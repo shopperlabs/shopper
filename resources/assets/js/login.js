@@ -69,24 +69,27 @@ $(function() {
 
     if (form[0].checkValidity() === false) {
       button.removeAttr('disabled').html('Login');
-      form.addClass('was-validated')
+      form.addClass('was-validated');
     }
 
     axios
       .post(form.attr('action'), JSON.stringify(form.serialize()))
       .then((response) => {
         button.removeAttr('disabled').html('Login');
-        Notiflix.Notify.Success('Your are successfull Logged In');
-        setInterval(function () {
-          window.location.href = 'https://arthurmonney.com';
-        }, 2000)
+
+        if (response.data.status === 'success') {
+          Notiflix.Notify.Success(response.data.message);
+          setInterval(function () {
+            window.location.href = response.data.redirect_url;
+          }, 2000);
+        }
       })
       .catch((error) => {
         const errors = error.response.data.errors;
 
         if (errors) {
           Notiflix.Notify.Failure(error.response.data.errors.email[0]);
-          button.removeAttr('disabled').html('Login')
+          button.removeAttr('disabled').html('Login');
         }
       });
   });

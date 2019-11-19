@@ -51,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware(['web'])
             ->as('shopper.')
             ->prefix(Shopper::prefix())
-            ->group(realpath(__DIR__ . '/../../routes/auth.php'));
+            ->group(realpath(SHOPPER_PATH . '/routes/auth.php'));
     }
 
     /**
@@ -66,7 +66,7 @@ class RouteServiceProvider extends ServiceProvider
             ->prefix(Shopper::prefix())
             ->as('shopper.')
             ->namespace($this->namespace)
-            ->group(realpath(__DIR__ . '/../../routes/backend.php'));
+            ->group(realpath(SHOPPER_PATH . '/routes/backend.php'));
     }
 
     /**
@@ -81,6 +81,6 @@ class RouteServiceProvider extends ServiceProvider
             ->prefix('shopper-api')
             ->as('shopper.api.')
             ->namespace($this->namespace)
-            ->group(realpath(__DIR__ . '/../../routes/api.php'));
+            ->group(realpath(SHOPPER_PATH . '/routes/api.php'));
     }
 }
