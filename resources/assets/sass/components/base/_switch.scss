@@ -1,0 +1,279 @@
+//
+// Switch
+//
+
+// Component Base
+@mixin switch-base() {
+    .switch  {
+        // Base
+        display: inline-block;
+        font-size: 1rem;
+
+        input:empty {
+            margin-left: -999px;
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            position: absolute;
+            opacity: 0;
+        }
+
+        input:empty ~ span {
+            display: inline-block;
+            position: relative;
+            float: left;
+            width: 1px;
+            text-indent: 0;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        input:empty ~ span:before,
+        input:empty ~ span:after {
+            position: absolute;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            content: ' ';
+            -webkit-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+        }
+
+        // State icons
+        &.switch--icon {
+            input:empty ~ span:after {
+                @include la-icon-self('\f342');
+            }
+
+            input:checked ~ span:after {
+                content: '\f17b';
+            }
+        }
+
+        // State icons
+        &.switch--icon-check {
+            input:checked ~ span:after {
+                @include la-icon-self('\f17b');
+            }
+        }
+
+        // Default size
+        & {
+            $switch-margin: 2px 0;
+            $switch-width: 54px;
+            $switch-height: 30px;
+            $switch-line-height: 26px;
+            $switch-space: 3px;
+            $switch-checked-tick-pos: 26px;
+            $switch-icon-font-size: 0.9em;
+
+            @include switch-size(
+                $switch-margin,
+                $switch-width,
+                $switch-height,
+                $switch-line-height,
+                $switch-space,
+                $switch-checked-tick-pos,
+                $switch-icon-font-size
+            );
+        }
+
+        // Large size
+        &.switch--lg {
+            $switch-margin: 2px 0;
+            $switch-width: 72px;
+            $switch-height: 40px;
+            $switch-line-height: 34px;
+            $switch-space: 3px;
+            $switch-checked-tick-pos: 34px;
+            $switch-icon-font-size: 1em;
+
+            @include switch-size(
+                $switch-margin,
+                $switch-width,
+                $switch-height,
+                $switch-line-height,
+                $switch-space,
+                $switch-checked-tick-pos,
+                $switch-icon-font-size
+            );
+        }
+
+        // Small size
+        &.switch--sm {
+            $switch-margin: 2px 0;
+            $switch-width: 38px;
+            $switch-height: 24px;
+            $switch-line-height: 20px;
+            $switch-space: 2px;
+            $switch-checked-tick-pos: 16px;
+            $switch-icon-font-size: 0.8em;
+
+            @include switch-size(
+                $switch-margin,
+                $switch-width,
+                $switch-height,
+                $switch-line-height,
+                $switch-space,
+                $switch-checked-tick-pos,
+                $switch-icon-font-size
+            );
+        }
+
+        // Form group
+        .form-group.row & {
+            margin-top: 0.15rem;
+
+            &.switch--lg {
+                margin-top: 0rem;
+                position: relative;
+                top: -0.3rem;
+            }
+
+            &.switch--sm {
+                margin-top: 0.3rem;
+            }
+        }
+    }
+}
+
+// Component Size
+@mixin switch-size($margin, $width, $height, $line-height, $space, $checked-tick-pos, $icon-font-size) {
+    input:empty ~ span {
+        line-height: $height;
+        margin: $margin;
+        height: $height;
+        width: $width + $space;
+        border-radius: ($height/2);
+    }
+
+    input:empty ~ span:before,
+    input:empty ~ span:after {
+        width: $width;
+        border-radius: ($height/2);
+    }
+
+    input:empty ~ span:after {
+        height: $height - 2 * $space;
+        width: $height - 2 * $space;
+        line-height: $line-height;
+        top: $space;
+        bottom: $space;
+        margin-left: $space;
+        font-size: $icon-font-size;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    input:checked ~ span:after {
+        margin-left: $checked-tick-pos;
+    }
+}
+
+// Component Skin
+@mixin switch-skin() {
+    $base-color: #e8ebf1;
+
+    .switch {
+        // Panel bg
+        input:empty ~ span:before {
+            background-color: $base-color;
+        }
+
+        // Tick bg
+        input:empty ~ span:after {
+            color: lighten($base-color, 5%);
+            background-color: #ffffff;
+        }
+
+        // Checked state
+        input:checked {
+            // Panel bg
+            ~ span:before {
+                background-color: $base-color;
+                //box-shadow: 0px 3px 20px 0px rgba($base-color, 0.41);
+            }
+
+            // Tick bg
+            ~ span:after {
+                background-color: state-color(brand, base);
+                color: state-color(brand, inverse);
+                //box-shadow: 0px 3px 20px 0px rgba($base-color, 0.41);
+            }
+        }
+
+        input[disabled] {
+            cursor: not-allowed;
+
+            ~ span:after,
+            ~ span:before {
+                cursor: not-allowed;
+                opacity: 0.7;
+            }
+        }
+
+        // States
+        @each $name, $color in $state-colors {
+            // states
+            &.switch--#{$name}:not(.switch--outline) {
+                input:empty ~ span:before {
+                    background-color: get($color, base);
+                }
+
+                input:empty ~ span:after {
+                    color: get($color, base);
+                    background-color: get($color, inverse);
+                    opacity: 0.4;
+                }
+
+                input:checked {
+                    // Panel bg
+                    ~ span:before {
+                        background-color: get($color, base);
+                    }
+
+                    // Tick bg
+                    ~ span:after {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            // outline style states
+            &.switch--outline.switch--#{$name} {
+                input:empty ~ span:before {
+                    border: 2px solid darken($base-color, 3%);
+                    background-color: $base-color;
+                }
+
+                input:empty ~ span:after {
+                    color: get($color, inverse);
+                    background-color: get($color, panel);
+                }
+
+                input:checked {
+                    // Panel bg
+                    ~ span:before {
+                        background-color: get($color, inverse);
+                    }
+
+                    // Tick bg
+                    ~ span:after {
+                        background-color: get($color, base);
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Component Base
+@include switch-base();
+
+// Component Skin
+@include switch-skin();

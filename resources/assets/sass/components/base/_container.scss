@@ -1,0 +1,34 @@
+//
+// Container
+//
+
+.container {
+    &,
+    &.container--fluid {
+        width: 100%;
+        margin: 0;
+    }
+
+    &.container--fit {
+        padding: 0 !important;
+    }
+
+    &.container--fit-left {
+        padding-left: 0 !important;
+    }
+
+    &.container--fit-right {
+        padding-right: 0 !important;
+    }
+}
+@media (min-width: #{$page-container-width + (2 * get($page-padding, desktop)) - 1px}) {
+    .container {
+        width: $page-container-width;
+        margin: 0 auto;
+
+        &.container--fluid {
+            width: 100%;
+            margin: 0;
+        }
+    }
+}

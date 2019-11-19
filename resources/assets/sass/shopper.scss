@@ -1,0 +1,28 @@
+/**
+* Shopper Style
+*
+* Qognitiv application custom style for the presentation of
+* our solutions. This theme is based on Bootstrap 4.1.3
+* custom Bootstrap element available on `sass/bootstrap` folder
+*
+* @version 1.0.0
+* @since November 2019
+* @author Arthur Monney<contact@arthurmonney.com>
+* @site https://laravel-shopper.com
+*/
+
+// 1: Include Librairies
+@import "~animate.css";
+@import "~react-toastify/dist/ReactToastify.css";
+
+// 2: Include global config
+@import "./core/config";
+@import "./core/base";
+
+// 3: Bootstrap framework includes
+@import "~bootstrap/scss/bootstrap";
+@import "./bootstrap/variables";
+@import "./bootstrap/bootstrap.scss";
+
+// 4: Page
+@import "pages/login/login-v1";

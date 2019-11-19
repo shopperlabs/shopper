@@ -1,0 +1,252 @@
+// Init global functions and mixins
+@import "init";
+
+$media-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+
+  // Small screen / phone
+  sm: 576px,
+
+  // Medium screen / tablet
+  md: 768px,
+
+  // Large screen / desktop
+  lg: 1024px, //1024px,
+
+  // Extra large screen / wide desktop
+  xl: 1399px
+) !default;
+
+// Global rounded border mode
+$rounded: true !default;
+
+// Border Radius
+$border-radius: 4px !default;
+
+// Core icon codes(lineawesome icons: https://icons8.com/line-awesome)
+$action-icons: (
+  close: '\f191',
+  down: '\f110',
+  up: '\f113',
+  left: '\f111',
+  right: '\f112',
+  plus: '\f2c2',
+  minus: '\f28e'
+) !default;
+
+// Core bold icon codes(lineawesome icons: https://keenthemes.com/keen/preview/default/components/icons/flaticon.html)
+$action-bold-icons: (
+  down: '\f1a3',
+  up: '\f1a5',
+  left: '\f1a4',
+  right: '\f19d',
+  close: '\f1b2'
+) !default;
+
+// Elevate shadow
+$elevate-shadow: 0px 0px 13px 0px rgba(82,63,105,0.05) !default;
+$elevate-shadow-2: 0px 0px 13px 0px rgba(82,63,105,0.1) !default;
+
+// Dropdown shadow
+$dropdown-shadow: 0px 0px 50px 0px rgba(82,63,105, 0.15) !default;
+
+// Custom scrollbar color
+$scroll-color: darken(#ebedf2, 6%) !default;
+
+// Transition
+$transition: all 0.3s !default;
+
+// Modal Z-index
+$modal-zindex: 1050 !default;
+
+// dropdown Z-index
+$dropdown-zindex: 95 !default;
+
+// State Colors
+// Brand colors
+$brand-color: #536be2 !default;
+$brand-inverse-color: #ffffff !default;
+
+// State colors
+$state-colors: (
+  // Keen states
+  brand: (
+    base: $brand-color,
+    inverse: $brand-inverse-color
+  ),
+  metal: (
+    base: #d3dae6,
+    inverse: #586272
+  ),
+  light: (
+    base: #ffffff,
+    inverse: #282a3c
+  ),
+  dark: (
+    base: lighten(#4c467a, 12%),
+    inverse: #ffffff
+  ),
+  accent: (
+    base: #00c5dc,
+    inverse: #ffffff
+  ),
+  focus: (
+    base: #9816f4,
+    inverse: #ffffff
+  ),
+
+  // Bootstrap states
+  primary: (
+    base: #5867dd,
+    inverse: #ffffff
+  ),
+  success: (
+    base: #1dc9b7,
+    inverse: #ffffff
+  ),
+  info: (
+    base: #5578eb,
+    inverse: #ffffff
+  ),
+  warning: (
+    base: #ffb822,
+    inverse: #ffffff
+  ),
+  danger: (
+    base: #fd397a,
+    inverse: #ffffff
+  )
+)!default;
+
+// Base colors
+$base-colors: (
+  label: (
+    1: #a2a5b9,
+    2: #74788d,
+    3: #595d6e,
+    4: #48465b
+  ),
+  shape: (
+    1: #f0f3ff,
+    2: #e8ecfa,
+    3: #93a2dd,
+    4: #646c9a
+  ),
+  grey: (
+    1: #f7f8fa, //#f4f5f8
+    2: #ebedf2,
+    3: darken(#ebedf2, 3%),
+    4: darken(#ebedf2, 6%)
+  )
+) !default;
+
+// Social network colors(see: https://brandcolors.net/)
+$social-colors: (
+  facebook: (
+    base: #3b5998,
+    inverse: #ffffff
+  ),
+  google: (
+    base: #dc4e41,
+    inverse: #ffffff
+  ),
+  twitter: (
+    base: #4AB3F4,
+    inverse: #ffffff
+  ),
+  instagram: (
+    base: #517fa4,
+    inverse: #ffffff
+  ),
+  youtube: (
+    base: #b31217,
+    inverse: #ffffff
+  ),
+  linkedin: (
+    base: #0077b5,
+    inverse: #ffffff
+  ),
+  skype: (
+    base: #00aff0,
+    inverse: #ffffff
+  ),
+  bitbucket: (
+    base: #205081,
+    inverse: #ffffff
+  ),
+  github: (
+    base: #333,
+    inverse: #ffffff
+  )
+) !default;
+
+// Root Font Settings
+$font-families: (
+  regular: unquote('Poppins, Helvetica, sans-serif'),
+  heading: unquote('Poppins, Helvetica, sans-serif')
+) !default;
+
+// Root Font Settings
+$font-size: (
+  size: (
+    desktop: 13px,
+    tablet: 12px,
+    mobile: 12px
+  ),
+  weight: 300
+) !default;
+
+// General Link Settings
+$font-color: (
+  text: #646c9a,
+  link: (
+    default: state-color(brand),
+    hover: darken(state-color(brand), 6%)
+  )
+) !default;
+
+// Portlet settings
+$portlet: (
+  min-height: (
+    default: (
+      desktop: 60px,
+      mobile: 50px
+    ),
+    sm: (
+      desktop: 50px,
+      mobile: 40px
+    ),
+    lg: (
+      desktop: 80px,
+      mobile: 60px
+    ),
+    xl: (
+      desktop: 100px,
+      mobile: 80px
+    )
+  ),
+  space: (
+    desktop: 25px,
+    mobile: 15px
+  ),
+  bottom-space: (
+    desktop: 20px,
+    mobile: 10px
+  ),
+  border-color: base-color(grey, 2),
+  bg-color: #ffffff,
+  shadow: 0px 0px 30px 0px rgba(82,63,105,0.05)
+) !default;
+
+// Custom Scroll(Perfect Scrollbar) size
+$custom-scroll-size: 4px !default;
+
+// Page padding
+$page-padding: (
+  desktop: 25px,
+  mobile: 15px
+) !default;
+
+// Page container width
+$page-container-width: 1380px !default;

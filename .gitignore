@@ -1,0 +1,11 @@
+/node_modules
+/.vscode
+/.vagrant
+.idea
+/vendor
+composer.lock
+package-lock.json
+yarn.lock
+.DS_Store
+Thumbs.db
+phpunit.xml

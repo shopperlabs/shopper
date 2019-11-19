@@ -1,0 +1,58 @@
+{
+  "name": "shopper/framework",
+  "description": "An eCommerce administration built with Laravel 6 for create online shop.",
+  "keywords": [
+    "laravel",
+    "admin",
+    "shopper",
+    "e-commerce"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arthur Monney",
+      "email": "contact@arthurmonney.com",
+      "homepage": "https://arthurmonney.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "illuminate/support": "~6",
+    "spatie/laravel-permission": "^3.2",
+    "tightenco/ziggy": "^0.8.1",
+    "torann/geoip": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0",
+    "mockery/mockery": "^1.0",
+    "orchestra/testbench": "~3.0"
+  },
+  "autoload": {
+    "files": [
+      "src/Helpers/helpers.php"
+    ],
+    "psr-4": {
+      "Shopper\\Framework\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Shopper\\Framework\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Framework\\FrameworkServiceProvider"
+      ],
+      "aliases": {
+        "Shopper": "Shopper\\Framework\\Facades\\Shopper"
+      }
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
