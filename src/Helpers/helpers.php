@@ -1,5 +1,7 @@
 <?php
 
+use Shopper\Framework\Shopper;
+
 if (! function_exists('app_name')) {
     /**
      * Helper to grab the application name.
@@ -78,5 +80,17 @@ if (! function_exists('setEnvironmentValue')) {
         }
 
         return true;
+    }
+}
+
+if (! function_exists('shopper_version')) {
+    /**
+     * Function to return Shopper current version
+     *
+     * @return string
+     */
+    function shopper_version()
+    {
+        return Shopper::version();
     }
 }
