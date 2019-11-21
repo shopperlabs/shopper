@@ -14,13 +14,19 @@
     "axios": "^0.19",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
+    "js-cookie": "^2.2.0",
     "lodash": "^4.17.13",
     "notiflix-react": "^1.4.0",
+    "pace": "0.0.4",
+    "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.16.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-toastify": "^5.4.1",
-    "toastr": "^2.1.4"
+    "sticky-js": "^1.2.0",
+    "toastr": "^2.1.4",
+    "tooltip.js": "^1.2.0",
+    "wnumb": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
