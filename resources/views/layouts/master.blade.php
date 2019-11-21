@@ -76,6 +76,10 @@
 
     @include('shopper::partials._scrolltop')
 
+    @include('shopper::partials._notifications')
+
+    @include('shopper::partials._search')
+
     @routes
     <script src="{{ asset('shopper/js/vendor.js') }}"></script>
     <script src="{{ asset('shopper/js/template.js') }}"></script>
