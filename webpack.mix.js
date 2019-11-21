@@ -15,6 +15,7 @@ mix.setPublicPath('public')
   .setResourceRoot('../') // turns assets paths in css relative to css file
   .sass('./resources/assets/sass/shopper.scss', 'css')
   .js('./resources/assets/js/vendor.js', 'js')
+  .js('./resources/assets/js/global/template.js', 'js')
   .js('./resources/assets/js/login.js', 'js')
   .react('./resources/assets/ts/shopper.ts', 'js')
   .webpackConfig({
