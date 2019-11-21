@@ -55,8 +55,8 @@ $(function() {
         $this.addClass('show');
         $(this).addClass('btn-outline-primary');
       }
-    })
-  })
+    });
+  });
 
   $('.my-login-validation').submit(function(event) {
     event.preventDefault();
@@ -76,7 +76,6 @@ $(function() {
       .post(form.attr('action'), JSON.stringify(form.serialize()))
       .then((response) => {
         button.removeAttr('disabled').html('Login');
-
         if (response.data.status === 'success') {
           Notiflix.Notify.Success(response.data.message);
           setInterval(function () {
@@ -89,7 +88,7 @@ $(function() {
 
         if (errors) {
           Notiflix.Notify.Failure(error.response.data.errors.email[0]);
-          button.removeAttr('disabled').html('Login');
+          button.removeAttr('disabled').html('Login')
         }
       });
   });

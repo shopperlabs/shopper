@@ -11,18 +11,51 @@
 * @site https://laravel-shopper.com
 */
 
-// 1: Include Librairies
+// =============================================================
+//            DO NOT MODIFY BELOW INCLUDE ORDER
+// =============================================================
+
+// 0: Include Librairies
+@import "plugins/flaticon/flaticon.css";
+@import "plugins/flaticon2/flaticon.css";
+@import "plugins/line-awesome/line-awesome.css";
 @import "~animate.css";
 @import "~react-toastify/dist/ReactToastify.css";
 
-// 2: Include global config
-@import "./core/config";
-@import "./core/base";
+// 1: Include global config
+@import "config";
+
+// 2: Include layout config
+@import "global/layout/config";
 
 // 3: Bootstrap framework includes
+@import "global/integration/frameworks/bootstrap/variables";
 @import "~bootstrap/scss/bootstrap";
-@import "./bootstrap/variables";
-@import "./bootstrap/bootstrap.scss";
+@import "global/integration/frameworks/bootstrap/bootstrap.scss";
 
-// 4: Page
+// 4: Components include
+@import "global/include";
+
+// =============================================================
+//            DO NOT MODIFY BELOW INCLUDE ORDER
+// =============================================================
+
+// 5: Layout config
+@import "global/layout/mobile-header/config";
+@import "global/layout/aside/config";
+@import "global/layout/footer/config";
+
+// 6: Layout includes
+@import "global/layout/base/base";
+
+@import "global/layout/mobile-header/mobile-header";
+@import "global/layout/aside/aside";
+@import "global/layout/aside/primary";
+@import "global/layout/aside/secondary";
+
+@import "global/layout/content/content";
+
+@import "global/layout/footer/footer";
+
+// 7: Custom Pages
 @import "pages/login/login-v1";
