@@ -18,6 +18,7 @@
   "require": {
     "php": "^7.2",
     "illuminate/support": "~6",
+    "maatwebsite/laravel-sidebar": "~2.1",
     "spatie/laravel-permission": "^3.2",
     "tightenco/ziggy": "^0.8.1",
     "torann/geoip": "^1.0"
