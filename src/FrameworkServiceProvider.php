@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
@@ -20,6 +21,12 @@ class FrameworkServiceProvider extends ServiceProvider
 
         Route::middlewareGroup('shopper', config('shopper.middleware', []));
         Route::aliasMiddleware('shopper.guest', RedirectIfAuthenticated::class);
+
+        // setLocale for php. Enables ->formatLocalized() with localized values for dates
+        setlocale(LC_TIME, config('app.locale_php'));
+
+        // setLocale to use Carbon source locales. Enables diffForHumans() localized
+        Carbon::setLocale(config('app.locale'));
     }
 
     /**

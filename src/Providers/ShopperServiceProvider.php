@@ -82,6 +82,8 @@ class ShopperServiceProvider extends ServiceProvider
             UserCommand::class,
             SymlinkCommand::class
         ]);
+
+        $this->app->register(ShopperSidebarServiceProvider::class);
     }
 
     /**
