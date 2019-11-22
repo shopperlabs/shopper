@@ -69,7 +69,7 @@ class UserCommand extends Command
 
         try {
             $user = User::create($userData);
-            $user->syncRoles(config('shopper.users.admin_role'));
+            $user->assignRole(config('shopper.users.admin_role'));
         } catch (\Exception | QueryException $e) {
             $this->error($e->getMessage());
         }
