@@ -10,7 +10,7 @@ trait TruncateTable
      * Truncate Table
      *
      * @param string $table
-     * @return bool|void
+     * @return mixed
      */
     protected function truncate($table)
     {

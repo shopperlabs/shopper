@@ -51,7 +51,6 @@ class UserCommand extends Command
         // Passwords don't match
         if ($password != $confirmPassword) {
             $this->info('Passwords don\'t match');
-            exit;
         }
 
         $this->info('Creating admin account...');

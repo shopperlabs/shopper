@@ -4,6 +4,9 @@ namespace Shopper\Framework\Models;
 
 use Spatie\Permission\Models\Role as SpatieRole;
 
+/**
+ * @property string name
+ */
 class Role extends SpatieRole
 {
     /**

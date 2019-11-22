@@ -10,8 +10,8 @@ class AuthenticationException extends BaseAuthenticationException
     /**
      * Render the exception.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function render($request)
     {
