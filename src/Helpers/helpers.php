@@ -2,7 +2,7 @@
 
 use Shopper\Framework\Shopper;
 
-if (! function_exists('app_name')) {
+if (!function_exists('app_name')) {
     /**
      * Helper to grab the application name.
      *
@@ -14,7 +14,7 @@ if (! function_exists('app_name')) {
     }
 }
 
-if (! function_exists('home_route')) {
+if (!function_exists('home_route')) {
     /**
      * Return the route to the "home" page depending on authentication/authorization status.
      *
@@ -34,7 +34,7 @@ if (! function_exists('home_route')) {
     }
 }
 
-if (! function_exists('setEnvironmentValue')) {
+if (!function_exists('setEnvironmentValue')) {
     /**
      * Function to set or update .env variable
      *
@@ -75,7 +75,7 @@ if (! function_exists('setEnvironmentValue')) {
 
         $str = substr($str, 0, -1);
 
-        if (! file_put_contents($envFile, $str)) {
+        if (!file_put_contents($envFile, $str)) {
             return false;
         }
 
@@ -83,7 +83,7 @@ if (! function_exists('setEnvironmentValue')) {
     }
 }
 
-if (! function_exists('shopper_version')) {
+if (!function_exists('shopper_version')) {
     /**
      * Function to return Shopper current version
      *
