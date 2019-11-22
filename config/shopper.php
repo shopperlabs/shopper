@@ -1,5 +1,6 @@
 <?php
 
+use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Http\Middleware\Authenticate;
 
 return [
@@ -55,6 +56,7 @@ return [
     'middleware' => [
         'web',
         Authenticate::class,
+        ResolveSidebars::class,
     ],
 
     /*
