@@ -3,6 +3,7 @@
 /.vagrant
 .idea
 /vendor
+/resources/assets/js
 /resources/assets/sass
 /resources/assets/js/global
 composer.lock
