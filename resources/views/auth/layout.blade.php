@@ -24,7 +24,7 @@
 </head>
 <body class="login-page">
 
-    <section class="wrapper">
+    <section class="login-wrapper">
         <div class="container-fluid">
             <div class="row h-100">
                 <div class="col-md-7 illustration" style="background-image: url('{{ asset('shopper/images/illustration.jpg') }}')"></div>

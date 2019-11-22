@@ -47,7 +47,7 @@
         <div class="grid__item grid__item--fluid grid grid--ver page">
 
             <button class="aside-close hidden" id="aside_close_btn"><i class="la la-close"></i></button>
-            <div class="aside  grid__item grid grid--ver" id="aside">
+            <div class="aside grid__item grid grid--ver" id="aside">
 
                 @include('shopper::partials.aside.primary')
                 @include('shopper::partials.aside.secondary')

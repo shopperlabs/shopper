@@ -13,7 +13,27 @@
         <ul class="aside__nav">
             <li class="aside__nav-item">
                 <a class="aside__nav-link active" href="{{ route('shopper.dashboard') }}" data-toggle="tooltip" data-title="{{ __('Dashboard') }}" data-placement="right" data-container="body" data-boundary="window">
-                    <i class="flaticon2-protection"></i>
+                    <i class="flaticon2-shopping-cart-1"></i>
+                </a>
+            </li>
+            <li class="aside__nav-item">
+                <a class="aside__nav-link" href="{{ url('/') }}" target="_blank" data-toggle="tooltip" data-title="{{ __('Open site') }}" data-placement="right" data-container="body" data-boundary="window">
+                    <i class="flaticon2-browser-1"></i>
+                </a>
+            </li>
+            <li class="aside__nav-item">
+                <a class="aside__nav-link" href="#" data-toggle="tooltip" data-title="{{ __('System settings') }}" data-placement="right" data-container="body" data-boundary="window">
+                    <i class="flaticon2-gear"></i>
+                </a>
+            </li>
+            <li class="aside__nav-item">
+                <a class="aside__nav-link" href="#" data-toggle="tooltip" data-title="{{ __('Access') }}" data-placement="right" data-container="body" data-boundary="window">
+                    <i class="flaticon2-lock"></i>
+                </a>
+            </li>
+            <li class="aside__nav-item">
+                <a class="aside__nav-link" href="#" data-toggle="tooltip" data-title="{{ __('Logs reports') }}" data-placement="right" data-container="body" data-boundary="window">
+                    <i class="flaticon2-list-3"></i>
                 </a>
             </li>
         </ul>
@@ -41,19 +61,6 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-left dropdown-menu-anim">
                     <ul class="nav margin-t-10 margin-b-10">
-                        <li class="nav__item nav__item--active">
-                            <a href="{{ url('/') }}" class="nav__link">
-                                <i class="nav__link-icon flaticon-globe"></i>
-                                <span class="nav__link-text">{{ _('Preview Website') }}</span>
-                            </a>
-                        </li>
-                        <li class="nav__separator"></li>
-                        <li class="nav__item">
-                            <a href="#" class="nav__link">
-                                <i class="nav__link-icon flaticon-settings"></i>
-                                <span class="nav__link-text">{{ __('Settings') }}</span>
-                            </a>
-                        </li>
                         <li class="nav__item">
                             <a href="#" class="nav__link">
                                 <i class="nav__link-icon flaticon-avatar"></i>
@@ -61,10 +68,14 @@
                             </a>
                         </li>
                         <li class="nav__item">
-                            <a href="#" class="nav__link">
+                            <a href="{{ route('logout') }}"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav__link">
                                 <i class="nav__link-icon flaticon-logout"></i>
                                 <span class="nav__link-text">{{ __('Logout') }}</span>
                             </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </div>
