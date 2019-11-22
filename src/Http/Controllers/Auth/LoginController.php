@@ -83,7 +83,7 @@ class LoginController extends Controller
         return response()->json([
             'message' => __('You are successfull Logged In'),
             'status' => 'success',
-            'redirect_url' => route('shopper.dashboard')
+            'redirect_url' => route(home_route())
         ]);
     }
 }
