@@ -84,6 +84,7 @@ class ShopperServiceProvider extends ServiceProvider
         ]);
 
         $this->app->register(ShopperSidebarServiceProvider::class);
+        $this->app->register(SidebarServiceProvider::class);
     }
 
     /**

@@ -60,4 +60,14 @@ class User extends Authenticatable
      * @var string
      */
     protected $guard_name = 'web';
+
+    /**
+     * Define if user is an admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->hasRole(config('shopper.users.admin_role'));
+    }
 }

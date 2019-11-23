@@ -5,6 +5,13 @@ namespace Shopper\Framework;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Shopper\Framework\Events\BuildingSidebar;
+use Shopper\Framework\Events\Handlers\RegisterBannerSidebar;
+use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
+use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
+use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
+use Shopper\Framework\Http\Composers\GlobalComposer;
+use Shopper\Framework\Http\Composers\SidebarCreator;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 
@@ -27,6 +34,13 @@ class FrameworkServiceProvider extends ServiceProvider
 
         // setLocale to use Carbon source locales. Enables diffForHumans() localized
         Carbon::setLocale(config('app.locale'));
+
+        // Global Composer
+        // This class binds the $logged_in_user variable to every view
+        view()->composer('*', GlobalComposer::class);
+
+        // Backend
+        view()->creator('shopper::partials.aside.secondary', SidebarCreator::class);
     }
 
     /**
@@ -41,6 +55,12 @@ class FrameworkServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom(__DIR__.'/../config/shopper.php', 'shopper');
+
+        // Register Default Dashboard Menu
+        $this->app['events']->listen(BuildingSidebar::class, RegisterDashboardSidebar::class);
+        $this->app['events']->listen(BuildingSidebar::class, RegisterShopSidebar::class);
+        $this->app['events']->listen(BuildingSidebar::class, RegisterOrderSidebar::class);
+        $this->app['events']->listen(BuildingSidebar::class, RegisterBannerSidebar::class);
 
         // Register the service the package provides.
         $this->app->singleton('shopper', function ($app) {
