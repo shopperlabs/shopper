@@ -13,7 +13,7 @@
         <ul class="aside__nav">
             <li class="aside__nav-item">
                 <a class="aside__nav-link active" href="{{ route('shopper.dashboard') }}" data-toggle="tooltip" data-title="{{ __('Dashboard') }}" data-placement="right" data-container="body" data-boundary="window">
-                    <i class="flaticon2-shopping-cart-1"></i>
+                    <i class="flaticon2-protection"></i>
                 </a>
             </li>
             <li class="aside__nav-item">

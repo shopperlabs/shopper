@@ -38,7 +38,7 @@
         @endforeach
     @endif
 </head>
-<body class="page-bg-grey header-mobile--fixed page-content-white subheader--enabled aside--secondary-enabled offcanvas-panel--left aside--left page--loading">
+<body class="page-bg-grey header-mobile--fixed page-content-white subheader--fixed subheader--enabled aside--secondary-enabled offcanvas-panel--left aside--left page--loading">
 
     @include('shopper::partials.header.header-mobile')
 
