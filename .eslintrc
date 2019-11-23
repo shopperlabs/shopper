@@ -1,0 +1,28 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "env": {
+        "browser": true,
+        "jest/globals": true
+    },
+    "plugins": ["@typescript-eslint", "react-hooks", "jest", "prettier"],
+    "extends": [
+        "airbnb",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript",
+        "plugin:prettier/recommended",
+        "plugin:jest/recommended",
+        "prettier/@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-use-before-define": 0,
+        "import/prefer-default-export": "off",
+        "react/jsx-wrap-multilines": "off",
+        "react/no-array-index-key": "off",
+        "react/jsx-filename-extension": ["warn", {
+            "extensions": [".jsx", ".tsx"]
+        }],
+        "react/prop-types": "off",
+        "react-hooks/rules-of-hooks": "error"
+    }
+}
