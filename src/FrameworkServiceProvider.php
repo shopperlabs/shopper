@@ -14,6 +14,7 @@ use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\SidebarCreator;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Framework\Providers\ShopperServiceProvider;
+use Shopper\Framework\Services\Gravatar;
 
 class FrameworkServiceProvider extends ServiceProvider
 {
@@ -64,7 +65,11 @@ class FrameworkServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('shopper', function ($app) {
-            return new Shopper();
+            return new Shopper;
+        });
+
+        $this->app->singleton('gravatar', function () {
+            return new Gravatar;
         });
     }
 

@@ -7,11 +7,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property string last_name
+ * @property string first_name
+ * @property string avatar_type
+ * @property string email
+ * @property string avatar_location
+ */
 class User extends Authenticatable
 {
     use Notifiable,
         HasRoles,
         SoftDeletes;
+
+    /**
+     * Model Default Guard
+     *
+     * @var string
+     */
+    protected $guard_name = 'web';
 
     /**
      * The attributes that are mass assignable.
@@ -57,9 +71,14 @@ class User extends Authenticatable
     ];
 
     /**
-     * @var string
+     * The dynamic attributes from mutators that should be returned with the user object.
+     *
+     * @var array
      */
-    protected $guard_name = 'web';
+    protected $appends = [
+        'full_name',
+        'picture',
+    ];
 
     /**
      * Define if user is an admin
@@ -69,5 +88,33 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->hasRole(config('shopper.users.admin_role'));
+    }
+
+    /**
+     * Return User Fullname
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->last_name
+            ? $this->first_name.' '.$this->last_name
+            : $this->first_name;
+    }
+
+    /**
+     * Get user profile picture
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
+     */
+    public function getPictureAttribute()
+    {
+        switch ($this->avatar_type) {
+            case 'gravatar':
+                return gravatar()->get($this->email);
+
+            case 'storage':
+                return url('storage/'.$this->avatar_location);
+        }
     }
 }
