@@ -43,7 +43,7 @@ class Gravatar
      * Can either be a public URL to an image or a valid themed image.
      * For more info, visit http://en.gravatar.com/site/implement/images/#default-image
      *
-     * @param string $fallback
+     * @param string|bool $fallback
      * @return $this
      */
     public function fallback($fallback)
@@ -125,9 +125,9 @@ class Gravatar
     /**
      * Helper function to retrieve config settings.
      *
-     * @param $value
-     * @param null $default
-     * @return null
+     * @param string $value
+     * @param null|string $default
+     * @return bool
      */
     protected function c($value, $default = null)
     {
@@ -183,62 +183,6 @@ class Gravatar
         }
 
         return '?' . http_build_query($build);
-    }
-
-    /**
-     * @return array|null
-     */
-    private function sizeParameter()
-    {
-        if (
-            !$this->c('size')
-            || !is_integer($this->c('size'))
-        ) {
-            return null;
-        }
-
-        return array('s' => $this->c('size'));
-    }
-
-    /**
-     * @return array|null
-     */
-    private function defaultParameter()
-    {
-        $this->fallback = $this->c('fallback');
-        if (!$this->fallback) {
-            return null;
-        }
-
-        return array('d' => $this->fallback);
-    }
-
-    /**
-     * @return array|null
-     */
-    private function ratingParameter()
-    {
-        $rating = $this->c('maximumRating');
-        if (
-            !$rating
-            || !in_array($rating, array('g', 'pg', 'r', 'x'))
-        ) {
-            return null;
-        }
-
-        return array('r' => $rating);
-    }
-
-    /**
-     * @return array|null
-     */
-    private function forceDefaultParameter()
-    {
-        if ($this->c('forceDefault') === true) {
-            return array('forcedefault' => 'y');
-        }
-
-        return null;
     }
 
     /**
