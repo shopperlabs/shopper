@@ -36,7 +36,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
             $group->item(__('Brands'), function (Item $item) {
                 $item->weight(3);
                 $item->authorize(true);
-                $item->icon('menu__link-icon flaticon-app');
+                $item->icon('menu__link-icon la la-star-o');
             });
 
             $group->item(__('Reviews'), function (Item $item) {
