@@ -11,6 +11,7 @@ use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
 use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
 use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
 use Shopper\Framework\Http\Composers\GlobalComposer;
+use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Framework\Providers\ShopperServiceProvider;
@@ -42,6 +43,7 @@ class FrameworkServiceProvider extends ServiceProvider
 
         // Backend
         view()->creator('shopper::partials.aside.secondary', SidebarCreator::class);
+        view()->composer('shopper::partials.aside.primary', MenuCreator::class);
     }
 
     /**

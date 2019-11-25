@@ -10,33 +10,7 @@
 
     <!-- begin::Aside Middle -->
     <div class="aside__middle">
-        <ul class="aside__nav">
-            <li class="aside__nav-item">
-                <a class="aside__nav-link active" href="{{ route('shopper.dashboard') }}" data-toggle="tooltip" data-title="{{ __('Dashboard') }}" data-placement="right" data-container="body" data-boundary="window">
-                    <i class="flaticon2-protection"></i>
-                </a>
-            </li>
-            <li class="aside__nav-item">
-                <a class="aside__nav-link" href="{{ url('/') }}" target="_blank" data-toggle="tooltip" data-title="{{ __('Open site') }}" data-placement="right" data-container="body" data-boundary="window">
-                    <i class="flaticon2-browser-1"></i>
-                </a>
-            </li>
-            <li class="aside__nav-item">
-                <a class="aside__nav-link" href="#" data-toggle="tooltip" data-title="{{ __('System settings') }}" data-placement="right" data-container="body" data-boundary="window">
-                    <i class="flaticon2-gear"></i>
-                </a>
-            </li>
-            <li class="aside__nav-item">
-                <a class="aside__nav-link" href="#" data-toggle="tooltip" data-title="{{ __('Access') }}" data-placement="right" data-container="body" data-boundary="window">
-                    <i class="flaticon2-lock"></i>
-                </a>
-            </li>
-            <li class="aside__nav-item">
-                <a class="aside__nav-link" href="#" data-toggle="tooltip" data-title="{{ __('Logs reports') }}" data-placement="right" data-container="body" data-boundary="window">
-                    <i class="flaticon2-list-3"></i>
-                </a>
-            </li>
-        </ul>
+        {!! $primaryMenu->asUl(['class' => 'aside__nav']) !!}
     </div>
     <!-- end::Aside Middle -->
 
@@ -49,7 +23,7 @@
                 </a>
             </li>
             <li class="aside__nav-item">
-                <a href="#" class="aside__nav-link" id="offcanvas_toolbar_notifications_toggler_btn" data-toggle="tooltip" data-title="Recent notifications" data-placement="right" data-container="body" data-boundary="window">
+                <a href="#" class="aside__nav-link" id="offcanvas_toolbar_notifications_toggler_btn" data-toggle="tooltip" data-title="{{ __('Recent notification') }}s" data-placement="right" data-container="body" data-boundary="window">
                     <i class="flaticon2-bell-alarm-symbol"></i>
                     <span class="badge badge--danger">3</span>
                 </a>

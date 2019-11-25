@@ -4,9 +4,6 @@ namespace Shopper\Framework\Http\Composers;
 
 use Illuminate\View\View;
 
-/**
- * Class GlobalComposer.
- */
 class GlobalComposer
 {
     /**
