@@ -5,6 +5,8 @@ namespace Shopper\Framework\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Shopper\Framework\Models\Shop\Shop;
+use Shopper\Framework\Models\Shop\ShopMember;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -13,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string avatar_type
  * @property string email
  * @property string avatar_location
+ * @property boolean is_superuser
  */
 class User extends Authenticatable
 {
@@ -61,6 +64,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_superuser'      => 'boolean'
     ];
 
     /**
@@ -92,6 +96,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Define if user is an super admin
+     *
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->isAdmin() && $this->is_superuser;
+    }
+
+    /**
      * Return User Fullname
      *
      * @return string
@@ -99,7 +113,7 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->last_name
-            ? $this->first_name.' '.$this->last_name
+            ? $this->first_name . ' ' . $this->last_name
             : $this->first_name;
     }
 
@@ -115,7 +129,27 @@ class User extends Authenticatable
                 return gravatar()->get($this->email);
 
             case 'storage':
-                return url('storage/'.$this->avatar_location);
+                return url('storage/' . $this->avatar_location);
         }
+    }
+
+    /**
+     * Get User Shop
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function shop()
+    {
+        return $this->hasOne(Shop::class, 'owner_id');
+    }
+
+    /**
+     * Shop member
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function shopMember()
+    {
+        return $this->belongsToMany(ShopMember::class, 'shop_members', 'user_id', 'shop_id');
     }
 }
