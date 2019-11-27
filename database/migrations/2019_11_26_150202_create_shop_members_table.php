@@ -13,7 +13,7 @@ class CreateShopMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('shop_members', function (Blueprint $table) {
+        Schema::create('shop_members', function(Blueprint $table) {
             $table->unsignedBigInteger('shop_id');
             $table->unsignedBigInteger('user_id');
             $table->primary(['user_id', 'shop_id'], 'shop_members_shop_id_user_id_primary');
