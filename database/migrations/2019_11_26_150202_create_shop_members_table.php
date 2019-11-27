@@ -14,9 +14,9 @@ class CreateShopMembersTable extends Migration
     public function up()
     {
         Schema::create('shop_members', function (Blueprint $table) {
-            $table->bigIncrements('user_id');
-            $table->bigIncrements('shop_id');
-            $table->primary(['user_id', 'shop_id']);
+            $table->unsignedBigInteger('shop_id');
+            $table->unsignedBigInteger('user_id');
+            $table->primary(['user_id', 'shop_id'], 'shop_members_shop_id_user_id_primary');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('shop_id')->references('id')->on('shops')->onDelete('CASCADE');

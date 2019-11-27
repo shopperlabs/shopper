@@ -17,6 +17,7 @@ class CreateShopSizesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
+            $table->integer('max_products')->nullable();
             $table->timestamps();
         });
     }

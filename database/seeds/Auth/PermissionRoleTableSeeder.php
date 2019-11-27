@@ -20,13 +20,13 @@ class PermissionRoleTableSeeder extends Seeder
         $admin = Role::create([
             'name' => config('shopper.users.admin_role'),
             'display_name' => 'Administrator',
-            'description' => 'Site administrator with access to developer tools.'
+            'description' => 'Site administrator with access to shop and developer tools.'
         ]);
 
         $executive = Role::create([
-            'name' => 'publisher',
-            'display_name' => 'Publisher',
-            'description' => 'Site editor with access to publishing tools.'
+            'name' => 'seller',
+            'display_name' => 'Seller',
+            'description' => 'Merchant of the site with the access for the publications of its products'
         ]);
 
         Role::create([
