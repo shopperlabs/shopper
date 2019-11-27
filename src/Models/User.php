@@ -24,13 +24,6 @@ class User extends Authenticatable
         SoftDeletes;
 
     /**
-     * Model Default Guard
-     *
-     * @var string
-     */
-    protected $guard_name = 'web';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array

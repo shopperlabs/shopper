@@ -4,7 +4,6 @@ namespace Shopper\Framework\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Shopper\Framework\Shopper;
 
 class RedirectIfAuthenticated
 {
@@ -19,7 +18,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect(Shopper::prefix());
+            return redirect()->route(home_route());
         }
 
         return $next($request);

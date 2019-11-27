@@ -39,8 +39,6 @@ if (!function_exists('home_route')) {
 
             return 'home';
         }
-
-        return 'home';
     }
 }
 

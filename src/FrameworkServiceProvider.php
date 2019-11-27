@@ -3,6 +3,7 @@
 namespace Shopper\Framework;
 
 use Carbon\Carbon;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Framework\Events\BuildingSidebar;
@@ -16,9 +17,22 @@ use Shopper\Framework\Http\Composers\SidebarCreator;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Services\Gravatar;
+use Spatie\Permission\Middlewares\PermissionMiddleware;
+use Spatie\Permission\Middlewares\RoleMiddleware;
 
 class FrameworkServiceProvider extends ServiceProvider
 {
+    /**
+     * The middleware base class name.
+     *
+     * @var array
+     */
+    protected $middlewares = [
+      'role'            => RoleMiddleware::class,
+      'permission'      => PermissionMiddleware::class,
+      'shopper.guest'   => RedirectIfAuthenticated::class,
+    ];
+
     /**
      * Perform post-registration booting of services.
      *
@@ -29,7 +43,7 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->app->register(ShopperServiceProvider::class);
 
         Route::middlewareGroup('shopper', config('shopper.middleware', []));
-        Route::aliasMiddleware('shopper.guest', RedirectIfAuthenticated::class);
+        $this->registerMiddleware($this->app['router']);
 
         // setLocale for php. Enables ->formatLocalized() with localized values for dates
         setlocale(LC_TIME, config('app.locale_php'));
@@ -44,6 +58,19 @@ class FrameworkServiceProvider extends ServiceProvider
         // Backend
         view()->creator('shopper::partials.aside.secondary', SidebarCreator::class);
         view()->composer('shopper::partials.aside.primary', MenuCreator::class);
+    }
+
+    /**
+     * Register the middleware.
+     *
+     * @param  Router $router
+     * @return void
+     */
+    public function registerMiddleware(Router $router)
+    {
+        foreach ($this->middlewares as $name => $middleware) {
+            $router->aliasMiddleware($name, $middleware);
+        }
     }
 
     /**
