@@ -64,6 +64,7 @@ class UserCommand extends Command
             'password'     => Hash::make($password),
             'last_login_at'     => now()->toDateTimeString(),
             'email_verified_at' => now()->toDateTimeString(),
+            'is_superuser'      => true,
             'last_login_ip' => $ip_address
         ];
 
