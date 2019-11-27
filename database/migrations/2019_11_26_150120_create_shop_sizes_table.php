@@ -13,7 +13,7 @@ class CreateShopSizesTable extends Migration
      */
     public function up()
     {
-        Schema::create('shop_sizes', function (Blueprint $table) {
+        Schema::create('shop_sizes', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
