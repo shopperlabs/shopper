@@ -15,8 +15,8 @@
     <link rel="manifest" href="{{ asset('shopper/images/favicons/site.webmanifest') }}">
     <link rel="mask-icon" href="{{ asset('shopper/images/favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="apple-mobile-web-app-title" content="Shopper">
-    <meta name="application-name" content="Shopper">
+    <meta name="apple-mobile-web-app-title" content="{{ app_name() }}">
+    <meta name="application-name" content="{{ app_name()  }}">
     <meta name="theme-color" content="#ffffff">
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
