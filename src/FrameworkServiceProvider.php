@@ -14,6 +14,7 @@ use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
 use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
+use Shopper\Framework\Http\Middleware\Dashboard;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Services\Gravatar;
@@ -28,9 +29,10 @@ class FrameworkServiceProvider extends ServiceProvider
      * @var array
      */
     protected $middlewares = [
-      'role'            => RoleMiddleware::class,
-      'permission'      => PermissionMiddleware::class,
-      'shopper.guest'   => RedirectIfAuthenticated::class,
+        'role'            => RoleMiddleware::class,
+        'permission'      => PermissionMiddleware::class,
+        'shopper.guest'   => RedirectIfAuthenticated::class,
+        'dashboard'       => Dashboard::class
     ];
 
     /**
