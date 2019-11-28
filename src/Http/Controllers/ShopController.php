@@ -4,15 +4,15 @@ namespace Shopper\Framework\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 
-class DashboardController extends Controller
+class ShopController extends Controller
 {
     /**
-     * Display Shopper Dashboard
+     * Display Shop Initialization view
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function initialize()
     {
-        return view('shopper::dashboard.index');
+        return view('shopper::shop.initialize');
     }
 }

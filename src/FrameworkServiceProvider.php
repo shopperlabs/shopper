@@ -42,6 +42,8 @@ class FrameworkServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->registerShopRoute();
+
         $this->app->register(ShopperServiceProvider::class);
 
         Route::middlewareGroup('shopper', config('shopper.middleware', []));
@@ -60,6 +62,16 @@ class FrameworkServiceProvider extends ServiceProvider
         // Backend
         view()->creator('shopper::partials.aside.secondary', SidebarCreator::class);
         view()->composer('shopper::partials.aside.primary', MenuCreator::class);
+    }
+
+    /**
+     * Register the Shop routes.
+     *
+     * @return void
+     */
+    public function registerShopRoute()
+    {
+        (new Shopper())->initializeRoute();
     }
 
     /**

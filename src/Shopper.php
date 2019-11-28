@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework;
 
+use Illuminate\Support\Facades\Route;
+
 class Shopper
 {
     /**
@@ -22,5 +24,23 @@ class Shopper
     public static function prefix()
     {
         return config('shopper.prefix');
+    }
+
+    /**
+     * Register the Shop routes.
+     *
+     * @return Shopper
+     */
+    public function initializeRoute()
+    {
+        Route::namespace('Shopper\Framework\Http\Controllers')
+            ->middleware(config('shopper.middleware'))
+            ->as('shopper.shop.')
+            ->prefix(self::prefix() . '/shop')
+            ->group(function () {
+                Route::get('/initialize', 'ShopController@initialize')->name('initialize');
+            });
+
+        return $this;
     }
 }
