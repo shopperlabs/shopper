@@ -23,6 +23,7 @@
             "extensions": [".jsx", ".tsx"]
         }],
         "react/prop-types": "off",
-        "react-hooks/rules-of-hooks": "error"
+        "react-hooks/rules-of-hooks": "error",
+        "global-require": 0
     }
 }
