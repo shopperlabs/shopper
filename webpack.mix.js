@@ -11,6 +11,8 @@ let mix = require('laravel-mix');
  |
  */
 
+mix.disableNotifications();
+
 mix.setPublicPath('public')
   .setResourceRoot('../') // turns assets paths in css relative to css file
   .sass('./resources/assets/sass/shopper.scss', 'css')
