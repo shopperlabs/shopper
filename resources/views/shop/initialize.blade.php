@@ -25,9 +25,9 @@
     <!--end::Fonts -->
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 </head>
-<body class="shop-inialization">
+<body class="shop-initialization">
 
-
+    <div id="shop-initialization-app"></div>
 
     <script src="{{ asset('shopper/js/vendor.js') }}"></script>
     <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
