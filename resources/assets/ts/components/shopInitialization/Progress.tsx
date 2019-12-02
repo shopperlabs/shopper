@@ -1,0 +1,37 @@
+import React from "react";
+// @ts-ignore
+import { ProgressBar, Step } from "react-step-progress-bar";
+
+export default ({ percent }: { percent: number }) => {
+  return (
+    <ProgressBar percent={percent}>
+      <Step>
+        {({ accomplished, index }: { accomplished: boolean, index: number }) => (
+          <div
+            className={`indexedStep ${accomplished ? "accomplished" : null}`}
+          >
+            {index + 1}
+          </div>
+        )}
+      </Step>
+      <Step>
+        {({ accomplished, index }: { accomplished: boolean, index: number }) => (
+          <div
+            className={`indexedStep ${accomplished ? "accomplished" : null}`}
+          >
+            {index + 1}
+          </div>
+        )}
+      </Step>
+      <Step>
+        {({ accomplished, index }: { accomplished: boolean, index: number }) => (
+          <div
+            className={`indexedStep ${accomplished ? "accomplished" : null}`}
+          >
+            {index + 1}
+          </div>
+        )}
+      </Step>
+    </ProgressBar>
+  );
+}
