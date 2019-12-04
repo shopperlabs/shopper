@@ -1,30 +1,46 @@
 import React, { useState } from "react";
 import ReactDom from "react-dom";
-
-import route from "../../utils/route";
+import { useTransition, animated } from "react-spring";
 
 import Steps from "./Steps";
 import Progress from "./Progress";
 import ButtonLoader from "./ButtonLoader";
+import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
+import StepTree from "./StepTree";
+import Complete from "./Complete";
+
+const steps = [
+  () => <StepOne />,
+  () => <StepTwo />,
+  () => <StepTree />,
+  () => <Complete />
+];
 
 const ShopInitialization = () => {
   const [step1Done, setStep1Done] = useState(false);
   const [step2Done, setStep2Done] = useState(false);
   const [step3Done, setStep3Done] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const transitions = useTransition(currentStep, item => item.toString(), {
+    from: { opacity: 0, transform: 'translate3d(60%,0,0)' },
+    enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+    leave: { opacity: 0, transform: 'translate3d(-5%,0,0)' }
+  });
 
   const getStep = (step: number): string => {
     let element = "";
 
     switch (step) {
-      case 1:
+      case 0:
         element = "Step 1 of 3";
         break;
-      case 2:
+      case 1:
         element = "Step 2 of 3";
         break;
-      case 3:
+      case 2:
         element = "Step 3 of 3";
         break;
       default:
@@ -38,13 +54,13 @@ const ShopInitialization = () => {
     let element = 0;
 
     switch (step) {
-      case 1:
+      case 0:
         element = 0;
         break;
-      case 2:
+      case 1:
         element = 50;
         break;
-      case 3:
+      case 2:
         element = 100;
         break;
       default:
@@ -58,19 +74,19 @@ const ShopInitialization = () => {
     setLoading(true);
     setStep1Done(true);
     setLoading(false);
-    setCurrentStep(2);
+    setCurrentStep(1);
   }
   const validateStep2 = () => {
     setLoading(true);
     setStep2Done(true);
     setLoading(false);
-    setCurrentStep(3);
+    setCurrentStep(2);
   }
   const validateStep3 = () => {
     setLoading(true);
     setStep3Done(true);
     setLoading(false);
-    setCurrentStep(4);
+    setCurrentStep(3);
   }
 
   return (
@@ -95,30 +111,33 @@ const ShopInitialization = () => {
             </div>
           </div>
           <div className="col-md-9">
-            {currentStep !== 4 &&
-              <div className="form-container">
-                <h2>Form Component</h2>
+            <div className="form-container">
 
-                <div className="buttons-step">
+              {transitions.map(({ item, props, key }) => {
+                const Component = steps[item];
+
+                return (
+                  <animated.div key={key} style={props}>
+                    <div style={{ position: "absolute", left: 0, right: 0 }}>
+                      <Component />
+                    </div>
+                  </animated.div>
+                )
+              })}
+
+              <div className="buttons-step">
+                { currentStep !== 3 &&
                   <div className="steps-indicator">
                     <span className="step">{getStep(currentStep)}</span>
                     <Progress percent={getPercent(currentStep)} />
-                  </div>
-                  <div className="actions-button">
-                    {currentStep === 1 && <ButtonLoader loading={loading} text="Next" onPress={validateStep1} />}
-                    {currentStep === 2 && <ButtonLoader loading={loading} text="Next" onPress={validateStep2} />}
-                    {currentStep === 3 && <ButtonLoader loading={loading} text="Finish" onPress={validateStep3} />}
-                  </div>
+                  </div>}
+                <div className="actions-button">
+                  {currentStep === 0 && <ButtonLoader loading={loading} text="Next" onPress={validateStep1} />}
+                  {currentStep === 1 && <ButtonLoader loading={loading} text="Next" onPress={validateStep2} />}
+                  {currentStep === 2 && <ButtonLoader loading={loading} text="Finish" onPress={validateStep3} />}
                 </div>
-              </div>}
-            {currentStep === 4 &&
-              <div className="step-complete">
-                <img src={require("../../assets/svg/confetti.svg")} alt="Successfully" />
-                <h1 className="step-complete__title">Create Shop successfully complete</h1>
-                <h2 className="step-complete__subtitle">Thank to use Shopper</h2>
-                <p className="step-complete__description">You can now access your shop by press the following button</p>
-                <a href={route('shopper.dashboard').template} className="btn btn-primary btn-elevate">Go To Dashboard</a>
-              </div>}
+              </div>
+            </div>
           </div>
         </div>
       </div>

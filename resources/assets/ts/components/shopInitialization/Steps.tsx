@@ -15,21 +15,21 @@ export default ({
 }: StepsProps) => {
   return (
     <div className="list">
-      <div className={`list__item ${currentStep === 1 ? "active" : ""}`}>
+      <div className={`list__item ${currentStep === 0 ? "active" : ""}`}>
         <span className="list__text">Category</span>
         <span className="list__time">
           {stepOneDone && <i className='flaticon2-checkmark font-success' />}
           {!stepOneDone && "1 of 3"}
         </span>
       </div>
-      <div className={`list__item ${currentStep === 2 ? "active" : ""}`}>
+      <div className={`list__item ${currentStep === 1 ? "active" : ""}`}>
         <span className="list__text">Informations</span>
         <span className="list__time">
           {stepTwoDone && <i className='flaticon2-checkmark font-success' />}
           {!stepTwoDone && "2 of 3"}
         </span>
       </div>
-      <div className={`list__item ${(currentStep === 3 && !stepTreeDone) ? "active" : ""}`}>
+      <div className={`list__item ${(currentStep === 2 && !stepTreeDone) ? "active" : ""}`}>
         <span className="list__text">Social Links</span>
         <span className="list__time">
           {stepTreeDone && <i className='flaticon2-checkmark font-success' />}
