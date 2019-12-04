@@ -17,6 +17,7 @@ class Shop extends Model
         'email',
         'phone_number',
         'logo_url',
+        'cover_url',
         'size_id',
         'owner_id',
         'facebook_url',
