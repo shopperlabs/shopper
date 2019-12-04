@@ -1,3 +1,4 @@
+"use strict";
 /**
  * Shopper.js
  *
@@ -9,11 +10,5 @@
  * @version 1.0.0
  * @since November 2019
  */
-
-import "./components/shopInitialization";
-
-declare global {
-  interface Window {
-    Ziggy: object;
-  }
-}
+Object.defineProperty(exports, "__esModule", { value: true });
+require("./components/shopInitialization");
