@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import ReactDom from "react-dom";
 
+import route from "../../utils/route";
+
 import Steps from "./Steps";
 import Progress from "./Progress";
+import ButtonLoader from "./ButtonLoader";
 
 const ShopInitialization = () => {
   const [step1Done, setStep1Done] = useState(false);
@@ -31,6 +34,44 @@ const ShopInitialization = () => {
 
     return element;
   }
+  const getPercent = (step: number): number => {
+    let element = 0;
+
+    switch (step) {
+      case 1:
+        element = 0;
+        break;
+      case 2:
+        element = 50;
+        break;
+      case 3:
+        element = 100;
+        break;
+      default:
+        element = 0;
+        break;
+    }
+
+    return element;
+  }
+  const validateStep1 = () => {
+    setLoading(true);
+    setStep1Done(true);
+    setLoading(false);
+    setCurrentStep(2);
+  }
+  const validateStep2 = () => {
+    setLoading(true);
+    setStep2Done(true);
+    setLoading(false);
+    setCurrentStep(3);
+  }
+  const validateStep3 = () => {
+    setLoading(true);
+    setStep3Done(true);
+    setLoading(false);
+    setCurrentStep(4);
+  }
 
   return (
     <div className="s-wrapper">
@@ -49,25 +90,35 @@ const ShopInitialization = () => {
                 stepOneDone={step1Done}
                 stepTwoDone={step2Done}
                 stepTreeDone={step3Done}
-                loading={loading}
                 currentStep={currentStep}
               />
             </div>
           </div>
           <div className="col-md-9">
-            <div className="form-container">
-              <h2>Form Component</h2>
+            {currentStep !== 4 &&
+              <div className="form-container">
+                <h2>Form Component</h2>
 
-              <div className="buttons-step">
-                <div className="steps-indicator">
-                  <span className="step">{getStep(currentStep)}</span>
-                  <Progress percent={0} />
+                <div className="buttons-step">
+                  <div className="steps-indicator">
+                    <span className="step">{getStep(currentStep)}</span>
+                    <Progress percent={getPercent(currentStep)} />
+                  </div>
+                  <div className="actions-button">
+                    {currentStep === 1 && <ButtonLoader loading={loading} text="Next" onPress={validateStep1} />}
+                    {currentStep === 2 && <ButtonLoader loading={loading} text="Next" onPress={validateStep2} />}
+                    {currentStep === 3 && <ButtonLoader loading={loading} text="Finish" onPress={validateStep3} />}
+                  </div>
                 </div>
-                <div className="actions-button">
-                  <button className="btn btn-primary" type="button">Next</button>
-                </div>
-              </div>
-            </div>
+              </div>}
+            {currentStep === 4 &&
+              <div className="step-complete">
+                <img src={require("../../assets/svg/confetti.svg")} alt="Successfully" />
+                <h1 className="step-complete__title">Create Shop successfully complete</h1>
+                <h2 className="step-complete__subtitle">Thank to use Shopper</h2>
+                <p className="step-complete__description">You can now access your shop by press the following button</p>
+                <a href={route('shopper.dashboard').template} className="btn btn-primary btn-elevate">Go To Dashboard</a>
+              </div>}
           </div>
         </div>
       </div>
