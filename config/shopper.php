@@ -45,7 +45,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Middleware
+    | Middleware Admin Panel and API
     |--------------------------------------------------------------------------
     |
     | Provide a convenient mechanism for filtering HTTP
@@ -58,6 +58,10 @@ return [
         'permission:view-backend',
         Authenticate::class,
         ResolveSidebars::class,
+    ],
+
+    'middleware_api' => [
+
     ],
 
     /*
