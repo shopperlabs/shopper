@@ -54217,12 +54217,12 @@ body.page-bg-grey {
   height: 5px;
   border-radius: 50%;
   position: relative;
-  -webkit-animation: loader12-uy9xwft 1s linear alternate infinite;
-          animation: loader12-uy9xwft 1s linear alternate infinite;
+  -webkit-animation: loader12-uu01u4r 1s linear alternate infinite;
+          animation: loader12-uu01u4r 1s linear alternate infinite;
   top: -11px;
 }
 
-@-webkit-keyframes loader12-uy9xwft {
+@-webkit-keyframes loader12-uu01u4r {
   0% {
     box-shadow: -60px 10px 0 2px #f5f5f5, -30px 10px 0 0 rgba(245, 245, 245, 0.2), 0 10px 0 0 rgba(245, 245, 245, 0.2), 30px 10px 0 0 rgba(245, 245, 245, 0.2), 60px 10px 0 0 rgba(245, 245, 245, 0.2);
   }
@@ -54244,7 +54244,7 @@ body.page-bg-grey {
   }
 }
 
-@keyframes loader12-uy9xwft {
+@keyframes loader12-uu01u4r {
   0% {
     box-shadow: -60px 10px 0 2px #f5f5f5, -30px 10px 0 0 rgba(245, 245, 245, 0.2), 0 10px 0 0 rgba(245, 245, 245, 0.2), 30px 10px 0 0 rgba(245, 245, 245, 0.2), 60px 10px 0 0 rgba(245, 245, 245, 0.2);
   }
