@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
 import { useTransition, animated } from "react-spring";
+import axios from "axios";
+
+import route from "../../utils/route";
 
 import Steps from "./Steps";
 import Progress from "./Progress";
@@ -10,25 +13,40 @@ import StepTwo from "./StepTwo";
 import StepTree from "./StepTree";
 import Complete from "./Complete";
 
-const steps = [
-  () => <StepOne />,
-  () => <StepTwo />,
-  () => <StepTree />,
-  () => <Complete />
-];
-
 const ShopInitialization = () => {
+  const formValues = {
+    sizeId: 0,
+    selected: "",
+    name: "",
+    email: ""
+  };
   const [step1Done, setStep1Done] = useState(false);
   const [step2Done, setStep2Done] = useState(false);
   const [step3Done, setStep3Done] = useState(false);
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [form, setForm] = useState(formValues);
+  const [sizes, setSizes] = useState([]);
+
+  useEffect(() => {
+    (async function loadSizes () {
+      const {data: { data }} = await axios.get(route('shopper.api.shop.sizes'));
+      setSizes(data);
+    })();
+  }, []);
 
   const transitions = useTransition(currentStep, item => item.toString(), {
     from: { opacity: 0, transform: 'translate3d(60%,0,0)' },
     enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
     leave: { opacity: 0, transform: 'translate3d(-5%,0,0)' }
   });
+
+  const steps = [
+    () => <StepOne selectCategory={selectCategory} items={sizes} selected={form.selected} />,
+    () => <StepTwo />,
+    () => <StepTree />,
+    () => <Complete />
+  ];
 
   const getStep = (step: number): string => {
     let element = "";
@@ -69,6 +87,9 @@ const ShopInitialization = () => {
     }
 
     return element;
+  }
+  const selectCategory = (item: string, id: number) => {
+    setForm((prevState: any) => ({...prevState, sizeId: id, selected: item }));
   }
   const validateStep1 = () => {
     setLoading(true);
