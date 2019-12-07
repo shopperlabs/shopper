@@ -143,6 +143,6 @@ class User extends Authenticatable
      */
     public function shopMember()
     {
-        return $this->belongsToMany(ShopMember::class, 'shop_members', 'user_id', 'shop_id');
+        return $this->belongsToMany(User::class, 'shop_members', 'user_id', 'shop_id');
     }
 }

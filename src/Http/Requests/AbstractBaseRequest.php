@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 abstract class AbstractBaseRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ abstract class AbstractBaseRequest extends FormRequest
      */
     public function authorize() : bool
     {
-        if (auth()->check()) {
+        if (Auth::guard()->check()) {
             return true;
         }
 

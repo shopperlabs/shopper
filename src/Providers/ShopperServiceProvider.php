@@ -70,22 +70,48 @@ class ShopperServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register provider
+     *
+     * @return void
+     */
+    public function registerProviders() : void
+    {
+        foreach ($this->provides() as $provide) {
+            $this->app->register($provide);
+        }
+    }
+
+    /**
      * Register any application services.
      *
      * @return void
      */
     public function register()
     {
+        $this->registerProviders();
+
         $this->commands([
             InstallCommand::class,
             PublishCommand::class,
+            SymlinkCommand::class,
             UserCommand::class,
-            SymlinkCommand::class
         ]);
-
-        $this->app->register(ShopperSidebarServiceProvider::class);
-        $this->app->register(SidebarServiceProvider::class);
     }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides() : array
+    {
+        return [
+            ObserverServiceProvider::class,
+            ShopperSidebarServiceProvider::class,
+            SidebarServiceProvider::class,
+        ];
+    }
+
 
     /**
      * Get the translation keys from file.

@@ -5,6 +5,9 @@ namespace Shopper\Framework\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\User;
 
+/**
+ * @property  integer owner_id  The id of the owner
+ */
 class Shop extends Model
 {
     /**

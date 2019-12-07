@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Core\Repositories;
+namespace Shopper\Framework\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;

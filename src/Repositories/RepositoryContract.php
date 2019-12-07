@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Core\Repositories;
+namespace Shopper\Framework\Repositories;
 
 interface RepositoryContract
 {
