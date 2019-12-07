@@ -11,4 +11,7 @@
 |
 */
 
-Route::get('shop-sizes', 'ShopSizeController@index')->name('shop.sizes');
+Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {
+    Route::get('/sizes', 'ShopSizeController@index')->name('sizes');
+    Route::post('/initialization', 'ShopController@store')->name('initialization');
+});
