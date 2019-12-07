@@ -18,6 +18,7 @@
         "@typescript-eslint/no-use-before-define": 0,
         "@typescript-eslint/no-var-requires": 0,
         "@typescript-eslint/ban-ts-ignore": 0,
+        "@typescript-eslint/camelcase": 0,
         "import/prefer-default-export": "off",
         "react/jsx-wrap-multilines": "off",
         "react/no-array-index-key": "off",
@@ -25,9 +26,11 @@
         "react/prop-types": "off",
         "react-hooks/rules-of-hooks": "error",
         "react/no-unescaped-entities": "off",
+        "react/button-has-type": "off",
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/click-events-have-key-events": "off",
         "jsx-a11y/no-static-element-interactions": "off",
+        "jsx-a11y/label-has-associated-control": "off",
         "global-require": 0,
         "prettier/prettier": 0
     }
