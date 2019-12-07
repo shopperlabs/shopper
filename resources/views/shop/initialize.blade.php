@@ -30,6 +30,9 @@
 
     <div id="shop-initialization-app"></div>
 
+    <script>
+        window.user = @json(auth()->user());
+    </script>
     <script src="{{ asset('shopper/js/vendor.js') }}"></script>
     <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
 
