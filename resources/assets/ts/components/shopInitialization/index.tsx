@@ -1,114 +1,137 @@
 import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
-import { useTransition, animated } from "react-spring";
 import axios from "axios";
+import { useTransition, animated } from "react-spring";
 
 import route from "../../utils/route";
 
 import Steps from "./Steps";
-import Progress from "./Progress";
-import ButtonLoader from "./ButtonLoader";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepTree from "./StepTree";
 import Complete from "./Complete";
 
+export type FormData = {
+  size_id: number;
+  owner_id: number;
+  selected: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  facebook_url: string;
+  twitter_url: string;
+  instagram_url: string;
+  linkedin_url: string;
+};
+
 const ShopInitialization = () => {
-  const formValues = {
-    sizeId: 0,
+  const formValues: FormData = {
+    size_id: 0,
+    owner_id: window.user.id,
     selected: "",
     name: "",
-    email: ""
+    email: "",
+    phone_number: "",
+    facebook_url: "",
+    twitter_url: "",
+    instagram_url: "",
+    linkedin_url: ""
   };
   const [step1Done, setStep1Done] = useState(false);
   const [step2Done, setStep2Done] = useState(false);
   const [step3Done, setStep3Done] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [form, setForm] = useState(formValues);
   const [sizes, setSizes] = useState([]);
-
-  useEffect(() => {
-    (async function loadSizes () {
-      const {data: { data }} = await axios.get(route('shopper.api.shop.sizes'));
-      setSizes(data);
-    })();
-  }, []);
-
   const transitions = useTransition(currentStep, item => item.toString(), {
     from: { opacity: 0, transform: 'translate3d(60%,0,0)' },
     enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
     leave: { opacity: 0, transform: 'translate3d(-5%,0,0)' }
   });
 
-  const steps = [
-    () => <StepOne selectCategory={selectCategory} items={sizes} selected={form.selected} />,
-    () => <StepTwo />,
-    () => <StepTree />,
-    () => <Complete />
-  ];
+  useEffect(() => {
+    const {CancelToken} = axios;
+    const source = CancelToken.source();
 
-  const getStep = (step: number): string => {
-    let element = "";
+    const loadData = () => {
+      try {
+        axios.get(route('shopper.api.shop.sizes'), { cancelToken: source.token }).then(response => {
+          const {data: { data }} = response;
+          setSizes(data);
+        });
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("cancelled");
+        } else {
+          throw error;
+        }
+      }
+    };
 
-    switch (step) {
-      case 0:
-        element = "Step 1 of 3";
-        break;
-      case 1:
-        element = "Step 2 of 3";
-        break;
-      case 2:
-        element = "Step 3 of 3";
-        break;
-      default:
-        element = "";
-        break;
-    }
+    loadData();
+    return () => {
+      source.cancel();
+    };
+  }, []);
 
-    return element;
-  }
-  const getPercent = (step: number): number => {
-    let element = 0;
-
-    switch (step) {
-      case 0:
-        element = 0;
-        break;
-      case 1:
-        element = 50;
-        break;
-      case 2:
-        element = 100;
-        break;
-      default:
-        element = 0;
-        break;
-    }
-
-    return element;
-  }
   const selectCategory = (item: string, id: number) => {
-    setForm((prevState: any) => ({...prevState, sizeId: id, selected: item }));
+    setForm((prevState: FormData) => ({...prevState, size_id: id, selected: item }));
+  }
+  const inputsRequiredShop = (name: string, email: string, phone_number: string) => {
+    setForm((prevState: FormData) => ({...prevState, name, email, phone_number }));
+  }
+  const inputsSocialShop = (facebook_url: string, instagram_url: string, twitter_url: string, linkedin_url: string) => {
+    setForm((prevState: FormData) => ({...prevState, facebook_url, instagram_url, twitter_url, linkedin_url }));
   }
   const validateStep1 = () => {
-    setLoading(true);
     setStep1Done(true);
-    setLoading(false);
     setCurrentStep(1);
   }
   const validateStep2 = () => {
-    setLoading(true);
     setStep2Done(true);
-    setLoading(false);
     setCurrentStep(2);
   }
   const validateStep3 = () => {
-    setLoading(true);
     setStep3Done(true);
-    setLoading(false);
     setCurrentStep(3);
   }
+  const onSubmit = () => {
+    const submittedValues = form;
+    delete submittedValues.selected;
+    axios.post(route('shopper.api.shop.initialization'), submittedValues)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  const steps = [
+    () => (
+      <StepOne
+        selectCategory={selectCategory}
+        items={sizes}
+        selected={form.selected}
+        shopId={form.size_id}
+        validateStep={validateStep1}
+      />
+    ),
+    () => (
+      <StepTwo
+        registerValues={inputsRequiredShop}
+        validateStep={validateStep2}
+      />
+    ),
+    () => (
+      <StepTree
+        registerValues={inputsSocialShop}
+        validateStep={validateStep3}
+        onSave={onSubmit}
+      />
+    ),
+    () => <Complete />
+  ];
 
   return (
     <div className="s-wrapper">
@@ -146,18 +169,6 @@ const ShopInitialization = () => {
                 )
               })}
 
-              <div className="buttons-step">
-                { currentStep !== 3 &&
-                  <div className="steps-indicator">
-                    <span className="step">{getStep(currentStep)}</span>
-                    <Progress percent={getPercent(currentStep)} />
-                  </div>}
-                <div className="actions-button">
-                  {currentStep === 0 && <ButtonLoader loading={loading} text="Next" onPress={validateStep1} />}
-                  {currentStep === 1 && <ButtonLoader loading={loading} text="Next" onPress={validateStep2} />}
-                  {currentStep === 2 && <ButtonLoader loading={loading} text="Finish" onPress={validateStep3} />}
-                </div>
-              </div>
             </div>
           </div>
         </div>

@@ -15,5 +15,6 @@ import "./components/shopInitialization";
 declare global {
   interface Window {
     Ziggy: object;
+    user: any;
   }
 }

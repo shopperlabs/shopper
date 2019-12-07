@@ -1,4 +1,8 @@
 import React from "react";
+// @ts-ignore
+import Notiflix from "notiflix-react";
+
+import ButtonLoader from "../ButtonLoader";
 
 type Size = {
   id: number;
@@ -8,14 +12,15 @@ type Size = {
   created_at: string;
   updated_at: string;
 };
-
 interface StepOneProps {
   selectCategory: (item: string, id: number) => void;
   items: Array<Size>;
+  shopId: number;
   selected: string;
+  validateStep: () => void;
 }
 
-export default ({ selectCategory, items, selected }: StepOneProps) => {
+export default ({ selectCategory, items, selected, validateStep, shopId }: StepOneProps) => {
   const onSelected = (item: string, id: number) => {
     selectCategory(item, id);
   }
@@ -29,6 +34,13 @@ export default ({ selectCategory, items, selected }: StepOneProps) => {
         return require("../../../assets/svg/enterprise.svg");
       default :
         return null;
+    }
+  }
+  const onSubmit = () => {
+    if (shopId === 0) {
+      Notiflix.Notify.Failure('You did not choose the size of your shop');
+    } else {
+      validateStep();
     }
   }
 
@@ -57,6 +69,13 @@ export default ({ selectCategory, items, selected }: StepOneProps) => {
             ))
           }
         </ul>
+      </div>
+      <div className="step-footer">
+        <div className="buttons-step">
+          <div className="actions-button">
+            <ButtonLoader text="Next" onPress={onSubmit} />
+          </div>
+        </div>
       </div>
     </div>
   );
