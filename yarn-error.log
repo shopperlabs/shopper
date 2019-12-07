@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /Users/mckenzie/.yarn/bin/yarn.js add -D @types/react-step-progress-bar
+  /usr/local/bin/node /Users/mckenzie/.yarn/bin/yarn.js add @types/notiflix-react
 
 PATH: 
   /usr/local/opt/sqlite/bin:/Users/mckenzie/.yarn/bin:/usr/local/bin:/usr/sbin:/Users/mckenzie/.composer/vendor/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2freact-step-progress-bar: Not found
+  Error: https://registry.yarnpkg.com/@types%2fnotiflix-react: Not found
       at Request.params.callback [as _callback] (/Users/mckenzie/.yarn/lib/cli.js:66830:18)
       at Request.self.callback (/Users/mckenzie/.yarn/lib/cli.js:140464:22)
       at Request.emit (events.js:198:13)
@@ -56,6 +56,8 @@ npm manifest:
       "popper.js": "^1.16.0",
       "react": "^16.12.0",
       "react-dom": "^16.12.0",
+      "react-hook-form": "^3.28.12",
+      "react-spring": "^8.0.27",
       "react-step-progress-bar": "^1.0.3",
       "react-toastify": "^5.4.1",
       "sticky-js": "^1.2.0",
@@ -75,6 +77,7 @@ npm manifest:
       "@types/jquery": "^3.3.31",
       "@types/lodash": "^4.14.148",
       "@types/node": "^12.12.14",
+      "@types/qs": "^6.9.0",
       "@types/react": "^16.9.11",
       "@types/react-dom": "^16.9.4",
       "@typescript-eslint/eslint-plugin": "^2.8.0",
@@ -91,6 +94,7 @@ npm manifest:
       "eslint-plugin-react-hooks": "^2.3.0",
       "husky": "^3.1.0",
       "prettier": "^1.19.1",
+      "qs": "^6.9.1",
       "resolve-url-loader": "^2.3.1",
       "sass": "^1.15.2",
       "sass-loader": "^7.1.0",
@@ -100,7 +104,7 @@ npm manifest:
     },
     "husky": {
       "hooks": {
-        "pre-commit": "yarn lint && yarn tsc"
+        "pre-commit": "yarn lint"
       }
     }
   }
@@ -816,7 +820,7 @@ Lockfile:
       "@babel/plugin-transform-react-jsx-self" "^7.0.0"
       "@babel/plugin-transform-react-jsx-source" "^7.0.0"
   
-  "@babel/runtime@^7.1.2", "@babel/runtime@^7.4.5":
+  "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.5":
     version "7.7.4"
     resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.7.4.tgz#b23a856751e4bf099262f867767889c0e3fe175b"
     integrity sha512-r24eVUUr0QqNZa+qrImUk8fn5SPhHq+IfYvIoIMg0do3GdK9sMdiLKP3GYVVaxpPKORgm8KRKaNTEhAjgIpLMw==
@@ -954,6 +958,11 @@ Lockfile:
     version "1.5.2"
     resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
     integrity sha512-ce5d3q03Ex0sy4R14722Rmt6MT07Ua+k4FwDfdcToYJcMKNtRVQvJ6JCAPdAmAnbRb6CsX6aYb9m96NGod9uTw==
+  
+  "@types/qs@^6.9.0":
+    version "6.9.0"
+    resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.0.tgz#2a5fa918786d07d3725726f7f650527e1cfeaffd"
+    integrity sha512-c4zji5CjWv1tJxIZkz1oUtGcdOlsH3aza28Nqmm+uNDWBRHoMsjooBEN4czZp1V3iXPihE/VRUOBqg+4Xq0W4g==
   
   "@types/react-dom@^16.9.4":
     version "16.9.4"
@@ -6309,7 +6318,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
     integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
   
-  prop-types@^15.6.2, prop-types@^15.7.2:
+  prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
     version "15.7.2"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
     integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6398,6 +6407,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
     integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
   
+  qs@^6.9.1:
+    version "6.9.1"
+    resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.1.tgz#20082c65cb78223635ab1a9eaca8875a29bf8ec9"
+    integrity sha512-Cxm7/SS/y/Z3MHWSxXb8lIFqgqBowP5JMlTUFyJN88y0SGQhVmZnqFK/PeuMX9LzUyWsqqhNxIyg0jlzq946yA==
+  
   querystring-es3@^0.2.0:
     version "0.2.1"
     resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
@@ -6463,6 +6477,11 @@ Lockfile:
       prop-types "^15.6.2"
       scheduler "^0.18.0"
   
+  react-hook-form@^3.28.12:
+    version "3.28.12"
+    resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-3.28.12.tgz#387173543ab8e89b47ed076ba7ad9886848d94f4"
+    integrity sha512-5bHttMAehOgUHeJhbCVzXguRljFrl2ZK+ydLBqsfLCOtS4++p34vp4/Hkqle5waGojZpNbDSaGUEee24WwfGQg==
+  
   react-is@^16.8.1:
     version "16.12.0"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
@@ -6472,6 +6491,14 @@ Lockfile:
     version "3.0.4"
     resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
     integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+  
+  react-spring@^8.0.27:
+    version "8.0.27"
+    resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.27.tgz#97d4dee677f41e0b2adcb696f3839680a3aa356a"
+    integrity sha512-nDpWBe3ZVezukNRandTeLSPcwwTMjNVu1IDq9qA/AMiUqHuRN4BeSWvKr3eIxxg1vtiYiOLy4FqdfCP5IoP77g==
+    dependencies:
+      "@babel/runtime" "^7.3.1"
+      prop-types "^15.5.8"
   
   react-step-progress-bar@^1.0.3:
     version "1.0.3"
