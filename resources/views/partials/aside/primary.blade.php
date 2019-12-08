@@ -28,6 +28,14 @@
                     <span class="badge badge--danger">3</span>
                 </a>
             </li>
+            <li class="aside__nav-item">
+                <span class="switch switch--outline switch--icon switch--metal switch--sm">
+                    <label>
+                        <input type="checkbox" id="darkSwitch">
+                        <span></span>
+                    </label>
+                </span>
+            </li>
             <li class="aside__nav-item dropdown">
                 <a href="#" class="aside__nav-link" data-toggle="dropdown" data-offset="100px, -50px">
                     <i class="flaticon2-hourglass-1 hidden"></i>

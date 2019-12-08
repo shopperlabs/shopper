@@ -81,6 +81,9 @@
     @include('shopper::partials._search')
 
     @routes
+    <script>
+        window.user = @json(auth()->user());
+    </script>
     <script src="{{ asset('shopper/js/vendor.js') }}"></script>
     <script src="{{ asset('shopper/js/template.js') }}"></script>
     <script src="{{ mix('/js/shopper.js','shopper')}}"></script>
