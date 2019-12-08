@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li class="aside__nav-item">
-                <span class="switch switch--outline switch--icon switch--metal switch--sm">
+                <span class="switch switch--outline switch--metal switch--sm">
                     <label>
                         <input type="checkbox" id="darkSwitch">
                         <span></span>
