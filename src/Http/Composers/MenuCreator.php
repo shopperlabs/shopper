@@ -59,7 +59,7 @@ class MenuCreator
                 'data-boundary' => 'window'
             ]);
 
-            $access = $item->add('<i class="flaticon2-lock"></i>', ['route' => 'shopper.login', 'class' => 'aside__nav-item']);
+            $access = $item->add('<i class="flaticon2-lock"></i>', ['route' => 'shopper.users.access', 'class' => 'aside__nav-item']);
             $access->active('access/*')->link->attr([
                 'class' => 'aside__nav-link',
                 'data-toggle' => 'tooltip',
