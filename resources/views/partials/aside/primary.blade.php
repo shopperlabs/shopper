@@ -39,7 +39,7 @@
             <li class="aside__nav-item dropdown">
                 <a href="#" class="aside__nav-link" data-toggle="dropdown" data-offset="100px, -50px">
                     <i class="flaticon2-hourglass-1 hidden"></i>
-                    <img class="hidden-" alt="" src="{{ $logged_in_user->picture }}">
+                    <img class="hidden-" alt="User profile" src="{{ $logged_in_user->picture }}">
                 </a>
                 <div class="dropdown-menu dropdown-menu-fit dropdown-menu-left dropdown-menu-anim">
                     <ul class="nav margin-t-10 margin-b-10">
