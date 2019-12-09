@@ -13,6 +13,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('shopper::dashboard.index');
+        return view('shopper::pages.dashboard.index');
     }
 }

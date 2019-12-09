@@ -13,6 +13,6 @@ class ShopController extends Controller
      */
     public function initialize()
     {
-        return view('shopper::shop.initialize');
+        return view('shopper::pages.shop.initialize');
     }
 }
