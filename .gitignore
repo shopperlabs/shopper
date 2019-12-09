@@ -8,6 +8,7 @@
 composer.lock
 package-lock.json
 yarn.lock
+yarn-error.log
 .DS_Store
 Thumbs.db
 phpunit.xml
