@@ -3,15 +3,23 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Build Status][ico-travis]][link-travis]
-[![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+## Introduction
 
-## Usage
+Shopper is an Admin Management build for Laravel 6.0+ which includes all the necessary for your online market application.
+Web Application is made using Laravel & React and Mobile Apps will be done with React Native.
 
-## Change log
+## Road Map
 
-Please see the [changelog](changelog.md) for more information on what has changed recently.
+Here's a rough roadmap of things to come (not in any specific order):
+
+- [x] Shop Creation
+- [ ] Email Configuration
+- [ ] Performance Improvements
+- [ ] User Impersonate
+- [ ] JWT Authentification
+- [ ] Android and iOS Mobile Apps
+- [ ] Social Media Post integration (Twitter & Facebook)
 
 ## Testing
 
@@ -39,11 +47,9 @@ MIT. Please see the [license file](license.md) for more information.
 [ico-version]: https://img.shields.io/packagist/v/shopper/framework.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/shopper/framework.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/shopper/framework/master.svg?style=flat-square
-[ico-styleci]: https://styleci.io/repos/12345678/shield
 
 [link-packagist]: https://packagist.org/packages/shopper/framework
 [link-downloads]: https://packagist.org/packages/shopper/framework
 [link-travis]: https://travis-ci.org/shopper/framework
-[link-styleci]: https://styleci.io/repos/12345678
 [link-author]: https://github.com/mckenziearts
 [link-contributors]: ../../contributors
