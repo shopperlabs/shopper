@@ -29,12 +29,7 @@
                 </a>
             </li>
             <li class="aside__nav-item">
-                <span class="switch switch--outline switch--metal switch--sm">
-                    <label>
-                        <input type="checkbox" id="darkSwitch">
-                        <span></span>
-                    </label>
-                </span>
+                <input class="l" type="checkbox" id="darkSwitch">
             </li>
             <li class="aside__nav-item dropdown">
                 <a href="#" class="aside__nav-link" data-toggle="dropdown" data-offset="100px, -50px">
