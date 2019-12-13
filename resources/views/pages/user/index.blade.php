@@ -3,6 +3,6 @@
 
 @section('content')
 
-
+    <div id="users-access-management"></div>
 
 @endsection
