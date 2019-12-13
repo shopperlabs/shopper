@@ -61,7 +61,7 @@ const ShopInitialization = () => {
         });
       } catch (error) {
         if (axios.isCancel(error)) {
-          console.log("cancelled");
+          console.log("Cancelled");
         } else {
           throw error;
         }

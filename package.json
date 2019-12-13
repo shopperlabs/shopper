@@ -16,6 +16,7 @@
     "animate.css": "^3.7.2",
     "axios": "^0.19",
     "bootstrap": "^4.3.1",
+    "evergreen-ui": "^4.21.5",
     "jquery": "^3.4.1",
     "js-cookie": "^2.2.0",
     "lang.js": "^1.1.14",
