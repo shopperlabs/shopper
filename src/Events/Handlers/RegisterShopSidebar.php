@@ -27,22 +27,31 @@ class RegisterShopSidebar extends AbstractAdminSidebar
                 $item->icon('menu__link-icon flaticon-map');
             });
 
-            $group->item(__('Products'), function (Item $item) {
-                $item->weight(2);
-                $item->authorize(true);
-                $item->icon('menu__link-icon flaticon-book');
-            });
-
             $group->item(__('Brands'), function (Item $item) {
-                $item->weight(3);
+                $item->weight(2);
                 $item->authorize(true);
                 $item->icon('menu__link-icon la la-star-o');
             });
 
-            $group->item(__('Reviews'), function (Item $item) {
-                $item->weight(4);
+            $group->item(__('Products'), function (Item $item) {
+                $item->weight(3);
+                $item->icon('menu__link-icon flaticon-book');
+                $item->toggleIcon('menu__ver-arrow la la-angle-right');
                 $item->authorize(true);
-                $item->icon('menu__link-icon flaticon-customer');
+
+                $item->item(__('All Products'), function (Item $item) {
+                    $item->weight(1);
+                    $item->icon('menu__link-bullet menu__link-bullet--dot');
+                    $item->append();
+                    $item->authorize(true);
+                });
+
+                $item->item(__('Reviews'), function (Item $item) {
+                    $item->weight(2);
+                    $item->icon('menu__link-bullet menu__link-bullet--dot');
+                    $item->append();
+                    $item->authorize(true);
+                });
             });
 
             $group->item(__('Customers'), function (Item $item) {

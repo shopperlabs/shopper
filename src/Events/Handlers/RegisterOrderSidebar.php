@@ -33,7 +33,7 @@ class RegisterOrderSidebar extends AbstractAdminSidebar
                 $item->icon('menu__link-icon flaticon2-delivery-truck');
             });
 
-            $group->item(__('Promotion'), function (Item $item) {
+            $group->item(__('Marketing'), function (Item $item) {
                 $item->weight(8);
                 $item->icon('menu__link-icon flaticon-interface-9');
                 $item->toggleIcon('menu__ver-arrow la la-angle-right');
@@ -41,13 +41,6 @@ class RegisterOrderSidebar extends AbstractAdminSidebar
 
                 $item->item(__('Coupon'), function (Item $item) {
                     $item->weight(1);
-                    $item->authorize(true);
-                    $item->icon('menu__link-bullet menu__link-bullet--dot');
-                    $item->append();
-                });
-
-                $item->item(__('Discount'), function (Item $item) {
-                    $item->weight(2);
                     $item->authorize(true);
                     $item->icon('menu__link-bullet menu__link-bullet--dot');
                     $item->append();
