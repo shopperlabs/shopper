@@ -5,6 +5,7 @@ namespace Shopper\Framework\Console;
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserCommand extends Command
 {
@@ -61,6 +62,7 @@ class UserCommand extends Command
             'first_name'   => $first_name,
             'last_name'    => $last_name,
             'password'     => Hash::make($password),
+            'api_token'    => Str::random(80),
             'last_login_at'     => now()->toDateTimeString(),
             'email_verified_at' => now()->toDateTimeString(),
             'is_superuser'      => true,

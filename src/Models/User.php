@@ -35,6 +35,7 @@ class User extends Authenticatable
         'avatar_type',
         'avatar_location',
         'password',
+        'api_token',
         'timezone',
         'last_login_at',
         'last_login_ip',
