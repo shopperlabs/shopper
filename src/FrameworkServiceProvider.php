@@ -16,6 +16,7 @@ use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
 use Shopper\Framework\Http\Middleware\Dashboard;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
+use Shopper\Framework\Http\Middleware\RedirectIfShop;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Services\Gravatar;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
@@ -32,7 +33,8 @@ class FrameworkServiceProvider extends ServiceProvider
         'role'            => RoleMiddleware::class,
         'permission'      => PermissionMiddleware::class,
         'shopper.guest'   => RedirectIfAuthenticated::class,
-        'dashboard'       => Dashboard::class
+        'dashboard'       => Dashboard::class,
+        'shopper.shop'    => RedirectIfShop::class
     ];
 
     /**
@@ -59,7 +61,7 @@ class FrameworkServiceProvider extends ServiceProvider
         // This class binds the $logged_in_user variable to every view
         view()->composer('*', GlobalComposer::class);
 
-        // Backend
+        // Backend Menu
         view()->creator('shopper::partials.aside.secondary', SidebarCreator::class);
         view()->composer('shopper::partials.aside.primary', MenuCreator::class);
     }
