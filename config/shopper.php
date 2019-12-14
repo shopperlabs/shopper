@@ -55,8 +55,8 @@ return [
 
     'middleware' => [
         'web',
-        'permission:view-backend',
         Authenticate::class,
+        'permission:view-backend',
         ResolveSidebars::class,
     ],
 
