@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar_location')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->string('timezone')->nullable();
             $table->boolean('is_superuser')->default(false);
             $table->timestamp('last_login_at')->nullable();
