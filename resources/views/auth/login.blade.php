@@ -31,7 +31,7 @@
                         <div class="form-group">
                             <div class="custom-checkbox custom-control">
                                 <input type="checkbox" name="remember" id="remember" class="custom-control-input">
-                                <label for="remember" class="custom-control-label">{{ __('Remeber Me') }}</label>
+                                <label for="remember" class="custom-control-label">{{ __('Remember Me') }}</label>
                             </div>
                         </div>
 
