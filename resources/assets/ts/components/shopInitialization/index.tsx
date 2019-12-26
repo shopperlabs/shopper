@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
-import axios from "axios";
 import { useTransition, animated } from "react-spring";
+// @ts-ignore
+import Notiflix from "notiflix-react";
 
-import route from "../../utils/route";
+import axios from "../../utils/axios";
 
 import Steps from "./Steps";
 import StepOne from "./StepOne";
@@ -13,7 +14,6 @@ import Complete from "./Complete";
 
 export type FormData = {
   size_id: number;
-  owner_id: number;
   selected: string;
   name: string;
   email: string;
@@ -27,7 +27,6 @@ export type FormData = {
 const ShopInitialization = () => {
   const formValues: FormData = {
     size_id: 0,
-    owner_id: window.user.id,
     selected: "",
     name: "",
     email: "",
@@ -40,6 +39,7 @@ const ShopInitialization = () => {
   const [step1Done, setStep1Done] = useState(false);
   const [step2Done, setStep2Done] = useState(false);
   const [step3Done, setStep3Done] = useState(false);
+  const [complete, setComplete] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [form, setForm] = useState(formValues);
   const [sizes, setSizes] = useState([]);
@@ -50,28 +50,11 @@ const ShopInitialization = () => {
   });
 
   useEffect(() => {
-    const {CancelToken} = axios;
-    const source = CancelToken.source();
-
-    const loadData = () => {
-      try {
-        axios.get(route('shopper.api.shop.sizes'), { cancelToken: source.token }).then(response => {
-          const {data: { data }} = response;
-          setSizes(data);
-        });
-      } catch (error) {
-        if (axios.isCancel(error)) {
-          console.log("Cancelled");
-        } else {
-          throw error;
-        }
-      }
-    };
-
-    loadData();
-    return () => {
-      source.cancel();
-    };
+    axios.get('/shop/sizes')
+      .then(response => {
+        const {data: { data }} = response;
+        setSizes(data);
+      });
   }, []);
 
   const selectCategory = (item: string, id: number) => {
@@ -98,12 +81,15 @@ const ShopInitialization = () => {
   const onSubmit = () => {
     const submittedValues = form;
     delete submittedValues.selected;
-    axios.post(route('shopper.api.shop.initialization'), submittedValues)
-      .then(response => {
-        console.log(response);
+    axios.post('/shop/initialization', submittedValues)
+      .then(() => {
+        setComplete(true);
+        validateStep3();
       })
       .catch(error => {
-        console.log(error);
+        if (error.response.data) {
+          Notiflix.Notify.Failure(error.response.data.message);
+        }
       });
   }
 
@@ -126,8 +112,8 @@ const ShopInitialization = () => {
     () => (
       <StepTree
         registerValues={inputsSocialShop}
-        validateStep={validateStep3}
         onSave={onSubmit}
+        complete={complete}
       />
     ),
     () => <Complete />

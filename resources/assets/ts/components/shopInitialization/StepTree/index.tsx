@@ -10,20 +10,21 @@ type FormData = {
   linkedin_url: string;
 };
 interface StepTreeProps {
-  validateStep: () => void;
   onSave: () => void;
   registerValues: (facebook_url: string, instagram_url: string, twitter_url: string, linkedin_url: string) => void;
+  complete: boolean;
 }
 
-export default ({ validateStep, registerValues, onSave }: StepTreeProps) => {
+export default ({ registerValues, onSave, complete }: StepTreeProps) => {
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<FormData>({ mode: "onChange" });
   const onSubmit = handleSubmit(({ facebook_url, instagram_url, twitter_url, linkedin_url }) => {
     setLoading(true);
     registerValues(facebook_url, instagram_url, twitter_url, linkedin_url);
     onSave();
-    setLoading(false);
-    validateStep();
+    if (complete) {
+      setLoading(false);
+    }
   });
 
   return (

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import route from "../../../utils/route";
+const dashboardURL = (document.querySelector('meta[name="dashboard-url"]') as Element).getAttribute('content');
 
 export default () => {
   return (
@@ -9,7 +9,7 @@ export default () => {
       <h1 className="step-complete__title">Create Shop successfully complete</h1>
       <h2 className="step-complete__subtitle">Thank to use Shopper</h2>
       <p className="step-complete__description">You can now access your shop by press the following button</p>
-      <a href={route('shopper.dashboard').template} className="btn btn-primary btn-elevate">Go To Dashboard</a>
+      <a href={`${dashboardURL}/dashboard`} className="btn btn-primary btn-elevate">Go To Dashboard</a>
     </div>
   );
 }

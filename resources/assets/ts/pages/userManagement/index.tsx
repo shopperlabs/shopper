@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDom from "react-dom";
-import axios from "axios";
 import { Table, Avatar } from "evergreen-ui";
 
-import route from "../../utils/route";
+import axios from "../../utils/axios";
 
 export type User = {
   id: number;
@@ -24,12 +23,10 @@ const UserManagement = () => {
 
   useEffect(() => {
     (async function loadUsers() {
-      const {data: { data }} = await axios.get(route('shopper.api.users.managers'));
+      const {data: { data }} = await axios.get('/users/managers');
       setUsers(data);
     })();
   }, []);
-
-  console.log(users);
 
   return (
     <div className="user-management-page">

@@ -12,10 +12,3 @@
 
 import "./components/shopInitialization";
 import "./pages/userManagement";
-
-declare global {
-  interface Window {
-    Ziggy: object;
-    user: any;
-  }
-}
