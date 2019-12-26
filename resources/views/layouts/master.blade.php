@@ -8,7 +8,10 @@
     <title>@yield('title') | Shopper E-commerce</title>
     <meta name="description" content="@yield('meta_description', 'Laravel Shopper Admin Panel')">
     <meta name="author" content="@yield('meta_author', 'Arthur Monney')">
+    <meta name="base-url" content="{{ config('app.url') }}">
+    <meta name="dashboard-url" content="{{ config('app.url').'/'.config('shopper.prefix') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="api-connection" content="{{ config('shopper.api_connection') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('shopper/images/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('shopper/images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('shopper/images/favicons/favicon-16x16.png') }}">
@@ -16,7 +19,7 @@
     <link rel="mask-icon" href="{{ asset('shopper/images/favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="apple-mobile-web-app-title" content="{{ app_name() }}">
-    <meta name="application-name" content="{{ app_name()  }}">
+    <meta name="application-name" content="{{ app_name() }}">
     <meta name="theme-color" content="#ffffff">
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -80,10 +83,6 @@
 
     @include('shopper::partials._search')
 
-    @routes
-    <script>
-        window.user = @json(auth()->user());
-    </script>
     <script src="{{ asset('shopper/js/vendor.js') }}"></script>
     <script src="{{ asset('shopper/js/template.js') }}"></script>
     <script src="{{ mix('/js/shopper.js','shopper')}}"></script>

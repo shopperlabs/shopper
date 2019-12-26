@@ -9,6 +9,9 @@
     <meta name="description" content="@yield('meta_description', 'Laravel Shopper Admin Panel')">
     <meta name="author" content="@yield('meta_author', 'Arthur Monney')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="base-url" content="{{ config('app.url') }}">
+    <meta name="dashboard-url" content="{{ config('app.url').'/'.config('shopper.prefix') }}">
+    <meta name="api-connection" content="{{ config('shopper.api_connection') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('shopper/images/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('shopper/images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('shopper/images/favicons/favicon-16x16.png') }}">
@@ -24,7 +27,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
     <!--end::Fonts -->
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
-    @routes
 </head>
 <body class="shop-initialization">
 

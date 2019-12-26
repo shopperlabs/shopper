@@ -46,7 +46,7 @@
                         </li>
                         <li class="nav__item">
                             <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav__link">
+                               onclick="event.preventDefault(); localStorage.removeItem('user'); localStorage.removeItem('token'); document.getElementById('logout-form').submit();" class="nav__link">
                                 <i class="nav__link-icon flaticon-logout"></i>
                                 <span class="nav__link-text">{{ __('Logout') }}</span>
                             </a>
