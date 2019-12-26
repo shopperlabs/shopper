@@ -11,7 +11,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This prefix method can be used for the prefix of each
-    | route in the administration panel. For example, you can change to 'admin'
+    | route in the administration panel. For example, you can change to 'admin'.
     |
     */
 
@@ -23,7 +23,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This value is the default currency of your store. This value is used when the
-    | orders price is given. Your can use it on your frontend
+    | orders price is given. Your can use it on your frontend.
     |
     */
 
@@ -34,7 +34,7 @@ return [
     | Shopper Resource
     |--------------------------------------------------------------------------
     |
-    | Automatically connect the stored links. For example js and css files
+    | Automatically connect the stored links. For example js and css files.
     |
     */
 
@@ -45,7 +45,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Middleware Admin Panel and API
+    | Middleware Admin Panel
     |--------------------------------------------------------------------------
     |
     | Provide a convenient mechanism for filtering HTTP
@@ -60,8 +60,32 @@ return [
         ResolveSidebars::class,
     ],
 
-    'middleware_api' => [
+    /*
+    |--------------------------------------------------------------------------
+    | Api Default Authentication
+    |--------------------------------------------------------------------------
+    |
+    | Define authentication you choose to protect your APIs. By default it is
+    | the api_token which is used but you can replace it with JWT.
+    |
+    | Supported: "token", "jwt"
+    |
+    */
 
+    'api_connection' => env('API_CONNECTION', 'token'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Middleware
+    |--------------------------------------------------------------------------
+    |
+    | Provide a convenient mechanism for protect API
+    | resources for your shopper application.
+    |
+    */
+
+    'middleware_api' => [
+        'auth:api',
     ],
 
     /*
@@ -70,15 +94,15 @@ return [
     |--------------------------------------------------------------------------
     |
     | Define the way the Sidebar should be cached.
-    | The cache store is defined by the Laravel
+    | The cache store is defined by the Laravel.
     |
-    | Available: null|static|user-based
+    | Available: "null" , "static", "user-based"
     |
     */
 
     'cache' => [
         'method'   => null,
-        'duration' => 1440
+        'duration' => 1440,
     ],
 
     /*
@@ -86,7 +110,7 @@ return [
     | Configurations for the user
     |--------------------------------------------------------------------------
     |
-    | User configuration to manage user access using spatie/laravel-permission
+    | User configuration to manage user access using spatie/laravel-permission.
     |
     */
 
