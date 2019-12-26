@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Controllers\Api;
 
-use Illuminate\Routing\Controller;
 use Shopper\Framework\Http\Requests\ShopRequest;
 use Shopper\Framework\Repositories\Shop\ShopRepository;
 
@@ -15,6 +14,7 @@ class ShopController extends Controller
 
     public function __construct(ShopRepository $repository)
     {
+        parent::__construct();
         $this->repository = $repository;
     }
 

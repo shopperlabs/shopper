@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Controllers\Api;
 
-use Illuminate\Routing\Controller;
 use Shopper\Framework\Http\Resources\ShopSizes as SizeResource;
 use Shopper\Framework\Models\Shop\ShopSize;
 

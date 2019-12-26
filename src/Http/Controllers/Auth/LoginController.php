@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Shopper\Framework\Shopper;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -69,6 +70,19 @@ class LoginController extends Controller
     }
 
     /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+    }
+
+    /**
      * Send the response after the user was authenticated.
      *
      * @param  \Illuminate\Http\Request $request
@@ -80,9 +94,19 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
+        $user = auth()->user();
+        $token = $user->api_token;
+        $apiConnection = config('shopper.api_connection');
+
+        if ($apiConnection === 'jwt') {
+            $token = JWTAuth::fromUser($user);
+        }
+
         return response()->json([
-            'message' => __('You are successfull Logged In'),
+            'message' => __('You are successfully Logged In'),
             'status' => 'success',
+            'token' => $token,
+            'user'  => $user,
             'redirect_url' => route('shopper.dashboard')
         ]);
     }

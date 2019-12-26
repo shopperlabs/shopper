@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Shopper\Framework\Models\Shop\Shop;
-use Shopper\Framework\Models\Shop\ShopMember;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @property string last_name
@@ -17,7 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string avatar_location
  * @property boolean is_superuser
  */
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable,
         HasRoles,
@@ -78,6 +78,26 @@ class User extends Authenticatable
         'full_name',
         'picture',
     ];
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     /**
      * Define if user is an admin

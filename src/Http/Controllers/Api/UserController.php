@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Controllers\Api;
 
-use Illuminate\Routing\Controller;
 use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Http\Resources\User as UserResource;
 
@@ -15,6 +14,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $repository)
     {
+        parent::__construct();
         $this->repository = $repository;
     }
 
