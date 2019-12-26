@@ -33,4 +33,9 @@ class ShopController extends Controller
             'status'  => 'success'
         ]);
     }
+
+    public function updateSetting()
+    {
+
+    }
 }

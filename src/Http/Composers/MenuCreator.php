@@ -49,8 +49,8 @@ class MenuCreator
                 'data-boundary' => 'window'
             ]);
 
-            $shop = $item->add('<i class="flaticon2-shopping-cart"></i>', ['route' => 'shopper.login', 'class' => 'aside__nav-item']);
-            $shop->active('shop/*')->link->attr([
+            $shop = $item->add('<i class="flaticon2-shopping-cart"></i>', ['route' => 'shopper.shop.setting', 'class' => 'aside__nav-item']);
+            $shop->active('shop/setting')->link->attr([
                 'class' => 'aside__nav-link',
                 'data-toggle' => 'tooltip',
                 'data-title' => __('Shop Settings'),

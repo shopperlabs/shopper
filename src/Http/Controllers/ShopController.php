@@ -15,4 +15,14 @@ class ShopController extends Controller
     {
         return view('shopper::pages.shop.initialize');
     }
+
+    /**
+     * Display Shop Setting view
+     *
+     * @return \Illuminate\View\View
+     */
+    public function setting()
+    {
+        return view('shopper::pages.shop.setting');
+    }
 }

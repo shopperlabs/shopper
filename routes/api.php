@@ -14,6 +14,7 @@
 Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {
     Route::get('/sizes', 'ShopSizeController@index')->name('sizes');
     Route::post('/initialization', 'ShopController@store')->name('initialization');
+    Route::put('/setting', 'ShopController@updateSetting')->name('update.setting');
 });
 
 Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
