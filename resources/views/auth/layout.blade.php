@@ -20,6 +20,7 @@
     <!--begin::Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
+    @notifyCss
 </head>
 <body class="login-page">
 
@@ -36,6 +37,7 @@
 
     <script src="{{ asset('shopper/js/vendor.js') }}"></script>
     <script src="{{ mix('/js/login.js', 'shopper') }}"></script>
-
+    @include('notify::messages')
+    @notifyJs
 </body>
 </html>

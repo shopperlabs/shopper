@@ -12,10 +12,9 @@
             <div class="card fat">
                 <div class="card-body">
                     <h4 class="card-title">{{ __('Reset Password') }}</h4>
-                    <form method="POST" class="my-login-validation" novalidate action="{{ route('shopper.password.update') }}">
+                    <form method="POST" class="reset-form" novalidate action="{{ route('shopper.password.update') }}">
                         @csrf
                         <input type="hidden" name="token" value="{{ $token }}">
-                        <input type="hidden" name="_id" value="{{ $id }}">
                         <div class="form-group">
                             <label for="email">{{ __('E-Mail Address') }}</label>
                             <input id="email" type="email" class="form-control" name="email" required autofocus>

@@ -12,7 +12,7 @@
             <div class="card fat">
                 <div class="card-body">
                     <h4 class="card-title">{{ __('Forgot Password') }}</h4>
-                    <form method="POST" class="my-login-validation" novalidate action="{{ route('shopper.password.email') }}">
+                    <form method="POST" class="email-form" novalidate action="{{ route('shopper.password.email') }}">
                         @csrf
                         <div class="form-group">
                             <label for="email">{{ __('E-Mail Address') }}</label>
