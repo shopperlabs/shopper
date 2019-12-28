@@ -20,6 +20,7 @@
     "illuminate/support": "~6",
     "lavary/laravel-menu": "^1.7",
     "maatwebsite/laravel-sidebar": "~2.1",
+    "mckenziearts/laravel-notify": "^1.1",
     "spatie/laravel-permission": "^3.2",
     "tightenco/ziggy": "^0.8.1",
     "torann/geoip": "^1.0",
