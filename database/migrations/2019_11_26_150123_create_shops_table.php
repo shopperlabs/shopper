@@ -19,6 +19,9 @@ class CreateShopsTable extends Migration
             $table->string('email')->unique();
             $table->string('phone_number');
             $table->string('address')->nullable();
+            $table->longText('description')->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             $table->string('logo_url')->nullable();
             $table->string('cover_url')->nullable();
             $table->bigInteger('size_id')->unsigned();
