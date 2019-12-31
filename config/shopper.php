@@ -117,6 +117,6 @@ return [
     'users' => [
         'admin_role' => 'administrator',
         'default_role' => 'user',
-    ]
+    ],
 
 ];
