@@ -7,7 +7,7 @@
                     Laravel Shopper.
                 </a>
                 {{ date('Y') }} &copy; Copyright &nbsp;
-                By Arthur Monney and Fabrice Yopa - v{{ shopper_version() }}
+                By Arthur Monney  - v{{ shopper_version() }}
             </div>
         </div>
     </div>

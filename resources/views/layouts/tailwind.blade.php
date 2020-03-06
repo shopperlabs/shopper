@@ -28,10 +28,10 @@
     <!--end::Fonts -->
     @stack('styles')
 
-    <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('/css/tailwind.css', 'shopper') }}">
 
     @if(! empty(config('shopper.resources.stylesheets')))
-        <!-- Additional CSS -->
+    <!-- Additional CSS -->
         @foreach(config('shopper.resources.stylesheets') as $css)
             @if (Str::startsWith($js, ['http://', 'https://']))
                 <link rel="stylesheet" type="text/css" href="{!! $css !!}">
@@ -41,51 +41,10 @@
         @endforeach
     @endif
 </head>
-<body class="page-bg-grey header-mobile--fixed page-content-white subheader--fixed subheader--enabled aside--secondary-enabled offcanvas-panel--left aside--left page--loading">
+<body class="">
 
-    @include('shopper::partials.bootstrap.header.header-mobile')
 
-    <div class="grid grid--hor grid--root">
-
-        <div class="grid__item grid__item--fluid grid grid--ver page">
-
-            <button class="aside-close hidden" id="aside_close_btn"><i class="la la-close"></i></button>
-            <div class="aside grid__item grid grid--ver" id="aside">
-
-                @include('shopper::partials.bootstrap.aside.primary')
-                @include('shopper::partials.bootstrap.aside.secondary')
-
-            </div>
-
-            <div class="grid__item grid__item--fluid grid grid--hor wrapper" id="wrapper">
-
-                <div class="content grid__item grid__item--fluid grid grid--hor" id="content">
-
-                    <div class="container container--fluid grid__item grid__item--fluid">
-
-                        @yield('content')
-
-                    </div>
-
-                </div>
-
-                @include('shopper::partials.bootstrap._footer')
-
-            </div>
-
-        </div>
-
-    </div>
-
-    @include('shopper::partials.bootstrap._scrolltop')
-
-    @include('shopper::partials.bootstrap._notifications')
-
-    @include('shopper::partials.bootstrap._search')
-
-    <script src="{{ asset('shopper/js/vendor.js') }}"></script>
-    <script src="{{ asset('shopper/js/template.js') }}"></script>
-    <script src="{{ mix('/js/shopper.js','shopper')}}"></script>
+    <script src="{{ mix('/js/tailwind.js','shopper')}}"></script>
 
     @stack('scripts')
 
