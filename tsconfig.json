@@ -20,7 +20,11 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./resources/assets/ts/*"]
+    }
   },
   "include": ["./resources/assets/ts/**/*"]
 }

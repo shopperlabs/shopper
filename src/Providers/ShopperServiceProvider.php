@@ -112,7 +112,6 @@ class ShopperServiceProvider extends ServiceProvider
         ];
     }
 
-
     /**
      * Get the translation keys from file.
      *

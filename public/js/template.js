@@ -13795,7 +13795,7 @@ __webpack_require__(/*! ./layout/dark-mode */ "./resources/assets/js/global/layo
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mckenzie/Sites/packages/laravel-shopper-v6/packages/shopper/framework/resources/assets/js/global/template.js */"./resources/assets/js/global/template.js");
+module.exports = __webpack_require__(/*! /Users/mckenzie/Sites/packages/laravel-shopper/packages/shopper/framework/resources/assets/js/global/template.js */"./resources/assets/js/global/template.js");
 
 
 /***/ })

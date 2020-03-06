@@ -2101,7 +2101,7 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/mckenzie/Sites/packages/laravel-shopper-v6/packages/shopper/framework/resources/assets/js/login.js */"./resources/assets/js/login.js");
+module.exports = __webpack_require__(/*! /Users/mckenzie/Sites/packages/laravel-shopper/packages/shopper/framework/resources/assets/js/login.js */"./resources/assets/js/login.js");
 
 
 /***/ })

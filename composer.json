@@ -16,7 +16,7 @@
     }
   ],
   "require": {
-    "php": "^7.2",
+    "php": "^7.4",
     "illuminate/support": "~6",
     "lavary/laravel-menu": "^1.7",
     "maatwebsite/laravel-sidebar": "~2.1",

@@ -36989,8 +36989,8 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/mckenzie/Sites/packages/laravel-shopper-v6/packages/shopper/framework/resources/assets/js/vendor.js */"./resources/assets/js/vendor.js");
-module.exports = __webpack_require__(/*! /Users/mckenzie/Sites/packages/laravel-shopper-v6/packages/shopper/framework/resources/assets/sass/shopper.scss */"./resources/assets/sass/shopper.scss");
+__webpack_require__(/*! /Users/mckenzie/Sites/packages/laravel-shopper/packages/shopper/framework/resources/assets/js/vendor.js */"./resources/assets/js/vendor.js");
+module.exports = __webpack_require__(/*! /Users/mckenzie/Sites/packages/laravel-shopper/packages/shopper/framework/resources/assets/sass/shopper.scss */"./resources/assets/sass/shopper.scss");
 
 
 /***/ })
