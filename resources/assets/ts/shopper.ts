@@ -10,5 +10,6 @@
  * @since November 2019
  */
 
+import "alpinejs";
 import "./components/shopInitialization";
 import "./pages/userManagement";

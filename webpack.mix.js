@@ -1,4 +1,7 @@
 const mix = require("laravel-mix");
+const path = require('path');
+const tailwindcss = require('tailwindcss');
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -16,11 +19,14 @@ mix.disableNotifications();
 mix.setPublicPath("public")
   .setResourceRoot("../") // turns assets paths in css relative to css file
   .sass("./resources/assets/sass/shopper.scss", "css")
-  .js("./resources/assets/js/vendor.js", "js")
-  .js("./resources/assets/js/global/template.js", "js")
   .js("./resources/assets/js/login.js", "js")
   .react("./resources/assets/ts/shopper.ts", "js")
+  .options({
+    processCssUrls: false,
+    postCss: [tailwindcss('./tailwind.config.js')],
+  })
   .webpackConfig({
+    output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
     module: {
       rules: [
         {
@@ -31,13 +37,25 @@ mix.setPublicPath("public")
       ]
     },
     resolve: {
-      extensions: ["*", ".js", ".jsx", ".ts", ".tsx"]
+      extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+      alias: {
+        '@': path.resolve('resources/assets/ts'),
+      },
     }
   })
   .sourceMaps();
 
 if (mix.inProduction()) {
   mix.version()
+    .purgeCss({
+      enabled: true,
+      globs: [
+        './resources/views/**/*.blade.php',
+        './resources/assets/ts/**/*.ts',
+        './resources/assets/ts/**/*.tsx',
+      ],
+      whitelistPatterns: [/nprogress/],
+    })
     .options({
       // optimize js minification process
       terser: {

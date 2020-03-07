@@ -1,0 +1,27 @@
+/**
+* Shopper Tailwind Style
+*
+* Qognitiv application custom style for the presentation of
+* our solutions. This theme is based on Tailwindcss 1.2.0
+*
+* @version 1.0.0
+* @since March 2020
+* @author Arthur Monney<contact@arthurmonney.com>
+* @site https://laravel-shopper.com
+*/
+
+// 0: Include Librairies
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "plugins/flaticon/flaticon.css";
+@import "plugins/flaticon2/flaticon.css";
+@import "plugins/line-awesome/line-awesome.css";
+
+// 1: Tailwind
+@tailwind base;
+@import "base";
+
+@tailwind components;
+@import "components";
+
+@tailwind utilities;
+@import "utilities";
