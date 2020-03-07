@@ -14,7 +14,7 @@ module.exports = {
       },
       spacing: {},
       fontFamily: {
-        body: ["Poppins", ...defaultTheme.fontFamily.sans],
+        body: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
     },
   },

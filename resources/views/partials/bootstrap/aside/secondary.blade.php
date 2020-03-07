@@ -8,7 +8,7 @@
     <div class="aside__secondary-bottom">
 
         <!-- begin:: Aside Menu -->
-        <div id="aside_menu" class="aside-menu  aziko" data-ktmenu-vertical="1" data-ktmenu-scroll="1">
+        <div id="aside_menu" class="aside-menu aziko" data-ktmenu-vertical="1" data-ktmenu-scroll="1">
             {!! $sidebar !!}
         </div>
         <!-- end:: Aside Menu -->

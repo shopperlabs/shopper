@@ -6,6 +6,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Sidebar\Infrastructure\SidebarFlusherFactory;
 use Maatwebsite\Sidebar\Infrastructure\SidebarResolverFactory;
+use Shopper\Framework\Sidebar\Domain\DefaultItem;
 use Shopper\Framework\Sidebar\Presentation\ShopperSidebarRenderer;
 
 class ShopperSidebarServiceProvider extends ServiceProvider
@@ -65,7 +66,7 @@ class ShopperSidebarServiceProvider extends ServiceProvider
         // Bind Item
         $this->app->bind(
             'Maatwebsite\Sidebar\Item',
-            'Maatwebsite\Sidebar\Domain\DefaultItem'
+            DefaultItem::class
         );
 
         // Bind Badge
