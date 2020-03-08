@@ -23,8 +23,12 @@ class RegisterDashboardSidebar extends AbstractAdminSidebar
 
             $group->item(__('Dashboard'), function (Item $item) {
                 $item->weight(1);
-                $item->icon('menu__link-icon flaticon2-protection');
                 $item->route('shopper.dashboard');
+                $item->icon('
+                    <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6" />
+                    </svg>
+                ');
             });
         });
 

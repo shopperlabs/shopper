@@ -1,0 +1,16 @@
+.active {
+  @apply bg-secondary;
+  &:hover {
+    background-color: theme('colors.secondary') !important;
+  }
+}
+
+.sidebar {
+  .menu-heading:first-child {
+    margin-top: 0;
+  }
+
+  .menu-heading {
+    margin-top: theme('margin.10');
+  }
+}

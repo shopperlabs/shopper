@@ -1,0 +1,15 @@
+input,
+select,
+textarea,
+button,
+div,
+a {
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+input {
+  width: 100%;
+}

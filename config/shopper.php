@@ -27,7 +27,20 @@ return [
     |
     */
 
-    'currency'  => env('CURRENCY_SYMBOL', 'XAF'),
+    'currency'  => env('CURRENCY_SYMBOL', 'USD'),
+
+    /*
+    |------------------------------------------------------------------ø--------
+    | Default Theme
+    |--------------------------------------------------------------------------
+    |
+    | Define the backend layout theme you want to use. For your admin
+    |
+    | Supported: default, sidebar.
+    |
+    */
+
+    'theme' => 'default',
 
     /*
     |--------------------------------------------------------------------------
