@@ -59,7 +59,7 @@
                 </button>
             </div>
             <div class="overflow-y-auto">
-                <main class="flex-1 relative z-0 min-h-screen -mb-12 focus:outline-none pt-3" tabindex="0" x-data x-init="$el.focus()">
+                <main class="flex-1 relative z-0 min-h-screen -mb-12 focus:outline-none pt-3 lg:pt-0" tabindex="0" x-data x-init="$el.focus()">
                     <div class="max-w-7xl mx-auto md:pt-6 px-4 sm:px-6 md:px-8">
                         <!-- Content -->
                         @yield('content')
