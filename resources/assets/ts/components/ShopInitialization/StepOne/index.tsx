@@ -12,6 +12,7 @@ type Size = {
   created_at: string;
   updated_at: string;
 };
+
 interface StepOneProps {
   selectCategory: (item: string, id: number) => void;
   items: Array<Size>;

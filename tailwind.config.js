@@ -12,7 +12,10 @@ module.exports = {
         smooth: '0 2px 20px 0 rgba(0, 0, 0, 0.05)',
         bigger: '0 10px 20px 0 rgba(0, 0, 0, 0.01)',
       },
-      spacing: {},
+      spacing: {
+        125: '31.25rem',
+        140: '35rem',
+      },
       fontFamily: {
         body: ["Inter var", ...defaultTheme.fontFamily.sans],
       },

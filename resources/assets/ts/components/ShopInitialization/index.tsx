@@ -4,13 +4,13 @@ import { useTransition, animated } from "react-spring";
 // @ts-ignore
 import Notiflix from "notiflix-react";
 
-import axios from "../../utils/axios";
+import axios from "@/utils/axios";
 
-import Steps from "./Steps";
-import StepOne from "./StepOne";
-import StepTwo from "./StepTwo";
-import StepTree from "./StepTree";
-import Complete from "./Complete";
+import Steps from "@/components/ShopInitialization/Steps";
+import StepOne from "@/components/ShopInitialization/StepOne";
+import StepTwo from "@/components/ShopInitialization/StepTwo";
+import StepTree from "@/components/ShopInitialization/StepTree";
+import Complete from "@/components/ShopInitialization/Complete";
 
 export type FormData = {
   size_id: number;

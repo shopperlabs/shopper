@@ -3,49 +3,16 @@
 
 @section('content')
 
-    <div class="wrapper-form">
-        <div class="card-wrapper">
-            <div class="brand">
+    <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 lg:mt-24">
+        <div class="max-w-md w-full">
+            <div>
                 @include('shopper::auth.partials.logo')
+                <h2 class="mt-6 text-center text-3xl leading-9 font-semibold text-gray-900">
+                    {{ __('Login to your account') }}
+                </h2>
             </div>
-
-            <div class="card fat">
-                <div class="card-body">
-                    <h4 class="card-title">{{ __('Login') }}</h4>
-                    <form method="POST" class="my-login-validation" novalidate action="{{ route('shopper.login') }}">
-                        @csrf
-                        <div class="form-group">
-                            <label for="email">{{ __('E-Mail Address') }}</label>
-                            <input id="email" type="email" class="form-control" name="email" required autofocus>
-                            <div class="invalid-feedback">{{ __('Email is invalid') }}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">{{ __('Password') }}
-                                <a href="{{ route('shopper.password.request') }}" class="float-right">{{ __('Forgot Password') }}?</a>
-                            </label>
-                            <input id="password" type="password" class="form-control" name="password" required data-eye>
-                            <div class="invalid-feedback">{{ __('Password is required') }}</div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="custom-checkbox custom-control">
-                                <input type="checkbox" name="remember" id="remember" class="custom-control-input">
-                                <label for="remember" class="custom-control-label">{{ __('Remember Me') }}</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group m-0">
-                            <button type="submit" class="btn btn-primary btn-block" id="btn-login">
-                                {{ __('Login') }}
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            @include('shopper::auth.partials.footer')
+            <div id="login-form" data-url="{{ route('shopper.login') }}"></div>
         </div>
     </div>
 
-@stop
+@endsection

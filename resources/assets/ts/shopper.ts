@@ -11,5 +11,6 @@
  */
 
 import "alpinejs";
-import "./components/shopInitialization";
-import "./pages/userManagement";
+
+import "@/pages/Login"
+import "@/components/ShopInitialization";

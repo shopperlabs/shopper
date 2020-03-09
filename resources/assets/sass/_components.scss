@@ -14,3 +14,28 @@
     margin-top: theme('margin.10');
   }
 }
+
+.btn-spinner,
+.btn-spinner:after {
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.btn-spinner {
+  display: inline-block;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 0.2em solid theme('colors.gray.50');
+  border-right: 0.2em solid theme('colors.gray.50');
+  border-bottom: 0.2em solid theme('colors.gray.50');
+  border-left: 0.2em solid transparent;
+  transform: translateZ(0);
+  animation: spinning 1s infinite linear;
+}
+
+@keyframes spinning {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -9,7 +9,7 @@
 |
 */
 
-Route::get('/login', 'LoginController@showLoginForm');
+Route::get('/login', 'LoginController@showLoginForm')->name('login-view');
 Route::post('/login', 'LoginController@login')->name('login');
 Route::get('/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');

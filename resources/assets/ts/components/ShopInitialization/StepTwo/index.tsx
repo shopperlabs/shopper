@@ -6,6 +6,7 @@ type FormData = {
   email: string;
   phone_number: string;
 };
+
 interface StepTwoProps {
   validateStep: () => void;
   registerValues: (name: string, email: string, phone_number: string) => void;
@@ -73,7 +74,7 @@ export default ({ validateStep, registerValues }: StepTwoProps) => {
                   </div>
                 </div>
                 <div className="col-md-6 text-center">
-                  <img src={require("../../../assets/svg/business_shop.svg")} alt="shop" width="60%" />
+                  <img src={require("@/assets/svg/business_shop.svg")} alt="shop" width="60%" />
                   <p className="mt-10">
                     This information will be useful if you want users of your site to directly
                     contact you by email or by your phone number.
