@@ -11,5 +11,5 @@ class ShopSize extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'description', 'max_products'];
+    protected $fillable = ['name', 'size', 'description', 'max_products'];
 }

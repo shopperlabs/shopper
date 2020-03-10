@@ -17,19 +17,22 @@ class ShopTableSeeder extends Seeder
 
         ShopSize::create([
             'name' => __('Small'),
-            'description' => __('=< 100 Products'),
+            'size' => __('=< 100 Products'),
+            'description' => __('Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.'),
             'max_products' => 100
         ]);
 
         ShopSize::create([
             'name' => __('Medium'),
-            'description' => __('>= 101 & <= 1000 Products'),
+            'size' => __('>= 101 & <= 1000 Products'),
+            'description' => __('Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.'),
             'max_products' => 1000
         ]);
 
         ShopSize::create([
             'name' => __('Bigger'),
-            'description' => __('>= 1001 Products'),
+            'size' => __('>= 1001 Products'),
+            'description' => __('Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.'),
             'max_products' => 10000
         ]);
 

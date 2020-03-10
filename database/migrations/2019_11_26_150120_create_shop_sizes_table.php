@@ -16,7 +16,8 @@ class CreateShopSizesTable extends Migration
         Schema::create('shop_sizes', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('size');
+            $table->string('description')->nullable();
             $table->integer('max_products')->nullable();
             $table->timestamps();
         });
