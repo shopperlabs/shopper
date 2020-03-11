@@ -50,4 +50,4 @@ module.exports = {
       addUtilities({ ...spaceX, ...spaceY }, variants('space'));
     },
   ],
-}
+};
