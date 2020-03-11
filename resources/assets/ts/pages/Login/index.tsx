@@ -2,40 +2,44 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import useForm from "react-hook-form";
 import axios from "axios";
-import { useTransition, animated } from "react-spring";
+
+import BannerAlert from "@/components/BannerAlert";
 
 const dashboardURL: any = (document.querySelector('meta[name="dashboard-url"]') as Element).getAttribute('content');
 const loginURL: any = document.getElementById('login-form');
 const url: string = loginURL ? loginURL.getAttribute('data-url') : '';
 
 const LoginForm = () => {
-  const [danger, setDanger] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [state, setState] = useState(false);
+  const [status, setStatus] = useState('');
+  const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
-  const transitions = useTransition(danger, null, {
-    from: { opacity: 0, transform: "translateY(40px)" },
-    enter: { opacity: 1, transform: "translateY(0)" },
-    leave: { opacity: 0, transform: "translateY(20px)" },
-  });
+
   const { register, handleSubmit, errors } = useForm<FormData>({ mode: "onChange" });
   const onSubmit = handleSubmit((values) => {
     setSending(true);
     axios.post(url, values)
       .then((response) => {
-        const { token, user, redirect_url } = response.data;
+        // eslint-disable-next-line no-shadow
+        const { token, user, redirect_url, message } = response.data;
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify(user));
 
+        setMessage(message);
+        setStatus("success");
+        setState(true);
+
         setInterval(function () {
           window.location.href = redirect_url;
-        }, 1000);
+        }, 2000);
       })
       .catch((error) => {
         setSending(false);
         if (error.response.data) {
-          const errors = error.response.data.errors;
-          setErrorMessage(errors.email[0])
-          setDanger(true);
+          const serverErrors = error.response.data.errors;
+          setMessage(serverErrors.email[0]);
+          setStatus("error");
+          setState(true);
         }
       });
   });
@@ -123,41 +127,10 @@ const LoginForm = () => {
           </button>
         </div>
       </form>
-      {
-        transitions.map(({ item, key, props }) =>
-          item && (
-            <animated.div className="absolute bottom-0 inset-x-0 pb-2 sm:pb-5" key={key} style={props}>
-              <div className="max-w-screen-xl mx-auto px-2 sm:px-6 lg:px-8">
-                <div className="py-1 px-2 rounded-lg bg-red-600 shadow-lg sm:py-2 sm:px-3">
-                  <div className="flex items-center justify-between flex-wrap">
-                    <div className="w-0 flex-1 flex items-center">
-                      <span className="flex p-1 rounded-lg bg-red-800">
-                        <svg className="h-5 w-5 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </span>
-                      <p className="ml-3 font-medium text-sm text-white truncate">
-                        <span className="md:hidden">Got an error!</span>
-                        <span className="hidden md:inline">{errorMessage}</span>
-                      </p>
-                    </div>
-                    <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
-                      <button type="button" onClick={() => setDanger(false)} className="-mr-1 flex p-1 rounded-md hover:bg-red-500 focus:outline-none focus:bg-red-500 transition ease-in-out duration-150">
-                        <svg className="h-5 w-5 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </animated.div>
-          )
-        )
-      }
+      <BannerAlert state={state} status={status} message={message} onClose={() => setState(!state)} />
     </>
   );
-}
+};
 
 if (document.getElementById('login-form')) {
   ReactDOM.render(

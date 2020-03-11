@@ -27,7 +27,7 @@
 <body class="h-full bg-gray-100 text-gray-600 leading-normal font-body transition ease-in-out duration-700 light">
 
     <div class="min-h-screen flex overflow-hidden">
-        <div class="hidden lg:flex flex-col bg-white px-6 pt-15 pb-20 justify-between relative w-140 shadow-md"></div>
+        <div class="hidden lg:flex flex-col bg-brand px-6 pt-15 pb-20 justify-between relative w-140 shadow-md"></div>
 
         <main class="relative h-screen mx-auto w-full lg:flex-1 p-10 flex flex-col justify-between overflow-hidden overflow-y-scroll">
 

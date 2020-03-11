@@ -13,12 +13,12 @@ export default ({
 }) => {
   return (
     <button
-      className={`btn btn-primary btn-elevate ${loading ? 'd-flex' : ''}`}
+      className="btn btn-primary w-full md:w-auto px-6"
       type={submit ? "submit" : "button"}
       onClick={onPress || undefined}
     >
       {loading &&
-        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" style={{ marginRight: "5px" }} />}
+        <span className="btn-spinner" role="status" aria-hidden="true" style={{ marginRight: "5px" }} />}
       {text}
     </button>
   );

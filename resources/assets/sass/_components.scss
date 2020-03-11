@@ -15,6 +15,30 @@
   }
 }
 
+.btn {
+  @apply inline-flex justify-center w-auto transition ease-in-out duration-150 block px-4 py-2 text-base rounded-md leading-6 font-medium;
+}
+
+.btn-primary {
+  @apply bg-brand text-white;
+
+  &:hover {
+    @apply bg-brand-hover;
+  }
+}
+
+.btn-white {
+  @apply border border-gray-300 bg-white text-gray-700 shadow-sm;
+
+  &:hover {
+    @apply text-gray-500;
+  }
+
+  &:focus {
+    @apply outline-none border-blue-300 shadow-outline;
+  }
+}
+
 .btn-spinner,
 .btn-spinner:after {
   border-radius: 50%;

@@ -28,14 +28,13 @@
     <!--end::Fonts -->
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 </head>
-<body class="shop-initialization">
+<body class="h-full bg-gray-100 text-gray-600 leading-normal font-body transition ease-in-out duration-700 light">
 
     <div id="shop-initialization-app"></div>
 
     <script>
         window.user = @json(auth()->user());
     </script>
-    <script src="{{ asset('shopper/js/vendor.js') }}"></script>
     <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
 
 </body>

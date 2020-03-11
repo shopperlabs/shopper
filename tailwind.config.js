@@ -23,6 +23,7 @@ module.exports = {
   },
   variants: {
     space: ['responsive'],
+    translate: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
   },
   plugins: [
     require('@tailwindcss/ui'),

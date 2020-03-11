@@ -29,9 +29,6 @@ composer.lock
 
 # Laravel Shopper
 #
-/resources/assets/js
-/resources/assets/sass-default
-/resources/views/partials/bootstrap
 phpunit.xml
 
 # OSX
