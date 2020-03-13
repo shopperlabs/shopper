@@ -10,18 +10,24 @@ class ShopController extends Controller
     /**
      * @var ShopRepository
      */
-    protected $repository;
+    protected ShopRepository $repository;
 
+    /**
+     * ShopController constructor.
+     *
+     * @param  ShopRepository $repository
+     */
     public function __construct(ShopRepository $repository)
     {
         parent::__construct();
+
         $this->repository = $repository;
     }
 
     /**
-     * Store Shop
+     * Store a new Shop in database.
      *
-     * @param ShopRequest $request
+     * @param  ShopRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(ShopRequest $request)
@@ -32,10 +38,5 @@ class ShopController extends Controller
             'message' => __("Your Shop has been successfully created. Have fun !"),
             'status'  => 'success'
         ]);
-    }
-
-    public function updateSetting()
-    {
-
     }
 }

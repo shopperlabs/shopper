@@ -107,7 +107,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Define the way the Sidebar should be cached.
-    | The cache store is defined by the Laravel.
+    | The cache store defined by the Laravel.
     |
     | Available: "null" , "static", "user-based"
     |
@@ -131,5 +131,20 @@ return [
         'admin_role' => 'administrator',
         'default_role' => 'user',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Database Table Prefix
+    |--------------------------------------------------------------------------
+    |
+    | This prefix table can be used for the prefix of each shopper
+    | tables in your database. For example your products table will have
+    | the current name `sp_products` if you are using 'sp_' as tables prefix.
+    |
+    | Eg: 'table_prefix' => 'sp_'
+    |
+    */
+
+    'table_prefix' => '',
 
 ];

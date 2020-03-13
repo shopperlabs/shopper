@@ -5,9 +5,6 @@ namespace Shopper\Framework\Models\Shop;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\User;
 
-/**
- * @property  integer owner_id  The id of the owner
- */
 class Shop extends Model
 {
     /**
@@ -28,6 +25,16 @@ class Shop extends Model
         'instagram_url',
         'linkedin_url'
     ];
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return shopper_table('shops');
+    }
 
     /**
      * Get Shop size
@@ -56,6 +63,6 @@ class Shop extends Model
      */
     public function members()
     {
-        return $this->belongsToMany(ShopMember::class, 'shop_members', 'shop_id', 'user_id');
+        return $this->belongsToMany(ShopMember::class, shopper_table('shop_members'), 'shop_id', 'user_id');
     }
 }

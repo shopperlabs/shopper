@@ -6,9 +6,9 @@ if (!function_exists('app_name')) {
     /**
      * Helper to grab the application name.
      *
-     * @return mixed
+     * @return string
      */
-    function app_name()
+    function app_name(): string
     {
         return config('app.name');
     }
@@ -17,6 +17,8 @@ if (!function_exists('app_name')) {
 if (! function_exists('gravatar')) {
     /**
      * Access the gravatar helper.
+     *
+     * @return mixed
      */
     function gravatar()
     {
@@ -26,11 +28,12 @@ if (! function_exists('gravatar')) {
 
 if (!function_exists('home_route')) {
     /**
-     * Return the route to the "home" page depending on authentication/authorization status.
+     * Return the route to the "home" page depending on
+     * authentication/authorization status.
      *
      * @return string
      */
-    function home_route()
+    function home_route(): string
     {
         if (auth()->check()) {
             if (auth()->user()->can('view-backend')) {
@@ -44,12 +47,12 @@ if (!function_exists('home_route')) {
 
 if (!function_exists('setEnvironmentValue')) {
     /**
-     * Function to set or update .env variable
+     * Function to set or update .env variable.
      *
      * @param array $values
      * @return bool
      */
-    function setEnvironmentValue(array $values)
+    function setEnvironmentValue(array $values): bool
     {
         $envFile = app()->environmentFilePath();
         $str = file_get_contents($envFile);
@@ -93,12 +96,29 @@ if (!function_exists('setEnvironmentValue')) {
 
 if (!function_exists('shopper_version')) {
     /**
-     * Function to return Shopper current version
+     * Function to return Shopper current version.
      *
      * @return string
      */
-    function shopper_version()
+    function shopper_version(): string
     {
         return Shopper::version();
+    }
+}
+
+if (!function_exists('shopper_table')) {
+    /**
+     * Return Shopper current table name.
+     *
+     * @param  string $table
+     * @return string
+     */
+    function shopper_table(string $table): string
+    {
+        if (config('shopper.table_prefix') !== '') {
+            return config('shopper.table_prefix').$table;
+        }
+
+        return $table;
     }
 }

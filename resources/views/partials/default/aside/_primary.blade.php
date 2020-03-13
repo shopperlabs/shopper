@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-between bg-brand text-center w-16">
-    <div class="pt-7">
+    <div class="pt-2">
         <a class="flex-shrink-0 flex items-center px-4" href="{{ route('shopper.dashboard') }}">
             <img class="h-15 w-auto" src="{{ asset('shopper/images/logo-white.svg') }}" alt="Shopper" />
         </a>

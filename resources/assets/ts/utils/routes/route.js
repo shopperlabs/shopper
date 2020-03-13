@@ -1,5 +1,5 @@
-import UrlBuilder from './UrlBuilder';
 import { stringify } from 'qs';
+import UrlBuilder from './UrlBuilder';
 
 class Router extends String {
   constructor(name, params, absolute, customZiggy = null) {
@@ -7,7 +7,7 @@ class Router extends String {
 
     this.name = name;
     this.absolute = absolute;
-    this.ziggy = customZiggy ? customZiggy : Ziggy;
+    this.ziggy = customZiggy || Ziggy;
     this.urlBuilder = this.name ? new UrlBuilder(name, absolute, this.ziggy) : null;
     this.template = this.urlBuilder ? this.urlBuilder.construct() : '';
     this.urlParams = this.normalizeParams(params);

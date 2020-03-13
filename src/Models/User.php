@@ -9,14 +9,6 @@ use Shopper\Framework\Models\Shop\Shop;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-/**
- * @property string last_name
- * @property string first_name
- * @property string avatar_type
- * @property string email
- * @property string avatar_location
- * @property boolean is_superuser
- */
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable,
@@ -152,6 +144,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function shopMember()
     {
-        return $this->belongsToMany(User::class, 'shop_members', 'user_id', 'shop_id');
+        return $this->belongsToMany(User::class, shopper_table('shop_members'), 'user_id', 'shop_id');
     }
 }

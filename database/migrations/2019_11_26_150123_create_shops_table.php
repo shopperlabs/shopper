@@ -3,9 +3,12 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Shopper\Framework\Traits\Database\MigrationTrait;
 
 class CreateShopsTable extends Migration
 {
+    use MigrationTrait;
+
     /**
      * Run the migrations.
      *
@@ -13,7 +16,7 @@ class CreateShopsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shops', function(Blueprint $table) {
+        Schema::create($this->getTableName('shops'), function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('email')->unique();
@@ -33,7 +36,7 @@ class CreateShopsTable extends Migration
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->foreign('size_id')->references('id')->on('shop_sizes')->onDelete('CASCADE');
+            $table->foreign('size_id')->references('id')->on($this->getTableName('shop_sizes'))->onDelete('CASCADE');
         });
     }
 
@@ -44,6 +47,6 @@ class CreateShopsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shops');
+        Schema::dropIfExists($this->getTableName('shops'));
     }
 }

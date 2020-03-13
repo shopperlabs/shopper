@@ -13,16 +13,20 @@ class ShopRequest extends AbstractBaseRequest
     }
 
     /**
-     * Rules for creating a new resource
+     * Return store rules
      *
-     * @var array
+     * @return array
      */
-    public $storeRules = [
-        'name' => 'required|max:255|unique:shops',
-        'email' => 'required|max:255|unique:shops',
-        'phone_number' => 'required',
-        'size_id'   => 'required|integer'
-    ];
+    public function getStoreRules(): array
+    {
+        return [
+            'name' => 'required|max:255|unique:'. shopper_table('shops'),
+            'email' => 'required|max:255|unique:'. shopper_table('shops'),
+            'phone_number' => 'required',
+            'size_id'   => 'required|integer'
+        ];
+    }
+
     /**
      * Rules for updating a resource
      *
