@@ -41,9 +41,9 @@
         @endforeach
     @endif
 </head>
-<body class="h-full bg-gray-100 text-gray-600 leading-normal font-body transition ease-in-out duration-700 light">
+<body class="h-full bg-background text-primary-text leading-normal font-body transition ease-in-out duration-500 light">
 
-    <div class="h-screen flex overflow-hidden bg-gray-100" x-data="{ sidebarOpen: false }" @keydown.window.escape="sidebarOpen = false">
+    <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false }" @keydown.window.escape="sidebarOpen = false">
         <!-- Off-canvas menu for mobile -->
         @include('shopper::partials.default.sidebar-mobile')
 

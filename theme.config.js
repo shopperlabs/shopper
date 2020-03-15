@@ -5,19 +5,27 @@ const lightTheme = new Theme()
   .default()
   .assignable()
   .colors({
-    transparent: 'transparent',
+    // Default Theme
+    'primary-light': '#048DDB',
+    'primary-default': '#007cc3',
+    'primary-dark': '#1d4670',
+    'primary-text': '#4b5563',
+    background: '#f4f5f7',
 
-    brand: '#007cc3',
-    'brand-hover': '#048DDB',
-    secondary: '#1d4670',
+    white: "#ffffff",
   });
 
 const darkTheme = new Theme()
   .name('dark')
   .colors({
-    brand: '#16191C',
-    'brand-hover': '#404B55',
-    secondary: '#262E35',
+    // Default Theme
+    'primary-light': '#374151',
+    'primary-default': '#252f3f',
+    'primary-dark': '#161e2e',
+    'primary-text': '#e2e8f0',
+    background: '#202830',
+
+    white: "#374151",
   });
 
 module.exports = new ThemeBuilder()

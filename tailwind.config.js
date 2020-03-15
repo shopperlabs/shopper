@@ -4,9 +4,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: 'rgb(var(--color-brand))',
-        secondary: 'rgb(var(--color-secondary))',
-        'brand-hover': 'rgb(var(--color-brand-hover))',
+        'primary-light': 'rgb(var(--color-primary-light))',
+        'primary-default': 'rgb(var(--color-primary-default))',
+        'primary-dark': 'rgb(var(--color-primary-dark))',
+        'primary-text': 'rgb(var(--color-primary-text))',
+        'on-primary': '#ffffff',
+        background: 'rgb(var(--color-background))',
+        white: 'rgb(var(--color-white))',
+
+        brand: {
+          100: '#048DDB',
+          400: '#007cc3',
+          999: '#1d4670',
+        }
       },
       boxShadow: {
         smooth: '0 2px 20px 0 rgba(0, 0, 0, 0.05)',

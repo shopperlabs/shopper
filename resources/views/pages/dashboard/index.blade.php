@@ -4,12 +4,12 @@
 @section('content')
 
     @component('shopper::components.breadcrumb')
-        <span class="text-gray-500">{{ __('Overview') }}</span>
+        <span class="text-primary-text">{{ __('Overview') }}</span>
     @endcomponent
 
     <div class="mt-2 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Overview') }}</h2>
+            <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate">{{ __('Overview') }}</h2>
         </div>
     </div>
 
