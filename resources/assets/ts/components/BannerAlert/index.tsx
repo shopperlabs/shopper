@@ -55,18 +55,18 @@ export default ({ state, status, message, onClose }: BannerAlertProps) => {
                   <div className="flex items-center justify-between flex-wrap">
                     <div className="w-0 flex-1 flex items-center">
                       <span className={svgClassName}>
-                        <svg className="h-5 w-5 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <svg className="h-5 w-5 text-on-primary" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={getStatusPath(status)} />
                         </svg>
                       </span>
-                      <p className="ml-3 font-medium text-sm text-white truncate">
+                      <p className="ml-3 font-medium text-sm text-on-primary truncate">
                         <span className="sm:hidden">{toCapitalize(status)}</span>
                         <span className="hidden sm:inline">{message}</span>
                       </p>
                     </div>
                     <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
                       <button type="button" onClick={onClose} className={buttonClassName}>
-                        <svg className="h-5 w-5 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <svg className="h-5 w-5 text-on-primary" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>

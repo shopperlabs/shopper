@@ -8,6 +8,9 @@ module.exports = {
         'primary-default': 'rgb(var(--color-primary-default))',
         'primary-dark': 'rgb(var(--color-primary-dark))',
         'primary-text': 'rgb(var(--color-primary-text))',
+        'input-text': 'rgb(var(--color-input-text))',
+        'input-bg': 'rgb(var(--color-input-bg))',
+        'input-border': 'rgb(var(--color-input-border))',
         'on-primary': '#ffffff',
         background: 'rgb(var(--color-background))',
         white: 'rgb(var(--color-white))',
@@ -15,7 +18,7 @@ module.exports = {
         brand: {
           100: '#048DDB',
           400: '#007cc3',
-          999: '#1d4670',
+          900: '#1d4670',
         }
       },
       boxShadow: {
