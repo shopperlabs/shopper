@@ -2,8 +2,24 @@
 
 namespace Shopper\Framework\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
+
 class ShopRequest extends AbstractBaseRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize() : bool
+    {
+        if (Auth::guard()->check() && auth()->user()->isSuperAdmin()) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * @return bool
      */

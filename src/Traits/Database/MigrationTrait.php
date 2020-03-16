@@ -44,18 +44,16 @@ trait MigrationTrait
      * @param  string    $columnName     MySQL table column name
      * @param  string    $tableName      MySQL table name
      * @param  boolean   $fk_nullable    foreign key nullable status
-     *
-     * @return \Illuminate\Support\Fluent
      */
-    public function addForeignKey(Blueprint $table, $columnName, $tableName, $fk_nullable = true)
+    public function addForeignKey(Blueprint $table, $columnName, $tableName, $fk_nullable = true): void
     {
         if ($fk_nullable) {
             $table->unsignedBigInteger($columnName)->index()->nullable();
+            $table->foreign($columnName)->references('id')->on($tableName)->onDelete('set null');
         } else {
             $table->unsignedBigInteger($columnName)->index();
+            $table->foreign($columnName)->references('id')->on($tableName)->onDelete('CASCADE');
         }
-
-        return $table->foreign($columnName)->references('id')->on($tableName)->onDelete('CASCADE');
     }
 
     /**

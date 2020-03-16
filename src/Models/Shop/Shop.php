@@ -3,6 +3,8 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\Channel;
+use Shopper\Framework\Models\Inventory;
 use Shopper\Framework\Models\User;
 
 class Shop extends Model
@@ -16,6 +18,8 @@ class Shop extends Model
         'name',
         'email',
         'phone_number',
+        'description',
+        'address',
         'logo_url',
         'cover_url',
         'size_id',
@@ -23,7 +27,9 @@ class Shop extends Model
         'facebook_url',
         'twitter_url',
         'instagram_url',
-        'linkedin_url'
+        'linkedin_url',
+        'latitude',
+        'latitude',
     ];
 
     /**
@@ -37,7 +43,7 @@ class Shop extends Model
     }
 
     /**
-     * Get Shop size
+     * Get Shop size.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -47,7 +53,7 @@ class Shop extends Model
     }
 
     /**
-     * Get owner of the shop
+     * Get owner of the shop.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -57,12 +63,32 @@ class Shop extends Model
     }
 
     /**
-     * Get shop members
+     * Get shop members.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function members()
     {
         return $this->belongsToMany(ShopMember::class, shopper_table('shop_members'), 'shop_id', 'user_id');
+    }
+
+    /**
+     * Return all shop's inventories.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
+    /**
+     * Return all shop's channels.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function channels()
+    {
+        return $this->hasMany(Channel::class);
     }
 }

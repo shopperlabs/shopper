@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Controllers\Api;
 
+use Shopper\Framework\Events\ShopCreated;
 use Shopper\Framework\Http\Requests\ShopRequest;
 use Shopper\Framework\Repositories\Shop\ShopRepository;
 
@@ -32,7 +33,9 @@ class ShopController extends Controller
      */
     public function store(ShopRequest $request)
     {
-        $this->repository->create($request->all());
+        $shop = $this->repository->create($request->all());
+
+        event(new ShopCreated($shop));
 
         return response()->json([
             'message' => __("Your Shop has been successfully created. Have fun !"),
