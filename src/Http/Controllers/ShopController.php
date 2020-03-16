@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller;
 class ShopController extends Controller
 {
     /**
-     * Display Shop Initialization view
+     * Display Shop Initialization view.
      *
      * @return \Illuminate\View\View
      */
@@ -17,7 +17,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Display Shop Setting view
+     * Display Shop Setting view.
      *
      * @return \Illuminate\View\View
      */

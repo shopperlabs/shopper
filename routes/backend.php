@@ -20,3 +20,5 @@ Route::prefix('access')->group(function () {
 Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {
     Route::get('/setting', 'ShopController@setting')->name('setting');
 });
+
+Route::resource('categories', 'CategoryController');
