@@ -10,7 +10,7 @@ class UserController extends Controller
     /**
      * @var UserRepository
      */
-    protected $repository;
+    protected UserRepository $repository;
 
     public function __construct(UserRepository $repository)
     {
@@ -19,7 +19,7 @@ class UserController extends Controller
     }
 
     /**
-     * Return resources list of users
+     * Return resources list of users.
      *
      * @return UserResource
      */

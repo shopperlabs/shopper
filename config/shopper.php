@@ -147,4 +147,21 @@ return [
 
     'table_prefix' => '',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Shopper Ecommerce Model
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the ecommerce class used by Shopper for the
+    | management of your website. You can replace the models with classes
+    | which is in a different namespace
+    |
+    */
+
+    'models' => [
+
+        'category' => \Shopper\Framework\Models\Ecommerce\Category::class,
+
+    ],
+
 ];

@@ -27,13 +27,14 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->
     @stack('styles')
+    @livewireStyles
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
     @if(! empty(config('shopper.resources.stylesheets')))
     <!-- Additional CSS -->
         @foreach(config('shopper.resources.stylesheets') as $css)
-            @if (Str::startsWith($js, ['http://', 'https://']))
+            @if (starts_with($js, ['http://', 'https://']))
                 <link rel="stylesheet" type="text/css" href="{!! $css !!}">
             @else
                 <link rel="stylesheet" type="text/css" href="{{ asset($css) }}">
@@ -76,11 +77,12 @@
     <script src="{{ mix('/js/shopper.js','shopper')}}"></script>
 
     @stack('scripts')
+    @livewireScripts
 
     @if(! empty(config('shopper.resources.scripts')))
         <!-- Additional Javascript -->
         @foreach(config('shopper.resources.scripts') as $js)
-            @if (Str::startsWith($js, ['http://', 'https://']))
+            @if (starts_with($js, ['http://', 'https://']))
                 <script type="text/javascript" src="{!! $js !!}"></script>
             @else
                 <script type="text/javascript" src="{{ asset($js) }}"></script>

@@ -1,6 +1,8 @@
 <?php
 
-namespace Shopper\Framework\Repositories;
+namespace Shopper\Framework\Repositories\Ecommerce;
+
+use Shopper\Framework\Repositories\BaseRepository;
 
 class CategoryRepository extends BaseRepository
 {
@@ -11,6 +13,6 @@ class CategoryRepository extends BaseRepository
      */
     public function model()
     {
-        return '';
+        return config('shopper.models.category');
     }
 }

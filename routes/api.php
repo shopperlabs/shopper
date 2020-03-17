@@ -20,3 +20,7 @@ Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {
 Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     Route::get('/managers', 'UserController@index')->name('managers');
 });
+
+Route::prefix('categories')->group(function () {
+    Route::get('/', 'CategoryController@index')->name('categories');
+});
