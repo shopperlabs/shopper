@@ -3,7 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "jsx": "react",
-    "types": ["node"],
+    "types": ["node", "jquery"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "moduleResolution": "node",

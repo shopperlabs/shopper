@@ -24,3 +24,6 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
 Route::prefix('categories')->group(function () {
     Route::get('/', 'CategoryController@index')->name('categories');
 });
+
+Route::post('/upload', 'MediaController@upload')->name('upload');
+Route::delete('/remove-file/{id}', 'MediaController@remove')->name('remove');

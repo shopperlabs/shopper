@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const rgba = require('hex-to-rgba');
 
 module.exports = {
   theme: {
@@ -21,10 +22,11 @@ module.exports = {
           900: '#1d4670',
         }
       },
-      boxShadow: {
+      boxShadow: theme => ({
         smooth: '0 2px 20px 0 rgba(0, 0, 0, 0.05)',
         bigger: '0 10px 20px 0 rgba(0, 0, 0, 0.01)',
-      },
+        'outline-brand': `0 0 0 3px ${rgba(theme('colors.brand.400'), 0.45)}`,
+      }),
       spacing: {
         125: '31.25rem',
         140: '35rem',
@@ -33,6 +35,21 @@ module.exports = {
         body: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
     },
+    customForms: theme => ({
+      default: {
+        'input, textarea, select, multiselect, checkbox, radio': {
+          borderWidth: defaultTheme.borderWidth[2],
+          '&:focus': {
+            outline: 'none',
+            boxShadow: 'none',
+            borderColor: theme('colors.brand.400'),
+          },
+        },
+        textarea: {
+
+        },
+      }
+    }),
   },
   variants: {
     space: ['responsive'],

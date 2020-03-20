@@ -479,4 +479,22 @@ abstract class BaseRepository implements RepositoryContract
 
         return $this;
     }
+
+    /**
+     * Get an array with the values of a given column.
+     *
+     * @param $column
+     * @param null $key
+     * @return \Illuminate\Support\Collection|mixed
+     */
+    public function pluck($column, $key = null)
+    {
+        $this->newQuery();
+
+        $results = $this->query->pluck($column, $key);
+
+        $this->unsetClauses();
+
+        return $results;
+    }
 }

@@ -3,7 +3,9 @@
 namespace Shopper\Framework\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Shopper\Framework\Http\Requests\Ecommerce\CategoryRequest;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Repositories\MediaRepository;
 
 class CategoryController extends Controller
 {
@@ -12,9 +14,21 @@ class CategoryController extends Controller
      */
     protected CategoryRepository $repository;
 
-    public function __construct(CategoryRepository $repository)
+    /**
+     * @var MediaRepository
+     */
+    protected MediaRepository $mediaRepository;
+
+    /**
+     * CategoryController constructor.
+     *
+     * @param  CategoryRepository $repository
+     * @param  MediaRepository $mediaRepository
+     */
+    public function __construct(CategoryRepository $repository, MediaRepository $mediaRepository)
     {
         $this->repository = $repository;
+        $this->mediaRepository = $mediaRepository;
     }
 
     /**
@@ -36,6 +50,35 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('shopper::pages.categories.create');
+        $categories = $this->repository->pluck('name', 'id');
+
+        return view('shopper::pages.categories.create', compact('categories'));
+    }
+
+    /**
+     * Store a newly category to the database.
+     *
+     * @param  CategoryRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(CategoryRequest $request)
+    {
+        $category = $this->repository->create([
+            'name' => $request->input('name'),
+            'parent_id' => $request->input('parent_id'),
+            'description' => $request->input('body'),
+        ]);
+
+        if ($request->input('media_id') !== "0") {
+            $media = $this->mediaRepository->getById($request->input('media_id'));
+            $media->update([
+                'mediatable_type'   => config('shopper.models.category'),
+                'mediatable_id'     => $category->id
+            ]);
+        }
+
+        notify()->success(__('Category Successfully Created'));
+
+        return redirect()->route('shopper.categories.index');
     }
 }

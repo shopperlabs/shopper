@@ -12,5 +12,10 @@
 
 import "alpinejs";
 
+// Class Components
+import "@/components/QuillEditor";
+import "@/components/Dropzone/Simple";
+
+// Pages Components
 import "@/pages/Login"
-import "@/components/ShopInitialization";
+import "@/pages/ShopInitialization";

@@ -28,6 +28,7 @@
     <!--end::Fonts -->
     @stack('styles')
     @livewireStyles
+    @notifyCss
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
@@ -61,7 +62,7 @@
             </div>
             <div class="overflow-y-auto">
                 <main class="flex-1 relative z-0 min-h-screen -mb-12 focus:outline-none pt-3 lg:pt-0" tabindex="0" x-data x-init="$el.focus()">
-                    <div class="max-w-7xl mx-auto md:pt-6 px-4 sm:px-6 md:px-8">
+                    <div class="relative max-w-7xl mx-auto md:pt-6 px-4 sm:px-6 md:px-14 pb-10">
                         <!-- Content -->
                         @yield('content')
                         <!-- /End content -->
@@ -76,8 +77,10 @@
 
     <script src="{{ mix('/js/shopper.js','shopper')}}"></script>
 
+    @include('notify::messages')
     @stack('scripts')
     @livewireScripts
+    @notifyJs
 
     @if(! empty(config('shopper.resources.scripts')))
         <!-- Additional Javascript -->

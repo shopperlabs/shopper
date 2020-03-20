@@ -117,8 +117,15 @@ interface RepositoryContract
     public function whereIn($column, $value);
 
     /**
-     * @param $relations
+     * @param  $relations
      * @return mixed
      */
     public function with($relations);
+
+    /**
+     * @param  $column
+     * @param  null $key
+     * @return mixed
+     */
+    public function pluck($column, $key = null);
 }

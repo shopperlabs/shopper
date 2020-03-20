@@ -20,7 +20,7 @@
 }
 
 .btn-primary {
-  @apply bg-brand-400 text-white;
+  @apply bg-brand-400 text-on-primary;
 
   &:hover {
     @apply bg-brand-100;
@@ -62,4 +62,58 @@
 @keyframes spinning {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.quill-editor {
+  .ql-container {
+    border: 1px solid theme('colors.gray.300') !important;
+    @apply rounded-b-md;
+    &:focus {
+      border-color: theme('colors.brand.400') !important;
+    }
+  }
+
+  .ql-editor {
+    min-height: 130px;
+    max-height: 400px;
+    font-size: theme('fontSize.base');
+
+    &:focus {
+      outline: none;
+      border-width: 2px;
+      box-shadow: theme('boxShadow.outline-brand');
+      border-color: theme('colors.brand.400') !important;
+      @apply rounded-b-md;
+    }
+  }
+
+  .ql-toolbar {
+    border: 1px solid theme('colors.gray.300') !important;
+    border-bottom: none;
+    background-color: theme('colors.gray.100');
+    @apply rounded-t-md;
+  }
+
+  .ql-editing {
+    left: 50px !important;
+    @apply rounded-t-md shadow;
+  }
+}
+
+.preview-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.preview-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+.preview-exit {
+  opacity: 1;
+}
+.preview-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 300ms, transform 300ms;
 }

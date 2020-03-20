@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Auth;
 abstract class AbstractBaseRequest extends FormRequest
 {
     /**
-     * Rules for creating a new resource
+     * Rules for creating a new resource.
      *
      * @var array
      */
     public $storeRules = [];
 
     /**
-     * Rules for updating a resource
+     * Rules for updating a resource.
      *
      * @var array
      */
@@ -57,7 +57,7 @@ abstract class AbstractBaseRequest extends FormRequest
     }
 
     /**
-     * Return store rules
+     * Return store rules.
      *
      * @return array
      */
@@ -67,7 +67,7 @@ abstract class AbstractBaseRequest extends FormRequest
     }
 
     /**
-     * Return update rules
+     * Return update rules.
      *
      * @return array
      */

@@ -24,6 +24,7 @@
         "react/no-array-index-key": "off",
         "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"]}],
         "react/prop-types": "off",
+        "react/jsx-props-no-spreading": "off",
         "react-hooks/rules-of-hooks": "error",
         "react/no-unescaped-entities": "off",
         "react/button-has-type": "off",

@@ -44,7 +44,7 @@ class Category extends Model
     /**
      * Set the proper slug attribute.
      *
-     * @param string $value
+     * @param  string $value
      */
     public function setSlugAttribute($value)
     {
