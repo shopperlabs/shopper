@@ -39,6 +39,7 @@ class MediaController extends Controller
             'file_name'     => $file->getClientOriginalName(),
             'file_size'     => $file->getSize(),
             'content_type'  => $file->getClientMimeType(),
+            'field'         => 'preview_image',
             'is_public'     => true
         ];
 

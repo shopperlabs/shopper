@@ -15,7 +15,7 @@ class CategoryRequest extends AbstractBaseRequest
     {
         return [
             'name'  => 'required',
-            'parent_id' => 'integer|nullable|exists:id'.shopper_table('categories'),
+            'parent_id' => 'integer|nullable|exists:'.shopper_table('categories').',id',
         ];
     }
 
@@ -28,7 +28,7 @@ class CategoryRequest extends AbstractBaseRequest
     {
         return [
             'name'  => 'sometimes|required',
-            'parent_id' => 'sometimes|integer|nullable|exists:id'.shopper_table('categories'),
+            'parent_id' => 'sometimes|integer|nullable|exists:'.shopper_table('categories').',id',
         ];
     }
 }

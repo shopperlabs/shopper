@@ -3,21 +3,37 @@
 namespace Shopper\Framework\Http\Components;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class CategoryList extends Component
 {
-    public $categories;
+    use WithPagination;
+
+    /**
+     * @var CategoryRepository
+     */
+    protected $repository;
 
     public function mount(CategoryRepository $repository)
     {
-        $this->categories = $repository->all();
+        $this->repository = $repository;
+    }
+
+    public function paginationView()
+    {
+        return 'shopper::components.wire-pagination-links';
+    }
+
+    public function hydrate()
+    {
+        $this->repository = new CategoryRepository();
     }
 
     public function render()
     {
         return view('shopper::components.categories.list', [
-            'categories' => $this->categories
+            'categories' => $this->repository->paginate(10),
         ]);
     }
 }

@@ -3,9 +3,12 @@
 namespace Shopper\Framework\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Traits\Mediatable;
 
 class Category extends Model
 {
+    use Mediatable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -53,6 +56,20 @@ class Category extends Model
         }
 
         $this->attributes['slug'] = $slug;
+    }
+
+    /**
+     * Get Parent name.
+     *
+     * @return string
+     */
+    public function getParentNameAttribute()
+    {
+        if ($this->parent_id !== null) {
+            return $this->parent->name;
+        }
+
+        return __('N/A (No parent category)');
     }
 
     /**

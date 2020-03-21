@@ -16,7 +16,7 @@
 }
 
 .btn {
-  @apply inline-flex justify-center w-auto transition ease-in-out duration-150 block px-4 py-2 text-base rounded-md leading-6 font-medium;
+  @apply inline-flex justify-center w-auto transition ease-in-out duration-150 block px-4 py-2 rounded-md leading-6;
 }
 
 .btn-primary {
@@ -36,6 +36,18 @@
 
   &:focus {
     @apply outline-none border-blue-300 shadow-outline;
+  }
+}
+
+.btn-danger {
+  @apply border border-transparent text-on-primary bg-red-600 shadow-sm;
+
+  &:hover {
+    @apply bg-red-500;
+  }
+
+  &:focus {
+    @apply outline-none border-red-700 shadow-outline;
   }
 }
 
