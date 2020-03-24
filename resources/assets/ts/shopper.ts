@@ -19,3 +19,6 @@ import "@/components/Dropzone/Simple";
 // Pages Components
 import "@/pages/Login"
 import "@/pages/ShopInitialization";
+
+// Common script files
+import "@/template";

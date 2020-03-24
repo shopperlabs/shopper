@@ -49,7 +49,7 @@
                     <div class="w-full mb-3">
                         <label for="description" class="block text-sm font-medium leading-5 text-gray-700">Description</label>
                         <div class="mt-1 rounded-md shadow-sm">
-                            <div id="editor"></div>
+                            <div id="editor" data-content="{{ $category->description }}"></div>
                         </div>
                     </div>
                 </div>
@@ -57,19 +57,19 @@
             <div class="w-full lg:w-1/3">
                 <div class="bg-white p-4 shadow rounded-md mt-4 lg:mt-0 lg:ml-4">
                     <h4 class="text-gray-500 font-medium pb-8 text-base">{{ __('Category image') }}</h4>
-                    <div id="dropzone-simple"></div>
+                    <div id="dropzone-simple" data-preview="{{ $category->preview_image_link }}" data-id="{{ $category->preview_image_id }}"></div>
                 </div>
             </div>
         </div>
-        <div class="mt-8 border-t border-gray-200 pt-5">
+        <div class="mt-8 border-t pt-5 border-gray-200">
             <div class="flex justify-between">
                 @include('shopper::components.delete-action', [
                     'title' => __('Delete').' '.$category->name,
                     'action' => __('Delete category'),
                     'message' => __("Are you sure you want to delete this category? All this data will be removed. This action cannot be undone."),
-                    'url' => route('shopper.categories.destroy', $category)
+                    'url' => route('shopper.categories.destroy', $category),
                 ])
-                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
             </div>
         </div>
     {!! Form::close() !!}

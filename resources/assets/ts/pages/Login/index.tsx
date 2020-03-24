@@ -29,7 +29,7 @@ const LoginForm = () => {
         setStatus("success");
         setState(true);
 
-        setInterval(function () {
+        setInterval(() => {
           window.location.href = redirect_url;
         }, 2000);
       })

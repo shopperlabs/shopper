@@ -83,7 +83,15 @@
                             <div class="flex items-center px-4 py-4 sm:px-6">
                                 <div class="min-w-0 flex-1 flex items-center">
                                     <div class="flex-shrink-0">
-                                        <img class="h-10 w-10 rounded-md" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                                        @if($category->preview_image_link !== null)
+                                            <img class="h-10 w-10 rounded-md" src="{{ $category->preview_image_link }}" alt="{{ $category->name }}" />
+                                        @else
+                                            <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md">
+                                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                                                    <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="min-w-0 flex-1 items-center px-4 md:grid md:grid-cols-2 md:gap-4">
                                         <div>

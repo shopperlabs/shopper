@@ -5,7 +5,8 @@ const fetchClient = () => {
   const defaultOptions: AxiosRequestConfig = {
     baseURL: `${baseURL}`,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      "X-Requested-With": "XMLHttpRequest"
     }
   };
 

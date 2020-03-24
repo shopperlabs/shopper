@@ -32,13 +32,12 @@ const DropzoneSimple = () => {
     })
       .then((response) => {
         setValue(response.data.id);
+        setPreview(URL.createObjectURL(selectFile));
+        setShowFile(true);
       })
       .catch((error) => {
         console.error(error.response.data);
       });
-
-    setPreview(URL.createObjectURL(selectFile));
-    setShowFile(true);
   }, []);
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
     onDrop,
@@ -55,6 +54,16 @@ const DropzoneSimple = () => {
     if (file !== null) {
       URL.revokeObjectURL(file.preview)
     }
+
+    if (dropzone) {
+      const previewImage = dropzone.getAttribute('data-preview');
+      const id = dropzone.getAttribute('data-id');
+      if (previewImage && id) {
+        setPreview(previewImage);
+        setValue(parseInt(id, 10));
+        setShowFile(true);
+      }
+    }
   }, [file]);
 
   function removeFile () {
@@ -62,6 +71,7 @@ const DropzoneSimple = () => {
       .then(() => {
         setFile(null);
         setShowFile(false);
+        setPreview('');
       })
       .catch((error) => {
         console.error(error.response.data);

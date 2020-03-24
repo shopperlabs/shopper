@@ -23,6 +23,13 @@ class Category extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['parent', 'previewImage'];
+
+    /**
      * Boot the model.
      */
     protected static function boot()
@@ -70,6 +77,34 @@ class Category extends Model
         }
 
         return __('N/A (No parent category)');
+    }
+
+    /**
+     * Get The image preview link.
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string|null
+     */
+    public function getPreviewImageLinkAttribute()
+    {
+        if ($this->previewImage) {
+            return url('/storage/categories/'.$this->previewImage->disk_name);
+        }
+
+        return null;
+    }
+
+    /**
+     * Return the current preview image id if exists.
+     *
+     * @return int|null
+     */
+    public function getPreviewImageIdAttribute()
+    {
+        if ($this->previewImage) {
+            return $this->previewImage->id;
+        }
+
+        return null;
     }
 
     /**

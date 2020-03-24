@@ -92,7 +92,6 @@
 
     &:focus {
       outline: none;
-      border-width: 2px;
       box-shadow: theme('boxShadow.outline-brand');
       border-color: theme('colors.brand.400') !important;
       @apply rounded-b-md;
