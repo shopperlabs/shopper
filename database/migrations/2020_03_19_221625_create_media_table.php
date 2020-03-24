@@ -22,6 +22,7 @@ class CreateMediaTable extends Migration
             $table->string('file_name');
             $table->string('file_size');
             $table->string('content_type');
+            $table->string('file_url');
             $table->string('field')->nullable();
             $table->boolean('is_public')->default(true);
             $table->smallInteger('sort_order')->default(1);

@@ -16,6 +16,7 @@ class Media extends Model
         'file_name',
         'file_size',
         'content_type',
+        'file_url',
         'field',
         'mediatable_type',
         'mediatable_id',

@@ -21,4 +21,9 @@ Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {
     Route::get('/setting', 'ShopController@setting')->name('setting');
 });
 
-Route::resource('categories', 'CategoryController');
+Route::namespace('Ecommerce')->group(function () {
+
+    Route::resource('categories', 'CategoryController');
+    Route::resource('brands', 'BrandController');
+
+});

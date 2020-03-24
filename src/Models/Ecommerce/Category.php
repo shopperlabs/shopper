@@ -80,34 +80,6 @@ class Category extends Model
     }
 
     /**
-     * Get The image preview link.
-     *
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string|null
-     */
-    public function getPreviewImageLinkAttribute()
-    {
-        if ($this->previewImage) {
-            return url('/storage/categories/'.$this->previewImage->disk_name);
-        }
-
-        return null;
-    }
-
-    /**
-     * Return the current preview image id if exists.
-     *
-     * @return int|null
-     */
-    public function getPreviewImageIdAttribute()
-    {
-        if ($this->previewImage) {
-            return $this->previewImage->id;
-        }
-
-        return null;
-    }
-
-    /**
      * Get all categories childs.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

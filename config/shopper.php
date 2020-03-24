@@ -160,7 +160,8 @@ return [
 
     'models' => [
 
-        'category' => \Shopper\Framework\Models\Ecommerce\Category::class,
+        'category'  => \Shopper\Framework\Models\Ecommerce\Category::class,
+        'brand'     => \Shopper\Framework\Models\Ecommerce\Brand::class,
 
     ],
 

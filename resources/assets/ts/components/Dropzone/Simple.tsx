@@ -72,6 +72,7 @@ const DropzoneSimple = () => {
         setFile(null);
         setShowFile(false);
         setPreview('');
+        setValue(0);
       })
       .catch((error) => {
         console.error(error.response.data);

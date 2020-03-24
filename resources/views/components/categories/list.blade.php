@@ -12,7 +12,7 @@
                 <div class="w-full pl-0 lg:pl-20 lg:pt-20 xl:pt-24">
                     <h3 class="text-primary-text font-medium text-xl mb-4">{{ __('Organize your products into categories') }}</h3>
                     <p class="text-gray-500 text-lg mb-3">{{ __('Create categories to help your customers find products.') }}</p>
-                    <a href="{{ route('shopper.categories.create') }}" class="btn btn-primary inline-flex px-6">{{ __('Create categories') }}</a>
+                    <a href="{{ route('shopper.categories.create') }}" class="btn btn-primary inline-flex px-6">{{ __('Create category') }}</a>
                 </div>
             </div>
         </div>
@@ -60,14 +60,14 @@
                         <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z"/>
                         </svg>
-                        <span class="ml-2">Sort</span>
+                        <span class="ml-2">{{ __('Sort') }}</span>
                     </button>
                 </div>
             </div>
             <div class="flex items-center px-4 py-4 sm:px-6">
                 <div class="min-w-0 flex-1 flex items-center">
                     <div class="flex-shrink-0 text-gray-800">
-                        {{ __('Name') }}
+                        {{ __('Title') }}
                     </div>
                     <div class="min-w-0 flex-1 items-center pr-4 md:grid md:grid-cols-2 md:gap-4">
                         <div></div>

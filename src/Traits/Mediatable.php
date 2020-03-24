@@ -7,6 +7,34 @@ use Shopper\Framework\Models\Media;
 trait Mediatable
 {
     /**
+     * Get The image preview link.
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string|null
+     */
+    public function getPreviewImageLinkAttribute()
+    {
+        if ($this->previewImage) {
+            return url('/storage'.$this->previewImage->file_url);
+        }
+
+        return null;
+    }
+
+    /**
+     * Return the current preview image id if exists.
+     *
+     * @return int|null
+     */
+    public function getPreviewImageIdAttribute()
+    {
+        if ($this->previewImage) {
+            return $this->previewImage->id;
+        }
+
+        return null;
+    }
+
+    /**
      * Get Image preview for a record.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphOne
