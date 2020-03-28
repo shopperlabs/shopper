@@ -15,6 +15,8 @@ import "alpinejs";
 // Class Components
 import "@/components/QuillEditor";
 import "@/components/Dropzone/Simple";
+import "@/components/DatePicker";
+import "@/components/TimePicker";
 
 // Pages Components
 import "@/pages/Login"

@@ -8,6 +8,7 @@
     <title>@yield('title', app_name()) | Shopper E-commerce</title>
     <meta name="description" content="@yield('meta_description', 'Laravel Shopper Admin Panel')">
     <meta name="author" content="@yield('meta_author', 'Arthur Monney')">
+    <meta name="locale" content="{{ app()->getLocale() }}">
     <meta name="base-url" content="{{ config('app.url') }}">
     <meta name="dashboard-url" content="{{ config('app.url').'/'.config('shopper.prefix') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -62,7 +63,7 @@
             </div>
             <div class="overflow-y-auto">
                 <main class="flex-1 relative z-0 min-h-screen -mb-12 focus:outline-none pt-3 lg:pt-0" tabindex="0" x-data x-init="$el.focus()">
-                    <div class="relative max-w-7xl mx-auto md:pt-6 px-4 sm:px-6 md:px-14 pb-16">
+                    <div class="relative max-w-7xl mx-auto md:pt-6 px-4 sm:px-6 md:px-10 pb-16">
                         <!-- Content -->
                         @yield('content')
                         <!-- /End content -->

@@ -25,5 +25,6 @@ Route::namespace('Ecommerce')->group(function () {
 
     Route::resource('categories', 'CategoryController');
     Route::resource('brands', 'BrandController');
+    Route::resource('collections', 'CollectionController');
 
 });

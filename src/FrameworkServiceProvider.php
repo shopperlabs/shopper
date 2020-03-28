@@ -100,7 +100,7 @@ class FrameworkServiceProvider extends ServiceProvider
             define('SHOPPER_PATH', realpath(__DIR__.'/../'));
         }
 
-        $this->mergeConfigFrom(__DIR__.'/../config/shopper.php', 'shopper');
+        $this->mergeConfigFrom(SHOPPER_PATH.'/config/shopper.php', 'shopper');
 
         // Register Default Dashboard Menu
         $this->app['events']->listen(BuildingSidebar::class, RegisterDashboardSidebar::class);

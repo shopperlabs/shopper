@@ -21,7 +21,7 @@ class CreateCategoriesTable extends Migration
 
             $table->string('name');
             $table->string('slug')->unique()->nullable();
-            $table->text('description')->nullable();
+            $table->longText('description')->nullable();
             $table->unsignedSmallInteger('sort_order')->default(0);
             $table->unsignedBigInteger('parent_id')->nullable();
 

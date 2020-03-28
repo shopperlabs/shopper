@@ -110,7 +110,7 @@ class ShopperServiceProvider extends ServiceProvider
             ShopperSidebarServiceProvider::class,
             SidebarServiceProvider::class,
             EventServiceProvider::class,
-            LivewireServiceProvider::class,
+            ComponentsServiceProvider::class,
         ];
     }
 

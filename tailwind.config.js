@@ -46,9 +46,6 @@ module.exports = {
             borderColor: theme('colors.brand.400'),
           },
         },
-        textarea: {
-
-        },
       }
     }),
   },
