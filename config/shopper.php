@@ -30,6 +30,18 @@ return [
     'currency'  => env('CURRENCY_SYMBOL', 'USD'),
 
     /*
+    |--------------------------------------------------------------------------
+    | PHP Locale Code
+    |--------------------------------------------------------------------------
+    |
+    | The PHP locale determines the default locale that will be used
+    | by the Carbon library when setting Carbon's localization.
+    |
+    */
+
+    'locale' => env('SHOPPER_LOCALE', 'en_US'),
+
+    /*
     |------------------------------------------------------------------ø--------
     | Default Theme
     |--------------------------------------------------------------------------

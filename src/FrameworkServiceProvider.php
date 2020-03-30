@@ -34,7 +34,7 @@ class FrameworkServiceProvider extends ServiceProvider
         'permission'      => PermissionMiddleware::class,
         'shopper.guest'   => RedirectIfAuthenticated::class,
         'dashboard'       => Dashboard::class,
-        'shopper.shop'    => RedirectIfShop::class
+        'shopper.shop'    => RedirectIfShop::class,
     ];
 
     /**
@@ -48,17 +48,18 @@ class FrameworkServiceProvider extends ServiceProvider
 
         $this->app->register(ShopperServiceProvider::class);
 
-        Route::middlewareGroup('shopper', config('shopper.middleware', []));
+        // Route::middlewareGroup();
+
         $this->registerMiddleware($this->app['router']);
 
-        // setLocale for php. Enables ->formatLocalized() with localized values for dates
-        setlocale(LC_TIME, config('app.locale_php'));
+        // setLocale for php. Enables ->formatLocalized() with localized values for dates.
+        setlocale(LC_TIME, config('shopper.locale'));
 
-        // setLocale to use Carbon source locales. Enables diffForHumans() localized
+        // setLocale to use Carbon source locales. Enables diffForHumans() localized.
         Carbon::setLocale(config('app.locale'));
 
         // Global Composer
-        // This class binds the $logged_in_user variable to every view
+        // This class binds the $logged_in_user variable to every view.
         view()->composer('*', GlobalComposer::class);
 
         // Backend Menu
@@ -84,6 +85,8 @@ class FrameworkServiceProvider extends ServiceProvider
      */
     public function registerMiddleware(Router $router)
     {
+        $router->middlewareGroup('shopper', config('shopper.middleware', []));
+
         foreach ($this->middlewares as $name => $middleware) {
             $router->aliasMiddleware($name, $middleware);
         }

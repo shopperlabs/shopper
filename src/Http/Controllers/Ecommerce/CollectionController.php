@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Shopper\Framework\Http\Requests\Ecommerce\CollectionRequest;
@@ -62,19 +63,24 @@ class CollectionController extends Controller
      */
     public function store(CollectionRequest $request)
     {
-        dd($request->all());
+        $datetime = null;
+
+        if ($request->input('date')) {
+            $datetime = Carbon::createFromFormat('Y-m-d H:i', $request->input('date').' '.($request->input('time') ?? now()->format('H:i')))->toDateTimeString();
+        }
 
         $collection = $this->repository->create([
             'name' => $request->input('name'),
             'description' => $request->input('body'),
             'type' => $request->input('type'),
+            'published_at' => $datetime,
         ]);
 
         if ($request->input('media_id') !== "0") {
             $media = $this->mediaRepository->getById($request->input('media_id'));
             $media->update([
                 'mediatable_type'   => config('shopper.models.collection'),
-                'mediatable_id'     => $collection->id
+                'mediatable_id'     => $collection->id,
             ]);
         }
 
@@ -105,10 +111,17 @@ class CollectionController extends Controller
      */
     public function update(CollectionRequest $request, $id)
     {
+        $datetime = null;
+
+        if ($request->input('date')) {
+            $datetime = Carbon::createFromFormat('Y-m-d H:i', $request->input('date').' '.($request->input('time') ?? now()->format('H:i')))->toDateTimeString();
+        }
+
         $collection = $this->repository->updateById($id, [
             'name' => $request->input('name'),
             'description' => $request->input('body'),
             'type' => $request->input('type'),
+            'published_at' => $datetime,
         ]);
 
         if ($request->input('media_id') !== "0") {
@@ -123,13 +136,13 @@ class CollectionController extends Controller
 
                 $media->update([
                     'mediatable_type'   => config('shopper.models.collection'),
-                    'mediatable_id'     => $collection->id
+                    'mediatable_id'     => $collection->id,
                 ]);
             }
 
             $media->update([
                 'mediatable_type'   => config('shopper.models.collection'),
-                'mediatable_id'     => $collection->id
+                'mediatable_id'     => $collection->id,
             ]);
         }
 

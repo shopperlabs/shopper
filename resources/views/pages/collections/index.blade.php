@@ -3,9 +3,9 @@
 
 @section('content')
 
-    @component('shopper::components.breadcrumb')
+    <x:breadcrumb>
         <span class="text-primary-text">{{ __('Collections') }}</span>
-    @endcomponent
+    </x:breadcrumb>
 
     <livewire:collection-list />
 

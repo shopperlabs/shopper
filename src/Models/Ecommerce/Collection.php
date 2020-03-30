@@ -23,6 +23,15 @@ class Collection extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'published_at'
+    ];
+
+    /**
      * The relations to eager load on every query.
      *
      * @var array
