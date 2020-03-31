@@ -22,7 +22,7 @@ class CategoryList extends Component
 
     public function paginationView()
     {
-        return 'shopper::components.wire-pagination-links';
+        return 'shopper::components.livewire.wire-pagination-links';
     }
 
     public function hydrate()
@@ -32,7 +32,7 @@ class CategoryList extends Component
 
     public function render()
     {
-        return view('shopper::components.categories.list', [
+        return view('shopper::components.livewire.categories.list', [
             'categories' => $this->repository->paginate(10),
         ]);
     }

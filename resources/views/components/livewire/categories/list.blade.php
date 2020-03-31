@@ -120,7 +120,7 @@
             </ul>
             <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                 <div class="flex-1 flex justify-between sm:hidden">
-                    {{ $categories->links('shopper::components.wire-mobile-pagination-links') }}
+                    {{ $categories->links('shopper::components.livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>

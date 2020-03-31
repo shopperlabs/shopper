@@ -3,10 +3,10 @@
 
 @section('content')
 
-    @component('shopper::components.breadcrumb')
+    <x:breadcrumb>
         <span class="text-primary-text">{{ __('Brands') }}</span>
-    @endcomponent
+    </x:breadcrumb>
 
-    @livewire('brand-list')
+    <livewire:brand-list />
 
 @endsection

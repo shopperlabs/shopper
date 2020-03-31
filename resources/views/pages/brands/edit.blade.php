@@ -3,13 +3,13 @@
 
 @section('content')
 
-    @component('shopper::components.breadcrumb')
+    <x:breadcrumb>
         <a href="{{ route('shopper.brands.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Brands') }}</a>
         <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
         </svg>
         <span class="text-primary-text">{{ __('Edit brand') }}</span>
-    @endcomponent
+    </x:breadcrumb>
 
     <div class="mt-6 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
@@ -52,12 +52,12 @@
         </div>
         <div class="mt-8 border-t pt-5 border-gray-200">
             <div class="flex justify-between">
-                @include('shopper::components.delete-action', [
-                    'title' => __('Delete').' '.$brand->name,
-                    'action' => __('Delete brand'),
-                    'message' => __("Are you sure you want to delete this brand? All this data will be removed. This action cannot be undone."),
-                    'url' => route('shopper.brands.destroy', $brand),
-                ])
+                <x:delete-action
+                    :title="$brand->name"
+                    action="brand"
+                    message="Are you sure you want to delete this brand? All this data will be removed. This action cannot be undone."
+                    :url="route('shopper.brands.destroy', $brand)"
+                />
                 <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
             </div>
         </div>

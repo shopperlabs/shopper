@@ -3,9 +3,9 @@
 
 @section('content')
 
-    @component('shopper::components.breadcrumb')
+    <x:breadcrumb>
         <span class="text-primary-text">{{ __('Overview') }}</span>
-    @endcomponent
+    </x:breadcrumb>
 
     <div class="mt-2 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">

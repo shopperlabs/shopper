@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Components\Livewire;
 
-use Carbon\Carbon;
 use Illuminate\View\Component;
 
 class DateTimePicker extends Component
@@ -17,7 +16,6 @@ class DateTimePicker extends Component
     /**
      * The component published_at state.
      *
-     * @var Carbon
      */
     public $published_at;
 
@@ -25,11 +23,12 @@ class DateTimePicker extends Component
      * Create the component instance.
      *
      * @param  bool  $show
-     * @param  Carbon  $published_at
+     * @param  $published_at
      * @return void
      */
     public function __construct(bool $show = false, $published_at = null)
     {
+        dump($published_at);
         $this->show = $show;
         $this->published_at = $published_at;
     }

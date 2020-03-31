@@ -38,7 +38,7 @@
                 <div class="hidden sm:block">
                     <div class="">
                         <nav class="-mb-px flex">
-                            <a href="#" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-collection-500 font-medium text-sm leading-5 text-collection-400 focus:outline-none focus:text-collection-500 focus:border-collection-500">
+                            <a href="#" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-brand-500 font-medium text-sm leading-5 text-brand-400 focus:outline-none focus:text-brand-500 focus:border-brand-500">
                                 {{ __('All') }}
                             </a>
                         </nav>
@@ -91,7 +91,7 @@
                                     </div>
                                     <div class="min-w-0 flex-1 items-center px-4 md:grid md:grid-cols-2 md:gap-4">
                                         <div>
-                                            <div class="text-sm leading-5 font-medium text-collection-400 truncate">{{ $collection->name }}</div>
+                                            <div class="text-sm leading-5 font-medium text-brand-400 truncate">{{ $collection->name }}</div>
                                             <div class="mt-1 flex items-center text-sm leading-5 text-gray-500">
                                                 <span class="truncate py-1 px-2 text-xs bg-gray-100 rounded-md">{{ $collection->slug }}</span>
                                             </div>

@@ -22,7 +22,7 @@ class BrandList extends Component
 
     public function paginationView()
     {
-        return 'shopper::components.wire-pagination-links';
+        return 'shopper::components.livewire.wire-pagination-links';
     }
 
     public function hydrate()
@@ -32,7 +32,7 @@ class BrandList extends Component
 
     public function render()
     {
-        return view('shopper::components.brands.list', [
+        return view('shopper::components.livewire.brands.list', [
             'brands' => $this->repository->paginate(10),
         ]);
     }
