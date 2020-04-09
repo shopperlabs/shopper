@@ -53,7 +53,7 @@ if (mix.inProduction()) {
         './resources/assets/ts/**/*.ts',
         './resources/assets/ts/**/*.tsx',
       ],
-      whitelistPatterns: [/nprogress/],
+      whitelistPatterns: [/nprogress/, /rc-$/, /pika-$/],
     })
     .options({
       // optimize js minification process

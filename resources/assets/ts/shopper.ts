@@ -24,3 +24,4 @@ import "@/pages/ShopInitialization";
 
 // Common script files
 import "@/template";
+import "../sass/plugins.scss";
