@@ -29,7 +29,7 @@ trait MigrationTrait
      */
     public function addCommonFields(Blueprint $table, bool $hasSoftDelete = false): void
     {
-        $table->bigIncrements('id');
+        $table->id();
         $table->timestamps();
 
         if ($hasSoftDelete) {
@@ -40,14 +40,14 @@ trait MigrationTrait
     /**
      * Link table to $tableName using $columnName.
      *
-     * @param  Blueprint $table          Laravel Blueprint
+     * @param  Blueprint  $table          Laravel Blueprint
      * @param  string    $columnName     MySQL table column name
      * @param  string    $tableName      MySQL table name
-     * @param  boolean   $fk_nullable    foreign key nullable status
+     * @param  boolean   $nullable       foreign key nullable status
      */
-    public function addForeignKey(Blueprint $table, $columnName, $tableName, $fk_nullable = true): void
+    public function addForeignKey(Blueprint $table, $columnName, $tableName, $nullable = true): void
     {
-        if ($fk_nullable) {
+        if ($nullable) {
             $table->unsignedBigInteger($columnName)->index()->nullable();
             $table->foreign($columnName)->references('id')->on($tableName)->onDelete('set null');
         } else {
@@ -59,8 +59,8 @@ trait MigrationTrait
     /**
      * Remove foreign key using $columnName.
      *
-     * @param  Blueprint $table       Laravel Blueprint
-     * @param  string    $columnName  Column on the table
+     * @param  Blueprint  $table       Laravel Blueprint
+     * @param  string  $columnName  Column on the table
      */
     public function removeLink(Blueprint $table, $columnName): void
     {

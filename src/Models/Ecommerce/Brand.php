@@ -63,4 +63,14 @@ class Brand extends Model
 
         $this->attributes['slug'] = $slug;
     }
+
+    /**
+     * Return products associated to the brand.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

@@ -63,7 +63,7 @@ class CollectionController extends Controller
      */
     public function store(CollectionRequest $request)
     {
-        $datetime = null;
+        $datetime = now();
 
         if ($request->input('date')) {
             $datetime = Carbon::createFromFormat('Y-m-d H:i', $request->input('date').' '.($request->input('time') ?? now()->format('H:i')))->toDateTimeString();
@@ -121,7 +121,7 @@ class CollectionController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('body'),
             'type' => $request->input('type'),
-            'published_at' => $datetime,
+            // 'published_at' => $datetime,
         ]);
 
         if ($request->input('media_id') !== "0") {

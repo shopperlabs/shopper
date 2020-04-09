@@ -65,7 +65,7 @@ class MediaController extends Controller
     public function remove($id)
     {
         $media = $this->repository->getById($id);
-        Storage::disk('public')->delete('/uploads/categories/'.$media->disk_name);
+        Storage::disk('public')->delete('/uploads/'.$media->disk_name);
 
         try {
             $media->delete();

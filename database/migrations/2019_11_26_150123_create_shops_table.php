@@ -17,7 +17,8 @@ class CreateShopsTable extends Migration
     public function up()
     {
         Schema::create($this->getTableName('shops'), function(Blueprint $table) {
-            $table->bigIncrements('id');
+            $this->addCommonFields($table);
+
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->string('phone_number');
@@ -33,7 +34,6 @@ class CreateShopsTable extends Migration
             $table->string('twitter_url')->nullable();
             $table->string('instagram_url')->nullable();
             $table->string('linkedin_url')->nullable();
-            $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('size_id')->references('id')->on($this->getTableName('shop_sizes'))->onDelete('CASCADE');

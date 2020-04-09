@@ -98,4 +98,14 @@ class Category extends Model
     {
         return $this->belongsTo(self::class, 'parent_id');
     }
+
+    /**
+     * Return products associated to the category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, '', 'category_id');
+    }
 }

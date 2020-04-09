@@ -5,7 +5,7 @@ namespace Shopper\Framework\Models\Ecommerce;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Traits\Mediatable;
 
-class Collection extends Model
+class Product extends Model
 {
     use Mediatable;
 
@@ -18,8 +18,8 @@ class Collection extends Model
         'name',
         'slug',
         'description',
+        'brand_id',
         'published_at',
-        'type',
     ];
 
     /**
@@ -45,8 +45,8 @@ class Collection extends Model
     {
         parent::boot();
 
-        static::created(function ($collection) {
-            $collection->update(['slug' => $collection->name]);
+        static::created(function ($product) {
+            $product->update(['slug' => $product->name]);
         });
     }
 
@@ -57,7 +57,7 @@ class Collection extends Model
      */
     public function getTable()
     {
-        return shopper_table('collections');
+        return shopper_table('products');
     }
 
     /**
@@ -75,12 +75,32 @@ class Collection extends Model
     }
 
     /**
-     * Return products associated to the collection.
+     * Return relation related to categories of the current product.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function products()
+    public function categories()
     {
-        return $this->belongsToMany(Product::class, '', 'collection_id');
+        return $this->belongsToMany(Category::class, '', 'product_id');
+    }
+
+    /**
+     * Return relation related to collections of the current product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class, '', 'product_id');
+    }
+
+    /**
+     * Return brand related to the current product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 }

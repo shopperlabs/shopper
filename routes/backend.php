@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Shopper\Framework\Shopper;
+
 /*
 |--------------------------------------------------------------------------
 | Backend Web Routes
@@ -8,10 +11,8 @@
 |
 */
 
-Route::redirect('/', \Shopper\Framework\Shopper::prefix() . '/dashboard', 301);
-Route::prefix('dashboard')->group(function() {
-    Route::get('/', 'DashboardController@index')->name('dashboard');
-});
+Route::redirect('/', Shopper::prefix() . '/dashboard', 301);
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::prefix('access')->group(function () {
     Route::get('users', 'UserController@index')->name('users.access');

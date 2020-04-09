@@ -17,20 +17,19 @@ class DateTimePicker extends Component
      * The component published_at state.
      *
      */
-    public $published_at;
+    public $publishedAt;
 
     /**
      * Create the component instance.
      *
      * @param  bool  $show
-     * @param  $published_at
+     * @param  $publishedAt
      * @return void
      */
-    public function __construct(bool $show = false, $published_at = null)
+    public function __construct($publishedAt = null, bool $show = false)
     {
-        dump($published_at);
         $this->show = $show;
-        $this->published_at = $published_at;
+        $this->publishedAt = $publishedAt;
     }
 
     /**

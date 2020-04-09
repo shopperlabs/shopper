@@ -80,7 +80,7 @@
                                 <div class="min-w-0 flex-1 flex items-center">
                                     <div class="flex-shrink-0">
                                         @if($collection->preview_image_link !== null)
-                                            <img class="h-10 w-10 rounded-md" src="{{ $collection->preview_image_link }}" alt="{{ $collection->name }}" />
+                                            <img class="h-10 w-10 rounded-md object-cover" src="{{ $collection->preview_image_link }}" alt="{{ $collection->name }}" />
                                         @else
                                             <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md">
                                                 <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
