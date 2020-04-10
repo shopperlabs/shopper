@@ -33,7 +33,7 @@ class CollectionList extends Component
     public function render()
     {
         return view('shopper::components.livewire.collections.list', [
-            'collections' => $this->repository->paginate(10),
+            'collections' => $this->repository->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 }

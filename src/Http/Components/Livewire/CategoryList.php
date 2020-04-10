@@ -33,7 +33,7 @@ class CategoryList extends Component
     public function render()
     {
         return view('shopper::components.livewire.categories.list', [
-            'categories' => $this->repository->paginate(10),
+            'categories' => $this->repository->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 }

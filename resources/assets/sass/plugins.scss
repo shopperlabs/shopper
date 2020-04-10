@@ -1,6 +1,10 @@
 // 0: Include Librairies
 @import "~react-quill/dist/quill.snow.css";
 
+// Custom Librairies
+@import 'components/inputnumber';
+@import "components/select2/core";
+
 // Custom style
 .quill-editor {
   .ql-container {

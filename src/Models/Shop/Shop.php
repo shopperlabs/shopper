@@ -4,6 +4,7 @@ namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Channel;
+use Shopper\Framework\Models\Ecommerce\Product;
 use Shopper\Framework\Models\Inventory;
 use Shopper\Framework\Models\User;
 
@@ -90,5 +91,15 @@ class Shop extends Model
     public function channels()
     {
         return $this->hasMany(Channel::class);
+    }
+
+    /**
+     * Return all shop's products.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

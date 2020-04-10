@@ -122,3 +122,15 @@ if (!function_exists('shopper_table')) {
         return $table;
     }
 }
+
+if (!function_exists('shopper_currency')) {
+    /**
+     * Return Shopper currency used.
+     *
+     * @return string
+     */
+    function shopper_currency(): string
+    {
+        return config('shopper.currency');
+    }
+}

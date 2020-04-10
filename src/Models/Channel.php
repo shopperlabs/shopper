@@ -19,6 +19,7 @@ class Channel extends Model
         'timezone',
         'url',
         'shop_id',
+        'default',
     ];
 
     /**

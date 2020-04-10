@@ -33,7 +33,7 @@ class BrandList extends Component
     public function render()
     {
         return view('shopper::components.livewire.brands.list', [
-            'brands' => $this->repository->paginate(10),
+            'brands' => $this->repository->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 }

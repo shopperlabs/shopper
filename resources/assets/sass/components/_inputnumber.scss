@@ -1,0 +1,135 @@
+.rc-input-number {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  width: 100%;
+  display: flex;
+  vertical-align: middle;
+  border-radius: 0.25rem;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+
+  &-focused, &:hover {
+    border-color: #007cc3;
+
+    .rc-input-number-input {
+      border-color: #007cc3;
+    }
+  }
+
+  &-handler {
+    text-align: center;
+    line-height: 12px;
+    overflow: hidden;
+    display: block;
+    touch-action: none;
+
+    &-active {
+      background: #ddd;
+    }
+  }
+
+  &-handler-up-inner, &-handler-down-inner {
+    color: #666666;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  &:hover {
+    border-color: #007cc3;
+
+    .rc-input-number-handler-up, .rc-input-number-handler-wrap {
+       border-color: #007cc3;
+    }
+  }
+
+  &-disabled:hover {
+    border-color: #007cc3;
+
+    .rc-input-number-handler-up, .rc-input-number-handler-wrap {
+       border-color: #d9d9d9;
+    }
+  }
+
+  &-input-wrap {
+    overflow: hidden;
+    height: 100%;
+    flex: 1;
+  }
+
+  &-input {
+    width: 100%;
+    -moz-appearance: textfield;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    background-color: #fff;
+    border-color: #e2e8f0;
+    border-width: 2px;
+    border-radius: 0.25rem 0 0 0.25rem;
+    border-right-width: 0;
+    padding-top: 0.5rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+  }
+
+  &-handler-wrap {
+    display: flex;
+    flex-direction: column;
+    border-width: 2px;
+    border-left-width: 1px;
+    border-color: #e2e8f0;
+    border-radius: 0 0.25rem 0.25rem 0;
+    width: 30px;
+    order: 2;
+  }
+
+  &-handler-up {
+    border-bottom: 1px solid #D9D9D9;
+    padding-top: 1px;
+    transition: all .3s;
+    flex: 1;
+
+    &-inner {
+      &:after {
+        content: '+';
+      }
+    }
+  }
+
+  &-handler-down {
+    transition: all .3s;
+    flex: 1;
+
+    &-inner {
+      &:after {
+        content: '-';
+      }
+    }
+  }
+
+  @mixin handler-disabled() {
+    opacity: 0.72;
+    &:hover {
+      color: #999;
+      border-color: #d9d9d9;
+    }
+  }
+
+  &-handler-down-disabled, &-handler-up-disabled {
+    @include handler-disabled;
+  }
+
+  &-disabled {
+    .rc-input-number-input {
+      opacity: 0.72;
+      cursor: not-allowed;
+      background-color: #f3f3f3;
+    }
+    .rc-input-number-handler {
+      @include handler-disabled;
+    }
+  }
+}

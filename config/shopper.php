@@ -181,7 +181,7 @@ return [
         'brand' => \Shopper\Framework\Models\Ecommerce\Brand::class,
 
         /**
-         * Eloquent model should be used to retrieve your brands. Of course,
+         * Eloquent model should be used to retrieve your collections. Of course,
          * it is often just the "Collection" model but you may use whatever you like.
          *
          * The model you want to use as a Collection model needs to extends the
@@ -189,6 +189,16 @@ return [
          */
 
         'collection'  => \Shopper\Framework\Models\Ecommerce\Collection::class,
+
+        /**
+         * Eloquent model should be used to retrieve your products. Of course,
+         * it is often just the "Product" model but you may use whatever you like.
+         *
+         * The model you want to use as a Product model needs to extends the
+         * `Shopper\Framework\Models\Ecommerce\Product` model.
+         */
+
+        'product'  => \Shopper\Framework\Models\Ecommerce\Product::class,
 
     ],
 

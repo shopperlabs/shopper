@@ -613,7 +613,7 @@ video {
   --color-primary-text: 75,85,99;
   --color-background: 244,245,247;
   --color-input-text: 37,47,63;
-  --color-input-bg: 244,245,247;
+  --color-input-bg: 255,255,255;
   --color-input-border: 210,214,220;
   --color-white: 255,255,255;
 }
@@ -625,7 +625,7 @@ video {
   --color-primary-text: 75,85,99;
   --color-background: 244,245,247;
   --color-input-text: 37,47,63;
-  --color-input-bg: 244,245,247;
+  --color-input-bg: 255,255,255;
   --color-input-border: 210,214,220;
   --color-white: 255,255,255;
 }

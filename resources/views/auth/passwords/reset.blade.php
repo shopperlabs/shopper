@@ -30,7 +30,7 @@
                     <label for="confirm_password" class="block text-sm leading-5 font-medium text-gray-700 mb-2">{{ __('Confirm Password') }}</label>
                     <input id="confirm_password" type="password" class="form-input" name="confirm_password" required>
                 </div>
-                <button type="submit" class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-brand hover:bg-brand-hover focus:outline-none focus:border-brand-hover active:bg-brand-hover transition duration-150 ease-in-out">
+                <button type="submit" class="group relative py-2 px-4 border border-transparent text-sm font-medium rounded-md text-on-primary bg-brand-400 hover:bg-brand-100 focus:outline-none focus:border-brand-400 active:bg-brand-400 transition duration-150 ease-in-out">
                     {{ __('Reset my password') }}
                 </button>
             </form>

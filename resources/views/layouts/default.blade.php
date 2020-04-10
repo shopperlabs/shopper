@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->
     @stack('styles')
-    @livewireStyles
+    <livewire:styles />
     @notifyCss
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
@@ -80,7 +80,7 @@
 
     @include('notify::messages')
     @stack('scripts')
-    @livewireScripts
+    <livewire:scripts />
     @notifyJs
 
     @if(! empty(config('shopper.resources.scripts')))

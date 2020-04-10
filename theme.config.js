@@ -13,7 +13,7 @@ const lightTheme = new Theme()
     'primary-text': colors.gray[600],
     background: colors.gray[100],
     'input-text': colors.gray[800],
-    'input-bg': colors.gray[100],
+    'input-bg': colors.white,
     'input-border': colors.gray[300],
 
     white: "#ffffff",

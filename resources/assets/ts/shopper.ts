@@ -17,6 +17,7 @@ import "@/components/QuillEditor";
 import "@/components/Dropzone/Simple";
 import "@/components/DatePicker";
 import "@/components/TimePicker";
+import "@/components/InputNumber";
 
 // Pages Components
 import "@/pages/Login"

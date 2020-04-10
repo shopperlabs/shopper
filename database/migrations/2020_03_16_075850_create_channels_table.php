@@ -20,10 +20,11 @@ class CreateChannelsTable extends Migration
             $this->addCommonFields($table);
 
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->nullable();
             $table->text('description')->nullable();
             $table->string('timezone')->nullable();
             $table->string('url')->nullable();
+            $table->boolean('default')->nullable();
 
             $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'), true);
         });

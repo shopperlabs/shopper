@@ -4,6 +4,10 @@
  * Every javascript single action must write here.
  */
 import axios from "axios";
+import jquery from "jquery";
+import "select2";
+
+const $: JQueryStatic = jquery;
 
 // Remove items on CRUD
 const element = document.getElementById('remove-item');
@@ -25,3 +29,10 @@ if (element) {
     });
   });
 }
+
+// jQuery Script
+$(() => {
+  $('.select-2').select2({
+    placeholder: "Search...",
+  });
+});

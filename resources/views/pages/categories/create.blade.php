@@ -11,7 +11,7 @@
         <span class="text-primary-text">{{ __('Create category') }}</span>
     </x:breadcrumb>
 
-    <div class="mt-6 md:flex md:items-center md:justify-between">
+    <div class="mt-4 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
             <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate pb-4">{{ __('Create Category') }}</h2>
         </div>
@@ -27,7 +27,8 @@
                             {!! Form::text('name', null, [
                                     'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
                                     'placeholder' => 'e.g.: Womens Shoes, Baby clothes',
-                                    'id' => 'name'
+                                    'id' => 'name',
+                                    'autocomplete' => 'off'
                                 ])
                             !!}
                         </div>

@@ -24,10 +24,23 @@ class CreateProductsTable extends Migration
             $table->string('sku')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->boolean('featured')->default(false);
-            $table->double('price')->nullable();
+            $table->decimal('price', 12, 4)->nullable();
+            $table->decimal('min_price', 12, 4)->nullable();
+            $table->decimal('max_price', 12, 4)->nullable();
             $table->dateTimeTz('published_at')->default(now());
             $table->boolean('backorder')->default(false);
             $table->boolean('requires_shipping')->default(false);
+
+            $table->decimal('weight_value', 10, 5)->default(0.00)->unsigned();
+            $table->string('weight_unit')->default('kg');
+            $table->decimal('height_value', 10, 5)->default(0.00)->unsigned();
+            $table->string('height_unit')->default('cm');
+            $table->decimal('width_value', 10, 5)->default(0.00)->unsigned();
+            $table->string('width_unit')->default('cm');
+            $table->decimal('depth_value', 10, 5)->default(0.00)->unsigned();
+            $table->string('depth_unit')->default('cm');
+            $table->decimal('volume_value', 10, 5)->default(0.00)->unsigned();
+            $table->string('volume_unit')->default('l');
 
             $this->addForeignKey($table, 'parent_id', $this->getTableName('products'));
             $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'));

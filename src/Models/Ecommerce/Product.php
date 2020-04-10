@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\Shop\Shop;
 use Shopper\Framework\Traits\Mediatable;
 
 class Product extends Model
@@ -17,9 +18,28 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
+        'sku',
         'description',
+        'featured',
         'brand_id',
+        'parent_id',
+        'shop_id',
+        'price',
+        'min_price',
+        'max_price',
         'published_at',
+        'backorder',
+        'requires_shipping',
+        'weight_value',
+        'weight_unit',
+        'height_value',
+        'height_unit',
+        'width_value',
+        'width_unit',
+        'depth_value',
+        'depth_unit',
+        'volume_value',
+        'volume_unit',
     ];
 
     /**
@@ -102,5 +122,15 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    /**
+     * Return shop related to the current product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id');
     }
 }
