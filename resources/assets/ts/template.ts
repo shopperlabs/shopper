@@ -5,6 +5,7 @@
  */
 import axios from "axios";
 import jquery from "jquery";
+import flatpickr from "flatpickr";
 import "select2";
 
 const $: JQueryStatic = jquery;
@@ -29,6 +30,17 @@ if (element) {
     });
   });
 }
+
+flatpickr(".timepicker", {
+  enableTime: true,
+  noCalendar: true,
+  dateFormat: "H:i",
+  time_24hr: true
+});
+
+flatpickr(".datepicker", {
+  minDate: "today"
+});
 
 // jQuery Script
 $(() => {

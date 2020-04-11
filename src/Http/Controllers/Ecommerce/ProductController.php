@@ -4,6 +4,7 @@ namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Shopper\Framework\Http\Requests\Ecommerce\ProductRequest;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
@@ -85,6 +86,17 @@ class ProductController extends Controller
         $collections = $this->collectionRepository->pluck('name', 'id');
 
         return view('shopper::pages.products.create', compact('brands', 'categories', 'collections'));
+    }
+
+    /**
+     * Store a newly product to the database.
+     *
+     * @param  ProductRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(ProductRequest $request)
+    {
+        dd($request->all());
     }
 
     /**

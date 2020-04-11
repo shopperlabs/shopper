@@ -1,4 +1,4 @@
-<div class="p-4 bg-gray-50" x-data="publishDate()">
+<div class="p-4 bg-gray-50 rounded-b-md" x-data="publishDate()">
     <div class="flex items-center justify-between">
         <span class="text-sm text-gray-400">{{ __('Publication date') }}</span>
         <button type="button" @click="open()">
@@ -8,8 +8,20 @@
         </button>
     </div>
     <div class="flex space-x-2 items-center mt-3" x-show="isOpen()">
-        <span id="date-picker" data-label="{{ __('Date') }}" data-value="{{ $publishedAt !== null ? $publishedAt->format('Y-m-d') : '' }}">&nbsp;</span>
-        <span id="time-picker" data-label="{{ __('Hour') }}" data-value="{{ $publishedAt !== null ? $publishedAt->format('H:i') : '' }}">&nbsp;</span>
+        {!! Form::text('date', null, [
+                'class' => 'form-input datepicker block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
+                'placeholder' => 'Date',
+                'id' => 'date',
+                'autocomplete' => 'off'
+            ])
+        !!}
+        {!! Form::text('time', null, [
+                'class' => 'form-input timepicker block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
+                'placeholder' => __("Hour"),
+                'id' => 'time',
+                'autocomplete' => 'off'
+            ])
+        !!}
         <button type="button" @click="close()">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -27,7 +39,9 @@
                 open() { this.show = true },
                 isOpen() { return this.show === true },
                 close() {
-                    this.show = false
+                    this.show = false;
+                    document.getElementById('date').value = "";
+                    document.getElementById('time').value = "";
                 },
             }
         }

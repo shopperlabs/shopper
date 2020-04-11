@@ -128,18 +128,46 @@
                         </div>
                     </div>
                 </div>
+                <div class="bg-white shadow rounded-md overflow-hidden">
+                    <div class="p-4">
+                        <h4 class="text-gray-500 font-medium pb-6 text-base">{{ __('Shipping') }}</h4>
+                        <div class="grid grid-cols-6 gap-6">
+                            <div class="col-span-6">
+                                <label class="inline-flex items-center text-sm font-medium leading-5 text-gray-700">{{ __("Actions") }}</label>
+                                <div class="mt-2 relative flex items-center space-x-6">
+                                    <div class="flex items-center">
+                                        <span x-data="{ value: false, toggle() { this.value = !this.value }, focused: false }" @focus="focused = true" @blur="focused = false" class="relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none" role="checkbox" tabindex="0" @click="toggle()" @keydown.space.prevent="toggle()" :aria-checked="value.toString()">
+                                            <input type="hidden" x-model="value" name="backorder" value="">
+                                            <span aria-hidden="true" :class="{ 'bg-brand-400': value, 'bg-gray-200': !value }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200"></span>
+                                            <span aria-hidden="true" :class="{ 'translate-x-5': value, 'translate-x-0': !value, 'shadow-outline-brand border-brand-100': focused }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform transition-transform ease-in-out duration-200"></span>
+                                        </span>
+                                        <span class="text-gray-500 ml-2 text-base">{{ __("This product can be returned") }}</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span x-data="{ value: false, toggle() { this.value = !this.value }, focused: false }" @focus="focused = true" @blur="focused = false" class="relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none" role="checkbox" tabindex="0" @click="toggle()" @keydown.space.prevent="toggle()" :aria-checked="value.toString()">
+                                            <input type="hidden" x-model="value" name="requires_shipping" value="">
+                                            <span aria-hidden="true" :class="{ 'bg-brand-400': value, 'bg-gray-200': !value }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200"></span>
+                                            <span aria-hidden="true" :class="{ 'translate-x-5': value, 'translate-x-0': !value, 'shadow-outline-brand border-brand-100': focused }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform transition-transform ease-in-out duration-200"></span>
+                                        </span>
+                                        <span class="text-gray-500 ml-2 text-base">{{ __("This product will be shipped") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="w-full lg:w-1/3 space-y-4 mt-4 lg:mt-0 lg:ml-4">
-                <div class="shadow overflow-hidden sm:rounded-md">
+            <div class="w-full lg:w-1/3 space-y-4 mt-4 lg:mt-0 lg:ml-6">
+                <div class="shadow rounded-md">
                     <div class="bg-white p-4">
-                        <h4 class="text-gray-500 font-medium text-base">{{ __('Product availability') }}</h4>
+                        <h4 class="text-gray-500 font-medium text-base">{{ __('Product Availability') }}</h4>
                         <p class="text-gray-400 text-sm mt-2">{{ __('Specify the date of availability of this product. If nothing is specified, today\'s date will be filled.') }}</p>
                     </div>
                     <x:datetime-picker />
                 </div>
 
                 <div class="bg-white p-4 shadow rounded-md">
-                    <h4 class="text-gray-500 font-medium pb-6 text-base">{{ __('Product preview') }}</h4>
+                    <h4 class="text-gray-500 font-medium pb-6 text-base">{{ __('Product Preview') }}</h4>
                     <div id="dropzone-simple"></div>
                 </div>
 

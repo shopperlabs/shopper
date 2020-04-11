@@ -43,8 +43,8 @@ class CreateProductsTable extends Migration
             $table->string('volume_unit')->default('l');
 
             $this->addForeignKey($table, 'parent_id', $this->getTableName('products'));
-            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'));
-            $this->addForeignKey($table, 'brand_id', $this->getTableName('brands'), true);
+            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'), false);
+            $this->addForeignKey($table, 'brand_id', $this->getTableName('brands'));
         });
     }
 
