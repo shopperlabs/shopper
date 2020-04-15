@@ -24,7 +24,7 @@ class CreateChannelsTable extends Migration
             $table->text('description')->nullable();
             $table->string('timezone')->nullable();
             $table->string('url')->nullable();
-            $table->boolean('default')->nullable();
+            $table->boolean('default')->default(false);
 
             $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'), true);
         });

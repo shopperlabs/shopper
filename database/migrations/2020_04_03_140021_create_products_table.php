@@ -22,6 +22,8 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug')->unique()->nullable();
             $table->string('sku')->unique()->nullable();
+            $table->string('barcode')->unique()->nullable();
+            $table->integer('security_stock')->default(0);
             $table->longText('description')->nullable();
             $table->boolean('featured')->default(false);
             $table->decimal('price', 12, 4)->nullable();
