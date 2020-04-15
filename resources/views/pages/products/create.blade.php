@@ -93,7 +93,7 @@
                         <p class="col-span-6 text-sm text-gray-400">{{ __("To allow negotiation on a product, compare the original price of the product with the minimum amount accepted. (Customers won’t see this)") }}</p>
                     </div>
                 </div>
-                <div class="bg-white shadow rounded-md overflow-hidden">
+                <div class="bg-white shadow rounded-md">
                     <div class="p-4">
                         <h4 class="text-gray-500 font-medium pb-6 text-base">{{ __('Inventory') }}</h4>
                         <div class="grid grid-cols-6 gap-6">
@@ -119,10 +119,35 @@
                                     !!}
                                 </div>
                             </div>
+                        </div>
+                        <div class="border-t border-gray-100 mt-4 grid grid-cols-6 gap-6 pt-3">
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="quantity" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Quantity") }}</label>
                                 <div class="mt-1 relative rounded-md shadow-sm">
                                     <span id="input-number"></span>
+                                </div>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3 relative" x-data="{ popup: false, toggle() { this.popup = !this.popup } }">
+                                <label for="security_stock" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Safety Stock") }}</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    {!! Form::number('security_stock', 0, [
+                                            'class' => 'form-input block w-full sm:text-sm sm:leading-5 pr-10 transition duration-150 ease-in-out',
+                                            'id' => 'security_stock',
+                                            'autocomplete' => 'off',
+                                        ])
+                                    !!}
+                                    <button @click="toggle()" type="button" class="cursor-pointer absolute inset-y-0 right-0 pr-3 flex items-center">
+                                        <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div
+                                    x-show="popup"
+                                    @click.away="popup = false"
+                                    x-transition:enter="transform ease-out duration-200 transition" x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2" x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0" x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                    class="absolute bottom-10 right-5 bg-gray-800 text-gray-50 px-3 py-1.5 text-sm rounded-md shadow-lg">
+                                    <span>{{ __("The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock") }}</span>
                                 </div>
                             </div>
                         </div>
@@ -134,22 +159,32 @@
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
                                 <label class="inline-flex items-center text-sm font-medium leading-5 text-gray-700">{{ __("Actions") }}</label>
-                                <div class="mt-2 relative flex items-center space-x-6">
-                                    <div class="flex items-center">
-                                        <span x-data="{ value: false, toggle() { this.value = !this.value }, focused: false }" @focus="focused = true" @blur="focused = false" class="relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none" role="checkbox" tabindex="0" @click="toggle()" @keydown.space.prevent="toggle()" :aria-checked="value.toString()">
-                                            <input type="hidden" x-model="value" name="backorder" value="">
-                                            <span aria-hidden="true" :class="{ 'bg-brand-400': value, 'bg-gray-200': !value }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200"></span>
-                                            <span aria-hidden="true" :class="{ 'translate-x-5': value, 'translate-x-0': !value, 'shadow-outline-brand border-brand-100': focused }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform transition-transform ease-in-out duration-200"></span>
-                                        </span>
-                                        <span class="text-gray-500 ml-2 text-base">{{ __("This product can be returned") }}</span>
+                                <div class="mt-2 space-y-4">
+                                    <div class="relative flex items-start">
+                                        <div class="absolute flex items-center h-5 mt-1">
+                                            <span x-data="{ value: false, toggle() { this.value = !this.value }, focused: false }" @focus="focused = true" @blur="focused = false" class="relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none" role="checkbox" tabindex="0" @click="toggle()" @keydown.space.prevent="toggle()" :aria-checked="value.toString()">
+                                                <input type="hidden" x-model="value" name="backorder" value="">
+                                                <span aria-hidden="true" :class="{ 'bg-brand-400': value, 'bg-gray-200': !value }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200"></span>
+                                                <span aria-hidden="true" :class="{ 'translate-x-5': value, 'translate-x-0': !value, 'shadow-outline-brand border-brand-100': focused }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform transition-transform ease-in-out duration-200"></span>
+                                            </span>
+                                        </div>
+                                        <div class="pl-12 text-sm leading-5">
+                                            <label for="comments" class="font-medium text-gray-700">{{ __("This product can be returned") }}</label>
+                                            <p class="text-gray-500">{{ __("Users have the option of returning this product if there is a problem or dissatisfaction.") }}</p>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center">
-                                        <span x-data="{ value: false, toggle() { this.value = !this.value }, focused: false }" @focus="focused = true" @blur="focused = false" class="relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none" role="checkbox" tabindex="0" @click="toggle()" @keydown.space.prevent="toggle()" :aria-checked="value.toString()">
-                                            <input type="hidden" x-model="value" name="requires_shipping" value="">
-                                            <span aria-hidden="true" :class="{ 'bg-brand-400': value, 'bg-gray-200': !value }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200"></span>
-                                            <span aria-hidden="true" :class="{ 'translate-x-5': value, 'translate-x-0': !value, 'shadow-outline-brand border-brand-100': focused }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform transition-transform ease-in-out duration-200"></span>
-                                        </span>
-                                        <span class="text-gray-500 ml-2 text-base">{{ __("This product will be shipped") }}</span>
+                                    <div class="relative flex items-start">
+                                        <div class="absolute flex items-center h-5 mt-1">
+                                            <span x-data="{ value: false, toggle() { this.value = !this.value }, focused: false }" @focus="focused = true" @blur="focused = false" class="relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none" role="checkbox" tabindex="0" @click="toggle()" @keydown.space.prevent="toggle()" :aria-checked="value.toString()">
+                                                <input type="hidden" x-model="value" name="requires_shipping" value="">
+                                                <span aria-hidden="true" :class="{ 'bg-brand-400': value, 'bg-gray-200': !value }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200"></span>
+                                                <span aria-hidden="true" :class="{ 'translate-x-5': value, 'translate-x-0': !value, 'shadow-outline-brand border-brand-100': focused }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform transition-transform ease-in-out duration-200"></span>
+                                            </span>
+                                        </div>
+                                        <div class="pl-12 text-sm leading-5">
+                                            <label for="comments" class="font-medium text-gray-700">{{ __("This product will be shipped") }}</label>
+                                            <p class="text-gray-500">{{ __("Reassure to fill in the information concerning the shipment of the product") }}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

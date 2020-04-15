@@ -4,11 +4,12 @@ namespace Shopper\Framework\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Shop\Shop;
+use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Traits\Mediatable;
 
 class Product extends Model
 {
-    use Mediatable;
+    use Mediatable, HasStock;
 
     /**
      * The attributes that are mass assignable.

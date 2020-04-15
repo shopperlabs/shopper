@@ -23,7 +23,7 @@ class CreateInventoryHistoriesTable extends Migration
             $table->string('reference_type')->nullable();
             $table->unsignedBigInteger('reference_id')->nullable();
             $table->integer('quantity');
-            $table->integer('old_quantity');
+            $table->integer('old_quantity')->default(0);
             $table->text('event')->nullable();
             $table->text('description')->nullable();
 
