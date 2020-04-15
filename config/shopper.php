@@ -161,16 +161,6 @@ return [
     'models' => [
 
         /**
-         * Eloquent model should be used to retrieve your categories. Of course,
-         * it is often just the "Category" model but you may use whatever you like.
-         *
-         * The model you want to use as a Category model needs to extends the
-         * `Shopper\Framework\Models\Ecommerce\Category` model.
-         */
-
-        'category'  => \Shopper\Framework\Models\Ecommerce\Category::class,
-
-        /**
          * Eloquent model should be used to retrieve your brands. Of course,
          * it is often just the "Brand" model but you may use whatever you like.
          *
@@ -179,6 +169,16 @@ return [
          */
 
         'brand' => \Shopper\Framework\Models\Ecommerce\Brand::class,
+
+        /**
+         * Eloquent model should be used to retrieve your categories. Of course,
+         * it is often just the "Category" model but you may use whatever you like.
+         *
+         * The model you want to use as a Category model needs to extends the
+         * `Shopper\Framework\Models\Ecommerce\Category` model.
+         */
+
+        'category'  => \Shopper\Framework\Models\Ecommerce\Category::class,
 
         /**
          * Eloquent model should be used to retrieve your collections. Of course,
