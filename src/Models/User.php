@@ -90,7 +90,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Define if user is an super admin
+     * Define if user is an super admin.
      *
      * @return bool
      */
@@ -100,7 +100,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Return User Fullname
+     * Return User Full Name.
      *
      * @return string
      */
@@ -112,7 +112,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Get user profile picture
+     * Get user profile picture.
      *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
      */
@@ -128,7 +128,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Get User Shop
+     * Get User Shop.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -138,7 +138,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Shop member
+     * Shop member.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

@@ -1,10 +1,88 @@
 <?php
 
-namespace App;
+namespace Shopper\Framework\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\Shop\Shop;
 
 class InventoryHistory extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'stockable_type',
+        'stockable_id',
+        'reference_type',
+        'reference_id',
+        'inventory_id',
+        'shop_id',
+        'user_id',
+        'event',
+        'quantity',
+        'old_quantity',
+        'description',
+    ];
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return shopper_table('inventory_histories');
+    }
+
+    /**
+     * Get histories related to a shop.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class, 'shop_id');
+    }
+
+    /**
+     * Get the inventory of the current history.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function inventory()
+    {
+        return $this->belongsTo(Inventory::class, 'inventory_id');
+    }
+
+    /**
+     * Get the user who adjusted the history quantity.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function stockable()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function reference()
+    {
+        return $this->morphTo();
+    }
 }

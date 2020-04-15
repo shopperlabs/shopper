@@ -20,6 +20,7 @@ class Product extends Model
         'slug',
         'sku',
         'description',
+        'security_stock',
         'featured',
         'brand_id',
         'parent_id',
@@ -101,7 +102,7 @@ class Product extends Model
      */
     public function categories()
     {
-        return $this->belongsToMany(Category::class, '', 'product_id');
+        return $this->belongsToMany(config('shopper.models.category'), shopper_table('category_product'), 'product_id');
     }
 
     /**
@@ -111,7 +112,7 @@ class Product extends Model
      */
     public function collections()
     {
-        return $this->belongsToMany(Collection::class, '', 'product_id');
+        return $this->belongsToMany(config('shopper.models.collection'), shopper_table('collection_product'), 'product_id');
     }
 
     /**
@@ -121,7 +122,7 @@ class Product extends Model
      */
     public function brand()
     {
-        return $this->belongsTo(Brand::class, 'brand_id');
+        return $this->belongsTo(config('shopper.models.brand'), 'brand_id');
     }
 
     /**

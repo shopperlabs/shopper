@@ -37,14 +37,13 @@ class Media extends Model
     ];
 
     /**
-     * Get all of the owning mediatable models.
+     * The accessors to append to the model's array form.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @var array
      */
-    public function mediatable()
-    {
-        return $this->morphTo();
-    }
+    protected $appends = [
+        'image_full_path',
+    ];
 
     /**
      * Get the table associated with the model.
@@ -54,5 +53,25 @@ class Media extends Model
     public function getTable()
     {
         return shopper_table('media');
+    }
+
+    /**
+     * Get The images link.
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
+    public function getImageFullPathAttribute()
+    {
+        return url('/storage'. $this->file_url);
+    }
+
+    /**
+     * Get all of the owning mediatable models.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function mediatable()
+    {
+        return $this->morphTo();
     }
 }

@@ -106,6 +106,6 @@ class Category extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, '', 'category_id');
+        return $this->belongsToMany(config('shopper.models.product'), shopper_table('category_product'), 'category_id');
     }
 }

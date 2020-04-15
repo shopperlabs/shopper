@@ -81,6 +81,6 @@ class Collection extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class, '', 'collection_id');
+        return $this->belongsToMany(config('shopper.models.product'), shopper_table('collection_product'), 'collection_id');
     }
 }
