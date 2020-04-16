@@ -3,9 +3,6 @@
 
 @section('content')
 
-    <x:breadcrumb>
-        <span class="text-primary-text">{{ __('Products') }}</span>
-    </x:breadcrumb>
 
 
 @endsection

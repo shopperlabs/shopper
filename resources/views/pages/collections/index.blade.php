@@ -3,10 +3,6 @@
 
 @section('content')
 
-    <x:breadcrumb>
-        <span class="text-primary-text">{{ __('Collections') }}</span>
-    </x:breadcrumb>
-
     <livewire:collection-list />
 
 @endsection
