@@ -30,6 +30,7 @@ composer.lock
 # Laravel Shopper
 #
 phpunit.xml
+.phpunit.result.cache
 
 # OSX
 #
