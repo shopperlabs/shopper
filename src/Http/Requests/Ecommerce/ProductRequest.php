@@ -14,8 +14,8 @@ class ProductRequest extends AbstractBaseRequest
     public function getStoreRules(): array
     {
         return [
-            'name'  => 'required',
-            'sku'  => 'unique:'.shopper_table('products').',sku',
+            'name'  => 'bail|required',
+            'sku'  => 'nullable|unique:'.shopper_table('products'),
             'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
         ];
     }
@@ -29,8 +29,8 @@ class ProductRequest extends AbstractBaseRequest
     {
         return [
             'name'  => 'sometimes|required',
-            'sku'  => 'sometimes|unique:'.shopper_table('products').',sku',
-            'brand_id' => 'sometimes|integer|nullable|exists:'.shopper_table('categories').',id',
+            'sku'  => 'sometimes|nullable|unique:'.shopper_table('products'),
+            'brand_id' => 'sometimes|integer|nullable|exists:'.shopper_table('brands').',id',
         ];
     }
 }

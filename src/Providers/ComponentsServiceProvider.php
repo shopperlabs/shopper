@@ -11,6 +11,7 @@ use Shopper\Framework\Http\Components\Livewire\BrandList;
 use Shopper\Framework\Http\Components\Livewire\CategoryList;
 use Shopper\Framework\Http\Components\Livewire\CollectionList;
 use Shopper\Framework\Http\Components\Livewire\DateTimePicker;
+use Shopper\Framework\Http\Components\Livewire\ProductList;
 
 class ComponentsServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,7 @@ class ComponentsServiceProvider extends ServiceProvider
         Livewire::component('category-list', CategoryList::class);
         Livewire::component('brand-list', BrandList::class);
         Livewire::component('collection-list', CollectionList::class);
+        Livewire::component('product-list', ProductList::class);
 
         /**
          * Blade Components.

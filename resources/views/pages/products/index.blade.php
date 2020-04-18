@@ -3,6 +3,6 @@
 
 @section('content')
 
-
+    <livewire:product-list />
 
 @endsection

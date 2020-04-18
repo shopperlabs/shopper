@@ -2,8 +2,10 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Shopper\Framework\Events\ProductCreated;
 use Shopper\Framework\Http\Requests\Ecommerce\ProductRequest;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
@@ -96,7 +98,65 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        dd($request->all());
+        $published_at = now();
+
+        if ($request->input('date')) {
+            $published_at = Carbon::createFromFormat('Y-m-d H:i', $request->input('date').' '.($request->input('time') ?? now()->format('H:i')))->toDateTimeString();
+        }
+
+        $product = $this->repository->create([
+            'name' => $request->input('name'),
+            'sku' => $request->input('sku'),
+            'barcode' => $request->input('barcode'),
+            'security_stock' => $request->input('security_stock'),
+            'description' => $request->input('body'),
+            'price' => $request->input('price'),
+            'brand_id' => $request->input('brand_id'),
+            'shop_id' => auth()->user()->shop->id,
+            'min_price' => $request->input('min_price'),
+            'max_price' => $request->input('max_price'),
+            'backorder' => $request->input('backorder') === "true" ? true : false,
+            'requires_shipping' => $request->input('requires_shipping') === "true" ? true : false,
+            'published_at' => $published_at,
+        ]);
+
+        if ($request->input('media_id') !== "0") {
+            $media = $this->mediaRepository->getById($request->input('media_id'));
+            $media->update([
+                'mediatable_type'   => config('shopper.models.product'),
+                'mediatable_id'     => $product->id
+            ]);
+        }
+
+        if ($request->input('categories')) {
+            $product->categories()->sync($request->input('categories'));
+        }
+
+        if ($request->input('collections')) {
+            $product->collections()->sync($request->input('collections'));
+        }
+
+        event(new ProductCreated($product, (int) $request->input('quantity')));
+
+        notify()->success(__('Product Successfully Created.'));
+
+        return redirect()->route('shopper.products.edit', $product);
+    }
+
+    /**
+     * Display Edit view.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(int $id)
+    {
+        $product = $this->repository->with('images')->getById($id);
+        $brands = $this->brandRepository->pluck('name', 'id');
+        $categories = $this->categoryRepository->pluck('name', 'id');
+        $collections = $this->collectionRepository->pluck('name', 'id');
+
+        return view('shopper::pages.products.edit', compact('product', 'brands', 'categories', 'collections'));
     }
 
     /**

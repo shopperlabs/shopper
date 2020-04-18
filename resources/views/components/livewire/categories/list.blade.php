@@ -71,7 +71,7 @@
                     </div>
                     <div class="min-w-0 flex-1 items-center pr-4 md:grid md:grid-cols-2 md:gap-4">
                         <div></div>
-                        <div class="text=gray-800">{{ __('Parent') }}</div>
+                        <div class="text-gray-800">{{ __('Parent') }}</div>
                     </div>
                 </div>
                 <div></div>

@@ -17,6 +17,8 @@
         </div>
     </div>
 
+    @include('shopper::partials.alert')
+
     {!! Form::open(['route' => 'shopper.products.store', 'files' => true]) !!}
         <div class="flex flex-col lg:flex-row mt-4">
             <div class="w-full lg:w-2/3 space-y-4">
@@ -109,11 +111,11 @@
                                 </div>
                             </div>
                             <div class="col-span-6 sm:col-span-3">
-                                <label for="sku" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Barcode (ISBN, UPC, GTIN, etc.)") }}</label>
+                                <label for="barcode" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Barcode (ISBN, UPC, GTIN, etc.)") }}</label>
                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                    {!! Form::text('sku', null, [
+                                    {!! Form::text('barcode', null, [
                                             'class' => 'form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
-                                            'id' => 'sku',
+                                            'id' => 'barcode',
                                             'autocomplete' => 'off',
                                         ])
                                     !!}

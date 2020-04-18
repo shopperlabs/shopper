@@ -97,6 +97,21 @@ class Product extends Model
     }
 
     /**
+     * Get the product SKU value.
+     *
+     * @param  string  $value
+     * @return array|\Illuminate\Contracts\Translation\Translator|string|null
+     */
+    public function getSkuAttribute($value)
+    {
+        if ($value) {
+            return $value;
+        }
+
+        return __("No SKU");
+    }
+
+    /**
      * Return relation related to categories of the current product.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

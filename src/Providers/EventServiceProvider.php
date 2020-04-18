@@ -3,8 +3,10 @@
 namespace Shopper\Framework\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Shopper\Framework\Events\ProductCreated;
 use Shopper\Framework\Events\ShopCreated;
 use Shopper\Framework\Listeners\ChannelSubscriber;
+use Shopper\Framework\Listeners\CreateProductSubscriber;
 use Shopper\Framework\Listeners\InventorySubscriber;
 
 class EventServiceProvider extends ServiceProvider
@@ -18,6 +20,10 @@ class EventServiceProvider extends ServiceProvider
         ShopCreated::class => [
             ChannelSubscriber::class,
             InventorySubscriber::class
+        ],
+
+        ProductCreated::class => [
+            CreateProductSubscriber::class,
         ],
     ];
 

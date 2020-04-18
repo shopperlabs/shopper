@@ -13,23 +13,67 @@
 
     <div class="mt-6 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate pb-4">{{ $product->name }}</h2>
+            <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate">{{ $product->name }}</h2>
+            <div class="md:my-4 ml-4 md:ml-0">
+                <a href="#" class="text-gray-600 text-base inline-flex items-center hover:text-gray-500 focus:text-gray-700 leading-5 transition duration-150 ease-in-out">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <span>{{ __('Duplicate') }}</span>
+                </a>
+            </div>
         </div>
     </div>
 
-    {!! Form::model($product, ['route' => ['shopper.products.update', $product], 'method' => 'put', 'files' => true]) !!}
-
-        <div class="mt-8 border-t pt-5 border-gray-200">
-            <div class="flex justify-between">
-                <x:delete-action
-                    :title="$product->name"
-                    action="product"
-                    message="Are you sure you want to delete this product? All this data will be removed. This action cannot be undone."
-                    :url="route('shopper.products.destroy', $product)"
-                />
-                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+    <div x-data="{ tab: 'detail' }">
+        <div class="sm:hidden">
+            <select aria-label="Selected tab" class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 transition ease-in-out duration-150">
+                <option selected>{{ __("Detail") }}</option>
+                <option>{{ __("Variants") }}</option>
+                <option>{{ __("Attributes") }}</option>
+                <option>{{ __("Inventory") }}</option>
+                <option>{{ __("Files") }}</option>
+            </select>
+        </div>
+        <div class="hidden sm:block">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex">
+                    <button type="button" @click="tab = 'detail' " class="whitespace-no-wrap py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'detail' }">
+                        {{ __("Detail") }}
+                    </button>
+                    <button type="button" @click="tab = 'variants' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'variants' }">
+                        {{ __("Variants") }}
+                    </button>
+                    <button type="button" @click="tab = 'attributes' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'attributes' }">
+                        {{ __("Attributes") }}
+                    </button>
+                    <button type="button" @click="tab = 'inventory' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'inventory' }">
+                        {{ __("Inventory") }}
+                    </button>
+                    <button type="button" @click="tab = 'files' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'files' }">
+                        {{ __("Files") }}
+                    </button>
+                </nav>
             </div>
         </div>
-    {!! Form::close() !!}
+
+        <div x-show="tab === 'detail'">
+            {!! Form::model($product, ['route' => ['shopper.products.update', $product], 'method' => 'put', 'files' => true]) !!}
+
+            <div class="mt-8 border-t pt-5 border-gray-200">
+                <div class="flex justify-between">
+                    <x:delete-action
+                        :title="$product->name"
+                        action="product"
+                        message="Are you sure you want to delete this product? All this data will be removed. This action cannot be undone."
+                        :url="route('shopper.products.destroy', $product)"
+                    />
+                    <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                </div>
+            </div>
+            {!! Form::close() !!}
+        </div>
+
+    </div>
 
 @endsection
