@@ -114,17 +114,17 @@
                                                 </div>
                                                 <div class="ml-4">
                                                     <div class="text-sm leading-5 font-medium text-gray-900">{{ $product->name }}</div>
-                                                    <div class="text-sm leading-5 text-gray-500">{{ $product->sku }}</div>
+                                                    <div class="text-sm leading-5 text-gray-500">{{ $product->sku ?? __("No SKU") }}</div>
                                                 </div>
                                             </a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                          <div class="flex items-center">
-                                              <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-semibold rounded-full {{ $product->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                                                  {{ $product->stock }}
-                                              </span>
-                                              {{ __("in stock") }}
-                                          </div>
+                                            <div class="flex items-center">
+                                                <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-semibold rounded-full {{ $product->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                                                    {{ $product->stock }}
+                                                </span>
+                                                {{ __("in stock") }}
+                                            </div>
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                                             <div class="text-sm leading-5 text-gray-900">

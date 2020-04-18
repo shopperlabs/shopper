@@ -151,12 +151,77 @@ class ProductController extends Controller
      */
     public function edit(int $id)
     {
-        $product = $this->repository->with('images')->getById($id);
+        $product = $this->repository->with('inventoryHistories')->getById($id);
         $brands = $this->brandRepository->pluck('name', 'id');
         $categories = $this->categoryRepository->pluck('name', 'id');
         $collections = $this->collectionRepository->pluck('name', 'id');
 
         return view('shopper::pages.products.edit', compact('product', 'brands', 'categories', 'collections'));
+    }
+
+    /**
+     * Update Product.
+     *
+     * @param  ProductRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(ProductRequest $request, int $id)
+    {
+        $published_at = now();
+
+        if ($request->input('date')) {
+            $published_at = Carbon::createFromFormat('Y-m-d H:i', $request->input('date').' '.($request->input('time') ?? now()->format('H:i')))->toDateTimeString();
+        }
+
+        $product = $this->repository->updateById($id, [
+            'name' => $request->input('name'),
+            'sku' => $request->input('sku'),
+            'barcode' => $request->input('barcode'),
+            'security_stock' => $request->input('security_stock'),
+            'description' => $request->input('body'),
+            'price' => $request->input('price'),
+            'brand_id' => $request->input('brand_id'),
+            'min_price' => $request->input('min_price'),
+            'max_price' => $request->input('max_price'),
+            'backorder' => $request->input('backorder') === "true" ? true : false,
+            'requires_shipping' => $request->input('requires_shipping') === "true" ? true : false,
+            'published_at' => $published_at,
+        ]);
+
+        if ($request->input('media_id') !== "0") {
+
+            // Get the current Media
+            $media = $this->mediaRepository->getById($request->input('media_id'));
+            // dd($category->previewImage);
+
+            if ($product->previewImage && $product->previewImage->id !== (int) $request->input('media_id')) {
+                // Remove media from the given category
+                $product->previewImage()->delete();
+
+                $media->update([
+                    'mediatable_type'   => config('shopper.models.product'),
+                    'mediatable_id'     => $product->id
+                ]);
+            }
+
+            $media->update([
+                'mediatable_type'   => config('shopper.models.product'),
+                'mediatable_id'     => $product->id
+            ]);
+        }
+
+        if ($request->input('categories')) {
+            $product->categories()->sync($request->input('categories'));
+        }
+
+        if ($request->input('collections')) {
+            $product->collections()->sync($request->input('collections'));
+        }
+
+        notify()->success(__('Product Successfully Updated'));
+
+        return redirect()->route('shopper.products.edit', $product);
     }
 
     /**

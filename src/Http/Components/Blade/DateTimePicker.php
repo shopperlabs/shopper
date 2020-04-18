@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Components\Livewire;
+namespace Shopper\Framework\Http\Components\Blade;
 
 use Illuminate\View\Component;
 
@@ -11,7 +11,7 @@ class DateTimePicker extends Component
      *
      * @var bool
      */
-    public bool $show;
+    public $show;
 
     /**
      * The component published_at state.

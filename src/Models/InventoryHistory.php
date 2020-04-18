@@ -27,6 +27,24 @@ class InventoryHistory extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+      'inventory'
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+      'adjustment'
+    ];
+
+    /**
      * Get the table associated with the model.
      *
      * @return string
@@ -34,6 +52,20 @@ class InventoryHistory extends Model
     public function getTable()
     {
         return shopper_table('inventory_histories');
+    }
+
+    /**
+     * Get the inventory history adjustment.
+     *
+     * @return string
+     */
+    public function getAdjustmentAttribute()
+    {
+        if ($this->old_quantity > 0) {
+            return '+'. $this->old_quantity;
+        }
+
+        return '-'. $this->old_quantity;
     }
 
     /**

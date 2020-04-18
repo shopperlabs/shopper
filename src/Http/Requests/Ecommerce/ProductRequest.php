@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Requests\Ecommerce;
 
+use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Requests\AbstractBaseRequest;
 
 class ProductRequest extends AbstractBaseRequest
@@ -29,7 +30,11 @@ class ProductRequest extends AbstractBaseRequest
     {
         return [
             'name'  => 'sometimes|required',
-            'sku'  => 'sometimes|nullable|unique:'.shopper_table('products'),
+            'sku'  => [
+                'sometimes',
+                'nullable',
+                Rule::unique(shopper_table('products'))->ignore($this->route()->parameter('product'))
+            ],
             'brand_id' => 'sometimes|integer|nullable|exists:'.shopper_table('brands').',id',
         ];
     }

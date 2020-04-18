@@ -17,7 +17,6 @@ const CustomInputNumber = () => {
 
       if (inputValue) {
         setDefaultValue(parseInt(inputValue, 10));
-        setValue(parseInt(inputValue, 10));
       }
 
       if (updateAction) {
@@ -27,20 +26,18 @@ const CustomInputNumber = () => {
   }, []);
 
   function onChange(current: number) {
-    console.log('onChange:', current);
     setValue(current);
   }
 
   return (
     <div className="flex items-center">
+      {isUpdate && <p className="text-sm font-medium text-gray-600 mr-4">{defaultValue + value}</p>}
       <InputNumber
         aria-label="Quantity"
-        min={0}
         value={value}
         onChange={onChange}
         name="quantity"
       />
-      {isUpdate && <p className="text-sm font-medium text-gray-600">{defaultValue + value}</p>}
     </div>
   );
 };

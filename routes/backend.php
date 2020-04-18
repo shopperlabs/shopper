@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Shopper\Framework\Http\Controllers\Ecommerce\ProductImageController;
 use Shopper\Framework\Shopper;
 
 /*
@@ -28,5 +29,8 @@ Route::namespace('Ecommerce')->group(function () {
     Route::resource('brands', 'BrandController');
     Route::resource('collections', 'CollectionController');
     Route::resource('products', 'ProductController');
+    Route::post('/product/images/upload/{id}', [ProductImageController::class, 'store'])->name('products.upload');
+    Route::get('/product/images/{id}', [ProductImageController::class, 'index'])->name('products.images');
+    Route::delete('/product/image/remove/{id}', [ProductImageController::class, 'delete'])->name('products.image.remove');
 
 });

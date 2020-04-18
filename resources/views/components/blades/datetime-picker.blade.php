@@ -8,14 +8,14 @@
         </button>
     </div>
     <div class="flex space-x-2 items-center mt-3" x-show="isOpen()">
-        {!! Form::text('date', null, [
+        {!! Form::text('date', $publishedAt !== null ? $publishedAt->format('Y-m-d') : null, [
                 'class' => 'form-input datepicker block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
                 'placeholder' => 'Date',
                 'id' => 'date',
                 'autocomplete' => 'off'
             ])
         !!}
-        {!! Form::text('time', null, [
+        {!! Form::text('time', $publishedAt !== null ? $publishedAt->format('H:i') : null, [
                 'class' => 'form-input timepicker block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
                 'placeholder' => __("Hour"),
                 'id' => 'time',
@@ -33,9 +33,11 @@
 @push('scripts')
 
     <script>
+        var value = @json($show);
+
         function publishDate() {
             return {
-                show: false,
+                show: value,
                 open() { this.show = true },
                 isOpen() { return this.show === true },
                 close() {

@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
 use Shopper\Framework\Http\Components\Blade\Breadcrumb;
 use Shopper\Framework\Http\Components\Blade\DeleteAction;
+use Shopper\Framework\Http\Components\Blade\DateTimePicker;
 use Shopper\Framework\Http\Components\Livewire\BrandList;
 use Shopper\Framework\Http\Components\Livewire\CategoryList;
 use Shopper\Framework\Http\Components\Livewire\CollectionList;
-use Shopper\Framework\Http\Components\Livewire\DateTimePicker;
 use Shopper\Framework\Http\Components\Livewire\ProductList;
 
 class ComponentsServiceProvider extends ServiceProvider
