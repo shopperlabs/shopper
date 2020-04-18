@@ -50,8 +50,12 @@ module.exports = {
     }),
   },
   variants: {
-    space: ['responsive'],
     translate: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    backgroundColor: ['responsive', 'hover', 'focus', 'group-hover', 'focus-within'],
+    textColor: ['responsive', 'hover', 'focus', 'group-hover', 'focus-within'],
+    fontFamily: ['responsive', 'hover', 'focus'],
+    zIndex: ['responsive', 'focus'],
+    space: ['responsive'],
   },
   plugins: [
     require('@tailwindcss/ui'),
