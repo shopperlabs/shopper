@@ -134,3 +134,15 @@ if (!function_exists('shopper_currency')) {
         return config('shopper.currency');
     }
 }
+
+if (!function_exists('shopper_prefix')) {
+    /**
+     * Return Shopper prefix used.
+     *
+     * @return string
+     */
+    function shopper_prefix(): string
+    {
+        return Shopper::prefix();
+    }
+}

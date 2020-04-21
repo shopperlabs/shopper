@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Shopper\Framework\Http\Controllers\Ecommerce\ProductImageController;
+use Shopper\Framework\Http\Controllers\ProfileController;
 use Shopper\Framework\Shopper;
 
 /*
@@ -14,6 +15,10 @@ use Shopper\Framework\Shopper;
 
 Route::redirect('/', Shopper::prefix() . '/dashboard', 301);
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+Route::prefix('profile')->group(function () {
+    Route::get('/{section?}', [ProfileController::class, 'profile'])->name('profile');
+});
 
 Route::prefix('access')->group(function () {
     Route::get('users', 'UserController@index')->name('users.access');

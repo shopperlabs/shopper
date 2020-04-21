@@ -24,6 +24,6 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('shopper::pages.user.index');
+        return view('shopper::pages.users.index');
     }
 }

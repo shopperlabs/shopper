@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller;
 class DashboardController extends Controller
 {
     /**
-     * Display Shopper Dashboard
+     * Display Shopper Dashboard.
      *
      * @return \Illuminate\View\View
      */
