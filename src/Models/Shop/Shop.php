@@ -7,9 +7,12 @@ use Shopper\Framework\Models\Channel;
 use Shopper\Framework\Models\Ecommerce\Product;
 use Shopper\Framework\Models\Inventory;
 use Shopper\Framework\Models\User;
+use Shopper\Framework\Traits\Mediatable;
 
 class Shop extends Model
 {
+    use Mediatable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +26,9 @@ class Shop extends Model
         'address',
         'logo_url',
         'cover_url',
+        'country',
+        'city',
+        'post_code',
         'size_id',
         'owner_id',
         'facebook_url',

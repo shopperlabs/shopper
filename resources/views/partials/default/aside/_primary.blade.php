@@ -4,7 +4,7 @@
             <img class="h-15 w-auto" src="{{ asset('shopper/images/logo-white.svg') }}" alt="Shopper" />
         </a>
         <div class="h-full pt-5 pb-4 overflow-y-auto">
-            {!! $primaryMenu->asUl(['class' => 'mt-5 px-2 space-y-1 flex flex-col items-center']) !!}
+            {!! $primaryMenu->asUl(['class' => 'primary-menu mt-5 px-2 space-y-2 flex flex-col items-center']) !!}
         </div>
     </div>
     <div class="flex-shrink-0 flex flex-col items-center space-y-3 pb-4">

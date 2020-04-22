@@ -19,6 +19,7 @@ import "@/components/FilePond";
 import "@/components/DatePicker";
 import "@/components/TimePicker";
 import "@/components/InputNumber";
+import "@/components/CountrySelector";
 
 // Pages Components
 import "@/pages/Login"

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Shopper\Framework\Http\Controllers\Ecommerce\ProductImageController;
 use Shopper\Framework\Http\Controllers\ProfileController;
+use Shopper\Framework\Http\Controllers\ShopController;
 use Shopper\Framework\Shopper;
 
 /*
@@ -25,7 +26,8 @@ Route::prefix('access')->group(function () {
 });
 
 Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {
-    Route::get('/setting', 'ShopController@setting')->name('setting');
+    Route::get('/setting', [ShopController::class, 'setting'])->name('setting');
+    Route::put('/update/{store}', [ShopController::class, 'update'])->name('update');
 });
 
 Route::namespace('Ecommerce')->group(function () {

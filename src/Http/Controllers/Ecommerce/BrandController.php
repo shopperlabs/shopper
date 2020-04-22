@@ -111,7 +111,6 @@ class BrandController extends Controller
 
             // Get the current Media
             $media = $this->mediaRepository->getById($request->input('media_id'));
-            // dd($brand->previewImage);
 
             if ($brand->previewImage && $brand->previewImage->id !== (int) $request->input('media_id')) {
                 // Remove media from the given brand

@@ -20,9 +20,4 @@ class ProfileController extends Controller
 
         return view('shopper::pages.users.profile', compact('section'));
     }
-
-    public function security()
-    {
-        return view('shopper::pages.users.security');
-    }
 }

@@ -8,6 +8,15 @@
   }
 }
 
+.primary-menu {
+  .active {
+    @apply bg-primary-dark;
+    &:hover {
+      background-color: theme('colors.primary-dark') !important;
+    }
+  }
+}
+
 .btn {
   @apply inline-flex justify-center w-auto text-sm transition ease-in-out duration-150 block px-4 py-2 rounded-md leading-6;
 }

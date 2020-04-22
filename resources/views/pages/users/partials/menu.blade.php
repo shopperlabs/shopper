@@ -1,6 +1,6 @@
 <div class="mt-6 md:flex md:items-center md:justify-between">
     <div class="flex-1 min-w-0">
-        <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate">{{ __('My profile') }}</h2>
+        <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate pb-4 border-b border-gray-200">{{ __('My profile') }}</h2>
     </div>
 </div>
 
