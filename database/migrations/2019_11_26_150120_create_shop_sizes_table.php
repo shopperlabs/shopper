@@ -17,12 +17,11 @@ class CreateShopSizesTable extends Migration
     public function up()
     {
         Schema::create($this->getTableName('shop_sizes'), function(Blueprint $table) {
-            $table->bigIncrements('id');
+            $this->addCommonFields($table);
             $table->string('name');
             $table->string('size');
             $table->string('description')->nullable();
             $table->integer('max_products')->nullable();
-            $table->timestamps();
         });
     }
 

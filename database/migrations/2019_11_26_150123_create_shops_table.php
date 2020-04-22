@@ -21,22 +21,23 @@ class CreateShopsTable extends Migration
 
             $table->string('name')->unique();
             $table->string('email')->unique();
-            $table->string('phone_number');
+            $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->longText('description')->nullable();
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
+            $table->string('city')->nullable();
+            $table->string('post_code')->nullable();
+            $table->string('country')->nullable();
             $table->string('logo_url')->nullable();
             $table->string('cover_url')->nullable();
-            $table->bigInteger('size_id')->unsigned();
-            $table->bigInteger('owner_id')->unsigned();
             $table->string('facebook_url')->nullable();
             $table->string('twitter_url')->nullable();
             $table->string('instagram_url')->nullable();
             $table->string('linkedin_url')->nullable();
 
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->foreign('size_id')->references('id')->on($this->getTableName('shop_sizes'))->onDelete('CASCADE');
+            $this->addForeignKey($table, 'owner_id', 'users', false);
+            $this->addForeignKey($table, 'size_id', $this->getTableName('shop_sizes'), false);
         });
     }
 

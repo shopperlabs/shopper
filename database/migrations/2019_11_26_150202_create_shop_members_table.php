@@ -17,12 +17,9 @@ class CreateShopMembersTable extends Migration
     public function up()
     {
         Schema::create($this->getTableName('shop_members'), function(Blueprint $table) {
-            $table->unsignedBigInteger('shop_id');
-            $table->unsignedBigInteger('user_id');
-            $table->primary(['user_id', 'shop_id'], 'shop_members_shop_id_user_id_primary');
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->foreign('shop_id')->references('id')->on($this->getTableName('shops'))->onDelete('CASCADE');
+            $this->addCommonFields($table);
+            $this->addForeignKey($table, 'user_id', 'users', false);
+            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'), false);
         });
     }
 
