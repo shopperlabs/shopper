@@ -35,8 +35,12 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapAuthRoutes();
+
         $this->mapBackendRoutes();
+
         $this->mapApiRoutes();
+
+        $this->mapCustomBackendRoute();
     }
 
     /**
@@ -67,6 +71,20 @@ class RouteServiceProvider extends ServiceProvider
             ->as('shopper.')
             ->namespace($this->namespace)
             ->group(realpath(SHOPPER_PATH . '/routes/backend.php'));
+    }
+
+    /**
+     * Define the "custom backend" routes for the application.
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    public function mapCustomBackendRoute()
+    {
+        Route::middleware(array_merge(config('shopper.middleware'), ['dashboard']))
+            ->prefix(Shopper::prefix())
+            ->namespace(config('shopper.controllers.namespace'))
+            ->group(base_path('routes/shopper.php'));
     }
 
     /**
