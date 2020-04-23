@@ -18,7 +18,7 @@ class SymlinkCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create a symbolic link from "vendor/shopper" to "public/shopper" and add Storage simnolic link';
+    protected $description = 'Create a symbolic link from "vendor/shopper" to "public/shopper" and add Storage symbolic link';
 
     /**
      * Execute the console command.
