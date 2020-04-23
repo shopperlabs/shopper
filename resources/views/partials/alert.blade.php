@@ -1,5 +1,5 @@
 @if($errors->any())
-    <div class="rounded-md bg-red-50 p-4 shadow-md">
+    <div class="rounded-t-md bg-red-50 p-4">
         <div class="flex">
             <div class="flex-shrink-0">
                 <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">

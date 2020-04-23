@@ -13,6 +13,10 @@ class ProductCreated
      * @var Product
      */
     public Product $product;
+
+    /**
+     * @var int
+     */
     public int $quantity;
 
     /**

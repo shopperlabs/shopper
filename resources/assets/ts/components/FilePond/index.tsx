@@ -15,7 +15,7 @@ import BlogLoader from "@/components/Loaders/BlogLoader";
 registerPlugin(FilePondPluginImageExifOrientation);
 
 const filePond = document.getElementById('filepond');
-const dashboardURL: any = (document.querySelector('meta[name="dashboard-url"]') as Element).getAttribute('content');
+const fetchURL: any = filePond?.getAttribute('data-fetch-images');
 
 type ImageType = {
   id: number;
@@ -36,10 +36,9 @@ const FilePondUpload = () => {
   useEffect(() => {
     if (filePond) {
       const uploadURL: any = filePond.getAttribute('data-url');
-      const productId: any = filePond.getAttribute('data-product-id');
       setUrl(uploadURL);
 
-      axios.get(`${dashboardURL}/product/images/${productId}`)
+      axios.get(`${fetchURL}`)
         .then((response) => {
           setLoading(false);
           setImages(response.data.images);
@@ -48,9 +47,7 @@ const FilePondUpload = () => {
   }, []);
 
   function getAllImage() {
-    const productId: any = filePond?.getAttribute('data-product-id');
-
-    axios.get(`${dashboardURL}/product/images/${productId}`)
+    axios.get(`${fetchURL}`)
       .then((response) => {
         setImages(response.data.images);
       });
@@ -107,6 +104,7 @@ const FilePondUpload = () => {
           }}
           onprocessfile={() => {
             setIsOpen(true);
+            setTimeout(() => { setFiles([]); }, 1000);
             getAllImage();
           }}
           onremovefile={(file) => {
@@ -114,7 +112,7 @@ const FilePondUpload = () => {
           }}
         />
         {loading && (
-          <div className="flex items-center overflow-hidden max-w-5xl py-4 space-x-4 my-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-hidden my-8">
             <div className="bg-white flex items-center justify-center p-6 rounded-md shadow-md">
               <BlogLoader />
             </div>

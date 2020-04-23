@@ -1,27 +1,28 @@
 <div x-show="tab === 'detail'" class="mt-8">
 
-    @include('shopper::partials.alert')
-
     {!! Form::model($product, ['route' => ['shopper.products.update', $product], 'method' => 'put', 'files' => true]) !!}
         <div class="flex flex-col lg:flex-row">
             <div class="w-full lg:w-2/3 space-y-4">
-                <div class="bg-white p-4 shadow rounded-md">
-                    <div class="w-full mb-3">
-                        <label for="name" class="block text-sm font-medium leading-5 text-gray-700">{{ __('Name') }}</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            {!! Form::text('name', null, [
-                                    'class' => 'form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
-                                    'placeholder' => 'e.g.: MackBook Retina 16',
-                                    'id' => 'name',
-                                    'autocomplete' => 'off'
-                                ])
-                            !!}
+                <div class="bg-white shadow rounded-md">
+                    @include('shopper::partials.alert')
+                    <div class="p-4">
+                        <div class="w-full mb-3">
+                            <label for="name" class="block text-sm font-medium leading-5 text-gray-700">{{ __('Name') }}</label>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                {!! Form::text('name', null, [
+                                        'class' => 'form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
+                                        'placeholder' => 'e.g.: MackBook Retina 16',
+                                        'id' => 'name',
+                                        'autocomplete' => 'off'
+                                    ])
+                                !!}
+                            </div>
                         </div>
-                    </div>
-                    <div class="w-full">
-                        <label for="description" class="block text-sm font-medium leading-5 text-gray-700">Description</label>
-                        <div class="mt-1 rounded-md shadow-sm">
-                            <div id="editor" data-content="{{ $product->description }}"></div>
+                        <div class="w-full">
+                            <label for="description" class="block text-sm font-medium leading-5 text-gray-700">Description</label>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <div id="editor" data-content="{{ $product->description }}"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

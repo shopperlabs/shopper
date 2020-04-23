@@ -80,7 +80,7 @@ class ShopController extends Controller
                 $shop->previewImage()->delete();
 
                 $media->update([
-                    'mediatable_type'   => Shop::class,
+                    'mediatable_type'   => $this->repository->model(),
                     'mediatable_id'     => $shop->id
                 ]);
 
@@ -88,7 +88,7 @@ class ShopController extends Controller
             }
 
             $media->update([
-                'mediatable_type'   => Shop::class,
+                'mediatable_type'   => $this->repository->model(),
                 'mediatable_id'     => $shop->id
             ]);
 

@@ -10,8 +10,8 @@
             <img src="{{ asset('shopper/images/empty/categories.svg') }}" class="w-full object-cover relative flex lg:absolute lg:top-0" alt="Empty state">
             <div class="w-full lg:w-1/2 relative z-90">
                 <div class="w-full pl-0 lg:pl-20 lg:pt-20 xl:pt-24">
-                    <h3 class="text-primary-text font-medium text-xl mb-2">{{ __('Organize your products into products') }}</h3>
-                    <p class="text-gray-500 text-lg mb-3">{{ __('Create products to help your customers find products.') }}</p>
+                    <h3 class="text-primary-text font-medium text-xl mb-2">{{ __('Add your products.') }}</h3>
+                    <p class="text-gray-500 text-lg mb-3">{{ __('Get closer to your first sale by adding and manage products.') }}</p>
                     <a href="{{ route('shopper.products.create') }}" class="btn btn-primary inline-flex">{{ __('Create product') }}</a>
                 </div>
             </div>

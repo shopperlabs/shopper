@@ -24,6 +24,11 @@
 
     @endif
 
-    <div id="filepond" data-product-id="{{ $product->id }}" data-url="{{ route('shopper.products.upload', $product) }}"></div>
+    <div
+        id="filepond"
+        data-product-id="{{ $product->id }}"
+        data-fetch-images="{{ route('shopper.products.images', $product) }}"
+        data-url="{{ route('shopper.products.upload', $product) }}">
+    </div>
 
 </div>

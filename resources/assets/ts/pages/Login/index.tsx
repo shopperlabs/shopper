@@ -44,6 +44,7 @@ const LoginForm = () => {
       });
   });
 
+  // @ts-ignore
   return (
     <>
       <form className="mt-8" onSubmit={onSubmit}>
