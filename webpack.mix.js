@@ -38,7 +38,7 @@ mix.setPublicPath("public")
     resolve: {
       extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
       alias: {
-        '@': path.resolve('resources/assets/ts'),
+        '@': path.resolve('./resources/assets/ts'),
       },
     }
   })

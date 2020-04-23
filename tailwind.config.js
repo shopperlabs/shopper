@@ -17,9 +17,15 @@ module.exports = {
         white: 'rgb(var(--color-white))',
 
         brand: {
+          50: '#048DDB',
           100: '#048DDB',
+          200: '#048DDB',
+          300: '#048DDB',
           400: '#007cc3',
           500: '#0069AF',
+          600: '#0069AF',
+          700: '#0069AF',
+          800: '#0069AF',
           900: '#1d4670',
         }
       },
@@ -60,26 +66,5 @@ module.exports = {
   plugins: [
     require('@tailwindcss/ui'),
     require('./theme.config.js'),
-    function ({
-      addUtilities,
-      theme,
-      e,
-      variants,
-    }) {
-      const spaceX = Object.fromEntries(
-        Object.entries(theme('spacing')).map(([k, v]) => [
-          `.${e(`space-x-${k}`)} > * + *`,
-          { marginLeft: v },
-        ]),
-      );
-      const spaceY = Object.fromEntries(
-        Object.entries(theme('spacing')).map(([k, v]) => [
-          `.${e(`space-y-${k}`)} > * + *`,
-          { marginTop: v },
-        ]),
-      );
-
-      addUtilities({ ...spaceX, ...spaceY }, variants('space'));
-    },
   ],
 };
