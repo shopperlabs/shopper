@@ -149,12 +149,29 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Shopper Controllers config
+    |--------------------------------------------------------------------------
+    |
+    | If you want extends your shopper admin panel with great features,
+    | Here you can specify custom Controller Namespace and Shopper RouteServiceProvider
+    | will load all your controllers.
+    |
+    */
+
+    'controllers' => [
+
+        'namespace' => 'App\\Http\\Controllers\\Shopper',
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Shopper Ecommerce Model
     |--------------------------------------------------------------------------
     |
     | Here you may specify the ecommerce class used by Shopper for the
     | management of your website. You can replace the models with classes
-    | which is in a different namespace
+    | which is in a different namespace.
     |
     */
 
