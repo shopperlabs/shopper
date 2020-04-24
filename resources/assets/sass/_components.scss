@@ -78,6 +78,10 @@
   100% { transform: rotate(360deg); }
 }
 
+.spinner {
+  position: absolute !important;
+}
+
 .preview-enter {
   opacity: 0;
   transform: translateY(10px);

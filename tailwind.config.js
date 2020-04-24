@@ -54,6 +54,14 @@ module.exports = {
         },
       }
     }),
+    spinner: (theme) => ({
+      default: {
+        color: theme('colors.brand.500'), // color you want to make the spinner
+        size: '1em', // size of the spinner (used for both width and height)
+        border: '2px', // border-width of the spinner (shouldn't be bigger than half the spinner's size)
+        speed: '500ms', // the speed at which the spinner should rotate
+      },
+    }),
   },
   variants: {
     translate: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
@@ -61,10 +69,11 @@ module.exports = {
     textColor: ['responsive', 'hover', 'focus', 'group-hover', 'focus-within'],
     fontFamily: ['responsive', 'hover', 'focus'],
     zIndex: ['responsive', 'focus'],
-    space: ['responsive'],
+    spinner: ['responsive'],
   },
   plugins: [
     require('@tailwindcss/ui'),
     require('./theme.config.js'),
+    require('tailwindcss-spinner')(),
   ],
 };
