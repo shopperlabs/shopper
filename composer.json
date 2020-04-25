@@ -17,6 +17,7 @@
   ],
   "require": {
     "php": "^7.4",
+    "ext-intl": "*",
     "illuminate/support": "^7.0",
     "laravel/helpers": "^1.2",
     "laravelcollective/html": "^6.0",

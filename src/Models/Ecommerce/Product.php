@@ -3,6 +3,10 @@
 namespace Shopper\Framework\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Model;
+use Money\Currencies\ISOCurrencies;
+use Money\Currency;
+use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
 use Shopper\Framework\Models\Shop\Shop;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Traits\Mediatable;
@@ -94,6 +98,26 @@ class Product extends Model
         }
 
         $this->attributes['slug'] = $slug;
+    }
+
+    /**
+     * Get the formatted price value.
+     *
+     * @return string|null
+     */
+    public function getFormattedPriceAttribute()
+    {
+        if ($this->price) {
+            $money = new Money($this->price, new Currency(config('shopper.currency')));
+            $currencies = new ISOCurrencies();
+
+            $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
+            $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+
+            return $moneyFormatter->format($money);
+        }
+
+        return null;
     }
 
     /**

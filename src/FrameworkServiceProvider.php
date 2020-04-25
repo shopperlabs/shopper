@@ -48,8 +48,6 @@ class FrameworkServiceProvider extends ServiceProvider
 
         $this->app->register(ShopperServiceProvider::class);
 
-        // Route::middlewareGroup();
-
         $this->registerMiddleware($this->app['router']);
 
         // setLocale for php. Enables ->formatLocalized() with localized values for dates.
