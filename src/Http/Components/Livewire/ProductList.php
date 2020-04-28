@@ -11,29 +11,41 @@ class ProductList extends Component
     use WithPagination;
 
     /**
-     * @var ProductRepository
+     * Search.
+     *
+     * @var string
      */
-    protected $repository;
+    public $search = '';
 
-    public function mount(ProductRepository $repository)
-    {
-        $this->repository = $repository;
-    }
+    /**
+     * Sort direction.
+     *
+     * @var string
+     */
+    public $direction = 'desc';
 
     public function paginationView()
     {
         return 'shopper::components.livewire.wire-pagination-links';
     }
 
-    public function hydrate()
+    /**
+     * Sort results.
+     *
+     * @param  string  $value
+     */
+    public function sort($value)
     {
-        $this->repository = new ProductRepository();
+        $this->direction = $value === 'asc' ? 'desc' : 'asc';
     }
 
     public function render()
     {
-        return view('shopper::components.livewire.products.list', [
-            'products' => $this->repository->orderBy('created_at', 'desc')->paginate(10),
-        ]);
+        $products = (new ProductRepository())
+            ->where('name', '%'. $this->search .'%', 'like')
+            ->orderBy('created_at', $this->direction)
+            ->paginate(10);
+
+        return view('shopper::components.livewire.products.list', compact('products'));
     }
 }
