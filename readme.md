@@ -17,7 +17,7 @@ Here's a rough roadmap of things to come (not in any specific order):
 - [ ] Email Configuration
 - [ ] Performance Improvements
 - [ ] User Impersonate
-- [ ] JWT Authentification
+- [ ] Laravel Sanctum Authentification API
 - [ ] Android and iOS Mobile Apps
 - [ ] Social Media Post integration (Twitter & Facebook)
 
