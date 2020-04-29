@@ -5,7 +5,6 @@ namespace Shopper\Framework\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Money\Currencies\ISOCurrencies;
 use Shopper\Framework\Http\Requests\UpdateShopRequest;
-use Shopper\Framework\Models\Shop\Shop;
 use Shopper\Framework\Repositories\MediaRepository;
 use Shopper\Framework\Repositories\Shop\ShopRepository;
 

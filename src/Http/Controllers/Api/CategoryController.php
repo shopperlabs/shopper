@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Controllers\Api;
 
+use Illuminate\Routing\Controller;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Http\Resources\Category as CategoryResource;
 

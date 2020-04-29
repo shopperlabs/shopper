@@ -79,9 +79,10 @@ return [
     |--------------------------------------------------------------------------
     |
     | Define authentication you choose to protect your APIs. By default it is
-    | the api_token which is used but you can replace it with JWT.
+    | the api_token which is used but you can replace it with Laravel sanctum.
+    | see https://laravel.com/docs/7.x/sanctum#introduction
     |
-    | Supported: "token", "jwt"
+    | Supported: "token", "sanctum"
     |
     */
 
@@ -92,13 +93,13 @@ return [
     | API Middleware
     |--------------------------------------------------------------------------
     |
-    | Provide a convenient mechanism for protect API
-    | resources for your shopper application.
+    | Provide a convenient mechanism for protect API resources for your shopper
+    | application. By Default no routes are protected.
     |
     */
 
     'middleware_api' => [
-        'auth:api',
+        // 'auth:api',
     ],
 
     /*
@@ -153,8 +154,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | If you want extends your shopper admin panel with great features,
-    | Here you can specify custom Controller Namespace and Shopper RouteServiceProvider
-    | will load all your controllers.
+    | Here you can specify custom Controller Namespace and Shopper
+    | RouteServiceProvider will load all your controllers.
     |
     */
 
