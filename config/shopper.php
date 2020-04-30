@@ -1,5 +1,6 @@
 <?php
 
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Http\Middleware\Authenticate;
 
@@ -99,7 +100,9 @@ return [
     */
 
     'middleware_api' => [
-        // 'auth:api',
+        // 'throttle:60,1',
+        // 'bindings',
+        // EnsureFrontendRequestsAreStateful::class,
     ],
 
     /*

@@ -7,7 +7,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Shopper\Framework\Shopper;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -96,11 +95,6 @@ class LoginController extends Controller
 
         $user = auth()->user();
         $token = $user->api_token;
-        $apiConnection = config('shopper.api_connection');
-
-        if ($apiConnection === 'jwt') {
-            $token = JWTAuth::fromUser($user);
-        }
 
         return response()->json([
             'message' => __('You are successfully Logged In'),
