@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Shopper\Framework\Models\Shop\Shop;
+use Shopper\Framework\Models\Shop\ShopMember;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -125,6 +126,6 @@ class User extends Authenticatable
      */
     public function shopMember()
     {
-        return $this->belongsToMany(User::class, shopper_table('shop_members'), 'user_id', 'shop_id');
+        return $this->belongsToMany(ShopMember::class, shopper_table('shop_members'), 'user_id', 'shop_id');
     }
 }

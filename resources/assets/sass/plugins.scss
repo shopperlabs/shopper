@@ -1,6 +1,7 @@
 // 0: Include Librairies
 @import "~react-quill/dist/quill.snow.css";
 @import "~flatpickr/dist/flatpickr.css";
+@import "~intl-tel-input/build/css/intlTelInput.css";
 
 // Custom Librairies
 @import 'components/inputnumber';
@@ -57,4 +58,12 @@
   cursor: pointer;
   background-color: #fff !important;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.iti {
+  display: block;
+}
+
+.iti__selected-flag {
+  padding: 0 10px;
 }

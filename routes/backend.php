@@ -41,3 +41,5 @@ Route::namespace('Ecommerce')->group(function () {
     Route::delete('/product/image/remove/{id}', [ProductImageController::class, 'delete'])->name('products.image.remove');
 
 });
+
+Route::resource('customers', 'CustomerController');

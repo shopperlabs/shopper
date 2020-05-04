@@ -15,7 +15,6 @@ class CategoryController extends Controller
 
     public function __construct(CategoryRepository $repository)
     {
-        parent::__construct();
         $this->repository = $repository;
     }
 

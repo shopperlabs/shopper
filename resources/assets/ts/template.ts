@@ -7,6 +7,7 @@ import axios from "axios";
 import jquery from "jquery";
 import flatpickr from "flatpickr";
 import "select2";
+import intlTelInput from "intl-tel-input";
 
 const $: JQueryStatic = jquery;
 
@@ -31,6 +32,7 @@ if (element) {
   });
 }
 
+// Datepicker
 flatpickr(".timepicker", {
   enableTime: true,
   noCalendar: true,
@@ -41,6 +43,32 @@ flatpickr(".timepicker", {
 flatpickr(".datepicker", {
   minDate: "today"
 });
+
+// Phone input
+const phoneInput = document.getElementById('phone_number');
+if (phoneInput) {
+    const iti = intlTelInput(phoneInput, {
+        nationalMode: true,
+        initialCountry: "auto",
+        geoIpLookup(callback) {
+            $.get('https://ipinfo.io', () => { return ''; }, "jsonp").always((resp) => {
+                const countryCode = (resp && resp.country) ? resp.country : "";
+                callback(countryCode);
+            });
+        },
+        utilsScript: require("intl-tel-input/build/js/utils.js"),
+    });
+
+    const handleChange = () => {
+        if (iti.isValidNumber()) {
+            // @ts-ignore
+            phoneInput.value = iti.getNumber();
+        }
+    };
+
+    phoneInput.addEventListener('change', handleChange);
+    phoneInput.addEventListener('keyup', handleChange);
+}
 
 // jQuery Script
 $(() => {
