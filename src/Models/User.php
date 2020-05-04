@@ -82,6 +82,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Define if an user account is verified.
+     *
+     * @return bool
+     */
+    public function isVerified()
+    {
+        return $this->email_verified_at !== null;
+    }
+
+    /**
      * Return User Full Name.
      *
      * @return string

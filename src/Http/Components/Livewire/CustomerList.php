@@ -25,6 +25,11 @@ class CustomerList extends Component
      */
     public $direction = 'desc';
 
+    /**
+     * @var string|null
+     */
+    public $verified = null;
+
     public function paginationView()
     {
         return 'shopper::components.livewire.wire-pagination-links';
