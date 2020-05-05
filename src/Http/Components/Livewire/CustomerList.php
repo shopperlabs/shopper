@@ -52,7 +52,7 @@ class CustomerList extends Component
             ->whereHas('roles', function (Builder $query) {
                 $query->where('name', config('shopper.users.default_role'));
             })
-            ->where('first_name', 'like', '%'. $this->search .'%')
+            ->where('first_name', 'like', '%' . $this->search . '%')
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 

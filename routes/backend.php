@@ -31,7 +31,6 @@ Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {
 });
 
 Route::namespace('Ecommerce')->group(function () {
-
     Route::resource('categories', 'CategoryController');
     Route::resource('brands', 'BrandController');
     Route::resource('collections', 'CollectionController');
@@ -39,7 +38,7 @@ Route::namespace('Ecommerce')->group(function () {
     Route::post('/product/images/upload/{id}', [ProductImageController::class, 'store'])->name('products.upload');
     Route::get('/product/images/{id}', [ProductImageController::class, 'index'])->name('products.images');
     Route::delete('/product/image/remove/{id}', [ProductImageController::class, 'delete'])->name('products.image.remove');
-
 });
 
 Route::resource('customers', 'CustomerController');
+Route::resource('inventory-histories', 'InventoryHistoryController');

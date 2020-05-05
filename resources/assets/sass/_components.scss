@@ -4,7 +4,7 @@
   }
 
   .menu-heading {
-    margin-top: theme('margin.10');
+    margin-top: theme("margin.10");
   }
 }
 
@@ -12,13 +12,13 @@
   .active {
     @apply bg-primary-dark;
     &:hover {
-      background-color: theme('colors.primary-dark') !important;
+      background-color: theme("colors.primary-dark") !important;
     }
   }
 }
 
 .btn {
-  @apply inline-flex justify-center w-auto text-sm transition ease-in-out duration-150 block px-4 py-2 rounded-md leading-6;
+  @apply inline-flex font-medium justify-center w-auto text-sm transition ease-in-out duration-150 block px-4 py-2 rounded-md leading-5;
 }
 
 .btn-primary {
@@ -65,17 +65,21 @@
   font-size: 10px;
   position: relative;
   text-indent: -9999em;
-  border-top: 0.2em solid theme('colors.gray.50');
-  border-right: 0.2em solid theme('colors.gray.50');
-  border-bottom: 0.2em solid theme('colors.gray.50');
+  border-top: 0.2em solid theme("colors.gray.50");
+  border-right: 0.2em solid theme("colors.gray.50");
+  border-bottom: 0.2em solid theme("colors.gray.50");
   border-left: 0.2em solid transparent;
   transform: translateZ(0);
   animation: spinning 1s infinite linear;
 }
 
 @keyframes spinning {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner {
