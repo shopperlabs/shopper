@@ -6,24 +6,24 @@
 
 ## Introduction
 
-Shopper is an Admin Management build for Laravel 6.0+ which includes all the necessary for your online market application.
-Web Application is made using Laravel & React and Mobile Apps will be done with React Native.
+Shopper is an Admin Management build for Laravel 7.0+ which includes all the necessary for your online market application.
+Web Application is made using Laravel & React and Mobile Apps (Soon) will be done with React Native. Please don't use it in production 🙏🏾 this package is still under active development.
 
 ## Road Map
 
 Here's a rough roadmap of things to come (not in any specific order):
 
-- [x] Shop Creation
-- [ ] Email Configuration
-- [ ] Performance Improvements
-- [ ] User Impersonate
-- [ ] Laravel Sanctum Authentification API
-- [ ] Android and iOS Mobile Apps
-- [ ] Social Media Post integration (Twitter & Facebook)
+-   [x] Shop Creation
+-   [ ] Email Configuration
+-   [ ] Performance Improvements
+-   [ ] User Impersonate
+-   [ ] Laravel Sanctum Authentification API
+-   [ ] Android and iOS Mobile Apps
+-   [ ] Social Media Post integration (Twitter & Facebook)
 
 ## Testing
 
-``` bash
+```bash
 $ composer test
 ```
 
@@ -37,8 +37,8 @@ If you discover any security related issues, please email contact@arthurmonney.c
 
 ## Credits
 
-- [Arthur Monney][link-author]
-- [All Contributors][link-contributors]
+-   [Arthur Monney][link-author]
+-   [All Contributors][link-contributors]
 
 ## License
 
@@ -47,7 +47,6 @@ MIT. Please see the [license file](license.md) for more information.
 [ico-version]: https://img.shields.io/packagist/v/shopper/framework.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/shopper/framework.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/shopper/framework/master.svg?style=flat-square
-
 [link-packagist]: https://packagist.org/packages/shopper/framework
 [link-downloads]: https://packagist.org/packages/shopper/framework
 [link-travis]: https://travis-ci.org/shopper/framework
