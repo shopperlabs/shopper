@@ -95,7 +95,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::middleware(config('shopper.middleware_api'))
+        Route::middleware('api')
             ->prefix('api')
             ->as('shopper.api.')
             ->namespace($this->namespace . '\Api')

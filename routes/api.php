@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Shopper\Framework\Http\Controllers\Api\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,9 +24,9 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     Route::get('/managers', 'UserController@index')->name('managers');
 });
 
-Route::prefix('categories')->group(function () {
-    Route::get('/', 'CategoryController@index')->name('categories');
-});
-
 Route::post('/upload', 'MediaController@upload')->name('upload');
 Route::delete('/remove-file/{id}', 'MediaController@remove')->name('remove');
+
+Route::middleware(config('shopper.middleware_api'))->group(function () {
+    Route::get('/categories', [CategoryController::class, 'index']);
+});

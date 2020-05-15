@@ -103,6 +103,7 @@ return [
         // 'throttle:60,1',
         // 'bindings',
         // EnsureFrontendRequestsAreStateful::class,
+        // auth:api
     ],
 
     /*
