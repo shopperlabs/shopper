@@ -1,4 +1,4 @@
-<div x-show="tab === 'activities'">
+<div x-cloak x-show="tab === 'activities'">
 
     <div class="flex flex-col items-center justify-center py-10">
         <span class="h-12 w-12 flex-shrink-0 block">

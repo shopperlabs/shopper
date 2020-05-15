@@ -76,11 +76,11 @@
         </div>
     </div>
 
+    <livewire:scripts />
     <script src="{{ mix('/js/shopper.js','shopper')}}"></script>
 
     @include('notify::messages')
     @stack('scripts')
-    <livewire:scripts />
     @notifyJs
 
     @if(! empty(config('shopper.resources.scripts')))
