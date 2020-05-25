@@ -74,36 +74,46 @@ return [
         ResolveSidebars::class,
     ],
 
-    /*
+    /**
     |--------------------------------------------------------------------------
-    | Api Default Authentication
+    | Api Default Configuration
     |--------------------------------------------------------------------------
     |
-    | Define authentication you choose to protect your APIs. By default it is
-    | the api_token which is used but you can replace it with Laravel sanctum.
-    | see https://laravel.com/docs/7.x/sanctum#introduction
-    |
-    | Supported: "token", "sanctum"
-    |
+    | Provide api configuration for all your shop.
     */
 
-    'api_connection' => env('API_CONNECTION', 'token'),
+    'api' => [
 
-    /*
-    |--------------------------------------------------------------------------
-    | API Middleware
-    |--------------------------------------------------------------------------
-    |
-    | Provide a convenient mechanism for protect API resources for your shopper
-    | application. By Default no routes are protected.
-    |
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | Api Default Authentication
+        |--------------------------------------------------------------------------
+        |
+        | Define authentication you choose to protect your APIs. By default it is
+        | the api_token which is used but you can replace it with Laravel sanctum.
+        | see https://laravel.com/docs/7.x/sanctum#introduction
+        |
+        | Supported: "token", "sanctum"
+        |
+        */
 
-    'middleware_api' => [
-        // 'throttle:60,1',
-        // 'bindings',
-        // EnsureFrontendRequestsAreStateful::class,
-        // auth:api
+        'connection' => env('API_CONNECTION', 'token'),
+
+        /*
+        |--------------------------------------------------------------------------
+        | API Middleware
+        |--------------------------------------------------------------------------
+        |
+        | Provide a convenient mechanism for protect API resources for your shopper
+        | application. By Default no routes are protected.
+        |
+        */
+
+        'middleware' => [
+            // 'throttle:60,1',
+            // 'bindings',
+            // EnsureFrontendRequestsAreStateful::class,
+        ],
     ],
 
     /*

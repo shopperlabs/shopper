@@ -36,7 +36,7 @@ class GeneralException extends Exception
      * Render the exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function render($request)
     {
@@ -44,6 +44,6 @@ class GeneralException extends Exception
         return redirect()
             ->back()
             ->withInput()
-            ->withFlashDanger($this->message);
+            ->with('danger', $this->message);
     }
 }

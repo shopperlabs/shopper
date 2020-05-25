@@ -27,6 +27,6 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
 Route::post('/upload', 'MediaController@upload')->name('upload');
 Route::delete('/remove-file/{id}', 'MediaController@remove')->name('remove');
 
-Route::middleware(config('shopper.middleware_api'))->group(function () {
+Route::middleware(config('shopper.api.middleware'))->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
 });

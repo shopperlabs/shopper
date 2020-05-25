@@ -15,7 +15,7 @@ use Shopper\Framework\Http\Components\Livewire\CustomerList;
 use Shopper\Framework\Http\Components\Livewire\InventoryHistory;
 use Shopper\Framework\Http\Components\Livewire\ProductList;
 
-class ComponentsServiceProvider extends ServiceProvider
+class ComponentServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -24,21 +24,34 @@ class ComponentsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /**
-         * Livewire Components.
-         */
+        $this->registerLivewireComponents();
+        $this->registerBladeComponents();
+    }
+
+    /**
+     * Register customs Blade Components.
+     *
+     * @return void
+     */
+    public function registerBladeComponents()
+    {
+        Blade::component('datetime-picker', DateTimePicker::class);
+        Blade::component('breadcrumb', Breadcrumb::class);
+        Blade::component('delete-action', DeleteAction::class);
+    }
+
+    /**
+     * Register Livewire components.
+     *
+     * @return void
+     */
+    public function registerLivewireComponents()
+    {
         Livewire::component('category-list', CategoryList::class);
         Livewire::component('brand-list', BrandList::class);
         Livewire::component('collection-list', CollectionList::class);
         Livewire::component('product-list', ProductList::class);
         Livewire::component('customer-list', CustomerList::class);
         Livewire::component('inventory-history', InventoryHistory::class);
-
-        /**
-         * Blade Components.
-         */
-        Blade::component('datetime-picker', DateTimePicker::class);
-        Blade::component('breadcrumb', Breadcrumb::class);
-        Blade::component('delete-action', DeleteAction::class);
     }
 }
