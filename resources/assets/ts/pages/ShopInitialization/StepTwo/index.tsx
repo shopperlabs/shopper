@@ -1,16 +1,16 @@
 import React from "react";
 import useForm from "react-hook-form";
 
+interface StepTwoProps {
+  validateStep: () => void;
+  registerValues: (name: string, email: string, phone_number: string) => void;
+}
+
 type FormData = {
   name: string;
   email: string;
   phone_number: string;
 };
-
-interface StepTwoProps {
-  validateStep: () => void;
-  registerValues: (name: string, email: string, phone_number: string) => void;
-}
 
 export default ({ validateStep, registerValues }: StepTwoProps) => {
   const { register, handleSubmit, errors } = useForm<FormData>({ mode: "onChange" });

@@ -12,7 +12,7 @@
     <meta name="base-url" content="{{ config('app.url') }}">
     <meta name="dashboard-url" content="{{ config('app.url').'/'.config('shopper.prefix') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="api-connection" content="{{ config('shopper.api_connection') }}">
+    <meta name="api-connection" content="{{ config('shopper.api.connection') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('shopper/images/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('shopper/images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('shopper/images/favicons/favicon-16x16.png') }}">
@@ -23,7 +23,6 @@
     <meta name="application-name" content="{{ app_name() }}">
     <meta name="theme-color" content="#ffffff">
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <!--begin::Fonts -->
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->

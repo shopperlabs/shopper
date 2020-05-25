@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="mt-4 flex md:mt-0 md:ml-4">
-                <a href="{{ route('shopper.customers.create') }}" class="btn btn-primary">{{ __('Add product') }}</a>
+                <a href="{{ route('shopper.customers.create') }}" class="btn btn-primary">{{ __('Add customer') }}</a>
             </div>
         </div>
 

@@ -9,6 +9,12 @@ const dashboardURL: any = (document.querySelector('meta[name="dashboard-url"]') 
 const loginURL: any = document.getElementById('login-form');
 const url: string = loginURL ? loginURL.getAttribute('data-url') : '';
 
+type FormData = {
+  email: string;
+  password: string;
+  remember: string;
+};
+
 const LoginForm = () => {
   const [state, setState] = useState(false);
   const [status, setStatus] = useState('');

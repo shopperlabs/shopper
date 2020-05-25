@@ -105,11 +105,13 @@
                                                         {{ $collection->published_at->format('F j, Y') }}
                                                     </time>
                                                 </div>
-                                                <div class="mt-2 flex items-center text-sm leading-5 text-gray-500">
-                                                    <svg class="flex-shrink-0 mr-1.5 h-5 w-5 {{ $collection->type === "auto" ? 'text-green-400' :  'text-blue-400' }}" fill="currentColor" viewBox="0 0 24 24">
-                                                        <path fill-rule="evenodd" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" clip-rule="evenodd" />
-                                                    </svg>
-                                                    {{ $collection->type === "auto" ? __('Automatic') : __('Manual') }}
+                                                <div class="mt-2">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 {{ $collection->type === "auto" ? 'bg-green-100 text-green-800' :  'bg-blue-100 text-blue-800' }}">
+                                                        <svg class="-ml-1 mr-1.5 h-2 w-2 {{ $collection->type === "auto" ? 'text-green-400' :  'text-blue-400' }}" fill="currentColor" viewBox="0 0 8 8">
+                                                            <circle cx="4" cy="4" r="3" />
+                                                        </svg>
+                                                        {{ $collection->type === "auto" ? __('Automatic') : __('Manual') }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

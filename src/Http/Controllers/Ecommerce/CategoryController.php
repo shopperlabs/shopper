@@ -39,9 +39,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->repository->orderBy('created_at', 'desc')->paginate(25);
-
-        return view('shopper::pages.categories.index', compact('categories'));
+        return view('shopper::pages.categories.index');
     }
 
     /**
