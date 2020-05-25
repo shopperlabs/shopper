@@ -1,7 +1,7 @@
 const mix = require("laravel-mix");
 const path = require('path');
-const tailwindcss = require('tailwindcss');
-require('laravel-mix-purgecss');
+
+require('laravel-mix-tailwind');
 
 /*
  |--------------------------------------------------------------------------
@@ -20,10 +20,8 @@ mix.setPublicPath("public")
   .setResourceRoot("../") // turns assets paths in css relative to css file
   .sass("./resources/assets/sass/shopper.scss", "css")
   .react("./resources/assets/ts/shopper.ts", "js")
-  .options({
-    processCssUrls: false,
-    postCss: [tailwindcss('./tailwind.config.js')],
-  })
+  .options({ processCssUrls: false })
+  .tailwind("./tailwind.config.js")
   .webpackConfig({
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
     module: {
@@ -46,25 +44,15 @@ mix.setPublicPath("public")
 
 if (mix.inProduction()) {
   mix.version()
-    .purgeCss({
-      enabled: true,
-      globs: [
-        './resources/views/**/*.blade.php',
-        './resources/assets/ts/**/*.ts',
-        './resources/assets/ts/**/*.tsx',
-      ],
-      defaultExtractor: content => content.match(/[\w-/.:]+(?<!:)/g) || [],
-      whitelistPatterns: [/nprogress/, /rc-$/, /pika-$/, /[\w-/.:]+(?<!:)/],
-    })
     .options({
       // optimize js minification process
       terser: {
         cache: true,
         parallel: true,
-        sourceMap: true
-      }
+        sourceMap: true,
+      },
     });
 } else {
   // Uses inline source-maps on development
-  mix.webpackConfig({ devtool: "inline-source-map" });
+  mix.webpackConfig({ devtool: 'inline-source-map' });
 }

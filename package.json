@@ -25,7 +25,7 @@
     "intl-tel-input": "^17.0.0",
     "jquery": "^3.4.1",
     "laravel-mix": "^4.0.7",
-    "laravel-mix-purgecss": "^5.0.0-rc.1",
+    "laravel-mix-tailwind": "^0.1.0",
     "lodash": "^4.17.13",
     "notiflix-react": "^1.4.0",
     "pikaday": "^1.8.0",
