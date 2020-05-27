@@ -138,4 +138,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(ShopMember::class, shopper_table('shop_members'), 'user_id', 'shop_id');
     }
+
+    /**
+     * Get all User Addresses.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }
