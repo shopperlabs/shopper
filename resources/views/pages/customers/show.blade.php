@@ -85,7 +85,7 @@
 		</div>
 
 		@include('shopper::pages.customers.partials.orders')
-		@include('shopper::pages.customers.partials.addresses')
+		@include('shopper::pages.customers.partials.addresses', ['addresses' => $customer->addresses])
 		@include('shopper::pages.customers.partials.activities')
 
 	</div>

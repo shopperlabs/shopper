@@ -73,7 +73,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $customer = $this->repository->getById($id);
+        $customer = $this->repository->with('addresses')->getById($id);
 
         return view('shopper::pages.customers.show', compact('customer'));
     }
