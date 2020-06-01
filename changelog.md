@@ -5,10 +5,12 @@ All notable changes to `Framework` will be documented in this file.
 ## Version 1.0-beta.3
 
 ### Added
-- Customers Address Manage
+- Order model and migration
+- OrderItem model and migration
+- OrderStatus (enable default order status) 
 
 ### Update
-- 
+- Customer Address Display
 
 ## Version 1.0-beta.2
 

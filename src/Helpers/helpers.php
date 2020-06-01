@@ -4,6 +4,7 @@ use Money\Currencies\ISOCurrencies;
 use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
+use Shopper\Framework\Models\Order\Order;
 use Shopper\Framework\Shopper;
 
 if (!function_exists('app_name')) {
@@ -46,55 +47,6 @@ if (!function_exists('home_route')) {
 
             return 'home';
         }
-    }
-}
-
-if (!function_exists('setEnvironmentValue')) {
-    /**
-     * Function to set or update .env variable.
-     *
-     * @param array $values
-     * @return bool
-     */
-    function setEnvironmentValue(array $values): bool
-    {
-        $envFile = app()->environmentFilePath();
-        $str = file_get_contents($envFile);
-
-        if (count($values) > 0) {
-            $str .= "\n"; // In case the searched variable is in the last line without \n
-            foreach ($values as $envKey => $envValue) {
-                if ($envValue === true) {
-                    $value = 'true';
-                } elseif ($envValue === false) {
-                    $value = 'false';
-                } else {
-                    $value = $envValue;
-                }
-
-                $envKey = strtoupper($envKey);
-                $keyPosition = strpos($str, "{$envKey}=");
-                $endOfLinePosition = strpos($str, "\n", $keyPosition);
-                $oldLine = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
-                $space = strpos($value, ' ');
-                $envValue = ($space === false) ? $value : '"' . $value . '"';
-
-                // If key does not exist, add it
-                if (!$keyPosition || !$endOfLinePosition || !$oldLine) {
-                    $str .= "{$envKey}={$envValue}\n";
-                } else {
-                    $str = str_replace($oldLine, "{$envKey}={$envValue}", $str);
-                }
-            }
-        }
-
-        $str = substr($str, 0, -1);
-
-        if (!file_put_contents($envFile, $str)) {
-            return false;
-        }
-
-        return true;
     }
 }
 
@@ -151,7 +103,7 @@ if (!function_exists('shopper_prefix')) {
     }
 }
 
-if (! function_exists('shopper_money_format')) {
+if (!function_exists('shopper_money_format')) {
     /**
      * Return money format
      *
@@ -159,7 +111,7 @@ if (! function_exists('shopper_money_format')) {
      * @param  string|null  $currency
      * @return string
      */
-    function shopper_money_format($amount, $currency = null)
+    function shopper_money_format($amount, $currency = null): string
     {
         $money = new Money($amount, new Currency($currency ?? config('shopper.currency')));
         $currencies = new ISOCurrencies();
@@ -168,5 +120,31 @@ if (! function_exists('shopper_money_format')) {
         $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
 
         return $moneyFormatter->format($money);
+    }
+}
+
+if (!function_exists('generate_number')) {
+    /**
+     * Generate Order Number.
+     *
+     * @return string
+     */
+    function generate_number(): string
+    {
+        $lastOrder = Order::orderBy('id', 'desc')->limit(1)->first();
+
+        $generator = [
+            'start_sequence_from' => 1,
+            'prefix'              => '#',
+            'pad_length'          => 1,
+            'pad_string'          => '0'
+        ];
+
+        $last = $lastOrder ? $lastOrder->id : 0;
+        $next = $generator['start_sequence_from'] + $last;
+
+        return sprintf('%s%s', $generator['prefix'],
+            str_pad($next, $generator['pad_length'], $generator['pad_string'], STR_PAD_LEFT)
+        );
     }
 }
