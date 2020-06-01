@@ -8,6 +8,7 @@ All notable changes to `Framework` will be documented in this file.
 - Order model and migration
 - OrderItem model and migration
 - OrderStatus (enable default order status) 
+- Address Manage
 
 ### Update
 - Customer Address Display
