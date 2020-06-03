@@ -68,7 +68,7 @@ class InstallCommand extends Command
         $this->progressBar->advance();
 
         $this->setupDatabaseConfig();
-        $this->addEnvVarible();
+        $this->addEnvVariable();
         $this->progressBar->advance();
 
         $this->complete();
@@ -98,7 +98,7 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    protected function addEnvVarible(): void
+    protected function addEnvVariable(): void
     {
         $env = [
             'DASHBOARD_PREFIX' => config('shopper.prefix'),
