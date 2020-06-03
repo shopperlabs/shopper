@@ -36,10 +36,6 @@ class ShopperServiceProvider extends ServiceProvider
         ], 'shopper-config');
 
         $this->publishes([
-            __DIR__ . '/../../public' => public_path('shopper'),
-        ], 'shopper-assets');
-
-        $this->publishes([
             __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/shopper'),
         ], 'shopper-lang');
     }
