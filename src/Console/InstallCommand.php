@@ -50,9 +50,9 @@ class InstallCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $this->progressBar = $this->output->createProgressBar(3);
         $this->introMessage();
@@ -110,7 +110,7 @@ class InstallCommand extends Command
         $this->info('Add DASHBOARD_PREFIX and CURRENCY_SYMBOL to .env file');
     }
 
-    protected function complete()
+    protected function complete(): void
     {
         $this->progressBar->finish();
 

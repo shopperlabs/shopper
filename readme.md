@@ -21,6 +21,34 @@ Here's a rough roadmap of things to come (not in any specific order):
 -   [ ] Android and iOS Mobile Apps
 -   [ ] Social Media Post integration (Twitter & Facebook)
 
+## Installation
+
+Firstly, download the Laravel installer using Composer:
+``` bash  
+$ composer require shopper/framework  
+```
+
+Run this command to install Shopper in your project
+```php
+php artisan shopper:install
+```
+
+This command will install shopper, publish config and lang files, run migrations and seeders classes and finally added dashboard prefix url and default shop currency.
+
+Extend your user model using the `Shopper\Framework\Models\User as Authenticatable` alias:
+
+```php
+namespace App;
+
+use Shopper\Framework\Models\User as Authenticatable;  
+  
+class User extends Authenticatable  
+{  
+  
+}
+
+```
+
 ## Testing
 
 ```bash
