@@ -5,6 +5,7 @@ namespace Shopper\Framework\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Shopper\Framework\Models\Shop\Shop;
 use Shopper\Framework\Models\Shop\ShopMember;
@@ -115,7 +116,7 @@ class User extends Authenticatable
                 return gravatar()->get($this->email);
 
             case 'storage':
-                return url('storage/' . $this->avatar_location);
+                return Storage::disk(config('shopper.storage.disks.avatars'))->url($this->avatar_location);
         }
     }
 

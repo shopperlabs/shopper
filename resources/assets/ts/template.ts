@@ -9,6 +9,12 @@ import flatpickr from "flatpickr";
 import "select2";
 import intlTelInput from "intl-tel-input";
 
+declare global {
+  interface Window {
+    livewire: any;
+  }
+}
+
 const $: JQueryStatic = jquery;
 
 // Remove items on CRUD
@@ -74,5 +80,13 @@ if (phoneInput) {
 $(() => {
   $('.select-2').select2({
     placeholder: "Search...",
+  });
+});
+
+// Livewire custom script
+document.addEventListener("livewire:load", () => {
+  // When a user remove a product to the cart.
+  window.livewire.on('updatedProfile', () => {
+    window.livewire.emit('profileUpdated');
   });
 });
