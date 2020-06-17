@@ -10,6 +10,11 @@ class OrderStatus
     const PENDING = 'pending';
 
     /**
+     * Orders that has been registered..
+     */
+    const REGISTER = 'register';
+
+    /**
      * Orders fulfilled completely.
      */
     const COMPLETED = 'completed';
@@ -23,6 +28,7 @@ class OrderStatus
     {
         return [
             self::PENDING    => __('Pending'),
+            self::REGISTER    => __('Registered'),
             self::COMPLETED  => __('Completed'),
             self::CANCELLED  => __('Cancelled')
         ];
