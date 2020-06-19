@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
@@ -62,7 +63,7 @@ class Media extends Model
      */
     public function getImageFullPathAttribute()
     {
-        return url('/storage'. $this->file_url);
+        return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->file_url);
     }
 
     /**

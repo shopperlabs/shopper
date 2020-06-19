@@ -28,10 +28,7 @@ class MediaController extends Controller
     public function upload(Request $request)
     {
         $file = $request->file('file');
-        $name = str_slug(explode('.', $file->getClientOriginalName())[0]). '-' .time();
-        $filename = $name . '.' . $file->getClientOriginalExtension();
-
-        $file->storeAs('/uploads', $filename, 'public');
+        $filename = $file->store('/', config('shopper.storage.disks.uploads'));
 
         // save file information to database.
         $data = [
@@ -39,7 +36,7 @@ class MediaController extends Controller
             'file_name'     => $file->getClientOriginalName(),
             'file_size'     => $file->getSize(),
             'content_type'  => $file->getClientMimeType(),
-            'file_url'      => '/uploads/'.$filename,
+            'file_url'      => $filename,
             'field'         => 'preview_image',
             'is_public'     => true
         ];
@@ -48,7 +45,7 @@ class MediaController extends Controller
 
         $response = [
             'status'   => 'success',
-            'url'      => asset('storage/uploads/'.$filename),
+            'url'      => Storage::disk(config('shopper.storage.disks.uploads'))->url($filename),
             'id'       => $media->id,
             'name'     => $filename,
         ];
@@ -65,7 +62,7 @@ class MediaController extends Controller
     public function remove($id)
     {
         $media = $this->repository->getById($id);
-        Storage::disk('public')->delete('/uploads/'.$media->disk_name);
+        Storage::disk(config('shopper.storage.disks.uploads'))->delete($media->disk_name);
 
         try {
             $media->delete();

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Traits;
 
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\Media;
 
 trait Mediatable
@@ -14,7 +15,7 @@ trait Mediatable
     public function getPreviewImageLinkAttribute()
     {
         if ($this->previewImage) {
-            return url('/storage'.$this->previewImage->file_url);
+            return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->previewImage->file_url);
         }
 
         return null;
