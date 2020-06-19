@@ -43,7 +43,7 @@ class Profile extends Component
         ]);
 
         if ($this->picture) {
-            $filename = $this->picture->store(config('shopper.storage.disks.avatars'));
+            $filename = $this->picture->store('/', config('shopper.storage.disks.avatars'));
 
             auth()->user()->update([
                 'avatar_type'   => 'storage',

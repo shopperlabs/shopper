@@ -23,6 +23,9 @@ class Dropdown extends Component
     public function updateUserPicture()
     {
         $this->picture = auth()->user()->picture;
+        $this->full_name = auth()->user()->full_name;
+        $this->picture = auth()->user()->picture;
+        $this->email = auth()->user()->email;
     }
 
     public function render()

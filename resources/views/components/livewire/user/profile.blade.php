@@ -61,6 +61,9 @@
             <div class="flex justify-end">
                 <span class="inline-flex rounded-md shadow-sm">
                     <button type="submit" class="btn btn-primary">
+                        <span wire:loading wire:target="save" class="pr-2">
+                            <span class="btn-spinner"></span>
+                        </span>
                         {{ __("Update") }}
                     </button>
                 </span>
