@@ -12,6 +12,7 @@ use Shopper\Framework\Http\Components\Livewire\BrandList;
 use Shopper\Framework\Http\Components\Livewire\CategoryList;
 use Shopper\Framework\Http\Components\Livewire\CollectionList;
 use Shopper\Framework\Http\Components\Livewire\CustomerList;
+use Shopper\Framework\Http\Components\Livewire\Product\Inventory;
 use Shopper\Framework\Http\Components\Livewire\InventoryHistory;
 use Shopper\Framework\Http\Components\Livewire\ProductList;
 use Shopper\Framework\Http\Components\Livewire\User\Dropdown;
@@ -57,5 +58,6 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('inventory-history', InventoryHistory::class);
         Livewire::component('profile', Profile::class);
         Livewire::component('dropdown', Dropdown::class);
+        Livewire::component('product-inventory', Inventory::class);
     }
 }

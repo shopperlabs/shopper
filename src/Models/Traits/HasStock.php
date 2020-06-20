@@ -171,6 +171,6 @@ trait HasStock
      */
     public function inventoryHistories()
     {
-        return $this->morphMany(InventoryHistory::class, 'stockable');
+        return $this->morphMany(InventoryHistory::class, 'stockable')->orderBy('created_at', 'desc');
     }
 }

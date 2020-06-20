@@ -65,7 +65,7 @@ class InventoryHistory extends Model
             return '+'. $this->old_quantity;
         }
 
-        return '-'. $this->old_quantity;
+        return $this->old_quantity;
     }
 
     /**
