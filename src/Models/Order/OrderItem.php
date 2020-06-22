@@ -19,6 +19,7 @@ class OrderItem extends Model
         'product_id',
         'product_type',
         'order_id',
+        'shop_id'
     ];
 
     /**
