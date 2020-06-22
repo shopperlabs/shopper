@@ -101,16 +101,6 @@ class Product extends Model
     }
 
     /**
-     * Return the stockable route name.
-     * 
-     * @return string
-     */
-    public function getRouteNameAttribute()
-    {
-        return 'shopper.products.edit';
-    }
-
-    /**
      * Get the formatted price value.
      *
      * @return string|null

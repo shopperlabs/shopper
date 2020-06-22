@@ -3,18 +3,18 @@
         <div class="relative z-0 inline-flex items-center leading-5 text-gray-700">
             <span class="block text-sm font-medium mr-4">{{ __("Quantity available") }}</span>
             <span class="mr-2 text-sm px-2 inline-flex leading-5 font-semibold rounded-full {{ $realStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                {{ $realStock }}
+                {{ $product->stock }}
             </span>
         </div>
         <div class="ml-4 flex items-center">
             <div class="flex items-center">
-                <p class="text-sm font-medium text-gray-600 mr-4">{{ $value }}</p>
+                <p class="text-sm font-medium text-gray-600 mr-4">{{ $realStock }}</p>
                 <div>
                     <div class="relative overflow-hidden">
-                        <input aria-label="{{ __("Number") }}" type="number" wire:model="value" step="1" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out pr-10">
-                        <div class="absolute inset-y-0 right-0 flex flex-col items-center justify-center border-l-2 border-gray-200 divide-y divide-gray-200">
-                            <button wire:click="incrementStock" type="button" class="text-sm leading-4 px-2.5 h-auto w-full inline-flex items-center outline-none rounded-r-md transition ease-in-out duration-150">+</button>
-                            <button wire:click="decrementStock" type="button" class="text-sm leading-4 px-2.5 h-auto w-full inline-flex items-center outline-none rounded-r-md transition ease-in-out duration-150">-</button>
+                        <input wire:model="value" aria-label="{{ __("Number") }}" type="number" step="1" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out pr-10">
+                        <div class="absolute inset-y-0 right-0 flex flex-col items-center justify-center border-l-2 border-gray-200 divide-y divide-gray-200 overflow-hidden">
+                            <button wire:click="incrementStock" type="button" class="text-sm leading-4 px-2.5 h-auto w-full focus:shadow-inner inline-flex items-center outline-none rounded-r-md transition ease-in-out duration-150">+</button>
+                            <button wire:click="decrementStock" type="button" class="text-sm leading-4 px-2.5 h-auto w-full focus:shadow-inner inline-flex items-center outline-none rounded-r-md transition ease-in-out duration-150">-</button>
                         </div>
                     </div>
                     @error('value')
@@ -59,30 +59,30 @@
                                 {{ __("Adjustment") }}
                             </th>
                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-sm leading-4 font-medium text-gray-700 tracking-wider">
-                                {{ __("Quantity") }}
+                                {{ __("Quantity Movement") }}
                             </th>
                         </tr>
                         </thead>
                         <tbody class="bg-white">
-                        @foreach($product->inventoryHistories as $inventoryHistory)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    {{ $inventoryHistory->created_at->diffForHumans() }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    {{ __($inventoryHistory->event) }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                    {{ $inventoryHistory->inventory->name }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->old_quantity > 0 ? 'text-green-500': 'text-red-500' }}">
-                                    {{ $inventoryHistory->adjustment }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-gray-500': 'text-red-500' }}">
-                                    {{ $inventoryHistory->quantity }}
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($product->inventoryHistories as $inventoryHistory)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                        {{ $inventoryHistory->created_at->diffForHumans() }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                        {{ __($inventoryHistory->event) }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                        {{ $inventoryHistory->inventory->name }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->old_quantity > 0 ? 'text-green-500': 'text-red-500' }}">
+                                        {{ $inventoryHistory->adjustment }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-gray-500': 'text-red-500' }}">
+                                        {{ $inventoryHistory->quantity }}
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

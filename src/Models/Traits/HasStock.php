@@ -29,7 +29,7 @@ trait HasStock
     {
         $date = $date ?: Carbon::now();
 
-        if (! $date instanceof DateTimeInterface) {
+        if (!$date instanceof DateTimeInterface) {
             $date = Carbon::create($date);
         }
 
@@ -93,7 +93,7 @@ trait HasStock
     {
         $this->inventoryHistories()->delete();
 
-        if (! is_null($newQuantity)) {
+        if (!is_null($newQuantity)) {
             $this->createStockMutation($newQuantity, $shop_id, $inventory_id, $arguments);
         }
 

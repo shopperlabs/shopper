@@ -42,7 +42,8 @@ class ProductList extends Component
     public function render()
     {
         $products = (new ProductRepository())
-            ->where('name', '%'. $this->search .'%', 'like')
+            ->where('name', '%' . $this->search . '%', 'like')
+            ->where('parent_id', null)
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 

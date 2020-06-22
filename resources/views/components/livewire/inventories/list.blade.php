@@ -60,37 +60,32 @@
                     <table class="min-w-full">
                         <thead>
                             <tr>
-                                <th class="pl-6 py-3 border-b border-gray-200 text-left text-sm leading-4 text-gray-700 tracking-wider">
-                                    <input id="select-all" type="checkbox" class="form-checkbox h-4 w-4 border-gray-300 text-brand-600 focus:shadow-outline-brand focus:border-brand-300 transition duration-150 ease-in-out" />
-                                </th>
-                                <th class="pl-3 pr-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
+                                <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
                                     {{ __('Name') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
-                                    {{ __('Type') }}
+                                    {{ __("Shop") }}
+                                </th>
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
                                     {{ __("Vendor") }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
-                                    {{ __("Quantity") }}
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
                                     {{ __("Last action") }}
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 text-right text-sm font-medium leading-4 text-gray-700 tracking-wider">
+                                    {{ __("Quantity Available") }}
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
-                            @foreach($inventoryHistories as $history)
+                            @foreach($products as $product)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="pl-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <input aria-label="select" type="checkbox" class="form-checkbox h-4 w-4 border-gray-300 text-brand-600 focus:shadow-outline-brand focus:border-brand-300 transition duration-150 ease-in-out" />
-                                    </td>
-                                    <td class="pl-3 pr-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <a href="{{ $history->route_name ? route($history->route_name, $history->stockable) : '#' }}" class="flex items-center">
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <a href="{{ route('shopper.products.edit', $product) }}" class="flex items-center">
                                             <div class="flex-shrink-0 h-10 w-10">
-                                                @if($history->stockable->preview_image_link !== null)
-                                                    <img class="h-10 w-10 rounded-md object-cover" src="{{ $history->stockable->preview_image_link }}" alt="{{ $history->name }}" />
+                                                @if($product->preview_image_link !== null)
+                                                    <img class="h-10 w-10 rounded-md object-cover" src="{{ $product->preview_image_link }}" alt="{{ $product->name }}" />
                                                 @else
                                                     <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md">
                                                         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
@@ -100,28 +95,25 @@
                                                 @endif
                                             </div>
                                             <div class="ml-4">
-                                                <div class="text-sm leading-5 font-medium text-gray-900">{{ $history->name }}</div>
-                                                <div class="text-sm leading-5 text-gray-500">{{ $history->sku }}</div>
+                                                <div class="text-sm leading-5 font-medium text-gray-900">{{ $product->name }}</div>
+                                                <div class="text-sm leading-5 text-gray-500">{{ $product->sku }}</div>
                                             </div>
                                         </a>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                            {{ $history->stockable_type }}
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        {{ $product->shop->name }}
+                                    </td>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        {{ $product->inventoryHistories->first() ? $product->inventoryHistories->first()->inventory->name : __("No inventory") }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        {{ $product->inventoryHistories->first() ? $product->inventoryHistories->first()->event : __("Initial inventory") }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                                        <span class="text-sm inline-flex leading-5 font-semibold {{ $product->stock < 10 ? 'text-red-600' : 'text-green-600' }}">
+                                            {{ $product->stock }}
                                         </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                        {{ $history->inventory->name }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <div class="flex items-center">
-                                            <span class="text-sm inline-flex leading-5 font-semibold {{ $history->quantity < 10 ? 'text-red-600' : 'text-green-600' }}">
-                                                {{ $history->quantity }}
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                        {{ __($history->event) }}
                                     </td>
                                 </tr>
                             @endforeach

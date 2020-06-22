@@ -3,7 +3,7 @@
 namespace Shopper\Framework\Http\Components\Livewire;
 
 use Livewire\Component;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class InventoryHistory extends Component
 {
@@ -33,20 +33,12 @@ class InventoryHistory extends Component
 
     public function render()
     {
-        $collections = (new InventoryHistoryRepository())
-            ->with(['stockable'])
+        $products = (new ProductRepository)
+            ->with(['inventoryHistories'])
+            ->where('name', '%' . $this->search . '%', 'like')
             ->orderBy('created_at', $this->direction)
             ->get();
 
-        $inventoryHistories = $collections
-            ->map(function ($item, $key) {
-                $item['name'] = $item->stockable->name ?? "N/A";
-                $item['sku'] = $item->stockable->sku ?? __("No SKU");
-                $item['route_name'] = $item->stockable->route_name ?? null;
-
-                return $item;
-            });
-
-        return view('shopper::components.livewire.inventories.list', compact('inventoryHistories'));
+        return view('shopper::components.livewire.inventories.list', compact('products'));
     }
 }

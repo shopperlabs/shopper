@@ -18,23 +18,25 @@ declare global {
 const $: JQueryStatic = jquery;
 
 // Remove items on CRUD
-const element = document.getElementById('remove-item');
+const element = document.getElementById("remove-item");
 if (element) {
   const span: any = element.firstElementChild;
-  const url: any = element.getAttribute('data-url');
+  const url: any = element.getAttribute("data-url");
 
-  element.addEventListener('click', (e) => {
+  element.addEventListener("click", e => {
     e.preventDefault();
-    span.classList.remove('hidden');
-    axios.delete(url, {
-      headers: {
-        "X-Requested-With": "XMLHttpRequest"
-      }
-    }).then((response) => {
-      setTimeout(() => {
-        window.location.href = response.data.redirect_url;
-      }, 1000);
-    });
+    span.classList.remove("hidden");
+    axios
+      .delete(url, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      })
+      .then(response => {
+        setTimeout(() => {
+          window.location.href = response.data.redirect_url;
+        }, 1000);
+      });
   });
 }
 
@@ -51,42 +53,40 @@ flatpickr(".datepicker", {
 });
 
 // Phone input
-const phoneInput = document.getElementById('phone_number');
+const phoneInput = document.getElementById("phone_number");
 if (phoneInput) {
-    const iti = intlTelInput(phoneInput, {
-        nationalMode: true,
-        initialCountry: "auto",
-        geoIpLookup(callback) {
-            $.get('https://ipinfo.io', () => { return ''; }, "jsonp").always((resp) => {
-                const countryCode = (resp && resp.country) ? resp.country : "";
-                callback(countryCode);
-            });
+  const iti = intlTelInput(phoneInput, {
+    nationalMode: true,
+    initialCountry: "auto",
+    geoIpLookup(callback) {
+      $.get(
+        "https://ipinfo.io",
+        () => {
+          return "";
         },
-        utilsScript: require("intl-tel-input/build/js/utils.js"),
-    });
+        "jsonp"
+      ).always(resp => {
+        const countryCode = resp && resp.country ? resp.country : "";
+        callback(countryCode);
+      });
+    },
+    utilsScript: require("intl-tel-input/build/js/utils.js")
+  });
 
-    const handleChange = () => {
-        if (iti.isValidNumber()) {
-            // @ts-ignore
-            phoneInput.value = iti.getNumber();
-        }
-    };
+  const handleChange = () => {
+    if (iti.isValidNumber()) {
+      // @ts-ignore
+      phoneInput.value = iti.getNumber();
+    }
+  };
 
-    phoneInput.addEventListener('change', handleChange);
-    phoneInput.addEventListener('keyup', handleChange);
+  phoneInput.addEventListener("change", handleChange);
+  phoneInput.addEventListener("keyup", handleChange);
 }
 
 // jQuery Script
 $(() => {
-  $('.select-2').select2({
-    placeholder: "Search...",
-  });
-});
-
-// Livewire custom script
-document.addEventListener("livewire:load", () => {
-  // When a user remove a product to the cart.
-  window.livewire.on('updatedProfile', () => {
-    window.livewire.emit('profileUpdated');
+  $(".select-2").select2({
+    placeholder: "Search..."
   });
 });

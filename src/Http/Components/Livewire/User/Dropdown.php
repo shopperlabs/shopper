@@ -11,7 +11,7 @@ class Dropdown extends Component
     public $picture = '';
     public $email = '';
 
-    protected $listeners = ['profileUpdated' => 'updateUserPicture'];
+    protected $listeners = ['updatedProfile'];
 
     public function mount()
     {
@@ -20,7 +20,7 @@ class Dropdown extends Component
         $this->email = auth()->user()->email;
     }
 
-    public function updateUserPicture()
+    public function updatedProfile()
     {
         $this->picture = auth()->user()->picture;
         $this->full_name = auth()->user()->full_name;

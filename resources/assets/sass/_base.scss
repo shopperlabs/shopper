@@ -14,4 +14,16 @@ input {
   width: 100%;
 }
 
-[x-cloak] { display:none; }
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+}
+
+[x-cloak] {
+  display: none;
+}
