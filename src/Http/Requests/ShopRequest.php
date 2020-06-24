@@ -11,13 +11,9 @@ class ShopRequest extends AbstractBaseRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
-        if (Auth::guard()->check() && auth()->user()->isSuperAdmin()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -36,8 +32,8 @@ class ShopRequest extends AbstractBaseRequest
     public function getStoreRules(): array
     {
         return [
-            'name' => 'required|max:255|unique:'. shopper_table('shops'),
-            'email' => 'required|max:255|unique:'. shopper_table('shops'),
+            'name' => 'required|max:255|unique:' . shopper_table('shops'),
+            'email' => 'required|max:255|unique:' . shopper_table('shops'),
             'phone_number' => 'required',
             'size_id'   => 'required|integer'
         ];

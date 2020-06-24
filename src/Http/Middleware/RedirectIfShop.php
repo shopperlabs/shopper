@@ -28,7 +28,7 @@ class RedirectIfShop
     {
         $user = $this->auth->user();
 
-        if ($user->shop || $user->shopMember->isNotEmpty()) {
+        if ($user->shop || $user->shopMember) {
             return redirect()->route(home_route());
         }
 

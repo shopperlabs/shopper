@@ -37,7 +37,7 @@ class Dashboard
             return abort(403, __("Unauthorized"));
         }
 
-        if (!$user->shop && $user->shopMember->isEmpty()) {
+        if (!$user->shop && !$user->shopMember) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', Response::HTTP_UNAUTHORIZED);
             }

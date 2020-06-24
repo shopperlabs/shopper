@@ -133,11 +133,11 @@ class User extends Authenticatable
     /**
      * Shop member.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
     public function shopMember()
     {
-        return $this->belongsToMany(ShopMember::class, shopper_table('shop_members'), 'user_id', 'shop_id');
+        return $this->hasOne(ShopMember::class, shopper_table('shop_members'), 'user_id');
     }
 
     /**

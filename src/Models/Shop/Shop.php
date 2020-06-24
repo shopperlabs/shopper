@@ -72,11 +72,11 @@ class Shop extends Model
     /**
      * Get shop members.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function members()
     {
-        return $this->belongsToMany(ShopMember::class, shopper_table('shop_members'), 'shop_id', 'user_id');
+        return $this->hasMany(ShopMember::class, shopper_table('shop_members'), 'shop_id');
     }
 
     /**
