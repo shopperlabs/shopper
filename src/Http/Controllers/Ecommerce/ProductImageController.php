@@ -56,10 +56,7 @@ class ProductImageController extends Controller
     public function store(Request $request, int $id)
     {
         $image = $request->file('image');
-        $name = str_slug(explode('.', $image->getClientOriginalName())[0]). '-' .time();
-        $filename = $name . '.' . $image->getClientOriginalExtension();
-
-        $image->storeAs('/uploads', $filename, 'public');
+        $filename = $image->store('/', config('shopper.storage.disks.uploads'));
 
         // save file information to database.
         $media = $this->mediaRepository->create([
@@ -67,7 +64,7 @@ class ProductImageController extends Controller
             'file_name'     => $image->getClientOriginalName(),
             'file_size'     => $image->getSize(),
             'content_type'  => $image->getClientMimeType(),
-            'file_url'      => '/uploads/'.$filename,
+            'file_url'      => $filename,
             'field'         => 'images',
             'is_public'     => true
         ]);
@@ -80,7 +77,7 @@ class ProductImageController extends Controller
         return response()->json([
             'status'  => 'success',
             'message' => __("Successfully uploaded"),
-            'url'     => asset('storage/uploads/'.$filename),
+            'url'     => Storage::disk(config('shopper.storage.disks.uploads'))->url($filename),
         ]);
     }
 

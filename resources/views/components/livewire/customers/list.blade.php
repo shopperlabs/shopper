@@ -87,7 +87,7 @@
                                             <span class="block text-sm leading-5 font-medium text-gray-700 ml-3">{{ __("Verified account") }}</span>
                                         </label>
                                         <label class="px-4 py-2 flex items-center cursor-pointer" for="unverified">
-                                            <input id="unverified" value="unverified" name="verified" type="radio" class="form-radio h-4 w-4 text-brand-500 transition duration-150 ease-in-out" />
+                                            <input id="unverified" value="unverified" name="unverified" type="radio" class="form-radio h-4 w-4 text-brand-500 transition duration-150 ease-in-out" />
                                             <span class="block text-sm leading-5 font-medium text-gray-700 ml-3">{{ __("Unverified account") }}</span>
                                         </label>
                                         <button type="button" class="block px-4 mt-3 text-sm leading-5 text-gray-400">{{ __("Clear") }}</button>
