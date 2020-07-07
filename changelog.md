@@ -7,6 +7,7 @@ All notable changes to `Framework` will be documented in this file.
 ### Updated
 
 -   Product multiple upload process
+-   Fix bug User default Model with Order Model relation
 
 ## Version 1.0-beta.5
 
