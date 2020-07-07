@@ -4,8 +4,9 @@ namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Repositories\MediaRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class ProductImageController extends Controller
 {
@@ -83,6 +84,5 @@ class ProductImageController extends Controller
 
     public function delete(int $id)
     {
-
     }
 }
