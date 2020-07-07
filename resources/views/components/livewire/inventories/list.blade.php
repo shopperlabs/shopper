@@ -3,12 +3,12 @@
         <div class="flex-1 min-w-0 flex flex-row items-center justify-between md:flex-col md:items-start">
             <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate">{{ __('Inventory') }}</h2>
             <div class="md:mt-2 ml-4 md:ml-0">
-                <a href="#" class="text-gray-400 text-sm inline-flex items-center hover:text-gray-500 focus:text-gray-600 leading-5 transition duration-150 ease-in-out">
+                <button type="button" class="text-gray-400 text-sm inline-flex items-center hover:text-gray-500 focus:text-gray-600 leading-5 transition duration-150 ease-in-out">
                     <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mr-2">
                         <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                     <span>{{ __('Export') }}</span>
-                </a>
+                </button>
             </div>
         </div>
         <div class="mt-4 flex md:mt-0 md:ml-4">
@@ -16,19 +16,32 @@
         </div>
     </div>
 
-    <div class="bg-white shadow overflow-hidden sm:rounded-md">
+    <div
+        x-data="{
+            options: ['all'],
+            words: {'all': '{{ __("All") }}'},
+            currentTab: 'all'
+        }"
+        class="bg-white shadow overflow-hidden sm:rounded-md"
+    >
         <div class="bg-white border-b border-gray-200">
             <div class="sm:hidden p-4">
-                <select aria-label="Selected tab" class="form-select form-select-shopper block w-full pl-3 pr-10 py-2 text-base leading-6 sm:text-sm sm:leading-5 transition ease-in-out duration-150">
-                    <option>{{ __('All') }}</option>
+                <select x-model="currentTab" aria-label="Selected tab" class="form-select form-select-shopper block w-full pl-3 pr-10 py-2 text-base leading-6 sm:text-sm sm:leading-5 transition ease-in-out duration-150">
+                    <template x-for="option in options" :key="option">
+                        <option
+                            x-bind:value="option"
+                            x-text="words[option]"
+                            x-bind:selected="option === currentTab"
+                        ></option>
+                    </template>
                 </select>
             </div>
             <div class="hidden sm:block">
-                <div class="">
+                <div>
                     <nav class="-mb-px flex">
-                        <a href="#" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-brand-500 font-medium text-sm leading-5 text-brand-400 focus:outline-none focus:text-brand-500 focus:border-brand-500">
+                        <button x-on:click="currentTab === all" type="button" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-brand-500 font-medium text-sm leading-5 text-brand-400 focus:outline-none focus:text-brand-500 focus:border-brand-500">
                             {{ __('All') }}
-                        </a>
+                        </button>
                     </nav>
                 </div>
             </div>
@@ -69,15 +82,15 @@
                                     {{ __("Vendor") }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
-                                    {{ __("Last action") }}
+                                    {{ __("Event") }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 text-right text-sm font-medium leading-4 text-gray-700 tracking-wider">
-                                    {{ __("Quantity Available") }}
+                                    {{ __("Available") }}
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
-                            @foreach($products as $product)
+                            @forelse($products as $product)
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                         <a href="{{ route('shopper.products.edit', $product) }}" class="flex items-center">
@@ -113,10 +126,35 @@
                                         </span>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-6 py-10 whitespace-no-wrap">
+                                        <h3 class="text-lg text-center font-medium leading-6 text-gray-700">{{ __("No inventory available") }}</h3>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+        <div class="rounded-b-md bg-white px-4 py-3 flex items-center justify-between sm:px-6">
+            <div class="flex-1 flex justify-between sm:hidden">
+                {{ $products->links('shopper::components.livewire.wire-mobile-pagination-links') }}
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm leading-5 text-gray-700">
+                        {{ __('Showing') }}
+                        <span class="font-medium">{{ ($products->currentPage() - 1) * $products->perPage() + 1 }}</span>
+                        {{ __('to') }}
+                        <span class="font-medium">{{ ($products->currentPage() - 1) * $products->perPage() + count($products->items()) }}</span>
+                        {{ __('of') }}
+                        <span class="font-medium"> {!! $products->total() !!}</span>
+                        {{ __('results') }}
+                    </p>
+                </div>
+                {{ $products->links() }}
             </div>
         </div>
     </div>
