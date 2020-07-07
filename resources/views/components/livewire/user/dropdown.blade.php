@@ -1,6 +1,6 @@
 <div @click.away="open = false" class="relative" x-data="{ open: false }">
     <div>
-        <button @click="open = !open" class="flex border-2 border-transparent rounded-full relative rounded-full focus:outline-none focus:border-gray-50 transition duration-150 ease-in-out">
+        <button @click="open = !open" class="flex border-2 border-transparent rounded-full relative focus:outline-none focus:border-gray-50 transition duration-150 ease-in-out">
             <img class="h-9 w-9 rounded-full" src="{{ $picture }}" alt="{{ $email }}" />
             <span class="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full text-white shadow-solid bg-green-400"></span>
         </button>
@@ -25,7 +25,7 @@
                     <p class="text-sm leading-5 font-medium text-gray-700 group-hover:text-gray-900">
                         {{ $full_name }}
                     </p>
-                    <p class="text-xs leading-4 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150">
+                    <p class="text-xs leading-4 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150 truncate">
                         {{ $email }}
                     </p>
                 </div>
