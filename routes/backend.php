@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Shopper\Framework\Http\Controllers\Ecommerce\ProductImageController;
 use Shopper\Framework\Http\Controllers\ProfileController;
+use Shopper\Framework\Http\Controllers\SettingController;
 use Shopper\Framework\Http\Controllers\ShopController;
 use Shopper\Framework\Shopper;
 
@@ -25,11 +26,6 @@ Route::prefix('access')->group(function () {
     Route::get('users', 'UserController@index')->name('users.access');
 });
 
-Route::group(['prefix' => 'shop', 'as' => 'shop.'], function () {
-    Route::get('/setting', [ShopController::class, 'setting'])->name('setting');
-    Route::put('/update/{store}', [ShopController::class, 'update'])->name('update');
-});
-
 Route::namespace('Ecommerce')->group(function () {
     Route::resource('categories', 'CategoryController');
     Route::resource('brands', 'BrandController');
@@ -42,3 +38,8 @@ Route::namespace('Ecommerce')->group(function () {
 
 Route::resource('customers', 'CustomerController');
 Route::resource('inventory-histories', 'InventoryHistoryController');
+Route::prefix('settings')->as('settings.')->group(function () {
+    Route::get('/shop', [ShopController::class, 'setting'])->name('shop');
+    Route::put('/update/{store}', [ShopController::class, 'update'])->name('shop.update');
+    Route::get('/', [SettingController::class, 'index'])->name('index');
+});

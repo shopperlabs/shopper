@@ -3,6 +3,13 @@
 
 @section('content')
 
+    <x:breadcrumb back="shopper.settings.shop">
+        <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+        </svg>
+        <a href="{{ route('shopper.settings.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Settings') }}</a>
+    </x:breadcrumb>
+
     <div class="mt-6 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
             <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate pb-4 border-b border-gray-200">{{ __('Store Setting') }}</h2>
@@ -10,7 +17,7 @@
     </div>
 
     <div class="py-8">
-        {!! Form::model($store, ['route' => ['shopper.shop.update', $store], 'files' => true, 'method' => 'PUT']) !!}
+        {!! Form::model($store, ['route' => ['shopper.settings.shop.update', $store], 'files' => true, 'method' => 'PUT']) !!}
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">
