@@ -236,7 +236,7 @@
                     message="Are you sure you want to delete this product? All this data will be removed. This action cannot be undone."
                     :url="route('shopper.products.destroy', $product)"
                 />
-                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
+                <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">{{ __('Update') }}</button>
             </div>
         </div>
     {!! Form::close() !!}

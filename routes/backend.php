@@ -42,4 +42,5 @@ Route::prefix('settings')->as('settings.')->group(function () {
     Route::get('/shop', [ShopController::class, 'setting'])->name('shop');
     Route::put('/update/{store}', [ShopController::class, 'update'])->name('shop.update');
     Route::get('/', [SettingController::class, 'index'])->name('index');
+    Route::resource('inventories', 'InventoryController');
 });

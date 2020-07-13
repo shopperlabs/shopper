@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller;
 class InventoryHistoryController extends Controller
 {
     /**
-     * Display Inventory Index.
+     * Display Inventory History Index.
      *
      * @return \Illuminate\View\View
      */

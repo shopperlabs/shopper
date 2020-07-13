@@ -31,6 +31,18 @@ return [
     'currency'  => env('CURRENCY_SYMBOL', 'USD'),
 
     /*
+    |--------------------------------------------------------------------------
+    | Shopper Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Shopper PHP locale determines the default locale that will be used
+    | by the model date format function ->formatLocalized().
+    |
+    */
+
+    'locale' => 'en_EN',
+
+    /*
     |------------------------------------------------------------------ø--------
     | Default Theme
     |--------------------------------------------------------------------------

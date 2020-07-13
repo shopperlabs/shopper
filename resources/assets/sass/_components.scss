@@ -18,7 +18,7 @@
 }
 
 .btn {
-  @apply inline-flex font-medium justify-center w-auto text-sm transition ease-in-out duration-150 block px-4 py-2 rounded-md leading-5;
+  @apply inline-flex font-medium justify-center w-auto text-sm transition ease-in-out duration-150 px-4 py-2 rounded-md leading-5;
 }
 
 .btn-primary {

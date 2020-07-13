@@ -2,23 +2,23 @@
     @if($customers->isEmpty())
         <div class="mt-6 md:flex md:items-center md:justify-between">
             <div class="flex-1 min-w-0">
-                <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate pb-4 border-b border-gray-200">{{ __('Customers') }}</h2>
+                <h2 class="text-2xl font-bold leading-7 text-gray-500 sm:text-3xl sm:leading-9 sm:truncate pb-4 border-b border-gray-200">{{ __('Customers') }}</h2>
             </div>
         </div>
         <div class="empty-categories relative w-full flex flex-col md:flex-row items-center justify-end relative py-12 md:py-24">
             <img src="{{ asset('shopper/images/empty/categories.svg') }}" class="w-full object-cover relative flex lg:absolute lg:top-0" alt="Empty state">
             <div class="w-full lg:w-1/2 relative z-90">
                 <div class="w-full pl-0 lg:pl-20 lg:pt-20 xl:pt-24">
-                    <h3 class="text-primary-text font-medium text-xl mb-2">{{ __('Understand your customers') }}</h3>
+                    <h3 class="text-gray-500 font-medium text-xl mb-2">{{ __('Understand your customers') }}</h3>
                     <p class="text-gray-500 text-lg mb-3">{{ __('When a customer places an order, you’ll find their details and purchase history here..') }}</p>
-                    <a href="{{ route('shopper.customers.create') }}" class="btn btn-primary inline-flex">{{ __('Add customer') }}</a>
+                    <a href="{{ route('shopper.customers.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150 inline-flex">{{ __('Add customer') }}</a>
                 </div>
             </div>
         </div>
     @else
         <div class="my-6 md:flex md:items-center md:justify-between">
             <div class="flex-1 min-w-0 flex flex-row items-center justify-between md:flex-col md:items-start">
-                <h2 class="text-2xl font-bold leading-7 text-primary-text sm:text-3xl sm:leading-9 sm:truncate">{{ __('Customers') }}</h2>
+                <h2 class="text-2xl font-bold leading-7 text-gray-500 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Customers') }}</h2>
                 <div class="md:mt-2 ml-4 md:ml-0">
                     <a href="#" class="text-gray-400 text-sm inline-flex items-center hover:text-gray-500 focus:text-gray-600 leading-5 transition duration-150 ease-in-out">
                         <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mr-2">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="mt-4 flex md:mt-0 md:ml-4">
-                <a href="{{ route('shopper.customers.create') }}" class="btn btn-primary">{{ __('Add customer') }}</a>
+                <a href="{{ route('shopper.customers.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">{{ __('Add customer') }}</a>
             </div>
         </div>
 

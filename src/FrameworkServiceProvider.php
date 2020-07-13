@@ -51,7 +51,7 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->registerMiddleware($this->app['router']);
 
         // setLocale for php. Enables ->formatLocalized() with localized values for dates.
-        setlocale(LC_TIME, config('app.locale'));
+        setlocale(LC_TIME, config('shopper.locale'));
 
         // setLocale to use Carbon source locales. Enables diffForHumans() localized.
         Carbon::setLocale(config('app.locale'));
@@ -61,8 +61,8 @@ class FrameworkServiceProvider extends ServiceProvider
         view()->composer('*', GlobalComposer::class);
 
         // Backend Menu
-        view()->creator('shopper::partials.'. config('shopper.theme') .'.aside._secondary', SidebarCreator::class);
-        view()->composer('shopper::partials.'. config('shopper.theme') .'.aside._primary', MenuCreator::class);
+        view()->creator('shopper::partials.' . config('shopper.theme') . '.aside._secondary', SidebarCreator::class);
+        view()->composer('shopper::partials.' . config('shopper.theme') . '.aside._primary', MenuCreator::class);
     }
 
     /**
@@ -97,11 +97,11 @@ class FrameworkServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (! defined('SHOPPER_PATH')) {
-            define('SHOPPER_PATH', realpath(__DIR__.'/../'));
+        if (!defined('SHOPPER_PATH')) {
+            define('SHOPPER_PATH', realpath(__DIR__ . '/../'));
         }
 
-        $this->mergeConfigFrom(SHOPPER_PATH.'/config/shopper.php', 'shopper');
+        $this->mergeConfigFrom(SHOPPER_PATH . '/config/shopper.php', 'shopper');
 
         // Register Default Dashboard Menu
         $this->app['events']->listen(BuildingSidebar::class, RegisterDashboardSidebar::class);

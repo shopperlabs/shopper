@@ -5,9 +5,11 @@ import axios from "axios";
 
 import BannerAlert from "@/components/BannerAlert";
 
-const dashboardURL: any = (document.querySelector('meta[name="dashboard-url"]') as Element).getAttribute('content');
-const loginURL: any = document.getElementById('login-form');
-const url: string = loginURL ? loginURL.getAttribute('data-url') : '';
+const dashboardURL: any = (document.querySelector(
+  'meta[name="dashboard-url"]'
+) as Element).getAttribute("content");
+const loginURL: any = document.getElementById("login-form");
+const url: string = loginURL ? loginURL.getAttribute("data-url") : "";
 
 type FormData = {
   email: string;
@@ -17,19 +19,22 @@ type FormData = {
 
 const LoginForm = () => {
   const [state, setState] = useState(false);
-  const [status, setStatus] = useState('');
-  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState("");
+  const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
 
-  const { register, handleSubmit, errors } = useForm<FormData>({ mode: "onChange" });
-  const onSubmit = handleSubmit((values) => {
+  const { register, handleSubmit, errors } = useForm<FormData>({
+    mode: "onChange"
+  });
+  const onSubmit = handleSubmit(values => {
     setSending(true);
-    axios.post(url, values)
-      .then((response) => {
+    axios
+      .post(url, values)
+      .then(response => {
         // eslint-disable-next-line no-shadow
         const { token, user, redirect_url, message } = response.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
 
         setMessage(message);
         setStatus("success");
@@ -39,7 +44,7 @@ const LoginForm = () => {
           window.location.href = redirect_url;
         }, 2000);
       })
-      .catch((error) => {
+      .catch(error => {
         setSending(false);
         if (error.response.data) {
           const serverErrors = error.response.data.errors;
@@ -61,7 +66,9 @@ const LoginForm = () => {
               id="email"
               name="email"
               type="email"
-              className={`appearance-none rounded-none relative block w-full px-3 py-2 border bg-input-bg placeholder-gray-500 text-input-text rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-brand-100 focus:z-10 sm:text-sm sm:leading-5 ${errors.email ? 'border-red-500 ' : 'border-input-border'}`}
+              className={`appearance-none rounded-none relative block w-full px-3 py-2 border bg-input-bg placeholder-primary-text text-input-text rounded-t-md focus:outline-none focus:shadow-outline-blue focus:border-brand-100 focus:z-10 sm:text-sm sm:leading-5 ${
+                errors.email ? "border-red-500 " : "border-input-border"
+              }`}
               placeholder="Email address"
               ref={register({
                 required: "Email Address required",
@@ -73,8 +80,16 @@ const LoginForm = () => {
             />
             {errors.email && (
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                <svg className="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-red-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
             )}
@@ -85,7 +100,7 @@ const LoginForm = () => {
               id="password"
               name="password"
               type="password"
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-input-border bg-input-bg placeholder-gray-500 text-input-text rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-brand-100 focus:z-10 sm:text-sm sm:leading-5"
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-input-border bg-input-bg placeholder-primary-text text-input-text rounded-b-md focus:outline-none focus:shadow-outline-blue focus:border-brand-100 focus:z-10 sm:text-sm sm:leading-5"
               placeholder="Password"
               ref={register({ required: true })}
             />
@@ -101,13 +116,19 @@ const LoginForm = () => {
               className="form-checkbox h-4 w-4 text-brand transition duration-150 ease-in-out"
               ref={register}
             />
-            <label htmlFor="remember_me" className="ml-2 block text-sm leading-5 text-primary-text cursor-pointer">
+            <label
+              htmlFor="remember_me"
+              className="ml-2 block text-sm leading-5 text-gray-500 cursor-pointer"
+            >
               Remember me
             </label>
           </div>
 
           <div className="text-sm leading-5">
-            <a href={`${dashboardURL}/password/reset`} className="font-medium text-primary-text hover:text-brand-400 focus:outline-none focus:underline transition ease-in-out duration-150">
+            <a
+              href={`${dashboardURL}/password/reset`}
+              className="font-medium text-gray-500 hover:text-brand-400 focus:outline-none focus:underline transition ease-in-out duration-150"
+            >
               Forgot your password?
             </a>
           </div>
@@ -120,8 +141,16 @@ const LoginForm = () => {
           >
             {!sending && (
               <span className="absolute left-0 inset-y pl-3">
-                <svg className="h-5 w-5 text-brand-100 group-hover:text-gray-50 transition ease-in-out duration-150" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-brand-100 group-hover:text-gray-50 transition ease-in-out duration-150"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </span>
             )}
@@ -134,14 +163,16 @@ const LoginForm = () => {
           </button>
         </div>
       </form>
-      <BannerAlert state={state} status={status} message={message} onClose={() => setState(!state)} />
+      <BannerAlert
+        state={state}
+        status={status}
+        message={message}
+        onClose={() => setState(!state)}
+      />
     </>
   );
 };
 
-if (document.getElementById('login-form')) {
-  ReactDOM.render(
-    <LoginForm />,
-    document.getElementById('login-form')
-  );
+if (document.getElementById("login-form")) {
+  ReactDOM.render(<LoginForm />, document.getElementById("login-form"));
 }

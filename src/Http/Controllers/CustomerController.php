@@ -2,11 +2,12 @@
 
 namespace Shopper\Framework\Http\Controllers;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Shopper\Framework\Http\Requests\CustomerRequest;
 use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -76,5 +77,30 @@ class CustomerController extends Controller
         $customer = $this->repository->with('addresses')->getById($id);
 
         return view('shopper::pages.customers.show', compact('customer'));
+    }
+
+    /**
+     * Delete a resource on the database.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Request $request, $id)
+    {
+        try {
+            $this->repository->deleteById($id);
+            notify()->success(__('Customer deleted successfully'));
+
+            if ($request->isXmlHttpRequest()) {
+                return response()->json(['redirect_url' => route('shopper.customers.index')]);
+            }
+
+            return redirect()->route('shopper.customers.index');
+        } catch (\Exception $e) {
+            notify()->error(__("We can't delete this customer!"));
+
+            return back();
+        }
     }
 }

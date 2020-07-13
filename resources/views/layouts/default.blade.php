@@ -43,7 +43,7 @@
         @endforeach
     @endif
 </head>
-<body class="h-full bg-background text-primary-text leading-normal font-body transition ease-in-out duration-500 light">
+<body class="h-full bg-background text-gray-500 leading-normal font-body transition ease-in-out duration-500 light">
 
     <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false }" @keydown.window.escape="sidebarOpen = false">
         <!-- Off-canvas menu for mobile -->

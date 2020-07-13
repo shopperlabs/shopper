@@ -55,7 +55,7 @@
                     </div>
                     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                         <span class="inline-flex rounded-md shadow-sm">
-                            <button class="btn btn-primary">
+                            <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">
                                 {{ __("Update Password") }}
                             </button>
                         </span>
@@ -120,7 +120,7 @@
                 </div>
                 <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                     <span class="inline-flex rounded-md shadow-sm">
-                        <button class="btn btn-primary">
+                        <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">
                             {{ __("Enable Authentication") }}
                         </button>
                     </span>

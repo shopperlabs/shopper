@@ -22,7 +22,7 @@
                     @enderror
                 </div>
             </div>
-            <button wire:click="updateCurrentStock" type="button" class="ml-3 btn btn-primary">
+            <button wire:click="updateCurrentStock" type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">
                 <span wire:loading wire:target="updateCurrentStock" class="pr-2">
                     <span class="btn-spinner"></span>
                 </span>

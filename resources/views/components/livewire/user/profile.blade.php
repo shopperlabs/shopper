@@ -60,7 +60,7 @@
         <div class="mt-8 border-t border-gray-200 pt-5">
             <div class="flex justify-end">
                 <span class="inline-flex rounded-md shadow-sm">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">
                         <span wire:loading wire:target="save" class="pr-2">
                             <span class="btn-spinner"></span>
                         </span>
