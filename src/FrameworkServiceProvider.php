@@ -4,7 +4,6 @@ namespace Shopper\Framework;
 
 use Carbon\Carbon;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Framework\Events\BuildingSidebar;
 use Shopper\Framework\Events\Handlers\RegisterBannerSidebar;
@@ -107,7 +106,7 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->app['events']->listen(BuildingSidebar::class, RegisterDashboardSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, RegisterShopSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, RegisterOrderSidebar::class);
-        $this->app['events']->listen(BuildingSidebar::class, RegisterBannerSidebar::class);
+        // $this->app['events']->listen(BuildingSidebar::class, RegisterBannerSidebar::class);
 
         // Register the service the package provides.
         $this->app->singleton('shopper', function ($app) {
