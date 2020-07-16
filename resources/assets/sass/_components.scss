@@ -10,23 +10,15 @@
 
 .primary-menu {
   .active {
-    @apply bg-primary-dark;
+    @apply bg-brand-700;
     &:hover {
-      background-color: theme("colors.primary-dark") !important;
+      background-color: theme("colors.brand.800") !important;
     }
   }
 }
 
 .btn {
   @apply inline-flex font-medium justify-center w-auto text-sm transition ease-in-out duration-150 px-4 py-2 rounded-md leading-5;
-}
-
-.btn-primary {
-  @apply bg-brand-400 text-on-primary;
-
-  &:hover {
-    @apply bg-brand-100;
-  }
 }
 
 .btn-white {
@@ -42,7 +34,7 @@
 }
 
 .btn-danger {
-  @apply border border-transparent text-on-primary bg-red-600 shadow-sm;
+  @apply border border-transparent text-white bg-red-600 shadow-sm;
 
   &:hover {
     @apply bg-red-500;

@@ -1,7 +1,7 @@
 <div>
     <div class="my-6 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0 flex flex-row items-center justify-between md:flex-col md:items-start">
-            <h2 class="text-2xl font-bold leading-7 text-gray-500 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Inventory') }}</h2>
+            <h2 class="text-2xl font-bold leading-7 text-gray-600 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Inventory') }}</h2>
             <div class="md:mt-2 ml-4 md:ml-0">
                 <button type="button" class="text-gray-400 text-sm inline-flex items-center hover:text-gray-500 focus:text-gray-600 leading-5 transition duration-150 ease-in-out">
                     <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mr-2">

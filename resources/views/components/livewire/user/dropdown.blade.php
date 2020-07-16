@@ -21,7 +21,7 @@
                 <div class="flex-shrink-0 overflow-hidden">
                     <img class="inline-block h-9 w-9 rounded-full" src="{{ $picture }}" alt="{{ $email }}" />
                 </div>
-                <div class="ml-3">
+                <div class="ml-3 truncate">
                     <p class="text-sm leading-5 font-medium text-gray-700 group-hover:text-gray-900">
                         {{ $full_name }}
                     </p>

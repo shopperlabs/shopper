@@ -16,7 +16,7 @@ class MenuCreator
     public function compose(View $view)
     {
         $menu = new Menu();
-        $class = 'group block p-2 text-base leading-6 font-medium rounded-md text-on-primary hover:text-on-primary hover:bg-primary-light focus:outline-none focus:text-on-primary focus:bg-primary-light transition ease-in-out duration-150';
+        $class = 'group block p-2 text-base leading-6 font-medium rounded-md text-white hover:bg-brand-400 focus:outline-none focus:text-white focus:bg-brand-800 transition ease-in-out duration-150';
         $svgClass = 'h-6 w-6 text-on-primary group-hover:text-on-primary group-focus:text-on-primary transition ease-in-out duration-150';
 
         $menu->make('primaryMenu', function (Builder $item) use ($class, $svgClass) {

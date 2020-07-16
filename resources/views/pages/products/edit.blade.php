@@ -13,7 +13,7 @@
 
     <div class="mt-6 flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-gray-500 sm:text-3xl sm:leading-9 sm:truncate">{{ $product->name }}</h2>
+            <h2 class="text-2xl font-bold leading-7 text-gray-600 sm:text-3xl sm:leading-9 sm:truncate">{{ $product->name }}</h2>
             <div class="md:my-4 mt-2">
                 <a href="#" class="text-gray-600 text-base inline-flex items-center hover:text-gray-500 focus:text-gray-700 leading-5 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
