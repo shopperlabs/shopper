@@ -56,7 +56,7 @@
                         </svg>
                     </div>
                     <input id="filter" wire:model.debounce.300ms="search" class="form-input block w-full rounded-none rounded-l-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search products') }}" />
-                    <span wire:loading class="spinner right-0 top-0 mt-5 mr-6"></span>
+                    <span wire:loading wire:target="search" class="spinner right-0 top-0 mt-5 mr-6"></span>
                 </div>
                 <button wire:click="sort('{{ $direction }}')" class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-r-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                     <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -76,13 +76,7 @@
                                     {{ __('Name') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
-                                    {{ __("Shop") }}
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
                                     {{ __("Vendor") }}
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
-                                    {{ __("Event") }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 text-right text-sm font-medium leading-4 text-gray-700 tracking-wider">
                                     {{ __("Available") }}
@@ -112,13 +106,7 @@
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                        {{ $product->shop->name }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                                         {{ $product->inventoryHistories->first() ? $product->inventoryHistories->first()->inventory->name : __("No inventory") }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                        {{ $product->inventoryHistories->first() ? $product->inventoryHistories->first()->event : __("Initial inventory") }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
                                         <span class="text-sm inline-flex leading-5 font-semibold {{ $product->stock < 10 ? 'text-red-600' : 'text-green-600' }}">

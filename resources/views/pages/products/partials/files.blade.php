@@ -1,7 +1,6 @@
-<div x-show="tab === 'files'" class="mt-8">
+<div x-show="currentTab === 'files'" class="mt-8">
 
     @if(env('APP_DEBUG') === true)
-
         <div class="rounded-md bg-blue-50 p-4 mb-2">
             <div class="flex">
                 <div class="flex-shrink-0">
@@ -21,7 +20,6 @@
                 </div>
             </div>
         </div>
-
     @endif
 
     <div

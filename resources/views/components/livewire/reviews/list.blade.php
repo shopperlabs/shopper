@@ -2,7 +2,7 @@
     x-data="{
         modal: false,
         options: ['all', 'approved', 'pending'],
-        textes: {'all': '{{ __("All") }}', 'approved': '{{ __("Approved") }}', 'pending': '{{ __("Pending") }}'},
+        words: {'all': '{{ __("All") }}', 'approved': '{{ __("Approved") }}', 'pending': '{{ __("Pending") }}'},
         currentTab: 'all'
     }"
 >
@@ -18,7 +18,7 @@
                 <template x-for="option in options" :key="option">
                     <option
                         x-bind:value="option"
-                        x-text="textes[option]"
+                        x-text="words[option]"
                         x-bind:selected="option === currentTab"
                     ></option>
                 </template>

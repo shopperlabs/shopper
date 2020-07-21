@@ -15,5 +15,30 @@
 @import "components";
 @import "empty-state";
 
+/* use a hand cursor intead of arrow for the action buttons */
+.filepond--file-action-button {
+  cursor: pointer;
+}
+
+/* the text color of the drop label*/
+.filepond--drop-label {
+  color: #555;
+}
+
+/* the background color of the filepond drop area */
+.filepond--panel-root {
+  cursor: pointer;
+  background-color: #fff !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.iti {
+  display: block;
+}
+
+.iti__selected-flag {
+  padding: 0 10px;
+}
+
 @tailwind utilities;
 @import "utilities";

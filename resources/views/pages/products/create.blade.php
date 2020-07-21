@@ -28,7 +28,7 @@
                         <div class="mt-1 relative rounded-md shadow-sm">
                             {!! Form::text('name', null, [
                                     'class' => 'form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
-                                    'placeholder' => 'e.g.: MackBook Retina 16',
+                                    'placeholder' => 'e.g.: MacBook Retina 16',
                                     'id' => 'name',
                                     'autocomplete' => 'off'
                                 ])

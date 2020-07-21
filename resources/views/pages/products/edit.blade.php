@@ -23,45 +23,52 @@
                 </a>
             </div>
         </div>
-        <div class="mt-4 flex-shrink-0 flex md:mt-0 md:ml-4">
-            <span>
-                <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-brand focus:border-brand-400 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out">
-                    {{ __("Add Variant") }}
-                </button>
-            </span>
-        </div>
     </div>
 
-    <div x-data="{ tab: 'detail' }">
+    <div
+        x-data="{
+            options: ['detail', 'variant', 'attributes', 'inventory', 'files', 'related'],
+            words: {
+                'detail': '{{ __("Detail") }}',
+                'variant': '{{ __("Variants") }}',
+                'attributes': '{{ __("Attributes") }}',
+                'inventory': '{{ __("Inventory") }}',
+                'files': '{{ __("Files") }}',
+                'related': '{{ __("Related Products") }}'
+            },
+            currentTab: 'detail'
+        }"
+    >
         <div class="sm:hidden mt-4">
-            <select aria-label="Selected tab" class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 transition ease-in-out duration-150">
-                <option selected>{{ __("Detail") }}</option>
-                <option>{{ __("Variants") }}</option>
-                <option>{{ __("Attributes") }}</option>
-                <option>{{ __("Inventory") }}</option>
-                <option>{{ __("Files") }}</option>
-                <option>{{ __("Related Products") }}</option>
+            <select x-model="currentTab" aria-label="Selected tab" class="mt-1 form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 transition ease-in-out duration-150">
+                <template x-for="option in options" :key="option">
+                    <option
+                        x-bind:value="option"
+                        x-text="words[option]"
+                        x-bind:selected="option === currentTab"
+                    ></option>
+                </template>
             </select>
         </div>
         <div class="hidden sm:block">
             <div class="border-b border-gray-200">
                 <nav class="-mb-px flex">
-                    <button type="button" @click="tab = 'detail' " class="whitespace-no-wrap py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'detail' }">
+                    <button type="button" @click="currentTab = 'detail' " class="whitespace-no-wrap py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : currentTab === 'detail' }">
                         {{ __("Detail") }}
                     </button>
-                    <button type="button" @click="tab = 'variants' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'variants' }">
+                    <button type="button" @click="currentTab = 'variants' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : currentTab === 'variants' }">
                         {{ __("Variants") }}
                     </button>
-                    <button type="button" @click="tab = 'attributes' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'attributes' }">
+                    <button type="button" @click="currentTab = 'attributes' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : currentTab === 'attributes' }">
                         {{ __("Attributes") }}
                     </button>
-                    <button type="button" @click="tab = 'inventory' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'inventory' }">
+                    <button type="button" @click="currentTab = 'inventory' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : currentTab === 'inventory' }">
                         {{ __("Inventory") }}
                     </button>
-                    <button type="button" @click="tab = 'files' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'files' }">
+                    <button type="button" @click="currentTab = 'files' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : currentTab === 'files' }">
                         {{ __("Files") }}
                     </button>
-                    <button type="button" @click="tab = 'related' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : tab === 'related' }">
+                    <button type="button" @click="currentTab = 'related' " class="whitespace-no-wrap ml-8 py-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'text-brand-400 border-brand-500 focus:text-brand-500 focus:border-brand-900' : currentTab === 'related' }">
                         {{ __("Related Products") }}
                     </button>
                 </nav>

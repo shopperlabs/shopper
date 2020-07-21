@@ -1,4 +1,4 @@
-<div x-show="tab === 'detail'" class="mt-8">
+<div x-show="currentTab === 'detail'" class="mt-8">
 
     {!! Form::model($product, ['route' => ['shopper.products.update', $product], 'method' => 'put', 'files' => true]) !!}
         <div class="flex flex-col lg:flex-row">
@@ -11,7 +11,7 @@
                             <div class="mt-1 relative rounded-md shadow-sm">
                                 {!! Form::text('name', null, [
                                         'class' => 'form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out',
-                                        'placeholder' => 'e.g.: MackBook Retina 16',
+                                        'placeholder' => 'e.g.: MacBook Retina 16',
                                         'id' => 'name',
                                         'autocomplete' => 'off'
                                     ])

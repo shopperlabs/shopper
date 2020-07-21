@@ -1,4 +1,21 @@
 <div class="bg-white shadow-md rounded-md overflow-hidden">
+    @if($inventories->count() > 1)
+        <div class="px-4 sm:px-6 py-3 relative flex items-center border-b border-gray-200">
+            <span class="relative z-0 inline-flex shadow-sm rounded-md">
+                <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-gray-300 bg-white">
+                    <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </span>
+                <select wire:model="inventory" id="inventory" class="-ml-px block form-select w-full pl-3 pr-9 py-2 rounded-l-none rounded-r-md border border-gray-300 bg-white text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150" aria-label="{{ __("Select inventory") }}">
+                    @foreach($inventories as $inventory)
+                        <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
+                    @endforeach
+                </select>
+            </span>
+        </div>
+    @endif
     <div class="flex items-center justify-between px-4 sm:px-6 mb-2 py-6">
         <div class="relative z-0 inline-flex items-center leading-5 text-gray-700">
             <span class="block text-sm font-medium mr-4">{{ __("Quantity available") }}</span>
@@ -30,7 +47,7 @@
             </button>
         </div>
     </div>
-    @if($product->inventoryHistories->isEmpty())
+    @if($histories->isEmpty())
         <div class="flex flex-col items-center justify-center px-4 sm:px-6 mb-2 py-6 mt-4">
                 <span class="flex-shrink-0 h-20 w-20">
                     <svg class="w-full h-full text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,26 +62,26 @@
                 <div class="align-middle inline-block min-w-full overflow-hidden">
                     <table class="min-w-full">
                         <thead>
-                        <tr>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
-                                {{ __("Date") }}
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
-                                {{ __("Event") }}
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
-                                {{ __("Inventory Place") }}
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-sm leading-4 font-medium text-gray-700 tracking-wider">
-                                {{ __("Adjustment") }}
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-sm leading-4 font-medium text-gray-700 tracking-wider">
-                                {{ __("Quantity Movement") }}
-                            </th>
-                        </tr>
+                            <tr>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                    {{ __("Date") }}
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                    {{ __("Event") }}
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                    {{ __("Inventory Place") }}
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                    {{ __("Adjustment") }}
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                    {{ __("Quantity Movement") }}
+                                </th>
+                            </tr>
                         </thead>
                         <tbody class="bg-white">
-                            @foreach($product->inventoryHistories as $inventoryHistory)
+                            @foreach($histories as $inventoryHistory)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         {{ $inventoryHistory->created_at->diffForHumans() }}
