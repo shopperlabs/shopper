@@ -2,6 +2,18 @@
 
 All notable changes to `Framework` will be documented in this file.
 
+## Version 1.0-beta.7
+
+### Added
+- Customers reviews
+- Multi-vendor product
+- Create multi-vendor
+
+### Updated
+
+-   Tailwind configuration and UI
+-   Fix some bugs.
+
 ## Version 1.0-beta.6
 
 ### Updated
