@@ -67,8 +67,9 @@ module.exports = {
   },
   variants: {
     translate: ["responsive", "hover", "focus", "active", "group-hover"],
-    backgroundColor: ["responsive", "hover", "focus", "group-hover", "focus-within"],
-    textColor: ["responsive", "hover", "focus", "group-hover", "focus-within"],
+    backgroundColor: ["responsive", "hover", "focus", "group-hover", "focus-within", "odd"],
+    textColor: ["responsive", "hover", "focus", "group-hover", "focus-within", "odd"],
+    borderWidth: ["responsive", "odd", "hover", "focus", "odd"],
     fontFamily: ["responsive", "hover", "focus"],
     zIndex: ["responsive", "focus"],
     spinner: ["responsive"]

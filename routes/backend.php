@@ -37,6 +37,7 @@ Route::namespace('Ecommerce')->group(function () {
 });
 
 Route::resource('customers', 'CustomerController');
+Route::resource('reviews', 'ReviewController');
 Route::resource('inventory-histories', 'InventoryHistoryController');
 Route::prefix('settings')->as('settings.')->group(function () {
     Route::get('/shop', [ShopController::class, 'setting'])->name('shop');
