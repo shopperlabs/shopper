@@ -37,12 +37,54 @@
                 </select>
             </div>
             <div class="hidden sm:block">
-                <div>
+                <div class="flex items-center justify-between">
                     <nav class="-mb-px flex">
                         <button x-on:click="currentTab === all" type="button" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-brand-500 font-medium text-sm leading-5 text-brand-400 focus:outline-none focus:text-brand-500 focus:border-brand-500">
                             {{ __('All') }}
                         </button>
                     </nav>
+                    @if($inventories->count() > 1)
+                        <div class="px-6">
+                            <div class="relative z-20 inline-flex shadow-sm rounded-md">
+                                <span class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                                    <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <span class="ml-2">{{ $name }}</span>
+                                </span>
+                                <div x-data="{ open: false }" class="-ml-px relative block">
+                                    <button @click="open = !open" @click.away="open = false" type="button" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150" aria-label="Expand">
+                                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </button>
+                                    <div
+                                        x-cloak
+                                        x-show="open"
+                                        x-description="Dropdown panel, show/hide based on dropdown state."
+                                        x-transition:enter="transition ease-out duration-100"
+                                        x-transition:enter-start="transform opacity-0 scale-95"
+                                        x-transition:enter-end="transform opacity-100 scale-100"
+                                        x-transition:leave="transition ease-in duration-75"
+                                        x-transition:leave-start="transform opacity-100 scale-100"
+                                        x-transition:leave-end="transform opacity-0 scale-95"
+                                        class="origin-top-right absolute right-0 mt-2 -mr-1 w-56 rounded-md shadow-lg"
+                                    >
+                                        <div class="rounded-md bg-white shadow-xs">
+                                            <div class="py-1">
+                                                @foreach($inventories as $inventory)
+                                                    <button wire:click="setInventory({{ $inventory->id }}, '{{ $inventory->name }}')" type="button" class="flex w-full px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">
+                                                        {{ $inventory->name }}
+                                                    </button>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -76,9 +118,9 @@
                                     {{ __('Name') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 text-left text-sm font-medium leading-4 text-gray-700 tracking-wider">
-                                    {{ __("Vendor") }}
+                                    {{ __("SKU") }}
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 text-right text-sm font-medium leading-4 text-gray-700 tracking-wider">
+                                <th class="px-6 py-3 border-b border-gray-200 text-center text-sm font-medium leading-4 text-gray-700 tracking-wider">
                                     {{ __("Available") }}
                                 </th>
                             </tr>
@@ -86,7 +128,7 @@
                         <tbody class="bg-white">
                             @forelse($products as $product)
                                 <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                    <td class="px-6 py-4 border-b border-gray-200">
                                         <a href="{{ route('shopper.products.edit', $product) }}" class="flex items-center">
                                             <div class="flex-shrink-0 h-10 w-10">
                                                 @if($product->preview_image_link !== null)
@@ -105,10 +147,10 @@
                                             </div>
                                         </a>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                        {{ $product->inventoryHistories->first() ? $product->inventoryHistories->first()->inventory->name : __("No inventory") }}
+                                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                        {{ $product->sku ?? __("No Sku") }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-right">
+                                    <td class="px-6 py-4 border-b border-gray-200 text-center">
                                         <span class="text-sm inline-flex leading-5 font-semibold {{ $product->stock < 10 ? 'text-red-600' : 'text-green-600' }}">
                                             {{ $product->stock }}
                                         </span>
@@ -116,8 +158,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-10 whitespace-no-wrap">
-                                        <h3 class="text-lg text-center font-medium leading-6 text-gray-700">{{ __("No inventory available") }}</h3>
+                                    <td colspan="4" class="px-6 py-10 whitespace-no-wrap">
+                                        <h3 class="text-lg text-center font-medium leading-6 text-gray-700">{{ __("No inventory available.") }}</h3>
                                     </td>
                                 </tr>
                             @endforelse

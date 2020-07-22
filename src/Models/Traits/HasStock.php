@@ -39,6 +39,27 @@ trait HasStock
     }
 
     /**
+     * Return the current stock of the inventory.
+     *
+     * @param  int  $inventory_id
+     * @param  null|string  $date
+     * @return int
+     */
+    public function stockInventory($inventory_id, $date = null)
+    {
+        $date = $date ?: Carbon::now();
+
+        if (!$date instanceof DateTimeInterface) {
+            $date = Carbon::create($date);
+        }
+
+        return (int) $this->inventoryHistories()
+            ->where('created_at', '<=', $date->format('Y-m-d H:i:s'))
+            ->where('inventory_id', $inventory_id)
+            ->sum('quantity');
+    }
+
+    /**
      * Increase Stock for an item.
      *
      * @param  int  $shop_id

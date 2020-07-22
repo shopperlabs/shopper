@@ -1,6 +1,6 @@
 <div class="bg-white shadow-md rounded-md overflow-hidden">
     @if($inventories->count() > 1)
-        <div class="px-4 sm:px-6 py-3 relative flex items-center border-b border-gray-200">
+        <div class="px-4 sm:px-6 py-3 relative flex items-center justify-between border-b border-gray-200">
             <span class="relative z-0 inline-flex shadow-sm rounded-md">
                 <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-gray-300 bg-white">
                     <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -14,13 +14,19 @@
                     @endforeach
                 </select>
             </span>
+            <div class="relative z-0 inline-flex items-center leading-5 text-gray-700">
+                <span class="block text-sm font-medium mr-4">{{ __("Quantity Available") }}</span>
+                    <span class="mr-2 text-sm px-2 inline-flex leading-5 font-semibold rounded-full {{ $product->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                    {{ $product->stock }}
+                </span>
+            </div>
         </div>
     @endif
     <div class="flex items-center justify-between px-4 sm:px-6 mb-2 py-6">
         <div class="relative z-0 inline-flex items-center leading-5 text-gray-700">
-            <span class="block text-sm font-medium mr-4">{{ __("Quantity available") }}</span>
-            <span class="mr-2 text-sm px-2 inline-flex leading-5 font-semibold rounded-full {{ $realStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                {{ $product->stock }}
+            <span class="block text-sm font-medium mr-4">{{ __("Current quantity on this inventory") }}</span>
+            <span class="mr-2 text-sm px-2 inline-flex leading-5 font-semibold rounded-full {{ $currentStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                {{ $currentStock }}
             </span>
         </div>
         <div class="ml-4 flex items-center">

@@ -90,11 +90,17 @@ class Inventory extends Component
     public function render()
     {
         $product = $this->getProduct();
+        $currentStock = (new InventoryHistoryRepository())
+            ->where('inventory_id', $this->inventory)
+            ->where('stockable_id', $product->id)
+            ->get()
+            ->sum('quantity');
         $histories = (new InventoryHistoryRepository())
             ->where('inventory_id', $this->inventory)
             ->where('stockable_id', $product->id)
+            ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('shopper::components.livewire.products.inventory', compact('product', 'histories'));
+        return view('shopper::components.livewire.products.inventory', compact('product', 'histories', 'currentStock'));
     }
 }
