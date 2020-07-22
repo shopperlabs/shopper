@@ -2,6 +2,12 @@
 
 All notable changes to `Framework` will be documented in this file.
 
+## Version 1.0-beta.8
+
+### Updated
+
+-   Fix inventory bugs.
+
 ## Version 1.0-beta.7
 
 ### Added
