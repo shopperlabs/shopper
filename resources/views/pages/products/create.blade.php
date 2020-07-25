@@ -196,7 +196,7 @@
             </div>
             <div class="w-full lg:w-1/3 space-y-4 mt-4 lg:mt-0 lg:ml-6">
                 <div class="shadow rounded-md">
-                    <div class="bg-white p-4">
+                    <div class="bg-white p-4 rounded-t-md">
                         <h4 class="text-gray-500 font-medium text-base">{{ __('Product Availability') }}</h4>
                         <p class="text-gray-400 text-sm mt-2">{{ __('Specify the date of availability of this product. If nothing is specified, today\'s date will be filled.') }}</p>
                     </div>

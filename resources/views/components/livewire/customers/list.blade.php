@@ -1,5 +1,5 @@
 <div>
-    @if($customers->isEmpty())
+    @if($total === 0)
         <div class="mt-6 md:flex md:items-center md:justify-between">
             <div class="flex-1 min-w-0">
                 <h2 class="text-2xl font-bold leading-7 text-gray-600 sm:text-3xl sm:leading-9 sm:truncate pb-4 border-b border-gray-200">{{ __('Customers') }}</h2>

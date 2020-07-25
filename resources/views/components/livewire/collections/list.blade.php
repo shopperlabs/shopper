@@ -1,6 +1,6 @@
 <div>
 
-    @if($collections->total() === 0)
+    @if($total === 0)
         <div class="mt-6 md:flex md:items-center md:justify-between">
             <div class="flex-1 min-w-0">
                 <h2 class="text-2xl font-bold leading-7 text-gray-600 sm:text-3xl sm:leading-9 sm:truncate pb-4 border-b border-gray-200">{{ __('Collections') }}</h2>
@@ -16,9 +16,7 @@
                 </div>
             </div>
         </div>
-    @endif
-
-    @if($collections->total() > 0)
+    @else
         <div class="my-6 md:flex md:items-center md:justify-between">
             <div class="flex-1 min-w-0">
                 <h2 class="text-2xl font-bold leading-7 text-gray-600 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Collections') }}</h2>
@@ -38,9 +36,9 @@
                 <div class="hidden sm:block">
                     <div class="">
                         <nav class="-mb-px flex">
-                            <a href="#" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-brand-500 font-medium text-sm leading-5 text-brand-400 focus:outline-none focus:text-brand-500 focus:border-brand-500">
+                            <button type="button" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-brand-500 font-medium text-sm leading-5 text-brand-400 focus:outline-none focus:text-brand-500 focus:border-brand-500">
                                 {{ __('All') }}
-                            </a>
+                            </button>
                         </nav>
                     </div>
                 </div>

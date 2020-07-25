@@ -41,12 +41,14 @@ class ProductList extends Component
 
     public function render()
     {
+        $total = (new ProductRepository())->count();
+
         $products = (new ProductRepository())
             ->where('name', '%' . $this->search . '%', 'like')
             ->where('parent_id', null)
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 
-        return view('shopper::components.livewire.products.list', compact('products'));
+        return view('shopper::components.livewire.products.list', compact('products', 'total'));
     }
 }

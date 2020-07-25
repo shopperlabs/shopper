@@ -41,11 +41,13 @@ class CategoryList extends Component
 
     public function render()
     {
+        $total = (new CategoryRepository())->count();
+
         $categories = (new CategoryRepository())
             ->where('name', '%'. $this->search .'%', 'like')
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 
-        return view('shopper::components.livewire.categories.list', compact('categories'));
+        return view('shopper::components.livewire.categories.list', compact('categories', 'total'));
     }
 }

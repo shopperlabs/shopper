@@ -41,11 +41,13 @@ class CollectionList extends Component
 
     public function render()
     {
+        $total = (new CollectionRepository())->count();
+
         $collections = (new CollectionRepository())
             ->where('name', '%'. $this->search .'%', 'like')
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 
-        return view('shopper::components.livewire.collections.list', compact('collections'));
+        return view('shopper::components.livewire.collections.list', compact('collections', 'total'));
     }
 }

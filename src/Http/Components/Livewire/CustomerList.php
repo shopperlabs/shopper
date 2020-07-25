@@ -47,6 +47,8 @@ class CustomerList extends Component
 
     public function render()
     {
+        $total = (new UserRepository())->count();
+
         $customers = (new UserRepository())
             ->makeModel()
             ->whereHas('roles', function (Builder $query) {
@@ -56,6 +58,6 @@ class CustomerList extends Component
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 
-        return view('shopper::components.livewire.customers.list', compact('customers'));
+        return view('shopper::components.livewire.customers.list', compact('customers', 'total'));
     }
 }

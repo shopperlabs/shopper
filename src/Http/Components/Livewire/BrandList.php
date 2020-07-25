@@ -41,11 +41,13 @@ class BrandList extends Component
 
     public function render()
     {
+        $total = (new BrandRepository())->count();
+
         $brands = (new BrandRepository())
             ->where('name', '%'. $this->search .'%', 'like')
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 
-        return view('shopper::components.livewire.brands.list', compact('brands'));
+        return view('shopper::components.livewire.brands.list', compact('brands', 'total'));
     }
 }

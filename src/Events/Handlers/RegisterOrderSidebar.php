@@ -31,7 +31,7 @@ class RegisterOrderSidebar extends AbstractAdminSidebar
                 ');
             });
 
-            $group->item(__('Marketing'), function (Item $item) {
+            $group->item(__('Discount'), function (Item $item) {
                 $item->weight(8);
                 $item->authorize(true);
                 $item->icon('
