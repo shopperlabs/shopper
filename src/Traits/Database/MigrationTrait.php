@@ -9,7 +9,7 @@ trait MigrationTrait
     /**
      * Return table name.
      *
-     * @param  string $table
+     * @param  string  $table
      * @return string
      */
     public function getTableName(string $table): string
@@ -24,8 +24,8 @@ trait MigrationTrait
     /**
      * Create fields common to all tables.
      *
-     * @param  Blueprint $table
-     * @param  boolean $hasSoftDelete
+     * @param  Blueprint  $table
+     * @param  boolean  $hasSoftDelete
      */
     public function addCommonFields(Blueprint $table, bool $hasSoftDelete = false): void
     {
@@ -40,10 +40,10 @@ trait MigrationTrait
     /**
      * Link table to $tableName using $columnName.
      *
-     * @param  Blueprint  $table          Laravel Blueprint
-     * @param  string    $columnName     MySQL table column name
-     * @param  string    $tableName      MySQL table name
-     * @param  boolean   $nullable       foreign key nullable status
+     * @param  Blueprint  $table     Laravel Blueprint
+     * @param  string  $columnName   MySQL table column name
+     * @param  string  $tableName    MySQL table name
+     * @param  boolean  $nullable    Foreign key nullable status
      */
     public function addForeignKey(Blueprint $table, $columnName, $tableName, $nullable = true): void
     {
@@ -59,7 +59,7 @@ trait MigrationTrait
     /**
      * Remove foreign key using $columnName.
      *
-     * @param  Blueprint  $table       Laravel Blueprint
+     * @param  Blueprint  $table   Laravel Blueprint
      * @param  string  $columnName  Column on the table
      */
     public function removeLink(Blueprint $table, $columnName): void

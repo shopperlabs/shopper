@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Shopper\Framework\Models\Shop\Shop;
 use Shopper\Framework\Models\Shop\ShopMember;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -16,6 +17,7 @@ class User extends Authenticatable
     use Notifiable,
         HasRoles,
         HasApiTokens,
+        CanHaveDiscount,
         SoftDeletes;
 
     /**

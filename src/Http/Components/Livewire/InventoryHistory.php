@@ -24,6 +24,11 @@ class InventoryHistory extends Component
         $this->name = $inventory ? $inventory->name : '';
     }
 
+    public function paginationView()
+    {
+        return 'shopper::components.livewire.wire-pagination-links';
+    }
+
     /**
      * Sort results.
      *

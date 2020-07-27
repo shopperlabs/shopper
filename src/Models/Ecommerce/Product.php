@@ -9,13 +9,17 @@ use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use Shopper\Framework\Contracts\ReviewRateable;
 use Shopper\Framework\Models\Shop\Shop;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
 use Shopper\Framework\Traits\Mediatable;
 
 class Product extends Model implements ReviewRateable
 {
-    use Mediatable, HasStock, ReviewRateableTrait;
+    use Mediatable,
+        HasStock,
+        CanHaveDiscount,
+        ReviewRateableTrait;
 
     /**
      * The attributes that are mass assignable.
