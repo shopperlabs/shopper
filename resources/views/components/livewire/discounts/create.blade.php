@@ -1,5 +1,5 @@
-<div x-data="{ modal: false, show: false }">
-    <div class="mt-4 grid gap-8 lg:grid-cols-6 lg:gap-12">
+<div x-data="{ modal: false, show: false, on: false }">
+    <div class="mt-4 grid gap-8 lg:grid-cols-6 lg:gap-10">
         <div class="lg:col-span-4 space-y-5">
             <div class="bg-white p-4 shadow rounded-md">
                 <div class="w-full mb-3">
@@ -84,9 +84,9 @@
                             </span>
                         </div>
                         @if(count($productsDetails) > 0)
-                            <div class="mt-5 space-y-2">
+                            <div class="mt-2 divide-y divide-gray-100">
                                 @foreach($productsDetails as $key => $productDetail)
-                                    <div class="flex items-center justify-between">
+                                    <div class="flex items-center justify-between py-2">
                                         <div class="flex items-center">
                                             @if($productDetail['image'] !== null)
                                                 <span class="flex-shrink-0 h-10 w-10 rounded-md overflow-hidden">
@@ -103,7 +103,7 @@
                                                 {{ $productDetail['name'] }}
                                             </p>
                                         </div>
-                                        <button wire:click="removeProduct({{ $key }}, {{ $productDetail['id'] }})" type="button" class="text-gray-500 text-sm font-medium inline-flex items-center">
+                                        <button wire:key="product_{{ $loop->index }}" wire:click="removeProduct({{ $key }}, {{ $productDetail['id'] }})" type="button" class="text-gray-500 text-sm font-medium inline-flex items-center">
                                             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                             </svg>
@@ -189,13 +189,30 @@
                                 </button>
                             </span>
                         </div>
+                        @if(count($customersDetails) > 0)
+                            <div class="mt-2 divide-y divide-gray-100">
+                                @foreach($customersDetails as $key => $customerDetail)
+                                    <div class="flex items-center justify-between py-2">
+                                        <div class="flex items-center space-x-3">
+                                            <span class="text-sm font-medium text-gray-800">{{ $customerDetail['name'] }}</span>
+                                            <span class="text-sm font-normal text-gray-500">{{ $customerDetail['email'] }}</span>
+                                        </div>
+                                        <button wire:key="customer_{{ $loop->index }}" wire:click="removeCustomer({{ $key }}, {{ $customerDetail['id'] }})" type="button" class="text-gray-500 text-sm font-medium inline-flex items-center">
+                                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>
         </div>
         <div class="lg:col-span-2">
-            <aside class="sticky top-6">
-                <div class="bg-white shadow-md rounded-md mb-5 px-4 py-5 sm:px-6">
+            <aside class="sticky top-6 space-y-4">
+                <div class="bg-white shadow-md rounded-md px-4 py-5 sm:px-6">
                     <h4 class="text-gray-800 font-medium text-base">{{ __('Summary') }}</h4>
                     @if($this->isEmpty())
                         <p class="text-gray-500 text-sm mt-5">{{ __('No information entered yet.') }}</p>
@@ -211,11 +228,37 @@
                             @if($minRequiredValue !== '' && $minRequired !== 'none')
                                 <li>
                                     <span>{{ __("Minimum purchase of") }}</span>
-                                    {{ $minRequired === 'quantity' ? $minRequiredValue . ' ' . __("items") : shopper_money_format($minRequiredValue) }}
+                                    {{ $minRequired === 'quantity' ?  __(":count items", ['count' => $minRequiredValue]) : shopper_money_format($minRequiredValue) }}
+                                </li>
+                            @endif
+                            @if($this->getCustomSize() !== null)
+                                <li>
+                                    <span>{{ $this->getCustomSize() }}</span>
                                 </li>
                             @endif
                         </ul>
                     @endif
+                </div>
+                <div class="bg-white shadow-md rounded-md px-4 py-5 sm:px-6">
+                    <h4 class="text-gray-800 font-medium text-base leading-6">{{ __('Visibility') }}</h4>
+                    <p class="text-sm mt-5 font-normal text-gray-500 leading-5">{{ __("Setup discount visibility for the customers.") }}</p>
+                    <div class="mt-3 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
+                                <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </span>
+                            <span class="font-semibold ml-3 text-sm">{{ __("Visible") }}</span>
+                        </div>
+                        <div>
+                            <span wire:model="is_visible" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                                <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
+                                <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </aside>
         </div>
@@ -274,7 +317,7 @@
                         @foreach($products as $product)
                             <label for="product_{{ $product->id }}" class="flex items-center py-3 cursor-pointer hover:bg-gray-50 px-4 sm:px-6 focus:bg-gray-50">
                                 <span class="mr-4">
-                                    <input id="product_{{ $product->id }}" aria-label="{{ __("Product") }}" wire:model="selectedProducts" value="{{ $product->id }}" type="checkbox" class="form-checkbox h-5 w-5 text-brand-600 transition duration-150 ease-in-out" />
+                                    <input id="product_{{ $product->id }}" aria-label="{{ __("Product") }}" wire:model="selectedProducts" value="{{ $product->id }}" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out" />
                                 </span>
                                 <span class="flex flex-1 items-center justify-between">
                                     <span class="block font-medium text-sm text-gray-700">{{ $product->name }}</span>
@@ -315,7 +358,7 @@
             x-cloak
             x-show="show"
             class="fixed bottom-0 z-100 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
-            x-on:added-customer.window="show = false"
+            x-on:customers-added.window="show = false"
         >
             <div
                 x-cloak
@@ -382,7 +425,7 @@
                             type="button"
                             class="inline-flex items-center justify-center w-full rounded-md border border-transparent px-4 py-2 bg-brand-400 text-base leading-6 font-medium text-white shadow-sm hover:bg-brand-500 focus:outline-none focus:border-brand-400 focus:shadow-outline-brand transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                         >
-                            <span wire:loading wire:target="addProducts" class="mr-2 hidden">
+                            <span wire:loading wire:target="addCustomers" class="mr-2 hidden">
                                 <span class="btn-spinner"></span>
                             </span>
                             {{ __('Add Select Customers') }}

@@ -11,7 +11,7 @@
                 <div class="w-full pl-0 lg:pl-20 lg:pt-20 xl:pt-24">
                     <h3 class="text-gray-700 font-medium text-xl mb-2">{{ __('Create discount codes.') }}</h3>
                     <p class="text-gray-500 text-lg mb-3">{{ __('Manage discounts and promotions code for all your products and orders.') }}</p>
-                    <a href="{{ route('shopper.discounts.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150 inline-flex">{{ __('Create product') }}</a>
+                    <a href="{{ route('shopper.discounts.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150 inline-flex">{{ __('Create discount code') }}</a>
                 </div>
             </div>
         </div>

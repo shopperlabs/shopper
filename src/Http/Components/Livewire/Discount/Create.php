@@ -15,6 +15,7 @@ class Create extends Component
     public $apply = 'order';
     public $minRequired = 'none';
     public $minRequiredValue = '';
+    public $is_visible = false;
     public $eligibility = 'everyone';
 
     public $searchProduct = '';
@@ -80,7 +81,7 @@ class Create extends Component
     }
 
     public function addProducts()
-    {;
+    {
         if (count($this->selectedProducts) > 0) {
             foreach ($this->selectedProducts as $selectedProduct) {
                 $product = (new ProductRepository())->getById($selectedProduct);
@@ -113,19 +114,40 @@ class Create extends Component
         }
 
         if (count($this->productsDetails) > 1) {
-            return count($this->productsDetails) . ' ' . __('products');
+            return __(':count products', ['count' => count($this->productsDetails)]);
         }
     }
 
     /**
-     * Remove product to the product list and the productIds restriction.
+     * Return Apply offer product.
+     *
+     * @return string
+     */
+    public function getCustomSize()
+    {
+        if (count($this->customersDetails) === 0 || $this->eligibility === 'everyone') {
+            return __('For everyone');
+        }
+
+        if (count($this->customersDetails) === 1) {
+            return __('For :name', ['name' => array_slice($this->customersDetails, 0, 1)[0]['name']]);
+        }
+
+        if (count($this->customersDetails) > 1) {
+            return __('For :count customers', ['count' => count($this->customersDetails)]);
+        }
+
+        return null;
+    }
+
+    /**
+     * Remove product to the products list and the productIds restriction.
      *
      * @param  int  $key
      * @param  int  $id
      */
     public function removeProduct($key, $id)
     {
-        //dd($this->productsIds);
         unset($this->productsDetails[$key]);
 
         foreach (array_keys($this->productsIds, $id) as $key) {
@@ -133,9 +155,37 @@ class Create extends Component
         }
     }
 
+    /**
+     * Remove customer to the customer list and the customersIds restriction.
+     *
+     * @param  int  $key
+     * @param  int  $id
+     */
+    public function removeCustomer($key, $id)
+    {
+        unset($this->customersDetails[$key]);
+
+        foreach (array_keys($this->customersIds, $id) as $key) {
+            unset($this->customersIds[$key]);
+        }
+    }
+
     public function addCustomers()
     {
+        if (count($this->selectedCustomers) > 0) {
+            foreach ($this->selectedCustomers as $selectedCustomer) {
+                $customer = (new UserRepository())->getById($selectedCustomer);
+                $customerArray['id'] = $customer->id;
+                $customerArray['name'] = $customer->full_name;
+                $customerArray['email'] = $customer->email;
 
+                array_push($this->customersDetails, $customerArray);
+                array_push($this->customersIds, $customer->id);
+            }
+
+            $this->selectedCustomers = [];
+            $this->dispatchBrowserEvent('customers-added');
+        }
     }
 
     public function render()
