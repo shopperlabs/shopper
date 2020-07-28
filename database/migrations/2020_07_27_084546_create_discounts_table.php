@@ -19,7 +19,7 @@ class CreateDiscountsTable extends Migration
         Schema::create($this->getTableName('discounts'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->boolean('active')->default(false);
+            $table->boolean('is_active')->default(false);
             $table->string('code')->unique()->index();
             $table->string('type'); // Percentage, Fix Amount
             $table->integer('value');

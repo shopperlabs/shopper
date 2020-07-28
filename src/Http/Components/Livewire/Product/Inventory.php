@@ -3,12 +3,15 @@
 namespace Shopper\Framework\Http\Components\Livewire\Product;
 
 use Livewire\Component;
+use Livewire\WithPagination;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryHistoryRepository;
 use Shopper\Framework\Repositories\InventoryRepository;
 
 class Inventory extends Component
 {
+    use WithPagination;
+
     public $product_id;
     public int $stock;
     public string $value = "0";
@@ -25,6 +28,11 @@ class Inventory extends Component
         $this->product_id = $product->id;
         $this->stock = $product->stock;
         $this->realStock = $product->stock;
+    }
+
+    public function paginationView()
+    {
+        return 'shopper::components.livewire.wire-pagination-links';
     }
 
     private function getProduct()
@@ -99,7 +107,7 @@ class Inventory extends Component
             ->where('inventory_id', $this->inventory)
             ->where('stockable_id', $product->id)
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return view('shopper::components.livewire.products.inventory', compact('product', 'histories', 'currentStock'));
     }

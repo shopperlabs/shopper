@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     @error('value')
-                        <p class="mt-2 text-sm text-red-600" id="email-error">{{ __("This number must be an integer.") }}</p>
+                        <p class="mt-2 text-sm text-red-600">{{ __("This number must be an integer.") }}</p>
                     @enderror
                 </div>
             </div>
@@ -108,6 +108,25 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                <div class="flex-1 flex justify-between sm:hidden">
+                    {{ $histories->links('shopper::components.livewire.wire-mobile-pagination-links') }}
+                </div>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm leading-5 text-gray-700">
+                            {{ __('Showing') }}
+                            <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + 1 }}</span>
+                            {{ __('to') }}
+                            <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + count($histories->items()) }}</span>
+                            {{ __('of') }}
+                            <span class="font-medium"> {!! $histories->total() !!}</span>
+                            {{ __('results') }}
+                        </p>
+                    </div>
+                    {{ $histories->links() }}
                 </div>
             </div>
         </div>

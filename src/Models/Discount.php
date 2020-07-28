@@ -17,7 +17,6 @@ class Discount extends Model
         'code',
         'type',
         'value',
-        'value',
         'apply_to',
         'min_required',
         'min_required_value',
