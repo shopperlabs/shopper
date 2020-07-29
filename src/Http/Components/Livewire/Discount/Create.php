@@ -17,6 +17,13 @@ class Create extends Component
     public $minRequiredValue = '';
     public $is_visible = false;
     public $eligibility = 'everyone';
+    public $usage_number = null;
+    public $usage_limit = '';
+    public $usage_limit_per_user = '';
+    public $dateStart = '';
+    public $timeStart = '';
+    public $dateEnd = '';
+    public $timeEnd = '';
 
     public $searchProduct = '';
     public $searchCustomer = '';
@@ -33,6 +40,12 @@ class Create extends Component
     public $selectedProducts = [];
     public $selectedCustomers = [];
 
+    public function mount()
+    {
+        $this->dateStart = now()->format('Y-m-d');
+        $this->timeStart = now()->format('H:m');
+    }
+
     /**
      * Determine if the discount information are empty or not.
      *
@@ -40,7 +53,12 @@ class Create extends Component
      */
     public function isEmpty()
     {
-        if (empty($this->code) && empty($this->minRequiredValue) && empty($this->value)) {
+        if (
+            empty($this->code) &&
+            empty($this->minRequiredValue) &&
+            empty($this->value) &&
+            empty($this->usage_limit)
+        ) {
             return true;
         }
 
@@ -135,6 +153,23 @@ class Create extends Component
 
         if (count($this->customersDetails) > 1) {
             return __('For :count customers', ['count' => count($this->customersDetails)]);
+        }
+
+        return null;
+    }
+
+    /**
+     * Return Usage limit message.
+     *
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Translation\Translator|string|null
+     */
+    public function getUsageLimitMessage()
+    {
+        if ($this->usage_number && $this->usage_limit !== '' && (int) $this->usage_limit > 0) {
+            $message = trans_choice('shopper::messages.discount_use', $this->usage_limit, ['count' => $this->usage_limit]);
+            $message .= $this->usage_limit_per_user === 'ONCE_PER_CUSTOMER_LIMIT' ? ', '. __("one per customer") : '';
+
+            return $message;
         }
 
         return null;

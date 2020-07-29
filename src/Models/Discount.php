@@ -23,6 +23,7 @@ class Discount extends Model
         'eligibility',
         'usage_limit',
         'usage_limit_per_user',
+        'total_use',
         'date_start',
         'date_end',
         'shop_id',
@@ -55,7 +56,22 @@ class Discount extends Model
      */
     protected $casts = [
         'is_active' => 'boolean',
+        'usage_limit_per_user' => 'boolean',
     ];
+
+    /**
+     * Determine if the discount code has reached his limit usage.
+     *
+     * @return bool
+     */
+    public function hasReachedLimit()
+    {
+        if (!is_null($this->usage_limit)) {
+            return $this->total_use === $this->usage_limit;
+        }
+
+        return false;
+    }
 
     /**
      * Get discounts related to a shop.

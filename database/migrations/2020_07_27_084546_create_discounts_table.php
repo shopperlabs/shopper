@@ -21,14 +21,15 @@ class CreateDiscountsTable extends Migration
 
             $table->boolean('is_active')->default(false);
             $table->string('code')->unique()->index();
-            $table->string('type'); // Percentage, Fix Amount
+            $table->string('type');
             $table->integer('value');
-            $table->string('apply_to'); // order, products
-            $table->string('min_required'); // none, price, qte items
+            $table->string('apply_to');
+            $table->string('min_required');
             $table->string('min_required_value')->nullable();
-            $table->string('eligibility'); // everyone, customers
-            $table->integer('usage_limit')->nullable();
-            $table->integer('usage_limit_per_user')->nullable();
+            $table->string('eligibility');
+            $table->unsignedInteger('usage_limit')->nullable();
+            $table->boolean('usage_limit_per_user')->default(false);
+            $table->unsignedInteger('total_use')->default(0);
             $table->dateTime('date_start');
             $table->dateTime('date_end')->nullable();
 
