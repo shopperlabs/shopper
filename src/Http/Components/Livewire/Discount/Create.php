@@ -172,6 +172,10 @@ class Create extends Component
             return $message;
         }
 
+        if ($this->usage_limit_per_user === 'ONCE_PER_CUSTOMER_LIMIT' && !$this->usage_number) {
+            return __("One per customer");
+        }
+
         return null;
     }
 
