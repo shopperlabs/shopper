@@ -95,7 +95,7 @@ class Create extends Component
 
     public function store()
     {
-
+        return "demo";
     }
 
     public function addProducts()

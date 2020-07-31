@@ -1,4 +1,17 @@
-<div x-data="{ modal: false, show: false, on: false }">
+<div
+    x-data="{ modal: false, show: false, on: false }"
+    x-init="
+        flatpickr('.date', {
+            minDate: 'today'
+        });
+        flatpickr('.time', {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: 'H:i',
+            time_24hr: true
+        });
+    "
+>
     <div class="mt-4 grid gap-8 lg:grid-cols-6 lg:gap-10">
         <div class="lg:col-span-4 space-y-5">
             <div class="bg-white p-4 shadow rounded-md">
@@ -233,6 +246,33 @@
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <label for="usage_limit_per_user" class="text-gray-500 cursor-pointer">{{ __("Limit to one use per customer") }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-4 shadow rounded-md">
+                <h4 class="text-base leading-6 font-medium text-gray-800">{{ __("Active dates") }}</h4>
+                <div class="mt-4 grid gap-6 lg:grid-cols-2 lg:gap-8">
+                    <div>
+                        <label for="dateStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start date") }}</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <input wire:model="dateStart" id="dateStart" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="timeStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start time") }}</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <input wire:model="timeStart" id="dateStart" class="form-input time block w-full pl-10 sm:text-sm sm:leading-5">
                         </div>
                     </div>
                 </div>
