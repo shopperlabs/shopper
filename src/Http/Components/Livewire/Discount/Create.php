@@ -2,8 +2,10 @@
 
 namespace Shopper\Framework\Http\Components\Livewire\Discount;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use Shopper\Framework\Repositories\DiscountRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\UserRepository;
 
@@ -13,15 +15,16 @@ class Create extends Component
     public $type = 'percentage';
     public $value = '';
     public $apply = 'order';
-    public $minRequired = 'none';
+    public $minRequired = 'none'; // price, quantity
     public $minRequiredValue = '';
-    public $is_visible = false;
+    public $is_active = false;
     public $eligibility = 'everyone';
     public $usage_number = null;
     public $usage_limit = '';
     public $usage_limit_per_user = '';
     public $dateStart = '';
     public $timeStart = '';
+    public $set_end_date = '';
     public $dateEnd = '';
     public $timeEnd = '';
 
@@ -44,6 +47,8 @@ class Create extends Component
     {
         $this->dateStart = now()->format('Y-m-d');
         $this->timeStart = now()->format('H:m');
+        $this->dateEnd = now()->format('Y-m-d');
+        $this->timeEnd = now()->format('H:m');
     }
 
     /**
@@ -82,6 +87,8 @@ class Create extends Component
             'type' => 'required',
             'value' => 'required',
             'apply' => 'required',
+            'dateStart' => 'required',
+            'timeStart' => 'required',
         ];
     }
 
@@ -91,29 +98,6 @@ class Create extends Component
     public function generate()
     {
         $this->code = substr(strtoupper(uniqid(str_random(10))), 0, 10);
-    }
-
-    public function store()
-    {
-        return "demo";
-    }
-
-    public function addProducts()
-    {
-        if (count($this->selectedProducts) > 0) {
-            foreach ($this->selectedProducts as $selectedProduct) {
-                $product = (new ProductRepository())->getById($selectedProduct);
-                $productArray['id'] = $product->id;
-                $productArray['name'] = $product->name;
-                $productArray['image'] = $product->preview_image_link;
-
-                array_push($this->productsDetails, $productArray);
-                array_push($this->productsIds, $product->id);
-            }
-
-            $this->selectedProducts = [];
-            $this->dispatchBrowserEvent('products-added');
-        }
     }
 
     /**
@@ -159,9 +143,53 @@ class Create extends Component
     }
 
     /**
+     * Return discount active date.
+     *
+     * @return string|null
+     * @throws \Exception
+     */
+    public function getDateWord()
+    {
+        $today = Carbon::today();
+        $startDate = new Carbon($this->dateStart);
+        $endDate = new Carbon($this->dateEnd);
+
+        if ($today->equalTo($startDate) && $today->equalTo($endDate) && $this->set_end_date === 'active') {
+            return __("Active today");
+        }
+
+        if ($today->equalTo($startDate) && $this->set_end_date !== 'active') {
+            return __("Active from today");
+        }
+
+        if ($today->notEqualTo($startDate) && $this->set_end_date !== 'active') {
+            return __("Active from :date", ['date' => $startDate->format('d M')]);
+        }
+
+        if ($today->notEqualTo($startDate) && $startDate->equalTo($endDate)) {
+            return __("Active :date", ['date' => $startDate->format('d M')]);
+        }
+
+        if ($startDate->notEqualTo($endDate) && $startDate->lessThan($endDate) && $this->set_end_date === 'active') {
+            return __("Active from :startDate to :endDate", [
+                'startDate' => $startDate->format('d M'),
+                'endDate'   => $endDate->format('d M'),
+            ]);
+        }
+
+        if ($startDate->greaterThan($endDate) && $this->set_end_date === 'active') {
+            $this->dateEnd = Carbon::createFromFormat('Y-m-d', $this->dateStart)->toDateString();
+
+            return __("Active :date", ['date' => $startDate->format('d M')]);
+        }
+
+        return null;
+    }
+
+    /**
      * Return Usage limit message.
      *
-     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Translation\Translator|string|null
+     * @return string|null
      */
     public function getUsageLimitMessage()
     {
@@ -209,6 +237,24 @@ class Create extends Component
         }
     }
 
+    public function addProducts()
+    {
+        if (count($this->selectedProducts) > 0) {
+            foreach ($this->selectedProducts as $selectedProduct) {
+                $product = (new ProductRepository())->getById($selectedProduct);
+                $productArray['id'] = $product->id;
+                $productArray['name'] = $product->name;
+                $productArray['image'] = $product->preview_image_link;
+
+                array_push($this->productsDetails, $productArray);
+                array_push($this->productsIds, $product->id);
+            }
+
+            $this->selectedProducts = [];
+            $this->dispatchBrowserEvent('products-added');
+        }
+    }
+
     public function addCustomers()
     {
         if (count($this->selectedCustomers) > 0) {
@@ -225,6 +271,49 @@ class Create extends Component
             $this->selectedCustomers = [];
             $this->dispatchBrowserEvent('customers-added');
         }
+    }
+
+    public function store()
+    {
+        $validationRules = $this->rules();
+
+        if ($this->minRequired !== 'none') {
+            array_merge($this->rules(), ['minRequiredValue' => 'required']);
+        }
+
+        if ($this->usage_number) {
+            array_merge($validationRules, ['usage_limit' => 'required']);
+        }
+
+        $this->validate($validationRules);
+        $dateStart = $this->dateStart. " ".$this->timeStart;
+        $dateEnd   = $this->dateEnd. " ".$this->timeEnd;
+
+        $discount = (new DiscountRepository())->create([
+            'is_active' => $this->is_active,
+            'code' => $this->code,
+            'type' => $this->type,
+            'value' => $this->value,
+            'apply_to' => $this->apply,
+            'min_required' => $this->minRequired,
+            'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
+            'eligibility' => $this->eligibility,
+            'usage_limit' => $this->usage_number ? $this->usage_limit: null,
+            'usage_limit_per_user'  => $this->usage_limit_per_user === 'ONCE_PER_CUSTOMER_LIMIT',
+            'date_start' => Carbon::createFromFormat('Y-m-d H:i', $dateStart)->toDateTimeString(),
+            'date_end'  => $this->set_end_date ? Carbon::createFromFormat('Y-m-d H:i', $dateEnd)->toDateTimeString() : null,
+        ]);
+
+        if ($this->apply === 'products') {
+            // Associate the discount to all the selected products.
+        }
+
+        if ($this->eligibility === 'customers') {
+            // Associate the discount to all the selected users.
+        }
+
+        session()->flash('success', __("Discount code {$discount->code} created successfully"));
+        $this->redirectRoute('shopper.discounts.index');
     }
 
     public function render()

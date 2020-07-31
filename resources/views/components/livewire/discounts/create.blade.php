@@ -1,9 +1,7 @@
 <div
     x-data="{ modal: false, show: false, on: false }"
     x-init="
-        flatpickr('.date', {
-            minDate: 'today'
-        });
+        flatpickr('.date', {minDate: 'today'});
         flatpickr('.time', {
             enableTime: true,
             noCalendar: true,
@@ -146,7 +144,7 @@
                                 </div>
                                 @if($minRequired === 'price')
                                     <div class="mt-2 relative rounded-md shadow-sm w-full sm:w-64">
-                                        <input wire:model="minRequiredValue" aria-label="{{ __("Min Required Value") }}" type="text" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('value') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
+                                        <input wire:model="minRequiredValue" aria-label="{{ __("Min Required Value") }}" type="text" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('minRequiredValue') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                             <span class="text-gray-500 sm:text-sm sm:leading-5">
                                                 {{ shopper_currency() }}
@@ -165,7 +163,7 @@
                                 </div>
                                 @if($minRequired === 'quantity')
                                     <div class="mt-2 relative rounded-md shadow-sm w-full sm:w-64">
-                                        <input wire:model="minRequiredValue" aria-label="{{ __("Min Required Value") }}" type="number" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('value') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
+                                        <input wire:model="minRequiredValue" aria-label="{{ __("Min Required Value") }}" type="number" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('minRequiredValue') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
                                     </div>
                                     <p class="mt-1 text-sm text-gray-400">{{ __("Applies only to selected products.") }}</p>
                                 @endif
@@ -235,8 +233,13 @@
                             </div>
                         </div>
                         @if($usage_number === 'TOTAL_USAGE_LIMIT')
-                            <div class="mt-2 relative rounded-md shadow-sm w-full sm:w-64">
-                                <input wire:model="usage_limit" aria-label="{{ __("Usage limit value") }}" type="number" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64" />
+                            <div class="mt-2">
+                                <div class="relative rounded-md shadow-sm w-full sm:w-64">
+                                    <input wire:model="usage_limit" aria-label="{{ __("Usage limit value") }}" type="number" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('usage_limit') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
+                                </div>
+                                @error('usage_limit')
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
                             </div>
                         @endif
                     </div>
@@ -252,29 +255,65 @@
             </div>
             <div class="bg-white p-4 shadow rounded-md">
                 <h4 class="text-base leading-6 font-medium text-gray-800">{{ __("Active dates") }}</h4>
-                <div class="mt-4 grid gap-6 lg:grid-cols-2 lg:gap-8">
-                    <div>
-                        <label for="dateStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start date") }}</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
+                <div class="space-y-4 mt-4">
+                    <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
+                        <div>
+                            <label for="dateStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start date") }}</label>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <input wire:model="dateStart" id="dateStart" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5">
                             </div>
-                            <input wire:model="dateStart" id="dateStart" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5">
+                        </div>
+                        <div>
+                            <label for="timeStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start time") }}</label>
+                            <div class="mt-1 relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <input wire:model="timeStart" id="timeStart" class="form-input time block w-full pl-10 sm:text-sm sm:leading-5">
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <label for="timeStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start time") }}</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            </div>
-                            <input wire:model="timeStart" id="dateStart" class="form-input time block w-full pl-10 sm:text-sm sm:leading-5">
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+                            <input wire:model="set_end_date" id="set_end_date" value="active" type="checkbox" class="form-checkbox h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                        </div>
+                        <div class="ml-3 text-sm leading-5">
+                            <label for="set_end_date" class="text-gray-500 cursor-pointer">{{ __("Set end date") }}</label>
                         </div>
                     </div>
+                    @if($set_end_date === 'active')
+                        <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
+                            <div>
+                                <label for="dateEnd" class="block text-sm font-medium leading-5 text-gray-700">{{ __("End date") }}</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <input wire:model="dateEnd" id="dateEnd" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5" readonly>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="timeEnd" class="block text-sm font-medium leading-5 text-gray-700">{{ __("End time") }}</label>
+                                <div class="mt-1 relative rounded-md shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <input wire:model="timeEnd" id="timeEnd" class="form-input time block w-full pl-10 sm:text-sm sm:leading-5">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -287,13 +326,13 @@
                     @else
                         @if($code !== '') <p class="text-base mt-5 font-bold text-gray-800 leading-6">{{ $code }}</p> @endif
                         <ul class="list-disc list-inside mt-4 space-y-1 text-sm">
-                            @if($value !== '')
+                            @if($value !== ''&& (int) $value > 0)
                                 <li>
                                     {{ $type === 'percentage' ? $value . ' %' : shopper_money_format($value) }}
                                     <span>{{ __("off") }} {{ $apply === 'order' ? __("entire order") : $this->getProductSize() }}</span>
                                 </li>
                             @endif
-                            @if($minRequiredValue !== '' && $minRequired !== 'none')
+                            @if($minRequiredValue !== '' && (int) $minRequiredValue > 0 && $minRequired !== 'none')
                                 <li>
                                     <span>{{ __("Minimum purchase of") }}</span>
                                     {{ $minRequired === 'quantity' ?  __(":count items", ['count' => $minRequiredValue]) : shopper_money_format($minRequiredValue) }}
@@ -307,6 +346,11 @@
                             @if($this->getUsageLimitMessage() !== null)
                                 <li>
                                     <span>{{ $this->getUsageLimitMessage() }}</span>
+                                </li>
+                            @endif
+                            @if($this->getDateWord() !== null)
+                                <li>
+                                    <span>{{ $this->getDateWord() }}</span>
                                 </li>
                             @endif
                         </ul>
@@ -326,7 +370,7 @@
                             <span class="font-semibold ml-3 text-sm">{{ __("Visible") }}</span>
                         </div>
                         <div>
-                            <span wire:model="is_visible" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                            <span wire:model="is_active" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
                                 <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                 <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
                             </span>
@@ -334,6 +378,16 @@
                     </div>
                 </div>
             </aside>
+        </div>
+    </div>
+    <div class="mt-8 border-t pt-5 border-gray-200">
+        <div class="flex justify-end">
+            <button wire:click="store" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">
+                <span wire:loading wire:target="store" class="pr-2">
+                    <span class="btn-spinner"></span>
+                </span>
+                {{ __('Save') }}
+            </button>
         </div>
     </div>
 
