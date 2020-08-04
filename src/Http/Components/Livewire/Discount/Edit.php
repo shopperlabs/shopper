@@ -11,16 +11,29 @@ use Shopper\Framework\Repositories\DiscountRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\UserRepository;
 
-class Create extends Component
+class Edit extends Component
 {
     use Actions;
 
-    public function mount()
+    public $discountId;
+
+    public function mount($discountId)
     {
-        $this->dateStart = now()->format('Y-m-d');
-        $this->timeStart = now()->format('H:m');
-        $this->dateEnd = now()->format('Y-m-d');
-        $this->timeEnd = now()->format('H:m');
+        $discount = (new DiscountRepository())->getById($discountId);
+        $this->discountId = $discountId;
+
+        $this->code = $discount->code;
+        $this->type = $discount->type;
+        $this->value = $discount->value;
+        $this->apply = $discount->apply_to;
+        $this->is_active = $discount->is_active;
+        $this->dateStart = $discount->date_start->format('Y-m-d');
+        $this->timeStart = $discount->date_start->format('H:m');
+
+        if ($discount->date_end) {
+            $this->dateEnd = $discount->date_end->format('Y-m-d');
+            $this->timeEnd = $discount->date_end->format('H:m');
+        }
     }
 
     public function updated($field)
@@ -100,7 +113,7 @@ class Create extends Component
             }
         }
 
-        session()->flash('success', __("Discount code {$discount->code} created successfully"));
+        session()->flash('success', __("Discount code {$discount->code} updated successfully"));
         $this->redirectRoute('shopper.discounts.index');
     }
 
@@ -122,6 +135,6 @@ class Create extends Component
             ->get()
             ->except($this->customersIds);
 
-        return view('shopper::components.livewire.discounts.create');
+        return view('shopper::components.livewire.discounts.edit');
     }
 }

@@ -13,6 +13,7 @@ use Shopper\Framework\Http\Components\Livewire\CategoryList;
 use Shopper\Framework\Http\Components\Livewire\CollectionList;
 use Shopper\Framework\Http\Components\Livewire\CustomerList;
 use Shopper\Framework\Http\Components\Livewire\Discount\Create as CreateDiscount;
+use Shopper\Framework\Http\Components\Livewire\Discount\Edit as EditDiscount;
 use Shopper\Framework\Http\Components\Livewire\Discount\DiscountList;
 use Shopper\Framework\Http\Components\Livewire\Product\Inventory;
 use Shopper\Framework\Http\Components\Livewire\InventoryHistory;
@@ -65,5 +66,6 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('reviews-list', ReviewList::class);
         Livewire::component('discounts-list', DiscountList::class);
         Livewire::component('create-discount', CreateDiscount::class);
+        Livewire::component('edit-discount', EditDiscount::class);
     }
 }

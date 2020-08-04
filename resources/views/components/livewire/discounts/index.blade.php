@@ -141,7 +141,7 @@
                 <ul class="divide-y divide-gray-200">
                     @foreach($discounts as $discount)
                         <li>
-                            <a href="#" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+                            <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
                                 <div class="px-4 py-4 flex items-center sm:px-6">
                                     <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                         <div>
@@ -159,26 +159,26 @@
                                         </div>
                                         <div class="mt-4 flex-shrink-0 sm:mt-0 flex space-x-6 items-center">
                                             <div class="flex-shrink-0 flex">
-                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $discount->is_active ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
-                                                        {{ $discount->is_active ? __('Visible'): __('Not Visible') }}
-                                                    </span>
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $discount->is_active ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
+                                                    {{ $discount->is_active ? __('Visible'): __('Not Visible') }}
+                                                </span>
                                             </div>
                                             <div class="flex-shrink-0 flex">
                                                 @if($discount->date_start > now())
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-yellow-100 text-yellow-800">
-                                                            <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
-                                                                <circle cx="4" cy="4" r="3" />
-                                                            </svg>
-                                                            {{ __("Scheduled") }}
-                                                        </span>
+                                                        <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
+                                                            <circle cx="4" cy="4" r="3" />
+                                                        </svg>
+                                                        {{ __("Scheduled") }}
+                                                    </span>
                                                 @endif
                                                 @if($discount->date_start <= now())
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-teal-100 text-teal-800">
-                                                            <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-teal-400" fill="currentColor" viewBox="0 0 8 8">
-                                                                <circle cx="4" cy="4" r="3" />
-                                                            </svg>
-                                                            {{ __("Active For users") }}
-                                                        </span>
+                                                        <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-teal-400" fill="currentColor" viewBox="0 0 8 8">
+                                                            <circle cx="4" cy="4" r="3" />
+                                                        </svg>
+                                                        {{ __("Active For users") }}
+                                                    </span>
                                                 @endif
                                             </div>
                                             <div class="flex items-center space-x-2">
