@@ -2,16 +2,20 @@
 
 namespace Shopper\Framework\Http\Components\Livewire\Discount;
 
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Shopper\Framework\Models\Discount;
 use Shopper\Framework\Repositories\DiscountRepository;
 
 class DiscountList extends Component
 {
     use WithPagination;
 
-    public $search = '';
+    public $is_active = '';
+    public $date = '';
     public $direction = 'desc';
+    public $search = '';
 
     public function paginationView()
     {
@@ -28,22 +32,40 @@ class DiscountList extends Component
         $this->direction = $value === 'asc' ? 'desc' : 'asc';
     }
 
+    public function resetDate()
+    {
+        $this->date = '';
+    }
+
+    public function changeStatus(string $status)
+    {
+        $this->is_active = $status;
+        $this->dispatchBrowserEvent('change-status');
+    }
+
+    public function clear()
+    {
+        $this->is_active = '';
+        $this->dispatchBrowserEvent('change-status');
+    }
+
     public function render()
     {
         $total = (new DiscountRepository())->count();
-        $discounts = (new DiscountRepository())
-            ->where('code', '%'. $this->search .'%', 'like')
+        $discounts = Discount::where('code', 'like', '%'. $this->search .'%')
+            ->where(function (Builder $query) {
+                if ($this->is_active !== '') {
+                    $query->where('is_active', $this->is_active);
+                }
+
+                if ($this->date !== '') {
+                    $query->whereDate('date_start', $this->date)
+                        ->orWhereDate('date_end', $this->date);
+                }
+            })
             ->orderBy('created_at', $this->direction)
             ->paginate(8);
 
-        $activeDiscounts = (new DiscountRepository())
-            ->where('is_active', true)
-            ->where('date_start', now(), '<=')
-            ->where('date_end', now(), '>=')
-            ->orderBy('created_at', $this->direction)
-            ->limit(8)
-            ->get();
-
-        return view('shopper::components.livewire.discounts.index', compact('total', 'discounts', 'activeDiscounts'));
+        return view('shopper::components.livewire.discounts.index', compact('total', 'discounts'));
     }
 }
