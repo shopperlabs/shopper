@@ -85,6 +85,12 @@ class InventoryController extends Controller
 	 */
 	public function update(InventoryRequest $request, int $id)
 	{
+	    if ($request->input('is_default') === 'true') {
+	        foreach ($this->repository->where('is_default', true)->get() as $inventory) {
+	            $inventory->update(['is_default' => false]);
+            }
+        }
+
 		$this->repository->updateById($id, [
 			'name' => $request->input('name'),
 			'street' => $request->input('street'),
@@ -94,6 +100,12 @@ class InventoryController extends Controller
 			'postcode' => $request->input('postcode'),
 			'phone_number' => $request->input('phone_number'),
 		]);
+
+        if ($request->input('is_default') === 'true') {
+            $this->repository->updateById($id, [
+                'is_default' => $request->input('is_default') === 'true',
+            ]);
+        }
 
 		notify()->success(__('Inventory Successfully Updated.'));
 

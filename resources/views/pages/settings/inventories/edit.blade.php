@@ -35,9 +35,10 @@
 									<label for="first_name" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Inventory Name") }}</label>
 									<div class="relative mt-1">
 										{!! Form::text('name', null, [
-											'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
-											'placeholder' => __('e.g.: Douala, BP Cité Stock'),
-											'id' => 'name'
+                                                'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
+                                                'placeholder' => __('e.g.: Douala, BP Cité Stock'),
+                                                'id' => 'name',
+											    'autocomplete' => 'off'
 											])
 										!!}
 									</div>
@@ -57,6 +58,24 @@
 											</div>
 										</div>
 									</div>
+                                @else
+                                    <div class="px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
+                                                <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                </svg>
+                                            </span>
+                                            <span class="font-semibold ml-3 text-sm">{{ __("Set Default inventory") }}</span>
+                                        </div>
+                                        <div>
+                                            <span role="checkbox" tabindex="0" x-data="{ on: @if($inventory->is_default) true @else false @endif }" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                                                <input type="hidden" x-ref="input" name="is_default" aria-label="Visible" x-model="on" />
+                                                <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
+                                            </span>
+                                        </div>
+                                    </div>
 								@endif
 							</div>
 						</div>
@@ -106,7 +125,8 @@
 									<div class="relative mt-1">
 										{!! Form::email('email', null, [
 												'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
-												'id' => 'email'
+												'id' => 'email',
+											    'autocomplete' => 'off'
 											])
 										!!}
 									</div>
@@ -125,7 +145,8 @@
 									<div class="relative mt-1">
 										{!! Form::text('city', null, [
 												'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
-												'id' => 'city'
+												'id' => 'city',
+											    'autocomplete' => 'off'
 											])
 										!!}
 									</div>
@@ -139,7 +160,8 @@
 									<div class="relative mt-1">
 										{!! Form::text('postcode', null, [
 												'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
-												'id' => 'postcode'
+												'id' => 'postcode',
+											    'autocomplete' => 'off'
 											])
 										!!}
 									</div>
@@ -188,3 +210,25 @@
 	{!! Form::close() !!}
 
 @endsection
+
+@push('scripts')
+    <script>
+      {{--var free = @json($course->free);--}}
+      {{--var type = @json($type);--}}
+      {{--var dateShow = @json($dateShow);--}}
+
+      {{--function display() {--}}
+      {{--  return {--}}
+      {{--    open: false,--}}
+      {{--    value: free,--}}
+      {{--    on: type,--}}
+      {{--    toggle() {--}}
+      {{--      return this.value = !this.value--}}
+      {{--    },--}}
+      {{--    toggleType() {--}}
+      {{--      return this.on = !this.on--}}
+      {{--    },--}}
+      {{--  }--}}
+      {{--}--}}
+    </script>
+@endpush

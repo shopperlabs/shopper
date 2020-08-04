@@ -35,9 +35,10 @@
 									<label for="first_name" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Inventory Name") }}</label>
 									<div class="relative mt-1">
 										{!! Form::text('name', null, [
-											'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
-											'placeholder' => __('e.g.: Douala, BP Cité Stock'),
-											'id' => 'name'
+											    'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
+											    'placeholder' => __('e.g.: Douala, BP Cité Stock'),
+											    'id' => 'name',
+											    'autocomplete' => 'off'
 											])
 										!!}
 									</div>
@@ -90,7 +91,8 @@
 									<div class="relative mt-1">
 										{!! Form::email('email', null, [
 												'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
-												'id' => 'email'
+												'id' => 'email',
+											    'autocomplete' => 'off'
 											])
 										!!}
 									</div>
@@ -109,7 +111,8 @@
 									<div class="relative mt-1">
 										{!! Form::text('city', null, [
 												'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
-												'id' => 'city'
+												'id' => 'city',
+											    'autocomplete' => 'off'
 											])
 										!!}
 									</div>
@@ -123,7 +126,8 @@
 									<div class="relative mt-1">
 										{!! Form::text('postcode', null, [
 												'class' => 'form-input form-input-shopper block w-full sm:text-sm sm:leading-5',
-												'id' => 'postcode'
+												'id' => 'postcode',
+											    'autocomplete' => 'off'
 											])
 										!!}
 									</div>
