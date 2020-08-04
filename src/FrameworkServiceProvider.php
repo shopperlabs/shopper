@@ -5,8 +5,10 @@ namespace Shopper\Framework;
 use Carbon\Carbon;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Events\BuildingSidebar;
 use Shopper\Framework\Events\Handlers\RegisterBannerSidebar;
+use Shopper\Framework\Http\Middleware\Authenticate;
 use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
 use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
 use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
@@ -77,12 +79,17 @@ class FrameworkServiceProvider extends ServiceProvider
     /**
      * Register the middleware.
      *
-     * @param  Router $router
+     * @param  Router  $router
      * @return void
      */
     public function registerMiddleware(Router $router)
     {
-        $router->middlewareGroup('shopper', config('shopper.middleware', []));
+        $router->middlewareGroup('shopper', array_merge([
+            'web',
+            Authenticate::class,
+            'permission:view-backend',
+            ResolveSidebars::class,
+        ], config('shopper.middleware', [])));
 
         foreach ($this->middlewares as $name => $middleware) {
             $router->aliasMiddleware($name, $middleware);

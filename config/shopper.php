@@ -1,8 +1,6 @@
 <?php
 
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
-use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
-use Shopper\Framework\Http\Middleware\Authenticate;
 
 return [
 
@@ -74,17 +72,12 @@ return [
     | Middleware Admin Panel
     |--------------------------------------------------------------------------
     |
-    | Provide a convenient mechanism for filtering HTTP
-    | requests entering your shopper application.
+    | Provide a convenient mechanism for filtering HTTP requests entering
+    | your shopper application. Add your custom middleware here.
     |
     */
 
-    'middleware' => [
-        'web',
-        Authenticate::class,
-        'permission:view-backend',
-        ResolveSidebars::class,
-    ],
+    'middleware' => [],
 
     /**
     |--------------------------------------------------------------------------
