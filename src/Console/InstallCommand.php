@@ -72,6 +72,10 @@ class InstallCommand extends Command
         $this->progressBar->advance();
 
         $this->complete();
+
+        if (!(bool) $this->option('no-interaction')) {
+            (new Thanks($this->output))();
+        }
     }
 
     /**

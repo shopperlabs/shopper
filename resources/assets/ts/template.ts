@@ -5,7 +5,6 @@
  */
 import axios from "axios";
 import jquery from "jquery";
-// import flatpickr from "flatpickr";
 import "select2";
 import intlTelInput from "intl-tel-input";
 
