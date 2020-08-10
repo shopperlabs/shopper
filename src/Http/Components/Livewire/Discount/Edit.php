@@ -38,6 +38,7 @@ class Edit extends Component
         if ($discount->date_end) {
             $this->dateEnd = $discount->date_end->format('Y-m-d');
             $this->timeEnd = $discount->date_end->format('H:m');
+            $this->set_end_date = 'active';
         }
 
         if ($discount->items()->where('condition', 'eligibility')->count() > 0) {
@@ -102,10 +103,16 @@ class Edit extends Component
         }
 
         $this->validate($this->rules());
-        $dateStart = $this->dateStart. " ".$this->timeStart;
-        $dateEnd   = $this->dateEnd. " ".$this->timeEnd;
 
-        $discount = (new DiscountRepository())->create([
+        $dateStart = $this->dateStart. " " .$this->timeStart;
+
+        if (!empty($this->dateEnd) && !empty($this->timeEnd)) {
+            $dateEnd = $this->dateEnd. " " .$this->timeEnd;
+        } else {
+            $dateEnd = $dateStart;
+        }
+
+        $discount = (new DiscountRepository())->updateById($this->discountId, [
             'is_active' => $this->is_active,
             'code' => $this->code,
             'type' => $this->type,
@@ -145,6 +152,14 @@ class Edit extends Component
         }
 
         session()->flash('success', __("Discount code {$discount->code} updated successfully"));
+        $this->redirectRoute('shopper.discounts.index');
+    }
+
+    public function destroy(int $id)
+    {
+        (new DiscountRepository())->deleteById($id);
+
+        session()->flash('success', __("Remove discount successfully"));
         $this->redirectRoute('shopper.discounts.index');
     }
 
