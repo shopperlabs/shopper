@@ -19,6 +19,7 @@ class CreatedDiscountablesTable extends Migration
         Schema::create($this->getTableName('discountables'), function (Blueprint $table) {
             $this->addCommonFields($table);
             $table->string('condition')->nullable(); // apply_to, eligibility
+            $table->unsignedInteger('total_use')->default(0);
             $table->morphs('discountable');
 
             $this->addForeignKey($table, 'discount_id', $this->getTableName('discounts'), false);

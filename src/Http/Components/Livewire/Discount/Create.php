@@ -47,17 +47,16 @@ class Create extends Component
 
     public function store()
     {
-        $validationRules = $this->rules();
-
         if ($this->minRequired !== 'none') {
-            array_merge($this->rules(), ['minRequiredValue' => 'required']);
+            $this->validate(['minRequiredValue' => 'required']);
         }
 
         if ($this->usage_number) {
-            array_merge($validationRules, ['usage_limit' => 'required']);
+            $this->validate(['usage_limit' => 'required']);
         }
 
-        $this->validate($validationRules);
+        $this->validate($this->rules());
+
         $dateStart = $this->dateStart. " ".$this->timeStart;
         $dateEnd   = $this->dateEnd. " ".$this->timeEnd;
 

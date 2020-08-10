@@ -4,6 +4,7 @@ namespace Shopper\Framework\Http\Components\Livewire\Discount;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Shopper\Framework\Models\DiscountDetail;
 use Shopper\Framework\Models\User;
@@ -26,6 +27,10 @@ class Edit extends Component
         $this->type = $discount->type;
         $this->value = $discount->value;
         $this->apply = $discount->apply_to;
+        $this->eligibility = $discount->eligibility;
+        $this->usage_limit = $discount->usage_limit;
+        $this->usage_limit_per_user = $discount->usage_limit_per_user;
+        $this->usage_number = $discount->usage_limit ? 'TOTAL_USAGE_LIMIT': null;
         $this->is_active = $discount->is_active;
         $this->dateStart = $discount->date_start->format('Y-m-d');
         $this->timeStart = $discount->date_start->format('H:m');
@@ -33,6 +38,30 @@ class Edit extends Component
         if ($discount->date_end) {
             $this->dateEnd = $discount->date_end->format('Y-m-d');
             $this->timeEnd = $discount->date_end->format('H:m');
+        }
+
+        if ($discount->items()->where('condition', 'eligibility')->count() > 0) {
+            $customers = $discount->items()->where('condition', 'eligibility')->get();
+            foreach ($customers as $customer) {
+                $customerArray['id'] = $customer->discountable->id;
+                $customerArray['name'] = $customer->discountable->full_name;
+                $customerArray['email'] = $customer->discountable->email;
+
+                array_push($this->customersDetails, $customerArray);
+                array_push($this->customersIds, $customer->discountable->id);
+            }
+        }
+
+        if ($discount->items()->where('condition', 'apply_to')->count() > 0) {
+            $products = $discount->items()->where('condition', 'apply_to')->get();
+            foreach ($products as $product) {
+                $productArray['id'] = $product->discountable->id;
+                $productArray['name'] = $product->discountable->name;
+                $productArray['image'] = $product->discountable->preview_image_link;
+
+                array_push($this->productsDetails, $productArray);
+                array_push($this->productsIds, $product->discountable->id);
+            }
         }
     }
 
@@ -49,28 +78,30 @@ class Edit extends Component
     protected function rules()
     {
         return [
-            'code' => 'required|unique:'. shopper_table('discounts'),
-            'type' => 'required',
-            'value' => 'required',
-            'apply' => 'required',
-            'dateStart' => 'required',
-            'timeStart' => 'required',
+            'code' => [
+                'sometimes',
+                'required',
+                Rule::unique(shopper_table('discounts'), 'code')->ignore($this->discountId)
+            ],
+            'type' => 'sometimes|required',
+            'value' => 'sometimes|required',
+            'apply' => 'sometimes|required',
+            'dateStart' => 'sometimes|required',
+            'timeStart' => 'sometimes|required',
         ];
     }
 
     public function store()
     {
-        $validationRules = $this->rules();
-
         if ($this->minRequired !== 'none') {
-            array_merge($this->rules(), ['minRequiredValue' => 'required']);
+            $this->validate(['minRequiredValue' => 'required']);
         }
 
         if ($this->usage_number) {
-            array_merge($validationRules, ['usage_limit' => 'required']);
+            $this->validate(['usage_limit' => 'required']);
         }
 
-        $this->validate($validationRules);
+        $this->validate($this->rules());
         $dateStart = $this->dateStart. " ".$this->timeStart;
         $dateEnd   = $this->dateEnd. " ".$this->timeEnd;
 
