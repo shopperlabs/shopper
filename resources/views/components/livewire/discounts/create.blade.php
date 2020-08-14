@@ -1,12 +1,9 @@
 <div
     x-data="{ modal: false, show: false, on: false }"
     x-init="
-        flatpickr('.date', {minDate: 'today'});
-        flatpickr('.time', {
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: 'H:i',
-            time_24hr: true
+        flatpickr('.date', {
+            minDate: 'today',
+            mode: 'range',
         });
     "
 >
@@ -256,128 +253,85 @@
             <div class="bg-white p-4 shadow rounded-md">
                 <h4 class="text-base leading-6 font-medium text-gray-800">{{ __("Active dates") }}</h4>
                 <div class="space-y-4 mt-4">
+                    <div>
+                        <label for="dateStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Period") }}</label>
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <input wire:model="dateStart" id="dateStart" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5">
+                        </div>
+                    </div>
                     <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                        <div>
-                            <label for="dateStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start date") }}</label>
-                            <div class="mt-1 relative rounded-md shadow-sm">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
-                                </div>
-                                <input wire:model="dateStart" id="dateStart" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="timeStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start time") }}</label>
-                            <div class="mt-1 relative rounded-md shadow-sm">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <input wire:model="timeStart" id="timeStart" class="form-input time block w-full pl-10 sm:text-sm sm:leading-5">
-                            </div>
-                        </div>
                     </div>
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input wire:model="set_end_date" id="set_end_date" value="active" type="checkbox" class="form-checkbox h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
-                        </div>
-                        <div class="ml-3 text-sm leading-5">
-                            <label for="set_end_date" class="text-gray-500 cursor-pointer">{{ __("Set end date") }}</label>
-                        </div>
-                    </div>
-                    @if($set_end_date === 'active')
-                        <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                            <div>
-                                <label for="dateEnd" class="block text-sm font-medium leading-5 text-gray-700">{{ __("End date") }}</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                    <input wire:model="dateEnd" id="dateEnd" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5" readonly>
-                                </div>
-                            </div>
-                            <div>
-                                <label for="timeEnd" class="block text-sm font-medium leading-5 text-gray-700">{{ __("End time") }}</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <input wire:model="timeEnd" id="timeEnd" class="form-input time block w-full pl-10 sm:text-sm sm:leading-5">
-                                </div>
-                            </div>
-                        </div>
-                    @endif
                 </div>
             </div>
         </div>
         <div class="lg:col-span-2">
-            <aside class="sticky top-6 space-y-4">
-                <div class="bg-white shadow-md rounded-md px-4 py-5 sm:px-6">
-                    <h4 class="text-gray-800 font-medium text-base">{{ __('Summary') }}</h4>
-                    @if($this->isEmpty())
-                        <p class="text-gray-500 text-sm mt-5">{{ __('No information entered yet.') }}</p>
-                    @else
-                        @if($code !== '') <p class="text-base mt-5 font-bold text-gray-800 leading-6">{{ $code }}</p> @endif
-                        <ul class="list-disc list-inside mt-4 space-y-1 text-sm">
-                            @if($value !== ''&& (int) $value > 0)
-                                <li>
-                                    {{ $type === 'percentage' ? $value . ' %' : shopper_money_format($value) }}
-                                    <span>{{ __("off") }} {{ $apply === 'order' ? __("entire order") : $this->getProductSize() }}</span>
-                                </li>
-                            @endif
-                            @if($minRequiredValue !== '' && (int) $minRequiredValue > 0 && $minRequired !== 'none')
-                                <li>
-                                    <span>{{ __("Minimum purchase of") }}</span>
-                                    {{ $minRequired === 'quantity' ?  __(":count items", ['count' => $minRequiredValue]) : shopper_money_format($minRequiredValue) }}
-                                </li>
-                            @endif
-                            @if($this->getCustomSize() !== null)
-                                <li>
-                                    <span>{{ $this->getCustomSize() }}</span>
-                                </li>
-                            @endif
-                            @if($this->getUsageLimitMessage() !== null)
-                                <li>
-                                    <span>{{ $this->getUsageLimitMessage() }}</span>
-                                </li>
-                            @endif
-                            @if($this->getDateWord() !== null)
-                                <li>
-                                    <span>{{ $this->getDateWord() }}</span>
-                                </li>
-                            @endif
-                        </ul>
-                    @endif
-                </div>
-                <div class="bg-white shadow-md rounded-md px-4 py-5 sm:px-6">
-                    <h4 class="text-gray-800 font-medium text-base leading-6">{{ __('Visibility') }}</h4>
-                    <p class="text-sm mt-5 font-normal text-gray-500 leading-5">{{ __("Setup discount visibility for the customers.") }}</p>
-                    <div class="mt-3 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
-                        <div class="flex items-center">
-                            <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
-                                <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </span>
-                            <span class="font-semibold ml-3 text-sm">{{ __("Visible") }}</span>
-                        </div>
-                        <div>
-                            <span wire:model="is_active" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
-                                <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
-                                <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
-                            </span>
+            <aside class="sticky top-6">
+                <div class="space-y-5">
+                    <div class="bg-white shadow-md rounded-md px-4 py-5 sm:px-6">
+                        <h4 class="text-gray-800 font-medium text-base">{{ __('Summary') }}</h4>
+                        @if($this->isEmpty())
+                            <p class="text-gray-500 text-sm mt-5">{{ __('No information entered yet.') }}</p>
+                        @else
+                            @if($code !== '') <p class="text-base mt-5 font-bold text-gray-800 leading-6">{{ $code }}</p> @endif
+                            <ul class="list-disc list-inside mt-4 space-y-1 text-sm">
+                                @if($value !== ''&& (int) $value > 0)
+                                    <li>
+                                        {{ $type === 'percentage' ? $value . ' %' : shopper_money_format($value) }}
+                                        <span>{{ __("off") }} {{ $apply === 'order' ? __("entire order") : $this->getProductSize() }}</span>
+                                    </li>
+                                @endif
+                                @if($minRequiredValue !== '' && (int) $minRequiredValue > 0 && $minRequired !== 'none')
+                                    <li>
+                                        <span>{{ __("Minimum purchase of") }}</span>
+                                        {{ $minRequired === 'quantity' ?  __(":count items", ['count' => $minRequiredValue]) : shopper_money_format($minRequiredValue) }}
+                                    </li>
+                                @endif
+                                @if($this->getCustomSize() !== null)
+                                    <li>
+                                        <span>{{ $this->getCustomSize() }}</span>
+                                    </li>
+                                @endif
+                                @if($this->getUsageLimitMessage() !== null)
+                                    <li>
+                                        <span>{{ $this->getUsageLimitMessage() }}</span>
+                                    </li>
+                                @endif
+                                @if($this->getDateWord() !== null)
+                                    <li>
+                                        <span>{{ $this->getDateWord() }}</span>
+                                    </li>
+                                @endif
+                            </ul>
+                        @endif
+                    </div>
+                    <div class="bg-white shadow-md rounded-md px-4 py-5 sm:px-6">
+                        <h4 class="text-gray-800 font-medium text-base leading-6">{{ __('Visibility') }}</h4>
+                        <p class="text-sm mt-5 font-normal text-gray-500 leading-5">{{ __("Setup discount visibility for the customers.") }}</p>
+                        <div class="mt-3 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
+                            <div class="flex items-center">
+                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
+                                    <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </span>
+                                <span class="font-semibold ml-3 text-sm">{{ __("Visible") }}</span>
+                            </div>
+                            <div>
+                                <span wire:model="is_active" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                                    <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
+                                    <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-8 border-t pt-5 border-gray-200">
+                <div class="mt-6 border-t pt-6 border-gray-200">
                     <div class="flex justify-end">
                         <button wire:click="store" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">
                             <span wire:loading wire:target="store" class="pr-2">
@@ -479,7 +433,6 @@
             </div>
         </div>
     @endif
-
     @if($eligibility === 'customers')
         <div
             x-cloak

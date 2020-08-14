@@ -47,9 +47,9 @@ class FrameworkServiceProvider extends ServiceProvider
     {
         $this->registerShopRoute();
 
-        $this->app->register(ShopperServiceProvider::class);
-
         $this->registerMiddleware($this->app['router']);
+
+        $this->app->register(ShopperServiceProvider::class);
 
         // setLocale for php. Enables ->formatLocalized() with localized values for dates.
         setlocale(LC_TIME, config('shopper.locale'));
@@ -87,7 +87,6 @@ class FrameworkServiceProvider extends ServiceProvider
         $router->middlewareGroup('shopper', array_merge([
             'web',
             Authenticate::class,
-            'permission:view-backend',
             ResolveSidebars::class,
         ], config('shopper.middleware', [])));
 
