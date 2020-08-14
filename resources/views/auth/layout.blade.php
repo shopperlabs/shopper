@@ -24,30 +24,12 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 </head>
-<body class="h-full bg-background text-gray-500 leading-normal font-body transition ease-in-out duration-700 light">
+<body class="bg-gray-50 text-gray-500 leading-normal transition duration-100 ease-in-out">
 
-    <div class="min-h-screen flex overflow-hidden">
-        <div class="hidden lg:flex flex-col bg-brand-400 px-6 pt-15 pb-20 justify-between relative w-140 shadow-md"></div>
+    @yield('content')
 
-        <main class="relative h-screen mx-auto w-full lg:flex-1 p-10 flex flex-col justify-between overflow-hidden overflow-y-scroll">
+    @stack('scripts')
 
-            @yield('content')
-
-            <div class="flex justify-between">
-                <p class="text-xs text-gray-600">
-                    @include('shopper::auth.partials.footer')
-                </p>
-                <p class="flex space-x-1 text-xs">
-                    <a href="https://docs.laravelshopper.com" class="text-brand hover:text-brand-hover" target="_blank">Documentation</a>
-                    <span class="text-brand">-</span>
-                    <a href="https://twitter.com/laravelshopper" class="text-brand hover:text-brand-hover" target="_blank">Twitter</a>
-                    <span class="text-brand">-</span>
-                    <a href="https://github.com/laravel-shopper/framework" class="text-brand hover:text-brand-hover" target="_blank">Github</a>
-                </p>
-            </div>
-        </main>
-    </div>
-
-    <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
+    <script src="{{ mix('/js/application.js', 'shopper') }}"></script>
 </body>
 </html>

@@ -62,7 +62,7 @@ class ForgotPasswordController extends Controller
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
-        notify()->emotify('success', trans($response));
+        session()->flash('success', trans($response));
 
         return back();
     }

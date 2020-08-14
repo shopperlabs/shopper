@@ -51,6 +51,20 @@ class ResetPasswordController extends Controller
     }
 
     /**
+     * Get the password reset validation rules.
+     *
+     * @return array
+     */
+    protected function rules()
+    {
+        return [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ];
+    }
+
+    /**
      * Get the URI the user should be redirected to after resetting their password.
      *
      * @return string
