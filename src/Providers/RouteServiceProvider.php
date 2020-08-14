@@ -66,7 +66,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapBackendRoutes()
     {
-        Route::middleware(array_merge(config('shopper.middleware'), ['dashboard']))
+        Route::middleware(['shopper', 'dashboard'])
             ->prefix(Shopper::prefix())
             ->as('shopper.')
             ->namespace($this->namespace)

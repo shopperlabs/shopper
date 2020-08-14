@@ -40,13 +40,11 @@ if (!function_exists('home_route')) {
      */
     function home_route(): string
     {
-        if (auth()->check()) {
-            if (auth()->user()->can('view-backend')) {
-                return 'shopper.dashboard';
-            }
-
-            return 'home';
+        if (auth()->check() && auth()->user()->hasRole('administrator')) {
+            return 'shopper.dashboard';
         }
+
+        return 'home';
     }
 }
 

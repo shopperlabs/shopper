@@ -80,28 +80,4 @@ class LoginController extends Controller
             $this->credentials($request), $request->filled('remember')
         );
     }
-
-    /**
-     * Send the response after the user was authenticated.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function sendLoginResponseDemo(Request $request)
-    {
-        $request->session()->regenerate();
-
-        $this->clearLoginAttempts($request);
-
-        $user = auth()->user();
-        $token = $user->api_token;
-
-        return response()->json([
-            'message' => __('You are successfully Logged In'),
-            'status' => 'success',
-            'token' => $token,
-            'user'  => $user,
-            'redirect_url' => route('shopper.dashboard')
-        ]);
-    }
 }

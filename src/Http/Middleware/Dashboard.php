@@ -29,7 +29,7 @@ class Dashboard
     {
         $user = $this->auth->user();
         // Check if the user is super admin or have to ability to access to the backend
-        if (!$user->isSuperAdmin() || !$user->hasPermissionTo('view-backend')) {
+        if (!$user->isSuperAdmin()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
             }

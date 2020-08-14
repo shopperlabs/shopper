@@ -31,10 +31,10 @@ class FrameworkServiceProvider extends ServiceProvider
      * @var array
      */
     protected $middlewares = [
+        'dashboard'       => Dashboard::class,
         'role'            => RoleMiddleware::class,
         'permission'      => PermissionMiddleware::class,
         'shopper.guest'   => RedirectIfAuthenticated::class,
-        'dashboard'       => Dashboard::class,
         'shopper.shop'    => RedirectIfShop::class,
     ];
 
@@ -45,9 +45,8 @@ class FrameworkServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerShopRoute();
-
         $this->registerMiddleware($this->app['router']);
+        $this->registerShopRoute();
 
         $this->app->register(ShopperServiceProvider::class);
 
