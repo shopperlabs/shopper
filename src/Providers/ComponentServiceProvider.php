@@ -8,6 +8,8 @@ use Livewire\Livewire;
 use Shopper\Framework\Http\Components\Blade\Breadcrumb;
 use Shopper\Framework\Http\Components\Blade\DeleteAction;
 use Shopper\Framework\Http\Components\Blade\DateTimePicker;
+use Shopper\Framework\Http\Components\Blade\Input\Group;
+use Shopper\Framework\Http\Components\Blade\Input\RichText;
 use Shopper\Framework\Http\Components\Livewire\BrandList;
 use Shopper\Framework\Http\Components\Livewire\CategoryList;
 use Shopper\Framework\Http\Components\Livewire\CollectionList;
@@ -15,6 +17,7 @@ use Shopper\Framework\Http\Components\Livewire\CustomerList;
 use Shopper\Framework\Http\Components\Livewire\Discount\Create as CreateDiscount;
 use Shopper\Framework\Http\Components\Livewire\Discount\Edit as EditDiscount;
 use Shopper\Framework\Http\Components\Livewire\Discount\DiscountList;
+use Shopper\Framework\Http\Components\Livewire\Initialization;
 use Shopper\Framework\Http\Components\Livewire\Product\Inventory;
 use Shopper\Framework\Http\Components\Livewire\InventoryHistory;
 use Shopper\Framework\Http\Components\Livewire\ProductList;
@@ -45,6 +48,8 @@ class ComponentServiceProvider extends ServiceProvider
         Blade::component('datetime-picker', DateTimePicker::class);
         Blade::component('breadcrumb', Breadcrumb::class);
         Blade::component('delete-action', DeleteAction::class);
+        Blade::component('input.group', Group::class);
+        Blade::component('input.rich-text', RichText::class);
     }
 
     /**
@@ -54,6 +59,7 @@ class ComponentServiceProvider extends ServiceProvider
      */
     public function registerLivewireComponents()
     {
+        Livewire::component('initialization', Initialization::class);
         Livewire::component('category-list', CategoryList::class);
         Livewire::component('brand-list', BrandList::class);
         Livewire::component('collection-list', CollectionList::class);
