@@ -45,24 +45,36 @@ module.exports = {
       }
     },
     customForms: theme => ({
+      default: {
+        select: {
+          iconColor: theme('colors.gray.400'),
+          icon: iconColor =>
+            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path d="M7 7l3-3 3 3m0 6l-3 3-3-3" stroke="${iconColor}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+          '&:focus': {
+            outline: 'none',
+            boxShadow: theme('boxShadow.outline-blue'),
+            borderColor: theme('colors.blue.300'),
+          },
+        },
+      },
       shopper: {
         "input, textarea, select, multiselect, checkbox, radio": {
           borderWidth: defaultTheme.borderWidth[2],
           "&:focus": {
             outline: "none",
             boxShadow: "none",
-            borderColor: theme("colors.brand.400")
+            borderColor: theme("colors.blue.400")
           },
         },
-      },
-      select: {
-        iconColor: theme('colors.gray.400'),
-        icon: iconColor =>
-          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path d="M7 7l3-3 3 3m0 6l-3 3-3-3" stroke="${iconColor}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-        '&:focus': {
-          outline: 'none',
-          boxShadow: theme('boxShadow.outline-blue'),
-          borderColor: theme('colors.blue.300'),
+        select: {
+          iconColor: theme('colors.gray.400'),
+          icon: iconColor =>
+            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path d="M7 7l3-3 3 3m0 6l-3 3-3-3" stroke="${iconColor}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+          '&:focus': {
+            outline: 'none',
+            boxShadow: theme('boxShadow.outline-blue'),
+            borderColor: theme('colors.blue.300'),
+          },
         },
       },
     }),

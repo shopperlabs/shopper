@@ -1053,7 +1053,7 @@ return [
     ],
 
     'XAF' => [
-        'name' => 'Central African CFA Franc (XAF)',
+        'name' => 'Central African CFA Franc (Beac)',
         'symbol' => 'FCFA',
         'format' => '1,0.00 FCFA',
         'exchange_rate' => 0.00,
@@ -1067,9 +1067,9 @@ return [
     ],
 
     'XOF' => [
-        'name' => 'Franc CFA (XOF)',
-        'symbol' => 'F.CFA',
-        'format' => '1,0.00 F.CFA',
+        'name' => 'West African CFA Franc',
+        'symbol' => 'FCFA',
+        'format' => '1,0.00 FCFA',
         'exchange_rate' => 0.00,
     ],
 
