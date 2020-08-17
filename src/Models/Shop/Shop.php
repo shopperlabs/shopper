@@ -4,6 +4,7 @@ namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Channel;
+use Shopper\Framework\Models\Currency;
 use Shopper\Framework\Models\Ecommerce\Product;
 use Shopper\Framework\Models\Inventory;
 use Shopper\Framework\Models\User;
@@ -107,5 +108,15 @@ class Shop extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    /**
+     * Return the Shop currency.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'currency_id');
     }
 }

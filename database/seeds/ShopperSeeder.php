@@ -21,6 +21,7 @@ class ShopperSeeder extends Seeder
 
         $this->seed('AuthTableSeeder');
         $this->seed('ShopTableSeeder');
+        $this->seed('CurrenciesTableSeeder');
 
         Model::reguard();
     }

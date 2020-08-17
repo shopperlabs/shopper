@@ -109,24 +109,4 @@ class ShopperServiceProvider extends ServiceProvider
             ComponentServiceProvider::class,
         ];
     }
-
-    /**
-     * Get the translation keys from file.
-     *
-     * @return array
-     */
-    private static function getTranslations()
-    {
-        $translationFile = resource_path('lang/' . app()->getLocale() . '.json');
-
-        if (! is_readable($translationFile)) {
-            $translationFile = resource_path('lang/' . app('translator')->getFallback() . '.json');
-        }
-
-        if (! is_readable($translationFile)) {
-            return [];
-        }
-
-        return json_decode(file_get_contents($translationFile), true);
-    }
 }
