@@ -128,6 +128,18 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
     <script src="https://unpkg.com/trix@1.2.3/dist/trix.js"></script>
+    <script>
+      $(document).ready(function() {
+        $(window).scroll(function(){
+          var winTop = $(window).scrollTop();
+          if(winTop >= 50){
+            $("#sticky-header").addClass("bg-white shadow-md sticky top-6 p-4 rounded-md mx-8");
+          }else{
+            $("#sticky-header").removeClass("bg-white shadow-md sticky top-6 p-4 rounded-md mx-8");
+          }
+        });
+      });
+    </script>
 
 </body>
 </html>

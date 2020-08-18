@@ -1,7 +1,6 @@
 <div>
-    <div class="px-4 sm:px-6 lg:px-8">
-        <span class="text-sm text-blue-600 uppercase font-medium lg:hidden">{{ __("Step :step of 3", ['step' => 1]) }}</span>
-        <div class="hidden lg:flex items-center pb-10 space-x-4">
+    <aside id="sticky-header" class="hidden lg:block mb-10 relative z-50 transition-all duration-200 ease-in-out">
+        <div class="px-4 sm:px-6 lg:px-8 flex items-center space-x-4">
             <div class="flex items-center">
                 <div class="h-6 w-6 flex items-center justify-center bg-green-500 border border-green-500 text-white rounded-full">
                     <svg viewBox="0 0 20 20" fill="currentColor" class="check w-4 h-4">
@@ -25,6 +24,10 @@
                 <span class="ml-3 text-lg font-medium text-gray-500">{{ __("Social links") }}</span>
             </div>
         </div>
+    </aside>
+
+    <div class="px-4 sm:px-6 lg:px-8">
+        <span class="text-sm text-blue-600 uppercase font-medium lg:hidden">{{ __("Step :step of 3", ['step' => 1]) }}</span>
 
         <h1 class="text-gray-900 font-bold text-2xl leading-5 mt-2">{{ __("Shop configuration") }}</h1>
         <div class="mt-8">
@@ -36,9 +39,9 @@
         </div>
     </div>
 
-    <div class="mt-6 lg:mt-8 px-4 sm:px-6 lg:px-8 grid gap-4 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+    <div x-data="{ current: 0 }" class="mt-6 lg:mt-8 px-4 sm:px-6 lg:px-8 grid gap-4 sm:gap-6 lg:grid-cols-3 lg:gap-8">
         @foreach($sizes as $size)
-            <button type="button" class="relative bg-white flex w-full rounded-lg shadow-md p-4 sm:p-6 cursor-pointer">
+            <button wire:key="{{ $size->id }}" @click="$dispatch('input', current); current = {{ $size->id }}" type="button" class="relative bg-white flex w-full rounded-lg shadow-md p-4 sm:p-6 cursor-pointer hover:shadow-lg">
                 <div class="flex-shrink-0">
                     <div class="flex items-center justify-center h-8 w-8 rounded-md bg-blue-600 text-white">
                         @if($size->max_products <= 100)
@@ -64,8 +67,14 @@
                         {{ __($size->description) }}
                     </p>
                 </div>
+                <div x-cloak x-show="current === {{ $size->id }}" class="flex-shrink-0 absolute top-4 right-4 text-green-500">
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="check-circle w-6 h-6">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
             </button>
         @endforeach
+        <input wire:model="size_id" type="hidden" class="sr-only" x-ref="input" x-model="current">
     </div>
 
     <div class="px-4 sm:px-6 lg:px-8">
@@ -91,7 +100,7 @@
                                 <path fill-rule="evenodd" d="M22 5H2a1 1 0 0 0-1 1v4a3 3 0 0 0 2 2.82V22a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9.18A3 3 0 0 0 23 10V6a1 1 0 0 0-1-1zm-7 2h2v3a1 1 0 1 1-2 0zm-4 0h2v3a1 1 0 1 1-2 0zM7 7h2v3a1 1 0 1 1-2 0zm-3 4a1 1 0 0 1-1-1V7h2v3a1 1 0 0 1-1 1zm10 10h-4v-2a2 2 0 1 1 4 0zm5 0h-3v-2a4 4 0 1 0-8 0v2H5v-8.18a3.17 3.17 0 0 0 1-.6 3 3 0 0 0 4 0 3 3 0 0 0 4 0 3 3 0 0 0 4 0c.293.26.632.464 1 .6zm2-11a1 1 0 1 1-2 0V7h2zM4.3 3H20a1 1 0 1 0 0-2H4.3a1 1 0 1 0 0 2z" clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <input id="name" class="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                        <input wire:model="name" id="name" class="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -108,7 +117,7 @@
                                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                             </svg>
                         </div>
-                        <input id="email" type="email" class="form-input block w-full pl-10 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <input wire:model="email" id="email" type="email" class="form-input block w-full pl-10 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                     </div>
                 </div>
             </div>
@@ -117,26 +126,26 @@
                 x-data
                 wire:ignore
                 x-init="
-                        phoneNumber = document.querySelector('#phone_number');
-                        iti = intlTelInput(document.querySelector('#phone_number'), {
-                            nationalMode: true,
-                            initialCountry: 'auto',
-                            geoIpLookup: function(success, failure) {
-                                $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                    var countryCode = (resp && resp.country) ? resp.country : '';
-                                    success(countryCode);
-                                });
-                            },
-                            utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-                        });
-                        var handleChange = () => {
-                            if (iti.isValidNumber()) {
-                                phoneNumber.value = iti.getNumber();
-                            }
-                          };
-                        phoneNumber.addEventListener('change', handleChange);
-                        phoneNumber.addEventListener('keyup', handleChange);
-                   "
+                    phoneNumber = document.querySelector('#phone_number');
+                    iti = intlTelInput(document.querySelector('#phone_number'), {
+                        nationalMode: true,
+                        initialCountry: 'auto',
+                        geoIpLookup: function(success, failure) {
+                            $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
+                                var countryCode = (resp && resp.country) ? resp.country : '';
+                                success(countryCode);
+                            });
+                        },
+                        utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
+                    });
+                    var handleChange = () => {
+                        if (iti.isValidNumber()) {
+                            phoneNumber.value = iti.getNumber();
+                        }
+                      };
+                    phoneNumber.addEventListener('change', handleChange);
+                    phoneNumber.addEventListener('keyup', handleChange);
+               "
                 class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
             >
                 <label for="phone_number" class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
@@ -144,7 +153,7 @@
                 </label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
-                        <input id="phone_number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                        <input wire:model="phone_number" id="phone_number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
                         @error('phone_number')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -163,19 +172,29 @@
                 <label for="photo" class="flex flex-col text-sm leading-5 font-medium text-gray-700">
                     Logo
                 </label>
-                <div class="mt-2 sm:mt-0 sm:col-span-2">
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="flex items-center">
-                        <span class="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="photograph w-8 h-8 text-gray-300">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                        </span>
-                        <span class="ml-5 rounded-md shadow-sm">
-                            <button type="button" class="py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+                        @if($logo)
+                            <div class="flex-shrink-0 h-12 w-12 rounded-full overflow-hidden">
+                                <img class="h-full w-full object-cover" src="{{ $logo->temporaryUrl() }}" alt="">
+                            </div>
+                        @else
+                            <span class="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="photograph w-8 h-8 text-gray-300">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </span>
+                        @endif
+                        <div class="ml-5 inline-flex rounded-md shadow-sm">
+                            <label class="inline-flex cursor-pointer py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
                                 {{ __("Change") }}
-                            </button>
-                        </span>
+                                <input @focus="focused = true" @blur="focused = false" type='file' wire:model='logo' class='sr-only' />
+                            </label>
+                        </div>
                     </div>
+                    @error('logo')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                     <p class="mt-2 text-sm text-gray-500">{{ __("The logo of your store that will be visible on your site. This assets will appear on your invoices.") }}</p>
                 </div>
             </div>
@@ -229,7 +248,7 @@
                                 <path fill-rule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd" />
                             </svg>
                         </div>
-                        <input id="facebook" class="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="https://facebook.com/mckenziearts">
+                        <input id="facebook" class="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="https://facebook.com/mckenziearts" autocomplete="off">
                     </div>
                 </div>
 
@@ -241,7 +260,7 @@
                                 <path d="M17.34 5.46a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2zm4.6 2.42a7.59 7.59 0 0 0-.46-2.43 4.94 4.94 0 0 0-1.16-1.77 4.7 4.7 0 0 0-1.77-1.15 7.3 7.3 0 0 0-2.43-.47C15.06 2 14.72 2 12 2s-3.06 0-4.12.06a7.3 7.3 0 0 0-2.43.47 4.78 4.78 0 0 0-1.77 1.15 4.7 4.7 0 0 0-1.15 1.77 7.3 7.3 0 0 0-.47 2.43C2 8.94 2 9.28 2 12s0 3.06.06 4.12a7.3 7.3 0 0 0 .47 2.43 4.7 4.7 0 0 0 1.15 1.77 4.78 4.78 0 0 0 1.77 1.15 7.3 7.3 0 0 0 2.43.47C8.94 22 9.28 22 12 22s3.06 0 4.12-.06a7.3 7.3 0 0 0 2.43-.47 4.7 4.7 0 0 0 1.77-1.15 4.85 4.85 0 0 0 1.16-1.77 7.59 7.59 0 0 0 .46-2.43c0-1.06.06-1.4.06-4.12s0-3.06-.06-4.12zM20.14 16a5.61 5.61 0 0 1-.34 1.86 3.06 3.06 0 0 1-.75 1.15 3.19 3.19 0 0 1-1.15.75 5.61 5.61 0 0 1-1.86.34c-1 .05-1.37.06-4 .06s-3 0-4-.06a5.73 5.73 0 0 1-1.94-.3 3.27 3.27 0 0 1-1.1-.75 3 3 0 0 1-.74-1.15 5.54 5.54 0 0 1-.4-1.9c0-1-.06-1.37-.06-4s0-3 .06-4a5.54 5.54 0 0 1 .35-1.9A3 3 0 0 1 5 5a3.14 3.14 0 0 1 1.1-.8A5.73 5.73 0 0 1 8 3.86c1 0 1.37-.06 4-.06s3 0 4 .06a5.61 5.61 0 0 1 1.86.34 3.06 3.06 0 0 1 1.19.8 3.06 3.06 0 0 1 .75 1.1 5.61 5.61 0 0 1 .34 1.9c.05 1 .06 1.37.06 4s-.01 3-.06 4zM12 6.87A5.13 5.13 0 1 0 17.14 12 5.12 5.12 0 0 0 12 6.87zm0 8.46A3.33 3.33 0 1 1 15.33 12 3.33 3.33 0 0 1 12 15.33z"/>
                             </svg>
                         </div>
-                        <input id="instagram" class="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="@mckenziearts">
+                        <input id="instagram" class="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="@mckenziearts" autocomplete="off">
                     </div>
                 </div>
 
@@ -253,7 +272,7 @@
                                 <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                             </svg>
                         </div>
-                        <input id="twitter" class="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="@mckenziearts">
+                        <input id="twitter" class="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="@mckenziearts" autocomplete="off">
                     </div>
                 </div>
             </div>
@@ -263,11 +282,13 @@
     <div class="px-4 sm:px-6 lg:px-8 mt-8 pt-5">
         <div class="flex justify-end">
             <span class="ml-3 inline-flex rounded-md shadow-sm">
-                <button type="button" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+                <button wire:click="store" type="button" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
+                    <span wire:loading wire:target="store" class="pr-2">
+                        <span class="btn-spinner"></span>
+                    </span>
                     {{ __("Create my shop") }}
                 </button>
             </span>
         </div>
     </div>
-
 </div>
