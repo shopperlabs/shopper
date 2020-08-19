@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\Channel;
 use Shopper\Framework\Models\Currency;
 use Shopper\Framework\Models\Ecommerce\Product;
@@ -39,6 +40,20 @@ class Shop extends Model
         'latitude',
         'latitude',
     ];
+
+    /**
+     * Get Shop default logo.
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
+     */
+    public function getLogoUrlAttribute()
+    {
+        if ($this->logo_url) {
+            return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->logo_url);
+        }
+
+        return null;
+    }
 
     /**
      * Get the table associated with the model.

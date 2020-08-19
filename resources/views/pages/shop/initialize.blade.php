@@ -29,11 +29,12 @@
     <link rel="stylesheet" href="https://unpkg.com/trix@1.2.3/dist/trix.css">
     <!--end::Fonts -->
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
+    <livewire:styles />
 </head>
 <body class="text-gray-500 leading-normal font-body transition ease-in-out duration-700">
 
     <div class="min-h-screen bg-gray-100">
-        <nav x-data="{ open: false }" class="bg-white shadow-sm">
+        <nav id="navbar" x-data="{ open: false }" class="bg-white shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex">
@@ -124,6 +125,7 @@
         </main>
     </div>
 
+    <livewire:scripts />
     <script src="{{ mix('/js/application.js', 'shopper') }}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
@@ -132,10 +134,10 @@
       $(document).ready(function() {
         $(window).scroll(function(){
           var winTop = $(window).scrollTop();
-          if(winTop >= 50){
-            $("#sticky-header").addClass("bg-white shadow-md sticky top-6 p-4 rounded-md mx-8");
-          }else{
-            $("#sticky-header").removeClass("bg-white shadow-md sticky top-6 p-4 rounded-md mx-8");
+          if(winTop >= 50) {
+            $('#sticky-header').addClass('bg-white shadow-md sticky top-6 p-4 rounded-md mx-8');
+          } else {
+            $('#sticky-header').removeClass('bg-white shadow-md sticky top-6 p-4 rounded-md mx-8');
           }
         });
       });
