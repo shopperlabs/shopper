@@ -68,11 +68,9 @@
   transition: opacity 300ms, transform 300ms;
 }
 
-#initialization {
-  .size-radio:checked + label {
-    @apply border-blue-300;
-    .selected {
-      display: block;
-    }
+.size-radio:checked + label {
+  @apply border-blue-300;
+  .selected {
+    display: block;
   }
 }

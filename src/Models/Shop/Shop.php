@@ -33,6 +33,7 @@ class Shop extends Model
         'post_code',
         'size_id',
         'owner_id',
+        'currency_id',
         'facebook_url',
         'twitter_url',
         'instagram_url',

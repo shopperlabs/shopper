@@ -21,7 +21,7 @@ class Initialization extends Component
     public $instagram = '';
     public $twitter = '';
     public $currency_id = '';
-    public $size_id = '';
+    public $size_id;
     public $logo;
 
     public function mount()
@@ -38,6 +38,24 @@ class Initialization extends Component
     public function stepOneState()
     {
         if ($this->size_id) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function stepTwoState()
+    {
+        if ($this->email && $this->name) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function stepTreeState()
+    {
+        if ($this->facebook || $this->instagram || $this->twitter) {
             return true;
         }
 
