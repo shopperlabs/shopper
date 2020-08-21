@@ -47,7 +47,7 @@ class Shop extends Model
      *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
      */
-    public function getLogoUrlAttribute()
+    public function getLogoFullUrlAttribute()
     {
         if ($this->logo_url) {
             return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->logo_url);
