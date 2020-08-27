@@ -10,6 +10,7 @@ use Shopper\Framework\Http\Components\Blade\DeleteAction;
 use Shopper\Framework\Http\Components\Blade\DateTimePicker;
 use Shopper\Framework\Http\Components\Blade\Input\Group;
 use Shopper\Framework\Http\Components\Blade\Input\RichText;
+use Shopper\Framework\Http\Components\Blade\LearnMore;
 use Shopper\Framework\Http\Components\Livewire\BrandList;
 use Shopper\Framework\Http\Components\Livewire\CategoryList;
 use Shopper\Framework\Http\Components\Livewire\CollectionList;
@@ -45,6 +46,7 @@ class ComponentServiceProvider extends ServiceProvider
      */
     public function registerBladeComponents()
     {
+        Blade::component('learn-more', LearnMore::class);
         Blade::component('datetime-picker', DateTimePicker::class);
         Blade::component('breadcrumb', Breadcrumb::class);
         Blade::component('delete-action', DeleteAction::class);
