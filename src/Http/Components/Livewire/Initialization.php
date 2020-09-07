@@ -100,7 +100,7 @@ class Initialization extends Component
     {
         return [
             'name' => 'required|unique:'. shopper_table('shops'),
-            'email' => 'required|unique:'. shopper_table('shops'),
+            'email' => 'required|email|unique:'. shopper_table('shops'),
             'size_id' => 'required',
             'currency_id' => 'required',
             'logo' => 'nullable|image|max:1024', // 1MB Max
