@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateCollectionsTable extends Migration
+class CreateChannelsTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,14 +16,15 @@ class CreateCollectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('collections'), function (Blueprint $table) {
+        Schema::create($this->getTableName('channels'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
             $table->string('name');
             $table->string('slug')->unique()->nullable();
-            $table->longText('description')->nullable();
-            $table->enum('type', ['manual', 'auto']);
-            $table->dateTimeTz('published_at')->default(now());
+            $table->text('description')->nullable();
+            $table->string('timezone')->nullable();
+            $table->string('url')->nullable();
+            $table->boolean('is_default')->default(false);
         });
     }
 
@@ -34,6 +35,6 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('collections'));
+        Schema::dropIfExists($this->getTableName('channels'));
     }
 }

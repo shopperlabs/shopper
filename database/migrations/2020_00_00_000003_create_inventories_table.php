@@ -23,17 +23,17 @@ class CreateInventoriesTable extends Migration
             $table->string('code')->unique();
             $table->text('description')->nullable();
             $table->string('email')->unique();
-            $table->string('phone_number');
-            $table->string('country')->nullable();
-            $table->string('city')->nullable();
-            $table->string('street')->nullable();
-            $table->string('postcode')->nullable();
+            $table->string('address');
+            $table->string('address_plus')->nullable();
+            $table->string('zipcode');
+            $table->string('city');
+            $table->string('phone_number')->nullable();
             $table->integer('priority')->default(0);
             $table->decimal('latitude', 10, 5)->nullable();
             $table->decimal('longitude', 10, 5)->nullable();
             $table->boolean('is_default')->default(false);
 
-            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'));
+            $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));
         });
     }
 
