@@ -27,7 +27,17 @@ class CreateUsersTables extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('api_token', 80)->unique()->nullable()->default(null);
+            $table->string('phone_number')->nullable();
+            $table->enum('gender', ['male', 'female']);
+            $table->date('birth_date')->nullable();
+            $table->string('avatar_type')->default('gravatar');
+            $table->string('avatar_location')->nullable();
+            $table->string('timezone')->nullable();
             $table->boolean('optin');
+            $table->timestamp('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

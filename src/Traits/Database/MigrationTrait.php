@@ -36,6 +36,18 @@ trait MigrationTrait
             $table->softDeletes();
         }
     }
+    
+    /**
+     * Create fields common to seo.
+     *
+     * @param  Blueprint  $table
+     * @param  boolean  $hasSoftDelete
+     */
+    public function addSeoFields(Blueprint $table, bool $hasSoftDelete = false): void
+    {
+        $table->string('seo_title', 60)->nullable();
+        $table->string('seo_description', 160)->nullable();
+    }
 
     /**
      * Link table to $tableName using $columnName.

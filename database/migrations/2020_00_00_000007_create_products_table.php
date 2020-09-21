@@ -50,6 +50,22 @@ class CreateProductsTable extends Migration
             $this->addForeignKey($table, 'brand_id', $this->getTableName('brands'));
         });
 
+        Schema::create($this->getTableName('product_reviews'), function (Blueprint $table) {
+            $this->addCommonFields($table);
+
+            $table->enum('recommended', ['Yes', 'No']);
+            $table->integer('rating');
+            $table->text('title');
+            $table->text('description');
+            $table->string('content')->nullable();
+            $table->boolean('approved')->default(false);
+            $table->morphs('reviewrateable');
+            $table->morphs('author');
+
+            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
+            $this->addForeignKey($table, 'product_id', $this->getTableName('products'));
+        }); 
+
         Schema::create($this->getTableName('category_product'), function (Blueprint $table) {
             $this->addForeignKey($table, 'category_id', $this->getTableName('categories'), false);
             $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
@@ -70,6 +86,7 @@ class CreateProductsTable extends Migration
     {
         Schema::dropIfExists($this->getTableName('channel_product'));
         Schema::dropIfExists($this->getTableName('category_product'));
+        Schema::dropIfExists($this->getTableName('product_reviews'));
         Schema::dropIfExists($this->getTableName('products'));
     }
 }
