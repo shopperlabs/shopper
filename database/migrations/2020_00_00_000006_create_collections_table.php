@@ -23,7 +23,7 @@ class CreateCollectionsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->enum('type', ['manual', 'auto']);
-            $table->string('sort')->nullable(); // defaults: ['best_selling', 'alpha_asc', 'alpha_desc', 'price_desc', 'price_asc', 'created_desc', 'created_asc', 'manual'])->nullable();
+            $table->string('sort')->nullable(); // defaults: ['best_selling', 'alpha_asc', 'alpha_desc', 'price_desc', 'price_asc', 'created_desc', 'created_asc', 'manual']
             $table->enum('match_conditions', ['all', 'any'])->nullable();
             $table->dateTimeTz('published_at')->default(now());
 

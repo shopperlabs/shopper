@@ -32,8 +32,6 @@ class CreateDiscountsTable extends Migration
             $table->unsignedInteger('total_use')->default(0);
             $table->dateTime('date_start');
             $table->dateTime('date_end')->nullable();
-
-            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'));
         });
     }
 
