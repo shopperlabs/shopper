@@ -28,7 +28,7 @@ class CreateOrdersTable extends Migration
 
             $this->addForeignKey($table, 'parent_order_id', $this->getTableName('orders'));
             $this->addForeignKey($table, 'shipping_address_id', $this->getTableName('user_addresses'));
-            $this->addForeignKey($table, 'user_id', 'users');
+            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
         });
     }
 

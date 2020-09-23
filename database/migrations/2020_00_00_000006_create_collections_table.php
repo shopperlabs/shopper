@@ -37,7 +37,7 @@ class CreateCollectionsTable extends Migration
             $table->string('operator'); // defaults: ['equals_to', 'not_equals_to', 'less_than', 'greather_than', 'starts_with', 'ends_with', 'contains', 'not_contains']
             $table->string('value');
 
-            $this->addForeignKey($table, 'collection_id', 'collections', false);
+            $this->addForeignKey($table, 'collection_id', $this->getTableName('collections'), false);
         });
     }
 

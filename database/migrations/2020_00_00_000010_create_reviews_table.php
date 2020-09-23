@@ -21,7 +21,7 @@ class CreateReviewsTable extends Migration
 
             $table->boolean('is_recommended');
             $table->integer('rating');
-            $table->text('title');
+            $table->text('title')->nullable();
             $table->text('content')->nullable();
             $table->boolean('approved')->default(false);
             $table->morphs('reviewrateable');

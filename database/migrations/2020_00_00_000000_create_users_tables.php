@@ -37,9 +37,6 @@ class CreateUsersTables extends Migration
             $table->boolean('opt_in')->default(false);
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
-
-            $table->rememberToken();
-            $table->softDeletes();
         });
 
         Schema::create($this->getTableName('user_addresses'), function (Blueprint $table) {
@@ -68,7 +65,7 @@ class CreateUsersTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('users_addresses'));
+        Schema::dropIfExists($this->getTableName('user_addresses'));
         Schema::dropIfExists($this->getTableName('users'));
     }
 }

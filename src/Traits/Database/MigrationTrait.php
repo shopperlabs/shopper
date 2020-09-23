@@ -41,7 +41,6 @@ trait MigrationTrait
      * Create fields common to seo.
      *
      * @param  Blueprint  $table
-     * @param  boolean  $hasSoftDelete
      */
     public function addSeoFields(Blueprint $table): void
     {
