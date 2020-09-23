@@ -23,12 +23,11 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->string('sku')->unique()->nullable();
             $table->string('barcode')->unique()->nullable();
-            $table->string('notification_type')->nullable();
-            $table->string('notification_value')->nullable();
             $table->longText('description')->nullable();
+            $table->integer('security_stock')->default(0);
             $table->boolean('featured')->default(false);
-            $table->decimal('old_amount', 12, 4)->nullable();
-            $table->decimal('amount', 12, 4);
+            $table->decimal('old_price_amount', 12, 4)->nullable();
+            $table->decimal('price_amount', 12, 4);
             $table->decimal('cost_amount', 12, 4);
             $table->boolean('requires_shipping')->default(false);
             $table->dateTimeTz('published_at')->default(now())->nullable();
@@ -50,22 +49,6 @@ class CreateProductsTable extends Migration
             $this->addForeignKey($table, 'brand_id', $this->getTableName('brands'));
         });
 
-        Schema::create($this->getTableName('product_reviews'), function (Blueprint $table) {
-            $this->addCommonFields($table);
-
-            $table->enum('recommended', ['Yes', 'No']);
-            $table->integer('rating');
-            $table->text('title');
-            $table->text('description');
-            $table->string('content')->nullable();
-            $table->boolean('approved')->default(false);
-            $table->morphs('reviewrateable');
-            $table->morphs('author');
-
-            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
-            $this->addForeignKey($table, 'product_id', $this->getTableName('products'));
-        }); 
-
         Schema::create($this->getTableName('category_product'), function (Blueprint $table) {
             $this->addForeignKey($table, 'category_id', $this->getTableName('categories'), false);
             $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
@@ -73,6 +56,11 @@ class CreateProductsTable extends Migration
 
         Schema::create($this->getTableName('channel_product'), function (Blueprint $table) {
             $this->addForeignKey($table, 'channel_id', $this->getTableName('channels'), false);
+            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
+        });
+
+        Schema::create($this->getTableName('collection_product'), function (Blueprint $table) {
+            $this->addForeignKey($table, 'collection_id', $this->getTableName('collections'), false);
             $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
         });
     }
@@ -84,9 +72,9 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists($this->getTableName('collection_product'));
         Schema::dropIfExists($this->getTableName('channel_product'));
         Schema::dropIfExists($this->getTableName('category_product'));
-        Schema::dropIfExists($this->getTableName('product_reviews'));
         Schema::dropIfExists($this->getTableName('products'));
     }
 }

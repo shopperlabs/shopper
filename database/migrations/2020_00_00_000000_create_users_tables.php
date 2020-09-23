@@ -22,8 +22,8 @@ class CreateUsersTables extends Migration
         Schema::create($this->getTableName('users'), function (Blueprint $table) {
             $this->addCommonFields($table, true);
 
-            $table->string('lastname');
-            $table->string('firstname');
+            $table->string('last_name');
+            $table->string('first_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -34,20 +34,19 @@ class CreateUsersTables extends Migration
             $table->string('avatar_type')->default('gravatar');
             $table->string('avatar_location')->nullable();
             $table->string('timezone')->nullable();
-            $table->boolean('optin');
+            $table->boolean('opt_in')->default(false);
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
 
             $table->rememberToken();
-            $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create($this->getTableName('user_addresses'), function (Blueprint $table) {
             $this->addCommonFields($table, true);
 
-            $table->string('lastname');
-            $table->string('firstname');
+            $table->string('last_name');
+            $table->string('first_name');
             $table->string('company_name')->nullable();
             $table->string('address');
             $table->string('address_plus')->nullable();
@@ -56,7 +55,6 @@ class CreateUsersTables extends Migration
             $table->string('phone_number')->nullable();
             $table->boolean('is_default')->default(0);
             $table->enum('type', ["billing", "shipping"]);
-            $table->timestamps();
 
             $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));
             $this->addForeignKey($table, 'user_id', $this->getTableName('users'));

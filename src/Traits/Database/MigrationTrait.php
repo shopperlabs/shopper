@@ -43,7 +43,7 @@ trait MigrationTrait
      * @param  Blueprint  $table
      * @param  boolean  $hasSoftDelete
      */
-    public function addSeoFields(Blueprint $table, bool $hasSoftDelete = false): void
+    public function addSeoFields(Blueprint $table): void
     {
         $table->string('seo_title', 60)->nullable();
         $table->string('seo_description', 160)->nullable();

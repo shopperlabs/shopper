@@ -23,10 +23,9 @@ class CreateOrderItemsTable extends Migration
             $table->string('sku')->nullable()->index();
             $table->morphs('product');
             $table->integer('quantity');
-            $table->decimal('unit_amount', 10, 2);
+            $table->decimal('unit_price_amount', 10, 2);
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
-            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'), false);
         });
 
         Schema::create($this->getTableName('orders_refunds'), function (Blueprint $table) {
@@ -35,7 +34,7 @@ class CreateOrderItemsTable extends Migration
             $table->increments('id');
             $table->longText('refund_reason')->nullable();
             $table->string('refund_amount')->nullable();
-            $table->enum('status', ['waiting', 'treatment', 'partial-refund', 'total-refund', 'refused'])->default('treatment');
+            $table->enum('status', ['pending', 'treatment', 'partial-refund', 'total-refund', 'refused'])->default('pending');
             $table->longText('notes');
             
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));

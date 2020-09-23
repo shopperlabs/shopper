@@ -33,6 +33,15 @@ class CreateDiscountsTable extends Migration
             $table->dateTime('date_start');
             $table->dateTime('date_end')->nullable();
         });
+
+        Schema::create($this->getTableName('discountables'), function (Blueprint $table) {
+            $this->addCommonFields($table);
+            $table->string('condition')->nullable(); // apply_to, eligibility
+            $table->unsignedInteger('total_use')->default(0);
+            $table->morphs('discountable');
+
+            $this->addForeignKey($table, 'discount_id', $this->getTableName('discounts'), false);
+        });
     }
 
     /**
@@ -42,6 +51,7 @@ class CreateDiscountsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists($this->getTableName('discountables'));
         Schema::dropIfExists($this->getTableName('discounts'));
     }
 }

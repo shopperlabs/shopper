@@ -39,11 +39,6 @@ class CreateCollectionsTable extends Migration
 
             $this->addForeignKey($table, 'collection_id', 'collections', false);
         });
-
-        Schema::create($this->getTableName('collection_product'), function (Blueprint $table) {
-            $this->addForeignKey($table, 'collection_id', $this->getTableName('collections'), false);
-            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
-        });
     }
 
     /**
@@ -53,7 +48,6 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('collection_product'));
         Schema::dropIfExists($this->getTableName('collection_rules'));
         Schema::dropIfExists($this->getTableName('collections'));
     }

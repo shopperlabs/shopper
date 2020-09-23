@@ -60,7 +60,7 @@ class CreateInventoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('inventories'));
         Schema::dropIfExists($this->getTableName('inventory_histories'));
+        Schema::dropIfExists($this->getTableName('inventories'));
     }
 }
