@@ -27,19 +27,6 @@ class CreateOrderItemsTable extends Migration
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
         });
-
-        Schema::create($this->getTableName('orders_refunds'), function (Blueprint $table) {
-            $this->addCommonFields($table);
-
-            $table->increments('id');
-            $table->longText('refund_reason')->nullable();
-            $table->string('refund_amount')->nullable();
-            $table->enum('status', ['pending', 'treatment', 'partial-refund', 'total-refund', 'refused'])->default('pending');
-            $table->longText('notes');
-            
-            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
-            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
-        });
     }
 
     /**
@@ -50,6 +37,5 @@ class CreateOrderItemsTable extends Migration
     public function down()
     {
         Schema::dropIfExists($this->getTableName('order_items'));
-        Schema::dropIfExists($this->getTableName('order_refunds'));
     }
 }
