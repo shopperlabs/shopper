@@ -20,6 +20,9 @@ class CreateCarriersTable extends Migration
             $this->addCommonFields($table);
 
             $table->string('name');
+            $table->string('slug')->unique()->nullable();
+            $table->string('logo')->nullable();
+            $table->string('link_url')->nullable();
             $table->string('description')->nullable();
         });
     }

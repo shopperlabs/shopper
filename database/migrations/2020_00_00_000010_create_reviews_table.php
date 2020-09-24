@@ -19,7 +19,7 @@ class CreateReviewsTable extends Migration
         Schema::create($this->getTableName('reviews'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->boolean('is_recommended');
+            $table->boolean('is_recommended')->default(false);
             $table->integer('rating');
             $table->text('title')->nullable();
             $table->text('content')->nullable();

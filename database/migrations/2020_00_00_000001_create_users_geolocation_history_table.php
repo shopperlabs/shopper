@@ -22,8 +22,8 @@ class CreateUsersGeolocationHistoryTable extends Migration
         Schema::create($this->getTableName('users_geolocation_history'), function (Blueprint $table) {
             $this->addCommonFields($table, true);
 
-            $table->json('ip-api')->nullable();
-            $table->json('extreme-ip-lookup')->nullable();
+            $table->json('ip_api')->nullable();
+            $table->json('extreme_ip_lookup')->nullable();
 
             $this->addForeignKey($table, 'user_id', $this->getTableName('users'), false);
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), true);

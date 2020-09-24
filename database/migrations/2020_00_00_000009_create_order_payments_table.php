@@ -25,7 +25,7 @@ class CreateOrderPaymentsTable extends Migration
             $table->string('platform');
             $table->json('details');
 
-            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
+            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
         });
 
         Schema::create($this->getTableName('order_refunds'), function (Blueprint $table) {
@@ -37,7 +37,7 @@ class CreateOrderPaymentsTable extends Migration
             $table->enum('status', ['pending', 'treatment', 'partial-refund', 'total-refund', 'refused'])->default('pending');
             $table->longText('notes');
             
-            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
+            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
             $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
         });
     }

@@ -24,7 +24,7 @@ class CreateOrderDeliveriesTable extends Migration
             $table->date('returned_at');
             $table->json('voucher');
 
-            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
+            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
             $this->addForeignKey($table, 'carrier_id', $this->getTableName('carriers'));
         });
     }
