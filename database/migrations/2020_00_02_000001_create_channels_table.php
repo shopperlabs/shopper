@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateCategoriesTable extends Migration
+class CreateChannelsTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,19 +16,15 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('categories'), function (Blueprint $table) {
+        Schema::create($this->getTableName('channels'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
             $table->string('name');
             $table->string('slug')->unique()->nullable();
-            $table->longText('description')->nullable();
-            $table->unsignedSmallInteger('sort_order')->default(0);
-            $table->unsignedBigInteger('parent_id')->nullable();
-
-            $table->foreign('parent_id')
-                ->references('id')
-                ->on($this->getTableName('categories'))
-                ->onDelete('CASCADE');
+            $table->text('description')->nullable();
+            $table->string('timezone')->nullable();
+            $table->string('url')->nullable();
+            $table->boolean('is_default')->default(false);
         });
     }
 
@@ -39,6 +35,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('categories'));
+        Schema::dropIfExists($this->getTableName('channels'));
     }
 }

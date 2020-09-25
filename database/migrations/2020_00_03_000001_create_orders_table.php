@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
         Schema::create($this->getTableName('orders'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->string('number', 32);
+            $table->string('price_amount', 32)->nullable();
             $table->string('status', 32);
             $table->string('currency');
             $table->decimal('shipping_total', 10, 2);
@@ -27,9 +27,8 @@ class CreateOrdersTable extends Migration
             $table->text('notes')->nullable();
 
             $this->addForeignKey($table, 'parent_order_id', $this->getTableName('orders'));
-            $this->addForeignKey($table, 'shipping_address_id', $this->getTableName('addresses'));
-            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'));
-            $this->addForeignKey($table, 'user_id', 'users');
+            $this->addForeignKey($table, 'shipping_address_id', $this->getTableName('user_addresses'));
+            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
         });
     }
 

@@ -36,6 +36,38 @@ trait MigrationTrait
             $table->softDeletes();
         }
     }
+    
+    /**
+     * Create fields common to seo.
+     *
+     * @param  Blueprint  $table
+     * @return void
+     */
+    public function addSeoFields(Blueprint $table): void
+    {
+        $table->string('seo_title', 60)->nullable();
+        $table->string('seo_description', 160)->nullable();
+    }
+
+    /**
+     * Create common fields for shipping.
+     *
+     * @param  Blueprint  $table
+     * @return void
+     */
+    public function addShippingFields(Blueprint $table): void
+    {
+        $table->decimal('weight_value', 10, 5)->default(0.00)->unsigned();
+        $table->string('weight_unit')->default('kg');
+        $table->decimal('height_value', 10, 5)->default(0.00)->unsigned();
+        $table->string('height_unit')->default('cm');
+        $table->decimal('width_value', 10, 5)->default(0.00)->unsigned();
+        $table->string('width_unit')->default('cm');
+        $table->decimal('depth_value', 10, 5)->default(0.00)->unsigned();
+        $table->string('depth_unit')->default('cm');
+        $table->decimal('volume_value', 10, 5)->default(0.00)->unsigned();
+        $table->string('volume_unit')->default('l');
+    }
 
     /**
      * Link table to $tableName using $columnName.

@@ -16,17 +16,16 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('media'), function (Blueprint $table) {
+        Schema::create($this->getTableName('system_files'), function (Blueprint $table) {
             $this->addCommonFields($table);
+        
             $table->string('disk_name');
             $table->string('file_name');
             $table->string('file_size');
             $table->string('content_type');
-            $table->string('file_url');
-            $table->string('field')->nullable();
             $table->boolean('is_public')->default(true);
-            $table->smallInteger('sort_order')->default(1);
-            $table->nullableMorphs('mediatable');
+            $table->smallInteger('position')->default(1);
+            $table->nullableMorphs('filetable');
         });
     }
 
@@ -37,6 +36,6 @@ class CreateMediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('media'));
+        Schema::dropIfExists($this->getTableName('system_files'));
     }
 }

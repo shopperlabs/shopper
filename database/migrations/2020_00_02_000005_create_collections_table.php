@@ -23,7 +23,21 @@ class CreateCollectionsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->enum('type', ['manual', 'auto']);
+            $table->string('sort')->nullable(); // defaults: ['best_selling', 'alpha_asc', 'alpha_desc', 'price_desc', 'price_asc', 'created_desc', 'created_asc', 'manual']
+            $table->enum('match_conditions', ['all', 'any'])->nullable();
             $table->dateTimeTz('published_at')->default(now());
+
+            $this->addSeoFields($table);
+        });
+
+        Schema::create($this->getTableName('collection_rules'), function (Blueprint $table) {
+            $this->addCommonFields($table);
+
+            $table->string('rule');
+            $table->string('operator'); // defaults: ['equals_to', 'not_equals_to', 'less_than', 'greather_than', 'starts_with', 'ends_with', 'contains', 'not_contains']
+            $table->string('value');
+
+            $this->addForeignKey($table, 'collection_id', $this->getTableName('collections'), false);
         });
     }
 
@@ -34,6 +48,7 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists($this->getTableName('collection_rules'));
         Schema::dropIfExists($this->getTableName('collections'));
     }
 }

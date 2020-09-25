@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreatedDiscountablesTable extends Migration
+class CreateSystemSettingsTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,13 +16,17 @@ class CreatedDiscountablesTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('discountables'), function (Blueprint $table) {
+        /**
+         * System settings table
+         */
+        Schema::create($this->getTableName('system_settings'), function (Blueprint $table) {
             $this->addCommonFields($table);
-            $table->string('condition')->nullable(); // apply_to, eligibility
-            $table->unsignedInteger('total_use')->default(0);
-            $table->morphs('discountable');
 
-            $this->addForeignKey($table, 'discount_id', $this->getTableName('discounts'), false);
+            $table->id();
+            $table->string('key')->unique();
+            $table->string('display_name');
+            $table->json('value');
+            $table->boolean('locked')->default(false);
         });
     }
 
@@ -33,6 +37,6 @@ class CreatedDiscountablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('discountables'));
+        Schema::dropIfExists('system_settings');
     }
 }

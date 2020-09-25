@@ -19,13 +19,10 @@ class CreateReviewsTable extends Migration
         Schema::create($this->getTableName('reviews'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
+            $table->boolean('is_recommended')->default(false);
             $table->integer('rating');
-            $table->integer('customer_service_rating')->nullable();
-            $table->integer('quality_rating')->nullable();
-            $table->integer('friendly_rating')->nullable();
-            $table->integer('pricing_rating')->nullable();
-            $table->enum('recommend', ['Yes', 'No']);
-            $table->string('content')->nullable();
+            $table->text('title')->nullable();
+            $table->text('content')->nullable();
             $table->boolean('approved')->default(false);
             $table->morphs('reviewrateable');
             $table->morphs('author');

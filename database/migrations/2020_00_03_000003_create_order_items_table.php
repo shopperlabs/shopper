@@ -23,10 +23,9 @@ class CreateOrderItemsTable extends Migration
             $table->string('sku')->nullable()->index();
             $table->morphs('product');
             $table->integer('quantity');
-            $table->decimal('price', 10, 2);
+            $table->decimal('unit_price_amount', 10, 2);
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
-            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'), false);
         });
     }
 

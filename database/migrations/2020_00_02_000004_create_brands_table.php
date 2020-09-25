@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateShopSizesTable extends Migration
+class CreateBrandsTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,12 +16,15 @@ class CreateShopSizesTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('shop_sizes'), function(Blueprint $table) {
+        Schema::create($this->getTableName('brands'), function (Blueprint $table) {
             $this->addCommonFields($table);
+
             $table->string('name');
-            $table->string('size');
-            $table->string('description')->nullable();
-            $table->integer('max_products')->nullable();
+            $table->string('slug')->unique()->nullable();
+            $table->longText('description')->nullable();
+            $table->unsignedSmallInteger('position')->default(0);
+
+            $this->addSeoFields($table);
         });
     }
 
@@ -32,6 +35,6 @@ class CreateShopSizesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('shop_sizes'));
+        Schema::dropIfExists($this->getTableName('brands'));
     }
 }

@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateCurrenciesTable extends Migration
+class CreateSystemCurrenciesTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,9 +16,11 @@ class CreateCurrenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currencies', function (Blueprint $table) {
-            $this->addCommonFields($table);
-
+        /**
+         * System settings table
+         */
+        Schema::create($this->getTableName('system_currencies'), function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->string('code', 10)->index();
             $table->string('symbol', 25);
@@ -34,6 +36,6 @@ class CreateCurrenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currencies');
+        Schema::dropIfExists($this->getTableName('system_settings'));
     }
 }

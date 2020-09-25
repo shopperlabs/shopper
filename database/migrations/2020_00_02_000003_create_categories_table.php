@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateChannelsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,17 +16,16 @@ class CreateChannelsTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('channels'), function (Blueprint $table) {
+        Schema::create($this->getTableName('categories'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
             $table->string('name');
             $table->string('slug')->unique()->nullable();
-            $table->text('description')->nullable();
-            $table->string('timezone')->nullable();
-            $table->string('url')->nullable();
-            $table->boolean('default')->default(false);
+            $table->longText('description')->nullable();
+            $table->unsignedSmallInteger('position')->default(0);
 
-            $this->addForeignKey($table, 'shop_id', $this->getTableName('shops'), true);
+            $this->addSeoFields($table);
+            $this->addForeignKey($table, 'parent_id', $this->getTableName('categories'));
         });
     }
 
@@ -37,6 +36,6 @@ class CreateChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('channels'));
+        Schema::dropIfExists($this->getTableName('categories'));
     }
 }
