@@ -22,10 +22,10 @@ class CreateOrderPaymentsTable extends Migration
             $table->decimal('total_amount', 10, 2);
             $table->string('currency');
             $table->enum('status', ['pending', 'treatment', 'partial-paid', 'paid', 'rejected'])->default('pending');
-            $table->string('platform');
             $table->json('details');
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
+            $this->addForeignKey($table, 'payment_id', $this->getTableName('payments'), false);
         });
 
         Schema::create($this->getTableName('order_refunds'), function (Blueprint $table) {

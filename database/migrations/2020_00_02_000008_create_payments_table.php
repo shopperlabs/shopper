@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateSystemSettingsTable extends Migration
+class CreatePaymentsTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,17 +16,14 @@ class CreateSystemSettingsTable extends Migration
      */
     public function up()
     {
-        /**
-         * System settings table
-         */
-        Schema::create($this->getTableName('system_settings'), function (Blueprint $table) {
+        Schema::create($this->getTableName('payments'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->id();
-            $table->string('key')->unique();
-            $table->string('display_name');
-            $table->json('value');
-            $table->boolean('locked')->default(false);
+            $table->string('name');
+            $table->string('slug')->unique()->nullable();
+            $table->string('logo')->nullable();
+            $table->string('link_url')->nullable();
+            $table->string('description')->nullable();
         });
     }
 
@@ -37,6 +34,6 @@ class CreateSystemSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('system_settings');
+        Schema::dropIfExists($this->getTableName('payments'));
     }
 }
