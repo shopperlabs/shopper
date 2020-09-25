@@ -22,9 +22,9 @@ class CreateOrderShippingTable extends Migration
             $table->date('shipped_at');
             $table->date('received_at');
             $table->date('returned_at');
-            $table->string('tracking_number');
-            $table->string('tracking_number_url');
-            $table->json('voucher');
+            $table->string('tracking_number')->nullable();
+            $table->string('tracking_number_url')->nullable();
+            $table->json('voucher')->nullable();
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
             $this->addForeignKey($table, 'carrier_id', $this->getTableName('carriers'));
