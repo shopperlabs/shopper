@@ -49,6 +49,17 @@ class CreateProductsTable extends Migration
             $this->addForeignKey($table, 'brand_id', $this->getTableName('brands'));
         });
 
+        Schema::create($this->getTableName('product_attributes'), function (Blueprint $table) {
+            $table->string('key');
+            $table->string('value');
+            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
+        });
+
+        Schema::create($this->getTableName('product_variants'), function (Blueprint $table) {
+            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
+            $this->addForeignKey($table, 'product_attributes_id', $this->getTableName('product_attributes'), false);
+        });
+
         Schema::create($this->getTableName('category_product'), function (Blueprint $table) {
             $this->addForeignKey($table, 'category_id', $this->getTableName('categories'), false);
             $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
@@ -75,6 +86,7 @@ class CreateProductsTable extends Migration
         Schema::dropIfExists($this->getTableName('collection_product'));
         Schema::dropIfExists($this->getTableName('channel_product'));
         Schema::dropIfExists($this->getTableName('category_product'));
+        Schema::dropIfExists($this->getTableName('product_attributes'));
         Schema::dropIfExists($this->getTableName('products'));
     }
 }

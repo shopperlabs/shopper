@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateOrderDeliveriesTable extends Migration
+class CreateOrderShippingTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,12 +16,14 @@ class CreateOrderDeliveriesTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('order_deliveries'), function (Blueprint $table) {
+        Schema::create($this->getTableName('order_shippings'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
             $table->date('shipped_at');
             $table->date('received_at');
             $table->date('returned_at');
+            $table->string('tracking_number');
+            $table->string('tracking_number_url');
             $table->json('voucher');
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
@@ -36,6 +38,6 @@ class CreateOrderDeliveriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('order_deliveries'));
+        Schema::dropIfExists($this->getTableName('order_shippings'));
     }
 }
