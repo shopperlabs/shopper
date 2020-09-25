@@ -24,6 +24,7 @@ class CreateCarriersTable extends Migration
             $table->string('logo')->nullable();
             $table->string('link_url')->nullable();
             $table->string('description')->nullable();
+            $table->boolean('is_enabled')->default(false);
         });
     }
 
