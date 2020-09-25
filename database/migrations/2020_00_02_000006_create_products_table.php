@@ -27,37 +27,17 @@ class CreateProductsTable extends Migration
             $table->integer('security_stock')->default(0);
             $table->boolean('featured')->default(false);
             $table->decimal('old_price_amount', 12, 4)->nullable();
-            $table->decimal('price_amount', 12, 4);
-            $table->decimal('cost_amount', 12, 4);
+            $table->decimal('price_amount', 12, 4)->nullable();
+            $table->decimal('cost_amount', 12, 4)->nullable();
+            $table->enum('type', ['deliverable', 'downloadable'])->nullable();
             $table->boolean('requires_shipping')->default(false);
             $table->dateTimeTz('published_at')->default(now())->nullable();
 
-            $table->decimal('weight_value', 10, 5)->default(0.00)->unsigned();
-            $table->string('weight_unit')->default('kg');
-            $table->decimal('height_value', 10, 5)->default(0.00)->unsigned();
-            $table->string('height_unit')->default('cm');
-            $table->decimal('width_value', 10, 5)->default(0.00)->unsigned();
-            $table->string('width_unit')->default('cm');
-            $table->decimal('depth_value', 10, 5)->default(0.00)->unsigned();
-            $table->string('depth_unit')->default('cm');
-            $table->decimal('volume_value', 10, 5)->default(0.00)->unsigned();
-            $table->string('volume_unit')->default('l');
-
             $this->addSeoFields($table);
+            $this->addShippingFields($table);
 
             $this->addForeignKey($table, 'parent_id', $this->getTableName('products'));
             $this->addForeignKey($table, 'brand_id', $this->getTableName('brands'));
-        });
-
-        Schema::create($this->getTableName('product_attributes'), function (Blueprint $table) {
-            $table->string('key');
-            $table->string('value');
-            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
-        });
-
-        Schema::create($this->getTableName('product_variants'), function (Blueprint $table) {
-            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
-            $this->addForeignKey($table, 'product_attributes_id', $this->getTableName('product_attributes'), false);
         });
 
         Schema::create($this->getTableName('category_product'), function (Blueprint $table) {
@@ -86,7 +66,6 @@ class CreateProductsTable extends Migration
         Schema::dropIfExists($this->getTableName('collection_product'));
         Schema::dropIfExists($this->getTableName('channel_product'));
         Schema::dropIfExists($this->getTableName('category_product'));
-        Schema::dropIfExists($this->getTableName('product_attributes'));
         Schema::dropIfExists($this->getTableName('products'));
     }
 }
