@@ -40,7 +40,7 @@ if (!function_exists('home_route')) {
      */
     function home_route(): string
     {
-        if (auth()->check() && auth()->user()->hasRole('administrator')) {
+        if (auth()->check() && auth()->user()->hasRole(config('shopper.user.admin_role'))) {
             return 'shopper.dashboard';
         }
 

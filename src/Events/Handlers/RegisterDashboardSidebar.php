@@ -17,7 +17,7 @@ class RegisterDashboardSidebar extends AbstractAdminSidebar
      */
     public function extendWith(Menu $menu)
     {
-        $menu->group(__('Main'), function (Group $group) {
+        $menu->group(__(''), function (Group $group) {
             $group->weight(1);
             $group->authorize(true);
 
