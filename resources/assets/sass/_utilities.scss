@@ -1,1 +1,7 @@
+.primary-menu .active {
+  @apply bg-blue-900;
 
+  &:hover, &:focus {
+    @apply bg-blue-900;
+  }
+}
