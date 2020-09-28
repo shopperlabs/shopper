@@ -19,8 +19,8 @@ mix.disableNotifications();
 mix.setPublicPath("public")
   .setResourceRoot("../") // turns assets paths in css relative to css file
   .sass("./resources/assets/sass/shopper.scss", "css")
-  .js("./resources/assets/js/application.js", "js")
-  .react("./resources/assets/ts/shopper.ts", "js")
+  .js("./resources/assets/js/shopper.js", "js")
+  // .react("./resources/assets/ts/shopper.ts", "js")
   .options({ processCssUrls: false })
   .tailwind("./tailwind.config.js")
   .webpackConfig({
