@@ -1,6 +1,6 @@
 {
   "name": "shopper/framework",
-  "description": "An eCommerce administration built with Laravel 6 for create online shop.",
+  "description": "An eCommerce administration built with Laravel for create and manage online shop.",
   "keywords": [
     "laravel",
     "admin",
@@ -11,8 +11,15 @@
   "authors": [
     {
       "name": "Arthur Monney",
-      "email": "contact@arthurmonney.me",
-      "homepage": "https://arthurmonney.me"
+      "email": "arthur@shopperlabs.io",
+      "homepage": "https://arthurmonney.me",
+      "role": "Developer"
+    },
+    {
+      "name": "Jean-Vincent ",
+      "email": "jeanvincent@shopperlabs.io",
+      "homepage": "https://twitter.com/jvq_txt",
+      "role": "Developer"
     }
   ],
   "require": {
