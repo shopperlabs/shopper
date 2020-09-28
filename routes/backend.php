@@ -17,7 +17,6 @@ use Shopper\Framework\Shopper;
 
 Route::redirect('/', Shopper::prefix() . '/dashboard', 301);
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::view('/layout', 'shopper::pages.layout');
 
 Route::prefix('profile')->group(function () {
     Route::get('/{section?}', [ProfileController::class, 'profile'])->name('profile');

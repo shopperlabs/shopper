@@ -98,8 +98,8 @@
                 </div>
             </div>
             <div class="overflow-y-auto">
-                <main class="flex-1 relative z-0 min-h-screen -mb-12 focus:outline-none pt-3 lg:pt-0" tabindex="0" x-data x-init="$el.focus()">
-                    <div class="relative max-w-6xl mx-auto md:pt-6 px-4 sm:px-6 md:px-10 pb-16">
+                <main class="flex-1 relative z-0 min-h-screen focus:outline-none pt-3 lg:pt-0" tabindex="0" x-data x-init="$el.focus()">
+                    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <!-- Content -->
                         @yield('content')
                         <!-- /End content -->
