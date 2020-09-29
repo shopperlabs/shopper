@@ -49,7 +49,7 @@
         @include('shopper::partials.default.sidebar')
 
         <div class="flex flex-col w-0 flex-1 overflow-hidden">
-            <div class="relative z-10 flex-shrink-0 flex h-16 bg-white md:bg-transparent shadow md:shadow-none md:py-6 md:h-auto">
+            <div class="relative flex-shrink-0 flex h-16 bg-white md:bg-transparent shadow md:shadow-none md:py-6 md:h-auto">
                 <button @click.stop="sidebarOpen = true" class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
@@ -67,7 +67,7 @@
                                 <input aria-label="Search" id="search_field" class="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm" placeholder="{{ __("Search") }}" type="search">
                             </div>
                         </form>
-                        <div class="hidden md:block relative w-full max-w-lg">
+                        <div class="hidden md:block relative w-full max-w-md">
                             <button class="transition-colors duration-100 ease-in-out text-gray-600 py-2 pr-12 pl-10 block w-full appearance-none leading-normal border border-transparent rounded-md focus:outline-none text-left select-none truncate bg-white border-gray-200 focus:border-gray-300 focus:bg-gray-50">
                                 {{ __("Search") }}
                             </button>
@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="overflow-y-auto">
-                <main class="flex-1 relative z-0 min-h-screen focus:outline-none pt-3 lg:pt-0" tabindex="0" x-data x-init="$el.focus()">
+                <main class="flex-1 relative z-0 min-h-screen focus:outline-none pt-3 lg:pt-0" tabindex="0"">
                     <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <!-- Content -->
                         @yield('content')

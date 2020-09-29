@@ -1,4 +1,4 @@
-<div @click.away="open = false" class="ml-3 relative" x-data="{ open: false }">
+<div @click.away="open = false" class="ml-3 relative z-20" x-data="{ open: false }">
     <div>
         <button @click="open = !open" class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline" id="user-menu" aria-label="User menu" aria-haspopup="true" x-bind:aria-expanded="open">
             <img class="h-8 w-8 rounded-full" src="{{ $picture }}" alt="{{ $email }}" />
@@ -13,7 +13,7 @@
         x-transition:leave="transition ease-in duration-75"
         x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95"
-        class="origin-top-left absolute rounded-md right-0 mt-2 w-56 rounded-md shadow-lg"
+        class="origin-top-left absolute rounded-md right-1 mt-2 w-56 rounded-md shadow-lg"
     >
         <div class="rounded-md bg-white text-left">
             <div class="px-4 py-3 flex items-center truncate">
