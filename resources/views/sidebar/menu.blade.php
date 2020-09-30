@@ -1,4 +1,4 @@
-<nav class="sidebar mb-8 px-6 space-y-2">
+<nav class="sidebar mb-8 space-y-8">
     @foreach($groups as $group)
         {!! $group !!}
     @endforeach

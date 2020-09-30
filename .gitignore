@@ -3,14 +3,11 @@
 /node_modules
 npm-debug.log
 yarn-error.log
-yarn.lock
-package-lock.json
 
 # Composer
 #
 /vendor
 composer.phar
-composer.lock
 
 # IntelliJ/PhpStorm
 #
@@ -19,13 +16,6 @@ composer.lock
 # Visual Studio Code
 #
 /.vscode
-
-# Netbeans
-#
-/nbproject
-.project
-
-/.vagrant
 
 # Laravel Shopper
 #
@@ -36,8 +26,3 @@ phpunit.xml
 #
 .DS_Store
 Thumbs.db
-
-# SublimeText
-#
-*.sublime-project
-*.sublime-workspace
