@@ -23,8 +23,8 @@ class CreateInventoriesTable extends Migration
             $table->string('code')->unique();
             $table->text('description')->nullable();
             $table->string('email')->unique();
-            $table->string('address');
-            $table->string('address_plus')->nullable();
+            $table->string('street_address');
+            $table->string('street_address_plus')->nullable();
             $table->string('zipcode');
             $table->string('city');
             $table->string('phone_number')->nullable();
