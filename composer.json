@@ -27,7 +27,6 @@
     "ext-intl": "*",
     "illuminate/support": "^7.0",
     "laravel/helpers": "^1.2",
-    "laravel/sanctum": "^2.2",
     "laravelcollective/html": "^6.0",
     "lavary/laravel-menu": "^1.7",
     "livewire/livewire": "^1.0",
