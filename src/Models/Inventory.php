@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Shop\Shop;
 
 class Inventory extends Model
 {
@@ -18,11 +17,11 @@ class Inventory extends Model
         'description',
         'email',
         'phone_number',
-        'shop_id',
-        'country',
+        'country_id',
         'city',
-        'street',
-        'postcode',
+        'street_address',
+        'street_address_plus',
+        'zipcode',
         'priority',
         'latitude',
         'latitude',
@@ -46,15 +45,5 @@ class Inventory extends Model
     public function getTable()
     {
         return shopper_table('inventories');
-    }
-
-    /**
-     * Get inventory shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function shop()
-    {
-        return $this->belongsTo(Shop::class, 'shop_id');
     }
 }

@@ -4,7 +4,6 @@ namespace Shopper\Framework\Models\Order;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Address;
-use Shopper\Framework\Models\Shop\Shop;
 use Shopper\Framework\Models\User;
 
 class Order extends Model
@@ -23,10 +22,16 @@ class Order extends Model
         'notes',
         'parent_order_id',
         'shipping_address_id',
-        'shop_id',
+        'price_amount',
         'user_id',
     ];
 
+    /**
+     * Create a new Eloquent model instance.
+     *
+     * @param  array  $attributes
+     * @return void
+     */
     public function __construct(array $attributes = [])
     {
         // Set default status in case there was none given
@@ -85,16 +90,6 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
-    }
-
-    /**
-     * Get Order's shop instance.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function shop()
-    {
-        return $this->belongsTo(Shop::class, 'shop_id');
     }
 
     /**

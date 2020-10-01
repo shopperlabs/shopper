@@ -3,11 +3,11 @@
 namespace Shopper\Framework\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Traits\Mediatable;
+use Shopper\Framework\Models\Traits\Filetable;
 
 class Category extends Model
 {
-    use Mediatable;
+    use Filetable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +18,20 @@ class Category extends Model
         'name',
         'slug',
         'description',
-        'sort_order',
+        'position',
         'parent_id',
+        'seo_title',
+        'seo_description',
+        'is_enabled'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+      'is_enabled' => 'boolean',
     ];
 
     /**
@@ -27,7 +39,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $with = ['parent', 'previewImage'];
+    protected $with = ['parent'];
 
     /**
      * Boot the model.
@@ -36,8 +48,8 @@ class Category extends Model
     {
         parent::boot();
 
-        static::created(function ($category) {
-            $category->update(['slug' => $category->name]);
+        static::created(function ($model) {
+            $model->update(['slug' => $model->name]);
         });
     }
 

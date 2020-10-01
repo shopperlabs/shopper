@@ -8,15 +8,14 @@ use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use Shopper\Framework\Contracts\ReviewRateable;
-use Shopper\Framework\Models\Shop\Shop;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Shopper\Framework\Models\Traits\Filetable;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
-use Shopper\Framework\Traits\Mediatable;
 
 class Product extends Model implements ReviewRateable
 {
-    use Mediatable,
+    use Filetable,
         HasStock,
         CanHaveDiscount,
         ReviewRateableTrait;
@@ -35,10 +34,10 @@ class Product extends Model implements ReviewRateable
         'featured',
         'brand_id',
         'parent_id',
-        'shop_id',
-        'price',
-        'min_price',
-        'max_price',
+        'old_price_amount',
+        'price_amount',
+        'cost_amount',
+        'type',
         'published_at',
         'backorder',
         'requires_shipping',
@@ -64,21 +63,14 @@ class Product extends Model implements ReviewRateable
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = ['previewImage'];
-
-    /**
      * Boot the model.
      */
     protected static function boot()
     {
         parent::boot();
 
-        static::created(function ($product) {
-            $product->update(['slug' => $product->name]);
+        static::created(function ($model) {
+            $model->update(['slug' => $model->name]);
         });
     }
 
@@ -113,8 +105,8 @@ class Product extends Model implements ReviewRateable
      */
     public function getFormattedPriceAttribute()
     {
-        if ($this->price) {
-            $money = new Money($this->price, new Currency(config('shopper.currency')));
+        if ($this->price_amount) {
+            $money = new Money($this->price_amount, new Currency(config('shopper.currency')));
             $currencies = new ISOCurrencies();
 
             $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
@@ -154,15 +146,5 @@ class Product extends Model implements ReviewRateable
     public function brand()
     {
         return $this->belongsTo(config('shopper.models.brand'), 'brand_id');
-    }
-
-    /**
-     * Return shop related to the current product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function shop()
-    {
-        return $this->belongsTo(Shop::class, 'shop_id');
     }
 }

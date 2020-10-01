@@ -178,7 +178,7 @@ if (!function_exists('generate_number')) {
      */
     function generate_number(): string
     {
-        $lastOrder = Order::orderBy('id', 'desc')->limit(1)->first();
+        $lastOrder = Order::query()->orderBy('id', 'desc')->limit(1)->first();
 
         $generator = [
             'start_sequence_from' => 1,

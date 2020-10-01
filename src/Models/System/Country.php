@@ -1,10 +1,10 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\System;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Channel extends Model
+class Country extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -13,11 +13,13 @@ class Channel extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
-        'description',
-        'timezone',
-        'url',
-        'is_default',
+        'name_official',
+        'cca3',
+        'cca2',
+        'flag',
+        'latitude',
+        'longitude',
+        'currencies',
     ];
 
     /**
@@ -26,8 +28,15 @@ class Channel extends Model
      * @var array
      */
     protected $casts = [
-        'is_default' => 'boolean',
+      'currencies' => 'array',
     ];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * Get the table associated with the model.
@@ -36,6 +45,6 @@ class Channel extends Model
      */
     public function getTable()
     {
-        return shopper_table('channels');
+        return shopper_table('system_countries');
     }
 }

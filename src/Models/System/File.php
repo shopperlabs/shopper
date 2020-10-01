@@ -1,11 +1,11 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\System;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class Media extends Model
+class File extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -17,12 +17,10 @@ class Media extends Model
         'file_name',
         'file_size',
         'content_type',
-        'file_url',
-        'field',
-        'mediatable_type',
-        'mediatable_id',
         'is_public',
-        'sort_order'
+        'position',
+        'filetable_type',
+        'filetable_id',
     ];
 
     /**
@@ -31,10 +29,10 @@ class Media extends Model
      * @var array
      */
     protected $hidden = [
-        'mediatable_type',
-        'mediatable_id',
         'is_public',
-        'sort_order'
+        'position',
+        'filetable_type',
+        'filetable_id',
     ];
 
     /**
@@ -43,7 +41,7 @@ class Media extends Model
      * @var array
      */
     protected $appends = [
-        'image_full_path',
+        'file_path',
     ];
 
     /**
@@ -53,25 +51,25 @@ class Media extends Model
      */
     public function getTable()
     {
-        return shopper_table('media');
+        return shopper_table('system_files');
     }
 
     /**
-     * Get The images link.
+     * Get the file full path.
      *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string
      */
-    public function getImageFullPathAttribute()
+    public function getFilePathAttribute()
     {
-        return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->file_url);
+        return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->disk_name);
     }
 
     /**
-     * Get all of the owning mediatable models.
+     * Get all of the owning filetable models.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function mediatable()
+    public function filetable()
     {
         return $this->morphTo();
     }

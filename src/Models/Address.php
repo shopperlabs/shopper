@@ -14,15 +14,16 @@ class Address extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'company',
-        'address',
-        'country',
-        'state',
+        'company_name',
+        'street_address',
+        'street_address_plus',
         'city',
-        'user_id',
-        'postcode',
-        'phone',
+        'zipcode',
+        'phone_number',
         'is_default',
+        'type',
+        'user_id',
+        'country_id',
     ];
 
     /**
@@ -41,7 +42,7 @@ class Address extends Model
      */
     public function getTable()
     {
-        return shopper_table('addresses');
+        return shopper_table('user_addresses');
     }
 
     /**

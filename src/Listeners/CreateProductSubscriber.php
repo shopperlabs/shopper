@@ -34,7 +34,6 @@ class CreateProductSubscriber
 
         if ($event->quantity > 0) {
             $event->product->mutateStock(
-                auth()->user()->shop->id,
                 $defaultInventory->id,
                 $event->quantity,
                 [

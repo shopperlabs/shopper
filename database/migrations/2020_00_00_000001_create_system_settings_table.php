@@ -22,7 +22,6 @@ class CreateSystemSettingsTable extends Migration
         Schema::create($this->getTableName('system_settings'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->id();
             $table->string('key')->unique();
             $table->string('display_name');
             $table->json('value');

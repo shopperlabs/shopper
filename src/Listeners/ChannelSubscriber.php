@@ -34,7 +34,7 @@ class ChannelSubscriber
             'name' => $name = __('Web Store'),
             'slug' => str_slug($name),
             'url' => env('APP_URL'),
-            'shop_id' => $event->shop->id,
+            'is_default' => true,
         ]);
     }
 }

@@ -15,11 +15,10 @@ class OrderItem extends Model
         'name',
         'sku',
         'quantity',
-        'price',
+        'unit_price_amount',
         'product_id',
         'product_type',
         'order_id',
-        'shop_id'
     ];
 
     /**

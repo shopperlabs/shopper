@@ -6,9 +6,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Sanctum\HasApiTokens;
-use Shopper\Framework\Models\Shop\Shop;
-use Shopper\Framework\Models\Shop\ShopMember;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -16,7 +13,6 @@ class User extends Authenticatable
 {
     use Notifiable,
         HasRoles,
-        HasApiTokens,
         CanHaveDiscount,
         SoftDeletes;
 
@@ -63,6 +59,16 @@ class User extends Authenticatable
         'full_name',
         'picture',
     ];
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return shopper_table('users');
+    }
 
     /**
      * Define if user is an admin
@@ -120,26 +126,6 @@ class User extends Authenticatable
             case 'storage':
                 return Storage::disk(config('shopper.storage.disks.avatars'))->url($this->avatar_location);
         }
-    }
-
-    /**
-     * Get User Shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function shop()
-    {
-        return $this->hasOne(Shop::class, 'owner_id');
-    }
-
-    /**
-     * Shop member.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\hasOne
-     */
-    public function shopMember()
-    {
-        return $this->hasOne(ShopMember::class, shopper_table('shop_members'), 'user_id');
     }
 
     /**

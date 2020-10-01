@@ -3,11 +3,11 @@
 namespace Shopper\Framework\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Traits\Mediatable;
+use Shopper\Framework\Models\Traits\Filetable;
 
 class Collection extends Model
 {
-    use Mediatable;
+    use Filetable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +20,10 @@ class Collection extends Model
         'description',
         'published_at',
         'type',
+        'sort',
+        'match_conditions',
+        'seo_title',
+        'seo_description',
     ];
 
     /**
@@ -32,21 +36,14 @@ class Collection extends Model
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = ['previewImage'];
-
-    /**
      * Boot the model.
      */
     protected static function boot()
     {
         parent::boot();
 
-        static::created(function ($collection) {
-            $collection->update(['slug' => $collection->name]);
+        static::created(function ($model) {
+            $model->update(['slug' => $model->name]);
         });
     }
 

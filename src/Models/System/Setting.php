@@ -1,10 +1,10 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\System;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Channel extends Model
+class Setting extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,12 +12,19 @@ class Channel extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'timezone',
-        'url',
-        'is_default',
+        'display_name',
+        'key',
+        'value',
+        'locked',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'locked'
     ];
 
     /**
@@ -26,7 +33,8 @@ class Channel extends Model
      * @var array
      */
     protected $casts = [
-        'is_default' => 'boolean',
+        'value' => 'array',
+        'locked' => 'boolean',
     ];
 
     /**
@@ -36,6 +44,6 @@ class Channel extends Model
      */
     public function getTable()
     {
-        return shopper_table('channels');
+        return shopper_table('system_settings');
     }
 }
