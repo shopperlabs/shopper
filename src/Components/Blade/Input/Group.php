@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Components\Blade\Input;
+namespace Shopper\Framework\Components\Blade\Input;
 
 use Illuminate\View\Component;
 

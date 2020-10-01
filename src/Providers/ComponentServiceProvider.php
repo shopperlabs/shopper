@@ -5,26 +5,30 @@ namespace Shopper\Framework\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
-use Shopper\Framework\Http\Components\Blade\Breadcrumb;
-use Shopper\Framework\Http\Components\Blade\DeleteAction;
-use Shopper\Framework\Http\Components\Blade\DateTimePicker;
-use Shopper\Framework\Http\Components\Blade\Input\Group;
-use Shopper\Framework\Http\Components\Blade\Input\RichText;
-use Shopper\Framework\Http\Components\Blade\LearnMore;
-use Shopper\Framework\Http\Components\Livewire\BrandList;
-use Shopper\Framework\Http\Components\Livewire\CategoryList;
-use Shopper\Framework\Http\Components\Livewire\CollectionList;
-use Shopper\Framework\Http\Components\Livewire\CustomerList;
-use Shopper\Framework\Http\Components\Livewire\Discount\Create as CreateDiscount;
-use Shopper\Framework\Http\Components\Livewire\Discount\Edit as EditDiscount;
-use Shopper\Framework\Http\Components\Livewire\Discount\DiscountList;
-use Shopper\Framework\Http\Components\Livewire\Initialization;
-use Shopper\Framework\Http\Components\Livewire\Product\Inventory;
-use Shopper\Framework\Http\Components\Livewire\InventoryHistory;
-use Shopper\Framework\Http\Components\Livewire\ProductList;
-use Shopper\Framework\Http\Components\Livewire\Review\ReviewList;
-use Shopper\Framework\Http\Components\Livewire\User\Dropdown;
-use Shopper\Framework\Http\Components\Livewire\User\Profile;
+use Shopper\Framework\Components\Blade\{
+    Breadcrumb,
+    DeleteAction,
+    DateTimePicker,
+    Input\Group,
+    Input\RichText,
+    LearnMore
+};
+use Shopper\Framework\Components\Livewire\{
+    BrandList,
+    CategoryList,
+    CollectionList,
+    CustomerList,
+    Discount\Create as CreateDiscount,
+    Discount\Edit as EditDiscount,
+    Discount\DiscountList,
+    Initialization,
+    InventoryHistory,
+    Review\ReviewList,
+    Product\Inventory,
+    ProductList,
+    User\Dropdown,
+    User\Profile
+};
 
 class ComponentServiceProvider extends ServiceProvider
 {
@@ -46,12 +50,12 @@ class ComponentServiceProvider extends ServiceProvider
      */
     public function registerBladeComponents()
     {
-        Blade::component('learn-more', LearnMore::class);
-        Blade::component('datetime-picker', DateTimePicker::class);
-        Blade::component('breadcrumb', Breadcrumb::class);
-        Blade::component('delete-action', DeleteAction::class);
-        Blade::component('input.group', Group::class);
-        Blade::component('input.rich-text', RichText::class);
+        Blade::component('shopper-learn.more', LearnMore::class);
+        Blade::component('shopper-datetime.picker', DateTimePicker::class);
+        Blade::component('shopper-breadcrumb', Breadcrumb::class);
+        Blade::component('shopper-delete.action', DeleteAction::class);
+        Blade::component('shopper-input.group', Group::class);
+        Blade::component('shopper-input.rich-text', RichText::class);
     }
 
     /**
@@ -61,19 +65,19 @@ class ComponentServiceProvider extends ServiceProvider
      */
     public function registerLivewireComponents()
     {
-        Livewire::component('initialization', Initialization::class);
-        Livewire::component('category-list', CategoryList::class);
-        Livewire::component('brand-list', BrandList::class);
-        Livewire::component('collection-list', CollectionList::class);
-        Livewire::component('product-list', ProductList::class);
-        Livewire::component('customer-list', CustomerList::class);
-        Livewire::component('inventory-history', InventoryHistory::class);
-        Livewire::component('profile', Profile::class);
-        Livewire::component('dropdown', Dropdown::class);
-        Livewire::component('product-inventory', Inventory::class);
-        Livewire::component('reviews-list', ReviewList::class);
-        Livewire::component('discounts-list', DiscountList::class);
-        Livewire::component('create-discount', CreateDiscount::class);
-        Livewire::component('edit-discount', EditDiscount::class);
+        Livewire::component('shopper-initialization', Initialization::class);
+        Livewire::component('shopper-category-list', CategoryList::class);
+        Livewire::component('shopper-brand-list', BrandList::class);
+        Livewire::component('shopper-collection-list', CollectionList::class);
+        Livewire::component('shopper-product-list', ProductList::class);
+        Livewire::component('shopper-customer-list', CustomerList::class);
+        Livewire::component('shopper-inventory-history', InventoryHistory::class);
+        Livewire::component('shopper-profile', Profile::class);
+        Livewire::component('shopper-dropdown', Dropdown::class);
+        Livewire::component('shopper-product-inventory', Inventory::class);
+        Livewire::component('shopper-reviews-list', ReviewList::class);
+        Livewire::component('shopper-discounts-list', DiscountList::class);
+        Livewire::component('shopper-create-discount', CreateDiscount::class);
+        Livewire::component('shopper-edit-discount', EditDiscount::class);
     }
 }

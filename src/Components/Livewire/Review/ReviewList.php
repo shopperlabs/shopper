@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Components\Livewire\Review;
+namespace Shopper\Framework\Components\Livewire\Review;
 
 use Livewire\Component;
 use Shopper\Framework\Models\Review;
