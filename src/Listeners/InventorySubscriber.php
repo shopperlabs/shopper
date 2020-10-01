@@ -25,7 +25,7 @@ class InventorySubscriber
     /**
      * Handle the event.
      *
-     * @param  ShopCreated $event
+     * @param  ShopCreated  $event
      * @return void
      */
     public function handle(ShopCreated $event)
@@ -35,7 +35,6 @@ class InventorySubscriber
            'code' => str_slug($event->shop->name),
            'email' => $event->shop->email,
            'phone_number' => $event->shop->phone_number,
-           'shop_id' => $event->shop->id,
            'is_default' => true,
         ]);
     }
