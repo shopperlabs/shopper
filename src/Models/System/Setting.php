@@ -26,4 +26,24 @@ class Setting extends Model
     protected $hidden = [
         'locked'
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'value' => 'array',
+        'locked' => 'boolean',
+    ];
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable()
+    {
+        return shopper_table('system_settings');
+    }
 }

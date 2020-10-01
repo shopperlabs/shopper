@@ -9,13 +9,13 @@ use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use Shopper\Framework\Contracts\ReviewRateable;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Shopper\Framework\Models\Traits\Filetable;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
-use Shopper\Framework\Traits\Mediatable;
 
 class Product extends Model implements ReviewRateable
 {
-    use Mediatable,
+    use Filetable,
         HasStock,
         CanHaveDiscount,
         ReviewRateableTrait;
@@ -61,13 +61,6 @@ class Product extends Model implements ReviewRateable
     protected $dates = [
         'published_at'
     ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = ['previewImage'];
 
     /**
      * Boot the model.

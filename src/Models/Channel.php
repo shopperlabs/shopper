@@ -17,7 +17,16 @@ class Channel extends Model
         'description',
         'timezone',
         'url',
-        'default',
+        'is_default',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_default' => 'boolean',
     ];
 
     /**

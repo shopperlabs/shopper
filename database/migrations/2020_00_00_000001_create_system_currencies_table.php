@@ -36,6 +36,6 @@ class CreateSystemCurrenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('system_settings'));
+        Schema::dropIfExists($this->getTableName('system_currencies'));
     }
 }

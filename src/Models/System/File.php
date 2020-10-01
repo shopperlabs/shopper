@@ -19,6 +19,8 @@ class File extends Model
         'content_type',
         'is_public',
         'position',
+        'filetable_type',
+        'filetable_id',
     ];
 
     /**
@@ -28,7 +30,9 @@ class File extends Model
      */
     protected $hidden = [
         'is_public',
-        'position'
+        'position',
+        'filetable_type',
+        'filetable_id',
     ];
 
     /**
@@ -47,7 +51,7 @@ class File extends Model
      */
     public function getTable()
     {
-        return shopper_table('media');
+        return shopper_table('system_files');
     }
 
     /**
@@ -57,7 +61,7 @@ class File extends Model
      */
     public function getFilePathAttribute()
     {
-        return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->file_name);
+        return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->disk_name);
     }
 
     /**

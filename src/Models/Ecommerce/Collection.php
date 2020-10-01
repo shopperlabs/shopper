@@ -3,11 +3,11 @@
 namespace Shopper\Framework\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Traits\Mediatable;
+use Shopper\Framework\Models\Traits\Filetable;
 
 class Collection extends Model
 {
-    use Mediatable;
+    use Filetable;
 
     /**
      * The attributes that are mass assignable.
@@ -34,13 +34,6 @@ class Collection extends Model
     protected $dates = [
         'published_at'
     ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = ['previewImage'];
 
     /**
      * Boot the model.

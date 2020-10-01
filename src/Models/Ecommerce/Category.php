@@ -3,11 +3,11 @@
 namespace Shopper\Framework\Models\Ecommerce;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Traits\Mediatable;
+use Shopper\Framework\Models\Traits\Filetable;
 
 class Category extends Model
 {
-    use Mediatable;
+    use Filetable;
 
     /**
      * The attributes that are mass assignable.
@@ -39,7 +39,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $with = ['parent', 'previewImage'];
+    protected $with = ['parent'];
 
     /**
      * Boot the model.
