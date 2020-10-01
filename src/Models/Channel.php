@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Shop\Shop;
 
 class Channel extends Model
 {
@@ -18,7 +17,6 @@ class Channel extends Model
         'description',
         'timezone',
         'url',
-        'shop_id',
         'default',
     ];
 
@@ -30,15 +28,5 @@ class Channel extends Model
     public function getTable()
     {
         return shopper_table('channels');
-    }
-
-    /**
-     * Get channel shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function shop()
-    {
-        return $this->belongsTo(Shop::class, 'shop_id');
     }
 }

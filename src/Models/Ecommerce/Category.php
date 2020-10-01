@@ -18,8 +18,20 @@ class Category extends Model
         'name',
         'slug',
         'description',
-        'sort_order',
+        'position',
         'parent_id',
+        'seo_title',
+        'seo_description',
+        'is_enabled'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+      'is_enabled' => 'boolean',
     ];
 
     /**
@@ -36,8 +48,8 @@ class Category extends Model
     {
         parent::boot();
 
-        static::created(function ($category) {
-            $category->update(['slug' => $category->name]);
+        static::created(function ($model) {
+            $model->update(['slug' => $model->name]);
         });
     }
 

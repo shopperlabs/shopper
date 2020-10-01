@@ -26,7 +26,7 @@ class CreateUsersTables extends Migration
             $table->string('first_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->string('phone_number')->nullable();
             $table->enum('gender', ['male', 'female']);
@@ -40,7 +40,7 @@ class CreateUsersTables extends Migration
         });
 
         Schema::create($this->getTableName('user_addresses'), function (Blueprint $table) {
-            $this->addCommonFields($table, true);
+            $this->addCommonFields($table);
 
             $table->string('last_name');
             $table->string('first_name');
@@ -50,7 +50,7 @@ class CreateUsersTables extends Migration
             $table->string('zipcode');
             $table->string('city');
             $table->string('phone_number')->nullable();
-            $table->boolean('is_default')->default(0);
+            $table->boolean('is_default')->default(false);
             $table->enum('type', ["billing", "shipping"]);
 
             $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));

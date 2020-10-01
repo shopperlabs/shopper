@@ -20,6 +20,10 @@ class Collection extends Model
         'description',
         'published_at',
         'type',
+        'sort',
+        'match_conditions',
+        'seo_title',
+        'seo_description',
     ];
 
     /**
@@ -45,8 +49,8 @@ class Collection extends Model
     {
         parent::boot();
 
-        static::created(function ($collection) {
-            $collection->update(['slug' => $collection->name]);
+        static::created(function ($model) {
+            $model->update(['slug' => $model->name]);
         });
     }
 

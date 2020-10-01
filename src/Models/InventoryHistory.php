@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Shop\Shop;
 
 class InventoryHistory extends Model
 {
@@ -18,7 +17,6 @@ class InventoryHistory extends Model
         'reference_type',
         'reference_id',
         'inventory_id',
-        'shop_id',
         'user_id',
         'event',
         'quantity',
@@ -69,16 +67,6 @@ class InventoryHistory extends Model
     }
 
     /**
-     * Get histories related to a shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function shop()
-    {
-        return $this->belongsTo(Shop::class, 'shop_id');
-    }
-
-    /**
      * Get the inventory of the current history.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -95,7 +83,7 @@ class InventoryHistory extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
     /**

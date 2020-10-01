@@ -62,60 +62,56 @@ trait HasStock
     /**
      * Increase Stock for an item.
      *
-     * @param  int  $shop_id
      * @param  int  $inventory_id
      * @param  int  $quantity
      * @param  array  $arguments
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function increaseStock($shop_id, $inventory_id, $quantity = 1, $arguments = [])
+    public function increaseStock($inventory_id, $quantity = 1, $arguments = [])
     {
-        return $this->createStockMutation($quantity, $shop_id, $inventory_id, $arguments);
+        return $this->createStockMutation($quantity, $inventory_id, $arguments);
     }
 
     /**
      * Decrease Stock for an item.
      *
-     * @param  int  $shop_id
      * @param  int  $inventory_id
      * @param  int  $quantity
      * @param  array  $arguments
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function decreaseStock($shop_id, $inventory_id, $quantity = 1, $arguments = [])
+    public function decreaseStock($inventory_id, $quantity = 1, $arguments = [])
     {
-        return $this->createStockMutation(-1 * abs($quantity), $shop_id, $inventory_id, $arguments);
+        return $this->createStockMutation(-1 * abs($quantity), $inventory_id, $arguments);
     }
 
     /**
      * Mutate Stock for an item.
      *
-     * @param  int  $shop_id
      * @param  int  $inventory_id
      * @param  int  $quantity
      * @param  array  $arguments
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function mutateStock($shop_id, $inventory_id, $quantity = 1, $arguments = [])
+    public function mutateStock($inventory_id, $quantity = 1, $arguments = [])
     {
-        return $this->createStockMutation($quantity, $shop_id, $inventory_id, $arguments);
+        return $this->createStockMutation($quantity, $inventory_id, $arguments);
     }
 
     /**
      * Reset a Stock for the Shop and inventory.
      *
-     * @param  null  $newQuantity
-     * @param  int  $shop_id
+     * @param  null|int  $newQuantity
      * @param  int  $inventory_id
      * @param  array  $arguments
      * @return bool
      */
-    public function clearStock($shop_id, $inventory_id, $newQuantity = null,  $arguments = [])
+    public function clearStock($inventory_id, $newQuantity = null,  $arguments = [])
     {
         $this->inventoryHistories()->delete();
 
         if (!is_null($newQuantity)) {
-            $this->createStockMutation($newQuantity, $shop_id, $inventory_id, $arguments);
+            $this->createStockMutation($newQuantity, $inventory_id, $arguments);
         }
 
         return true;
@@ -133,38 +129,33 @@ trait HasStock
     }
 
     /**
-     * Set a new stock for the item.
-     *
-     * We will specify in which shop and inventory
+     * Set a new stock for the item. We will specify in which inventory
      * will be allocated this stock for the item.
      *
      * @param  int  $newQuantity
-     * @param  int  $shop_id
      * @param  int  $inventory_id
      * @param  array  $arguments
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function setStock($newQuantity, $shop_id, $inventory_id, $arguments = [])
+    public function setStock($newQuantity, $inventory_id, $arguments = [])
     {
         $currentStock = $this->stock;
 
         if ($deltaStock = $newQuantity - $currentStock) {
-            return $this->createStockMutation($deltaStock, $shop_id, $inventory_id, $arguments);
+            return $this->createStockMutation($deltaStock, $inventory_id, $arguments);
         }
     }
 
     /**
      * Internal function to handle mutations (increase, decrease).
-     *
      * We create a stock mutation for a shop and for a specific inventory.
      *
      * @param  int  $quantity
-     * @param  int  $shop_id
      * @param  int  $inventory_id
      * @param  array  $arguments
      * @return \Illuminate\Database\Eloquent\Model
      */
-    protected function createStockMutation($quantity, $shop_id, $inventory_id, $arguments = [])
+    protected function createStockMutation($quantity, $inventory_id, $arguments = [])
     {
         $reference = Arr::get($arguments, 'reference');
 
@@ -173,7 +164,6 @@ trait HasStock
             'old_quantity'  => Arr::get($arguments, 'old_quantity'),
             'description'   => Arr::get($arguments, 'description'),
             'event'         => Arr::get($arguments, 'event'),
-            'shop_id'       => $shop_id,
             'inventory_id'  => $inventory_id,
             'user_id'       => auth()->id(),
         ])->when($reference, function ($collection) use ($reference) {

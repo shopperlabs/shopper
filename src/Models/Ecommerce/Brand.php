@@ -18,7 +18,10 @@ class Brand extends Model
         'name',
         'slug',
         'description',
-        'sort_order',
+        'position',
+        'seo_title',
+        'seo_description',
+        'is_enabled'
     ];
 
     /**
@@ -35,8 +38,8 @@ class Brand extends Model
     {
         parent::boot();
 
-        static::created(function ($brand) {
-            $brand->update(['slug' => $brand->name]);
+        static::created(function ($model) {
+            $model->update(['slug' => $model->name]);
         });
     }
 

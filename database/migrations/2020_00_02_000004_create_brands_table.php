@@ -23,6 +23,7 @@ class CreateBrandsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->longText('description')->nullable();
             $table->unsignedSmallInteger('position')->default(0);
+            $table->boolean('is_enabled')->default(false);
 
             $this->addSeoFields($table);
         });

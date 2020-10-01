@@ -74,16 +74,6 @@ class Discount extends Model
     }
 
     /**
-     * Get discounts related to a shop.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function shop()
-    {
-        return $this->belongsTo(Shop::class, 'shop_id');
-    }
-
-    /**
      * Get all associate model that's used this discount.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

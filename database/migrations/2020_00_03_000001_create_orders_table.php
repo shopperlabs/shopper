@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
         Schema::create($this->getTableName('orders'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
+            $table->string('number', 32);
             $table->string('price_amount', 32)->nullable();
             $table->string('status', 32);
             $table->string('currency');
