@@ -1,12 +1,12 @@
 <?php
 
-namespace Shopper\Framework\Http\Components\Livewire;
+namespace Shopper\Framework\Components\Livewire;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
-class BrandList extends Component
+class CollectionList extends Component
 {
     use WithPagination;
 
@@ -41,13 +41,13 @@ class BrandList extends Component
 
     public function render()
     {
-        $total = (new BrandRepository())->count();
+        $total = (new CollectionRepository())->count();
 
-        $brands = (new BrandRepository())
+        $collections = (new CollectionRepository())
             ->where('name', '%'. $this->search .'%', 'like')
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 
-        return view('shopper::components.livewire.brands.list', compact('brands', 'total'));
+        return view('shopper::components.livewire.collections.list', compact('collections', 'total'));
     }
 }

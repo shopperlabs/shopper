@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Components\Blade;
+namespace Shopper\Framework\Components\Blade;
 
 use Illuminate\View\Component;
 

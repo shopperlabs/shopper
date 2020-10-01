@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Components\Livewire\User;
+namespace Shopper\Framework\Components\Livewire\User;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
