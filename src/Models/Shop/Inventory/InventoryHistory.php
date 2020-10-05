@@ -1,8 +1,10 @@
 <?php
 
-namespace Shopper\Framework\Models\Shop;
+namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
+
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
 
 class InventoryHistory extends Model
 {
