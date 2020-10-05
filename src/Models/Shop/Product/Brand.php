@@ -1,11 +1,11 @@
 <?php
 
-namespace Shopper\Framework\Models\Shop;
+namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Traits\Filetable;
 
-class Collection extends Model
+class Brand extends Model
 {
     use Filetable;
 
@@ -18,22 +18,18 @@ class Collection extends Model
         'name',
         'slug',
         'description',
-        'published_at',
-        'type',
-        'sort',
-        'match_conditions',
+        'position',
         'seo_title',
         'seo_description',
+        'is_enabled'
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The relations to eager load on every query.
      *
      * @var array
      */
-    protected $dates = [
-        'published_at'
-    ];
+    protected $with = ['previewImage'];
 
     /**
      * Boot the model.
@@ -54,7 +50,7 @@ class Collection extends Model
      */
     public function getTable()
     {
-        return shopper_table('collections');
+        return shopper_table('brands');
     }
 
     /**
@@ -72,12 +68,12 @@ class Collection extends Model
     }
 
     /**
-     * Return products associated to the collection.
+     * Return products associated to the brand.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products()
     {
-        return $this->belongsToMany(config('shopper.config.models.product'), shopper_table('collection_product'), 'collection_id');
+        return $this->hasMany(config('shopper.config.models.product'));
     }
 }

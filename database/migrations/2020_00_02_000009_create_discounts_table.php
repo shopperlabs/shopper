@@ -30,8 +30,8 @@ class CreateDiscountsTable extends Migration
             $table->unsignedInteger('usage_limit')->nullable();
             $table->boolean('usage_limit_per_user')->default(false);
             $table->unsignedInteger('total_use')->default(0);
-            $table->dateTime('date_start');
-            $table->dateTime('date_end')->nullable();
+            $table->dateTime('start_at');
+            $table->dateTime('end_at')->nullable();
         });
 
         Schema::create($this->getTableName('discountables'), function (Blueprint $table) {
