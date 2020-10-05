@@ -147,4 +147,12 @@ class Product extends Model implements ReviewRateable
     {
         return $this->belongsTo(config('shopper.config.models.brand'), 'brand_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attributes()
+    {
+        return $this->hasMany(ProductAttribute::class);
+    }
 }
