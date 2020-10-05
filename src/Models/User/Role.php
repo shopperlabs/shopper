@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\User;
 
 use Spatie\Permission\Models\Role as SpatieRole;
 

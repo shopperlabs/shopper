@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,11 +17,11 @@ class InventoryHistory extends Model
         'reference_type',
         'reference_id',
         'inventory_id',
-        'user_id',
         'event',
         'quantity',
         'old_quantity',
         'description',
+        'user_id',
     ];
 
     /**

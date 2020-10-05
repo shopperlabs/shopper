@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models\Order;
+namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,7 +38,7 @@ class OrderItem extends Model
      */
     public function total()
     {
-        return $this->price * $this->quantity;
+        return $this->unit_price_amount * $this->quantity;
     }
 
     /**

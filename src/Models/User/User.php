@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\User;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,7 +29,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
+        'last_login_at',
+        'last_login_ip',
     ];
 
     /**
@@ -39,15 +42,15 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'is_superuser'      => 'boolean'
+        'last_login_at' => 'datetime',
     ];
 
     /**
      * @var array
      */
     protected $dates = [
+        'email_verified_at',
         'last_login_at',
-        'password_changed_at',
     ];
 
     /**
@@ -78,16 +81,6 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->hasRole(config('shopper.config.users.admin_role'));
-    }
-
-    /**
-     * Define if user is an super admin.
-     *
-     * @return bool
-     */
-    public function isSuperAdmin()
-    {
-        return $this->isAdmin() && $this->is_superuser;
     }
 
     /**

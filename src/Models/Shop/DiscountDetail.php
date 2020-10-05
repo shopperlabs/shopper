@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
 

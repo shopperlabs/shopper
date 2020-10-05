@@ -1,14 +1,11 @@
 <?php
 
-namespace Shopper\Framework\Models\Ecommerce;
+namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Traits\Filetable;
 
-class Collection extends Model
+class Attribute extends Model
 {
-    use Filetable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -18,21 +15,21 @@ class Collection extends Model
         'name',
         'slug',
         'description',
-        'published_at',
         'type',
-        'sort',
-        'match_conditions',
-        'seo_title',
-        'seo_description',
+        'is_enabled',
+        'is_searchable',
+        'is_filterable',
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast.
      *
      * @var array
      */
-    protected $dates = [
-        'published_at'
+    protected $casts = [
+        'is_enabled' => 'boolean',
+        'is_searchable' => 'boolean',
+        'is_filterable' => 'boolean',
     ];
 
     /**
@@ -54,13 +51,13 @@ class Collection extends Model
      */
     public function getTable()
     {
-        return shopper_table('collections');
+        return shopper_table('attributes');
     }
 
     /**
      * Set the proper slug attribute.
      *
-     * @param  string $value
+     * @param  string  $value
      */
     public function setSlugAttribute($value)
     {
@@ -72,12 +69,10 @@ class Collection extends Model
     }
 
     /**
-     * Return products associated to the collection.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function products()
+    public function values()
     {
-        return $this->belongsToMany(config('shopper.config.models.product'), shopper_table('collection_product'), 'collection_id');
+        return $this->hasMany(AttributeValue::class);
     }
 }

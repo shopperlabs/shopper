@@ -1,11 +1,14 @@
 <?php
 
-namespace Shopper\Framework\Models\Ecommerce;
+namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\Traits\Filetable;
 
-class Attribute extends Model
+class Brand extends Model
 {
+    use Filetable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -15,22 +18,18 @@ class Attribute extends Model
         'name',
         'slug',
         'description',
-        'type',
-        'is_enabled',
-        'is_searchable',
-        'is_filterable',
+        'position',
+        'seo_title',
+        'seo_description',
+        'is_enabled'
     ];
 
     /**
-     * The attributes that should be cast.
+     * The relations to eager load on every query.
      *
      * @var array
      */
-    protected $casts = [
-        'is_enabled' => 'boolean',
-        'is_searchable' => 'boolean',
-        'is_filterable' => 'boolean',
-    ];
+    protected $with = ['previewImage'];
 
     /**
      * Boot the model.
@@ -51,13 +50,13 @@ class Attribute extends Model
      */
     public function getTable()
     {
-        return shopper_table('attributes');
+        return shopper_table('brands');
     }
 
     /**
      * Set the proper slug attribute.
      *
-     * @param  string  $value
+     * @param  string $value
      */
     public function setSlugAttribute($value)
     {
@@ -69,10 +68,12 @@ class Attribute extends Model
     }
 
     /**
+     * Return products associated to the brand.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function values()
+    public function products()
     {
-        return $this->hasMany(AttributeValue::class);
+        return $this->hasMany(config('shopper.config.models.product'));
     }
 }

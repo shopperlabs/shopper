@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,13 +12,13 @@ class Address extends Model
      * @var array
      */
     protected $fillable = [
-        'first_name',
         'last_name',
+        'first_name',
         'company_name',
         'street_address',
         'street_address_plus',
-        'city',
         'zipcode',
+        'city',
         'phone_number',
         'is_default',
         'type',
@@ -56,12 +56,22 @@ class Address extends Model
     }
 
     /**
-     * Return the customer's information.
+     * Return the user's information.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function customer()
+    public function user()
     {
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
+    }
+
+    /**
+     * Return the address country information.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
     }
 }

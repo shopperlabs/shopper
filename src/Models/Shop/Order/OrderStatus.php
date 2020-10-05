@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models\Order;
+namespace Shopper\Framework\Models\Shop\Order;
 
 class OrderStatus
 {

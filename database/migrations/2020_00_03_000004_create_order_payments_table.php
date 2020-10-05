@@ -21,7 +21,7 @@ class CreateOrderPaymentsTable extends Migration
 
             $table->decimal('total_amount', 10, 2);
             $table->string('currency');
-            $table->enum('status', ['pending', 'treatment', 'partial-paid', 'paid', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'treatment', 'partial-paid', 'paid', 'cancelled', 'rejected'])->default('pending');
             $table->json('details');
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
@@ -34,7 +34,7 @@ class CreateOrderPaymentsTable extends Migration
             $table->increments('id');
             $table->longText('refund_reason')->nullable();
             $table->string('refund_amount')->nullable();
-            $table->enum('status', ['pending', 'treatment', 'partial-refund', 'total-refund', 'refused'])->default('pending');
+            $table->enum('status', ['pending', 'treatment', 'partial-refund', 'refunded', 'cancelled', 'rejected'])->default('pending');
             $table->longText('notes');
             
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
