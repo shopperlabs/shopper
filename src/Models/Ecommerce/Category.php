@@ -66,11 +66,11 @@ class Category extends Model
     /**
      * Set the proper slug attribute.
      *
-     * @param  string $value
+     * @param  string  $value
      */
     public function setSlugAttribute($value)
     {
-        if (static::where('slug', $slug = str_slug($value))->exists()) {
+        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
             $slug = "{$slug}-{$this->id}";
         }
 
@@ -118,6 +118,6 @@ class Category extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(config('shopper.models.product'), shopper_table('category_product'), 'category_id');
+        return $this->belongsToMany(config('shopper.config.models.product'), shopper_table('category_product'), 'category_id');
     }
 }

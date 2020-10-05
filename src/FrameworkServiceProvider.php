@@ -7,7 +7,6 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Events\BuildingSidebar;
-use Shopper\Framework\Events\Handlers\RegisterBannerSidebar;
 use Shopper\Framework\Http\Middleware\Authenticate;
 use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
 use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
@@ -17,7 +16,6 @@ use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
 use Shopper\Framework\Http\Middleware\Dashboard;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
-use Shopper\Framework\Http\Middleware\RedirectIfShop;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Services\Gravatar;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
@@ -35,7 +33,6 @@ class FrameworkServiceProvider extends ServiceProvider
         'role'            => RoleMiddleware::class,
         'permission'      => PermissionMiddleware::class,
         'shopper.guest'   => RedirectIfAuthenticated::class,
-        'shopper.shop'    => RedirectIfShop::class,
     ];
 
     /**
@@ -105,13 +102,12 @@ class FrameworkServiceProvider extends ServiceProvider
             define('SHOPPER_PATH', realpath(__DIR__ . '/../'));
         }
 
-        $this->mergeConfigFrom(SHOPPER_PATH . '/config/shopper.php', 'shopper');
+        $this->mergeConfigFrom(SHOPPER_PATH . '/config/config.php', 'shopper');
 
         // Register Default Dashboard Menu
         $this->app['events']->listen(BuildingSidebar::class, RegisterDashboardSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, RegisterShopSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, RegisterOrderSidebar::class);
-        // $this->app['events']->listen(BuildingSidebar::class, RegisterBannerSidebar::class);
 
         // Register the service the package provides.
         $this->app->singleton('shopper', function ($app) {

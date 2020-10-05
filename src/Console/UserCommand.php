@@ -43,8 +43,8 @@ class UserCommand extends Command
     protected function createUser(): void
     {
         $email           = $this->ask('Email Address', 'admin@admin.com');
-        $first_name      = $this->ask('First Name', 'Admin');
-        $last_name       = $this->ask('Last Name', 'Istrator');
+        $first_name      = $this->ask('First Name', 'Shopper');
+        $last_name       = $this->ask('Last Name', 'Admin');
         $password        = $this->secret('Password');
         $confirmPassword = $this->secret('Confirm Password');
 
@@ -55,8 +55,6 @@ class UserCommand extends Command
 
         $this->info('Creating admin account...');
 
-        $ip_address = request()->getClientIp();
-
         $userData = [
             'email'        => $email,
             'first_name'   => $first_name,
@@ -65,14 +63,14 @@ class UserCommand extends Command
             'last_login_at'     => now()->toDateTimeString(),
             'email_verified_at' => now()->toDateTimeString(),
             'is_superuser'      => true,
-            'last_login_ip' => $ip_address
+            'last_login_ip' => request()->getClientIp()
         ];
         $model = config('auth.providers.users.model');
 
         try {
             $user = tap((new $model)->forceFill($userData))->save();
 
-            $user->assignRole(config('shopper.users.admin_role'));
+            $user->assignRole(config('shopper.config.users.admin_role'));
         } catch (\Exception | QueryException $e) {
             $this->error($e->getMessage());
         }

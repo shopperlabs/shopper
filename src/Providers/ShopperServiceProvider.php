@@ -32,7 +32,7 @@ class ShopperServiceProvider extends ServiceProvider
     public function registerPublishing()
     {
         $this->publishes([
-            __DIR__ . '/../../config/shopper.php' => config_path('shopper.php'),
+            __DIR__ . '/../../config/config.php' => config_path('shopper/config.php'),
         ], 'shopper-config');
 
         $this->publishes([

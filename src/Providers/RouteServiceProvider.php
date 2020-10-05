@@ -83,7 +83,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware(['shopper', 'dashboard'])
             ->prefix(Shopper::prefix())
-            ->namespace(config('shopper.controllers.namespace'))
+            ->namespace(config('shopper.config.controllers.namespace'))
             ->group(base_path('routes/shopper.php'));
     }
 

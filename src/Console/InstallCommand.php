@@ -105,13 +105,12 @@ class InstallCommand extends Command
     protected function addEnvVariable(): void
     {
         $env = [
-            'DASHBOARD_PREFIX' => config('shopper.prefix'),
-            'CURRENCY_SYMBOL'  => config('shopper.currency')
+            'DASHBOARD_PREFIX' => config('shopper.config.prefix'),
         ];
 
         $this->progressBar->advance();
         setEnvironmentValue($env);
-        $this->info('Add DASHBOARD_PREFIX and CURRENCY_SYMBOL to .env file');
+        $this->info('Add DASHBOARD_PREFIX to .env file');
     }
 
     protected function complete(): void

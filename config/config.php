@@ -16,18 +16,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Currency
-    |--------------------------------------------------------------------------
-    |
-    | This value is the default currency of your store. This value is used when the
-    | orders price is given. Your can use it on your frontend.
-    |
-    */
-
-    'currency'  => env('CURRENCY_SYMBOL', 'USD'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Shopper Locale Configuration
     |--------------------------------------------------------------------------
     |
