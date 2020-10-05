@@ -5,7 +5,6 @@ use Shopper\Framework\Http\Controllers\Ecommerce\ProductImageController;
 use Shopper\Framework\Http\Controllers\ProfileController;
 use Shopper\Framework\Http\Controllers\SettingController;
 use Shopper\Framework\Http\Controllers\ShopController;
-use Shopper\Framework\Shopper;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +14,7 @@ use Shopper\Framework\Shopper;
 |
 */
 
-Route::redirect('/', Shopper::prefix() . '/dashboard', 301);
+Route::redirect('/', shopper_prefix() . '/dashboard', 301);
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 Route::prefix('profile')->group(function () {

@@ -64,7 +64,7 @@ class Collection extends Model
      */
     public function setSlugAttribute($value)
     {
-        if (static::where('slug', $slug = str_slug($value))->exists()) {
+        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
             $slug = "{$slug}-{$this->id}";
         }
 
@@ -78,6 +78,6 @@ class Collection extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(config('shopper.models.product'), shopper_table('collection_product'), 'collection_id');
+        return $this->belongsToMany(config('shopper.config.models.product'), shopper_table('collection_product'), 'collection_id');
     }
 }

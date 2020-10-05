@@ -4,9 +4,6 @@ namespace Shopper\Framework\Models;
 
 use Spatie\Permission\Models\Role as SpatieRole;
 
-/**
- * @property string name
- */
 class Role extends SpatieRole
 {
     /**
@@ -16,6 +13,6 @@ class Role extends SpatieRole
      */
     public function isAdmin()
     {
-        return $this->name === config('shopper.users.admin_role');
+        return $this->name === config('shopper.config.users.admin_role');
     }
 }

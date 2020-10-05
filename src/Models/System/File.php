@@ -61,7 +61,7 @@ class File extends Model
      */
     public function getFilePathAttribute()
     {
-        return Storage::disk(config('shopper.storage.disks.uploads'))->url($this->disk_name);
+        return Storage::disk(config('shopper.config.storage.disks.uploads'))->url($this->disk_name);
     }
 
     /**

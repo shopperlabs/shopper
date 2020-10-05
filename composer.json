@@ -27,9 +27,9 @@
     "ext-intl": "*",
     "illuminate/support": "^7.0",
     "laravel/helpers": "^1.2",
-    "laravelcollective/html": "^6.0",
+    "laravel/ui": "^2.0",
     "lavary/laravel-menu": "^1.7",
-    "livewire/livewire": "^1.0",
+    "livewire/livewire": "^2.0",
     "maatwebsite/laravel-sidebar": "~2.3",
     "mckenziearts/laravel-notify": "^1.1",
     "moneyphp/money": "^3.3",
@@ -40,8 +40,6 @@
     "mockery/mockery": "^1.3.1",
     "nunomaduro/collision": "^5.0",
     "orchestra/testbench": "^5.0",
-    "pestphp/pest": "^0.2.3",
-    "pestphp/pest-plugin-livewire": "^0.2.1",
     "phpunit/phpunit": "^9.0"
   },
   "autoload": {

@@ -60,7 +60,7 @@ class Brand extends Model
      */
     public function setSlugAttribute($value)
     {
-        if (static::where('slug', $slug = str_slug($value))->exists()) {
+        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
             $slug = "{$slug}-{$this->id}";
         }
 
@@ -74,6 +74,6 @@ class Brand extends Model
      */
     public function products()
     {
-        return $this->hasMany(config('shopper.models.product'));
+        return $this->hasMany(config('shopper.config.models.product'));
     }
 }

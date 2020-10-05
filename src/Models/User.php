@@ -77,7 +77,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        return $this->hasRole(config('shopper.users.admin_role'));
+        return $this->hasRole(config('shopper.config.users.admin_role'));
     }
 
     /**
@@ -124,7 +124,7 @@ class User extends Authenticatable
                 return gravatar()->get($this->email);
 
             case 'storage':
-                return Storage::disk(config('shopper.storage.disks.avatars'))->url($this->avatar_location);
+                return Storage::disk(config('shopper.config.storage.disks.avatars'))->url($this->avatar_location);
         }
     }
 

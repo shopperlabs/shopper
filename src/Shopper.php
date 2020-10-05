@@ -34,11 +34,11 @@ class Shopper
     public function initializeRoute()
     {
         Route::namespace('Shopper\Framework\Http\Controllers')
-            ->middleware(['shopper', 'shopper.shop'])
-            ->as('shopper.shop.')
-            ->prefix(self::prefix() . '/shop')
+            ->middleware(['shopper'])
+            ->as('shopper.')
+            ->prefix(self::prefix() . '/setup')
             ->group(function () {
-                Route::get('/initialize', 'ShopController@initialize')->name('initialize');
+                Route::get('/configuration', 'ShopController@initialize')->name('initialize');
             });
 
         return $this;

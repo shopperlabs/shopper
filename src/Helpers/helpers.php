@@ -160,7 +160,7 @@ if (!function_exists('shopper_money_format')) {
      */
     function shopper_money_format($amount, $currency = null): string
     {
-        $money = new Money($amount, new Currency($currency ?? config('shopper.currency')));
+        $money = new Money($amount, new Currency($currency ?? shopper_currency()));
         $currencies = new ISOCurrencies();
 
         $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);

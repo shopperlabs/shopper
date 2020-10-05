@@ -18,26 +18,16 @@ mix.disableNotifications();
 
 mix.setPublicPath("public")
   .setResourceRoot("../") // turns assets paths in css relative to css file
-  .sass("./resources/assets/sass/shopper.scss", "css")
-  .js("./resources/assets/js/shopper.js", "js")
-  // .react("./resources/assets/ts/shopper.ts", "js")
+  .sass("./resources/sass/shopper.scss", "css")
+  .react("./resources/js/shopper.js", "js")
   .options({ processCssUrls: false })
   .tailwind("./tailwind.config.js")
   .webpackConfig({
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
-    module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          loader: "ts-loader",
-          exclude: /node_modules/
-        }
-      ]
-    },
     resolve: {
-      extensions: ["*", ".js", ".jsx", ".ts", ".tsx"],
+      extensions: ["*", ".js", ".jsx"],
       alias: {
-        '@': path.resolve('./resources/assets/ts'),
+        '@': path.resolve('./resources/js'),
       },
     }
   })

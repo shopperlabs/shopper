@@ -87,11 +87,11 @@ class Product extends Model implements ReviewRateable
     /**
      * Set the proper slug attribute.
      *
-     * @param  string $value
+     * @param  string  $value
      */
     public function setSlugAttribute($value)
     {
-        if (static::where('slug', $slug = str_slug($value))->exists()) {
+        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
             $slug = "{$slug}-{$this->id}";
         }
 
@@ -106,7 +106,7 @@ class Product extends Model implements ReviewRateable
     public function getFormattedPriceAttribute()
     {
         if ($this->price_amount) {
-            $money = new Money($this->price_amount, new Currency(config('shopper.currency')));
+            $money = new Money($this->price_amount, new Currency(shopper_currency()));
             $currencies = new ISOCurrencies();
 
             $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
@@ -125,7 +125,7 @@ class Product extends Model implements ReviewRateable
      */
     public function categories()
     {
-        return $this->belongsToMany(config('shopper.models.category'), shopper_table('category_product'), 'product_id');
+        return $this->belongsToMany(config('shopper.config.models.category'), shopper_table('category_product'), 'product_id');
     }
 
     /**
@@ -135,7 +135,7 @@ class Product extends Model implements ReviewRateable
      */
     public function collections()
     {
-        return $this->belongsToMany(config('shopper.models.collection'), shopper_table('collection_product'), 'product_id');
+        return $this->belongsToMany(config('shopper.config.models.collection'), shopper_table('collection_product'), 'product_id');
     }
 
     /**
@@ -145,6 +145,6 @@ class Product extends Model implements ReviewRateable
      */
     public function brand()
     {
-        return $this->belongsTo(config('shopper.models.brand'), 'brand_id');
+        return $this->belongsTo(config('shopper.config.models.brand'), 'brand_id');
     }
 }
