@@ -20,6 +20,7 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
+            $table->string('table_name')->nullable();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
