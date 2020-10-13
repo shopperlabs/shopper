@@ -110,7 +110,7 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->app['events']->listen(BuildingSidebar::class, RegisterOrderSidebar::class);
 
         // Register the service the package provides.
-        $this->app->singleton('shopper', function ($app) {
+        $this->app->singleton('shopper', function () {
             return new Shopper;
         });
 

@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Spatie\Permission\Traits\HasRoles;
 
-use Shopper\Framework\Models\User\Address;
-
 class User extends Authenticatable
 {
     use Notifiable,

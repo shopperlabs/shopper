@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateMediaTable extends Migration
+class CreateSystemFilesTable extends Migration
 {
     use MigrationTrait;
 

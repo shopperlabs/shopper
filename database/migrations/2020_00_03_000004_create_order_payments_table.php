@@ -31,7 +31,6 @@ class CreateOrderPaymentsTable extends Migration
         Schema::create($this->getTableName('order_refunds'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->increments('id');
             $table->longText('refund_reason')->nullable();
             $table->string('refund_amount')->nullable();
             $table->enum('status', ['pending', 'treatment', 'partial-refund', 'refunded', 'cancelled', 'rejected'])->default('pending');
@@ -49,7 +48,7 @@ class CreateOrderPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('order_payments'));
         Schema::dropIfExists($this->getTableName('order_refunds'));
+        Schema::dropIfExists($this->getTableName('order_payments'));
     }
 }
