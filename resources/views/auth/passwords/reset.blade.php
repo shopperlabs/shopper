@@ -29,7 +29,7 @@
                 </div>
             @endif
             <div class="mt-4">
-                <img class="mx-auto h-12 w-auto" src="{{ asset('shopper/images/shopper.svg') }}" alt="Laravel Shopper">
+                <img class="mx-auto h-20 w-auto" src="{{ asset('shopper/images/logo.svg') }}" alt="Laravel Shopper">
                 <h2 class="mt-10 text-3xl font-semibold font-heading text-center leading-9 text-gray-800">{{ __('Reset your password') }}</h2>
                 <p class="mt-5 text-sm leading-5 text-center text-gray-600">
                     {{ __("Enter your email and the new password you'd like to use to access your account.") }}

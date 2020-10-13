@@ -30,7 +30,7 @@
             @endif
 
             <div class="mt-4">
-                <img class="mx-auto h-12 w-auto" src="{{ asset('shopper/images/shopper.svg') }}" alt="Laravel Shopper">
+                <img class="mx-auto h-20 w-auto" src="{{ asset('shopper/images/logo.svg') }}" alt="Laravel Shopper">
                 <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
                     {{ __("Welcome Back !") }}
                 </h2>
@@ -81,17 +81,5 @@
             <p class="mt-8 text-gray-500 font-medium text-sm text-center">Copyright &copy; {{ date('Y') }} &mdash; Shopper Labs.</p>
         </div>
     </div>
-
-{{--    <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 lg:mt-24">--}}
-{{--        <div class="max-w-md w-full">--}}
-{{--            <div>--}}
-{{--                @include('shopper::auth.partials.logo')--}}
-{{--                <h2 class="mt-6 text-center text-3xl leading-9 font-semibold text-gray-500">--}}
-{{--                    {{ __('Login to your account') }}--}}
-{{--                </h2>--}}
-{{--            </div>--}}
-{{--            <div id="login-form" data-url="{{ route('shopper.login') }}"></div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
 @endsection
