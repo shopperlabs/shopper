@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models\Ecommerce;
+namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Traits\Filetable;
@@ -14,16 +14,7 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'position',
-        'parent_id',
-        'seo_title',
-        'seo_description',
-        'is_enabled'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be cast.

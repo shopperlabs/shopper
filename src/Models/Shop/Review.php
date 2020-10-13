@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,7 +19,8 @@ class Review extends Model
      * @var array
      */
     protected $casts = [
-        'approved' => 'boolean',
+        'is_recommended' => 'boolean',
+        'approved'       => 'boolean',
     ];
 
     /**

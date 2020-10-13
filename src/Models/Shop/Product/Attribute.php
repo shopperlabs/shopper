@@ -1,10 +1,10 @@
 <?php
 
-namespace Shopper\Framework\Models\Ecommerce;
+namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Attribute extends Model
+class ProductAttribute extends Model
 {
     /**
      * The attributes that are mass assignable.

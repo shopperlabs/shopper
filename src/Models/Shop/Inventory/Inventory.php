@@ -1,10 +1,10 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Channel extends Model
+class Inventory extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -13,15 +13,23 @@ class Channel extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
+        'code',
         'description',
-        'timezone',
-        'url',
+        'email',
+        'phone_number',
+        'street_address',
+        'street_address_plus',
+        'zipcode',
+        'city',
+        'priority',
+        'longitude',
+        'latitude',
         'is_default',
+        'country_id',
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
@@ -36,6 +44,6 @@ class Channel extends Model
      */
     public function getTable()
     {
-        return shopper_table('channels');
+        return shopper_table('inventories');
     }
 }

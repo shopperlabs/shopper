@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Models;
+namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Shop\Shop;
@@ -24,9 +24,19 @@ class Discount extends Model
         'usage_limit',
         'usage_limit_per_user',
         'total_use',
-        'date_start',
-        'date_end',
+        'start_at',
+        'end_at',
         'shop_id',
+    ];
+    
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'start_at',
+        'end_at'
     ];
 
     /**
@@ -38,16 +48,6 @@ class Discount extends Model
     {
         return shopper_table('discounts');
     }
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'date_start',
-        'date_end',
-    ];
 
     /**
      * The attributes that should be cast.
