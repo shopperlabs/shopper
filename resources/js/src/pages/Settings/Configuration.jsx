@@ -128,6 +128,7 @@ const Configuration = () => {
                         <option>Euro (EUR)</option>
                       </select>
                     </div>
+                    <p className="mt-2 text-sm text-gray-500">This is the currency your products are sold in. After your first sale, currency is locked in and can’t be changed.</p>
                   </div>
                 </div>
               </div>
