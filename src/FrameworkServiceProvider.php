@@ -8,9 +8,11 @@ use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Events\BuildingSidebar;
 use Shopper\Framework\Http\Middleware\Authenticate;
-use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
-use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
-use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
+use Shopper\Framework\Events\Handlers\{
+    RegisterDashboardSidebar,
+    RegisterOrderSidebar,
+    RegisterShopSidebar
+};
 use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
@@ -43,7 +45,7 @@ class FrameworkServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerMiddleware($this->app['router']);
-        $this->registerShopRoute();
+        $this->registerShopSettingRoute();
 
         $this->app->register(ShopperServiceProvider::class);
 
@@ -67,7 +69,7 @@ class FrameworkServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerShopRoute()
+    public function registerShopSettingRoute()
     {
         (new Shopper())->initializeRoute();
     }
@@ -84,7 +86,7 @@ class FrameworkServiceProvider extends ServiceProvider
             'web',
             Authenticate::class,
             ResolveSidebars::class,
-        ], config('shopper.middleware', [])));
+        ], config('shopper.routes.middleware', [])));
 
         foreach ($this->middlewares as $name => $middleware) {
             $router->aliasMiddleware($name, $middleware);
@@ -98,12 +100,6 @@ class FrameworkServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (!defined('SHOPPER_PATH')) {
-            define('SHOPPER_PATH', realpath(__DIR__ . '/../'));
-        }
-
-        $this->mergeConfigFrom(SHOPPER_PATH . '/config/config.php', 'shopper');
-
         // Register Default Dashboard Menu
         $this->app['events']->listen(BuildingSidebar::class, RegisterDashboardSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, RegisterShopSidebar::class);

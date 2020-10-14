@@ -23,7 +23,7 @@ class Shopper
      */
     public static function prefix()
     {
-        return config('shopper.config.prefix');
+        return config('shopper.routes.prefix');
     }
 
     /**

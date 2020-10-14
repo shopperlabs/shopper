@@ -81,10 +81,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function mapCustomBackendRoute()
     {
-        Route::middleware(['shopper', 'dashboard'])
-            ->prefix(Shopper::prefix())
-            ->namespace(config('shopper.config.controllers.namespace'))
-            ->group(base_path('routes/shopper.php'));
+        if (config('shopper.routes.custom_file')) {
+            Route::middleware(['shopper', 'dashboard'])
+                ->prefix(Shopper::prefix())
+                ->namespace(config('shopper.system.controllers.namespace'))
+                ->group(base_path(config('shopper.routes.custom_file')));
+        }
+
     }
 
     /**

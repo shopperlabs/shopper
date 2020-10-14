@@ -101,8 +101,8 @@ if (!function_exists('shopper_table')) {
      */
     function shopper_table(string $table): string
     {
-        if (config('shopper.table_prefix') !== '') {
-            return config('shopper.config.table_prefix').$table;
+        if (config('shopper.system.table_prefix') !== '') {
+            return config('shopper.system.table_prefix').$table;
         }
 
         return $table;

@@ -17,7 +17,7 @@ class PermissionRoleTableSeeder extends Seeder
 
         // Create Roles
         Role::create([
-            'name' => config('shopper.config.users.admin_role'),
+            'name' => config('shopper.system.users.admin_role'),
             'display_name' => 'Administrator',
             'description' => 'Site administrator with access to shop and developer tools.'
         ]);
@@ -29,7 +29,7 @@ class PermissionRoleTableSeeder extends Seeder
         ]);
 
         Role::create([
-            'name' => config('shopper.config.users.default_role'),
+            'name' => config('shopper.system.users.default_role'),
             'display_name' => 'User',
             'description' => 'Site customer role with access on front site.'
         ]);
