@@ -4,7 +4,7 @@ use Money\Currencies\ISOCurrencies;
 use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
-use Shopper\Framework\Models\Order\Order;
+use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Shopper;
 
 if (!function_exists('app_name')) {
@@ -28,23 +28,6 @@ if (! function_exists('gravatar')) {
     function gravatar()
     {
         return app('gravatar');
-    }
-}
-
-if (!function_exists('home_route')) {
-    /**
-     * Return the route to the "home" page depending on
-     * authentication/authorization status.
-     *
-     * @return string
-     */
-    function home_route(): string
-    {
-        if (auth()->check() && auth()->user()->hasRole(config('shopper.user.admin_role'))) {
-            return 'shopper.dashboard';
-        }
-
-        return 'home';
     }
 }
 
@@ -119,7 +102,7 @@ if (!function_exists('shopper_table')) {
     function shopper_table(string $table): string
     {
         if (config('shopper.table_prefix') !== '') {
-            return config('shopper.table_prefix').$table;
+            return config('shopper.config.table_prefix').$table;
         }
 
         return $table;
@@ -134,7 +117,7 @@ if (!function_exists('shopper_currency')) {
      */
     function shopper_currency(): string
     {
-        return config('shopper.currency');
+        return 'XAF';
     }
 }
 

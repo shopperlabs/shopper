@@ -41,7 +41,7 @@ class ShopperServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Datababse and seeders
+     * Register Database and seeders.
      *
      * @return void
      */

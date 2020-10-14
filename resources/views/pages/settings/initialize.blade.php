@@ -39,12 +39,9 @@
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
-                            <svg class="block lg:hidden h-8 w-auto" fill="none" viewBox="0 0 40 40">
-                                <path d="M19.636 30.552c-.007 1.122-.778 2.046-1.793 2.206-.029.008-.058.008-.08.015-.395.046-.798.077-1.209.07-5.543-.024-10.014-4.811-9.992-10.69 0-.359.021-.718.05-1.061 0-.016 0-.031.007-.039 0-.03.007-.06.007-.091v-.008c.015-.122.044-.244.08-.359.273-.908 1.08-1.565 2.023-1.557 1.101.007 2.001.9 2.102 2.046.007.069.007.137.007.214 0 .076-.007.145-.014.221-.015.153-.03.306-.036.458 0 .069 0 .145-.008.214-.014 3.398 2.57 6.162 5.774 6.177.21 0 .418-.008.627-.03.014 0 .028-.008.043-.008.029 0 .05-.008.08-.008.071-.008.136-.008.208-.008 1.18-.007 2.124 1 2.124 2.238z" fill="#1C64F2"/>
-                                <path d="M26.513 22.275v.19a11.109 11.109 0 0 1-.835 4.024c-1.397 3.352-4.4 5.827-7.956 6.292 1.015-.168 1.793-1.084 1.8-2.2.007-1.236-.936-2.252-2.11-2.252-.071 0-.143 0-.208.008 2.369-.313 4.298-2.138 4.888-4.543l-8.761-6.726-.994-.764-.014-.007-2.563-1.97-3.24-2.49-.007-.587c.029-1.42.317-2.772.82-4.001 1.383-3.36 4.37-5.849 7.92-6.33-1.008.168-1.786 1.1-1.786 2.215 0 1.236.95 2.244 2.117 2.244.072 0 .286-.032.35-.04-2.36.321-4.418 2.178-5.008 4.576 0 .007 0 .015-.007.022l3.744 2.848.007.008L26.49 21.87c.022.13.022.267.022.405z" fill="#1E429F"/>
-                                <path d="M26.48 11.494c0 .36-.015.718-.051 1.062v.038c0 .03-.007.06-.007.091v.008a1.984 1.984 0 0 1-.08.359c-.273.908-1.072 1.573-2.022 1.573-1.102 0-2.01-.894-2.11-2.031-.007-.069-.007-.138-.007-.214 0-.076 0-.145.007-.222.015-.152.029-.305.029-.458v-.213c0-3.398-2.599-6.154-5.803-6.154-.209 0-.417.015-.626.038-.014 0-.029.007-.043.007-.03 0-.05.008-.08.008-.071.008-.136.008-.208.008-1.167 0-2.117-1.008-2.117-2.245 0-1.122.77-2.046 1.786-2.214.028-.008.057-.008.079-.015.396-.054.799-.077 1.21-.077 5.55.008 10.042 4.772 10.042 10.651z" fill="#1C64F2"/>
-                            </svg>
-                            <svg class="hidden lg:block h-8 w-auto" width="152" height="30" fill="none">
+                            <img class="h-9 w-auto" src="{{ asset('shopper/images/logo.svg') }}" alt="Shopper Logo">
+                            <h2 class="ml-4 text-2xl leading-6 font-semibold text-gray-900 tracking-wide">Shopper</h2>
+                            <svg class="hidden h-8 w-auto" width="152" height="30" fill="none">
                                 <path d="M12.798 27.806c-.007 1.046-.751 1.907-1.732 2.057-.028.007-.056.007-.077.014a9.059 9.059 0 0 1-1.169.064C4.463 29.92.142 25.458.162 19.979c0-.335.021-.67.05-.99 0-.014 0-.028.006-.035 0-.029.007-.057.007-.086v-.007c.014-.114.042-.227.077-.334.264-.847 1.043-1.459 1.955-1.452 1.064.007 1.934.84 2.032 1.907.007.064.007.128.007.2 0 .07-.007.135-.014.206-.014.142-.028.284-.035.427 0 .064 0 .135-.007.2-.014 3.166 2.484 5.742 5.58 5.756.202 0 .404-.007.606-.029.014 0 .027-.007.041-.007.028 0 .049-.007.077-.007.07-.007.132-.007.202-.007 1.14-.007 2.052.932 2.052 2.085z" fill="#1C64F2"/>
                                 <path d="M19.445 20.093v.177a10.037 10.037 0 0 1-.807 3.75c-1.35 3.125-4.252 5.43-7.69 5.865a2.08 2.08 0 0 0 1.74-2.05c.007-1.153-.904-2.1-2.038-2.1-.07 0-.14 0-.202.008 2.29-.292 4.154-1.993 4.724-4.234l-8.467-6.27-.96-.711-.015-.007-2.477-1.836-3.13-2.32-.008-.548C.143 8.493.422 7.234.91 6.088c1.336-3.13 4.223-5.45 7.653-5.9-.974.157-1.725 1.026-1.725 2.065 0 1.152.918 2.092 2.045 2.092.07 0 .277-.03.34-.038-2.283.3-4.27 2.03-4.841 4.265 0 .007 0 .014-.007.021l3.618 2.654.007.007 11.425 8.461c.02.121.02.25.02.378z" fill="#1E429F"/>
                                 <path d="M19.413 10.044c0 .335-.014.67-.05.99v.035c0 .029-.006.057-.006.086v.007a1.8 1.8 0 0 1-.077.334c-.264.847-1.036 1.466-1.955 1.466-1.064 0-1.941-.832-2.039-1.893-.007-.064-.007-.128-.007-.199 0-.071 0-.135.007-.206a4.4 4.4 0 0 0 .028-.427v-.2c0-3.166-2.512-5.735-5.608-5.735-.202 0-.403.014-.605.035-.014 0-.028.008-.042.008-.028 0-.049.007-.077.007-.07.007-.132.007-.201.007-1.128 0-2.046-.94-2.046-2.092 0-1.046.744-1.907 1.726-2.064.027-.007.055-.007.076-.014a9.05 9.05 0 0 1 1.17-.071c5.364.007 9.706 4.447 9.706 9.926z" fill="#1C64F2"/>
@@ -54,13 +51,13 @@
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">
                         <!-- Profile dropdown -->
-                        <div @click.away="open = false" class="ml-3 relative" x-data="{ open: false }">
+                        <div @click.away="open = false" class="ml-3 relative">
                             <div>
                                 <button @click="open = !open" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true" x-bind:aria-expanded="open">
-                                    <img class="h-8 w-8 rounded-full" src="{{ $logged_in_user->picture }}" alt="">
+                                    <img class="h-8 w-8 rounded-full" src="{{ $logged_in_user->picture }}" alt="Avatar">
                                 </button>
                             </div>
-                            <div x-show="open" x-description="Profile dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg" style="display: none;">
+                            <div x-show="open" x-description="Profile dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute z-50 right-0 mt-2 w-48 rounded-md shadow-lg" style="display: none;">
                                 <div class="py-1 rounded-md bg-white shadow-xs">
                                     <a
                                        href="{{ route('logout') }}"
@@ -116,11 +113,11 @@
             </div>
         </nav>
 
-        <livewire:initialization />
+        <livewire:shopper-initialization />
     </div>
 
     <livewire:scripts />
-    <script src="{{ mix('/js/application.js', 'shopper') }}"></script>
+    <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
     <script src="https://unpkg.com/trix@1.2.3/dist/trix.js"></script>

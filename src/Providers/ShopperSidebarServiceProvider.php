@@ -32,7 +32,7 @@ class ShopperSidebarServiceProvider extends ServiceProvider
         $this->app->bind('Maatwebsite\Sidebar\Infrastructure\SidebarResolver', function (Application $app) {
 
             $resolver = SidebarResolverFactory::getClassName(
-                $app['config']->get('shopper.cache.method')
+                $app['config']->get('shopper.config.cache.method')
             );
 
             return $app->make($resolver);
@@ -42,7 +42,7 @@ class ShopperSidebarServiceProvider extends ServiceProvider
         $this->app->bind('Maatwebsite\Sidebar\Infrastructure\SidebarFlusher', function (Application $app) {
 
             $resolver = SidebarFlusherFactory::getClassName(
-                $app['config']->get('shopper.cache.method')
+                $app['config']->get('shopper.config.cache.method')
             );
 
             return $app->make($resolver);

@@ -5,6 +5,7 @@ namespace Shopper\Framework\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Response;
+use Shopper\Framework\Models\System\Setting;
 
 class Dashboard
 {
@@ -35,6 +36,15 @@ class Dashboard
             }
 
             return abort(403, __("Unauthorized"));
+        }
+
+
+        if (!Setting::query()->where('key', 'email')->exists()) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response('Unauthorized.', Response::HTTP_UNAUTHORIZED);
+            }
+
+            return redirect()->route('shopper.initialize');
         }
 
         return $next($request);

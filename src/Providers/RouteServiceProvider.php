@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAuthRoutes()
     {
         Route::namespace($this->namespace . '\Auth')
-            ->middleware(['web'])
+            ->middleware('web')
             ->as('shopper.')
             ->prefix(Shopper::prefix())
             ->group(realpath(SHOPPER_PATH . '/routes/auth.php'));

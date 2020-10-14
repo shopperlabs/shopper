@@ -5,9 +5,7 @@ namespace Shopper\Framework\Components\Livewire;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Events\ShopCreated;
-use Shopper\Framework\Models\Currency;
-use Shopper\Framework\Models\Shop\ShopSize;
-use Shopper\Framework\Repositories\Shop\ShopRepository;
+use Shopper\Framework\Models\System\Currency;
 
 class Initialization extends Component
 {
@@ -26,7 +24,7 @@ class Initialization extends Component
 
     public function mount()
     {
-        $defaultCurrency = Currency::where('code', shopper_currency())->first();
+        $defaultCurrency = Currency::query()->where('code', shopper_currency())->first();
         $this->currency_id = (string) $defaultCurrency->id;
     }
 
@@ -66,29 +64,29 @@ class Initialization extends Component
     {
         $this->validate($this->rules());
 
-        $shop = (new ShopRepository())->create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'description' => $this->description,
-            'size_id' => $this->size_id,
-            'currency_id' => $this->currency_id,
-            'owner_id' => auth()->id(),
-            'phone_number' => $this->phone_number,
-            'facebook_url' => $this->facebook,
-            'instagram_url' => $this->instagram,
-            'twitter_url' => $this->twitter,
-        ]);
+//        $shop = (new ShopRepository())->create([
+//            'name' => $this->name,
+//            'email' => $this->email,
+//            'description' => $this->description,
+//            'size_id' => $this->size_id,
+//            'currency_id' => $this->currency_id,
+//            'owner_id' => auth()->id(),
+//            'phone_number' => $this->phone_number,
+//            'facebook_url' => $this->facebook,
+//            'instagram_url' => $this->instagram,
+//            'twitter_url' => $this->twitter,
+//        ]);
 
-        if ($this->logo) {
-            $filename = $this->logo->store('/', config('shopper.storage.disks.uploads'));
-
-            $shop->update(['logo_url' => $filename]);
-        }
-
-        event(new ShopCreated($shop));
-
-        notify()->success(__('Your Shop has been successfully created. Have fun !'));
-        $this->redirectRoute('shopper.dashboard');
+//        if ($this->logo) {
+//            $filename = $this->logo->store('/', config('shopper.storage.disks.uploads'));
+//
+//            $shop->update(['logo_url' => $filename]);
+//        }
+//
+//        event(new ShopCreated($shop));
+//
+//        notify()->success(__('Your Shop has been successfully created. Have fun !'));
+//        $this->redirectRoute('shopper.dashboard');
     }
 
     /**
@@ -99,8 +97,8 @@ class Initialization extends Component
     protected function rules()
     {
         return [
-            'name' => 'required|unique:'. shopper_table('shops'),
-            'email' => 'required|email|unique:'. shopper_table('shops'),
+            // 'name' => 'required|unique:'. shopper_table('shops'),
+            // 'email' => 'required|email|unique:'. shopper_table('shops'),
             'size_id' => 'required',
             'currency_id' => 'required',
             'logo' => 'nullable|image|max:1024', // 1MB Max
@@ -109,7 +107,7 @@ class Initialization extends Component
 
     public function render()
     {
-        $sizes = ShopSize::all();
+        $sizes = collect();
         $currencies = Currency::all();
 
         return view('shopper::components.livewire.initialization', compact('sizes', 'currencies'));

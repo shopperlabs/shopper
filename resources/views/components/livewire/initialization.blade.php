@@ -1,6 +1,6 @@
 <div>
     <header class="hidden lg:block relative z-30 sticky top-0 bg-white shadow-md lg:border-t lg:border-b lg:border-gray-200 transition-all duration-200 ease-in-out">
-        <nav class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ul class="overflow-hidden flex">
                 <li class="relative overflow-hidden lg:flex-1">
                     <div class="border border-gray-200 overflow-hidden border-b-0 rounded-t-md lg:border-0">
@@ -310,7 +310,7 @@
                             </label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 <div class="flex rounded-md shadow-sm sm:max-w-lg overflow-x-auto lg:w-full lg:overflow-visible">
-                                    <x:input.rich-text wire:model.lazy="description" id="description" />
+                                    <x-shopper-input.rich-text wire:model.lazy="description" id="description" />
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500">{{ __("You can view this information on the About page on your website.") }}</p>
                             </div>

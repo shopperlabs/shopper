@@ -4,7 +4,7 @@ namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductAttribute extends Model
+class Attribute extends Model
 {
     /**
      * The attributes that are mass assignable.

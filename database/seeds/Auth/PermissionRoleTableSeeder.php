@@ -23,6 +23,12 @@ class PermissionRoleTableSeeder extends Seeder
         ]);
 
         Role::create([
+            'name' => 'manager',
+            'display_name' => 'Manager',
+            'description' => 'Site manager with access to shop and publishing menus.'
+        ]);
+
+        Role::create([
             'name' => config('shopper.config.users.default_role'),
             'display_name' => 'User',
             'description' => 'Site customer role with access on front site.'

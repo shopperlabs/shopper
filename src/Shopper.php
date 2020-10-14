@@ -23,7 +23,7 @@ class Shopper
      */
     public static function prefix()
     {
-        return config('shopper.prefix');
+        return config('shopper.config.prefix');
     }
 
     /**
@@ -34,11 +34,11 @@ class Shopper
     public function initializeRoute()
     {
         Route::namespace('Shopper\Framework\Http\Controllers')
-            ->middleware(['shopper'])
+            ->middleware('shopper')
             ->as('shopper.')
-            ->prefix(self::prefix() . '/setup')
+            ->prefix(self::prefix())
             ->group(function () {
-                Route::get('/configuration', 'ShopController@initialize')->name('initialize');
+                Route::get('/configuration', 'SettingController@initialize')->name('initialize');
             });
 
         return $this;
