@@ -28,6 +28,10 @@ mix.setPublicPath("public")
       extensions: ["*", ".js", ".jsx"],
       alias: {
         '@': path.resolve('./resources/js'),
+        '@components': path.resolve('./resources/js/src/components'),
+        '@hooks': path.resolve('./resources/js/src/hooks'),
+        '@pages': path.resolve('./resources/js/src/pages'),
+        '@utils': path.resolve('./resources/js/src/utils'),
       },
     }
   })

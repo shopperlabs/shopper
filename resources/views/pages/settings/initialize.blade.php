@@ -10,8 +10,7 @@
     <meta name="author" content="@yield('meta_author', 'Arthur Monney')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="base-url" content="{{ config('app.url') }}">
-    <meta name="dashboard-url" content="{{ config('app.url').'/'.config('shopper.prefix') }}">
-    <meta name="api-connection" content="{{ config('shopper.api_connection') }}">
+    <meta name="dashboard-url" content="{{ config('app.url').'/'.shopper_prefix() }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('shopper/images/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('shopper/images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('shopper/images/favicons/favicon-16x16.png') }}">
@@ -22,14 +21,10 @@
     <meta name="application-name" content="{{ app_name()  }}">
     <meta name="theme-color" content="#ffffff">
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <!--begin::Fonts -->
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/trix@1.2.3/dist/trix.css">
     <!--end::Fonts -->
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
-    <livewire:styles />
 </head>
 <body class="text-gray-500 leading-normal font-body transition ease-in-out duration-700">
 
@@ -113,14 +108,10 @@
             </div>
         </nav>
 
-        <livewire:shopper-initialization />
+        <div id="setting-configuration"></div>
     </div>
 
-    <livewire:scripts />
     <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
-    <script src="https://unpkg.com/trix@1.2.3/dist/trix.js"></script>
 
 </body>
 </html>

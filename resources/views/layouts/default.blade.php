@@ -8,7 +8,7 @@
     <title>@yield('title', app_name()) | Shopper E-commerce</title>
     <meta name="locale" content="{{ app()->getLocale() }}">
     <meta name="base-url" content="{{ config('app.url') }}">
-    <meta name="dashboard-url" content="{{ config('app.url').'/'.config('shopper.prefix') }}">
+    <meta name="dashboard-url" content="{{ config('app.url').'/'.shopper_prefix() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('shopper/images/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('shopper/images/favicons/favicon-32x32.png') }}">
@@ -28,9 +28,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
-    @if(! empty(config('shopper.resources.stylesheets')))
-    <!-- Additional CSS -->
-        @foreach(config('shopper.resources.stylesheets') as $css)
+    @if(! empty(config('shopper.config.resources.stylesheets')))
+        <!-- Additional CSS -->
+        @foreach(config('shopper.config.resources.stylesheets') as $css)
             @if (starts_with($css, ['http://', 'https://']))
                 <link rel="stylesheet" type="text/css" href="{!! $css !!}">
             @else
@@ -93,12 +93,12 @@
                         </button>
 
                         <!-- Profile dropdown -->
-                        <livewire:dropdown />
+                        <livewire:shopper-dropdown />
                     </div>
                 </div>
             </div>
             <div class="overflow-y-auto">
-                <main class="flex-1 relative z-0 min-h-screen focus:outline-none pt-3 lg:pt-0" tabindex="0"">
+                <main class="flex-1 relative z-0 min-h-screen focus:outline-none pt-3 lg:pt-0" tabindex="0">
                     <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <!-- Content -->
                         @yield('content')
@@ -116,9 +116,9 @@
     @include('notify::messages')
     @stack('scripts')
 
-    @if(! empty(config('shopper.resources.scripts')))
+    @if(! empty(config('shopper.config.resources.scripts')))
         <!-- Additional Javascript -->
-        @foreach(config('shopper.resources.scripts') as $js)
+        @foreach(config('shopper.config.resources.scripts') as $js)
             @if (starts_with($js, ['http://', 'https://']))
                 <script type="text/javascript" src="{!! $js !!}"></script>
             @else
