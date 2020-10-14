@@ -4,18 +4,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Route Prefix
-    |--------------------------------------------------------------------------
-    |
-    | This prefix method can be used for the prefix of each
-    | route in the administration panel. For example, you can change to 'admin'.
-    |
-    */
-
-    'prefix' => env('DASHBOARD_PREFIX', 'shopper'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Shopper Locale Configuration
     |--------------------------------------------------------------------------
     |
@@ -52,18 +40,6 @@ return [
         'stylesheets' => [],
         'scripts'     => [],
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Middleware Admin Panel
-    |--------------------------------------------------------------------------
-    |
-    | Provide a convenient mechanism for filtering HTTP requests entering
-    | your shopper application. Add your custom middleware here.
-    |
-    */
-
-    'middleware' => [],
 
     /*
     |--------------------------------------------------------------------------
