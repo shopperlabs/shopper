@@ -50,7 +50,7 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->app->register(ShopperServiceProvider::class);
 
         // setLocale for php. Enables ->formatLocalized() with localized values for dates.
-        setlocale(LC_TIME, config('shopper.locale'));
+        setlocale(LC_TIME, config('shopper.system.locale'));
 
         // setLocale to use Carbon source locales. Enables diffForHumans() localized.
         Carbon::setLocale(config('app.locale'));

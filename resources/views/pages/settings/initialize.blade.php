@@ -54,14 +54,17 @@
                             </div>
                             <div x-show="open" x-description="Profile dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute z-50 right-0 mt-2 w-48 rounded-md shadow-lg" style="display: none;">
                                 <div class="py-1 rounded-md bg-white shadow-xs">
-                                    <a
-                                       href="{{ route('logout') }}"
-                                       class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                    <button
+                                       type="button"
+                                       class="w-full inline-flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
                                        onclick="document.getElementById('logout-form').submit();"
                                     >
+                                        <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
                                         {{ __("Sign out") }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    </button>
+                                    <form id="logout-form" action="{{ route('shopper.logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -94,13 +97,18 @@
                         </div>
                     </div>
                     <div class="mt-3" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        <a href="{{ route('logout') }}"
-                           class="mt-1 block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 focus:outline-none focus:text-gray-800 focus:bg-gray-100 transition duration-150 ease-in-out" role="menuitem"
+                        <button
+                           type="button"
+                           class="mt-1 inline-flex items-center w-full px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 focus:outline-none focus:text-gray-800 focus:bg-gray-100 transition duration-150 ease-in-out"
+                           role="menuitem"
                            onclick="document.getElementById('sm-logout-form').submit();"
                         >
+                            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
                             {{ __("Sign out") }}
-                        </a>
-                        <form id="sm-logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        </button>
+                        <form id="sm-logout-form" action="{{ route('shopper.logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </div>
