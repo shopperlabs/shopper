@@ -7,7 +7,7 @@
 </tr>
 <tr>
     <td style="padding-top: 20px;">
-        <img style="float:left; width: 145px;" src="{{ asset('shopper/images/shopper.svg') }}" alt="Logo">
+        <img style="float:left; height: 45px;" src="{{ asset('shopper/images/logo.svg') }}" alt="Shopper Logo">
         <p class="app-description">
             {{ $description }}
         </p>
