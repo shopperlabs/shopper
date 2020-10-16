@@ -1,5 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
+use Shopper\Framework\Http\Controllers\Api\SettingController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -10,3 +15,7 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::prefix('configuration')->group(function () {
+    Route::post('/steps/{id}', [SettingController::class, 'steps']);
+});

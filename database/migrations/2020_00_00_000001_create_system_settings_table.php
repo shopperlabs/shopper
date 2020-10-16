@@ -23,7 +23,7 @@ class CreateSystemSettingsTable extends Migration
             $this->addCommonFields($table);
 
             $table->string('key')->unique();
-            $table->string('display_name');
+            $table->string('display_name')->nullable();
             $table->json('value');
             $table->boolean('locked')->default(false);
         });
