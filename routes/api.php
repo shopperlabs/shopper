@@ -17,5 +17,5 @@ use Shopper\Framework\Http\Controllers\Api\SettingController;
 */
 
 Route::prefix('configuration')->group(function () {
-    Route::post('/steps/{id}', [SettingController::class, 'steps']);
+    Route::post('/', [SettingController::class, 'configure']);
 });
