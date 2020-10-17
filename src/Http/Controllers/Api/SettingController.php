@@ -4,14 +4,14 @@ namespace Shopper\Framework\Http\Controllers\Api;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
-
 use Shopper\Framework\Models\System\Setting;
 
 class SettingController extends Controller
 {
     /**
      * Validate configuration settings fields.
-     * @return void
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function configure()
     {
@@ -40,9 +40,8 @@ class SettingController extends Controller
         }
 
         foreach ($inputs as $key => $value) {
-            Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+            Setting::query()->updateOrCreate(['key' => $key], ['value' => $value]);
         }
-             
 
         return response()->json([
             'status'  => 'success',
