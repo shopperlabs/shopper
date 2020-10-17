@@ -29,6 +29,9 @@ class SettingController extends Controller
             'shop_phone_number'   => 'nullable',
             'shop_lng'            => 'nullable|numeric',
             'shop_lat'            => 'nullable|numeric',
+            'shop_facebook_link'  => 'nullable|string',
+            'shop_twitter_link'   => 'nullable|string',
+            'shop_instagram_link' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {

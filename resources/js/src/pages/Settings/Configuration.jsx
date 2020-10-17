@@ -8,24 +8,24 @@ import TrixEditor from "@components/TrixEditor";
 import PhoneNumber from "@components/Input/PhoneNumber";
 import ButtonLoader from "@components/ButtonLoader";
 
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2hvcHBlcmxhYnMiLCJhIjoiY2tnNzFsYWo4MDJ6aTJ1bDE0NmJ5d3k0dyJ9.5mAK55meVSZ3v5RwKYraqw';
+
 const Configuration = () => {
   const [step, setStep] = useState(0);
   const [body, setBody] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [switchValue, setSwitchValue] = useState(false);
   const [loading, setLoading] = useState(false);
-  var map = false;
+  let map = false;
 
   useEffect(() => {
     if (!map) {
       map = new mapboxgl.Map({
-      container: 'mapboxgl',
-        style: 'mapbox://styles/mapbox/streets-v11'
+        container: 'mapboxgl',
+        style: 'mapbox://styles/mapbox/streets-v11',
       });
     }
   }, [map])
-
-  mapboxgl.accessToken = 'pk.eyJ1Ijoic2hvcHBlcmxhYnMiLCJhIjoiY2tnNzFsYWo4MDJ6aTJ1bDE0NmJ5d3k0dyJ9.5mAK55meVSZ3v5RwKYraqw';
 
   return (
     <>
@@ -161,7 +161,7 @@ const Configuration = () => {
               <div className="bg-white shadow-md sm:rounded-md p-4">
                 <div className="grid gap-4 lg:grid-cols-3 lg:gap-6">
                   <div className="space-y-4 sm:col-span-2">
-                    <div id="mapboxgl" />
+                    <div id="mapboxgl" className="bg-gray-100 rounded-md h-95 overflow-hidden" />
                     <p className="text-sm text-gray-500 leading-5">
                       Shopper uses <span className="font-medium">Mapbox</span> to make it easier to locate your store.
                       To learn more about mapbox, consult the <a href="https://docs.mapbox.com/mapbox-gl-js/api" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-500 transition-colors duration-150 ease-in-out mr-1">documentation</a>
