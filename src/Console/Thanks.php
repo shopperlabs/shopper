@@ -17,7 +17,7 @@ final class Thanks
         '  - Tweet something about Shopper on Twitter:',
         '    <options=bold>https://twitter.com/laravelshopper</>',
         '  - Sponsor the creator:',
-        '    <options=bold>https://github.com/sponsors/mckenziearts</>',
+        '    <options=bold>https://github.com/sponsors/Sense</>',
     ];
 
     /** @var OutputInterface */

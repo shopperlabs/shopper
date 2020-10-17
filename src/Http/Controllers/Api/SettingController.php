@@ -6,6 +6,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Shopper\Framework\Models\System\Setting;
 
+use Shopper\Framework\Models\System\Country;
+use Shopper\Framework\Models\System\Currency;
+
 class SettingController extends Controller
 {
     /**
@@ -42,8 +45,21 @@ class SettingController extends Controller
             ], 400);
         }
 
-        foreach ($inputs as $key => $value) {
-            Setting::query()->updateOrCreate(['key' => $key], ['value' => $value]);
+        $country  = Country::find($inputs["shop_country_id"]);
+        Setting::updateOrCreate(
+            [ 'key' => 'shop_country' ], 
+            [ 'display_name' => 'Shop Country', 'value' => $country ],
+        );
+        
+        $currency = Currency::find($inputs["shop_currency_id"]);
+        Setting::updateOrCreate(
+            [ 'key' => 'shop_currency' ], 
+            [ 'display_name' => 'Shop Currency', 'value' => $currency ],
+        );
+
+        foreach (request()->except([ 'shop_country_id', 'shop_currency_id' ]) as $key => $value) {
+            $configKey = str_replace("shop_", "", $key);
+            config()->set('shopper.shop.' . $configKey, $value);
         }
 
         return response()->json([
