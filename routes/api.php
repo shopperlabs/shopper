@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Shopper\Framework\Http\Controllers\Api\SettingController;
-
+use Shopper\Framework\Http\Controllers\Api\Settings\SettingController;
+          
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,11 @@ use Shopper\Framework\Http\Controllers\Api\SettingController;
 |
 */
 
-Route::prefix('configuration')->group(function () {
-    Route::post('/', [SettingController::class, 'configure']);
+// shop initialization
+Route::put('/configuration', [SettingController::class, 'general']);
+
+// settings page
+Route::prefix('settings')->group(function () {
+    Route::put('/general',   [SettingController::class, 'general']);
+    Route::put('/analytics', [SettingController::class, 'analytics']);
 });

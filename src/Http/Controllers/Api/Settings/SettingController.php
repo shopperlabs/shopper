@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Controllers\Api;
+namespace Shopper\Framework\Http\Controllers\Api\Settings;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +15,7 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function configure()
+    public function general()
     {
         $inputs = request()->all();
 
@@ -60,6 +60,34 @@ class SettingController extends Controller
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
             ]);
         }
+
+        return response()->json([
+            'status'  => 'success',
+            'data' => $inputs,
+        ]);
+    }
+
+    public function analytics()
+    {
+        $inputs = request()->all();
+
+        $validator = Validator::make($inputs, [
+            'google_analytics_tracking_id'  => 'nullable|string',
+            'google_analytics_view_id'      => 'nullable|numeric',
+            'google_analytics_add_js'       => 'nullable|string',
+            'google_tag_manager_account_id' => 'nullable|string',
+            'facebook_pixel_account_id'     => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => 'error',
+                'errors'  => $validator->messages()->get('*'),
+                'data'    => request()->all(),
+            ], 400);
+        }
+        
+        setEnvironmentValue($inputs);
 
         return response()->json([
             'status'  => 'success',
