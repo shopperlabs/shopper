@@ -4,7 +4,7 @@ namespace Shopper\Framework\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class Category extends ResourceCollection
+class Country extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

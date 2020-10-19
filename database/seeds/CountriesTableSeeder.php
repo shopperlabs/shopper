@@ -33,9 +33,7 @@ class CountriesTableSeeder extends Seeder
         $this->disableForeignKeys();
 
         foreach ($this->countries as $key => $country) {
-            Country::updateOrCreate([ 'id' => $key + 1 ],
-            [
-                'id'            => ++$key,
+            Country::query()->create([
                 'name'          => $country["name"]["common"],
                 'name_official' => $country["name"]["official"],
                 'cca2'          => $country["cca2"],
