@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Shopper\Framework\Http\Controllers\Api\Settings\SettingController;
-          
+use Shopper\Framework\Http\Controllers\Api\Settings\{CountryController, CurrencyController, SettingController};
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,8 +14,12 @@ use Shopper\Framework\Http\Controllers\Api\Settings\SettingController;
 |
 */
 
+Route::get('/countries', [CountryController::class, 'lists']);
+Route::get('/currencies', [CurrencyController::class, 'lists']);
+Route::get('/currency/{code}', [CurrencyController::class, 'getCurrencyByCode']);
+
 // shop initialization
-Route::put('/configuration', [SettingController::class, 'general']);
+Route::post('/configuration', [SettingController::class, 'general']);
 
 // settings page
 Route::prefix('settings')->group(function () {

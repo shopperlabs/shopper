@@ -5,8 +5,6 @@ namespace Shopper\Framework\Http\Controllers\Api\Settings;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Shopper\Framework\Models\System\Setting;
-use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Models\System\Currency;
 
 class SettingController extends Controller
 {
@@ -31,6 +29,9 @@ class SettingController extends Controller
             'shop_phone_number'   => 'nullable',
             'shop_lng'            => 'nullable|numeric',
             'shop_lat'            => 'nullable|numeric',
+            'shop_facebook_link'  => 'nullable|string',
+            'shop_instagram_link' => 'nullable|string',
+            'shop_twitter_link'   => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -41,23 +42,12 @@ class SettingController extends Controller
             ], 400);
         }
 
-        $country  = Country::find($inputs["shop_country_id"]);
-        Setting::updateOrCreate(
-            [ 'key' => 'shop_country' ], 
-            [ 'display_name' => 'Shop Country', 'value' => $country, 'locked' => true ],
-        );
-        
-        $currency = Currency::find($inputs["shop_currency_id"]);
-        Setting::updateOrCreate(
-            [ 'key' => 'shop_currency' ], 
-            [ 'display_name' => 'Shop Currency', 'value' => $currency, 'locked' => true ],
-        );
-
-        foreach (request()->except(['shop_country_id', 'shop_currency_id']) as $key => $value) {
-            Setting::query()->updateOrCreate(['key' => $key], [
+        foreach (request()->all() as $key => $value) {
+            Setting::query()->create([
+                'key' => $key,
                 'value'  => $value,
                 'locked' => true,
-                'display_name' => ucwords(str_replace('_', ' ', $key)),
+                'display_name' => Setting::lockedAttributesDisplayName($key),
             ]);
         }
 

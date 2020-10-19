@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
-import { Switch } from "@headlessui/react";
+import { Switch, Listbox, Transition } from "@headlessui/react";
 import mapboxgl from 'mapbox-gl';
 
+import axios from "@utils/axios";
 import Steps from "@components/Steps";
 import TrixEditor from "@components/TrixEditor";
 import PhoneNumber from "@components/Input/PhoneNumber";
@@ -16,6 +17,22 @@ const Configuration = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [switchValue, setSwitchValue] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [currencies, setCurrencies] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState({});
+  const [selectedCurrency, setSelectedCurrency] = useState(0);
+  const [values, setValues] = useState({
+    shop_name: "",
+    shop_email: "",
+    shop_street_address: "",
+    shop_zipcode: "",
+    shop_city: "",
+    shop_lng: "",
+    shop_lat: "",
+    shop_facebook_link: "",
+    shop_instagram_link: "",
+    shop_twitter_link: "",
+  });
   let map = false;
 
   useEffect(() => {
@@ -25,7 +42,33 @@ const Configuration = () => {
         style: 'mapbox://styles/mapbox/streets-v11',
       });
     }
-  }, [map])
+
+    axios.get('/api/countries')
+      .then((response) => {
+        setCountries(response.data.data);
+        setSelectedCountry(response.data.data[0]);
+      });
+
+    axios.get('/api/currencies')
+      .then((response) => {
+        setCurrencies(response.data.data);
+        setSelectedCurrency(response.data.data[0].id);
+      });
+  }, [map]);
+
+  function onChangeCountry(country) {
+    setSelectedCountry(country);
+
+    if (Object.entries(country.currencies).length > 0) {
+      const code = Object.entries(country.currencies)[0][0];
+
+      axios.get(`/api/currency/${code}`)
+        .then(response => {
+          const currency = response.data.data;
+          setSelectedCurrency(currency.id);
+        })
+    }
+  }
 
   return (
     <>
@@ -58,7 +101,13 @@ const Configuration = () => {
                           <path fillRule="evenodd" d="M22 5H2a1 1 0 0 0-1 1v4a3 3 0 0 0 2 2.82V22a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9.18A3 3 0 0 0 23 10V6a1 1 0 0 0-1-1zm-7 2h2v3a1 1 0 1 1-2 0zm-4 0h2v3a1 1 0 1 1-2 0zM7 7h2v3a1 1 0 1 1-2 0zm-3 4a1 1 0 0 1-1-1V7h2v3a1 1 0 0 1-1 1zm10 10h-4v-2a2 2 0 1 1 4 0zm5 0h-3v-2a4 4 0 1 0-8 0v2H5v-8.18a3.17 3.17 0 0 0 1-.6 3 3 0 0 0 4 0 3 3 0 0 0 4 0 3 3 0 0 0 4 0c.293.26.632.464 1 .6zm2-11a1 1 0 1 1-2 0V7h2zM4.3 3H20a1 1 0 1 0 0-2H4.3a1 1 0 1 0 0 2z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <input id="name" className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autoComplete="off" />
+                      <input
+                        id="name"
+                        name="shop_name"
+                        className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        autoComplete="off"
+                        required
+                      />
                     </div>
                   </div>
                 </div>
@@ -75,7 +124,12 @@ const Configuration = () => {
                           <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                         </svg>
                       </div>
-                      <input id="email" type="email" className="form-input block w-full pl-10 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                      <input
+                        id="email"
+                        name="shop_email"
+                        type="email"
+                        className="form-input block w-full pl-10 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                      />
                     </div>
                   </div>
                 </div>
@@ -84,13 +138,74 @@ const Configuration = () => {
                   <label htmlFor="country" className="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
                     Country <span className="text-red-500">*</span>
                   </label>
-                  <div className="mt-1 sm:mt-0 sm:col-span-2">
+                  <div className="relative mt-1 sm:mt-0 sm:col-span-2">
                     <div className="rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
-                      <select id="country" className="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option>United States</option>
-                        <option>Canada</option>
-                        <option>Mexico</option>
-                      </select>
+                      <Listbox
+                        as="div"
+                        className="space-y-1"
+                        value={selectedCountry}
+                        onChange={onChangeCountry}
+                      >
+                        {({ open }) => (
+                          <>
+                            <Listbox.Button className="cursor-default relative w-full rounded-md border border-gray-300 bg-white px-10 py-2 text-left focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                {selectedCountry.flag}
+                              </span>
+                              <span className="block truncate">{selectedCountry.name}</span>
+                              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                                <svg
+                                  className="h-5 w-5 text-gray-400"
+                                  viewBox="0 0 20 20"
+                                  fill="none"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    d="M7 7l3-3 3 3m0 6l-3 3-3-3"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                </svg>
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              show={open}
+                              enter="transition duration-100 ease-out"
+                              enterFrom="transform scale-95 opacity-0"
+                              enterTo="transform scale-100 opacity-100"
+                              leave="transition duration-75 ease-out"
+                              leaveFrom="transform scale-100 opacity-100"
+                              leaveTo="transform scale-95 opacity-0"
+                            >
+                              <Listbox.Options
+                                static
+                                className="mt-2 max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5"
+                              >
+                                {countries.map(country => (
+                                  <Listbox.Option key={country.id} value={country}>
+                                    {({ selected, active }) => (
+                                      <div className={`${
+                                        active
+                                        ? "text-gray-600 bg-gray-50" 
+                                        : "text-gray-900"
+                                      } cursor-pointer relative py-2 px-4 flex items-center`}>
+                                        <span>{country.flag}</span>
+                                        <span
+                                          className={`${
+                                          selected ? "font-semibold" : "font-normal"
+                                        } block truncate ml-3`}>
+                                          {country.name}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </>
+                        )}
+                      </Listbox>
                     </div>
                   </div>
                 </div>
@@ -135,10 +250,15 @@ const Configuration = () => {
                   </label>
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
                     <div className="rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
-                      <select id="currency" className="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                        <option>Central African CFA BEAC (XAF)</option>
-                        <option>US Dollar (US)</option>
-                        <option>Euro (EUR)</option>
+                      <select
+                        onChange={(e) => setSelectedCurrency(e.target.value)}
+                        value={selectedCurrency}
+                        id="currency"
+                        className="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                      >
+                        {currencies.map(currency => (
+                          <option value={currency.id} key={currency.id}>{currency.name} ({currency.code})</option>
+                        ))}
                       </select>
                     </div>
                     <p className="mt-2 text-sm text-gray-500">This is the currency your products are sold in. After your first sale, currency is locked in and can’t be changed.</p>
@@ -172,26 +292,41 @@ const Configuration = () => {
                     <div className="grid gap-4 lg:grid-cols-4 lg:gap-5">
                       <div className="sm:col-span-4">
                         <label htmlFor="street_address" className="block text-sm font-medium leading-5 text-gray-700">
-                          Street address
+                          Street address <span className="text-red-500">*</span>
                         </label>
                         <div className="mt-1 rounded-md shadow-sm">
-                          <input id="street_address" className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                          <input
+                            id="street_address"
+                            name="shop_street_address"
+                            className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            required
+                          />
                         </div>
                       </div>
                       <div className="sm:col-span-1">
                         <label htmlFor="zip_code" className="block text-sm font-medium leading-5 text-gray-700">
-                          Zip code
+                          Zip code <span className="text-red-500">*</span>
                         </label>
                         <div className="mt-1 rounded-md shadow-sm">
-                          <input id="zip_code" className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                          <input
+                            id="zip_code"
+                            name="zip_code"
+                            className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            required
+                          />
                         </div>
                       </div>
                       <div className="sm:col-span-3">
                         <label htmlFor="city" className="block text-sm font-medium leading-5 text-gray-700">
-                          City
+                          City <span className="text-red-500">*</span>
                         </label>
                         <div className="mt-1 rounded-md shadow-sm">
-                          <input id="city" className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                          <input
+                            id="city"
+                            name="shop_city"
+                            className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            required
+                          />
                         </div>
                       </div>
                       <div className="sm:col-span-4">
@@ -218,7 +353,13 @@ const Configuration = () => {
                               <path d="M19.167 9.167H17.45a7.51 7.51 0 0 0-6.618-6.618V.833a.834.834 0 0 0-1.666 0V2.55a7.51 7.51 0 0 0-6.618 6.618H.833a.834.834 0 0 0 0 1.666H2.55a7.51 7.51 0 0 0 6.618 6.618v1.716a.834.834 0 0 0 1.666 0V17.45a7.51 7.51 0 0 0 6.618-6.618h1.716a.834.834 0 0 0 0-1.666zM10 15.833A5.84 5.84 0 0 1 4.167 10 5.84 5.84 0 0 1 10 4.167 5.84 5.84 0 0 1 15.833 10 5.84 5.84 0 0 1 10 15.833z" />
                             </svg>
                           </div>
-                          <input id="longitude" type="text" className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                          <input
+                            id="longitude"
+                            name="shop_lng"
+                            type="text"
+                            className="form-input pl-10 block w-full bg-gray-50 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            readOnly
+                          />
                         </div>
                       </div>
                       <div className="sm:col-span-2">
@@ -232,7 +373,13 @@ const Configuration = () => {
                               <path d="M19.167 9.167H17.45a7.51 7.51 0 0 0-6.618-6.618V.833a.834.834 0 0 0-1.666 0V2.55a7.51 7.51 0 0 0-6.618 6.618H.833a.834.834 0 0 0 0 1.666H2.55a7.51 7.51 0 0 0 6.618 6.618v1.716a.834.834 0 0 0 1.666 0V17.45a7.51 7.51 0 0 0 6.618-6.618h1.716a.834.834 0 0 0 0-1.666zM10 15.833A5.84 5.84 0 0 1 4.167 10 5.84 5.84 0 0 1 10 4.167 5.84 5.84 0 0 1 15.833 10 5.84 5.84 0 0 1 10 15.833z" />
                             </svg>
                           </div>
-                          <input id="latitude" type="text" className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                          <input
+                            id="latitude"
+                            name="shop_lat"
+                            type="text"
+                            className="form-input pl-10 block w-full bg-gray-50 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            readOnly
+                          />
                         </div>
                       </div>
                     </div>
@@ -286,7 +433,13 @@ const Configuration = () => {
                           <path fillRule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      <input id="facebook" className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="https://facebook.com/mckenziearts" autoComplete="off" />
+                      <input
+                        id="facebook"
+                        name="shop_facebook_link"
+                        className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        placeholder="https://facebook.com/mckenziearts"
+                        autoComplete="off"
+                      />
                     </div>
                   </div>
 
@@ -298,7 +451,13 @@ const Configuration = () => {
                           <path d="M17.34 5.46a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2zm4.6 2.42a7.59 7.59 0 0 0-.46-2.43 4.94 4.94 0 0 0-1.16-1.77 4.7 4.7 0 0 0-1.77-1.15 7.3 7.3 0 0 0-2.43-.47C15.06 2 14.72 2 12 2s-3.06 0-4.12.06a7.3 7.3 0 0 0-2.43.47 4.78 4.78 0 0 0-1.77 1.15 4.7 4.7 0 0 0-1.15 1.77 7.3 7.3 0 0 0-.47 2.43C2 8.94 2 9.28 2 12s0 3.06.06 4.12a7.3 7.3 0 0 0 .47 2.43 4.7 4.7 0 0 0 1.15 1.77 4.78 4.78 0 0 0 1.77 1.15 7.3 7.3 0 0 0 2.43.47C8.94 22 9.28 22 12 22s3.06 0 4.12-.06a7.3 7.3 0 0 0 2.43-.47 4.7 4.7 0 0 0 1.77-1.15 4.85 4.85 0 0 0 1.16-1.77 7.59 7.59 0 0 0 .46-2.43c0-1.06.06-1.4.06-4.12s0-3.06-.06-4.12zM20.14 16a5.61 5.61 0 0 1-.34 1.86 3.06 3.06 0 0 1-.75 1.15 3.19 3.19 0 0 1-1.15.75 5.61 5.61 0 0 1-1.86.34c-1 .05-1.37.06-4 .06s-3 0-4-.06a5.73 5.73 0 0 1-1.94-.3 3.27 3.27 0 0 1-1.1-.75 3 3 0 0 1-.74-1.15 5.54 5.54 0 0 1-.4-1.9c0-1-.06-1.37-.06-4s0-3 .06-4a5.54 5.54 0 0 1 .35-1.9A3 3 0 0 1 5 5a3.14 3.14 0 0 1 1.1-.8A5.73 5.73 0 0 1 8 3.86c1 0 1.37-.06 4-.06s3 0 4 .06a5.61 5.61 0 0 1 1.86.34 3.06 3.06 0 0 1 1.19.8 3.06 3.06 0 0 1 .75 1.1 5.61 5.61 0 0 1 .34 1.9c.05 1 .06 1.37.06 4s-.01 3-.06 4zM12 6.87A5.13 5.13 0 1 0 17.14 12 5.12 5.12 0 0 0 12 6.87zm0 8.46A3.33 3.33 0 1 1 15.33 12 3.33 3.33 0 0 1 12 15.33z" />
                         </svg>
                       </div>
-                      <input id="instagram" className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="@mckenziearts" autoComplete="off" />
+                      <input
+                        id="instagram"
+                        name="shop_instagram_link"
+                        className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        placeholder="@mckenziearts"
+                        autoComplete="off"
+                      />
                     </div>
                   </div>
 
@@ -310,7 +469,13 @@ const Configuration = () => {
                           <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                         </svg>
                       </div>
-                      <input id="twitter" className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="@mckenziearts" autoComplete="off" />
+                      <input
+                        id="twitter"
+                        name="shop_twitter_link"
+                        className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        placeholder="@mckenziearts"
+                        autoComplete="off"
+                      />
                     </div>
                   </div>
                 </div>

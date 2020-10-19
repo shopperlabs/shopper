@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Controllers\Api;
+namespace Shopper\Framework\Http\Controllers\Api\Settings;
 
 use Illuminate\Routing\Controller;
 use Shopper\Framework\Http\Resources\Country as CountryResource;

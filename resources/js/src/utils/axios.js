@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = (document.querySelector('meta[name="dashboard-url"]') as Element).getAttribute('content');
+const baseURL = (document.querySelector('meta[name="base-url"]')).getAttribute('content');
 const fetchClient = () => {
   const defaultOptions = {
     baseURL: `${baseURL}`,
