@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import ReactDom from "react-dom";
+import React, { useState, useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
 import { Switch, Listbox, Transition } from "@headlessui/react";
 import mapboxgl from 'mapbox-gl';
 
@@ -27,21 +27,46 @@ const Configuration = () => {
     shop_street_address: "",
     shop_zipcode: "",
     shop_city: "",
-    shop_lng: "",
-    shop_lat: "",
     shop_facebook_link: "",
     shop_instagram_link: "",
     shop_twitter_link: "",
   });
-  let map = false;
+  const [coordinates, setCoordinates] = useState({
+    shop_lng: 5,
+    shop_lat: 34,
+    zoom: 2
+  });
+  const mapContainerRef = useRef(null);
+  const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
   useEffect(() => {
-    if (!map) {
-      map = new mapboxgl.Map({
-        container: 'mapboxgl',
-        style: 'mapbox://styles/mapbox/streets-v11',
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [coordinates.shop_lng, coordinates.shop_lat],
+      zoom: coordinates.zoom
+    });
+
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('mouseenter', 'places', function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+
+// Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'places', function () {
+      map.getCanvas().style.cursor = '';
+    });
+
+    // Add navigation control (the +/- zoom buttons)
+    map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+    map.on('move', () => {
+      setCoordinates({
+        shop_lng: map.getCenter().lng.toFixed(4),
+        shop_lat: map.getCenter().lat.toFixed(4),
+        zoom: map.getZoom().toFixed(2),
       });
-    }
+    });
 
     axios.get('/api/countries')
       .then((response) => {
@@ -54,7 +79,9 @@ const Configuration = () => {
         setCurrencies(response.data.data);
         setSelectedCurrency(response.data.data[0].id);
       });
-  }, [map]);
+
+    return () => map.remove();
+  }, []);
 
   function onChangeCountry(country) {
     setSelectedCountry(country);
@@ -281,7 +308,7 @@ const Configuration = () => {
               <div className="bg-white shadow-md sm:rounded-md p-4">
                 <div className="grid gap-4 lg:grid-cols-3 lg:gap-6">
                   <div className="space-y-4 sm:col-span-2">
-                    <div id="mapboxgl" className="bg-gray-100 rounded-md h-95 overflow-hidden" />
+                    <div ref={mapContainerRef} className="bg-gray-100 rounded-md h-95 overflow-hidden outline-none focus:outline-none" />
                     <p className="text-sm text-gray-500 leading-5">
                       Shopper uses <span className="font-medium">Mapbox</span> to make it easier to locate your store.
                       To learn more about mapbox, consult the <a href="https://docs.mapbox.com/mapbox-gl-js/api" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-500 transition-colors duration-150 ease-in-out mr-1">documentation</a>
@@ -357,6 +384,7 @@ const Configuration = () => {
                             id="longitude"
                             name="shop_lng"
                             type="text"
+                            value={coordinates.shop_lng}
                             className="form-input pl-10 block w-full bg-gray-50 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                             readOnly
                           />
@@ -376,6 +404,7 @@ const Configuration = () => {
                           <input
                             id="latitude"
                             name="shop_lat"
+                            value={coordinates.shop_lat}
                             type="text"
                             className="form-input pl-10 block w-full bg-gray-50 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                             readOnly
@@ -495,7 +524,7 @@ const Configuration = () => {
 }
 
 if (document.getElementById('setting-configuration')) {
-  ReactDom.render(
+  ReactDOM.render(
     <Configuration />,
     document.getElementById('setting-configuration')
   );
