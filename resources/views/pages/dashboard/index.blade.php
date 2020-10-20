@@ -1,4 +1,4 @@
-@extends('shopper::layouts.'. config('shopper.theme'))
+@extends('shopper::layouts.'. config('shopper.system.theme'))
 @section('title', __('Dashboard'))
 
 @section('content')

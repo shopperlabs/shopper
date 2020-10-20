@@ -60,8 +60,8 @@ class FrameworkServiceProvider extends ServiceProvider
         view()->composer('*', GlobalComposer::class);
 
         // Backend Menu
-        view()->creator('shopper::partials.' . config('shopper.theme') . '.aside._secondary', SidebarCreator::class);
-        view()->composer('shopper::partials.' . config('shopper.theme') . '.aside._primary', MenuCreator::class);
+        view()->creator('shopper::partials.' . config('shopper.system.theme') . '.aside._secondary', SidebarCreator::class);
+        view()->composer('shopper::partials.' . config('shopper.system.theme') . '.aside._primary', MenuCreator::class);
     }
 
     /**

@@ -29,6 +29,6 @@ class Dropdown extends Component
 
     public function render()
     {
-        return view('shopper::components.livewire.user.dropdown');
+        return view('shopper::livewire.user.dropdown');
     }
 }
