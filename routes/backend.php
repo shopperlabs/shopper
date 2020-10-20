@@ -39,7 +39,9 @@ Route::resource('customers', 'CustomerController');
 Route::resource('reviews', 'ReviewController');
 Route::resource('discounts', 'DiscountController');
 Route::resource('inventory-histories', 'InventoryHistoryController');
-Route::prefix('settings')->as('settings.')->group(function () {
+Route::prefix('setting')->as('settings.')->group(function () {
+    Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
+
     Route::get('/shop', [ShopController::class, 'setting'])->name('shop');
     Route::put('/update/{store}', [ShopController::class, 'update'])->name('shop.update');
     Route::get('/', [SettingController::class, 'index'])->name('index');

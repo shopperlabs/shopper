@@ -11,6 +11,8 @@ use Shopper\Framework\Components\Blade\{
     DateTimePicker,
     Input\Group,
     Input\RichText,
+    Input\Text,
+    Input\Textarea,
     LearnMore
 };
 use Shopper\Framework\Components\Livewire\{
@@ -27,7 +29,8 @@ use Shopper\Framework\Components\Livewire\{
     Product\Inventory,
     ProductList,
     User\Dropdown,
-    User\Profile
+    User\Profile,
+    Settings\Analytics
 };
 
 class ComponentServiceProvider extends ServiceProvider
@@ -56,6 +59,8 @@ class ComponentServiceProvider extends ServiceProvider
         Blade::component('shopper-delete.action', DeleteAction::class);
         Blade::component('shopper-input.group', Group::class);
         Blade::component('shopper-input.rich-text', RichText::class);
+        Blade::component('shopper-input.text', Text::class);
+        Blade::component('shopper-input.textarea', Textarea::class);
     }
 
     /**
@@ -79,5 +84,6 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-discounts-list', DiscountList::class);
         Livewire::component('shopper-create-discount', CreateDiscount::class);
         Livewire::component('shopper-edit-discount', EditDiscount::class);
+        Livewire::component('shopper-settings-analytics', Analytics::class);
     }
 }

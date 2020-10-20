@@ -30,6 +30,6 @@ class Breadcrumb extends Component
      */
     public function render()
     {
-        return view('shopper::components.blades.breadcrumb');
+        return view('shopper::components.breadcrumb');
     }
 }

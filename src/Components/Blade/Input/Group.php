@@ -8,6 +8,6 @@ class Group extends Component
 {
     public function render()
     {
-        return view('shopper::components.blades.input.group');
+        return view('shopper::components.input.group');
     }
 }
