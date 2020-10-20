@@ -39,7 +39,7 @@ class Dashboard
         }
 
 
-        if (!Setting::query()->where('key', 'email')->exists()) {
+        if (!Setting::query()->where('key', 'shop_email')->exists()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', Response::HTTP_UNAUTHORIZED);
             }

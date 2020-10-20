@@ -24,7 +24,7 @@ class CreateSystemSettingsTable extends Migration
 
             $table->string('key')->unique();
             $table->string('display_name')->nullable();
-            $table->json('value');
+            $table->json('value')->nullable();
             $table->boolean('locked')->default(false);
         });
     }

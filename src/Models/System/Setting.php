@@ -58,9 +58,10 @@ class Setting extends Model
         return [
             'shop_name' => __('Store name'),
             'shop_email' => __('Store email'),
+            'shop_logo' => __('Store Logo'),
             'shop_about' => __('Store description'),
             'shop_country_id' => __('Country'),
-            'shop_currency_id' => __('Currency'),
+            'shop_currency_id' => __('Store Currency'),
             'shop_street_address' => __('Store street address'),
             'shop_zipcode' => __('Zip Code'),
             'shop_city' => __('Store city'),

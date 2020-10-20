@@ -1,6 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useRef
+} from "react";
 import ReactDOM from "react-dom";
 import { Switch, Listbox, Transition } from "@headlessui/react";
+import { useDropzone } from "react-dropzone";
 import mapboxgl from 'mapbox-gl';
 
 import axios from "@utils/axios";
@@ -8,14 +14,21 @@ import Steps from "@components/Steps";
 import TrixEditor from "@components/TrixEditor";
 import PhoneNumber from "@components/Input/PhoneNumber";
 import ButtonLoader from "@components/ButtonLoader";
+import Modal from "@components/Modal";
+import { scrollToPosition } from "@utils/helpers";
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2hvcHBlcmxhYnMiLCJhIjoiY2tnNzFsYWo4MDJ6aTJ1bDE0NmJ5d3k0dyJ9.5mAK55meVSZ3v5RwKYraqw';
 
 const Configuration = () => {
   const [step, setStep] = useState(0);
+  const [errors, setErrors] = useState([]);
+  const [message, setMessage] = useState('');
+  const [show, setIsShow] = useState(false);
   const [body, setBody] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [switchValue, setSwitchValue] = useState(false);
+  const [preview, setPreview] = useState(null);
+  const [picture, setPicture] = useState(null);
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
   const [currencies, setCurrencies] = useState([]);
@@ -31,13 +44,23 @@ const Configuration = () => {
     shop_instagram_link: "",
     shop_twitter_link: "",
   });
+  const onDrop = useCallback((acceptedFiles) => {
+    const selectFile = acceptedFiles[0];
+    setPreview(URL.createObjectURL(selectFile));
+    setPicture(selectFile);
+  }, []);
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: 'image/jpeg, image/png, image/jpg',
+    maxSize: 1024 * 1500,
+    multiple: false,
+  });
   const [coordinates, setCoordinates] = useState({
     shop_lng: 5,
     shop_lat: 34,
     zoom: 2
   });
   const mapContainerRef = useRef(null);
-  const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }));
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -68,13 +91,13 @@ const Configuration = () => {
       });
     });
 
-    axios.get('/api/countries')
+    axios.get('/countries')
       .then((response) => {
         setCountries(response.data.data);
         setSelectedCountry(response.data.data[0]);
       });
 
-    axios.get('/api/currencies')
+    axios.get('/currencies')
       .then((response) => {
         setCurrencies(response.data.data);
         setSelectedCurrency(response.data.data[0].id);
@@ -89,7 +112,7 @@ const Configuration = () => {
     if (Object.entries(country.currencies).length > 0) {
       const code = Object.entries(country.currencies)[0][0];
 
-      axios.get(`/api/currency/${code}`)
+      axios.get(`/currency/${code}`)
         .then(response => {
           const currency = response.data.data;
           setSelectedCurrency(currency.id);
@@ -97,12 +120,68 @@ const Configuration = () => {
     }
   }
 
+  function onSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+
+    // Upload file to the server.
+    const formData = new FormData();
+    formData.append('shop_logo', picture);
+    formData.append('shop_country_id', selectedCountry.id);
+    formData.append('shop_currency_id', selectedCurrency);
+    formData.append('shop_phone_number', phoneNumber);
+    formData.append('shop_lng', coordinates.shop_lng);
+    formData.append('shop_lat', coordinates.shop_lat);
+    formData.append('shop_name', values.shop_name);
+    formData.append('shop_email', values.shop_email);
+    formData.append('shop_about', body);
+    formData.append('shop_street_address', values.shop_street_address);
+    formData.append('shop_zipcode', values.shop_zipcode);
+    formData.append('shop_city', values.shop_city);
+    formData.append('shop_facebook_link', values.shop_facebook_link);
+    formData.append('shop_instagram_link', values.shop_instagram_link);
+    formData.append('shop_twitter_link', values.shop_twitter_link);
+    formData.append('is_default_inventory', switchValue)
+
+    axios.post('/configuration', formData)
+      .then(response => {
+        setLoading(false);
+        setMessage(response.data.message);
+        setTimeout(() => { setIsShow(true) }, 1500);
+      })
+      .catch(error => {
+        setLoading(false);
+        let errors = [];
+        if (error.response.data) {
+          const response = error.response.data;
+
+          if (response.status === 'error') {
+            Object.entries(response.errors).forEach((error) => {
+              error[1].forEach(err => { errors.push(err); });
+            });
+            setErrors(errors);
+            scrollToPosition('#step-one');
+          }
+        }
+      });
+  }
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+
+    // eslint-disable-next-line no-shadow
+    setValues((values) => ({
+      ...values,
+      [name]: value,
+    }));
+  }
+
   return (
     <>
       <Steps {...step} />
       <main className="py-5 sm:py-10">
         <div className="max-w-7xl mx-auto">
-          <form>
+          <form onSubmit={onSubmit}>
             <div id="step-one" className="px-4 sm:px-6 lg:px-8">
               <span className="text-sm text-blue-600 uppercase font-medium lg:hidden">Step 1 of 3</span>
               <h1 className="text-gray-900 font-bold text-2xl leading-8 mt-2 lg:text-3xl lg:mt-0">Shop configuration</h1>
@@ -113,6 +192,27 @@ const Configuration = () => {
                   This information will be useful if you want users of your site to directly contact you by email or by your phone number.
                 </p>
               </div>
+              {errors.length > 0 && (
+                <div className="rounded-md bg-red-50 p-4 border border-red-200 mt-4">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-sm leading-5 font-medium text-red-800">
+                        There were {errors.length} errors with your submission
+                      </h3>
+                      <div className="mt-2 text-sm leading-5 text-red-700">
+                        <ul className="list-disc pl-5 space-y-1">
+                          {errors.map((err, idx) => <li key={idx}>{err}</li>)}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="mt-6 lg:mt-8 sm:px-6 lg:px-8">
@@ -131,8 +231,10 @@ const Configuration = () => {
                       <input
                         id="name"
                         name="shop_name"
+                        value={values.shop_name}
                         className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         autoComplete="off"
+                        onChange={handleChange}
                         required
                       />
                     </div>
@@ -154,8 +256,11 @@ const Configuration = () => {
                       <input
                         id="email"
                         name="shop_email"
+                        value={values.shop_email}
                         type="email"
                         className="form-input block w-full pl-10 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                        onChange={handleChange}
+                        required
                       />
                     </div>
                   </div>
@@ -242,17 +347,23 @@ const Configuration = () => {
                     Logo
                   </label>
                   <div className="mt-1 sm:mt-0 sm:col-span-2">
-                    <div className="flex items-center">
-                      <span className="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                    <div className="mt-2 flex items-center">
+                    <span className="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                      {preview && (<img className="h-full w-full rounded-full object-center object-cover" src={preview} alt="Shop logo" />)}
+                      {!preview && (
                         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="photograph w-8 h-8 text-gray-300">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                      </span>
-                      <div className="ml-5 inline-flex rounded-md shadow-sm">
-                        <label className="inline-flex cursor-pointer py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+                      )}
+                    </span>
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} multiple={false} />
+                        <button
+                          type="button"
+                          className="ml-5 rounded-md shadow-sm py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-200 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out"
+                        >
                           Change
-                          <input type='file' className='sr-only' />
-                        </label>
+                        </button>
                       </div>
                     </div>
                     <p className="mt-2 text-sm text-gray-500">The logo of your store that will be visible on your site. This assets will appear on your invoices.</p>
@@ -324,8 +435,10 @@ const Configuration = () => {
                         <div className="mt-1 rounded-md shadow-sm">
                           <input
                             id="street_address"
+                            value={values.shop_street_address}
                             name="shop_street_address"
                             className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            onChange={handleChange}
                             required
                           />
                         </div>
@@ -337,8 +450,10 @@ const Configuration = () => {
                         <div className="mt-1 rounded-md shadow-sm">
                           <input
                             id="zip_code"
-                            name="zip_code"
+                            name="shop_zipcode"
+                            value={values.shop_zipcode}
                             className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            onChange={handleChange}
                             required
                           />
                         </div>
@@ -351,7 +466,9 @@ const Configuration = () => {
                           <input
                             id="city"
                             name="shop_city"
+                            value={values.shop_city}
                             className="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+                            onChange={handleChange}
                             required
                           />
                         </div>
@@ -465,6 +582,8 @@ const Configuration = () => {
                       <input
                         id="facebook"
                         name="shop_facebook_link"
+                        value={values.shop_facebook_link}
+                        onChange={handleChange}
                         className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         placeholder="https://facebook.com/mckenziearts"
                         autoComplete="off"
@@ -483,6 +602,8 @@ const Configuration = () => {
                       <input
                         id="instagram"
                         name="shop_instagram_link"
+                        value={values.shop_instagram_link}
+                        onChange={handleChange}
                         className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         placeholder="@mckenziearts"
                         autoComplete="off"
@@ -501,6 +622,8 @@ const Configuration = () => {
                       <input
                         id="twitter"
                         name="shop_twitter_link"
+                        value={values.shop_twitter_link}
+                        onChange={handleChange}
                         className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         placeholder="@mckenziearts"
                         autoComplete="off"
@@ -519,6 +642,39 @@ const Configuration = () => {
           </form>
         </div>
       </main>
+      <Modal show={show}>
+        <div
+          className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-headline"
+        >
+          <div>
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+              <svg className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+            <div className="mt-3 text-center sm:mt-5">
+              <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                Congratulations!
+              </h3>
+              <div className="mt-2">
+                <p className="text-sm leading-5 text-gray-500">
+                  {message}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="mt-5 sm:mt-6">
+            <span className="flex w-full rounded-md shadow-sm">
+              <a href={`${(document.querySelector('meta[name="dashboard-url"]')).getAttribute('content')}/dashboard`} className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                Go to dashboard
+              </a>
+            </span>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 }

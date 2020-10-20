@@ -3,7 +3,7 @@ import axios from "axios";
 const baseURL = (document.querySelector('meta[name="base-url"]')).getAttribute('content');
 const fetchClient = () => {
   const defaultOptions = {
-    baseURL: `${baseURL}`,
+    baseURL: `${baseURL}/api`,
     headers: {
       'Content-Type': 'application/json',
       "X-Requested-With": "XMLHttpRequest"
