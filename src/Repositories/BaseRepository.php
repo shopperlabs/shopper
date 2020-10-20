@@ -80,15 +80,15 @@ abstract class BaseRepository implements RepositoryContract
     abstract public function model();
 
     /**
+     * @return \Illuminate\Contracts\Foundation\Application|Model|mixed
      * @throws GeneralException
-     * @return Model|mixed
      */
     public function makeModel()
     {
         $model = resolve($this->model());
 
         if (! $model instanceof Model) {
-            throw new GeneralException("Class {$this->model()} must be an instance of ".Model::class);
+            throw new GeneralException("Class {$this->model()} must be an instance of ". Model::class);
         }
 
         return $this->model = $model;

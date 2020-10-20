@@ -14,14 +14,6 @@ class CartItem extends Model
     protected $guarded = [];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-    ];
-
-    /**
      * Get the table associated with the model.
      *
      * @return string

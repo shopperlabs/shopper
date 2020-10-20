@@ -20,6 +20,7 @@ class ShopperSeeder extends Seeder
         Model::unguard();
 
         $this->seed('AuthTableSeeder');
+        $this->seed('CountriesTableSeeder');
         $this->seed('CurrenciesTableSeeder');
 
         Model::reguard();

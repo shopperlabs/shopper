@@ -22,7 +22,7 @@ class CreateCartsTable extends Migration
             $table->string('status', 32);
             $table->text('notes')->nullable();
 
-            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
+            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
         });
     }
 

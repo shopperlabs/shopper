@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Shopper\Framework\Models\Currency;
+use Shopper\Framework\Models\System\Currency;
 use Shopper\Framework\Traits\Database\DisableForeignKeys;
 
 class CurrenciesTableSeeder extends Seeder
@@ -34,7 +34,7 @@ class CurrenciesTableSeeder extends Seeder
 
         foreach ($this->currencies as $code => $currency) {
             $data = array_merge($currency, ['code' => $code]);
-            Currency::create($data);
+            Currency::query()->create($data);
         }
 
         $this->enableForeignKeys();

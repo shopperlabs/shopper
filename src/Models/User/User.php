@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Spatie\Permission\Traits\HasRoles;
 
-use Shopper\Framework\Models\User\Address;
-
 class User extends Authenticatable
 {
     use Notifiable,
@@ -82,7 +80,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        return $this->hasRole(config('shopper.config.users.admin_role'));
+        return $this->hasRole(config('shopper.system.users.admin_role'));
     }
 
     /**
@@ -119,7 +117,7 @@ class User extends Authenticatable
                 return gravatar()->get($this->email);
 
             case 'storage':
-                return Storage::disk(config('shopper.config.storage.disks.avatars'))->url($this->avatar_location);
+                return Storage::disk(config('shopper.system.storage.disks.avatars'))->url($this->avatar_location);
         }
     }
 

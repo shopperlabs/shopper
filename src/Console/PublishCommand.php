@@ -28,7 +28,7 @@ class PublishCommand extends Command
     public function handle()
     {
         $this->call('vendor:publish', [
-            '--tag' => 'shopper-config',
+            '--tag' => 'shopper',
             '--force' => $this->option('force'),
         ]);
 

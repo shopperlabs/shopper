@@ -5,7 +5,6 @@ namespace Shopper\Framework\Console;
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class UserCommand extends Command
 {
@@ -62,7 +61,6 @@ class UserCommand extends Command
             'password'     => Hash::make($password),
             'last_login_at'     => now()->toDateTimeString(),
             'email_verified_at' => now()->toDateTimeString(),
-            'is_superuser'      => true,
             'last_login_ip' => request()->getClientIp()
         ];
         $model = config('auth.providers.users.model');
@@ -70,7 +68,7 @@ class UserCommand extends Command
         try {
             $user = tap((new $model)->forceFill($userData))->save();
 
-            $user->assignRole(config('shopper.config.users.admin_role'));
+            $user->assignRole(config('shopper.system.users.admin_role'));
         } catch (\Exception | QueryException $e) {
             $this->error($e->getMessage());
         }

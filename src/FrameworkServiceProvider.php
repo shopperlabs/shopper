@@ -8,9 +8,11 @@ use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Events\BuildingSidebar;
 use Shopper\Framework\Http\Middleware\Authenticate;
-use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
-use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
-use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
+use Shopper\Framework\Events\Handlers\{
+    RegisterDashboardSidebar,
+    RegisterOrderSidebar,
+    RegisterShopSidebar
+};
 use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
@@ -43,12 +45,12 @@ class FrameworkServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerMiddleware($this->app['router']);
-        $this->registerShopRoute();
+        $this->registerShopSettingRoute();
 
         $this->app->register(ShopperServiceProvider::class);
 
         // setLocale for php. Enables ->formatLocalized() with localized values for dates.
-        setlocale(LC_TIME, config('shopper.locale'));
+        setlocale(LC_TIME, config('shopper.system.locale'));
 
         // setLocale to use Carbon source locales. Enables diffForHumans() localized.
         Carbon::setLocale(config('app.locale'));
@@ -58,8 +60,8 @@ class FrameworkServiceProvider extends ServiceProvider
         view()->composer('*', GlobalComposer::class);
 
         // Backend Menu
-        view()->creator('shopper::partials.' . config('shopper.theme') . '.aside._secondary', SidebarCreator::class);
-        view()->composer('shopper::partials.' . config('shopper.theme') . '.aside._primary', MenuCreator::class);
+        view()->creator('shopper::partials.' . config('shopper.system.theme') . '.aside._secondary', SidebarCreator::class);
+        view()->composer('shopper::partials.' . config('shopper.system.theme') . '.aside._primary', MenuCreator::class);
     }
 
     /**
@@ -67,7 +69,7 @@ class FrameworkServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerShopRoute()
+    public function registerShopSettingRoute()
     {
         (new Shopper())->initializeRoute();
     }
@@ -84,7 +86,7 @@ class FrameworkServiceProvider extends ServiceProvider
             'web',
             Authenticate::class,
             ResolveSidebars::class,
-        ], config('shopper.middleware', [])));
+        ], config('shopper.routes.middleware', [])));
 
         foreach ($this->middlewares as $name => $middleware) {
             $router->aliasMiddleware($name, $middleware);
@@ -98,19 +100,13 @@ class FrameworkServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (!defined('SHOPPER_PATH')) {
-            define('SHOPPER_PATH', realpath(__DIR__ . '/../'));
-        }
-
-        $this->mergeConfigFrom(SHOPPER_PATH . '/config/config.php', 'shopper');
-
         // Register Default Dashboard Menu
         $this->app['events']->listen(BuildingSidebar::class, RegisterDashboardSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, RegisterShopSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, RegisterOrderSidebar::class);
 
         // Register the service the package provides.
-        $this->app->singleton('shopper', function ($app) {
+        $this->app->singleton('shopper', function () {
             return new Shopper;
         });
 

@@ -30,6 +30,6 @@
 
     @stack('scripts')
 
-    <script src="{{ mix('/js/application.js', 'shopper') }}"></script>
+    <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
 </body>
 </html>

@@ -23,7 +23,7 @@
             @endif
 
             <div class="mt-4">
-                <img class="mx-auto h-12 w-auto" src="{{ asset('shopper/images/shopper.svg') }}" alt="Laravel Shopper">
+                <img class="mx-auto h-20 w-auto" src="{{ asset('shopper/images/logo.svg') }}" alt="Laravel Shopper">
                 <h2 class="mt-10 text-3xl font-semibold text-center leading-9 text-gray-800">{{ __('Reset your password') }}</h2>
                 <p class="mt-5 text-sm leading-5 text-center text-gray-600">
                     {{ __("Enter the email address you used when creating your account and we will send you instructions to reset your password.") }}
@@ -43,10 +43,10 @@
                         placeholder="{{ __("Email address") }}"
                         value="{{ old('email') }}"
                     >
-                    @error('email')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
                 </div>
+                @error('email')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
 
                 <div class="mt-5">
                     <button type="submit" class="relative block w-full py-2 px-3 border border-transparent rounded-md text-white font-semibold bg-blue-600 hover:bg-blue-700 focus:bg-blue-800 focus:outline-none focus:shadow-outline-blue sm:text-sm sm:leading-5">

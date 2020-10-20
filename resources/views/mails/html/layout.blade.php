@@ -3,10 +3,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <style>
         .footer {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter var', sans-serif;
             font-size: 14px;
             font-weight: normal;
             font-style: normal;
@@ -17,7 +17,7 @@
         }
 
         .footer__explications {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter var', sans-serif;
             font-size: 14px;
             font-weight: normal;
             font-style:
@@ -33,7 +33,7 @@
         .app-name {
             width: 175px;
             height: 20px;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter var', sans-serif;
             font-size: 18px;
             font-weight: 500;
             font-style: normal;
@@ -47,7 +47,7 @@
         }
 
         .app-description {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter var', sans-serif;
             font-size: 13px;
             font-weight: 500;
             font-style: normal;
@@ -68,12 +68,12 @@
         }
 
         .email-body p {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter var', sans-serif;
             font-size: 14px;
         }
 
         .social-link a {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter var', sans-serif;
             font-size: 12px;
             color:#007cc3;
             text-decoration: underline;
@@ -85,7 +85,7 @@
         }
 
         .button {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter var', sans-serif;
             background-color: #007cc3;
             border: none;color: #fff;
             padding: 10px 18px;
@@ -100,7 +100,7 @@
 
         .link {
             display: block;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter var', sans-serif;
             font-size: 12px;
             font-weight: 500;
             font-style: normal;
@@ -128,69 +128,69 @@
         <td style="padding: 50px;">
             <table style="width: 550px;height: 100%;margin: 0 auto" cellpadding="0" cellspacing="0" border="0">
                 <tbody>
-                {!! $header ?? '' !!}
+                    {!! $header ?? '' !!}
 
-                <!-- Email Body -->
-                <tr>
-                    <td class="email-body">
-                        {!! $slot !!}
+                    <!-- Email Body -->
+                    <tr>
+                        <td class="email-body">
+                            {!! $slot !!}
 
-                        {!! $subcopy ?? '' !!}
-                    </td>
-                </tr>
+                            {!! $subcopy ?? '' !!}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
             <table style="width: 270px;height: 100%;margin: 20px auto 0 auto;" cellpadding="0" cellspacing="0" border="0">
                 <tbody>
-                <tr>
-                    <td>
-                        <table style="float:left;margin-right:15px;" cellpadding="0" cellspacing="0" border="0">
-                            <tbody>
-                            <tr>
-                                <td class="social-link">
-                                    <a href="https://laravelshopper.com">Website</a>
-                                    <span>·</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table style="float:left;margin-right:15px;" cellpadding="0" cellspacing="0" border="0">
-                            <tbody>
-                            <tr>
-                                <td class="social-link">
-                                    <a href="https://github.com/laravel-shopper/framework">Github</a>
-                                    <span>·</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table style="float:left;margin-right:15px;" cellpadding="0" cellspacing="0" border="0">
-                            <tbody>
-                            <tr>
-                                <td class="social-link">
-                                    <a href="https://twitter.com/laravelshopper">Twitter</a>
-                                    <span>·</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table style="float:left;" cellpadding="0" cellspacing="0" border="0">
-                            <tbody>
-                            <tr>
-                                <td class="social-link">
-                                    <a href="https://laravelcm.slack.com">Slack</a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <table style="float:left;margin-right:15px;" cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <td class="social-link">
+                                        <a href="https://laravelshopper.io">Website</a>
+                                        <span>·</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table style="float:left;margin-right:15px;" cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <td class="social-link">
+                                        <a href="https://github.com/laravel-shopper/framework">Github</a>
+                                        <span>·</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table style="float:left;margin-right:15px;" cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <td class="social-link">
+                                        <a href="https://twitter.com/laravelshopper">Twitter</a>
+                                        <span>·</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table style="float:left;" cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
+                                <tr>
+                                    <td class="social-link">
+                                        <a href="https://discord.gg/AqWpFVR">Discord</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <table style="margin: 20px auto 10px auto;" cellpadding="0" cellspacing="0" border="0">
                 <tbody>
-                {!! $footer ?? '' !!}
+                    {!! $footer ?? '' !!}
                 </tbody>
             </table>
         </td>

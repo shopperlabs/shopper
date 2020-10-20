@@ -16,11 +16,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {},
-      boxShadow: {
-        smooth: "0 2px 20px 0 rgba(0, 0, 0, 0.05)",
-        bigger: "0 10px 20px 0 rgba(0, 0, 0, 0.01)",
-      },
       spacing: {
+        95: "23.75rem",
         125: "31.25rem",
         140: "35rem"
       },

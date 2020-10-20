@@ -11,6 +11,15 @@ use Shopper\Framework\Console\UserCommand;
 class ShopperServiceProvider extends ServiceProvider
 {
     /**
+     * Shopper config files.
+     *
+     * @var string[]
+     */
+    protected $configFiles = [
+        'system', 'routes',
+    ];
+
+    /**
      * Bootstrap any package services.
      *
      * @return void
@@ -31,25 +40,26 @@ class ShopperServiceProvider extends ServiceProvider
      */
     public function registerPublishing()
     {
-        $this->publishes([
-            __DIR__ . '/../../config/config.php' => config_path('shopper/config.php'),
-        ], 'shopper-config');
+        collect($this->configFiles)->each(function ($config) {
+            $this->mergeConfigFrom(SHOPPER_PATH . "/config/$config.php", "shopper.$config");
+            $this->publishes([SHOPPER_PATH. "/config/$config.php" => config_path("shopper/$config.php")], 'shopper');
+        });
 
         $this->publishes([
-            __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/shopper'),
+            SHOPPER_PATH . '/resources/lang' => resource_path('lang/vendor/shopper'),
         ], 'shopper-lang');
     }
 
     /**
-     * Register Datababse and seeders
+     * Register Database and seeders.
      *
      * @return void
      */
     public function registerDatabase()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadMigrationsFrom(SHOPPER_PATH . '/database/migrations');
         $this->publishes([
-            __DIR__ . '/../../database/seeds' => database_path('seeds'),
+            SHOPPER_PATH . '/database/seeds' => database_path('seeds'),
         ], 'shopper-seeders');
     }
 
@@ -60,8 +70,8 @@ class ShopperServiceProvider extends ServiceProvider
      */
     protected function registerResources()
     {
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'shopper');
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'shopper');
+        $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
+        $this->loadTranslationsFrom(SHOPPER_PATH . '/resources/lang', 'shopper');
         $this->loadJsonTranslationsFrom(resource_path('lang/vendor/shopper'));
     }
 
@@ -86,6 +96,10 @@ class ShopperServiceProvider extends ServiceProvider
     {
         $this->registerProviders();
 
+        if (!defined('SHOPPER_PATH')) {
+            define('SHOPPER_PATH', realpath(__DIR__ . '/../../'));
+        }
+
         $this->commands([
             InstallCommand::class,
             PublishCommand::class,
@@ -102,7 +116,6 @@ class ShopperServiceProvider extends ServiceProvider
     public function provides() : array
     {
         return [
-            ObserverServiceProvider::class,
             ShopperSidebarServiceProvider::class,
             SidebarServiceProvider::class,
             EventServiceProvider::class,
