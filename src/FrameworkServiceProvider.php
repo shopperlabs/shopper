@@ -7,7 +7,6 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Events\BuildingSidebar;
-use Shopper\Framework\Http\Middleware\Authenticate;
 use Shopper\Framework\Events\Handlers\{
     RegisterDashboardSidebar,
     RegisterOrderSidebar,
@@ -16,8 +15,12 @@ use Shopper\Framework\Events\Handlers\{
 use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
-use Shopper\Framework\Http\Middleware\Dashboard;
-use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
+use Shopper\Framework\Http\Middleware\{
+    Authenticate,
+    Dashboard,
+    HasConfiguration,
+    RedirectIfAuthenticated
+};
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Services\Gravatar;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
@@ -35,6 +38,7 @@ class FrameworkServiceProvider extends ServiceProvider
         'role'            => RoleMiddleware::class,
         'permission'      => PermissionMiddleware::class,
         'shopper.guest'   => RedirectIfAuthenticated::class,
+        'shopper.setup'   => HasConfiguration::class,
     ];
 
     /**

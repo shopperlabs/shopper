@@ -34,7 +34,7 @@ class Shopper
     public function initializeRoute()
     {
         Route::namespace('Shopper\Framework\Http\Controllers')
-            ->middleware('shopper')
+            ->middleware(['shopper', 'shopper.setup'])
             ->as('shopper.')
             ->prefix(self::prefix())
             ->group(function () {
