@@ -251,9 +251,9 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * @param       $item
-     * @param       $column
-     * @param array $columns
+     * @param  string  $item
+     * @param  string  $column
+     * @param  array  $columns
      *
      * @return Model|null|static
      */
@@ -267,10 +267,10 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * @param int    $limit
-     * @param array  $columns
-     * @param string $pageName
-     * @param null   $page
+     * @param  int  $limit
+     * @param  array  $columns
+     * @param  string  $pageName
+     * @param  null  $page
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
@@ -322,8 +322,8 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set an ORDER BY clause.
      *
-     * @param string $column
-     * @param string $direction
+     * @param  string  $column
+     * @param  string  $direction
      * @return $this
      */
     public function orderBy($column, $direction = 'asc')

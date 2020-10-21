@@ -13,7 +13,8 @@ use Shopper\Framework\Components\Blade\{
     Input\RichText,
     Input\Text,
     Input\Textarea,
-    LearnMore
+    LearnMore,
+    Notification,
 };
 use Shopper\Framework\Components\Livewire\{
     BrandList,
@@ -30,7 +31,8 @@ use Shopper\Framework\Components\Livewire\{
     ProductList,
     User\Dropdown,
     User\Profile,
-    Settings\Analytics
+    Settings\Analytics,
+    Settings\Management,
 };
 
 class ComponentServiceProvider extends ServiceProvider
@@ -61,6 +63,7 @@ class ComponentServiceProvider extends ServiceProvider
         Blade::component('shopper-input.rich-text', RichText::class);
         Blade::component('shopper-input.text', Text::class);
         Blade::component('shopper-input.textarea', Textarea::class);
+        Blade::component('shopper-notification', Notification::class);
     }
 
     /**
@@ -71,6 +74,7 @@ class ComponentServiceProvider extends ServiceProvider
     public function registerLivewireComponents()
     {
         Livewire::component('shopper-initialization', Initialization::class);
+
         Livewire::component('shopper-category-list', CategoryList::class);
         Livewire::component('shopper-brand-list', BrandList::class);
         Livewire::component('shopper-collection-list', CollectionList::class);
@@ -84,6 +88,11 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-discounts-list', DiscountList::class);
         Livewire::component('shopper-create-discount', CreateDiscount::class);
         Livewire::component('shopper-edit-discount', EditDiscount::class);
+
+        /**
+         * Settings Components.
+         */
         Livewire::component('shopper-settings-analytics', Analytics::class);
+        Livewire::component('shopper-settings-management', Management::class);
     }
 }

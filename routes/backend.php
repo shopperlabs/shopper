@@ -21,10 +21,6 @@ Route::prefix('profile')->group(function () {
     Route::get('/{section?}', [ProfileController::class, 'profile'])->name('profile');
 });
 
-Route::prefix('access')->group(function () {
-    Route::get('users', 'UserController@index')->name('users.access');
-});
-
 Route::namespace('Ecommerce')->group(function () {
     Route::resource('categories', 'CategoryController');
     Route::resource('brands', 'BrandController');
@@ -39,8 +35,10 @@ Route::resource('customers', 'CustomerController');
 Route::resource('reviews', 'ReviewController');
 Route::resource('discounts', 'DiscountController');
 Route::resource('inventory-histories', 'InventoryHistoryController');
+
 Route::prefix('setting')->as('settings.')->group(function () {
     Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
+    Route::view('/management', 'shopper::pages.settings.management')->name('users');
 
     Route::get('/shop', [ShopController::class, 'setting'])->name('shop');
     Route::put('/update/{store}', [ShopController::class, 'update'])->name('shop.update');

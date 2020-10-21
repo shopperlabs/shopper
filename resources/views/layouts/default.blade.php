@@ -28,9 +28,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
-    @if(! empty(config('shopper.config.resources.stylesheets')))
+    @if(! empty(config('shopper.system.resources.stylesheets')))
         <!-- Additional CSS -->
-        @foreach(config('shopper.config.resources.stylesheets') as $css)
+        @foreach(config('shopper.system.resources.stylesheets') as $css)
             @if (starts_with($css, ['http://', 'https://']))
                 <link rel="stylesheet" type="text/css" href="{!! $css !!}">
             @else
@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="overflow-y-auto">
-                <main class="flex-1 relative z-0 min-h-screen focus:outline-none pt-3 lg:pt-0" tabindex="0">
+                <main class="flex-1 relative z-0 focus:outline-none pt-3 lg:pt-0" tabindex="0">
                     <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <!-- Content -->
                         @yield('content')
@@ -109,6 +109,7 @@
 
         </div>
     </div>
+    <x-shopper-notification />
 
     <livewire:scripts />
     <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
@@ -116,9 +117,9 @@
     @include('notify::messages')
     @stack('scripts')
 
-    @if(! empty(config('shopper.config.resources.scripts')))
+    @if(! empty(config('shopper.system.resources.scripts')))
         <!-- Additional Javascript -->
-        @foreach(config('shopper.config.resources.scripts') as $js)
+        @foreach(config('shopper.system.resources.scripts') as $js)
             @if (starts_with($js, ['http://', 'https://']))
                 <script type="text/javascript" src="{!! $js !!}"></script>
             @else
