@@ -24,5 +24,4 @@ Route::post('/configuration', [SettingController::class, 'general']);
 // settings page
 Route::prefix('settings')->group(function () {
     Route::put('/general',   [SettingController::class, 'general']);
-    Route::put('/analytics', [SettingController::class, 'analytics']);
 });

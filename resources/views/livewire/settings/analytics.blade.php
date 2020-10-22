@@ -12,6 +12,7 @@
         </div>
     </div>
 
+    <form wire:submit.prevent="submit">
     <div class="mt-8">
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
@@ -38,7 +39,7 @@
                                     {{ __("Google Analytics Tracking ID") }}
                                 </label>
                                 <div class="mt-1 relative">
-                                    <input id="google_tracking_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="UA-XXX" />
+                                    <input id="google_tracking_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="UA-XXX" wire:model="google_analytics_tracking_id"/>
                                 </div>
                             </div>
                             <div class="col-span-3">
@@ -46,7 +47,7 @@
                                     {{ __("Google Analytics view ID") }}
                                 </label>
                                 <div class="mt-1 relative">
-                                    <input id="google_view_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="123456789" />
+                                    <input id="google_view_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="123456789" wire:model="google_analytics_view_id" />
                                 </div>
                             </div>
                             <div class="col-span-3">
@@ -54,7 +55,7 @@
                                     {{ __("Google Analytics additional script") }}
                                 </label>
                                 <div class="rounded-md shadow-sm">
-                                    <textarea id="analytic_script" rows="3" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                    <textarea id="analytic_script" rows="3" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" wire:model="google_analytics_add_js"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +118,7 @@
                             <div class="col-span-6">
                                 <label for="google_tag_id" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Your Google Tag Manager account ID") }}</label>
                                 <div class="mt-1 relative">
-                                    <input id="google_tag_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="GTM-XXX" />
+                                    <input id="google_tag_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="GTM-XXX" wire:model="google_tag_manager_account_id" />
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500">
                                     {{ __("Read more about") }} <a href="#" class="text-blue-500 hover:text-blue-400">Google Tag Manager</a>.
@@ -158,7 +159,7 @@
                             <div class="col-span-6">
                                 <label for="pixel_facebook_id" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Your Facebook Pixel account ID") }}</label>
                                 <div class="mt-1 relative">
-                                    <input id="pixel_facebook_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="12345678" />
+                                    <input id="pixel_facebook_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="12345678" wire:model="facebook_pixel_account_id" />
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500">
                                     {{ __("Read more about") }} <a href="#" class="text-blue-500 hover:text-blue-400">Facebook Pixel</a>.
@@ -184,5 +185,5 @@
             </span>
         </div>
     </div>
-
+    </form>
 </div>

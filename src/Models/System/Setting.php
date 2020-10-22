@@ -71,6 +71,7 @@ class Setting extends Model
             'shop_facebook_link' => __('Facebook Page'),
             'shop_instagram_link' => __('Twitter account'),
             'shop_twitter_link' => __('Instagram account'),
+            'google_analytics_add_js' => __('Google Analytics additional script'),
         ][$key];
     }
 }
