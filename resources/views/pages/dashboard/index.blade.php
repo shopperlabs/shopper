@@ -12,7 +12,7 @@
         </h2>
     </div>
 
-    <div class="mt-8 bg-white overflow-hidden shadow-lg sm:rounded-lg">
+    <div class="my-8 bg-white overflow-hidden shadow-lg sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
             <div class="text-xl text-gray-700 font-medium">
                 {{ __("Start with the basic for your online store") }}
