@@ -1,6 +1,5 @@
 <div
    x-data="{ modaleRole: false }"
-   class="pb-20"
 >
     <x:shopper-breadcrumb back="shopper.settings.index">
         <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">

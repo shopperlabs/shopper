@@ -99,7 +99,7 @@
             </div>
             <div class="overflow-y-auto">
                 <main class="flex-1 relative z-0 focus:outline-none pt-3 lg:pt-0" tabindex="0">
-                    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
                         <!-- Content -->
                         @yield('content')
                         <!-- /End content -->

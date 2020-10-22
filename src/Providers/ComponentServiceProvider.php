@@ -32,6 +32,7 @@ use Shopper\Framework\Components\Livewire\{
     User\Dropdown,
     User\Profile,
     Settings\Analytics,
+    Settings\Integrations,
     Settings\Management,
 };
 
@@ -92,7 +93,8 @@ class ComponentServiceProvider extends ServiceProvider
         /**
          * Settings Components.
          */
-        Livewire::component('shopper-settings-analytics', Analytics::class);
         Livewire::component('shopper-settings-management', Management::class);
+        Livewire::component('shopper-settings-analytics', Analytics::class);
+        Livewire::component('shopper-settings-integrations', Integrations::class);
     }
 }

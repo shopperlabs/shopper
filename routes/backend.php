@@ -37,8 +37,9 @@ Route::resource('discounts', 'DiscountController');
 Route::resource('inventory-histories', 'InventoryHistoryController');
 
 Route::prefix('setting')->as('settings.')->group(function () {
-    Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
     Route::view('/management', 'shopper::pages.settings.management')->name('users');
+    Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
+    Route::view('/integrations', 'shopper::pages.settings.integrations')->name('integrations');
 
     Route::get('/shop', [ShopController::class, 'setting'])->name('shop');
     Route::put('/update/{store}', [ShopController::class, 'update'])->name('shop.update');
