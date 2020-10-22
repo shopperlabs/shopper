@@ -67,6 +67,7 @@ if (!function_exists('setEnvironmentValue')) {
                 } else {
                     $str = str_replace($oldLine, "{$envKey}={$envValue}", $str);
                 }
+                env($envKey, $envValue);
             }
         }
 

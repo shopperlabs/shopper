@@ -64,32 +64,4 @@ class SettingController extends Controller
             'message' => __("Store successfully created, you can now access to your dashboard to manage everything."),
         ]);
     }
-
-    public function analytics()
-    {
-        $inputs = request()->all();
-
-        $validator = Validator::make($inputs, [
-            'google_analytics_tracking_id'  => 'nullable|string',
-            'google_analytics_view_id'      => 'nullable|numeric',
-            'google_analytics_add_js'       => 'nullable|string',
-            'google_tag_manager_account_id' => 'nullable|string',
-            'facebook_pixel_account_id'     => 'nullable|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status'  => 'error',
-                'errors'  => $validator->messages()->get('*'),
-                'data'    => request()->all(),
-            ], 400);
-        }
-        
-        setEnvironmentValue($inputs);
-
-        return response()->json([
-            'status'  => 'success',
-            'data' => $inputs,
-        ]);
-    }
 }
