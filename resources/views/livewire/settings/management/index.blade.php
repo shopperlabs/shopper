@@ -44,10 +44,10 @@
                             <p class="mt-1 flex items-center text-sm text-blue-600 group-hover:text-blue-500 transition duration-200 ease-in-out">
                                 {{ __("View details") }}
                                 <span class="ml-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </span>
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </span>
                             </p>
                         </div>
                     </a>
@@ -140,7 +140,8 @@
                                                     </svg>
                                                     {{ __("Me") }}
                                                 </span>
-                                            @else
+                                            @endif
+                                            @if(auth()->user()->isAdmin() && !$user->isAdmin())
                                                 <div x-data="{ open: false }" x-on:user-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
                                                     <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
                                                         <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
