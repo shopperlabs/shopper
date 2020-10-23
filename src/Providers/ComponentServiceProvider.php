@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
 use Shopper\Framework\Components\Blade\{
+    Alert,
     Breadcrumb,
     DeleteAction,
     DateTimePicker,
@@ -24,14 +25,15 @@ use Shopper\Framework\Components\Livewire\{
     Discount\Create as CreateDiscount,
     Discount\Edit as EditDiscount,
     Discount\DiscountList,
-    Initialization,
     InventoryHistory,
+    NetworkStatus,
     Review\ReviewList,
     Product\Inventory,
     ProductList,
     User\Dropdown,
     User\Profile,
     Settings\Analytics,
+    Settings\CreateAdminUser,
     Settings\Integrations,
     Settings\Management,
 };
@@ -56,6 +58,8 @@ class ComponentServiceProvider extends ServiceProvider
      */
     public function registerBladeComponents()
     {
+        Blade::component('shopper-notification', Notification::class);
+        Blade::component('shopper-alert', Alert::class);
         Blade::component('shopper-learn.more', LearnMore::class);
         Blade::component('shopper-datetime.picker', DateTimePicker::class);
         Blade::component('shopper-breadcrumb', Breadcrumb::class);
@@ -64,7 +68,6 @@ class ComponentServiceProvider extends ServiceProvider
         Blade::component('shopper-input.rich-text', RichText::class);
         Blade::component('shopper-input.text', Text::class);
         Blade::component('shopper-input.textarea', Textarea::class);
-        Blade::component('shopper-notification', Notification::class);
     }
 
     /**
@@ -74,7 +77,7 @@ class ComponentServiceProvider extends ServiceProvider
      */
     public function registerLivewireComponents()
     {
-        Livewire::component('shopper-initialization', Initialization::class);
+        Livewire::component('shopper-network-status', NetworkStatus::class);
 
         Livewire::component('shopper-category-list', CategoryList::class);
         Livewire::component('shopper-brand-list', BrandList::class);
@@ -94,6 +97,7 @@ class ComponentServiceProvider extends ServiceProvider
          * Settings Components.
          */
         Livewire::component('shopper-settings-management', Management::class);
+        Livewire::component('shopper-settings-management-new', CreateAdminUser::class);
         Livewire::component('shopper-settings-analytics', Analytics::class);
         Livewire::component('shopper-settings-integrations', Integrations::class);
     }

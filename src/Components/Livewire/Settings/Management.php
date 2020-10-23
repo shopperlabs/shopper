@@ -42,6 +42,16 @@ class Management extends Component
         $this->role_description = '';
     }
 
+    public function removeUser(int $id)
+    {
+        (new UserRepository())->getById($id)->delete();
+        $this->dispatchBrowserEvent('user-removed');
+        $this->dispatchBrowserEvent('notify', [
+            'title' => 'Deleted',
+            'message' => __("Admin deleted successfully"),
+        ]);
+    }
+
     public function render()
     {
         $roles = Role::query()
@@ -58,6 +68,6 @@ class Management extends Component
             ->orderBy('created_at', 'desc')
             ->paginate(3);
 
-        return view('shopper::livewire.settings.management', compact('roles', 'users'));
+        return view('shopper::livewire.settings.management.index', compact('roles', 'users'));
     }
 }

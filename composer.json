@@ -31,7 +31,6 @@
     "lavary/laravel-menu": "^1.7",
     "livewire/livewire": "^2.0",
     "maatwebsite/laravel-sidebar": "~2.3",
-    "mckenziearts/laravel-notify": "^1.1",
     "moneyphp/money": "^3.3",
     "spatie/laravel-permission": "^3.2",
     "torann/geoip": "^1.0"

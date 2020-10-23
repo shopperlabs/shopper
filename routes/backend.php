@@ -37,7 +37,8 @@ Route::resource('discounts', 'DiscountController');
 Route::resource('inventory-histories', 'InventoryHistoryController');
 
 Route::prefix('setting')->as('settings.')->group(function () {
-    Route::view('/management', 'shopper::pages.settings.management')->name('users');
+    Route::view('/management', 'shopper::pages.settings.management.index')->name('users');
+    Route::view('/management/new', 'shopper::pages.settings.management.create')->name('user.new');
     Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
     Route::view('/integrations', 'shopper::pages.settings.integrations')->name('integrations');
 
