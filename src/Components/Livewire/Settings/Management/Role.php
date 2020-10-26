@@ -44,6 +44,14 @@ class Role extends Component
         ]);
     }
 
+    public function destroy()
+    {
+        RoleModel::query()->find($this->role->id)->delete();
+
+        session()->flash('success', "Role deleted successfully.");
+        $this->redirectRoute('shopper.settings.users');
+    }
+
     public function render()
     {
         return view('shopper::livewire.settings.management.role');
