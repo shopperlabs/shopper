@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Components\Livewire\Settings;
+namespace Shopper\Framework\Components\Livewire\Settings\Management;
 
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -58,6 +58,7 @@ class Management extends Component
             ->with('users')
             ->where('name', '<>', config('shopper.system.users.default_role'))
             ->limit(3)
+            ->orderBy('created_at')
             ->get();
 
         $users = (new UserRepository())

@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Components\Livewire\Settings;
+namespace Shopper\Framework\Components\Livewire\Settings\Management;
 
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;

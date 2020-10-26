@@ -30,7 +30,7 @@
             </p>
             <div class="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8">
                 @foreach($roles as $role)
-                    <a href="#" class="group flex flex-col justify-between p-4 border border-gray-200 rounded-md overflow-hidden hover:shadow-md focus:border-gray-300 focus:outline-none transition duration-200 ease-in-out">
+                    <a href="{{ route('shopper.settings.user.role', $role) }}" class="group flex flex-col justify-between p-4 border border-gray-200 rounded-md overflow-hidden hover:shadow-md focus:border-gray-300 focus:outline-none transition duration-200 ease-in-out">
                         <div class="flex items-center justify-between">
                             <span class="text-xs leading-4 text-gray-400 font-semibold uppercase tracking-wider">{{ $role->users->count() }} {{ str_plural(__("Account"), $role->users->count()) }}</span>
                             <div class="flex overflow-hidden ml-4">

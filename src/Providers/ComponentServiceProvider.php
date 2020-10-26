@@ -33,9 +33,12 @@ use Shopper\Framework\Components\Livewire\{
     User\Dropdown,
     User\Profile,
     Settings\Analytics,
-    Settings\CreateAdminUser,
     Settings\Integrations,
-    Settings\Management,
+    Settings\Management\CreateAdminUser,
+    Settings\Management\Management,
+    Settings\Management\Permissions,
+    Settings\Management\Role,
+    Settings\Management\UsersRole,
 };
 
 class ComponentServiceProvider extends ServiceProvider
@@ -98,6 +101,9 @@ class ComponentServiceProvider extends ServiceProvider
          */
         Livewire::component('shopper-settings-management', Management::class);
         Livewire::component('shopper-settings-management-new', CreateAdminUser::class);
+        Livewire::component('shopper-settings-management-role', Role::class);
+        Livewire::component('shopper-settings-management-permissions', Permissions::class);
+        Livewire::component('shopper-settings-management-users-role', UsersRole::class);
         Livewire::component('shopper-settings-analytics', Analytics::class);
         Livewire::component('shopper-settings-integrations', Integrations::class);
     }

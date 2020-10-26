@@ -1,0 +1,3 @@
+<div>
+    Permissions Component
+</div>
