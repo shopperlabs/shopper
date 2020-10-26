@@ -20,9 +20,10 @@ class CreatePermissionTables extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
-            $table->string('table_name')->nullable();
+            $table->string('group_name')->nullable();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->boolean('can_be_removed')->default(true);
             $table->timestamps();
         });
 
@@ -32,6 +33,7 @@ class CreatePermissionTables extends Migration
             $table->string('guard_name');
             $table->string('display_name')->nullable();
             $table->text('description')->nullable();
+            $table->boolean('can_be_removed')->default(true);
             $table->timestamps();
         });
 

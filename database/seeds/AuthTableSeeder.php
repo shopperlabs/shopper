@@ -32,6 +32,8 @@ class AuthTableSeeder extends Seeder
             'users',
         ]);
 
+        $this->seed('RolesTableSeeder');
+        $this->seed('PermissionsTableSeeder');
         $this->seed('PermissionRoleTableSeeder');
 
         $this->enableForeignKeys();

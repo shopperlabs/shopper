@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Repositories;
 
-use Shopper\Framework\Models\User;
+use Shopper\Framework\Models\User\User;
 
 class UserRepository extends BaseRepository
 {

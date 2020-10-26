@@ -28,9 +28,9 @@
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
-    @if(! empty(config('shopper.config.resources.stylesheets')))
+    @if(! empty(config('shopper.system.resources.stylesheets')))
         <!-- Additional CSS -->
-        @foreach(config('shopper.config.resources.stylesheets') as $css)
+        @foreach(config('shopper.system.resources.stylesheets') as $css)
             @if (starts_with($css, ['http://', 'https://']))
                 <link rel="stylesheet" type="text/css" href="{!! $css !!}">
             @else
@@ -49,7 +49,7 @@
         @include('shopper::partials.default.sidebar')
 
         <div class="flex flex-col w-0 flex-1 overflow-hidden">
-            <div class="relative flex-shrink-0 flex h-16 bg-white md:bg-transparent shadow md:shadow-none md:py-6 md:h-auto">
+            <div class="relative flex-shrink-0 flex h-16 bg-white md:bg-transparent shadow md:shadow-none md:py-4 md:h-auto">
                 <button @click.stop="sidebarOpen = true" class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" aria-label="Open sidebar">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
@@ -98,27 +98,27 @@
                 </div>
             </div>
             <div class="overflow-y-auto">
-                <main class="flex-1 relative z-0 min-h-screen focus:outline-none pt-3 lg:pt-0" tabindex="0">
-                    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <main class="flex-1 relative z-0 focus:outline-none pt-3 lg:pt-0" tabindex="0">
+                    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
                         <!-- Content -->
                         @yield('content')
                         <!-- /End content -->
                     </div>
                 </main>
             </div>
-
         </div>
     </div>
+    <x-shopper-notification />
+    <x-shopper-alert />
 
     <livewire:scripts />
     <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
 
-    @include('notify::messages')
     @stack('scripts')
 
-    @if(! empty(config('shopper.config.resources.scripts')))
+    @if(! empty(config('shopper.system.resources.scripts')))
         <!-- Additional Javascript -->
-        @foreach(config('shopper.config.resources.scripts') as $js)
+        @foreach(config('shopper.system.resources.scripts') as $js)
             @if (starts_with($js, ['http://', 'https://']))
                 <script type="text/javascript" src="{!! $js !!}"></script>
             @else

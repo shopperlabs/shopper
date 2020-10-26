@@ -61,6 +61,7 @@ class User extends Authenticatable
     protected $appends = [
         'full_name',
         'picture',
+        'roles_label',
     ];
 
     /**
@@ -103,6 +104,24 @@ class User extends Authenticatable
         return $this->last_name
             ? $this->first_name . ' ' . $this->last_name
             : $this->first_name;
+    }
+
+    /**
+     * Get User roles name.
+     *
+     * @return string
+     */
+    public function getRolesLabelAttribute()
+    {
+        $roles = $this->roles()->pluck('display_name')->toArray();
+
+        if (\count($roles)) {
+            return implode(', ', array_map(function ($item) {
+                return ucwords($item);
+            }, $roles));
+        }
+
+        return 'N/A';
     }
 
     /**
