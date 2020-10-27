@@ -20,6 +20,7 @@ use Shopper\Framework\Components\Blade\{
 use Shopper\Framework\Components\Livewire\{
     Brands\Browse as BrowseBrand,
     Brands\Create as CreateBrand,
+    Brands\Edit as EditBrand,
     CategoryList,
     CollectionList,
     CustomerList,
@@ -85,6 +86,7 @@ class ComponentServiceProvider extends ServiceProvider
 
         Livewire::component('shopper-brands-lists', BrowseBrand::class);
         Livewire::component('shopper-brands-create', CreateBrand::class);
+        Livewire::component('shopper-brands-edit', EditBrand::class);
         Livewire::component('shopper-category-list', CategoryList::class);
         Livewire::component('shopper-collection-list', CollectionList::class);
         Livewire::component('shopper-product-list', ProductList::class);

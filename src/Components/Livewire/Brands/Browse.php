@@ -26,7 +26,7 @@ class Browse extends Component
 
     public function paginationView()
     {
-        return 'shopper::components.livewire.wire-pagination-links';
+        return 'shopper::livewire.wire-pagination-links';
     }
 
     /**
@@ -37,6 +37,17 @@ class Browse extends Component
     public function sort($value)
     {
         $this->direction = $value === 'asc' ? 'desc' : 'asc';
+    }
+
+    public function remove(int $id)
+    {
+        (new BrandRepository())->getById($id)->delete();
+
+        $this->dispatchBrowserEvent('brand-removed');
+        $this->dispatchBrowserEvent('notify', [
+            'title' => __("Deleted"),
+            'message' => __("The brand has successfully removed!")
+        ]);
     }
 
     public function render()

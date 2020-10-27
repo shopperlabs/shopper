@@ -30,19 +30,7 @@ class Brand extends Model
      *
      * @var array
      */
-    protected $with = ['previewImage'];
-
-    /**
-     * Boot the model.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($model) {
-            $model->update(['slug' => $model->name]);
-        });
-    }
+    protected $with = ['files'];
 
     /**
      * Get the table associated with the model.
@@ -52,20 +40,6 @@ class Brand extends Model
     public function getTable()
     {
         return shopper_table('brands');
-    }
-
-    /**
-     * Set the proper slug attribute.
-     *
-     * @param  string  $value
-     */
-    public function setSlugAttribute($value)
-    {
-        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
-            $slug = "{$slug}-{$this->id}";
-        }
-
-        $this->attributes['slug'] = $slug;
     }
 
     /**
