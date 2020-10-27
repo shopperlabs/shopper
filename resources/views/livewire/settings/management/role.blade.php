@@ -14,7 +14,7 @@
         <a href="{{ route('shopper.settings.users') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Users & roles') }}</a>
     </x:shopper-breadcrumb>
 
-    <div class="mt-2 relative pb-5 border-b border-gray-200 space-y-4 sm:pb-0">
+    <div class="mt-3 relative pb-5 border-b border-gray-200 space-y-4 sm:pb-0">
         <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
             <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
                 {{ $display_name }}

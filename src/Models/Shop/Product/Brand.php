@@ -17,6 +17,7 @@ class Brand extends Model
     protected $fillable = [
         'name',
         'slug',
+        'website',
         'description',
         'position',
         'seo_title',
@@ -56,7 +57,7 @@ class Brand extends Model
     /**
      * Set the proper slug attribute.
      *
-     * @param  string $value
+     * @param  string  $value
      */
     public function setSlugAttribute($value)
     {
@@ -74,6 +75,6 @@ class Brand extends Model
      */
     public function products()
     {
-        return $this->hasMany(config('shopper.config.models.product'));
+        return $this->hasMany(config('shopper.system.models.product'));
     }
 }

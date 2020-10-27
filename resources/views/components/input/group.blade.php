@@ -8,7 +8,7 @@
 
 <div {{ $attributes }}>
     <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-gray-700">
-        {{ $label }} @if($isRequired) <span class="text-red-500">*</span> @endif
+        {{ __($label) }} @if($isRequired) <span class="text-red-500">*</span> @endif
     </label>
 
     <div class="mt-1 relative rounded-md shadow-sm">

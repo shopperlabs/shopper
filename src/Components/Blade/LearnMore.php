@@ -39,6 +39,6 @@ class LearnMore extends Component
      */
     public function render()
     {
-        return view('shopper::components.blades.learn-more');
+        return view('shopper::components.learn-more');
     }
 }

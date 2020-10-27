@@ -1,12 +1,12 @@
 <?php
 
-namespace Shopper\Framework\Components\Livewire;
+namespace Shopper\Framework\Components\Livewire\Brands;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 
-class BrandList extends Component
+class Browse extends Component
 {
     use WithPagination;
 
@@ -48,6 +48,6 @@ class BrandList extends Component
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 
-        return view('shopper::components.livewire.brands.list', compact('brands', 'total'));
+        return view('shopper::livewire.brands.browse', compact('brands', 'total'));
     }
 }
