@@ -47,7 +47,7 @@ class Management extends Component
         (new UserRepository())->getById($id)->delete();
         $this->dispatchBrowserEvent('user-removed');
         $this->dispatchBrowserEvent('notify', [
-            'title' => 'Deleted',
+            'title' => __('Deleted'),
             'message' => __("Admin deleted successfully"),
         ]);
     }

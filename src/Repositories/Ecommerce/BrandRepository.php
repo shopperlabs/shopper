@@ -13,6 +13,6 @@ class BrandRepository extends BaseRepository
      */
     public function model()
     {
-        return config('shopper.models.brand');
+        return config('shopper.system.models.brand');
     }
 }

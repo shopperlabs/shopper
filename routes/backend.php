@@ -22,8 +22,8 @@ Route::prefix('profile')->group(function () {
 });
 
 Route::namespace('Ecommerce')->group(function () {
-    Route::resource('categories', 'CategoryController');
     Route::resource('brands', 'BrandController');
+    Route::resource('categories', 'CategoryController');
     Route::resource('collections', 'CollectionController');
     Route::resource('products', 'ProductController');
     Route::post('/product/images/upload/{id}', [ProductImageController::class, 'store'])->name('products.upload');

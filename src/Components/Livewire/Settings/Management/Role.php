@@ -4,6 +4,7 @@ namespace Shopper\Framework\Components\Livewire\Settings\Management;
 
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role as RoleModel;
 
 class Role extends Component
@@ -12,6 +13,11 @@ class Role extends Component
     public string $name = '';
     public string $display_name = '';
     public string $description = '';
+
+    public string $permission_name = '';
+    public string $permission_display_name = '';
+    public string $permission_description = '';
+    public $group;
 
     public function mount(RoleModel $role)
     {
@@ -44,6 +50,30 @@ class Role extends Component
         ]);
     }
 
+    public function addPermission()
+    {
+        $this->validate([
+            'permission_name' => 'required|max:20|unique:permissions,name'
+        ]);
+
+        $permission = Permission::query()->create([
+            'name' => $this->permission_name,
+            'group_name' => $this->group,
+            'display_name' => $this->permission_display_name,
+            'description' => $this->permission_description,
+        ]);
+
+        $this->role->givePermissionTo($permission->name);
+
+        $this->dispatchBrowserEvent('permission-added');
+        $this->dispatchBrowserEvent('notify', [
+            'title' => __('Saved'),
+            'message' => __("A new permission has been create and add to this role.")
+        ]);
+
+        $this->emit('permissionAdded');
+    }
+
     public function destroy()
     {
         RoleModel::query()->find($this->role->id)->delete();
@@ -54,6 +84,8 @@ class Role extends Component
 
     public function render()
     {
-        return view('shopper::livewire.settings.management.role');
+        return view('shopper::livewire.settings.management.role', [
+            'groups' => Permission::groups()
+        ]);
     }
 }

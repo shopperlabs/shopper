@@ -51,7 +51,7 @@ class SettingController extends Controller
             ]);
         }
 
-        if ($request->input('shop_logo')) {
+        if ($request->input('shop_logo') && $request->input('shop_logo') !== "null") {
             Setting::query()->create([
                 'key' => 'shop_logo',
                 'value'  => $request->input('shop_logo')->store('/', config('shopper.system.storage.disks.uploads')),

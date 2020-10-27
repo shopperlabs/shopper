@@ -17,6 +17,7 @@ class Brand extends Model
     protected $fillable = [
         'name',
         'slug',
+        'website',
         'description',
         'position',
         'seo_title',
@@ -29,19 +30,7 @@ class Brand extends Model
      *
      * @var array
      */
-    protected $with = ['previewImage'];
-
-    /**
-     * Boot the model.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($model) {
-            $model->update(['slug' => $model->name]);
-        });
-    }
+    protected $with = ['files'];
 
     /**
      * Get the table associated with the model.
@@ -54,26 +43,12 @@ class Brand extends Model
     }
 
     /**
-     * Set the proper slug attribute.
-     *
-     * @param  string $value
-     */
-    public function setSlugAttribute($value)
-    {
-        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
-            $slug = "{$slug}-{$this->id}";
-        }
-
-        $this->attributes['slug'] = $slug;
-    }
-
-    /**
      * Return products associated to the brand.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products()
     {
-        return $this->hasMany(config('shopper.config.models.product'));
+        return $this->hasMany(config('shopper.system.models.product'));
     }
 }

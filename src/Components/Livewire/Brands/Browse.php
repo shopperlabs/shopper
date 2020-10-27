@@ -1,12 +1,12 @@
 <?php
 
-namespace Shopper\Framework\Components\Livewire;
+namespace Shopper\Framework\Components\Livewire\Brands;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 
-class BrandList extends Component
+class Browse extends Component
 {
     use WithPagination;
 
@@ -26,7 +26,7 @@ class BrandList extends Component
 
     public function paginationView()
     {
-        return 'shopper::components.livewire.wire-pagination-links';
+        return 'shopper::livewire.wire-pagination-links';
     }
 
     /**
@@ -39,6 +39,17 @@ class BrandList extends Component
         $this->direction = $value === 'asc' ? 'desc' : 'asc';
     }
 
+    public function remove(int $id)
+    {
+        (new BrandRepository())->getById($id)->delete();
+
+        $this->dispatchBrowserEvent('brand-removed');
+        $this->dispatchBrowserEvent('notify', [
+            'title' => __("Deleted"),
+            'message' => __("The brand has successfully removed!")
+        ]);
+    }
+
     public function render()
     {
         $total = (new BrandRepository())->count();
@@ -48,6 +59,6 @@ class BrandList extends Component
             ->orderBy('created_at', $this->direction)
             ->paginate(10);
 
-        return view('shopper::components.livewire.brands.list', compact('brands', 'total'));
+        return view('shopper::livewire.brands.browse', compact('brands', 'total'));
     }
 }
