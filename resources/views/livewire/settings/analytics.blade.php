@@ -23,7 +23,7 @@
                             <path d="M23.25 0h-7.5a.75.75 0 0 0-.75.75v22.5c0 .414.336.75.75.75h7.5a.75.75 0 0 0 .75-.75V.75a.75.75 0 0 0-.75-.75z" fill="#FFA000"/>
                         </svg>
                     </div>
-                    <h3 class="mt-2 text-lg font-medium leading-6 text-gray-900">{{ __("Google Analytics") }}</h3>
+                    <h3 class="mt-2 text-lg font-semibold leading-6 text-gray-900">{{ __("Google Analytics") }}</h3>
                     <p class="mt-4 text-sm leading-5 text-gray-600">
                         {{ __("Google Analytics allows you to track visitors to your site and generates reports that will help you with your marketing.") }}
                     </p>
@@ -104,7 +104,7 @@
                             <path d="M11.964 24.002a2.974 2.974 0 1 0 0-5.948 2.974 2.974 0 0 0 0 5.948z" fill="#246FDB"/>
                         </svg>
                     </div>
-                    <h3 class="mt-2 text-lg font-medium leading-6 text-gray-900">{{ __("Google Tag Manager") }}</h3>
+                    <h3 class="mt-2 text-lg font-semibold leading-6 text-gray-900">{{ __("Google Tag Manager") }}</h3>
                     <p class="mt-4 text-sm leading-5 text-gray-600">
                         {{ __("Google Tag Manager allows marketing managers to easily add tags (Analytics, remarketing, etc.)") }}
                     </p>
@@ -145,7 +145,7 @@
                             <path d="M15 4h3a.5.5 0 0 0 .5-.5v-3A.5.5 0 0 0 18 0h-3a5.506 5.506 0 0 0-5.5 5.5V9H6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3.5v10.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V13H17a.5.5 0 0 0 .474-.342l1-3A.5.5 0 0 0 18 9h-4.5V5.5A1.5 1.5 0 0 1 15 4z" fill="#2196F3"/>
                         </svg>
                     </div>
-                    <h3 class="mt-2 text-lg font-medium leading-6 text-gray-900">{{ __("Facebook Pixel") }}</h3>
+                    <h3 class="mt-2 text-lg font-semibold leading-6 text-gray-900">{{ __("Facebook Pixel") }}</h3>
                     <p class="mt-4 text-sm leading-5 text-gray-600">
                         {{ __("Facebook Pixel helps you create ad campaigns to find new customers who are most like your buyers.") }}
                     </p>

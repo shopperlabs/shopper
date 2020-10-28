@@ -41,13 +41,21 @@ class Group extends Component
      */
     public $helpText;
 
-    public function __construct(string $label, string $for, bool $isRequired = false, $error = null, $helpText = null)
+    /**
+     * The Shadow on the group input.
+     *
+     * @var null
+     */
+    public $noShadow;
+
+    public function __construct(string $label, string $for, bool $isRequired = false, $error = null, $helpText = null, $noShadow = null)
     {
         $this->label = $label;
         $this->for = $for;
         $this->isRequired = $isRequired;
         $this->error = $error;
         $this->helpText = $helpText;
+        $this->noShadow = $noShadow;
     }
 
     /**
