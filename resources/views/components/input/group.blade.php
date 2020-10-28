@@ -1,6 +1,7 @@
 @props([
     'label',
     'for',
+    'noShadow' => false,
     'isRequired' => false,
     'error' => false,
     'helpText' => false,
@@ -11,7 +12,7 @@
         {{ __($label) }} @if($isRequired) <span class="text-red-500">*</span> @endif
     </label>
 
-    <div class="mt-1 relative rounded-md shadow-sm">
+    <div class="mt-1 relative @if(!$noShadow) rounded-md shadow-sm @endif">
         {{ $slot }}
     </div>
     @if ($error)

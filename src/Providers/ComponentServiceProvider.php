@@ -10,6 +10,7 @@ use Shopper\Framework\Components\Blade\{
     Breadcrumb,
     DeleteAction,
     DateTimePicker,
+    Input\FileUpload,
     Input\Group,
     Input\RichText,
     Input\Text,
@@ -36,6 +37,7 @@ use Shopper\Framework\Components\Livewire\{
     User\Profile,
     Settings\Analytics,
     Settings\Integrations,
+    Settings\General,
     Settings\Management\CreateAdminUser,
     Settings\Management\Management,
     Settings\Management\Permissions,
@@ -72,6 +74,7 @@ class ComponentServiceProvider extends ServiceProvider
         Blade::component('shopper-input.group', Group::class);
         Blade::component('shopper-input.rich-text', RichText::class);
         Blade::component('shopper-input.text', Text::class);
+        Blade::component('shopper-input.file-upload', FileUpload::class);
         Blade::component('shopper-input.textarea', Textarea::class);
     }
 
@@ -110,5 +113,6 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-settings-management-users-role', UsersRole::class);
         Livewire::component('shopper-settings-analytics', Analytics::class);
         Livewire::component('shopper-settings-integrations', Integrations::class);
+        Livewire::component('shopper-settings-general', General::class);
     }
 }
