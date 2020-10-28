@@ -1,10 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
 use Money\Currencies\ISOCurrencies;
 use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use Shopper\Framework\Models\Shop\Order\Order;
+use Shopper\Framework\Models\System\Setting;
+use Shopper\Framework\Models\System\Currency as CurrencyModel;
 use Shopper\Framework\Shopper;
 
 if (!function_exists('app_name')) {
@@ -118,7 +121,15 @@ if (!function_exists('shopper_currency')) {
      */
     function shopper_currency(): string
     {
-        return 'XAF';
+        $id =  Setting::query()->where('key', 'currency_id')->first();
+
+        if ($id) {
+            $currency = CurrencyModel::query()->find($id);
+
+            return $currency ? $currency->code : 'USD';
+        }
+
+        return 'USD';
     }
 }
 
@@ -177,5 +188,19 @@ if (!function_exists('generate_number')) {
         return sprintf('%s%s', $generator['prefix'],
             str_pad($next, $generator['pad_length'], $generator['pad_string'], STR_PAD_LEFT)
         );
+    }
+}
+
+if (!function_exists('shopper_asset')) {
+    /**
+     * Return the full path of an image.
+     *
+     * @param  string  $file
+     * @param  string  $disk
+     * @return string
+     */
+    function shopper_asset(string $file, string $disk = 'uploads'): string
+    {
+        return Storage::disk(config('shopper.system.storage.disks.'. $disk))->url($file);
     }
 }

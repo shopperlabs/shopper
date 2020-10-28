@@ -42,7 +42,7 @@ class Analytics extends Component
         Artisan::call('config:clear');
 
         $this->dispatchBrowserEvent('notify', [
-            'title' => 'Updated',
+            'title' => __('Updated'),
             'message' => __("Your analytics configurations have been correctly updated")
         ]);
     }

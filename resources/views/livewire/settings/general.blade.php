@@ -99,7 +99,7 @@
                                 <label for="phone_number" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Phone number") }}</label>
                                 <div class="mt-1 relative">
                                     <input wire:model="shop_phone_number" id="phone_number" type="tel" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 pr-10" autocomplete="off" />
-                                    @error('phone_number')
+                                    @error('shop_phone_number')
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                             <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
@@ -110,7 +110,7 @@
                                 <p class="mt-1 text-sm text-gray-500">
                                     {{ __("Your customers will use this phone number if they need to call you directly.") }}
                                 </p>
-                                @error('phone_number')
+                                @error('shop_phone_number')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -144,6 +144,8 @@
                                     <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
                                         @if ($shop_logo)
                                             <img class="h-12 w-12 object-cover" src="{{ $shop_logo->temporaryUrl() }}" alt="Store logo">
+                                        @elseif($logo)
+                                            <img class="h-12 w-12 object-cover" src="{{ shopper_asset($logo) }}" alt="Store logo">
                                         @else
                                             <svg class="h-8 w-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -167,6 +169,20 @@
                                                         <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                                     </svg>
                                                     {{ __("Remove") }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @elseif($cover)
+                                        <div>
+                                            <div class="shadow flex-shrink-0 rounded-md overflow-hidden">
+                                                <img class="h-40 w-full object-cover" src="{{ shopper_asset($cover) }}" alt="Store Cover image">
+                                            </div>
+                                            <div class="mt-1 flex items-center">
+                                                <button wire:click="deleteCover" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
+                                                    <svg class="h-5 w-5 mr-1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                    {{ __("Delete") }}
                                                 </button>
                                             </div>
                                         </div>
@@ -230,7 +246,7 @@
 
                                 <div class="col-span-6">
                                     <x-shopper-input.group label="About" for="about">
-                                        <x-shopper-input.rich-text wire:model.lazy="shop_about" id="about" />
+                                        <x-shopper-input.rich-text wire:model.lazy="shop_about" id="about" :initial-value="$shop_about" />
                                     </x-shopper-input.group>
                                 </div>
 
@@ -344,7 +360,7 @@
 
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="shop_twitter_link" class="block text-sm font-medium leading-5 text-gray-700">
-                                        {{ __("Twitter") }}
+                                        Twitter
                                     </label>
                                     <div class="mt-1 relative">
                                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -358,7 +374,7 @@
 
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="shop_instagram_link" class="block text-sm font-medium leading-5 text-gray-700">
-                                        {{ __("Instagram") }}
+                                        Instagram
                                     </label>
                                     <div class="mt-1 relative">
                                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
