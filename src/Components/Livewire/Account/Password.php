@@ -19,7 +19,7 @@ class Password extends Component
         $user = auth()->user();
 
         if (Hash::check($this->current_password, $user->password)) {
-            $user->update(['password' => $this->password]);
+            $user->update(['password' => Hash::make($this->password)]);
 
             $this->current_password = '';
             $this->password = '';
