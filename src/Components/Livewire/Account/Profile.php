@@ -54,10 +54,9 @@ class Profile extends Component
                 'avatar_type'   => 'storage',
                 'avatar_location' => $filename,
             ]);
-
-            $this->emit('updatedProfile');
         }
 
+        $this->emit('updatedProfile');
         $this->dispatchBrowserEvent('notify', [
             'title' => __('Profile Updated'),
             'message' => __("Your profile have been successfully updated!")
