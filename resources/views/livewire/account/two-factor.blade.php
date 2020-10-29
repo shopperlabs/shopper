@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="shadow sm:rounded-md sm:overflow-hidden">
+            <div class="shadow rounded-md overflow-hidden">
                 <div class="px-4 py-5 bg-white sm:p-6">
                     <div class="rounded-md bg-blue-50 p-4">
                         <div class="flex">

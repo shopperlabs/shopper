@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow sm:rounded-md sm:overflow-hidden">
-                    <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="shadow rounded-md">
+                    <div class="px-4 py-5 bg-white sm:p-6 rounded-t-md">
                         <div>
                             <label class="block text-sm leading-5 font-medium text-gray-700">Photo</label>
                             <div class="mt-2 flex items-center">
@@ -34,7 +34,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="grid grid-cols-6 gap-5 mt-5">
+                        <div class="grid gap-4 grid-cols-6 sm:gap-5 mt-5">
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="first_name" class="block text-sm font-medium leading-5 text-gray-700">{{ __("First name") }}</label>
                                 <div class="relative mt-1">
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-md">
                         <span class="inline-flex rounded-md shadow-sm">
                             <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
                                 <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">

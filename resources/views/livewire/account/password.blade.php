@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="shadow sm:rounded-md sm:overflow-hidden">
+            <div class="shadow rounded-md overflow-hidden">
                 <div class="px-4 py-5 bg-white sm:p-6 space-y-4">
                     @if (session()->has('error'))
                         <div class="rounded-md bg-red-50 p-4">
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                     @endif
-                    <div class="grid grid-cols-6 gap-6">
+                    <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                         <div class="sm:col-span-6">
                             <label for="current_password" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Current Password") }}</label>
                             <div class="relative mt-1">

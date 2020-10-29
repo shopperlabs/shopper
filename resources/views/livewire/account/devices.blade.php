@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="shadow sm:rounded-md sm:overflow-hidden">
+            <div class="shadow rounded-md overflow-hidden">
                 <div class="px-4 py-5 bg-white sm:p-6">
                     @if (count($this->sessions) > 0)
                         <p class="text-gray-500 text-sm">
