@@ -174,7 +174,7 @@
         </div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
         <div
            x-cloak
            x-show="deleteModal"
@@ -246,7 +246,7 @@
             </div>
 
             <!-- This element is to trick the browser into centering the modal contents. -->
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
             <div
                x-cloak
                x-show="createModal"

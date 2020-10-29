@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Components\Livewire\User;
+namespace Shopper\Framework\Components\Livewire\Account;
 
 use Livewire\Component;
 
@@ -29,6 +29,6 @@ class Dropdown extends Component
 
     public function render()
     {
-        return view('shopper::livewire.user.dropdown');
+        return view('shopper::livewire.account.dropdown');
     }
 }

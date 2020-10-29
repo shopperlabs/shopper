@@ -1,7 +1,8 @@
 <?php
 
-namespace Shopper\Framework\Components\Livewire\User;
+namespace Shopper\Framework\Components\Livewire\Account;
 
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -12,6 +13,7 @@ class Profile extends Component
     public $first_name = '';
     public $last_name = '';
     public $email = '';
+    public $phone_number = '';
     public $picture;
 
     public function mount()
@@ -19,6 +21,7 @@ class Profile extends Component
         $this->first_name = auth()->user()->first_name;
         $this->last_name = auth()->user()->last_name;
         $this->email = auth()->user()->email;
+        $this->phone_number = auth()->user()->phone_number;
     }
 
     public function updatedPhoto()
@@ -31,6 +34,7 @@ class Profile extends Component
     public function save()
     {
         $this->validate([
+            'email' => ['required', 'email', Rule::unique(shopper_table('users'), 'email')->ignore(auth()->id())],
             'first_name' => 'required',
             'last_name' => 'required',
             'picture' => 'nullable|image|max:1024', // 1MB Max
@@ -40,10 +44,11 @@ class Profile extends Component
             'last_name'     => $this->last_name,
             'first_name'    => $this->first_name,
             'email'         => $this->email,
+            'phone_number'  => $this->phone_number,
         ]);
 
         if ($this->picture) {
-            $filename = $this->picture->store('/', config('shopper.storage.disks.avatars'));
+            $filename = $this->picture->store('/', config('shopper.system.storage.disks.avatars'));
 
             auth()->user()->update([
                 'avatar_type'   => 'storage',
@@ -53,11 +58,14 @@ class Profile extends Component
             $this->emit('updatedProfile');
         }
 
-        session()->flash('success', __("Profile successfully updated."));
+        $this->dispatchBrowserEvent('notify', [
+            'title' => __('Profile Updated'),
+            'message' => __("Your profile have been successfully updated!")
+        ]);
     }
 
     public function render()
     {
-        return view('shopper::components.livewire.user.profile');
+        return view('shopper::livewire.account.profile');
     }
 }

@@ -16,10 +16,7 @@ use Shopper\Framework\Http\Controllers\ShopController;
 
 Route::redirect('/', shopper_prefix() . '/dashboard', 301);
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-
-Route::prefix('profile')->group(function () {
-    Route::get('/{section?}', [ProfileController::class, 'profile'])->name('profile');
-});
+Route::view('/profile', 'shopper::pages.account.profile')->name('profile');
 
 Route::namespace('Ecommerce')->group(function () {
     Route::resource('brands', 'BrandController');

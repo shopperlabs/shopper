@@ -19,6 +19,11 @@ use Shopper\Framework\Components\Blade\{
     Notification,
 };
 use Shopper\Framework\Components\Livewire\{
+    Account\Devices,
+    Account\Dropdown,
+    Account\Password,
+    Account\Profile,
+    Account\TwoFactor,
     Brands\Browse as BrowseBrand,
     Brands\Create as CreateBrand,
     Brands\Edit as EditBrand,
@@ -33,8 +38,6 @@ use Shopper\Framework\Components\Livewire\{
     Review\ReviewList,
     Product\Inventory,
     ProductList,
-    User\Dropdown,
-    User\Profile,
     Settings\Analytics,
     Settings\Integrations,
     Settings\General,
@@ -86,6 +89,11 @@ class ComponentServiceProvider extends ServiceProvider
     public function registerLivewireComponents()
     {
         Livewire::component('shopper-network-status', NetworkStatus::class);
+        Livewire::component('shopper-dropdown', Dropdown::class);
+        Livewire::component('shopper-account.profile', Profile::class);
+        Livewire::component('shopper-account.password', Password::class);
+        Livewire::component('shopper-account.two-factor', TwoFactor::class);
+        Livewire::component('shopper-account.devices', Devices::class);
 
         Livewire::component('shopper-brands-lists', BrowseBrand::class);
         Livewire::component('shopper-brands-create', CreateBrand::class);
@@ -95,8 +103,6 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-product-list', ProductList::class);
         Livewire::component('shopper-customer-list', CustomerList::class);
         Livewire::component('shopper-inventory-history', InventoryHistory::class);
-        Livewire::component('shopper-profile', Profile::class);
-        Livewire::component('shopper-dropdown', Dropdown::class);
         Livewire::component('shopper-product-inventory', Inventory::class);
         Livewire::component('shopper-reviews-list', ReviewList::class);
         Livewire::component('shopper-discounts-list', DiscountList::class);
