@@ -108,7 +108,7 @@
             </div>
         </div>
     </div>
-    <x-shopper-notification />
+    <x-shopper-notify />
     <x-shopper-alert />
 
     <livewire:scripts />

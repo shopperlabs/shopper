@@ -1,8 +1,8 @@
 <?php
 
-namespace Laravel\Fortify;
+namespace Shopper\Framework\Services\TwoFactor;
 
-use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
+use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use PragmaRX\Google2FA\Google2FA;
 
 class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProviderContract

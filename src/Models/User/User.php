@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -14,7 +15,8 @@ class User extends Authenticatable
     use Notifiable,
         HasRoles,
         CanHaveDiscount,
-        SoftDeletes;
+        SoftDeletes,
+        TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -33,6 +35,8 @@ class User extends Authenticatable
         'remember_token',
         'last_login_at',
         'last_login_ip',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
     ];
 
     /**

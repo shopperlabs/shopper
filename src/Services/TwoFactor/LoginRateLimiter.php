@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Fortify;
+namespace Shopper\Framework\Services\TwoFactor;
 
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
@@ -78,6 +78,6 @@ class LoginRateLimiter
      */
     protected function throttleKey(Request $request)
     {
-        return Str::lower($request->input(Fortify::username())).'|'.$request->ip();
+        return Str::lower($request->input('email')).'|'.$request->ip();
     }
 }

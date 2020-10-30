@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Fortify\Contracts;
+namespace Shopper\Framework\Contracts;
 
 interface TwoFactorAuthenticationProvider
 {

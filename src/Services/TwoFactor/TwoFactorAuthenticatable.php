@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Fortify;
+namespace Shopper\Framework\Services\TwoFactor;
 
 use BaconQrCode\Renderer\Color\Rgb;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
@@ -8,7 +8,8 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
-use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider;
+use Shopper\Framework\Actions\RecoveryCode;
+use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
 
 trait TwoFactorAuthenticatable
 {

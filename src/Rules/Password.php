@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Fortify\Rules;
+namespace Shopper\Framework\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
@@ -19,14 +19,14 @@ class Password implements Rule
      *
      * @var bool
      */
-    protected $requireUppercase = false;
+    protected $requireUppercase = true;
 
     /**
      * Indicates if the password must contain one numeric digit.
      *
      * @var int
      */
-    protected $requireNumeric = false;
+    protected $requireNumeric = true;
 
     /**
      * Indicates if the password must contain one special character.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Fortify\Actions;
+namespace Shopper\Framework\Actions;
 
 class DisableTwoFactorAuthentication
 {

@@ -1,24 +1,23 @@
 <?php
 
-namespace Laravel\Fortify\Actions;
+namespace Shopper\Framework\Actions;
 
 use Illuminate\Support\Collection;
-use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider;
-use Laravel\Fortify\RecoveryCode;
+use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
 
 class EnableTwoFactorAuthentication
 {
     /**
      * The two factor authentication provider.
      *
-     * @var \Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider
+     * @var \Shopper\Framework\Contracts\TwoFactorAuthenticationProvider
      */
     protected $provider;
 
     /**
      * Create a new action instance.
      *
-     * @param  \Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider  $provider
+     * @param  \Shopper\Framework\Contracts\TwoFactorAuthenticationProvider  $provider
      * @return void
      */
     public function __construct(TwoFactorAuthenticationProvider $provider)

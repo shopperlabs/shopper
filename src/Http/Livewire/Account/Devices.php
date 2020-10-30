@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -40,7 +41,14 @@ class Devices extends Component
         $this->confirmingLogout = true;
     }
 
-    public function logoutOtherBrowserSessions()
+    /**
+     * Logout from other browser sessions.
+     *
+     * @param \Illuminate\Contracts\Auth\StatefulGuard $guard
+     * @throws ValidationException
+     * @return void
+     */
+    public function logoutOtherBrowserSessions(StatefulGuard $guard)
     {
         $this->resetErrorBag();
 
@@ -50,7 +58,7 @@ class Devices extends Component
             ]);
         }
 
-        auth()->logoutOtherDevices($this->password);
+        $guard->logoutOtherDevices($this->password);
 
         $this->deleteOtherSessionRecords();
 

@@ -3,9 +3,12 @@
 namespace Shopper\Framework;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
+use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use Shopper\Framework\Events\BuildingSidebar;
 use Shopper\Framework\Events\Handlers\{
     RegisterDashboardSidebar,
@@ -23,6 +26,7 @@ use Shopper\Framework\Http\Middleware\{
 };
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Services\Gravatar;
+use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticationProvider;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
 use Spatie\Permission\Middlewares\RoleMiddleware;
 
@@ -116,6 +120,15 @@ class FrameworkServiceProvider extends ServiceProvider
 
         $this->app->singleton('gravatar', function () {
             return new Gravatar;
+        });
+
+        $this->app->singleton(
+            TwoFactorAuthenticationProviderContract::class,
+            TwoFactorAuthenticationProvider::class
+        );
+
+        $this->app->bind(StatefulGuard::class, function () {
+            return Auth::guard(config('auth.defaults.guard', null));
         });
     }
 

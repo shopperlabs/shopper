@@ -134,7 +134,7 @@
                 <div class="p-4 sm:px-6">
                     <div>
                         <div class="relative">
-                            <input wire:model="password" id="password" type="password" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="{{ __("Enter your password") }}" />
+                            <input wire:model="password" aria-label="{{ __("Password") }}" type="password" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="{{ __("Enter your password") }}" />
                         </div>
                         @error('password')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

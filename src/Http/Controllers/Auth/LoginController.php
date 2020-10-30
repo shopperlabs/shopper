@@ -80,4 +80,14 @@ class LoginController extends Controller
             $this->credentials($request), $request->filled('remember')
         );
     }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return config('shopper.auth.username');
+    }
 }
