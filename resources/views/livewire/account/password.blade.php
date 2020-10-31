@@ -29,31 +29,22 @@
                     @endif
                     <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                         <div class="sm:col-span-6">
-                            <label for="current_password" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Current Password") }}</label>
-                            <div class="relative mt-1">
-                                <input wire:model='current_password' id='current_password' type='password' class='form-input block w-full sm:text-sm sm:leading-5' autocomplete='off' />
-                            </div>
-                            @error('current_password')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            <x-shopper-input.group label="Current Password" for="current_password" :error="$errors->first('current_password')">
+                                <input wire:model="current_password" id="current_password" type="password" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                            </x-shopper-input.group>
                         </div>
 
                         <div class="sm:col-span-6">
-                            <label for="password" class="block text-sm font-medium leading-5 text-gray-700">{{ __("New Password") }}</label>
-                            <div class="mt-1 relative">
-                                <input wire:model='password' id='password' type='password' class='form-input block w-full sm:text-sm sm:leading-5' autocomplete='off' />
-                            </div>
-                            @error('password')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                            @enderror
+                            <x-shopper-input.group label="New Password" for="password" :error="$errors->first('password')">
+                                <input wire:model="password" id="password" type="password" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                            </x-shopper-input.group>
                             <p class="mt-1 text-sm text-gray-500 leading-5">{{ __("Your password must be more than 8 characters long and must contain at least 1 uppercase, 1 lowercase and 1 digit.") }}</p>
                         </div>
 
                         <div class="sm:col-span-6">
-                            <label for="password_confirmation" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Confirm Password") }}</label>
-                            <div class="mt-1 relative">
-                                <input wire:model='password_confirmation' id='password_confirmation' type='password' class='form-input block w-full sm:text-sm sm:leading-5' autocomplete='off' />
-                            </div>
+                            <x-shopper-input.group label="Confirm Password" for="password_confirmation" :error="$errors->first('password_confirmation')">
+                                <input wire:model="password_confirmation" id="password_confirmation" type="password" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                            </x-shopper-input.group>
                         </div>
 
                     </div>

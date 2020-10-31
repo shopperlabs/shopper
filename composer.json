@@ -25,6 +25,8 @@
   "require": {
     "php": "^7.4",
     "ext-intl": "*",
+    "ext-json": "*",
+    "bacon/bacon-qr-code": "^2.0",
     "illuminate/support": "^7.0",
     "jenssegers/agent": "^2.6",
     "laravel/helpers": "^1.2",
@@ -33,6 +35,7 @@
     "livewire/livewire": "^2.0",
     "maatwebsite/laravel-sidebar": "~2.3",
     "moneyphp/money": "^3.3",
+    "pragmarx/google2fa": "^7.0|^8.0",
     "spatie/laravel-permission": "^3.2",
     "stevebauman/location": "^5.2"
   },

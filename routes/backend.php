@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Shopper\Framework\Http\Controllers\Ecommerce\ProductImageController;
-use Shopper\Framework\Http\Controllers\ProfileController;
 use Shopper\Framework\Http\Controllers\SettingController;
-use Shopper\Framework\Http\Controllers\ShopController;
 
 /*
 |--------------------------------------------------------------------------

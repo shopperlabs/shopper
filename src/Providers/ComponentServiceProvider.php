@@ -4,21 +4,9 @@ namespace Shopper\Framework\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Livewire;
-use Shopper\Framework\Components\Blade\{
-    Alert,
-    Breadcrumb,
-    DeleteAction,
-    DateTimePicker,
-    Input\FileUpload,
-    Input\Group,
-    Input\RichText,
-    Input\Text,
-    Input\Textarea,
-    LearnMore,
-    Notification,
-};
-use Shopper\Framework\Components\Livewire\{
+use Shopper\Framework\Http\Livewire\{
     Account\Devices,
     Account\Dropdown,
     Account\Password,
@@ -68,17 +56,22 @@ class ComponentServiceProvider extends ServiceProvider
      */
     public function registerBladeComponents()
     {
-        Blade::component('shopper-notification', Notification::class);
-        Blade::component('shopper-alert', Alert::class);
-        Blade::component('shopper-learn-more', LearnMore::class);
-        Blade::component('shopper-datetime.picker', DateTimePicker::class);
-        Blade::component('shopper-breadcrumb', Breadcrumb::class);
-        Blade::component('shopper-delete.action', DeleteAction::class);
-        Blade::component('shopper-input.group', Group::class);
-        Blade::component('shopper-input.rich-text', RichText::class);
-        Blade::component('shopper-input.text', Text::class);
-        Blade::component('shopper-input.file-upload', FileUpload::class);
-        Blade::component('shopper-input.textarea', Textarea::class);
+        $this->callAfterResolving(BladeCompiler::class, function () {
+            $this->registerComponent('alert');
+            $this->registerComponent('button');
+            $this->registerComponent('breadcrumb');
+            $this->registerComponent('confirms-password');
+            $this->registerComponent('datetime-picker');
+            $this->registerComponent('delete-action');
+            $this->registerComponent('dialog-modal');
+            $this->registerComponent('input.group');
+            $this->registerComponent('input.rich-text');
+            $this->registerComponent('input.text');
+            $this->registerComponent('input.textarea');
+            $this->registerComponent('input.file-upload');
+            $this->registerComponent('learn-more');
+            $this->registerComponent('notify');
+        });
     }
 
     /**
@@ -120,5 +113,16 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-settings-analytics', Analytics::class);
         Livewire::component('shopper-settings-integrations', Integrations::class);
         Livewire::component('shopper-settings-general', General::class);
+    }
+
+    /**
+     * Register the given component.
+     *
+     * @param  string  $component
+     * @return void
+     */
+    protected function registerComponent(string $component)
+    {
+        Blade::component('shopper::components.'.$component, 'shopper-'.$component);
     }
 }

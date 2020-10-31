@@ -21,7 +21,7 @@
                     <img class="inline-block h-9 w-9 rounded-full" src="{{ $picture }}" alt="{{ $email }}" />
                 </div>
                 <div class="ml-3 truncate">
-                    <p class="text-sm leading-5 font-medium text-gray-700 group-hover:text-gray-900">
+                    <p class="text-sm leading-5 font-medium truncate text-gray-700 group-hover:text-gray-900">
                         {{ $full_name }}
                     </p>
                     <p class="text-xs leading-4 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150 truncate">

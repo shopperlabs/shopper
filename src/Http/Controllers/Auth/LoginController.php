@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Pipeline;
+use Illuminate\Support\Facades\Auth;
+use Shopper\Framework\Actions\AttemptToAuthenticate;
+use Shopper\Framework\Actions\RedirectIfTwoFactorAuthenticatable;
 use Shopper\Framework\Shopper;
 
 class LoginController extends Controller
@@ -55,6 +59,8 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
+        $request->session()->regenerateToken();
+
         return redirect($this->redirectPath());
     }
 
@@ -69,15 +75,85 @@ class LoginController extends Controller
     }
 
     /**
-     * Attempt to log the user into the application.
+     * Handle a login request to the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return bool
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    protected function attemptLogin(Request $request)
+    public function login(Request $request)
     {
-        return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
-        );
+        $this->validateLogin($request);
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        // Attempt to authenticate a new session.
+        return $this->loginPipeline($request)->then(function ($request) {
+            return $this->sendLoginResponse($request);
+        });
+    }
+
+    /**
+     * Get the authentication pipeline instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Pipeline\Pipeline
+     */
+    protected function loginPipeline(Request $request)
+    {
+        return (new Pipeline(app()))->send($request)->through(array_filter([
+            RedirectIfTwoFactorAuthenticatable::class,
+            AttemptToAuthenticate::class,
+        ]));
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? response()->json(['two_factor' => false])
+            : redirect()->intended($this->redirectPath());
+    }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return Shopper::username();
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard(config('shopper.auth.guard'));
     }
 }

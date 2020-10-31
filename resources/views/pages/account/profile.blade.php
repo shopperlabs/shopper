@@ -17,13 +17,15 @@
 
     <livewire:shopper-account.password />
 
-    <div class="hidden sm:block">
-        <div class="py-5">
-            <div class="border-t border-gray-200"></div>
+    @if (config('shopper.auth.2fa_enabled'))
+        <div class="hidden sm:block">
+            <div class="py-5">
+                <div class="border-t border-gray-200"></div>
+            </div>
         </div>
-    </div>
 
-    <livewire:shopper-account.two-factor />
+        <livewire:shopper-account.two-factor />
+    @endif
 
     <div class="hidden sm:block">
         <div class="py-5">
