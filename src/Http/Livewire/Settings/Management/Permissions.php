@@ -19,14 +19,14 @@ class Permissions extends Component
         if ($this->role->hasPermissionTo($permission->name)) {
             $this->role->revokePermissionTo($permission->name);
             $this->dispatchBrowserEvent('notify', [
-                'title' => 'Revoke Permission',
-                'message' => __("Permission $permission->display_name has been revoked to this role."),
+                'title' => __('Revoke Permission'),
+                'message' => __('Permission :permission has been revoked to this role.', ['permission' => $permission->display_name]),
             ]);
         } else {
             $this->role->givePermissionTo($permission->name);
             $this->dispatchBrowserEvent('notify', [
-                'title' => 'Allow Permission',
-                'message' => __("Permission $permission->display_name has been given to this role."),
+                'title' => __('Allow Permission'),
+                'message' => __('Permission :permission has been given to this role.', ['permission' => $permission->display_name]),
             ]);
         }
     }
