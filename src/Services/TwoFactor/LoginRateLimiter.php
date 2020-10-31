@@ -5,6 +5,7 @@ namespace Shopper\Framework\Services\TwoFactor;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Shopper\Framework\Shopper;
 
 class LoginRateLimiter
 {
@@ -78,6 +79,6 @@ class LoginRateLimiter
      */
     protected function throttleKey(Request $request)
     {
-        return Str::lower($request->input('email')).'|'.$request->ip();
+        return Str::lower($request->input(Shopper::username())).'|'.$request->ip();
     }
 }

@@ -4,10 +4,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Shopper Guard
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify which authentication guard Shopper will use while
+    | authenticating users. This value should correspond with one of your
+    | guards that is already present in your "auth" configuration file.
+    |
+    */
+
+    'guard' => 'web',
+
+    /*
+    |--------------------------------------------------------------------------
     | Login username
     |--------------------------------------------------------------------------
     |
-    | Get the login username to be used by the controller.
+    | This value defines which model attribute should be considered as your
+    | application's "username" field. Typically, this might be the email
+    | address of the users but you are free to change this value here.
     |
     */
 
@@ -22,6 +37,6 @@ return [
     |
     */
 
-    '2fa_enabled' => false,
+    '2fa_enabled' => true,
 
 ];

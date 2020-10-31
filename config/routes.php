@@ -16,11 +16,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Middleware Admin Panel
+    | Shopper Routes Middleware
     |--------------------------------------------------------------------------
     |
-    | Provide a convenient mechanism for filtering HTTP requests entering
-    | your shopper application. Add your custom middleware here.
+    | Here you may specify which middleware Shopper will assign to the routes
+    | that it registers with the application. If necessary, you may change
+    | these middleware but typically this provided default is preferred.
     |
     */
 
@@ -32,8 +33,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | This value sets the file to load for Shopper admin custom routes. This
-    | depend of your application. For example for "shopper.php" Shopper will load
-    | the file into "routes/shopper.php"
+    | depend of your application.
+    | Eg.: base_path('routes/shopper.php')
     |
     */
 

@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     @endif
-                    <div class="flex items-center">
+                    <div class="flex items-start">
                         <div class="flex-shrink-0">
                             <span class="block w-12 w-12">
                                 <svg class="w-full h-full text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,9 +54,16 @@
                                 </svg>
                             </span>
                         </div>
-                        <p class="ml-4 text-gray-500 text-sm">
-                            {{ __("With two factor authentication, only you can access your account — even if someone else has your password.") }}
-                        </p>
+                        <div class="ml-4">
+                            <p class="text-gray-500 text-sm">
+                                {{ __("With two factor authentication, only you can access your account — even if someone else has your password.") }}
+                            </p>
+                            @if($this->enabled)
+                                <p class="mt-1 text-gray-500 text-sm leading-5">
+                                    {{ __("When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone's Google Authenticator application.") }}
+                                </p>
+                            @endif
+                        </div>
                     </div>
                     @if ($this->enabled)
                         @if ($showingQrCode)

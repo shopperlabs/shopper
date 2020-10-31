@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Actions;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Shopper\Framework\Shopper;
 
 class ConfirmPassword
 {
@@ -16,10 +17,8 @@ class ConfirmPassword
      */
     public function __invoke(StatefulGuard $guard, $user, string $password)
     {
-        $username = config('shopper.auth.username');
-
         return $guard->validate([
-            $username => $user->{$username},
+            Shopper::username() => $user->{Shopper::username()},
             'password' => $password,
         ]);
     }

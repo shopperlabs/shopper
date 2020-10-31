@@ -128,7 +128,7 @@ class FrameworkServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(StatefulGuard::class, function () {
-            return Auth::guard(config('auth.defaults.guard', null));
+            return Auth::guard(config('shopper.auth.guard', null));
         });
     }
 

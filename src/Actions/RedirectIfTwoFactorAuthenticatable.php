@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
+use Shopper\Framework\Shopper;
 
 class RedirectIfTwoFactorAuthenticatable
 {
@@ -66,9 +67,7 @@ class RedirectIfTwoFactorAuthenticatable
     {
         $model = $this->guard->getProvider()->getModel();
 
-        $username = config('shopper.auth.username');
-
-        return tap($model::where($username, $request->{$username})->first(), function ($user) use ($request) {
+        return tap($model::where(Shopper::username(), $request->{Shopper::username()})->first(), function ($user) use ($request) {
             if (! $user || ! Hash::check($request->password, $user->password)) {
                 $this->throwFailedAuthenticationException($request);
             }
@@ -88,7 +87,7 @@ class RedirectIfTwoFactorAuthenticatable
         $this->limiter->increment($request);
 
         throw ValidationException::withMessages([
-            config('shopper.auth.username') => [trans('auth.failed')],
+            Shopper::username() => [trans('auth.failed')],
         ]);
     }
 

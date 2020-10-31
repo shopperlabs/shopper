@@ -27,6 +27,16 @@ class Shopper
     }
 
     /**
+     * Get the username used for authentication.
+     *
+     * @return string
+     */
+    public static function username()
+    {
+        return config('shopper.auth.username', 'email');
+    }
+
+    /**
      * Register the Shop routes.
      *
      * @return Shopper
