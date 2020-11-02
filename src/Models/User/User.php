@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,8 @@ class User extends Authenticatable
         HasRoles,
         CanHaveDiscount,
         SoftDeletes,
-        TwoFactorAuthenticatable;
+        TwoFactorAuthenticatable,
+        Billable;
 
     /**
      * The attributes that are mass assignable.
