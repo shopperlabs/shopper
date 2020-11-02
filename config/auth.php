@@ -33,10 +33,10 @@ return [
     | Two Factor Authentication
     |--------------------------------------------------------------------------
     |
-    | Enabled 2FA authentification during login on the dashboard.
+    | Enabled 2FA authentication during login on the shopper dashboard.
     |
     */
 
-    '2fa_enabled' => true,
+    '2fa_enabled' => env('SHOPPER_ENABLED_TWO_FACTOR', true),
 
 ];

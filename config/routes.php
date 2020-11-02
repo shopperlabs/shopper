@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'prefix' => env('DASHBOARD_PREFIX', 'shopper'),
+    'prefix' => env('SHOPPER_DASHBOARD_PREFIX', 'shopper'),
 
     /*
     |--------------------------------------------------------------------------
