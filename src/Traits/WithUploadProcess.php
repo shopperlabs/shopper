@@ -24,6 +24,25 @@ trait WithUploadProcess
     }
 
     /**
+     * Removed file from the database.
+     *
+     * @param  int  $id
+     * @throws \Exception
+     * @return void
+     */
+    public function deleteImage(int $id)
+    {
+        File::query()->find($id)->delete();
+
+        $this->emitSelf('fileDeleted');
+
+        $this->dispatchBrowserEvent('notify', [
+            'title' => __("Removed"),
+            'message' => __("Image removed from the storage.")
+        ]);
+    }
+
+    /**
      * Upload file and associate with the current model.
      *
      * @param  string  $model
