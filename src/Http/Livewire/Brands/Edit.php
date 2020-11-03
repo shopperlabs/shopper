@@ -6,24 +6,77 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Models\Shop\Product\Brand;
 use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithUploadProcess;
 
+    /**
+     * Upload listeners.
+     *
+     * @var string[]
+     */
+    protected $listeners = ['fileDeleted'];
+
+    /**
+     * Brand Model.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
+     */
     public $brand;
-    public $brand_id;
-    public $name = '';
-    public $slug = '';
-    public $website = '';
-    public $description = '';
-    public $is_enabled = false;
-    public $file;
 
-    public function mount(Brand $brand)
+    /**
+     * Brand Model id.
+     *
+     * @var int
+     */
+    public $brand_id;
+
+    /**
+     * Name attribute.
+     *
+     * @var string
+     */
+    public $name = '';
+
+    /**
+     * Slug for custom url.
+     *
+     * @var string
+     */
+    public $slug;
+
+    /**
+     * Brand url website.
+     *
+     * @var string
+     */
+    public $website = '';
+
+    /**
+     * Brand sample description.
+     *
+     * @var string
+     */
+    public $description = '';
+
+    /**
+     * Indicates if brand is being enabled.
+     *
+     * @var bool
+     */
+    public $is_enabled = false;
+
+    /**
+     * Component mounted action.
+     *
+     * @param  $brand
+     * @return void
+     */
+    public function mount($brand)
     {
         $this->brand = $brand;
         $this->brand_id = $brand->id;
@@ -34,6 +87,11 @@ class Edit extends Component
         $this->is_enabled = $brand->is_enabled;
     }
 
+    /**
+     * Update brand record in the database.
+     *
+     * @return void
+     */
     public function store()
     {
         $this->validate($this->rules());
@@ -55,35 +113,41 @@ class Edit extends Component
                 File::query()->where('filetable_id', $this->brand_id)->delete();
             }
 
-            File::query()->create([
-                'disk_name'     => $filename = $this->file->store('/', config('shopper.system.storage.disks.uploads')),
-                'file_name'     => $this->file->getClientOriginalName(),
-                'file_size'     => $this->file->getSize(),
-                'content_type'  => $this->file->getClientMimeType(),
-                'filetable_type' => config('shopper.system.models.brand'),
-                'filetable_id'   => $this->brand->id,
-            ]);
+            $this->uploadFile(config('shopper.system.models.brand'), $this->brand->id);
         }
 
         session()->flash('success', __("Brand successfully updated!"));
         $this->redirectRoute('shopper.brands.index');
     }
 
-    public function removeImage()
-    {
-        $this->file = null;
-    }
-
+    /**
+     * Real-time component validation.
+     *
+     * @param  string  $field
+     * @throws \Illuminate\Validation\ValidationException
+     * @return void
+     */
     public function updated($field)
     {
         $this->validateOnly($field, $this->rules());
     }
 
+    /**
+     * Update slug value when name if updated.
+     *
+     * @param  string  $value
+     * @return void
+     */
     public function updatedName($value)
     {
         $this->slug = str_slug($value, '-');
     }
 
+    /**
+     * Component validation rules.
+     *
+     * @return string[]
+     */
     public function rules()
     {
         return [
@@ -100,8 +164,28 @@ class Edit extends Component
         ];
     }
 
+    /**
+     * Listen when a file is removed from the storage
+     * and update the user screen and remove image preview.
+     *
+     * @return void
+     */
+    public function fileDeleted()
+    {
+        $this->media = null;
+    }
+
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
-        return view('shopper::livewire.brands.edit');
+        return view('shopper::livewire.brands.edit', [
+            'media' => $this->brand->files->isNotEmpty()
+                ? $this->brand->files->first()
+                : null,
+        ]);
     }
 }
