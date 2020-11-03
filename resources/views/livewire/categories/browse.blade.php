@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ open: false }">
 
     <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Categories') }}</h2>
@@ -106,7 +106,6 @@
             </div>
         </x-shopper-empty-state>
     @else
-
         <div class="mt-6 bg-white shadow sm:rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-center">
@@ -129,7 +128,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="ml-4 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                    <button @click="open = true" type="button" class="ml-4 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                         <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z" />
                         </svg>
@@ -252,9 +251,95 @@
                 </div>
             </div>
         </div>
-
     @endif
 
     <x-shopper-learn-more name="categories" link="#" />
 
+    <div
+        x-cloak
+        x-show="open"
+        class="fixed z-50 inset-0 overflow-y-auto"
+        x-on:reorder-complete.window="open = false"
+    >
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div x-cloak x-show="open" x-description="Background overlay, show/hide based on modal state." x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <!-- This element is to trick the browser into centering the modal contents. -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+            <div
+                x-cloak
+                x-show="open"
+                x-description="Modal panel, show/hide based on modal state."
+                x-transition:enter="ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-headline"
+            >
+                <div class="bg-white">
+                    <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
+                        <div class="text-left">
+                            <h3 class="inline-flex items-center text-lg leading-6 font-medium text-gray-900">
+                                <svg class="w-5 h-5 -ml-1 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+                                {{ __("Reorder categories") }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:px-6 sm:px-5 border-t border-gray-100">
+                        <div wire:sortable="updateCategoryOrder">
+                            @foreach($parentCategories as $parentCategory)
+                                <div wire:sortable.item="{{ $parentCategory->id }}" wire:key="category-{{ $parentCategory->id }}" class="pb-5">
+                                    <div class="p-3 bg-gray-100 flex items-center justify-center rounded-md">
+                                        <div class="flex flex-1 items-center space-x-3">
+                                            <svg class="flex-shrink-0 w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                            </svg>
+                                            <div class="flex items-center space-x-3">
+                                                <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $parentCategory->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
+                                                <span wire:sortable.handle class="text-sm leading-5 text-gray-900 font-medium">{{ $parentCategory->name }}</span>
+                                            </div>
+                                        </div>
+                                        <span class="ml-4 text-gray-500 leading-4 text-xs">
+                                            /{{ $parentCategory->slug }}
+                                        </span>
+                                    </div>
+                                    @if($parentCategory->childs->isNotEmpty())
+                                        <div class="ml-4 border-l border-dashed border-gray-200">
+                                            @foreach($parentCategory->childs as $child)
+                                                <div class="flex flex-1 items-center space-x-3 py-3 -mx-1">
+                                                    <div class="flex-shrink-0 w-2 h-2 rounded-full {{ $child->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
+                                                    <span wire:sortable.handle class="text-sm leading-5 text-gray-600">{{ $child->name }}</span>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                        <button @click="open = false" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                            {{ __("Cancel") }}
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
+@endpush

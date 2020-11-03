@@ -84,7 +84,7 @@ class Category extends Model
      */
     public function childs()
     {
-        return $this->hasMany(self::class);
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     /**

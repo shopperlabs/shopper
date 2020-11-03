@@ -45,6 +45,11 @@ class Browse extends Component
         ]);
     }
 
+    public function updateCategoryOrder()
+    {
+
+    }
+
     /**
      * Render the component.
      *
@@ -52,13 +57,17 @@ class Browse extends Component
      */
     public function render()
     {
-        $total = (new CategoryRepository())->count();
-
-        $categories = (new CategoryRepository())
-            ->where('name', '%'. $this->search .'%', 'like')
-            ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
-            ->paginate(10);
-
-        return view('shopper::livewire.categories.browse', compact('categories', 'total'));
+        return view('shopper::livewire.categories.browse', [
+            'total' => (new CategoryRepository())->count(),
+            'categories' => (new CategoryRepository())
+                ->where('name', '%'. $this->search .'%', 'like')
+                ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
+                ->paginate(10),
+            'parentCategories' => (new CategoryRepository())
+                ->with('childs')
+                ->where('parent_id', null)
+                ->orderBy('name', 'desc')
+                ->get(),
+        ]);
     }
 }
