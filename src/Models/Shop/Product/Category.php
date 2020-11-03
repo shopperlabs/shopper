@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Traits\Filetable;
 
@@ -30,19 +31,16 @@ class Category extends Model
      *
      * @var array
      */
-    protected $with = ['parent'];
+    protected $with = ['parent', 'files'];
 
     /**
-     * Boot the model.
+     * The accessors to append to the model's array form.
+     *
+     * @var array
      */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($model) {
-            $model->update(['slug' => $model->name]);
-        });
-    }
+    protected $appends = [
+        'parent_name',
+    ];
 
     /**
      * Get the table associated with the model.
@@ -55,17 +53,14 @@ class Category extends Model
     }
 
     /**
-     * Set the proper slug attribute.
+     * Scope a query to only include enabled categories.
      *
-     * @param  string  $value
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function setSlugAttribute($value)
+    public function scopeEnabled(Builder $query)
     {
-        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
-            $slug = "{$slug}-{$this->id}";
-        }
-
-        $this->attributes['slug'] = $slug;
+        return $query->where('is_enabled', true);
     }
 
     /**
@@ -79,11 +74,11 @@ class Category extends Model
             return $this->parent->name;
         }
 
-        return __('N/A (No parent category)');
+        return null;
     }
 
     /**
-     * Get all categories childs.
+     * Get all categories children.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -109,6 +104,6 @@ class Category extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(config('shopper.config.models.product'), shopper_table('category_product'), 'category_id');
+        return $this->belongsToMany(config('shopper.system.models.product'), shopper_table('category_product'), 'category_id');
     }
 }

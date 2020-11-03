@@ -9,7 +9,7 @@ trait WithSorting
      *
      * @var string
      */
-    public $sortBy = '';
+    public $sortBy;
 
     /**
      * Sort direction

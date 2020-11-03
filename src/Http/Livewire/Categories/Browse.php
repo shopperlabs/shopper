@@ -1,53 +1,64 @@
 <?php
 
-namespace Shopper\Framework\Http\Livewire;
+namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Traits\WithSorting;
 
-class CategoryList extends Component
+class Browse extends Component
 {
-    use WithPagination;
+    use WithPagination, WithSorting;
 
     /**
      * Search.
      *
      * @var string
      */
-    public $search = '';
+    public $search;
 
     /**
-     * Sort direction.
+     * Custom Livewire pagination view.
      *
-     * @var string
+     * @return string
      */
-    public $direction = 'desc';
-
     public function paginationView()
     {
-        return 'shopper::components.livewire.wire-pagination-links';
+        return 'shopper::livewire.wire-pagination-links';
     }
 
     /**
-     * Sort results.
+     * Remove a record to the database.
      *
-     * @param  string  $value
+     * @param  int  $id
+     * @throws \Exception
      */
-    public function sort($value)
+    public function remove(int $id)
     {
-        $this->direction = $value === 'asc' ? 'desc' : 'asc';
+        (new CategoryRepository())->getById($id)->delete();
+
+        $this->dispatchBrowserEvent('item-removed');
+        $this->dispatchBrowserEvent('notify', [
+            'title' => __("Deleted"),
+            'message' => __("The category has successfully removed!")
+        ]);
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         $total = (new CategoryRepository())->count();
 
         $categories = (new CategoryRepository())
             ->where('name', '%'. $this->search .'%', 'like')
-            ->orderBy('created_at', $this->direction)
+            ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
             ->paginate(10);
 
-        return view('shopper::components.livewire.categories.list', compact('categories', 'total'));
+        return view('shopper::livewire.categories.browse', compact('categories', 'total'));
     }
 }
