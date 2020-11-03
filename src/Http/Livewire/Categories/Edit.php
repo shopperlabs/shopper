@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Models\Shop\Product\Brand;
 use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
@@ -14,6 +13,13 @@ use Shopper\Framework\Traits\WithUploadProcess;
 class Edit extends Component
 {
     use WithFileUploads, WithUploadProcess;
+
+    /**
+     * Upload listeners.
+     *
+     * @var string[]
+     */
+    protected $listeners = ['fileDeleted'];
 
     /**
      * Category Model.
@@ -161,6 +167,17 @@ class Edit extends Component
     }
 
     /**
+     * Listen when a file is removed from the storage
+     * and update the user screen and remove image preview.
+     *
+     * @return void
+     */
+    public function fileDeleted()
+    {
+        $this->media = null;
+    }
+
+    /**
      * Render the component.
      *
      * @return \Illuminate\View\View
@@ -173,7 +190,10 @@ class Edit extends Component
                 ->scopes('enabled')
                 ->select('name', 'id')
                 ->get()
-                ->except($this->category->id)
+                ->except($this->category->id),
+            'media' => $this->category->files->isNotEmpty()
+                ? $this->category->files->first()
+                : null,
         ]);
     }
 }
