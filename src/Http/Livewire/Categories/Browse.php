@@ -45,9 +45,37 @@ class Browse extends Component
         ]);
     }
 
-    public function updateCategoryOrder()
+    /**
+     * Update category parent position.
+     *
+     * @param  array  $items
+     * @return void
+     */
+    public function updateGroupOrder($items)
     {
+        foreach ($items as $item) {
+            (new CategoryRepository())
+                ->getById($item['value'])
+                ->update(['position' => $item['order']]);
+        }
 
+        $this->emitSelf('notify-saved');
+    }
+
+    public function updateCategoryOrder($groups)
+    {
+        foreach ($groups as $group) {
+            foreach ($group['items'] as $item) {
+                (new CategoryRepository())
+                    ->getById($item['value'])
+                    ->update([
+                        'parent_id' => $group['value'],
+                        'position'  => $item['order']
+                    ]);
+            }
+        }
+
+        $this->emitSelf('notify-saved');
     }
 
     /**
@@ -66,7 +94,7 @@ class Browse extends Component
             'parentCategories' => (new CategoryRepository())
                 ->with('childs')
                 ->where('parent_id', null)
-                ->orderBy('name', 'desc')
+                ->orderBy('position', 'asc')
                 ->get(),
         ]);
     }

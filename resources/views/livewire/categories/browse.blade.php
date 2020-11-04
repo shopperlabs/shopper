@@ -1,5 +1,12 @@
-<div x-data="{ open: false }">
-
+<div
+    x-data="{ open: false, show: false }"
+    x-init="
+        @this.on('notify-saved', () => {
+            if (show === false) setTimeout(() => { show = false }, 2500);
+            show = true;
+        })
+    "
+>
     <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Categories') }}</h2>
         @if($total > 0)
@@ -284,7 +291,7 @@
                 aria-labelledby="modal-headline"
             >
                 <div class="bg-white">
-                    <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
+                    <div class="sm:flex sm:items-center sm:justify-between px-4 sm:px-6 py-4">
                         <div class="text-left">
                             <h3 class="inline-flex items-center text-lg leading-6 font-medium text-gray-900">
                                 <svg class="w-5 h-5 -ml-1 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -293,19 +300,39 @@
                                 {{ __("Reorder categories") }}
                             </h3>
                         </div>
+                        <div class="ml-4">
+                            <div
+                                x-show.transition.out.duration.1000ms="show"
+                                style="display: none;"
+                                class="rounded-md bg-green-50 p-2"
+                            >
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm leading-5 font-medium text-green-800">
+                                            {{ __("Saved!") }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="p-4 sm:px-6 sm:px-5 border-t border-gray-100">
-                        <div wire:sortable="updateCategoryOrder">
+                    <div class="relative p-4 sm:px-6 sm:px-5 border-t border-gray-100">
+                        <div wire:sortable="updateGroupOrder" wire:sortable-group="updateCategoryOrder">
                             @foreach($parentCategories as $parentCategory)
-                                <div wire:sortable.item="{{ $parentCategory->id }}" wire:key="category-{{ $parentCategory->id }}" class="pb-5">
+                                <div wire:sortable.item="{{ $parentCategory->id }}" wire:key="category-{{ $parentCategory->id }}" class="pb-5 cursor-move">
                                     <div class="p-3 bg-gray-100 flex items-center justify-center rounded-md">
-                                        <div class="flex flex-1 items-center space-x-3">
+                                        <div wire:sortable.handle class="flex flex-1 items-center space-x-3">
                                             <svg class="flex-shrink-0 w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                                             </svg>
                                             <div class="flex items-center space-x-3">
                                                 <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $parentCategory->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
-                                                <span wire:sortable.handle class="text-sm leading-5 text-gray-900 font-medium">{{ $parentCategory->name }}</span>
+                                                <span class="text-sm leading-5 text-gray-900 font-medium">{{ $parentCategory->name }}</span>
                                             </div>
                                         </div>
                                         <span class="ml-4 text-gray-500 leading-4 text-xs">
@@ -313,14 +340,16 @@
                                         </span>
                                     </div>
                                     @if($parentCategory->childs->isNotEmpty())
-                                        <div class="ml-4 border-l border-dashed border-gray-200">
+                                        <ul wire:sortable-group.item-group="{{ $parentCategory->id }}" class="ml-4 border-l border-dashed border-gray-200">
                                             @foreach($parentCategory->childs as $child)
-                                                <div class="flex flex-1 items-center space-x-3 py-3 -mx-1">
-                                                    <div class="flex-shrink-0 w-2 h-2 rounded-full {{ $child->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
-                                                    <span wire:sortable.handle class="text-sm leading-5 text-gray-600">{{ $child->name }}</span>
-                                                </div>
+                                                <li wire:key="sub-category-{{ $child->id }}" wire:sortable-group.item="{{ $child->id }}" class="-mx-1">
+                                                    <div class="flex flex-1 items-center space-x-3 py-3 cursor-move">
+                                                        <div class="flex-shrink-0 w-2 h-2 rounded-full {{ $child->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
+                                                        <span wire:sortable.handle class="text-sm leading-5 text-gray-600">{{ $child->name }}</span>
+                                                    </div>
+                                                </li>
                                             @endforeach
-                                        </div>
+                                        </ul>
                                     @endif
                                 </div>
                             @endforeach
@@ -330,7 +359,7 @@
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                         <button @click="open = false" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                            {{ __("Cancel") }}
+                            {{ __("Close") }}
                         </button>
                     </span>
                 </div>
