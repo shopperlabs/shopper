@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateUsersTables extends Migration
+class CreateUsersTable extends Migration
 {
     use MigrationTrait;
 

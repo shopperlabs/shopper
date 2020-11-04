@@ -25,7 +25,7 @@ class CreateOrderPaymentsTable extends Migration
             $table->json('details');
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
-            $this->addForeignKey($table, 'payment_id', $this->getTableName('payments'), false);
+            $this->addForeignKey($table, 'payment_method_id', $this->getTableName('payment_methods'), false);
         });
 
         Schema::create($this->getTableName('order_refunds'), function (Blueprint $table) {
@@ -35,7 +35,7 @@ class CreateOrderPaymentsTable extends Migration
             $table->string('refund_amount')->nullable();
             $table->enum('status', ['pending', 'treatment', 'partial-refund', 'refunded', 'cancelled', 'rejected'])->default('pending');
             $table->longText('notes');
-            
+
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
             $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
         });
