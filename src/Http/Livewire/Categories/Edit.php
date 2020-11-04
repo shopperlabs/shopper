@@ -1,13 +1,13 @@
 <?php
 
-namespace Shopper\Framework\Http\Livewire\Brands;
+namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\File;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends Component
@@ -22,49 +22,49 @@ class Edit extends Component
     protected $listeners = ['fileDeleted'];
 
     /**
-     * Brand Model.
+     * Category Model.
      *
      * @var \Illuminate\Database\Eloquent\Model
      */
-    public $brand;
+    public $category;
 
     /**
-     * Brand Model id.
+     * Category Model id.
      *
      * @var int
      */
-    public $brand_id;
+    public $categoryId;
 
     /**
-     * Name attribute.
+     * Category name.
      *
      * @var string
      */
     public $name = '';
 
     /**
-     * Slug for custom url.
+     * Category slug for custom url.
      *
      * @var string
      */
     public $slug;
 
     /**
-     * Brand url website.
+     * Category parentId.
      *
      * @var string
      */
-    public $website = '';
+    public $parentId;
 
     /**
-     * Brand sample description.
+     * Category sample description.
      *
      * @var string
      */
-    public $description = '';
+    public $description;
 
     /**
-     * Indicates if brand is being enabled.
+     * Indicates if category is being enabled.
      *
      * @var bool
      */
@@ -73,22 +73,22 @@ class Edit extends Component
     /**
      * Component mounted action.
      *
-     * @param  $brand
+     * @param  $category
      * @return void
      */
-    public function mount($brand)
+    public function mount($category)
     {
-        $this->brand = $brand;
-        $this->brand_id = $brand->id;
-        $this->name = $brand->name;
-        $this->slug = $brand->slug;
-        $this->website = $brand->website;
-        $this->description = $brand->description;
-        $this->is_enabled = $brand->is_enabled;
+        $this->category = $category;
+        $this->categoryId = $category->id;
+        $this->name = $category->name;
+        $this->slug = $category->slug;
+        $this->parentId = $category->parent_id;
+        $this->description = $category->description;
+        $this->is_enabled = $category->is_enabled;
     }
 
     /**
-     * Update brand record in the database.
+     * Update category record in the database.
      *
      * @return void
      */
@@ -96,28 +96,28 @@ class Edit extends Component
     {
         $this->validate($this->rules());
 
-        (new BrandRepository())->getById($this->brand->id)->update([
+        (new CategoryRepository())->getById($this->category->id)->update([
             'name' => $this->name,
             'slug' => $this->slug,
-            'website' => $this->website,
+            'parent_id' => $this->parentId,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
         ]);
 
         if ($this->file) {
 
-            if ($this->brand->files->isNotEmpty()) {
-                foreach ($this->brand->files as $file) {
+            if ($this->category->files->isNotEmpty()) {
+                foreach ($this->category->files as $file) {
                     Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
                 }
-                File::query()->where('filetable_id', $this->brand_id)->delete();
+                File::query()->where('filetable_id', $this->categoryId)->delete();
             }
 
-            $this->uploadFile(config('shopper.system.models.brand'), $this->brand->id);
+            $this->uploadFile(config('shopper.system.models.category'), $this->category->id);
         }
 
-        session()->flash('success', __("Brand successfully updated!"));
-        $this->redirectRoute('shopper.brands.index');
+        session()->flash('success', __("Category successfully updated!"));
+        $this->redirectRoute('shopper.categories.index');
     }
 
     /**
@@ -152,15 +152,17 @@ class Edit extends Component
     {
         return [
             'name' => [
+                'sometimes',
                 'required',
                 'max:150',
-                Rule::unique(shopper_table('brands'), 'name')->ignore($this->brand_id),
+                Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
             ],
             'slug' => [
+                'sometimes',
                 'required',
-                Rule::unique(shopper_table('brands'), 'slug')->ignore($this->brand_id),
+                Rule::unique(shopper_table('categories'), 'slug')->ignore($this->categoryId),
             ],
-            'file' => 'nullable|image|max:1024',
+            'file' => 'sometimes|nullable|image|max:1024',
         ];
     }
 
@@ -182,9 +184,15 @@ class Edit extends Component
      */
     public function render()
     {
-        return view('shopper::livewire.brands.edit', [
-            'media' => $this->brand->files->isNotEmpty()
-                ? $this->brand->files->first()
+        return view('shopper::livewire.categories.edit', [
+            'categories' => (new CategoryRepository())
+                ->makeModel()
+                ->scopes('enabled')
+                ->select('name', 'id')
+                ->get()
+                ->except($this->category->id),
+            'media' => $this->category->files->isNotEmpty()
+                ? $this->category->files->first()
                 : null,
         ]);
     }

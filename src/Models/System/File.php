@@ -55,6 +55,23 @@ class File extends Model
     }
 
     /**
+     * Get the formatted file_size attribute.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getFileSizeAttribute($value)
+    {
+        $units = ['octets', 'Ko', 'Mo', 'Go', 'To', 'Po'];
+
+        for ($i = 0; $value > 1024; $i++) {
+            $value /= 1024;
+        }
+
+        return round($value, 2) . ' ' . $units[$i];
+    }
+
+    /**
      * Get the file full path.
      *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string

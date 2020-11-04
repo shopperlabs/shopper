@@ -13,6 +13,6 @@ class CategoryRepository extends BaseRepository
      */
     public function model()
     {
-        return config('shopper.models.category');
+        return config('shopper.system.models.category');
     }
 }

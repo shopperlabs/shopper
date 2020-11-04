@@ -1,9 +1,9 @@
 <div x-data="{ on: @if($is_enabled) true @else false @endif }">
-    <x:shopper-breadcrumb back="shopper.brands.index">
+    <x:shopper-breadcrumb back="shopper.categories.index">
         <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
-        <a href="{{ route('shopper.brands.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Brands') }}</a>
+        <a href="{{ route('shopper.categories.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Categories') }}</a>
     </x:shopper-breadcrumb>
 
     <div class="mt-3 pb-5 border-b border-gray-200 space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
@@ -26,16 +26,18 @@
             <div class="bg-white rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="Apple, Nike, Samsung...">
+                        <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="Women Shoes, Baby Clothes clothes">
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-4">
-                    <label for="website" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Website") }}</label>
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500 sm:text-sm sm:leading-5">https://</span>
-                        </div>
-                        <input wire:model="website" id="website" type="text" class="form-input block w-full pl-16 sm:text-sm sm:leading-5" placeholder="www.example.com">
+                    <label for="parentId" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Parent") }}</label>
+                    <div class="mt-1 rounded-md shadow-sm">
+                        <select wire:model="parentId" id="parentId" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                            <option>{{ __("Select parent category") }}</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="mt-5 border-t border-b border-gray-200 py-4">
@@ -48,13 +50,13 @@
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <label for="online" class="font-medium text-gray-700">{{ __("Visibility") }}</label>
-                            <p class="text-sm text-gray-400 font-normal">{{ __("Set brand visibility for the customers.") }}</p>
+                            <p class="text-sm text-gray-400 font-normal">{{ __("Set category visibility for the customers.") }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="mt-5">
                     <x-shopper-input.group label="Description" for="description">
-                        <x-shopper-input.rich-text wire:model.lazy="description" id="description" :initial-value="$description" />
+                        <x-shopper-input.rich-text wire:model.lazy="description" id="description" />
                     </x-shopper-input.group>
                 </div>
             </div>
@@ -104,7 +106,7 @@
                                         </div>
                                     </label>
                                     @error('file')
-                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
                             @endif
@@ -136,4 +138,5 @@
             </aside>
         </div>
     </div>
+
 </div>

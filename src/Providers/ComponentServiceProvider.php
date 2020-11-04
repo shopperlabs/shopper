@@ -12,10 +12,12 @@ use Shopper\Framework\Http\Livewire\{
     Account\Password,
     Account\Profile,
     Account\TwoFactor,
-    Brands\Browse as BrowseBrand,
+    Brands\Browse as BrowseBrands,
     Brands\Create as CreateBrand,
     Brands\Edit as EditBrand,
-    CategoryList,
+    Categories\Browse as BrowseCategories,
+    Categories\Create as CreateCategory,
+    Categories\Edit as EditCategory,
     CollectionList,
     CustomerList,
     Discount\Create as CreateDiscount,
@@ -65,6 +67,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('datetime-picker');
             $this->registerComponent('delete-action');
             $this->registerComponent('dialog-modal');
+            $this->registerComponent('empty-state');
             $this->registerComponent('input.group');
             $this->registerComponent('input.rich-text');
             $this->registerComponent('input.text');
@@ -89,10 +92,12 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-account.two-factor', TwoFactor::class);
         Livewire::component('shopper-account.devices', Devices::class);
 
-        Livewire::component('shopper-brands-lists', BrowseBrand::class);
+        Livewire::component('shopper-brands-lists', BrowseBrands::class);
         Livewire::component('shopper-brands-create', CreateBrand::class);
         Livewire::component('shopper-brands-edit', EditBrand::class);
-        Livewire::component('shopper-category-list', CategoryList::class);
+        Livewire::component('shopper-categories-lists', BrowseCategories::class);
+        Livewire::component('shopper-categories-create', CreateCategory::class);
+        Livewire::component('shopper-categories-edit', EditCategory::class);
         Livewire::component('shopper-collection-list', CollectionList::class);
         Livewire::component('shopper-product-list', ProductList::class);
         Livewire::component('shopper-customer-list', CustomerList::class);
