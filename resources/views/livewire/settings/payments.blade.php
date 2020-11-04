@@ -32,9 +32,9 @@
                     <div class="px-4 py-5 bg-white sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
-                                <label for="pixel_facebook_id" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Stripe API key") }}</label>
+                                <label for="stripe_key" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Stripe API key") }}</label>
                                 <div class="mt-1 relative">
-                                    <input wire:model="facebook_pixel_account_id" id="pixel_facebook_id" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="12345678" />
+                                    <input wire:model="stripe_key" id="stripe_key" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="12345678" />
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500">
                                     {{ __("Read more about") }} <a href="https://www.facebook.com/business/learn/facebook-ads-pixel" target="_blank" class="text-blue-500 hover:text-blue-400">Stripe SDK</a>.

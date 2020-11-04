@@ -8,14 +8,36 @@ use Shopper\Framework\Models\System\Setting;
 
 class Payments extends Component
 {
+    /**
+     * Stripe API key.
+     *
+     * @var string
+     */
     public $stripe_key;
+
+    /**
+     * Stripe API secret.
+     *
+     * @var string
+     */
     public $stripe_secret;
 
-    public function mount() {
+    /**
+     * Mounted component.
+     *
+     * @return void
+     */
+    public function mount()
+    {
         $this->stripe_key = env('STRIPE_KEY');
         $this->stripe_secret = env('STRIPE_SECRET');
     }
 
+    /**
+     * Updated Stripe payment.
+     *
+     * @return void
+     */
     public function store()
     {
         setEnvironmentValue([
@@ -27,10 +49,15 @@ class Payments extends Component
 
         $this->dispatchBrowserEvent('notify', [
             'title' => __('Updated'),
-            'message' => __("Your payments configuration settings have been correctly updated")
+            'message' => __("Your payments configuration settings have been correctly updated!")
         ]);
     }
 
+    /**
+     * Renter component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('shopper::livewire.settings.payments');
