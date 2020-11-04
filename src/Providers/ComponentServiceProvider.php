@@ -29,7 +29,6 @@ use Shopper\Framework\Http\Livewire\{
     Product\Inventory,
     ProductList,
     Settings\Analytics,
-    Settings\Payments,
     Settings\Integrations,
     Settings\General,
     Settings\Management\CreateAdminUser,
@@ -37,6 +36,8 @@ use Shopper\Framework\Http\Livewire\{
     Settings\Management\Permissions,
     Settings\Management\Role,
     Settings\Management\UsersRole,
+    Settings\Payments\General as PaymentMethods,
+    Settings\Payments\Stripe,
 };
 
 class ComponentServiceProvider extends ServiceProvider
@@ -117,7 +118,8 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-settings-management-permissions', Permissions::class);
         Livewire::component('shopper-settings-management-users-role', UsersRole::class);
         Livewire::component('shopper-settings-analytics', Analytics::class);
-        Livewire::component('shopper-settings-payments', Payments::class);
+        Livewire::component('shopper-settings-payments-general', PaymentMethods::class);
+        Livewire::component('shopper-settings-payments-stripe', Stripe::class);
         Livewire::component('shopper-settings-integrations', Integrations::class);
         Livewire::component('shopper-settings-general', General::class);
     }
