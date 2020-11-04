@@ -4,7 +4,6 @@ namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Models\Shop\Order;
 
 class OrderPayment extends Model
 {
