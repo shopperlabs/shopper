@@ -4,7 +4,6 @@ namespace Shopper\Framework\Http\Livewire\Settings;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Artisan;
-use Shopper\Framework\Models\System\Setting;
 
 class Payments extends Component
 {
