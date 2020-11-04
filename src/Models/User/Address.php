@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\System\Country;
 
 class Address extends Model
 {

@@ -22,5 +22,4 @@ class Geolocation extends Model
     {
         return shopper_table('users_geolocation_history');
     }
-
 }
