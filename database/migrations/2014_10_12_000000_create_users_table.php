@@ -16,19 +16,15 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        /**
-         * Users & Customers table
-         */
         Schema::create($this->getTableName('users'), function (Blueprint $table) {
             $this->addCommonFields($table, true);
 
             $table->string('last_name');
-            $table->string('first_name');
+            $table->string('first_name')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
-            $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->string('phone_number')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->date('birth_date')->nullable();
@@ -39,24 +35,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
         });
-
-        Schema::create($this->getTableName('user_addresses'), function (Blueprint $table) {
-            $this->addCommonFields($table);
-
-            $table->string('last_name');
-            $table->string('first_name');
-            $table->string('company_name')->nullable();
-            $table->string('street_address');
-            $table->string('street_address_plus')->nullable();
-            $table->string('zipcode');
-            $table->string('city');
-            $table->string('phone_number')->nullable();
-            $table->boolean('is_default')->default(false);
-            $table->enum('type', ["billing", "shipping"]);
-
-            $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));
-            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
-        });
     }
 
     /**
@@ -66,7 +44,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('user_addresses'));
         Schema::dropIfExists($this->getTableName('users'));
     }
 }
