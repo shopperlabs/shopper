@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Traits\Filetable;
 
@@ -26,6 +27,15 @@ class Brand extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_enabled' => 'boolean',
+    ];
+
+    /**
      * The relations to eager load on every query.
      *
      * @var array
@@ -40,6 +50,17 @@ class Brand extends Model
     public function getTable()
     {
         return shopper_table('brands');
+    }
+
+    /**
+     * Scope a query to only include enabled categories.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeEnabled(Builder $query)
+    {
+        return $query->where('is_enabled', true);
     }
 
     /**
