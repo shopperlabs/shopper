@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37402a6a908146729ccb3e21b7dbffa2",
+    "content-hash": "0bc6291d3fe966ce082bc8d20d2af225",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -805,16 +805,16 @@
         },
         {
             "name": "laravel/cashier",
-            "version": "v12.4.2",
+            "version": "v12.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/cashier-stripe.git",
-                "reference": "e783a51d90644d2c46c8aafe9405e22c22bf136e"
+                "reference": "00b61d7ac6e02cdace822a2dbfd9c9ce1db4f9d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/cashier-stripe/zipball/e783a51d90644d2c46c8aafe9405e22c22bf136e",
-                "reference": "e783a51d90644d2c46c8aafe9405e22c22bf136e",
+                "url": "https://api.github.com/repos/laravel/cashier-stripe/zipball/00b61d7ac6e02cdace822a2dbfd9c9ce1db4f9d5",
+                "reference": "00b61d7ac6e02cdace822a2dbfd9c9ce1db4f9d5",
                 "shasum": ""
             },
             "require": {
@@ -830,7 +830,7 @@
                 "illuminate/view": "^6.0|^7.0|^8.0",
                 "moneyphp/money": "^3.2",
                 "nesbot/carbon": "^2.0",
-                "php": "^7.2",
+                "php": "^7.2.5|^8.0",
                 "stripe/stripe-php": "^7.39",
                 "symfony/http-kernel": "^4.3|^5.0",
                 "symfony/intl": "^4.3|^5.0"
@@ -879,7 +879,7 @@
                 "issues": "https://github.com/laravel/cashier/issues",
                 "source": "https://github.com/laravel/cashier"
             },
-            "time": "2020-10-20T15:12:09+00:00"
+            "time": "2020-11-03T14:54:45+00:00"
         },
         {
             "name": "laravel/framework",

@@ -29,7 +29,7 @@
     "bacon/bacon-qr-code": "^2.0",
     "illuminate/support": "^7.0",
     "jenssegers/agent": "^2.6",
-    "laravel/cashier": "^12.4",
+    "laravel/cashier": "^12.5",
     "laravel/helpers": "^1.2",
     "laravel/ui": "^2.0",
     "lavary/laravel-menu": "^1.7",

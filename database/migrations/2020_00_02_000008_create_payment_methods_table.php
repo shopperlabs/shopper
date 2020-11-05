@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreatePaymentsTable extends Migration
+class CreatePaymentMethodsTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,14 +16,15 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('payments'), function (Blueprint $table) {
+        Schema::create($this->getTableName('payment_methods'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->string('name');
+            $table->string('title');
             $table->string('slug')->unique()->nullable();
             $table->string('logo')->nullable();
             $table->string('link_url')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
+            $table->text('instructions')->nullable();
             $table->boolean('is_enabled')->default(false);
         });
     }
@@ -35,6 +36,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('payments'));
+        Schema::dropIfExists($this->getTableName('payment_methods'));
     }
 }

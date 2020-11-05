@@ -1,8 +1,8 @@
 @extends('shopper::layouts.'. config('shopper.system.theme'))
-@section('title', __('Payments'))
+@section('title', __('Payments Methods'))
 
 @section('content')
 
-    <livewire:shopper-settings-payments />
+    <livewire:shopper-settings-payments-general />
 
 @endsection
