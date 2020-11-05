@@ -53,13 +53,6 @@ class Stripe extends Component
     public $enabled = false;
 
     /**
-     * Indicates if Stripe installation modal is launch.
-     *
-     * @var bool
-     */
-    public $launchInstallationModal = false;
-
-    /**
      * Mounted component.
      *
      * @return void
@@ -74,6 +67,11 @@ class Stripe extends Component
         $this->currency = ($currency = Setting::query()
             ->where('key', 'shop_currency_id')
             ->first()) ? $currency->value: 'USD';
+    }
+
+    public function install()
+    {
+
     }
 
     /**

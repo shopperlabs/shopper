@@ -3,7 +3,7 @@
         open: false,
         options: ['general', 'stripe'],
         words: {'general': '{{ __("General") }}', 'stripe': '{{ __("Stripe") }}'},
-        currentTab: 'general'
+        currentTab: 'stripe'
     }"
 >
 

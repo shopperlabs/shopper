@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ show: false }">
 
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
@@ -23,13 +23,6 @@
                                 @endif
                             </h3>
                         </div>
-                        @if(! $this->enabled)
-                            <div class="ml-4">
-                                <span role="checkbox" tabindex="0" x-on:click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="true" aria-labelledby="toggleLabel" x-data="{ on: @entangle('enabled') }" x-bind:class="{ 'bg-gray-200': !on, 'bg-green-500': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-green bg-green-500">
-                                    <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-5"></span>
-                                </span>
-                            </div>
-                        @endif
                     </div>
                 </div>
                 <div class="px-4 py-5 bg-white sm:p-6">
@@ -53,6 +46,13 @@
                             {{ __("This provider allows you to integrate Laravel Cashier into your store to allow your customers to make payments, subscriptions using Stripe.") }}
                             <a href="https://laravel.com/docs/billing" target="_blank" class="text-blue-600 hover:text-blue-500 transition-colors duration-150 ease-in-out">{{ __("Learn more about Laravel Cashier") }}</a>
                         </p>
+                        @if(! $this->enabled)
+                            <span class="mt-4 inline-flex rounded-md shadow-sm">
+                                <button @click="show = true" type="button" class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-light-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+                                    {{ __("Enabled Stripe Payment") }}
+                                </button>
+                            </span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -170,5 +170,55 @@
         </div>
 
     @endif
+
+    <x-shopper-modal x-show="show" maxWidth="lg">
+        <div class="p-4 sm:p-6 space-y-5">
+            <div>
+                <div class="py-4">
+                    <h3 class="text-xs leading-4 font-medium text-gray-900 tracking-wide uppercase">{{ __("What's included") }}</h3>
+                    <ul class="mt-6 space-y-2">
+                        <li class="flex space-x-2">
+                            <svg class="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" x-description="Heroicon name: check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm leading-5 text-gray-500">{{ __("Download Laravel Cashier from composer") }}</span>
+                        </li>
+                        <li class="flex space-x-2">
+                            <svg class="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" x-description="Heroicon name: check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm leading-5 text-gray-500">{{ __("Run package migrations") }}</span>
+                        </li>
+                        <li class="flex space-x-2">
+                            <svg class="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" x-description="Heroicon name: check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-sm leading-5 text-gray-500">{{ __("Set up environnement variables") }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="relative bg-gray-900 shadow rounded-md h-28 overflow-y-auto overflow-hidden p-3">
+                <div class="absolute left-0 top-0 px-2">
+                    <span class="text-gray-600 text-xs leading-4">{{ __("output") }}</span>
+                </div>
+                <div class="mt-2 text-gray-500 text-sm leading-5">
+                    ...
+                </div>
+            </div>
+            <div class="sm:mt-4 sm:flex sm:flex-row-reverse">
+                <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                    <button wire:click="install" wire.loading.attr="disabled" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                        {{ __("Proceed to installation") }}
+                    </button>
+                </span>
+                <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                    <button @click="show = false" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                        {{ __("Cancel") }}
+                    </button>
+                </span>
+            </div>
+        </div>
+    </x-shopper-modal>
 
 </div>
