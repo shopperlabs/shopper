@@ -48,7 +48,11 @@
                         </p>
                         @if(! $this->enabled)
                             <span class="mt-4 inline-flex rounded-md shadow-sm">
-                                <button @click="show = true" type="button" class="py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-light-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+                                <button wire:click="enabledStripe" wire.loading.attr="disabled" type="button" class="inline-flex items-center py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-light-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
+                                    <svg wire:loading wire:target="enabledStripe" class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                    </svg>
                                     {{ __("Enabled Stripe Payment") }}
                                 </button>
                             </span>
@@ -107,7 +111,7 @@
 
                                 <div class="sm:col-span-6">
                                     <x-shopper-input.group label="Webhook key" for="webhook_key">
-                                        <input wire:model="stripe_webhook" id="webhook_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                        <input wire:model="stripe_webhook_secret" id="webhook_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
                                     </x-shopper-input.group>
                                     <p class="mt-2 text-gray-500 text-sm leading-5">
                                         {{ __("Webhooks Key can be grabbed from") }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-blue-600 hover:text-blue-500">https://dashboard.stripe.com/account/webhooks</a>
@@ -145,7 +149,7 @@
                                     <div class="mt-1 rounded-md shadow-sm">
                                         <select wire:model="currency" id="currency" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                             @foreach($currencies as $currency)
-                                                <option value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})</option>
+                                                <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
                                             @endforeach
                                         </select>
                                     </div>

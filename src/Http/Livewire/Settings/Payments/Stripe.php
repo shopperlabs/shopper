@@ -4,6 +4,7 @@ namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
 use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
+use Shopper\Framework\Models\Shop\PaymentMethod;
 use Shopper\Framework\Models\System\Currency;
 use Shopper\Framework\Models\System\Setting;
 
@@ -59,7 +60,7 @@ class Stripe extends Component
      */
     public function mount()
     {
-        $this->enabled = false;
+        $this->enabled = ($stripe = PaymentMethod::query()->where('slug', 'stripe')->first()) ? $stripe->is_enabled : false;
         $this->stripe_mode = env('STRIPE_MODE', 'sandbox');
         $this->stripe_key = env('STRIPE_KEY', '');
         $this->stripe_secret = env('STRIPE_SECRET', '');
@@ -69,9 +70,26 @@ class Stripe extends Component
             ->first()) ? $currency->value: 'USD';
     }
 
-    public function install()
+    /**
+     * Enabled Stripe payment.
+     *
+     * @return void
+     */
+    public function enabledStripe()
     {
+        PaymentMethod::query()->create([
+            'title' => 'Stripe',
+            'link_url' => 'https://laravel.com/docs/billing',
+            'is_enabled' => true,
+            'description' => "Laravel Cashier provides an expressive, fluent interface to Stripe's subscription billing services. It handles almost all of the boilerplate subscription billing code you are dreading writing. In addition to basic subscription management, Cashier can handle coupons, swapping subscription, subscription 'quantities', cancellation grace periods, and even generate invoice PDFs."
+        ]);
 
+        $this->enabled = true;
+
+        $this->dispatchBrowserEvent('notify', [
+            'title' => __("Success"),
+            'message' => __("You have successfully enabled Stripe payment for your store!"),
+        ]);
     }
 
     /**
