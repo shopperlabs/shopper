@@ -75,6 +75,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('input.textarea');
             $this->registerComponent('input.file-upload');
             $this->registerComponent('learn-more');
+            $this->registerComponent('modal');
             $this->registerComponent('notify');
         });
     }
