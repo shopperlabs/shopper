@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Cashier\Billable;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -16,7 +17,8 @@ class User extends Authenticatable
         HasRoles,
         CanHaveDiscount,
         SoftDeletes,
-        TwoFactorAuthenticatable;
+        TwoFactorAuthenticatable,
+        Billable;
 
     /**
      * The attributes that are mass assignable.
