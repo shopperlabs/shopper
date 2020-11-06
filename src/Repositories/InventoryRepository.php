@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Repositories;
 
-use Shopper\Framework\Models\Inventory;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
 
 class InventoryRepository extends BaseRepository
 {

@@ -41,7 +41,7 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased">
 
-    <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false }" @keydown.window.escape="sidebarOpen = false">
+    <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false, modalDemo: false, }" @keydown.window.escape="sidebarOpen = false">
         <!-- Off-canvas menu for mobile -->
         @include('shopper::partials.default.sidebar-mobile')
 
@@ -107,6 +107,8 @@
                 </main>
             </div>
         </div>
+
+        <x-shopper-wip />
     </div>
     <x-shopper-notify />
     <x-shopper-alert />

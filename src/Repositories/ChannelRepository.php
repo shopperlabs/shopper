@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Repositories;
 
-use Shopper\Framework\Models\Channel;
+use Shopper\Framework\Models\Shop\Channel;
 
 class ChannelRepository extends BaseRepository
 {

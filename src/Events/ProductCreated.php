@@ -3,7 +3,7 @@
 namespace Shopper\Framework\Events;
 
 use Illuminate\Queue\SerializesModels;
-use Shopper\Framework\Models\Ecommerce\Product;
+use Shopper\Framework\Models\Shop\Product\Product;
 
 class ProductCreated
 {

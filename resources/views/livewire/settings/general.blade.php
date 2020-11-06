@@ -14,13 +14,6 @@
         <div class="flex-1 min-w-0">
             <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Store Setting') }}</h2>
         </div>
-        <div class="text-right">
-            <span class="text-sm leading-5 text-gray-600 font-medium">80% {{ __("Profile completion") }}</span>
-            <div class="mt-1 h-3 relative w-48 rounded-full overflow-hidden">
-                <div class="w-full h-full bg-gray-300 absolute"></div>
-                <div class="h-full bg-blue-600 absolute" style="width:50%"></div>
-            </div>
-        </div>
     </div>
 
     <form wire:submit.prevent="store">
@@ -35,8 +28,8 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow sm:rounded-md sm:overflow-hidden">
-                    <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="shadow bg-white rounded-md">
+                    <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
                                 <label for="shop_name" class="block text-sm font-medium leading-5 text-gray-700">
@@ -137,8 +130,8 @@
                     </div>
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
-                    <div class="shadow sm:rounded-md sm:overflow-hidden">
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                    <div class="shadow bg-white rounded-md overflow-hidden">
+                        <div class="px-4 py-5 sm:p-6">
                             <x-shopper-input.group label="Logo" for="logo" :error="$errors->first('shop_logo')" noShadow>
                                 <x-shopper-input.file-upload wire:model="shop_logo" id="photo">
                                     <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
@@ -235,8 +228,8 @@
                     </div>
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
-                    <div class="shadow sm:rounded-md sm:overflow-hidden">
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                    <div class="shadow bg-white rounded-md overflow-hidden">
+                        <div class="px-4 py-5 sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6">
                                     <x-shopper-input.group label="Legal name of the company" for="shop_legal_name">
@@ -304,8 +297,8 @@
                     </div>
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                    <div class="shadow overflow-hidden bg-white rounded-md">
+                        <div class="px-4 py-5 sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6">
                                     <label for="shop_currency_id" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Store Currency") }}</label>
@@ -341,8 +334,8 @@
                     </div>
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
-                    <div class="shadow sm:rounded-md sm:overflow-hidden">
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                    <div class="shadow bg-white rounded-md overflow-hidden">
+                        <div class="px-4 py-5 sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6">
                                     <label for="shop_facebook_link" class="block text-sm font-medium leading-5 text-gray-700">

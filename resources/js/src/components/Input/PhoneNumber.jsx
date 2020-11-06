@@ -1,5 +1,5 @@
 import React from "react";
-import IntlTelInput from 'react-intl-tel-input';
+import IntlTelInput from "react-intl-tel-input";
 import "./custom-intel-style.css";
 
 export default ({ value, onChange, className }) => (

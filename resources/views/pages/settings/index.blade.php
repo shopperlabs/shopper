@@ -42,7 +42,7 @@
                     </p>
                 </div>
             </a>
-            <a href="{{ route('shopper.settings.inventories.index') }}" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+            <a x-on:click.prevent="modalDemo = true" href="{{ route('shopper.settings.inventories.index') }}" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
                 <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-600 text-white sm:h-12 sm:w-12 ">
                     <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -58,7 +58,7 @@
                     </p>
                 </div>
             </a>
-            <a href="#" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+            <a x-on:click.prevent="modalDemo = true" href="#" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
                 <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-600 text-white sm:h-12 sm:w-12 ">
                     <svg class="h-6 w-6" stroke="none" fill="currentColor" viewBox="0 0 24 24">
                         <path clip-rule="evenodd" fill-rule="evenodd" d="M17.765 5.453c2.905 0 5.226 2.405 5.235 5.36v6.042c-.06 1.055-1.028.955-1.028.955v.008c0 1.726-1.431 3.182-3.128 3.182-1.743 0-3.127-1.408-3.127-3.182v-.008h-5.54v.008c0 1.726-1.43 3.182-3.126 3.182-1.73 0-3.106-1.39-3.127-3.143H2.895a.905.905 0 01-.895-.91V2.906A.9.9 0 012.895 2h10.672c2.784.122 2.48 2.881 2.454 3.452h1.744zm0 1.818H16.02v3.726h5.227v-.135c0-2-1.564-3.591-3.483-3.591zM7.046 19.227c.758 0 1.384-.637 1.384-1.409 0-.771-.625-1.408-1.384-1.408-.759 0-1.384.637-1.384 1.408 0 .772.625 1.409 1.384 1.409zm7.236-3.235V4.542a.712.712 0 00-.715-.728H3.743v12.222h.703a3.099 3.099 0 012.6-1.4c1.071 0 2.01.532 2.57 1.356h4.666zm4.554 3.235c.763 0 1.388-.637 1.384-1.409-.043-.77-.625-1.408-1.384-1.408-.759 0-1.384.637-1.384 1.408 0 .772.625 1.409 1.384 1.409zm0-4.59c.977 0 1.842.444 2.412 1.142V12.81H16.02v3.225h.214a3.099 3.099 0 012.6-1.4h.001zm-7.634-7.641c.488 0 .895.41.895.91 0 .501-.403.911-.895.911H6.51a.905.905 0 01-.896-.91c0-.501.403-.911.896-.911h4.69zm0 3.727c.488 0 .89.41.895.91-.047.502-.403.911-.895.911H6.51a.905.905 0 01-.896-.91c0-.501.403-.911.896-.911h4.69z"/>
@@ -103,7 +103,7 @@
                     </p>
                 </div>
             </a>
-            <a href="#" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+            <a x-on:click.prevent="modalDemo = true" href="#" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
                 <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-600 text-white sm:h-12 sm:w-12 ">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z"/>
@@ -133,7 +133,7 @@
                     </p>
                 </div>
             </a>
-            <a href="#" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+            <a x-on:click.prevent="modalDemo = true" href="#" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
                 <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-600 text-white sm:h-12 sm:w-12 ">
                     <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>

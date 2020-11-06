@@ -4,7 +4,7 @@ namespace Shopper\Framework\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Shopper\Framework\Events\ProductCreated;
-use Shopper\Framework\Events\ShopCreated;
+use Shopper\Framework\Events\StoreCreated;
 use Shopper\Framework\Listeners\ChannelSubscriber;
 use Shopper\Framework\Listeners\CreateProductSubscriber;
 use Shopper\Framework\Listeners\InventorySubscriber;
@@ -17,7 +17,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        ShopCreated::class => [
+        StoreCreated::class => [
             ChannelSubscriber::class,
             InventorySubscriber::class
         ],
@@ -26,16 +26,4 @@ class EventServiceProvider extends ServiceProvider
             CreateProductSubscriber::class,
         ],
     ];
-
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        parent::boot();
-
-        //
-    }
 }
