@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Response;
 use Shopper\Framework\Models\System\Setting;
 
 class HasConfiguration
@@ -19,7 +18,7 @@ class HasConfiguration
     {
         if (Setting::query()->where('key', 'shop_email')->exists()) {
             if ($request->ajax() || $request->wantsJson()) {
-                return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
+                return response()->json(['setup' => true]);
             }
 
             return redirect()->route('shopper.dashboard');

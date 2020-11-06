@@ -19,7 +19,7 @@ class Dashboard
     {
         $user = auth()->user();
         // Check if the user is super admin or have to ability to access to the backend
-        if (!$user->isAdmin()) {
+        if (! $user->isAdmin()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
             }
@@ -28,7 +28,7 @@ class Dashboard
         }
 
 
-        if (!Setting::query()->where('key', 'shop_email')->exists()) {
+        if (! Setting::query()->where('key', 'shop_email')->exists()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response(__("Unauthorized"), Response::HTTP_UNAUTHORIZED);
             }
