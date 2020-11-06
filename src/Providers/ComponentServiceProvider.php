@@ -77,6 +77,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('learn-more');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
+            $this->registerComponent('wip');
         });
     }
 

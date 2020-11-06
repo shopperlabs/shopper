@@ -68,7 +68,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
             $group->item(__('Inventory'), function (Item $item) {
                 $item->weight(5);
                 $item->authorize(true);
-                $item->route('shopper.inventory-histories.index');
+                // $item->route('shopper.inventory-histories.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -79,7 +79,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
             $group->item(__('Customers'), function (Item $item) {
                 $item->weight(6);
                 $item->authorize(true);
-                $item->route('shopper.customers.index');
+                // $item->route('shopper.customers.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -90,7 +90,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
             $group->item(__('Reviews'), function (Item $item) {
                 $item->weight(7);
                 $item->authorize(true);
-                $item->route('shopper.reviews.index');
+                // $item->route('shopper.reviews.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
