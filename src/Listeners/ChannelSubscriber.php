@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Listeners;
 
-use Shopper\Framework\Events\ShopCreated;
+use Shopper\Framework\Events\StoreCreated;
 use Shopper\Framework\Repositories\ChannelRepository;
 
 class ChannelSubscriber
@@ -25,10 +25,10 @@ class ChannelSubscriber
     /**
      * Handle the event.
      *
-     * @param  ShopCreated $event
+     * @param  StoreCreated  $event
      * @return void
      */
-    public function handle(ShopCreated $event)
+    public function handle(StoreCreated $event)
     {
         $this->repository->create([
             'name' => $name = __('Web Store'),
