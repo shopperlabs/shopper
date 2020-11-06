@@ -19,7 +19,7 @@ class HasConfiguration
     {
         if (Setting::query()->where('key', 'shop_email')->exists()) {
             if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', Response::HTTP_UNAUTHORIZED);
+                return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
             }
 
             return redirect()->route('shopper.dashboard');
