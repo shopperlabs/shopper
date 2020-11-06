@@ -147,7 +147,7 @@ const Configuration = () => {
       .then(response => {
         setLoading(false);
         setMessage(response.data.message);
-        setTimeout(() => { setIsShow(true) }, 1500);
+        setIsShow(true);
       })
       .catch(error => {
         setLoading(false);
@@ -319,7 +319,7 @@ const Configuration = () => {
                                     {({ selected, active }) => (
                                       <div className={`${
                                         active
-                                        ? "text-gray-600 bg-gray-50" 
+                                        ? "text-gray-600 bg-gray-50"
                                         : "text-gray-900"
                                       } cursor-pointer relative py-2 px-4 flex items-center`}>
                                         <span>{country.flag}</span>
@@ -480,9 +480,7 @@ const Configuration = () => {
                         <PhoneNumber
                           value={phoneNumber}
                           onChange={(status, number) => {
-                            if (status) {
-                              setPhoneNumber(number);
-                            }
+                            setPhoneNumber(number);
                           }}
                         />
                       </div>
@@ -668,7 +666,7 @@ const Configuration = () => {
           </div>
           <div className="mt-5 sm:mt-6">
             <span className="flex w-full rounded-md shadow-sm">
-              <a href={`${(document.querySelector('meta[name="dashboard-url"]')).getAttribute('content')}/dashboard`} className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+              <a href={`${(document.querySelector('meta[name="dashboard-url"]')).getAttribute('content')}/dashboard`} className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
                 Go to dashboard
               </a>
             </span>
