@@ -5,6 +5,7 @@ namespace Shopper\Framework\Http\Controllers\Api\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Shopper\Framework\Events\StoreCreated;
 use Shopper\Framework\Models\System\Setting;
 
 class SettingController extends Controller
@@ -21,7 +22,6 @@ class SettingController extends Controller
             'shop_name'           => 'required|max:100',
             'shop_email'          => 'required|email',
             'shop_about'          => 'nullable|string',
-            'shop_logo'           => 'nullable',
             'shop_country_id'     => 'required',
             'shop_currency_id'    => 'required',
             'shop_street_address' => 'required|string',
@@ -58,6 +58,8 @@ class SettingController extends Controller
                 'display_name' => Setting::lockedAttributesDisplayName('shop_logo'),
             ]);
         }
+
+        event(new StoreCreated(boolval($request->input('is_default_inventory'))));
 
         return response()->json([
             'status'  => 'success',
