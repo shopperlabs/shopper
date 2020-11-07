@@ -33,8 +33,8 @@ class CreateCollectionsTable extends Migration
         Schema::create($this->getTableName('collection_rules'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->string('rule');
-            $table->string('operator'); // defaults: ['equals_to', 'not_equals_to', 'less_than', 'greather_than', 'starts_with', 'ends_with', 'contains', 'not_contains']
+            $table->string('rule'); // defaults: ['product_title', 'product_price', 'compare_price_at', 'inventory_stock', 'product_brand', 'product_category']
+            $table->string('operator'); // defaults: ['equals_to', 'not_equals_to', 'less_than', 'greater_than', 'starts_with', 'ends_with', 'contains', 'not_contains']
             $table->string('value');
 
             $this->addForeignKey($table, 'collection_id', $this->getTableName('collections'), false);
