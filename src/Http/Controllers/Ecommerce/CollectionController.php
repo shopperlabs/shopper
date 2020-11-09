@@ -3,56 +3,43 @@
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Shopper\Framework\Http\Requests\Ecommerce\CollectionRequest;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Repositories\MediaRepository;
 
 class CollectionController extends Controller
 {
     /**
-     * @var CollectionRepository
-     */
-    protected CollectionRepository $repository;
-
-    /**
-     * @var MediaRepository
-     */
-    protected MediaRepository $mediaRepository;
-
-    /**
-     * collectionController constructor.
-     *
-     * @param  CollectionRepository $repository
-     * @param  MediaRepository $mediaRepository
-     */
-    public function __construct(CollectionRepository $repository, MediaRepository $mediaRepository)
-    {
-        $this->repository = $repository;
-        $this->mediaRepository = $mediaRepository;
-    }
-
-    /**
      * Return collections list view.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        $collections = $this->repository->paginate(25);
-
-        return view('shopper::pages.collections.index', compact('collections'));
+        return view('shopper::pages.collections.index');
     }
 
     /**
      * Display Create view.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function create()
     {
         return view('shopper::pages.collections.create');
+    }
+
+    /**
+     * Display Edit form.
+     *
+     * @param  int $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        return view('shopper::pages.collections.edit', [
+            'collection' => (new CollectionRepository())->getById($id)
+        ]);
     }
 
     /**
@@ -87,19 +74,6 @@ class CollectionController extends Controller
         notify()->success(__('Collection Successfully Created'));
 
         return redirect()->route('shopper.collections.index');
-    }
-
-    /**
-     * Display Edit form.
-     *
-     * @param  int $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit($id)
-    {
-        $collection = $this->repository->getById($id);
-
-        return view('shopper::pages.collections.edit', compact('collection'));
     }
 
     /**
@@ -149,30 +123,5 @@ class CollectionController extends Controller
         notify()->success(__('Collection Successfully Updated'));
 
         return redirect()->route('shopper.collections.index');
-    }
-
-    /**
-     * Delete a resource on the database.
-     *
-     * @param  Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Request $request, $id)
-    {
-        try {
-            $this->repository->deleteById($id);
-            notify()->success(__('Collection deleted successfully'));
-
-            if ($request->isXmlHttpRequest()) {
-                return response()->json(['redirect_url' => route('shopper.collections.index')]);
-            }
-
-            return redirect()->route('shopper.collections.index');
-        } catch (\Exception $e) {
-            notify()->error(__("We can't delete this collection!"));
-
-            return back();
-        }
     }
 }

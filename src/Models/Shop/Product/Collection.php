@@ -78,6 +78,6 @@ class Collection extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(config('shopper.config.models.product'), shopper_table('collection_product'), 'collection_id');
+        return $this->belongsToMany(config('shopper.system.models.product'), shopper_table('collection_product'), 'collection_id');
     }
 }
