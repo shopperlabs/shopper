@@ -1,11 +1,11 @@
 <div>
 
     <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Brands') }}</h2>
+        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Customers') }}</h2>
         @if($total > 0)
             <div class="flex space-x-3">
                 <span class="shadow-sm rounded-md">
-                    <a href="{{ route('shopper.brands.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
+                    <a href="{{ route('shopper.customers.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
                         {{ __("Create") }}
                     </a>
                 </span>
@@ -15,10 +15,10 @@
 
     @if($total === 0)
         <x-shopper-empty-state
-            :title="__('Organize your products into brands')"
-            :content="__('Create brands and organize your products to make it easier for users to find products.')"
-            :button="__('Create brand')"
-            :url="route('shopper.brands.create')"
+            :title="__('Organize your products into customers')"
+            :content="__('Create customers and organize your products to make it easier for users to find products.')"
+            :button="__('Create customer')"
+            :url="route('shopper.customers.create')"
         >
             <div class="flex-shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 356 285">
@@ -125,7 +125,7 @@
     @else
         <div class="mt-6 bg-white shadow sm:rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
-                <label for="filter" class="sr-only">{{ __('Search brands') }}</label>
+                <label for="filter" class="sr-only">{{ __('Search customers') }}</label>
                 <div class="flex rounded-md shadow-sm">
                     <div class="relative flex-grow focus-within:z-10">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -133,7 +133,7 @@
                                 <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                             </svg>
                         </div>
-                        <input id="filter" wire:model.debounce.300ms="search" class="form-input block w-full rounded-none rounded-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search brand by name') }}" />
+                        <input id="filter" wire:model.debounce.300ms="search" class="form-input block w-full rounded-none rounded-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search customer by first name / last name') }}" />
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -167,41 +167,14 @@
                             @forelse($customers as $customer)
                                 <tr>
                                     <td class="px-6 py-3 max-w-0 w-full whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                        <div class="flex items-center space-x-3 lg:pl-2">
-                                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $customer->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
-                                            <div class="flex items-center">
-                                                @if($customer->files->count() > 0)
-                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $customer->files->first()->file_path }}" alt="">
-                                                @else
-                                                    <div class="bg-gray-200 flex items-center justify-center h-8 w-8 rounded">
-                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                    </div>
-                                                @endif
-                                                <a href="{{ route('shopper.brands.edit', $customer) }}" class="ml-2 truncate hover:text-gray-600">
-                                                    <span>{{ $customer->name }} </span>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                        @if($customer->website)
-                                            <a href="https://{{ $customer->website }}" target="_blank" class="inline-flex items-center text-gray-500 font-medium text-sm leading-5">
-                                                {{ $customer->website }}
-                                                <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                                </svg>
-                                            </a>
-                                        @else
-                                            <span class="inline-flex h-0.5 rounded w-6 bg-gray-700"></span>
-                                        @endif
+                                        
                                     </td>
                                     <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">
-                                        {{ $customer->slug }}
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
-                                        <time datetime="{{ $customer->created_at->format('Y-m-d') }}" class="capitalize">{{ $customer->created_at->formatLocalized('%d %B, %Y') }}</time>
                                     </td>
                                     <td class="pr-6">
                                         <div x-data="{ open: false }" x-on:brand-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
@@ -213,7 +186,7 @@
                                             <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
                                                 <div class="relative z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
                                                     <div class="py-1">
-                                                        <a href="{{ route('shopper.brands.edit', $customer) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
+                                                        <a href="{{ route('shopper.customers.edit', $customer) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
                                                             <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: pencil-alt" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                                                 <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
@@ -242,7 +215,7 @@
                                             <svg class="h-8 w-8 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
-                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No brands found") }}...</span>
+                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No customers found") }}...</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -273,6 +246,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="brands" link="#" />
+    <x-shopper-learn-more name="customers" link="#" />
 
 </div>

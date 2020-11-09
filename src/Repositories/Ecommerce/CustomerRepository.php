@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Repositories\Ecommerce;
 
 use Shopper\Framework\Repositories\BaseRepository;
+use Shopper\Framework\Models\User\User;
 
 class CustomerRepository extends BaseRepository
 {
@@ -13,6 +14,6 @@ class CustomerRepository extends BaseRepository
      */
     public function model()
     {
-        return config('shopper.system.models.customer');
+        return config('auth.providers.users.model', User::class);
     }
 }
