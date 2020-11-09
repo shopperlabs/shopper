@@ -157,6 +157,16 @@ return [
 
         'product'  => \Shopper\Framework\Models\Shop\Product\Product::class,
 
+        /**
+         * Eloquent model should be used to retrieve your customers. Of course,
+         * it is often just the "Customer" model but you may use whatever you like.
+         *
+         * The model you want to use as a Customer model needs to extends the
+         * `\Shopper\Framework\Models\Shop\Customer` model.
+         */
+
+        'customer'  => \Shopper\Framework\Models\Shop\Customer::class,
+
     ],
 
     /*
