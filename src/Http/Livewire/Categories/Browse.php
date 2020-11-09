@@ -62,6 +62,12 @@ class Browse extends Component
         $this->emitSelf('notify-saved');
     }
 
+    /**
+     * Update subcategory position.
+     *
+     * @param array $groups
+     * @return void
+     */
     public function updateCategoryOrder($groups)
     {
         foreach ($groups as $group) {
