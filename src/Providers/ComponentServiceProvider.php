@@ -20,6 +20,8 @@ use Shopper\Framework\Http\Livewire\{
     Categories\Edit as EditCategory,
     CollectionList,
     Customers\Browse as BrowseCustomers,
+    Customers\Create as CreateCustomer,
+    Customers\Edit as EditCustomer,
     Discount\Create as CreateDiscount,
     Discount\Edit as EditDiscount,
     Discount\DiscountList,
@@ -104,6 +106,8 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-collection-list', CollectionList::class);
         Livewire::component('shopper-product-list', ProductList::class);
         Livewire::component('shopper-customer-lists', BrowseCustomers::class);
+        Livewire::component('shopper-customers-create', CreateCustomer::class);
+        Livewire::component('shopper-customers-edit', EditCustomer::class);
         Livewire::component('shopper-inventory-history', InventoryHistory::class);
         Livewire::component('shopper-product-inventory', Inventory::class);
         Livewire::component('shopper-reviews-list', ReviewList::class);
