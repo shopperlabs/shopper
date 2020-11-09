@@ -1,53 +1,63 @@
 <?php
 
-namespace Shopper\Framework\Http\Livewire;
+namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Traits\WithSorting;
 
-class CollectionList extends Component
+class Browse extends Component
 {
-    use WithPagination;
+    use WithPagination, WithSorting;
 
     /**
      * Search.
      *
      * @var string
      */
-    public $search = '';
+    public $search;
 
     /**
-     * Sort direction.
+     * Custom Livewire pagination view.
      *
-     * @var string
+     * @return string
      */
-    public $direction = 'desc';
-
     public function paginationView()
     {
-        return 'shopper::components.livewire.wire-pagination-links';
+        return 'shopper::livewire.wire-pagination-links';
     }
 
     /**
-     * Sort results.
+     * Remove a record to the database.
      *
-     * @param  string  $value
+     * @param  int  $id
+     * @throws \Exception
      */
-    public function sort($value)
+    public function remove(int $id)
     {
-        $this->direction = $value === 'asc' ? 'desc' : 'asc';
+        (new CollectionRepository())->getById($id)->delete();
+
+        $this->dispatchBrowserEvent('item-removed');
+        $this->dispatchBrowserEvent('notify', [
+            'title' => __("Deleted"),
+            'message' => __("The collection has successfully removed!")
+        ]);
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
-        $total = (new CollectionRepository())->count();
-
-        $collections = (new CollectionRepository())
-            ->where('name', '%'. $this->search .'%', 'like')
-            ->orderBy('created_at', $this->direction)
-            ->paginate(10);
-
-        return view('shopper::components.livewire.collections.list', compact('collections', 'total'));
+        return view('shopper::livewire.collections.browse', [
+            'total' => (new CollectionRepository())->count(),
+            'collections' => (new CollectionRepository())
+                ->where('name', '%'. $this->search .'%', 'like')
+                ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
+                ->paginate(10)
+        ]);
     }
 }
