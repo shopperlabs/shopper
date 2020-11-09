@@ -149,16 +149,22 @@
                         <thead>
                         <tr class="border-t border-gray-200">
                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                <span class="lg:pl-2">{{ __("Name") }}</span>
+                                <span class="lg:pl-2">{{ __("Last Name") }}</span>
                             </th>
                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __("Website") }}
+                                <span class="lg:pl-2">{{ __("First Name") }}</span>
                             </th>
                             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __("Url") }}
+                                <span class="lg:pl-2">{{ __("Gender") }}</span>
                             </th>
                             <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __("Last updated") }}
+                                <span class="lg:pl-2">{{ __("Email") }}</span>
+                            </th>
+                            <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <span class="lg:pl-2">{{ __("Newsletter") }}</span>
+                            </th>
+                            <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <span class="lg:pl-2">{{ __("Updated at") }}</span>
                             </th>
                             <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
                         </tr>
@@ -166,15 +172,23 @@
                         <tbody class="bg-white divide-y divide-gray-100" x-max="1">
                             @forelse($customers as $customer)
                                 <tr>
-                                    <td class="px-6 py-3 max-w-0 w-full whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                        
+                                    <td class="px-6 py-3 max-w-0 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                        {{ $customer->last_name }}
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                                        
+                                        {{ $customer->first_name }}
                                     </td>
                                     <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">
+                                        {{ ucfirst($customer->gender) }}
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
+                                        {{ $customer->email }}
+                                    </td>
+                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
+                                        {{ $customer->opt_in ? __("Subscribed") : __("Not Subscribed") }}
+                                    </td>
+                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
+                                        <time datetime="{{ $customer->updated_at->format('Y-m-d') }}" class="capitalize">{{ $customer->updated_at->formatLocalized('%d %B, %Y') }}</time>
                                     </td>
                                     <td class="pr-6">
                                         <div x-data="{ open: false }" x-on:brand-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">

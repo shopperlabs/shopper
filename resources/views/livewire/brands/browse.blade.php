@@ -158,7 +158,7 @@
                                 {{ __("Url") }}
                             </th>
                             <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __("Last updated") }}
+                                {{ __("Updated at") }}
                             </th>
                             <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
                         </tr>
@@ -201,7 +201,7 @@
                                         {{ $brand->slug }}
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
-                                        <time datetime="{{ $brand->created_at->format('Y-m-d') }}" class="capitalize">{{ $brand->created_at->formatLocalized('%d %B, %Y') }}</time>
+                                        <time datetime="{{ $brand->updated_at->format('Y-m-d') }}" class="capitalize">{{ $brand->updated_at->formatLocalized('%d %B, %Y') }}</time>
                                     </td>
                                     <td class="pr-6">
                                         <div x-data="{ open: false }" x-on:brand-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
