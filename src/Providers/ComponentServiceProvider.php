@@ -103,7 +103,7 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-categories-edit', EditCategory::class);
         Livewire::component('shopper-collection-list', CollectionList::class);
         Livewire::component('shopper-product-list', ProductList::class);
-        Livewire::component('shopper-customer-list', BrowseCustomers::class);
+        Livewire::component('shopper-customer-lists', BrowseCustomers::class);
         Livewire::component('shopper-inventory-history', InventoryHistory::class);
         Livewire::component('shopper-product-inventory', Inventory::class);
         Livewire::component('shopper-reviews-list', ReviewList::class);
