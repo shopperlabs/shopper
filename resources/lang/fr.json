@@ -1,3 +1,15 @@
 {
+  "Save": "Enregistrer",
+  "Update": "Modifier",
+  "Delete": "Supprimer",
 
+  "Name": "Nom",
+
+  "Collections": "Collections",
+  "Create collection": "Créer collection",
+  "Collection type": "Type de Collection",
+  "Manual": "Manuel",
+  "Automated": "Automatique",
+  "Add the products to this collection one by one.": "Ajoutez les produits à cette collection un par un.",
+  "Products that match the conditions you set will automatically be added to collection.": "Les produits qui correspondent aux conditions que vous avez définies seront automatiquement ajoutés à la collection."
 }
