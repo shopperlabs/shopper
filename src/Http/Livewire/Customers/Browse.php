@@ -5,7 +5,7 @@ namespace Shopper\Framework\Http\Livewire\Customers;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\Ecommerce\CustomerRepository;
+use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Traits\WithSorting;
 
 class Browse extends Component
@@ -20,6 +20,20 @@ class Browse extends Component
     public $search = '';
 
     /**
+     * Filter by email subscription.
+     *
+     * @var bool
+     */
+    public $emailSubscription;
+
+    /**
+     * Filter by active account.
+     *
+     * @var bool
+     */
+    public $activeAccount;
+
+    /**
      * Custom Livewire pagination view.
      *
      * @return string
@@ -30,6 +44,26 @@ class Browse extends Component
     }
 
     /**
+     * Reset Filter on email subscription.
+     *
+     * @return void
+     */
+    public function resetEmailFilter()
+    {
+        $this->emailSubscription = null;
+    }
+
+    /**
+     * Reset Filter on active account.
+     *
+     * @return void
+     */
+    public function resetActiveAccountFilter()
+    {
+        $this->activeAccount = null;
+    }
+
+    /**
      * Remove a record to the database.
      *
      * @param  int  $id
@@ -37,7 +71,7 @@ class Browse extends Component
      */
     public function remove(int $id)
     {
-        (new CustomerRepository())->getById($id)->delete();
+        (new UserRepository())->getById($id)->delete();
 
         $this->dispatchBrowserEvent('item-removed');
         $this->dispatchBrowserEvent('notify', [
@@ -54,20 +88,36 @@ class Browse extends Component
     public function render()
     {
         return view('shopper::livewire.customers.browse', [
-            'total' => (new CustomerRepository())
+            'total' => (new UserRepository())
                 ->makeModel()
                 ->whereHas('roles', function (Builder $query) {
                     $query->where('name', config('shopper.system.users.default_role'));
                 })
                 ->count(),
-            'customers' => (new CustomerRepository())
+            'customers' => (new UserRepository())
                 ->makeModel()
                 ->whereHas('roles', function (Builder $query) {
                     $query->where('name', config('shopper.system.users.default_role'));
                 })
-                ->where('last_name', '%'. $this->search .'%', 'like')
-                ->orWhere('first_name', '%'. $this->search .'%', 'like')
-                ->orderBy($this->sortBy ?? 'last_name', $this->sortDirection)
+                ->where(function (Builder  $query) {
+                    $query->where('last_name', 'like', '%'. $this->search .'%')
+                        ->orWhere('first_name', 'like', '%'. $this->search .'%');
+                })
+                ->where(function (Builder $query) {
+                    if ($this->emailSubscription !== null) {
+                        $query->where('opt_in', $this->emailSubscription);
+                    }
+                })
+                ->where(function (Builder $query) {
+                    if ($this->activeAccount === "1") {
+                        $query->whereNotNull('email_verified_at');
+                    }
+
+                    if ($this->activeAccount === "0") {
+                        $query->whereNull('email_verified_at');
+                    }
+                })
+                ->orderBy($this->sortBy ?? 'first_name', $this->sortDirection)
                 ->paginate(10),
         ]);
     }
