@@ -2,13 +2,15 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Repositories\Ecommerce\CustomerRepository;
+use Shopper\Framework\Traits\WithSorting;
 
 class Browse extends Component
 {
-    use WithPagination;
+    use WithPagination, WithSorting;
 
     /**
      * Search.
@@ -18,48 +20,55 @@ class Browse extends Component
     public $search = '';
 
     /**
-     * Sort direction.
+     * Custom Livewire pagination view.
      *
-     * @var string
+     * @return string
      */
-    public $direction = 'desc';
-
     public function paginationView()
     {
         return 'shopper::livewire.wire-pagination-links';
     }
 
     /**
-     * Sort results.
+     * Remove a record to the database.
      *
-     * @param  string  $value
+     * @param  int  $id
+     * @throws \Exception
      */
-    public function sort($value)
-    {
-        $this->direction = $value === 'asc' ? 'desc' : 'asc';
-    }
-
     public function remove(int $id)
     {
         (new CustomerRepository())->getById($id)->delete();
 
-        $this->dispatchBrowserEvent('customer-removed');
+        $this->dispatchBrowserEvent('item-removed');
         $this->dispatchBrowserEvent('notify', [
             'title' => __("Deleted"),
             'message' => __("The customer has successfully removed!")
         ]);
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
-        $total = (new CustomerRepository())->count();
-
-        $customers = (new CustomerRepository())
-            ->where('last_name', '%'. $this->search .'%', 'like')
-            ->orWhere('first_name', '%'. $this->search .'%', 'like')
-            ->orderBy('created_at', $this->direction)
-            ->paginate(10);
-
-        return view('shopper::livewire.customers.browse', compact('customers', 'total'));
+        return view('shopper::livewire.customers.browse', [
+            'total' => (new CustomerRepository())
+                ->makeModel()
+                ->whereHas('roles', function (Builder $query) {
+                    $query->where('name', config('shopper.system.users.default_role'));
+                })
+                ->count(),
+            'customers' => (new CustomerRepository())
+                ->makeModel()
+                ->whereHas('roles', function (Builder $query) {
+                    $query->where('name', config('shopper.system.users.default_role'));
+                })
+                ->where('last_name', '%'. $this->search .'%', 'like')
+                ->orWhere('first_name', '%'. $this->search .'%', 'like')
+                ->orderBy($this->sortBy ?? 'last_name', $this->sortDirection)
+                ->paginate(10),
+        ]);
     }
 }
