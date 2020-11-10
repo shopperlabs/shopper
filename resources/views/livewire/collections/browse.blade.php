@@ -271,4 +271,6 @@
         </div>
     @endif
 
+    <x-shopper-learn-more name="collections" link="#" />
+
 </div>

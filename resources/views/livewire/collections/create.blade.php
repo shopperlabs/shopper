@@ -60,22 +60,22 @@
 
                         <div :class="{ 'border-gray-200': !(active === 1), 'bg-blue-50 border-blue-200 z-10': active === 1 }" class="relative border rounded-md border-gray-200 p-4 flex">
                             <div class="flex items-center h-5">
-                                <input wire:model="type" id="collection-type-1" name="type" value="automatic" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
+                                <input wire:model="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
                             </div>
                             <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-blue-900': active === 1, 'text-gray-900': !(active === 1) }" class="block text-sm leading-5 font-medium text-gray-900">
                                     {{ __("Automated") }}
                                 </span>
                                 <span :class="{ 'text-blue-700': active === 1, 'text-gray-500': !(active === 1) }" class="mt-0.5 block text-xs leading-4 text-gray-500">
-                                    {{ __("Products that match the conditions you set will automatically be added to collection") }}
+                                    {{ __("Products that match the conditions you set will automatically be added to collection.") }}
                                 </span>
                             </label>
                         </div>
 
                     </div>
                 </div>
-                @if($type === 'automatic')
-                    <div class="border-t border-gray-200 p-4 sm:p-5 space-y-4">
+                @if($type === 'auto')
+                    <div class="border-t border-gray-200 p-4 sm:p-5 space-y-5">
                         <h3 class="text-base text-gray-900 leading-6 font-medium">{{ __("Conditions") }}</h3>
                         <div class="flex items-center space-x-6">
                             <p class="text-sm leading-5 text-gray-500">{{ __("Products must match:") }}</p>
@@ -92,14 +92,54 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="space-y-4">
-                            <div class="relative">
-                                <span class="inline-flex rounded-md shadow-sm">
-                                    <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ __("Add another condition") }}
-                                    </button>
-                                </span>
+                        <div class="space-y-5">
+                            <div class="space-y-4">
+                                @foreach($conditions as $conditionKey => $conditionValue)
+                                    <div class="flex items-center space-x-4">
+                                        <div class="grid grid-cols-3 gap-4">
+                                            <div>
+                                                <select wire:model="rule.{{ $conditionValue }}" aria-label="{{ __("Rules") }}" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                                    @foreach($this->collectionRules as $ruleKey => $ruleValue)
+                                                        <option value="{{ $ruleKey }}">{{ $ruleValue['name'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <select wire:model="operator.{{ $conditionValue }}" aria-label="{{ __("Conditions") }}" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                                    @foreach($this->operators as $operatorKey => $operatorValue)
+                                                        <option value="{{ $operatorKey }}">
+                                                            {{ $operatorValue['name'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <div class="relative rounded-md shadow-sm">
+                                                    <input wire:model="value.{{ $conditionValue }}" type="text" class="form-input block w-full pr-12 sm:text-sm sm:leading-5" aria-label="{{ __("Value") }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="relative">
+                                            <span class="inline-flex rounded-md shadow-sm">
+                                                <button wire:click.prevent="remove({{ $conditionKey }})" type="button" class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
+                            @if(count($conditions) < 4)
+                                <div class="relative">
+                                    <span class="inline-flex rounded-md shadow-sm">
+                                        <button wire:click.prevent="add({{ $i }})" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                            {{ count($conditions) === 0 ? __("Add condition") : __("Add another condition") }}
+                                        </button>
+                                    </span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endif
@@ -171,7 +211,7 @@
                                 <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                         </div>
-                        <input wire:model="publishedAt" x-ref="input" id="date" type="date" class="form-input block w-full pl-10 sm:text-sm sm:leading-5" placeholder="{{ __("Choose a date") }}" readonly />
+                        <input wire:model="publishedAt" x-ref="input" id="date" type="text" class="form-input block w-full pl-10 sm:text-sm sm:leading-5" placeholder="{{ __("Choose a date") }}" readonly />
                     </div>
                     @if($publishedAt)
                         <div class="mt-2 flex items-start">
