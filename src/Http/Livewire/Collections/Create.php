@@ -6,11 +6,12 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithUploadProcess;
 
 class Create extends Component
 {
-    use WithFileUploads, WithUploadProcess;
+    use WithFileUploads, WithUploadProcess, WithConditions;
 
     /**
      * Collection name.
@@ -31,7 +32,7 @@ class Create extends Component
      *
      * @var string
      */
-    public $type = 'automatic';
+    public $type = 'auto';
 
     /**
      * Update SEO elements.
@@ -107,6 +108,12 @@ class Create extends Component
 
         $collection = (new CollectionRepository())->create([
             'name' => $this->name,
+            'description' => $this->description,
+            'type' => $this->type,
+            'match_conditions' => $this->condition_match,
+            'seo_title' => $this->seoTitle,
+            'seo_description' => $this->seoDescription,
+            'published_at' => $this->publishedAt,
         ]);
 
         if ($this->file) {
@@ -114,7 +121,7 @@ class Create extends Component
         }
 
         session()->flash('success', __("Collection successfully added!"));
-        $this->redirectRoute('shopper.collections.index');
+        $this->redirectRoute('shopper.collections.edit', $collection);
     }
 
     /**
