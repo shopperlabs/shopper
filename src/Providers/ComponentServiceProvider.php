@@ -5,6 +5,7 @@ namespace Shopper\Framework\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Compilers\BladeCompiler;
+use Livewire\Component;
 use Livewire\Livewire;
 use Shopper\Framework\Http\Livewire\{
     Account\Devices,
@@ -53,6 +54,10 @@ class ComponentServiceProvider extends ServiceProvider
     {
         $this->registerLivewireComponents();
         $this->registerBladeComponents();
+
+        Component::macro('notify', function ($params) {
+            $this->dispatchBrowserEvent('notify', $params);
+        });
     }
 
     /**
