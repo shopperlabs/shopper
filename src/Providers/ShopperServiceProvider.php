@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Providers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Framework\Console\InstallCommand;
 use Shopper\Framework\Console\PublishCommand;
@@ -31,6 +32,10 @@ class ShopperServiceProvider extends ServiceProvider
         $this->registerResources();
 
         $this->app->register(RouteServiceProvider::class);
+
+        Builder::macro('search', function ($field, $string) {
+            return $string ? $this->where($field, 'like', '%'.$string.'%') : $this;
+        });
     }
 
     /**
