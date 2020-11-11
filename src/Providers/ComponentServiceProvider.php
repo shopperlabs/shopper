@@ -22,7 +22,8 @@ use Shopper\Framework\Http\Livewire\{
     CollectionList,
     Customers\Browse as BrowseCustomers,
     Customers\Create as CreateCustomer,
-    Customers\Edit as EditCustomer,
+    Customers\Show as ShowCustomer,
+    Customers\Profile as ProfileCustomer,
     Discount\Create as CreateDiscount,
     Discount\Edit as EditDiscount,
     Discount\DiscountList,
@@ -85,6 +86,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('modal');
             $this->registerComponent('notify');
             $this->registerComponent('wip');
+            $this->registerComponent('wip-placeholder');
         });
     }
 
@@ -112,7 +114,8 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-product-list', ProductList::class);
         Livewire::component('shopper-customer-lists', BrowseCustomers::class);
         Livewire::component('shopper-customers-create', CreateCustomer::class);
-        Livewire::component('shopper-customers-edit', EditCustomer::class);
+        Livewire::component('shopper-customers-show', ShowCustomer::class);
+        Livewire::component('shopper-customers-profile', ProfileCustomer::class);
         Livewire::component('shopper-inventory-history', InventoryHistory::class);
         Livewire::component('shopper-product-inventory', Inventory::class);
         Livewire::component('shopper-reviews-list', ReviewList::class);
