@@ -4,10 +4,17 @@ namespace Shopper\Framework\Http\Livewire\Customers;
 
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Shopper\Framework\Repositories\Ecommerce\CustomerRepository;
+use Shopper\Framework\Repositories\UserRepository;
 
-class Edit extends Component
+class Show extends Component
 {
+    /**
+     * Listeners.
+     *
+     * @var string[]
+     */
+    protected $listeners = ['profileUpdate'];
+
     /**
      * Customer Model.
      *
@@ -44,6 +51,13 @@ class Edit extends Component
     public $email;
 
     /**
+     * Customer Profile picture.
+     *
+     * @var string
+     */
+    public $picture;
+
+    /**
      * Component mounted action.
      *
      * @param  $customer
@@ -56,6 +70,20 @@ class Edit extends Component
         $this->email = $customer->email;
         $this->last_name = $customer->last_name;
         $this->first_name = $customer->first_name;
+        $this->picture = $customer->picture;
+    }
+
+    /**
+     * Update Customer profile after listen to custom event.
+     *
+     * @return void
+     */
+    public function profileUpdate()
+    {
+        $this->email = $this->customer->email;
+        $this->last_name = $this->customer->last_name;
+        $this->first_name = $this->customer->first_name;
+        $this->picture = $this->customer->picture;
     }
 
     /**
@@ -67,7 +95,7 @@ class Edit extends Component
     {
         $this->validate($this->rules());
 
-        (new CustomerRepository())->getById($this->customer->id)->update([
+        (new UserRepository())->getById($this->customer->id)->update([
             'email' => $this->email,
             'last_name' => $this->last_name,
             'first_name' => $this->first_name,
@@ -100,10 +128,10 @@ class Edit extends Component
             'email' => [
                 'required',
                 'max:150',
-                Rule::unique(shopper_table('users'), 'email')->ignore($this->brand_id),
+                Rule::unique(shopper_table('users'), 'email')->ignore($this->user_id),
             ],
-            'last_name' => [ 'required' ],
-            'first_name' => [ 'required' ],
+            'last_name' => 'sometimes|required',
+            'first_name' => 'sometimes|required',
         ];
     }
 
@@ -114,6 +142,6 @@ class Edit extends Component
      */
     public function render()
     {
-        return view('shopper::livewire.customers.edit');
+        return view('shopper::livewire.customers.show');
     }
 }
