@@ -3,7 +3,7 @@
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
 use Illuminate\Routing\Controller;
-use Shopper\Framework\Repositories\Ecommerce\CustomerRepository;
+use Shopper\Framework\Repositories\UserRepository;
 
 class CustomerController extends Controller
 {
@@ -28,15 +28,15 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display Edit form.
+     * Display Show view.
      *
      * @param  int  $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function show($id)
     {
-        $customer = (new CustomerRepository())->getById($id);
-
-        return view('shopper::pages.customers.edit', compact('customer'));
+        return view('shopper::pages.customers.show', [
+            'customer' => (new UserRepository())->getById($id)
+        ]);
     }
 }
