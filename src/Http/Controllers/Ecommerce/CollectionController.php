@@ -2,9 +2,7 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
-use Carbon\Carbon;
 use Illuminate\Routing\Controller;
-use Shopper\Framework\Http\Requests\Ecommerce\CollectionRequest;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class CollectionController extends Controller
@@ -40,88 +38,5 @@ class CollectionController extends Controller
         return view('shopper::pages.collections.edit', [
             'collection' => (new CollectionRepository())->getById($id)
         ]);
-    }
-
-    /**
-     * Store a newly collection to the database.
-     *
-     * @param  CollectionRequest $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(CollectionRequest $request)
-    {
-        $datetime = now();
-
-        if ($request->input('date')) {
-            $datetime = Carbon::createFromFormat('Y-m-d H:i', $request->input('date').' '.($request->input('time') ?? now()->format('H:i')))->toDateTimeString();
-        }
-
-        $collection = $this->repository->create([
-            'name' => $request->input('name'),
-            'description' => $request->input('body'),
-            'type' => $request->input('type'),
-            'published_at' => $datetime,
-        ]);
-
-        if ($request->input('media_id') !== "0") {
-            $media = $this->mediaRepository->getById($request->input('media_id'));
-            $media->update([
-                'mediatable_type'   => config('shopper.models.collection'),
-                'mediatable_id'     => $collection->id,
-            ]);
-        }
-
-        notify()->success(__('Collection Successfully Created'));
-
-        return redirect()->route('shopper.collections.index');
-    }
-
-    /**
-     * Update collection.
-     *
-     * @param  CollectionRequest $request
-     * @param  int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(CollectionRequest $request, $id)
-    {
-        $datetime = null;
-
-        if ($request->input('date')) {
-            $datetime = Carbon::createFromFormat('Y-m-d H:i', $request->input('date').' '.($request->input('time') ?? now()->format('H:i')))->toDateTimeString();
-        }
-
-        $collection = $this->repository->updateById($id, [
-            'name' => $request->input('name'),
-            'description' => $request->input('body'),
-            'type' => $request->input('type'),
-            // 'published_at' => $datetime,
-        ]);
-
-        if ($request->input('media_id') !== "0") {
-
-            // Get the current Media
-            $media = $this->mediaRepository->getById($request->input('media_id'));
-            // dd($collection->previewImage);
-
-            if ($collection->previewImage && $collection->previewImage->id !== (int) $request->input('media_id')) {
-                // Remove media from the given collection
-                $collection->previewImage()->delete();
-
-                $media->update([
-                    'mediatable_type'   => config('shopper.models.collection'),
-                    'mediatable_id'     => $collection->id,
-                ]);
-            }
-
-            $media->update([
-                'mediatable_type'   => config('shopper.models.collection'),
-                'mediatable_id'     => $collection->id,
-            ]);
-        }
-
-        notify()->success(__('Collection Successfully Updated'));
-
-        return redirect()->route('shopper.collections.index');
     }
 }
