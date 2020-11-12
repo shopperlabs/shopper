@@ -84,6 +84,7 @@ class Create extends Component
     public function updateSeo()
     {
         $this->seoTitle = $this->name;
+        $this->seoDescription = $this->description;
         $this->updateSeo = true;
     }
 
@@ -113,7 +114,7 @@ class Create extends Component
             'match_conditions' => $this->condition_match,
             'seo_title' => $this->seoTitle,
             'seo_description' => $this->seoDescription,
-            'published_at' => $this->publishedAt,
+            'published_at' => $this->publishedAt ?? now(),
         ]);
 
         if ($this->file) {

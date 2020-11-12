@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Collections;
 
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
@@ -17,6 +18,13 @@ class Browse extends Component
      * @var string
      */
     public $search;
+
+    /**
+     * Collection type filter.
+     *
+     * @var string
+     */
+    public $type;
 
     /**
      * Custom Livewire pagination view.
@@ -39,10 +47,20 @@ class Browse extends Component
         (new CollectionRepository())->getById($id)->delete();
 
         $this->dispatchBrowserEvent('item-removed');
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __("Deleted"),
             'message' => __("The collection has successfully removed!")
         ]);
+    }
+
+    /**
+     * Reset Filter on type.
+     *
+     * @return void
+     */
+    public function resetTypeFilter()
+    {
+        $this->type = null;
     }
 
     /**
@@ -55,7 +73,13 @@ class Browse extends Component
         return view('shopper::livewire.collections.browse', [
             'total' => (new CollectionRepository())->count(),
             'collections' => (new CollectionRepository())
-                ->where('name', '%'. $this->search .'%', 'like')
+                ->makeModel()
+                ->where('name', 'like', '%'. $this->search .'%')
+                ->where(function (Builder $query) {
+                    if ($this->type !== null) {
+                        $query->where('type', $this->type);
+                    }
+                })
                 ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
                 ->paginate(10)
         ]);
