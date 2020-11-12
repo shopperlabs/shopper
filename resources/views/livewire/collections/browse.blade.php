@@ -249,9 +249,9 @@
                                             {{ $collection->type === "auto" ? __('Automatic') : __('Manual') }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">
+                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         @if($collection->rules->isNotEmpty())
-                                            Les conditions
+                                            {{ ucfirst(strtolower($collection->firstRule())) }}
                                         @endif
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
