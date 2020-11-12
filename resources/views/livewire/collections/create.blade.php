@@ -95,28 +95,31 @@
                         <div class="space-y-5">
                             <div class="space-y-4">
                                 @foreach($conditions as $conditionKey => $conditionValue)
-                                    <div class="flex items-center space-x-4">
+                                    <div wire:key="condition-{{ $conditionKey }}"  class="flex items-center space-x-4">
                                         <div class="grid grid-cols-3 gap-4">
                                             <div>
                                                 <select wire:model="rule.{{ $conditionValue }}" aria-label="{{ __("Rules") }}" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                                    <option>{{ __("Choose a rule") }}</option>
                                                     @foreach($this->collectionRules as $ruleKey => $ruleValue)
-                                                        <option value="{{ $ruleKey }}">{{ $ruleValue['name'] }}</option>
+                                                        <option value="{{ $ruleKey }}" @if($loop->first) selected @endif>{{ $ruleValue['name'] }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('rule.'.$conditionValue) <p class="mt-1 text-sm leading-5 text-red-500">{{ $message }}</p> @enderror
                                             </div>
                                             <div>
                                                 <select wire:model="operator.{{ $conditionValue }}" aria-label="{{ __("Conditions") }}" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                                    <option>{{ __("Select Operator") }}</option>
                                                     @foreach($this->operators as $operatorKey => $operatorValue)
-                                                        <option value="{{ $operatorKey }}">
-                                                            {{ $operatorValue['name'] }}
-                                                        </option>
+                                                        <option value="{{ $operatorKey }}" @if($loop->first) selected @endif>{{ $operatorValue['name'] }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('operator.'.$conditionValue) <p class="mt-1 text-sm leading-5 text-red-500">{{ $message }}</p> @enderror
                                             </div>
                                             <div>
                                                 <div class="relative rounded-md shadow-sm">
-                                                    <input wire:model="value.{{ $conditionValue }}" type="text" class="form-input block w-full pr-12 sm:text-sm sm:leading-5" aria-label="{{ __("Value") }}">
+                                                    <input wire:model="value.{{ $conditionValue }}" type="text" class="form-input block w-full pr-12 sm:text-sm sm:leading-5" aria-label="{{ __("Value") }}" placeholder="{{ __("your value here") }}">
                                                 </div>
+                                                @error('value.'.$conditionValue) <p class="mt-1 text-sm leading-5 text-red-500">{{ $message }}</p> @enderror
                                             </div>
                                         </div>
                                         <div class="relative">
@@ -263,11 +266,11 @@
                                         <input id="file" type="file" wire:model="file" class="sr-only">
                                     </div>
                                 </label>
-                                @error('file')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
                         @endif
+                        @error('file')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </aside>

@@ -5,6 +5,7 @@ namespace Shopper\Framework\Http\Livewire\Collections;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Shopper\Framework\Models\Shop\Product\CollectionRule;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithUploadProcess;
@@ -119,6 +120,21 @@ class Create extends Component
 
         if ($this->file) {
             $this->uploadFile(config('shopper.system.models.collection'), $collection->id);
+        }
+
+        if ($this->type === 'auto' && count($this->conditions) > 0 && $this->rule) {
+
+            foreach ($this->rule as $key => $value) {
+                CollectionRule::query()->create([
+                    'collection_id' => $collection->id,
+                    'rule' => $this->rule[$key],
+                    'operator' => $this->operator[$key],
+                    'value' => $this->value[$key],
+                ]);
+            }
+
+            $this->conditions = [];
+            $this->resetConditionsFields();
         }
 
         session()->flash('success', __("Collection successfully added!"));

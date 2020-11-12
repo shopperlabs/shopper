@@ -7,21 +7,21 @@ trait WithConditions
     /**
      * Condition rule.
      *
-     * @var string
+     * @var mixed
      */
     public $rule;
 
     /**
      * Condition operator.
      *
-     * @var string
+     * @var mixed
      */
     public $operator;
 
     /**
      * Condition value.
      *
-     * @var string
+     * @var mixed
      */
     public $value;
 
