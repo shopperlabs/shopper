@@ -101,6 +101,13 @@ class Edit extends Component
     public $condition_match = 'all';
 
     /**
+     * Products of the collections
+     *
+     * @var \Illuminate\Database\Eloquent\Collection
+     */
+    public $products;
+
+    /**
      * Component mounted action.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $collection
@@ -109,10 +116,12 @@ class Edit extends Component
     public function mount($collection)
     {
         $this->collection = $collection;
+        $this->products = $collection->products;
         $this->collectionId = $collection->id;
         $this->name = $collection->name;
         $this->description = $collection->description;
         $this->type = $collection->type;
+        $this->condition_match = $collection->match_conditions;
         $this->publishedAt = $collection->published_at;
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $collection->published_at->toDateString())->toRfc7231String();
         $this->updateSeo = $collection->seo_title !== null;

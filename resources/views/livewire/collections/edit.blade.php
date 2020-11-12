@@ -39,110 +39,61 @@
                     </x-shopper-input.group>
                 </div>
             </div>
-            <div class="bg-white rounded-lg shadow overflow-hidden pt-4 sm:pt-5">
-                <h3 class="text-base text-gray-900 leading-6 px-4 sm:px-5 font-medium">{{ __("Collection type") }}</h3>
-                <div class="p-4 sm:p-5" x-data="radioGroup()">
-                    <div class="bg-white rounded-md grid gap-4 sm:grid-cols-2 sm:gap-6" x-ref="radiogroup">
-
-                        <div :class="{ 'border-gray-200': !(active === 0), 'bg-blue-50 border-blue-200 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-blue-50 border-blue-200 z-10">
-                            <div class="flex items-center h-5">
-                                <input wire:model="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer" checked="">
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="sm:flex sm:items-center sm:justify-between p-4 sm:py-5 sm:px-6">
+                    <h3 class="text-base text-gray-900 leading-6 font-medium">{{ __("Products") }}</h3>
+                    <div class="mt-4 sm:mt-0 flex items-center space-x-3">
+                        @if($type === 'manual')
+                            <span class="inline-flex rounded-md shadow-sm">
+                                <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                    {{ __("Browse") }}
+                                </button>
+                            </span>
+                        @endif
+                        <div class="relative">
+                            <label for="sort" class="sr-only block text-sm leading-5 font-medium text-gray-700">{{ __("Sort products by") }}</label>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-sm text-gray-500 leading-5">
+                                    {{ __("Sort by:") }}
+                                </span>
                             </div>
-                            <label for="collection-type-0" class="ml-3 flex flex-col cursor-pointer">
-                                <span :class="{ 'text-blue-900': active === 0, 'text-gray-900': !(active === 0) }" class="block text-sm leading-5 font-medium text-blue-900">
-                                    {{ __("Manual") }}
-                                </span>
-                                <span :class="{ 'text-blue-700': active === 0, 'text-gray-500': !(active === 0) }" class="mt-0.5 block text-xs leading-4 text-blue-700">
-                                    {{ __("Add the products to this collection one by one.") }}
-                                </span>
-                            </label>
+                            <select id="sort" class="form-select block w-full pl-18 pr-10 py-2 transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                <option value="best_selling">{{ __("Best selling") }}</option>
+                                <option value="alpha_asc">{{ __("Alpha Asc") }}</option>
+                                <option value="alpha_desc">{{ __("Alpha Desc") }}</option>
+                                <option value="price_desc">{{ __("Price Desc") }}</option>
+                                <option value="price_asc">{{ __("Price ASC") }}</option>
+                                <option value="created_desc">{{ __("Created Desc") }}</option>
+                                <option value="created_asc">{{ __("Created Asc") }}</option>
+                            </select>
                         </div>
-
-                        <div :class="{ 'border-gray-200': !(active === 1), 'bg-blue-50 border-blue-200 z-10': active === 1 }" class="relative border rounded-md border-gray-200 p-4 flex">
-                            <div class="flex items-center h-5">
-                                <input wire:model="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
-                            </div>
-                            <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
-                                <span :class="{ 'text-blue-900': active === 1, 'text-gray-900': !(active === 1) }" class="block text-sm leading-5 font-medium text-gray-900">
-                                    {{ __("Automated") }}
-                                </span>
-                                <span :class="{ 'text-blue-700': active === 1, 'text-gray-500': !(active === 1) }" class="mt-0.5 block text-xs leading-4 text-gray-500">
-                                    {{ __("Products that match the conditions you set will automatically be added to collection.") }}
-                                </span>
-                            </label>
-                        </div>
-
                     </div>
                 </div>
-                @if($type === 'auto')
-                    <div class="border-t border-gray-200 p-4 sm:p-5 space-y-5">
-                        <h3 class="text-base text-gray-900 leading-6 font-medium">{{ __("Conditions") }}</h3>
-                        <div class="flex items-center space-x-6">
-                            <p class="text-sm leading-5 text-gray-500">{{ __("Products must match:") }}</p>
-                            <div class="flex items-center">
-                                <input wire:model="condition_match" id="all" value="all" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
-                                <label for="all" class="ml-3 cursor-pointer">
-                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("All conditions") }}</span>
-                                </label>
-                            </div>
-                            <div class="flex items-center">
-                                <input wire:model="condition_match" id="any" value="any" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
-                                <label for="any" class="ml-3 cursor-pointer">
-                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Any condition") }}</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="space-y-5">
-                            <div class="space-y-4">
-                                @foreach($conditions as $conditionKey => $conditionValue)
-                                    <div class="flex items-center space-x-4">
-                                        <div class="grid grid-cols-3 gap-4">
-                                            <div>
-                                                <select wire:model="rule.{{ $conditionValue }}" aria-label="{{ __("Rules") }}" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                                    @foreach($this->collectionRules as $ruleKey => $ruleValue)
-                                                        <option value="{{ $ruleKey }}">{{ $ruleValue['name'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <select wire:model="operator.{{ $conditionValue }}" aria-label="{{ __("Conditions") }}" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                                    @foreach($this->operators as $operatorKey => $operatorValue)
-                                                        <option value="{{ $operatorKey }}">
-                                                            {{ $operatorValue['name'] }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <div class="relative rounded-md shadow-sm">
-                                                    <input wire:model="value.{{ $conditionValue }}" type="text" class="form-input block w-full pr-12 sm:text-sm sm:leading-5" aria-label="{{ __("Value") }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="relative">
-                                            <span class="inline-flex rounded-md shadow-sm">
-                                                <button wire:click.prevent="remove({{ $conditionKey }})" type="button" class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                            @if(count($conditions) < 4)
-                                <div class="relative">
+                <div class="border-t border-gray-200 p-4 sm:px-6 sm:py-5">
+                    @if($products->isNotEmpty())
+
+                    @else
+                        <div class="py-5 w-full max-w-xs mx-auto flex flex-col items-center justify-center">
+                            <span class="flex-shrink-0 w-10 h-10">
+                                <svg class="w-full h-full text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                            </span>
+                            <p class="mt-2.5 text-sm text-gray-500 leading-5 text-center">
+                                {{ __("There are no products in this collection. Add or change conditions to add products.") }}
+                            </p>
+                            @if($type === 'auto')
+                                <div class="relative mt-3">
                                     <span class="inline-flex rounded-md shadow-sm">
-                                        <button wire:click.prevent="add({{ $i }})" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                                            {{ count($conditions) === 0 ? __("Add condition") : __("Add another condition") }}
+                                        <button type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                            {{ __("Update conditions") }}
                                         </button>
                                     </span>
                                 </div>
                             @endif
                         </div>
-                    </div>
-                @endif
+                    @endif
+                </div>
             </div>
             <div class="bg-white rounded-lg shadow-md divide-y divide-gray-200">
                 <div class="p-4 sm:p-5">
@@ -260,14 +211,14 @@
                                         <p class="mt-1 text-xs text-gray-500">
                                             PNG, JPG, GIF up to 1MB
                                         </p>
-                                        <input id="file" type="file" wire:model="file" class="sr-only">
+                                        <input id="file" type="file" wire:model="file" class="sr-only" />
                                     </div>
                                 </label>
-                                @error('file')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
                             </div>
                         @endif
+                        @error('file')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                     @if($media)
                         <div class="mt-4 p-2 bg-gray-50 rounded-md border border-dashed border-gray-200 flex items-center justify-between">
