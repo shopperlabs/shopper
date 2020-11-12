@@ -67,6 +67,18 @@ class Collection extends Model
     }
 
     /**
+     * Return the correct formatted word of the first collection rule.
+     *
+     * @return string
+     */
+    public function firstRule()
+    {
+        $condition = $this->rules()->first();
+
+        return $condition->getFormattedRule(). ' '. $condition->getFormattedOperator(). ' '. $condition->value;
+    }
+
+    /**
      * Set the proper slug attribute.
      *
      * @param  string  $value
