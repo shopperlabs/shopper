@@ -208,7 +208,7 @@
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     <span class="lg:pl-2">{{ __("Name") }}</span>
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     {{ __("Type") }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -241,7 +241,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">
+                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium text-right">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 {{ $collection->type === "auto" ? 'bg-green-100 text-green-800' :  'bg-blue-100 text-blue-800' }}">
                                             <svg class="-ml-1 mr-1.5 h-2 w-2 {{ $collection->type === "auto" ? 'text-green-400' :  'text-blue-400' }}" fill="currentColor" viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3" />
