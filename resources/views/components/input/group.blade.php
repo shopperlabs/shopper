@@ -1,6 +1,6 @@
 @props([
-    'label',
-    'for',
+    'label' => false,
+    'for' => false,
     'noShadow' => false,
     'isRequired' => false,
     'error' => false,
@@ -8,11 +8,13 @@
 ])
 
 <div {{ $attributes }}>
-    <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-gray-700">
-        {{ __($label) }} @if($isRequired) <span class="text-red-500">*</span> @endif
-    </label>
+    @if($label)
+        <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-gray-700">
+            {{ __($label) }} @if($isRequired) <span class="text-red-500">*</span> @endif
+        </label>
+    @endif
 
-    <div class="mt-1 relative @if(!$noShadow) rounded-md shadow-sm @endif">
+    <div class="@if($label) mt-1 @endif relative @if(!$noShadow) rounded-md shadow-sm @endif">
         {{ $slot }}
     </div>
     @if ($error)

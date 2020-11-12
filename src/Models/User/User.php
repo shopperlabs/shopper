@@ -57,6 +57,7 @@ class User extends Authenticatable
     protected $dates = [
         'email_verified_at',
         'last_login_at',
+        'birth_date',
     ];
 
     /**
@@ -68,6 +69,7 @@ class User extends Authenticatable
         'full_name',
         'picture',
         'roles_label',
+        'birth_date_formatted',
     ];
 
     /**
@@ -110,6 +112,21 @@ class User extends Authenticatable
         return $this->last_name
             ? $this->first_name . ' ' . $this->last_name
             : $this->first_name;
+    }
+
+    /**
+     * Return Formatted Birth Date Attribute.
+     *
+     * @param  string  $value
+     * @return \Illuminate\Contracts\Translation\Translator|string
+     */
+    public function getBirthDateFormattedAttribute()
+    {
+        if ($this->birth_date) {
+            return $this->birth_date->formatLocalized('%d, %B %Y');
+        }
+
+        return __('Not defined');
     }
 
     /**
