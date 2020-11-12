@@ -27,6 +27,15 @@ class Collection extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    public $with = [
+        'rules',
+    ];
+
+    /**
      * The attributes that should be mutated to dates.
      *
      * @var array
@@ -60,7 +69,7 @@ class Collection extends Model
     /**
      * Set the proper slug attribute.
      *
-     * @param  string $value
+     * @param  string  $value
      */
     public function setSlugAttribute($value)
     {
@@ -79,5 +88,15 @@ class Collection extends Model
     public function products()
     {
         return $this->belongsToMany(config('shopper.system.models.product'), shopper_table('collection_product'), 'collection_id');
+    }
+
+    /**
+     * Get all rules of the current collection.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rules()
+    {
+        return $this->hasMany(CollectionRule::class, 'collection_id');
     }
 }

@@ -35,6 +35,6 @@ class CollectionRule extends Model
      */
     public function collection()
     {
-        return $this->belongsTo(config('shopper.config.models.collection'), 'collection_id');
+        return $this->belongsTo(config('shopper.system.models.collection'), 'collection_id');
     }
 }
