@@ -32,6 +32,7 @@ class Product extends Model implements ReviewRateable
         'description',
         'security_stock',
         'featured',
+        'is_visible',
         'brand_id',
         'parent_id',
         'old_price_amount',
@@ -50,7 +51,19 @@ class Product extends Model implements ReviewRateable
         'depth_value',
         'depth_unit',
         'volume_value',
-        'volume_unit',
+        'seo_title',
+        'seo_description',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'featured' => 'boolean',
+        'is_visible' => 'boolean',
+        'requires_shipping' => 'boolean',
     ];
 
     /**
@@ -125,7 +138,7 @@ class Product extends Model implements ReviewRateable
      */
     public function categories()
     {
-        return $this->belongsToMany(config('shopper.config.models.category'), shopper_table('category_product'), 'product_id');
+        return $this->belongsToMany(config('shopper.system.models.category'), shopper_table('category_product'), 'product_id');
     }
 
     /**
@@ -135,7 +148,7 @@ class Product extends Model implements ReviewRateable
      */
     public function collections()
     {
-        return $this->belongsToMany(config('shopper.config.models.collection'), shopper_table('collection_product'), 'product_id');
+        return $this->belongsToMany(config('shopper.system.models.collection'), shopper_table('collection_product'), 'product_id');
     }
 
     /**
@@ -145,7 +158,7 @@ class Product extends Model implements ReviewRateable
      */
     public function brand()
     {
-        return $this->belongsTo(config('shopper.config.models.brand'), 'brand_id');
+        return $this->belongsTo(config('shopper.system.models.brand'), 'brand_id');
     }
 
     /**

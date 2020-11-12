@@ -121,10 +121,10 @@ if (!function_exists('shopper_currency')) {
      */
     function shopper_currency(): string
     {
-        $id =  Setting::query()->where('key', 'currency_id')->first();
+        $settingCurrency =  Setting::query()->where('key', 'shop_currency_id')->first();
 
-        if ($id) {
-            $currency = CurrencyModel::query()->find($id);
+        if ($settingCurrency) {
+            $currency = CurrencyModel::query()->find($settingCurrency->value);
 
             return $currency ? $currency->code : 'USD';
         }

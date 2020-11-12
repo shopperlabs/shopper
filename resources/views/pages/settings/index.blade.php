@@ -95,7 +95,7 @@
                     </svg>
                 </div>
                 <div class="space-y-1">
-                    <p class="inlinex-flex items-center text-base leading-6 font-medium text-gray-900">
+                    <p class="inline-flex items-center text-base leading-6 font-medium text-gray-900">
                         <span>{{ __('Analytics') }}</span>
                     </p>
                     <p class="text-sm leading-5 text-gray-500">

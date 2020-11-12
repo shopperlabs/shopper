@@ -1,8 +1,8 @@
-@extends('shopper::layouts.'. config('shopper.theme'))
+@extends('shopper::layouts.'. config('shopper.system.theme'))
 @section('title', __('Collections'))
 
 @section('content')
 
-    <livewire:collection-list />
+    <livewire:shopper-collections-lists />
 
 @endsection

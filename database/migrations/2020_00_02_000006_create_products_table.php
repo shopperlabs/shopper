@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->longText('description')->nullable();
             $table->integer('security_stock')->default(0);
             $table->boolean('featured')->default(false);
+            $table->boolean('is_visible')->default(false);
             $table->decimal('old_price_amount', 12, 4)->nullable();
             $table->decimal('price_amount', 12, 4)->nullable();
             $table->decimal('cost_amount', 12, 4)->nullable();
