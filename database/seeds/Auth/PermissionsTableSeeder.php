@@ -16,6 +16,14 @@ class PermissionsTableSeeder extends Seeder
         $this->disableForeignKeys();
 
         Permission::query()->create([
+            'name' => 'access_dashboard',
+            'group_name' => 'system',
+            'display_name' => 'Access Dashboard',
+            'description' => __("This permission allow user to access to the dashboard."),
+            'can_be_removed' => false,
+        ]);
+
+        Permission::query()->create([
             'name' => 'access_setting',
             'group_name' => 'system',
             'display_name' => 'Access Setting',
