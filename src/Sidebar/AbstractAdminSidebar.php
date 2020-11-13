@@ -10,16 +10,18 @@ use Shopper\Framework\Events\BuildingSidebar;
 abstract class AbstractAdminSidebar implements SidebarExtender
 {
     /**
-     * @var Guard
+     * Logged User.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
      */
-    protected $auth;
+    protected $user;
 
     /**
      * @internal param Guard $guard
      */
     public function __construct()
     {
-        $this->auth = auth();
+        $this->user = auth()->user();
     }
 
     /**
