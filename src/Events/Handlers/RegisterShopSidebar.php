@@ -23,7 +23,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
 
             $group->item(__('Categories'), function (Item $item) {
                 $item->weight(1);
-                $item->authorize(true);
+                $item->authorize($this->user->hasPermissionTo('browse_categories'));
                 $item->route('shopper.categories.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -34,7 +34,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
 
             $group->item(__('Brands'), function (Item $item) {
                 $item->weight(2);
-                $item->authorize(true);
+                $item->authorize($this->user->hasPermissionTo('browse_brands'));
                 $item->route('shopper.brands.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
 
             $group->item(__('Collections'), function (Item $item) {
                 $item->weight(3);
-                $item->authorize(true);
+                $item->authorize($this->user->hasPermissionTo('browse_collections'));
                 $item->route('shopper.collections.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
 
             $group->item(__('Catalog'), function (Item $item) {
                 $item->weight(4);
-                $item->authorize(true);
+                $item->authorize($this->user->hasPermissionTo('browse_products'));
                 $item->route('shopper.products.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -78,7 +78,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
 
             $group->item(__('Customers'), function (Item $item) {
                 $item->weight(6);
-                $item->authorize(true);
+                $item->authorize($this->user->hasPermissionTo('browse_customers'));
                 $item->route('shopper.customers.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -89,7 +89,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
 
             $group->item(__('Reviews'), function (Item $item) {
                 $item->weight(7);
-                $item->authorize(true);
+                $item->authorize($this->user->hasPermissionTo('browse_products'));
                 // $item->route('shopper.reviews.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
