@@ -119,17 +119,19 @@
                         Add products and prices to start selling. Tailor it to your store's needs with an unlimited number of products (depending on the size of your store), brands, collections, and variations.
                     </div>
 
-                    <a href="{{ route('shopper.products.create') }}" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
-                            <span>Add product to your store</span>
+                    @can('add_products')
+                        <a href="{{ route('shopper.products.create') }}" class="group">
+                            <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
+                                <span>Add product to your store</span>
 
-                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
-                                <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
-                            </span>
-                        </div>
-                    </a>
+                                <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
+                                    <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        </a>
+                    @endcan
                 </div>
             </div>
         </div>
