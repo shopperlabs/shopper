@@ -9,16 +9,68 @@ use Shopper\Framework\Models\User\Role as RoleModel;
 
 class Role extends Component
 {
+    /**
+     * Role Model.
+     *
+     * @var RoleModel
+     */
     public RoleModel $role;
+
+    /**
+     * Role name.
+     *
+     * @var string
+     */
     public string $name = '';
+
+    /**
+     * Role display name.
+     *
+     * @var string
+     */
     public string $display_name = '';
+
+    /**
+     * Role description.
+     *
+     * @var string
+     */
     public string $description = '';
 
+    /**
+     * Permission Name.
+     *
+     * @var string
+     */
     public string $permission_name = '';
+
+    /**
+     * Permission display name.
+     *
+     * @var string
+     */
     public string $permission_display_name = '';
+
+    /**
+     * Permission description.
+     *
+     * @var string
+     */
     public string $permission_description = '';
+
+    /**
+     * Permission group item.
+     *
+     * @var string
+     */
     public $group;
 
+    /**
+     * Component Mount instance.
+     *
+     * @param  RoleModel  $role
+     * @return void
+     */
     public function mount(RoleModel $role)
     {
         $this->name = $role->name;
@@ -26,6 +78,11 @@ class Role extends Component
         $this->description = $role->description;
     }
 
+    /**
+     * Save a new record in the storage.
+     *
+     * @return void
+     */
     public function save()
     {
         $this->validate([
@@ -34,8 +91,8 @@ class Role extends Component
                 Rule::unique('roles', 'name')->ignore($this->role->id)
             ],
         ], [
-            'name.required' => 'The role name is required.',
-            'name.unique' => 'This name is already used.'
+            'name.required' => __('The role name is required.'),
+            'name.unique' => __('This name is already used.'),
         ]);
 
         RoleModel::query()->find($this->role->id)->update([
@@ -44,12 +101,17 @@ class Role extends Component
             'description' => $this->description,
         ]);
 
-        $this->dispatchBrowserEvent('notify', [
-            'title' => 'Updated',
+        $this->notify([
+            'title' => __('Updated'),
             'message' => __("Role updated successfully!"),
         ]);
     }
 
+    /**
+     * Add a new permission on the storage.
+     *
+     * @return void
+     */
     public function addPermission()
     {
         $this->validate([
@@ -66,7 +128,7 @@ class Role extends Component
         $this->role->givePermissionTo($permission->name);
 
         $this->dispatchBrowserEvent('permission-added');
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __('Saved'),
             'message' => __("A new permission has been create and add to this role.")
         ]);
@@ -74,14 +136,25 @@ class Role extends Component
         $this->emit('permissionAdded');
     }
 
+    /**
+     * Removed role item from the storage.
+     *
+     * @throws \Exception
+     * @return void
+     */
     public function destroy()
     {
         RoleModel::query()->find($this->role->id)->delete();
 
-        session()->flash('success', "Role deleted successfully.");
+        session()->flash('success', __("Role deleted successfully."));
         $this->redirectRoute('shopper.settings.users');
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('shopper::livewire.settings.management.role', [
