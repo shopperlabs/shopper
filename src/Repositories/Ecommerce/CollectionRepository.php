@@ -13,6 +13,6 @@ class CollectionRepository extends BaseRepository
      */
     public function model()
     {
-        return config('shopper.models.collection');
+        return config('shopper.system.models.collection');
     }
 }
