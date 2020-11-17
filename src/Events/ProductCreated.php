@@ -10,11 +10,15 @@ class ProductCreated
     use SerializesModels;
 
     /**
-     * @var Product
+     * Product Model.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
      */
-    public Product $product;
+    public $product;
 
     /**
+     * Quantity to set to the product.
+     *
      * @var int
      */
     public int $quantity;
