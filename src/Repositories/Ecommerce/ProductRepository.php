@@ -13,6 +13,6 @@ class ProductRepository extends BaseRepository
      */
     public function model()
     {
-        return config('shopper.models.product');
+        return config('shopper.system.models.product');
     }
 }
