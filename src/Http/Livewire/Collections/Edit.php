@@ -10,11 +10,15 @@ use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
+use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends Component
 {
-    use WithFileUploads, WithUploadProcess, WithConditions;
+    use WithFileUploads,
+        WithUploadProcess,
+        WithConditions,
+        WithSeoAttributes;
 
     /**
      * Upload listeners.
@@ -57,27 +61,6 @@ class Edit extends Component
      * @var string
      */
     public $type = 'auto';
-
-    /**
-     * Update SEO elements.
-     *
-     * @var bool
-     */
-    public $updateSeo = false;
-
-    /**
-     * Seo Display title.
-     *
-     * @var string
-     */
-    public $seoTitle;
-
-    /**
-     * Seo description.
-     *
-     * @var string
-     */
-    public $seoDescription;
 
     /**
      * Publish date for the collection.
@@ -165,6 +148,16 @@ class Edit extends Component
     }
 
     /**
+     * Define is the current action is create or update.
+     *
+     * @return false
+     */
+    public function isUpdate()
+    {
+        return true;
+    }
+
+    /**
      * Real-time component validation.
      *
      * @param  string  $field
@@ -174,18 +167,6 @@ class Edit extends Component
     public function updated($field)
     {
         $this->validateOnly($field, $this->rules());
-    }
-
-    /**
-     * Display the block to update SEO values.
-     *
-     * @return void
-     */
-    public function updateSeo()
-    {
-        $this->seoTitle = $this->name;
-        $this->seoDescription = strip_tags(nl2br($this->description));
-        $this->updateSeo = true;
     }
 
     /**
