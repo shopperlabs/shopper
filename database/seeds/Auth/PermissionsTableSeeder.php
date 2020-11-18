@@ -40,14 +40,6 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         Permission::query()->create([
-            'name' => 'view_setting',
-            'group_name' => 'system',
-            'display_name' => __('Access Setting'),
-            'description' => __("This permission allow user to view the setting page."),
-            'can_be_removed' => false,
-        ]);
-
-        Permission::query()->create([
             'name' => 'manage_mail',
             'group_name' => 'system',
             'display_name' => __('Manage mail setting'),
