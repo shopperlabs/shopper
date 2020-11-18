@@ -36,7 +36,7 @@ trait WithUploadProcess
 
         $this->emitSelf('fileDeleted');
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __("Removed"),
             'message' => __("Image removed from the storage.")
         ]);
