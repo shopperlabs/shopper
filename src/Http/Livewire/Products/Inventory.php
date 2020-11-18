@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Livewire\Product;
+namespace Shopper\Framework\Http\Livewire\Products;
 
 use Livewire\Component;
 use Livewire\WithPagination;

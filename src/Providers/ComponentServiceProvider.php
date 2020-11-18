@@ -32,8 +32,9 @@ use Shopper\Framework\Http\Livewire\{
     InventoryHistory,
     NetworkStatus,
     Review\ReviewList,
-    Product\Inventory,
-    ProductList,
+    Products\Inventory,
+    Products\Browse as BrowseProduct,
+    Products\Create as CreateProduct,
     Settings\Analytics,
     Settings\Integrations,
     Settings\General,
@@ -79,6 +80,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('delete-action');
             $this->registerComponent('dialog-modal');
             $this->registerComponent('empty-state');
+            $this->registerComponent('input.drag-upload');
             $this->registerComponent('input.group');
             $this->registerComponent('input.rich-text');
             $this->registerComponent('input.text');
@@ -115,13 +117,14 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-collections-lists', BrowseCollections::class);
         Livewire::component('shopper-collections-create', CreateCollection::class);
         Livewire::component('shopper-collections-edit', EditCollection::class);
-        Livewire::component('shopper-product-list', ProductList::class);
+        Livewire::component('shopper-products-browse', BrowseProduct::class);
+        Livewire::component('shopper-products-create', CreateProduct::class);
+        Livewire::component('shopper-products-inventory', Inventory::class);
         Livewire::component('shopper-customers-lists', BrowseCustomers::class);
         Livewire::component('shopper-customers-create', CreateCustomer::class);
         Livewire::component('shopper-customers-show', ShowCustomer::class);
         Livewire::component('shopper-customers-profile', ProfileCustomer::class);
         Livewire::component('shopper-inventory-history', InventoryHistory::class);
-        Livewire::component('shopper-product-inventory', Inventory::class);
         Livewire::component('shopper-reviews-list', ReviewList::class);
         Livewire::component('shopper-discounts-list', DiscountList::class);
         Livewire::component('shopper-create-discount', CreateDiscount::class);
