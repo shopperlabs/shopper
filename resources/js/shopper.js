@@ -14,12 +14,6 @@ import "alpinejs";
 import axios from "axios";
 
 /**
- * React Components
- * Load all React components used in shopper here.
- */
-import "@/src/pages/Settings/Configuration";
-
-/**
  * Custom HTML script code.
  * @type {HTMLElement}
  */

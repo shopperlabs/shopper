@@ -20,6 +20,7 @@ mix.setPublicPath("public")
   .setResourceRoot("../") // turns assets paths in css relative to css file
   .sass("./resources/sass/shopper.scss", "css")
   .react("./resources/js/shopper.js", "js")
+  .react("./resources/js/initialization.js", "js")
   .options({ processCssUrls: false })
   .tailwind("./tailwind.config.js")
   .webpackConfig({
