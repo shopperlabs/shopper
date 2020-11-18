@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->
     @stack('styles')
+    @bukStyles
     <livewire:styles />
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
@@ -117,6 +118,7 @@
     <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
 
     @stack('scripts')
+    @bukScripts
 
     @if(! empty(config('shopper.system.resources.scripts')))
         <!-- Additional Javascript -->
