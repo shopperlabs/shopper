@@ -14,6 +14,13 @@ import "alpinejs";
 import axios from "axios";
 
 /**
+ * Condition require for the shop initialization.
+ */
+if (document.getElementById('setting-configuration')) {
+  require("@/src/pages/Settings/Configuration");
+}
+
+/**
  * Custom HTML script code.
  * @type {HTMLElement}
  */
