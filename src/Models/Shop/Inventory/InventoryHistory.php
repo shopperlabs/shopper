@@ -3,8 +3,7 @@
 namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
-
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Models\User\User;
 
 class InventoryHistory extends Model
 {

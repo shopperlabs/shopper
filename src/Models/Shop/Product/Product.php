@@ -4,6 +4,7 @@ namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Contracts\ReviewRateable;
+use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Traits\Filetable;
 use Shopper\Framework\Models\Traits\HasPrice;
@@ -140,6 +141,16 @@ class Product extends Model implements ReviewRateable
     public function categories()
     {
         return $this->belongsToMany(config('shopper.system.models.category'), shopper_table('category_product'), 'product_id');
+    }
+
+    /**
+     * Return relation related to categories of the current product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class, shopper_table('channel_product'), 'product_id');
     }
 
     /**
