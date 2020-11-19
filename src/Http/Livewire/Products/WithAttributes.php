@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Carbon\Carbon;
+
 trait WithAttributes
 {
     /**
@@ -30,7 +32,7 @@ trait WithAttributes
      *
      * @var string
      */
-    public $brandId;
+    public $brand_id;
 
     /**
      * Product sample description.
@@ -89,6 +91,27 @@ trait WithAttributes
     public $securityStock;
 
     /**
+     * Publish date for the collection.
+     *
+     * @var string
+     */
+    public $publishedAt;
+
+    /**
+     * Formatted publishedAt date.
+     *
+     * @var string
+     */
+    public $publishedAtFormatted;
+
+    /**
+     * Type of product that's be created.
+     *
+     * @var string
+     */
+    public $type = 'deliverable';
+
+    /**
      * Product dimension: weight Value.
      *
      * @var string
@@ -143,4 +166,14 @@ trait WithAttributes
      * @var string
      */
     public $volumeUnit = 'l';
+
+    /**
+     * Live updated Formatted publishedAt attribute.
+     *
+     * @return void
+     */
+    public function updatedPublishedAt()
+    {
+        $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $this->publishedAt)->toRfc7231String();
+    }
 }
