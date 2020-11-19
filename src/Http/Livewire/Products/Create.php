@@ -4,6 +4,9 @@ namespace Shopper\Framework\Http\Livewire\Products;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 
@@ -50,7 +53,7 @@ class Create extends Component
             'sku'  => 'nullable|unique:'.shopper_table('products'),
             'barcode'  => 'nullable|unique:'.shopper_table('products'),
             'file' => 'nullable|image|max:1024',
-            // 'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
+            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
         ];
     }
 
@@ -61,6 +64,18 @@ class Create extends Component
      */
     public function render()
     {
-        return view('shopper::livewire.products.create');
+        return view('shopper::livewire.products.create', [
+            'brands' => (new BrandRepository())
+                ->makeModel()
+                ->scopes('enabled')
+                ->select('name', 'id')
+                ->get(),
+            'categories' => (new CategoryRepository())
+                ->makeModel()
+                ->scopes('enabled')
+                ->select('name', 'id')
+                ->get(),
+            'collections' => (new CollectionRepository())->get(['name', 'id'])
+        ]);
     }
 }
