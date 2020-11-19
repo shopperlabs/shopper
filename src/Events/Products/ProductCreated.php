@@ -26,10 +26,10 @@ class ProductCreated
     /**
      * Create a new event instance.
      *
-     * @param  Product  $product
+     * @param  \Illuminate\Database\Eloquent\Model  $product
      * @param  int  $quantity
      */
-    public function __construct(Product $product, int $quantity = 0)
+    public function __construct($product, int $quantity = 0)
     {
         $this->product = $product;
         $this->quantity = $quantity;
