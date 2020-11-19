@@ -1,8 +1,8 @@
 <?php
 
-namespace Shopper\Framework\Listeners;
+namespace Shopper\Framework\Listeners\Products;
 
-use Shopper\Framework\Events\ProductCreated;
+use Shopper\Framework\Events\Products\ProductCreated;
 use Shopper\Framework\Repositories\InventoryRepository;
 
 class CreateProductSubscriber
@@ -32,12 +32,16 @@ class CreateProductSubscriber
     {
         $defaultInventory = $this->inventoryRepository->where('is_default', true)->first();
 
+        if (! $defaultInventory) {
+            $defaultInventory = $this->inventoryRepository->first();
+        }
+
         if ($event->quantity > 0) {
             $event->product->mutateStock(
                 $defaultInventory->id,
                 $event->quantity,
                 [
-                    'event' => 'Initial inventory',
+                    'event' => __('Initial inventory'),
                     'old_quantity' => $event->quantity,
                 ]
             );
