@@ -208,7 +208,7 @@
                         @else
                             <div class="flex flex-col">
                                 <h3 class="text-base text-blue-800 font-medium leading-6">{{ $seoTitle }}</h3>
-                                <span class="mt-1 text-green-600 text-sm leading-5">{{ env('APP_URL') }}/product/{{ str_slug($name) }}</span>
+                                <span class="mt-1 text-green-600 text-sm leading-5">{{ env('APP_URL') }}/products/{{ str_slug($name) }}</span>
                                 <p class="mt-1 text-gray-500 text-sm leading-5">{{ str_limit($seoDescription, 160) }}</p>
                             </div>
                         @endif
@@ -225,7 +225,7 @@
                                     type="text"
                                     class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                                     autocomplete="off"
-                                >
+                                />
                             </div>
                         </div>
                         <div>
@@ -254,16 +254,16 @@
                         <h4 class="text-sm leading-5 text-gray-700 font-medium">{{ __("Product status") }}</h4>
                         <div class="mt-4 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
                             <div class="flex items-center">
-                            <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
-                                <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                            </span>
+                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
+                                    <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                    </svg>
+                                </span>
                                 <span class="font-semibold ml-3 text-sm">{{ __("Visible") }}</span>
                             </div>
                             <div>
-                                <span wire:model="isVisible" x-data="{ on: false }" role="checkbox" tabindex="0" x-on:click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                                <span wire:model="isVisible" x-data="{ on: false }" role="checkbox" tabindex="0"x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                     <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
                                 </span>
@@ -344,7 +344,7 @@
                             <div class="mt-1 rounded-md shadow-sm">
                                 <select wire:model="brand_id" id="brand_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
                                     @foreach($brands as $brand)
-                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        <option value="{{ $brand->id }}" @if($loop->first) selected @endif>{{ $brand->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -352,7 +352,7 @@
                         <div class="p-4 sm:p-5">
                             <label for="categories" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Categories") }}</label>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <select id="categories" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" multiple>
+                                <select wire:model="category_ids" id="categories" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" multiple>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
@@ -362,7 +362,7 @@
                         <div class="p-4 sm:p-5">
                             <label for="collections" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Collections") }}</label>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <select id="collections" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" multiple>
+                                <select wire:model="collection_ids" id="collections" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" multiple>
                                     @foreach($collections as $collection)
                                         <option value="{{ $collection->id }}">{{ $collection->name }}</option>
                                     @endforeach
