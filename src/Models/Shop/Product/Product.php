@@ -134,6 +134,16 @@ class Product extends Model implements ReviewRateable
     }
 
     /**
+     * Return products variantes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function variantes()
+    {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
+    /**
      * Return relation related to categories of the current product.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

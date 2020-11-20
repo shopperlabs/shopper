@@ -35,7 +35,7 @@
                         <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="Apple, Nike, Samsung...">
                     </x-shopper-input.group>
                 </div>
-                <div class="mt-5 border-t border-b border-gray-200 pt-4">
+                <div class="mt-5 border-t border-gray-200 pt-4">
                     <x-shopper-input.group label="Description" for="description">
                         <x-shopper-input.rich-text wire:model.lazy="description" id="description" />
                     </x-shopper-input.group>
