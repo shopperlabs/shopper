@@ -4,6 +4,7 @@ namespace Shopper\Framework\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Shopper\Framework\Events\Products\ProductCreated;
+use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Events\StoreCreated;
 use Shopper\Framework\Listeners\ChannelSubscriber;
@@ -28,6 +29,10 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         ProductUpdated::class => [
+
+        ],
+
+        ProductRemoved::class => [
 
         ],
     ];
