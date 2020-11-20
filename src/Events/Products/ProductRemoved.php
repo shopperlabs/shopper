@@ -4,7 +4,7 @@ namespace Shopper\Framework\Events\Products;
 
 use Illuminate\Queue\SerializesModels;
 
-class ProductUpdated
+class ProductRemoved
 {
     use SerializesModels;
 
