@@ -35,6 +35,7 @@ use Shopper\Framework\Http\Livewire\{
     Products\Inventory,
     Products\Browse as BrowseProduct,
     Products\Create as CreateProduct,
+    Products\Edit as EditProduct,
     Settings\Analytics,
     Settings\Integrations,
     Settings\General,
@@ -119,6 +120,7 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-collections-edit', EditCollection::class);
         Livewire::component('shopper-products-browse', BrowseProduct::class);
         Livewire::component('shopper-products-create', CreateProduct::class);
+        Livewire::component('shopper-products-edit', EditProduct::class);
         Livewire::component('shopper-products-inventory', Inventory::class);
         Livewire::component('shopper-customers-lists', BrowseCustomers::class);
         Livewire::component('shopper-customers-create', CreateCustomer::class);
