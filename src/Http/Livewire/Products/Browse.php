@@ -119,6 +119,23 @@ class Browse extends Component
                     $query->where('parent_id', null);
                 })
                 ->where(function (Builder $query) {
+                    if ($this->brand_id) {
+                        $query->where('brand_id', $this->brand_id);
+                    }
+
+                    if ($this->collection_id) {
+                        $query->whereHas('collections', function (Builder $q) {
+                            $q->whereIn('id', [$this->collection_id]);
+                        });
+                    }
+
+                    if ($this->category_id) {
+                        $query->whereHas('categories', function (Builder $q) {
+                            $q->whereIn('id', [$this->category_id]);
+                        });
+                    }
+                })
+                ->where(function (Builder $query) {
                     if ($this->is_visible !== null) {
                         $query->where('is_visible', boolval($this->is_visible));
                     }

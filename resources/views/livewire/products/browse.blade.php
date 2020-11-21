@@ -107,7 +107,7 @@
                                                             <button @click="show = false;" class="bg-blue-700 rounded-md text-blue-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
                                                                 <span class="sr-only">{{ __("Close panel") }}</span>
                                                                 <svg class="h-6 w-6" x-description="Heroicon name: x" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                                                 </svg>
                                                             </button>
                                                         </div>
@@ -130,7 +130,7 @@
                                                                         <div class="mt-1">
                                                                             <div class="mt-1 rounded-md shadow-sm">
                                                                                 <select wire:model="brand_id" id="brand_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                                                                    <option>{{ __("No Brand") }}</option>
+                                                                                    <option value="0">{{ __("No Brand") }}</option>
                                                                                     @foreach($brands as $brand)
                                                                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                                                     @endforeach
@@ -145,7 +145,7 @@
                                                                         <div class="mt-1">
                                                                             <div class="mt-1 rounded-md shadow-sm">
                                                                                 <select wire:model="category_id" id="category_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                                                                    <option>{{ __("No Category") }}</option>
+                                                                                    <option value="0">{{ __("No Category") }}</option>
                                                                                     @foreach($categories as $category)
                                                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                                                     @endforeach
@@ -160,7 +160,7 @@
                                                                         <div class="mt-1">
                                                                             <div class="mt-1 rounded-md shadow-sm">
                                                                                 <select wire:model="collection_id" id="collection_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                                                                    <option>{{ __("No Collection") }}</option>
+                                                                                    <option value="0">{{ __("No Collection") }}</option>
                                                                                     @foreach($collections as $collection)
                                                                                         <option value="{{ $collection->id }}">{{ $collection->name }}</option>
                                                                                     @endforeach
@@ -172,49 +172,37 @@
                                                             </div>
                                                             <div class="p-4 sm:px-6 sm:py-5">
                                                                 <fieldset>
-                                                                    <legend class="text-sm font-medium text-gray-900">
-                                                                        Privacy
-                                                                    </legend>
+                                                                    <div class="flex items-center justify-between">
+                                                                        <legend class="text-sm font-medium text-gray-900">
+                                                                            {{ __("Status") }}
+                                                                        </legend>
+                                                                        <button wire:click="resetStatusFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600 hover:underline">{{ __("Clear") }}</button>
+                                                                    </div>
                                                                     <div class="mt-2 space-y-5">
                                                                         <div class="relative flex items-start">
                                                                             <div class="absolute flex items-center h-5">
-                                                                                <input id="privacy_public" aria-describedby="privacy_public_description" type="radio" name="privacy" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                                                                                <input wire:model="is_visible" id="status_public" value="1" aria-describedby="product_status_visible" type="radio" name="status" class="focus:shadow-blue-500 h-4 w-4 text-blue-600 border-gray-300" />
                                                                             </div>
                                                                             <div class="pl-7 text-sm">
-                                                                                <label for="privacy_public" class="font-medium text-gray-900">
-                                                                                    Public access
+                                                                                <label for="status_public" class="font-medium text-gray-900">
+                                                                                    {{ __("Visible") }}
                                                                                 </label>
                                                                                 <p id="privacy_public_description" class="text-gray-500">
-                                                                                    Everyone with the link will see this project.
+                                                                                    {{ __("All store customers will be able to view this product.") }}
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                         <div>
                                                                             <div class="relative flex items-start">
                                                                                 <div class="absolute flex items-center h-5">
-                                                                                    <input id="privacy_private-to-project" aria-describedby="privacy_private-to-project_description" type="radio" name="privacy" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
+                                                                                    <input wire:model="is_visible" id="status_private" value="0" aria-describedby="product_status_invisible" type="radio" name="status" class="focus:shadow-blue-500 h-4 w-4 text-blue-600 border-gray-300" />
                                                                                 </div>
                                                                                 <div class="pl-7 text-sm">
-                                                                                    <label for="privacy_private-to-project" class="font-medium text-gray-900">
-                                                                                        Private to project members
+                                                                                    <label for="status_private" class="font-medium text-gray-900">
+                                                                                        {{ __("Not visible") }}
                                                                                     </label>
                                                                                     <p id="privacy_private-to-project_description" class="text-gray-500">
-                                                                                        Only members of this project would be able to access.
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div>
-                                                                            <div class="relative flex items-start">
-                                                                                <div class="absolute flex items-center h-5">
-                                                                                    <input id="privacy_private" aria-describedby="privacy_private-to-project_description" type="radio" name="privacy" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300">
-                                                                                </div>
-                                                                                <div class="pl-7 text-sm">
-                                                                                    <label for="privacy_private" class="font-medium text-gray-900">
-                                                                                        Private to you
-                                                                                    </label>
-                                                                                    <p id="privacy_private_description" class="text-gray-500">
-                                                                                        You are the only one able to access this project.
+                                                                                        {{ __("Products that have not yet been released to customers") }}
                                                                                     </p>
                                                                                 </div>
                                                                             </div>
