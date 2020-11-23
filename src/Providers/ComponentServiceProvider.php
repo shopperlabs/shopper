@@ -37,6 +37,7 @@ use Shopper\Framework\Http\Livewire\{
     Products\Create as CreateProduct,
     Products\Edit as EditProduct,
     Products\Form\Edit as EditFormProduct,
+    Products\Form\Seo as SEOFormProduct,
     Settings\Analytics,
     Settings\Integrations,
     Settings\General,
@@ -125,6 +126,7 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-products-create', CreateProduct::class);
         Livewire::component('shopper-products-edit', EditProduct::class);
         Livewire::component('shopper-products-form-edit', EditFormProduct::class);
+        Livewire::component('shopper-products-form-seo', SEOFormProduct::class);
         Livewire::component('shopper-products-form-inventory', Inventory::class);
         Livewire::component('shopper-customers-lists', BrowseCustomers::class);
         Livewire::component('shopper-customers-create', CreateCustomer::class);

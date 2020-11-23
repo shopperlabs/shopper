@@ -131,12 +131,24 @@
         <div x-show="currentTab === 'detail'">
             <livewire:shopper-products-form-edit :product="$product" />
         </div>
-        <div x-cloak x-show="currentTab === 'variants'"></div>
-        <div x-cloak x-show="currentTab === 'attributes'"></div>
-        <div x-cloak x-show="currentTab === 'inventory'"></div>
-        <div x-cloak x-show="currentTab === 'seo'"></div>
-        <div x-cloak x-show="currentTab === 'shipping'"></div>
-        <div x-cloak x-show="currentTab === 'related'"></div>
+        <div x-cloak x-show="currentTab === 'variants'" class="bg-white overflow-hidden rounded-lg shadow-md">
+            <x-shopper-wip-placeholder />
+        </div>
+        <div x-cloak x-show="currentTab === 'attributes'" class="bg-white overflow-hidden rounded-lg shadow-md">
+            <x-shopper-wip-placeholder />
+        </div>
+        <div x-cloak x-show="currentTab === 'inventory'" class="bg-white overflow-hidden rounded-lg shadow-md">
+            <x-shopper-wip-placeholder />
+        </div>
+        <div x-cloak x-show="currentTab === 'seo'">
+            <livewire:shopper-products-form-seo :product="$product" />
+        </div>
+        <div x-cloak x-show="currentTab === 'shipping'" class="bg-white overflow-hidden rounded-lg shadow-md">
+            <x-shopper-wip-placeholder />
+        </div>
+        <div x-cloak x-show="currentTab === 'related'" class="bg-white overflow-hidden rounded-lg shadow-md">
+            <x-shopper-wip-placeholder />
+        </div>
     </div>
 
     <div
