@@ -45,6 +45,19 @@ class Edit extends Component
     }
 
     /**
+     *  Removed a product to the storage.
+     *
+     * @throws \Exception
+     */
+    public function destroy()
+    {
+        (new ProductRepository())->getById($this->product->id)->delete();
+
+        session()->flash('success', __("The product has been correctly removed."));
+        $this->redirectRoute('shopper.products.index');
+    }
+
+    /**
      * Render the component.
      *
      * @return \Illuminate\View\View
