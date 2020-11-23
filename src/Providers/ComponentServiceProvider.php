@@ -36,6 +36,7 @@ use Shopper\Framework\Http\Livewire\{
     Products\Browse as BrowseProduct,
     Products\Create as CreateProduct,
     Products\Edit as EditProduct,
+    Products\Form\Edit as EditFormProduct,
     Settings\Analytics,
     Settings\Integrations,
     Settings\General,
@@ -78,6 +79,8 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('breadcrumb');
             $this->registerComponent('confirms-password');
             $this->registerComponent('datetime-picker');
+            $this->registerComponent('danger-button');
+            $this->registerComponent('default-button');
             $this->registerComponent('delete-action');
             $this->registerComponent('dialog-modal');
             $this->registerComponent('empty-state');
@@ -121,7 +124,8 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-products-browse', BrowseProduct::class);
         Livewire::component('shopper-products-create', CreateProduct::class);
         Livewire::component('shopper-products-edit', EditProduct::class);
-        Livewire::component('shopper-products-inventory', Inventory::class);
+        Livewire::component('shopper-products-form-edit', EditFormProduct::class);
+        Livewire::component('shopper-products-form-inventory', Inventory::class);
         Livewire::component('shopper-customers-lists', BrowseCustomers::class);
         Livewire::component('shopper-customers-create', CreateCustomer::class);
         Livewire::component('shopper-customers-show', ShowCustomer::class);
