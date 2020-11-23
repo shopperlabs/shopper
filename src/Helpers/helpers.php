@@ -1,10 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
-use Money\Currencies\ISOCurrencies;
-use Money\Currency;
-use Money\Formatter\IntlMoneyFormatter;
-use Money\Money;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\System\Setting;
 use Shopper\Framework\Models\System\Currency as CurrencyModel;
@@ -142,26 +138,6 @@ if (!function_exists('shopper_prefix')) {
     function shopper_prefix(): string
     {
         return Shopper::prefix();
-    }
-}
-
-if (!function_exists('shopper_money_format')) {
-    /**
-     * Return money format
-     *
-     * @param  mixed  $amount
-     * @param  string|null  $currency
-     * @return string
-     */
-    function shopper_money_format($amount, $currency = null): string
-    {
-        $money = new Money($amount, new Currency($currency ?? shopper_currency()));
-        $currencies = new ISOCurrencies();
-
-        $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
-        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
-
-        return $moneyFormatter->format($money);
     }
 }
 

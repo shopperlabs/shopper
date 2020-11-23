@@ -3,13 +3,11 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
-use Money\Currencies\ISOCurrencies;
-use Money\Currency;
-use Money\Formatter\IntlMoneyFormatter;
-use Money\Money;
 use Shopper\Framework\Contracts\ReviewRateable;
+use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Traits\Filetable;
+use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
 
@@ -17,6 +15,7 @@ class Product extends Model implements ReviewRateable
 {
     use Filetable,
         HasStock,
+        HasPrice,
         CanHaveDiscount,
         ReviewRateableTrait;
 
@@ -72,7 +71,16 @@ class Product extends Model implements ReviewRateable
      * @var array
      */
     protected $dates = [
-        'published_at'
+        'published_at',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    public $appends = [
+        'formatted_price',
     ];
 
     /**
@@ -119,16 +127,20 @@ class Product extends Model implements ReviewRateable
     public function getFormattedPriceAttribute()
     {
         if ($this->price_amount) {
-            $money = new Money($this->price_amount, new Currency(shopper_currency()));
-            $currencies = new ISOCurrencies();
-
-            $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
-            $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
-
-            return $moneyFormatter->format($money);
+            $this->formattedPrice($this->price_amount);
         }
 
         return null;
+    }
+
+    /**
+     * Return products variantes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function variantes()
+    {
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     /**
@@ -139,6 +151,16 @@ class Product extends Model implements ReviewRateable
     public function categories()
     {
         return $this->belongsToMany(config('shopper.system.models.category'), shopper_table('category_product'), 'product_id');
+    }
+
+    /**
+     * Return relation related to categories of the current product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class, shopper_table('channel_product'), 'product_id');
     }
 
     /**

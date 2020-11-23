@@ -20,10 +20,10 @@ class CreateOrdersTable extends Migration
             $this->addCommonFields($table);
 
             $table->string('number', 32);
-            $table->string('price_amount', 32)->nullable();
+            $table->integer('price_amount')->nullable();
             $table->string('status', 32);
             $table->string('currency');
-            $table->decimal('shipping_total', 10, 2);
+            $table->integer('shipping_total');
             $table->string('shipping_method')->nullable();
             $table->text('notes')->nullable();
 

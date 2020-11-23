@@ -8,11 +8,15 @@ use Livewire\WithFileUploads;
 use Shopper\Framework\Models\Shop\Product\CollectionRule;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
+use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 
 class Create extends Component
 {
-    use WithFileUploads, WithUploadProcess, WithConditions;
+    use WithFileUploads,
+        WithUploadProcess,
+        WithConditions,
+        WithSeoAttributes;
 
     /**
      * Collection name.
@@ -36,27 +40,6 @@ class Create extends Component
     public $type = 'auto';
 
     /**
-     * Update SEO elements.
-     *
-     * @var bool
-     */
-    public $updateSeo = false;
-
-    /**
-     * Seo Display title.
-     *
-     * @var string
-     */
-    public $seoTitle;
-
-    /**
-     * Seo description.
-     *
-     * @var string
-     */
-    public $seoDescription;
-
-    /**
      * Publish date for the collection.
      *
      * @var string
@@ -76,18 +59,6 @@ class Create extends Component
      * @var string
      */
     public $condition_match = 'all';
-
-    /**
-     * Display the block to update SEO values.
-     *
-     * @return void
-     */
-    public function updateSeo()
-    {
-        $this->seoTitle = $this->name;
-        $this->seoDescription = $this->description;
-        $this->updateSeo = true;
-    }
 
     /**
      * Live updated Formatted publishedAt attribute.

@@ -3,67 +3,13 @@
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Shopper\Framework\Events\ProductCreated;
 use Shopper\Framework\Http\Requests\Ecommerce\ProductRequest;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\MediaRepository;
 
 class ProductController extends Controller
 {
-    /**
-     * @var ProductRepository
-     */
-    protected ProductRepository $repository;
-
-    /**
-     * @var MediaRepository
-     */
-    protected MediaRepository $mediaRepository;
-
-    /**
-     * @var CategoryRepository
-     */
-    protected CategoryRepository $categoryRepository;
-
-    /**
-     * @var CollectionRepository
-     */
-    protected CollectionRepository $collectionRepository;
-
-    /**
-     * @var BrandRepository
-     */
-    protected BrandRepository $brandRepository;
-
-    /**
-     * ProductController constructor.
-     *
-     * @param  ProductRepository  $repository
-     * @param  MediaRepository  $mediaRepository
-     * @param  CategoryRepository  $categoryRepository
-     * @param  CollectionRepository  $collectionRepository
-     * @param  BrandRepository  $brandRepository
-     */
-    public function __construct(
-        ProductRepository $repository,
-        MediaRepository $mediaRepository,
-        CategoryRepository $categoryRepository,
-        CollectionRepository $collectionRepository,
-        BrandRepository $brandRepository
-    )
-    {
-        $this->repository = $repository;
-        $this->mediaRepository = $mediaRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->collectionRepository = $collectionRepository;
-        $this->brandRepository = $brandRepository;
-    }
-
     /**
      * Return products list view.
      *
@@ -71,9 +17,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->repository->with(['brand', 'shop'])->paginate(25);
-
-        return view('shopper::pages.products.index', compact('products'));
+        return view('shopper::pages.products.index');
     }
 
     /**
@@ -83,11 +27,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brands = $this->brandRepository->pluck('name', 'id');
-        $categories = $this->categoryRepository->pluck('name', 'id');
-        $collections = $this->collectionRepository->pluck('name', 'id');
-
-        return view('shopper::pages.products.create', compact('brands', 'categories', 'collections'));
+        return view('shopper::pages.products.create');
     }
 
     /**
@@ -120,14 +60,6 @@ class ProductController extends Controller
             'published_at' => $published_at,
         ]);
 
-        if ($request->input('media_id') !== "0") {
-            $media = $this->mediaRepository->getById($request->input('media_id'));
-            $media->update([
-                'mediatable_type'   => config('shopper.models.product'),
-                'mediatable_id'     => $product->id
-            ]);
-        }
-
         if ($request->input('categories')) {
             $product->categories()->sync($request->input('categories'));
         }
@@ -151,101 +83,8 @@ class ProductController extends Controller
      */
     public function edit(int $id)
     {
-        $product = $this->repository->with('inventoryHistories')->getById($id);
-        $brands = $this->brandRepository->pluck('name', 'id');
-        $categories = $this->categoryRepository->pluck('name', 'id');
-        $collections = $this->collectionRepository->pluck('name', 'id');
-
-        return view('shopper::pages.products.edit', compact('product', 'brands', 'categories', 'collections'));
-    }
-
-    /**
-     * Update Product.
-     *
-     * @param  ProductRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(ProductRequest $request, int $id)
-    {
-        $published_at = now();
-
-        if ($request->input('date')) {
-            $published_at = Carbon::createFromFormat('Y-m-d H:i', $request->input('date').' '.($request->input('time') ?? now()->format('H:i')))->toDateTimeString();
-        }
-
-        $product = $this->repository->updateById($id, [
-            'name' => $request->input('name'),
-            'sku' => $request->input('sku'),
-            'barcode' => $request->input('barcode'),
-            'security_stock' => $request->input('security_stock'),
-            'description' => $request->input('body'),
-            'price' => $request->input('price'),
-            'brand_id' => $request->input('brand_id'),
-            'min_price' => $request->input('min_price'),
-            'max_price' => $request->input('max_price'),
-            'backorder' => $request->input('backorder') === "true" ? true : false,
-            'requires_shipping' => $request->input('requires_shipping') === "true" ? true : false,
-            'published_at' => $published_at,
+        return view('shopper::pages.products.edit', [
+            'product' => (new ProductRepository())->with('inventoryHistories')->getById($id)
         ]);
-
-        if ($request->input('media_id') !== "0") {
-
-            // Get the current Media
-            $media = $this->mediaRepository->getById($request->input('media_id'));
-            // dd($category->previewImage);
-
-            if ($product->previewImage && $product->previewImage->id !== (int) $request->input('media_id')) {
-                // Remove media from the given category
-                $product->previewImage()->delete();
-
-                $media->update([
-                    'mediatable_type'   => config('shopper.models.product'),
-                    'mediatable_id'     => $product->id
-                ]);
-            }
-
-            $media->update([
-                'mediatable_type'   => config('shopper.models.product'),
-                'mediatable_id'     => $product->id
-            ]);
-        }
-
-        if ($request->input('categories')) {
-            $product->categories()->sync($request->input('categories'));
-        }
-
-        if ($request->input('collections')) {
-            $product->collections()->sync($request->input('collections'));
-        }
-
-        notify()->success(__('Product Successfully Updated'));
-
-        return redirect()->route('shopper.products.edit', $product);
-    }
-
-    /**
-     * Delete a resource on the database.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Request $request, $id)
-    {
-        try {
-            $this->repository->deleteById($id);
-            notify()->success(__('Product deleted successfully'));
-
-            if ($request->isXmlHttpRequest()) {
-                return response()->json(['redirect_url' => route('shopper.products.index')]);
-            }
-
-            return redirect()->route('shopper.products.index');
-        } catch (\Exception $e) {
-            notify()->error(__("We can't delete this product!"));
-
-            return back();
-        }
     }
 }

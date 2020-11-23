@@ -105,11 +105,11 @@
                                             <input id="file" type="file" wire:model="file" class="sr-only">
                                         </div>
                                     </label>
-                                    @error('file')
-                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
                                 </div>
                             @endif
+                            @error('file')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>

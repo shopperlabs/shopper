@@ -5,7 +5,7 @@ namespace Shopper\Framework\Models\Traits;
 use DateTimeInterface;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
-use Shopper\Framework\Models\InventoryHistory;
+use Shopper\Framework\Models\Shop\Inventory\InventoryHistory;
 
 trait HasStock
 {

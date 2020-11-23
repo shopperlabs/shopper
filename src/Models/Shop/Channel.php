@@ -38,4 +38,14 @@ class Channel extends Model
     {
         return shopper_table('channels');
     }
+
+    /**
+     * Return relation related to product of the channel.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function products()
+    {
+        return $this->belongsToMany(config('shopper.system.models.product'), shopper_table('channel_product'), 'channel_id');
+    }
 }

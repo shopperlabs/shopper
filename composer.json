@@ -27,6 +27,7 @@
     "ext-intl": "*",
     "ext-json": "*",
     "bacon/bacon-qr-code": "^2.0",
+    "blade-ui-kit/blade-ui-kit": "^0.2.0",
     "illuminate/support": "^7.0",
     "jenssegers/agent": "^2.6",
     "laravel/cashier": "^12.5",

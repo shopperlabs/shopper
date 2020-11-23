@@ -197,7 +197,7 @@
                                                 </svg>
                                             </a>
                                         @else
-                                            <span class="inline-flex h-0.5 rounded w-6 bg-gray-700"></span>
+                                            <span class="inline-flex text-gray-700">&mdash;</span>
                                         @endif
                                     </td>
                                     <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">

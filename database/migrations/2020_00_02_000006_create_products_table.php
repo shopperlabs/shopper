@@ -27,10 +27,11 @@ class CreateProductsTable extends Migration
             $table->integer('security_stock')->default(0);
             $table->boolean('featured')->default(false);
             $table->boolean('is_visible')->default(false);
-            $table->decimal('old_price_amount', 12, 4)->nullable();
-            $table->decimal('price_amount', 12, 4)->nullable();
-            $table->decimal('cost_amount', 12, 4)->nullable();
+            $table->integer('old_price_amount')->nullable();
+            $table->integer('price_amount')->nullable();
+            $table->integer('cost_amount')->nullable();
             $table->enum('type', ['deliverable', 'downloadable'])->nullable();
+            $table->boolean('backorder')->default(false);
             $table->boolean('requires_shipping')->default(false);
             $table->dateTimeTz('published_at')->default(now())->nullable();
 

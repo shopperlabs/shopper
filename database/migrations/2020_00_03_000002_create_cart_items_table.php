@@ -23,7 +23,7 @@ class CreateCartItemsTable extends Migration
             $table->string('sku')->nullable()->index();
             $table->morphs('product');
             $table->integer('quantity');
-            $table->decimal('unit_price_amount', 10, 2);
+            $table->integer('unit_price_amount');
 
             $this->addForeignKey($table, 'cart_id', $this->getTableName('carts'));
         });

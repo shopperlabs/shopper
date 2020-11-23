@@ -24,7 +24,7 @@ class CreateCarriersTable extends Migration
             $table->string('logo')->nullable();
             $table->string('link_url')->nullable();
             $table->string('description')->nullable();
-            $table->decimal('shipping_amount', 12, 4)->default('0.00');
+            $table->integer('shipping_amount')->default(0);
             $table->boolean('is_enabled')->default(false);
         });
     }

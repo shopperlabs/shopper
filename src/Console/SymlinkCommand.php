@@ -28,11 +28,16 @@ class SymlinkCommand extends Command
      */
     public function handle()
     {
-        if (file_exists(public_path('shopper'))) {
+        $link = public_path('shopper');
+        $target = realpath(__DIR__ . '/../../public/');
+
+        if (file_exists($link)) {
             $this->error('The "public/shopper" directory already exists.');
+        } else {
+            $this->laravel->make('files')->link($target, $link);
+            $this->info('The [public/shopper] directory has been linked.');
         }
 
-        $this->laravel->make('files')->link(realpath(__DIR__ . '/../../public/'), public_path('shopper'));
-        $this->info('The [public/shopper] directory has been linked.');
+        $this->info('The link have been created.');
     }
 }

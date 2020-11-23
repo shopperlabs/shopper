@@ -19,7 +19,7 @@ class CreateOrderPaymentsTable extends Migration
         Schema::create($this->getTableName('order_payments'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
-            $table->decimal('total_amount', 10, 2);
+            $table->integer('total_amount');
             $table->string('currency');
             $table->enum('status', ['pending', 'treatment', 'partial-paid', 'paid', 'cancelled', 'rejected'])->default('pending');
             $table->json('details');
