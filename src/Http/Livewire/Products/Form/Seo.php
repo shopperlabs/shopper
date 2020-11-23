@@ -70,7 +70,7 @@ class Seo extends Component
 
         $this->notify([
             'title' => __("Updated"),
-            'message' => __("Product successfully updated!"),
+            'message' => __("Product SEO successfully updated!"),
         ]);
     }
 

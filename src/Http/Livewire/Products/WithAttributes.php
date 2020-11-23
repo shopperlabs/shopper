@@ -74,7 +74,7 @@ trait WithAttributes
      *
      * @var bool
      */
-    public $requiredShipping = false;
+    public $requiresShipping = false;
 
     /**
      * Define if the product is visible for the customer.
