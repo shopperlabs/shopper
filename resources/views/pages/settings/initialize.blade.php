@@ -119,7 +119,7 @@
         <div id="setting-configuration"></div>
     </div>
 
-    <script src="{{ mix('/js/initialization.js', 'shopper') }}"></script>
+    <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
 
 </body>
 </html>
