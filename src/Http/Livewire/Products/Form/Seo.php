@@ -63,14 +63,14 @@ class Seo extends Component
         (new ProductRepository())->getById($this->productId)->update([
             'slug' => str_slug($this->slug),
             'seo_title' => $this->seoTitle,
-            'seo_description' => $this->seoDescription,
+            'seo_description' => str_limit($this->seoDescription, 157),
         ]);
 
         $this->emit('productHasUpdated', $this->productId);
 
         $this->notify([
             'title' => __("Updated"),
-            'message' => __("Product successfully updated!"),
+            'message' => __("Product SEO successfully updated!"),
         ]);
     }
 

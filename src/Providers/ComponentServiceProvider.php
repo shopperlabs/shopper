@@ -32,12 +32,13 @@ use Shopper\Framework\Http\Livewire\{
     InventoryHistory,
     NetworkStatus,
     Review\ReviewList,
-    Products\Inventory,
     Products\Browse as BrowseProduct,
     Products\Create as CreateProduct,
     Products\Edit as EditProduct,
     Products\Form\Edit as EditFormProduct,
     Products\Form\Seo as SEOFormProduct,
+    Products\Form\Shipping as ShippingFormProduct,
+    Products\Form\Inventory as InventoryProduct,
     Settings\Analytics,
     Settings\Integrations,
     Settings\General,
@@ -127,7 +128,8 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-products-edit', EditProduct::class);
         Livewire::component('shopper-products-form-edit', EditFormProduct::class);
         Livewire::component('shopper-products-form-seo', SEOFormProduct::class);
-        Livewire::component('shopper-products-form-inventory', Inventory::class);
+        Livewire::component('shopper-products-form-shipping', ShippingFormProduct::class);
+        Livewire::component('shopper-products-form-inventory', InventoryProduct::class);
         Livewire::component('shopper-customers-lists', BrowseCustomers::class);
         Livewire::component('shopper-customers-create', CreateCustomer::class);
         Livewire::component('shopper-customers-show', ShowCustomer::class);

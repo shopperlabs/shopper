@@ -31,7 +31,7 @@ class InventoryHistory extends Model
      * @var array
      */
     protected $with = [
-      'inventory'
+      'inventory',
     ];
 
     /**
@@ -40,7 +40,7 @@ class InventoryHistory extends Model
      * @var array
      */
     protected $appends = [
-      'adjustment'
+      'adjustment',
     ];
 
     /**

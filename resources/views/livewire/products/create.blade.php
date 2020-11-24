@@ -128,7 +128,7 @@
                         </div>
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <input wire:model="requiredShipping" id="required_shipping" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" />
+                                <input wire:model="requiresShipping" id="required_shipping" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <label for="required_shipping" class="font-medium text-gray-700 cursor-pointer">{{ __("This product will be shipped") }}</label>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-                @if($requiredShipping)
+                @if($requiresShipping)
                     <div class="p-4 sm:p-5">
                         <h4 class="block text-base font-medium leading-6 text-gray-900">{{ __("Weight and Dimension") }}</h4>
                         <p class="text-sm text-gray-500 leading-5">{{ __("Used to calculate shipping charges during checkout and to label prices during order processing.") }}</p>
@@ -148,8 +148,8 @@
                                     <input wire:model="weightValue" id="weightValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
                                         <select wire:model="weightUnit" aria-label="{{ __("weight Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
-                                            <option value="kg">KG</option>
-                                            <option value="g">G</option>
+                                            <option value="kg">kg</option>
+                                            <option value="g">g</option>
                                         </select>
                                     </div>
                                 </div>
@@ -160,8 +160,8 @@
                                     <input wire:model="heightValue" id="heightValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
                                         <select wire:model="heightUnit" aria-label="{{ __("height Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
-                                            <option value="cm">CM</option>
-                                            <option value="m">M</option>
+                                            <option value="cm">cm</option>
+                                            <option value="m">m</option>
                                         </select>
                                     </div>
                                 </div>
@@ -172,8 +172,8 @@
                                     <input wire:model="WidthValue" id="WidthValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
                                         <select wire:model="WidthUnit" aria-label="{{ __("Width Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
-                                            <option value="cm">CM</option>
-                                            <option value="m">M</option>
+                                            <option value="cm">cm</option>
+                                            <option value="m">m</option>
                                         </select>
                                     </div>
                                 </div>
@@ -184,8 +184,8 @@
                                     <input wire:model="VolumeValue" id="VolumeValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
                                         <select wire:model="VolumeUnit" aria-label="{{ __("Volume Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
-                                            <option value="l">L</option>
-                                            <option value="ml">ML</option>
+                                            <option value="l">l</option>
+                                            <option value="ml">ml</option>
                                         </select>
                                     </div>
                                 </div>

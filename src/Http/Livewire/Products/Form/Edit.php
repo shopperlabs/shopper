@@ -60,9 +60,7 @@ class Edit extends AbstractBaseComponent
         $this->name = $product->name;
         $this->sku = $product->sku;
         $this->brand_id = $product->brand_id;
-        $this->barcode = $product->barcode;
         $this->description = $product->description;
-        $this->securityStock = $product->security_stock;
         $this->isVisible = $product->is_visible;
         $this->price_amount = $product->price_amount;
         $this->old_price_amount = $product->old_price_amount;
@@ -83,14 +81,6 @@ class Edit extends AbstractBaseComponent
     {
         return [
             'name' => 'required',
-//            'sku'  => [
-//                'nullable',
-//                Rule::unique(shopper_table('products'), 'sku')->ignore($this->productId),
-//            ],
-//            'barcode'  => [
-//                'nullable',
-//                Rule::unique(shopper_table('products'), 'barcode')->ignore($this->productId),
-//            ],
             'file' => 'nullable|image|max:1024',
             'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
         ];

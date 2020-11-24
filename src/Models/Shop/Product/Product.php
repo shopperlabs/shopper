@@ -28,6 +28,7 @@ class Product extends Model implements ReviewRateable
         'name',
         'slug',
         'sku',
+        'barcode',
         'description',
         'security_stock',
         'featured',

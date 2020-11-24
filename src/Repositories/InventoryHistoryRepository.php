@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Repositories;
 
-use Shopper\Framework\Models\InventoryHistory;
+use Shopper\Framework\Models\Shop\Inventory\InventoryHistory;
 
 class InventoryHistoryRepository extends BaseRepository
 {

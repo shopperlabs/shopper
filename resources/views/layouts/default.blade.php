@@ -115,10 +115,10 @@
     <x-shopper-alert />
 
     <livewire:scripts />
+    @bukScripts
     <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
 
     @stack('scripts')
-    @bukScripts
 
     @if(! empty(config('shopper.system.resources.scripts')))
         <!-- Additional Javascript -->
