@@ -2,28 +2,33 @@
 
 namespace Shopper\Framework\Http\Controllers;
 
-use Illuminate\Routing\Controller;
 use Shopper\Framework\Repositories\DiscountRepository;
 
-class DiscountController extends Controller
+class DiscountController extends ShopperBaseController
 {
     /**
      * Display Discount Index.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('browse_discounts');
+
         return view('shopper::pages.discounts.index');
     }
 
     /**
      * Display Create Discount View.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create_discounts');
+
         return view('shopper::pages.discounts.create');
     }
 
@@ -31,12 +36,15 @@ class DiscountController extends Controller
      * Display edit view.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(int $id)
     {
-        $discount = (new DiscountRepository())->getById($id);
+        $this->authorize('edit_discounts');
 
-        return view('shopper::pages.discounts.edit', compact('discount'));
+        return view('shopper::pages.discounts.edit', [
+            'discount' => (new DiscountRepository())->getById($id)
+        ]);
     }
 }

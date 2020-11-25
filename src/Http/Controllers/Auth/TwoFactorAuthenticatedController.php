@@ -42,8 +42,9 @@ class TwoFactorAuthenticatedController extends Controller
     /**
      * Attempt to authenticate a new session using the two factor authentication code.
      *
-     * @param  \Shopper\Framework\Http\Requests\TwoFactorLoginRequest  $request
+     * @param \Shopper\Framework\Http\Requests\TwoFactorLoginRequest $request
      * @return  mixed
+     * @throws ValidationException
      */
     public function store(TwoFactorLoginRequest $request)
     {

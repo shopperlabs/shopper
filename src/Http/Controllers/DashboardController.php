@@ -2,9 +2,7 @@
 
 namespace Shopper\Framework\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-
-class DashboardController extends Controller
+class DashboardController extends ShopperBaseController
 {
     /**
      * Display Shopper Dashboard.

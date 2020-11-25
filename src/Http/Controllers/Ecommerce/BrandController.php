@@ -2,28 +2,34 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
-use Illuminate\Routing\Controller;
+use Shopper\Framework\Http\Controllers\ShopperBaseController;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 
-class BrandController extends Controller
+class BrandController extends ShopperBaseController
 {
     /**
      * Return brands list view.
      *
      * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('browse_brands');
+
         return view('shopper::pages.brands.index');
     }
 
     /**
      * Display Create view.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
     {
+        $this->authorize('create_brands');
+
         return view('shopper::pages.brands.create');
     }
 
@@ -31,12 +37,15 @@ class BrandController extends Controller
      * Display Edit form.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit($id)
     {
-        $brand = (new BrandRepository())->getById($id);
+        $this->authorize('edit_brands');
 
-        return view('shopper::pages.brands.edit', compact('brand'));
+        return view('shopper::pages.brands.edit', [
+            'brand' => (new BrandRepository())->getById($id)
+        ]);
     }
 }

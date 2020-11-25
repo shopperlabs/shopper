@@ -2,9 +2,7 @@
 
 namespace Shopper\Framework\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-
-class InventoryHistoryController extends Controller
+class InventoryHistoryController extends ShopperBaseController
 {
     /**
      * Display Inventory History Index.

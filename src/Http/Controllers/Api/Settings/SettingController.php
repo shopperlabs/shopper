@@ -3,12 +3,12 @@
 namespace Shopper\Framework\Http\Controllers\Api\Settings;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Shopper\Framework\Events\StoreCreated;
+use Shopper\Framework\Http\Controllers\ShopperBaseController;
 use Shopper\Framework\Models\System\Setting;
 
-class SettingController extends Controller
+class SettingController extends ShopperBaseController
 {
     /**
      * Validate configuration settings fields.
