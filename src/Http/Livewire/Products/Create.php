@@ -79,6 +79,7 @@ class Create extends AbstractBaseComponent
             'cost_amount' => $this->cost_amount,
             'type'  => $this->type,
             'requires_shipping' => $this->requiresShipping,
+            'backorder' => $this->backorder,
             'published_at'  => $this->publishedAt,
             'seo_title'     => $this->seoTitle,
             'seo_description' => str_limit($this->seoDescription, 157),

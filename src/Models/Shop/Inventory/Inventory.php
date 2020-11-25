@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\System\Country;
 
 class Inventory extends Model
 {
@@ -29,6 +30,26 @@ class Inventory extends Model
     ];
 
     /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($inventory) {
+            if ($inventory->is_default) {
+                static::query()->update(['is_default' => false]);
+            }
+        });
+
+        static::updating(function ($inventory) {
+            if ($inventory->is_default) {
+                static::query()->update(['is_default' => false]);
+            }
+        });
+    }
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -45,5 +66,15 @@ class Inventory extends Model
     public function getTable()
     {
         return shopper_table('inventories');
+    }
+
+    /**
+     * Country relationship for the inventory.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
     }
 }

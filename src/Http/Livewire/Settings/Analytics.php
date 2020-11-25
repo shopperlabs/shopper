@@ -8,13 +8,48 @@ use Shopper\Framework\Models\System\Setting;
 
 class Analytics extends Component
 {
+    /**
+     * Google Analytics tracking iD.
+     *
+     * @var string
+     */
     public $google_analytics_tracking_id;
+
+    /**
+     * Google Analytics view id.
+     *
+     * @var string
+     */
     public $google_analytics_view_id;
+
+    /**
+     * Google Analytics custom js.
+     *
+     * @var string
+     */
     public $google_analytics_add_js;
+
+    /**
+     * Google Tag Manager id.
+     *
+     * @var string
+     */
     public $google_tag_manager_account_id;
+
+    /**
+     * Facebook Pixel Id.
+     *
+     * @var string
+     */
     public $facebook_pixel_account_id;
 
-    public function mount() {
+    /**
+     * Component Mount Method.
+     *
+     * @return void
+     */
+    public function mount()
+    {
         $ga_add_js = Setting::query()->where('key', 'google_analytics_add_js')->first();
         $this->google_analytics_tracking_id = env('GOOGLE_ANALYTICS_TRACKING_ID');
         $this->google_analytics_view_id = env('GOOGLE_ANALYTICS_VIEW_ID');
@@ -23,6 +58,11 @@ class Analytics extends Component
         $this->facebook_pixel_account_id = env('FACEBOOK_PIXEL_ACCOUNT_ID');
     }
 
+    /**
+     * Sav/Update a entry on the storage.
+     *
+     * @return void
+     */
     public function store()
     {
         setEnvironmentValue([
@@ -47,6 +87,11 @@ class Analytics extends Component
         ]);
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('shopper::livewire.settings.analytics');
