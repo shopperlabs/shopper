@@ -36,7 +36,7 @@ class InventorySubscriber
            'code' => str_slug($name),
            'email' => Setting::query()->where('key', 'shop_email')->first()->value,
            'street_address' => Setting::query()->where('key', 'shop_street_address')->first()->value,
-           'zipcode' => Setting::query()->where('key', 'shop_zipcode')->first(),
+           'zipcode' => Setting::query()->where('key', 'shop_zipcode')->first()->value,
            'city' => Setting::query()->where('key', 'shop_city')->first()->value,
            'phone_number' => ($phone = Setting::query()->where('key', 'shop_phone_number')->first()) ? $phone->value: null,
            'country_id' => ($country = Setting::query()->where('key', 'shop_country_id')->first()) ? $country->value: null,
