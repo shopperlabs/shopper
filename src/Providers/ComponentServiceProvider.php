@@ -32,7 +32,7 @@ use Shopper\Framework\Http\Livewire\{
     InventoryHistory,
     NetworkStatus,
     Review\ReviewList,
-    Products\Browse as BrowseProduct,
+    Products\Browse as BrowseProducts,
     Products\Create as CreateProduct,
     Products\Edit as EditProduct,
     Products\Form\Edit as EditFormProduct,
@@ -41,6 +41,9 @@ use Shopper\Framework\Http\Livewire\{
     Products\Form\Inventory as InventoryProduct,
     Settings\Analytics,
     Settings\Integrations,
+    Settings\Inventories\Browse as BrowseInventories,
+    Settings\Inventories\Create as CreateInventory,
+    Settings\Inventories\Edit as EditInventory,
     Settings\General,
     Settings\Management\CreateAdminUser,
     Settings\Management\Management,
@@ -123,7 +126,7 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-collections-lists', BrowseCollections::class);
         Livewire::component('shopper-collections-create', CreateCollection::class);
         Livewire::component('shopper-collections-edit', EditCollection::class);
-        Livewire::component('shopper-products-browse', BrowseProduct::class);
+        Livewire::component('shopper-products-browse', BrowseProducts::class);
         Livewire::component('shopper-products-create', CreateProduct::class);
         Livewire::component('shopper-products-edit', EditProduct::class);
         Livewire::component('shopper-products-form-edit', EditFormProduct::class);
@@ -153,6 +156,9 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-settings-payments-stripe', Stripe::class);
         Livewire::component('shopper-settings-integrations', Integrations::class);
         Livewire::component('shopper-settings-general', General::class);
+        Livewire::component('shopper-settings-inventories-browse', BrowseInventories::class);
+        Livewire::component('shopper-settings-inventories-create', CreateInventory::class);
+        Livewire::component('shopper-settings-inventories-edit', EditInventory::class);
     }
 
     /**
