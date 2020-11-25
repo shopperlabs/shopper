@@ -1,7 +1,12 @@
 <div x-data="{ open: false }">
-    <button @click="open = true;" type="button" class="btn btn-danger">{{ __('Delete').' '.$action }}</button>
+    <x-shopper-danger-button  @click="open = true;" type="button">
+        <svg class="w-5 h-5 -ml-1 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+        {{ __('Delete').' '.$action }}
+    </x-shopper-danger-button>
 
-    <div x-show="open" class="fixed bottom-0 z-100 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center">
+    <div x-show="open" class="fixed bottom-0 z-50 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center">
         <div x-cloak x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity">
             <div class="absolute inset-0 bg-gray-700 opacity-75"></div>
         </div>
@@ -24,17 +29,13 @@
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button
-                        type="button"
-                        class="inline-flex items-center justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                        data-url="{{ $url }}"
-                        id="remove-item"
-                    >
-                        <span class="mr-2 hidden">
-                            <span class="btn-spinner"></span>
-                        </span>
+                    <x-shopper-danger-button wire:click="{{ $attributes->get('wire:click') }}" type="button">
+                        <svg wire:loading wire:target="{{ $attributes->get('wire:target') }}" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        </svg>
                         {{ __('Delete').' '.$action }}
-                    </button>
+                    </x-shopper-danger-button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <button @click="open = false;" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5">
