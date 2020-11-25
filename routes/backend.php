@@ -22,9 +22,6 @@ Route::namespace('Ecommerce')->group(function () {
     Route::resource('collections', 'CollectionController');
     Route::resource('customers', 'CustomerController');
     Route::resource('products', 'ProductController');
-    Route::post('/product/images/upload/{id}', [ProductImageController::class, 'store'])->name('products.upload');
-    Route::get('/product/images/{id}', [ProductImageController::class, 'index'])->name('products.images');
-    Route::delete('/product/image/remove/{id}', [ProductImageController::class, 'delete'])->name('products.image.remove');
 });
 
 Route::resource('reviews', 'ReviewController');
