@@ -133,7 +133,7 @@ class Role extends Component
             'message' => __("A new permission has been create and add to this role.")
         ]);
 
-        $this->emit('permissionAdded');
+        $this->emit('permissionAdded', $this->role->id);
     }
 
     /**

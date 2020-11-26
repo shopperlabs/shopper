@@ -20,7 +20,17 @@ class Permissions extends Component
      *
      * @var string[]
      */
-    protected $listeners = ['togglePermission'];
+    protected $listeners = ['togglePermission', 'permissionAdded'];
+
+    /**
+     * Reload all Role permission in the view.
+     *
+     * @param  int  $id
+     */
+    public function permissionAdded(int  $id)
+    {
+        $this->role = Role::query()->findOrFail($id);
+    }
 
     /**
      * Toggle permission on the role.
