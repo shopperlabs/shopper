@@ -28,7 +28,7 @@ class BrandController extends ShopperBaseController
      */
     public function create()
     {
-        $this->authorize('create_brands');
+        $this->authorize('add_brands');
 
         return view('shopper::pages.brands.create');
     }

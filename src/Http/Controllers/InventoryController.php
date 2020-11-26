@@ -27,7 +27,7 @@ class InventoryController extends ShopperBaseController
 	 */
 	public function create()
 	{
-        $this->authorize('create_inventories');
+        $this->authorize('add_inventories');
 
 		return view('shopper::pages.settings.inventories.create');
 	}

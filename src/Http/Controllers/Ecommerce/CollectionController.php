@@ -28,7 +28,7 @@ class CollectionController extends ShopperBaseController
      */
     public function create()
     {
-        $this->authorize('create_collections');
+        $this->authorize('add_collections');
 
         return view('shopper::pages.collections.create');
     }

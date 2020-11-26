@@ -27,7 +27,7 @@ class DiscountController extends ShopperBaseController
      */
     public function create()
     {
-        $this->authorize('create_discounts');
+        $this->authorize('add_discounts');
 
         return view('shopper::pages.discounts.create');
     }

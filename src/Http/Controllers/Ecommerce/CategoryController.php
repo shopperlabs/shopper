@@ -28,7 +28,7 @@ class CategoryController extends ShopperBaseController
      */
     public function create()
     {
-        $this->authorize('create_categories');
+        $this->authorize('add_categories');
 
         return view('shopper::pages.categories.create');
     }

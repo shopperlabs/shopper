@@ -28,7 +28,7 @@ class ProductController extends ShopperBaseController
      */
     public function create()
     {
-        $this->authorize('create_products');
+        $this->authorize('add_products');
 
         return view('shopper::pages.products.create');
     }

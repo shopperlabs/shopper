@@ -28,7 +28,7 @@ class CustomerController extends ShopperBaseController
      */
     public function create()
     {
-        $this->authorize('create_customers');
+        $this->authorize('add_customers');
 
         return view('shopper::pages.customers.create');
     }
