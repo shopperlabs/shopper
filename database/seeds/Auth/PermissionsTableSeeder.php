@@ -81,7 +81,7 @@ class PermissionsTableSeeder extends Seeder
         Permission::generate('customers');
         Permission::generate('orders');
         Permission::generate('discounts');
-        Permission::generate('inventories');
+        Permission::generate('inventories', 'products');
 
         $this->enableForeignKeys();
     }
