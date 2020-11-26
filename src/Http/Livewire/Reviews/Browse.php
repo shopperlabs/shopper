@@ -9,18 +9,6 @@ use Shopper\Framework\Models\Shop\Review;
 class Browse extends Component
 {
     /**
-     * User that make review.
-     *
-     * @var null
-     */
-    public $reviewer = null;
-
-    /**
-     * @var bool
-     */
-    public $process = false;
-
-    /**
      * Defined if a review is approved.
      *
      * @var bool
@@ -35,20 +23,6 @@ class Browse extends Component
     public $search;
 
     /**
-     * Display a user
-     *
-     * @param  int  $id
-     * @return void
-     */
-    public function show($id)
-    {
-        $this->process = true;
-        $this->reviewer = Review::with(['reviewrateable', 'author'])->find($id);
-
-        $this->dispatchBrowserEvent('open-review');
-    }
-
-    /**
      * Reset Filter on status.
      *
      * @return void
@@ -56,28 +30,6 @@ class Browse extends Component
     public function resetStatusFilter()
     {
         $this->approved = null;
-    }
-
-    /**
-     * Toggle review status to approve/unapproved.
-     *
-     * @param  int  $id
-     * @return void
-     */
-    public function toggleApproved($id)
-    {
-        $review = Review::query()
-            ->find($id)
-            ->update(['approved' => !$this->reviewer->approved]);
-
-        $this->notify([
-            'title' => __("Deleted"),
-            'message' => __("Review status updated.")
-        ]);
-        $this->dispatchBrowserEvent('close-review');
-
-        $this->process = false;
-        $this->reviewer = $review;
     }
 
     /**
@@ -89,9 +41,6 @@ class Browse extends Component
     public function remove($id)
     {
         Review::query()->find($id)->delete();
-
-        $this->process = false;
-        $this->reviewer = null;
 
         $this->notify([
            'title' => __("Deleted"),
@@ -110,8 +59,11 @@ class Browse extends Component
         return view('shopper::livewire.reviews.browse', [
             'total' => Review::query()->count(),
             'reviews' => Review::with(['reviewrateable', 'author'])
+                ->whereHasMorph('reviewrateable', config('shopper.system.models.product'), function (Builder $query) {
+                    $query->where('name', 'like', '%'. $this->search .'%');
+                })
                 ->where(function (Builder $query) {
-                    if ($this->approved) {
+                    if ($this->approved !== null) {
                         $query->where('approved', boolval($this->approved));
                     }
                 })

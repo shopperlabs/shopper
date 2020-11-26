@@ -156,13 +156,13 @@
                                         <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
                                             <div class="relative z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
                                                 <div class="py-1">
-                                                    <button wire:click="show({{ $review->id }})" type="button" class="group w-full flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
+                                                    <a href="#" type="button" class="group w-full flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
                                                         <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                         </svg>
                                                         {{ __("View") }}
-                                                    </button>
+                                                    </a>
                                                 </div>
                                                 <div class="border-t border-gray-100"></div>
                                                 <div class="py-1">
@@ -183,7 +183,7 @@
                                 <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                                     <div class="flex justify-center items-center space-x-2">
                                         <svg class="h-8 w-8 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                                         </svg>
                                         <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No review found") }}...</span>
                                     </div>
@@ -217,163 +217,4 @@
 
     <x-shopper-learn-more name="reviews" link="#" />
 
-    @if($reviewer !== null && $process)
-        <div
-            x-cloak
-            x-on:open-review.window="modal = true"
-            x-on:close-review.window="modal = false"
-            x-show="modal"
-            class="fixed bottom-0 z-100 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
-        >
-            <div
-                x-cloak
-                x-show="modal"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                class="fixed inset-0 transition-opacity"
-            >
-                <div class="absolute inset-0 bg-gray-700 opacity-75"></div>
-            </div>
-
-            <div
-                x-cloak
-                x-show="modal"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                class="bg-white rounded-md overflow-hidden shadow-xl transform transition-all sm:max-w-2xl sm:w-full"
-            >
-                <div class="bg-white">
-                    <div class="px-4 sm:px-6 py-4 max-h-md overflow-auto">
-                        <div class="flex items-start justify-between">
-                            <div class="flex-1 inline-flex flex-shrink-0 items-start pt-3">
-                                @if($reviewer->reviewrateable->preview_image_link !== null)
-                                    <span class="flex-shrink-0 h-12 w-12 rounded-md overflow-hidden">
-                                    <img class="object-cover object-center w-full h-full block" src="{{ $reviewer->reviewrateable->preview_image_link }}" alt="{{ $reviewer->reviewrateable->id }}" />
-                                </span>
-                                @else
-                                    <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-                                        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                </span>
-                                @endif
-                                <div class="ml-4 flex flex-col space-y-1">
-                                    <p class="text-base leading-6 font-medium text-gray-900">{{ $reviewer->reviewrateable->name }}</p>
-                                    @if($reviewer->reviewrateable->sku)
-                                        <span class="text-gray-500 leading-5 text-sm">{{ $reviewer->reviewrateable->sku }}</span>
-                                    @endif
-                                    @if($reviewer->reviewrateable->price)
-                                        <span class="font-medium text-brand-500 leading-5 text-sm">{{ shopper_money_format($reviewer->reviewrateable->price) }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="ml-4">
-                                <span class="inline-flex rounded-md shadow-sm">
-                                    <button wire:click="remove({{ $reviewer->id }})" type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition ease-in-out duration-150">
-                                        <svg class="-ml-0.5 h-4 w-4" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="py-2 mt-4">
-                            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-                                <div class="px-4 py-5 sm:px-6">
-                                    <dl class="grid grid-cols-1 col-gap-4 row-gap-8 sm:grid-cols-2">
-                                        <div class="sm:col-span-1">
-                                            <dt class="text-sm leading-5 font-medium text-gray-500">
-                                                {{ __("Reviewer") }}
-                                            </dt>
-                                            <dd class="mt-1 flex items-center text-sm leading-5 text-gray-900">
-                                                <div class="flex-shrink-0 h-8 w-8">
-                                                    <img class="h-8 w-8 rounded-full" src="{{ $reviewer->author->picture }}" alt="">
-                                                </div>
-                                                <div class="ml-4 truncate">
-                                                    <div class="text-sm leading-5 font-medium text-gray-900">{{ $reviewer->author->full_name }}</div>
-                                                    <div class="text-xs leading-4 text-gray-500 truncate">{{ $reviewer->author->email }}</div>
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="sm:col-span-1">
-                                            <dt class="text-sm leading-5 font-medium text-gray-500">
-                                                {{ __("Created At") }}
-                                            </dt>
-                                            <dd class="mt-1 text-sm leading-5 text-gray-900">
-                                                {{ $reviewer->created_at->format('m-d-Y H:m') }}
-                                            </dd>
-                                        </div>
-                                        <div class="sm:col-span-1">
-                                            <dt class="text-sm leading-5 font-medium text-gray-500">
-                                                {{ __("Rating") }}
-                                            </dt>
-                                            <dd class="mt-1 text-sm leading-5 text-gray-900">
-                                                <span class="flex items-center">
-                                                    <svg fill="{{ $reviewer->rating >= 1 ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-yellow-300" viewBox="0 0 24 24">
-                                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                    </svg>
-                                                    <svg fill="{{ $reviewer->rating >= 2 ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-yellow-300" viewBox="0 0 24 24">
-                                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                    </svg>
-                                                    <svg fill="{{ $reviewer->rating >= 3 ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-yellow-300" viewBox="0 0 24 24">
-                                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                    </svg>
-                                                    <svg fill="{{ $reviewer->rating >= 4 ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-yellow-300" viewBox="0 0 24 24">
-                                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                    </svg>
-                                                    <svg fill="{{ $reviewer->rating === 5 ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-yellow-300" viewBox="0 0 24 24">
-                                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                    </svg>
-                                                </span>
-                                            </dd>
-                                        </div>
-                                        <div class="sm:col-span-1">
-                                            <dt class="text-sm leading-5 font-medium text-gray-500">
-                                                {{ __("Status") }}
-                                            </dt>
-                                            <dd class="flex items-center mt-1 text-sm leading-5 text-gray-900">
-                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $reviewer->approved ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
-                                                    {{ $reviewer->approved ? __("Published") : __("Pending") }}
-                                                </span>
-                                                <div class="ml-4 flex items-center relative">
-                                                    <button wire:click="toggleApproved({{ $reviewer->id }})" type="button" class="mr-3 text-sm font-medium text-gray-600 leading-5">
-                                                        {{ __("Update status") }}
-                                                    </button>
-                                                    <span wire:loading wire:target="toggleApproved" class="spinner right-0 ml-3"></span>
-                                                </div>
-                                            </dd>
-                                        </div>
-                                        <div class="sm:col-span-2">
-                                            <dt class="text-sm leading-5 font-medium text-gray-500">
-                                                {{ __("Content") }}
-                                            </dt>
-                                            <dd class="mt-1 text-sm leading-5 text-gray-900">
-                                                {{ $reviewer->content }}
-                                            </dd>
-                                        </div>
-                                    </dl>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-50 relative z-30 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                        <button @click="modal = false;" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                            {{ __('Close') }}
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
-    @endif
 </div>
