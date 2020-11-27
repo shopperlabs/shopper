@@ -3,7 +3,7 @@
 namespace Shopper\Framework\Models\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Review;
+use Shopper\Framework\Models\Shop\Review;
 
 trait ReviewRateable
 {

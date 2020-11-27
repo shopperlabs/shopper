@@ -1,8 +1,8 @@
-@extends('shopper::layouts.'. config('shopper.theme'))
-@section('title', __('Reviews'))
+@extends('shopper::layouts.'. config('shopper.system.theme'))
+@section('title', __('Products Reviews'))
 
 @section('content')
 
-    <livewire:reviews-list />
+    <livewire:shopper-reviews-browse />
 
 @endsection
