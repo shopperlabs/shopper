@@ -162,9 +162,10 @@ class Review extends Model
      *
      * @param  int  $id
      * @return mixed
+     * @throws \Exception
      */
     public function deleteRating($id)
     {
-        return static::find($id)->delete();
+        return static::query()->find($id)->delete();
     }
 }
