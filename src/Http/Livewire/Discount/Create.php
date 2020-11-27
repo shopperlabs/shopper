@@ -4,47 +4,33 @@ namespace Shopper\Framework\Http\Livewire\Discount;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Component;
-use Shopper\Framework\Models\DiscountDetail;
-use Shopper\Framework\Models\User;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Models\Shop\DiscountDetail;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\User\User;
 use Shopper\Framework\Repositories\DiscountRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\UserRepository;
 
-class Create extends Component
+class Create extends AbstractBaseComponent
 {
-    use Actions;
+    use WithDiscountAttributes, WithDiscountActions, HasPrice;
 
+    /**
+     * Component Mount instance.
+     *
+     * @return void
+     */
     public function mount()
     {
-        $this->dateStart = now()->format('Y-m-d');
-        $this->timeStart = now()->format('H:m');
-        $this->dateEnd = now()->format('Y-m-d');
-        $this->timeEnd = now()->format('H:m');
-    }
-
-    public function updated($field)
-    {
-        $this->validateOnly($field, $this->rules());
+        $this->dateStart = now()->format('Y-m-d H:i');
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Store a newly entry to the database.
      *
-     * @return array
+     * @return void
      */
-    protected function rules()
-    {
-        return [
-            'code' => 'required|unique:'. shopper_table('discounts'),
-            'type' => 'required',
-            'value' => 'required',
-            'apply' => 'required',
-            'dateStart' => 'required',
-            'timeStart' => 'required',
-        ];
-    }
-
     public function store()
     {
         if ($this->minRequired !== 'none') {
@@ -69,16 +55,16 @@ class Create extends Component
             'min_required' => $this->minRequired,
             'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
-            'usage_limit' => $this->usage_number ? $this->usage_limit: null,
+            'usage_limit' => $this->usage_number ?? null,
             'usage_limit_per_user'  => $this->usage_limit_per_user === 'ONCE_PER_CUSTOMER_LIMIT',
-            'date_start' => Carbon::createFromFormat('Y-m-d H:i', $dateStart)->toDateTimeString(),
-            'date_end'  => $this->set_end_date ? Carbon::createFromFormat('Y-m-d H:i', $dateEnd)->toDateTimeString() : null,
+            'start_at' => Carbon::createFromFormat('Y-m-d H:i', $dateStart)->toDateTimeString(),
+            'end_at'  => $this->set_end_date ? Carbon::createFromFormat('Y-m-d H:i', $dateEnd)->toDateTimeString() : null,
         ]);
 
         if ($this->apply === 'products') {
             // Associate the discount to all the selected products.
             foreach ($this->productsIds as $productId) {
-                DiscountDetail::create([
+                DiscountDetail::query()->create([
                    'discount_id' => $discount->id,
                     'condition' => 'apply_to',
                     'discountable_type' => config('shopper.models.product'),
@@ -90,7 +76,7 @@ class Create extends Component
         if ($this->eligibility === 'customers') {
             // Associate the discount to all the selected users.
             foreach ($this->customersIds as $customerId) {
-                DiscountDetail::create([
+                DiscountDetail::query()->create([
                     'discount_id' => $discount->id,
                     'condition' => 'eligibility',
                     'discountable_type' => config('auth.providers.users.model', User::class),
@@ -103,24 +89,50 @@ class Create extends Component
         $this->redirectRoute('shopper.discounts.index');
     }
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return string[]
+     */
+    protected function rules()
+    {
+        return [
+            'code' => 'required|unique:'. shopper_table('discounts'),
+            'type' => 'required',
+            'value' => 'required',
+            'apply' => 'required',
+            'dateStart' => 'required',
+            'timeStart' => 'required',
+        ];
+    }
+
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     * @throws \Shopper\Framework\Exceptions\GeneralException
+     */
     public function render()
     {
         $this->products = (new ProductRepository())
-            ->orderBy('name', 'asc')
             ->where('name', '%'. $this->searchProduct .'%', 'like')
-            ->get(['name', 'price', 'id'])
+            ->orderBy('name', 'asc')
+            ->get(['name', 'price_amount', 'id'])
             ->except($this->productsIds);
 
         $this->customers = (new UserRepository())
             ->makeModel()
             ->whereHas('roles', function (Builder $query) {
-                $query->where('name', config('shopper.users.default_role'));
+                $query->where('name', config('shopper.system.users.default_role'));
+            })
+            ->where(function (Builder $query) {
+                $query->where('first_name', 'like', '%' . $this->searchCustomer . '%')
+                    ->orWhere('last_name', 'like', '%' . $this->searchCustomer . '%');
             })
             ->orderBy('created_at', 'asc')
-            ->where('first_name', 'like', '%' . $this->searchCustomer . '%')
             ->get()
             ->except($this->customersIds);
 
-        return view('shopper::components.livewire.discounts.create');
+        return view('shopper::livewire.discounts.create');
     }
 }

@@ -14,7 +14,7 @@ use Shopper\Framework\Repositories\UserRepository;
 
 class Edit extends Component
 {
-    use Actions;
+    use WithDiscountAttributes;
 
     public $discountId;
 

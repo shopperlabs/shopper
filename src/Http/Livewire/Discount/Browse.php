@@ -5,67 +5,98 @@ namespace Shopper\Framework\Http\Livewire\Discount;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Models\Discount;
-use Shopper\Framework\Repositories\DiscountRepository;
+use Shopper\Framework\Models\Shop\Discount;
+use Shopper\Framework\Traits\WithSorting;
 
-class DiscountList extends Component
+class Browse extends Component
 {
-    use WithPagination;
+    use WithPagination, WithSorting;
 
-    public $is_active = '';
-    public $date = '';
-    public $direction = 'desc';
-    public $search = '';
+    /**
+     * Search.
+     *
+     * @var string
+     */
+    public $search;
 
+    /**
+     * Discount active state.
+     *
+     * @var string
+     */
+    public $is_active;
+
+    /**
+     * Start/End Date of the discount
+     *
+     * @var string
+     */
+    public $date;
+
+    /**
+     * Custom Livewire pagination view.
+     *
+     * @return string
+     */
     public function paginationView()
     {
-        return 'shopper::components.livewire.wire-pagination-links';
+        return 'shopper::livewire.wire-pagination-links';
     }
 
     /**
-     * Sort results.
+     * Reset date filter.
      *
-     * @param  string  $value
+     * @return void
      */
-    public function sort($value)
-    {
-        $this->direction = $value === 'asc' ? 'desc' : 'asc';
-    }
-
     public function resetDate()
     {
-        $this->date = '';
+        $this->date = null;
     }
 
+    /**
+     * Discount filter status.
+     *
+     * @param  string  $status
+     */
     public function changeStatus(string $status)
     {
         $this->is_active = $status;
         $this->dispatchBrowserEvent('change-status');
     }
 
+    /**
+     * Reset status filter.
+     *
+     * @return void
+     */
     public function clear()
     {
-        $this->is_active = '';
+        $this->is_active = null;
         $this->dispatchBrowserEvent('change-status');
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
-        $total = (new DiscountRepository())->count();
-        $discounts = Discount::where('code', 'like', '%'. $this->search .'%')
-            ->where(function (Builder $query) {
-                if ($this->is_active !== '') {
-                    $query->where('is_active', $this->is_active);
-                }
+        return view('shopper::livewire.discounts.browse', [
+            'total' => Discount::query()->count(),
+            'discounts' => Discount::query()->where('code', 'like', '%'. $this->search .'%')
+                ->where(function (Builder $query) {
+                    if ($this->is_active !== null) {
+                        $query->where('is_active', boolval($this->is_active));
+                    }
 
-                if ($this->date !== '') {
-                    $query->whereDate('date_start', $this->date)
-                        ->orWhereDate('date_end', $this->date);
-                }
-            })
-            ->orderBy('created_at', $this->direction)
-            ->paginate(8);
-
-        return view('shopper::components.livewire.discounts.index', compact('total', 'discounts'));
+                    if ($this->date !== null) {
+                        $query->whereDate('date_start', $this->date)
+                            ->orWhereDate('date_end', $this->date);
+                    }
+                })
+                ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)
+                ->paginate(8)
+        ]);
     }
 }
