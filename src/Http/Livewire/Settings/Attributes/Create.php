@@ -1,0 +1,117 @@
+<?php
+
+namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
+
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Models\Shop\Product\Attribute;
+
+class Create extends AbstractBaseComponent
+{
+    /**
+     * Attribute name.
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Attribute slug code.
+     *
+     * @var string
+     */
+    public $slug;
+
+    /**
+     * Attribute product type.
+     *
+     * @var string
+     */
+    public $type = 'text';
+
+
+    /**
+     * Attribute description.
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * Define if the attribute is enabled for the client side.
+     *
+     * @var bool
+     */
+    public $isEnabled = false;
+
+    /**
+     * Define if the attribute can be searchable.
+     *
+     * @var bool
+     */
+    public $isSearchable = false;
+
+    /**
+     * Define if the attribute can be filterable.
+     *
+     * @var bool
+     */
+    public $isFilterable = false;
+
+    /**
+     * Update slug value when writing name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function updatedName($value)
+    {
+        $this->slug = str_slug($value, '-');
+    }
+
+    /**
+     * Store/Update a entry to the storage.
+     *
+     * @return void
+     */
+    public function store()
+    {
+        $this->validate($this->rules());
+
+        $attribute = Attribute::query()->create([
+            'name' => $this->name,
+            'slug' => str_slug($this->slug, '-'),
+            'type' => $this->type,
+            'description' => $this->description,
+            'is_enabled' => $this->isEnabled,
+            'is_searchable' => $this->isSearchable,
+            'is_filterable' => $this->isFilterable,
+        ]);
+
+        session('flash', __("Attribute successfully added"));
+        $this->redirectRoute('shopper.settings.attributes.edit', $attribute);
+    }
+
+    /**
+     * Component validation rules.
+     *
+     * @return string[]
+     */
+    protected function rules()
+    {
+        return [
+            'name' => 'required|max:75',
+            'slug' => 'required|unique:'. shopper_table('attributes'),
+            'type' => 'required',
+        ];
+    }
+
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function render()
+    {
+        return view('shopper::livewire.settings.attributes.create');
+    }
+}

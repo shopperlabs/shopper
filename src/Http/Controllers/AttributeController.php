@@ -16,4 +16,17 @@ class AttributeController extends ShopperBaseController
 
         return view('shopper::pages.settings.attributes.index');
     }
+
+    /**
+     * Create Attribute view page.
+     *
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function create()
+    {
+        $this->authorize('add_attributes');
+
+        return view('shopper::pages.settings.attributes.create');
+    }
 }
