@@ -168,7 +168,7 @@
             </div>
         </x-shopper-empty-state>
     @else
-        <div class="mt-6 bg-white shadow sm:rounded-md">
+        <div class="mt-6 bg-white shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-center space-x-4">
                     <div class="flex flex-1">

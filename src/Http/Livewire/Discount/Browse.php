@@ -24,7 +24,7 @@ class Browse extends Component
      *
      * @var string
      */
-    public $is_active;
+    public $isActive;
 
     /**
      * Start/End Date of the discount
@@ -54,25 +54,13 @@ class Browse extends Component
     }
 
     /**
-     * Discount filter status.
-     *
-     * @param  string  $status
-     */
-    public function changeStatus(string $status)
-    {
-        $this->is_active = $status;
-        $this->dispatchBrowserEvent('change-status');
-    }
-
-    /**
      * Reset status filter.
      *
      * @return void
      */
-    public function clear()
+    public function resetActiveFilter()
     {
-        $this->is_active = null;
-        $this->dispatchBrowserEvent('change-status');
+        $this->isActive = null;
     }
 
     /**
@@ -86,13 +74,13 @@ class Browse extends Component
             'total' => Discount::query()->count(),
             'discounts' => Discount::query()->where('code', 'like', '%'. $this->search .'%')
                 ->where(function (Builder $query) {
-                    if ($this->is_active !== null) {
-                        $query->where('is_active', boolval($this->is_active));
+                    if ($this->isActive !== null) {
+                        $query->where('is_active', boolval($this->isActive));
                     }
 
                     if ($this->date !== null) {
-                        $query->whereDate('date_start', $this->date)
-                            ->orWhereDate('date_end', $this->date);
+                        $query->whereDate('start_at', $this->date)
+                            ->orWhereDate('end_at', $this->date);
                     }
                 })
                 ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)

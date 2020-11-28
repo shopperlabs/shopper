@@ -1,4 +1,8 @@
-<div>
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endpush
+
+<div x-data="{ open: false }" x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});">
 
     <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Discounts') }}</h2>
@@ -137,125 +141,85 @@
             </div>
         </x-shopper-empty-state>
     @else
-        <div class="my-6 md:flex md:items-center md:justify-between">
-            <div class="flex-1 min-w-0 flex flex-row items-center justify-between md:flex-col md:items-start">
-                <h2 class="text-2xl font-bold leading-7 text-gray-600 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Discounts') }}</h2>
-            </div>
-            <div class="mt-4 flex md:mt-0 md:ml-4">
-                <a href="{{ route('shopper.discounts.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">{{ __('Create discount') }}</a>
-            </div>
-        </div>
 
-        <div
-            x-data="{
-                options: ['all'],
-                words: {'all': '{{ __("All") }}'},
-                currentTab: 'all'
-            }"
-            x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});"
-            class="bg-white shadow overflow-hidden sm:rounded-md"
-        >
-            <div class="bg-white border-b border-gray-200">
-                <div class="sm:hidden p-4">
-                    <select x-model="currentTab" aria-label="Selected tab" class="form-select form-select-shopper block w-full pl-3 pr-10 py-2 text-base leading-6 sm:text-sm sm:leading-5 transition ease-in-out duration-150">
-                        <template x-for="option in options" :key="option">
-                            <option
-                                x-bind:value="option"
-                                x-text="words[option]"
-                                x-bind:selected="option === currentTab"
-                            ></option>
-                        </template>
-                    </select>
-                </div>
-                <div class="hidden sm:block">
-                    <div>
-                        <nav class="-mb-px flex">
-                            <button @click="currentTab = 'all'" type="button" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-transparent font-medium text-base leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'border-brand-500 text-brand-500 focus:text-brand-500 focus:border-brand-600': currentTab === 'all' }">
-                                {{ __('All') }}
-                            </button>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            <div class="flex items-start px-4 py-4 sm:px-6">
-                <div class="flex-1">
-                    <label for="filter" class="sr-only">{{ __('Search discounts') }}</label>
-                    <div class="flex rounded-md shadow-sm">
-                        <div class="relative flex-grow focus-within:z-10">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                                </svg>
+        <div class="mt-6 bg-white shadow rounded-md">
+            <div class="p-4 sm:p-6 sm:pb-4">
+                <div class="flex items-start space-x-4">
+                    <div class="flex flex-1">
+                        <label for="filter" class="sr-only">{{ __('Search discounts') }}</label>
+                        <div class="flex flex-1 rounded-md shadow-sm">
+                            <div class="relative flex-grow focus-within:z-10">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
+                                    </svg>
+                                </div>
+                                <input id="filter" wire:model.debounce.300ms="search" autocomplete="off" class="form-input block w-full rounded-none rounded-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search discounts code') }}" />
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                    </svg>
+                                </div>
                             </div>
-                            <input id="filter" wire:model.debounce.300ms="search" autocomplete="off" class="form-input block w-full rounded-none rounded-l-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search discounts code') }}" />
-                            <span wire:loading wire:target="search" class="spinner right-0 top-0 mt-5 mr-6"></span>
                         </div>
-                        <div class="relative inline-flex text-left" x-data="{ status: false }">
-                            <button @click="status = true" class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                                {{ __('Status') }}
-                                <svg class="ml-2 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                </svg>
-                            </button>
-                            <div
-                                    @click.away="status = false"
-                                    x-show="status"
-                                    x-on:change-status.window="status = false"
-                                    x-transition:enter="transition ease-out duration-100"
-                                    x-transition:enter-start="opacity-0 transform scale-95"
-                                    x-transition:enter-end="opacity-100 transform scale-100"
-                                    x-transition:leave="transition ease-in duration-75"
-                                    x-transition:leave-start="opacity-100 transform scale-100"
-                                    x-transition:leave-end="opacity-0 transform scale-95"
-                            >
-                                <div class="origin-top-right absolute z-30 right-0 mt-12 w-56 rounded-md shadow-lg">
-                                    <div class="rounded-md bg-white shadow-xs">
-                                        <div class="py-2">
-                                            <button wire:click="changeStatus('1')" type="button" class="w-full flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 @if($is_active === '1') bg-gray-50 text-gray-900 @endif" role="menuitem">
-                                            <span class="inline-flex items-center text-sm font-medium leading-5 text-gray-700">
-                                                {{ __("Active ") }}
-                                            </span>
-                                            </button>
-                                            <button wire:click="changeStatus('0')" type="button" class="w-full flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 @if($is_active === '0') bg-gray-50 text-gray-900 @endif" role="menuitem">
-                                            <span class="inline-flex items-center text-sm font-medium leading-5 text-gray-700">
-                                                {{ __("Not Active") }}
-                                            </span>
-                                            </button>
-                                            <button wire:click="clear" type="button" class="block px-4 mt-3 text-sm leading-5 text-gray-400">{{ __("Clear") }}</button>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="relative z-10 inline-flex shadow-sm rounded-md">
+                            <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
+                                <button @click="open = !open" type="button" class="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                                    {{ __("Status") }}
+                                    <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                                <div x-cloak x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
+                                    <div class="rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                        <div class="py-1">
+                                            <div class="flex items-center py-2 px-4">
+                                                <input wire:model="isActive" id="isActive_enabled" name="is_active" type="radio" value="1" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <label for="isActive_enabled" class="cursor-pointer ml-3">
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Active") }}</span>
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center py-2 px-4">
+                                                <input wire:model="isActive" id="isActive_disabled" name="is_active" type="radio" value="0" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <label for="isActive_disabled" class="cursor-pointer ml-3">
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Not Active") }}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="border-t border-gray-100"></div>
+                                        <div class="py-1">
+                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600">{{ __("Clear") }}</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button wire:click="sort('{{ $direction }}')" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-r-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z"/>
-                            </svg>
-                            <span class="ml-2">{{ __('Sort') }}</span>
-                        </button>
+                        <div class="relative flex items-center rounded-md shadow-sm">
+                            <label for="date" class="block text-sm font-medium leading-5 text-gray-700 sr-only">{{ __("Date") }}</label>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <input
+                                wire:model="date"
+                                x-ref="input"
+                                id="date"
+                                class="form-input block w-48 pl-10 sm:text-sm sm:leading-5"
+                                autocomplete="off"
+                                placeholder="{{ __("Choose date") }}"
+                                readonly
+                            >
+                            <button wire:click="resetDate" type="button" class="absolute z-30 inset-y-0 right-0 pr-3 flex items-center @if($date === '') hidden @endif">
+                                <svg class="text-gray-500 h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="ml-4 relative flex items-center rounded-md shadow-sm">
-                    <label for="date" class="block text-sm font-medium leading-5 text-gray-700 sr-only">{{ __("Date") }}</label>
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                    </div>
-                    <input
-                        wire:model="date"
-                        x-ref="input"
-                        id="date"
-                        class="form-input block w-full pl-10 sm:text-sm sm:leading-5"
-                        autocomplete="off"
-                        placeholder="{{ __("Choose date") }}"
-                        readonly
-                    >
-                    <button wire:click="resetDate" type="button" class="absolute z-30 inset-y-0 right-0 pr-3 flex items-center @if($date === '') hidden @endif">
-                        <svg class="text-gray-500 h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </button>
                 </div>
             </div>
             <div class="bg-white">
@@ -285,7 +249,7 @@
                                                 </span>
                                             </div>
                                             <div class="flex-shrink-0 flex">
-                                                @if($discount->date_start > now())
+                                                @if($discount->start_at > now())
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-yellow-100 text-yellow-800">
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
@@ -293,7 +257,7 @@
                                                         {{ __("Scheduled") }}
                                                     </span>
                                                 @endif
-                                                @if($discount->date_start <= now())
+                                                @if($discount->start_at <= now())
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-teal-100 text-teal-800">
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-teal-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
@@ -303,12 +267,12 @@
                                                 @endif
                                             </div>
                                             <div class="flex items-center space-x-2">
-                                                @if($discount->date_end)
-                                                    <span class="text-sm text-gray-500">{{ $discount->date_start->format('d M') }}</span>
+                                                @if($discount->end_at)
+                                                    <span class="text-sm text-gray-500">{{ $discount->start_at->format('d M') }}</span>
                                                     <span>-</span>
-                                                    <span class="text-sm text-gray-500">{{ $discount->date_end->format('d M') }}</span>
+                                                    <span class="text-sm text-gray-500">{{ $discount->end_at->format('d M') }}</span>
                                                 @else
-                                                    <span class="text-sm text-gray-500">{{ __("From :date", ['date' => $discount->date_start->format('d M')]) }}</span>
+                                                    <span class="text-sm text-gray-500">{{ __("From :date", ['date' => $discount->start_at->format('d M')]) }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -324,9 +288,9 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="bg-white px-4 py-3 border-t border-gray-200 flex items-center justify-between sm:px-6">
+            <div class="bg-white px-4 py-3 border-t border-gray-200 rounded-b-md  flex items-center justify-between sm:px-6">
                 <div class="flex-1 flex justify-between sm:hidden">
-                    {{ $discounts->links('shopper::components.livewire.wire-mobile-pagination-links') }}
+                    {{ $discounts->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
@@ -349,3 +313,7 @@
     <x-shopper-learn-more name="discounts" link="#" />
 
 </div>
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@endpush

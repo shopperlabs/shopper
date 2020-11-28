@@ -67,7 +67,7 @@ class Create extends AbstractBaseComponent
                 DiscountDetail::query()->create([
                    'discount_id' => $discount->id,
                     'condition' => 'apply_to',
-                    'discountable_type' => config('shopper.models.product'),
+                    'discountable_type' => config('shopper.system.models.product'),
                     'discountable_id' => $productId,
                 ]);
             }
