@@ -57,26 +57,26 @@ class Edit extends AbstractBaseComponent
         }
 
         if ($discount->items()->where('condition', 'eligibility')->count() > 0) {
-            $customers = $discount->items()->where('condition', 'eligibility')->get();
-            foreach ($customers as $customer) {
-                $customerArray['id'] = $customer->discountable->id;
-                $customerArray['name'] = $customer->discountable->full_name;
-                $customerArray['email'] = $customer->discountable->email;
+            $customerConditions = $discount->items()->where('condition', 'eligibility')->get();
+            foreach ($customerConditions as $customerCondition) {
+                $customerArray['id'] = $customerCondition->discountable->id;
+                $customerArray['name'] = $customerCondition->discountable->full_name;
+                $customerArray['email'] = $customerCondition->discountable->email;
 
                 array_push($this->customersDetails, $customerArray);
-                array_push($this->customersIds, $customer->discountable->id);
+                array_push($this->customersIds, $customerCondition->discountable->id);
             }
         }
 
         if ($discount->items()->where('condition', 'apply_to')->count() > 0) {
-            $products = $discount->items()->where('condition', 'apply_to')->get();
-            foreach ($products as $product) {
-                $productArray['id'] = $product->discountable->id;
-                $productArray['name'] = $product->discountable->name;
-                $productArray['image'] = $product->discountable->preview_image_link;
+            $productConditions = $discount->items()->where('condition', 'apply_to')->get();
+            foreach ($productConditions as $productCondition) {
+                $productArray['id'] = $productCondition->discountable->id;
+                $productArray['name'] = $productCondition->discountable->name;
+                $productArray['image'] = $productCondition->discountable->files->first()->file_path ?? null;
 
                 array_push($this->productsDetails, $productArray);
-                array_push($this->productsIds, $product->discountable->id);
+                array_push($this->productsIds, $productCondition->discountable->id);
             }
         }
     }
@@ -114,27 +114,41 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->apply === 'products') {
-            // Associate the discount to all the selected products.
+            $this->discount->items()
+                ->where('condition', 'apply_to')
+                ->whereNotIn('discountable_id', $this->productsIds)
+                ->delete();
+
             foreach ($this->productsIds as $productId) {
-                DiscountDetail::query()->create([
-                   'discount_id' => $this->discountId,
+                DiscountDetail::query()->updateOrCreate([
+                    'discount_id' => $this->discountId,
+                    'discountable_id' => $productId,
+                ], [
                     'condition' => 'apply_to',
                     'discountable_type' => config('shopper.system.models.product'),
-                    'discountable_id' => $productId,
                 ]);
             }
+        } else {
+            $this->discount->items()->where('condition', 'apply')->delete();
         }
 
         if ($this->eligibility === 'customers') {
-            // Associate the discount to all the selected users.
+            $this->discount->items()
+                ->where('condition', 'eligibility')
+                ->whereNotIn('discountable_id', $this->customersIds)
+                ->delete();
+
             foreach ($this->customersIds as $customerId) {
-                DiscountDetail::query()->create([
+                DiscountDetail::query()->updateOrCreate([
                     'discount_id' => $this->discountId,
+                    'discountable_id' => $customerId,
+                ], [
                     'condition' => 'eligibility',
                     'discountable_type' => config('auth.providers.users.model', User::class),
-                    'discountable_id' => $customerId,
                 ]);
             }
+        } else {
+            $this->discount->items()->where('condition', 'eligibility')->delete();
         }
 
         session()->flash('success', __("Discount code {$this->code} updated successfully!"));
