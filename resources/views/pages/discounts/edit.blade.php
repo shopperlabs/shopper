@@ -1,8 +1,8 @@
-@extends('shopper::layouts.'. config('shopper.theme'))
+@extends('shopper::layouts.'. config('shopper.system.theme'))
 @section('title', __('Update discount code'). ' '. $discount->code)
 
 @section('content')
 
-    <livewire:edit-discount :discountId="$discount->id" />
+    <livewire:shopper-discounts-edit :discount="$discount" />
 
 @endsection

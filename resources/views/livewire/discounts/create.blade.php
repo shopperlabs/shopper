@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div class="mt-6 grid gap-8 lg:grid-cols-6 lg:gap-10">
+    <div class="mt-6 grid gap-4 sm:grid-cols-6 sm:gap-6">
         <div class="lg:col-span-4 space-y-5">
             <div class="bg-white p-4 sm:p--5 shadow rounded-md">
                 <div class="w-full mb-3">
@@ -257,7 +257,7 @@
                         @if($usage_number)
                             <div class="mt-2">
                                 <div class="relative rounded-md shadow-sm w-full sm:w-64">
-                                    <input wire:model="usage_limit" aria-label="{{ __("Usage limit value") }}" type="number" min="0" step="1" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('usage_limit') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
+                                    <input wire:model="usage_limit" aria-label="{{ __("Usage limit value") }}" type="number" min="1" step="1" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('usage_limit') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
                                 </div>
                                 @error('usage_limit')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -277,7 +277,7 @@
             </div>
             <div class="bg-white p-4 sm:p-5 shadow rounded-md">
                 <h4 class="text-base leading-6 font-medium text-gray-900">{{ __("Active dates") }}</h4>
-                <div class="mt-4 grid gap-4 lg:grid-cols-2 lg:gap-8">
+                <div class="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-1">
                         <label for="dateStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start At") }}</label>
                         <div class="mt-1 relative rounded-md shadow-sm">

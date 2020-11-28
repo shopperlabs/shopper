@@ -43,9 +43,6 @@ class Create extends AbstractBaseComponent
 
         $this->validate($this->rules());
 
-        $dateStart = $this->dateStart;
-        $dateEnd   = $this->dateEnd;
-
         $discount = Discount::query()->create([
             'is_active' => $this->is_active,
             'code' => $this->code,
@@ -57,8 +54,8 @@ class Create extends AbstractBaseComponent
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
             'usage_limit_per_user'  => $this->usage_limit_per_user,
-            'start_at' => Carbon::createFromFormat('Y-m-d H:i', $dateStart)->toDateTimeString(),
-            'end_at'  => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $dateEnd)->toDateTimeString() : null,
+            'start_at' => Carbon::createFromFormat('Y-m-d H:i', $this->dateStart)->toDateTimeString(),
+            'end_at'  => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
         if ($this->apply === 'products') {

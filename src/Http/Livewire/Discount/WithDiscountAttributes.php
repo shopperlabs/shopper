@@ -63,7 +63,7 @@ trait WithDiscountAttributes
      *
      * @var bool
      */
-    public $usage_number;
+    public $usage_number = false;
 
     /**
      * Coupon limit usage.

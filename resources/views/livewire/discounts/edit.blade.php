@@ -1,43 +1,43 @@
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+@endpush
+
 <div
     x-data="{ modal: false, show: false, on: @if($is_active) true @else false @endif }"
     x-init="
-        flatpickr('.date', {minDate: 'today'});
-        flatpickr('.time', {
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: 'H:i',
-            time_24hr: true
-        });
+        flatpickr('.date', { minDate: 'today', dateFormat: 'Y-m-d H:i', time_24hr: true, enableTime: true });
+        flatpickr($refs.datepicker, { minDate: 'today', dateFormat: 'Y-m-d H:i', time_24hr: true, enableTime: true });
     "
 >
-    <x:breadcrumb back="shopper.discounts.index">
-        <a href="{{ route('shopper.discounts.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Discount codes') }}</a>
-        <svg class="flex-shrink-0 mx-2 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+    <x:shopper-breadcrumb back="shopper.discounts.index">
+        <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
-        <span class="text-gray-500">{{ __('Update discount') }}</span>
-    </x:breadcrumb>
+        <a href="{{ route('shopper.discounts.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Discounts') }}</a>
+    </x:shopper-breadcrumb>
 
-    <div class="mt-6 md:flex md:items-center md:justify-between">
-        <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-gray-600 sm:text-3xl sm:leading-9 sm:truncate pb-4">{{ $code }}</h2>
-        </div>
-        <div class="mt-4 flex-shrink-0 flex md:mt-0 md:ml-4">
-            <span class="shadow-sm rounded-md">
-                <button wire:click="destroy({{ $discountId }})" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                    {{ __("Delete") }}
-                </button>
-            </span>
+    <div class="mt-3 pb-5 border-b border-gray-200 space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
+        <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+            {{ $discount->code }}
+        </h3>
+        <div class="flex">
+            <x-shopper-button wire:click="store" type="button">
+                <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                </svg>
+                {{ __("Update") }}
+            </x-shopper-button>
         </div>
     </div>
 
-    <div class="mt-4 grid gap-8 lg:grid-cols-6 lg:gap-10">
+    <div class="mt-6 grid gap-4 sm:grid-cols-6 sm:gap-6">
         <div class="lg:col-span-4 space-y-5">
-            <div class="bg-white p-4 shadow rounded-md">
+            <div class="bg-white p-4 shadow rounded-md sm:p-5">
                 <div class="w-full mb-3">
                     <div class="flex items-center justify-between">
                         <label for="code" class="block text-sm font-medium leading-5 text-gray-700">{{ __('Code') }}</label>
-                        <button wire:click="generate" type="button" class="text-brand-600 text-sm font-medium leading-5 hover:text-brand-400 transition ease-in-out duration-150">{{ __("Generate code") }}</button>
+                        <button wire:click="generate" type="button" class="text-blue-600 text-sm font-medium leading-5 hover:text-blue-400 transition ease-in-out duration-150">{{ __("Generate code") }}</button>
                     </div>
                     <div class="mt-4 relative rounded-md shadow-sm">
                         <input wire:model="code" id="code" type="text" placeholder="{{ __("Eg.: NOELCMR900") }}" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out @error('code') pr-10 border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
@@ -56,18 +56,18 @@
                 <p class="text-sm text-gray-500 leading-5 mt-2">{{ __("Customers will enter this discount code at checkout.") }}</p>
             </div>
             <div class="bg-white divide-y divide-gray-200 shadow rounded-md">
-                <div class="p-4">
+                <div class="p-4 sm:p-5">
                     <div class="flex items-center justify-between">
                         <h4 class="text-base leading-5 font-medium text-gray-800">{{ __("Types") }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <input wire:model="type" id="percentage" value="percentage" name="type" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="type" id="percentage" value="percentage" name="type" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="percentage" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Percentage") }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <input wire:model="type" id="amount" value="fixed_amount" name="type" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="type" id="amount" value="fixed_amount" name="type" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="amount" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Fixed amount") }}</span>
                                 </label>
@@ -89,18 +89,18 @@
                         @enderror
                     </div>
                 </div>
-                <div class="p-4">
+                <div class="p-4 sm:p-5">
                     <div class="flex items-center justify-between">
                         <h4 class="text-base leading-5 font-medium text-gray-800">{{ __("Applies To") }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <input wire:model="apply" id="order" value="order" name="apply" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="apply" id="order" value="order" name="apply" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="order" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Entire order") }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <input wire:model="apply" id="product" value="products" name="apply" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="apply" id="product" value="products" name="apply" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="product" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Specific products") }}</span>
                                 </label>
@@ -151,14 +151,14 @@
                         <h4 class="text-base leading-5 font-medium text-gray-800">{{ __("Minimum requirements") }}</h4>
                         <div class="mt-4 space-y-3">
                             <div class="flex items-center">
-                                <input wire:model="minRequired" id="none" value="none" name="min" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="minRequired" id="none" value="none" name="min" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="none" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 text-gray-500">{{ __("None") }}</span>
                                 </label>
                             </div>
                             <div>
                                 <div class="flex items-center">
-                                    <input wire:model="minRequired" id="price" value="price" name="min" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                    <input wire:model="minRequired" id="price" value="price" name="min" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                     <label for="price" class="ml-3 cursor-pointer">
                                         <span class="block text-sm leading-5 text-gray-500">{{ __("Minimum purchase amount") }} ({{ shopper_currency() }})</span>
                                     </label>
@@ -177,7 +177,7 @@
                             </div>
                             <div>
                                 <div class="flex items-center">
-                                    <input wire:model="minRequired" id="quantity" value="quantity" name="min" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                    <input wire:model="minRequired" id="quantity" value="quantity" name="min" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                     <label for="quantity" class="ml-3 cursor-pointer">
                                         <span class="block text-sm leading-5 text-gray-500">{{ __("Minimum quantity of items") }}</span>
                                     </label>
@@ -200,13 +200,13 @@
                         <h4 class="text-base leading-5 font-medium text-gray-800">{{ __("Customer eligibility") }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <input wire:model="eligibility" id="everyone" value="everyone" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="eligibility" id="everyone" value="everyone" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="everyone" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Everyone") }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <input wire:model="eligibility" id="customer" value="customers" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="eligibility" id="customer" value="customers" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="customer" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Specific customers") }}</span>
                                 </label>
@@ -247,16 +247,16 @@
                     <div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input wire:model="usage_number" id="usage_number" value="TOTAL_USAGE_LIMIT" type="checkbox" class="form-checkbox h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="usage_number" id="usage_number" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <label for="usage_number" class="text-gray-500 cursor-pointer">{{ __("Limit number of times this discount can be used in total") }}</label>
                             </div>
                         </div>
-                        @if($usage_number === 'TOTAL_USAGE_LIMIT')
+                        @if($usage_number)
                             <div class="mt-2">
                                 <div class="relative rounded-md shadow-sm w-full sm:w-64">
-                                    <input wire:model="usage_limit" aria-label="{{ __("Usage limit value") }}" type="number" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('usage_limit') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
+                                    <input wire:model="usage_limit" aria-label="{{ __("Usage limit value") }}" type="number" min="1" step="1" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('usage_limit') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
                                 </div>
                                 @error('usage_limit')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -266,7 +266,7 @@
                     </div>
                     <div class="flex items-start">
                         <div class="flex items-center h-5">
-                            <input wire:model="usage_limit_per_user" id="usage_limit_per_user" value="ONCE_PER_CUSTOMER_LIMIT" type="checkbox" class="form-checkbox h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                            <input wire:model="usage_limit_per_user" id="usage_limit_per_user" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <label for="usage_limit_per_user" class="text-gray-500 cursor-pointer">{{ __("Limit to one use per customer") }}</label>
@@ -274,11 +274,11 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-4 shadow rounded-md">
+            <div class="bg-white p-4 shadow rounded-md sm:p-5">
                 <h4 class="text-base leading-6 font-medium text-gray-800">{{ __("Active dates") }}</h4>
                 <div class="space-y-4 mt-4">
-                    <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                        <div>
+                    <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                        <div class="sm:col-span-1">
                             <label for="dateStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start date") }}</label>
                             <div class="mt-1 relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -286,55 +286,24 @@
                                         <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                     </svg>
                                 </div>
-                                <input wire:model="dateStart" id="dateStart" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5" readonly>
+                                <input wire:model="dateStart" id="dateStart" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5" readonly autocomplete="off">
                             </div>
+                            @error('dateStart')
+                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
-                        <div>
-                            <label for="timeStart" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Start time") }}</label>
+                        <div class="sm:col-span-1">
+                            <label for="dateEnd" class="block text-sm font-medium leading-5 text-gray-700">{{ __("End At") }}</label>
                             <div class="mt-1 relative rounded-md shadow-sm">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                     </svg>
                                 </div>
-                                <input wire:model="timeStart" id="timeStart" class="form-input time block w-full pl-10 sm:text-sm sm:leading-5" readonly>
+                                <input wire:model="dateEnd" id="dateEnd" x-ref="datepicker" class="form-input block w-full pl-10 sm:text-sm sm:leading-5" readonly autocomplete="off" placeholder="{{ __("Choose end date") }}" />
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input wire:model="set_end_date" id="set_end_date" value="active" type="checkbox" class="form-checkbox h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
-                        </div>
-                        <div class="ml-3 text-sm leading-5">
-                            <label for="set_end_date" class="text-gray-500 cursor-pointer">{{ __("Set end date") }}</label>
-                        </div>
-                    </div>
-                    @if($set_end_date === 'active')
-                        <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
-                            <div>
-                                <label for="dateEnd" class="block text-sm font-medium leading-5 text-gray-700">{{ __("End date") }}</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <div class="date_end absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                        </svg>
-                                    </div>
-                                    <input wire:model="dateEnd" id="dateEnd" class="dateEnd form-input date block w-full pl-10 sm:text-sm sm:leading-5" readonly>
-                                </div>
-                            </div>
-                            <div>
-                                <label for="timeEnd" class="block text-sm font-medium leading-5 text-gray-700">{{ __("End time") }}</label>
-                                <div class="mt-1 relative rounded-md shadow-sm">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <input wire:model="timeEnd" id="timeEnd" class="timeEnd form-input time block w-full pl-10 sm:text-sm sm:leading-5">
-                                </div>
-                            </div>
-                        </div>
-                    @endif
                 </div>
             </div>
         </div>
@@ -342,7 +311,12 @@
             <aside class="sticky top-6">
                 <div class="space-y-5">
                     <div class="bg-white shadow-md rounded-md px-4 py-5 sm:px-6">
-                        <h4 class="text-gray-800 font-medium text-base">{{ __('Summary') }}</h4>
+                        <div class="flex items-center space-x-2">
+                            <h4 class="text-gray-800 font-medium text-base">{{ __('Summary') }}</h4>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $discount->is_active ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
+                                {{ $discount->is_active ? __("Active") : __("Not active") }}
+                            </span>
+                        </div>
                         @if($this->isEmpty())
                             <p class="text-gray-500 text-sm mt-5">{{ __('No information entered yet.') }}</p>
                         @else
@@ -350,14 +324,14 @@
                             <ul class="list-disc list-inside mt-4 space-y-1 text-sm">
                                 @if($value !== ''&& (int) $value > 0)
                                     <li>
-                                        {{ $type === 'percentage' ? $value . ' %' : shopper_money_format($value) }}
+                                        {{ $type === 'percentage' ? $value . ' %' : $this->formattedPrice($value) }}
                                         <span>{{ __("off") }} {{ $apply === 'order' ? __("entire order") : $this->getProductSize() }}</span>
                                     </li>
                                 @endif
                                 @if($minRequiredValue !== '' && (int) $minRequiredValue > 0 && $minRequired !== 'none')
                                     <li>
                                         <span>{{ __("Minimum purchase of") }}</span>
-                                        {{ $minRequired === 'quantity' ?  __(":count items", ['count' => $minRequiredValue]) : shopper_money_format($minRequiredValue) }}
+                                        {{ $minRequired === 'quantity' ?  __(":count items", ['count' => $minRequiredValue]) : $this->formattedPrice($minRequiredValue) }}
                                     </li>
                                 @endif
                                 @if($this->getCustomSize() !== null)
@@ -378,10 +352,10 @@
                             </ul>
                         @endif
                     </div>
-                    <div class="bg-white shadow-md rounded-md px-4 py-5 sm:px-6">
-                        <h4 class="text-gray-800 font-medium text-base leading-6">{{ __('Visibility') }}</h4>
-                        <p class="text-sm mt-5 font-normal text-gray-500 leading-5">{{ __("Setup discount visibility for the customers.") }}</p>
-                        <div class="mt-3 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
+                    <div class="bg-white shadow-md rounded-md p-4 sm:p-5">
+                        <h4 class="text-gray-900 font-medium text-base leading-6">{{ __('Visibility') }}</h4>
+                        <p class="text-sm mt-4 font-normal text-gray-500 leading-5">{{ __("Setup discount visibility for the customers.") }}</p>
+                        <div class="mt-5 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
                             <div class="flex items-center">
                                 <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
                                     <svg class="h-6 w-6 text-white" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -400,17 +374,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-8 border-t pt-8 border-gray-200">
-                    <div class="flex justify-end">
-                        <button wire:click="store" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">
-                            <span wire:loading wire:target="store" class="pr-2">
-                                <span class="btn-spinner"></span>
-                            </span>
-                            {{ __('Update discount') }}
-                        </button>
-                    </div>
-                </div>
             </aside>
+        </div>
+    </div>
+
+    <div class="mt-6 border-t border-gray-200 pt-5">
+        <div class="flex justify-end">
+            <x-shopper-button wire:click="store" wire.loading.attr="disabled" type="button">
+                <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                </svg>
+                {{ __("Update") }}
+            </x-shopper-button>
         </div>
     </div>
 
@@ -473,7 +449,7 @@
                                     <span class="block font-medium text-sm text-gray-700">{{ $product->name }}</span>
                                     <span class="flex items-center space-x-2">
                                         <span class="text-sm leading-5 text-gray-500">{{ $product->stock }} {{ __("available") }}</span>
-                                        <span class="text-sm leading-5 text-gray-500">{{ shopper_money_format($product->price) }}</span>
+                                        <span class="text-sm leading-5 text-gray-500">{{ $product->formattedPrice }}</span>
                                     </span>
                                 </span>
                             </label>
@@ -482,16 +458,13 @@
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                        <button
-                            wire:click="addProducts"
-                            type="button"
-                            class="inline-flex items-center justify-center w-full rounded-md border border-transparent px-4 py-2 bg-brand-400 text-base leading-6 font-medium text-white shadow-sm hover:bg-brand-500 focus:outline-none focus:border-brand-400 focus:shadow-outline-brand transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                        >
-                            <span wire:loading wire:target="addProducts" class="mr-2 hidden">
-                                <span class="btn-spinner"></span>
-                            </span>
-                            {{ __('Add Select Product') }}
-                        </button>
+                        <x-shopper-button wire:click="addProducts" wire.loading.attr="disabled" type="button">
+                            <svg wire:loading wire:target="addProducts" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                            </svg>
+                            {{ __('Add Selected Products') }}
+                        </x-shopper-button>
                     </span>
                     <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                         <button @click="modal = false;" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-brand-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5">
@@ -556,14 +529,19 @@
                         @foreach($customers as $customer)
                             <label for="customer_{{ $customer->id }}" class="flex items-center py-3 cursor-pointer hover:bg-gray-50 px-4 sm:px-6 focus:bg-gray-50">
                                 <span class="mr-4">
-                                    <input id="customer_{{ $customer->id }}" aria-label="{{ __("Product") }}" wire:model="selectedCustomers" value="{{ $customer->id }}" type="checkbox" class="form-checkbox h-5 w-5 text-brand-600 transition duration-150 ease-in-out" />
+                                    <input id="customer_{{ $customer->id }}" aria-label="{{ __("Product") }}" wire:model="selectedCustomers" value="{{ $customer->id }}" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out" />
                                 </span>
-                                <span class="flex flex-1 items-center justify-between">
-                                    <span class="block font-medium text-sm text-gray-700">{{ $customer->full_name }}</span>
+                                <div class="flex flex-1 items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-shrink-0">
+                                            <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="">
+                                        </div>
+                                        <span class="block font-medium text-sm text-gray-700">{{ $customer->full_name }}</span>
+                                    </div>
                                     <span class="flex items-center space-x-2">
                                         <span class="text-sm leading-5 text-gray-500">{{ $customer->email }}</span>
                                     </span>
-                                </span>
+                                </div>
                             </label>
                         @endforeach
                     </div>
@@ -592,3 +570,7 @@
     @endif
 
 </div>
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+@endpush
