@@ -81,15 +81,15 @@ trait WithDiscountActions
         $startDate = new Carbon($this->dateStart);
         $endDate = new Carbon($this->dateEnd);
 
-        if ($today->equalTo($startDate) && $today->equalTo($endDate) && $this->set_end_date === 'active') {
+        if ($today->equalTo($startDate) && $today->equalTo($endDate) && $this->dateEnd !== null) {
             return __("Active today");
         }
 
-        if ($today->equalTo($startDate) && $this->set_end_date !== 'active') {
+        if ($today->equalTo($startDate) && $this->dateEnd === null) {
             return __("Active from today");
         }
 
-        if ($today->notEqualTo($startDate) && $this->set_end_date !== 'active') {
+        if ($today->notEqualTo($startDate) && $this->dateEnd === null) {
             return __("Active from :date", ['date' => $startDate->format('d M')]);
         }
 
@@ -97,15 +97,15 @@ trait WithDiscountActions
             return __("Active :date", ['date' => $startDate->format('d M')]);
         }
 
-        if ($startDate->notEqualTo($endDate) && $startDate->lessThan($endDate) && $this->set_end_date === 'active') {
+        if ($startDate->notEqualTo($endDate) && $startDate->lessThan($endDate) && $this->dateEnd !== null) {
             return __("Active from :startDate to :endDate", [
                 'startDate' => $startDate->format('d M'),
                 'endDate'   => $endDate->format('d M'),
             ]);
         }
 
-        if ($startDate->greaterThan($endDate) && $this->set_end_date === 'active') {
-            $this->dateEnd = Carbon::createFromFormat('Y-m-d', $this->dateStart)->toDateString();
+        if ($startDate->greaterThan($endDate) && $this->dateEnd !== null) {
+            $this->dateEnd = Carbon::createFromFormat('Y-m-d H:i', $this->dateStart)->toDateString();
 
             return __("Active :date", ['date' => $startDate->format('d M')]);
         }
@@ -120,14 +120,14 @@ trait WithDiscountActions
      */
     public function getUsageLimitMessage()
     {
-        if ($this->usage_number && $this->usage_limit !== '' && (int) $this->usage_limit > 0) {
+        if ($this->usage_number && $this->usage_limit !== null && (int) $this->usage_limit > 0) {
             $message = trans_choice('shopper::messages.discount_use', $this->usage_limit, ['count' => $this->usage_limit]);
-            $message .= $this->usage_limit_per_user === 'ONCE_PER_CUSTOMER_LIMIT' ? ', '. __("one per customer") : '';
+            $message .= $this->usage_limit_per_user ? ', '. __("one per customer") : '';
 
             return $message;
         }
 
-        if ($this->usage_limit_per_user === 'ONCE_PER_CUSTOMER_LIMIT' && !$this->usage_number) {
+        if ($this->usage_limit_per_user && ! $this->usage_number) {
             return __("One per customer");
         }
 

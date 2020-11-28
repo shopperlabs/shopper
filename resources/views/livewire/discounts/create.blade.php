@@ -5,8 +5,8 @@
 <div
     x-data="{ modal: false, show: false, on: false }"
     x-init="
-        flatpickr('.date', { minDate: 'today', dateFormat: 'Y-m-d H:i', });
-        flatpickr($refs.datepicker, { minDate: 'today' });
+        flatpickr('.date', { minDate: 'today', dateFormat: 'Y-m-d H:i', time_24hr: true, enableTime: true });
+        flatpickr($refs.datepicker, { minDate: 'today', dateFormat: 'Y-m-d H:i', time_24hr: true, enableTime: true });
     "
 >
 
@@ -62,13 +62,13 @@
                         <h4 class="text-base leading-5 font-medium text-gray-900">{{ __("Types") }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <input wire:model="type" id="percentage" value="percentage" name="type" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="type" id="percentage" value="percentage" name="type" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="percentage" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Percentage") }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <input wire:model="type" id="amount" value="fixed_amount" name="type" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="type" id="amount" value="fixed_amount" name="type" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="amount" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Fixed amount") }}</span>
                                 </label>
@@ -95,13 +95,13 @@
                         <h4 class="text-base leading-5 font-medium text-gray-900">{{ __("Applies To") }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <input wire:model="apply" id="order" value="order" name="apply" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="apply" id="order" value="order" name="apply" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="order" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Entire order") }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <input wire:model="apply" id="product" value="products" name="apply" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="apply" id="product" value="products" name="apply" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="product" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Specific products") }}</span>
                                 </label>
@@ -152,14 +152,14 @@
                         <h4 class="text-base leading-5 font-medium text-gray-900">{{ __("Minimum requirements") }}</h4>
                         <div class="mt-4 space-y-3">
                             <div class="flex items-center">
-                                <input wire:model="minRequired" id="none" value="none" name="min" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="minRequired" id="none" value="none" name="min" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="none" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 text-gray-500">{{ __("None") }}</span>
                                 </label>
                             </div>
                             <div>
                                 <div class="flex items-center">
-                                    <input wire:model="minRequired" id="price" value="price" name="min" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                    <input wire:model="minRequired" id="price" value="price" name="min" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                     <label for="price" class="ml-3 cursor-pointer">
                                         <span class="block text-sm leading-5 text-gray-500">{{ __("Minimum purchase amount") }} ({{ shopper_currency() }})</span>
                                     </label>
@@ -178,7 +178,7 @@
                             </div>
                             <div>
                                 <div class="flex items-center">
-                                    <input wire:model="minRequired" id="quantity" value="quantity" name="min" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                    <input wire:model="minRequired" id="quantity" value="quantity" name="min" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                     <label for="quantity" class="ml-3 cursor-pointer">
                                         <span class="block text-sm leading-5 text-gray-500">{{ __("Minimum quantity of items") }}</span>
                                     </label>
@@ -201,13 +201,13 @@
                         <h4 class="text-base leading-5 font-medium text-gray-900">{{ __("Customer eligibility") }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <input wire:model="eligibility" id="everyone" value="everyone" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="eligibility" id="everyone" value="everyone" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="everyone" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Everyone") }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <input wire:model="eligibility" id="customer" value="customers" type="radio" class="form-radio h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="eligibility" id="customer" value="customers" type="radio" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                 <label for="customer" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-gray-500">{{ __("Specific customers") }}</span>
                                 </label>
@@ -248,16 +248,16 @@
                     <div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input wire:model="usage_number" id="usage_number" value="TOTAL_USAGE_LIMIT" type="checkbox" class="form-checkbox h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                                <input wire:model="usage_number" id="usage_number" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <label for="usage_number" class="text-gray-500 cursor-pointer">{{ __("Limit number of times this discount can be used in total") }}</label>
                             </div>
                         </div>
-                        @if($usage_number === 'TOTAL_USAGE_LIMIT')
+                        @if($usage_number)
                             <div class="mt-2">
                                 <div class="relative rounded-md shadow-sm w-full sm:w-64">
-                                    <input wire:model="usage_limit" aria-label="{{ __("Usage limit value") }}" type="number" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('usage_limit') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
+                                    <input wire:model="usage_limit" aria-label="{{ __("Usage limit value") }}" type="number" min="0" step="1" autocomplete="off" class="form-input block w-full sm:text-sm sm:leading-5 transition duration-150 ease-in-out sm:w-64 @error('usage_limit') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" />
                                 </div>
                                 @error('usage_limit')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -267,7 +267,7 @@
                     </div>
                     <div class="flex items-start">
                         <div class="flex items-center h-5">
-                            <input wire:model="usage_limit_per_user" id="usage_limit_per_user" value="ONCE_PER_CUSTOMER_LIMIT" type="checkbox" class="form-checkbox h-4 w-4 text-brand-600 transition duration-150 ease-in-out">
+                            <input wire:model="usage_limit_per_user" id="usage_limit_per_user" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <label for="usage_limit_per_user" class="text-gray-500 cursor-pointer">{{ __("Limit to one use per customer") }}</label>
@@ -288,6 +288,9 @@
                             </div>
                             <input wire:model="dateStart" id="dateStart" class="form-input date block w-full pl-10 sm:text-sm sm:leading-5" readonly autocomplete="off" placeholder="{{ __("Choose start date period") }}" />
                         </div>
+                        @error('dateStart')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="sm:col-span-1">
                         <label for="dateEnd" class="block text-sm font-medium leading-5 text-gray-700">{{ __("End At") }}</label>
@@ -309,9 +312,9 @@
                     <div class="bg-white shadow rounded-md p-4 sm:p-5">
                         <h4 class="text-gray-800 font-medium text-base">{{ __('Summary') }}</h4>
                         @if($this->isEmpty())
-                            <p class="text-gray-500 text-sm mt-5">{{ __('No information entered yet.') }}</p>
+                            <p class="text-gray-500 text-sm mt-4">{{ __('No information entered yet.') }}</p>
                         @else
-                            @if($code !== '') <p class="text-base mt-5 font-bold text-gray-800 leading-6">{{ $code }}</p> @endif
+                            @if($code !== '') <p class="text-base mt-4 font-bold text-gray-800 leading-6">{{ $code }}</p> @endif
                             <ul class="list-disc list-inside mt-4 space-y-1 text-sm">
                                 @if($value !== '' && (int) $value > 0)
                                     <li>
@@ -345,7 +348,7 @@
                     </div>
                     <div class="bg-white shadow-md rounded-md p-4 sm:p-5">
                         <h4 class="text-gray-800 font-medium text-base leading-6">{{ __('Visibility') }}</h4>
-                        <p class="text-sm mt-5 font-normal text-gray-500 leading-5">{{ __("Setup discount visibility for the customers.") }}</p>
+                        <p class="text-sm mt-4 font-normal text-gray-500 leading-5">{{ __("Setup discount visibility for the customers.") }}</p>
                         <div class="mt-3 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
                             <div class="flex items-center">
                                 <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
@@ -530,7 +533,7 @@
                         @foreach($customers as $customer)
                             <label for="customer_{{ $customer->id }}" class="flex items-center py-3 cursor-pointer hover:bg-gray-50 px-4 sm:px-6 focus:bg-gray-50">
                                 <span class="mr-4">
-                                    <input id="customer_{{ $customer->id }}" aria-label="{{ __("Product") }}" wire:model="selectedCustomers" value="{{ $customer->id }}" type="checkbox" class="form-checkbox h-5 w-5 text-brand-600 transition duration-150 ease-in-out" />
+                                    <input id="customer_{{ $customer->id }}" aria-label="{{ __("Product") }}" wire:model="selectedCustomers" value="{{ $customer->id }}" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out" />
                                 </span>
                                 <div class="flex flex-1 items-center justify-between">
                                     <div class="flex items-center space-x-2">

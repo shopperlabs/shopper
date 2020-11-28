@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Repositories;
 
-use Shopper\Framework\Models\Discount;
+use Shopper\Framework\Models\Shop\Discount;
 
 class DiscountRepository extends BaseRepository
 {

@@ -5,10 +5,10 @@ namespace Shopper\Framework\Http\Livewire\Discount;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Models\Shop\Discount;
 use Shopper\Framework\Models\Shop\DiscountDetail;
 use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Repositories\DiscountRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\UserRepository;
 
@@ -38,15 +38,15 @@ class Create extends AbstractBaseComponent
         }
 
         if ($this->usage_number) {
-            $this->validate(['usage_limit' => 'required']);
+            $this->validate(['usage_limit' => 'required|integer']);
         }
 
         $this->validate($this->rules());
 
-        $dateStart = $this->dateStart. " ".$this->timeStart;
-        $dateEnd   = $this->dateEnd. " ".$this->timeEnd;
+        $dateStart = $this->dateStart;
+        $dateEnd   = $this->dateEnd;
 
-        $discount = (new DiscountRepository())->create([
+        $discount = Discount::query()->create([
             'is_active' => $this->is_active,
             'code' => $this->code,
             'type' => $this->type,
@@ -55,10 +55,10 @@ class Create extends AbstractBaseComponent
             'min_required' => $this->minRequired,
             'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
-            'usage_limit' => $this->usage_number ?? null,
-            'usage_limit_per_user'  => $this->usage_limit_per_user === 'ONCE_PER_CUSTOMER_LIMIT',
+            'usage_limit' => $this->usage_limit ?? null,
+            'usage_limit_per_user'  => $this->usage_limit_per_user,
             'start_at' => Carbon::createFromFormat('Y-m-d H:i', $dateStart)->toDateTimeString(),
-            'end_at'  => $this->set_end_date ? Carbon::createFromFormat('Y-m-d H:i', $dateEnd)->toDateTimeString() : null,
+            'end_at'  => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $dateEnd)->toDateTimeString() : null,
         ]);
 
         if ($this->apply === 'products') {
@@ -102,7 +102,6 @@ class Create extends AbstractBaseComponent
             'value' => 'required',
             'apply' => 'required',
             'dateStart' => 'required',
-            'timeStart' => 'required',
         ];
     }
 

@@ -61,23 +61,23 @@ trait WithDiscountAttributes
     /**
      * Discount usage limit number.
      *
-     * @var null
+     * @var bool
      */
-    public $usage_number = null;
+    public $usage_number;
 
     /**
      * Coupon limit usage.
      *
-     * @var string
+     * @var int
      */
     public $usage_limit;
 
     /**
      * Coupon limit user per user value.
      *
-     * @var string
+     * @var bool
      */
-    public $usage_limit_per_user;
+    public $usage_limit_per_user = false;
 
     /**
      * Global discount available date.
@@ -99,10 +99,6 @@ trait WithDiscountAttributes
      * @var string
      */
     public $dateEnd;
-
-    public $timeStart = '';
-    public $set_end_date = '';
-    public $timeEnd = '';
 
     /**
      * Search product input.
