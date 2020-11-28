@@ -6,7 +6,7 @@
             @can('add_attributes')
                 <div class="flex space-x-3">
                     <span class="shadow-sm rounded-md">
-                        <a href="{{ route('shopper.attributes.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
+                        <a href="{{ route('shopper.settings.attributes.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
                             {{ __("Create") }}
                         </a>
                     </span>

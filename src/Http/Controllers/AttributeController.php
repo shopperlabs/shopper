@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework\Http\Controllers;
 
+use Shopper\Framework\Models\Shop\Product\Attribute;
+
 class AttributeController extends ShopperBaseController
 {
     /**
@@ -28,5 +30,19 @@ class AttributeController extends ShopperBaseController
         $this->authorize('add_attributes');
 
         return view('shopper::pages.settings.attributes.create');
+    }
+
+    /**
+     * Edit Attribute view page.
+     *
+     * @param  Attribute  $attribute
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function edit(Attribute $attribute)
+    {
+        $this->authorize('edit_attributes');
+
+        return view('shopper::pages.settings.attributes.edit', compact('attribute'));
     }
 }
