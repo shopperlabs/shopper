@@ -9,8 +9,8 @@
         </div>
     </div>
 
-    <div class="mt-8 bg-white rounded-lg shadow-lg p-5 sm:p-6">
-        <div class="z-20 relative grid gap-6 sm:gap-x-8 sm:gap-y-6 sm:grid-cols-3">
+    <div class="mt-6 bg-white rounded-lg shadow-lg p-4 sm:p-5">
+        <div class="z-20 relative grid gap-4 sm:gap-x-6 sm:gap-y-4 sm:grid-cols-3">
             <a href="{{ route('shopper.settings.shop') }}" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
                 <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-600 text-white sm:h-12 sm:w-12 ">
                     <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -55,6 +55,21 @@
                     </p>
                     <p class="text-sm leading-5 text-gray-500">
                         {{ __("Manage the places you stock inventory and sell products.") }}
+                    </p>
+                </div>
+            </a>
+            <a x-on:click.prevent="modalDemo = true" href="#" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+                <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-600 text-white sm:h-12 sm:w-12 ">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-base leading-6 font-medium text-gray-900">
+                        {{ __("Properties") }}
+                    </p>
+                    <p class="text-sm leading-5 text-gray-500">
+                        {{ __("Manage additional properties for your products.") }}
                     </p>
                 </div>
             </a>
@@ -130,6 +145,21 @@
                     </p>
                     <p class="text-sm leading-5 text-gray-500">
                         {{ __("Add different payment methods for your customers.") }}
+                    </p>
+                </div>
+            </a>
+            <a x-on:click.prevent="modalDemo = true" href="#" class="p-3 flex items-start space-x-4 rounded-lg hover:bg-gray-50 transition ease-in-out duration-150">
+                <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-blue-600 text-white sm:h-12 sm:w-12 ">
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                    </svg>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-base leading-6 font-medium text-gray-900">
+                        {{ __("Files") }}
+                    </p>
+                    <p class="text-sm leading-5 text-gray-500">
+                        {{ __("Manage store assets (images, videos and documents).") }}
                     </p>
                 </div>
             </a>
