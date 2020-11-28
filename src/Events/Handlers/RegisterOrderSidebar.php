@@ -34,7 +34,7 @@ class RegisterOrderSidebar extends AbstractAdminSidebar
             $group->item(__('Discounts'), function (Item $item) {
                 $item->weight(9);
                 $item->authorize($this->user->hasPermissionTo('browse_discounts'));
-                // $item->route('shopper.discounts.index');
+                $item->route('shopper.discounts.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="none" fill="currentColor" viewBox="0 0 24 24">
                         <path clip-rule="evenodd" fill-rule="evenodd" d="M20.125 19H3.875A1.877 1.877 0 012 17.125V14c0-.345.28-.625.625-.625A1.877 1.877 0 004.5 11.5a1.877 1.877 0 00-1.875-1.875A.625.625 0 012 9V5.875C2 4.841 2.841 4 3.875 4h16.25C21.159 4 22 4.841 22 5.875V9c0 .345-.28.625-.625.625A1.877 1.877 0 0019.5 11.5c0 1.034.841 1.875 1.875 1.875.345 0 .625.28.625.625v3.125A1.877 1.877 0 0120.125 19zM3.25 14.562v2.563c0 .345.28.625.625.625h16.25c.345 0 .625-.28.625-.625v-2.563a3.13 3.13 0 01-2.5-3.062 3.13 3.13 0 012.5-3.062V5.875a.625.625 0 00-.625-.625H3.875a.625.625 0 00-.625.625v2.563a3.13 3.13 0 012.5 3.062 3.13 3.13 0 01-2.5 3.062z" />

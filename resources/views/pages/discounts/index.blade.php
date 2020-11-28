@@ -1,8 +1,8 @@
-@extends('shopper::layouts.'. config('shopper.theme'))
+@extends('shopper::layouts.'. config('shopper.system.theme'))
 @section('title', __('Discounts'))
 
 @section('content')
 
-    <livewire:discounts-list />
+    <livewire:shopper-discounts-browse />
 
 @endsection

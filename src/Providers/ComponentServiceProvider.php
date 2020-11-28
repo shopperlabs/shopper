@@ -26,9 +26,9 @@ use Shopper\Framework\Http\Livewire\{
     Customers\Create as CreateCustomer,
     Customers\Show as ShowCustomer,
     Customers\Profile as ProfileCustomer,
+    Discount\Browse as BrowseDiscounts,
     Discount\Create as CreateDiscount,
     Discount\Edit as EditDiscount,
-    Discount\DiscountList,
     InventoryHistory,
     NetworkStatus,
     Reviews\Browse as BrowseReviews,
@@ -141,9 +141,9 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-inventory-history', InventoryHistory::class);
         Livewire::component('shopper-reviews-browse', BrowseReviews::class);
         Livewire::component('shopper-reviews-show', ShowReview::class);
-        Livewire::component('shopper-discounts-list', DiscountList::class);
-        Livewire::component('shopper-create-discount', CreateDiscount::class);
-        Livewire::component('shopper-edit-discount', EditDiscount::class);
+        Livewire::component('shopper-discounts-browse', BrowseDiscounts::class);
+        Livewire::component('shopper-discounts-create', CreateDiscount::class);
+        Livewire::component('shopper-discounts-edit', EditDiscount::class);
 
         /**
          * Settings Components.
