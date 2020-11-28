@@ -41,6 +41,8 @@ use Shopper\Framework\Http\Livewire\{
     Products\Form\Shipping as ShippingFormProduct,
     Products\Form\Inventory as InventoryProduct,
     Settings\Analytics,
+    Settings\Attributes\Browse as BrowseAttributes,
+    Settings\Attributes\Create as CreateAttributes,
     Settings\Integrations,
     Settings\Inventories\Browse as BrowseInventories,
     Settings\Inventories\Create as CreateInventory,
@@ -161,6 +163,8 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-settings-inventories-browse', BrowseInventories::class);
         Livewire::component('shopper-settings-inventories-create', CreateInventory::class);
         Livewire::component('shopper-settings-inventories-edit', EditInventory::class);
+        Livewire::component('shopper-settings-attributes-browse', BrowseAttributes::class);
+        Livewire::component('shopper-settings-attributes-create', CreateAttributes::class);
     }
 
     /**

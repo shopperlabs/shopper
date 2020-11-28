@@ -19,6 +19,13 @@ abstract class AbstractBaseComponent extends Component
     }
 
     /**
+     * Store/Update a entry to the storage.
+     *
+     * @return void
+     */
+    abstract public function store();
+
+    /**
      * Component validation rules.
      *
      * @return string[]
@@ -26,9 +33,9 @@ abstract class AbstractBaseComponent extends Component
     abstract protected function rules();
 
     /**
-     * Store/Update a entry to the storage.
+     * Render the component.
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
-    abstract public function store();
+    abstract public function render();
 }
