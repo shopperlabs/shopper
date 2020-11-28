@@ -289,7 +289,7 @@
                                         </div>
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
-                                        @if($this->published_at)
+                                        @if($product->published_at)
                                             <time datetime="{{ $product->published_at->format('Y-m-d') }}" class="capitalize">{{ $product->published_at->formatLocalized('%d %B, %Y') }}</time>
                                         @endif
                                     </td>
