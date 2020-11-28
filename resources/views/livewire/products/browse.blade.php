@@ -289,7 +289,9 @@
                                         </div>
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
-                                        <time datetime="{{ $product->published_at->format('Y-m-d') }}" class="capitalize">{{ $product->published_at->formatLocalized('%d %B, %Y') }}</time>
+                                        @if($this->published_at)
+                                            <time datetime="{{ $product->published_at->format('Y-m-d') }}" class="capitalize">{{ $product->published_at->formatLocalized('%d %B, %Y') }}</time>
+                                        @endif
                                     </td>
                                     <td class="pr-6">
                                         <div x-data="{ open: false }" x-on:item-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">

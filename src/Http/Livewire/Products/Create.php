@@ -80,7 +80,7 @@ class Create extends AbstractBaseComponent
             'type'  => $this->type,
             'requires_shipping' => $this->requiresShipping,
             'backorder' => $this->backorder,
-            'published_at'  => $this->publishedAt,
+            'published_at'  => $this->publishedAt ?? now(),
             'seo_title'     => $this->seoTitle,
             'seo_description' => str_limit($this->seoDescription, 157),
             'weight_value'  => $this->weightValue ?? null,

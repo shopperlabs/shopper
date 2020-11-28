@@ -88,7 +88,7 @@ trait WithAttributes
      *
      * @var int
      */
-    public $securityStock;
+    public $securityStock = 0;
 
     /**
      * Publish date for the collection.

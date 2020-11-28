@@ -105,7 +105,7 @@
                         </div>
                         <div class="sm:col-span-1">
                             <x-shopper-input.group label="Safety Stock" for="security_stock" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
-                                <input wire:model="securityStock" id="security_stock" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" min="0" autocomplete="off">
+                                <input wire:model="securityStock" id="security_stock" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" min="1" step="1" autocomplete="off">
                             </x-shopper-input.group>
                         </div>
                     </div>
