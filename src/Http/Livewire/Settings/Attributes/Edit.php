@@ -37,7 +37,7 @@ class Edit extends AbstractBaseComponent
     public $slug;
 
     /**
-     * Attribute product type.
+     * Attribute type.
      *
      * @var string
      */
@@ -134,12 +134,24 @@ class Edit extends AbstractBaseComponent
     }
 
     /**
+     * Check if the attribute has default values.
+     *
+     * @return bool
+     */
+    public function hasValues()
+    {
+        return in_array($this->type, Attribute::fieldsWithValues());
+    }
+
+    /**
      * Render the component.
      *
      * @return \Illuminate\View\View
      */
     public function render()
     {
-        return view('shopper::livewire.settings.attributes.edit');
+        return view('shopper::livewire.settings.attributes.edit', [
+            'fields' => Attribute::typesFields(),
+        ]);
     }
 }

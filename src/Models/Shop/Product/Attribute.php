@@ -55,6 +55,45 @@ class Attribute extends Model
     }
 
     /**
+     * Return available fields types.
+     *
+     * @return string[]
+     */
+    public static function typesFields()
+    {
+        return [
+          'text' => __('Text field :type', ['type' => '(input)']),
+          'number' => __('Text field :type', ['type' => '(number)']) ,
+          'richtext' => __('Richtext') ,
+          'markdown' => __('Markdown') ,
+          'select' => __('Select') ,
+          'checkbox' => __('Checkbox') ,
+          'checkbox_list' => __('Checkbox List') ,
+          'radio' => __('Radio') ,
+          'toggle' => __('Toggle') ,
+          'colorpicker' => __('Color picker') ,
+          'datepicker' => __('Date picker') ,
+          'file' => __('File') ,
+        ];
+    }
+
+    /**
+     * Return attributes fields that has values by default.
+     *
+     * @return string[]
+     */
+    public static function fieldsWithValues()
+    {
+        return [
+            'select',
+            'checkbox',
+            'checkbox_list',
+            'colorpicker',
+            'radio',
+        ];
+    }
+
+    /**
      * Set the proper slug attribute.
      *
      * @param  string  $value

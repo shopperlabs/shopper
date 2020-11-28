@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div>
+    <div class="mt-10 sm:mt-0">
         <div>
             <h3 class="text-lg leading-6 font-medium text-gray-900">
                 {{ __("Stock management") }}

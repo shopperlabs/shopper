@@ -33,18 +33,9 @@
                     <label for="type" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Type") }}</label>
                     <div class="mt-1 rounded-md shadow-sm">
                         <select wire:model="type" id="type" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                            <option value="text">{{ __("Text field") }} (input)</option>
-                            <option value="number">{{ __("Text field") }} (number)</option>
-                            <option value="richtext">{{ __("Richtext") }}</option>
-                            <option value="markdown">{{ __("Markdown") }}</option>
-                            <option value="select">{{ __("Select") }}</option>
-                            <option value="checkbox">{{ __("Checkbox") }}</option>
-                            <option value="checkbox_list">{{ __("Checkbox list") }}</option>
-                            <option value="radio">{{ __("Radio") }}</option>
-                            <option value="toggle">{{ __("Toggle") }}</option>
-                            <option value="colorpicker">{{ __("Color picker") }}</option>
-                            <option value="datepicker">{{ __("Date picker") }}</option>
-                            <option value="file">{{ __("File") }}</option>
+                            @foreach($fields as $key => $field)
+                                <option value="{{ $key }}">{{ $field }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

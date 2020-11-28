@@ -112,6 +112,8 @@ class Create extends AbstractBaseComponent
      */
     public function render()
     {
-        return view('shopper::livewire.settings.attributes.create');
+        return view('shopper::livewire.settings.attributes.create', [
+            'fields' => Attribute::typesFields(),
+        ]);
     }
 }
