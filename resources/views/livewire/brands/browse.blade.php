@@ -126,7 +126,7 @@
             </div>
         </x-shopper-empty-state>
     @else
-        <div class="mt-6 bg-white shadow sm:rounded-md">
+        <div class="mt-6 bg-white shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <label for="filter" class="sr-only">{{ __('Search brands') }}</label>
                 <div class="flex rounded-md shadow-sm">

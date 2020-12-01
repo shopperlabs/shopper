@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Shopper\Framework\Http\Controllers\Ecommerce\ProductImageController;
 use Shopper\Framework\Http\Controllers\SettingController;
 
 /*
@@ -38,4 +37,5 @@ Route::prefix('setting')->as('settings.')->group(function () {
     Route::view('/payments', 'shopper::pages.settings.payments.general')->name('payments');
     Route::view('/general', 'shopper::pages.settings.general')->name('shop');
     Route::resource('inventories', 'InventoryController');
+    Route::resource('attributes', 'AttributeController')->except('destroy', 'store', 'update');
 });

@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="mt-6 grid sm:grid-cols-6 gap-4 lg:gap-6">
+    <div class="mt-6 grid sm:grid-cols-6 gap-4 sm:gap-6">
         <div class="sm:col-span-4">
             <div class="bg-white rounded-lg shadow p-4 sm:p-5">
                 <div>

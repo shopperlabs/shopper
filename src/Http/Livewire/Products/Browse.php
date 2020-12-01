@@ -95,7 +95,7 @@ class Browse extends Component
         $this->dispatchBrowserEvent('item-removed');
         $this->notify([
             'title' => __("Deleted"),
-            'message' => __("The customer has successfully removed!")
+            'message' => __("The product has successfully removed!")
         ]);
     }
 

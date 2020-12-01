@@ -22,7 +22,7 @@ class CreateAttributesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique()->nullable();
             $table->string('description')->nullable();
-            $table->string('type'); // text, textarea, number, select, radio, checkbox, richtext, toggle, markdown, colorpicker, file
+            $table->string('type');
             $table->boolean('is_enabled')->default(false);
             $table->boolean('is_searchable')->default(false);
             $table->boolean('is_filterable')->default(false);
@@ -30,7 +30,9 @@ class CreateAttributesTable extends Migration
 
         Schema::create($this->getTableName('attribute_values'), function (Blueprint $table) {
             $table->id();
-            $table->string('value');
+            $table->string('value', 50);
+            $table->string('key')->unique();
+            $table->unsignedSmallInteger('position')->nullable()->default(1);
             $this->addForeignKey($table, 'attribute_id', $this->getTableName('attributes'), false);
         });
 

@@ -33,16 +33,13 @@ class Attribute extends Model
     ];
 
     /**
-     * Boot the model.
+     * The accessors to append to the model's array form.
+     *
+     * @var array
      */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($model) {
-            $model->update(['slug' => $model->name]);
-        });
-    }
+    protected $appends = [
+      'type_formatted',
+    ];
 
     /**
      * Get the table associated with the model.
@@ -55,17 +52,52 @@ class Attribute extends Model
     }
 
     /**
-     * Set the proper slug attribute.
+     * Return formatted type.
      *
-     * @param  string  $value
+     * @return string
      */
-    public function setSlugAttribute($value)
+    public function getTypeFormattedAttribute()
     {
-        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
-            $slug = "{$slug}-{$this->id}";
-        }
+        return self::typesFields()[$this->type];
+    }
 
-        $this->attributes['slug'] = $slug;
+    /**
+     * Return available fields types.
+     *
+     * @return string[]
+     */
+    public static function typesFields()
+    {
+        return [
+          'text' => __('Text field :type', ['type' => '(input)']),
+          'number' => __('Text field :type', ['type' => '(number)']) ,
+          'richtext' => __('Richtext') ,
+          'markdown' => __('Markdown') ,
+          'select' => __('Select') ,
+          'checkbox' => __('Checkbox') ,
+          'checkbox_list' => __('Checkbox List') ,
+          'radio' => __('Radio') ,
+          'toggle' => __('Toggle') ,
+          'colorpicker' => __('Color picker') ,
+          'datepicker' => __('Date picker') ,
+          'file' => __('File') ,
+        ];
+    }
+
+    /**
+     * Return attributes fields that has values by default.
+     *
+     * @return string[]
+     */
+    public static function fieldsWithValues()
+    {
+        return [
+            'select',
+            'checkbox',
+            'checkbox_list',
+            'colorpicker',
+            'radio',
+        ];
     }
 
     /**

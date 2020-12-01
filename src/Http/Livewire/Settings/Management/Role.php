@@ -21,42 +21,42 @@ class Role extends Component
      *
      * @var string
      */
-    public string $name = '';
+    public $name = '';
 
     /**
      * Role display name.
      *
      * @var string
      */
-    public string $display_name = '';
+    public $display_name = '';
 
     /**
      * Role description.
      *
      * @var string
      */
-    public string $description = '';
+    public $description = '';
 
     /**
      * Permission Name.
      *
      * @var string
      */
-    public string $permission_name = '';
+    public $permission_name = '';
 
     /**
      * Permission display name.
      *
      * @var string
      */
-    public string $permission_display_name = '';
+    public $permission_display_name = '';
 
     /**
      * Permission description.
      *
      * @var string
      */
-    public string $permission_description = '';
+    public $permission_description = '';
 
     /**
      * Permission group item.
@@ -134,6 +134,11 @@ class Role extends Component
         ]);
 
         $this->emit('permissionAdded', $this->role->id);
+
+        $this->group = null;
+        $this->permission_name = '';
+        $this->permission_display_name = '';
+        $this->permission_description = '';
     }
 
     /**

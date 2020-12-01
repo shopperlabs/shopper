@@ -209,7 +209,7 @@
             <div class="p-4 sm:px-6 border-t border-gray-100">
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-2">
-                        <x-shopper-input.group label="Custom payment method name" for="title" :errors="$errors->first('title')" isRequired>
+                        <x-shopper-input.group label="Custom payment method name" for="title" :error="$errors->first('title')" isRequired>
                             <input wire:model="title" id="title" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                         </x-shopper-input.group>
                     </div>

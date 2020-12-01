@@ -13,8 +13,17 @@ class AttributeValue extends Model
      */
     protected $fillable = [
         'value',
+        'key',
+        'position',
         'attribute_id',
     ];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * Get the table associated with the model.

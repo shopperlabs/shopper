@@ -55,7 +55,7 @@ class General extends Component
     /**
      * Payment Method ID for edition.
      *
-     * @var bool
+     * @var int
      */
     public $providerId;
 
