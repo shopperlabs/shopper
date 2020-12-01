@@ -29,6 +29,23 @@ class Browse extends Component
     }
 
     /**
+     * Remove a record to the database.
+     *
+     * @param  int  $id
+     * @throws \Exception
+     */
+    public function remove(int $id)
+    {
+        Attribute::query()->find($id)->delete();
+
+        $this->dispatchBrowserEvent('item-removed');
+        $this->notify([
+            'title' => __("Deleted"),
+            'message' => __("The :item has successfully removed!", ['item' => 'attribute'])
+        ]);
+    }
+
+    /**
      * Render the component.
      *
      * @return \Illuminate\View\View

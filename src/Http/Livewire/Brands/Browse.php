@@ -24,6 +24,11 @@ class Browse extends Component
      */
     public $direction = 'desc';
 
+    /**
+     * Custom Livewire pagination view.
+     *
+     * @return string
+     */
     public function paginationView()
     {
         return 'shopper::livewire.wire-pagination-links';
@@ -50,15 +55,19 @@ class Browse extends Component
         ]);
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
-        $total = (new BrandRepository())->count();
-
-        $brands = (new BrandRepository())
-            ->where('name', '%'. $this->search .'%', 'like')
-            ->orderBy('created_at', $this->direction)
-            ->paginate(10);
-
-        return view('shopper::livewire.brands.browse', compact('brands', 'total'));
+        return view('shopper::livewire.brands.browse', [
+            'total' => (new BrandRepository())->count(),
+            'brands' => (new BrandRepository())
+                ->where('name', '%'. $this->search .'%', 'like')
+                ->orderBy('created_at', $this->direction)
+                ->paginate(8)
+        ]);
     }
 }

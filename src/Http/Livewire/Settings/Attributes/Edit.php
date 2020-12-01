@@ -114,6 +114,12 @@ class Edit extends AbstractBaseComponent
             'title' => __("Updated"),
             'message' => __("Attribute has been successfully updated!"),
         ]);
+
+//        if ($this->hasValues() && ! $this->attribute->values->isEmpty()) {
+//
+//        } else {
+//            $this->emitSelf('notify-error');
+//        }
     }
 
     /**
