@@ -95,11 +95,12 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('dialog-modal');
             $this->registerComponent('empty-state');
             $this->registerComponent('input.drag-upload');
+            $this->registerComponent('input.file-upload');
             $this->registerComponent('input.group');
             $this->registerComponent('input.rich-text');
+            $this->registerComponent('input.search');
             $this->registerComponent('input.text');
             $this->registerComponent('input.textarea');
-            $this->registerComponent('input.file-upload');
             $this->registerComponent('learn-more');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
