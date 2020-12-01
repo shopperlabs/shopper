@@ -36,10 +36,11 @@ use Shopper\Framework\Http\Livewire\{
     Products\Browse as BrowseProducts,
     Products\Create as CreateProduct,
     Products\Edit as EditProduct,
+    Products\Form\Attributes as AttributesFormProduct,
     Products\Form\Edit as EditFormProduct,
     Products\Form\Seo as SEOFormProduct,
     Products\Form\Shipping as ShippingFormProduct,
-    Products\Form\Inventory as InventoryProduct,
+    Products\Form\Inventory as InventoryFormProduct,
     Settings\Analytics,
     Settings\Attributes\Browse as BrowseAttributes,
     Settings\Attributes\Create as CreateAttribute,
@@ -135,10 +136,11 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-products-browse', BrowseProducts::class);
         Livewire::component('shopper-products-create', CreateProduct::class);
         Livewire::component('shopper-products-edit', EditProduct::class);
+        Livewire::component('shopper-products-form-attributes', AttributesFormProduct::class);
         Livewire::component('shopper-products-form-edit', EditFormProduct::class);
         Livewire::component('shopper-products-form-seo', SEOFormProduct::class);
         Livewire::component('shopper-products-form-shipping', ShippingFormProduct::class);
-        Livewire::component('shopper-products-form-inventory', InventoryProduct::class);
+        Livewire::component('shopper-products-form-inventory', InventoryFormProduct::class);
         Livewire::component('shopper-customers-lists', BrowseCustomers::class);
         Livewire::component('shopper-customers-create', CreateCustomer::class);
         Livewire::component('shopper-customers-show', ShowCustomer::class);
