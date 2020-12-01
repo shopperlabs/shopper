@@ -127,7 +127,7 @@ class Edit extends Component
             'type' => $this->type,
             'match_conditions' => $this->condition_match,
             'seo_title' => $this->seoTitle,
-            'seo_description' => $this->seoDescription,
+            'seo_description' => str_limit($this->seoDescription, 157),
             'published_at' => $this->publishedAt,
         ]);
 
