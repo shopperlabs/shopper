@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Shopper\Framework\Exceptions\ShopperExceptionHandler;
 
 class ShopperBaseController extends Controller
@@ -21,11 +20,9 @@ class ShopperBaseController extends Controller
      */
     public function __construct()
     {
-        if (Auth::check()) {
-            app()->singleton(
-                \Illuminate\Contracts\Debug\ExceptionHandler::class,
-                ShopperExceptionHandler::class
-            );
-        }
+        app()->singleton(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+            ShopperExceptionHandler::class
+        );
     }
 }
