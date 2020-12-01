@@ -33,16 +33,13 @@ class Attribute extends Model
     ];
 
     /**
-     * Boot the model.
+     * The accessors to append to the model's array form.
+     *
+     * @var array
      */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($model) {
-            $model->update(['slug' => $model->name]);
-        });
-    }
+    protected $appends = [
+      'type_formatted',
+    ];
 
     /**
      * Get the table associated with the model.
@@ -52,6 +49,16 @@ class Attribute extends Model
     public function getTable()
     {
         return shopper_table('attributes');
+    }
+
+    /**
+     * Return formatted type.
+     *
+     * @return string
+     */
+    public function getTypeFormattedAttribute()
+    {
+        return self::typesFields()[$this->type];
     }
 
     /**
@@ -91,20 +98,6 @@ class Attribute extends Model
             'colorpicker',
             'radio',
         ];
-    }
-
-    /**
-     * Set the proper slug attribute.
-     *
-     * @param  string  $value
-     */
-    public function setSlugAttribute($value)
-    {
-        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
-            $slug = "{$slug}-{$this->id}";
-        }
-
-        $this->attributes['slug'] = $slug;
     }
 
     /**
