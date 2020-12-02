@@ -19,7 +19,7 @@
             </div>
 
             <div class="mt-4 text-gray-500">
-                To begin building your new Store with Laravel Shopper v2, we recommend starting with these steps. The framework allows you to create
+                To begin building your new store with Laravel Shopper v2, we recommend starting with these steps. The framework allows you to create
                 your store and configure it exactly as you want. You can make <span class="text-gray-600 font-medium">integrations</span> to go faster if you want.
             </div>
         </div>
@@ -35,12 +35,12 @@
 
                 <div class="ml-10">
                     <div class="mt-4 text-sm text-gray-500">
-                        Get to know Laravel Shopper by understanding its capabilities the right way, whether you are new to the framework or have already worked on it. This documentation is made for you.
+                        {{ __('Get to know Laravel Shopper by understanding its capabilities the right way, whether you are new to the framework or have already worked on it. This documentation is made for you.') }}
                     </div>
 
                     <a href="https://docs.laravelshopper.io" class="group">
                         <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
-                            <span>Visit the documentation</span>
+                            <span>{{ __('Visit the documentation') }}</span>
 
                             <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
                                 <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,12 +62,12 @@
 
                 <div class="ml-10">
                     <div class="mt-4 text-sm text-gray-500">
-                        Learn how to Learn to build a professional online store from start to finish with complete Shopper video lessons and sample codes to quickly set up your store.
+                        {{ __('Learn how to Learn to build a professional online store from start to finish with complete Shopper video lessons and sample codes to quickly set up your store.') }}
                     </div>
 
                     <a href="https://docs.laravelshopper.io/screencasts" class="group">
                         <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
-                            <span>Start watching Shopper</span>
+                            <span>{{ __('Start watching Shopper') }}</span>
 
                             <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
                                 <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,12 +89,12 @@
 
                 <div class="ml-10">
                     <div class="mt-2 text-sm text-gray-500">
-                        Your store is the website for your products. Get up and running quickly with an available theme, specially created for Shopper. Edit as needed or create your own theme.
+                        {{ __('Your store is the website for your products. Get up and running quickly with an available theme, specially created for Shopper. Edit as needed or create your own theme.') }}
                     </div>
 
                     <a href="#" class="group">
                         <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
-                            <span>Find a Theme</span>
+                            <span>{{ __('Find a Theme') }}</span>
 
                             <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
                                 <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,18 +111,18 @@
                     <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 text-blue-600">
                         <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
-                    <h4 class="ml-4 text-base text-gray-900 leading-6 font-medium">Add products</h4>
+                    <h4 class="ml-4 text-base text-gray-900 leading-6 font-medium">{{ __('Add products') }}</h4>
                 </div>
 
                 <div class="ml-10">
                     <div class="mt-2 text-sm text-gray-500">
-                        Add products and prices to start selling. Tailor it to your store's needs with an unlimited number of products (depending on the size of your store), brands, collections, and variations.
+                        {{ __("Add products and prices to start selling. Tailor it to your store's needs with an unlimited number of products (depending on the size of your store), brands, collections, and variations.") }}
                     </div>
 
                     @can('add_products')
                         <a href="{{ route('shopper.products.create') }}" class="group">
                             <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
-                                <span>Add product to your store</span>
+                                <span>{{ __('Add product to your store') }}</span>
 
                                 <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
                                     <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
