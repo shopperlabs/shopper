@@ -17,7 +17,7 @@ class ShopperExceptionHandler extends ExceptionHandler
      */
     public function report(Throwable $e)
     {
-        //
+        parent::report($e);
     }
 
     /**
@@ -31,6 +31,10 @@ class ShopperExceptionHandler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
+        if (! $request->user()) {
+            return parent::render($request, $e);
+        }
+
         return response()->view(
             'shopper::errors.template',
             ['exception' => $e]

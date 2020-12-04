@@ -15,6 +15,7 @@ use Shopper\Framework\Events\Handlers\{
     RegisterOrderSidebar,
     RegisterShopSidebar
 };
+use Shopper\Framework\Exceptions\ShopperExceptionHandler;
 use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
@@ -125,6 +126,11 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->app->singleton(
             TwoFactorAuthenticationProviderContract::class,
             TwoFactorAuthenticationProvider::class
+        );
+
+        $this->app->bind(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+            ShopperExceptionHandler::class
         );
 
         $this->app->bind(StatefulGuard::class, function () {
