@@ -135,8 +135,9 @@ class Edit extends AbstractBaseComponent
      * Render the component.
      *
      * @return View
+     * @throws \Shopper\Framework\Exceptions\GeneralException
      */
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-edit', [
             'brands' => (new BrandRepository())
@@ -149,7 +150,8 @@ class Edit extends AbstractBaseComponent
                 ->scopes('enabled')
                 ->select('name', 'id')
                 ->get(),
-            'collections' => (new CollectionRepository())->get(['name', 'id'])
+            'collections' => (new CollectionRepository())->get(['name', 'id']),
+            'currency' => shopper_currency(),
         ]);
     }
 }

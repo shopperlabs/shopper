@@ -32,7 +32,7 @@
                             <div class="mt-1 relative rounded-md shadow-sm">
                                 <input wire:model="price_amount" id="price_amount" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="0.00" min="0">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ shopper_currency() }}</span>
+                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                             <div class="mt-1 relative rounded-md shadow-sm">
                                 <input wire:model="old_price_amount" id="old_price_amount" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="0.00" min="0">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ shopper_currency() }}</span>
+                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="mt-1 relative rounded-md shadow-sm">
                                 <input wire:model="cost_amount" id="cost_amount" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="0.00" min="0">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ shopper_currency() }}</span>
+                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
                                 </div>
                             </div>
                             <p class="mt-2 text-sm text-gray-500">{{ __("Customers won’t see this.") }}</p>
@@ -68,12 +68,12 @@
                             <input wire:model="type" id="product-type-0" name="type" value="deliverable" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer" checked="">
                         </div>
                         <label for="product-type-0" class="ml-3 flex flex-col cursor-pointer">
-                        <span :class="{ 'text-blue-900': active === 0, 'text-gray-900': !(active === 0) }" class="block text-sm leading-5 font-medium text-blue-900">
-                            {{ __("Deliverable") }}
-                        </span>
+                            <span :class="{ 'text-blue-900': active === 0, 'text-gray-900': !(active === 0) }" class="block text-sm leading-5 font-medium text-blue-900">
+                                {{ __("Deliverable") }}
+                            </span>
                             <span :class="{ 'text-blue-700': active === 0, 'text-gray-500': !(active === 0) }" class="mt-0.5 block text-xs leading-4 text-blue-700">
-                            {{ __("This product can be delivered to a customer.") }}
-                        </span>
+                                {{ __("This product can be delivered to a customer.") }}
+                            </span>
                         </label>
                     </div>
 

@@ -153,8 +153,9 @@ class Create extends AbstractBaseComponent
      * Render the component.
      *
      * @return View
+     * @throws \Shopper\Framework\Exceptions\GeneralException
      */
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.create', [
             'brands' => (new BrandRepository())
