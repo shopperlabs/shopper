@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class Attributes extends Component
@@ -9,7 +11,7 @@ class Attributes extends Component
     /**
      * Product Model.
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     public $product;
 
@@ -26,7 +28,7 @@ class Attributes extends Component
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function render()
     {

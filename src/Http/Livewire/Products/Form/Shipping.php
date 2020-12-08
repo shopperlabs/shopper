@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\View\View;
 use Livewire\Component;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
@@ -13,7 +15,7 @@ class Shipping extends Component
     /**
      * Product Model.
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     public $product;
 
@@ -76,7 +78,7 @@ class Shipping extends Component
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function render()
     {

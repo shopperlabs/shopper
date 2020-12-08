@@ -2,6 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Exception;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\View\View;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
@@ -19,7 +22,7 @@ class Edit extends Component
     /**
      * Product Model.
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     public $product;
 
@@ -47,7 +50,7 @@ class Edit extends Component
     /**
      *  Removed a product to the storage.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function destroy()
     {
@@ -60,7 +63,7 @@ class Edit extends Component
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function render()
     {

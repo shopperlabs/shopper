@@ -81,7 +81,7 @@
                             <div class="sm:col-span-1">
                                 <label for="WidthValue" class="block text-sm leading-5 font-medium text-gray-700">{{ __("Width") }}</label>
                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input wire:model="WidthValue" id="WidthValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
+                                    <input wire:model="widthValue" id="WidthValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
                                         <select wire:model="WidthUnit" aria-label="{{ __("Width Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
                                             <option value="cm">cm</option>
@@ -93,7 +93,7 @@
                             <div class="sm:col-span-1">
                                 <label for="VolumeValue" class="block text-sm leading-5 font-medium text-gray-700">{{ __("Volume") }}</label>
                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input wire:model="VolumeValue" id="VolumeValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
+                                    <input wire:model="volumeValue" id="VolumeValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
                                         <select wire:model="VolumeUnit" aria-label="{{ __("Volume Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
                                             <option value="l">l</option>

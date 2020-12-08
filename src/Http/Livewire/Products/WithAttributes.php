@@ -114,7 +114,7 @@ trait WithAttributes
     /**
      * Product dimension: weight Value.
      *
-     * @var string
+     * @var mixed
      */
     public $weightValue;
 
@@ -128,7 +128,7 @@ trait WithAttributes
     /**
      * Product dimension: height Value.
      *
-     * @var string
+     * @var mixed
      */
     public $heightValue;
 
@@ -142,7 +142,7 @@ trait WithAttributes
     /**
      * Product dimension: width Value.
      *
-     * @var string
+     * @var mixed
      */
     public $widthValue;
 
@@ -156,7 +156,7 @@ trait WithAttributes
     /**
      * Product dimension: volume Value.
      *
-     * @var string
+     * @var mixed
      */
     public $volumeValue;
 

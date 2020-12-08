@@ -2,10 +2,11 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\View\View;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Events\Products\ProductCreated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Channel;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
@@ -15,10 +16,17 @@ use Shopper\Framework\Traits\WithUploadProcess;
 
 class Create extends AbstractBaseComponent
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithAttributes,
-        WithSeoAttributes;
+    use WithAttributes,
+        WithFileUploads,
+        WithSeoAttributes,
+        WithUploadProcess;
+
+    /**
+     * Product custom event listeners.
+     *
+     * @var string[]
+     */
+    protected $listeners = ['productAdded'];
 
     /**
      * Default product stock quantity.
@@ -108,7 +116,18 @@ class Create extends AbstractBaseComponent
 
         $product->channels()->attach($this->defaultChannel->id);
 
-        event(new ProductCreated($product, (int) $this->quantity));
+        if (count($this->quantity) > 0) {
+            foreach ($this->quantity as $inventory => $value) {
+                $product->mutateStock(
+                    $inventory,
+                    $value,
+                    [
+                        'event' => __('Initial inventory'),
+                        'old_quantity' => $value,
+                    ]
+                );
+            }
+        }
 
         session()->flash('success', __("Product successfully added!"));
         $this->redirectRoute('shopper.products.edit', $product);
@@ -133,7 +152,7 @@ class Create extends AbstractBaseComponent
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function render()
     {
@@ -148,7 +167,9 @@ class Create extends AbstractBaseComponent
                 ->scopes('enabled')
                 ->select('name', 'id')
                 ->get(),
-            'collections' => (new CollectionRepository())->get(['name', 'id'])
+            'collections' => (new CollectionRepository())->get(['name', 'id']),
+            'inventories' => Inventory::query()->get(['name', 'id']),
+            'currency' => shopper_currency(),
         ]);
     }
 }
