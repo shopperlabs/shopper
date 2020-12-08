@@ -98,6 +98,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('input.drag-upload');
             $this->registerComponent('input.file-upload');
             $this->registerComponent('input.group');
+            $this->registerComponent('input.markdown');
             $this->registerComponent('input.rich-text');
             $this->registerComponent('input.search');
             $this->registerComponent('input.text');
