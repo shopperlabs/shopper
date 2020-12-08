@@ -63,6 +63,8 @@ We send an email about 3-4 emails per year. Sometimes less.
 -   [Jean-Vincent QUILICHINI][link-author-2]
 -   [All Contributors][link-contributors]
 
+And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
+
 ## License
 
 The Shopper Framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
