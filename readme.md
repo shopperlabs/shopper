@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://laravelshopper.io/" title="Shopper Dashboard Screenshoot"><img src="/art/socialcard.png"></a>
+    <a href="https://laravelshopper.io/" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
 </p>
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
