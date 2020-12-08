@@ -126,9 +126,18 @@
             <div class="p-4 sm:px-6 border-t border-gray-100">
                 <div class="grid gap-4 sm:grid-cols-2">
                     <div class="sm:col-span-2">
-                        <x-shopper-input.group label="Value" for="value" :error="$errors->first('value')">
-                            <input wire:model="value" id="value" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="My value" />
-                        </x-shopper-input.group>
+                            @if($type === 'colorpicker')
+                                <div wire:ignore>
+                                    <label for="value" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Value") }}</label>
+                                    <div class="mt-1 relative">
+                                        <x-color-picker name="value" wire:model="value" />
+                                    </div>
+                                </div>
+                            @else
+                                <x-shopper-input.group label="Value" for="value" :error="$errors->first('value')">
+                                    <input wire:model="value" id="value" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="My value" />
+                                </x-shopper-input.group>
+                            @endif
                     </div>
                     <div class="sm:col-span-2">
                         <x-shopper-input.group label="Key" for="key" :error="$errors->first('key')" helpText="The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format">
