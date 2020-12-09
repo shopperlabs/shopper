@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://laravelshopper.io/" title="Shopper Dashboard Screenshoot"><img src="https://laravelshopper.io/images/shopper_dashboard_screenshoot.png"></a>
+    <a href="https://laravelshopper.io/" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
 </p>
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
@@ -8,7 +8,7 @@
 ## Introduction
 
 [Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 7.0+ which includes all the necessary for your online market application.
-Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied. 
+Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 
 ## Installation
@@ -19,8 +19,8 @@ Instructions on how to install Shopper can be found at the [installation guide](
 
 For advanced users, run this in your terminal to install Shopper from command line:
 
-``` bash  
-$ composer require shopper/framework  
+``` bash
+$ composer require shopper/framework
 ```
 
 Run this command to install Shopper in your project
@@ -54,7 +54,7 @@ Please see [contributing.md](contributing.md) for details and a todolist.
 
 If you discover any security related issues, please email contact@shopperlabs.io instead of using the issue tracker.
 
-It's _heavily_ recommended that you **[subscribe to the Shopper Newsletter](http://laravelshopper.io)** so you can find out about any security updates, breaking changes or major features. 
+It's _heavily_ recommended that you **[subscribe to the Shopper Newsletter](http://laravelshopper.io)** so you can find out about any security updates, breaking changes or major features.
 We send an email about 3-4 emails per year. Sometimes less.
 
 ## Credits
@@ -62,6 +62,8 @@ We send an email about 3-4 emails per year. Sometimes less.
 -   [Arthur Monney][link-author]
 -   [Jean-Vincent QUILICHINI][link-author-2]
 -   [All Contributors][link-contributors]
+
+And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
 ## License
 
