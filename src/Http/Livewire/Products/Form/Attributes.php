@@ -121,12 +121,12 @@ class Attributes extends Component
         if ($this->type === 'checkbox' || $this->type === 'checkbox_list') {
             $this->validate(['multipleValues' => 'required|array']);
         } else {
-            $this->validate(['value' => 'required']);
+            $this->validate(['value' => 'required', 'attribute_id' => 'required|int']);
         }
 
         $productAttribute = ProductAttribute::query()->create([
             'product_id' => $this->productId,
-            'attribute_id' => (int) $this->attribute_id,
+            'attribute_id' => $this->attribute_id,
         ]);
 
         if ($this->type === 'checkbox' || $this->type === 'checkbox_list') {

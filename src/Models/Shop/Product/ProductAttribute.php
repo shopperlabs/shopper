@@ -17,6 +17,13 @@ class ProductAttribute extends Model
     ];
 
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Get the table associated with the model.
      *
      * @return string
