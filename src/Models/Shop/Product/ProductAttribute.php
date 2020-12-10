@@ -24,6 +24,15 @@ class ProductAttribute extends Model
     public $timestamps = false;
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'attribute',
+    ];
+
+    /**
      * Get the table associated with the model.
      *
      * @return string
@@ -50,10 +59,10 @@ class ProductAttribute extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function values()
     {
-        return $this->belongsToMany(AttributeValue::class, shopper_table('attribute_value_product_attribute'), 'product_attribute_id');
+        return $this->hasMany(ProductAttributeValue::class);
     }
 }

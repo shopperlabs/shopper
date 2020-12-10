@@ -2,13 +2,14 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
+use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
 
 class Attributes extends Component
 {
@@ -84,11 +85,8 @@ class Attributes extends Component
     {
         $this->product = $product;
         $this->productId = $product->id;
-        $this->attributes = Attribute::query()->where('is_enabled', true)->get();
-        $this->productAttributes = ProductAttribute::query()
-            ->with('values')
-            ->where('product_id', $product->id)
-            ->get();
+        $this->getProductAttributes();
+        $this->getAttributes();
     }
 
     /**
@@ -131,18 +129,18 @@ class Attributes extends Component
 
         if ($this->type === 'checkbox' || $this->type === 'checkbox_list') {
             foreach ($this->multipleValues as $checkboxValue) {
-                DB::table(shopper_table('attribute_value_product_attribute'))->insert([
+                ProductAttributeValue::query()->create([
                     'attribute_value_id'    => $checkboxValue,
                     'product_attribute_id'  => $productAttribute->id,
                 ]);
             }
         } else {
-            DB::table(shopper_table('attribute_value_product_attribute'))->insert([
-                'attribute_value_id'    => in_array($this->type, ['text', 'number', 'richtext', 'markdown'])
+            ProductAttributeValue::query()->create([
+                'attribute_value_id'    => in_array($this->type, Attribute::fieldsWithStringValues())
                     ? null
                     : $this->value,
                 'product_attribute_id'  => $productAttribute->id,
-                'product_custom_value'  => in_array($this->type, ['text', 'number', 'richtext', 'markdown'])
+                'product_custom_value'  => in_array($this->type, Attribute::fieldsWithStringValues())
                     ? $this->value
                     : null,
             ]);
@@ -156,6 +154,30 @@ class Attributes extends Component
         ]);
     }
 
+    public function updateProductAttribute(int $id)
+    {
+        dd($id);
+    }
+
+    /**
+     * Remove Attribute to product.
+     *
+     * @param  int  $id
+     * @throws \Exception
+     */
+    public function removeProductAttribute(int $id)
+    {
+        ProductAttribute::query()->find($id)->delete();
+
+        $this->getProductAttributes();
+        $this->getAttributes();
+
+        $this->notify([
+            'title' => __("Attribute Removed"),
+            'message' => __("You have successfully removed this attribute to product."),
+        ]);
+    }
+
     /**
      * Close Modal.
      *
@@ -163,6 +185,9 @@ class Attributes extends Component
      */
     public function closeModal()
     {
+        $this->getProductAttributes();
+        $this->getAttributes();
+
         $this->dispatchBrowserEvent('modal-close');
         $this->resetErrorBag();
 
@@ -170,6 +195,37 @@ class Attributes extends Component
         $this->type = 'text';
         $this->multipleValues = [];
         $this->attribute_id = '0';
+    }
+
+    /**
+     * Get Product Attributes lists.
+     *
+     * @return void
+     */
+    private function getProductAttributes()
+    {
+        $this->productAttributes = ProductAttribute::query()
+            ->with('values')
+            ->where('product_id', $this->product->id)
+            ->get()
+            ->map(function ($pa) {
+                $pa['type'] = $pa->attribute->type;
+
+                return $pa;
+            });
+    }
+
+    /**
+     * Get Attributes lists not used by the product.
+     *
+     * @return void
+     */
+    private function getAttributes()
+    {
+        $this->attributes = Attribute::query()
+            ->whereNotIn('id', $this->productAttributes->pluck('attribute_id')->toArray())
+            ->where('is_enabled', true)
+            ->get();
     }
 
     /**

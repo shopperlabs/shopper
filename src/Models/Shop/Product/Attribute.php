@@ -101,6 +101,22 @@ class Attribute extends Model
     }
 
     /**
+     * Return attributes fields that has custom string values.
+     *
+     * @return string[]
+     */
+    public static function fieldsWithStringValues()
+    {
+        return [
+            'text',
+            'number',
+            'richtext',
+            'markdown',
+            'datepicker'
+        ];
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function values()
