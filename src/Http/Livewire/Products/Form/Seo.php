@@ -2,7 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
@@ -14,7 +16,7 @@ class Seo extends Component
     /**
      * Product Model.
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     public $product;
 
@@ -77,7 +79,7 @@ class Seo extends Component
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function render()
     {

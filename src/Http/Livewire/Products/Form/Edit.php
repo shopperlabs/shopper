@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\View\View;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -23,7 +25,7 @@ class Edit extends AbstractBaseComponent
     /**
      * Product Model.
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     public $product;
 
@@ -132,9 +134,10 @@ class Edit extends AbstractBaseComponent
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
+     * @return View
+     * @throws \Shopper\Framework\Exceptions\GeneralException
      */
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-edit', [
             'brands' => (new BrandRepository())
@@ -147,7 +150,8 @@ class Edit extends AbstractBaseComponent
                 ->scopes('enabled')
                 ->select('name', 'id')
                 ->get(),
-            'collections' => (new CollectionRepository())->get(['name', 'id'])
+            'collections' => (new CollectionRepository())->get(['name', 'id']),
+            'currency' => shopper_currency(),
         ]);
     }
 }

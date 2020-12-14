@@ -2,14 +2,19 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Excel;
 use Shopper\Framework\Exports\ProductInventoryExport;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryHistoryRepository;
 use Shopper\Framework\Repositories\InventoryRepository;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class Inventory extends Component
 {
@@ -18,7 +23,7 @@ class Inventory extends Component
     /**
      * Product Model.
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var Model
      */
     public $product;
 
@@ -209,19 +214,19 @@ class Inventory extends Component
     /**
      * Export default product stock movement.
      *
-     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @return Response|BinaryFileResponse
      */
     public function export()
     {
         return (new ProductInventoryExport())
             ->forProduct($this->productId)
-            ->download('product-stock-movements.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+            ->download('product-stock-movements.xlsx', Excel::XLSX);
     }
 
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function render()
     {

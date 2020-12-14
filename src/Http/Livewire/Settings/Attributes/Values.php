@@ -161,17 +161,13 @@ class Values extends AbstractBaseComponent
             ->find($this->valueId)
             ->update(['value' => $this->value, 'key' => $this->key]);
 
-        $this->dispatchBrowserEvent('modal-close');
+        $this->closeModal();
         $this->emitSelf('updateValues');
 
         $this->notify([
             'title' => __("Update"),
             'message' => __("Your value have been correctly updated."),
         ]);
-
-        $this->value = '';
-        $this->key = '';
-        $this->valueId = null;
     }
 
     /**

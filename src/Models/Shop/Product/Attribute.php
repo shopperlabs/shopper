@@ -77,10 +77,10 @@ class Attribute extends Model
           'checkbox' => __('Checkbox') ,
           'checkbox_list' => __('Checkbox List') ,
           'radio' => __('Radio') ,
-          'toggle' => __('Toggle') ,
+          // 'toggle' => __('Toggle') ,
           'colorpicker' => __('Color picker') ,
           'datepicker' => __('Date picker') ,
-          'file' => __('File') ,
+          // 'file' => __('File') ,
         ];
     }
 
@@ -97,6 +97,22 @@ class Attribute extends Model
             'checkbox_list',
             'colorpicker',
             'radio',
+        ];
+    }
+
+    /**
+     * Return attributes fields that has custom string values.
+     *
+     * @return string[]
+     */
+    public static function fieldsWithStringValues()
+    {
+        return [
+            'text',
+            'number',
+            'richtext',
+            'markdown',
+            'datepicker'
         ];
     }
 

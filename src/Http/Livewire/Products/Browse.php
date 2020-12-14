@@ -2,7 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Events\Products\ProductRemoved;
@@ -82,7 +84,7 @@ class Browse extends Component
      * Remove a record to the database.
      *
      * @param  int  $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(int $id)
     {
@@ -102,7 +104,7 @@ class Browse extends Component
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function render()
     {

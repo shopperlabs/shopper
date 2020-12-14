@@ -80,7 +80,7 @@ class Product extends Model implements ReviewRateable
      *
      * @var array
      */
-    public $appends = [
+    protected $appends = [
         'formatted_price',
     ];
 

@@ -18,17 +18,17 @@ class ProductCreated
     /**
      * Quantity to set to the product.
      *
-     * @var int
+     * @var array
      */
-    public int $quantity;
+    public $quantity;
 
     /**
      * Create a new event instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  int  $quantity
+     * @param  array  $quantity
      */
-    public function __construct($product, int $quantity = 0)
+    public function __construct($product, array $quantity)
     {
         $this->product = $product;
         $this->quantity = $quantity;

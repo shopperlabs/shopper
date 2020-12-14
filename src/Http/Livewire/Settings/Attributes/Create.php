@@ -87,7 +87,7 @@ class Create extends AbstractBaseComponent
             'is_filterable' => $this->isFilterable,
         ]);
 
-        session('flash', __("Attribute successfully added"));
+        session()->flash('success', __("Attribute successfully added"));
         $this->redirectRoute('shopper.settings.attributes.edit', $attribute);
     }
 
