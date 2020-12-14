@@ -12,7 +12,7 @@
             'shipping': '{{ __("Shipping") }}',
             'related': '{{ __("Related Products") }}'
         },
-        currentTab: 'attributes'
+        currentTab: 'detail'
     }"
 >
     <x:shopper-breadcrumb back="shopper.products.index">
