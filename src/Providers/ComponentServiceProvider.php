@@ -102,6 +102,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('input.markdown');
             $this->registerComponent('input.rich-text');
             $this->registerComponent('input.search');
+            $this->registerComponent('input.select');
             $this->registerComponent('input.text');
             $this->registerComponent('input.textarea');
             $this->registerComponent('label');
