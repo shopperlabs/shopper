@@ -2,13 +2,15 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
+use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 
 class General extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     /**
      * Search word
@@ -60,6 +62,20 @@ class General extends Component
     public $providerId;
 
     /**
+     * Logo Attribute.
+     *
+     * @var mixed
+     */
+    public $logo;
+
+    /**
+     * Logo full url preview.
+     *
+     * @var string
+     */
+    public $logoUrl;
+
+    /**
      * Add a new entry of payment method in the storage.
      *
      * @return void
@@ -68,9 +84,10 @@ class General extends Component
     {
         $this->validate([
             'title' => 'required|unique:'. shopper_table('payment_methods'),
+            'logo'  => 'nullable|image|max:1024'
         ]);
 
-        PaymentMethod::query()->create([
+        $paymentMethod = PaymentMethod::query()->create([
             'title' => $this->title,
             'link_url' => $this->linkUrl,
             'description' => $this->description,
@@ -78,18 +95,20 @@ class General extends Component
             'is_enabled' => $this->enabled,
         ]);
 
+        if ($this->logo) {
+            $paymentMethod->update([
+                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads'))
+            ]);
+        }
+
         $this->dispatchBrowserEvent('modal-close');
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __("Saved!"),
             'message' => __("Your payment method have been correctly added."),
         ]);
 
-        $this->title = '';
-        $this->linkUrl = '';
-        $this->description = '';
-        $this->instructions = '';
-        $this->enabled = false;
+        $this->resetFields();
     }
 
     /**
@@ -100,14 +119,15 @@ class General extends Component
      */
     public function modalEdit(int $id)
     {
-        $payment = PaymentMethod::query()->find($id);
+        $paymentMethod = PaymentMethod::query()->find($id);
 
         $this->providerId = $id;
-        $this->title = $payment->title;
-        $this->description = $payment->description;
-        $this->linkUrl = $payment->link_url;
-        $this->instructions = $payment->instructions;
-        $this->enabled = $payment->is_enabled;
+        $this->title = $paymentMethod->title;
+        $this->description = $paymentMethod->description;
+        $this->linkUrl = $paymentMethod->link_url;
+        $this->instructions = $paymentMethod->instructions;
+        $this->enabled = $paymentMethod->is_enabled;
+        $this->logoUrl = $paymentMethod->logo_url;
 
         $this->dispatchBrowserEvent('modal-open');
         $this->dispatchBrowserEvent('item-update');
@@ -122,12 +142,7 @@ class General extends Component
     {
         $this->dispatchBrowserEvent('modal-close');
 
-        $this->providerId = null;
-        $this->title = '';
-        $this->linkUrl = '';
-        $this->description = '';
-        $this->instructions = '';
-        $this->enabled = false;
+        $this->resetFields();
     }
 
     /**
@@ -135,32 +150,40 @@ class General extends Component
      *
      * @return void
      */
-    public function updatePayment()
+    public function updatePaymentMethod()
     {
-        $this->validate(['title' => 'sometimes|required']);
+        $this->validate([
+            'title' => [
+                'required',
+                Rule::unique(shopper_table('payment_methods'), 'title')->ignore($this->providerId)
+            ],
+            'logo'  => 'nullable|image|max:1024'
+        ]);
 
-        PaymentMethod::query()
-            ->find($this->providerId)
-            ->update([
-                'title' => $this->title,
-                'link_url' => $this->linkUrl,
-                'description' => $this->description,
-                'instructions' => $this->instructions,
-                'is_enabled' => $this->enabled,
+        $paymentMethod = PaymentMethod::query()->find($this->providerId);
+
+        $paymentMethod->update([
+            'title' => $this->title,
+            'link_url' => $this->linkUrl,
+            'description' => $this->description,
+            'instructions' => $this->instructions,
+            'is_enabled' => $this->enabled,
+        ]);
+
+        if ($this->logo) {
+            $paymentMethod->update([
+                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads'))
             ]);
+        }
 
         $this->dispatchBrowserEvent('modal-close');
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __("Update"),
             'message' => __("Your payment method have been correctly updated."),
         ]);
 
-        $this->title = '';
-        $this->linkUrl = '';
-        $this->description = '';
-        $this->instructions = '';
-        $this->enabled = false;
+        $this->resetFields();
     }
 
     /**
@@ -175,10 +198,27 @@ class General extends Component
 
         $this->dispatchBrowserEvent('item-update');
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __("Deleted"),
             'message' => __("Your payment method have been correctly removed."),
         ]);
+    }
+
+    /**
+     * Reset Components Form Fields.
+     *
+     * @return void
+     */
+    private function resetFields()
+    {
+        $this->providerId = null;
+        $this->title = '';
+        $this->linkUrl = '';
+        $this->description = '';
+        $this->instructions = '';
+        $this->enabled = false;
+        $this->logoUrl = null;
+        $this->logo = null;
     }
 
     /**

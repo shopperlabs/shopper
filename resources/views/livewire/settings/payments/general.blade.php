@@ -82,18 +82,18 @@
                     <div class="align-middle inline-block min-w-full">
                         <table class="min-w-full">
                             <thead>
-                            <tr class="border-t border-gray-200">
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    <span class="lg:pl-2">{{ __("Title") }}</span>
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Website") }}
-                                </th>
-                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Updated at") }}
-                                </th>
-                                <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
-                            </tr>
+                                <tr class="border-t border-gray-200">
+                                    <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        <span class="lg:pl-2">{{ __("Title") }}</span>
+                                    </th>
+                                    <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        {{ __("Website") }}
+                                    </th>
+                                    <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        {{ __("Updated at") }}
+                                    </th>
+                                    <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
+                                </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-100" x-max="1">
                                 @forelse($methods as $method)
@@ -102,9 +102,18 @@
                                             <div class="flex items-center space-x-3 lg:pl-2">
                                                 <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $method->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
                                                 <div class="flex items-center">
-                                                    <a href="#" class="ml-2 truncate hover:text-gray-600">
+                                                    @if($method->logo_url)
+                                                        <img class="h-8 w-8 rounded object-cover object-center" src="{{ $method->logo_url }}" alt="">
+                                                    @else
+                                                        <div class="bg-gray-200 flex items-center justify-center h-8 w-8 rounded">
+                                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                            </svg>
+                                                        </div>
+                                                    @endif
+                                                    <span class="ml-2 truncate">
                                                         <span>{{ $method->title }} </span>
-                                                    </a>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </td>
@@ -202,30 +211,52 @@
             <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
                 <div class="text-left">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        {{ __("Add new payment method") }}
+                        {{ $providerId ? __("Update payment method") : __('Add new payment method') }}
                     </h3>
                 </div>
             </div>
             <div class="p-4 sm:px-6 border-t border-gray-100">
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                    @if(! $logoUrl)
+                        <div class="sm:col-span-2">
+                            <div>
+                                <x-shopper-label value="{{ __('Provider Logo') }}" />
+                                <div class="mt-2">
+                                    <x-shopper-input.file-upload id="logo" wire:model='logo'>
+                                        <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                                            @if($logo)
+                                                <img class="h-full w-full bg-center" src="{{ $logo->temporaryUrl() }}" alt="">
+                                            @else
+                                                <span class="h-12 w-12 flex items-center justify-center">
+                                                    <svg class="h-8 w-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                </span>
+                                            @endif
+                                        </span>
+                                    </x-shopper-input.file-upload>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="sm:col-span-2">
                         <x-shopper-input.group label="Custom payment method name" for="title" :error="$errors->first('title')" isRequired>
-                            <input wire:model="title" id="title" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                            <x-shopper-input.text wire:model="title" id="title" />
                         </x-shopper-input.group>
                     </div>
                     <div class="sm:col-span-2">
                         <x-shopper-input.group label="Payment Website Documentation" for="link_url">
-                            <input wire:model="linkUrl" id="link_url" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                            <x-shopper-input.text wire:model="linkUrl" type="url" id="link_url" placeholder="https://doc.myprovider.com" />
                         </x-shopper-input.group>
                     </div>
                     <div class="sm:col-span-2">
                         <x-shopper-input.group label="Additional details" for="description" helpText="Displays to customers when they’re choosing a payment method.">
-                            <textarea wire:model="description" id="description" rows="4" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                            <x-shopper-input.textarea wire:model="description" id="description" />
                         </x-shopper-input.group>
                     </div>
                     <div class="sm:col-span-2">
                         <x-shopper-input.group label="Payment instructions" for="instructions" helpText="Displays to customers after they place an order with this payment method.">
-                            <textarea wire:model="instructions" id="instructions" rows="4" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                            <x-shopper-input.textarea wire:model="instructions" id="instructions" />
                         </x-shopper-input.group>
                     </div>
                     <div class="sm:col-span-2">
@@ -234,7 +265,7 @@
                                 <span class="text-sm leading-5 font-medium text-gray-900">{{ __("Enabled") }}</span>
                                 <span class="text-sm leading-normal text-gray-500">{{ __("This provider will be available and visible to your customers once it is enabled.") }}</span>
                             </span>
-                            <span role="checkbox" tabindex="0" x-on:click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" aria-labelledby="toggleLabel" x-bind:class="{ 'bg-gray-200': !on, 'bg-green-600': on }" class="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-green">
+                            <span role="checkbox" tabindex="0" x-on:click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" aria-labelledby="toggleLabel" x-bind:class="{ 'bg-gray-200': !on, 'bg-blue-600': on }" class="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue">
                                 <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
                             </span>
                         </div>
@@ -245,8 +276,8 @@
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <span class="flex w-full sm:ml-3 sm:w-auto">
                 @if($providerId)
-                    <x-shopper-button wire:click="updatePayment" type="button" wire.loading.attr="disabled">
-                        <svg wire:loading wire:target="updatePayment" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <x-shopper-button wire:click="updatePaymentMethod" type="button" wire.loading.attr="disabled">
+                        <svg wire:loading wire:target="updatePaymentMethod" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                         </svg>
