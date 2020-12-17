@@ -86,6 +86,7 @@ class ComponentServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('alert');
+            $this->registerComponent('application-logo');
             $this->registerComponent('button');
             $this->registerComponent('breadcrumb');
             $this->registerComponent('confirms-password');
@@ -107,6 +108,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('learn-more');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
+            $this->registerComponent('validation-errors');
             $this->registerComponent('wip');
             $this->registerComponent('wip-placeholder');
         });
