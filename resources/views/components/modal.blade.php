@@ -22,11 +22,13 @@
 @endphp
 
 <div
-    x-cloak
     {{ $attributes }}
-    class="fixed z-50 inset-0 overflow-y-auto"
+    x-data="{ show: @entangle($attributes->wire('model')), }"
     x-on:modal-close.window="show = false"
     x-on:modal-open.window="show = true"
+    x-show="show"
+    class="fixed z-50 inset-0 overflow-y-auto"
+    style="display: none;"
 >
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div
