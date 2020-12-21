@@ -52,28 +52,25 @@
             <div class="bg-white rounded-lg shadow p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <div class="sm:col-span-1">
                     <x-shopper-input.group label="Name" for="name" :error="$errors->first('name')">
-                        <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                        <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" />
                     </x-shopper-input.group>
                 </div>
                 <div class="sm:col-span-1">
-                    <label for="type" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Type") }}</label>
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <select wire:model="type" id="type" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    <x-shopper-input.group for="type" label="Type">
+                        <x-shopper-input.select wire:model="type" id="type">
                             @foreach($fields as $key => $field)
                                 <option value="{{ $key }}">{{ $field }}</option>
                             @endforeach
-                        </select>
-                    </div>
+                        </x-shopper-input.select>
+                    </x-shopper-input.group>
                 </div>
                 <div class="sm:col-span-2">
                     <div class="flex items-center justify-between">
-                        <label for="description" class="block text-sm leading-5 font-medium text-gray-700">
-                            {{ __("Description") }}
-                        </label>
+                        <x-shopper-label :value="__('Description')" for="description" />
                         <span class="ml-4 text-sm text-gray-500 leading-5">{{ __("Optional") }}</span>
                     </div>
                     <div class="rounded-md shadow-sm">
-                        <textarea wire:model="description" id="description" rows="3" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                        <x-shopper-input.textarea wire:model="description" id="description" />
                     </div>
                 </div>
                 <div class="sm:col-span-2 flex items-center space-x-4">
@@ -103,7 +100,7 @@
                 <div class="bg-white rounded-md shadow overflow-hidden divide-y divide-gray-200">
                     <div class="p-4 sm:p-5">
                         <x-shopper-input.group label="Slug (code)" for="slug" :error="$errors->first('slug')">
-                            <input wire:model="slug" id="slug" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                            <x-shopper-input.text wire:model="slug" id="slug" type="text" autocomplete="off" />
                         </x-shopper-input.group>
                     </div>
                     <div class="p-4 sm:p-5">

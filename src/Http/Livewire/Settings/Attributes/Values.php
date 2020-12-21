@@ -73,6 +73,13 @@ class Values extends AbstractBaseComponent
     public $key;
 
     /**
+     * Launch create modal.
+     *
+     * @var bool
+     */
+    public $createModale = false;
+
+    /**
      * Component Mount new instance.
      *
      * @param  Attribute  $attribute
@@ -84,6 +91,16 @@ class Values extends AbstractBaseComponent
         $this->attributeId = $attribute->id;
         $this->values = $attribute->values;
         $this->type = $attribute->type;
+    }
+
+    /**
+     * Launch modale to create a new permission.
+     *
+     * @return void
+     */
+    public function launchModale()
+    {
+        $this->createModale = true;
     }
 
     /**
@@ -139,7 +156,7 @@ class Values extends AbstractBaseComponent
         $this->value = $value->value;
         $this->key = $value->key;
 
-        $this->dispatchBrowserEvent('modal-open');
+        $this->createModale = true;
     }
 
     /**
@@ -183,8 +200,8 @@ class Values extends AbstractBaseComponent
         $this->emitSelf('updateValues');
 
         $this->notify([
-            'title' => __("Deleted"),
-            'message' => __("Your value have been correctly removed."),
+            'title' => __('Deleted'),
+            'message' => __('Your value have been correctly removed.'),
         ]);
     }
 
@@ -195,12 +212,13 @@ class Values extends AbstractBaseComponent
      */
     public function closeModal()
     {
-        $this->dispatchBrowserEvent('modal-close');
-        $this->resetErrorBag();
-
         $this->valueId = null;
         $this->value = '';
         $this->key = '';
+
+        $this->createModale = false;
+
+        $this->resetErrorBag();
     }
 
 
