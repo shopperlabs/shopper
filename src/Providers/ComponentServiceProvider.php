@@ -89,6 +89,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('application-logo');
             $this->registerComponent('button');
             $this->registerComponent('breadcrumb');
+            $this->registerComponent('confirm-modal');
             $this->registerComponent('confirms-password');
             $this->registerComponent('datetime-picker');
             $this->registerComponent('danger-button');
