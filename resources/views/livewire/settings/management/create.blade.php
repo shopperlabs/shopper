@@ -28,19 +28,12 @@
 
         <div class="mt-5 bg-white rounded-md shadow-md overflow-hidden px-4 py-5 sm:px-6">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
-                <label for="email" class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                <x-shopper-label for="email" class="sm:mt-px sm:pt-2">
                     {{ __("Email address") }} <span class="text-red-500">*</span>
-                </label>
+                </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg relative rounded-md shadow-sm">
-                        <input wire:model="email" id="email" type="email" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('email') pr-10 border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror" autocomplete="off">
-                        @error('email')
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        @enderror
+                        <x-shopper-input.text wire:model="email" id="email" type="email" autocomplete="off" />
                     </div>
                     @error('email')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -48,9 +41,9 @@
                 </div>
             </div>
             <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label for="password" class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                <x-shopper-label for="password" class="sm:mt-px sm:pt-2">
                     {{ __("Password") }} <span class="text-red-500">*</span>
-                </label>
+                </x-shopper-label>
                 <div x-data="{ show: false }" class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="flex items-center justify-between max-w-lg">
                         <button wire:click="generate" type="button" class="text-brand-500 text-sm font-medium leading-5 hover:text-brand-400 transition ease-in-out duration-150">
@@ -110,12 +103,12 @@
 
         <div class="mt-5 bg-white rounded-md shadow-md overflow-hidden px-4 py-5 sm:px-6">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
-                <label for="first_name" class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                <x-shopper-label for="first_name" class="sm:mt-px sm:pt-2">
                     {{ __("First name") }} <span class="text-red-500">*</span>
-                </label>
+                </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <input wire:model="first_name" id="first_name" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                        <x-shopper-input.text wire:model="first_name" id="first_name" autocomplete="off" />
                     </div>
                     @error('first_name')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -124,12 +117,12 @@
             </div>
 
             <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label for="last_name" class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                <x-shopper-label for="last_name" class="sm:mt-px sm:pt-2">
                     {{ __("Last name") }} <span class="text-red-500">*</span>
-                </label>
+                </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <input wire:model="last_name" id="last_name" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                        <x-shopper-input.text wire:model="last_name" id="last_name" autocomplete="off" />
                     </div>
                     @error('last_name')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -138,15 +131,15 @@
             </div>
 
             <div class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label for="gender" class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                <x-shopper-label for="gender" class="sm:mt-px sm:pt-2">
                     {{ __("Gender") }}
-                </label>
+                </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <select wire:model="gender" id="gender" class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <x-shopper-input.select wire:model="gender" id="gender">
                             <option value="male">{{ __("Male") }}</option>
                             <option value="female">{{ __("Female") }}</option>
-                        </select>
+                        </x-shopper-input.select>
                     </div>
                 </div>
             </div>
@@ -177,12 +170,12 @@
                "
                 class="mt-6 sm:mt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
             >
-                <label for="phone_number" class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                <x-shopper-label for="phone_number" class="sm:mt-px sm:pt-2">
                     {{ __("Phone number") }}
-                </label>
+                </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <input wire:model="phone_number" id="phone_number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                        <x-shopper-input.text wire:model="phone_number" id="phone_number" />
                         @error('phone_number')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -269,13 +262,13 @@
                     </a>
                 </span>
                 <span class="ml-3 inline-flex rounded-md shadow-sm">
-                    <button wire:click="save" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue active:bg-blue-700 transition duration-150 ease-in-out">
-                        <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
+                        <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                         </svg>
                         {{ __("Save and Continue") }}
-                    </button>
+                    </x-shopper-button>
                 </span>
             </div>
         </div>

@@ -8,10 +8,32 @@ use Shopper\Framework\Rules\Password as PasswordRules;
 
 class Password extends Component
 {
-    public $current_password = '';
-    public $password = '';
-    public $password_confirmation = '';
+    /**
+     * User current password.
+     *
+     * @var string
+     */
+    public $current_password;
 
+    /**
+     * User new password.
+     *
+     * @var string
+     */
+    public $password;
+
+    /**
+     * Password confirmation.
+     *
+     * @var string
+     */
+    public $password_confirmation;
+
+    /**
+     * Update user password.
+     *
+     * @return void
+     */
     public function save()
     {
         $this->validate($this->rules());
@@ -34,6 +56,11 @@ class Password extends Component
         }
     }
 
+    /**
+     * Component validation rules.
+     *
+     * @return string[]
+     */
     public function rules()
     {
         return [
@@ -47,6 +74,11 @@ class Password extends Component
         ];
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('shopper::livewire.account.password');

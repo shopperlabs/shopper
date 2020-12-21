@@ -3,34 +3,109 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
 use Illuminate\Support\Facades\Hash;
-use Livewire\Component;
+use Illuminate\Validation\Rule;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\User\Role;
 use Shopper\Framework\Notifications\AdminSendCredentials;
 use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Rules\Phone;
+use Shopper\Framework\Rules\RealEmailValidator;
 
-class CreateAdminUser extends Component
+class CreateAdminUser extends AbstractBaseComponent
 {
+    /**
+     * Indicate if user will receive mail with credentials.
+     *
+     * @var bool
+     */
     public bool $send_mail = false;
-    public string $email = '';
-    public string $password = '';
-    public string $first_name = '';
-    public string $last_name = '';
-    public string $gender = 'male';
+
+    /**
+     * Admin email address.
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     * Admin password.
+     *
+     * @var string
+     */
+    public $password;
+
+    /**
+     * Admin first name.
+     *
+     * @var string
+     */
+    public $first_name;
+
+    /**
+     * Admin last name.
+     *
+     * @var string
+     */
+    public $last_name;
+
+    /**
+     * Admin default gender.
+     *
+     * @var string
+     */
+    public $gender = 'male';
+
+    /**
+     * Phone number attribute.
+     *
+     * @var string
+     */
     public $phone_number;
+
+    /**
+     * Admin define role id.
+     *
+     * @var integer
+     */
     public $role_id;
+
+    /**
+     * Define if the choose role is an admin role.
+     *
+     * @var bool
+     */
     public $is_admin = false;
 
+    /**
+     * Generate a random 10 characters password.
+     *
+     * @return void
+     */
     public function generate()
     {
         $this->password = substr(strtoupper(uniqid(str_random(10))), 0, 10);
+
+        $this->resetErrorBag(['password']);
     }
 
+    /**
+     * Real-time component validation.
+     *
+     * @param  string  $field
+     * @throws \Illuminate\Validation\ValidationException
+     * @return void
+     */
     public function updated($field)
     {
         $this->validateOnly($field, $this->rules(), $this->messages());
     }
 
+    /**
+     * Update roleId to determine if the choose role is an admin role.
+     *
+     * @param  string  $id
+     * @return void
+     */
     public function updatedRoleId($id)
     {
         $chooseRole = Role::findById($id);
@@ -38,7 +113,12 @@ class CreateAdminUser extends Component
         $this->is_admin = $chooseRole->name === config('shopper.system.users.admin_role');
     }
 
-    public function save()
+    /**
+     * Store/Update a entry to the storage.
+     *
+     * @return void
+     */
+    public function store()
     {
         $this->validate($this->rules(), $this->messages());
 
@@ -59,14 +139,25 @@ class CreateAdminUser extends Component
             $user->notify(new AdminSendCredentials($this->password));
         }
 
-        session()->flash('success', "Admin $user->full_name added successfully.");
+        session()->flash('success', __('Admin :user added successfully.', ['user' => $user->full_name]));
+
         $this->redirectRoute('shopper.settings.users');
     }
 
+    /**
+     * Component validation rules.
+     *
+     * @return string[]
+     */
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:'. shopper_table('users'),
+            'email' => [
+                'required',
+                'email',
+                Rule::unique(shopper_table('users'), 'email'),
+                new RealEmailValidator()
+            ],
             'first_name' => 'required',
             'last_name' => 'required',
             'password' => 'required|min:8',
@@ -78,6 +169,11 @@ class CreateAdminUser extends Component
         ];
     }
 
+    /**
+     * Custom error messages.
+     *
+     * @return string[]
+     */
     public function messages()
     {
         return [
@@ -92,6 +188,11 @@ class CreateAdminUser extends Component
         ];
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         $roles = Role::query()
