@@ -21,42 +21,42 @@ class Role extends Component
      *
      * @var string
      */
-    public $name = '';
+    public $name;
 
     /**
      * Role display name.
      *
      * @var string
      */
-    public $display_name = '';
+    public $display_name;
 
     /**
      * Role description.
      *
      * @var string
      */
-    public $description = '';
+    public $description;
 
     /**
      * Permission Name.
      *
      * @var string
      */
-    public $permission_name = '';
+    public $permission_name;
 
     /**
      * Permission display name.
      *
      * @var string
      */
-    public $permission_display_name = '';
+    public $permission_display_name;
 
     /**
      * Permission description.
      *
      * @var string
      */
-    public $permission_description = '';
+    public $permission_description;
 
     /**
      * Permission group item.
@@ -64,6 +64,13 @@ class Role extends Component
      * @var string
      */
     public $group;
+
+    /**
+     * Launch create modal.
+     *
+     * @var bool
+     */
+    public $createModale = false;
 
     /**
      * Component Mount instance.
@@ -76,6 +83,16 @@ class Role extends Component
         $this->name = $role->name;
         $this->display_name = $role->display_name;
         $this->description = $role->description;
+    }
+
+    /**
+     * Launch modale to create a new permission.
+     *
+     * @return void
+     */
+    public function createPermissionModale()
+    {
+        $this->createModale = true;
     }
 
     /**
@@ -115,7 +132,8 @@ class Role extends Component
     public function addPermission()
     {
         $this->validate([
-            'permission_name' => 'required|max:20|unique:permissions,name'
+            'permission_name' => 'required|max:20|unique:permissions,name',
+            'permission_display_name' => 'required|max:50'
         ]);
 
         $permission = Permission::query()->create([
@@ -128,6 +146,9 @@ class Role extends Component
         $this->role->givePermissionTo($permission->name);
 
         $this->dispatchBrowserEvent('permission-added');
+
+        $this->createModale = false;
+
         $this->notify([
             'title' => __('Saved'),
             'message' => __("A new permission has been create and add to this role.")

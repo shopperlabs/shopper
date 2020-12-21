@@ -62,11 +62,13 @@ class Management extends Component
         ]);
 
         $this->dispatchBrowserEvent('modal-close');
-        $this->displayModal = false;
+
         $this->notify([
-            'title' => __('Saved'),
-            'message' => __("Role saved successfully"),
+            'title' => __('Saved!'),
+            'message' => __("Role saved successfully!"),
         ]);
+
+        $this->displayModal = false;
 
         $this->name = '';
         $this->role_display_name = '';
@@ -96,7 +98,7 @@ class Management extends Component
         $this->dispatchBrowserEvent('user-removed');
         $this->notify([
             'title' => __('Deleted'),
-            'message' => __("Admin deleted successfully"),
+            'message' => __("Admin deleted successfully!"),
         ]);
     }
 
