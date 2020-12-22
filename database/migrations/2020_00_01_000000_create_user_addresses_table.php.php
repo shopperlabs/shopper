@@ -31,7 +31,7 @@ class CreateUserAddressesTable extends Migration
             $table->enum('type', ["billing", "shipping"]);
 
             $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));
-            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
+            $this->addForeignKey($table, 'user_id', $this->getTableName('users'), false);
         });
     }
 
