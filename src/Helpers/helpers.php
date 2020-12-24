@@ -159,7 +159,7 @@ if (! function_exists('shopper_currency')) {
     }
 }
 
-if (!function_exists('shopper_money_format')) {
+if (! function_exists('shopper_money_format')) {
     /**
      * Return money format
      *
