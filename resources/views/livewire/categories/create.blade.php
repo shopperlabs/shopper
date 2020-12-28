@@ -26,19 +26,18 @@
             <div class="bg-white rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="Women Shoes, Baby Clothes clothes">
+                        <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-4">
-                    <label for="parentId" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Parent") }}</label>
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <select wire:model="parentId" id="parentId" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                    <x-shopper-input.group label="Parent" for="parentId">
+                        <x-shopper-input.select wire:model="parent_id" id="parentId">
                             <option>{{ __("Select parent category") }}</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
-                        </select>
-                    </div>
+                        </x-shopper-input.select>
+                    </x-shopper-input.group>
                 </div>
                 <div class="mt-5 border-t border-b border-gray-200 py-4">
                     <div class="relative flex items-start">
@@ -66,11 +65,11 @@
                 <div class="bg-white rounded-md shadow overflow-hidden divide-y divide-gray-200">
                     <div class="p-4 sm:p-5">
                         <x-shopper-input.group label="Slug (url)" for="slug" isRequired :error="$errors->first('slug')">
-                            <input wire:model="slug" id="slug" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                            <x-shopper-input.text wire:model="slug" id="slug" type="text" autocomplete="off" />
                         </x-shopper-input.group>
                     </div>
                     <div class="p-4 sm:p-5">
-                        <h4 class="block text-sm font-medium leading-5 text-gray-700">{{ __("Image preview") }}</h4>
+                        <x-shopper-label>{{ __("Image preview") }}</x-shopper-label>
                         <div class="mt-1">
                             @if($file)
                                 <div>
@@ -105,12 +104,12 @@
                                             <input id="file" type="file" wire:model="file" class="sr-only">
                                         </div>
                                     </label>
-                                    @error('file')
-                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
                                 </div>
                             @endif
                         </div>
+                        @error('file')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </aside>

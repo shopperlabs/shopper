@@ -1,12 +1,4 @@
-<div
-    x-data="{ open: false, show: false }"
-    x-init="
-        @this.on('notify-saved', () => {
-            if (show === false) setTimeout(() => { show = false }, 2500);
-            show = true;
-        })
-    "
->
+<div>
     <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Categories') }}</h2>
         @if($total > 0)
@@ -128,7 +120,7 @@
                                         <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                                     </svg>
                                 </div>
-                                <input id="filter" wire:model.debounce.300ms="search" class="form-input block w-full rounded-none rounded-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search category by name') }}" />
+                                <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search category by name') }}" />
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -138,7 +130,7 @@
                             </div>
                         </div>
                     </div>
-                    <button @click="open = true" type="button" class="ml-4 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                    <button wire:click="launchModale" type="button" class="ml-4 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                         <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z" />
                         </svg>
@@ -195,7 +187,7 @@
                                     </td>
                                     <td class="pr-6">
                                         <div x-data="{ open: false }" x-on:item-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
-                                            <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
+                                            <button id="category-options-menu-{{ $category->id }}" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
                                                 <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                     <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                                                 </svg>
@@ -265,110 +257,91 @@
 
     <x-shopper-learn-more name="categories" link="#" />
 
-    <div
-        x-cloak
-        x-show="open"
-        class="fixed z-50 inset-0 overflow-y-auto"
-        x-on:reorder-complete.window="open = false"
-    >
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div x-cloak x-show="open" x-description="Background overlay, show/hide based on modal state." x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-
-            <!-- This element is to trick the browser into centering the modal contents. -->
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-            <div
-                x-cloak
-                x-show="open"
-                x-description="Modal panel, show/hide based on modal state."
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="modal-headline"
-            >
-                <div class="bg-white">
-                    <div class="sm:flex sm:items-center sm:justify-between px-4 sm:px-6 py-4">
-                        <div class="text-left">
-                            <h3 class="inline-flex items-center text-lg leading-6 font-medium text-gray-900">
-                                <svg class="w-5 h-5 -ml-1 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                                </svg>
-                                {{ __("Reorder categories") }}
-                            </h3>
-                        </div>
-                        <div class="ml-4">
-                            <div
-                                x-show.transition.out.duration.1000ms="show"
-                                style="display: none;"
-                                class="rounded-md bg-green-50 p-2"
-                            >
-                                <div class="flex">
-                                    <div class="flex-shrink-0">
-                                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm leading-5 font-medium text-green-800">
-                                            {{ __("Saved!") }}
-                                        </p>
-                                    </div>
+    <x-shopper-modal wire:model="reorderModal" maxWidth="lg" x-on:reorder-complete.window="show = false">
+        <div
+            x-data="{ show: false }"
+            x-init="
+                @this.on('notify-saved', () => {
+                    if (show === false) setTimeout(() => { show = false }, 2500);
+                    show = true;
+                })
+            "
+        >
+            <div class="bg-white">
+                <div class="sm:flex sm:items-center sm:justify-between px-4 sm:px-6 py-4">
+                    <div class="text-left">
+                        <h3 class="inline-flex items-center text-lg leading-6 font-medium text-gray-900">
+                            <svg class="w-5 h-5 -ml-1 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                            </svg>
+                            {{ __("Reorder categories") }}
+                        </h3>
+                    </div>
+                    <div class="ml-4">
+                        <div
+                            x-show.transition.out.duration.1000ms="show"
+                            style="display: none;"
+                            class="rounded-md bg-green-50 p-2"
+                        >
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm leading-5 font-medium text-green-800">
+                                        {{ __("Saved!") }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="relative p-4 sm:px-6 sm:px-5 border-t border-gray-100">
-                        <div wire:sortable="updateGroupOrder" wire:sortable-group="updateCategoryOrder">
-                            @foreach($parentCategories as $parentCategory)
-                                <div wire:sortable.item="{{ $parentCategory->id }}" wire:key="category-{{ $parentCategory->id }}" class="pb-5 cursor-move">
-                                    <div class="p-3 bg-gray-100 flex items-center justify-center rounded-md">
-                                        <div wire:sortable.handle class="flex flex-1 items-center space-x-3">
-                                            <svg class="flex-shrink-0 w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                            </svg>
-                                            <div class="flex items-center space-x-3">
-                                                <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $parentCategory->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
-                                                <span class="text-sm leading-5 text-gray-900 font-medium">{{ $parentCategory->name }}</span>
-                                            </div>
+                </div>
+                <div class="relative p-4 sm:px-6 sm:px-5 border-t border-gray-100">
+                    <div wire:sortable="updateGroupOrder" wire:sortable-group="updateCategoryOrder">
+                        @foreach($parentCategories as $parentCategory)
+                            <div wire:sortable.item="{{ $parentCategory->id }}" wire:key="category-{{ $parentCategory->id }}" class="pb-5 cursor-move">
+                                <div class="p-3 bg-gray-100 flex items-center justify-center rounded-md">
+                                    <div wire:sortable.handle class="flex flex-1 items-center space-x-3">
+                                        <svg class="flex-shrink-0 w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                        </svg>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $parentCategory->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
+                                            <span class="text-sm leading-5 text-gray-900 font-medium">{{ $parentCategory->name }}</span>
                                         </div>
-                                        <span class="ml-4 text-gray-500 leading-4 text-xs">
-                                            /{{ $parentCategory->slug }}
-                                        </span>
                                     </div>
-                                    @if($parentCategory->childs->isNotEmpty())
-                                        <ul wire:sortable-group.item-group="{{ $parentCategory->id }}" class="ml-4 border-l border-dashed border-gray-200">
-                                            @foreach($parentCategory->childs as $child)
-                                                <li wire:key="sub-category-{{ $child->id }}" wire:sortable-group.item="{{ $child->id }}" class="-mx-1">
-                                                    <div class="flex flex-1 items-center space-x-3 py-3 cursor-move">
-                                                        <div class="flex-shrink-0 w-2 h-2 rounded-full {{ $child->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
-                                                        <span wire:sortable.handle class="text-sm leading-5 text-gray-600">{{ $child->name }}</span>
-                                                    </div>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
+                                    <span class="ml-4 text-gray-500 leading-4 text-xs">
+                                    /{{ $parentCategory->slug }}
+                                </span>
                                 </div>
-                            @endforeach
-                        </div>
+                                @if($parentCategory->childs->isNotEmpty())
+                                    <ul wire:sortable-group.item-group="{{ $parentCategory->id }}" class="ml-4 border-l border-dashed border-gray-200">
+                                        @foreach($parentCategory->childs as $child)
+                                            <li wire:key="sub-category-{{ $child->id }}" wire:sortable-group.item="{{ $child->id }}" class="-mx-1">
+                                                <div class="flex flex-1 items-center space-x-3 py-3 cursor-move">
+                                                    <div class="flex-shrink-0 w-2 h-2 rounded-full {{ $child->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
+                                                    <span wire:sortable.handle class="text-sm leading-5 text-gray-600">{{ $child->name }}</span>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                        <button @click="open = false" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                            {{ __("Close") }}
-                        </button>
-                    </span>
-                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                <button wire:click="closeModale" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                    {{ __("Close") }}
+                </button>
+            </span>
             </div>
         </div>
-    </div>
+    </x-shopper-modal>
 
 </div>
 

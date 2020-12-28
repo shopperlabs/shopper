@@ -4,10 +4,11 @@ namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
 
-class Create extends Component
+class Create extends AbstractBaseComponent
 {
     use WithFileUploads, WithUploadProcess;
 
@@ -26,11 +27,11 @@ class Create extends Component
     public $slug;
 
     /**
-     * Category parentId.
+     * Category parent_id.
      *
      * @var string
      */
-    public $parentId;
+    public $parent_id;
 
     /**
      * Category sample description.
@@ -58,7 +59,7 @@ class Create extends Component
         $category = (new CategoryRepository())->create([
             'name' => $this->name,
             'slug' => $this->slug,
-            'parent_id' => $this->parentId,
+            'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
         ]);
@@ -72,24 +73,12 @@ class Create extends Component
     }
 
     /**
-     * Real-time component validation.
-     *
-     * @param  string  $field
-     * @throws \Illuminate\Validation\ValidationException
-     * @return void
-     */
-    public function updated($field)
-    {
-        $this->validateOnly($field, $this->rules());
-    }
-
-    /**
      * Update slug value when name if updated.
      *
      * @param  string  $value
      * @return void
      */
-    public function updatedName($value)
+    public function updatedName(string $value)
     {
         $this->slug = str_slug($value, '-');
     }
@@ -112,6 +101,7 @@ class Create extends Component
      * Render the component.
      *
      * @return \Illuminate\View\View
+     * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
     {

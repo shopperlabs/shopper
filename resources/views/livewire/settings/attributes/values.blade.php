@@ -1,4 +1,4 @@
-<div x-data="{ show: false }">
+<div>
     <div class="hidden sm:block">
         <div class="py-5">
             <div class="border-t border-gray-200"></div>
