@@ -97,6 +97,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('delete-action');
             $this->registerComponent('dialog-modal');
             $this->registerComponent('empty-state');
+            $this->registerComponent('input.checkbox');
             $this->registerComponent('input.drag-upload');
             $this->registerComponent('input.file-upload');
             $this->registerComponent('input.group');
