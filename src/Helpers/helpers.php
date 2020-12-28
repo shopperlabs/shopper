@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
+use Money\Currencies\ISOCurrencies;
+use Money\Currency;
+use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\System\Setting;
 use Shopper\Framework\Models\System\Currency as CurrencyModel;
@@ -18,6 +22,32 @@ if (!function_exists('app_name')) {
     }
 }
 
+if (!function_exists('generate_number')) {
+    /**
+     * Generate Order Number.
+     *
+     * @return string
+     */
+    function generate_number(): string
+    {
+        $lastOrder = Order::query()->orderBy('id', 'desc')->limit(1)->first();
+
+        $generator = [
+            'start_sequence_from' => 1,
+            'prefix'              => '#',
+            'pad_length'          => 1,
+            'pad_string'          => '0'
+        ];
+
+        $last = $lastOrder ? $lastOrder->id : 0;
+        $next = $generator['start_sequence_from'] + $last;
+
+        return sprintf('%s%s', $generator['prefix'],
+            str_pad($next, $generator['pad_length'], $generator['pad_string'], STR_PAD_LEFT)
+        );
+    }
+}
+
 if (! function_exists('gravatar')) {
     /**
      * Access the gravatar helper.
@@ -30,7 +60,7 @@ if (! function_exists('gravatar')) {
     }
 }
 
-if (!function_exists('setEnvironmentValue')) {
+if (! function_exists('setEnvironmentValue')) {
     /**
      * Function to set or update .env variable.
      *
@@ -80,7 +110,7 @@ if (!function_exists('setEnvironmentValue')) {
     }
 }
 
-if (!function_exists('shopper_version')) {
+if (! function_exists('shopper_version')) {
     /**
      * Function to return Shopper current version.
      *
@@ -92,7 +122,7 @@ if (!function_exists('shopper_version')) {
     }
 }
 
-if (!function_exists('shopper_table')) {
+if (! function_exists('shopper_table')) {
     /**
      * Return Shopper current table name.
      *
@@ -109,7 +139,7 @@ if (!function_exists('shopper_table')) {
     }
 }
 
-if (!function_exists('shopper_currency')) {
+if (! function_exists('shopper_currency')) {
     /**
      * Return Shopper currency used.
      *
@@ -129,7 +159,27 @@ if (!function_exists('shopper_currency')) {
     }
 }
 
-if (!function_exists('shopper_prefix')) {
+if (! function_exists('shopper_money_format')) {
+    /**
+     * Return money format
+     *
+     * @param  mixed  $amount
+     * @param  string|null  $currency
+     * @return string
+     */
+    function shopper_money_format($amount, string $currency = null): string
+    {
+        $money = new Money($amount, new Currency(shopper_currency()));
+        $currencies = new ISOCurrencies();
+
+        $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
+        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+
+        return $moneyFormatter->format($money);
+    }
+}
+
+if (! function_exists('shopper_prefix')) {
     /**
      * Return Shopper prefix used.
      *
@@ -141,33 +191,7 @@ if (!function_exists('shopper_prefix')) {
     }
 }
 
-if (!function_exists('generate_number')) {
-    /**
-     * Generate Order Number.
-     *
-     * @return string
-     */
-    function generate_number(): string
-    {
-        $lastOrder = Order::query()->orderBy('id', 'desc')->limit(1)->first();
-
-        $generator = [
-            'start_sequence_from' => 1,
-            'prefix'              => '#',
-            'pad_length'          => 1,
-            'pad_string'          => '0'
-        ];
-
-        $last = $lastOrder ? $lastOrder->id : 0;
-        $next = $generator['start_sequence_from'] + $last;
-
-        return sprintf('%s%s', $generator['prefix'],
-            str_pad($next, $generator['pad_length'], $generator['pad_string'], STR_PAD_LEFT)
-        );
-    }
-}
-
-if (!function_exists('shopper_asset')) {
+if (! function_exists('shopper_asset')) {
     /**
      * Return the full path of an image.
      *

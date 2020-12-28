@@ -30,6 +30,7 @@ class ProductAttribute extends Model
      */
     protected $with = [
         'attribute',
+        'values',
     ];
 
     /**

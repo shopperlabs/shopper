@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Address;
-use Shopper\Framework\Models\User;
+use Shopper\Framework\Models\User\Address;
+use Shopper\Framework\Models\User\User;
 
 class Order extends Model
 {
