@@ -23,7 +23,7 @@
             @endif
 
             <div class="mt-4">
-                <img class="mx-auto h-20 w-auto" src="{{ asset('shopper/images/logo.svg') }}" alt="Laravel Shopper">
+                <x-shopper-application-logo class="mx-auto h-20 w-auto" />
                 <h2 class="mt-10 text-3xl font-semibold text-center leading-9 text-gray-800">{{ __('Reset your password') }}</h2>
                 <p class="mt-5 text-sm leading-5 text-center text-gray-600">
                     {{ __("Enter the email address you used when creating your account and we will send you instructions to reset your password.") }}
@@ -39,10 +39,10 @@
                         type="email"
                         required
                         autofocus
-                        class="border-gray-300 placeholder-gray-500 focus:shadow-outline-blue focus:border-blue-300  appearance-none relative block w-full px-3 py-2 border text-gray-900 rounded-md focus:outline-none sm:text-sm sm:leading-5"
+                        class="form-input block w-full py-2 px-3 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
                         placeholder="{{ __("Email address") }}"
                         value="{{ old('email') }}"
-                    >
+                    />
                 </div>
                 @error('email')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

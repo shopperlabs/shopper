@@ -4,13 +4,13 @@ namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Livewire\Component;
 use Livewire\WithFileUploads;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
 
-class Edit extends Component
+class Edit extends AbstractBaseComponent
 {
     use WithFileUploads, WithUploadProcess;
 
@@ -54,7 +54,7 @@ class Edit extends Component
      *
      * @var string
      */
-    public $parentId;
+    public $parent_id;
 
     /**
      * Category sample description.
@@ -82,7 +82,7 @@ class Edit extends Component
         $this->categoryId = $category->id;
         $this->name = $category->name;
         $this->slug = $category->slug;
-        $this->parentId = $category->parent_id;
+        $this->parent_id = $category->parent_id;
         $this->description = $category->description;
         $this->is_enabled = $category->is_enabled;
     }
@@ -99,7 +99,7 @@ class Edit extends Component
         (new CategoryRepository())->getById($this->category->id)->update([
             'name' => $this->name,
             'slug' => $this->slug,
-            'parent_id' => $this->parentId,
+            'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
         ]);
@@ -121,24 +121,12 @@ class Edit extends Component
     }
 
     /**
-     * Real-time component validation.
-     *
-     * @param  string  $field
-     * @throws \Illuminate\Validation\ValidationException
-     * @return void
-     */
-    public function updated($field)
-    {
-        $this->validateOnly($field, $this->rules());
-    }
-
-    /**
      * Update slug value when name if updated.
      *
      * @param  string  $value
      * @return void
      */
-    public function updatedName($value)
+    public function updatedName(string $value)
     {
         $this->slug = str_slug($value, '-');
     }
@@ -181,6 +169,7 @@ class Edit extends Component
      * Render the component.
      *
      * @return \Illuminate\View\View
+     * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
     {

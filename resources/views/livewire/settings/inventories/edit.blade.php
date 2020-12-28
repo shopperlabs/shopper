@@ -41,23 +41,21 @@
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                             <div class="sm:col-span-1">
                                 <x-shopper-input.group label="Location Name" for="name" :error="$errors->first('name')">
-                                    <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="White House" />
+                                    <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="White House" />
                                 </x-shopper-input.group>
                             </div>
                             <div class="sm:col-span-1">
                                 <x-shopper-input.group label="Email" for="email" :error="$errors->first('email')">
-                                    <input wire:model="email" id="email" type="email" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                    <x-shopper-input.text wire:model="email" id="email" type="email" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
                             <div class="sm:col-span-2">
                                 <div class="flex items-center justify-between">
-                                    <label for="description" class="block text-sm font-medium leading-5 text-gray-700">
-                                        {{ __("Description") }}
-                                    </label>
+                                    <x-shopper-label :value="__('Description')" for="description" />
                                     <span class="ml-4 text-sm text-gray-500 leading-5">{{ __("Optional") }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
-                                    <textarea wire:model="description" id="description" rows="3" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
+                                    <x-shopper-input.textarea wire:model="description" id="description" />
                                 </div>
                             </div>
                         </div>
@@ -114,48 +112,40 @@
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                             <div class="sm:col-span-6">
                                 <x-shopper-input.group label="Street address" for="street_address" :error="$errors->first('street_address')">
-                                    <input wire:model="street_address" id="street_address" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="Akwa Avenue 34..." />
+                                    <x-shopper-input.text wire:model="street_address" id="street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
                                 </x-shopper-input.group>
                             </div>
 
                             <div class="sm:col-span-6">
                                 <div class="flex items-center justify-between">
-                                    <label for="street_address_plus" class="block text-sm font-medium leading-5 text-gray-700">
-                                        {{ __("Apartment, suite, etc.") }}
-                                    </label>
+                                    <x-shopper-label :value="__('Apartment, suite, etc.')" for="street_address_plus" />
                                     <span class="ml-4 text-sm text-gray-500 leading-5">{{ __("Optional") }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
-                                    <input wire:model="street_address_plus" id="street_address_plus" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                    <x-shopper-input.text wire:model="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
                                 </div>
                             </div>
 
                             <div class="sm:col-span-6">
-                                <label for="country_id" class="block text-sm font-medium leading-5 text-gray-700">
-                                    {{ __("Country") }}
-                                </label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select wire:model="country_id" id="country_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                <x-shopper-input.group for="country_id" label="Country" :error="$errors->first('country_id')">
+                                    <x-shopper-input.select wire:model="country_id" id="country_id">
                                         <option value="0">{{ __("Choose a Country") }}</option>
                                         @foreach($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
                                         @endforeach
-                                    </select>
-                                </div>
-                                @error('country_id')
-                                    <p class="mt-2 text-red-500 text-sm leading-5">{{ $message }}</p>
-                                @enderror
+                                    </x-shopper-input.select>
+                                </x-shopper-input.group>
                             </div>
 
                             <div class="sm:col-span-3">
                                 <x-shopper-input.group label="City" for="city" :error="$errors->first('city')">
-                                    <input wire:model="city" id="city" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                    <x-shopper-input.text wire:model="city" id="city" type="text" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
 
                             <div class="sm:col-span-3">
                                 <x-shopper-input.group label="Postal / Zip code" for="zipcode" :error="$errors->first('zipcode')">
-                                    <input wire:model="zipcode" id="zipcode" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                    <x-shopper-input.text wire:model="zipcode" id="zipcode" type="text" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
 
@@ -185,20 +175,16 @@
                                "
                                 class="sm:col-span-6"
                             >
-                                <label for="phone_number" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Phone number") }}</label>
-                                <div class="mt-1 relative">
-                                    <input wire:model="phone_number" id="phone_number" type="tel" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 pr-10" autocomplete="off" />
+                                <x-shopper-input.group label="Phone number" for="phone_number" :error="$errors->first('phone_number')">
+                                    <x-shopper-input.text wire:model="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
                                     @error('phone_number')
-                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                            <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
+                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                        <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
                                     @enderror
-                                </div>
-                                @error('phone_number')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                </x-shopper-input.group>
                             </div>
                         </div>
                     </div>
@@ -209,20 +195,24 @@
 
     <div class="mt-6 border-t border-gray-200 pt-5">
         <div class="flex items-center justify-between space-x-4">
-            <x-shopper-delete-action
-                :title="$inventory->name"
-                action="inventory"
-                message="Are you sure you want to delete this inventory? All this data will be removed. This action cannot be undone."
-                wire:click="remove"
-                wire:target="remove"
-            />
-            <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
-                <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                </svg>
-                {{ __("Update") }}
-            </x-shopper-button>
+            @can('delete_inventories')
+                <x-shopper-delete-action
+                    :title="$inventory->name"
+                    action="inventory"
+                    message="Are you sure you want to delete this inventory? All this data will be removed. This action cannot be undone."
+                    wire:click="remove"
+                    wire:target="remove"
+                />
+            @endcan
+            <span class="ml-auto flex justify-end">
+                <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
+                    <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                    </svg>
+                    {{ __("Update") }}
+                </x-shopper-button>
+            </span>
         </div>
     </div>
 

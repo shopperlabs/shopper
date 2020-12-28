@@ -86,8 +86,10 @@ class ComponentServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('alert');
+            $this->registerComponent('application-logo');
             $this->registerComponent('button');
             $this->registerComponent('breadcrumb');
+            $this->registerComponent('confirm-modal');
             $this->registerComponent('confirms-password');
             $this->registerComponent('datetime-picker');
             $this->registerComponent('danger-button');
@@ -95,18 +97,21 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('delete-action');
             $this->registerComponent('dialog-modal');
             $this->registerComponent('empty-state');
+            $this->registerComponent('input.checkbox');
             $this->registerComponent('input.drag-upload');
             $this->registerComponent('input.file-upload');
             $this->registerComponent('input.group');
             $this->registerComponent('input.markdown');
             $this->registerComponent('input.rich-text');
             $this->registerComponent('input.search');
+            $this->registerComponent('input.select');
             $this->registerComponent('input.text');
             $this->registerComponent('input.textarea');
             $this->registerComponent('label');
             $this->registerComponent('learn-more');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
+            $this->registerComponent('validation-errors');
             $this->registerComponent('wip');
             $this->registerComponent('wip-placeholder');
         });

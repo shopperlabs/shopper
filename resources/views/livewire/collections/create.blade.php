@@ -30,7 +30,7 @@
             <div class="bg-white rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="Summers Collections, Christmas promotions...">
+                        <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-5">
@@ -124,11 +124,11 @@
                                         </div>
                                         <div class="relative">
                                             <span class="inline-flex rounded-md shadow-sm">
-                                                <button wire:click.prevent="remove({{ $conditionKey }})" type="button" class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                                <x-shopper-default-button wire:click.prevent="remove({{ $conditionKey }})" type="button">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
-                                                </button>
+                                                </x-shopper-default-button>
                                             </span>
                                         </div>
                                     </div>
@@ -137,9 +137,9 @@
                             @if(count($conditions) < 4)
                                 <div class="relative">
                                     <span class="inline-flex rounded-md shadow-sm">
-                                        <button wire:click.prevent="add({{ $i }})" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                                        <x-shopper-default-button wire:click.prevent="add({{ $i }})" type="button">
                                             {{ count($conditions) === 0 ? __("Add condition") : __("Add another condition") }}
-                                        </button>
+                                        </x-shopper-default-button>
                                     </span>
                                 </div>
                             @endif
@@ -169,31 +169,16 @@
                 </div>
                 @if($updateSeo)
                     <div class="px-4 py-5 sm:px-6 space-y-5">
-                        <div>
-                            <label for="seo_title" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Title") }}</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <input
-                                    wire:model="seoTitle"
-                                    id="seo_title"
-                                    type="text"
-                                    class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                                    autocomplete="off"
-                                >
-                            </div>
-                        </div>
+                        <x-shopper-input.group for="seo_title" label="Title">
+                            <x-shopper-input.text wire:model="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                        </x-shopper-input.group>
                         <div>
                             <div class="flex items-center justify-between">
-                                <label for="seo_description" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Description") }}</label>
+                                <x-shopper-label for="seo_description">{{ __("Description") }}</x-shopper-label>
                                 <span class="ml-4 text-sm leading-5 text-gray-500">{{ __("160 characters") }}</span>
                             </div>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <textarea
-                                    wire:model="seoDescription"
-                                    id="seo_description"
-                                    rows="4"
-                                    class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                                >
-                                </textarea>
+                                <x-shopper-input.textarea wire:model="seoDescription" id="seo_description" />
                             </div>
                         </div>
                     </div>
@@ -207,7 +192,7 @@
                     x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});"
                     class="bg-white rounded-md shadow p-4 sm:p-5"
                 >
-                    <label for="date" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Collection availability") }}</label>
+                    <x-shopper-label for="date">{{ __("Collection availability") }}</x-shopper-label>
                     <div class="mt-1 relative rounded-md shadow-sm">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">

@@ -19,6 +19,13 @@ class Browse extends Component
     public $search;
 
     /**
+     * Open reorder Modal.
+     *
+     * @var bool
+     */
+    public $reorderModal = false;
+
+    /**
      * Custom Livewire pagination view.
      *
      * @return string
@@ -39,7 +46,7 @@ class Browse extends Component
         (new CategoryRepository())->getById($id)->delete();
 
         $this->dispatchBrowserEvent('item-removed');
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __("Deleted"),
             'message' => __("The category has successfully removed!")
         ]);
@@ -65,7 +72,7 @@ class Browse extends Component
     /**
      * Update subcategory position.
      *
-     * @param array $groups
+     * @param  array  $groups
      * @return void
      */
     public function updateCategoryOrder($groups)
@@ -82,6 +89,26 @@ class Browse extends Component
         }
 
         $this->emitSelf('notify-saved');
+    }
+
+    /**
+     * Close reorder modal.
+     *
+     * @return void
+     */
+    public function closeModale()
+    {
+        $this->reorderModal = false;
+    }
+
+    /**
+     * Launch reorder modale.
+     *
+     * @return void
+     */
+    public function launchModale()
+    {
+        $this->reorderModal = true;
     }
 
     /**

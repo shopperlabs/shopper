@@ -26,17 +26,16 @@
             <div class="bg-white rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="Apple, Nike, Samsung...">
+                        <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-4">
-                    <label for="website" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Website") }}</label>
-                    <div class="mt-1 relative rounded-md shadow-sm">
+                    <x-shopper-input.group label="Website" for="website">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 sm:text-sm sm:leading-5">https://</span>
                         </div>
-                        <input wire:model="website" id="website" type="text" class="form-input block w-full pl-16 sm:text-sm sm:leading-5" placeholder="www.example.com">
-                    </div>
+                        <x-shopper-input.text wire:model="website" id="website" type="text" class="pl-16" placeholder="www.example.com" />
+                    </x-shopper-input.group>
                 </div>
                 <div class="mt-5 border-t border-b border-gray-200 py-4">
                     <div class="relative flex items-start">
@@ -47,7 +46,7 @@
                             </span>
                         </div>
                         <div class="ml-3 text-sm leading-5">
-                            <label for="online" class="font-medium text-gray-700">{{ __("Visibility") }}</label>
+                            <x-shopper-label for="online">{{ __("Visibility") }}</x-shopper-label>
                             <p class="text-sm text-gray-400 font-normal">{{ __("Set brand visibility for the customers.") }}</p>
                         </div>
                     </div>
@@ -64,7 +63,7 @@
                 <div class="bg-white rounded-md shadow overflow-hidden divide-y divide-gray-200">
                     <div class="p-4 sm:p-5">
                         <x-shopper-input.group label="Slug (url)" for="slug" isRequired :error="$errors->first('slug')">
-                            <input wire:model="slug" id="slug" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                            <x-shopper-input.text wire:model="slug" id="slug" type="text" autocomplete="off" />
                         </x-shopper-input.group>
                     </div>
                     <div class="p-4 sm:p-5">
@@ -112,7 +111,7 @@
                         @if($media)
                             <div class="mt-4 p-2 bg-gray-50 rounded-md border border-dashed border-gray-200 flex items-center justify-between">
                                 <div class="flex flex-1 items-center space-x-2 truncate">
-                                    <div class="flex-shrink-0 w-10 h-10 overflow-hidden rounded-md shadow-md">
+                                    <div class="flex-shrink-0 w-10 h-10 overflow-hidden rounded-md">
                                         <img class="h-full w-full object-cover" src="{{ $media->file_path }}" alt="">
                                     </div>
                                     <div class="truncate">

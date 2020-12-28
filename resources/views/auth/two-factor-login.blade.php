@@ -5,31 +5,10 @@
 
     <div x-data="{ recovery: false }" class="min-h-screen flex items-center justify-center">
         <div class="max-w-md w-full px-6 space-y-4">
-            @if($errors->any())
-                <div class="rounded-md bg-red-50 p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm leading-5 font-medium text-red-800">
-                                {{ __("Your submission contains errors. Please try again") }}
-                            </h3>
-                            <div class="mt-2 text-sm leading-5 text-red-700">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    @foreach ($errors->all() as $message)
-                                        <li>{{ $message }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            <x-shopper-validation-errors />
+
             <div class="flex-shrink-0">
-                <img class="mx-auto h-20 w-auto" src="{{ asset('shopper/images/logo.svg') }}" alt="Laravel Shopper">
+                <x-shopper-application-logo class="mx-auto h-20 w-auto" />
             </div>
             <div class="bg-white rounded-lg shadow-md overflow-hidden p-4 sm:p-6">
                 <div class="text-center">
@@ -49,11 +28,11 @@
                 <form class="mt-5" action="{{ route('shopper.two-factor.post-login') }}" method="POST">
                     @csrf
                     <x-shopper-input.group x-show="! recovery" label="Code" for="code">
-                        <input  id="code" type="text" name="code" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autofocus x-ref="code" autocomplete="one-time-code" />
+                        <x-shopper-input.text  id="code" type="text" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
                     </x-shopper-input.group>
 
                     <x-shopper-input.group x-show="recovery" label="Recovery Code" for="recovery_code" style="display: none">
-                        <input  id="recovery_code" name="recovery_code" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" x-ref="recovery_code" autocomplete="one-time-code" />
+                        <x-shopper-input.text  id="recovery_code" name="recovery_code" type="text" x-ref="recovery_code" autocomplete="one-time-code" />
                     </x-shopper-input.group>
 
                     <div class="mt-5 flex items-center space-x-4">

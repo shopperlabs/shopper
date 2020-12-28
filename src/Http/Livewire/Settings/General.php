@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings;
 
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\Country;
@@ -12,9 +13,9 @@ class General extends Component
 {
     use WithFileUploads;
 
-    public string $shop_name = '';
-    public string $shop_legal_name = '';
-    public string $shop_email = '';
+    public $shop_name = '';
+    public $shop_legal_name = '';
+    public $shop_email = '';
     public $shop_phone_number = '';
     public $shop_about = '';
     public $shop_street_address = '';
@@ -50,6 +51,12 @@ class General extends Component
         $this->shop_twitter_link = ($twitter = Setting::query()->where('key', 'shop_twitter_link')->first()) ? $twitter->value: '';
     }
 
+    /**
+     * Change currency when country value updated.
+     *
+     * @param  string  $value
+     * @return void
+     */
     public function updatedShopCountryId($value)
     {
         $country = Country::query()->find($value);
@@ -62,11 +69,22 @@ class General extends Component
         }
     }
 
+    /**
+     * Real-Time validation.
+     *
+     * @param  string  $field
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updated($field)
     {
         $this->validateOnly($field, $this->rules());
     }
 
+    /**
+     * Update setting to the storage.
+     *
+     * @return void
+     */
     public function store()
     {
         $this->validate($this->rules());
@@ -111,12 +129,17 @@ class General extends Component
             ]);
         }
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __('Updated'),
             'message' => __("Shop informations have been correctly updated!")
         ]);
     }
 
+    /**
+     * Validation rules.
+     *
+     * @return string[]
+     */
     public function rules()
     {
         return [
@@ -133,11 +156,21 @@ class General extends Component
         ];
     }
 
+    /**
+     * Remove cover.
+     *
+     * @return void
+     */
     public function removeCover()
     {
         $this->shop_cover = null;
     }
 
+    /**
+     * Remove cover from the storage.
+     *
+     * @return void
+     */
     public function deleteCover()
     {
         Setting::query()->updateOrCreate(['key' => 'shop_cover'], [
@@ -148,13 +181,13 @@ class General extends Component
 
         $this->cover = null;
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __('Deleted'),
             'message' => __("Shop cover have been correctly removed!")
         ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.general', [
             'countries'  => Country::query()->orderBy('name')->get(),

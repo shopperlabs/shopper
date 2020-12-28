@@ -1,4 +1,4 @@
-<div x-data="{ show: false }">
+<div>
 
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
@@ -175,7 +175,7 @@
 
     @endif
 
-    <x-shopper-modal x-show="show" maxWidth="lg">
+    <x-shopper-modal wire:model="confirmInstallation" maxWidth="lg">
         <div class="p-4 sm:p-6 space-y-5">
             <div>
                 <div class="py-4">
@@ -207,17 +207,21 @@
                     <span class="text-gray-600 text-xs leading-4">{{ __("output") }}</span>
                 </div>
                 <div class="mt-2 text-gray-500 text-sm leading-5">
-                    ...
+                    {{ $message }}
                 </div>
             </div>
             <div class="sm:mt-4 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click="install" wire.loading.attr="disabled" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                    <x-shopper-button wire:click="install" type="button" wire.loading.attr="disabled">
+                        <svg wire:loading wire:target="install" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        </svg>
                         {{ __("Proceed to installation") }}
-                    </button>
+                    </x-shopper-button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <button @click="show = false" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                    <button wire:click="closeModal" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
                         {{ __("Cancel") }}
                     </button>
                 </span>

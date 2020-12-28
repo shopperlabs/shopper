@@ -4,7 +4,7 @@
     'placeholder' => '',
 ])
 
-<div>
+<div class="{{ $attributes->get('class') }}">
     @if($label)
         <label for="search" class="sr-only">{{ __($label) }}</label>
     @endif

@@ -6,11 +6,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
 
-class Edit extends Component
+class Edit extends AbstractBaseComponent
 {
     use WithFileUploads, WithUploadProcess;
 
@@ -121,24 +122,12 @@ class Edit extends Component
     }
 
     /**
-     * Real-time component validation.
-     *
-     * @param  string  $field
-     * @throws \Illuminate\Validation\ValidationException
-     * @return void
-     */
-    public function updated($field)
-    {
-        $this->validateOnly($field, $this->rules());
-    }
-
-    /**
      * Update slug value when name if updated.
      *
      * @param  string  $value
      * @return void
      */
-    public function updatedName($value)
+    public function updatedName(string $value)
     {
         $this->slug = str_slug($value, '-');
     }

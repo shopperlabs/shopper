@@ -76,6 +76,23 @@ class General extends Component
     public $logoUrl;
 
     /**
+     * Launch component modal.
+     *
+     * @var bool
+     */
+    public $display = false;
+
+    /**
+     * Launch modale to create/update a new payment method.
+     *
+     * @return void
+     */
+    public function launchModale()
+    {
+        $this->display = true;
+    }
+
+    /**
      * Add a new entry of payment method in the storage.
      *
      * @return void
@@ -101,14 +118,12 @@ class General extends Component
             ]);
         }
 
-        $this->dispatchBrowserEvent('modal-close');
+        $this->closeModal();
 
         $this->notify([
             'title' => __("Saved!"),
             'message' => __("Your payment method have been correctly added."),
         ]);
-
-        $this->resetFields();
     }
 
     /**
@@ -129,7 +144,7 @@ class General extends Component
         $this->enabled = $paymentMethod->is_enabled;
         $this->logoUrl = $paymentMethod->logo_url;
 
-        $this->dispatchBrowserEvent('modal-open');
+        $this->display = true;
         $this->dispatchBrowserEvent('item-update');
     }
 
@@ -140,7 +155,7 @@ class General extends Component
      */
     public function closeModal()
     {
-        $this->dispatchBrowserEvent('modal-close');
+        $this->display = false;
 
         $this->resetFields();
     }
@@ -176,14 +191,12 @@ class General extends Component
             ]);
         }
 
-        $this->dispatchBrowserEvent('modal-close');
+        $this->closeModal();
 
         $this->notify([
             'title' => __("Update"),
             'message' => __("Your payment method have been correctly updated."),
         ]);
-
-        $this->resetFields();
     }
 
     /**

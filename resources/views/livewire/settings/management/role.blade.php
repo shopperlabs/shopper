@@ -1,18 +1,17 @@
 <div
     x-data="{
-        createModal: false,
         deleteModal: false,
         options: ['role', 'users', 'permissions'],
         words: {'role': '{{ __("Role") }}', 'users': '{{ __("Users") }}', 'permissions': '{{ __("Permissions") }}'},
         currentTab: 'role'
     }"
 >
-    <x:shopper-breadcrumb back="shopper.settings.users">
+    <x-shopper-breadcrumb back="shopper.settings.users">
         <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
         <a href="{{ route('shopper.settings.users') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Users & roles') }}</a>
-    </x:shopper-breadcrumb>
+    </x-shopper-breadcrumb>
 
     <div class="mt-3 relative pb-5 border-b border-gray-200 space-y-4 sm:pb-0">
         <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
@@ -38,7 +37,7 @@
                     @endif
                 </span>
                 <span class="shadow-sm rounded-md">
-                    <button @click="createModal = true" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
+                    <button wire:click="createPermissionModale" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
                         <svg class="w-5 h-5 -ml-1 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                         </svg>
@@ -107,42 +106,30 @@
             <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-1">
-                        <label for="name" class="block text-sm font-medium leading-5 text-gray-700">
-                            {{ __("Name") }} <span class="text-red-500">*</span>
-                        </label>
-                        <div class="mt-1 relative">
-                            <input wire:model="name" id="name" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="manager" />
-                        </div>
-                        @error('name')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                        <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                            <x-shopper-input.text wire:model="name" id="name" placeholder="manager" />
+                        </x-shopper-input.group>
                     </div>
                     <div class="sm:col-span-1">
-                        <label for="display_name" class="block text-sm font-medium leading-5 text-gray-700">
-                            {{ __("Display name") }}
-                        </label>
-                        <div class="mt-1 relative">
-                            <input wire:model="display_name" id="display_name" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="Manager" />
-                        </div>
+                        <x-shopper-input.group label="Display name" for="display_name">
+                            <x-shopper-input.text wire:model="display_name" id="display_name" placeholder="Manager" />
+                        </x-shopper-input.group>
                     </div>
                     <div class="sm:col-span-2">
-                        <label for="description" class="block text-sm leading-5 font-medium text-gray-700">
-                            {{ __("Description") }}
-                        </label>
-                        <div class="rounded-md shadow-sm">
-                            <textarea wire:model="description" id="description" rows="3" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
-                        </div>
+                        <x-shopper-input.group label="Description" for="description">
+                            <x-shopper-input.textarea wire:model="description" id="description" />
+                        </x-shopper-input.group>
                     </div>
                 </div>
             </div>
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                <button wire:click="save" type="button" class="inline-flex items-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 shadow-sm hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">
+                <x-shopper-button wire:click="save" wire:loading.attr="disabled" type="button">
                     <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                     </svg>
                     {{ __("Update") }}
-                </button>
+                </x-shopper-button>
             </div>
         </div>
         <div x-cloak x-show="currentTab === 'users'">
@@ -176,20 +163,20 @@
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
         <div
-           x-cloak
-           x-show="deleteModal"
-           x-description="Modal panel, show/hide based on modal state."
-           x-transition:enter="ease-out duration-300"
-           x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-           x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-           x-transition:leave="ease-in duration-200"
-           x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-           x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-           class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
-           role="dialog"
-           aria-modal="true"
-           aria-labelledby="modal-headline"
-           style="display: none;"
+            x-cloak
+            x-show="deleteModal"
+            x-description="Modal panel, show/hide based on modal state."
+            x-transition:enter="ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave="ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+            x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-headline"
+            style="display: none;"
         >
             <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
                 <button @click="deleteModal = false;" type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150" aria-label="Close">
@@ -217,123 +204,79 @@
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click="destroy" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                    <x-shopper-danger-button wire:click="destroy" type="button" wire:loading.attr="disabled">
                         <svg wire:loading wire:target="destroy" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                         </svg>
                         {{ __("Confirm") }}
-                    </button>
+                    </x-shopper-danger-button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <button @click="deleteModal = false;" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                        {{ __("Cancel") }}
-                    </button>
+                    <x-shopper-default-button @click="deleteModal = false;" type="button">
+                        {{ __('Cancel') }}
+                    </x-shopper-default-button>
                 </span>
             </div>
         </div>
     </div>
 
-    <div
-        x-cloak
-        x-show="createModal"
-        class="fixed z-50 inset-0 overflow-y-auto"
-        x-on:permission-added.window="createModal = false"
-    >
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div x-cloak x-show="createModal" x-description="Background overlay, show/hide based on modal state." x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-
-            <!-- This element is to trick the browser into centering the modal contents. -->
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-            <div
-               x-cloak
-               x-show="createModal"
-               x-description="Modal panel, show/hide based on modal state."
-               x-transition:enter="ease-out duration-300"
-               x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-               x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-               x-transition:leave="ease-in duration-200"
-               x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-               x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-               class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-               role="dialog"
-               aria-modal="true"
-               aria-labelledby="modal-headline"
-            >
-                <div class="bg-white">
-                    <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
-                        <div class="text-left">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">
-                                {{ __("New permission") }}
-                            </h3>
-                            <p class="text-sm leading-5 text-gray-500">{{ __("Add a new permission and directly assign to this role.") }}</p>
-                        </div>
-                    </div>
-                    <div class="p-4 sm:px-6 border-t border-gray-100">
-                        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                            <div class="sm:col-span-2">
-                                <label for="group" class="block text-sm font-medium leading-5 text-gray-700">
-                                    {{ __("Group name") }}
-                                </label>
-                                <div class="mt-1 rounded-md shadow-sm">
-                                    <select id="group" wire:model="group" class="block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                        <option>{{ __("No group") }}</option>
-                                        @foreach($groups as $key => $value)
-                                            <option value="{{ $key }}">{{ $value }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label for="permission_name" class="block text-sm font-medium leading-5 text-gray-700">
-                                    {{ __("Permission name") }} <span class="text-red-500">*</span>
-                                </label>
-                                <div class="mt-1 relative">
-                                    <input wire:model="permission_name" id="permission_name" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="create_post, manage_articles, etc" />
-                                </div>
-                                @error('permission_name')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label for="display_name" class="block text-sm font-medium leading-5 text-gray-700">
-                                    {{ __("Display name") }}
-                                </label>
-                                <div class="mt-1 relative">
-                                    <input wire:model="permission_display_name" id="display_name" class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" placeholder="Create Blog posts" />
-                                </div>
-                            </div>
-                            <div class="sm:col-span-2">
-                                <label for="permission_description" class="block text-sm leading-5 font-medium text-gray-700">
-                                    {{ __("Description") }}
-                                </label>
-                                <div class="rounded-md shadow-sm">
-                                    <textarea wire:model="permission_description" id="permission_description" rows="3" class="form-textarea mt-1 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <x-shopper-modal wire:model="createModale" maxWidth="lg">
+        <div class="bg-white">
+            <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
+                <div class="text-left">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">
+                        {{ __("New permission") }}
+                    </h3>
+                    <p class="text-sm leading-5 text-gray-500">{{ __("Add a new permission and directly assign to this role.") }}</p>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                        <button wire:click="addPermission" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                            <svg wire:loading wire:target="addPermission" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                            </svg>
-                            {{ __("Save") }}
-                        </button>
-                    </span>
-                    <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                        <button @click="createModal = false" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                            {{ __("Cancel") }}
-                        </button>
-                    </span>
+            </div>
+            <div class="p-4 sm:px-6 border-t border-gray-100">
+                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                    <div class="sm:col-span-2">
+                        <x-shopper-input.group label="Group name" for="group">
+                            <x-shopper-input.select id="group" wire:model="group">
+                                <option>{{ __("No group") }}</option>
+                                @foreach($groups as $key => $value)
+                                    <option value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                            </x-shopper-input.select>
+                        </x-shopper-input.group>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <x-shopper-input.group label="Permission name" for="permission_name" isRequired :error="$errors->first('permission_name')">
+                            <x-shopper-input.text wire:model="permission_name" id="permission_name" placeholder="create_post, manage_articles, etc" />
+                        </x-shopper-input.group>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <x-shopper-input.group label="Display name" for="display_name" isRequired :error="$errors->first('permission_display_name')">
+                            <x-shopper-input.text wire:model="permission_display_name" id="display_name" placeholder="Create Blog posts" />
+                        </x-shopper-input.group>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <x-shopper-input.group label="Description" for="permission_description">
+                            <x-shopper-input.textarea wire:model="permission_description" id="permission_description" />
+                        </x-shopper-input.group>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                <x-shopper-button wire:click="addPermission" type="button" wire:loading.attr="disabled">
+                    <svg wire:loading wire:target="addPermission" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                    </svg>
+                    {{ __('Save') }}
+                </x-shopper-button>
+            </span>
+            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                <x-shopper-default-button @click="show = false;" type="button">
+                    {{ __('Cancel') }}
+                </x-shopper-default-button>
+            </span>
+        </div>
+    </x-shopper-modal>
 
 </div>

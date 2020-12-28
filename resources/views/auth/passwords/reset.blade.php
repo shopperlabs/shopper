@@ -5,35 +5,15 @@
 
     <div class="min-h-screen flex items-center justify-center">
         <div class="max-w-md w-full px-6">
-            @if($errors->count() > 0)
-                <div class="rounded-md bg-red-50 p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm leading-5 font-medium text-red-800">
-                                {{ __("Your submission contains errors. Please try again") }}
-                            </h3>
-                            <div class="mt-2 text-sm leading-5 text-red-700">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    @foreach ($errors->all() as $message)
-                                        <li>{{ $message }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            <div class="space-y-4">
+                <x-shopper-validation-errors />
+                <div>
+                    <x-shopper-application-logo class="mx-auto h-20 w-auto" />
+                    <h2 class="mt-10 text-3xl font-semibold font-heading text-center leading-9 text-gray-800">{{ __('Reset your password') }}</h2>
+                    <p class="mt-5 text-sm leading-5 text-center text-gray-600">
+                        {{ __("Enter your email and the new password you'd like to use to access your account.") }}
+                    </p>
                 </div>
-            @endif
-            <div class="mt-4">
-                <img class="mx-auto h-20 w-auto" src="{{ asset('shopper/images/logo.svg') }}" alt="Laravel Shopper">
-                <h2 class="mt-10 text-3xl font-semibold font-heading text-center leading-9 text-gray-800">{{ __('Reset your password') }}</h2>
-                <p class="mt-5 text-sm leading-5 text-center text-gray-600">
-                    {{ __("Enter your email and the new password you'd like to use to access your account.") }}
-                </p>
             </div>
             <form class="mt-5" action="{{ route('shopper.password.update') }}" method="POST">
                 @csrf
