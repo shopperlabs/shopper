@@ -1,7 +1,5 @@
 <div
     x-data="{
-        show: false,
-        on: @entangle('enabled'),
         options: ['general', 'stripe'],
         words: {'general': '{{ __("General") }}', 'stripe': '{{ __("Stripe") }}'},
         currentTab: 'general'
@@ -22,7 +20,7 @@
             </h3>
             <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
                 <span class="shadow-sm rounded-md">
-                    <button @click="show = true" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
+                    <button wire:click="launchModale" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
                         {{ __("Create custom payment method") }}
                     </button>
                 </span>
@@ -68,7 +66,7 @@
                                     <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                                 </svg>
                             </div>
-                            <input id="filter" wire:model.debounce.300ms="search" class="form-input block w-full rounded-none rounded-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search payment by provider title') }}" />
+                            <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="rounded-none rounded-md pl-10" placeholder="{{ __('Search payment by provider title') }}" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -134,7 +132,7 @@
                                         </td>
                                         <td class="pr-6">
                                             <div x-data="{ open: false }" x-on:item-update.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
-                                                <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
+                                                <button id="payment-options-menu-{{ $method->id }}" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
                                                     <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                         <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                                                     </svg>
@@ -206,7 +204,7 @@
         </div>
     </div>
 
-    <x-shopper-modal x-show="show" maxWidth="lg">
+    <x-shopper-modal wire:model="display" maxWidth="lg">
         <div class="bg-white">
             <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
                 <div class="text-left">
@@ -265,7 +263,7 @@
                                 <span class="text-sm leading-5 font-medium text-gray-900">{{ __("Enabled") }}</span>
                                 <span class="text-sm leading-normal text-gray-500">{{ __("This provider will be available and visible to your customers once it is enabled.") }}</span>
                             </span>
-                            <span role="checkbox" tabindex="0" x-on:click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" aria-labelledby="toggleLabel" x-bind:class="{ 'bg-gray-200': !on, 'bg-blue-600': on }" class="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue">
+                            <span role="checkbox" tabindex="0" @click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" aria-labelledby="toggleLabel" x-data="{ on: @entangle('enabled') }" x-bind:class="{ 'bg-gray-200': !on, 'bg-blue-600': on }" class="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue">
                                 <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
                             </span>
                         </div>

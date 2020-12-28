@@ -54,6 +54,20 @@ class Stripe extends Component
     public $enabled = false;
 
     /**
+     * Message display during Stripe installation.
+     *
+     * @var string
+     */
+    public $message = '...';
+
+    /**
+     * Confirm if install Stripe using composer.
+     *
+     * @var bool
+     */
+    public $confirmInstallation = true;
+
+    /**
      * Mounted component.
      *
      * @return void
@@ -86,10 +100,32 @@ class Stripe extends Component
 
         $this->enabled = true;
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __("Success"),
             'message' => __("You have successfully enabled Stripe payment for your store!"),
         ]);
+    }
+
+    /**
+     * Close Installation Modal.
+     *
+     * @return void
+     */
+    public function closeModal()
+    {
+        $this->confirmInstallation = false;
+    }
+
+    /**
+     * Stripe installation process using composer.
+     *
+     * @return void
+     */
+    public function install()
+    {
+        $this->message = __('This feature is not enabled for now :(');
+
+        $this->closeModal();
     }
 
     /**
@@ -109,7 +145,7 @@ class Stripe extends Component
 
         Artisan::call('config:clear');
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __('Updated'),
             'message' => __("Your Stripe payments configuration have been correctly updated!")
         ]);
