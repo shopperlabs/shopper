@@ -1220,10 +1220,10 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-alpinejs@^2.7.3:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/alpinejs/-/alpinejs-2.7.3.tgz#9009fd1daa53366e0937585eada3b6f9cc986fb4"
-  integrity sha512-IRXnszk68s+FOGFMA1+K3rjLK44NqLShNpSy8aI6J3Ch9gss56FqlU6NVRP+mJes7LeQFCreH410luScVSkdfg==
+alpinejs@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/alpinejs/-/alpinejs-2.8.0.tgz#d0de7309dd642e9198aef7c14acb9243246549f0"
+  integrity sha512-UHvE71BBYHJa6+RxjMwM0g4eokq+5yG1QO5C6VieUu0MVPlsUSlwvrh19VVZQApNIlQsgcvQUhIalzAIgoAPoA==
 
 ansi-colors@^3.0.0:
   version "3.2.4"
@@ -6839,10 +6839,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-tailwindcss@^1.8.7:
-  version "1.8.10"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.8.10.tgz#945ef151c401c04a1c95e6a6bc747387a8d1b9dc"
-  integrity sha512-7QkERG/cWCzsuMqHMwjOaLMVixOGLNBiXsrkssxlE1aWfkxVbGqiuMokR2162xRyaH2mBIHKxmlf1qb3DvIPqw==
+tailwindcss@^1.9.6:
+  version "1.9.6"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.9.6.tgz#0c5089911d24e1e98e592a31bfdb3d8f34ecf1a0"
+  integrity sha512-nY8WYM/RLPqGsPEGEV2z63riyQPcHYZUJpAwdyBzVpxQHOHqHE+F/fvbCeXhdF1+TA5l72vSkZrtYCB9hRcwkQ==
   dependencies:
     "@fullhuman/postcss-purgecss" "^2.1.2"
     autoprefixer "^9.4.5"
