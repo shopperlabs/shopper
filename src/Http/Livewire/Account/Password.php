@@ -47,7 +47,7 @@ class Password extends Component
             $this->password = '';
             $this->password_confirmation = '';
 
-            $this->dispatchBrowserEvent('notify', [
+            $this->notify([
                 'title' => __('Password Changed!'),
                 'message' => __("You have been successfully updated your password!")
             ]);
