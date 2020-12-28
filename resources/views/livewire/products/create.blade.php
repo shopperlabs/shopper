@@ -30,7 +30,7 @@
             <div class="bg-white rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <input wire:model="name" id="name" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" placeholder="Apple, Nike, Samsung...">
+                        <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Apple, Nike, Samsung...') }}" />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-5 border-t border-gray-200 pt-4">
@@ -88,12 +88,12 @@
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 p-4 sm:p-5">
                         <div class="sm:col-span-1">
                             <x-shopper-input.group label="SKU (Stock Keeping Unit)" for="sku" :error="$errors->first('sku')">
-                                <input wire:model="sku" id="sku" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                                <x-shopper-input.text wire:model="sku" id="sku" type="text" autocomplete="off" />
                             </x-shopper-input.group>
                         </div>
                         <div class="sm:col-span-1">
                             <x-shopper-input.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
-                                <input wire:model="barcode" id="barcode" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
+                                <x-shopper-input.text wire:model="barcode" id="barcode" type="text" autocomplete="off" />
                             </x-shopper-input.group>
                         </div>
                     </div>
@@ -101,13 +101,13 @@
                         @if($inventories->count() <= 1)
                             <div class="sm:col-span-1">
                                 <x-shopper-input.group label="Quantity" for="quantity">
-                                    <input wire:model="quantity.{{ $inventories->first()->id }}" id="quantity" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" min="0" autocomplete="off">
+                                    <x-shopper-input.text wire:model="quantity.{{ $inventories->first()->id }}" id="quantity" type="number" min="0" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
                         @endif
                         <div class="sm:col-span-1">
                             <x-shopper-input.group label="Safety Stock" for="security_stock" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
-                                <input wire:model="securityStock" id="security_stock" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" min="1" step="1" autocomplete="off">
+                                <x-shopper-input.text wire:model="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
                             </x-shopper-input.group>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                                             <span class="text-sm leading-5 text-gray-600">{{ $inventory->name }}</span>
                                         </div>
                                         <div class="col-span-1 pl-4 flex justify-end">
-                                            <input wire:model="quantity.{{ $inventory->id }}" type="number" class="form-input block w-32 transition duration-150 ease-in-out sm:text-sm sm:leading-5" aria-label="{{ __("Inventory quantity") }}"  min="0" autocomplete="off" />
+                                            <input wire:model="quantity.{{ $inventory->id }}" type="number" class="form-input block w-24 transition duration-150 ease-in-out sm:text-sm sm:leading-5" aria-label="{{ __("Inventory quantity") }}"  min="0" autocomplete="off" />
                                         </div>
                                     </div>
                                 @endforeach

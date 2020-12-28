@@ -39,7 +39,7 @@
                                         <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                                     </svg>
                                 </div>
-                                <input id="filter" wire:model.debounce.300ms="search" class="form-input block w-full rounded-none rounded-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search product by name') }}" />
+                                <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search product by name') }}" />
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -120,47 +120,47 @@
                                                             <div class="px-4 sm:px-6 pb-5">
                                                                 <div class="space-y-6">
                                                                     <div>
-                                                                        <label for="brand_id" class="block text-sm font-medium text-gray-900">
+                                                                        <x-shopper-label for="brand_id" class="text-gray-900">
                                                                             {{ __("Brands") }}
-                                                                        </label>
+                                                                        </x-shopper-label>
                                                                         <div class="mt-1">
                                                                             <div class="mt-1 rounded-md shadow-sm">
-                                                                                <select wire:model="brand_id" id="brand_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                                                                <x-shopper-input.select wire:model="brand_id" id="brand_id">
                                                                                     <option value="0">{{ __("No Brand") }}</option>
                                                                                     @foreach($brands as $brand)
                                                                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                                                     @endforeach
-                                                                                </select>
+                                                                                </x-shopper-input.select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div>
-                                                                        <label for="category_id" class="block text-sm font-medium text-gray-900">
+                                                                        <x-shopper-label for="category_id" class="text-gray-900">
                                                                             {{ __("Categories") }}
-                                                                        </label>
+                                                                        </x-shopper-label>
                                                                         <div class="mt-1">
                                                                             <div class="mt-1 rounded-md shadow-sm">
-                                                                                <select wire:model="category_id" id="category_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                                                                <x-shopper-input.select wire:model="category_id" id="category_id">
                                                                                     <option value="0">{{ __("No Category") }}</option>
                                                                                     @foreach($categories as $category)
                                                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                                                     @endforeach
-                                                                                </select>
+                                                                                </x-shopper-input.select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                     <div>
-                                                                        <label for="collection_id" class="block text-sm font-medium text-gray-900">
+                                                                        <x-shopper-label for="collection_id" class="text-gray-900">
                                                                             {{ __("Collections") }}
-                                                                        </label>
+                                                                        </x-shopper-label>
                                                                         <div class="mt-1">
                                                                             <div class="mt-1 rounded-md shadow-sm">
-                                                                                <select wire:model="collection_id" id="collection_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                                                                <x-shopper-input.select wire:model="collection_id" id="collection_id">
                                                                                     <option value="0">{{ __("No Collection") }}</option>
                                                                                     @foreach($collections as $collection)
                                                                                         <option value="{{ $collection->id }}">{{ $collection->name }}</option>
                                                                                     @endforeach
-                                                                                </select>
+                                                                                </x-shopper-input.select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -180,9 +180,9 @@
                                                                                 <input wire:model="is_visible" id="status_public" value="1" aria-describedby="product_status_visible" type="radio" name="status" class="focus:shadow-blue-500 h-4 w-4 text-blue-600 border-gray-300" />
                                                                             </div>
                                                                             <div class="pl-7 text-sm">
-                                                                                <label for="status_public" class="font-medium text-gray-900">
+                                                                                <x-shopper-label for="status_public" class="text-gray-900">
                                                                                     {{ __("Visible") }}
-                                                                                </label>
+                                                                                </x-shopper-label>
                                                                                 <p id="privacy_public_description" class="text-gray-500">
                                                                                     {{ __("All store customers will be able to view this product.") }}
                                                                                 </p>
@@ -194,9 +194,9 @@
                                                                                     <input wire:model="is_visible" id="status_private" value="0" aria-describedby="product_status_invisible" type="radio" name="status" class="focus:shadow-blue-500 h-4 w-4 text-blue-600 border-gray-300" />
                                                                                 </div>
                                                                                 <div class="pl-7 text-sm">
-                                                                                    <label for="status_private" class="font-medium text-gray-900">
+                                                                                    <x-shopper-label for="status_private" class="text-gray-900">
                                                                                         {{ __("Not visible") }}
-                                                                                    </label>
+                                                                                    </x-shopper-label>
                                                                                     <p id="privacy_private-to-project_description" class="text-gray-500">
                                                                                         {{ __("Products that have not yet been released to customers") }}
                                                                                     </p>
