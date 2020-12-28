@@ -2,22 +2,55 @@
 
 namespace Shopper\Framework\Http\Livewire\Brands;
 
-use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Models\System\File;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Traits\WithUploadProcess;
 
-class Create extends Component
+class Create extends AbstractBaseComponent
 {
-    use WithFileUploads;
+    use WithFileUploads, WithUploadProcess;
 
+    /**
+     * Brand name attribute.
+     *
+     * @var string
+     */
     public $name;
-    public $slug;
-    public $website;
-    public $description;
-    public $is_enabled = false;
-    public $file;
 
+    /**
+     * Brand slug attribute for manage SEO.
+     *
+     * @var string
+     */
+    public $slug;
+
+    /**
+     * Brand website url.
+     *
+     * @var string
+     */
+    public $website;
+
+    /**
+     * Brand full description.
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * Determine if brand is enabled.
+     *
+     * @var bool
+     */
+    public $is_enabled = false;
+
+    /**
+     * Store/Update a entry to the storage.
+     *
+     * @return void
+     */
     public function store()
     {
         $this->validate($this->rules());
@@ -31,35 +64,28 @@ class Create extends Component
         ]);
 
         if ($this->file) {
-            File::query()->create([
-                'disk_name'     => $filename = $this->file->store('/', config('shopper.system.storage.disks.uploads')),
-                'file_name'     => $this->file->getClientOriginalName(),
-                'file_size'     => $this->file->getSize(),
-                'content_type'  => $this->file->getClientMimeType(),
-                'filetable_type' => config('shopper.system.models.brand'),
-                'filetable_id'   => $brand->id,
-            ]);
+            $this->uploadFile(config('shopper.system.models.brand'), $brand->id);
         }
 
         session()->flash('success', __("Brand successfully added!"));
         $this->redirectRoute('shopper.brands.index');
     }
 
-    public function removeImage()
-    {
-        $this->file = null;
-    }
-
-    public function updated($field)
-    {
-        $this->validateOnly($field, $this->rules());
-    }
-
-    public function updatedName($value)
+    /**
+     * Update dynamically slug when updated brand name.
+     *
+     * @param  string  $value
+     */
+    public function updatedName(string $value)
     {
         $this->slug = str_slug($value, '-');
     }
 
+    /**
+     * Component validation rules.
+     *
+     * @return string[]
+     */
     public function rules()
     {
         return [
@@ -69,6 +95,11 @@ class Create extends Component
         ];
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('shopper::livewire.brands.create');
