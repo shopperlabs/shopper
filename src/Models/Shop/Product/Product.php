@@ -3,6 +3,9 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Framework\Contracts\ReviewRateable;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
@@ -81,7 +84,7 @@ class Product extends Model implements ReviewRateable
      * @var array
      */
     protected $appends = [
-        'formatted_price',
+        'formattedPrice',
     ];
 
     /**
@@ -101,7 +104,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('products');
     }
@@ -111,7 +114,7 @@ class Product extends Model implements ReviewRateable
      *
      * @param  string  $value
      */
-    public function setSlugAttribute($value)
+    public function setSlugAttribute(string $value)
     {
         if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
             $slug = "{$slug}-{$this->id}";
@@ -125,7 +128,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return string|null
      */
-    public function getFormattedPriceAttribute()
+    public function getFormattedPriceAttribute(): ?string
     {
         if ($this->price_amount) {
             $this->formattedPrice($this->price_amount);
@@ -139,7 +142,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function variantes()
+    public function variations(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
     }
@@ -149,7 +152,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function categories()
+    public function categories(): BelongsToMany
     {
         return $this->belongsToMany(config('shopper.system.models.category'), shopper_table('category_product'), 'product_id');
     }
@@ -159,7 +162,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function channels()
+    public function channels(): BelongsToMany
     {
         return $this->belongsToMany(Channel::class, shopper_table('channel_product'), 'product_id');
     }
@@ -169,7 +172,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function collections()
+    public function collections(): BelongsToMany
     {
         return $this->belongsToMany(config('shopper.system.models.collection'), shopper_table('collection_product'), 'product_id');
     }
@@ -179,7 +182,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function brand()
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(config('shopper.system.models.brand'), 'brand_id');
     }
@@ -187,7 +190,7 @@ class Product extends Model implements ReviewRateable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function attributes()
+    public function attributes(): HasMany
     {
         return $this->hasMany(ProductAttribute::class);
     }
