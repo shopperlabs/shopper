@@ -67,6 +67,7 @@ class Browse extends Component
      * Render the component.
      *
      * @return \Illuminate\View\View
+     * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
     {
