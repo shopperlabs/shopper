@@ -76,7 +76,7 @@
                 <div class="sm:col-span-2 flex items-center space-x-4">
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <input wire:model="isSearchable" id="is_searchable" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" />
+                            <x-shopper-input.checkbox wire:model="isSearchable" id="is_searchable" />
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <label for="is_searchable" class="font-medium text-gray-700 cursor-pointer">{{ __("Is Searchable") }}</label>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <input wire:model="isFilterable" id="is_filterable" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" />
+                            <x-shopper-input.checkbox wire:model="isFilterable" id="is_filterable" />
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <label for="is_filterable" class="font-medium text-gray-700 cursor-pointer">{{ __("Is Filterable") }}</label>
