@@ -12,7 +12,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
     /**
      * Method used to define your sidebar menu groups and items
      *
-     * @param Menu $menu
+     * @param  Menu  $menu
      * @return Menu
      */
     public function extendWith(Menu $menu)
@@ -21,24 +21,24 @@ class RegisterShopSidebar extends AbstractAdminSidebar
             $group->weight(20);
             $group->authorize(true);
 
-            $group->item(__('Categories'), function (Item $item) {
-                $item->weight(1);
-                $item->authorize($this->user->hasPermissionTo('browse_categories'));
-                $item->route('shopper.categories.index');
-                $item->icon('
-                    <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                    </svg>
-                ');
-            });
-
             $group->item(__('Brands'), function (Item $item) {
-                $item->weight(2);
+                $item->weight(1);
                 $item->authorize($this->user->hasPermissionTo('browse_brands'));
                 $item->route('shopper.brands.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                ');
+            });
+
+            $group->item(__('Categories'), function (Item $item) {
+                $item->weight(2);
+                $item->authorize($this->user->hasPermissionTo('browse_categories'));
+                $item->route('shopper.categories.index');
+                $item->icon('
+                    <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                     </svg>
                 ');
             });
