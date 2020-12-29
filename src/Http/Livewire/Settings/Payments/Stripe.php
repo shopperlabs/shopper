@@ -65,7 +65,7 @@ class Stripe extends Component
      *
      * @var bool
      */
-    public $confirmInstallation = true;
+    public $confirmInstallation = false;
 
     /**
      * Mounted component.
