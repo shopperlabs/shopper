@@ -118,7 +118,6 @@ class User extends Authenticatable
     /**
      * Return Formatted Birth Date Attribute.
      *
-     * @param  string  $value
      * @return \Illuminate\Contracts\Translation\Translator|string
      */
     public function getBirthDateFormattedAttribute()

@@ -47,6 +47,24 @@ class Address extends Model
     }
 
     /**
+     * Bootstrap the model and its traits.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($address) {
+            if ($address->is_default) {
+                $address->user->addresses()->update([
+                    'is_default' => false
+                ]);
+            }
+        });
+    }
+
+    /**
      * Define if an address is default or not.
      *
      * @return bool
