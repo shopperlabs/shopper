@@ -2,10 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\View\View;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
@@ -77,8 +75,16 @@ class Attributes extends Component
     public $multipleValues = [];
 
     /**
+     * Launch Attribute modale.
+     *
+     * @var bool
+     */
+    public $launchModale = false;
+
+    /**
      * Component Mount method.
      *
+     * @param  mixed  $product
      * @return void
      */
     public function mount($product)
@@ -94,7 +100,7 @@ class Attributes extends Component
      *
      * @param  string  $value
      */
-    public function updatedAttributeId($value)
+    public function updatedAttributeId(string $value)
     {
         if ($value === "0") {
             return;
@@ -179,6 +185,16 @@ class Attributes extends Component
     }
 
     /**
+     * Launch modale to remove product.
+     *
+     * @return void
+     */
+    public function openModale()
+    {
+        $this->launchModale = true;
+    }
+
+    /**
      * Close Modal.
      *
      * @return void
@@ -188,7 +204,7 @@ class Attributes extends Component
         $this->getProductAttributes();
         $this->getAttributes();
 
-        $this->dispatchBrowserEvent('modal-close');
+        $this->launchModale = false;
         $this->resetErrorBag();
 
         $this->value = null;
@@ -231,9 +247,9 @@ class Attributes extends Component
     /**
      * Render the component.
      *
-     * @return View
+     * @return \Illuminate\View\View
      */
-    public function render(): View
+    public function render()
     {
         return view('shopper::livewire.products.forms.form-attributes');
     }

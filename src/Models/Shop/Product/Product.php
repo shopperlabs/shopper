@@ -131,7 +131,7 @@ class Product extends Model implements ReviewRateable
     public function getFormattedPriceAttribute(): ?string
     {
         if ($this->price_amount) {
-            $this->formattedPrice($this->price_amount);
+            return $this->formattedPrice($this->price_amount);
         }
 
         return null;

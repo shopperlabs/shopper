@@ -3,7 +3,7 @@
 @endpush
 
 <div
-    x-data="{ show: false }"
+    x-data
     class="bg-white rounded-lg p-4 sm:p-6 shadow-md"
 >
     <div class="pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
@@ -14,7 +14,7 @@
             </p>
         </div>
         <div>
-            <button @click="show = true" type="button" class="inline-flex items-center px-4 py-2 shadow-sm rounded-md border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
+            <button wire:click="openModale" type="button" class="inline-flex items-center px-4 py-2 shadow-sm rounded-md border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
                 {{ __("Add attribute") }}
             </button>
         </div>
@@ -61,7 +61,7 @@
         @endforelse
     </dl>
 
-    <x-shopper-modal x-show="show" maxWidth="xl">
+    <x-shopper-modal wire:model="launchModale" maxWidth="xl">
         <div class="bg-white">
             <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
                 <div class="text-left">

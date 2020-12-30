@@ -1,7 +1,6 @@
 <div
     x-data="{
         open: false,
-        show: false,
         options: ['detail', 'variants', 'attributes', 'inventory', 'seo', 'shipping', 'related'],
         words: {
             'detail': '{{ __("Overview") }}',
@@ -34,14 +33,16 @@
                     </div>
                 </div>
                 <div class="flex space-x-3 pt-1">
-                    <x-shopper-danger-button @click="show = true" type="button">
-                        <svg class="w-5 h-5 -ml-1 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                        {{ __("Delete") }}
-                    </x-shopper-danger-button>
+                    <span class="hidden sm:block">
+                        <x-shopper-danger-button wire:click="openModale" type="button">
+                            <svg class="w-5 h-5 -ml-1 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            {{ __("Delete") }}
+                        </x-shopper-danger-button>
+                    </span>
 
-                    <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
+                    <div @keydown.escape="open = false" @click.away="open = false" class="relative block text-left">
                         <x-shopper-default-button @click="open = !open" type="button">
                             {{ __("More actions") }}
                             <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +152,7 @@
         </div>
     </div>
 
-    <x-shopper-modal x-show="show" maxWidth="lg">
+    <x-shopper-modal wire:model="confirmDeleteProduct" maxWidth="lg">
         <div class="bg-white rounded-lg px-4 pt-5 pb-4 text-left">
             <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
                 <button @click="show = false;" type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150" aria-label="Close">
@@ -188,9 +189,9 @@
                     </button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <button @click="show = false;" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                    <x-shopper-default-button wire:click="closeModale" type="button">
                         {{ __("Cancel") }}
-                    </button>
+                    </x-shopper-default-button>
                 </span>
             </div>
         </div>

@@ -4,7 +4,6 @@ namespace Shopper\Framework\Http\Livewire\Products;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\View\View;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
@@ -15,9 +14,7 @@ class Edit extends Component
      *
      * @var string[]
      */
-    protected $listeners = [
-        'productHasUpdated'
-    ];
+    protected $listeners = ['productHasUpdated'];
 
     /**
      * Product Model.
@@ -27,13 +24,41 @@ class Edit extends Component
     public $product;
 
     /**
+     * Confirm action to delete product.
+     *
+     * @var bool
+     */
+    public $confirmDeleteProduct = false;
+
+    /**
      * Component Mount method.
      *
+     * @param  mixed  $product
      * @return void
      */
     public function mount($product)
     {
         $this->product = $product;
+    }
+
+    /**
+     * Launch modale to remove product.
+     *
+     * @return void
+     */
+    public function openModale()
+    {
+        $this->confirmDeleteProduct = true;
+    }
+
+    /**
+     * Close modale.
+     *
+     * @return void
+     */
+    public function closeModale()
+    {
+        $this->confirmDeleteProduct = false;
     }
 
     /**
@@ -48,7 +73,7 @@ class Edit extends Component
     }
 
     /**
-     *  Removed a product to the storage.
+     * Removed a product to the storage.
      *
      * @throws Exception
      */
@@ -63,7 +88,7 @@ class Edit extends Component
     /**
      * Render the component.
      *
-     * @return View
+     * @return \Illuminate\View\View
      */
     public function render()
     {
