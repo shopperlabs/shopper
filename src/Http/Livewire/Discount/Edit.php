@@ -180,7 +180,7 @@ class Edit extends AbstractBaseComponent
      *
      * @throws \Exception
      */
-    public function destroy()
+    public function remove()
     {
         Discount::query()->find($this->discountId)->delete();
 
