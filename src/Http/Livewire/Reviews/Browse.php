@@ -38,7 +38,7 @@ class Browse extends Component
      * @param  int  $id
      * @throws \Exception
      */
-    public function remove($id)
+    public function remove(int $id)
     {
         Review::query()->find($id)->delete();
 
