@@ -67,7 +67,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
 
             $group->item(__('Inventory'), function (Item $item) {
                 $item->weight(5);
-                $item->authorize(true);
+                $item->authorize(false);
                 // $item->route('shopper.inventory-histories.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
