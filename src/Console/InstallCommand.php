@@ -45,6 +45,10 @@ class InstallCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
+        if (file_exists(config_path('shopper/system.php'))) {
+            $this->setHidden(true);
+        }
     }
 
     /**
