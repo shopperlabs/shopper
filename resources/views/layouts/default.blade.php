@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->
     @stack('styles')
-    @bukStyles
+    @bukStyles(true)
     <livewire:styles />
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
@@ -115,7 +115,7 @@
     <x-shopper-alert />
 
     <livewire:scripts />
-    @bukScripts
+    @bukScripts(true)
     <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
 
     @stack('scripts')
