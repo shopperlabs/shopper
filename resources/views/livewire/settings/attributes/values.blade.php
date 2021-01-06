@@ -17,7 +17,7 @@
     </div>
 
     <section aria-labelledby="values_attributes_heading">
-        <div class="mt-5 bg-white pt-5 space-y-5 shadow sm:rounded-md sm:overflow-hidden">
+        <div class="mt-5 bg-white pt-5 space-y-5 shadow rounded-md overflow-hidden">
             <div class="px-4 sm:px-5 flex items-center justify-between space-x-4">
                 <div class="flex flex-1">
                     <label for="filter" class="sr-only">{{ __('Search attributes values') }}</label>
