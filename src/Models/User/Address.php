@@ -57,7 +57,7 @@ class Address extends Model
 
         static::creating(function ($address) {
             if ($address->is_default) {
-                $address->user->addresses()->update([
+                $address->user->addresses()->where('type', $address->type)->update([
                     'is_default' => false
                 ]);
             }
