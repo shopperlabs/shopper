@@ -10,7 +10,7 @@ use Shopper\Framework\Models\System\Setting;
 use Shopper\Framework\Models\System\Currency as CurrencyModel;
 use Shopper\Framework\Shopper;
 
-if (!function_exists('app_name')) {
+if (! function_exists('app_name')) {
     /**
      * Helper to grab the application name.
      *
@@ -22,7 +22,7 @@ if (!function_exists('app_name')) {
     }
 }
 
-if (!function_exists('generate_number')) {
+if (! function_exists('generate_number')) {
     /**
      * Generate Order Number.
      *
@@ -147,10 +147,10 @@ if (! function_exists('shopper_currency')) {
      */
     function shopper_currency(): string
     {
-        $settingCurrency =  Setting::query()->where('key', 'shop_currency_id')->first();
+        $settingCurrency =  shopper_setting('shop_currency_id');
 
         if ($settingCurrency) {
-            $currency = CurrencyModel::query()->find($settingCurrency->value);
+            $currency = CurrencyModel::query()->find($settingCurrency);
 
             return $currency ? $currency->code : 'USD';
         }
@@ -202,5 +202,20 @@ if (! function_exists('shopper_asset')) {
     function shopper_asset(string $file, string $disk = 'uploads'): string
     {
         return Storage::disk(config('shopper.system.storage.disks.'. $disk))->url($file);
+    }
+}
+
+if (! function_exists('shopper_setting')) {
+    /**
+     * Return shopper setting from the setting table.
+     *
+     * @param  string  $key
+     * @return string|null
+     */
+    function shopper_setting(string $key): ?string
+    {
+        $setting = Setting::query()->where('key', $key)->first();
+
+        return $setting ? json_decode($setting->value) : null;
     }
 }
