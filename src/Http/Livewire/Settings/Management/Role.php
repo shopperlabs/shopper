@@ -132,8 +132,8 @@ class Role extends Component
     public function addPermission()
     {
         $this->validate([
-            'permission_name' => 'required|max:20|unique:permissions,name',
-            'permission_display_name' => 'required|max:50'
+            'permission_name' => 'required|max:50|unique:permissions,name',
+            'permission_display_name' => 'required|max:75'
         ]);
 
         $permission = Permission::query()->create([
