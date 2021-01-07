@@ -19,12 +19,12 @@ class Dashboard
     {
         $user = auth()->user();
         // Check if the user is super admin or have to ability to access to the backend
-        if (! $user->isAdmin()) {
+        if (! $user->hasPermissionTo('access_dashboard') || ! $user->isAdmin()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
             }
 
-            return abort(403, __("Unauthorized"));
+            abort(403, __("Unauthorized"));
         }
 
         if (! Setting::query()->where('key', 'shop_email')->exists()) {
