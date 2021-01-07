@@ -67,9 +67,12 @@ class Password extends Component
             'current_password' => 'required',
             'password' => [
                 'required',
-                'min:8',
                 'confirmed',
-                new PasswordRules(),
+                (new PasswordRules())
+                    ->requireUppercase()
+                    ->requireSpecialCharacter()
+                    ->requireNumeric()
+                ,
             ],
         ];
     }

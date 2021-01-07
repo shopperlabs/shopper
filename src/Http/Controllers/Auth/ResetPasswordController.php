@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Shopper\Framework\Rules\Password;
+use Shopper\Framework\Rules\RealEmailValidator;
 use Shopper\Framework\Shopper;
 
 class ResetPasswordController extends Controller
@@ -59,8 +61,14 @@ class ResetPasswordController extends Controller
     {
         return [
             'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8',
+            'email' => ['required', 'email', new RealEmailValidator()],
+            'password' => [
+                'required',
+                (new Password())
+                    ->requireNumeric()
+                    ->requireSpecialCharacter()
+                    ->requireUppercase()
+            ],
         ];
     }
 
