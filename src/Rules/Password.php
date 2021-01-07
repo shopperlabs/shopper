@@ -19,19 +19,19 @@ class Password implements Rule
      *
      * @var bool
      */
-    protected $requireUppercase = true;
+    protected $requireUppercase = false;
 
     /**
      * Indicates if the password must contain one numeric digit.
      *
-     * @var int
+     * @var bool
      */
-    protected $requireNumeric = true;
+    protected $requireNumeric = false;
 
     /**
      * Indicates if the password must contain one special character.
      *
-     * @var int
+     * @var bool
      */
     protected $requireSpecialCharacter = false;
 
