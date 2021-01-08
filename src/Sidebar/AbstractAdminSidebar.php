@@ -21,7 +21,7 @@ abstract class AbstractAdminSidebar implements SidebarExtender
      */
     public function __construct()
     {
-        $this->user = auth()->user();
+        $this->user = auth(config('shopper.auth.guard'))->user();
     }
 
     /**

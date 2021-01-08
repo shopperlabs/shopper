@@ -17,9 +17,9 @@ class Dashboard
      */
     public function handle($request, Closure $next)
     {
-        $user = auth()->user();
+        $user = auth(config('shopper.auth.guard'))->user();
         // Check if the user is super admin or have to ability to access to the backend
-        if (! $user->hasPermissionTo('access_dashboard') || ! $user->isAdmin()) {
+        if (! $user->isAdmin() && ! $user->hasPermissionTo('access_dashboard')) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
             }
