@@ -66,10 +66,10 @@
                 </div>
                 <div class="space-y-1">
                     <p class="text-base leading-6 font-medium text-gray-900">
-                        {{ __("Properties") }}
+                        {{ __("Attributes") }}
                     </p>
                     <p class="text-sm leading-5 text-gray-500">
-                        {{ __("Manage additional properties for your products.") }}
+                        {{ __("Manage additional attributes for your products.") }}
                     </p>
                 </div>
             </a>
