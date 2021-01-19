@@ -21,7 +21,7 @@
         <a href="{{ route('shopper.products.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Products') }}</a>
     </x:shopper-breadcrumb>
 
-    <div class="mt-3 bg-gray-100 z-30 relative pb-5 sm:pb-0 sticky top-0 z-30 sm:-mx-8">
+    <div class="mt-3 bg-gray-100 z-30 relative pb-5 sm:pb-0 sticky top-0 sm:-mx-8">
         <div class="sm:px-8 space-y-4">
             <div class="space-y-3 md:flex md:items-start md:justify-between md:space-y-0">
                 <div class="flex-1 min-w-0">

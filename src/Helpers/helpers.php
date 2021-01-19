@@ -216,6 +216,6 @@ if (! function_exists('shopper_setting')) {
     {
         $setting = Setting::query()->where('key', $key)->first();
 
-        return $setting ? json_decode($setting->value) : null;
+        return $setting ? $setting->value : null;
     }
 }

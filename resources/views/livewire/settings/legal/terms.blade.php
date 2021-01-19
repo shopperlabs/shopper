@@ -1,0 +1,3 @@
+<div>
+    Terms
+</div>

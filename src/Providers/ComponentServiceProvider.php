@@ -51,6 +51,10 @@ use Shopper\Framework\Http\Livewire\{
     Settings\Inventories\Create as CreateInventory,
     Settings\Inventories\Edit as EditInventory,
     Settings\General,
+    Settings\Legal\Privacy,
+    Settings\Legal\Refund,
+    Settings\Legal\Shipping,
+    Settings\Legal\Terms,
     Settings\Management\CreateAdminUser,
     Settings\Management\Management,
     Settings\Management\Permissions,
@@ -180,6 +184,10 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-settings-attributes-create', CreateAttribute::class);
         Livewire::component('shopper-settings-attributes-edit', EditAttribute::class);
         Livewire::component('shopper-settings-attributes-values', ValuesAttribute::class);
+        Livewire::component('shopper-settings-legal-privacy', Privacy::class);
+        Livewire::component('shopper-settings-legal-refund', Refund::class);
+        Livewire::component('shopper-settings-legal-shipping', Shipping::class);
+        Livewire::component('shopper-settings-legal-terms', Terms::class);
     }
 
     /**

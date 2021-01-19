@@ -30,6 +30,7 @@ Route::resource('inventory-histories', 'InventoryHistoryController');
 Route::prefix('setting')->as('settings.')->group(function () {
     Route::view('/', 'shopper::pages.settings.index')->name('index');
     Route::view('/management', 'shopper::pages.settings.management.index')->name('users');
+    Route::view('/legal', 'shopper::pages.settings.legal')->name('legal');
     Route::view('/management/user/new', 'shopper::pages.settings.management.create')->name('user.new');
     Route::get('/management/roles/{role}', [SettingController::class, 'role'])->name('user.role');
     Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
