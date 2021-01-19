@@ -4,11 +4,18 @@ namespace Shopper\Framework\Http\Livewire\Settings\Legal;
 
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Legal;
-use Shopper\Framework\Traits\WithLegalAttributes;
+use Shopper\Framework\Traits\WithLegalActions;
 
 class Privacy extends Component
 {
-    use WithLegalAttributes;
+    use WithLegalActions;
+
+    /**
+     * Legal page title.
+     *
+     * @var string
+     */
+    public $title = 'Privacy policy';
 
     /**
      * Component mount instance.
@@ -17,7 +24,7 @@ class Privacy extends Component
      */
     public function mount()
     {
-        $legal = Legal::query()->where('slug', str_slug('Privacy policy'))->first();
+        $legal = Legal::query()->where('slug', str_slug($this->title))->first();
 
         $this->initializeValues($legal);
     }
@@ -29,12 +36,7 @@ class Privacy extends Component
      */
     public function store()
     {
-        Legal::query()->updateOrCreate(['slug' => str_slug('Privacy policy')], [
-            'title' => $title = 'Privacy policy',
-            'slug' => str_slug($title),
-            'content' => $this->content,
-            'is_enabled' => $this->isEnabled,
-        ]);
+        $this->storeValues($this->title, $this->content, $this->isEnabled);
 
         $this->notify([
             'title' => __('Updated'),

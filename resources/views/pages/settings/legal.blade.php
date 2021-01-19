@@ -75,6 +75,7 @@
             </div>
         </div>
 
+        <x-shopper-learn-more name="legal pages" link="#" />
     </div>
 
 @endsection

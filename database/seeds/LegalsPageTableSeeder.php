@@ -39,7 +39,7 @@ class LegalsPageTableSeeder extends Seeder
          * Terms of uses.
          */
         Legal::query()->create([
-            'title' => $title = 'Terms of uses',
+            'title' => $title = 'Terms of use',
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null

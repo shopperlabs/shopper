@@ -4,7 +4,7 @@ namespace Shopper\Framework\Traits;
 
 use Shopper\Framework\Models\Shop\Legal;
 
-trait WithLegalAttributes
+trait WithLegalActions
 {
     /**
      * Legal id.
@@ -38,5 +38,22 @@ trait WithLegalAttributes
         $this->legalId = $legal ? $legal->id : null;
         $this->content = $legal ? $legal->content : null;
         $this->isEnabled = $legal ? $legal->is_enabled : false;
+    }
+
+    /**
+     * Update/Create values on the storage.
+     *
+     * @param  string  $title
+     * @param  mixed  $content
+     * @param  bool  $isEnabled
+     */
+    public function storeValues(string $title, $content, bool $isEnabled = false)
+    {
+        Legal::query()->updateOrCreate(['slug' => str_slug($title)], [
+            'title' => $title,
+            'slug' => str_slug($title),
+            'content' => $content,
+            'is_enabled' => $isEnabled,
+        ]);
     }
 }
