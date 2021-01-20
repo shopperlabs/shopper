@@ -11,7 +11,6 @@ use Shopper\Framework\Http\Controllers\SettingController;
 |
 */
 
-Route::redirect('/', shopper_prefix() . '/dashboard', 301);
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::view('/profile', 'shopper::pages.account.profile')->name('profile');
 

@@ -15,6 +15,8 @@ use Shopper\Framework\Http\Controllers\Auth\TwoFactorAuthenticatedController;
 |
 */
 
+Route::redirect('/', shopper_prefix() . '/login', 301);
+
 // Authentication...
 Route::get('/login', [LoginController::class, 'showLoginForm'])
     ->name('login-view');
