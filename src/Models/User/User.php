@@ -74,6 +74,22 @@ class User extends Authenticatable
     ];
 
     /**
+     * Bootstrap the model and its traits.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($model) {
+            $model->addresses()->delete();
+            $model->roles()->detach();
+            $model->orders()->delete();
+        });
+    }
+
+    /**
      * Get the table associated with the model.
      *
      * @return string

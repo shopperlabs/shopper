@@ -58,6 +58,13 @@ class Show extends AbstractBaseComponent
     public $picture;
 
     /**
+     * Confirm customer delete action.
+     *
+     * @var bool
+     */
+    public $confirmDeletion = false;
+
+    /**
      * Component mounted action.
      *
      * @param  $customer
@@ -121,6 +128,41 @@ class Show extends AbstractBaseComponent
             'last_name' => 'sometimes|required',
             'first_name' => 'sometimes|required',
         ];
+    }
+
+    /**
+     * Display deletion modale.
+     *
+     * @return void
+     */
+    public function confirmDeletion()
+    {
+        $this->confirmDeletion = true;
+    }
+
+    /**
+     * Cancel customer deletion.
+     *
+     * @return void
+     */
+    public function cancelDeletion()
+    {
+        $this->confirmDeletion = false;
+    }
+
+    /**
+     * Remove user from the storage.
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function deleteCustomer()
+    {
+        $this->customer->delete();
+
+        session()->flash('success', __("You have successfully archived this customer, it's no longer available in your customer list."));
+
+        $this->redirectRoute('shopper.customers.index');
     }
 
     /**
