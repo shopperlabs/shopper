@@ -22,6 +22,7 @@
             :button="__('Add product')"
             permission="add_products"
             :url="route('shopper.products.create')"
+            class="lg:pb-0"
         >
             <div class="flex-shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 350 294.7">
