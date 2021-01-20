@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Http\Livewire\Customers;
 
 use Illuminate\Validation\Rule;
-use Livewire\Component;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\UserRepository;
 
-class Show extends Component
+class Show extends AbstractBaseComponent
 {
     /**
      * Listeners.
@@ -103,18 +103,6 @@ class Show extends Component
 
         session()->flash('success', __("Customer successfully updated!"));
         $this->redirectRoute('shopper.customers.index');
-    }
-
-    /**
-     * Real-time component validation.
-     *
-     * @param  string  $field
-     * @throws \Illuminate\Validation\ValidationException
-     * @return void
-     */
-    public function updated($field)
-    {
-        $this->validateOnly($field, $this->rules());
     }
 
     /**

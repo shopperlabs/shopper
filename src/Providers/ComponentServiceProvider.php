@@ -26,6 +26,7 @@ use Shopper\Framework\Http\Livewire\{
     Customers\Create as CreateCustomer,
     Customers\Show as ShowCustomer,
     Customers\Profile as ProfileCustomer,
+    Customers\Addresses,
     Discount\Browse as BrowseDiscounts,
     Discount\Create as CreateDiscount,
     Discount\Edit as EditDiscount,
@@ -157,6 +158,7 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-customers-create', CreateCustomer::class);
         Livewire::component('shopper-customers-show', ShowCustomer::class);
         Livewire::component('shopper-customers-profile', ProfileCustomer::class);
+        Livewire::component('shopper-customers-addresses', Addresses::class);
         Livewire::component('shopper-inventory-history', InventoryHistory::class);
         Livewire::component('shopper-reviews-browse', BrowseReviews::class);
         Livewire::component('shopper-reviews-show', ShowReview::class);

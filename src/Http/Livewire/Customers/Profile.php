@@ -4,7 +4,6 @@ namespace Shopper\Framework\Http\Livewire\Customers;
 
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Shopper\Framework\Traits\User\WithGenderActions;
 
 class Profile extends Component
 {

@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="mt-4 flex md:mt-0 md:ml-4 space-x-2">
+        <div class="hidden md:flex mt-4 flex md:mt-0 md:ml-4 space-x-2">
             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
                 <div>
                     <button @click="open = !open" class="flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600" aria-label="Options" id="options-menu" aria-haspopup="true" x-bind:aria-expanded="open">
@@ -107,16 +107,16 @@
         </div>
 
         <div class="mt-6">
-            <div x-show="currentTab === 'profile'" class="bg-white shadow overflow-hidden sm:rounded-md px-4 py-5 bg-white sm:p-6">
+            <div x-show="currentTab === 'profile'">
                 <livewire:shopper-customers-profile :customer="$customer" />
             </div>
-            <div x-cloak x-show="currentTab === 'address'" class="bg-white shadow overflow-hidden sm:rounded-md px-4 py-5 bg-white sm:p-6">
+            <div x-cloak x-show="currentTab === 'address'">
+                <livewire:shopper-customers-addresses :customer="$customer" />
+            </div>
+            <div x-cloak x-show="currentTab === 'orders'" class="bg-white shadow overflow-hidden rounded-md px-4 py-5 bg-white sm:p-6">
                 <x-shopper-wip-placeholder />
             </div>
-            <div x-cloak x-show="currentTab === 'orders'" class="bg-white shadow overflow-hidden sm:rounded-md px-4 py-5 bg-white sm:p-6">
-                <x-shopper-wip-placeholder />
-            </div>
-            <div x-cloak x-show="currentTab === 'tax'" class="bg-white shadow overflow-hidden sm:rounded-md px-4 py-5 bg-white sm:p-6">
+            <div x-cloak x-show="currentTab === 'tax'" class="bg-white shadow overflow-hidden rounded-md px-4 py-5 bg-white sm:p-6">
                 <x-shopper-wip-placeholder />
             </div>
         </div>

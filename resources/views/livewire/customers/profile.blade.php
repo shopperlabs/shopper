@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 
-<div>
+<div class="bg-white shadow overflow-hidden rounded-md px-4 py-5 bg-white sm:p-6">
     <div class="space-y-6 divide-y divide-gray-200">
         <div class="space-y-1">
             <h3 class="text-lg leading-6 font-medium text-gray-900">
