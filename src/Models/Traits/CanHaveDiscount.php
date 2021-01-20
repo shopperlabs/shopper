@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Models\Traits;
 
-use Shopper\Framework\Models\DiscountDetail;
+use Shopper\Framework\Models\Shop\DiscountDetail;
 
 trait CanHaveDiscount
 {
