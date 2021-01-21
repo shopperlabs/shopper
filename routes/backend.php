@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Shopper\Framework\Http\Controllers\Ecommerce\ProductController;
 use Shopper\Framework\Http\Controllers\SettingController;
 
 /*
@@ -20,6 +21,9 @@ Route::namespace('Ecommerce')->group(function () {
     Route::resource('collections', 'CollectionController');
     Route::resource('customers', 'CustomerController');
     Route::resource('products', 'ProductController');
+    Route::prefix('products')->as('products.')->group(function () {
+        Route::get('/{product}/variants/{id}', [ProductController::class, 'variant'])->name('variant');
+    });
 });
 
 Route::resource('reviews', 'ReviewController');
