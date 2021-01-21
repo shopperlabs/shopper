@@ -39,9 +39,10 @@ use Shopper\Framework\Http\Livewire\{
     Products\Edit as EditProduct,
     Products\Form\Attributes as AttributesFormProduct,
     Products\Form\Edit as EditFormProduct,
+    Products\Form\Inventory as InventoryFormProduct,
     Products\Form\Seo as SEOFormProduct,
     Products\Form\Shipping as ShippingFormProduct,
-    Products\Form\Inventory as InventoryFormProduct,
+    Products\Form\Variants as VariantsFormProduct,
     Settings\Analytics,
     Settings\Attributes\Browse as BrowseAttributes,
     Settings\Attributes\Create as CreateAttribute,
@@ -154,6 +155,7 @@ class ComponentServiceProvider extends ServiceProvider
         Livewire::component('shopper-products-form-seo', SEOFormProduct::class);
         Livewire::component('shopper-products-form-shipping', ShippingFormProduct::class);
         Livewire::component('shopper-products-form-inventory', InventoryFormProduct::class);
+        Livewire::component('shopper-products-form-variants', VariantsFormProduct::class);
         Livewire::component('shopper-customers-lists', BrowseCustomers::class);
         Livewire::component('shopper-customers-create', CreateCustomer::class);
         Livewire::component('shopper-customers-show', ShowCustomer::class);

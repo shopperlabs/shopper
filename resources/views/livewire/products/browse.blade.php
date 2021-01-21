@@ -445,7 +445,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden sm:block">
+            <div class="block">
                 <div class="align-middle inline-block min-w-full">
                     <table class="min-w-full">
                         <thead>
@@ -504,10 +504,17 @@
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         <div class="flex items-center">
-                                            <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-semibold rounded-full {{ $product->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                                                {{ $product->stock }}
-                                            </span>
-                                            {{ __("in stock") }}
+                                            @if($product->variations_count > 0)
+                                                <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-semibold rounded-full {{ $product->variationsStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                                                    {{ $product->variationsStock }}
+                                                </span>
+                                                {{ __('in stock for :count variant(s)', ['count' => $product->variations_count]) }}
+                                            @else
+                                                <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-semibold rounded-full {{ $product->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                                                    {{ $product->stock }}
+                                                </span>
+                                                {{ __("in stock") }}
+                                            @endif
                                         </div>
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">

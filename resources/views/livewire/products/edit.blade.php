@@ -132,8 +132,8 @@
         <div x-show="currentTab === 'detail'">
             <livewire:shopper-products-form-edit :product="$product" />
         </div>
-        <div x-cloak x-show="currentTab === 'variants'" class="bg-white overflow-hidden rounded-lg shadow-md">
-            <x-shopper-wip-placeholder />
+        <div x-cloak x-show="currentTab === 'variants'">
+            <livewire:shopper-products-form-variants :product="$product" />
         </div>
         <div x-cloak x-show="currentTab === 'attributes'">
             <livewire:shopper-products-form-attributes :product="$product" />
@@ -180,13 +180,13 @@
             </div>
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click="destroy" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                    <x-shopper-danger-button wire:click="destroy" type="button">
                         <svg wire:loading wire:target="destroy" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                         </svg>
                         {{ __("Confirm") }}
-                    </button>
+                    </x-shopper-danger-button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <x-shopper-default-button wire:click="closeModale" type="button">
