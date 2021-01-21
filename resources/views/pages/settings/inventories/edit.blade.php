@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-settings-inventories-edit :inventory="$inventory" />
+    <livewire:shopper-settings.inventories.edit :inventory="$inventory" />
 
 @endsection

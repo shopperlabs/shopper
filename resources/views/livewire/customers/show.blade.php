@@ -108,10 +108,10 @@
 
         <div class="mt-6">
             <div x-show="currentTab === 'profile'">
-                <livewire:shopper-customers-profile :customer="$customer" />
+                <livewire:shopper-customers.profile :customer="$customer" />
             </div>
             <div x-cloak x-show="currentTab === 'address'">
-                <livewire:shopper-customers-addresses :customer="$customer" />
+                <livewire:shopper-customers.addresses :customer="$customer" />
             </div>
             <div x-cloak x-show="currentTab === 'orders'" class="bg-white shadow overflow-hidden rounded-md px-4 py-5 bg-white sm:p-6">
                 <x-shopper-wip-placeholder />

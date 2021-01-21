@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Livewire\Discount;
+namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;

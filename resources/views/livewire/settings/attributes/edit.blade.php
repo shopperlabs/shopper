@@ -124,7 +124,7 @@
 
     @if($this->hasValues())
 
-        <livewire:shopper-settings-attributes-values :attribute="$attribute" />
+        <livewire:shopper-settings.attributes.values :attribute="$attribute" />
 
     @endif
 </div>

@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-settings-attributes-edit :attribute="$attribute" />
+    <livewire:shopper-settings.attributes.edit :attribute="$attribute" />
 
 @endsection

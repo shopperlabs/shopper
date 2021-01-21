@@ -200,7 +200,7 @@
             </div>
         </div>
         <div x-cloak x-show="currentTab === 'stripe'">
-            <livewire:shopper-settings-payments-stripe />
+            <livewire:shopper-settings.payments.stripe />
         </div>
     </div>
 

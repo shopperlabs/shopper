@@ -94,7 +94,7 @@
                         </button>
 
                         <!-- Profile dropdown -->
-                        <livewire:shopper-dropdown />
+                        <livewire:shopper-account.dropdown />
                     </div>
                 </div>
             </div>

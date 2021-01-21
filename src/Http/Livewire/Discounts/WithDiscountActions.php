@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Livewire\Discount;
+namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;

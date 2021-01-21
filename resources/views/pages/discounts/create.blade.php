@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-discounts-create />
+    <livewire:shopper-discounts.create />
 
 @endsection

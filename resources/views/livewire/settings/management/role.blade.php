@@ -133,10 +133,10 @@
             </div>
         </div>
         <div x-cloak x-show="currentTab === 'users'">
-            <livewire:shopper-settings-management-users-role :role="$role" />
+            <livewire:shopper-settings.management.users-role :role="$role" />
         </div>
         <div x-cloak x-show="currentTab === 'permissions'">
-            <livewire:shopper-settings-management-permissions :role="$role" />
+            <livewire:shopper-settings.management.permissions :role="$role" />
         </div>
     </div>
 

@@ -1,8 +1,8 @@
 @extends('shopper::layouts.'. config('shopper.system.theme'))
-@section('title', __('Update category'). ' '. $category->name)
+@section('title', __('Update category :name', ['name' => $category->name]))
 
 @section('content')
 
-    <livewire:shopper-categories-edit :category="$category" />
+    <livewire:shopper-categories.edit :category="$category" />
 
 @endsection

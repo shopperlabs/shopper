@@ -22,7 +22,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
             $group->authorize(true);
 
             $group->item(__('Brands'), function (Item $item) {
-                $item->weight(4);
+                $item->weight(3);
                 $item->authorize($this->user->hasPermissionTo('browse_brands'));
                 $item->route('shopper.brands.index');
                 $item->icon('
@@ -33,7 +33,7 @@ class RegisterShopSidebar extends AbstractAdminSidebar
             });
 
             $group->item(__('Categories'), function (Item $item) {
-                $item->weight(3);
+                $item->weight(4);
                 $item->authorize($this->user->hasPermissionTo('browse_categories'));
                 $item->route('shopper.categories.index');
                 $item->icon('

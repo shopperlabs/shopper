@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-settings-payments-general />
+    <livewire:shopper-settings.payments.general />
 
 @endsection

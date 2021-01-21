@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-settings-inventories-create />
+    <livewire:shopper-settings.inventories.create />
 
 @endsection

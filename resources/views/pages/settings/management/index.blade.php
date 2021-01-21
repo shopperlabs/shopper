@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-settings-management />
+    <livewire:shopper-settings.management.management />
 
 @endsection

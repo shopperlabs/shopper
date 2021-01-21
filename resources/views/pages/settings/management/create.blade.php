@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-settings-management-new />
+    <livewire:shopper-settings.management.create-admin-user />
 
 @endsection

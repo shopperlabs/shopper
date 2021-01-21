@@ -62,16 +62,16 @@
 
         <div class="mt-6">
             <div x-show="currentTab === 'refund'">
-                <livewire:shopper-settings-legal-refund />
+                <livewire:shopper-settings.legal.refund />
             </div>
             <div x-cloak x-show="currentTab === 'privacy'">
-                <livewire:shopper-settings-legal-privacy />
+                <livewire:shopper-settings.legal.privacy />
             </div>
             <div x-cloak x-show="currentTab === 'terms'">
-                <livewire:shopper-settings-legal-terms />
+                <livewire:shopper-settings.legal.terms />
             </div>
             <div x-cloak x-show="currentTab === 'shipping'">
-                <livewire:shopper-settings-legal-shipping />
+                <livewire:shopper-settings.legal.shipping />
             </div>
         </div>
 

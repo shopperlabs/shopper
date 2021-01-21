@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-reviews-show :review="$review" />
+    <livewire:shopper-reviews.show :review="$review" />
 
 @endsection

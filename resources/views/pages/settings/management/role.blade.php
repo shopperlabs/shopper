@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-settings-management-role :role="$role" />
+    <livewire:shopper-settings.management.role :role="$role" />
 
 @endsection
