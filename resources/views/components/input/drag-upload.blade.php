@@ -30,7 +30,7 @@
                         {{ __("or drag and drop") }}
                     </p>
                     <p :class="{ 'text-blue-500': focused }" class="mt-1 text-xs text-gray-500 group-hover:text-blue-500">
-                        PNG, JPG, GIF up to 1MB
+                        {{ __('PNG, JPG, GIF up to 1MB') }}
                     </p>
                     <input @focus="focused = true" @blur="focused = false" class="sr-only" type="file" {{ $attributes }} />
                 </div>

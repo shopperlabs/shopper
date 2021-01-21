@@ -15,8 +15,14 @@
             $maxWidth = 'sm:max-w-xl';
             break;
         case '2xl':
-        default:
             $maxWidth = 'sm:max-w-2xl';
+            break;
+        case '3xl':
+            $maxWidth = 'sm:max-w-3xl';
+            break;
+        case '4xl':
+        default:
+            $maxWidth = 'sm:max-w-4xl';
             break;
     }
 @endphp
