@@ -4,7 +4,6 @@ namespace Shopper\Framework\Http\Livewire\Products;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Events\Products\ProductRemoved;
@@ -104,7 +103,8 @@ class Browse extends Component
     /**
      * Render the component.
      *
-     * @return View
+     * @return \Illuminate\View\View
+     * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
     {
@@ -114,8 +114,9 @@ class Browse extends Component
             'categories' => (new CategoryRepository())->makeModel()->scopes('enabled')->select('name', 'id')->get(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
             'products' => (new ProductRepository())
-                ->with('brand')
                 ->makeModel()
+                ->with(['brand', 'variations'])
+                ->withCount(['variations'])
                 ->where(function (Builder $query) {
                     $query->where('name', 'like', '%'. $this->search .'%');
                     $query->where('parent_id', null);

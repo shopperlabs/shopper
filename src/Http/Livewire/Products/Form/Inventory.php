@@ -2,10 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Excel;
@@ -23,7 +21,7 @@ class Inventory extends Component
     /**
      * Product Model.
      *
-     * @var Model
+     * @var \Illuminate\Database\Eloquent\Model
      */
     public $product;
 
@@ -65,6 +63,11 @@ class Inventory extends Component
      */
     public $inventory = 0;
 
+    /**
+     * Component mount instance.
+     *
+     * @param  \Illuminate\Database\Eloquent\Model  $product
+     */
     public function mount($product)
     {
         $this->inventories = (new InventoryRepository())->get(['name', 'id']);
@@ -226,7 +229,7 @@ class Inventory extends Component
     /**
      * Render the component.
      *
-     * @return View
+     * @return \Illuminate\View\View
      */
     public function render()
     {

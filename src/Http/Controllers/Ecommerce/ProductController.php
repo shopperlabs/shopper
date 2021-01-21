@@ -50,4 +50,24 @@ class ProductController extends ShopperBaseController
                 ->getById($id)
         ]);
     }
+
+    /**
+     * Display variant edit view.
+     *
+     * @param  int  $product
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function variant($product, int $id)
+    {
+        $this->authorize('edit_products');
+
+        return view('shopper::pages.products.edit-variant', [
+            'product' => (new ProductRepository())->getById($product),
+            'variant' => (new ProductRepository())
+                ->with('inventoryHistories')
+                ->getById($id)
+        ]);
+    }
 }

@@ -85,6 +85,7 @@ class Product extends Model implements ReviewRateable
      */
     protected $appends = [
         'formattedPrice',
+        'variationsStock',
     ];
 
     /**
@@ -130,11 +131,35 @@ class Product extends Model implements ReviewRateable
      */
     public function getFormattedPriceAttribute(): ?string
     {
-        if ($this->price_amount) {
-            return $this->formattedPrice($this->price_amount);
+        if ($this->parent_id) {
+            return $this->price_amount
+                ? $this->formattedPrice($this->price_amount)
+                : ($this->parent->price_amount ? $this->formattedPrice($this->parent->price_amount) : null);
+        } else {
+            return $this->price_amount
+                ? $this->formattedPrice($this->price_amount)
+                : null;
+        }
+    }
+
+    /**
+     * Get the stock of all variations.
+     *
+     * @return int|null
+     */
+    public function getVariationsStockAttribute(): ?int
+    {
+        $stock = null;
+
+        if ($this->variations->isNotEmpty()) {
+            foreach ($this->variations as $variation) {
+                $stock += $variation->stock;
+            }
+
+            return $stock;
         }
 
-        return null;
+        return $stock;
     }
 
     /**
@@ -145,6 +170,16 @@ class Product extends Model implements ReviewRateable
     public function variations(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
+    }
+
+    /**
+     * Return product parent.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class);
     }
 
     /**

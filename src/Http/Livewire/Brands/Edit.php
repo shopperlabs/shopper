@@ -72,7 +72,7 @@ class Edit extends AbstractBaseComponent
     public $is_enabled = false;
 
     /**
-     * Component mounted action.
+     * Component mount instance.
      *
      * @param  $brand
      * @return void

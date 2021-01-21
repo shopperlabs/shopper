@@ -6,7 +6,7 @@
     'url',
 ])
 
-<div class="relative w-full md:flex md:items-center py-12 lg:py-16">
+<div {{ $attributes->merge(['class' => 'relative w-full md:flex md:items-center py-12 lg:py-16']) }}>
     <div class="w-full md:w-1/2 relative flex justify-center md:block">
         {{ $slot }}
     </div>
