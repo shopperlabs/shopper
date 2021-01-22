@@ -71,7 +71,7 @@ class LoginController extends Controller
      */
     public function redirectPath()
     {
-        return Shopper::prefix();
+        return route('shopper.dashboard');
     }
 
     /**
