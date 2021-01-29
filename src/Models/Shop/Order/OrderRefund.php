@@ -4,7 +4,6 @@ namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Models\Shop\Order;
 
 class OrderRefund extends Model
 {
@@ -24,7 +23,7 @@ class OrderRefund extends Model
     public function __construct(array $attributes = [])
     {
         // Set default status in case there was none given
-        if (!isset($attributes['status'])) {
+        if (! isset($attributes['status'])) {
             $this->setDefaultOrderRefundStatus();
         }
 

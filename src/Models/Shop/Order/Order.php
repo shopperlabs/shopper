@@ -98,6 +98,16 @@ class Order extends Model
     }
 
     /**
+     * Return the refund instance of the order.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function refund()
+    {
+        return $this->hasOne(OrderRefund::class);
+    }
+
+    /**
      * Get all items of the order.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
