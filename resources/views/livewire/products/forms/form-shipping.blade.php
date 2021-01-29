@@ -55,13 +55,13 @@
                     <div class="bg-white shadow sm:rounded-md sm:overflow-hidden p-4 sm:p-5">
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 sm:gap-y-4">
                             <div class="sm:col-span-1">
-                                <label for="weightValue" class="block text-sm leading-5 font-medium text-gray-700">{{ __("Weight") }}</label>
+                                <label for="WidthValue" class="block text-sm leading-5 font-medium text-gray-700">{{ __("Width") }}</label>
                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input wire:model="weightValue" id="weightValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
+                                    <input wire:model="widthValue" id="WidthValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
-                                        <select wire:model="weightUnit" aria-label="{{ __("weight Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
-                                            <option value="kg">kg</option>
-                                            <option value="g">g</option>
+                                        <select wire:model="WidthUnit" aria-label="{{ __("Width Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
+                                            <option value="cm">cm</option>
+                                            <option value="m">m</option>
                                         </select>
                                     </div>
                                 </div>
@@ -79,13 +79,13 @@
                                 </div>
                             </div>
                             <div class="sm:col-span-1">
-                                <label for="WidthValue" class="block text-sm leading-5 font-medium text-gray-700">{{ __("Width") }}</label>
+                                <label for="weightValue" class="block text-sm leading-5 font-medium text-gray-700">{{ __("Weight") }}</label>
                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input wire:model="widthValue" id="WidthValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
+                                    <input wire:model="weightValue" id="weightValue" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0.00" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
-                                        <select wire:model="WidthUnit" aria-label="{{ __("Width Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
-                                            <option value="cm">cm</option>
-                                            <option value="m">m</option>
+                                        <select wire:model="weightUnit" aria-label="{{ __("weight Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
+                                            <option value="kg">kg</option>
+                                            <option value="g">g</option>
                                         </select>
                                     </div>
                                 </div>
