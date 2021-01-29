@@ -40,7 +40,7 @@ class Order extends Model
     public function __construct(array $attributes = [])
     {
         // Set default status in case there was none given
-        if (!isset($attributes['status'])) {
+        if (! isset($attributes['status'])) {
             $this->setDefaultOrderStatus();
         }
 
