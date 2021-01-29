@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database\MigrationTrait;
 
-class CreateOrderPaymentsTable extends Migration
+class CreateOrderRefundsTable extends Migration
 {
     use MigrationTrait;
 
@@ -16,18 +16,6 @@ class CreateOrderPaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->getTableName('order_payments'), function (Blueprint $table) {
-            $this->addCommonFields($table);
-
-            $table->integer('total_amount');
-            $table->string('currency');
-            $table->enum('status', ['pending', 'treatment', 'partial-paid', 'paid', 'cancelled', 'rejected'])->default('pending');
-            $table->json('details');
-
-            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
-            $this->addForeignKey($table, 'payment_method_id', $this->getTableName('payment_methods'), false);
-        });
-
         Schema::create($this->getTableName('order_refunds'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
@@ -49,6 +37,5 @@ class CreateOrderPaymentsTable extends Migration
     public function down()
     {
         Schema::dropIfExists($this->getTableName('order_refunds'));
-        Schema::dropIfExists($this->getTableName('order_payments'));
     }
 }

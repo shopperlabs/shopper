@@ -87,7 +87,7 @@ trait MigrationTrait
      * @param  string  $tableName    MySQL table name
      * @param  boolean  $nullable    Foreign key nullable status
      */
-    public function addForeignKey(Blueprint $table, $columnName, $tableName, $nullable = true): void
+    public function addForeignKey(Blueprint $table, string $columnName, string $tableName, $nullable = true): void
     {
         if ($nullable) {
             $table->unsignedBigInteger($columnName)->index()->nullable();

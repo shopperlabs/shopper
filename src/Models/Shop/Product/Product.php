@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Contracts\ReviewRateable;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
@@ -20,6 +21,7 @@ class Product extends Model implements ReviewRateable
         HasStock,
         HasPrice,
         CanHaveDiscount,
+        SoftDeletes,
         ReviewRateableTrait;
 
     /**
@@ -117,9 +119,18 @@ class Product extends Model implements ReviewRateable
      */
     public function setSlugAttribute(string $value)
     {
-        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
-            $slug = "{$slug}-{$this->id}";
+        $slug = str_slug($value);
+
+        if (! $this->parent_id) {
+            if (static::query()->where('slug', $slug)->exists()) {
+                $slug = "{$slug}-{$this->id}";
+            }
+        } else {
+            if (static::query()->where('slug', $variantSlug = $this->parent->slug. '-'. $slug)->exists()) {
+                $slug = "{$variantSlug}-{$this->id}";
+            }
         }
+
 
         $this->attributes['slug'] = $slug;
     }

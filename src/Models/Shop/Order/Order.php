@@ -3,11 +3,15 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Framework\Models\Shop\PaymentMethod;
 use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\User\User;
 
 class Order extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,6 +26,7 @@ class Order extends Model
         'notes',
         'parent_order_id',
         'shipping_address_id',
+        'payment_method_id',
         'price_amount',
         'user_id',
     ];
@@ -80,6 +85,16 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
+    }
+
+    /**
+     * Return the associate Payment method for this order if exist.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
     }
 
     /**
