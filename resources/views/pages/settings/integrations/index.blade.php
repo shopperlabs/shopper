@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-settings.integrations />
+    <livewire:shopper-settings.integrations.browse />
 
 @endsection

@@ -81,7 +81,7 @@ class Analytics extends Component
 
         Artisan::call('config:clear');
 
-        $this->dispatchBrowserEvent('notify', [
+        $this->notify([
             'title' => __('Updated'),
             'message' => __("Your analytics configurations have been correctly updated")
         ]);
