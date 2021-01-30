@@ -81,7 +81,7 @@ trait WithAttributes
      *
      * @var bool
      */
-    public $isVisible = false;
+    public $isVisible = true;
 
     /**
      * Product Safety stock.
