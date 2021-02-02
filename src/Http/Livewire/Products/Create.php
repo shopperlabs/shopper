@@ -116,7 +116,7 @@ class Create extends AbstractBaseComponent
 
         $product->channels()->attach($this->defaultChannel->id);
 
-        if (count($this->quantity) > 0) {
+        if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
                 $product->mutateStock(
                     $inventory,

@@ -105,7 +105,7 @@ class Variants extends Component
     public function rules()
     {
         return [
-            'name'  => 'bail|required|unique:'.shopper_table('products'),
+            'name'  => 'required|unique:'.shopper_table('products'),
             'sku'  => 'nullable|unique:'.shopper_table('products'),
             'barcode'  => 'nullable|unique:'.shopper_table('products'),
             'file' => 'nullable|image|max:1024',
@@ -138,7 +138,7 @@ class Variants extends Component
             $this->uploadFile(config('shopper.system.models.product'), $product->id);
         }
 
-        if (count($this->quantity) > 0) {
+        if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
                 $product->mutateStock(
                     $inventory,
