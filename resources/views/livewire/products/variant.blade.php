@@ -21,7 +21,7 @@
                 </div>
                 <div class="flex space-x-3 pt-1">
                     <span class="hidden sm:block">
-                        <x-shopper-danger-button wire:click="openModale" type="button">
+                        <x-shopper-danger-button wire:click="openModal" type="button">
                             <svg class="w-5 h-5 -ml-1 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
@@ -212,7 +212,7 @@
                             <div class="flex items-center justify-between">
                                 <h4 class="block text-sm font-medium leading-5 text-gray-900">{{ __("Quantity Inventory") }}</h4>
                                 <div class="ml-4 sm:ml-0 flex items-center space-x-3">
-                                    <button type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">{{ __("Update stock") }}</button>
+                                    <button wire:click="openModal('stock')" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">{{ __("Update stock") }}</button>
                                     <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">{{ __("Manage Inventories") }}</a>
                                 </div>
                             </div>
@@ -255,7 +255,7 @@
         </div>
     </div>
 
-    <x-shopper-modal wire:model="confirmDeleteProduct" maxWidth="lg">
+    <x-shopper-modal id="confirm-delete-modal" wire:model="confirmDeleteProduct" maxWidth="lg">
         <div class="bg-white rounded-lg px-4 pt-5 pb-4 text-left">
             <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
                 <button @click="show = false;" type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150" aria-label="Close">
@@ -292,9 +292,31 @@
                     </x-shopper-danger-button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <x-shopper-default-button wire:click="closeModale" type="button">
+                    <x-shopper-default-button wire:click="closeModal" type="button">
                         {{ __("Cancel") }}
                     </x-shopper-default-button>
+                </span>
+            </div>
+        </div>
+    </x-shopper-modal>
+
+    <x-shopper-modal id="stock-management-modal" wire:model="showModalInventories" maxWidth="3xl">
+        <div>
+            <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
+                <div class="text-left">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">
+                        {{ __("Stock management for this variation") }}
+                    </h3>
+                </div>
+            </div>
+            <div class="p-4 sm:px-6 border-t border-gray-100">
+                Mon composant stock ici
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                    <button wire:click="closeModal('stock')" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                        {{ __("Close") }}
+                    </button>
                 </span>
             </div>
         </div>
