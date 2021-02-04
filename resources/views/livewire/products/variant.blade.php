@@ -300,7 +300,7 @@
         </div>
     </x-shopper-modal>
 
-    <x-shopper-modal id="stock-management-modal" wire:model="showModalInventories" maxWidth="3xl">
+    <x-shopper-modal id="stock-management-modal" wire:model="showModalInventories" maxWidth="4xl">
         <div>
             <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
                 <div class="text-left">
@@ -309,8 +309,8 @@
                     </h3>
                 </div>
             </div>
-            <div class="p-4 sm:px-6 border-t border-gray-100">
-                Mon composant stock ici
+            <div class="border-t border-gray-100 h-96 overflow-y-scroll">
+                <livewire:shopper-products.variant-stock :variant="$variant" />
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">

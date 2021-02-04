@@ -63,7 +63,7 @@ class ProductController extends ShopperBaseController
     {
         $this->authorize('edit_products');
 
-        return view('shopper::pages.products.edit-variant', [
+        return view('shopper::pages.products.variant', [
             'product' => (new ProductRepository())->getById($product),
             'variant' => (new ProductRepository())
                 ->with('inventoryHistories')

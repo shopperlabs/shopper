@@ -53,6 +53,13 @@ class Variant extends Component
     public $confirmDeleteProduct = false;
 
     /**
+     * Display inventory modal.
+     *
+     * @var bool
+     */
+    public $showModalInventories = false;
+
+    /**
      * Component Mount instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
@@ -65,9 +72,9 @@ class Variant extends Component
         $this->product = $product;
         $this->variant = $variant;
         $this->name = $variant->name;
-        $this->sku = $product->sku;
-        $this->barcode = $product->barcode;
-        $this->securityStock = $product->security_stock;
+        $this->sku = $variant->sku;
+        $this->barcode = $variant->barcode;
+        $this->securityStock = $variant->security_stock;
         $this->price_amount = $variant->price_amount;
         $this->old_price_amount = $variant->old_price_amount;
         $this->cost_amount = $variant->cost_amount;
@@ -76,21 +83,31 @@ class Variant extends Component
     /**
      * Launch modale to remove product.
      *
+     * @param  string  $type
      * @return void
      */
-    public function openModale()
+    public function openModal(string $type = 'delete')
     {
-        $this->confirmDeleteProduct = true;
+        if ($type === 'delete') {
+            $this->confirmDeleteProduct = true;
+        } else {
+            $this->showModalInventories = true;
+        }
     }
 
     /**
      * Close modale.
      *
+     * @param  string  $type
      * @return void
      */
-    public function closeModale()
+    public function closeModal(string $type = 'delete')
     {
-        $this->confirmDeleteProduct = false;
+        if ($type === 'delete') {
+            $this->confirmDeleteProduct = false;
+        } else {
+            $this->showModalInventories = false;
+        }
     }
 
     /**
@@ -170,12 +187,13 @@ class Variant extends Component
      */
     public function render()
     {
-        return view('shopper::livewire.products.edit-variant', [
+        return view('shopper::livewire.products.variant', [
             'currency' => shopper_currency(),
             'media' => $this->variant->files->isNotEmpty()
                 ? $this->variant->files->first()
                 : null,
             'histories' => (new InventoryHistoryRepository())
+                ->with('inventory')
                 ->where('stockable_id', $this->variant->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(5),
