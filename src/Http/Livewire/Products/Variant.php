@@ -192,11 +192,6 @@ class Variant extends Component
             'media' => $this->variant->files->isNotEmpty()
                 ? $this->variant->files->first()
                 : null,
-            'histories' => (new InventoryHistoryRepository())
-                ->with('inventory')
-                ->where('stockable_id', $this->variant->id)
-                ->orderBy('created_at', 'desc')
-                ->paginate(5),
         ]);
     }
 }

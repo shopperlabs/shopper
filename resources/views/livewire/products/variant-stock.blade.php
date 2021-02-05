@@ -22,7 +22,7 @@
             </div>
         </div>
     @endif
-    <div class="flex items-start justify-between px-4 sm:px-6 mb-2 py-6">
+    <div class="flex items-center justify-between px-4 sm:px-6 mb-2 py-6">
         <div class="relative z-0 inline-flex items-center leading-5 text-gray-700">
             <span class="block text-sm font-medium mr-4">{{ __("Current quantity on this inventory") }}</span>
             <span class="mr-2 text-sm px-2 inline-flex leading-5 font-semibold rounded-full {{ $currentStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">

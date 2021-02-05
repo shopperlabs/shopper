@@ -225,13 +225,13 @@
                                         <span class="text-xs leading-5 font-semibold text-gray-500 uppercase tracking-wider">{{ __('Available') }}</span>
                                     </div>
                                 </div>
-                                @foreach($histories as $inventoryHistory)
-                                    <div class="grid grid-cols-3 py-4" wire:key="history-{{ $inventoryHistory->id }}">
+                                @foreach($inventories as $inventory)
+                                    <div class="grid grid-cols-3 py-4" wire:key="inventory-{{ $inventory->id }}">
                                         <div class="col-span-2">
-                                            <span class="text-sm leading-5 text-gray-600">{{ $inventoryHistory->inventory->name }}</span>
+                                            <span class="text-sm leading-5 text-gray-600">{{ $inventory->name }}</span>
                                         </div>
                                         <div class="col-span-1 pl-4 flex justify-end text-right">
-                                            <span class="text-sm leading-5 text-gray-600">{{ $inventoryHistory->quantity }}</span>
+                                            <span class="text-sm leading-5 text-gray-600">{{ $variant->stockInventory($inventory->id) }}</span>
                                         </div>
                                     </div>
                                 @endforeach
@@ -309,7 +309,7 @@
                     </h3>
                 </div>
             </div>
-            <div class="border-t border-gray-100 h-96 overflow-y-scroll">
+            <div class="border-t border-gray-200 h-96 overflow-y-scroll">
                 <livewire:shopper-products.variant-stock :variant="$variant" />
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
