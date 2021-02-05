@@ -157,6 +157,7 @@
                             <label for="brand_id" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Brand") }}</label>
                             <div class="mt-1 rounded-md shadow-sm">
                                 <select wire:model="brand_id" id="brand_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
+                                    <option>{{ __('Select brand') }}</option>
                                     @foreach($brands as $brand)
                                         <option value="{{ $brand->id }}" @if($loop->first) selected @endif>{{ $brand->name }}</option>
                                     @endforeach
