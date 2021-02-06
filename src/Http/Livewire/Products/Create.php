@@ -22,6 +22,20 @@ class Create extends AbstractBaseComponent
         WithUploadProcess;
 
     /**
+     * Products images.
+     *
+     * @var array
+     */
+    public $files = [];
+
+    /**
+     * Image preview url.
+     *
+     * @var array
+     */
+    public $images = [];
+
+    /**
      * Product custom event listeners.
      *
      * @var string[]
@@ -134,6 +148,17 @@ class Create extends AbstractBaseComponent
     }
 
     /**
+     * Remove file to the array.
+     *
+     * @param  int  $index
+     * @return void
+     */
+    public function removeFile($index)
+    {
+        unset($this->files[$index]);
+    }
+
+    /**
      * Component validation rules.
      *
      * @return string[]
@@ -144,7 +169,7 @@ class Create extends AbstractBaseComponent
             'name'  => 'bail|required',
             'sku'  => 'nullable|unique:'.shopper_table('products'),
             'barcode'  => 'nullable|unique:'.shopper_table('products'),
-            'file' => 'nullable|image|max:1024',
+            'files.*' => 'nullable|image|max:1024',
             'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
         ];
     }
