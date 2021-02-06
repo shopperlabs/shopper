@@ -177,7 +177,7 @@
                                                         {{ __("or drag and drop") }}
                                                     </p>
                                                     <p class="mt-1 text-xs text-gray-500">
-                                                        PNG, JPG, GIF up to 1MB
+                                                        {{ __('PNG, JPG, GIF up to 1MB') }}
                                                     </p>
                                                     <input id="shop_cover" type="file" wire:model="shop_cover" class="sr-only">
                                                 </div>

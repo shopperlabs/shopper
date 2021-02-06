@@ -42,7 +42,7 @@
             <div class="bg-white rounded-lg shadow p-4 sm:p-5 overflow-hidden">
                 <h4 class="block text-base font-medium leading-6 text-gray-900">{{ __("Product Media") }}</h4>
                 <div class="mt-4">
-                    <x-shopper-input.drag-upload id="file" wire:click="removeImage" wire:model="file" :file="$file" :error="$errors->first('file')" />
+                    <x-shopper-input.multiple-upload id="file" wire:click="removeImage" wire:model="file" :file="$file" :error="$errors->first('file')" />
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">
