@@ -29,13 +29,6 @@ class Create extends AbstractBaseComponent
     public $files = [];
 
     /**
-     * Image preview url.
-     *
-     * @var array
-     */
-    public $images = [];
-
-    /**
      * Product custom event listeners.
      *
      * @var string[]
