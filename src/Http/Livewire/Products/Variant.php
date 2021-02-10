@@ -46,6 +46,13 @@ class Variant extends Component
     public $inventories;
 
     /**
+     * Shopper default currency.
+     *
+     * @var string
+     */
+    public $currency;
+
+    /**
      * Confirm action to delete product.
      *
      * @var bool
@@ -64,9 +71,10 @@ class Variant extends Component
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
      * @param  \Illuminate\Database\Eloquent\Model  $variant
+     * @param  string  $currency
      * @return void
      */
-    public function mount($product, $variant)
+    public function mount($product, $variant, $currency)
     {
         $this->inventories = (new InventoryRepository())->get(['name', 'id']);
         $this->product = $product;
@@ -78,6 +86,7 @@ class Variant extends Component
         $this->price_amount = $variant->price_amount;
         $this->old_price_amount = $variant->old_price_amount;
         $this->cost_amount = $variant->cost_amount;
+        $this->currency = $currency;
     }
 
     /**
@@ -188,7 +197,6 @@ class Variant extends Component
     public function render()
     {
         return view('shopper::livewire.products.variant', [
-            'currency' => shopper_currency(),
             'media' => $this->variant->files->isNotEmpty()
                 ? $this->variant->files->first()
                 : null,

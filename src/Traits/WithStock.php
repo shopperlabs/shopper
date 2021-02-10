@@ -42,17 +42,6 @@ trait WithStock
     public $inventory;
 
     /**
-     * Load all inventories.
-     *
-     * @return void
-     */
-    public function loadInventories()
-    {
-        $this->inventories = $inventories = (new InventoryRepository())->get();
-        $this->inventory = $inventories->where('is_default', true)->first()->id;
-    }
-
-    /**
      * Update stock value.
      *
      * @param  int  $value

@@ -115,16 +115,16 @@
 
     <div class="mt-6">
         <div x-show="currentTab === 'detail'">
-            <livewire:shopper-products.form.edit :product="$product" />
+            <livewire:shopper-products.form.edit :product="$product" :currency="$currency" />
         </div>
         <div x-cloak x-show="currentTab === 'variants'">
-            <livewire:shopper-products.form.variants :product="$product" />
+            <livewire:shopper-products.form.variants :product="$product" :currency="$currency" :inventories="$inventories" />
         </div>
         <div x-cloak x-show="currentTab === 'attributes'">
             <livewire:shopper-products.form.attributes :product="$product" />
         </div>
         <div x-cloak x-show="currentTab === 'inventory'">
-            <livewire:shopper-products.form.inventory :product="$product" />
+            <livewire:shopper-products.form.inventory :product="$product" :inventories="$inventories" :defaultInventory="$inventory" />
         </div>
         <div x-cloak x-show="currentTab === 'seo'">
             <livewire:shopper-products.form.seo :product="$product" />
