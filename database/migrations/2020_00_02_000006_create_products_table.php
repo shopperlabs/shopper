@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create($this->getTableName('products'), function (Blueprint $table) {
-            $this->addCommonFields($table);
+            $this->addCommonFields($table, true);
 
             $table->string('name');
             $table->string('slug')->unique()->nullable();
