@@ -23,7 +23,7 @@
     }
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^7.4|^8",
     "ext-intl": "*",
     "ext-json": "*",
     "askedio/laravel-soft-cascade": "^8.1",
@@ -40,7 +40,6 @@
     "maatwebsite/laravel-sidebar": "~2.3",
     "moneyphp/money": "^3.3",
     "pragmarx/google2fa": "^7.0|^8.0",
-    "spatie/laravel-medialibrary-pro": "^1.0.0",
     "spatie/laravel-permission": "^3.2",
     "stevebauman/location": "^5.2"
   },
