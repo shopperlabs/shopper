@@ -200,33 +200,43 @@ class Product extends Model implements ReviewRateable
     }
 
     /**
-     * Return relation related to categories of the current product.
+     * Get all of the channels that are assigned this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function categories()
-    {
-        return $this->belongsToMany(config('shopper.system.models.category'), shopper_table('category_product'), 'product_id');
-    }
-
-    /**
-     * Return relation related to categories of the current product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function channels()
     {
-        return $this->belongsToMany(Channel::class, shopper_table('channel_product'), 'product_id');
+        return $this->morphedByMany(Channel::class, 'productable', 'product_has_relations');
     }
 
     /**
-     * Return relation related to collections of the current product.
+     * Get all of the related products that are assigned this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function relatedProducts()
+    {
+        return $this->morphedByMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
+    }
+
+    /**
+     * Get all of the categories that are assigned this product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function categories()
+    {
+        return $this->morphedByMany(config('shopper.system.models.category'), 'productable', 'product_has_relations');
+    }
+
+    /**
+     * Get all of the collections that are assigned this product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function collections()
     {
-        return $this->belongsToMany(config('shopper.system.models.collection'), shopper_table('collection_product'), 'product_id');
+        return $this->morphedByMany(config('shopper.system.models.collection'), 'productable', 'product_has_relations');
     }
 
     /**

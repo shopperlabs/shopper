@@ -98,12 +98,12 @@ class Category extends Model
     }
 
     /**
-     * Return products associated to the category.
+     * Get all of the products for the category.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function products()
     {
-        return $this->belongsToMany(config('shopper.system.models.product'), shopper_table('category_product'), 'category_id');
+        return $this->morphToMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
     }
 }
