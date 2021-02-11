@@ -15,6 +15,13 @@ class Browse extends Component
     public $github = false;
 
     /**
+     * Twitter status integration.
+     *
+     * @var bool
+     */
+    public $twitter = false;
+
+    /**
      * The current provider to setup.
      *
      * @var string
@@ -36,6 +43,7 @@ class Browse extends Component
     public function mount()
     {
         $this->github = env('SHOPPER_INTEGRATION_GITHUB', false);
+        $this->twitter = env('SHOPPER_INTEGRATION_TWITTER', false);
     }
 
     /**
