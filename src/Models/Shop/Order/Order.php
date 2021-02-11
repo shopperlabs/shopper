@@ -3,15 +3,12 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\User\User;
 
 class Order extends Model
 {
-    use SoftDeletes;
-
     /**
      * The attributes that are mass assignable.
      *

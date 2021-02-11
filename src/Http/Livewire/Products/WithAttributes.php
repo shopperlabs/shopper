@@ -30,7 +30,7 @@ trait WithAttributes
     /**
      * Brand id.
      *
-     * @var string
+     * @var int
      */
     public $brand_id;
 

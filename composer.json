@@ -23,9 +23,10 @@
     }
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^7.4|^8",
     "ext-intl": "*",
     "ext-json": "*",
+    "askedio/laravel-soft-cascade": "^8.1",
     "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-ui-kit": "^0.2.0",
     "illuminate/support": "^7.0",

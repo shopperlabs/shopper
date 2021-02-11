@@ -4,6 +4,7 @@ namespace Shopper\Framework\Http\Livewire\Products;
 
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\InventoryRepository;
 
 class Edit extends Component
 {
@@ -29,6 +30,20 @@ class Edit extends Component
     public $confirmDeleteProduct = false;
 
     /**
+     * All locations available on the store.
+     *
+     * @var mixed
+     */
+    public $inventories;
+
+    /**
+     * Default inventory id.
+     *
+     * @var int
+     */
+    public $inventory;
+
+    /**
      * Component Mount method.
      *
      * @param  mixed  $product
@@ -37,6 +52,8 @@ class Edit extends Component
     public function mount($product)
     {
         $this->product = $product;
+        $this->inventories = $inventories = (new InventoryRepository())->get();
+        $this->inventory = $inventories->where('is_default', true)->first()->id;
     }
 
     /**
@@ -90,6 +107,8 @@ class Edit extends Component
      */
     public function render()
     {
-        return view('shopper::livewire.products.edit');
+        return view('shopper::livewire.products.edit', [
+            'currency' => shopper_currency(),
+        ]);
     }
 }

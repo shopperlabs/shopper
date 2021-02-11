@@ -40,12 +40,12 @@ class Channel extends Model
     }
 
     /**
-     * Return relation related to product of the channel.
+     * Get all of the products for the channel.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function products()
     {
-        return $this->belongsToMany(config('shopper.system.models.product'), shopper_table('channel_product'), 'channel_id');
+        return $this->morphToMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
     }
 }

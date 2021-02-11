@@ -8,7 +8,6 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithSorting;
 use Shopper\Framework\Traits\WithUploadProcess;
@@ -50,13 +49,32 @@ class Variants extends Component
     public $product;
 
     /**
+     * Shopper default currency.
+     *
+     * @var string
+     */
+    public $currency;
+
+    /**
+     * All locations available on the store.
+     *
+     * @var mixed
+     */
+    public $inventories;
+
+    /**
      * Component mount instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
+     * @param  string  $currency
+     * @param  \Illuminate\Database\Eloquent\Collection  $inventories
+     * @return void
      */
-    public function mount($product)
+    public function mount($product, $currency, $inventories)
     {
         $this->product = $product;
+        $this->currency = $currency;
+        $this->inventories = $inventories;
     }
 
     /**
@@ -105,7 +123,7 @@ class Variants extends Component
     public function rules()
     {
         return [
-            'name'  => 'bail|required|unique:'.shopper_table('products'),
+            'name'  => 'required|unique:'.shopper_table('products'),
             'sku'  => 'nullable|unique:'.shopper_table('products'),
             'barcode'  => 'nullable|unique:'.shopper_table('products'),
             'file' => 'nullable|image|max:1024',
@@ -138,7 +156,7 @@ class Variants extends Component
             $this->uploadFile(config('shopper.system.models.product'), $product->id);
         }
 
-        if (count($this->quantity) > 0) {
+        if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
                 $product->mutateStock(
                     $inventory,
@@ -189,8 +207,6 @@ class Variants extends Component
     public function render()
     {
         return  view('shopper::livewire.products.forms.form-variants', [
-            'currency' => shopper_currency(),
-            'inventories' => Inventory::query()->get(['name', 'id']),
             'variants' => (new ProductRepository())
                 ->makeModel()
                 ->where(function (Builder $query) {

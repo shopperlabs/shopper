@@ -2,10 +2,8 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Contracts\ReviewRateable;
 use Shopper\Framework\Models\Shop\Channel;
@@ -22,6 +20,7 @@ class Product extends Model implements ReviewRateable
         HasPrice,
         CanHaveDiscount,
         SoftDeletes,
+        SoftCascadeTrait,
         ReviewRateableTrait;
 
     /**
@@ -59,6 +58,13 @@ class Product extends Model implements ReviewRateable
         'seo_title',
         'seo_description',
     ];
+
+    /**
+     * Cascade soft delete tables.
+     *
+     * @var string[]
+     */
+    protected $softCascade = ['variations'];
 
     /**
      * The attributes that should be cast.
@@ -178,7 +184,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function variations(): HasMany
+    public function variations()
     {
         return $this->hasMany(self::class, 'parent_id');
     }
@@ -188,39 +194,49 @@ class Product extends Model implements ReviewRateable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function parent(): BelongsTo
+    public function parent()
     {
         return $this->belongsTo(self::class);
     }
 
     /**
-     * Return relation related to categories of the current product.
+     * Get all of the channels that are assigned this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function categories(): BelongsToMany
+    public function channels()
     {
-        return $this->belongsToMany(config('shopper.system.models.category'), shopper_table('category_product'), 'product_id');
+        return $this->morphedByMany(Channel::class, 'productable', 'product_has_relations');
     }
 
     /**
-     * Return relation related to categories of the current product.
+     * Get all of the related products that are assigned this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function channels(): BelongsToMany
+    public function relatedProducts()
     {
-        return $this->belongsToMany(Channel::class, shopper_table('channel_product'), 'product_id');
+        return $this->morphedByMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
     }
 
     /**
-     * Return relation related to collections of the current product.
+     * Get all of the categories that are assigned this product.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function collections(): BelongsToMany
+    public function categories()
     {
-        return $this->belongsToMany(config('shopper.system.models.collection'), shopper_table('collection_product'), 'product_id');
+        return $this->morphedByMany(config('shopper.system.models.category'), 'productable', 'product_has_relations');
+    }
+
+    /**
+     * Get all of the collections that are assigned this product.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
+    public function collections()
+    {
+        return $this->morphedByMany(config('shopper.system.models.collection'), 'productable', 'product_has_relations');
     }
 
     /**
@@ -228,7 +244,7 @@ class Product extends Model implements ReviewRateable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function brand(): BelongsTo
+    public function brand()
     {
         return $this->belongsTo(config('shopper.system.models.brand'), 'brand_id');
     }
@@ -236,7 +252,7 @@ class Product extends Model implements ReviewRateable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function attributes(): HasMany
+    public function attributes()
     {
         return $this->hasMany(ProductAttribute::class);
     }

@@ -93,13 +93,13 @@ class Collection extends Model
     }
 
     /**
-     * Return products associated to the collection.
+     * Get all of the products for the collection.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function products()
     {
-        return $this->belongsToMany(config('shopper.system.models.product'), shopper_table('collection_product'), 'collection_id');
+        return $this->morphToMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
     }
 
     /**

@@ -218,44 +218,7 @@
                 <div class="bg-white rounded-md shadow overflow-hidden p-4 sm:p-5">
                     <h4 class="block text-sm font-medium leading-5 text-gray-700">{{ __("Image preview") }}</h4>
                     <div class="mt-1">
-                        @if($file)
-                            <div>
-                                <div class="flex-shrink-0 rounded-md overflow-hidden">
-                                    <img class="h-40 w-full object-cover rounded-md" src="{{ $file->temporaryUrl() }}" alt="">
-                                    <div class="flex items-center mt-2">
-                                        <button wire:click="removeImage" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
-                                            <svg class="h-5 w-5 mr-1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                            {{ __("Remove") }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            <div class="w-full">
-                                <label for="file" class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer">
-                                    <div class="text-center">
-                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <p class="mt-1 text-sm text-gray-600">
-                                            <span class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                                {{ __("Upload a file") }}
-                                            </span>
-                                            {{ __("or drag and drop") }}
-                                        </p>
-                                        <p class="mt-1 text-xs text-gray-500">
-                                            PNG, JPG, GIF up to 1MB
-                                        </p>
-                                        <input id="file" type="file" wire:model="file" class="sr-only">
-                                    </div>
-                                </label>
-                            </div>
-                        @endif
-                        @error('file')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                        <x-shopper-input.single-upload id="file" wire:click="removeImage" wire:model="file" :file="$file" :error="$errors->first('file')" />
                     </div>
                 </div>
             </aside>

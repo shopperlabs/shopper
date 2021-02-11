@@ -99,7 +99,7 @@ class Create extends AbstractBaseComponent
             'width_unit'    => $this->widthUnit,
             'volume_value'  => $this->volumeValue ?? null,
             'volume_unit'   => $this->volumeUnit,
-            'brand_id'  => $this->brand_id,
+            'brand_id'  => $this->brand_id ?? null,
         ]);
 
         if ($this->file) {
@@ -116,7 +116,7 @@ class Create extends AbstractBaseComponent
 
         $product->channels()->attach($this->defaultChannel->id);
 
-        if (count($this->quantity) > 0) {
+        if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
                 $product->mutateStock(
                     $inventory,

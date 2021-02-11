@@ -153,36 +153,20 @@
                         <h4 class="block text-base font-medium leading-6 text-gray-900">{{ __("Product associations") }}</h4>
                     </div>
                     <div class="divide-y divide-gray-200">
-                        <div class="p-4 sm:p-5">
-                            <label for="brand_id" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Brand") }}</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select wire:model="brand_id" id="brand_id" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                    @foreach($brands as $brand)
-                                        <option value="{{ $brand->id }}" @if($loop->first) selected @endif>{{ $brand->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="p-4 sm:p-5">
-                            <label for="categories" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Categories") }}</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select wire:model="category_ids" id="categories" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" multiple>
-                                    @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="p-4 sm:p-5">
-                            <label for="collections" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Collections") }}</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <select wire:model="collection_ids" id="collections" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" multiple>
-                                    @foreach($collections as $collection)
-                                        <option value="{{ $collection->id }}">{{ $collection->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                        <x-shopper-input.group class="p-4 sm:p-5" label="Brand" for="brand_id">
+                            <x-shopper-input.select wire:model="brand_id" id="brand_id">
+                                <option>{{ __('Select brand') }}</option>
+                                @foreach($brands as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                @endforeach
+                            </x-shopper-input.select>
+                        </x-shopper-input.group>
+                        <x-shopper-input.group class="p-4 sm:p-5" label="Categories" for="categories">
+                            <x-shopper-input.select wire:model="category_ids" id="categories" :items="$categories" multiple />
+                        </x-shopper-input.group>
+                        <x-shopper-input.group class="p-4 sm:p-5" label="Collections" for="collections">
+                            <x-shopper-input.select wire:model="collection_ids" id="collections" :items="$collections" multiple />
+                        </x-shopper-input.group>
                     </div>
                 </div>
             </aside>
