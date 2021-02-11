@@ -19,7 +19,7 @@ class LegalsPageTableSeeder extends Seeder
          * Refund Policy.
          */
         Legal::query()->create([
-            'title' => $title = 'Refund policy',
+            'title' => $title = __('Refund policy'),
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null
@@ -29,7 +29,7 @@ class LegalsPageTableSeeder extends Seeder
          * Privacy Policy.
          */
         Legal::query()->create([
-            'title' => $title = 'Privacy policy',
+            'title' => $title = __('Privacy policy'),
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null
@@ -39,7 +39,7 @@ class LegalsPageTableSeeder extends Seeder
          * Terms of uses.
          */
         Legal::query()->create([
-            'title' => $title = 'Terms of use',
+            'title' => $title = __('Terms of use'),
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null
@@ -49,7 +49,7 @@ class LegalsPageTableSeeder extends Seeder
          * Terms of uses.
          */
         Legal::query()->create([
-            'title' => $title = 'Shipping policy',
+            'title' => $title = __('Shipping policy'),
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null

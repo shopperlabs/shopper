@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -16,7 +15,7 @@ class Seo extends Component
     /**
      * Product Model.
      *
-     * @var Model
+     * @var \Illuminate\Database\Eloquent\Model
      */
     public $product;
 
@@ -37,6 +36,7 @@ class Seo extends Component
     /**
      * Component Mount method.
      *
+     * @param  \Illuminate\Database\Eloquent\Model  $product
      * @return void
      */
     public function mount($product)

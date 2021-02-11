@@ -27,6 +27,7 @@ class RolesTableSeeder extends Seeder
             'name' => 'manager',
             'display_name' => 'Manager',
             'description' => 'Site manager with access to shop admin panel and publishing menus.',
+            'can_be_removed' => false,
         ]);
 
         Role::create([

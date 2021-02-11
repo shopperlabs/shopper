@@ -37,6 +37,13 @@ class Edit extends AbstractBaseComponent
     public $productId;
 
     /**
+     * Shopper default currency.
+     *
+     * @var string
+     */
+    public $currency;
+
+    /**
      * Product categories associate id.
      *
      * @var array
@@ -53,9 +60,11 @@ class Edit extends AbstractBaseComponent
     /**
      * Component Mount method.
      *
+     * @param  \Illuminate\Database\Eloquent\Model  $product
+     * @param  string  $currency
      * @return void
      */
-    public function mount($product)
+    public function mount($product, $currency)
     {
         $this->product = $product;
         $this->productId = $product->id;
@@ -72,6 +81,7 @@ class Edit extends AbstractBaseComponent
         $this->publishedAtFormatted = $product->published_at->toRfc7231String();
         $this->collection_ids = $product->collections->pluck('id');
         $this->category_ids = $product->categories->pluck('id');
+        $this->currency = $currency;
     }
 
     /**
@@ -151,7 +161,6 @@ class Edit extends AbstractBaseComponent
                 ->select('name', 'id')
                 ->get(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
-            'currency' => shopper_currency(),
         ]);
     }
 }
