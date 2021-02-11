@@ -132,8 +132,8 @@
         <div x-cloak x-show="currentTab === 'shipping'">
             <livewire:shopper-products.form.shipping :product="$product" />
         </div>
-        <div x-cloak x-show="currentTab === 'related'" class="bg-white overflow-hidden rounded-lg shadow-md">
-            <x-shopper-wip-placeholder />
+        <div x-cloak x-show="currentTab === 'related'">
+            <livewire:shopper-products.form.related-products :product="$product" />
         </div>
     </div>
 

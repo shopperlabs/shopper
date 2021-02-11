@@ -46,7 +46,7 @@ class ProductController extends ShopperBaseController
 
         return view('shopper::pages.products.edit', [
             'product' => (new ProductRepository())
-                ->with('inventoryHistories')
+                ->with(['inventoryHistories', 'variations', 'categories', 'collections', 'channels', 'relatedProducts', 'attributes'])
                 ->getById($id)
         ]);
     }
