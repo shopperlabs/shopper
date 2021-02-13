@@ -4,6 +4,7 @@ namespace Shopper\Framework\Http\Livewire\Settings\Integrations;
 
 use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
+use Shopper\Framework\Models\Shop\Channel;
 
 class Browse extends Component
 {
@@ -29,6 +30,13 @@ class Browse extends Component
     public $currentProvider = '';
 
     /**
+     * Provider description for channel update.
+     *
+     * @var string
+     */
+    public $message = '';
+
+    /**
      * Confirmation to launch modal to setup an integration.
      *
      * @var bool
@@ -50,12 +58,16 @@ class Browse extends Component
      * Confirmation modal.
      *
      * @param  string  $provider
+     * @param  string|null  $message
      * @return void
      */
-    public function confirmationEnable(string $provider)
+    public function confirmationEnable(string $provider, string $message = null)
     {
         $this->currentProvider = $provider;
         $this->confirmModalActivation = true;
+        $this->message = $message
+            ? __($message)
+            : __('You are about to activate :provider for your store. This will allow you to have more options to improve your store.', ['provider' => $this->currentProvider]);
     }
 
     /**
@@ -71,6 +83,10 @@ class Browse extends Component
 
         $provider = $this->currentProvider;
 
+        if (in_array($this->currentProvider, $this->availableDatabaseChannels())) {
+            $this->createChannel($this->currentProvider);
+        }
+
         Artisan::call('config:clear');
 
         $this->closeIntegrationModal();
@@ -79,6 +95,35 @@ class Browse extends Component
             'title' => __('Enabled'),
             'message' => __("You have been successfully enabled :provider", ['provider' => $provider])
         ]);
+    }
+
+    /**
+     * Create a newly channel on the storage.
+     *
+     * @param  string  $channel
+     * @return void
+     */
+    public function createChannel(string $channel)
+    {
+        Channel::query()->create([
+            'name' => ucfirst($channel),
+            'slug' => str_slug($channel),
+        ]);
+    }
+
+    /**
+     * Return the list of channel to add.
+     *
+     * @return string[]
+     */
+    protected function availableDatabaseChannels()
+    {
+        return [
+            'twitter',
+            'facebook',
+            'instagram',
+            'telegram',
+        ];
     }
 
     /**
