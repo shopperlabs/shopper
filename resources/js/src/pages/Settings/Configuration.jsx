@@ -583,7 +583,7 @@ const Configuration = () => {
                         value={values.shop_facebook_link}
                         onChange={handleChange}
                         className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                        placeholder="username"
+                        placeholder="https://facebook.com/laravelshopper"
                         autoComplete="off"
                       />
                     </div>
@@ -603,7 +603,7 @@ const Configuration = () => {
                         value={values.shop_instagram_link}
                         onChange={handleChange}
                         className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                        placeholder="username"
+                        placeholder="https://instagram.com/laravelshopper"
                         autoComplete="off"
                       />
                     </div>
@@ -623,7 +623,7 @@ const Configuration = () => {
                         value={values.shop_twitter_link}
                         onChange={handleChange}
                         className="form-input pl-10 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                        placeholder="username"
+                        placeholder="https://twitter.com/laravelshopper"
                         autoComplete="off"
                       />
                     </div>
