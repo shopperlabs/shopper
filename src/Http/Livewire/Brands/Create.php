@@ -44,7 +44,7 @@ class Create extends AbstractBaseComponent
      *
      * @var bool
      */
-    public $is_enabled = false;
+    public $is_enabled = true;
 
     /**
      * Store/Update a entry to the storage.
