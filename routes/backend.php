@@ -45,5 +45,6 @@ Route::prefix('setting')->as('settings.')->group(function () {
     Route::prefix('integrations')->group(function () {
         Route::view('/', 'shopper::pages.settings.integrations.index')->name('integrations');
         Route::view('/github', 'shopper::pages.settings.integrations.github')->name('integrations.github');
+        Route::view('/twitter', 'shopper::pages.settings.integrations.twitter')->name('integrations.twitter');
     });
 });

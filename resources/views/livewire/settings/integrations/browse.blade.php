@@ -35,7 +35,7 @@
             </div>
             <div class="bg-gray-50 grid grid-cols-2">
                 @if($github)
-                    <div class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-green-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-green-500 focus:outline-none focus:text-green-700 transition duration-150 ease-in-out">
+                    <div class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-green-600 leading-6 text-base font-medium sm:text-sm sm:leading-5">
                         <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
@@ -214,20 +214,20 @@
             </div>
             <div class="bg-gray-50 grid grid-cols-2">
                 @if($twitter)
-                    <div class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-green-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-green-500 focus:outline-none focus:text-green-700 transition duration-150 ease-in-out">
+                    <div class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-green-600 leading-6 text-base font-medium sm:text-sm sm:leading-5">
                         <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
                         {{ __("Added") }}
                     </div>
-                    <a href="{{ route('shopper.settings.integrations.github') }}" class="inline-flex items-center border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                    <a href="{{ route('shopper.settings.integrations.twitter') }}" class="inline-flex items-center border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
                         {{ __("Getting Started") }}
                         <svg class="h-5 w-5 ml-2 -mr-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                     </a>
                 @else
-                    <button wire:click="confirmationEnable('twitter', 'You are about to activate the integration with Twitter. This will create a new sales channel for posting products to your Twitter account.')" type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-blue-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-blue-500 focus:outline-none focus:text-blue-700 transition duration-150 ease-in-out">
+                    <button data-modal="confirmationEnable('twitter', 'You are about to activate the integration with Twitter. This will create a new sales channel for posting products to your Twitter account.')" type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-blue-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-blue-500 focus:outline-none focus:text-blue-700 transition duration-150 ease-in-out">
                         <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                         </svg>
