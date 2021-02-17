@@ -37,9 +37,14 @@ Route::prefix('setting')->as('settings.')->group(function () {
     Route::view('/management/user/new', 'shopper::pages.settings.management.create')->name('user.new');
     Route::get('/management/roles/{role}', [SettingController::class, 'role'])->name('user.role');
     Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
-    Route::view('/integrations', 'shopper::pages.settings.integrations')->name('integrations');
     Route::view('/payments', 'shopper::pages.settings.payments.general')->name('payments');
     Route::view('/general', 'shopper::pages.settings.general')->name('shop');
     Route::resource('inventories', 'InventoryController');
     Route::resource('attributes', 'AttributeController')->except('destroy', 'store', 'update');
+
+    Route::prefix('integrations')->group(function () {
+        Route::view('/', 'shopper::pages.settings.integrations.index')->name('integrations');
+        Route::view('/github', 'shopper::pages.settings.integrations.github')->name('integrations.github');
+        Route::view('/twitter', 'shopper::pages.settings.integrations.twitter')->name('integrations.twitter');
+    });
 });

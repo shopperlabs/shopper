@@ -17,7 +17,7 @@ class Create extends AbstractBaseComponent
      *
      * @var string
      */
-    public $name = '';
+    public $name;
 
     /**
      * Category slug for custom url.
@@ -45,7 +45,7 @@ class Create extends AbstractBaseComponent
      *
      * @var bool
      */
-    public $is_enabled = false;
+    public $is_enabled = true;
 
     /**
      * Save new entry to the database.
