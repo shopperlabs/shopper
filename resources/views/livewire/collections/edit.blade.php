@@ -39,62 +39,9 @@
                     </x-shopper-input.group>
                 </div>
             </div>
-            <div class="bg-white rounded-lg shadow overflow-hidden">
-                <div class="sm:flex sm:items-center sm:justify-between p-4 sm:py-5 sm:px-6">
-                    <h3 class="text-base text-gray-900 leading-6 font-medium">{{ __("Products") }}</h3>
-                    <div class="mt-4 sm:mt-0 flex items-center space-x-3">
-                        @if($type === 'manual')
-                            <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper-default-button type="button">
-                                    {{ __("Browse") }}
-                                </x-shopper-default-button>
-                            </span>
-                        @endif
-                        <div class="relative">
-                            <x-shopper-label for="sort" class="sr-only">{{ __("Sort products by") }}</x-shopper-label>
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-sm text-gray-500 leading-5">
-                                    {{ __("Sort by:") }}
-                                </span>
-                            </div>
-                            <x-shopper-input.select id="sort" class="pl-18 pr-10 py-2">
-                                <option value="best_selling">{{ __("Best selling") }}</option>
-                                <option value="alpha_asc">{{ __("Alpha Asc") }}</option>
-                                <option value="alpha_desc">{{ __("Alpha Desc") }}</option>
-                                <option value="price_desc">{{ __("Price Desc") }}</option>
-                                <option value="price_asc">{{ __("Price ASC") }}</option>
-                                <option value="created_desc">{{ __("Created Desc") }}</option>
-                                <option value="created_asc">{{ __("Created Asc") }}</option>
-                            </x-shopper-input.select>
-                        </div>
-                    </div>
-                </div>
-                <div class="border-t border-gray-200 p-4 sm:px-6 sm:py-5">
-                    @if($products->isNotEmpty())
 
-                    @else
-                        <div class="py-5 w-full max-w-xs mx-auto flex flex-col items-center justify-center">
-                            <span class="flex-shrink-0 w-10 h-10">
-                                <svg class="w-full h-full text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                            </span>
-                            <p class="mt-2.5 text-sm text-gray-500 leading-5 text-center">
-                                {{ __("There are no products in this collection. Add or change conditions to add products.") }}
-                            </p>
-                            @if($type === 'auto')
-                                <div class="relative mt-3">
-                                    <span class="inline-flex rounded-md shadow-sm">
-                                        <x-shopper-default-button type="button">
-                                            {{ __("Update conditions") }}
-                                        </x-shopper-default-button>
-                                    </span>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                </div>
-            </div>
+            <livewire:shopper-collections.products :collection="$collection" />
+
             <div class="bg-white rounded-lg shadow-md divide-y divide-gray-200">
                 <div class="p-4 sm:p-5">
                     <div class="flex items-center justify-between">
@@ -166,44 +113,7 @@
                 <div class="bg-white rounded-md shadow overflow-hidden p-4 sm:p-5">
                     <h4 class="block text-sm font-medium leading-5 text-gray-700">{{ __("Image preview") }}</h4>
                     <div class="mt-1">
-                        @if($file)
-                            <div>
-                                <div class="flex-shrink-0 rounded-md overflow-hidden">
-                                    <img class="h-40 w-full object-cover rounded-md" src="{{ $file->temporaryUrl() }}" alt="">
-                                    <div class="flex items-center mt-2">
-                                        <button wire:click="removeImage" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
-                                            <svg class="h-5 w-5 mr-1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                            {{ __("Remove") }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            <div class="w-full">
-                                <label for="file" class="mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer">
-                                    <div class="text-center">
-                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <p class="mt-1 text-sm text-gray-600">
-                                            <span class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                                {{ __("Upload a file") }}
-                                            </span>
-                                            {{ __("or drag and drop") }}
-                                        </p>
-                                        <p class="mt-1 text-xs text-gray-500">
-                                            PNG, JPG, GIF up to 1MB
-                                        </p>
-                                        <input id="file" type="file" wire:model="file" class="sr-only" />
-                                    </div>
-                                </label>
-                            </div>
-                        @endif
-                        @error('file')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                        <x-shopper-input.single-upload id="file" wire:click="removeImage" wire:model="file" :file="$file" :error="$errors->first('file')" />
                     </div>
                     @if($media)
                         <div class="mt-4 p-2 bg-gray-50 rounded-md border border-dashed border-gray-200 flex items-center justify-between">

@@ -5,15 +5,15 @@ namespace Shopper\Framework\Http\Livewire\Collections;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Livewire\Component;
 use Livewire\WithFileUploads;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 
-class Edit extends Component
+class Edit extends AbstractBaseComponent
 {
     use WithFileUploads,
         WithUploadProcess,
@@ -46,7 +46,7 @@ class Edit extends Component
      *
      * @var string
      */
-    public $name = '';
+    public $name;
 
     /**
      * Collection sample description.
@@ -155,18 +155,6 @@ class Edit extends Component
     public function isUpdate()
     {
         return true;
-    }
-
-    /**
-     * Real-time component validation.
-     *
-     * @param  string  $field
-     * @throws \Illuminate\Validation\ValidationException
-     * @return void
-     */
-    public function updated($field)
-    {
-        $this->validateOnly($field, $this->rules());
     }
 
     /**

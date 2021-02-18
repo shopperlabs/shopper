@@ -23,7 +23,7 @@ class Create extends Component
      *
      * @var string
      */
-    public $name = '';
+    public $name;
 
     /**
      * Collection sample description.
