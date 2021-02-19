@@ -24,6 +24,7 @@ Route::namespace('Ecommerce')->group(function () {
     Route::prefix('products')->as('products.')->group(function () {
         Route::get('/{product}/variants/{id}', [ProductController::class, 'variant'])->name('variant');
     });
+    Route::resource('orders', 'OrderController')->only(['index', 'show', 'create']);
 });
 
 Route::resource('reviews', 'ReviewController');
