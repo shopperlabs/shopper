@@ -10,9 +10,8 @@
         <option>All time </option>
         <option>Custom date</option>
       </select>
-
     <h3 class="text-lg leading-6 font-medium text-gray-900 mt-5">
-        Last 30 days
+        From {{ $period->startDate->format('d/m/Y') }} to {{ $period->endDate->format('d/m/Y') }}
       </h3>
       <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
         <div>
@@ -22,7 +21,7 @@
             </dt>
             <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
               <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-                {{ $analytics['visitors_pageviews']->sum('visitors') }}
+                {{ $analytics['total_visitors'] }}
                 <span class="ml-2 text-sm font-medium text-gray-500">
                   from XX XXX
                 </span>
@@ -48,7 +47,7 @@
             </dt>
             <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
               <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-                {{ $analytics['visitors_pageviews']->sum('pageViews') }}
+                {{ $analytics['total_pageviews'] }}
                 <span class="ml-2 text-sm font-medium text-gray-500">
                   from XX XXX
                 </span>
