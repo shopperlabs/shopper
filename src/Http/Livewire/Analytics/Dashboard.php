@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Analytics;
 
+use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use Analytics;
 use Spatie\Analytics\Period;
@@ -41,8 +42,22 @@ class Dashboard extends Component
      * Component mount instance.
      *
      * @return void
+     * @throws \Spatie\Analytics\Exceptions\InvalidPeriod
      */
     public function mount()
+    {
+        if (File::exists(storage_path('app/analytics/service-account-credentials.json')) && env('ANALYTICS_VIEW_ID')) {
+            $this->enabledAnalytics();
+        }
+    }
+
+    /**
+     * Enabled Google Analytics.
+     *
+     * @throws \Spatie\Analytics\Exceptions\InvalidPeriod
+     * @return void
+     */
+    public function enabledAnalytics()
     {
         $this->fromDate = Carbon::now()->subDays(7);
         $this->toDate = Carbon::now();
@@ -77,7 +92,7 @@ class Dashboard extends Component
         if (isset($top_socials->rows)) $top_socials = collect($top_socials->rows)->map(function ($el, $i) {
             return ['name' => $el[0], 'sessions' => number_format($el[1], 0, '.', ' ')];
         });
-        
+
         $this->analytics = [
             'visitors'                => isset($visitors_pviews) ? $visitors_pviews->rows : [],
             'total_visitors'          => isset($total_visitors) ? number_format($total_visitors, 0, '.', ' ') : '-',
@@ -101,7 +116,8 @@ class Dashboard extends Component
     {
         return view('shopper::livewire.analytics.dashboard', [
             'period'    => $this->period,
-            'analytics' => $this->analytics
+            'analytics' => $this->analytics,
+            'can_display_analytics' => File::exists(storage_path('app/analytics/service-account-credentials.json')) && env('ANALYTICS_VIEW_ID')
         ]);
     }
 }
