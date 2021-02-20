@@ -5,6 +5,7 @@ namespace Shopper\Framework\Console;
 use Illuminate\Console\Command;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Traits\Database\Seedable;
+use Spatie\Analytics\AnalyticsServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 class InstallCommand extends Command
@@ -69,6 +70,7 @@ class InstallCommand extends Command
         }
 
         $this->call('vendor:publish', ['--provider' => ShopperServiceProvider::class]);
+        $this->call('vendor:publish', ['--provider' => AnalyticsServiceProvider::class]);
         $this->progressBar->advance();
 
         $this->setupDatabaseConfig();
