@@ -48,13 +48,6 @@ class General extends Component
     public $instructions;
 
     /**
-     * Determine if the provider is enabled or not.
-     *
-     * @var bool
-     */
-    public $enabled = false;
-
-    /**
      * Payment Method ID for edition.
      *
      * @var int
@@ -109,7 +102,7 @@ class General extends Component
             'link_url' => $this->linkUrl,
             'description' => $this->description,
             'instructions' => $this->instructions,
-            'is_enabled' => $this->enabled,
+            'is_enabled' => true,
         ]);
 
         if ($this->logo) {
@@ -123,6 +116,27 @@ class General extends Component
         $this->notify([
             'title' => __("Saved!"),
             'message' => __("Your payment method have been correctly added."),
+        ]);
+    }
+
+    /**
+     * Toggle payment method enable status.
+     *
+     * @param  int  $id
+     * @param  int  $status
+     * @return void
+     */
+    public function toggleStatus(int $id, int $status)
+    {
+        PaymentMethod::query()->find($id)->update(['is_enabled' => $status === 1 ? false: true]);
+
+        $this->dispatchBrowserEvent('toggle-saved-'. $id);
+
+        $this->display = false;
+
+        $this->notify([
+            'title' => __("Update"),
+            'message' => __("Your payment method status have been correctly updated."),
         ]);
     }
 
