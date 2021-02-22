@@ -1,6 +1,19 @@
 <div>
 
-    @if($can_display_analytics)
+    <div class="mt-4 pb-5 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
+        <div>
+            <h3 class="text-xl leading-6 sm:text-2xl sm:leading-7 sm:truncate font-bold text-gray-900">
+                {{ __('Analytics') }}
+            </h3>
+            <p class="max-w-4xl text-sm text-gray-500">
+                {{ __('Here are your stats for the period') }}
+                <span class="font-medium text-gray-600">{{ $fromDate->format('Y-m-d') . ' - '. $toDate->format('Y-m-d') }}</span>
+            </p>
+        </div>
+    </div>
+
+
+@if($can_display_analytics)
         <h4 class="text-md leading-6 font-medium text-gray-900">
             {{ __('Display analytics from ') }}
         </h4>

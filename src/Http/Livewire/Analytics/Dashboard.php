@@ -46,6 +46,9 @@ class Dashboard extends Component
      */
     public function mount()
     {
+        $this->fromDate = Carbon::now()->subDays(7);
+        $this->toDate = Carbon::now();
+
         if (File::exists(storage_path('app/analytics/service-account-credentials.json')) && env('ANALYTICS_VIEW_ID')) {
             $this->enabledAnalytics();
         }
@@ -59,8 +62,6 @@ class Dashboard extends Component
      */
     public function enabledAnalytics()
     {
-        $this->fromDate = Carbon::now()->subDays(7);
-        $this->toDate = Carbon::now();
         $this->period = new Period(new Carbon($this->fromDate), new Carbon($this->toDate));
 
         $period_visitors_pviews = Analytics::fetchVisitorsAndPageViews($this->period);
