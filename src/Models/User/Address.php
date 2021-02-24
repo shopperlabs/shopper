@@ -7,6 +7,9 @@ use Shopper\Framework\Models\System\Country;
 
 class Address extends Model
 {
+    const TYPE_BILLING = 'billing';
+    const TYPE_SHIPPING = 'shipping';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,6 +28,15 @@ class Address extends Model
         'type',
         'user_id',
         'country_id',
+    ];
+
+    /**
+     * The dynamic attributes from mutators that should be returned with the user object.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'full_name',
     ];
 
     /**
@@ -65,11 +77,23 @@ class Address extends Model
     }
 
     /**
+     * Return Address Full Name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->last_name
+            ? $this->first_name . ' ' . $this->last_name
+            : $this->first_name;
+    }
+
+    /**
      * Define if an address is default or not.
      *
      * @return bool
      */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->is_default === true;
     }
