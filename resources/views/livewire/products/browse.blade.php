@@ -453,10 +453,10 @@
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     <span class="lg:pl-2">{{ __("Product") }}</span>
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     {{ __("Sku") }}
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     {{ __("Brand") }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -490,7 +490,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">
+                                    <td class="hidden md:table-cell px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">
                                         <span>@if($product->sku) {{ $product->sku }} @else &mdash; @endif</span>
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
@@ -502,7 +502,7 @@
                                             <span class="inline-flex text-gray-700">&mdash;</span>
                                         @endif
                                     </td>
-                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                    <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         <div class="flex items-center">
                                             @if($product->variations_count > 0)
                                                 <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-semibold rounded-full {{ $product->variationsStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
