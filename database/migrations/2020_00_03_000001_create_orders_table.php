@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create($this->getTableName('orders'), function (Blueprint $table) {
-            $this->addCommonFields($table);
+            $this->addCommonFields($table, true);
 
             $table->string('number', 32);
             $table->integer('price_amount')->nullable();

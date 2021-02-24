@@ -3,12 +3,16 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Models\Shop\PaymentMethod;
+use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\User\User;
 
 class Order extends Model
 {
+    use HasPrice, SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -26,6 +30,15 @@ class Order extends Model
         'payment_method_id',
         'price_amount',
         'user_id',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'total',
     ];
 
     /**
@@ -52,6 +65,27 @@ class Order extends Model
     public function getTable()
     {
         return shopper_table('orders');
+    }
+
+    /**
+     * Return Total order price without shipping amount.
+     *
+     * @return bool|string
+     */
+    public function getTotalAttribute()
+    {
+        return $this->formattedPrice($this->total());
+    }
+
+    /**
+     * Return the correct order status formatted.
+     *
+     * @param  string  $status
+     * @return mixed
+     */
+    public function formattedStatus(string $status)
+    {
+        return OrderStatus::values()[$status];
     }
 
     /**
