@@ -88,26 +88,6 @@ class Browse extends Component
     }
 
     /**
-     * Return status style classes.
-     *
-     * @param  string  $status
-     * @return string
-     */
-    public function statusClasses(string $status): string
-    {
-        switch ($status) {
-            case OrderStatus::PENDING:
-                return 'border-yellow-200 bg-yellow-100 text-yellow-800';
-            case OrderStatus::REGISTER:
-                return 'border-blue-200 bg-blue-100 text-blue-800';
-            case OrderStatus::PAID:
-                return 'border-green-200 bg-green-100 text-green-800';
-            case OrderStatus::CANCELLED:
-                return 'border-red-200 bg-red-100 text-red-800';
-        }
-    }
-
-    /**
      * Render the component.
      *
      * @return \Illuminate\View\View

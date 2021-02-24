@@ -5,26 +5,13 @@
 <div>
     <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Orders') }}</h2>
-        @if($total > 0)
-            @can('add_orders')
-                <div class="flex space-x-3">
-                    <span class="shadow-sm rounded-md">
-                        <a href="{{ route('shopper.orders.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
-                            {{ __("Place order") }}
-                        </a>
-                    </span>
-                </div>
-            @endcan
-        @endif
     </div>
 
     @if($total === 0)
         <x-shopper-empty-state
             :title="__('Manage customers orders')"
             :content="__('When customers place orders, this is where all the processing will be done, the management of refunds and the tracking of their order.')"
-            :button="__('Place order')"
             permission="add_orders"
-            :url="route('shopper.orders.create')"
             class="lg:pb-0"
         >
             <div class="flex-shrink-0">
@@ -235,14 +222,20 @@
                         @forelse($orders as $order)
                             <tr>
                                 <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">
-                                    <span>{{ $order->number }}</span>
+                                    @can('read_orders')
+                                        <a href="{{ route('shopper.orders.show', $order) }}" class="truncate text-gray-900 hover:text-gray-700">
+                                            <span>{{ $order->number }}</span>
+                                        </a>
+                                    @else
+                                        <span>{{ $order->number }}</span>
+                                    @endcan
                                 </td>
                                 <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                     <time datetime="{{ $order->created_at->format('Y-m-d') }}">{{ $order->created_at->diffForHumans() }}</time>
                                 </td>
                                 <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 border-2 rounded-full text-xs font-medium {{ $this->statusClasses($order->status) }}">
-                                        {{ $order->formattedStatus($order->status) }}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 border-2 rounded-full text-xs font-medium {{ $order->status_classes }}">
+                                        {{ $order->formatted_status }}
                                     </span>
                                 </td>
                                 <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium truncate">
@@ -269,36 +262,40 @@
                                     <span>{{ $order->total }}</span>
                                 </td>
                                 <td class="pr-6">
-                                    <div x-data="{ open: false }" x-on:item-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
-                                        <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
-                                            <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                            </svg>
-                                        </button>
-                                        <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
-                                            <div class="relative z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
-                                                <div class="py-1">
-                                                    <a href="{{ route('shopper.orders.show', $order) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                                                        <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        {{ __("View order") }}
-                                                    </a>
-                                                </div>
-                                                <div class="border-t border-gray-100"></div>
-                                                <div class="py-1">
-                                                    <button wire:click="archived({{ $order->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                                                        <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
-                                                            <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        {{ __("Archived") }}
-                                                    </button>
+                                    @can('read_orders')
+                                        <div x-data="{ open: false }" x-on:item-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
+                                            <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
+                                                <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                                                </svg>
+                                            </button>
+                                            <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
+                                                <div class="relative z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
+                                                    <div class="py-1">
+                                                        <a href="{{ route('shopper.orders.show', $order) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
+                                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            {{ __("View order") }}
+                                                        </a>
+                                                    </div>
+                                                    @can('delete_orders')
+                                                        <div class="border-t border-gray-100"></div>
+                                                        <div class="py-1">
+                                                            <button wire:click="archived({{ $order->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
+                                                                <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                    <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
+                                                                    <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" />
+                                                                </svg>
+                                                                {{ __("Archived") }}
+                                                            </button>
+                                                        </div>
+                                                    @endcan
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endcan
                                 </td>
                             </tr>
                         @empty
