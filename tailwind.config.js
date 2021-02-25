@@ -16,6 +16,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {},
+      inset: {
+        '-0.5': '-0.125rem',
+      },
       spacing: {
         18: '4.5rem',
         95: "23.75rem",
