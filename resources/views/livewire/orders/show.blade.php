@@ -6,7 +6,7 @@
         <a href="{{ route('shopper.orders.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Orders') }}</a>
     </x:shopper-breadcrumb>
 
-    <div class="mt-3 bg-gray-100 z-30 relative pb-5 border-b border-gray-200 sticky top-4 sm:top-0 sm:-mx-8">
+    <div class="mt-3 bg-gray-100 z-30 relative pb-5 border-b border-gray-200 sticky top-0 -my-2 pt-4 sm:pt-0 sm:-my-0 sm:-mx-8">
         <div class="sm:px-8 space-y-4">
             <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
                 <div class="flex-1 flex items-center space-x-4 min-w-0">
@@ -86,13 +86,196 @@
         </div>
     </div>
 
-    <div class="grid gap-6 sm:grid-cols-6 sm:gap-8">
+    <div class="grid sm:grid-cols-6">
         <div class="sm:col-span-4 py-2 divide-y divide-gray-200">
-            <div class="py-4">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Order items') }}</h3>
+            <div class="py-4 sm:pr-8">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Products') }}</h3>
+                    <div class="flex items-center space-x-3">
+                        <span class="whitespace-no-wrap text-sm font-medium text-gray-500">{{ __('Per Page') }}</span>
+                        <x-shopper-input.select wire:model="perPage" class="w-20" aria-label="{{ __('Per Page items') }}">
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </x-shopper-input.select>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <ul class="divide-y divide-gray-200">
+                        @foreach($items as $item)
+                            <li class="flex-1 py-2.5">
+                                <div class="flex items-center">
+                                    <div class="min-w-0 flex-1 flex items-center">
+                                        <div class="flex-shrink-0">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                @if($item->product->getFirstImage())
+                                                    <img class="h-10 w-10 rounded-md object-cover" src="{{ $item->product->getFirstImage()->file_path }}" alt="{{ $item->id }}" />
+                                                @else
+                                                    <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md">
+                                                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                                                            <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                        </svg>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-4 md:gap-4">
+                                            <div class="md:col-span-2">
+                                                <div class="text-sm leading-5 font-medium text-gray-900 truncate">
+                                                    {{ $item->name }}
+                                                </div>
+                                                <div class="mt-1 flex items-center text-xs leading-4 text-gray-500">
+                                                    <span class="truncate">{{ $item->product->sku ?? '' }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="hidden md:block">
+                                                <span class="text-sm leading-5 text-gray-500">
+                                                    {{ shopper_money_format($item->unit_price_amount) }} x {{ $item->quantity }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm leading-5 text-gray-500">
+                                            {{ shopper_money_format($item->total) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="mt-2 pt-3 border-t border-gray-200">
+                        {{ $items->links() }}
+                    </div>
+                </div>
+                <div class="mt-3 flex justify-end">
+                    <div class="sm:max-w-sm space-y-1 text-right">
+                        <div class="bg-gray-200 rounded-md p-4 text-right">
+                            <span class="text-base leading-6 font-semibold text-gray-900">{{ __('Items total:') }} </span>
+                            {{ $order->total }}
+                        </div>
+                        <p class="text-sm text-gray-500 leading-5">{{ __('This price does not include applicable taxes on the product or on the customer.') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="py-4 sm:pr-8">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Payment Method') }}</h3>
+                <div class="mt-4">
+                    <div class="py-4 flex">
+                        @if($order->paymentMethod->logo)
+                            <img class="h-10 w-10 rounded-md object-cover" src="{{ $order->paymentMethod->logo_url }}" alt="payment icon" />
+                        @else
+                            <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                                    <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                            </span>
+                        @endif
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-900">{{ $order->paymentMethod->title }}</p>
+                            <a href="{{ route('shopper.settings.payments') }}" class="text-sm text-gray-500 hover:text-gray-400 underline">{{ __('View available methods') }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-4 sm:pr-8">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Shipping') }}</h3>
+                <div class="mt-4">
+                    @if($order->shipping_method)
+                        <dl>
+                            <div class="bg-gray-50 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    {{ __('Provider') }}
+                                </dt>
+                                <dd class="mt-1 text-sm font-medium text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {{ $order->shipping_method }}
+                                </dd>
+                            </div>
+                            <div class="bg-gray-100 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    {{ __('Price') }}
+                                </dt>
+                                <dd class="mt-1 text-sm font-medium text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {{ shopper_money_format($order->shipping_total) }}
+                                </dd>
+                            </div>
+                            <div class="bg-gray-50 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    {{ __('Tax') }}
+                                </dt>
+                                <dd class="mt-1 text-sm font-medium text-gray-900 sm:mt-0 sm:col-span-2">
+                                    0.00
+                                </dd>
+                            </div>
+                        </dl>
+                    @else
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-yellow-700">
+                                        {{ __("This order don't have a shipping method.") }}
+                                        <a href="#" class="font-medium underline text-yellow-700 hover:text-yellow-600">
+                                            {{ __('Read more about shipping.') }}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    @endif
+                </div>
+            </div>
+            <div class="py-4 sm:pr-8">
+                <div class="flex justify-end">
+                    <div class="sm:max-w-sm space-y-1 text-right text-gray-500">
+                        <div class="bg-gray-200 rounded-md p-4">
+                            <span class="text-xl leading-7 font-bold text-gray-900">{{ __('Order total:') }} </span>
+                            <span class="font-medium">{{ shopper_money_format($order->fullPriceWithShipping()) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="py-4 sm:pr-8">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Private notes') }}</h3>
+                <div class="mt-5 flex space-x-3">
+                    <div class="flex-shrink-0">
+                        <div class="relative">
+                            <img class="h-10 w-10 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=8&amp;w=256&amp;h=256&amp;q=80" alt="">
+                            <span class="absolute -bottom-0.5 bg-gray-100 right-0 rounded-tl p-0.5">
+                                <svg class="h-5 w-5 text-gray-400" x-description="Heroicon name: solid/chat-alt" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z" clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        @if($order->notes)
+                            <p class="text-sm leading-5 text-gray-500">{{ $order->notes }}</p>
+                        @else
+                            <div>
+                                <label for="comment" class="sr-only">{{ __('Comment') }}</label>
+                                <x-shopper-input.textarea wire:model="notes" id="comment" placeholder="{{ __('Leave notes for this customer') }}" :value="$order->notes" />
+                                @error('notes')
+                                    <p class="mt-1 text-red-500 text-sm">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="mt-6 flex items-center justify-end space-x-4">
+                                <x-shopper-button wire:click="leaveNotes" wire:loading.attr="disabled" type="button">
+                                    <x-shopper-loader wire:loading wire:target="leaveNotes" />
+                                    {{ __('Send notes') }}
+                                </x-shopper-button>
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="sm:col-span-2 border-t py-1 sm:border-t-0 sm:border-l border-gray-200 sm:pl-8 divide-y divide-gray-200">
+        <div class="sm:col-span-2 border-t py-2 sm:border-t-0 sm:border-l border-gray-200 sm:pl-8 divide-y divide-gray-200">
             <div class="py-4">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Customer') }}</h3>
                 <div class="mt-4 flex items-center space-x-4">

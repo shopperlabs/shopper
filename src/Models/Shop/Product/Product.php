@@ -88,6 +88,13 @@ class Product extends Model implements ReviewRateable
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['files'];
+
+    /**
      * The accessors to append to the model's array form.
      *
      * @var array
