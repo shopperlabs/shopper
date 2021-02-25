@@ -155,7 +155,6 @@ class General extends Component
         $this->description = $paymentMethod->description;
         $this->linkUrl = $paymentMethod->link_url;
         $this->instructions = $paymentMethod->instructions;
-        $this->enabled = $paymentMethod->is_enabled;
         $this->logoUrl = $paymentMethod->logo_url;
 
         $this->display = true;
@@ -196,7 +195,6 @@ class General extends Component
             'link_url' => $this->linkUrl,
             'description' => $this->description,
             'instructions' => $this->instructions,
-            'is_enabled' => $this->enabled,
         ]);
 
         if ($this->logo) {
