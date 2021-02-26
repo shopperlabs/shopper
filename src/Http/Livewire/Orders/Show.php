@@ -5,6 +5,7 @@ namespace Shopper\Framework\Http\Livewire\Orders;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\Order\Order;
+use Shopper\Framework\Models\Shop\Order\OrderStatus;
 use Shopper\Framework\Models\User\Address;
 
 class Show extends Component
@@ -33,6 +34,13 @@ class Show extends Component
     public $notes;
 
     /**
+     * Confirm modal to archived order.
+     *
+     * @var bool
+     */
+    public $confirmationArchived = false;
+
+    /**
      * Redirect to the specific order.
      *
      * @param  int  $id
@@ -41,6 +49,56 @@ class Show extends Component
     public function goToOrder(int $id)
     {
         $this->redirectRoute('shopper.orders.show', $id);
+    }
+
+    /**
+     * Launch modal to archived the current order.
+     *
+     * @return void
+     */
+    public function openModal()
+    {
+        $this->confirmationArchived = true;
+    }
+
+    /**
+     * Cancel action to archived order.
+     *
+     * @return void
+     */
+    public function cancel()
+    {
+        $this->confirmationArchived = false;
+    }
+
+    /**
+     * Archived order.
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function archived()
+    {
+        $this->order->delete();
+
+        session()->flash('success', __('Order successfully archived'));
+
+        $this->redirectRoute('shopper.orders.index');
+    }
+
+    /**
+     * Cancel order.
+     *
+     * @return void
+     */
+    public function cancelOrder()
+    {
+        $this->order->update(['status' => OrderStatus::CANCELLED]);
+
+        $this->notify([
+            'title' => __('Cancelled'),
+            'message' => __('This order has been cancelled.')
+        ]);
     }
 
     /**
@@ -68,7 +126,7 @@ class Show extends Component
     public function render()
     {
         return view('shopper::livewire.orders.show', [
-            'items' => $this->order->items()->simplePaginate($this->perPage),
+            'items' => $this->order->items()->with('product')->simplePaginate($this->perPage),
             'nextOrder' => Order::query()->where('id', '>', $this->order->id)->oldest('id')->first() ?? null,
             'prevOrder' => Order::query()->where('id', '<', $this->order->id)->latest('id')->first() ?? null,
             'billingAddress' => Address::query()
