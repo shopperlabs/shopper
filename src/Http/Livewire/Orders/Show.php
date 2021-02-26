@@ -119,6 +119,38 @@ class Show extends Component
     }
 
     /**
+     * Register the order by changed order status.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->order->update(['status' => OrderStatus::REGISTER]);
+
+        // Send notification to the customer
+
+        $this->notify([
+            'title' => __('Update Status'),
+            'message' => __('This order has been marked as register and notification has been sent to the customer by email.')
+        ]);
+    }
+
+    /**
+     * Mark the order as paid.
+     *
+     * @return void
+     */
+    public function markPaid()
+    {
+        $this->order->update(['status' => OrderStatus::PAID]);
+
+        $this->notify([
+            'title' => __('Update Status'),
+            'message' => __('This order is marked as paid.')
+        ]);
+    }
+
+    /**
      * Render the component.
      *
      * @return \Illuminate\View\View

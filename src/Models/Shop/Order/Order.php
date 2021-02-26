@@ -157,6 +157,16 @@ class Order extends Model
     }
 
     /**
+     * Determine if on order is in register status.
+     *
+     * @return bool
+     */
+    public function isRegister(): bool
+    {
+        return $this->status === OrderStatus::REGISTER;
+    }
+
+    /**
      * Return total order with shipping.
      *
      * @return int

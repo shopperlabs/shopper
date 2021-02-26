@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<div>
     <x:shopper-breadcrumb back="shopper.orders.index">
         <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -6,7 +6,7 @@
         <a href="{{ route('shopper.orders.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Orders') }}</a>
     </x:shopper-breadcrumb>
 
-    <div class="mt-3 bg-gray-100 z-30 relative pb-5 border-b border-gray-200 sticky top-0 -my-2 pt-4 sm:pt-0 sm:-my-0 sm:-mx-8">
+    <div class="mt-3 bg-gray-100 z-30 relative pb-5 border-b border-gray-200 sticky top-0 -my-2 pt-4 sm:pt-1 sm:-my-0 sm:-mx-8">
         <div class="sm:px-8 space-y-4">
             <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
                 <div class="flex-1 flex items-center space-x-4 min-w-0">
@@ -40,26 +40,29 @@
                         </x-shopper-danger-button>
                     </span>
 
-                    <div @keydown.escape="open = false" @click.away="open = false" x-on:notify.window="open = false" class="relative block text-left">
-                        <x-shopper-default-button @click="open = !open" type="button">
-                            {{ __("More actions") }}
-                            <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                            </svg>
-                        </x-shopper-default-button>
-                        <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100" role="menu" aria-orientation="vertical" aria-labelledby="options-menu" style="display: none;">
+                    <x-shopper-dropdown width="56">
+                        <x-slot name="trigger">
+                            <x-shopper-default-button>
+                                {{ __("More actions") }}
+                                <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                            </x-shopper-default-button>
+                        </x-slot>
+
+                        <x-slot name="content">
                             <div class="py-1">
                                 @if($order->canBeCancelled())
-                                    <button wire:click="cancelOrder" type="button" class="group w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+                                    <x-shopper-dropdown-button wire:click="cancelOrder" role="menuitem">
                                         <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                                         </svg>
                                         {{ __("Cancel Order") }}
-                                    </button>
+                                    </x-shopper-dropdown-button>
                                 @endif
                             </div>
-                        </div>
-                    </div>
+                        </x-slot>
+                    </x-shopper-dropdown>
 
                     <span class="relative z-0 inline-flex shadow-sm">
                         <button @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif type="button" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150 @if(! $prevOrder) bg-gray-100 hover:text-gray-500 disabled:opacity-50 @endif" aria-label="{{ __('Previous order') }}" @if(! $prevOrder) disabled @endif>
@@ -231,6 +234,39 @@
                             {{ shopper_money_format($order->fullPriceWithShipping()) }}
                         </div>
                     </div>
+                </div>
+                <div class="flex justify-end mt-2 text-right">
+                    <x-shopper-dropdown>
+                        <x-slot name="trigger">
+                            <x-shopper-default-button>
+                                {{ __("Payment actions") }}
+                                <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                </svg>
+                            </x-shopper-default-button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <div class="py-1">
+                                <x-shopper-dropdown-button role="menuitem">
+                                    {{ __("Send invoice") }}
+                                    <span class="inline-flex items-center ml-3 px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-gray-100 text-gray-800">
+                                      {{ __('Soon') }}
+                                    </span>
+                                </x-shopper-dropdown-button>
+                                @if($order->isPending())
+                                    <x-shopper-dropdown-button wire:click="register" role="menuitem">
+                                        {{ __("Register") }}
+                                    </x-shopper-dropdown-button>
+                                @endif
+                                @if($order->isPending() || $order->isRegister())
+                                    <x-shopper-dropdown-button wire:click="markPaid" role="menuitem">
+                                        {{ __("Mark as paid") }}
+                                    </x-shopper-dropdown-button>
+                                @endif
+                            </div>
+                        </x-slot>
+                    </x-shopper-dropdown>
                 </div>
             </div>
             <div class="py-4 sm:pr-8">
