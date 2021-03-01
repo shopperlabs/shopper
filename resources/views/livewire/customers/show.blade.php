@@ -1,12 +1,11 @@
 <div
     x-data="{
         open: false,
-        options: ['profile', 'address', 'orders', 'tax'],
+        options: ['profile', 'address', 'orders'],
         words: {
             'profile': '{{ __("Profile") }}',
             'address': '{{ __("Address") }}',
-            'orders': '{{ __("Orders") }}',
-            'tax': '{{ __("Tax") }}',
+            'orders': '{{ __("Orders") }}'
         },
         currentTab: 'profile'
     }"
@@ -97,10 +96,6 @@
                         <button @click="currentTab = 'orders'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'border-blue-500 text-blue-600 focus:text-blue-800 focus:border-blue-700': currentTab === 'orders' }">
                             {{ __("Orders") }}
                         </button>
-
-                        <button @click="currentTab = 'tax'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'border-blue-500 text-blue-600 focus:text-blue-800 focus:border-blue-700': currentTab === 'tax' }">
-                            {{ __("Tax") }}
-                        </button>
                     </nav>
                 </div>
             </div>
@@ -113,11 +108,8 @@
             <div x-cloak x-show="currentTab === 'address'">
                 <livewire:shopper-customers.addresses :customer="$customer" />
             </div>
-            <div x-cloak x-show="currentTab === 'orders'" class="bg-white shadow overflow-hidden rounded-md px-4 py-5 bg-white sm:p-6">
-                <x-shopper-wip-placeholder />
-            </div>
-            <div x-cloak x-show="currentTab === 'tax'" class="bg-white shadow overflow-hidden rounded-md px-4 py-5 bg-white sm:p-6">
-                <x-shopper-wip-placeholder />
+            <div x-cloak x-show="currentTab === 'orders'">
+                <livewire:shopper-customers.orders :customer="$customer" />
             </div>
         </div>
     </div>

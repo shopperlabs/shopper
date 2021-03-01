@@ -4,9 +4,12 @@ namespace Shopper\Framework\Http\Livewire\Customers;
 
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
+use Livewire\WithPagination;
 
-class Addresses extends Component
+class Orders extends Component
 {
+    use WithPagination;
+
     /**
      * Customer Model.
      *
@@ -31,10 +34,10 @@ class Addresses extends Component
      */
     public function render()
     {
-        return view('shopper::livewire.customers.addresses', [
-            'addresses' => Cache::remember('customer-addresses', 60*60*24, function () {
-                return $this->customer->addresses;
-            })
+        return view('shopper::livewire.customers.orders', [
+            'orders' => $this->customer->orders()
+                ->with(['customer', 'items', 'shippingAddress', 'paymentMethod'])
+                ->simplePaginate(3)
         ]);
     }
 }
