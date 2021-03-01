@@ -49,11 +49,20 @@ class Address extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'country'
+    ];
+
+    /**
      * Get the table associated with the model.
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('user_addresses');
     }
