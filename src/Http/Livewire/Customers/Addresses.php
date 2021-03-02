@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class Addresses extends Component
@@ -31,7 +32,9 @@ class Addresses extends Component
     public function render()
     {
         return view('shopper::livewire.customers.addresses', [
-            'addresses' => $this->customer->addresses->load('country')
+            'addresses' => Cache::remember('customer-addresses', 60*60*24, function () {
+                return $this->customer->addresses;
+            })
         ]);
     }
 }

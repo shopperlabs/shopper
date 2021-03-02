@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Money\Currencies\ISOCurrencies;
 use Money\Currency;
@@ -150,7 +151,9 @@ if (! function_exists('shopper_currency')) {
         $settingCurrency =  shopper_setting('shop_currency_id');
 
         if ($settingCurrency) {
-            $currency = CurrencyModel::query()->find($settingCurrency);
+            $currency = Cache::remember('shopper-currency', 60*60*24*7, function () use ($settingCurrency) {
+                return CurrencyModel::query()->find($settingCurrency);
+            });
 
             return $currency ? $currency->code : 'USD';
         }
@@ -214,7 +217,9 @@ if (! function_exists('shopper_setting')) {
      */
     function shopper_setting(string $key): ?string
     {
-        $setting = Setting::query()->where('key', $key)->first();
+        $setting = Cache::remember("shopper-setting-$key", 60*60*24, function () use ($key) {
+            return Setting::query()->where('key', $key)->first();
+        });
 
         return $setting ? $setting->value : null;
     }

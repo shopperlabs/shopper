@@ -5,6 +5,8 @@ namespace Shopper\Framework\Events\Handlers;
 use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
+use Shopper\Framework\Models\Shop\Order\Order;
+use Shopper\Framework\Models\Shop\Order\OrderStatus;
 use Shopper\Framework\Sidebar\AbstractAdminSidebar;
 
 class RegisterOrderSidebar extends AbstractAdminSidebar
@@ -17,13 +19,19 @@ class RegisterOrderSidebar extends AbstractAdminSidebar
      */
     public function extendWith(Menu $menu)
     {
-        $menu->group(__('Shop'), function (Group $group) {
+        $count = Order::query()->where('status', OrderStatus::PENDING)->count();
+
+        $menu->group(__('Shop'), function (Group $group) use ($count) {
             $group->weight(20);
             $group->authorize(true);
 
-            $group->item(__('Orders'), function (Item $item) {
+            $group->item(__('Orders'), function (Item $item) use ($count) {
                 $item->weight(1);
                 $item->authorize($this->user->hasPermissionTo('browse_orders'));
+                if ($count > 0) {
+                    $item->badge($count);
+                }
+                $item->route('shopper.orders.index');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />

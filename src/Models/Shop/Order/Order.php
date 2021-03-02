@@ -3,12 +3,16 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Models\Shop\PaymentMethod;
+use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\User\User;
 
 class Order extends Model
 {
+    use HasPrice, SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -26,6 +30,17 @@ class Order extends Model
         'payment_method_id',
         'price_amount',
         'user_id',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'total',
+        'status_classes',
+        'formatted_status',
     ];
 
     /**
@@ -55,6 +70,45 @@ class Order extends Model
     }
 
     /**
+     * Return Total order price without shipping amount.
+     *
+     * @return bool|string
+     */
+    public function getTotalAttribute()
+    {
+        return $this->formattedPrice($this->total());
+    }
+
+    /**
+     * Return status style classes.
+     *
+     * @return string
+     */
+    public function getStatusClassesAttribute(): string
+    {
+        switch ($this->status) {
+            case OrderStatus::PENDING:
+                return 'border-yellow-200 bg-yellow-100 text-yellow-800';
+            case OrderStatus::REGISTER:
+                return 'border-blue-200 bg-blue-100 text-blue-800';
+            case OrderStatus::PAID:
+                return 'border-green-200 bg-green-100 text-green-800';
+            case OrderStatus::CANCELLED:
+                return 'border-red-200 bg-red-100 text-red-800';
+        }
+    }
+
+    /**
+     * Return the correct order status formatted.
+     *
+     * @return mixed
+     */
+    public function getFormattedStatusAttribute()
+    {
+        return OrderStatus::values()[$this->status];
+    }
+
+    /**
      * Return total order.
      *
      * @return mixed
@@ -62,6 +116,64 @@ class Order extends Model
     public function total()
     {
         return $this->items->sum('total');
+    }
+
+    /**
+     * Determine if an order can be cancelled.
+     *
+     * @return bool
+     */
+    public function canBeCancelled(): bool
+    {
+        if ($this->status === OrderStatus::COMPLETED || $this->status === OrderStatus::PAID) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Determine if an order is not cancelled.
+     *
+     * @return bool
+     */
+    public function isNotCancelled(): bool
+    {
+        if ($this->status === OrderStatus::CANCELLED) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Determine if on order is in pending status.
+     *
+     * @return bool
+     */
+    public function isPending(): bool
+    {
+        return $this->status === OrderStatus::PENDING;
+    }
+
+    /**
+     * Determine if on order is in register status.
+     *
+     * @return bool
+     */
+    public function isRegister(): bool
+    {
+        return $this->status === OrderStatus::REGISTER;
+    }
+
+    /**
+     * Return total order with shipping.
+     *
+     * @return int
+     */
+    public function fullPriceWithShipping(): int
+    {
+        return $this->items->sum('total') + $this->shipping_total;
     }
 
     /**

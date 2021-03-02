@@ -21,7 +21,7 @@
         <a href="{{ route('shopper.products.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Products') }}</a>
     </x:shopper-breadcrumb>
 
-    <div class="mt-3 bg-gray-100 z-30 relative pb-5 sm:pb-0 sticky top-0 sm:-mx-8">
+    <div class="mt-3 bg-gray-100 z-30 relative pb-5 sm:pb-0 sticky top-4 sm:top-0 sm:-mx-8">
         <div class="sm:px-8 space-y-4">
             <div class="space-y-3 md:flex md:items-start md:justify-between md:space-y-0">
                 <div class="flex-1 min-w-0">
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <div class="border-b border-gray-200">
+            <div class="pb-5 sm:pb-0 border-b border-gray-200">
                 <!-- Dropdown menu on small screens -->
                 <div class="sm:hidden">
                     <select x-model="currentTab" aria-label="Selected tab" class="form-select block w-full pl-3 pr-10 py-2 text-base leading-6 border-gray-300 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5 transition ease-in-out duration-150">

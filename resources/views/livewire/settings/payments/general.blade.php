@@ -85,6 +85,9 @@
                                         <span class="lg:pl-2">{{ __("Title") }}</span>
                                     </th>
                                     <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        {{ __("Status") }}
+                                    </th>
+                                    <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                         {{ __("Website") }}
                                     </th>
                                     <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -113,6 +116,14 @@
                                                         <span>{{ $method->title }} </span>
                                                     </span>
                                                 </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-3 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                                            <div class="flex items-center">
+                                                <span x-data="{ on: @if($method->is_enabled) true @else false @endif }" role="checkbox" tabindex="0" wire:click="toggleStatus({{ $method->id }}, {{ $method->is_enabled ? 1 : 0 }})" x-on:toggle-saved-{{ $method->id }}.window="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" @focus="focused = true" @blur="focused = false" class="group relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none">
+                                                    <span aria-hidden="true" :class="{ 'bg-blue-600': on, 'bg-gray-200': !on }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200 bg-gray-200"></span>
+                                                    <span aria-hidden="true" :class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform group-focus:shadow-outline group-focus:border-blue-300 transition-transform ease-in-out duration-200 translate-x-0"></span>
+                                                </span>
                                             </div>
                                         </td>
                                         <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
@@ -256,17 +267,6 @@
                         <x-shopper-input.group label="Payment instructions" for="instructions" helpText="Displays to customers after they place an order with this payment method.">
                             <x-shopper-input.textarea wire:model="instructions" id="instructions" />
                         </x-shopper-input.group>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <div class="flex items-center justify-between">
-                            <span class="flex-grow flex flex-col" id="toggleLabel">
-                                <span class="text-sm leading-5 font-medium text-gray-900">{{ __("Enabled") }}</span>
-                                <span class="text-sm leading-normal text-gray-500">{{ __("This provider will be available and visible to your customers once it is enabled.") }}</span>
-                            </span>
-                            <span role="checkbox" tabindex="0" @click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" aria-labelledby="toggleLabel" x-data="{ on: @entangle('enabled') }" x-bind:class="{ 'bg-gray-200': !on, 'bg-blue-600': on }" class="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue">
-                                <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>

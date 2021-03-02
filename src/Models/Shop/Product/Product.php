@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Contracts\ReviewRateable;
@@ -177,6 +178,18 @@ class Product extends Model implements ReviewRateable
         }
 
         return $stock;
+    }
+
+    /**
+     * Scope a query to only include enabled collection.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePublish(Builder $query)
+    {
+        return $query->whereDate('published_at', '<=', now())
+            ->where('is_visible', true);
     }
 
     /**

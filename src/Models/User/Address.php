@@ -7,6 +7,9 @@ use Shopper\Framework\Models\System\Country;
 
 class Address extends Model
 {
+    const TYPE_BILLING = 'billing';
+    const TYPE_SHIPPING = 'shipping';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +31,15 @@ class Address extends Model
     ];
 
     /**
+     * The dynamic attributes from mutators that should be returned with the user object.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'full_name',
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array
@@ -37,11 +49,20 @@ class Address extends Model
     ];
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = [
+        'country'
+    ];
+
+    /**
      * Get the table associated with the model.
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('user_addresses');
     }
@@ -65,11 +86,23 @@ class Address extends Model
     }
 
     /**
+     * Return Address Full Name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->last_name
+            ? $this->first_name . ' ' . $this->last_name
+            : $this->first_name;
+    }
+
+    /**
      * Define if an address is default or not.
      *
      * @return bool
      */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->is_default === true;
     }

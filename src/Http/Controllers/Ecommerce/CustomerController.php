@@ -45,7 +45,7 @@ class CustomerController extends ShopperBaseController
         $this->authorize('read_customers');
 
         return view('shopper::pages.customers.show', [
-            'customer' => (new UserRepository())->getById($id)
+            'customer' => (new UserRepository())->with(['addresses', 'orders'])->getById($id)
         ]);
     }
 }

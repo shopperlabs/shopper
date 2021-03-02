@@ -104,7 +104,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->hasRole(config('shopper.system.users.admin_role'));
     }
@@ -114,7 +114,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isVerified()
+    public function isVerified(): bool
     {
         return $this->email_verified_at !== null;
     }
@@ -124,7 +124,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
         return $this->last_name
             ? $this->first_name . ' ' . $this->last_name
@@ -150,7 +150,7 @@ class User extends Authenticatable
      *
      * @return string
      */
-    public function getRolesLabelAttribute()
+    public function getRolesLabelAttribute(): string
     {
         $roles = $this->roles()->pluck('display_name')->toArray();
 
