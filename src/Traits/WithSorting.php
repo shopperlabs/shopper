@@ -16,7 +16,7 @@ trait WithSorting
      *
      * @var string
      */
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
 
     /**
      * Sort by field on the table view.

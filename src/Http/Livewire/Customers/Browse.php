@@ -118,7 +118,7 @@ class Browse extends Component
                         $query->whereNull('email_verified_at');
                     }
                 })
-                ->orderBy($this->sortBy ?? 'first_name', $this->sortDirection)
+                ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)
                 ->paginate(10),
         ]);
     }
