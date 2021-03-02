@@ -47,7 +47,7 @@ class ShopperServiceProvider extends ServiceProvider
     {
         collect($this->configFiles)->each(function ($config) {
             $this->mergeConfigFrom(SHOPPER_PATH . "/config/$config.php", "shopper.$config");
-            $this->publishes([SHOPPER_PATH. "/config/$config.php" => config_path("shopper/$config.php")], 'shopper');
+            $this->publishes([SHOPPER_PATH. "/config/$config.php" => config_path("shopper/$config.php")], 'shopper-config');
         });
 
         $this->publishes([
