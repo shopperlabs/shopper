@@ -195,11 +195,11 @@ class CreateAdminUser extends AbstractBaseComponent
      */
     public function render()
     {
-        $roles = Role::query()
-            ->select(['id', 'display_name', 'name'])
-            ->where('name', '<>', config('shopper.system.users.default_role'))
-            ->get();
-
-        return view('shopper::livewire.settings.management.create', compact('roles'));
+        return view('shopper::livewire.settings.management.create', [
+            'roles' => Role::query()
+                ->select(['id', 'display_name', 'name'])
+                ->where('name', '<>', config('shopper.system.users.default_role'))
+                ->get()
+        ]);
     }
 }
