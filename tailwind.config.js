@@ -25,6 +25,9 @@ module.exports = {
         125: "31.25rem",
         140: "35rem"
       },
+      minHeight: {
+        '(screen-mail)': 'calc(100vh - 9.625rem)',
+      },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans]
       }
@@ -40,5 +43,6 @@ module.exports = {
     require("@tailwindcss/ui")({
       layout: 'sidebar',
     }),
+    require('@tailwindcss/line-clamp'),
   ]
 };
