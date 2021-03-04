@@ -1,16 +1,22 @@
-@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'bg-white', 'containerClasses' => 'relative block text-left'])
+@props([
+    'align' => 'right',
+    'width' => '48',
+    'customAlignmentClasses' => '',
+    'contentClasses' => 'bg-white',
+    'containerClasses' => 'relative block text-left'
+])
 
 @php
 switch ($align) {
     case 'left':
-        $alignmentClasses = 'origin-top-left left-0';
+        $alignmentClasses = 'origin-top-left '. $customAlignmentClasses;
         break;
     case 'top':
-        $alignmentClasses = 'origin-top';
+        $alignmentClasses = 'origin-top '. $customAlignmentClasses;
         break;
     case 'right':
     default:
-        $alignmentClasses = 'origin-top-right right-0';
+        $alignmentClasses = 'origin-top-right '. $customAlignmentClasses;
         break;
 }
 
