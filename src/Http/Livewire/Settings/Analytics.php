@@ -105,6 +105,10 @@ class Analytics extends Component
 
         Artisan::call('config:clear');
 
+        if (app()->environment('production')) {
+            Artisan::call('config:cache');
+        }
+
         $this->notify([
             'title' => __('Updated'),
             'message' => __("Your analytics configurations have been correctly updated")

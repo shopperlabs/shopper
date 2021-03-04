@@ -41,6 +41,7 @@ Route::prefix('setting')->as('settings.')->group(function () {
     Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
     Route::view('/payments', 'shopper::pages.settings.payments.general')->name('payments');
     Route::view('/general', 'shopper::pages.settings.general')->name('shop');
+    Route::view('/email-setting', 'shopper::pages.settings.mails')->name('mails');
     Route::resource('inventories', 'InventoryController');
     Route::resource('attributes', 'AttributeController')->except('destroy', 'store', 'update');
 
