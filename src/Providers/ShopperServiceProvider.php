@@ -17,7 +17,7 @@ class ShopperServiceProvider extends ServiceProvider
      * @var string[]
      */
     protected $configFiles = [
-        'system', 'routes', 'auth',
+        'system', 'routes', 'auth', 'mails',
     ];
 
     /**
