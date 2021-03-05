@@ -22,7 +22,7 @@
         <div class="min-w-0 flex-1 lg:flex">
             <aside class="hidden lg:block lg:flex-shrink-0">
                 <div class="h-full relative flex flex-col w-80 border-r border-gray-200 bg-white">
-                    <nav aria-label="{{ __('Email menu') }}" class="min-h-(screen-mail) flex-1 overflow-y-auto">
+                    <nav aria-label="{{ __('Email menu') }}" class="min-h-(screen-content) flex-1 overflow-y-auto">
                         <ul class="border-b border-gray-200 divide-y divide-gray-200">
                             <li class="relative bg-white py-5 px-6 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600" :class="{ 'bg-gray-50': currentTab === 'config' }">
                                 <div class="flex items-start justify-between space-x-3">
@@ -90,7 +90,7 @@
                 </div>
             </aside>
             <section aria-labelledby="configuration-heading" class="min-w-0 flex-1 h-full flex flex-col overflow-hidden">
-                <div class="min-h-(screen-mail) flex-1 overflow-y-auto">
+                <div class="min-h-(screen-content) flex-1 overflow-y-auto">
                     <div x-show="currentTab === 'config'">
                         <livewire:shopper-settings.mails.configuration />
                     </div>

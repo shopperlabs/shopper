@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <div class="mt-6">
+    <div class="mt-6 pb-10">
         <div x-show="currentTab === 'detail'">
             <livewire:shopper-products.form.edit :product="$product" :currency="$currency" />
         </div>

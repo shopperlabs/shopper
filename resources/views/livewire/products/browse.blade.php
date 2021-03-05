@@ -322,7 +322,7 @@
                                                             {{ __("Products Filters") }}
                                                         </h2>
                                                         <div class="ml-3 h-7 flex items-center">
-                                                            <button @click="show = false;" class="bg-blue-700 rounded-md text-blue-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+                                                            <button @click="show = false;" type="button" class="bg-blue-700 rounded-md text-blue-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
                                                                 <span class="sr-only">{{ __("Close panel") }}</span>
                                                                 <svg class="h-6 w-6" x-description="Heroicon name: x" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

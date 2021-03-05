@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <div class="mt-6">
+    <div class="mt-6 pb-10">
         <div x-show="currentTab === 'role'" class="bg-white shadow overflow-hidden sm:rounded-md">
             @if(config('shopper.system.users.admin_role') === $role->name)
                 <div class="pt-5 px-4 sm:px-6">

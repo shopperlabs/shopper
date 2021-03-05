@@ -372,7 +372,7 @@
         </div>
     </div>
 
-    <div class="mt-6 border-t border-gray-200 pt-5">
+    <div class="mt-6 border-t border-gray-200 pt-5 pb-10">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" wire.loading.attr="disabled" type="button">
                 <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">

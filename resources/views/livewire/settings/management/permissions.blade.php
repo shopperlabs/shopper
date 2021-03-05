@@ -1,4 +1,4 @@
-<div class="bg-white shadow overflow-hidden sm:rounded-md">
+<div class="bg-white shadow overflow-hidden rounded-md">
     <div class="px-4 pt-5 sm:px-6 flex flex-wrap items-baseline">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
             {{ __("Permissions") }}
