@@ -11,7 +11,7 @@
     </x:shopper-breadcrumb>
 
     <div
-        x-data="{ currentTab: 'config' }"
+        x-data="{ currentTab: 'templates' }"
         class="sm:-mx-8"
     >
         <div class="mt-3 bg-gray-100 z-30 relative pb-5 border-b border-gray-200 md:flex md:items-center md:justify-between">

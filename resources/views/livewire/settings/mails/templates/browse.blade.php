@@ -20,13 +20,13 @@
         <div class="p-6 sm:px-8 pb-10">
             <div class="pb-5 border-b border-gray-200 sm:flex sm:items-center sm:justify-between">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">
-                    {{ __('Mailables') }}
+                    {{ __('Templates') }}
                 </h3>
                 @if($isLocal)
                     <div class="mt-3 sm:mt-0 sm:ml-4">
-                        <x-shopper-button wire:click="openModal" type="button">
-                            {{ __('Create new mailable') }}
-                        </x-shopper-button>
+                        <x-shopper-link-button :href="route('shopper.settings.mails.select-template')" class="border border-transparent focus:border-blue-300 bg-blue-600 hover:bg-blue-500 text-white">
+                            {{ __('Create new template') }}
+                        </x-shopper-link-button>
                     </div>
                 @endif
             </div>
@@ -42,10 +42,10 @@
                                             {{ __('Name') }}
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            {{ __('Namespace') }}
+                                            {{ __('Template') }}
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            {{ __('Last Updated') }}
+                                            {{ __('Type') }}
                                         </th>
                                         <th scope="col" class="relative px-6 py-3">
                                             <span class="sr-only">Actions</span>
@@ -53,16 +53,17 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @forelse($mailables->all() as $mailable)
+                                    @forelse($templates->all() as $template)
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                {{ $mailable['name'] }}
+                                                {{ ucwords($template->template_name) }}
                                             </td>
                                             <td class="px-6 py-4 min-w-0 whitespace-nowrap text-sm text-gray-500">
-                                                {{ $mailable['namespace'] }}
+                                                <span class="font-medium text-gray-700">{{ ucfirst($template->template_view_name) }}</span>
+                                                ({{ ucfirst($template->template_skeleton) }})
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
-                                                {{ (\Carbon\Carbon::createFromTimeStamp($mailable['modified']))->diffForHumans() }}
+                                            <td class="px-6 py-4 whitespace-nowrap text-right capitalize text-sm text-gray-500">
+                                                {{ $template->template_type }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <a href="#" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 active:bg-gray-100 focus:bg-gray-100 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none">
@@ -71,7 +72,7 @@
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                     </svg>
                                                 </a>
-                                                <button wire:click="openRemovedModal('{{ $mailable['name'] }}')" type="button" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 active:bg-gray-100 focus:bg-gray-100 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none">
+                                                <button wire:click="openRemovedModal('{{ $template->template_name }}')" type="button" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 active:bg-gray-100 focus:bg-gray-100 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none">
                                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
@@ -140,110 +141,4 @@
         </div>
     </div>
 
-    <x-shopper-modal wire:model="createModalConfirmation" maxWidth="lg" id="createModal">
-        <div class="bg-white">
-            <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
-                <div class="text-left">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        {{ __("New Mailable") }}
-                    </h3>
-                </div>
-            </div>
-            <div class="p-4 sm:px-6 border-t border-gray-100">
-                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                    <div class="sm:col-span-2">
-                        <x-shopper-input.group label="Name" for="name" :error="$errors->first('name')" helpText="Enter mailable name e.g Welcome User, WelcomeUser" isRequired>
-                            <x-shopper-input.text wire:model="name" id="name" placeholder="Mailable name" />
-                        </x-shopper-input.group>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <div class="relative flex items-start">
-                            <div class="flex items-center h-5">
-                                <input wire:model.debounce.300ms="isMarkdown" id="is_markdown" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
-                            </div>
-                            <div class="ml-3 text-sm leading-5">
-                                <label for="is_markdown" class="font-medium text-gray-700">{{ __('Markdown Template') }}</label>
-                                <p class="text-gray-500">{{ __('Use markdown template.') }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    @if($isMarkdown)
-                        <div class="sm:col-span-2">
-                            <x-shopper-input.group label="Markdown" for="markdown" :error="$errors->first('markdownView')" isRequired>
-                                <x-shopper-input.text wire:model="markdownView" id="markdown" placeholder="Eg. markdown.view" />
-                            </x-shopper-input.group>
-                        </div>
-                    @endif
-
-                    <div class="sm:col-span-2">
-                        <div class="relative flex items-start">
-                            <div class="flex items-center h-5">
-                                <input wire:model.debounce.300ms="isForce" id="is_force" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
-                            </div>
-                            <div class="ml-3 text-sm leading-5">
-                                <label for="is_force" class="font-medium text-gray-700">{{ __('Force') }}</label>
-                                <p class="text-gray-500">{{ __('Force mailable creation even if already exists.') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <x-shopper-button wire:click="generateMailable" type="button" wire:loading.attr="disabled">
-                    <x-shopper-loader wire:loading wire:target="generateMailable" />
-                    {{ __('Save') }}
-                </x-shopper-button>
-            </span>
-            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <x-shopper-default-button wire:click="closeModal" type="button">
-                    {{ __('Cancel') }}
-                </x-shopper-default-button>
-            </span>
-        </div>
-    </x-shopper-modal>
-
-    <x-shopper-modal wire:model="deleteModalConfirmation" maxWidth="lg" id="removedModal">
-        <div class="bg-white rounded-lg px-4 pt-5 pb-4 text-left">
-            <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
-                <button wire:click="closeRemovedModal" type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150" aria-label="Close">
-                    <svg class="h-6 w-6" x-description="Heroicon name: x" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <div class="sm:flex sm:items-start">
-                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <svg class="h-6 w-6 text-red-600" x-description="Heroicon name: exclamation" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                </div>
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                        {{ __("Delete :class Mailable", ['class' => $itemToDelete]) }}
-                    </h3>
-                    <div class="mt-2">
-                        <p class="text-sm leading-5 text-gray-500">
-                            {{ __("Are you sure you want to delete this Mailable class? If this class is used in your project this action will create a bug in your site.") }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <x-shopper-danger-button wire:click="removedMailable" type="button">
-                        <x-shopper-loader wire:loading wire:target="removedMailable" />
-                        {{ __("Confirm") }}
-                    </x-shopper-danger-button>
-                </span>
-                <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <x-shopper-default-button wire:click="closeRemovedModal" type="button">
-                        {{ __("Cancel") }}
-                    </x-shopper-default-button>
-                </span>
-            </div>
-        </div>
-    </x-shopper-modal>
 </div>

@@ -67,6 +67,8 @@ class Mailables extends Component
 
     /**
      * Component Mount instance.
+     *
+     * @return void
      */
     public function mount()
     {
