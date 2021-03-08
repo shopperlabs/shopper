@@ -87,27 +87,20 @@
                     <div class="shadow rounded-md overflow-hidden">
                         <div class="px-4 py-5 bg-white sm:p-6 space-y-4">
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                                <div class="col-span-6">
-                                    <label for="stripe_mode" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Stripe Mode") }}</label>
-                                    <div class="mt-1 rounded-md shadow-sm">
-                                        <select wire:model="stripe_mode" id="stripe_mode" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                            <option value="sandbox">Sandbox</option>
-                                            <option value="live">Live</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <x-shopper-input.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
+                                    <x-shopper-input.select wire:model="stripe_mode" id="stripe_mode">
+                                        <option value="sandbox">Sandbox</option>
+                                        <option value="live">Live</option>
+                                    </x-shopper-input.select>
+                                </x-shopper-input.group>
 
-                                <div class="sm:col-span-3">
-                                    <x-shopper-input.group label="Public key" for="public_key">
-                                        <input wire:model="stripe_key" id="public_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
-                                    </x-shopper-input.group>
-                                </div>
+                                <x-shopper-input.group label="Public key" for="public_key" class="sm:col-span-3">
+                                    <input wire:model="stripe_key" id="public_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                </x-shopper-input.group>
 
-                                <div class="sm:col-span-3">
-                                    <x-shopper-input.group label="Secret key" for="secret_key">
-                                        <input wire:model="stripe_secret" id="secret_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
-                                    </x-shopper-input.group>
-                                </div>
+                                <x-shopper-input.group label="Secret key" for="secret_key" class="sm:col-span-3">
+                                    <input wire:model="stripe_secret" id="secret_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                </x-shopper-input.group>
 
                                 <div class="sm:col-span-6">
                                     <x-shopper-input.group label="Webhook key" for="webhook_key">
@@ -144,16 +137,13 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
-                                <div class="col-span-6">
-                                    <label for="currency" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Default Currency") }}</label>
-                                    <div class="mt-1 rounded-md shadow-sm">
-                                        <select wire:model="currency" id="currency" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                            @foreach($currencies as $currency)
-                                                <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                                <x-shopper-input.group label="Default Currency" for="currency" class="col-span-6">
+                                    <x-shopper-input.select wire:model="currency" id="currency">
+                                        @foreach($currencies as $currency)
+                                            <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
+                                        @endforeach
+                                    </x-shopper-input.select>
+                                </x-shopper-input.group>
                             </div>
                         </div>
                     </div>
