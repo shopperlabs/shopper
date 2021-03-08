@@ -297,7 +297,7 @@ trait Templates
     public static function previewMarkdownViewContent($simpleview, $content, $viewName, $template = false, $namespace = null)
     {
         $previewtoset = self::markdownedTemplateToView(false, $content);
-        $dir = dirname(__FILE__, 4).'/resources/views/draft';
+        $dir = dirname(__FILE__, 3).'/resources/views/draft';
         $viewName = $template ? $viewName.'_template' : $viewName;
 
         if (file_exists($dir)) {

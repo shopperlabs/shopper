@@ -3,6 +3,6 @@
 
 @section('content')
 
-
+    <livewire:shopper-settings.mails.create-template :skeleton="$skeleton" />
 
 @endsection

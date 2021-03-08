@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework\Http\Controllers;
 
+use Shopper\Framework\Services\Mailable;
+
 class TemplatesController extends ShopperBaseController
 {
     /**
@@ -10,12 +12,12 @@ class TemplatesController extends ShopperBaseController
      * @param  string  $type
      * @param  string  $name
      * @param  string  $skeleton
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\View\View
      */
     public function create(string $type, string $name, string $skeleton)
     {
-        return view('shopper::pages.settings.mails.templates.create',
-            compact('type', 'name', 'skeleton')
-        );
+        return view('shopper::pages.settings.mails.templates.create', [
+            'skeleton' => Mailable::getTemplateSkeleton($type, $name, $skeleton)
+        ]);
     }
 }

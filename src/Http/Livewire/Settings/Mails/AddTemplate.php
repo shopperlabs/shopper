@@ -15,6 +15,13 @@ class AddTemplate extends Component
     public $currentSkeleton;
 
     /**
+     * Email template type. HTML or Markdown.
+     *
+     * @var string
+     */
+    public $type = 'html';
+
+    /**
      * SubSkeletons depend of the current skeleton selected.
      *
      * @var array
@@ -33,12 +40,15 @@ class AddTemplate extends Component
      * skeleton on a modal.
      *
      * @param  string  $name
+     * @param  string  $type
      * @param  array  $subSkeletons
      * @return void
      */
-    public function loadSubSkeletons(string $name, array $subSkeletons = [])
+    public function loadSubSkeletons(string $name, string $type, array $subSkeletons = [])
     {
         $this->currentSkeleton = $name;
+
+        $this->type = $type;
 
         $this->subSkeletons = $subSkeletons;
 

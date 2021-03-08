@@ -28,7 +28,7 @@
     <div class="mt-6 pb-10">
         <div x-show="currentTab === 'html'" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 md:grid-cols-3 lg:col-span-3">
             @foreach($skeletons->get('html') as $name => $subskeletons)
-                <button wire:click="loadSubSkeletons('{{ $name }}', {{ json_encode($subskeletons) }})" type="button" class="block overflow-hidden group text-left">
+                <button wire:click="loadSubSkeletons('{{ $name }}', 'html', {{ json_encode($subskeletons) }})" type="button" class="block overflow-hidden group text-left">
                     <figure>
                         <div class="relative rounded overflow-hidden transition transform duration-150 ease-in-out">
                             @if (file_exists(public_path("shopper/images/skeletons/html/{$name}.png")))
@@ -52,7 +52,7 @@
         </div>
         <div x-cloak x-show="currentTab === 'markdown'" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 md:grid-cols-3 lg:col-span-3">
             @foreach($skeletons->get('markdown') as $name => $subskeletons)
-                <button wire:click="loadSubSkeletons('{{ $name }}', {{ json_encode($subskeletons) }})" type="button" class="block group text-left">
+                <button wire:click="loadSubSkeletons('{{ $name }}', 'markdown', {{ json_encode($subskeletons) }})" type="button" class="block group text-left">
                     <figure>
                         <div class="relative rounded overflow-hidden transition transform duration-150 ease-in-out">
                             @if (file_exists(public_path("shopper/images/skeletons/markdown/{$name}.png")))
@@ -90,7 +90,7 @@
                     @foreach($subSkeletons as $skeleton)
                         <div class="relative rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm flex items-center hover:border-gray-400">
                             <div class="flex-1 min-w-0">
-                                <a href="{{ route('shopper.settings.mails.create-template', ['type' => 'html', 'name' => $currentSkeleton, 'skeleton' => $skeleton]) }}" class="focus:outline-none">
+                                <a href="{{ route('shopper.settings.mails.create-template', ['type' => $type, 'name' => $currentSkeleton, 'skeleton' => $skeleton]) }}" class="focus:outline-none">
                                     <span class="absolute inset-0" aria-hidden="true"></span>
                                     <p class="text-sm font-medium text-gray-900 capitalize">
                                         {{ $skeleton }}
