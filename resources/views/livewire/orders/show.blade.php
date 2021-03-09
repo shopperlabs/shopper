@@ -40,7 +40,7 @@
                         </x-shopper-danger-button>
                     </span>
 
-                    <x-shopper-dropdown width="56">
+                    <x-shopper-dropdown>
                         <x-slot name="trigger">
                             <x-shopper-default-button>
                                 {{ __("More actions") }}
@@ -222,7 +222,6 @@
                                 </div>
                             </div>
                         </div>
-
                     @endif
                 </div>
             </div>

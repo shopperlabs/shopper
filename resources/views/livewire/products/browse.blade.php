@@ -253,7 +253,7 @@
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="relative z-20 flex items-center space-x-4">
                     <div class="flex flex-1">
-                        <label for="filter" class="sr-only">{{ __('Search products') }}</label>
+                        <label for="filter" class="sr-only">{{ __('Search product by name') }}</label>
                         <div class="flex flex-grow rounded-md shadow-sm">
                             <div class="relative flex-grow focus-within:z-10">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -263,10 +263,7 @@
                                 </div>
                                 <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search product by name') }}" />
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                                    </svg>
+                                    <x-shopper-loader wire:loading wire:target="search" class="text-blue-600" />
                                 </div>
                             </div>
                         </div>
@@ -406,7 +403,7 @@
                                                                                     {{ __("Visible") }}
                                                                                 </x-shopper-label>
                                                                                 <p id="privacy_public_description" class="text-gray-500">
-                                                                                    {{ __("All store customers will be able to view this product.") }}
+                                                                                    {{ __("All store customers will be able to view these products.") }}
                                                                                 </p>
                                                                             </div>
                                                                         </div>
@@ -484,9 +481,13 @@
                                                         </svg>
                                                     </div>
                                                 @endif
-                                                <a href="{{ route('shopper.products.edit', $product) }}" class="ml-2 truncate hover:text-gray-600">
-                                                    <span>{{ $product->name }} </span>
-                                                </a>
+                                                @can('read_products')
+                                                    <a href="{{ route('shopper.products.edit', $product) }}" class="ml-2 truncate hover:text-gray-600">
+                                                        <span>{{ $product->name }} </span>
+                                                    </a>
+                                                @else
+                                                    <span class="ml-2 truncate">{{ $product->name }} </span>
+                                                @endcan
                                             </div>
                                         </div>
                                     </td>
