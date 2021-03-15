@@ -67,6 +67,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('loader');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
+            $this->registerComponent('time');
             $this->registerComponent('validation-errors');
             $this->registerComponent('wip');
             $this->registerComponent('wip-placeholder');
