@@ -63,9 +63,11 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('input.textarea');
             $this->registerComponent('label');
             $this->registerComponent('learn-more');
+            $this->registerComponent('link-button');
             $this->registerComponent('loader');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
+            $this->registerComponent('time');
             $this->registerComponent('validation-errors');
             $this->registerComponent('wip');
             $this->registerComponent('wip-placeholder');

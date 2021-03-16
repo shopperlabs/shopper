@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-6 pb-10">
         <div>
             <h3 class="text-lg leading-6 font-medium text-gray-900">
                 {{ __("Login information") }}

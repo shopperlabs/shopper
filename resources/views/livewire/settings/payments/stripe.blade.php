@@ -87,27 +87,20 @@
                     <div class="shadow rounded-md overflow-hidden">
                         <div class="px-4 py-5 bg-white sm:p-6 space-y-4">
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                                <div class="col-span-6">
-                                    <label for="stripe_mode" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Stripe Mode") }}</label>
-                                    <div class="mt-1 rounded-md shadow-sm">
-                                        <select wire:model="stripe_mode" id="stripe_mode" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                            <option value="sandbox">Sandbox</option>
-                                            <option value="live">Live</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <x-shopper-input.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
+                                    <x-shopper-input.select wire:model="stripe_mode" id="stripe_mode">
+                                        <option value="sandbox">Sandbox</option>
+                                        <option value="live">Live</option>
+                                    </x-shopper-input.select>
+                                </x-shopper-input.group>
 
-                                <div class="sm:col-span-3">
-                                    <x-shopper-input.group label="Public key" for="public_key">
-                                        <input wire:model="stripe_key" id="public_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
-                                    </x-shopper-input.group>
-                                </div>
+                                <x-shopper-input.group label="Public key" for="public_key" class="sm:col-span-3">
+                                    <input wire:model="stripe_key" id="public_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                </x-shopper-input.group>
 
-                                <div class="sm:col-span-3">
-                                    <x-shopper-input.group label="Secret key" for="secret_key">
-                                        <input wire:model="stripe_secret" id="secret_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
-                                    </x-shopper-input.group>
-                                </div>
+                                <x-shopper-input.group label="Secret key" for="secret_key" class="sm:col-span-3">
+                                    <input wire:model="stripe_secret" id="secret_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                </x-shopper-input.group>
 
                                 <div class="sm:col-span-6">
                                     <x-shopper-input.group label="Webhook key" for="webhook_key">
@@ -144,16 +137,13 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
-                                <div class="col-span-6">
-                                    <label for="currency" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Default Currency") }}</label>
-                                    <div class="mt-1 rounded-md shadow-sm">
-                                        <select wire:model="currency" id="currency" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                            @foreach($currencies as $currency)
-                                                <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                                <x-shopper-input.group label="Default Currency" for="currency" class="col-span-6">
+                                    <x-shopper-input.select wire:model="currency" id="currency">
+                                        @foreach($currencies as $currency)
+                                            <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
+                                        @endforeach
+                                    </x-shopper-input.select>
+                                </x-shopper-input.group>
                             </div>
                         </div>
                     </div>
@@ -161,13 +151,10 @@
             </div>
         </div>
 
-        <div class="mt-6 border-t border-gray-200 pt-5">
+        <div class="mt-6 border-t border-gray-200 pt-5 pb-10">
             <div class="flex justify-end">
                 <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
-                    <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                    </svg>
+                    <x-shopper-loader wire:loading wire:target="store" />
                     {{ __("Update Configuration") }}
                 </x-shopper-button>
             </div>

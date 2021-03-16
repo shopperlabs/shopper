@@ -1,4 +1,4 @@
-@extends('shopper::layouts.'. config('shopper.system.theme'))
+@extends('shopper::layouts.default')
 @section('title', __('Add attribute'))
 
 @section('content')

@@ -54,13 +54,10 @@
             {{ $slot }}
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <x-shopper-danger-button wire:click="{{ $method }}" wire:loading.attr="disabled" type="button">
-                        <svg wire:loading wire:target="{{ $method }}" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                        </svg>
+                    <x-shopper-button wire:click="{{ $method }}" wire:loading.attr="disabled" type="button">
+                        <x-shopper-loader wire:loading wire:target="{{ $method }}" />
                         {{ __("Confirm") }}
-                    </x-shopper-danger-button>
+                    </x-shopper-button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <x-shopper-default-button @click="confirm = false;" type="button">

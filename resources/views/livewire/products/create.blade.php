@@ -49,36 +49,26 @@
                 <h4 class="block text-base font-medium leading-6 text-gray-900 px-4 sm:px-5">{{ __("Pricing") }}</h4>
                 <div class="divide-y divide-gray-200">
                     <div class="grid gap-4 sm:grid-cols-6 sm:gap-6 p-4 sm:p-5">
-                        <div class="col-span-6 sm:col-span-3">
-                            <label for="price_amount" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Price amount") }}</label>
-                            <div class="mt-1 relative rounded-md shadow-sm">
-                                <input wire:model="price_amount" id="price_amount" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" min="0" autocomplete="off" placeholder="0.00">
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
-                                </div>
+                        <x-shopper-input.group for="price_amount" label="Price amount" class="col-span-6 sm:col-span-3">
+                            <x-shopper-input.text wire:model="price_amount" id="price_amount" type="number" min="0" autocomplete="off" placeholder="0.00" />
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
                             </div>
-                        </div>
-                        <div class="col-span-6 sm:col-span-3">
-                            <label for="old_price_amount" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Compare at price") }}</label>
-                            <div class="mt-1 relative rounded-md shadow-sm">
-                                <input wire:model="old_price_amount" id="old_price_amount" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" min="0" autocomplete="off" placeholder="0.00">
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
-                                </div>
+                        </x-shopper-input.group>
+                        <x-shopper-input.group for="old_price_amount" label="Compare at price" class="col-span-6 sm:col-span-3">
+                            <x-shopper-input.text wire:model="old_price_amount" id="old_price_amount" type="number" min="0" autocomplete="off" placeholder="0.00" />
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
                             </div>
-                        </div>
+                        </x-shopper-input.group>
                     </div>
                     <div class="grid grid-cols-6 gap-6 p-4 sm:p-5">
-                        <div class="col-span-6 sm:col-span-3">
-                            <label for="cost_amount" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Cost per item") }}</label>
-                            <div class="mt-1 relative rounded-md shadow-sm">
-                                <input wire:model="cost_amount" id="cost_amount" type="number" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" min="0" autocomplete="off" placeholder="0.00">
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
-                                </div>
+                        <x-shopper-input.group for="cost_amount" label="Cost per item" class="col-span-6 sm:col-span-3" helpText="Customers won’t see this.">
+                            <x-shopper-input.text wire:model="cost_amount" id="cost_amount" type="number" min="0" autocomplete="off" placeholder="0.00" />
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
                             </div>
-                            <p class="mt-2 text-sm text-gray-500">{{ __("Customers won’t see this.") }}</p>
-                        </div>
+                        </x-shopper-input.group>
                     </div>
                 </div>
             </div>
@@ -187,7 +177,7 @@
                                 <div class="mt-1 relative rounded-md shadow-sm">
                                     <input wire:model="heightValue" id="heightValue" type="text" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
-                                        <select wire:model="heightUnit" aria-label="{{ __("height Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
+                                        <select wire:model="heightUnit" aria-label="{{ __("Height Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
                                             <option value="cm">cm</option>
                                             <option value="m">m</option>
                                         </select>
@@ -199,7 +189,7 @@
                                 <div class="mt-1 relative rounded-md shadow-sm">
                                     <input wire:model="weightValue" id="weightValue" type="text" class="form-input block w-full pl-3 pr-12 sm:text-sm sm:leading-5" placeholder="0" />
                                     <div class="absolute inset-y-0 right-0 flex items-center">
-                                        <select wire:model="weightUnit" aria-label="{{ __("weight Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
+                                        <select wire:model="weightUnit" aria-label="{{ __("Weight Unit") }}" class="form-select h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-gray-500 sm:text-sm sm:leading-5">
                                             <option value="kg">kg</option>
                                             <option value="g">g</option>
                                         </select>
@@ -244,18 +234,9 @@
                 </div>
                 @if($updateSeo)
                     <div class="px-4 py-5 sm:px-6 space-y-5">
-                        <div>
-                            <label for="seo_title" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Title") }}</label>
-                            <div class="mt-1 rounded-md shadow-sm">
-                                <input
-                                    wire:model="seoTitle"
-                                    id="seo_title"
-                                    type="text"
-                                    class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                                    autocomplete="off"
-                                />
-                            </div>
-                        </div>
+                        <x-shopper-input.group for="seo_title" label="Title">
+                            <x-shopper-input.text wire:model="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                        </x-shopper-input.group>
                         <div>
                             <div class="flex items-center justify-between">
                                 <label for="seo_description" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Description") }}</label>
@@ -387,13 +368,10 @@
         </div>
     </div>
 
-    <div class="mt-6 border-t border-gray-200 pt-5">
+    <div class="mt-6 border-t border-gray-200 pt-5 pb-10">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" wire.loading.attr="disabled" type="button">
-                <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                </svg>
+                <x-shopper-loader wire:loading wire:target="store" />
                 {{ __("Save") }}
             </x-shopper-button>
         </div>

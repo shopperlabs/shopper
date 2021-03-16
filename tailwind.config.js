@@ -20,10 +20,18 @@ module.exports = {
         '-0.5': '-0.125rem',
       },
       spacing: {
+        44: '11rem',
         18: '4.5rem',
         95: "23.75rem",
         125: "31.25rem",
         140: "35rem"
+      },
+      opacity: {
+        15: '.15',
+        30: '0.3'
+      },
+      minHeight: {
+        '(screen-content)': 'calc(100vh - 9.625rem)',
       },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans]
@@ -35,10 +43,12 @@ module.exports = {
     backgroundColor: ["responsive", "hover", "focus", "group-hover", "focus-within", "odd"],
     textColor: ["responsive", "hover", "focus", "group-hover", "focus-within", "odd"],
     borderWidth: ["responsive", "odd", "hover", "focus", "odd"],
+    opacity: ['responsive', 'hover', 'focus', 'group-hover'],
   },
   plugins: [
     require("@tailwindcss/ui")({
       layout: 'sidebar',
     }),
+    require('@tailwindcss/line-clamp'),
   ]
 };

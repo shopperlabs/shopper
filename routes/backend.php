@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Shopper\Framework\Http\Controllers\Ecommerce\ProductController;
 use Shopper\Framework\Http\Controllers\SettingController;
+use Shopper\Framework\Http\Controllers\TemplatesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,13 @@ Route::prefix('setting')->as('settings.')->group(function () {
     Route::view('/general', 'shopper::pages.settings.general')->name('shop');
     Route::resource('inventories', 'InventoryController');
     Route::resource('attributes', 'AttributeController')->except('destroy', 'store', 'update');
+
+    Route::prefix('email-setting')->group(function () {
+        Route::view('/', 'shopper::pages.settings.mails.index')->name('mails');
+        Route::view('/templates/select', 'shopper::pages.settings.mails.templates.add-template')->name('mails.select-template');
+        Route::get('/templates/create/{type}/{name}/{skeleton}', [TemplatesController::class, 'create'])->name('mails.create-template');
+        Route::post('/templates/create', [TemplatesController::class, 'store'])->name('mails.store-template');
+    });
 
     Route::prefix('integrations')->group(function () {
         Route::view('/', 'shopper::pages.settings.integrations.index')->name('integrations');

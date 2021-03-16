@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-6">
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
@@ -193,7 +193,7 @@
         </div>
     </div>
 
-    <div class="mt-6 border-t border-gray-200 pt-5">
+    <div class="mt-6 border-t border-gray-200 pt-5 pb-10">
         <div class="flex items-center justify-between space-x-4">
             @can('delete_inventories')
                 <x-shopper-delete-action

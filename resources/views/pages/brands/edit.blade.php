@@ -1,4 +1,4 @@
-@extends('shopper::layouts.'. config('shopper.system.theme'))
+@extends('shopper::layouts.default')
 @section('title', __('Update brand :name', ['name' => $brand->name]))
 
 @section('content')

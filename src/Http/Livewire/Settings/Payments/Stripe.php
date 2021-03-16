@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 use Shopper\Framework\Models\System\Currency;
@@ -79,9 +80,7 @@ class Stripe extends Component
         $this->stripe_key = env('STRIPE_KEY', '');
         $this->stripe_secret = env('STRIPE_SECRET', '');
         $this->stripe_webhook_secret = env('STRIPE_WEBHOOK_SECRET', '');
-        $this->currency = ($currency = Setting::query()
-            ->where('key', 'shop_currency_id')
-            ->first()) ? $currency->value: 'USD';
+        $this->currency = env('CASHIER_CURRENCY', shopper_currency());
     }
 
     /**
@@ -140,7 +139,7 @@ class Stripe extends Component
             'stripe_key'        => $this->stripe_key,
             'stripe_secret'     => $this->stripe_secret,
             'stripe_webhook_secret' => $this->stripe_webhook_secret,
-            'cahier_currency'   => $this->currency,
+            'cashier_currency'   => $this->currency,
         ]);
 
         Artisan::call('config:clear');
@@ -159,7 +158,9 @@ class Stripe extends Component
     public function render()
     {
         return view('shopper::livewire.settings.payments.stripe', [
-            'currencies' => Currency::all(),
+            'currencies' => Cache::rememberForever('currencies', function () {
+                return Currency::all();
+            }),
         ]);
     }
 }

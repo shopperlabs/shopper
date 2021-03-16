@@ -272,24 +272,24 @@
                                             <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
                                                 <div class="relative z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
                                                     <div class="py-1">
-                                                        <a href="{{ route('shopper.orders.show', $order) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
+                                                        <x-shopper-dropdown-link :href="route('shopper.orders.show', $order)" role="menuitem">
                                                             <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                                                 <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
                                                             </svg>
                                                             {{ __("View order") }}
-                                                        </a>
+                                                        </x-shopper-dropdown-link>
                                                     </div>
                                                     @can('delete_orders')
                                                         <div class="border-t border-gray-100"></div>
                                                         <div class="py-1">
-                                                            <button wire:click="archived({{ $order->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
+                                                            <x-shopper-dropdown-button wire:click="archived({{ $order->id }})" type="button">
                                                                 <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                                     <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" />
                                                                     <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" />
                                                                 </svg>
                                                                 {{ __("Archived") }}
-                                                            </button>
+                                                            </x-shopper-dropdown-button>
                                                         </div>
                                                     @endcan
                                                 </div>

@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="mt-8 space-y-10">
+    <div class="mt-8 pb-10 space-y-10">
         <div class="bg-white rounded-lg p-4 sm:p-6 shadow-md overflow-hidden">
             <div class="flex items-center">
                 <h2 class="text-lg leading-6 font-medium text-gray-900">{{ __("Administrator role available") }}</h2>

@@ -1,4 +1,4 @@
-<div class="flex justify-center text-center mt-10">
+<div class="flex justify-center text-center my-10">
     <div class="bg-gray-50 overflow-hidden shadow-md rounded-md flex items-center">
         <div class="p-3 flex items-center justify-center flex-shrink-0 border-r border-gray-200">
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

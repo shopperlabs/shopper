@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-6">
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
@@ -170,7 +170,7 @@
         </div>
     </div>
 
-    <div class="mt-6 border-t border-gray-200 pt-5">
+    <div class="mt-6 border-t border-gray-200 pt-5 pb-10">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
                 <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">

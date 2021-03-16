@@ -38,7 +38,7 @@ class FrameworkServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $middlewares = [
+    protected array $middlewares = [
         'dashboard'       => Dashboard::class,
         'role'            => RoleMiddleware::class,
         'permission'      => PermissionMiddleware::class,
@@ -69,8 +69,8 @@ class FrameworkServiceProvider extends ServiceProvider
         view()->composer('*', GlobalComposer::class);
 
         // Backend Menu
-        view()->creator('shopper::partials.' . config('shopper.system.theme') . '.aside._secondary', SidebarCreator::class);
-        view()->composer('shopper::partials.' . config('shopper.system.theme') . '.aside._primary', MenuCreator::class);
+        view()->creator('shopper::partials.default.aside._secondary', SidebarCreator::class);
+        view()->composer('shopper::partials.default.aside._primary', MenuCreator::class);
     }
 
     /**
@@ -143,7 +143,7 @@ class FrameworkServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return ['shopper'];
     }

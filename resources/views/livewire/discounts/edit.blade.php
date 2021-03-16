@@ -378,7 +378,7 @@
         </div>
     </div>
 
-    <div class="mt-6 border-t border-gray-200 pt-5">
+    <div class="mt-6 border-t border-gray-200 pt-5 pb-10">
         <div class="flex items-center justify-between space-x-4">
             @can('delete_discounts')
                 <x-shopper-delete-action
