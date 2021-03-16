@@ -146,16 +146,21 @@ trait Templates
         return $template;
     }
 
+    /**
+     * Create template from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|void
+     */
     public static function createTemplate($request)
     {
         if (! preg_match("/^[a-zA-Z0-9-_\s]+$/", $request->template_name)) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Template name not valid',
-            ]);
+           session()->flash('error', __('Template name not valid'));
+
+           return;
         }
 
-        $view = 'shopper::mails.templates.'.$request->template_name;
+        $view = 'shopper::templates.'.$request->template_name;
 
         $templatename = Str::camel(preg_replace('/\s+/', '_', $request->template_name));
 
@@ -170,7 +175,7 @@ trait Templates
                     'template_skeleton' => $request->template_skeleton,
                 ]));
 
-            $dir = resource_path('views/vendor/shopper/mails/templates');
+            $dir = resource_path('views/vendor/shopper/templates');
 
             if (! File::isDirectory($dir)) {
                 File::makeDirectory($dir, 0755, true);
@@ -178,19 +183,16 @@ trait Templates
 
             file_put_contents($dir."/{$templatename}.blade.php", self::templateComponentReplace($request->content));
 
-            file_put_contents($dir."/{$templatename}_plain_text.blade.php", $request->plain_text);
+            // file_put_contents($dir."/{$templatename}_plain_text.blade.php", $request->plain_text);
 
-            return response()->json([
-                'status' => 'ok',
-                'message' => 'Template created<br> <small>Reloading...<small>',
-                'template_url' => route('viewTemplate', ['templatename' => $templatename]),
-            ]);
+            session()->flash('success', __('Template successfully created!'));
+
+            return  redirect()->route('shopper::settings.mails');
         }
 
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Template not created',
-        ]);
+        session()->flash('error', __('Template not created'));
+
+        return;
     }
 
     public static function getTemplateSkeletons()

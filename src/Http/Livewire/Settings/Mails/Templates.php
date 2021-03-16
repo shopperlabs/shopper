@@ -12,21 +12,28 @@ class Templates extends Component
      *
      * @var bool
      */
-    public $isLocal = false;
+    public bool $isLocal = false;
 
     /**
-     * Template name to removed.
+     * Template slug to removed.
      *
-     * @var string
+     * @var string|null
      */
-    public $itemToDelete;
+    public ?string $itemToDelete;
+
+    /**
+     * Template name to delete.
+     *
+     * @var string|null
+     */
+    public ?string $itemName;
 
     /**
      * Define Modal to removed Template.
      *
      * @var bool
      */
-    public $deleteModalConfirmation = false;
+    public bool $deleteModalConfirmation = false;
 
     /**
      * Component Mount instance.
@@ -44,11 +51,13 @@ class Templates extends Component
      * Launch removed modal.
      *
      * @param  string  $item
+     * @param  string  $slug
      * @return void
      */
-    public function openRemovedModal(string $item)
+    public function openRemovedModal(string $item, string $slug)
     {
-        $this->itemToDelete = $item;
+        $this->itemToDelete = $slug;
+        $this->itemName = $item;
 
         $this->deleteModalConfirmation = true;
     }
@@ -61,6 +70,7 @@ class Templates extends Component
     public function closeRemovedModal()
     {
         $this->itemToDelete = null;
+        $this->itemName = null;
 
         $this->deleteModalConfirmation = false;
     }
@@ -72,7 +82,14 @@ class Templates extends Component
      */
     public function removedTemplate()
     {
+        Mailable::deleteTemplate($this->itemToDelete);
 
+        $this->notify([
+            'title' => __('Removed'),
+            'message' => __("You have removed the :template", ['template' => $this->itemName])
+        ]);
+
+        $this->closeRemovedModal();
     }
 
     /**

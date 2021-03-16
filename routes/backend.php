@@ -49,6 +49,7 @@ Route::prefix('setting')->as('settings.')->group(function () {
         Route::view('/', 'shopper::pages.settings.mails.index')->name('mails');
         Route::view('/templates/select', 'shopper::pages.settings.mails.templates.add-template')->name('mails.select-template');
         Route::get('/templates/create/{type}/{name}/{skeleton}', [TemplatesController::class, 'create'])->name('mails.create-template');
+        Route::post('/templates/create', [TemplatesController::class, 'store'])->name('mails.store-template');
     });
 
     Route::prefix('integrations')->group(function () {

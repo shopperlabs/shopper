@@ -14,56 +14,56 @@ class Mailables extends Component
      *
      * @var bool
      */
-    public $createModalConfirmation = false;
+    public bool $createModalConfirmation = false;
 
     /**
      * Define Modal to removed Mailable class.
      *
      * @var bool
      */
-    public $deleteModalConfirmation = false;
+    public bool $deleteModalConfirmation = false;
 
     /**
      * Mailable class to generate.
      *
-     * @var string
+     * @var string|null
      */
-    public $name;
+    public ?string $name;
 
     /**
      * Markdown view.
      *
-     * @var string
+     * @var string|null
      */
-    public $markdownView;
+    public ?string $markdownView;
 
     /**
      * Define if the mailable class is markdown.
      *
      * @var bool
      */
-    public $isMarkdown = false;
+    public bool $isMarkdown = false;
 
     /**
      * Force option to erase mailable class.
      *
      * @var bool
      */
-    public $isForce = false;
+    public bool $isForce = false;
 
     /**
      * Define if the we can create mailable in production.
      *
      * @var bool
      */
-    public $isLocal = false;
+    public bool $isLocal = false;
 
     /**
      * Mailable class name to removed to the Mail folder.
      *
-     * @var string
+     * @var string|null
      */
-    public $itemToDelete;
+    public ?string $itemToDelete;
 
     /**
      * Component Mount instance.
