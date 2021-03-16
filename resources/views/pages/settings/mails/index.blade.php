@@ -55,7 +55,15 @@
                                     <div class="min-w-0 flex-1">
                                         <button @click="currentTab = 'templates'" type="button" class="block text-left focus:outline-none">
                                             <span class="absolute inset-0" aria-hidden="true"></span>
-                                            <p class="text-sm font-medium text-gray-900 truncate">{{ __('Templates') }}</p>
+                                            <p class="inline-flex items-center text-sm font-medium text-gray-900 truncate">
+                                                {{ __('Templates') }}
+                                                <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                                    <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-gray-400" fill="currentColor" viewBox="0 0 8 8">
+                                                        <circle cx="4" cy="4" r="3" />
+                                                    </svg>
+                                                    {{ __('work in progress') }}
+                                                </span>
+                                            </p>
                                             <div class="mt-1">
                                                 <p class="line-clamp-2 text-sm text-gray-500">
                                                     {{ __('Modify the mail templates that are sent to customers and administrators, manage email layouts.') }}
