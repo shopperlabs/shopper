@@ -311,7 +311,7 @@
                         @endif
                     </div>
                 </div>
-                <div x-data="radioGroup()" class="bg-white rounded-lg shadow overflow-hidden p-4 sm:p-5">
+                {{--<div x-data="radioGroup()" class="bg-white rounded-lg shadow overflow-hidden p-4 sm:p-5">
                     <h4 class="block text-base font-medium leading-6 text-gray-900">{{ __("Product type") }}</h4>
                     <div x-ref="radiogroup" class="mt-5 space-y-4">
                         <div :class="{ 'border-gray-200': !(active === 0), 'bg-blue-50 border-blue-200 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-blue-50 border-blue-200 z-10">
@@ -342,7 +342,7 @@
                             </label>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <div class="bg-white rounded-lg shadow">
                     <div class="px-4 pt-4 sm:px-5 sm:pt-5">
                         <h4 class="block text-base font-medium leading-6 text-gray-900">{{ __("Product associations") }}</h4>

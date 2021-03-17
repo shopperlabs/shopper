@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div x-data="radioGroup()" class="bg-white rounded-lg shadow overflow-hidden p-4 sm:p-5">
+            {{--<div x-data="radioGroup()" class="bg-white rounded-lg shadow overflow-hidden p-4 sm:p-5">
                 <h4 class="block text-base font-medium leading-6 text-gray-900">{{ __("Product type") }}</h4>
                 <div x-ref="radiogroup" class="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-5">
                     <div :class="{ 'border-gray-200': !(active === 0), 'bg-blue-50 border-blue-200 z-10': active === 0 }" class="sm:col-span-1 relative border rounded-md p-4 flex bg-blue-50 border-blue-200 z-10">
@@ -91,7 +91,7 @@
                         </label>
                     </div>
                 </div>
-            </div>
+            </div>--}}
         </div>
         <div class="sm:col-span-2">
             <aside class="space-y-5">
@@ -176,10 +176,7 @@
     <div class="mt-6 border-t border-gray-200 pt-5">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" wire.loading.attr="disabled" type="button">
-                <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                </svg>
+                <x-shopper-loader wire:loading wire:target="store" />
                 {{ __("Update") }}
             </x-shopper-button>
         </div>
