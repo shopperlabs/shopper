@@ -16,7 +16,7 @@ class Browse extends Component
     /**
      * Search.
      *
-     * @var string
+     * @var string|null
      */
     public $search;
 
@@ -25,26 +25,26 @@ class Browse extends Component
      *
      * @var int
      */
-    public $perPage = 10;
+    public int $perPage = 10;
 
     /**
      * Order status.
      *
-     * @var string
+     * @var string|null
      */
     public $status;
 
     /**
      * Filter start date.
      *
-     * @var string
+     * @var string|null
      */
     public $dateStart;
 
     /**
      * Filter end date.
      *
-     * @var string
+     * @var string|null
      */
     public $dateEnd;
 
@@ -105,7 +105,7 @@ class Browse extends Component
                     }
 
                     if ($this->status) {
-                        $query->where('status', $this->status);
+                        $query->where('status', '=', $this->status);
                     }
 
                     if ($this->dateStart & $this->dateEnd) {
@@ -113,8 +113,10 @@ class Browse extends Component
                     }
                 })
                 ->orWhereHas('customer', function (Builder $query) {
-                    $query->where('email', 'like', '%'. $this->search .'%')
-                        ->orWhere('first_name', 'like', '%'. $this->search .'%');
+                    if ($this->search) {
+                        $query->where('email', 'like', '%'. $this->search .'%')
+                            ->orWhere('first_name', 'like', '%'. $this->search .'%');
+                    }
                 })
                 ->paginate($this->perPage),
             'orderStatus' => OrderStatus::values(),
