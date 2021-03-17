@@ -38,6 +38,7 @@
     "livewire/livewire": "^2.0",
     "maatwebsite/excel": "^3.1",
     "maatwebsite/laravel-sidebar": "~2.3",
+    "milon/barcode": "^7.0",
     "moneyphp/money": "^3.3",
     "pragmarx/google2fa": "^7.0|^8.0",
     "reecem/mocker": "1.1.*",
