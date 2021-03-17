@@ -4,6 +4,7 @@ namespace Shopper\Framework\Http\Livewire\Products;
 
 use Illuminate\View\View;
 use Livewire\WithFileUploads;
+use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
@@ -171,6 +172,9 @@ class Create extends AbstractBaseComponent
             'collections' => (new CollectionRepository())->get(['name', 'id']),
             'inventories' => Inventory::query()->get(['name', 'id']),
             'currency' => shopper_currency(),
+            'barcodeImage' => $this->barcode
+                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.system.barcode_type'))
+                : null,
         ]);
     }
 }
