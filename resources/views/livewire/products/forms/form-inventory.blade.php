@@ -20,6 +20,11 @@
                         <x-shopper-input.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
                             <input wire:model="barcode" id="barcode" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off">
                         </x-shopper-input.group>
+                        @if($barcodeImage)
+                            <div class="mt-2 rounded-sm w-auto flex-shrink-0">
+                                {!! $barcodeImage !!}
+                            </div>
+                        @endif
                     </div>
                     <div class="sm:col-span-1">
                         <x-shopper-input.group label="Safety Stock" for="security_stock">
