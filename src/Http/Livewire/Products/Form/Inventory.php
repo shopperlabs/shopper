@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Maatwebsite\Excel\Excel;
+use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Framework\Exports\ProductInventoryExport;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
@@ -105,6 +106,9 @@ class Inventory extends Component
                 ->where('stockable_id', $this->product->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(5),
+            'barcodeImage' => $this->barcode
+                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.system.barcode_type'))
+                : null,
         ]);
     }
 }

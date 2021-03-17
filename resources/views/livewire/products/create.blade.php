@@ -85,6 +85,11 @@
                             <x-shopper-input.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
                                 <x-shopper-input.text wire:model="barcode" id="barcode" type="text" autocomplete="off" />
                             </x-shopper-input.group>
+                            @if($barcodeImage)
+                                <div class="mt-2 rounded-sm w-auto flex-shrink-0">
+                                    {!! $barcodeImage !!}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 p-4 sm:p-5">
