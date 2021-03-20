@@ -29,6 +29,7 @@
     "askedio/laravel-soft-cascade": "^8.1",
     "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-ui-kit": "^0.2.0",
+    "doctrine/dbal": "^3.0",
     "illuminate/support": "^8.0",
     "jenssegers/agent": "^2.6",
     "laravel/cashier": "^12.10",
