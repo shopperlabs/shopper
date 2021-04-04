@@ -16,7 +16,7 @@ class CreateProductHasRelationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_has_relations', function (Blueprint $table) {
+        Schema::create($this->getTableName('product_has_relations'), function (Blueprint $table) {
             $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
             $table->morphs('productable');
         });
