@@ -51,7 +51,7 @@ class Browse extends Component
         $this->dispatchBrowserEvent('brand-removed');
         $this->dispatchBrowserEvent('notify', [
             'title' => __("Deleted"),
-            'message' => __("The brand has successfully removed!")
+            'message' => __("The brand has successfully been removed!")
         ]);
     }
 

@@ -49,7 +49,7 @@ class Browse extends Component
         $this->dispatchBrowserEvent('item-removed');
         $this->notify([
             'title' => __("Deleted"),
-            'message' => __("The collection has successfully removed!")
+            'message' => __("The collection has successfully been removed!")
         ]);
     }
 
