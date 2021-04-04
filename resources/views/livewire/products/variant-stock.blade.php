@@ -1,5 +1,5 @@
 <div class="overflow-hidden">
-    @if($inventories->count() > 1)
+    @if($inventories && count($inventories) > 1)
         <div class="p-4 sm:px-5 relative flex items-center justify-between border-b border-gray-200">
             <span class="relative z-0 inline-flex shadow-sm rounded-md">
                 <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-gray-300 bg-white">
