@@ -2,9 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Exception;
 use Livewire\Component;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Edit extends Component
 {
@@ -31,8 +32,6 @@ class Edit extends Component
 
     /**
      * All locations available on the store.
-     *
-     * @var mixed
      */
     public $inventories;
 
@@ -45,9 +44,6 @@ class Edit extends Component
 
     /**
      * Component Mount method.
-     *
-     * @param  mixed  $product
-     * @return void
      */
     public function mount($product)
     {
@@ -58,8 +54,6 @@ class Edit extends Component
 
     /**
      * Launch modale to remove product.
-     *
-     * @return void
      */
     public function openModale()
     {
@@ -68,8 +62,6 @@ class Edit extends Component
 
     /**
      * Close modale.
-     *
-     * @return void
      */
     public function closeModale()
     {
@@ -78,9 +70,6 @@ class Edit extends Component
 
     /**
      * Product updated Listener.
-     *
-     * @param  int  $id
-     * @return void
      */
     public function productHasUpdated(int $id)
     {
@@ -90,13 +79,13 @@ class Edit extends Component
     /**
      * Removed a product to the storage.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function destroy()
     {
         (new ProductRepository())->getById($this->product->id)->delete();
 
-        session()->flash('success', __("The product has been correctly removed."));
+        session()->flash('success', __('The product has been correctly removed.'));
         $this->redirectRoute('shopper.products.index');
     }
 

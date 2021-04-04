@@ -11,6 +11,7 @@ class ProductController extends ShopperBaseController
      * Return products list view.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -24,6 +25,7 @@ class ProductController extends ShopperBaseController
      * Display Create view.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
@@ -36,8 +38,8 @@ class ProductController extends ShopperBaseController
     /**
      * Display Edit view.
      *
-     * @param  int  $id
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(int $id)
@@ -47,16 +49,17 @@ class ProductController extends ShopperBaseController
         return view('shopper::pages.products.edit', [
             'product' => (new ProductRepository())
                 ->with(['inventoryHistories', 'variations', 'categories', 'collections', 'channels', 'relatedProducts', 'attributes'])
-                ->getById($id)
+                ->getById($id),
         ]);
     }
 
     /**
      * Display variant edit view.
      *
-     * @param  int  $product
-     * @param  int  $id
+     * @param int $product
+     *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function variant($product, int $id)
@@ -67,7 +70,7 @@ class ProductController extends ShopperBaseController
             'product' => (new ProductRepository())->getById($product),
             'variant' => (new ProductRepository())
                 ->with('inventoryHistories')
-                ->getById($id)
+                ->getById($id),
         ]);
     }
 }

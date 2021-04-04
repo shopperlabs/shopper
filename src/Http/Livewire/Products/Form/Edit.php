@@ -2,18 +2,19 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Model;
+use function count;
 use Illuminate\View\View;
 use Livewire\WithFileUploads;
+use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends AbstractBaseComponent
 {
@@ -60,9 +61,8 @@ class Edit extends AbstractBaseComponent
     /**
      * Component Mount method.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  string  $currency
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $product
+     * @param string                              $currency
      */
     public function mount($product, $currency)
     {
@@ -100,8 +100,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
@@ -116,7 +114,7 @@ class Edit extends AbstractBaseComponent
             'price_amount' => $this->price_amount,
             'cost_amount' => $this->cost_amount,
             'published_at' => $this->publishedAt,
-            'brand_id'  => $this->brand_id,
+            'brand_id' => $this->brand_id,
         ]);
 
         if ($this->file) {
@@ -136,15 +134,14 @@ class Edit extends AbstractBaseComponent
         $this->emit('productHasUpdated', $this->productId);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product successfully updated!'),
         ]);
     }
 
     /**
      * Render the component.
      *
-     * @return View
      * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render(): View

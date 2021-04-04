@@ -75,8 +75,6 @@ class Products extends Component
 
     /**
      * Open products modal.
-     *
-     * @return void
      */
     public function launchModal()
     {
@@ -85,8 +83,6 @@ class Products extends Component
 
     /**
      * Close modal products.
-     *
-     * @return void
      */
     public function closeModal()
     {
@@ -95,8 +91,6 @@ class Products extends Component
 
     /**
      * Add products to current collection.
-     *
-     * @return void
      */
     public function addProducts()
     {
@@ -107,9 +101,6 @@ class Products extends Component
 
     /**
      * Removed product to the current collection.
-     *
-     * @param  int  $id
-     * @return void
      */
     public function removeProduct(int $id)
     {
@@ -117,15 +108,12 @@ class Products extends Component
 
         $this->notify([
             'title' => __('Product removed'),
-            'message' => __('The product have been correctly remove to this collection.')
+            'message' => __('The product have been correctly remove to this collection.'),
         ]);
     }
 
     /**
      * Order by filter.
-     *
-     * @param  string  $sortBy
-     * @return void
      */
     public function updatedSortBy(string $sortBy)
     {
@@ -168,13 +156,13 @@ class Products extends Component
     {
         return view('shopper::livewire.collections.products', [
             'products' => (new ProductRepository())
-                ->where('name', '%'. $this->search .'%', 'like')
+                ->where('name', '%' . $this->search . '%', 'like')
                 ->get(['name', 'price_amount', 'id'])
                 ->except($this->productsIds),
             'collectionProducts' => $this->collection
                 ->products()
                 ->orderBy($this->sortValue, $this->direction)
-                ->get()
+                ->get(),
         ]);
     }
 }

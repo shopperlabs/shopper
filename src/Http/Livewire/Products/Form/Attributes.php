@@ -2,9 +2,11 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Exception;
+use function in_array;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
@@ -62,8 +64,6 @@ class Attributes extends Component
 
     /**
      * Product attribute value added.
-     *
-     * @var mixed
      */
     public $value;
 
@@ -83,9 +83,6 @@ class Attributes extends Component
 
     /**
      * Component Mount method.
-     *
-     * @param  mixed  $product
-     * @return void
      */
     public function mount($product)
     {
@@ -97,12 +94,10 @@ class Attributes extends Component
 
     /**
      * Update type field of the selected attribute.
-     *
-     * @param  string  $value
      */
     public function updatedAttributeId(string $value)
     {
-        if ($value === "0") {
+        if ($value === '0') {
             return;
         }
 
@@ -117,8 +112,6 @@ class Attributes extends Component
 
     /**
      * Add attribute with value on the current product.
-     *
-     * @return void
      */
     public function addAttribute()
     {
@@ -155,8 +148,8 @@ class Attributes extends Component
         $this->closeModal();
 
         $this->notify([
-            'title' => __("Attribute Added"),
-            'message' => __("You have successfully added an attribute to this product."),
+            'title' => __('Attribute Added'),
+            'message' => __('You have successfully added an attribute to this product.'),
         ]);
     }
 
@@ -168,8 +161,7 @@ class Attributes extends Component
     /**
      * Remove Attribute to product.
      *
-     * @param  int  $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function removeProductAttribute(int $id)
     {
@@ -179,15 +171,13 @@ class Attributes extends Component
         $this->getAttributes();
 
         $this->notify([
-            'title' => __("Attribute Removed"),
-            'message' => __("You have successfully removed this attribute to product."),
+            'title' => __('Attribute Removed'),
+            'message' => __('You have successfully removed this attribute to product.'),
         ]);
     }
 
     /**
      * Launch modale to remove product.
-     *
-     * @return void
      */
     public function openModale()
     {
@@ -196,8 +186,6 @@ class Attributes extends Component
 
     /**
      * Close Modal.
-     *
-     * @return void
      */
     public function closeModal()
     {
@@ -214,9 +202,17 @@ class Attributes extends Component
     }
 
     /**
-     * Get Product Attributes lists.
+     * Render the component.
      *
-     * @return void
+     * @return \Illuminate\View\View
+     */
+    public function render()
+    {
+        return view('shopper::livewire.products.forms.form-attributes');
+    }
+
+    /**
+     * Get Product Attributes lists.
      */
     private function getProductAttributes()
     {
@@ -233,8 +229,6 @@ class Attributes extends Component
 
     /**
      * Get Attributes lists not used by the product.
-     *
-     * @return void
      */
     private function getAttributes()
     {
@@ -242,15 +236,5 @@ class Attributes extends Component
             ->whereNotIn('id', $this->productAttributes->pluck('attribute_id')->toArray())
             ->where('is_enabled', true)
             ->get();
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function render()
-    {
-        return view('shopper::livewire.products.forms.form-attributes');
     }
 }
