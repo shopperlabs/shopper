@@ -84,9 +84,11 @@
                             {{ __("Overview") }}
                         </button>
 
+                        @if(! $product->parent_id)
                         <button @click="currentTab = 'variants'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'border-blue-500 text-blue-600 focus:text-blue-800 focus:border-blue-700': currentTab === 'variants' }">
                             {{ __("Variants") }}
                         </button>
+                        @endif
 
                         <button @click="currentTab = 'attributes'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'border-blue-500 text-blue-600 focus:text-blue-800 focus:border-blue-700': currentTab === 'attributes' }">
                             {{ __("Attributes") }}
@@ -104,9 +106,11 @@
                             {{ __("Shipping") }}
                         </button>
 
+                        @if(! $product->parent_id)
                         <button @click="currentTab = 'related'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300" :class="{ 'border-blue-500 text-blue-600 focus:text-blue-800 focus:border-blue-700': currentTab === 'related' }">
                             {{ __("Related Products") }}
                         </button>
+                        @endif
                     </nav>
                 </div>
             </div>
@@ -117,9 +121,11 @@
         <div x-show="currentTab === 'detail'">
             <livewire:shopper-products.form.edit :product="$product" :currency="$currency" />
         </div>
+        @if(! $product->parent_id)
         <div x-cloak x-show="currentTab === 'variants'">
             <livewire:shopper-products.form.variants :product="$product" :currency="$currency" :inventories="$inventories" />
         </div>
+        @endif
         <div x-cloak x-show="currentTab === 'attributes'">
             <livewire:shopper-products.form.attributes :product="$product" />
         </div>
@@ -132,9 +138,11 @@
         <div x-cloak x-show="currentTab === 'shipping'">
             <livewire:shopper-products.form.shipping :product="$product" />
         </div>
+        @if(! $product->parent_id)
         <div x-cloak x-show="currentTab === 'related'">
             <livewire:shopper-products.form.related-products :product="$product" />
         </div>
+        @endif
     </div>
 
     <x-shopper-modal wire:model="confirmDeleteProduct" maxWidth="lg">

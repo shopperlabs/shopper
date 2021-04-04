@@ -123,10 +123,8 @@
             </div>
         </div>
 
-        @if($this->hasValues())
-
+        {{-- @if($this->hasValues()) --}}
             <livewire:shopper-settings.attributes.values :attribute="$attribute" />
-
-        @endif
+        {{-- @endif --}}
     </div>
 </div>
