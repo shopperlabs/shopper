@@ -22,12 +22,9 @@ class VariantStock extends Component
      * Component Mount instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $variant
-     * @return void
      */
     public function mount($variant)
     {
-        $this->loadInventories();
-
         $this->product = $variant;
         $this->stock = $variant->stock;
         $this->realStock = $variant->stock;
