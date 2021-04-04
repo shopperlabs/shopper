@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Traits\Filetable;
 
 class Brand extends Model
@@ -23,7 +23,7 @@ class Brand extends Model
         'position',
         'seo_title',
         'seo_description',
-        'is_enabled'
+        'is_enabled',
     ];
 
     /**
@@ -40,7 +40,7 @@ class Brand extends Model
      *
      * @var array
      */
-    protected $with = ['files'];
+    // protected $with = ['files']; // Be careful using the $with magic. It can quickly bloat the SQL calls. Try Laravel Debugbar. This was loaded once for every product on the browse page, but wasn't even used.
 
     /**
      * Get the table associated with the model.
@@ -53,9 +53,8 @@ class Brand extends Model
     }
 
     /**
-     * Scope a query to only include enabled categories.
+     * Scope a query to only include enabled brands.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeEnabled(Builder $query)
