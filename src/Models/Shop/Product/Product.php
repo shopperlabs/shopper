@@ -2,16 +2,16 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
-use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Shopper\Framework\Contracts\ReviewRateable;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Shop\Channel;
-use Shopper\Framework\Models\Traits\CanHaveDiscount;
-use Shopper\Framework\Models\Traits\Filetable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasStock;
+use Shopper\Framework\Models\Traits\Filetable;
+use Shopper\Framework\Contracts\ReviewRateable;
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
 
 class Product extends Model implements ReviewRateable
@@ -93,8 +93,8 @@ class Product extends Model implements ReviewRateable
      * @var array
      */
     protected $appends = [
-        'formattedPrice',
-        'variationsStock',
+        // 'formattedPrice', // Be very careful w/ Appends. This line gives an infinite loop on any child-products that does not have a price_amount attribute
+        // 'variationsStock', // Do we really need *always* pull this out for every product loaded?
     ];
 
     /**
@@ -111,8 +111,6 @@ class Product extends Model implements ReviewRateable
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -121,8 +119,6 @@ class Product extends Model implements ReviewRateable
 
     /**
      * Set the proper slug attribute.
-     *
-     * @param  string  $value
      */
     public function setSlugAttribute(string $value)
     {
@@ -133,19 +129,16 @@ class Product extends Model implements ReviewRateable
                 $slug = "{$slug}-{$this->id}";
             }
         } else {
-            if (static::query()->where('slug', $variantSlug = $this->parent->slug. '-'. $slug)->exists()) {
+            if (static::query()->where('slug', $variantSlug = $this->parent->slug . '-' . $slug)->exists()) {
                 $slug = "{$variantSlug}-{$this->id}";
             }
         }
-
 
         $this->attributes['slug'] = $slug;
     }
 
     /**
      * Get the formatted price value.
-     *
-     * @return string|null
      */
     public function getFormattedPriceAttribute(): ?string
     {
@@ -153,37 +146,64 @@ class Product extends Model implements ReviewRateable
             return $this->price_amount
                 ? $this->formattedPrice($this->price_amount)
                 : ($this->parent->price_amount ? $this->formattedPrice($this->parent->price_amount) : null);
-        } else {
-            return $this->price_amount
+        }
+
+        return $this->price_amount
                 ? $this->formattedPrice($this->price_amount)
                 : null;
-        }
     }
 
     /**
      * Get the stock of all variations.
-     *
-     * @return int|null
      */
     public function getVariationsStockAttribute(): ?int
     {
-        $stock = null;
+        return once(function () {
+            $stock = null;
 
-        if ($this->variations->isNotEmpty()) {
-            foreach ($this->variations as $variation) {
-                $stock += $variation->stock;
+            if ($this->variations->isNotEmpty()) {
+                $stock += $this->stockInventories($this->variations->pluck('id'));
+
+                return $stock;
             }
 
             return $stock;
-        }
+        });
+    }
 
-        return $stock;
+    public function getOldPriceAmountAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setOldPriceAmountAttribute($attribute)
+    {
+        $this->attributes['old_price_amount'] = (int) $attribute * 100;
+    }
+
+    public function getPriceAmountAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setPriceAmountAttribute($attribute)
+    {
+        $this->attributes['price_amount'] = (int) $attribute * 100;
+    }
+
+    public function getCostAmountAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setCostAmountAttribute($attribute)
+    {
+        $this->attributes['cost_amount'] = (int) $attribute * 100;
     }
 
     /**
      * Scope a query to only include enabled collection.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePublish(Builder $query)

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Models\Traits;
 
+use function abs;
 use DateTimeInterface;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -27,6 +28,29 @@ trait HasStock
      */
     public function stock($date = null)
     {
+        return once(function () use ($date) {
+            $date = $date ?: Carbon::now();
+
+            if (! $date instanceof DateTimeInterface) {
+                $date = Carbon::create($date);
+            }
+
+            return (int) $this->inventoryHistories()
+                ->where('created_at', '<=', $date->format('Y-m-d H:i:s'))
+                ->sum('quantity');
+        });
+    }
+
+    /**
+     * Return the current stock of the inventories.
+     *
+     * @param array        $inventory_ids
+     * @param null|string] $date
+     *
+     * @return int
+     */
+    public function stockInventories($inventory_ids, $date = null)
+    {
         $date = $date ?: Carbon::now();
 
         if (!$date instanceof DateTimeInterface) {
@@ -35,6 +59,7 @@ trait HasStock
 
         return (int) $this->inventoryHistories()
             ->where('created_at', '<=', $date->format('Y-m-d H:i:s'))
+            ->whereIn('inventory_id', $inventory_ids)
             ->sum('quantity');
     }
 
@@ -106,11 +131,11 @@ trait HasStock
      * @param  array  $arguments
      * @return bool
      */
-    public function clearStock($inventory_id, $newQuantity = null,  $arguments = [])
+    public function clearStock($inventory_id, $newQuantity = null, $arguments = [])
     {
         $this->inventoryHistories()->delete();
 
-        if (!is_null($newQuantity)) {
+        if (null !== $newQuantity) {
             $this->createStockMutation($newQuantity, $inventory_id, $arguments);
         }
 
