@@ -105,6 +105,16 @@ return [
     'models' => [
 
         /**
+         * Eloquent model should be used to retrieve your attributes. Of course,
+         * it is often just the "Attribute" model but you may use whatever you like.
+         *
+         * The model you want to use as a Attribute model needs to extends the
+         * `\Shopper\Framework\Models\Shop\Product\Attribute` model.
+         */
+
+        'attribute' => \Shopper\Framework\Models\Shop\Product\Attribute::class,
+
+        /*
          * Eloquent model should be used to retrieve your brands. Of course,
          * it is often just the "Brand" model but you may use whatever you like.
          *
