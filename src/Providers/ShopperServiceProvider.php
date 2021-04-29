@@ -16,7 +16,7 @@ class ShopperServiceProvider extends ServiceProvider
      *
      * @var string[]
      */
-    protected $configFiles = [
+    protected array $configFiles = [
         'system', 'routes', 'auth', 'mails',
     ];
 
@@ -64,7 +64,7 @@ class ShopperServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(SHOPPER_PATH . '/database/migrations');
         $this->publishes([
-            SHOPPER_PATH . '/database/seeds' => database_path('seeds'),
+            SHOPPER_PATH . '/database/seeders' => database_path('seeders'),
         ], 'shopper-seeders');
     }
 
