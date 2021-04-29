@@ -4,25 +4,15 @@ namespace Shopper\Framework\Console;
 
 use Illuminate\Console\Command;
 use Shopper\Framework\Providers\ShopperServiceProvider;
-use Shopper\Framework\Traits\Database\Seedable;
 use Spatie\Analytics\AnalyticsServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 class InstallCommand extends Command
 {
-    use Seedable;
-
     /**
      * @var ProgressBar
      */
     protected $progressBar;
-
-    /**
-     * The path of the seeder
-     *
-     * @var string
-     */
-    protected $seedersPath = SHOPPER_PATH.'/database/seeds/';
 
     /**
      * The name and signature of the console command.
@@ -97,7 +87,7 @@ class InstallCommand extends Command
         $this->progressBar->advance();
 
         $this->info('Flush data into the database');
-        $this->seed('ShopperSeeder');
+        $this->call('db:seed', ['--class' => 'ShopperSeeder']);
         $this->progressBar->advance();
 
         // Visually slow down the installation process so that the user can read what's happening
