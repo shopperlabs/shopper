@@ -1,17 +1,17 @@
 <?php
 
+namespace Database\Seeders;
+
+use Database\Seeders\Auth\PermissionRoleTableSeeder;
+use Database\Seeders\Auth\PermissionsTableSeeder;
+use Database\Seeders\Auth\RolesTableSeeder;
 use Illuminate\Database\Seeder;
 use Shopper\Framework\Traits\Database\DisableForeignKeys;
-use Shopper\Framework\Traits\Database\Seedable;
 use Shopper\Framework\Traits\Database\TruncateTable;
 
 class AuthTableSeeder extends Seeder
 {
-    use DisableForeignKeys,
-        TruncateTable,
-        Seedable;
-
-    protected $seedersPath = __DIR__.'/Auth/';
+    use DisableForeignKeys, TruncateTable;
 
     /**
      * Run the database seeds.
@@ -32,9 +32,9 @@ class AuthTableSeeder extends Seeder
             'users',
         ]);
 
-        $this->seed('RolesTableSeeder');
-        $this->seed('PermissionsTableSeeder');
-        $this->seed('PermissionRoleTableSeeder');
+        $this->call(RolesTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
+        $this->call(PermissionRoleTableSeeder::class);
 
         $this->enableForeignKeys();
     }
