@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders\Auth;
+
 use Illuminate\Database\Seeder;
 use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Traits\Database\DisableForeignKeys;

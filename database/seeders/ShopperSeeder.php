@@ -1,15 +1,12 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
-use Shopper\Framework\Traits\Database\Seedable;
 
 class ShopperSeeder extends Seeder
 {
-    use Seedable;
-
-    protected $seedersPath = __DIR__.'/';
-
     /**
      * Seed the application's database.
      *
@@ -19,10 +16,10 @@ class ShopperSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->seed('AuthTableSeeder');
-        $this->seed('CountriesTableSeeder');
-        $this->seed('CurrenciesTableSeeder');
-        $this->seed('LegalsPageTableSeeder');
+        $this->call(AuthTableSeeder::class);
+        $this->call(CountriesTableSeeder::class);
+        $this->call(CurrenciesTableSeeder::class);
+        $this->call(LegalsPageTableSeeder::class);
 
         Model::reguard();
     }

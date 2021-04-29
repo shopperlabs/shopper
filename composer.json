@@ -58,7 +58,8 @@
       "src/Helpers/helpers.php"
     ],
     "psr-4": {
-      "Shopper\\Framework\\": "src/"
+      "Shopper\\Framework\\": "src/",
+      "Database\\Seeders\\": "database/seeders/"
     }
   },
   "autoload-dev": {
