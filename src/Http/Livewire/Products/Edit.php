@@ -23,13 +23,6 @@ class Edit extends Component
     public $product;
 
     /**
-     * Confirm action to delete product.
-     *
-     * @var bool
-     */
-    public $confirmDeleteProduct = false;
-
-    /**
      * All locations available on the store.
      *
      * @var mixed
@@ -57,26 +50,6 @@ class Edit extends Component
     }
 
     /**
-     * Launch modale to remove product.
-     *
-     * @return void
-     */
-    public function openModale()
-    {
-        $this->confirmDeleteProduct = true;
-    }
-
-    /**
-     * Close modale.
-     *
-     * @return void
-     */
-    public function closeModale()
-    {
-        $this->confirmDeleteProduct = false;
-    }
-
-    /**
      * Product updated Listener.
      *
      * @param  int  $id
@@ -87,11 +60,6 @@ class Edit extends Component
         $this->product = (new ProductRepository())->getById($id);
     }
 
-    /**
-     * Removed a product to the storage.
-     *
-     * @throws \Exception
-     */
     public function destroy()
     {
         (new ProductRepository())->getById($this->product->id)->delete();
