@@ -108,8 +108,12 @@
     <x-shopper-notify />
     <x-shopper-alert />
 
+
+    @livewire('livewire-ui-modal')
+    @livewireUIScripts
     <livewire:scripts />
     @bukScripts(true)
+
     <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
 
     @stack('scripts')
