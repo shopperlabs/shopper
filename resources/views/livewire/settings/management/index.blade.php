@@ -15,12 +15,12 @@
     <div class="mt-8 pb-10 space-y-10">
         <div class="bg-white rounded-lg p-4 sm:p-6 shadow-md overflow-hidden">
             <div class="flex items-center">
-                <h2 class="text-lg leading-6 font-medium text-gray-900">{{ __("Administrator role available") }}</h2>
-                <button wire:click="launchCreateModal" type="button" class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-50 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-blue-200 transition ease-in-out duration-150">
+                <h2 class="text-lg leading-6 font-medium text-gray-900">{{ __('Administrator role available') }}</h2>
+                <button wire:click="$emit('openModal', 'shopper-modals.create-role')" type="button" class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-50 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-blue-200 transition ease-in-out duration-150">
                     <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
                     </svg>
-                    {{ __("Add new role") }}
+                    {{ __('Add new role') }}
                 </button>
             </div>
             <p class="mt-3 text-gray-500 leading-6 text-base">
@@ -30,7 +30,7 @@
                 @foreach($roles as $role)
                     <a href="{{ route('shopper.settings.user.role', $role) }}" class="group flex flex-col justify-between p-4 border border-gray-200 rounded-md overflow-hidden hover:shadow-md focus:border-gray-300 focus:outline-none transition duration-200 ease-in-out">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs leading-4 text-gray-400 font-semibold uppercase tracking-wider">{{ $role->users->count() }} {{ str_plural(__("Account"), $role->users->count()) }}</span>
+                            <span class="text-xs leading-4 text-gray-400 font-semibold uppercase tracking-wider">{{ $role->users->count() }} {{ str_plural(__('Account'), $role->users->count()) }}</span>
                             <div class="flex overflow-hidden ml-4">
                                 @foreach($role->users as $admin)
                                     <img class="{{ $loop->first ? '' : '-ml-1' }} inline-block h-6 w-6 rounded-full text-white shadow-solid" src="{{ $admin->picture }}" alt="">
@@ -40,7 +40,7 @@
                         <div>
                             <h3 class="mt-4 text-gray-900 text-lg leading-6 font-medium">{{ $role->display_name }}</h3>
                             <p class="mt-1 flex items-center text-sm text-blue-600 group-hover:text-blue-500 transition duration-200 ease-in-out">
-                                {{ __("View details") }}
+                                {{ __('View details') }}
                                 <span class="ml-2">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -55,9 +55,9 @@
         <div class="bg-white rounded-lg p-4 sm:p-6 shadow-md">
             <div class="pb-6 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
                 <div class="flex-1 min-w-0 max-w-2xl">
-                    <h2 class="text-lg leading-6 font-medium text-gray-900">{{ __("Administrators accounts") }}</h2>
+                    <h2 class="text-lg leading-6 font-medium text-gray-900">{{ __('Administrators accounts') }}</h2>
                     <p class="mt-3 text-gray-500 leading-6 text-base">
-                        {{ __("These are the members who are already in your store with their associated roles. You can assign new roles to existing member here.") }}
+                        {{ __('These are the members who are already in your store with their associated roles. You can assign new roles to existing member here.') }}
                     </p>
                 </div>
                 <div>
@@ -65,7 +65,7 @@
                         <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                         </svg>
-                        {{ __("Add administrator") }}
+                        {{ __('Add administrator') }}
                     </a>
                 </div>
             </div>
@@ -76,16 +76,16 @@
                             <thead>
                                 <tr>
                                     <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider rounded-t-md">
-                                        <span class="lg:pl-2">{{ __("Name") }}</span>
+                                        <span class="lg:pl-2">{{ __('Name') }}</span>
                                     </th>
                                     <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __("Email Address") }}
+                                        {{ __('Email Address') }}
                                     </th>
                                     <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __("Role") }}
+                                        {{ __('Role') }}
                                     </th>
                                     <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __("Access") }}
+                                        {{ __('Access') }}
                                     </th>
                                     <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider rounded-t-md"></th>
                                 </tr>
@@ -103,7 +103,7 @@
                                                         {{ $user->full_name }}
                                                     </div>
                                                     <div class="text-sm leading-5 text-gray-500 font-normal">
-                                                        {{ __("Registered on") }} <time datetime="{{ $user->created_at->format('Y-m-d') }}" class="capitalize">{{ $user->created_at->formatLocalized('%d %B %Y') }}</time>
+                                                        {{ __('Registered on') }} <time datetime="{{ $user->created_at->format('Y-m-d') }}" class="capitalize">{{ $user->created_at->formatLocalized('%d %B %Y') }}</time>
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,7 +128,7 @@
                                             </span>
                                         </td>
                                         <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
-                                            {{ $user->hasRole(config('shopper.system.users.admin_role')) ? __("Full") : __("Limited") }}
+                                            {{ $user->hasRole(config('shopper.system.users.admin_role')) ? __('Full') : __('Limited') }}
                                         </td>
                                         <td class="pr-6 text-right">
                                             @if($user->id === auth()->id())
@@ -136,24 +136,24 @@
                                                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
-                                                    {{ __("Me") }}
+                                                    {{ __('Me') }}
                                                 </span>
                                             @endif
                                             @if(auth()->user()->isAdmin() && ! $user->isAdmin())
                                                 <div x-data="{ open: false }" x-on:user-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
                                                     <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
-                                                        <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                             <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                                                         </svg>
                                                     </button>
-                                                    <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
+                                                    <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
                                                         <div class="z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
                                                             <div class="py-1">
                                                                 <button wire:click="removeUser({{ $user->id }})" type="button" class="group w-full flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
                                                                     <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                                         <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                                                     </svg>
-                                                                    {{ __("Delete") }}
+                                                                    {{ __('Delete') }}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -189,53 +189,5 @@
             </div>
         </div>
     </div>
-
-    <x-shopper-modal wire:model="displayModal" maxWidth="2xl">
-        <div class="bg-white">
-            <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
-                <div class="sm:flex sm:items-center">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        {{ __("Add new role") }}
-                    </h3>
-                    <p class="mt-1 sm:mt-0 sm:ml-3 text-sm leading-5 text-gray-500">{{ __("Add a new role and assign permissions for administrators.") }}</p>
-                </div>
-            </div>
-            <div class="p-4 sm:px-6 border-t border-gray-100">
-                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                    <div class="sm:col-span-1">
-                        <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                            <x-shopper-input.text wire:model="name" id="name" placeholder="manager" />
-                        </x-shopper-input.group>
-                    </div>
-                    <div class="sm:col-span-1">
-                        <x-shopper-input.group label="Display name" for="display_name">
-                            <x-shopper-input.text wire:model="role_display_name" id="display_name" placeholder="Manager" />
-                        </x-shopper-input.group>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <x-shopper-input.group label="Description" for="description">
-                            <x-shopper-input.textarea wire:model="role_description" id="description" />
-                        </x-shopper-input.group>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <x-shopper-button wire:click="addNewRole" type="button" wire:loading.attr="disabled">
-                    <svg wire:loading wire:target="addNewRole" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                    </svg>
-                    {{ __('Save') }}
-                </x-shopper-button>
-            </span>
-            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <x-shopper-default-button @click="show = false;" type="button">
-                    {{ __('Cancel') }}
-                </x-shopper-default-button>
-            </span>
-        </div>
-    </x-shopper-modal>
 
 </div>
