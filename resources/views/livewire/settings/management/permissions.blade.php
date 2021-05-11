@@ -1,15 +1,13 @@
 <div class="bg-white shadow overflow-hidden rounded-md">
     <div class="px-4 pt-5 sm:px-6 flex flex-wrap items-baseline">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-            {{ __("Permissions") }}
-        </h3>
-        <p class="ml-2 mt-1 text-sm leading-5 text-gray-500 truncate">{{ __("in") }} {{ $role->display_name }} {{ __("role") }}</p>
+        <h3 class="text-lg leading-6 font-medium text-gray-900">{{ __('Permissions') }}</h3>
+        <p class="ml-2 mt-1 text-sm leading-5 text-gray-500 truncate">{{ __('in') }} {{ $role->display_name }} {{ __('role') }}</p>
     </div>
     <div class="mt-4 border-t border-gray-200 overflow-x-auto divide-y divide-gray-200">
         @foreach($groupPermissions as $group => $permissions)
             <div>
                 <div class="full bg-cool-gray-100 py-1.5 px-4">
-                    <span class="text-gray-900 capitalize tracking-wide text-sm font-medium leading-5">{{ ! empty($group) ? $group : __("Custom permissions") }}</span>
+                    <span class="text-gray-900 capitalize tracking-wide text-sm font-medium leading-5">{{ ! empty($group) ? $group : __('Custom permissions') }}</span>
                 </div>
                 <div class="px-4 py-1 divide-y divide-gray-200">
                     @foreach($permissions as $permission)
