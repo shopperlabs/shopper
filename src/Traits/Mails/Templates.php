@@ -22,7 +22,7 @@ trait Templates
         return $file;
     }
 
-    public static function deleteTemplate($templateSlug)
+    public static function deleteTemplate($templateSlug): bool
     {
         $template = self::getTemplates()
             ->where('template_slug', $templateSlug)->first();
