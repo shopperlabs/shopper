@@ -27,8 +27,8 @@
 
     <div class="mt-6 pb-10">
         <div x-show="currentTab === 'html'" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 md:grid-cols-3 lg:col-span-3">
-            @foreach($skeletons->get('html') as $name => $subskeletons)
-                <button wire:click="loadSubSkeletons('{{ $name }}', 'html', {{ json_encode($subskeletons) }})" type="button" class="block overflow-hidden group text-left">
+            @foreach($skeletons->get('html') as $name => $subSkeletons)
+                <button wire:click='$emit("openModal", "shopper-modals.choose-skeleton", {{ json_encode([$name, 'html', $subSkeletons]) }})' type="button" class="block overflow-hidden group text-left">
                     <figure>
                         <div class="relative rounded overflow-hidden transition transform duration-150 ease-in-out">
                             @if (file_exists(public_path("shopper/images/skeletons/html/{$name}.png")))
@@ -51,8 +51,8 @@
             @endforeach
         </div>
         <div x-cloak x-show="currentTab === 'markdown'" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 md:grid-cols-3 lg:col-span-3">
-            @foreach($skeletons->get('markdown') as $name => $subskeletons)
-                <button wire:click="loadSubSkeletons('{{ $name }}', 'markdown', {{ json_encode($subskeletons) }})" type="button" class="block group text-left">
+            @foreach($skeletons->get('markdown') as $name => $subSkeletons)
+                <button wire:click='$emit("openModal", "shopper-modals.choose-skeleton", {{ json_encode([$name, 'markdown', $subSkeletons]) }})' type="button" class="block group text-left">
                     <figure>
                         <div class="relative rounded overflow-hidden transition transform duration-150 ease-in-out">
                             @if (file_exists(public_path("shopper/images/skeletons/markdown/{$name}.png")))
@@ -75,39 +75,4 @@
             @endforeach
         </div>
     </div>
-
-    <x-shopper-modal wire:model="skeletonDisplayModal" maxWidth="lg" id="skeletons">
-        <div class="bg-white">
-            <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
-                <div class="text-left">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 capitalize">
-                        {{ $currentSkeleton }}
-                    </h3>
-                </div>
-            </div>
-            <div class="p-4 sm:px-6 border-t border-gray-100">
-                <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
-                    @foreach($subSkeletons as $skeleton)
-                        <div class="relative rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm flex items-center hover:border-gray-400">
-                            <div class="flex-1 min-w-0">
-                                <a href="{{ route('shopper.settings.mails.create-template', ['type' => $type, 'name' => $currentSkeleton, 'skeleton' => $skeleton]) }}" class="focus:outline-none">
-                                    <span class="absolute inset-0" aria-hidden="true"></span>
-                                    <p class="text-sm font-medium text-gray-900 capitalize">
-                                        {{ $skeleton }}
-                                    </p>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <x-shopper-default-button wire:click="closeModal" type="button">
-                    {{ __('Cancel') }}
-                </x-shopper-default-button>
-            </span>
-        </div>
-    </x-shopper-modal>
 </div>
