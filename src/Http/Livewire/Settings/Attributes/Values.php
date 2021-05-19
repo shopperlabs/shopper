@@ -2,144 +2,34 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\AttributeValue;
 
-class Values extends AbstractBaseComponent
+class Values extends Component
 {
-    /**
-     * Components Listeners.
-     *
-     * @var string[]
-     */
     protected $listeners = ['updateValues'];
 
-    /**
-     * Current updated attribute.
-     *
-     * @var Attribute
-     */
     public Attribute $attribute;
+    public ?string $search;
+    public Collection $values;
+    public ?int $valueId;
+    public string $type = 'select';
 
-    /**
-     * Attribute id for validation.
-     *
-     * @var int
-     */
-    public $attributeId;
-
-    /**
-     * Value search value.
-     *
-     * @var string
-     */
-    public $search;
-
-    /**
-     * Attribute values.
-     *
-     * @var \Illuminate\Database\Eloquent\Collection
-     */
-    public $values;
-
-    /**
-     * Value id to update on modal.
-     *
-     * @var int
-     */
-    public $valueId;
-
-    /**
-     * Attribute type.
-     *
-     * @var string
-     */
-    public $type = 'select';
-
-    /**
-     * Attribute value.
-     *
-     * @var string
-     */
-    public $value;
-
-    /**
-     * Attribute value key.
-     *
-     * @var string
-     */
-    public $key;
-
-    /**
-     * Launch create modal.
-     *
-     * @var bool
-     */
-    public $createModale = false;
-
-    /**
-     * Component Mount new instance.
-     *
-     * @param  Attribute  $attribute
-     * @return void
-     */
     public function mount(Attribute $attribute)
     {
         $this->attribute = $attribute;
-        $this->attributeId = $attribute->id;
         $this->values = $attribute->values;
         $this->type = $attribute->type;
     }
 
-    /**
-     * Launch modale to create a new permission.
-     *
-     * @return void
-     */
-    public function launchModale()
-    {
-        $this->createModale = true;
-    }
-
-    /**
-     * Update Values collections.
-     *
-     * @return void
-     */
     public function updateValues()
     {
         $this->values = AttributeValue::query()
-            ->where('attribute_id', $this->attributeId)
+            ->where('attribute_id', $this->attribute->id)
             ->get();
-    }
-
-    /**
-     * Add new entry to the database.
-     *
-     * @return void
-     */
-    public function store()
-    {
-        $this->validate($this->rules());
-
-        $this->attribute->values()->create([
-           'value' => $this->value,
-            'key'  => $this->key,
-        ]);
-
-        $this->dispatchBrowserEvent('modal-close');
-        $this->emitSelf('updateValues');
-
-        $this->notify([
-            'title' => __('Added!'),
-            'message' => __("New value added for :attribute", ['attribute' => $this->attribute->name]),
-        ]);
-
-        $this->value = '';
-        $this->key = '';
-        $this->valueId = null;
     }
 
     /**
@@ -178,7 +68,6 @@ class Values extends AbstractBaseComponent
             ->find($this->valueId)
             ->update(['value' => $this->value, 'key' => $this->key]);
 
-        $this->closeModal();
         $this->emitSelf('updateValues');
 
         $this->notify([
@@ -205,41 +94,6 @@ class Values extends AbstractBaseComponent
         ]);
     }
 
-    /**
-     * Close Modal.
-     *
-     * @return void
-     */
-    public function closeModal()
-    {
-        $this->valueId = null;
-        $this->value = '';
-        $this->key = '';
-
-        $this->createModale = false;
-
-        $this->resetErrorBag();
-    }
-
-
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules()
-    {
-        return [
-            'value' => 'required|max:50',
-            'key' => 'required|unique:'. shopper_table('attribute_values'),
-        ];
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.attributes.values');

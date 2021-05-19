@@ -30,19 +30,16 @@
                             </div>
                             <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="rounded-none rounded-md pl-10" placeholder="{{ __('Search attribute value') }}" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                                </svg>
+                                <x-shopper-loader wire:loading wire:target="search" class="text-blue-600" />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div>
                     <span class="shadow-sm rounded-md">
-                        <button wire:click="launchModale" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
-                            {{ __("Add new value") }}
-                        </button>
+                        <x-shopper-button wire:click="$emit('openModal', 'shopper-modals.create-value', {{ json_encode([$attribute->id]) }})" type="button">
+                            {{ __('Add new value') }}
+                        </x-shopper-button>
                     </span>
                 </div>
             </div>
@@ -100,7 +97,7 @@
                                                     <svg class="h-8 w-8 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                                     </svg>
-                                                    <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No values") }}...</span>
+                                                    <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No values') }}...</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -128,27 +125,7 @@
                 </div>
             </div>
             <div class="p-4 sm:px-6 border-t border-gray-100">
-                <div class="grid gap-4 sm:grid-cols-2">
-                    <div class="sm:col-span-2">
-                        @if($type === 'colorpicker')
-                            <div wire:ignore>
-                                <label for="value" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Value") }}</label>
-                                <div class="mt-1 relative">
-                                    <x-color-picker name="value" wire:model="value" />
-                                </div>
-                            </div>
-                        @else
-                            <x-shopper-input.group label="Value" for="value" :error="$errors->first('value')">
-                                <x-shopper-input.text wire:model="value" id="value" placeholder="My value" />
-                            </x-shopper-input.group>
-                        @endif
-                    </div>
-                    <div class="sm:col-span-2">
-                        <x-shopper-input.group label="Key" for="key" :error="$errors->first('key')" helpText="The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format">
-                            <x-shopper-input.text wire:model="key" id="key" placeholder="my_key" />
-                        </x-shopper-input.group>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
