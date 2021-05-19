@@ -77,7 +77,7 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                                 <div class="flex-1 flex justify-end items-center space-x-4">
-                                                    <button wire:click="modalEdit({{ $v->id }})" wire:key="{{ $v->id }}" type="button" class="text-gray-500 hover:text-gray-600">
+                                                    <button wire:click="$emit('openModal', 'shopper-modals.update-value', {{ json_encode([$attribute->name, $type, $v->id]) }})" wire:key="{{ $v->id }}" type="button" class="text-gray-500 hover:text-gray-600">
                                                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                                         </svg>
@@ -111,48 +111,4 @@
         </div>
     </section>
 
-    <x-shopper-modal wire:model="createModale" maxWidth="lg">
-        <div class="bg-white">
-            <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
-                <div class="text-left">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        @if($valueId)
-                            {{ __("Update value for :attribute", ['attribute' => $attribute->name]) }}
-                        @else
-                            {{ __("Add new value for :attribute", ['attribute' => $attribute->name]) }}
-                        @endif
-                    </h3>
-                </div>
-            </div>
-            <div class="p-4 sm:px-6 border-t border-gray-100">
-
-            </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <span class="flex w-full sm:ml-3 sm:w-auto">
-                @if($valueId)
-                    <x-shopper-button wire:click="updateValue" type="button" wire.loading.attr="disabled">
-                        <svg wire:loading wire:target="updateValue" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                        </svg>
-                        {{ __("Update value") }}
-                    </x-shopper-button>
-                @else
-                    <x-shopper-button wire:click="store" type="button" wire.loading.attr="disabled">
-                        <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                        </svg>
-                        {{ __("Add value") }}
-                    </x-shopper-button>
-                @endif
-            </span>
-            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <button wire:click="closeModal" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                    {{ __("Cancel") }}
-                </button>
-            </span>
-        </div>
-    </x-shopper-modal>
 </div>
