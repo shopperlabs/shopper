@@ -56,7 +56,7 @@ class PaymentMethod extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('payment_methods');
     }
@@ -66,7 +66,7 @@ class PaymentMethod extends Model
      *
      * @param  string  $value
      */
-    public function setSlugAttribute($value)
+    public function setSlugAttribute(string $value)
     {
         if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
             $slug = "{$slug}-{$this->id}";
