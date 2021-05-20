@@ -18,7 +18,7 @@ class DeleteProduct extends ModalComponent
     {
         (new ProductRepository())->getById($this->productId)->delete();
 
-        session()->flash('success', __("The :item has been correctly removed.", ['item' => 'product']));
+        session()->flash('success', __('The :item has been correctly removed.', ['item' => 'product']));
 
         $this->redirectRoute('shopper.products.index');
     }
