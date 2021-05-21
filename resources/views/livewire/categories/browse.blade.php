@@ -122,15 +122,12 @@
                                 </div>
                                 <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search category by name') }}" />
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                                    </svg>
+                                    <x-shopper-loader wire:loading wire:target="search" class="text-blue-600" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button wire:click="launchModale" type="button" class="ml-4 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                    <button wire:click="$emit('openModal', 'shopper-modals.re-order-categories')" type="button" class="ml-4 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-gray-50 hover:text-gray-500 hover:bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                         <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z" />
                         </svg>
@@ -256,92 +253,6 @@
     @endif
 
     <x-shopper-learn-more name="categories" link="#" />
-
-    <x-shopper-modal wire:model="reorderModal" maxWidth="lg" x-on:reorder-complete.window="show = false">
-        <div
-            x-data="{ show: false }"
-            x-init="
-                @this.on('notify-saved', () => {
-                    if (show === false) setTimeout(() => { show = false }, 2500);
-                    show = true;
-                })
-            "
-        >
-            <div class="bg-white">
-                <div class="sm:flex sm:items-center sm:justify-between px-4 sm:px-6 py-4">
-                    <div class="text-left">
-                        <h3 class="inline-flex items-center text-lg leading-6 font-medium text-gray-900">
-                            <svg class="w-5 h-5 -ml-1 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-                            </svg>
-                            {{ __("Reorder categories") }}
-                        </h3>
-                    </div>
-                    <div class="ml-4">
-                        <div
-                            x-show.transition.out.duration.1000ms="show"
-                            style="display: none;"
-                            class="rounded-md bg-green-50 p-2"
-                        >
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm leading-5 font-medium text-green-800">
-                                        {{ __("Saved!") }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="relative p-4 sm:px-6 sm:px-5 border-t border-gray-100">
-                    <div wire:sortable="updateGroupOrder" wire:sortable-group="updateCategoryOrder">
-                        @foreach($parentCategories as $parentCategory)
-                            <div wire:sortable.item="{{ $parentCategory->id }}" wire:key="category-{{ $parentCategory->id }}" class="pb-5 cursor-move">
-                                <div class="p-3 bg-gray-100 flex items-center justify-center rounded-md">
-                                    <div wire:sortable.handle class="flex flex-1 items-center space-x-3">
-                                        <svg class="flex-shrink-0 w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                                        </svg>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $parentCategory->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
-                                            <span class="text-sm leading-5 text-gray-900 font-medium">{{ $parentCategory->name }}</span>
-                                        </div>
-                                    </div>
-                                    <span class="ml-4 text-gray-500 leading-4 text-xs">
-                                    /{{ $parentCategory->slug }}
-                                </span>
-                                </div>
-                                @if($parentCategory->childs->isNotEmpty())
-                                    <ul wire:sortable-group.item-group="{{ $parentCategory->id }}" class="ml-4 border-l border-dashed border-gray-200">
-                                        @foreach($parentCategory->childs as $child)
-                                            <li wire:key="sub-category-{{ $child->id }}" wire:sortable-group.item="{{ $child->id }}" class="-mx-1">
-                                                <div class="flex flex-1 items-center space-x-3 py-3 cursor-move">
-                                                    <div class="flex-shrink-0 w-2 h-2 rounded-full {{ $child->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
-                                                    <span wire:sortable.handle class="text-sm leading-5 text-gray-600">{{ $child->name }}</span>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <button wire:click="closeModale" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                    {{ __("Close") }}
-                </button>
-            </span>
-            </div>
-        </div>
-    </x-shopper-modal>
 
 </div>
 

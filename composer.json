@@ -36,6 +36,7 @@
     "laravel/helpers": "^1.4.1",
     "laravel/ui": "^3.2",
     "lavary/laravel-menu": "^1.8.3",
+    "livewire-ui/modal": "^0.1.5",
     "livewire/livewire": "^2.4",
     "maatwebsite/excel": "^3.1",
     "maatwebsite/laravel-sidebar": "^2.4",

@@ -11,26 +11,11 @@ class Browse extends Component
 {
     use WithPagination, WithSorting;
 
-    /**
-     * Search.
-     *
-     * @var string
-     */
-    public $search;
+    protected $listeners = ['onCategoriesReordered' => 'render'];
 
-    /**
-     * Open reorder Modal.
-     *
-     * @var bool
-     */
-    public $reorderModal = false;
+    public string $search = '';
 
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
@@ -53,65 +38,6 @@ class Browse extends Component
     }
 
     /**
-     * Update category parent position.
-     *
-     * @param  array  $items
-     * @return void
-     */
-    public function updateGroupOrder($items)
-    {
-        foreach ($items as $item) {
-            (new CategoryRepository())
-                ->getById($item['value'])
-                ->update(['position' => $item['order']]);
-        }
-
-        $this->emitSelf('notify-saved');
-    }
-
-    /**
-     * Update subcategory position.
-     *
-     * @param  array  $groups
-     * @return void
-     */
-    public function updateCategoryOrder($groups)
-    {
-        foreach ($groups as $group) {
-            foreach ($group['items'] as $item) {
-                (new CategoryRepository())
-                    ->getById($item['value'])
-                    ->update([
-                        'parent_id' => $group['value'],
-                        'position'  => $item['order']
-                    ]);
-            }
-        }
-
-        $this->emitSelf('notify-saved');
-    }
-
-    /**
-     * Close reorder modal.
-     *
-     * @return void
-     */
-    public function closeModale()
-    {
-        $this->reorderModal = false;
-    }
-
-    /**
-     * Launch reorder modale.
-     *
-     * @return void
-     */
-    public function launchModale()
-    {
-        $this->reorderModal = true;
-    }
-
-    /**
      * Render the component.
      *
      * @return \Illuminate\View\View
@@ -123,12 +49,7 @@ class Browse extends Component
             'categories' => (new CategoryRepository())
                 ->where('name', '%'. $this->search .'%', 'like')
                 ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
-                ->paginate(10),
-            'parentCategories' => (new CategoryRepository())
-                ->with('childs')
-                ->where('parent_id', null)
-                ->orderBy('position', 'asc')
-                ->get(),
+                ->paginate(10)
         ]);
     }
 }

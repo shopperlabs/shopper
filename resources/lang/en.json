@@ -188,5 +188,6 @@
   "Product status": "Product status",
   "This product will be hidden from all sales channels.": "This product will be hidden from all sales channels.",
   "Product availability": "Product availability",
-  "work in progress": "work in progress"
+  "work in progress": "work in progress",
+  "The :item has been correctly removed.": "The :item has been correctly removed."
 }

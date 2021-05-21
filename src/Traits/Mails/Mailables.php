@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Traits\Mails;
 
 use Illuminate\Container\Container;
-use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use RecursiveDirectoryIterator;
@@ -191,8 +190,6 @@ trait Mailables
 
             DB::beginTransaction();
 
-            $eloquentFactory = app(Factory::class);
-
             $args = collect($params)->map(function ($param) {
                 if ($param->getType() !== null) {
                     if (class_exists($param->getType()->getName())) {
@@ -216,26 +213,6 @@ trait Mailables
             });
 
             $filteredparams = [];
-
-            foreach ($args->all() as $arg) {
-                $factoryStates = [];
-
-                if (is_array($arg)) {
-                    if (isset($arg['is_instance'])) {
-                        if (isset($eloquentFactory[$arg['instance']]) && config('shopper.mails.factory')) {
-                            $filteredparams[] = factory($arg['instance'])->states($factoryStates)->make();
-                        } else {
-                            $filteredparams[] = app($arg['instance']);
-                        }
-                    } elseif (isset($arg['is_array'])) {
-                        $filteredparams[] = [];
-                    } else {
-                        return;
-                    }
-                } else {
-                    $filteredparams[] = self::getMissingParams($arg, $params);
-                }
-            }
 
             $reflector = new ReflectionClass($mailable);
 

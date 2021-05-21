@@ -17,12 +17,7 @@ class Variant extends Component
         WithUploadProcess,
         WithAttributes;
 
-    /**
-     * Upload listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['fileDeleted'];
+    protected $listeners = ['fileDeleted', 'onVariantUpdated' => 'render'];
 
     /**
      * Product Model.
@@ -50,21 +45,7 @@ class Variant extends Component
      *
      * @var string
      */
-    public $currency;
-
-    /**
-     * Confirm action to delete product.
-     *
-     * @var bool
-     */
-    public $confirmDeleteProduct = false;
-
-    /**
-     * Display inventory modal.
-     *
-     * @var bool
-     */
-    public $showModalInventories = false;
+    public string $currency;
 
     /**
      * Component Mount instance.
@@ -74,7 +55,7 @@ class Variant extends Component
      * @param  string  $currency
      * @return void
      */
-    public function mount($product, $variant, $currency)
+    public function mount($product, $variant, string $currency)
     {
         $this->inventories = (new InventoryRepository())->get(['name', 'id']);
         $this->product = $product;
@@ -89,41 +70,6 @@ class Variant extends Component
         $this->currency = $currency;
     }
 
-    /**
-     * Launch modale to remove product.
-     *
-     * @param  string  $type
-     * @return void
-     */
-    public function openModal(string $type = 'delete')
-    {
-        if ($type === 'delete') {
-            $this->confirmDeleteProduct = true;
-        } else {
-            $this->showModalInventories = true;
-        }
-    }
-
-    /**
-     * Close modale.
-     *
-     * @param  string  $type
-     * @return void
-     */
-    public function closeModal(string $type = 'delete')
-    {
-        if ($type === 'delete') {
-            $this->confirmDeleteProduct = false;
-        } else {
-            $this->showModalInventories = false;
-        }
-    }
-
-    /**
-     * Update variant record in the database.
-     *
-     * @return void
-     */
     public function store()
     {
         $this->validate([
@@ -159,9 +105,11 @@ class Variant extends Component
 
         event(new ProductUpdated($this->variant));
 
+        $this->emitSelf('onVariantUpdated');
+
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Variant successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Variant successfully updated!'),
         ]);
     }
 
@@ -176,24 +124,6 @@ class Variant extends Component
         $this->media = null;
     }
 
-    /**
-     * Removed a product to the storage.
-     *
-     * @throws \Exception
-     */
-    public function destroy()
-    {
-        (new ProductRepository())->getById($this->variant->id)->delete();
-
-        session()->flash('success', __("The variation has been correctly removed!"));
-        $this->redirectRoute('shopper.products.edit', $this->product);
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.products.variant', [
