@@ -10,66 +10,28 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 trait WithStock
 {
-    /**
-     * Stock product value
-     *
-     * @var int
-     */
-    public $stock;
+    public int $stock = 0;
 
-    /**
-     * @var int
-     */
-    public $value = 0;
+    public int $value = 0;
 
-    /**
-     * @var int
-     */
-    public $realStock = 0;
+    public int $realStock = 0;
 
-    /**
-     * All locations available on the store.
-     *
-     * @var mixed
-     */
-    public $inventories;
-
-    /**
-     * Default inventory id.
-     *
-     * @var int
-     */
     public $inventory;
 
-    /**
-     * Update stock value.
-     *
-     * @param  int  $value
-     */
-    public function updatedValue($value)
+    public function updatedValue(int $value)
     {
         $this->value = $value;
-        $this->realStock = $this->stock + (int) $this->value;
+        $this->realStock = $this->stock + $this->value;
     }
 
-    /**
-     * Increment product stock.
-     *
-     * @return void
-     */
     public function incrementStock()
     {
         $this->validate(['value' => 'required|integer']);
 
         $this->value++;
-        $this->realStock = $this->stock + (int) $this->value;
+        $this->realStock = $this->stock + $this->value;
     }
 
-    /**
-     * Decrement product stock.
-     *
-     * @return void
-     */
     public function decrementStock()
     {
         if ($this->realStock === 0) {
@@ -79,14 +41,9 @@ trait WithStock
         $this->validate(['value' => 'required|integer']);
 
         $this->value--;
-        $this->realStock = $this->stock + (int) $this->value;
+        $this->realStock = $this->stock + $this->value;
     }
 
-    /**
-     * Update stock.
-     *
-     * @return void
-     */
     public function updateCurrentStock()
     {
         if ($this->value === 0) {
@@ -120,7 +77,7 @@ trait WithStock
 
         $this->notify([
             'title' => __('Updated'),
-            'message' => __("Stock successfully Updated"),
+            'message' => __('Stock successfully Updated'),
         ]);
     }
 

@@ -36,10 +36,6 @@
                         <span class="flex-grow">WIP</span>
                     @endif
                     <span class="flex-shrink-0 flex items-start space-x-4">
-                        <button wire:click="updateProductAttribute({{ $productAttribute->id }})" type="button" class="font-medium text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
-                            {{ __('Update') }}
-                        </button>
-                        <span class="text-gray-300" aria-hidden="true">|</span>
                         <button wire:click="removeProductAttribute({{ $productAttribute->id }})" type="button" class="font-medium text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
                             {{ __('Remove') }}
                         </button>

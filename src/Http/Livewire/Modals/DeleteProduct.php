@@ -8,19 +8,31 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 class DeleteProduct extends ModalComponent
 {
     public int $productId;
+    public string $type;
+    public ?string $route;
 
-    public function mount(int $id)
+    public function mount(int $id, string $type = 'product', string $route = null)
     {
         $this->productId = $id;
+        $this->type = $type;
+        $this->route = $route;
     }
 
     public function delete()
     {
-        (new ProductRepository())->getById($this->productId)->delete();
+        if ($this->type === 'product') {
+            (new ProductRepository())->getById($this->productId)->delete();
+        } else {
+            (new ProductRepository())->getById($this->productId)->forceDelete();
+        }
 
-        session()->flash('success', __('The :item has been correctly removed.', ['item' => 'product']));
+        session()->flash('success', __('The :item has been correctly removed.', ['item' => $this->type]));
 
-        $this->redirectRoute('shopper.products.index');
+        if ($this->route) {
+            $this->redirectRoute('shopper.products.index');
+        } else {
+            $this->redirect($this->route);
+        }
     }
 
     public static function modalMaxWidth(): string

@@ -27,6 +27,8 @@ class Inventory extends Component
      */
     public $product;
 
+    public $inventories;
+
     /**
      * Component mount instance.
      *
@@ -48,12 +50,7 @@ class Inventory extends Component
         $this->securityStock = $product->security_stock;
     }
 
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
@@ -83,8 +80,8 @@ class Inventory extends Component
         ]);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product Stock attribute successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product Stock attribute successfully updated!'),
         ]);
     }
 

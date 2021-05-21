@@ -8,11 +8,11 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                    {{ __("Delete this product") }}
+                    {{ __('Delete this :item', ['item' => $type]) }}
                 </h3>
                 <div class="mt-2">
                     <p class="text-sm leading-5 text-gray-500">
-                        {{ __("Are you sure you want to delete this product? All information associated with this product will be deleted.") }}
+                        {{ __('Are you sure you want to delete this product? All information associated with this product will be deleted.') }}
                     </p>
                 </div>
             </div>
@@ -23,12 +23,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper-danger-button wire:click="delete" type="button">
                 <x-shopper-loader wire:loading wire:target="delete" class="text-white" />
-                {{ __("Confirm") }}
+                {{ __('Confirm') }}
             </x-shopper-danger-button>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper-default-button wire:click="$emit('closeModal')" type="button">
-                {{ __("Cancel") }}
+                {{ __('Cancel') }}
             </x-shopper-default-button>
         </span>
     </x-slot>

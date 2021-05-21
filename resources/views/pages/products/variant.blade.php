@@ -3,6 +3,6 @@
 
 @section('content')
 
-    <livewire:shopper-products.variant :product="$product" :variant="$variant" />
+    <livewire:shopper-products.variant :product="$product" :variant="$variant" :currency="shopper_currency()" />
 
 @endsection

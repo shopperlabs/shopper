@@ -63,7 +63,7 @@ class Inventory extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('inventories');
     }
