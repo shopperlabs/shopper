@@ -17,7 +17,7 @@ class RegisterOrderSidebar extends AbstractAdminSidebar
      * @param  Menu  $menu
      * @return Menu
      */
-    public function extendWith(Menu $menu)
+    public function extendWith(Menu $menu): Menu
     {
         $count = Order::query()->where('status', OrderStatus::PENDING)->count();
 
