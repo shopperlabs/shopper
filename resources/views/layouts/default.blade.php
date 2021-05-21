@@ -5,23 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-DNS-Prefetch-Control" content="on">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', app_name()) | Shopper E-commerce</title>
+    <title>@yield('title', app_name()) | {{ __('Shopper E-commerce') }}</title>
     <meta name="locale" content="{{ app()->getLocale() }}">
     <meta name="base-url" content="{{ config('app.url') }}">
     <meta name="dashboard-url" content="{{ config('app.url').'/'.shopper_prefix() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('shopper/images/favicons/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('shopper/images/favicons/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('shopper/images/favicons/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('shopper/images/favicons/site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ asset('shopper/images/favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="apple-mobile-web-app-title" content="{{ app_name() }}">
-    <meta name="application-name" content="{{ app_name() }}">
-    <meta name="theme-color" content="#ffffff">
+
+    @include('shopper::layouts.favicons')
+
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <!--begin::Fonts -->
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!--end::Fonts -->
     @stack('styles')
     @bukStyles(true)
