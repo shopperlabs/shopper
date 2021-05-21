@@ -14,8 +14,14 @@ import 'alpinejs';
 
 const darkModeToggles = document.getElementsByClassName('darkModeToggle');
 
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
+
 for (let i = 0; i < darkModeToggles.length; i++) {
-  darkModeToggles[i].onclick = function () {
+  darkModeToggles[i].onclick = () => {
     if (localStorage.theme === 'light') {
       localStorage.theme = 'dark';
       document.querySelector('html').classList.add('dark');

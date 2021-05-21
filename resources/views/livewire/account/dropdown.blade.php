@@ -1,6 +1,6 @@
 <x-shopper-dropdown align="left" width="56" customAlignmentClasses="right-1" containerClasses="relative" contentClasses="bg-white dark:bg-gray-800 text-left">
     <x-slot name="trigger">
-        <button class="max-w-xs flex items-center text-sm rounded-full overflow-hidden focus:outline-none hover:bg-gray-50 focus:bg-gray-50 dark:focus:bg-gray-700 dark:hover:bg-gray-700 lg:p-1.5 lg:rounded-md">
+        <button class="max-w-xs flex items-center text-sm rounded-full overflow-hidden focus:outline-none hover:bg-gray-50 dark:focus:bg-gray-700 dark:hover:bg-gray-800 lg:p-1.5 lg:rounded-md">
             <img class="h-8 w-8 rounded-full" src="{{ $picture }}" alt="{{ $email }}" />
             <span class="hidden ml-3 text-gray-900 dark:text-white text-sm leading-5 font-medium lg:block">{{ $full_name }}</span>
             <svg class="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block" x-description="Heroicon name: chevron-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">

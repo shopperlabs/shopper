@@ -1981,17 +1981,27 @@ __webpack_require__.r(__webpack_exports__);
  * @since May 2021
  */
 
+var darkModeToggles = document.getElementsByClassName('darkModeToggle');
 
-function toggleDarkMode() {
-  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-  if (localStorage.theme === 'dark' || !'theme' in localStorage && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.querySelector('html').classList.add('dark');
-  } else if (localStorage.theme === 'light') {
-    document.querySelector('html').classList.add('light');
-  }
+if (localStorage.theme === 'dark' || !('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
 }
 
-toggleDarkMode();
+for (var i = 0; i < darkModeToggles.length; i++) {
+  darkModeToggles[i].onclick = function () {
+    if (localStorage.theme === 'light') {
+      localStorage.theme = 'dark';
+      document.querySelector('html').classList.add('dark');
+      document.querySelector('html').classList.remove('light');
+    } else {
+      localStorage.theme = 'light';
+      document.querySelector('html').classList.remove('dark');
+      document.querySelector('html').classList.add('light');
+    }
+  };
+}
 
 /***/ }),
 

@@ -1,18 +1,16 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors')
 
 module.exports = {
   darkMode: 'class',
   purge: [
     './resources/assets/js/**/*.js',
     './resources/views/**/*.php',
+    './resources/lang/**/*.php',
     './src/**/*.php',
   ],
   theme: {
     extend: {
-      colors: {
-        'light-blue': colors.lightBlue
-      },
+      colors: {},
       inset: {
         '-0.5': '-0.125rem',
       },
@@ -25,7 +23,8 @@ module.exports = {
       },
       opacity: {
         15: '.15',
-        30: '0.3'
+        30: '0.3',
+        40: '0.4',
       },
       minHeight: {
         '(screen-content)': 'calc(100vh - 9.625rem)',
@@ -37,11 +36,12 @@ module.exports = {
   },
   variants: {
     extend: {
-      translate: ['group-hover'],
       backgroundColor: ['group-hover', 'focus-within', 'odd'],
-      textColor: ['group-hover', 'focus-within', 'odd'],
       borderWidth: ['odd'],
+      display: ['dark'],
+      textColor: ['group-hover', 'focus-within', 'odd'],
       opacity: ['group-hover'],
+      translate: ['group-hover', 'dark'],
     }
   },
   plugins: [
