@@ -69,7 +69,7 @@ class Variants extends Component
 
         event(new ProductRemoved($product));
 
-        $product->delete();
+        $product->forceDelete();
 
         $this->dispatchBrowserEvent('item-removed');
 
