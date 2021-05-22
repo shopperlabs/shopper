@@ -3,9 +3,11 @@
 @endpush
 
 <div>
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Orders') }}</h2>
-    </div>
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('Orders') }}
+        </x-slot>
+    </x-shopper-heading>
 
     @if($total === 0)
         <x-shopper-empty-state

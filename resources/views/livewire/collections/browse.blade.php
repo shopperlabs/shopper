@@ -1,19 +1,24 @@
 <div>
 
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Collections') }}</h2>
-        @if($total > 0)
-            @can('add_collections')
-                <div class="flex space-x-3">
-                    <span class="shadow-sm rounded-md">
-                        <a href="{{ route('shopper.collections.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
-                            {{ __("Create") }}
-                        </a>
-                    </span>
-                </div>
-            @endcan
-        @endif
-    </div>
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('Collections') }}
+        </x-slot>
+
+        <x-slot name="action">
+            @if($total > 0)
+                @can('add_collections')
+                    <div class="flex space-x-3">
+                        <span class="shadow-sm rounded-md">
+                            <x-shopper-button :link="route('shopper.collections.create')">
+                                {{ __('Create') }}
+                            </x-shopper-button>
+                        </span>
+                    </div>
+                @endcan
+            @endif
+        </x-slot>
+    </x-shopper-heading>
 
     @if($total === 0)
         <x-shopper-empty-state
@@ -144,59 +149,39 @@
             </div>
         </x-shopper-empty-state>
     @else
-        <div class="mt-6 bg-white shadow sm:rounded-md">
+        <div class="mt-6 bg-white dark:bg-gray-800 shadow sm:rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="relative z-20 flex items-center space-x-4">
-                    <div class="flex flex-1">
-                        <label for="filter" class="sr-only">{{ __('Search collections') }}</label>
-                        <div class="flex flex-1 rounded-md shadow-sm">
-                            <div class="relative flex-grow focus-within:z-10">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                                    </svg>
-                                </div>
-                                <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search collection by name') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <x-shopper-input.search label="Search collection" placeholder="Search collection by name" />
                     <div x-data="{ open: false }" @keydown.window.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
                         <div>
                             <span class="rounded-md shadow-sm">
-                                <button @click="open = !open" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150" id="options-menu" aria-haspopup="true" aria-expanded="true" x-bind:aria-expanded="open">
-                                    {{ __("Type") }}
-                                    <svg class="-mr-1 ml-2 h-5 w-5" x-description="Heroicon name: chevron-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
+                                <x-shopper-default-button @click="open = !open" type="button" id="options-menu" aria-haspopup="true" aria-expanded="true" x-bind:aria-expanded="open">
+                                    {{ __('Type') }}
+                                    <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
+                                </x-shopper-default-button>
                             </span>
                         </div>
 
                         <div x-cloak x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
-                            <div class="rounded-md bg-white shadow-xs">
+                            <div class="rounded-md bg-white dark:bg-gray-800 shadow-xs">
                                 <div class="py-1">
                                     <div class="flex items-center py-2 px-4">
                                         <input wire:model="type" id="type_manual" name="type" type="radio" value="manual" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="type_manual" class="cursor-pointer ml-3">
-                                            <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Manual") }}</span>
+                                            <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ __('Manual') }}</span>
                                         </label>
                                     </div>
                                     <div class="flex items-center py-2 px-4">
                                         <input wire:model="type" id="type_auto" name="type" type="radio" value="auto" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="type_auto" class="cursor-pointer ml-3">
-                                            <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Automatic") }}</span>
+                                            <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ __('Automatic') }}</span>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="border-t border-gray-100"></div>
+                                <div class="border-t border-gray-100 dark:border-gray-700"></div>
                                 <div class="py-1">
-                                    <button wire:click="resetTypeFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600">{{ __("Clear") }}</button>
+                                    <button wire:click="resetTypeFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 dark:text-gray-400 hover:text-blue-600">{{ __('Clear') }}</button>
                                 </div>
                             </div>
                         </div>

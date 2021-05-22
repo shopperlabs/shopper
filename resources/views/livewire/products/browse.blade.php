@@ -1,19 +1,24 @@
 <div>
 
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Products') }}</h2>
-        @if($total > 0)
-            @can('add_products')
-                <div class="flex space-x-3">
-                    <span class="shadow-sm rounded-md">
-                        <a href="{{ route('shopper.products.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
-                            {{ __("Create") }}
-                        </a>
-                    </span>
-                </div>
-            @endcan
-        @endif
-    </div>
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('Products') }}
+        </x-slot>
+
+        <x-slot name="action">
+            @if($total > 0)
+                @can('add_products')
+                    <div class="flex space-x-3">
+                        <span class="shadow-sm rounded-md">
+                            <x-shopper-button :link="route('shopper.products.create')">
+                                {{ __('Create') }}
+                            </x-shopper-button>
+                        </span>
+                    </div>
+                @endcan
+            @endif
+        </x-slot>
+    </x-shopper-heading>
 
     @if($total === 0)
         <x-shopper-empty-state
@@ -249,51 +254,36 @@
             </div>
         </x-shopper-empty-state>
     @else
-        <div class="mt-6 bg-white shadow rounded-md">
+        <div class="mt-6 bg-white dark:bg-gray-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="relative z-20 flex items-center space-x-4">
-                    <div class="flex flex-1">
-                        <label for="filter" class="sr-only">{{ __('Search product by name') }}</label>
-                        <div class="flex flex-grow rounded-md shadow-sm">
-                            <div class="relative flex-grow focus-within:z-10">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                                    </svg>
-                                </div>
-                                <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search product by name') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <x-shopper-loader wire:loading wire:target="search" class="text-blue-600" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <x-shopper-input.search label="Search product" placeholder="Search product by name" />
                     <div x-data="{ open: false }" @keydown.window.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
                         <div>
                             <x-shopper-default-button @click="open = !open" type="button" id="options-menu" aria-haspopup="true" aria-expanded="true" x-bind:aria-expanded="open">
-                                {{ __("Status") }}
+                                {{ __('Status') }}
                                 <svg class="-mr-1 ml-2 h-5 w-5" x-description="Heroicon name: chevron-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </x-shopper-default-button>
                         </div>
-                        <div x-cloak x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
-                            <div class="rounded-md bg-white shadow-xs">
+                        <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
+                            <div class="rounded-md bg-white dark:bg-gray-800 shadow-xs">
                                 <div class="py-1">
                                     <div class="flex items-center py-2 px-4">
                                         <input wire:model="is_visible" id="visible" name="is_visible" type="radio" value="1" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="visible" class="cursor-pointer ml-3">
-                                            <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Visible") }}</span>
+                                            <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ __('Visible') }}</span>
                                         </label>
                                     </div>
                                     <div class="flex items-center py-2 px-4">
                                         <input wire:model="is_visible" id="invisible" name="is_visible" type="radio" value="0" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="invisible" class="cursor-pointer ml-3">
-                                            <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Not visible") }}</span>
+                                            <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ __('Not visible') }}</span>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="border-t border-gray-100"></div>
+                                <div class="border-t border-gray-100 dark:border-gray-700"></div>
                                 <div class="py-1">
                                     <button wire:click="resetStatusFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600">{{ __("Clear") }}</button>
                                 </div>
@@ -302,12 +292,10 @@
                     </div>
                     <div x-data="{ show: false }" @keydown.window.escape="show = false" @click.away="show = false" class="relative inline-block text-left">
                         <x-shopper-default-button @click="show = !show" type="button" id="options-filters" aria-haspopup="true" aria-expanded="true" x-bind:aria-expanded="show">
-                            <svg class="-ml-1 mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                            </svg>
-                            {{ __("More Filters") }}
+                            <x-heroicon-o-filter class="-ml-1 mr-2 h-5 w-5" />
+                            {{ __('More Filters') }}
                         </x-shopper-default-button>
-                        <div x-cloak x-show="show" @keydown.window.escape="show = false;" class="fixed z-50 inset-0 overflow-hidden">
+                        <div x-cloak x-show="show" @keydown.window.escape="show = false;" class="fixed z-40 inset-0 overflow-hidden">
                             <div class="absolute inset-0 overflow-hidden">
                                 <section @click.away="show = false;" class="absolute inset-y-0 pl-16 max-w-full right-0 flex" aria-labelledby="slide-over-heading">
                                     <div class="w-screen max-w-md" x-description="Slide-over panel, show/hide based on slide-over state." x-show="show" x-transition:enter="transform transition ease-in-out duration-500 sm:duration-700" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
@@ -446,29 +434,29 @@
                 <div class="align-middle inline-block min-w-full">
                     <table class="min-w-full">
                         <thead>
-                            <tr class="border-t border-gray-200">
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    <span class="lg:pl-2">{{ __("Product") }}</span>
+                            <tr class="border-t border-gray-200 dark:border-gray-700">
+                                <th class="px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    <span class="lg:pl-2">{{ __('Product') }}</span>
                                 </th>
-                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Sku") }}
+                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    {{ __('Sku') }}
                                 </th>
-                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Brand") }}
+                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    {{ __('Brand') }}
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Stock") }}
+                                <th class="px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    {{ __('Stock') }}
                                 </th>
-                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Published At") }}
+                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-right text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    {{ __('Published At') }}
                                 </th>
-                                <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
+                                <th class="pr-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-right text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"></th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-100" x-max="1">
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-100 dark:divide-gray-700" x-max="1">
                             @forelse($products as $product)
                                 <tr>
-                                    <td class="px-6 py-3 max-w-0 w-full whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $product->is_visible ? 'bg-green-600': 'bg-gray-400' }}"></div>
                                             <div class="flex items-center">
@@ -482,7 +470,7 @@
                                                     </div>
                                                 @endif
                                                 @can('read_products')
-                                                    <a href="{{ route('shopper.products.edit', $product) }}" class="ml-2 truncate hover:text-gray-600">
+                                                    <a href="{{ route('shopper.products.edit', $product) }}" class="ml-2 truncate hover:text-gray-600 dark:hover:text-gray-400">
                                                         <span>{{ $product->name }} </span>
                                                     </a>
                                                 @else
@@ -557,12 +545,12 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex justify-center items-center space-x-2">
                                             <svg class="h-8 w-8 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                                             </svg>
-                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No products found") }}...</span>
+                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No products found') }}...</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -571,13 +559,13 @@
                     </table>
                 </div>
             </div>
-            <div class="bg-white px-4 py-3 flex items-center rounded-b-md justify-between border-t border-gray-200 sm:px-6">
+            <div class="bg-white dark:bg-gray-800 px-4 py-3 flex items-center rounded-b-md justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
                 <div class="flex-1 flex justify-between sm:hidden">
                     {{ $products->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm leading-5 text-gray-700">
+                        <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
                             {{ __('Showing') }}
                             <span class="font-medium">{{ ($products->currentPage() - 1) * $products->perPage() + 1 }}</span>
                             {{ __('to') }}

@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <main class="flex-1 relative z-0 focus:outline-none pt-3 lg:py-6" tabindex="0">
+            <main class="flex-1 relative z-0 focus:outline-none py-3 lg:py-6" tabindex="0">
                 <div class="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 min-h-(screen-content)">
                     <!-- Content -->
                     @yield('content')

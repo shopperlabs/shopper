@@ -1,19 +1,24 @@
 <div>
 
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Brands') }}</h2>
-        @if($total > 0)
-            @can('add_brands')
-                <div class="flex space-x-3">
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('Brands') }}
+        </x-slot>
+
+        <x-slot name="action">
+            @if($total > 0)
+                @can('add_brands')
+                    <div class="flex space-x-3">
                     <span class="shadow-sm rounded-md">
-                        <a href="{{ route('shopper.brands.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
-                            {{ __("Create") }}
-                        </a>
+                        <x-shopper-button :link="route('shopper.brands.create')">
+                            {{ __('Create') }}
+                        </x-shopper-button>
                     </span>
-                </div>
-            @endcan
-        @endif
-    </div>
+                    </div>
+                @endcan
+            @endif
+        </x-slot>
+    </x-shopper-heading>
 
     @if($total === 0)
         <x-shopper-empty-state
