@@ -9,7 +9,7 @@
                 <x-shopper-validation-errors />
 
                 <div>
-                    <x-shopper-application-logo class="mx-auto h-20 w-auto" />
+                    <x-shopper-application-icon class="mx-auto h-20 w-auto" />
                     <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900 dark:text-white">
                         {{ __('Welcome Back !') }}
                     </h2>

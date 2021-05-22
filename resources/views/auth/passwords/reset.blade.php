@@ -8,7 +8,7 @@
             <div class="space-y-4">
                 <x-shopper-validation-errors />
                 <div>
-                    <x-shopper-application-logo class="mx-auto h-20 w-auto" />
+                    <x-shopper-application-icon class="mx-auto h-20 w-auto" />
                     <h2 class="mt-10 text-3xl font-extrabold font-heading text-center leading-9 text-gray-900 dark:text-white">{{ __('Reset your password') }}</h2>
                     <p class="mt-5 text-sm leading-5 text-center">
                         {{ __("Enter your email and the new password you'd like to use to access your account.") }}

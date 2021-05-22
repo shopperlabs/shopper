@@ -1,7 +1,7 @@
 <div class="flex flex-col justify-between bg-blue-800 text-center w-16">
     <div class="pt-3">
         <a class="flex-shrink-0 flex items-center px-4" href="{{ route('shopper.dashboard') }}">
-            <x-shopper-application-logo class="h-12 w-auto" />
+            <x-shopper-application-icon class="h-12 w-auto" />
         </a>
         <div class="h-full pt-5 pb-4 overflow-y-auto">
             {!! $primaryMenu->asUl(['class' => 'primary-menu mt-5 px-2 space-y-2 flex flex-col items-center']) !!}

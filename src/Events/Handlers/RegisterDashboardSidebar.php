@@ -23,7 +23,6 @@ class RegisterDashboardSidebar extends AbstractAdminSidebar
 
             $group->item(__('Dashboard'), function (Item $item) {
                 $item->weight(1);
-                $item->badge(10);
                 $item->route('shopper.dashboard');
                 $item->icon('
                     <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">

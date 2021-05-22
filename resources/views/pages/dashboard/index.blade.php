@@ -3,11 +3,11 @@
 
 @section('content')
 
-    <div class="mt-4 pb-5 border-b border-gray-200 dark:border-gray-700 flex items-center">
-        <svg class="h-6 w-6 mr-1.5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+    <div class="flex items-center space-x-2">
+        <svg class="h-8 w-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8 3.6a1.2 1.2 0 1 1 2.4 0v6.6a.6.6 0 1 0 1.2 0V4.8a1.2 1.2 0 1 1 2.4 0v5.4a.6.6 0 1 0 1.2 0v-3a1.2 1.2 0 1 1 2.4 0v6a8.401 8.401 0 0 1-16.16 3.215A8.4 8.4 0 0 1 3.6 13.2v-2.4a1.2 1.2 0 0 1 2.4 0v3a.6.6 0 1 0 1.2 0v-9a1.2 1.2 0 0 1 2.4 0v5.4a.6.6 0 1 0 1.2 0V3.6z" />
         </svg>
-        <h2 class="text-2xl leading-6 font-medium text-gray-600 dark:text-white sm:leading-9 sm:truncate">
+        <h2 class="text-3xl leading-8 font-bold text-gray-900 dark:text-white sm:leading-9 sm:truncate">
             @lang('shopper::messages.dashboard.title')
         </h2>
     </div>
@@ -15,7 +15,7 @@
     <div class="my-8 bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
         <div class="p-6 border-b border-gray-200 dark:border-gray-600">
             <div class="text-xl text-gray-900 dark:text-white font-medium">
-                {{ __("Start with the basic for your online store") }}
+                {{ __('Start with the basic for your online store') }}
             </div>
 
             <div class="mt-4 text-gray-500 dark:text-gray-400">
@@ -26,9 +26,7 @@
         <div class="bg-gray-50 dark:bg-gray-700 grid grid-cols-1 md:grid-cols-2">
             <div class="px-6 py-5">
                 <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 text-blue-600">
-                        <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                    </svg>
+                    <x-heroicon-o-code class="w-6 h-6 text-blue-600" />
                     <h4 class="ml-4 text-base text-gray-900 dark:text-white leading-6 font-medium">Documentation</h4>
                 </div>
 
@@ -41,10 +39,8 @@
                         <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
                             <span>{{ __('Visit the documentation') }}</span>
 
-                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
-                                <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
+                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
+                                <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                             </span>
                         </div>
                     </a>
@@ -53,9 +49,7 @@
 
             <div class="px-6 py-5 border-t border-gray-200 dark:border-gray-600 sm:border-t-0">
                 <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 text-blue-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
-                    </svg>
+                    <x-heroicon-o-film class="w-6 h-6 text-blue-600" />
                     <h4 class="ml-4 text-base text-gray-900 dark:text-white leading-6 font-medium">{{ __('Screencasts') }}</h4>
                 </div>
 
@@ -68,10 +62,8 @@
                         <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
                             <span>{{ __('Start watching Shopper') }}</span>
 
-                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
-                                <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
+                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
+                                <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                             </span>
                         </div>
                     </a>
@@ -80,9 +72,7 @@
 
             <div class="px-6 py-5 border-t border-gray-200 dark:border-gray-600">
                 <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 text-blue-600">
-                        <path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-                    </svg>
+                    <x-heroicon-o-color-swatch class="w-6 h-6 text-blue-600" />
                     <h4 class="ml-4 text-base text-gray-900 dark:text-white leading-6 font-medium">{{ __('Themes') }}</h4>
                 </div>
 
@@ -95,10 +85,8 @@
                         <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
                             <span>{{ __('Find a Theme') }}</span>
 
-                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
-                                <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                </svg>
+                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
+                                <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                             </span>
                         </div>
                     </a>
@@ -107,9 +95,7 @@
 
             <div class="px-6 py-5 border-t border-gray-200 dark:border-gray-600">
                 <div class="flex items-center">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 text-blue-600">
-                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
+                    <x-heroicon-o-book-open class="w-6 h-6 text-blue-600" />
                     <h4 class="ml-4 text-base text-gray-900 dark:text-white leading-6 font-medium">{{ __('Add product') }}</h4>
                 </div>
 
@@ -123,10 +109,8 @@
                             <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
                                 <span>{{ __('Add product to your store') }}</span>
 
-                                <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-150 ease-in-out">
-                                    <svg class="arrow-right w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                                    </svg>
+                                <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
+                                    <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                                 </span>
                             </div>
                         </a>
