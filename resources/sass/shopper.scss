@@ -11,6 +11,18 @@
 @tailwind base;
 @import "base";
 
+.dark {
+  trix-toolbar {
+    .trix-button-group {
+      @apply border-gray-700
+    }
+    .trix-button {
+      @apply text-gray-400 border-gray-700
+    }
+  }
+
+}
+
 @tailwind components;
 @import "components";
 

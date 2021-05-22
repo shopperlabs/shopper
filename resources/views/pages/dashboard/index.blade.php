@@ -13,7 +13,7 @@
     </div>
 
     <div class="my-8 bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg">
-        <div class="p-6 border-b border-gray-200 dark:border-gray-600">
+        <div class="p-6 border-b border-gray-200 dark:border-gray-700">
             <div class="text-xl text-gray-900 dark:text-white font-medium">
                 {{ __('Start with the basic for your online store') }}
             </div>
