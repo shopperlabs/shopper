@@ -36,6 +36,7 @@ class ComponentServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('alert');
+            $this->registerComponent('application-icon');
             $this->registerComponent('application-logo');
             $this->registerComponent('button');
             $this->registerComponent('breadcrumb');
