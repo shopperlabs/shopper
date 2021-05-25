@@ -15,17 +15,15 @@
     }"
 >
     <x:shopper-breadcrumb back="shopper.products.index">
-        <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
-        </svg>
-        <a href="{{ route('shopper.products.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Products') }}</a>
+        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
+        <a href="{{ route('shopper.products.index') }}" class="text-gray-500 dark:text-gray-400 dark:hover:text-gray-200 hover:text-gray-700">{{ __('Products') }}</a>
     </x:shopper-breadcrumb>
 
-    <div class="mt-3 bg-gray-100 z-30 relative pb-5 sm:pb-0 sticky top-4 sm:top-0 sm:-mx-8">
+    <div class="mt-3 bg-gray-100 dark:bg-gray-800 z-30 relative pb-5 sm:pb-0 sticky top-4 sm:top-0 sm:-mx-8">
         <div class="sm:px-8 space-y-4">
             <div class="space-y-3 md:flex md:items-start md:justify-between md:space-y-0">
                 <div class="flex-1 min-w-0">
-                    <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ $product->name }}</h3>
+                    <h3 class="text-2xl font-bold leading-6 text-gray-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">{{ $product->name }}</h3>
                     <div class="mt-1">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $product->is_visible ? 'bg-green-100 text-green-800': 'bg-yellow-100 text-yellow-800' }}">
                             {{ $product->is_visible ? __('Visible'): __('Not visible') }}
