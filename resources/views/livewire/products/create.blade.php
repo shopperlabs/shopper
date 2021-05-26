@@ -232,7 +232,7 @@
                                 <span class="ml-4 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('160 characters') }}</span>
                             </div>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <x-shopper-input.textarea wire:model="seoDescription" id="seo_description"></x-shopper-input.textarea>
+                                <x-shopper-input.textarea wire:model.lazy="seoDescription" id="seo_description" />
                             </div>
                         </div>
                     </div>
@@ -267,7 +267,7 @@
                         x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});"
                         class="p-4 sm:p-5"
                     >
-                        <x-shopper-label for="date" value="{{ __('Product availability') }}" />
+                        <x-shopper-label for="date" :value="__('Product availability')" />
                         <div class="mt-1 relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <x-heroicon-o-calendar class="h-5 w-5 text-gray-400" />
@@ -303,10 +303,10 @@
                             </x-shopper-input.select>
                         </x-shopper-input.group>
                         <x-shopper-input.group class="p-4 sm:p-5" label="Categories" for="categories">
-                            <x-shopper-input.select wire:model="category_ids" id="categories" :items="$categories" multiple />
+                            <x-shopper-input.select wire:model.lazy="category_ids" id="categories" :items="$categories" multiple />
                         </x-shopper-input.group>
                         <x-shopper-input.group class="p-4 sm:p-5" label="Collections" for="collections">
-                            <x-shopper-input.select wire:model="collection_ids" id="collections" :items="$collections" multiple />
+                            <x-shopper-input.select wire:model.lazy="collection_ids" id="collections" :items="$collections" multiple />
                         </x-shopper-input.group>
                     </div>
                 </div>
@@ -318,7 +318,7 @@
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper-loader wire:loading wire:target="store" />
-                {{ __("Save") }}
+                {{ __('Save') }}
             </x-shopper-button>
         </div>
     </div>
