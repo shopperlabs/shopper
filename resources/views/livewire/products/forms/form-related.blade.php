@@ -1,22 +1,22 @@
 <div>
     <div>
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-            {{ __("Similar Products") }}
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+            {{ __('Similar Products') }}
         </h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500">
-            {{ __("All products that can be identified as similar or complementary to your product.") }}
+        <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+            {{ __('All products that can be identified as similar or complementary to your product.') }}
         </p>
     </div>
 
     <section aria-labelledby="similar_products_heading">
-        <div class="mt-5 bg-white p-4 sm:p-6 shadow rounded-md">
+        <div class="mt-5 bg-white dark:bg-gray-800 p-4 sm:p-6 shadow rounded-md">
             <div class="grid grid-cols-12 gap-4">
                 <div class="col-span-5">
-                    <select aria-label="{{ __('Products') }}" name="from[]" id="multiselect" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" size="8" multiple>
+                    <x-shopper-input.select aria-label="{{ __('Products') }}" name="from[]" id="multiselect" size="8" multiple>
                         @foreach($products as $product)
                             <option value="{{ $product->id }}">{{ $product->name }}</option>
                         @endforeach
-                    </select>
+                    </x-shopper-input.select>
                 </div>
 
                 <div class="col-span-2 flex items-center">
@@ -35,11 +35,11 @@
                 </div>
 
                 <div class="col-span-5">
-                    <select aria-label="{{ __('Similar Products') }}" name="to[]" id="multiselect_to" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" size="8" multiple>
+                    <x-shopper-input.select aria-label="{{ __('Similar Products') }}" name="to[]" id="multiselect_to" size="8" multiple>
                         @foreach($relatedProducts as $related)
                             <option value="{{ $related->id }}">{{ $related->name }}</option>
                         @endforeach
-                    </select>
+                    </x-shopper-input.select>
                 </div>
             </div>
         </div>
