@@ -131,126 +131,98 @@
             </div>
         </x-shopper-empty-state>
     @else
-        <div class="mt-6 bg-white shadow rounded-md">
+        <div class="mt-6 bg-white dark:bg-gray-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
-                <label for="filter" class="sr-only">{{ __('Search brands') }}</label>
-                <div class="flex rounded-md shadow-sm">
-                    <div class="relative flex-grow focus-within:z-10">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                            </svg>
-                        </div>
-                        <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search brand by name') }}" />
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+                <x-shopper-input.search label="Search brands" placeholder="Search brand by name" />
             </div>
             <div class="hidden sm:block">
                 <div class="align-middle inline-block min-w-full">
                     <table class="min-w-full">
                         <thead>
-                        <tr class="border-t border-gray-200">
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                <span class="lg:pl-2">{{ __("Name") }}</span>
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __("Website") }}
-                            </th>
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __("Url") }}
-                            </th>
-                            <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __("Updated at") }}
-                            </th>
-                            <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
-                        </tr>
+                            <tr class="border-t border-gray-200 dark:border-gray-700">
+                                <th class="px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    <span class="lg:pl-2">{{ __('Name') }}</span>
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    {{ __('Website') }}
+                                </th>
+                                <th class="px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-left text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    {{ __('Url') }}
+                                </th>
+                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-right text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    {{ __('Updated at') }}
+                                </th>
+                                <th class="pr-6 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-right text-xs leading-4 font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"></th>
+                            </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-100" x-max="1">
+                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700" x-max="1">
                             @forelse($brands as $brand)
                                 <tr>
-                                    <td class="px-6 py-3 max-w-0 w-full whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $brand->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
                                             <div class="flex items-center">
                                                 @if($brand->files->count() > 0)
                                                     <img class="h-8 w-8 rounded object-cover object-center" src="{{ $brand->files->first()->file_path }}" alt="">
                                                 @else
-                                                    <div class="bg-gray-200 flex items-center justify-center h-8 w-8 rounded">
-                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
+                                                    <div class="bg-gray-200 dark:bg-gray-700 flex items-center justify-center h-8 w-8 rounded">
+                                                        <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />
                                                     </div>
                                                 @endif
-                                                <a href="{{ route('shopper.brands.edit', $brand) }}" class="ml-2 truncate hover:text-gray-600">
+                                                <a href="{{ route('shopper.brands.edit', $brand) }}" class="ml-2 truncate hover:text-gray-600 dark:hover:text-gray-400">
                                                     <span>{{ $brand->name }} </span>
                                                 </a>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400">
                                         @if($brand->website)
-                                            <a href="https://{{ $brand->website }}" target="_blank" class="inline-flex items-center text-gray-500 font-medium text-sm leading-5">
+                                            <a href="https://{{ $brand->website }}" target="_blank" class="inline-flex items-center text-gray-500 dark:text-gray-400 font-medium text-sm leading-5">
                                                 {{ $brand->website }}
-                                                <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                                </svg>
+                                                <x-heroicon-o-external-link class="w-5 h-5 -mr-1 ml-2" />
                                             </a>
                                         @else
-                                            <span class="inline-flex text-gray-700">&mdash;</span>
+                                            <span class="inline-flex text-gray-700 dark:text-gray-500">&mdash;</span>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium">
+                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400 font-medium">
                                         {{ $brand->slug }}
                                     </td>
-                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
+                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400 text-right">
                                         <time datetime="{{ $brand->updated_at->format('Y-m-d') }}" class="capitalize">{{ $brand->updated_at->formatLocalized('%d %B, %Y') }}</time>
                                     </td>
                                     <td class="pr-6">
-                                        <div x-data="{ open: false }" x-on:brand-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
-                                            <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                                </svg>
-                                            </button>
-                                            <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
-                                                <div class="relative z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
-                                                    <div class="py-1">
-                                                        <a href="{{ route('shopper.brands.edit', $brand) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: pencil-alt" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                                            </svg>
-                                                            {{ __("Edit") }}
-                                                        </a>
-                                                    </div>
-                                                    <div class="border-t border-gray-100"></div>
-                                                    <div class="py-1">
-                                                        <button wire:click="remove({{ $brand->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                            </svg>
-                                                            {{ __("Delete") }}
-                                                        </button>
-                                                    </div>
+                                        <x-shopper-dropdown customAlignmentClasses="right-12 -bottom-1">
+                                            <x-slot name="trigger">
+                                                <button id="brand-options-menu" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700 transition ease-in-out duration-150">
+                                                    <x-heroicon-s-dots-vertical class="w-5 h-5" />
+                                                </button>
+                                            </x-slot>
+
+                                            <x-slot name="content">
+                                                <div class="py-1">
+                                                    <a href="{{ route('shopper.brands.edit', $brand) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white" role="menuitem">
+                                                        <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                                                        {{ __('Edit') }}
+                                                    </a>
                                                 </div>
-                                            </div>
-                                        </div>
+                                                <div class="border-t border-gray-100 dark:border-gray-600"></div>
+                                                <div class="py-1">
+                                                    <button wire:click="remove({{ $brand->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white" role="menuitem">
+                                                        <x-heroicon-s-trash class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </div>
+                                            </x-slot>
+                                        </x-shopper-dropdown>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex justify-center items-center space-x-2">
-                                            <svg class="h-8 w-8 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No brands found") }}...</span>
+                                            <x-heroicon-o-bookmark-alt class="h-8 w-8 text-gray-400" />
+                                            <span class="font-medium py-8 text-gray-400 text-xl">{{ __('No brands found') }}...</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -259,13 +231,13 @@
                     </table>
                 </div>
             </div>
-            <div class="bg-white px-4 py-3 flex items-center rounded-b-md justify-between border-t border-gray-200 sm:px-6">
+            <div class="px-4 py-3 flex items-center rounded-b-md justify-between border-t border-gray-200 dark:border-gray-700 sm:px-6">
                 <div class="flex-1 flex justify-between sm:hidden">
                     {{ $brands->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm leading-5 text-gray-700">
+                        <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
                             {{ __('Showing') }}
                             <span class="font-medium">{{ ($brands->currentPage() - 1) * $brands->perPage() + 1 }}</span>
                             {{ __('to') }}
