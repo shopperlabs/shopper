@@ -295,7 +295,7 @@
                     </div>
                     <div class="divide-y divide-gray-200 dark:divide-gray-700">
                         <x-shopper-input.group class="p-4 sm:p-5" label="Brand" for="brand_id">
-                            <x-shopper-input.select wire:model="brand_id" id="brand_id">
+                            <x-shopper-input.select wire:model.lazy="brand_id" id="brand_id">
                                 <option>{{ __('Select brand') }}</option>
                                 @foreach($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>

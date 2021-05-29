@@ -12,6 +12,7 @@
 
 import 'alpinejs';
 
+// Make dark mode switch.
 const darkModeToggles = document.getElementsByClassName('darkModeToggle');
 
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
