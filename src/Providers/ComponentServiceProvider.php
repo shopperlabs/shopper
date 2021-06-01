@@ -40,6 +40,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('application-logo');
             $this->registerComponent('button');
             $this->registerComponent('breadcrumb');
+            $this->registerComponent('breadcrumb-link');
             $this->registerComponent('confirm-modal');
             $this->registerComponent('confirms-password');
             $this->registerComponent('datetime-picker');
@@ -57,6 +58,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('input.file-upload');
             $this->registerComponent('input.group');
             $this->registerComponent('input.markdown');
+            $this->registerComponent('input.radio');
             $this->registerComponent('input.rich-text');
             $this->registerComponent('input.search');
             $this->registerComponent('input.select');
@@ -69,6 +71,8 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('loader');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
+            $this->registerComponent('tables.table-head');
+            $this->registerComponent('tables.table-td');
             $this->registerComponent('time');
             $this->registerComponent('validation-errors');
             $this->registerComponent('wip');
