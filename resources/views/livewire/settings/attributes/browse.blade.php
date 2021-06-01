@@ -109,7 +109,7 @@
                 <x-shopper-input.search
                     label="Search attributes"
                     placeholder="Search attribute by name"
-                    wire:model.debounce.300ms="search"
+                    wire:model.debounce.350ms="search"
                     wire:target="search"
                 />
             </div>

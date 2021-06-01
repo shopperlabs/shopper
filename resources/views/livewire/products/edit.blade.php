@@ -16,7 +16,7 @@
 >
     <x:shopper-breadcrumb back="shopper.products.index">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
-        <a href="{{ route('shopper.products.index') }}" class="text-gray-500 dark:text-gray-400 dark:hover:text-gray-200 hover:text-gray-700">{{ __('Products') }}</a>
+        <x-shopper-breadcrumb-link :link="route('shopper.products.index')" title="Products" />
     </x:shopper-breadcrumb>
 
     <div class="mt-3 bg-gray-100 dark:bg-gray-900 z-30 relative pb-5 sm:pb-0 sticky top-4 sm:top-2 sm:-mx-8">

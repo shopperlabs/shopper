@@ -14,7 +14,7 @@
         <div class="sm:col-span-2">
             <div class="space-y-5">
                 <x-shopper-input.group label="Title">
-                    <x-shopper-input.text wire:model.debounce550ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                    <x-shopper-input.text wire:model.debounce.350ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
                 </x-shopper-input.group>
                 <div>
                     <div class="flex items-center justify-between">
@@ -22,7 +22,7 @@
                         <span class="ml-4 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('160 characters') }}</span>
                     </div>
                     <div class="mt-1 rounded-md shadow-sm">
-                        <x-shopper-input.textarea wire:model.debounce350ms="seoDescription" id="seo_description" />
+                        <x-shopper-input.textarea wire:model.debounce.350ms="seoDescription" id="seo_description" />
                     </div>
                 </div>
                 <div>

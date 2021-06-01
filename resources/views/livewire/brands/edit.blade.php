@@ -1,7 +1,7 @@
 <div x-data="{ on: @entangle('is_enabled') }">
     <x:shopper-breadcrumb back="shopper.brands.index">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
-        <a href="{{ route('shopper.brands.index') }}" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Brands') }}</a>
+        <x-shopper-breadcrumb-link :link="route('shopper.brands.index')" title="Brands" />
     </x:shopper-breadcrumb>
 
     <x-shopper-heading>

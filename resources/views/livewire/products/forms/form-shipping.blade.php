@@ -22,7 +22,7 @@
                     </div>
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <x-shopper-input.checkbox wire:model.debounce350ms="requiresShipping" id="required_shipping" />
+                            <x-shopper-input.checkbox wire:model.debounce.350ms="requiresShipping" id="required_shipping" />
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper-label for="required_shipping" :value="__('This product will be shipped')" />
