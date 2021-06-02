@@ -18,7 +18,7 @@
         {{ $slot }}
     </div>
     @if ($error)
-        <p class="mt-1 text-red-500 text-sm">{{ $error }}</p>
+        <p class="mt-1 text-sm text-red-500 dark:text-red-400">{{ $error }}</p>
     @endif
 
     @if ($helpText)

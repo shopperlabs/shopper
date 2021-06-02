@@ -56,7 +56,7 @@
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                     <x-shopper-button wire:click="{{ $method }}" wire:loading.attr="disabled" type="button">
                         <x-shopper-loader wire:loading wire:target="{{ $method }}" />
-                        {{ __("Confirm") }}
+                        {{ __('Confirm') }}
                     </x-shopper-button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">

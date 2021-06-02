@@ -3,15 +3,17 @@
 
 @section('content')
 
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('My profile') }}</h2>
-    </div>
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('My profile') }}
+        </x-slot>
+    </x-shopper-heading>
 
     <livewire:shopper-account.profile />
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200"></div>
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
         </div>
     </div>
 
@@ -20,7 +22,7 @@
     @if (config('shopper.auth.2fa_enabled'))
         <div class="hidden sm:block">
             <div class="py-5">
-                <div class="border-t border-gray-200"></div>
+                <div class="border-t border-gray-200 dark:border-gray-700"></div>
             </div>
         </div>
 
@@ -29,7 +31,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200"></div>
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
         </div>
     </div>
 
