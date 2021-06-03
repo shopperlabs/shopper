@@ -81,9 +81,9 @@
                                 </p>
                             </div>
 
-                            <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 text-sm bg-gray-100 rounded-lg dark:bg-gray-600">
+                            <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 text-sm bg-gray-100 rounded-lg dark:bg-gray-700">
                                 @foreach (json_decode(decrypt($this->user->two_factor_recovery_codes), true) as $code)
-                                    <div>{{ $code }}</div>
+                                    <div class="text-gray-500 leading-5 dark:text-gray-300">{{ $code }}</div>
                                 @endforeach
                             </div>
                         @endif
