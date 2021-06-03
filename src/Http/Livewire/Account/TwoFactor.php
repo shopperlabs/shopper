@@ -17,14 +17,14 @@ class TwoFactor extends Component
      *
      * @var bool
      */
-    public $showingQrCode = false;
+    public bool $showingQrCode = false;
 
     /**
      * Indicates if two factor authentication recovery codes are being displayed.
      *
      * @var bool
      */
-    public $showingRecoveryCodes = false;
+    public bool $showingRecoveryCodes = false;
 
     /**
      * Enable two factor authentication for the user.
@@ -105,7 +105,7 @@ class TwoFactor extends Component
      *
      * @return bool
      */
-    public function getEnabledProperty()
+    public function getEnabledProperty(): bool
     {
         return ! empty($this->user->two_factor_secret);
     }

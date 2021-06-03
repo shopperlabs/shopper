@@ -15,7 +15,7 @@ class ConfirmPassword
      * @param  string  $password
      * @return bool
      */
-    public function __invoke(StatefulGuard $guard, $user, string $password)
+    public function __invoke(StatefulGuard $guard, $user, string $password): bool
     {
         return $guard->validate([
             Shopper::username() => $user->{Shopper::username()},

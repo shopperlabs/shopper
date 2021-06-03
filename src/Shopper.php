@@ -11,7 +11,7 @@ class Shopper
      *
      * @return string
      */
-    public static function version()
+    public static function version(): string
     {
         return '2.0.0';
     }
@@ -21,7 +21,7 @@ class Shopper
      *
      * @return string
      */
-    public static function prefix()
+    public static function prefix(): string
     {
         return config('shopper.routes.prefix');
     }
@@ -31,7 +31,7 @@ class Shopper
      *
      * @return string
      */
-    public static function username()
+    public static function username(): string
     {
         return config('shopper.auth.username', 'email');
     }
@@ -41,7 +41,7 @@ class Shopper
      *
      * @return Shopper
      */
-    public function initializeRoute()
+    public function initializeRoute(): self
     {
         Route::namespace('Shopper\Framework\Http\Controllers')
             ->middleware(['shopper', 'shopper.setup'])
