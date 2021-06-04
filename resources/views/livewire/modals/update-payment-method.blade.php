@@ -1,5 +1,5 @@
 <x-shopper-modal
-    headerClasses="bg-white p-4 sm:px-6 sm:py-4 border-b border-gray-100"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -9,22 +9,20 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 h-96 overflow-y-scroll">
             <div class="sm:col-span-2">
                 <div>
                     <x-shopper-label value="{{ __('Provider Logo') }}" />
                     <div class="mt-2">
                         <x-shopper-input.file-upload id="logo" wire:model.lazy='logo'>
-                            <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                            <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
                                 @if($logo)
                                     <img class="h-full w-full bg-center" src="{{ $logo->temporaryUrl() }}" alt="">
                                 @elseif($logoUrl)
                                     <img class="h-full w-full bg-center" src="{{ $logoUrl }}" alt="">
                                 @else
                                     <span class="h-12 w-12 flex items-center justify-center">
-                                        <svg class="h-8 w-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
+                                        <x-heroicon-o-photograph class="w-8 h-8 text-gray-400 dark:text-gray-500" />
                                     </span>
                                 @endif
                             </span>
@@ -34,7 +32,7 @@
             </div>
             <div class="sm:col-span-2">
                 <x-shopper-input.group label="Custom payment method name" for="title" :error="$errors->first('title')" isRequired>
-                    <x-shopper-input.text wire:model.lazy="title" id="title" />
+                    <x-shopper-input.text wire:model.lazy="title" id="title" type="text" />
                 </x-shopper-input.group>
             </div>
             <div class="sm:col-span-2">
