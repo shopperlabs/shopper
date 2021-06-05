@@ -52,7 +52,7 @@
                 <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg" style="display: none;">
                     <div class="rounded-md bg-white shadow-xs dark:bg-gray-800">
                         <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                            <button wire:click="confirmDeletion" type="button" class="block w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700" role="menuitem">
+                            <button wire:click="$emit('openModal', 'shopper-modals.delete-customer', {{ json_encode([$customer->id]) }})" type="button" class="block w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700" role="menuitem">
                                 {{ __('Delete customer') }}
                             </button>
                         </div>
@@ -108,37 +108,4 @@
         </div>
     </div>
 
-    <x-shopper-modal wire:model="confirmDeletion" maxWidth="lg">
-        <div class="px-4 pt-5 pb-4 sm:p-6">
-            <div class="sm:flex sm:items-start">
-                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                </div>
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
-                        {{ __('Archived customer') }}
-                    </h3>
-                    <div class="mt-2">
-                        <p class="text-sm text-gray-500">
-                            {{ __('Are you sure you want to deactivate this customer? All of his data (orders & addresses) will be permanently removed from your store forever. This action cannot be undone.') }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                <x-shopper-danger-button type="button" wire:click="deleteCustomer" wire:loading.attr="disabled" class="sm:ml-3 sm:w-auto">
-                    <svg wire:loading wire:target="deleteCustomer" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    {{ __('Confirm') }}
-                </x-shopper-danger-button>
-                <x-shopper-default-button type="button" wire:click="cancelDeletion" class="mt-3 sm:mt-0 sm:w-auto">
-                    {{ __('Cancel') }}
-                </x-shopper-default-button>
-            </div>
-        </div>
-    </x-shopper-modal>
 </div>
