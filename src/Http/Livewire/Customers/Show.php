@@ -22,47 +22,15 @@ class Show extends AbstractBaseComponent
      */
     public $customer;
 
-    /**
-     * Customer Model id.
-     *
-     * @var int
-     */
-    public $user_id;
+    public int $user_id;
 
-    /**
-     * Last Name attribute.
-     *
-     * @var string
-     */
-    public $last_name = '';
+    public string $last_name;
 
-    /**
-     * First Name attribute.
-     *
-     * @var string
-     */
-    public $first_name = '';
+    public string $first_name;
 
-    /**
-     * Email for custom url.
-     *
-     * @var string
-     */
-    public $email;
+    public string $email;
 
-    /**
-     * Customer Profile picture.
-     *
-     * @var string
-     */
-    public $picture;
-
-    /**
-     * Confirm customer delete action.
-     *
-     * @var bool
-     */
-    public $confirmDeletion = false;
+    public string $picture;
 
     /**
      * Component mounted action.
@@ -117,7 +85,7 @@ class Show extends AbstractBaseComponent
      *
      * @return string[]
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'email' => [
@@ -130,46 +98,6 @@ class Show extends AbstractBaseComponent
         ];
     }
 
-    /**
-     * Display deletion modale.
-     *
-     * @return void
-     */
-    public function confirmDeletion()
-    {
-        $this->confirmDeletion = true;
-    }
-
-    /**
-     * Cancel customer deletion.
-     *
-     * @return void
-     */
-    public function cancelDeletion()
-    {
-        $this->confirmDeletion = false;
-    }
-
-    /**
-     * Remove user from the storage.
-     *
-     * @return void
-     * @throws \Exception
-     */
-    public function deleteCustomer()
-    {
-        $this->customer->delete();
-
-        session()->flash('success', __("You have successfully archived this customer, it's no longer available in your customer list."));
-
-        $this->redirectRoute('shopper.customers.index');
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.customers.show');
