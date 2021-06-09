@@ -5,7 +5,7 @@
             <div class="mt-4 sm:mt-0 flex items-center space-x-3">
                 @if($collection->type === 'manual')
                     <span class="inline-flex rounded-md shadow-sm">
-                        <x-shopper-default-button wire:click="launchModal" type="button">
+                        <x-shopper-default-button wire:click="$emit('openModal', 'shopper-modals.products-lists', {{ json_encode([$collection->id, $this->productsIds]) }})" type="button">
                             {{ __('Browse') }}
                         </x-shopper-default-button>
                     </span>
@@ -29,14 +29,14 @@
             </div>
         </div>
         <div class="border-t border-gray-200 p-4 sm:px-6 sm:py-5 dark:border-gray-700">
-            @if($collectionProducts->isNotEmpty())
+            @if($products->isNotEmpty())
                 <div class="divide-y divide-gray-200 dark:border-gray-700">
-                    @foreach($collectionProducts as $collectionProduct)
+                    @foreach($products as $product)
                         <div class="flex items-center justify-between py-2">
                             <div class="flex items-center">
-                                @if($collectionProduct->getFirstImage())
+                                @if($product->getFirstImage())
                                     <span class="flex-shrink-0 h-10 w-10 rounded-md overflow-hidden">
-                                        <img class="object-cover object-center w-full h-full block" src="{{ $collectionProduct->getFirstImage()->file_path }}" alt="" />
+                                        <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstImage()->file_path }}" alt="" />
                                     </span>
                                 @else
                                     <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md dark:bg-gray-700 dark:text-gray-500">
@@ -46,10 +46,10 @@
                                     </span>
                                 @endif
                                 <p class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-500">
-                                    {{ $collectionProduct->name }}
+                                    {{ $product->name }}
                                 </p>
                             </div>
-                            <button wire:key="product_{{ $loop->index }}" wire:click="removeProduct({{ $collectionProduct->id }})" type="button" class="text-gray-500 text-sm font-medium inline-flex items-center dark:text-gray-400">
+                            <button wire:key="product_{{ $loop->index }}" wire:click="removeProduct({{ $product->id }})" type="button" class="text-gray-500 text-sm font-medium inline-flex items-center dark:text-gray-400">
                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
                                 </svg>
@@ -83,63 +83,4 @@
             @endif
         </div>
     </div>
-
-    <x-shopper-modal id="products-list" wire:model="browsingProductsModal" maxWidth="2xl">
-        <div class="bg-white">
-            <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
-                <div class="text-center sm:text-left">
-                    <h3 class="text-lg leading-6 font-medium text-gray-700">{{ __('Add Products to collection') }}</h3>
-                </div>
-            </div>
-            <div class="py-2 px-4 sm:px-6 border-t border-gray-100">
-                <label for="search" class="sr-only">{{ __('Search product') }}</label>
-                <div class="mt-1 relative rounded-md shadow-sm">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                    <input id="search" wire:model.debounce.350ms="search" autocomplete="off" class="form-input block w-full pl-10 pr-6 sm:text-sm sm:leading-5" placeholder="{{ __("Search product by name") }}" />
-                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-            <div class="my-2 divide-y divide-gray-200 h-80 overflow-auto">
-                @foreach($products as $product)
-                    <label for="product_{{ $product->id }}" class="flex items-center py-3 cursor-pointer hover:bg-gray-50 px-4 sm:px-6 focus:bg-gray-50">
-                        <span class="mr-4">
-                            <input id="product_{{ $product->id }}" aria-label="{{ __("Product") }}" wire:model="selectedProducts" value="{{ $product->id }}" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out" />
-                        </span>
-                        <span class="flex flex-1 items-center justify-between">
-                            <span class="block font-medium text-sm text-gray-700">{{ $product->name }}</span>
-                            <span class="flex items-center space-x-2">
-                                <span class="text-sm leading-5 text-gray-500">{{ $product->stock }} {{ __("available") }}</span>
-                                <span class="text-sm leading-5 text-gray-500">{{ $product->formattedPrice }}</span>
-                            </span>
-                        </span>
-                    </label>
-                @endforeach
-            </div>
-        </div>
-        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <x-shopper-button wire:click="addProducts" wire.loading.attr="disabled" type="button">
-                    <svg wire:loading wire:target="addProducts" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                    </svg>
-                    {{ __('Add Selected Products') }}
-                </x-shopper-button>
-            </span>
-            <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <x-shopper-default-button wire:click="closeModal" type="button">
-                    {{ __('Cancel') }}
-                </x-shopper-default-button>
-            </span>
-        </div>
-    </x-shopper-modal>
 </div>
