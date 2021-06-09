@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Traits\Mails;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
@@ -9,7 +10,7 @@ use Illuminate\Support\Str;
 
 trait Templates
 {
-    public static function getTemplatesFile()
+    public static function getTemplatesFile(): string
     {
         $file = config('shopper.mails.mailables_dir').'templates.json';
         if (! file_exists($file)) {
@@ -54,7 +55,7 @@ trait Templates
         file_put_contents(self::getTemplatesFile(), $templates->toJson());
     }
 
-    public static function updateTemplate($request)
+    public static function updateTemplate(Request $request): \Illuminate\Http\JsonResponse
     {
         $template = self::getTemplates()
             ->where('template_slug', $request->templateslug)->first();
@@ -110,7 +111,7 @@ trait Templates
         }
     }
 
-    public static function getTemplate($templateSlug)
+    public static function getTemplate(string $templateSlug): Collection
     {
         $template = self::getTemplates()
             ->where('template_slug', $templateSlug)->first();
@@ -137,9 +138,11 @@ trait Templates
                 return $templateData;
             }
         }
+
+        return collect();
     }
 
-    public static function getTemplates()
+    public static function getTemplates(): Collection
     {
         $template = collect(json_decode(file_get_contents(self::getTemplatesFile())));
 
@@ -152,7 +155,7 @@ trait Templates
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|void
      */
-    public static function createTemplate($request)
+    public static function createTemplate(Request $request)
     {
         if (! preg_match("/^[a-zA-Z0-9-_\s]+$/", $request->template_name)) {
            session()->flash('error', __('Template name not valid'));
@@ -187,7 +190,7 @@ trait Templates
 
             session()->flash('success', __('Template successfully created!'));
 
-            return  redirect()->route('shopper::settings.mails');
+            return redirect()->route('shopper.settings.mails');
         }
 
         session()->flash('error', __('Template not created'));
@@ -195,7 +198,7 @@ trait Templates
         return;
     }
 
-    public static function getTemplateSkeletons()
+    public static function getTemplateSkeletons(): Collection
     {
         return collect(config('shopper.mails.skeletons'));
     }
