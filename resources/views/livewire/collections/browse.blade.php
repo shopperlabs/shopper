@@ -163,7 +163,7 @@
                             </span>
                         </div>
 
-                        <div x-cloak x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
+                        <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
                             <div class="rounded-md bg-white dark:bg-gray-800 shadow-xs">
                                 <div class="py-1">
                                     <div class="flex items-center py-2 px-4">
@@ -192,44 +192,34 @@
                 <div class="align-middle inline-block min-w-full">
                     <table class="min-w-full">
                         <thead>
-                            <tr class="border-t border-gray-200">
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    <span class="lg:pl-2">{{ __("Name") }}</span>
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Type") }}
-                                </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Product Conditions") }}
-                                </th>
-                                <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Published at") }}
-                                </th>
-                                <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
+                            <tr class="border-t border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-700">
+                                <x-shopper-tables.table-head><span class="lg:pl-2">{{ __('Name') }}</span></x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head>{{ __('Type') }}</x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head>{{ __('Product Conditions') }}</x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head class="hidden md:table-cell text-right">{{ __('Published at') }}</x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head class="pr-6 text-right" />
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-100" x-max="1">
+                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700" x-max="1">
                             @forelse($collections as $collection)
                                 <tr>
-                                    <td class="px-6 py-3 max-w-lg whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td class="px-6 py-3 max-w-lg whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="flex items-center">
                                                 @if($collection->files->count() > 0)
                                                     <img class="h-8 w-8 rounded object-cover object-center" src="{{ $collection->files->first()->file_path }}" alt="">
                                                 @else
-                                                    <div class="bg-gray-200 flex items-center justify-center h-8 w-8 rounded">
-                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
+                                                    <div class="bg-gray-200 flex items-center justify-center h-8 w-8 rounded dark:bg-gray-700">
+                                                        <x-heroicon-o-photograph class="w-5 h-5 text-gray-400 dark:txt-gray-500" />
                                                     </div>
                                                 @endif
-                                                <a href="{{ route('shopper.collections.edit', $collection) }}" class="ml-2 truncate hover:text-gray-600">
+                                                <a href="{{ route('shopper.collections.edit', $collection) }}" class="ml-2 truncate hover:text-gray-700 dark:hover:text-gray-300">
                                                     <span>{{ $collection->name }}</span>
                                                 </a>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium text-right">
+                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium text-right dark:text-gray-400">
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 {{ $collection->type === "auto" ? 'bg-green-100 text-green-800' :  'bg-blue-100 text-blue-800' }}">
                                             <svg class="-ml-1 mr-1.5 h-2 w-2 {{ $collection->type === "auto" ? 'text-green-400' :  'text-blue-400' }}" fill="currentColor" viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3" />
@@ -237,54 +227,46 @@
                                             {{ $collection->type === "auto" ? __('Automatic') : __('Manual') }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400">
                                         @if($collection->rules->isNotEmpty())
                                             {{ ucfirst(strtolower($collection->firstRule())) }}
                                         @endif
                                     </td>
-                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
+                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right dark:text-gray-400">
                                         <time datetime="{{ $collection->published_at->format('Y-m-d') }}" class="capitalize">{{ $collection->published_at->formatLocalized('%d %B, %Y') }}</time>
                                     </td>
                                     <td class="pr-6">
-                                        <div x-data="{ open: false }" x-on:item-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
-                                            <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                                </svg>
-                                            </button>
-                                            <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
-                                                <div class="relative z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
-                                                    <div class="py-1">
-                                                        <a href="{{ route('shopper.collections.edit', $collection) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: pencil-alt" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                                            </svg>
-                                                            {{ __("Edit") }}
-                                                        </a>
-                                                    </div>
-                                                    <div class="border-t border-gray-100"></div>
-                                                    <div class="py-1">
-                                                        <button wire:click="remove({{ $collection->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                            </svg>
-                                                            {{ __("Delete") }}
-                                                        </button>
-                                                    </div>
+                                        <x-shopper-dropdown customAlignmentClasses="right-12 -bottom-1">
+                                            <x-slot name="trigger">
+                                                <button id="collection-options-menu-{{ $collection->id }}" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700 transition ease-in-out duration-150">
+                                                    <x-heroicon-s-dots-vertical class="w-5 h-5" />
+                                                </button>
+                                            </x-slot>
+
+                                            <x-slot name="content">
+                                                <div class="py-1">
+                                                    <a href="{{ route('shopper.collections.edit', $collection) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white" role="menuitem">
+                                                        <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                                                        {{ __('Edit') }}
+                                                    </a>
                                                 </div>
-                                            </div>
-                                        </div>
+                                                <div class="border-t border-gray-100 dark:border-gray-600"></div>
+                                                <div class="py-1">
+                                                    <button wire:click="remove({{ $collection->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white" role="menuitem">
+                                                        <x-heroicon-s-trash class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </div>
+                                            </x-slot>
+                                        </x-shopper-dropdown>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium">
                                         <div class="flex justify-center items-center space-x-2">
-                                            <svg class="h-8 w-8 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                                            </svg>
-                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No collection found") }}...</span>
+                                            <x-heroicon-o-collection class="h-8 w-8 text-gray-400" />
+                                            <span class="font-medium py-8 text-gray-500 text-xl dark:text-gray-400">{{ __('No collection found') }}...</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -293,13 +275,13 @@
                     </table>
                 </div>
             </div>
-            <div class="bg-white px-4 py-3 flex items-center rounded-b-md justify-between border-t border-gray-200 sm:px-6">
+            <div class="px-4 py-3 flex items-center rounded-b-md justify-between border-t border-gray-200 sm:px-6 dark:border-gray-700">
                 <div class="flex-1 flex justify-between sm:hidden">
                     {{ $collections->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm leading-5 text-gray-700">
+                        <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
                             {{ __('Showing') }}
                             <span class="font-medium">{{ ($collections->currentPage() - 1) * $collections->perPage() + 1 }}</span>
                             {{ __('to') }}

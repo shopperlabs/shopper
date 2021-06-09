@@ -127,12 +127,12 @@
                 <div class="align-middle inline-block min-w-full">
                     <table class="min-w-full">
                         <thead>
-                        <tr class="border-t border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-700">
-                            <x-shopper-tables.table-head><span class="lg:pl-2">{{ __('Name') }}</span></x-shopper-tables.table-head>
-                            <x-shopper-tables.table-head>{{ __('Url') }}</x-shopper-tables.table-head>
-                            <x-shopper-tables.table-head class="hidden md:table-cell text-right">{{ __('Updated at') }}</x-shopper-tables.table-head>
-                            <x-shopper-tables.table-head class="pr-6 text-right" />
-                        </tr>
+                            <tr class="border-t border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-700">
+                                <x-shopper-tables.table-head><span class="lg:pl-2">{{ __('Name') }}</span></x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head>{{ __('Url') }}</x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head class="hidden md:table-cell text-right">{{ __('Updated at') }}</x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head class="pr-6 text-right" />
+                            </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-100 dark:bg-gray-800 dark:divide-gray-700" x-max="1">
                             @forelse($categories as $category)
