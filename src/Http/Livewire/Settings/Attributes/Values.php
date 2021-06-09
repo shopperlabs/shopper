@@ -12,8 +12,9 @@ class Values extends Component
     protected $listeners = ['updateValues'];
 
     public Attribute $attribute;
-    public ?string $search;
+
     public Collection $values;
+
     public string $type = 'select';
 
     public function mount(Attribute $attribute)
