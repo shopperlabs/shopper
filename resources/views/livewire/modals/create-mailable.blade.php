@@ -1,48 +1,44 @@
 <x-shopper-modal
-    headerClasses="bg-white p-4 sm:px-6 sm:py-4 border-b border-gray-100"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
 
     <x-slot name="title">
-        {{ __("New Mailable") }}
+        {{ __('New Mailable') }}
     </x-slot>
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <div class="sm:col-span-2">
-                <x-shopper-input.group label="Name" for="name" :error="$errors->first('name')" helpText="Enter mailable name e.g Welcome User, WelcomeUser" isRequired>
-                    <x-shopper-input.text wire:model.lazy="name" id="name" placeholder="Mailable name" />
-                </x-shopper-input.group>
-            </div>
+            <x-shopper-input.group label="Name" for="name" class="sm:col-span-2" :error="$errors->first('name')" helpText="Enter mailable name e.g Welcome User, WelcomeUser" isRequired>
+                <x-shopper-input.text wire:model.debounce.350ms="name" type="text" id="name" placeholder="Mailable name" />
+            </x-shopper-input.group>
             <div class="sm:col-span-2">
                 <div class="relative flex items-start">
                     <div class="flex items-center h-5">
-                        <input wire:model.lazy="isMarkdown" id="is_markdown" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                        <x-shopper-input.checkbox wire:model.lazy="isMarkdown" id="is_markdown" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
-                        <label for="is_markdown" class="font-medium text-gray-700">{{ __('Markdown Template') }}</label>
-                        <p class="text-gray-500">{{ __('Use markdown template.') }}</p>
+                        <label for="is_markdown" class="font-medium text-gray-700 dark:text-gray-300">{{ __('Markdown Template') }}</label>
+                        <p class="text-gray-500 dark:text-gray-400">{{ __('Use markdown template.') }}</p>
                     </div>
                 </div>
             </div>
 
             @if($isMarkdown)
-                <div class="sm:col-span-2">
-                    <x-shopper-input.group label="Markdown" for="markdown" :error="$errors->first('markdownView')" isRequired>
-                        <x-shopper-input.text wire:model.lazy="markdownView" id="markdown" placeholder="Eg. markdown.view" />
-                    </x-shopper-input.group>
-                </div>
+                <x-shopper-input.group label="Markdown" for="markdown" class="sm:col-span-2" :error="$errors->first('markdownView')" isRequired>
+                    <x-shopper-input.text wire:model.lazy="markdownView" type="text" id="markdown" placeholder="Eg. markdown.view" />
+                </x-shopper-input.group>
             @endif
 
             <div class="sm:col-span-2">
                 <div class="relative flex items-start">
                     <div class="flex items-center h-5">
-                        <input wire:model.lazy="isForce" id="is_force" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                        <x-shopper-input.checkbox wire:model.lazy="isForce" id="is_force" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
-                        <label for="is_force" class="font-medium text-gray-700">{{ __('Force') }}</label>
-                        <p class="text-gray-500">{{ __('Force mailable creation even if already exists.') }}</p>
+                        <label for="is_force" class="font-medium text-gray-700 dark:text-gray-300">{{ __('Force') }}</label>
+                        <p class="text-gray-500 dark:text-gray-400">{{ __('Force mailable creation even if already exists.') }}</p>
                     </div>
                 </div>
             </div>

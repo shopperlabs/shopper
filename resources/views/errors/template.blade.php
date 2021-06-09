@@ -166,14 +166,14 @@
 
         <div class="mt-10 w-full md:mt-0 md:w-1/2 relative lg:py-20 flex items-center justify-center">
             <div class="w-full text-center sm:max-w-md md:text-left">
-                <h3 class="text-lg leading-6 sm:text-2xl lg:text-6xl sm:leading-7 lg:leading-none font-extrabold text-gray-900">{{ __($exception->getCode()) }}</h3>
-                <p class="mt-4 text-gray-600 text-base sm:text-lg font-medium leading-6 sm:leading-8">{{ __($exception->getMessage()) }}</p>
-                <p class="mt-1 text-gray-500 text-base leading-6">
+                <h3 class="text-lg leading-6 sm:text-2xl lg:text-6xl sm:leading-7 lg:leading-none font-extrabold text-gray-900 dark:text-white">{{ __($exception->getCode()) }}</h3>
+                <p class="mt-4 text-gray-600 text-base sm:text-lg font-medium leading-6 sm:leading-8 dark:text-gray-300">{{ __($exception->getMessage()) }}</p>
+                <p class="mt-1 text-gray-500 text-base leading-6 dark:text-gray-400">
                     {{ __("You don't have permission/authorization to access requested page.") }}
                 </p>
-                <a href="{{ url()->previous() }}" class="mt-5 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
+                <x-shopper-button :link="url()->previous()" class="mt-5">
                     {{ __('Go Back') }}
-                </a>
+                </x-shopper-button>
             </div>
         </div>
     </div>
