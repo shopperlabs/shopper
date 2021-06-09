@@ -8,68 +8,23 @@ use Shopper\Framework\Rules\RealEmailValidator;
 
 class Configuration extends Component
 {
-    /**
-     *  Mail mailer method.
-     *
-     * @var string
-     */
-    public $mail_mailer;
+    public ?string $mail_mailer;
 
-    /**
-     * Mail host.
-     *
-     * @var string
-     */
-    public $mail_host;
+    public ?string $mail_host;
 
-    /**
-     * Mail port.
-     *
-     * @var string
-     */
-    public $mail_port;
+    public ?string $mail_port;
 
-    /**
-     * Mail username.
-     *
-     * @var string
-     */
-    public $mail_username;
+    public ?string $mail_username;
 
-    /**
-     * Mail password config.
-     *
-     * @var string
-     */
-    public $mail_password;
+    public ?string $mail_password;
 
-    /**
-     * Mail encryption.
-     *
-     * @var string
-     */
-    public $mail_encryption;
+    public ?string $mail_encryption;
 
-    /**
-     * Mail sender address.
-     *
-     * @var string
-     */
-    public $mail_from_address;
+    public ?string $mail_from_address;
 
-    /**
-     * Mail sender name.
-     *
-     * @var string
-     */
-    public $mail_from_name;
+    public ?string $mail_from_name;
 
-    /**
-     * Component Mount instance.
-     *
-     * @return void
-     */
-    public function mount()
+    public function mount(): void
     {
         $this->mail_mailer = env('MAIL_MAILER');
         $this->mail_host = env('MAIL_HOST');
@@ -81,12 +36,7 @@ class Configuration extends Component
         $this->mail_from_name = env('MAIL_FROM_NAME');
     }
 
-    /**
-     * Sav/Update a entry on the .env file.
-     *
-     * @return void
-     */
-    public function store()
+    public function store(): void
     {
         $this->validate([
             'mail_from_address' => ['required', 'email', new RealEmailValidator()],
@@ -112,15 +62,10 @@ class Configuration extends Component
 
         $this->notify([
             'title' => __('Updated'),
-            'message' => __("Your mail configurations have been correctly updated.")
+            'message' => __('Your mail configurations have been correctly updated.')
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.mails.configuration');
