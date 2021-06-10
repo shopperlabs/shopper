@@ -11,6 +11,8 @@
 @tailwind base;
 @import "base";
 
+@import '~flatpickr/dist/themes/light.css';
+
 .dark {
   trix-toolbar {
     .trix-button-group {
@@ -20,7 +22,11 @@
       @apply text-gray-400 border-gray-700
     }
   }
+  @import '~flatpickr/dist/themes/dark.css';
+}
 
+.light {
+  @import '~flatpickr/dist/themes/light.css';
 }
 
 @tailwind components;

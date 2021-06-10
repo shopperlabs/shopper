@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
 <div x-data="{ open: false }" x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});">
 
     <x-shopper-heading>
@@ -146,7 +142,6 @@
             </div>
         </x-shopper-empty-state>
     @else
-
         <div class="mt-6 bg-white dark:bg-gray-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-start space-x-4">
@@ -158,32 +153,32 @@
                                     {{ __('Status') }}
                                     <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
                                 </x-shopper-default-button>
-                                <div x-cloak x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
-                                    <div class="rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
+                                    <div class="rounded-md bg-white shadow-xs dark:bg-gray-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">
                                             <div class="flex items-center py-2 px-4">
-                                                <input wire:model="isActive" id="isActive_enabled" name="is_active" type="radio" value="1" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
                                                 <label for="isActive_enabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __('Active') }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Active') }}</span>
                                                 </label>
                                             </div>
                                             <div class="flex items-center py-2 px-4">
-                                                <input wire:model="isActive" id="isActive_disabled" name="is_active" type="radio" value="0" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
                                                 <label for="isActive_disabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Not Active") }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Not Active') }}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="border-t border-gray-100"></div>
+                                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
                                         <div class="py-1">
-                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600">{{ __("Clear") }}</button>
+                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500">{{ __('Clear') }}</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="relative flex items-center rounded-md shadow-sm">
-                            <label for="date" class="block text-sm font-medium leading-5 text-gray-700 sr-only">{{ __('Date') }}</label>
+                            <x-shopper-label for="date" class="sr-only" :value="__('Date')" />
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <x-heroicon-o-calendar class="h-5 w-5 text-gray-400" />
                             </div>
@@ -191,7 +186,7 @@
                                 wire:model="date"
                                 x-ref="input"
                                 id="date"
-                                class="w-48 pl-10 py-2 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm"
+                                class="w-48 pl-10 py-2 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm"
                                 autocomplete="off"
                                 placeholder="{{ __('Choose date') }}"
                                 readonly
@@ -205,20 +200,20 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white">
-                <ul class="divide-y divide-gray-200">
+            <div class="border-t border-gray-200 dark:border-gray-700">
+                <ul class="divide-y divide-gray-200 dark:divide-gray-700">
                     @foreach($discounts as $discount)
                         <li>
-                            <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+                            <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-700">
                                 <div class="px-4 py-4 flex items-center sm:px-6">
                                     <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                         <div>
-                                            <div class="text-sm leading-5 font-semibold text-brand-500 truncate">
+                                            <div class="text-sm leading-5 font-semibold text-blue-500 truncate dark:text-blue-400">
                                                 {{ $discount->code }}
                                             </div>
                                             <div class="mt-2 flex">
-                                                <ul class="divide-x divide-y-100 flex items-center text-sm leading-5 text-gray-500">
-                                                    <li class="pr-2"><span>{{ $discount->total_use }}/{{ $discount->usage_limit ?? __('unlimited') }} {{ __("used") }}</span></li>
+                                                <ul class="divide-x divide-gray-200 flex items-center text-sm leading-5 text-gray-500 dark:text-gray-400 dark:divide-gray-600">
+                                                    <li class="pr-2"><span>{{ $discount->total_use }}/{{ $discount->usage_limit ?? __('unlimited') }} {{ __('used') }}</span></li>
                                                     @if($discount->usage_limit_per_user)
                                                         <li class="px-2"><span>{{ __('Once per user') }}</span></li>
                                                     @endif
@@ -237,25 +232,25 @@
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
                                                         </svg>
-                                                        {{ __("Scheduled") }}
+                                                        {{ __('Scheduled') }}
                                                     </span>
                                                 @endif
                                                 @if($discount->start_at <= now())
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-teal-100 text-teal-800">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-purple-100 text-purple-800">
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-teal-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
                                                         </svg>
-                                                        {{ __("Active For users") }}
+                                                        {{ __('Active For users') }}
                                                     </span>
                                                 @endif
                                             </div>
                                             <div class="flex items-center space-x-2">
                                                 @if($discount->end_at)
-                                                    <span class="text-sm text-gray-500">{{ $discount->start_at->format('d M') }}</span>
+                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $discount->start_at->format('d M') }}</span>
                                                     <span>-</span>
-                                                    <span class="text-sm text-gray-500">{{ $discount->end_at->format('d M') }}</span>
+                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $discount->end_at->format('d M') }}</span>
                                                 @else
-                                                    <span class="text-sm text-gray-500">{{ __("From :date", ['date' => $discount->start_at->format('d M')]) }}</span>
+                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ __("From :date", ['date' => $discount->start_at->format('d M')]) }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -271,13 +266,13 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="bg-white px-4 py-3 border-t border-gray-200 rounded-b-md  flex items-center justify-between sm:px-6">
+            <div class="px-4 py-3 border-t border-gray-200 rounded-b-md  flex items-center justify-between sm:px-6 dark:border-gray-700">
                 <div class="flex-1 flex justify-between sm:hidden">
                     {{ $discounts->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm leading-5 text-gray-700">
+                        <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
                             {{ __('Showing') }}
                             <span class="font-medium">{{ ($discounts->currentPage() - 1) * $discounts->perPage() + 1 }}</span>
                             {{ __('to') }}
@@ -296,7 +291,3 @@
     <x-shopper-learn-more name="discounts" link="#" />
 
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endpush

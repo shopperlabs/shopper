@@ -50,8 +50,8 @@
                         @else
                             <div class="flex flex-col">
                                 <h3 class="text-base text-blue-800 font-medium leading-6 dark:text-blue-500">{{ $seoTitle }}</h3>
-                                <span class="mt-1 text-green-600 text-sm leading-5">{{ env('APP_URL') }}/collections/{{ str_slug($name) }}</span>
-                                <p class="mt-1 text-gray-500 text-sm leading-5">{{ str_limit($seoDescription, 160) }}</p>
+                                <span class="mt-1 text-green-600 text-sm leading-5 dark:text-green-500">{{ env('APP_URL') }}/collections/{{ str_slug($name) }}</span>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 dark:text-gray-400">{{ str_limit($seoDescription, 160) }}</p>
                             </div>
                         @endif
                     </div>
@@ -63,8 +63,8 @@
                         </x-shopper-input.group>
                         <div>
                             <div class="flex items-center justify-between">
-                                <x-shopper-label for="seo_description">{{ __("Description") }}</x-shopper-label>
-                                <span class="ml-4 text-sm leading-5 text-gray-500">{{ __("160 characters") }}</span>
+                                <x-shopper-label for="seo_description" :value="__('Description')" />
+                                <span class="ml-4 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('160 characters') }}</span>
                             </div>
                             <div class="mt-1 rounded-md shadow-sm">
                                 <x-shopper-input.textarea wire:model="seoDescription" id="seo_description" />

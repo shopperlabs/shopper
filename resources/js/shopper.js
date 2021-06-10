@@ -11,6 +11,9 @@
  */
 
 import 'alpinejs';
+import flatpickr from 'flatpickr';
+
+window.flatpickr = flatpickr;
 
 // Make dark mode switch.
 const darkModeToggles = document.getElementsByClassName('darkModeToggle');
