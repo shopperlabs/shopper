@@ -7,12 +7,12 @@
         <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
-        <a href="{{ route('shopper.settings.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Settings') }}</a>
+        <a href="{{ route('shopper.settings.index') }}" class="text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-500">{{ __('Settings') }}</a>
     </x:shopper-breadcrumb>
 
-    <div class="mt-2 space-y-4 sm:flex sm:items-center sm:justify-between sm:space-y-0 pb-5 border-b border-gray-200">
+    <div class="mt-2 space-y-4 sm:flex sm:items-center sm:justify-between sm:space-y-0 pb-5 border-b border-gray-200 dark:border-gray-700">
         <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Store Setting') }}</h2>
+            <h2 class="text-2xl font-bold leading-6 text-gray-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">{{ __('Store Setting') }}</h2>
         </div>
     </div>
 
@@ -21,14 +21,14 @@
     <div class="mt-8 md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("Store details") }}</h3>
-                <p class="mt-4 text-sm leading-5 text-gray-500">
-                    {{ __("Your customers will use this information to contact you.") }}
+                <h3 class="text-lg font-semibold leading-6 text-gray-900 dark:text-white">{{ __('Store details') }}</h3>
+                <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    {{ __('Your customers will use this information to contact you.') }}
                 </p>
             </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="shadow bg-white rounded-md">
+            <div class="shadow bg-white dark:bg-gray-800 rounded-md">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6">
@@ -99,7 +99,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200"></div>
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
         </div>
     </div>
 
@@ -107,24 +107,24 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("Store assets") }}</h3>
+                    <h3 class="text-lg font-semibold leading-6 text-gray-900 dark:text-white">{{ __('Assets') }}</h3>
                     <p class="mt-4 text-sm leading-5 text-gray-500">
-                        {{ __("The logo and cover image of your store that will be visible on your site. This assets will appear on your invoices.") }}
+                        {{ __('The logo and cover image of your store that will be visible on your site. This assets will appear on your invoices.') }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow bg-white rounded-md overflow-hidden">
+                <div class="shadow bg-white dark:bg-gray-800 rounded-md overflow-hidden">
                     <div class="px-4 py-5 sm:p-6">
                         <x-shopper-input.group label="Logo" for="logo" :error="$errors->first('shop_logo')" noShadow>
                             <x-shopper-input.file-upload wire:model="shop_logo" id="photo">
-                                <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                                <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                                     @if ($shop_logo)
                                         <img class="h-12 w-12 object-cover" src="{{ $shop_logo->temporaryUrl() }}" alt="Store logo">
                                     @elseif($logo)
                                         <img class="h-12 w-12 object-cover" src="{{ shopper_asset($logo) }}" alt="Store logo">
                                     @else
-                                        <svg class="h-8 w-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="h-8 w-8 text-gray-300 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                         </svg>
                                     @endif
@@ -133,7 +133,7 @@
                         </x-shopper-input.group>
 
                         <div class="mt-6">
-                            <h4 class="block text-sm leading-5 font-medium text-gray-700">{{ __("Cover photo") }}</h4>
+                            <x-shopper-label value="{{ __('Cover photo') }}" />
                             <div class="mt-1">
                                 @if($shop_cover)
                                     <div>
@@ -145,7 +145,7 @@
                                                 <svg class="h-5 w-5 mr-1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                                 </svg>
-                                                {{ __("Remove") }}
+                                                {{ __('Remove') }}
                                             </button>
                                         </div>
                                     </div>
@@ -159,24 +159,24 @@
                                                 <svg class="h-5 w-5 mr-1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                                 </svg>
-                                                {{ __("Delete") }}
+                                                {{ __('Delete') }}
                                             </button>
                                         </div>
                                     </div>
                                 @else
                                     <div class="w-full">
-                                        <label for="shop_cover" class="group mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer">
+                                        <label for="shop_cover" class="group mt-2 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-700 border-dashed rounded-md cursor-pointer">
                                             <div class="text-center">
                                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                                 </svg>
-                                                <p class="mt-1 text-sm text-gray-600">
+                                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                                     <span class="font-medium text-blue-600 group-hover:text-blue-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                                        {{ __("Upload a file") }}
+                                                        {{ __('Upload a file') }}
                                                     </span>
-                                                    {{ __("or drag and drop") }}
+                                                    {{ __('or drag and drop') }}
                                                 </p>
-                                                <p class="mt-1 text-xs text-gray-500">
+                                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                                                     PNG, JPG, GIF up to 1MB
                                                 </p>
                                                 <input id="shop_cover" type="file" wire:model="shop_cover" class="sr-only">
@@ -197,7 +197,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200"></div>
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
         </div>
     </div>
 
@@ -205,14 +205,14 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("Store address") }}</h3>
+                    <h3 class="text-lg font-semibold leading-6 text-gray-900 dark:text-white">{{ __("Store address") }}</h3>
                     <p class="mt-4 text-sm leading-5 text-gray-500">
                         {{ __("This address will appear on your invoices. You can edit the address used.") }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow bg-white rounded-md overflow-hidden">
+                <div class="shadow bg-white dark:bg-gray-800 rounded-md overflow-hidden">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
@@ -259,7 +259,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200"></div>
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
         </div>
     </div>
 
@@ -267,14 +267,14 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("Store currency") }}</h3>
+                    <h3 class="text-lg font-semibold leading-6 text-gray-900 dark:text-white">{{ __("Store currency") }}</h3>
                     <p class="mt-4 text-sm leading-5 text-gray-500">
                         {{ __("This is the currency your products are sold in. After your first sale, currency is locked in and can’t be changed.") }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow overflow-hidden bg-white rounded-md">
+                <div class="shadow overflow-hidden bg-white dark:bg-gray-800 rounded-md">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
@@ -295,7 +295,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200"></div>
+            <div class="border-t border-gray-200 dark:border-gray-700"></div>
         </div>
     </div>
 
@@ -303,14 +303,14 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("Store social links") }}</h3>
+                    <h3 class="text-lg font-semibold leading-6 text-gray-900 dark:text-white">{{ __('Social links') }}</h3>
                     <p class="mt-4 text-sm leading-5 text-gray-500">
-                        {{ __("Information about your different accounts on social networks. Users will be able to contact you directly on your official pages.") }}
+                        {{ __('Information about your different accounts on social networks. Users will be able to contact you directly on your official pages.') }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow bg-white rounded-md overflow-hidden">
+                <div class="shadow bg-white dark:bg-gray-800 rounded-md overflow-hidden">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
@@ -352,7 +352,7 @@
         </div>
     </div>
 
-    <div class="mt-6 border-t border-gray-200 pt-5 pb-10">
+    <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-5 pb-10">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
                 <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">

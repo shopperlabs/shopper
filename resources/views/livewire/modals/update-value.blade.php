@@ -1,5 +1,5 @@
 <x-shopper-modal
-    headerClasses="bg-white p-4 sm:px-6 sm:py-4 border-b border-gray-100"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -20,15 +20,13 @@
                     </div>
                 @else
                     <x-shopper-input.group label="Value" for="value" :error="$errors->first('value')">
-                        <x-shopper-input.text wire:model.lazy="value" id="value" placeholder="My value" />
+                        <x-shopper-input.text wire:model.lazy="value" type="text" id="value" placeholder="My value" />
                     </x-shopper-input.group>
                 @endif
             </div>
-            <div class="sm:col-span-2">
-                <x-shopper-input.group label="Key" for="key" :error="$errors->first('key')" helpText="The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format">
-                    <x-shopper-input.text wire:model.lazy="key" id="key" placeholder="my_key" />
-                </x-shopper-input.group>
-            </div>
+            <x-shopper-input.group label="Key" for="key" class="sm:col-span-2" :error="$errors->first('key')" helpText="The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format">
+                <x-shopper-input.text wire:model.lazy="key" type="text" id="key" placeholder="my_key" />
+            </x-shopper-input.group>
         </div>
     </x-slot>
 

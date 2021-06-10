@@ -21,22 +21,21 @@
         </x-slot>
 
         <x-slot name="content">
-            <p class="text-sm text-gray-500 leading-5">{{ $content }}</p>
+            <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">{{ $content }}</p>
 
             <div class="mt-4" x-data="{}" x-on:confirming-password.window="setTimeout(() => $refs.confirmable_password.focus(), 250)">
-                <input
+                <x-shopper-input.text
                     x-ref="confirmable_password"
                     wire:model.defer="confirmablePassword"
                     wire:keydown.enter="confirmPassword"
                     id="confirmable_password"
                     type="password"
-                    class="form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                    placeholder="{{ __("Enter your password") }}"
-                    aria-label="{{ __("Password") }}"
+                    placeholder="{{ __('Enter your password') }}"
+                    aria-label="{{ __('Password') }}"
                 />
 
                 @error('confirmable_password')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-red-500 dark:text-red-400">{{ $message }}</p>
                 @enderror
             </div>
         </x-slot>
@@ -44,7 +43,7 @@
         <x-slot name="footer">
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <x-shopper-button wire:click="confirmPassword" wire:loading.attr="disabled" type="button">
-                    <x-shopper-loader wire:loading wire:target="confirmPassword" />
+                    <x-shopper-loader wire:loading wire:target="confirmPassword" class="text-white" />
                     {{ $button }}
                 </x-shopper-button>
             </span>

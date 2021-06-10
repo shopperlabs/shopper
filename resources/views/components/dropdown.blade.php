@@ -2,7 +2,7 @@
     'align' => 'right',
     'width' => '48',
     'customAlignmentClasses' => '',
-    'contentClasses' => 'bg-white',
+    'contentClasses' => 'bg-white dark:bg-gray-700',
     'containerClasses' => 'relative block text-left'
 ])
 

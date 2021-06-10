@@ -3,9 +3,7 @@
         <div class="bg-blue-50 p-4">
             <div class="flex">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
+                    <x-heroicon-s-information-circle class="h-5 w-5 text-blue-400" />
                 </div>
                 <div class="ml-3 flex-1 md:flex md:justify-between">
                     <p class="text-sm text-blue-700">
@@ -18,15 +16,15 @@
 
     <div class="min-h-0 flex-1 overflow-y-auto">
         <div class="p-6 sm:px-8 pb-10">
-            <div class="pb-5 border-b border-gray-200 sm:flex sm:items-center sm:justify-between">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <div class="pb-5 border-b border-gray-200 sm:flex sm:items-center sm:justify-between dark:border-gray-700">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                     {{ __('Templates') }}
                 </h3>
                 @if($isLocal)
                     <div class="mt-3 sm:mt-0 sm:ml-4">
-                        <x-shopper-link-button :href="route('shopper.settings.mails.select-template')" class="border border-transparent focus:border-blue-300 bg-blue-600 hover:bg-blue-500 text-white">
+                        <x-shopper-button :link="route('shopper.settings.mails.select-template')">
                             {{ __('Create new template') }}
-                        </x-shopper-link-button>
+                        </x-shopper-button>
                     </div>
                 @endif
             </div>
@@ -35,16 +33,16 @@
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden sm:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
                                             {{ __('Name') }}
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
                                             {{ __('Template') }}
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
                                             {{ __('Type') }}
                                         </th>
                                         <th scope="col" class="relative px-6 py-3">
@@ -52,36 +50,31 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
+                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                                     @forelse($templates->all() as $template)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                                                 {{ ucwords($template->template_name) }}
                                             </td>
-                                            <td class="px-6 py-4 min-w-0 whitespace-nowrap text-sm text-gray-500">
-                                                <span class="font-medium text-gray-700">{{ ucfirst($template->template_view_name) }}</span>
+                                            <td class="px-6 py-4 min-w-0 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                                <span class="font-medium text-gray-700 dark:text-gray-300">{{ ucfirst($template->template_view_name) }}</span>
                                                 ({{ ucfirst($template->template_skeleton) }})
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right capitalize text-sm text-gray-500">
+                                            <td class="px-6 py-4 whitespace-nowrap text-right capitalize text-sm text-gray-500 dark:text-gray-400">
                                                 {{ $template->template_type }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="#" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 active:bg-gray-100 focus:bg-gray-100 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                                    </svg>
-                                                </a>
-                                                <button wire:click="$emit('openModal', 'shopper-modals.delete-template', {{ json_encode(['name' => $template->template_name, 'slug' => $template->template_slug]) }})" type="button" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 active:bg-gray-100 focus:bg-gray-100 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
+                                                {{--<a href="#" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 active:bg-gray-100 focus:bg-gray-100 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none">
+                                                    <x-heroicon-o-eye class="w-5 h-5" />
+                                                </a>--}}
+                                                <button wire:click="$emit('openModal', 'shopper-modals.delete-template', {{ json_encode(['name' => $template->template_name, 'slug' => $template->template_slug]) }})" type="button" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700">
+                                                    <x-heroicon-o-trash class="w-5 h-5" />
                                                 </button>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="px-6 py-3 text-right text-xs font-medium text-gray-500">
+                                            <td colspan="4" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400">
                                                 <div class="py-10 flex flex-col items-center justify-center">
                                                     <svg class="currentColor w-20" viewBox="0 -1 385.27478 385" xmlns="http://www.w3.org/2000/svg">
                                                         <path d="m71.558594 122.113281-62.46875-14.914062 19.019531-79.679688 62.472656 14.914063c9.503907 2.265625 15.367188 11.808594 13.101563 21.316406l-10.808594 45.265625c-2.269531 9.5-11.8125 15.367187-21.316406 13.097656zm0 0" fill="#d7e9ff" fill-rule="evenodd"></path>
@@ -108,7 +101,7 @@
                                                             <path d="m320.851562 27.445312h-27.304687c-3.773437 0-6.828125-3.058593-6.828125-6.828124 0-3.769532 3.054688-6.828126 6.828125-6.828126h27.304687c3.773438 0 6.828126 3.058594 6.828126 6.828126 0 3.769531-3.054688 6.828124-6.828126 6.828124zm0 0"></path>
                                                         </g>
                                                     </svg>
-                                                    <span class="mt-4 text-sm text-gray-600 font-medium">{{ __("We didn't find anything - just empty space.") }}</span>
+                                                    <span class="mt-4 text-sm font-medium">{{ __("We didn't find anything - just empty space.") }}</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -120,21 +113,19 @@
                 </div>
             </div>
 
-            <div class="mt-10 bg-gray-50 p-4 sm:p-5 rounded-md border border-gray-200">
-                <p class="text-sm text-gray-600 font-medium leading-5">
+            <div class="mt-10 bg-gray-50 p-4 sm:p-5 rounded-md border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                <p class="text-sm text-gray-500 font-medium leading-5 dark:text-gray-400">
                     {{ __("Do you like this feature? It's inspired by Laravel Mail Eclipse. You can sponsor the author") }}
                 </p>
                 <div class="mt-4">
                     <div class="-mx-2 -my-1.5 flex">
-                        <a href="https://github.com/Qoraiche/laravel-mail-editor" target="_blank" class="px-3 py-2 rounded-md text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition ease-in-out duration-150">
+                        <a href="https://github.com/Qoraiche/laravel-mail-editor" target="_blank" class="px-3 py-2 rounded-md text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
                             {{ __('View the repo') }}
                         </a>
-                        <a href="https://www.paypal.com/paypalme/streamaps" target="_blank" class="ml-3 inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
-                            <svg class="w-5 h-5 text-pink-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
+                        <x-shopper-default-button link="https://www.paypal.com/paypalme/streamaps" target="_blank" class="ml-3">
+                            <x-heroicon-o-heart class="w-5 h-5 text-pink-500 mr-1" />
                             {{ __('Sponsor') }}
-                        </a>
+                        </x-shopper-default-button>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@
             </div>
             <div class="ml-3">
                 <h3 class="text-sm leading-5 font-medium text-red-800">
-                    {{ __("There were error(s) with your submission.") }}
+                    {{ __('There were :count error(s) with your submission.', ['count' => $errors->count()]) }}
                 </h3>
                 <div class="mt-2 text-sm leading-5 text-red-700">
                     <ul class="list-disc pl-5 space-y-1">

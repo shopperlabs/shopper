@@ -3,9 +3,11 @@
 @endpush
 
 <div>
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Orders') }}</h2>
-    </div>
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('Orders') }}
+        </x-slot>
+    </x-shopper-heading>
 
     @if($total === 0)
         <x-shopper-empty-state
@@ -125,7 +127,7 @@
                                         <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                                     </svg>
                                 </div>
-                                <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search by order #, firstname or email...') }}" />
+                                <x-shopper-input.text id="filter" wire:model.debounce.350ms="search" class="pl-10" placeholder="{{ __('Search by order #, firstname or email...') }}" />
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <x-shopper-loader wire:loading wire:target="search" class="text-blue-600"  />
                                 </div>

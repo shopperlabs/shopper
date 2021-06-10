@@ -39,14 +39,12 @@
 @section('content')
 
     <x:shopper-breadcrumb back="shopper.settings.mails.select-template">
-        <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
-        </svg>
-        <a href="{{ route('shopper.settings.mails.select-template') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Templates') }}</a>
+        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
+        <x-shopper-breadcrumb-link :link="route('shopper.settings.mails.select-template')" title="Templates" />
     </x:shopper-breadcrumb>
 
-    <div class="mt-3 pb-5 border-b border-gray-200">
-        <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
+    <div class="mt-3 pb-5 border-b border-gray-200 dark:border-gray-700">
+        <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
             {{ ucfirst($skeleton['type']) }} / {{ ucfirst($skeleton['name']) }} / {{ ucfirst($skeleton['skeleton']) }}
         </h3>
     </div>
@@ -57,21 +55,22 @@
             <input type="hidden" name="template_type" value="{{ $type }}">
             <input type="hidden" name="template_view_name" value="{{ $name }}">
             <input type="hidden" name="template_skeleton" value="{{ $skeleton['skeleton'] }}">
+
             <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
                 <div class="sm:col-span-3">
                     <textarea id="template_editor" name="content" cols="30" rows="10">{{ $skeleton['template'] }}</textarea>
                 </div>
                 <div class="sm:col-span-1 space-y-5">
                     <x-shopper-input.group for="name" label="Template name" :error="$errors->first('template_name')" isRequired>
-                        <x-shopper-input.text name="template_name" id="name" placeholder="Shopper Newsletter" />
+                        <x-shopper-input.text name="template_name" type="text" id="name" placeholder="Shopper Newsletter" />
                     </x-shopper-input.group>
                     <x-shopper-input.group for="description" label="Template description" :error="$errors->first('template_description')" isRequired>
                         <x-shopper-input.textarea name="template_description" id="description" />
                     </x-shopper-input.group>
-                    <div class="border-t border-gray-200 pt-5">
+                    <div class="pt-5 border-t border-gray-200 dark:border-gray-700">
                         <div class="flex justify-end">
                             <x-shopper-button type="submit">
-                                {{ __("Create") }}
+                                {{ __('Create') }}
                             </x-shopper-button>
                         </div>
                     </div>

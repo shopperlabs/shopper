@@ -14,21 +14,21 @@ trait ConfirmsPasswords
      *
      * @var bool
      */
-    public $confirmingPassword = false;
+    public bool $confirmingPassword = false;
 
     /**
      * The ID of the operation being confirmed.
      *
      * @var string|null
      */
-    public $confirmableId = null;
+    public ?string $confirmableId = null;
 
     /**
      * The user's password.
      *
      * @var string
      */
-    public $confirmablePassword = '';
+    public string $confirmablePassword = '';
 
     /**
      * Start confirming the user's password.
@@ -69,6 +69,7 @@ trait ConfirmsPasswords
      * Confirm the user's password.
      *
      * @return void
+     * @throws ValidationException
      */
     public function confirmPassword()
     {
@@ -106,7 +107,7 @@ trait ConfirmsPasswords
      * @param  int|null  $maximumSecondsSinceConfirmation
      * @return bool
      */
-    protected function passwordIsConfirmed($maximumSecondsSinceConfirmation = null)
+    protected function passwordIsConfirmed($maximumSecondsSinceConfirmation = null): bool
     {
         $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ?: config('auth.password_timeout', 900);
 

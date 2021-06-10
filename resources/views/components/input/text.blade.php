@@ -1,3 +1,1 @@
-@props(['iconAddOn' => false])
-
-<input {!! $attributes->merge(['class' => 'form-input block w-full py-2 px-3 transition duration-150 ease-in-out sm:text-sm sm:leading-5' . ($iconAddOn ?? '')]) !!} />
+<input {!! $attributes->merge(['class' => 'block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm']) !!} />

@@ -1,11 +1,13 @@
 <div>
 
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Reviews') }}</h2>
-    </div>
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('Reviews') }}
+        </x-slot>
+    </x-shopper-heading>
 
     @if($total === 0)
-        <div class="mt-10 relative w-full bg-white flex flex-col shadow-sm rounded-md items-center justify-center py-12 lg:py-16">
+        <div class="mt-10 relative w-full bg-white dark:bg-gray-800 flex flex-col shadow-sm rounded-md items-center justify-center py-12 lg:py-16">
             <div class="flex-shrink-0 w-1/3 h-64">
                 <svg class="w-full h-full" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 320 230">
                     <style>
@@ -359,37 +361,19 @@
                 </svg>
             </div>
             <div class="mt-5 w-full sm:max-w-md space-y-3 text-center">
-                <p class="text-base leading-6 text-gray-900 font-medium">{{ __('Customers reviews') }}</p>
-                <p class="text-sm text-gray-500">{{ __('This is where you will see the reviews of your customers and the ratings given to your products.') }}</p>
+                <p class="text-base leading-6 text-gray-900 dark:text-white font-medium">{{ __('Customers reviews') }}</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('This is where you will see the reviews of your customers and the ratings given to your products.') }}</p>
             </div>
         </div>
     @else
         <div class="mt-6 bg-white shadow sm:rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="relative z-20 flex items-center space-x-4">
-                    <div class="flex flex-1">
-                        <label for="filter" class="sr-only">{{ __('Search reviews') }}</label>
-                        <div class="flex flex-grow rounded-md shadow-sm">
-                            <div class="relative flex-grow focus-within:z-10">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                                    </svg>
-                                </div>
-                                <x-shopper-input.text id="filter" wire:model.debounce.300ms="search" class="pl-10" placeholder="{{ __('Search review by product name') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <x-shopper-input.search label="Search review" placeholder="Search review by product name" />
                     <div x-data="{ open: false }" @keydown.window.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
                         <div>
                             <x-shopper-default-button @click="open = !open" type="button" id="options-menu" aria-haspopup="true" aria-expanded="true" x-bind:aria-expanded="open">
-                                {{ __("Status") }}
+                                {{ __('Status') }}
                                 <svg class="-mr-1 ml-2 h-5 w-5" x-description="Heroicon name: chevron-down" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
@@ -401,13 +385,13 @@
                                     <div class="flex items-center py-2 px-4">
                                         <input wire:model="approved" id="approved" name="approved" type="radio" value="1" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="approved" class="cursor-pointer ml-3">
-                                            <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Approved") }}</span>
+                                            <span class="block text-sm leading-5 font-medium text-gray-700">{{ __('Approved') }}</span>
                                         </label>
                                     </div>
                                     <div class="flex items-center py-2 px-4">
                                         <input wire:model="approved" id="not_approved" name="approved" type="radio" value="0" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="not_approved" class="cursor-pointer ml-3">
-                                            <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Not Approved") }}</span>
+                                            <span class="block text-sm leading-5 font-medium text-gray-700">{{ __('Not Approved') }}</span>
                                         </label>
                                     </div>
                                 </div>

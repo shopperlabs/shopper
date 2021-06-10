@@ -2,7 +2,7 @@
 * Shopper Tailwind Style
 *
 * @version 2.0.0
-* @since March 2020
+* @since May 2021
 * @author Arthur Monney<arthur@shopperlabs.io>
 * @site https://laravelshopper.io
 */
@@ -10,6 +10,24 @@
 // 1: Tailwind
 @tailwind base;
 @import "base";
+
+@import '~flatpickr/dist/themes/light.css';
+
+.dark {
+  trix-toolbar {
+    .trix-button-group {
+      @apply border-gray-700
+    }
+    .trix-button {
+      @apply text-gray-400 border-gray-700
+    }
+  }
+  @import '~flatpickr/dist/themes/dark.css';
+}
+
+.light {
+  @import '~flatpickr/dist/themes/light.css';
+}
 
 @tailwind components;
 @import "components";

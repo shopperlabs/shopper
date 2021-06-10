@@ -1,18 +1,13 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  purge: {
-    enable: true,
-    content: [
-      "./resources/assets/js/**/*.js",
-      "./resources/views/**/*.php",
-      "./src/**/*.php",
-    ],
-    options: {
-      defaultExtractor: content => content.match(/[\w-/.:]+(?<!:)/g) || [],
-      whitelistPatterns: [/-active$/, /-enter$/, /-leave-to$/, /show$/]
-    }
-  },
+  darkMode: 'class',
+  purge: [
+    './resources/assets/js/**/*.js',
+    './resources/views/**/*.php',
+    './resources/lang/**/*.php',
+    './src/**/*.php',
+  ],
   theme: {
     extend: {
       colors: {},
@@ -28,27 +23,29 @@ module.exports = {
       },
       opacity: {
         15: '.15',
-        30: '0.3'
+        30: '0.3',
+        40: '0.4',
       },
       minHeight: {
         '(screen-content)': 'calc(100vh - 9.625rem)',
       },
       fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans]
+        sans: ['Manrope', ...defaultTheme.fontFamily.sans]
       }
     },
   },
   variants: {
-    translate: ["responsive", "hover", "focus", "active", "group-hover"],
-    backgroundColor: ["responsive", "hover", "focus", "group-hover", "focus-within", "odd"],
-    textColor: ["responsive", "hover", "focus", "group-hover", "focus-within", "odd"],
-    borderWidth: ["responsive", "odd", "hover", "focus", "odd"],
-    opacity: ['responsive', 'hover', 'focus', 'group-hover'],
+    extend: {
+      backgroundColor: ['group-hover', 'focus-within', 'odd'],
+      borderWidth: ['odd'],
+      display: ['dark'],
+      textColor: ['group-hover', 'focus-within', 'odd'],
+      opacity: ['group-hover'],
+      translate: ['group-hover', 'dark'],
+    }
   },
   plugins: [
-    require("@tailwindcss/ui")({
-      layout: 'sidebar',
-    }),
+    require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
   ]
 };

@@ -22,11 +22,6 @@ class Create extends AbstractBaseComponent
         WithSeoAttributes,
         WithUploadProcess;
 
-    /**
-     * Product custom event listeners.
-     *
-     * @var string[]
-     */
     protected $listeners = ['productAdded'];
 
     /**
@@ -36,26 +31,11 @@ class Create extends AbstractBaseComponent
      */
     public $quantity;
 
-    /**
-     * Product categories associate id.
-     *
-     * @var array
-     */
-    public $category_ids = [];
+    public array $category_ids = [];
 
-    /**
-     * Product collections associate ids.
-     *
-     * @var array
-     */
-    public $collection_ids = [];
+    public array $collection_ids = [];
 
-    /**
-     * Product default published channel.
-     *
-     * @var Channel
-     */
-    public $defaultChannel;
+    public ?Channel $defaultChannel;
 
     /**
      * Component Mount method.
@@ -139,7 +119,7 @@ class Create extends AbstractBaseComponent
      *
      * @return string[]
      */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             'name'  => 'bail|required',
@@ -150,13 +130,7 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    /**
-     * Render the component.
-     *
-     * @return View
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
-    public function render(): View
+    public function render()
     {
         return view('shopper::livewire.products.create', [
             'brands' => (new BrandRepository())

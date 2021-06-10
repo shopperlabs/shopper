@@ -1,5 +1,5 @@
 <x-shopper-modal
-    headerClasses="bg-white p-4 sm:px-6 sm:py-4 border-b border-gray-100"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -22,17 +22,15 @@
                 <x-shopper-label for="value" value="{{ __('Value') }}" />
                 <div class="mt-1">
                     @if($type === 'text')
-                        <input wire:model="value" id="value" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" required />
+                        <x-shopper-input.text wire:model.lazy="value" id="value" type="text" autocomplete="off" required />
                     @elseif($type === 'number')
-                        <input wire:model="value" id="value" type="number" min="0" step="1" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" required />
+                        <x-shopper-input.text wire:model.lazy="value" id="value" type="number" min="0" step="1" autocomplete="off" required />
                     @elseif($type === 'datepicker')
                         <div x-data x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});" class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
+                                <x-heroicon-o-calendar class="h-5 w-5 text-gray-400" />
                             </div>
-                            <input wire:model="value" x-ref="input" id="value" type="text" class="form-input block w-full pl-10 sm:text-sm sm:leading-5" placeholder="{{ __('Choose a date') }}" readonly />
+                            <input wire:model="value" x-ref="input" id="value" type="text" class="w-full pl-10 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm" placeholder="{{ __('Choose a date') }}" readonly />
                         </div>
                     @elseif($type === 'richtext')
                         <div
@@ -44,7 +42,7 @@
                             @trix-blur="$dispatch('change', $event.target.value)"
                         >
                             <input id="richtext" value="{{ $value }}" type="hidden" class="sr-only">
-                            <trix-editor input="richtext" class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"></trix-editor>
+                            <trix-editor input="richtext" class="block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm max-h-96 overflow-y-scroll"></trix-editor>
                         </div>
                     @elseif($type === 'markdown')
                         <div
@@ -59,14 +57,14 @@
                             wire:ignore
                             {{ $attributes }}
                         >
-                            <textarea name="body" id="body" x-ref="textarea" class="form-input block w-full sm:text-sm sm:leading-5">{{ $value }}</textarea>
+                            <textarea name="body" id="body" x-ref="textarea" class="block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm">{{ $value }}</textarea>
                         </div>
                     @elseif($type === 'select')
-                        <select wire:model="value" id="value" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" required>
+                        <x-shopper-input.select wire:model.lazy="value" id="value" required>
                             @foreach($values as $v)
                                 <option value="{{ $v->id }}">{{ $v->value }}</option>
                             @endforeach
-                        </select>
+                        </x-shopper-input.select>
                     @elseif($type === 'checkbox' || $type === 'checkbox_list')
                         <div class="grid grid-cols-2 gap-4 mt-2">
                             @foreach($values as $v)
@@ -75,7 +73,7 @@
                                         <input wire:model="multipleValues" id="value_{{ $v->id }}" value="{{ $v->id }}" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" />
                                     </div>
                                     <div class="ml-3 text-sm leading-5">
-                                        <label for="value_{{ $v->id }}" class="font-medium text-gray-700 cursor-pointer">{{ $v->value }}</label>
+                                        <label for="value_{{ $v->id }}" class="font-medium text-gray-700 cursor-pointer dark:text-gray-400">{{ $v->value }}</label>
                                     </div>
                                 </div>
                             @endforeach
@@ -86,7 +84,7 @@
                                 <div class="flex items-center">
                                     <input wire:model="value" id="value_{{ $v->id }}" type="radio" value="{{ $v->id }}" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                     <label for="value_{{ $v->id }}" class="ml-3">
-                                        <span class="block text-sm leading-5 font-medium text-gray-700">{{ $v->value }}</span>
+                                        <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ $v->value }}</span>
                                     </label>
                                 </div>
                             @endforeach
