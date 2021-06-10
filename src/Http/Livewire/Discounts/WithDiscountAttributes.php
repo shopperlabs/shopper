@@ -68,9 +68,9 @@ trait WithDiscountAttributes
     /**
      * Coupon limit usage.
      *
-     * @var int
+     * @var int|null
      */
-    public int $usage_limit;
+    public ?int $usage_limit = null;
 
     /**
      * Coupon limit user per user value.
@@ -96,9 +96,9 @@ trait WithDiscountAttributes
     /**
      * Coupon end date.
      *
-     * @var string|null
+     * @var string
      */
-    public ?string $dateEnd;
+    public string $dateEnd = '';
 
     /**
      * Search product input.

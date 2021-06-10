@@ -29,7 +29,7 @@ class Edit extends AbstractBaseComponent
      *
      * @var int
      */
-    public $discountId;
+    public int $discountId;
 
     /**
      * Component Mount instance.
@@ -152,6 +152,7 @@ class Edit extends AbstractBaseComponent
         }
 
         session()->flash('success', __("Discount code {$this->code} updated successfully!"));
+
         $this->redirectRoute('shopper.discounts.index');
     }
 
@@ -160,7 +161,7 @@ class Edit extends AbstractBaseComponent
      *
      * @return array
      */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             'code' => [
@@ -184,14 +185,14 @@ class Edit extends AbstractBaseComponent
     {
         Discount::query()->find($this->discountId)->delete();
 
-        session()->flash('success', __("Remove discount successfully"));
+        session()->flash('success', __('Remove discount successfully'));
+
         $this->redirectRoute('shopper.discounts.index');
     }
 
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
      * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
