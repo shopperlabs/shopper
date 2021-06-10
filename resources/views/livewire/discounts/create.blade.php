@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="mt-5">
-                        <label for="value" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">{{ __('Value') }}</label>
+                        <x-shopper-label for="value" :value="__('Value')" />
                         <div class="mt-1 relative rounded-md shadow-sm w-full sm:w-64">
                             <x-shopper-input.text wire:model="value" id="value" type="text" autocomplete="off" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -265,7 +265,7 @@
                 <h4 class="text-base leading-6 font-medium text-gray-900 dark:text-white">{{ __('Active dates') }}</h4>
                 <div class="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-1">
-                        <x-shopper-label for="dateStart" :value="__('Start At')" />
+                        <x-shopper-label for="dateStart" :value="__('Start date')" />
                         <div class="mt-1 relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <x-heroicon-o-calendar class="h-5 w-5 text-gray-400" />
@@ -301,7 +301,7 @@
                                 @if($value !== '' && (int) $value > 0)
                                     <li>
                                         {{ $type === 'percentage' ? $value . ' %' : $this->formattedPrice($value) }}
-                                        <span>{{ __('off') }} {{ $apply === 'order' ? __('entire order') : $this->getProductSize() }}</span>
+                                        <span>{{ __('of') }} {{ $apply === 'order' ? __('entire order') : $this->getProductSize() }}</span>
                                     </li>
                                 @endif
                                 @if($minRequiredValue !== '' && (int) $minRequiredValue > 0 && $minRequired !== 'none')
