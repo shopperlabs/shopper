@@ -13,6 +13,7 @@
     "alpinejs": "^2.8.2",
     "autoprefixer": "^10.2.5",
     "axios": "^0.21",
+    "flatpickr": "^4.6.9",
     "laravel-mix": "^6.0.19",
     "lodash": "^4.17.13",
     "popper.js": "^1.16.0",
