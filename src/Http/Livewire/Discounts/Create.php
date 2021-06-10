@@ -83,6 +83,7 @@ class Create extends AbstractBaseComponent
         }
 
         session()->flash('success', __("Discount code {$discount->code} created successfully"));
+
         $this->redirectRoute('shopper.discounts.index');
     }
 
@@ -91,7 +92,7 @@ class Create extends AbstractBaseComponent
      *
      * @return string[]
      */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             'code' => 'required|unique:'. shopper_table('discounts'),
@@ -105,14 +106,13 @@ class Create extends AbstractBaseComponent
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
      * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
     {
         $this->products = (new ProductRepository())
             ->where('name', '%'. $this->searchProduct .'%', 'like')
-            ->orderBy('name', 'asc')
+            ->orderBy('name')
             ->get(['name', 'price_amount', 'id'])
             ->except($this->productsIds);
 
