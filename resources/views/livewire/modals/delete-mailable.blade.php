@@ -23,12 +23,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper-danger-button wire:click="delete" type="button">
                 <x-shopper-loader wire:loading wire:target="delete" class="text-white" />
-                {{ __("Confirm") }}
+                {{ __('Confirm') }}
             </x-shopper-danger-button>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper-default-button wire:click="$emit('closeModal')" type="button">
-                {{ __("Cancel") }}
+                {{ __('Cancel') }}
             </x-shopper-default-button>
         </span>
     </x-slot>

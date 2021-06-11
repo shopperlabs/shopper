@@ -13,6 +13,11 @@ class DeleteMailable extends ModalComponent
         $this->item = $item;
     }
 
+    public static function modalMaxWidth(): string
+    {
+        return 'lg';
+    }
+
     public function delete()
     {
         $mailableFile = config('shopper.mails.mailables_dir').$this->item.'.php';

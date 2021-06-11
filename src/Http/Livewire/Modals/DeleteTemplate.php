@@ -16,13 +16,18 @@ class DeleteTemplate extends ModalComponent
         $this->slug = $slug;
     }
 
+    public static function modalMaxWidth(): string
+    {
+        return 'lg';
+    }
+
     public function delete()
     {
         Mailable::deleteTemplate($this->slug);
 
         $this->notify([
             'title' => __('Removed'),
-            'message' => __('You have removed the :template', ['template' => $this->name])
+            'message' => __('You have removed the :template template', ['template' => $this->name])
         ]);
 
         $this->emit('onTemplateRemoved');
@@ -32,6 +37,6 @@ class DeleteTemplate extends ModalComponent
 
     public function render()
     {
-        return view('shopper::livewire.modals.delete-mailable');
+        return view('shopper::livewire.modals.delete-template');
     }
 }
