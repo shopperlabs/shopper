@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AttributeValue extends Model
 {
@@ -30,15 +31,12 @@ class AttributeValue extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('attribute_values');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function attribute()
+    public function attribute(): BelongsTo
     {
         return $this->belongsTo(Attribute::class, 'attribute_id');
     }

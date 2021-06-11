@@ -13,9 +13,8 @@ trait HasPrice
      * Return formatted price.
      *
      * @param  int|string  $price
-     * @return bool|string
      */
-    public function formattedPrice($price)
+    public function formattedPrice($price): string
     {
         $money = new Money($price, new Currency(shopper_currency()));
         $currencies = new ISOCurrencies();

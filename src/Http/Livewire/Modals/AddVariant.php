@@ -14,6 +14,7 @@ class AddVariant extends ModalComponent
     use WithFileUploads, WithAttributes, WithUploadProcess;
 
     public int $productId;
+
     public string $currency;
 
     /**
@@ -35,6 +36,7 @@ class AddVariant extends ModalComponent
 
         $product = (new ProductRepository())->create([
             'name' => $this->name,
+            'slug' => $this->name,
             'sku' => $this->sku,
             'barcode' => $this->barcode,
             'is_visible' => true,

@@ -3,6 +3,9 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 use Shopper\Framework\Models\Traits\HasPrice;
@@ -64,7 +67,7 @@ class Order extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('orders');
     }
@@ -72,9 +75,8 @@ class Order extends Model
     /**
      * Return Total order price without shipping amount.
      *
-     * @return bool|string
      */
-    public function getTotalAttribute()
+    public function getTotalAttribute(): string
     {
         return $this->formattedPrice($this->total());
     }
@@ -103,17 +105,12 @@ class Order extends Model
      *
      * @return mixed
      */
-    public function getFormattedStatusAttribute()
+    public function getFormattedStatusAttribute(): string
     {
         return OrderStatus::values()[$this->status];
     }
 
-    /**
-     * Return total order.
-     *
-     * @return mixed
-     */
-    public function total()
+    public function total(): int
     {
         return $this->items->sum('total');
     }
@@ -173,65 +170,35 @@ class Order extends Model
      */
     public function fullPriceWithShipping(): int
     {
-        return $this->items->sum('total') + $this->shipping_total;
+        return $this->total() + $this->shipping_total;
     }
 
-    /**
-     * Get the user Shipping Address for the order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function shippingAddress()
+    public function shippingAddress(): BelongsTo
     {
         return $this->belongsTo(Address::class, 'shipping_address_id');
     }
 
-    /**
-     * Return the associate User for this order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
-    /**
-     * Return the associate Payment method for this order if exist.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function paymentMethod()
+    public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
     }
 
-    /**
-     * Return the refund instance of the order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function refund()
+    public function refund(): HasOne
     {
         return $this->hasOne(OrderRefund::class);
     }
 
-    /**
-     * Get all items of the order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    /**
-     * Set a default value to an order.
-     *
-     * @return void
-     */
-    protected function setDefaultOrderStatus()
+    protected function setDefaultOrderStatus(): void
     {
         $this->setRawAttributes(
             array_merge(

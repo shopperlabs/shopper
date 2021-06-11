@@ -40,7 +40,7 @@ class Permission extends SpatiePermission
      * @param  string  $item
      * @param  string|null  $group
      */
-    public static function generate(string $item, string $group = null)
+    public static function generate(string $item, string $group = null): void
     {
         self::query()->firstOrCreate([
             'name' => 'browse_'. $item,

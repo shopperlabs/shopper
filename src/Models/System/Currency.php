@@ -31,7 +31,7 @@ class Currency extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('system_currencies');
     }

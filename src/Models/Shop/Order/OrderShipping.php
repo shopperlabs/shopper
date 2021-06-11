@@ -3,6 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Framework\Models\Shop\Carrier;
 
 class OrderShipping extends Model
 {
@@ -14,14 +16,14 @@ class OrderShipping extends Model
     protected $guarded = [];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast.
      *
      * @var array
      */
-    protected $dates = [
-        'shipped_at',
-        'received_at',
-        'returned_at',
+    protected $casts = [
+        'shipped_at' => 'datetime',
+        'received_at' => 'datetime',
+        'returned_at' => 'datetime',
     ];
 
     /**
@@ -29,27 +31,17 @@ class OrderShipping extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('order_shippings');
     }
 
-    /**
-     * Get order of the current order shipping.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function order()
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
 
-    /**
-     * Get carrier of the current order shipping.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function carrier()
+    public function carrier(): BelongsTo
     {
         return $this->belongsTo(Carrier::class, 'carrier_id');
     }

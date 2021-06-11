@@ -3,9 +3,13 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Framework\Models\Traits\HasSlug;
 
 class Attribute extends Model
 {
+    use HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -46,7 +50,7 @@ class Attribute extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('attributes');
     }
@@ -56,7 +60,7 @@ class Attribute extends Model
      *
      * @return string
      */
-    public function getTypeFormattedAttribute()
+    public function getTypeFormattedAttribute(): string
     {
         return self::typesFields()[$this->type];
     }
@@ -66,7 +70,7 @@ class Attribute extends Model
      *
      * @return string[]
      */
-    public static function typesFields()
+    public static function typesFields(): array
     {
         return [
           'text' => __('Text field :type', ['type' => '(input)']),
@@ -89,7 +93,7 @@ class Attribute extends Model
      *
      * @return string[]
      */
-    public static function fieldsWithValues()
+    public static function fieldsWithValues(): array
     {
         return [
             'select',
@@ -105,7 +109,7 @@ class Attribute extends Model
      *
      * @return string[]
      */
-    public static function fieldsWithStringValues()
+    public static function fieldsWithStringValues(): array
     {
         return [
             'text',
@@ -116,10 +120,7 @@ class Attribute extends Model
         ];
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function values()
+    public function values(): HasMany
     {
         return $this->hasMany(AttributeValue::class);
     }

@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Traits;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Relations\morphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Shopper\Framework\Models\Shop\Inventory\InventoryHistory;
@@ -14,7 +15,7 @@ trait HasStock
      *
      * @return int
      */
-    public function getStockAttribute()
+    public function getStockAttribute(): int
     {
         return $this->stock();
     }
@@ -25,7 +26,7 @@ trait HasStock
      * @param  null|DateTimeInterface  $date
      * @return int
      */
-    public function stock($date = null)
+    public function stock(DateTimeInterface $date = null): int
     {
         $date = $date ?: Carbon::now();
 
@@ -41,11 +42,11 @@ trait HasStock
     /**
      * Return the current stock of the inventory.
      *
-     * @param  int  $inventory_id
+     * @param  int  $inventoryId
      * @param  null|string  $date
      * @return int
      */
-    public function stockInventory($inventory_id, $date = null)
+    public function stockInventory(int $inventoryId, string $date = null): int
     {
         $date = $date ?: Carbon::now();
 
@@ -55,47 +56,50 @@ trait HasStock
 
         return (int) $this->inventoryHistories()
             ->where('created_at', '<=', $date->format('Y-m-d H:i:s'))
-            ->where('inventory_id', $inventory_id)
+            ->where('inventory_id', $inventoryId)
             ->sum('quantity');
     }
 
     /**
      * Increase Stock for an item.
      *
-     * @param  int  $inventory_id
-     * @param  int  $quantity
-     * @param  array  $arguments
-     * @return \Illuminate\Database\Eloquent\Model
+     * @param int $inventoryId
+     * @param int $quantity
+     * @param array $arguments
+     *
+     * @return InventoryHistory
      */
-    public function increaseStock($inventory_id, $quantity = 1, $arguments = [])
+    public function increaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
-        return $this->createStockMutation($quantity, $inventory_id, $arguments);
+        return $this->createStockMutation($quantity, $inventoryId, $arguments);
     }
 
     /**
      * Decrease Stock for an item.
      *
-     * @param  int  $inventory_id
+     * @param  int  $inventoryId
      * @param  int  $quantity
      * @param  array  $arguments
-     * @return \Illuminate\Database\Eloquent\Model
+     * 
+     * @return InventoryHistory
      */
-    public function decreaseStock($inventory_id, $quantity = 1, $arguments = [])
+    public function decreaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
-        return $this->createStockMutation(-1 * abs($quantity), $inventory_id, $arguments);
+        return $this->createStockMutation(-1 * abs($quantity), $inventoryId, $arguments);
     }
 
     /**
      * Mutate Stock for an item.
      *
-     * @param  int  $inventory_id
+     * @param  int  $inventoryId
      * @param  int  $quantity
      * @param  array  $arguments
-     * @return \Illuminate\Database\Eloquent\Model
+     * 
+     * @return InventoryHistory
      */
-    public function mutateStock($inventory_id, $quantity = 1, $arguments = [])
+    public function mutateStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
-        return $this->createStockMutation($quantity, $inventory_id, $arguments);
+        return $this->createStockMutation($quantity, $inventoryId, $arguments);
     }
 
     /**
@@ -133,16 +137,17 @@ trait HasStock
      * will be allocated this stock for the item.
      *
      * @param  int  $newQuantity
-     * @param  int  $inventory_id
+     * @param  int  $inventoryId
      * @param  array  $arguments
-     * @return \Illuminate\Database\Eloquent\Model
+     *
+     * @return InventoryHistory
      */
-    public function setStock($newQuantity, $inventory_id, $arguments = [])
+    public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
         $currentStock = $this->stock;
 
         if ($deltaStock = $newQuantity - $currentStock) {
-            return $this->createStockMutation($deltaStock, $inventory_id, $arguments);
+            return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
         }
     }
 
@@ -151,11 +156,12 @@ trait HasStock
      * We create a stock mutation for a shop and for a specific inventory.
      *
      * @param  int  $quantity
-     * @param  int  $inventory_id
+     * @param  int  $inventoryId
      * @param  array  $arguments
-     * @return \Illuminate\Database\Eloquent\Model
+     *
+     * @return InventoryHistory
      */
-    protected function createStockMutation($quantity, $inventory_id, $arguments = [])
+    protected function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
         $reference = Arr::get($arguments, 'reference');
 
@@ -164,7 +170,7 @@ trait HasStock
             'old_quantity'  => Arr::get($arguments, 'old_quantity'),
             'description'   => Arr::get($arguments, 'description'),
             'event'         => Arr::get($arguments, 'event'),
-            'inventory_id'  => $inventory_id,
+            'inventory_id'  => $inventoryId,
             'user_id'       => auth()->id(),
         ])->when($reference, function ($collection) use ($reference) {
             return $collection
@@ -175,12 +181,7 @@ trait HasStock
         return $this->inventoryHistories()->create($createArguments);
     }
 
-    /**
-     * Relation with InventoryHistory.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\morphMany
-     */
-    public function inventoryHistories()
+    public function inventoryHistories(): morphMany
     {
         return $this->morphMany(InventoryHistory::class, 'stockable')->orderBy('created_at', 'desc');
     }

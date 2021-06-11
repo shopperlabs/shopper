@@ -42,18 +42,12 @@ class Setting extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('system_settings');
     }
 
-    /**
-     * Display the correct and formatted name from a setting key.
-     *
-     * @param  string  $key
-     * @return mixed
-     */
-    public static function lockedAttributesDisplayName(string $key)
+    public static function lockedAttributesDisplayName(string $key): string
     {
         return [
             'shop_name' => __('Store name'),

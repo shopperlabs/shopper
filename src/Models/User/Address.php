@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Framework\Models\System\Country;
 
 class Address extends Model
@@ -107,22 +108,12 @@ class Address extends Model
         return $this->is_default === true;
     }
 
-    /**
-     * Return the user's information.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
-    /**
-     * Return the address country information.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function country()
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
     }

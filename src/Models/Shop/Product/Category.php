@@ -4,11 +4,15 @@ namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Models\Traits\Filetable;
+use Shopper\Framework\Models\Traits\HasSlug;
 
 class Category extends Model
 {
-    use Filetable;
+    use Filetable, HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -27,48 +31,21 @@ class Category extends Model
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = ['parent', 'files'];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'parent_name',
-    ];
-
-    /**
      * Get the table associated with the model.
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('categories');
     }
 
-    /**
-     * Scope a query to only include enabled categories.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeEnabled(Builder $query)
+    public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
     }
 
-    /**
-     * Get Parent name.
-     *
-     * @return string
-     */
-    public function getParentNameAttribute()
+    public function getParentNameAttribute(): ?string
     {
         if ($this->parent_id !== null) {
             return $this->parent->name;
@@ -77,32 +54,22 @@ class Category extends Model
         return null;
     }
 
-    /**
-     * Get all categories children.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function childs()
+    public function setSlugAttribute(string $slug)
+    {
+        $this->attributes['slug'] = $this->generateUniqueSlug($slug, true);
+    }
+
+    public function childs(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    /**
-     * Get Category parent.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
     }
 
-    /**
-     * Get all of the products for the category.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function products()
+    public function products(): MorphToMany
     {
         return $this->morphToMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
     }

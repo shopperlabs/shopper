@@ -5,12 +5,16 @@ namespace Shopper\Framework\Models\Shop\Product;
 use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Contracts\ReviewRateable;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Traits\Filetable;
 use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\Traits\HasSlug;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
 
@@ -19,6 +23,7 @@ class Product extends Model implements ReviewRateable
     use Filetable,
         HasStock,
         HasPrice,
+        HasSlug,
         CanHaveDiscount,
         SoftDeletes,
         SoftCascadeTrait,
@@ -76,38 +81,8 @@ class Product extends Model implements ReviewRateable
         'featured' => 'boolean',
         'is_visible' => 'boolean',
         'requires_shipping' => 'boolean',
+        'published_at' => 'datetime',
     ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'published_at',
-    ];
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = [
-        'formattedPrice',
-        'variationsStock',
-    ];
-
-    /**
-     * Boot the model.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($model) {
-            $model->update(['slug' => $model->name]);
-        });
-    }
 
     /**
      * Get the table associated with the model.
@@ -122,24 +97,11 @@ class Product extends Model implements ReviewRateable
     /**
      * Set the proper slug attribute.
      *
-     * @param  string  $value
+     * @param  string  $slug
      */
-    public function setSlugAttribute(string $value)
+    public function setSlugAttribute(string $slug)
     {
-        $slug = str_slug($value);
-
-        if (! $this->parent_id) {
-            if (static::query()->where('slug', $slug)->exists()) {
-                $slug = "{$slug}-{$this->id}";
-            }
-        } else {
-            if (static::query()->where('slug', $variantSlug = $this->parent->slug. '-'. $slug)->exists()) {
-                $slug = "{$variantSlug}-{$this->id}";
-            }
-        }
-
-
-        $this->attributes['slug'] = $slug;
+        $this->attributes['slug'] = $this->generateUniqueSlug($slug, true);
     }
 
     /**
@@ -163,109 +125,63 @@ class Product extends Model implements ReviewRateable
     /**
      * Get the stock of all variations.
      *
-     * @return int|null
+     * @return int
      */
-    public function getVariationsStockAttribute(): ?int
+    public function getVariationsStockAttribute(): int
     {
-        $stock = null;
+        $stock = 0;
 
         if ($this->variations->isNotEmpty()) {
             foreach ($this->variations as $variation) {
                 $stock += $variation->stock;
             }
-
-            return $stock;
         }
 
         return $stock;
     }
 
-    /**
-     * Scope a query to only include enabled collection.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopePublish(Builder $query)
+    public function scopePublish(Builder $query): Builder
     {
         return $query->whereDate('published_at', '<=', now())
             ->where('is_visible', true);
     }
 
-    /**
-     * Return products variantes.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function variations()
+    public function variations(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    /**
-     * Return product parent.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class);
     }
 
-    /**
-     * Get all of the channels that are assigned this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function channels()
+    public function channels(): MorphToMany
     {
         return $this->morphedByMany(Channel::class, 'productable', 'product_has_relations');
     }
 
-    /**
-     * Get all of the related products that are assigned this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function relatedProducts()
+    public function relatedProducts(): MorphToMany
     {
         return $this->morphedByMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
     }
 
-    /**
-     * Get all of the categories that are assigned this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function categories()
+    public function categories(): MorphToMany
     {
         return $this->morphedByMany(config('shopper.system.models.category'), 'productable', 'product_has_relations');
     }
 
-    /**
-     * Get all of the collections that are assigned this product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function collections()
+    public function collections(): MorphToMany
     {
         return $this->morphedByMany(config('shopper.system.models.collection'), 'productable', 'product_has_relations');
     }
 
-    /**
-     * Return brand related to the current product.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function brand()
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(config('shopper.system.models.brand'), 'brand_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function attributes()
+    public function attributes(): HasMany
     {
         return $this->hasMany(ProductAttribute::class);
     }
