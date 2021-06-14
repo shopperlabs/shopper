@@ -455,7 +455,7 @@
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400">
                                         @if($product->brand)
-                                            <a href="{{ route('shopper.brands.edit', $product->brand) }}" class="inline-flex items-center border-b border-dashed border-bue-400 text-blue-500 hover:text-blue-400 hover:border-blue-300 font-medium text-sm leading-5">
+                                            <a href="{{ route('shopper.brands.edit', $product->brand) }}" class="inline-flex items-center border-b border-dashed border-blue-400 text-blue-500 hover:text-blue-400 hover:border-blue-300 font-medium text-sm leading-5">
                                                 <span>{{ $product->brand->name }}</span>
                                             </a>
                                         @else

@@ -3,7 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\View\View;
+use Illuminate\Support\Collection;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -11,7 +11,6 @@ use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 
@@ -22,49 +21,23 @@ class Edit extends AbstractBaseComponent
         WithAttributes,
         WithSeoAttributes;
 
-    /**
-     * Product Model.
-     *
-     * @var Model
-     */
     public $product;
 
-    /**
-     * Product Id.
-     *
-     * @var int
-     */
-    public $productId;
+    public int $productId;
 
-    /**
-     * Shopper default currency.
-     *
-     * @var string
-     */
-    public $currency;
+    public string $currency;
 
-    /**
-     * Product categories associate id.
-     *
-     * @var array
-     */
-    public $category_ids = [];
+    public Collection $category_ids;
 
-    /**
-     * Product collections associate ids.
-     *
-     * @var array
-     */
-    public $collection_ids = [];
+    public Collection $collection_ids;
 
     /**
      * Component Mount method.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
      * @param  string  $currency
-     * @return void
      */
-    public function mount($product, $currency)
+    public function mount($product, string $currency)
     {
         $this->product = $product;
         $this->productId = $product->id;
@@ -84,12 +57,7 @@ class Edit extends AbstractBaseComponent
         $this->currency = $currency;
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             'name' => 'required',
@@ -98,17 +66,13 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     *
-     * @return void
-     */
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
-        (new ProductRepository())->getById($this->product->id)->update([
+        $this->product->update([
             'name' => $this->name,
+            'slug' => $this->name,
             'description' => $this->description,
             'type' => $this->type,
             'is_visible' => $this->isVisible,
@@ -141,13 +105,7 @@ class Edit extends AbstractBaseComponent
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return View
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
-    public function render(): View
+    public function render()
     {
         return view('shopper::livewire.products.forms.form-edit', [
             'brands' => (new BrandRepository())

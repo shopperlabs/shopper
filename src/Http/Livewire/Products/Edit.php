@@ -34,7 +34,7 @@ class Edit extends Component
      *
      * @var int
      */
-    public $inventory;
+    public int $inventory;
 
     /**
      * Component Mount method.
@@ -60,19 +60,6 @@ class Edit extends Component
         $this->product = (new ProductRepository())->getById($id);
     }
 
-    public function destroy()
-    {
-        (new ProductRepository())->getById($this->product->id)->delete();
-
-        session()->flash('success', __("The product has been correctly removed."));
-        $this->redirectRoute('shopper.products.index');
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.products.edit', [

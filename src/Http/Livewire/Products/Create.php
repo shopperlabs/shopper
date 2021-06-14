@@ -58,6 +58,7 @@ class Create extends AbstractBaseComponent
 
         $product = (new ProductRepository())->create([
             'name' => $this->name,
+            'slug' => $this->name,
             'sku' => $this->sku,
             'barcode' => $this->barcode,
             'description' => $this->description,
@@ -110,8 +111,9 @@ class Create extends AbstractBaseComponent
             }
         }
 
-        session()->flash('success', __("Product successfully added!"));
-        $this->redirectRoute('shopper.products.edit', $product);
+        session()->flash('success', __('Product successfully added!'));
+
+        $this->redirectRoute('shopper.products.index');
     }
 
     /**

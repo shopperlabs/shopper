@@ -19,7 +19,7 @@
 
     <div class="mt-6 grid sm:grid-cols-6 gap-4 lg:gap-6">
         <div class="sm:col-span-4">
-            <div class=" p-4 sm:p-5bg-white rounded-lg shadow dark:bg-gray-800">
+            <div class=" p-4 sm:p-5 bg-white rounded-lg shadow dark:bg-gray-800">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
                         <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
@@ -58,12 +58,7 @@
         </div>
         <div class="sm:col-span-2">
             <aside class="sticky top-6 space-y-5">
-                <div class="bg-white rounded-md shadow overflow-hidden divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                    <div class="p-4 sm:p-5">
-                        <x-shopper-input.group label="Slug (url)" for="slug" isRequired :error="$errors->first('slug')">
-                            <x-shopper-input.text wire:model="slug" id="slug" type="text" autocomplete="off" />
-                        </x-shopper-input.group>
-                    </div>
+                <div class="bg-white rounded-md shadow overflow-hidden dark:bg-gray-800">
                     <div class="p-4 sm:p-5">
                         <x-shopper-label :value="__('Image preview')" />
                         <div class="mt-1">
