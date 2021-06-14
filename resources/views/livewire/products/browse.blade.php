@@ -352,12 +352,12 @@
                                                                         <legend class="text-sm font-medium text-gray-900 dark:text-white">
                                                                             {{ __('Status') }}
                                                                         </legend>
-                                                                        <button wire:click="resetStatusFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-600 hover:underline">{{ __('Clear') }}</button>
+                                                                        <button wire:click="resetStatusFilter" type="button" class="block px-4 py-2 text-sm text-right leading-5 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-600 hover:underline">{{ __('Clear') }}</button>
                                                                     </div>
                                                                     <div class="mt-2 space-y-5">
                                                                         <div class="relative flex items-start">
                                                                             <div class="absolute flex items-center h-5">
-                                                                                <input wire:model="is_visible" id="status_public" value="1" aria-describedby="product_status_visible" type="radio" name="status" class="focus:shadow-blue-500 h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-700 dark:focus:ring-offset-gray-800" />
+                                                                                <x-shopper-input.radio wire:model="isVisible" id="status_public" value="1" aria-describedby="product_status_visible" name="status" />
                                                                             </div>
                                                                             <div class="pl-7 text-sm">
                                                                                 <x-shopper-label for="status_public" class="text-gray-900 dark:text-white">
@@ -371,7 +371,7 @@
                                                                         <div>
                                                                             <div class="relative flex items-start">
                                                                                 <div class="absolute flex items-center h-5">
-                                                                                    <input wire:model="is_visible" id="status_private" value="0" aria-describedby="product_status_invisible" type="radio" name="status" class="focus:shadow-blue-500 h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-700 dark:focus:ring-offset-gray-800" />
+                                                                                    <x-shopper-input.radio wire:model.lazy="isVisible" id="status_private" value="0" aria-describedby="product_status_invisible" name="status" />
                                                                                 </div>
                                                                                 <div class="pl-7 text-sm">
                                                                                     <x-shopper-label for="status_private" class="text-gray-900 dark:text-white">
