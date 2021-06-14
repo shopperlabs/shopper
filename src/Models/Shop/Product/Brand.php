@@ -38,13 +38,6 @@ class Brand extends Model
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = ['files'];
-
-    /**
      * Get the table associated with the model.
      *
      * @return string

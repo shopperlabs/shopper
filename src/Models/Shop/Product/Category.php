@@ -54,11 +54,6 @@ class Category extends Model
         return null;
     }
 
-    public function setSlugAttribute(string $slug)
-    {
-        $this->attributes['slug'] = $this->generateUniqueSlug($slug, true);
-    }
-
     public function childs(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');

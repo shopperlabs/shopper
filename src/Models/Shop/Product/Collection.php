@@ -30,15 +30,6 @@ class Collection extends Model
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    public $with = [
-        'rules',
-    ];
-
-    /**
      * The attributes that should be cast.
      *
      * @var array

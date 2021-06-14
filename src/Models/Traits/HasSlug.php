@@ -21,18 +21,14 @@ trait HasSlug
         return static::where('slug', $slug)->firstOrFail();
     }
 
-    protected function generateUniqueSlug(string $value, bool $hasParentId = false): string
+    protected function generateUniqueSlug(string $value): string
     {
         $slug = $originalSlug = Str::slug($value) ?: Str::random(5);
         $counter = 0;
 
-        while ($this->slugExists($slug, $this->exists ? $this->id() : null)) {
+        while ($this->slugExists($slug, $this->exists ? $this->id : null)) {
             $counter++;
             $slug = $originalSlug.'-'.$counter;
-        }
-
-        if ($hasParentId) {
-            $slug = $this->parent->slug.'-'.$slug;
         }
 
         return $slug;

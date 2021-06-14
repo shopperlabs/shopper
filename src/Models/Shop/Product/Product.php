@@ -95,16 +95,6 @@ class Product extends Model implements ReviewRateable
     }
 
     /**
-     * Set the proper slug attribute.
-     *
-     * @param  string  $slug
-     */
-    public function setSlugAttribute(string $slug)
-    {
-        $this->attributes['slug'] = $this->generateUniqueSlug($slug, true);
-    }
-
-    /**
      * Get the formatted price value.
      *
      * @return string|null
