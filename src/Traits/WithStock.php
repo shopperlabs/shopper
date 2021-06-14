@@ -5,7 +5,6 @@ namespace Shopper\Framework\Traits;
 use Illuminate\Http\Response;
 use Maatwebsite\Excel\Excel;
 use Shopper\Framework\Exports\ProductInventoryExport;
-use Shopper\Framework\Repositories\InventoryRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 trait WithStock
