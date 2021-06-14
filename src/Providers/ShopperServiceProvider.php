@@ -121,10 +121,11 @@ class ShopperServiceProvider extends ServiceProvider
     public function provides() : array
     {
         return [
-            ShopperSidebarServiceProvider::class,
-            SidebarServiceProvider::class,
-            EventServiceProvider::class,
             ComponentServiceProvider::class,
+            EventServiceProvider::class,
+            ModelServiceProvider::class,
+            SidebarServiceProvider::class,
+            ShopperSidebarServiceProvider::class,
         ];
     }
 }
