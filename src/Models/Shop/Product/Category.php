@@ -17,9 +17,18 @@ class Category extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'position',
+        'is_enabled',
+        'seo_title',
+        'seo_description',
+        'parent_id',
+    ];
 
     /**
      * The attributes that should be cast.
