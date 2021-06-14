@@ -7,6 +7,7 @@ module.exports = {
     './resources/views/**/*.php',
     './resources/lang/**/*.php',
     './src/**/*.php',
+    './vendor/livewire-ui/modal/resources/views/*.blade.php',
   ],
   theme: {
     extend: {
