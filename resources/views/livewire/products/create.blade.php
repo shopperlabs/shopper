@@ -138,7 +138,7 @@
                     <div class="mt-5 space-y-4">
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <input wire:model="backorder" id="backorder" type="checkbox" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-700 dark:focus:offset-gray-800 rounded" />
+                                <x-shopper-input.checkbox wire:model.lazy="backorder" id="backorder" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <x-shopper-label for="backorder" :value="__('This product can be returned')" />
@@ -147,7 +147,7 @@
                         </div>
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <input wire:model="requiresShipping" id="required_shipping" type="checkbox" class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-700 dark:focus:offset-gray-800 rounded" />
+                                <x-shopper-input.checkbox wire:model.lazy="requiresShipping" id="required_shipping" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <x-shopper-label for="required_shipping" :value="__('This product will be shipped')" />
@@ -252,7 +252,7 @@
                                 <span class="font-semibold ml-3 text-sm">{{ __('Visible') }}</span>
                             </div>
                             <div>
-                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0"x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-100': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0"x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                     <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
                                 </span>
