@@ -49,7 +49,7 @@ class File extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('system_files');
     }
@@ -60,7 +60,7 @@ class File extends Model
      * @param  string  $value
      * @return string
      */
-    public function getFileSizeAttribute($value)
+    public function getFileSizeAttribute(string $value): string
     {
         $units = ['octets', 'Ko', 'Mo', 'Go', 'To', 'Po'];
 

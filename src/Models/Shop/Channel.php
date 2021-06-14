@@ -3,9 +3,13 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Framework\Models\Traits\HasSlug;
 
 class Channel extends Model
 {
+    use HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -34,17 +38,12 @@ class Channel extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('channels');
     }
 
-    /**
-     * Get all of the products for the channel.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function products()
+    public function products(): MorphToMany
     {
         return $this->morphToMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
     }

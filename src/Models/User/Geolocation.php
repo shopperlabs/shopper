@@ -18,7 +18,7 @@ class Geolocation extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('users_geolocation_history');
     }

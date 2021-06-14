@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Models\User;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,15 +51,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $dates = [
-        'email_verified_at',
-        'last_login_at',
-        'birth_date',
+        'birth_date' => 'datetime',
     ];
 
     /**
@@ -131,12 +124,7 @@ class User extends Authenticatable
             : $this->first_name;
     }
 
-    /**
-     * Return Formatted Birth Date Attribute.
-     *
-     * @return \Illuminate\Contracts\Translation\Translator|string
-     */
-    public function getBirthDateFormattedAttribute()
+    public function getBirthDateFormattedAttribute(): string
     {
         if ($this->birth_date) {
             return $this->birth_date->formatLocalized('%d, %B %Y');
@@ -163,12 +151,7 @@ class User extends Authenticatable
         return 'N/A';
     }
 
-    /**
-     * Get user profile picture.
-     *
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
-     */
-    public function getPictureAttribute()
+    public function getPictureAttribute(): string
     {
         switch ($this->avatar_type) {
             case 'gravatar':
@@ -179,22 +162,12 @@ class User extends Authenticatable
         }
     }
 
-    /**
-     * Get all User Addresses.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function addresses()
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }
 
-    /**
-     * Return user orders list.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }

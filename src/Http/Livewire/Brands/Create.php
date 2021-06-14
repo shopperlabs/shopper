@@ -11,53 +11,23 @@ class Create extends AbstractBaseComponent
 {
     use WithFileUploads, WithUploadProcess;
 
-    /**
-     * Brand name attribute.
-     *
-     * @var string
-     */
-    public $name;
+    public string $name = '';
 
-    /**
-     * Brand slug attribute for manage SEO.
-     *
-     * @var string
-     */
-    public $slug;
+    public string $slug;
 
-    /**
-     * Brand website url.
-     *
-     * @var string
-     */
-    public $website;
+    public ?string $website = null;
 
-    /**
-     * Brand full description.
-     *
-     * @var string
-     */
-    public $description;
+    public ?string $description = null;
 
-    /**
-     * Determine if brand is enabled.
-     *
-     * @var bool
-     */
-    public $is_enabled = true;
+    public bool $is_enabled = true;
 
-    /**
-     * Store/Update a entry to the storage.
-     *
-     * @return void
-     */
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
         $brand = (new BrandRepository())->create([
             'name' => $this->name,
-            'slug' => $this->slug,
+            'slug' => $this->name,
             'website' => $this->website,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
@@ -67,39 +37,19 @@ class Create extends AbstractBaseComponent
             $this->uploadFile(config('shopper.system.models.brand'), $brand->id);
         }
 
-        session()->flash('success', __("Brand successfully added!"));
+        session()->flash('success', __('Brand successfully added!'));
+
         $this->redirectRoute('shopper.brands.index');
     }
 
-    /**
-     * Update dynamically slug when updated brand name.
-     *
-     * @param  string  $value
-     */
-    public function updatedName(string $value)
-    {
-        $this->slug = str_slug($value, '-');
-    }
-
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|max:150|unique:'.shopper_table('brands'),
-            'slug' => 'required',
             'file' => 'nullable|image|max:1024',
         ];
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.brands.create');

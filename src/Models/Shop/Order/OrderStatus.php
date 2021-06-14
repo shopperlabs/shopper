@@ -29,7 +29,7 @@ class OrderStatus
      */
     const CANCELLED = 'cancelled';
 
-    public static function values()
+    public static function values(): array
     {
         return [
             self::PENDING    => __('Pending'),

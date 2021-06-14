@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Framework\Models\System\Country;
 
 class Inventory extends Model
@@ -68,12 +69,7 @@ class Inventory extends Model
         return shopper_table('inventories');
     }
 
-    /**
-     * Country relationship for the inventory.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function country()
+    public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
     }

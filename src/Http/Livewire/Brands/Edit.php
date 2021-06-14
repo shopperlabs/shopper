@@ -15,66 +15,29 @@ class Edit extends AbstractBaseComponent
 {
     use WithFileUploads, WithUploadProcess;
 
-    /**
-     * Upload listeners.
-     *
-     * @var string[]
-     */
     protected $listeners = ['fileDeleted'];
 
-    /**
-     * Brand Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $brand;
 
-    /**
-     * Brand Model id.
-     *
-     * @var int
-     */
-    public $brand_id;
+    public int $brand_id;
 
-    /**
-     * Name attribute.
-     *
-     * @var string
-     */
-    public $name = '';
+    public string $name;
 
-    /**
-     * Slug for custom url.
-     *
-     * @var string
-     */
-    public $slug;
+    public ?string $website = null;
 
-    /**
-     * Brand url website.
-     *
-     * @var string
-     */
-    public $website = '';
-
-    /**
-     * Brand sample description.
-     *
-     * @var string
-     */
-    public $description = '';
+    public ?string $description = null;
 
     /**
      * Indicates if brand is being enabled.
      *
      * @var bool
      */
-    public $is_enabled = false;
+    public bool $is_enabled = false;
 
     /**
      * Component mount instance.
      *
-     * @param  $brand
+     * @param  mixed  $brand
      * @return void
      */
     public function mount($brand)
@@ -82,24 +45,18 @@ class Edit extends AbstractBaseComponent
         $this->brand = $brand;
         $this->brand_id = $brand->id;
         $this->name = $brand->name;
-        $this->slug = $brand->slug;
         $this->website = $brand->website;
         $this->description = $brand->description;
         $this->is_enabled = $brand->is_enabled;
     }
 
-    /**
-     * Update brand record in the database.
-     *
-     * @return void
-     */
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
-        (new BrandRepository())->getById($this->brand->id)->update([
+        $this->brand->update([
             'name' => $this->name,
-            'slug' => $this->slug,
+            'slug' => $this->name,
             'website' => $this->website,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
@@ -117,37 +74,18 @@ class Edit extends AbstractBaseComponent
             $this->uploadFile(config('shopper.system.models.brand'), $this->brand->id);
         }
 
-        session()->flash('success', __("Brand successfully updated!"));
+        session()->flash('success', __('Brand successfully updated!'));
+
         $this->redirectRoute('shopper.brands.index');
     }
 
-    /**
-     * Update slug value when name if updated.
-     *
-     * @param  string  $value
-     * @return void
-     */
-    public function updatedName(string $value)
-    {
-        $this->slug = str_slug($value, '-');
-    }
-
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => [
                 'required',
                 'max:150',
                 Rule::unique(shopper_table('brands'), 'name')->ignore($this->brand_id),
-            ],
-            'slug' => [
-                'required',
-                Rule::unique(shopper_table('brands'), 'slug')->ignore($this->brand_id),
             ],
             'file' => 'nullable|image|max:1024',
         ];
@@ -164,11 +102,6 @@ class Edit extends AbstractBaseComponent
         $this->media = null;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.brands.edit', [

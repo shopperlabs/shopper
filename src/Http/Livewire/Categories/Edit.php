@@ -14,74 +14,25 @@ class Edit extends AbstractBaseComponent
 {
     use WithFileUploads, WithUploadProcess;
 
-    /**
-     * Upload listeners.
-     *
-     * @var string[]
-     */
     protected $listeners = ['fileDeleted'];
 
-    /**
-     * Category Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $category;
 
-    /**
-     * Category Model id.
-     *
-     * @var int
-     */
-    public $categoryId;
+    public int $categoryId;
 
-    /**
-     * Category name.
-     *
-     * @var string
-     */
-    public $name = '';
+    public string $name = '';
 
-    /**
-     * Category slug for custom url.
-     *
-     * @var string
-     */
-    public $slug;
+    public ?int $parent_id = null;
 
-    /**
-     * Category parentId.
-     *
-     * @var string
-     */
-    public $parent_id;
+    public ?string $description = null;
 
-    /**
-     * Category sample description.
-     *
-     * @var string
-     */
-    public $description;
+    public bool $is_enabled = false;
 
-    /**
-     * Indicates if category is being enabled.
-     *
-     * @var bool
-     */
-    public $is_enabled = false;
-
-    /**
-     * Component mounted action.
-     *
-     * @param  $category
-     * @return void
-     */
     public function mount($category)
     {
         $this->category = $category;
         $this->categoryId = $category->id;
         $this->name = $category->name;
-        $this->slug = $category->slug;
         $this->parent_id = $category->parent_id;
         $this->description = $category->description;
         $this->is_enabled = $category->is_enabled;
@@ -96,9 +47,9 @@ class Edit extends AbstractBaseComponent
     {
         $this->validate($this->rules());
 
-        (new CategoryRepository())->getById($this->category->id)->update([
+        $this->category->update([
             'name' => $this->name,
-            'slug' => $this->slug,
+            'slug' => $this->name,
             'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
@@ -116,27 +67,12 @@ class Edit extends AbstractBaseComponent
             $this->uploadFile(config('shopper.system.models.category'), $this->category->id);
         }
 
-        session()->flash('success', __("Category successfully updated!"));
+        session()->flash('success', __('Category successfully updated!'));
+
         $this->redirectRoute('shopper.categories.index');
     }
 
-    /**
-     * Update slug value when name if updated.
-     *
-     * @param  string  $value
-     * @return void
-     */
-    public function updatedName(string $value)
-    {
-        $this->slug = str_slug($value, '-');
-    }
-
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => [
@@ -144,11 +80,6 @@ class Edit extends AbstractBaseComponent
                 'required',
                 'max:150',
                 Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
-            ],
-            'slug' => [
-                'sometimes',
-                'required',
-                Rule::unique(shopper_table('categories'), 'slug')->ignore($this->categoryId),
             ],
             'file' => 'sometimes|nullable|image|max:1024',
         ];
@@ -165,12 +96,6 @@ class Edit extends AbstractBaseComponent
         $this->media = null;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
     public function render()
     {
         return view('shopper::livewire.categories.edit', [

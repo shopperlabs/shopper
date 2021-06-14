@@ -3,6 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Framework\Models\User\User;
 
 class InventoryHistory extends Model
@@ -48,17 +50,12 @@ class InventoryHistory extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('inventory_histories');
     }
 
-    /**
-     * Get the inventory history adjustment.
-     *
-     * @return string
-     */
-    public function getAdjustmentAttribute()
+    public function getAdjustmentAttribute(): string
     {
         if ($this->old_quantity > 0) {
             return '+'. $this->old_quantity;
@@ -67,42 +64,22 @@ class InventoryHistory extends Model
         return $this->old_quantity;
     }
 
-    /**
-     * Get the inventory of the current history.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function inventory()
+    public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class, 'inventory_id');
     }
 
-    /**
-     * Get the user who adjusted the history quantity.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
-    /**
-     * Relation.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function stockable()
+    public function stockable(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /**
-     * Relation.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function reference()
+    public function reference(): MorphTo
     {
         return $this->morphTo();
     }

@@ -6,8 +6,6 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
 use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
 
@@ -89,8 +87,9 @@ class Variant extends Component
             ],
         ]);
 
-        (new ProductRepository())->getById($this->variant->id)->update([
+        $this->variant->update([
             'name' => $this->name,
+            'slug' => $this->name,
             'old_price_amount' => $this->old_price_amount ?? null,
             'price_amount' => $this->price_amount ?? null,
             'cost_amount' => $this->cost_amount ?? null,

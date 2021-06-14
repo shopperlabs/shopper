@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Framework\Models\User\User;
 
 class OrderRefund extends Model
@@ -35,38 +36,22 @@ class OrderRefund extends Model
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('order_refunds');
     }
 
-    /**
-     * Return the associate User for this order payment refund.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Return the associate Order for this order payment refund.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function order()
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
 
-
-    /**
-     * Set a default value to an order.
-     *
-     * @return void
-     */
-    protected function setDefaultOrderRefundStatus()
+    protected function setDefaultOrderRefundStatus(): void
     {
         $this->setRawAttributes(
             array_merge(

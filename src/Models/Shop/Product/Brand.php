@@ -4,11 +4,13 @@ namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Framework\Models\Traits\Filetable;
+use Shopper\Framework\Models\Traits\HasSlug;
 
 class Brand extends Model
 {
-    use Filetable;
+    use Filetable, HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -36,39 +38,21 @@ class Brand extends Model
     ];
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = ['files'];
-
-    /**
      * Get the table associated with the model.
      *
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('brands');
     }
 
-    /**
-     * Scope a query to only include enabled categories.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeEnabled(Builder $query)
+    public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
     }
 
-    /**
-     * Return products associated to the brand.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function products()
+    public function products(): HasMany
     {
         return $this->hasMany(config('shopper.system.models.product'));
     }
