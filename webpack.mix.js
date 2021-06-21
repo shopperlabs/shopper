@@ -20,7 +20,10 @@ mix.setPublicPath('public')
   .sass('./resources/sass/shopper.scss', 'css')
   .options({
     processCssUrls: false,
-    postCss: [require('tailwindcss')],
+    postCss: [
+      require('tailwindcss'),
+      require('autoprefixer'),
+    ],
   })
   .webpackConfig({
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
