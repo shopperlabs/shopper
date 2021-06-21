@@ -18,7 +18,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!--end::Fonts -->
     @stack('styles')
+
     @bukStyles(true)
+
     <livewire:styles />
 
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
@@ -34,7 +36,7 @@
         @endforeach
     @endif
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 font-sans antialiased">
+<body class="bg-gray-100 font-sans antialiased dark:bg-gray-900">
 
     <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false, modalDemo: false, }" @keydown.window.escape="sidebarOpen = false">
         <!-- Off-canvas menu for mobile -->
@@ -44,7 +46,7 @@
         @include('shopper::partials.default.sidebar')
 
         <div class="flex flex-col w-0 flex-1 overflow-hidden overflow-y-auto">
-            <div class="sticky top-0 z-30 flex-shrink-0 flex h-16 bg-white dark:bg-gray-900 md:bg-transparent md:dark:bg-transparent backdrop-filter backdrop-blur-md shadow md:shadow-none md:py-4 md:h-auto border-b border-transparent md:border-gray-200 dark:border-gray-700 firefox:bg-opacity-90">
+            <div class="sticky top-0 z-30 flex-shrink-0 flex h-16 bg-white dark:bg-gray-900 md:bg-transparent md:dark:bg-transparent backdrop-filter backdrop-blur-md shadow md:shadow-none md:py-4 md:h-auto border-b border-transparent md:border-gray-200 dark:border-gray-700">
                 <button @click.stop="sidebarOpen = true" class="px-4 border-r border-gray-200 dark:border-gray-700 text-gray-500 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 focus:text-gray-600 dark:focus:text-gray-500 md:hidden" aria-label="Open sidebar">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
@@ -82,14 +84,20 @@
         </div>
 
         <x-shopper-wip />
+
     </div>
+
     <x-shopper-notify />
+
     <x-shopper-alert />
 
 
     @livewire('livewire-ui-modal')
+
     @livewireUIScripts
+
     <livewire:scripts />
+
     @bukScripts(true)
 
     <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
