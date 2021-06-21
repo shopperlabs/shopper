@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
 <div>
     <x-shopper-breadcrumb back="shopper.products.index">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
