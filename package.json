@@ -18,7 +18,7 @@
     "lodash": "^4.17.13",
     "popper.js": "^1.16.0",
     "postcss": "^8.3.0",
-    "tailwindcss": "^2.1.2"
+    "tailwindcss": "^2.2.2"
   },
   "devDependencies": {
     "resolve-url-loader": "^2.3.1",
