@@ -1,9 +1,10 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+  mode: 'jit',
   darkMode: 'class',
   purge: [
-    './resources/assets/js/**/*.js',
+    './resources/js/**/*.js',
     './resources/views/**/*.php',
     './resources/lang/**/*.php',
     './src/**/*.php',
@@ -11,7 +12,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {},
       inset: {
         '-0.5': '-0.125rem',
       },
