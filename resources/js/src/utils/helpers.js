@@ -11,4 +11,4 @@
  *
  * @param {string} selector
  */
-export const scrollToPosition = (selector) => document.querySelector(selector).scrollIntoView({ behavior: 'smooth', block: 'end'});
+export let scrollToPosition = (selector) => document.querySelector(selector).scrollIntoView({ behavior: 'smooth', block: 'end'});
