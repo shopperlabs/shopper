@@ -23,6 +23,7 @@
 
     <livewire:styles />
 
+    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 </head>
 <body class="text-gray-500 font-sans transition ease-in-out duration-700 dark:text-gray-400">
@@ -115,77 +116,7 @@
             </div>
         </nav>
 
-        <div id="setting-configuration">
-            <x-shopper-configuration-step />
-
-            <main class="max-w-7xl mx-auto py-5 sm:py-10">
-                <form action="#" method="POST">
-                    @csrf
-                    <div id="step-one" class="px-4 sm:px-6 lg:px-8">
-                        <span class="text-sm text-blue-600 uppercase font-medium lg:hidden dark:text-blue-500">{{ __('Step 1 of 3') }}</span>
-                        <h1 class="text-gray-900 font-bold text-2xl leading-8 mt-2 lg:text-3xl lg:mt-0 dark:text-white">{{ __('Shop configuration') }}</h1>
-
-                        <div class="mt-8">
-                            <span class="text-sm font-medium text-blue-600 dark:text-blue-500">{{ __('Step 1 - Shop information') }}</span>
-                            <h3 class="text-base mt-1.5 font-semibold text-gray-900 leading-5 dark:text-white">{{ __('Tell us about your Shop') }}</h3>
-                            <p class="mt-3 text-gray-500 leading-5 text-sm lg:max-w-xl dark:text-gray-400">
-                                {{ __('This information will be useful if you want users of your site to directly contact you by email or by your phone number.') }}
-                            </p>
-                        </div>
-                    </div>
-
-                    <x-shopper-validation-errors />
-
-                    <div class="mt-6 lg:mt-8 sm:px-6 lg:px-8">
-                        <div class="bg-white shadow-md sm:rounded-md p-4 lg:p-6 space-y-6 dark:bg-gray-800">
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
-                                <x-shopper-label for="name" class="sm:mt-px sm:pt-2">
-                                    {{ __('Store name') }} <span class="text-red-500">*</span>
-                                </x-shopper-label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <svg class="h-5 w-5 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                                                <path fill-rule="evenodd" d="M22 5H2a1 1 0 0 0-1 1v4a3 3 0 0 0 2 2.82V22a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9.18A3 3 0 0 0 23 10V6a1 1 0 0 0-1-1zm-7 2h2v3a1 1 0 1 1-2 0zm-4 0h2v3a1 1 0 1 1-2 0zM7 7h2v3a1 1 0 1 1-2 0zm-3 4a1 1 0 0 1-1-1V7h2v3a1 1 0 0 1-1 1zm10 10h-4v-2a2 2 0 1 1 4 0zm5 0h-3v-2a4 4 0 1 0-8 0v2H5v-8.18a3.17 3.17 0 0 0 1-.6 3 3 0 0 0 4 0 3 3 0 0 0 4 0 3 3 0 0 0 4 0c.293.26.632.464 1 .6zm2-11a1 1 0 1 1-2 0V7h2zM4.3 3H20a1 1 0 1 0 0-2H4.3a1 1 0 1 0 0 2z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        <x-shopper-input.text id="name" type="text" name="shop_name" class="form-input pl-10" auto-complete="off" required />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5 dark:border-gray-700">
-                                <x-shopper-label for="email" class="sm:mt-px sm:pt-2">
-                                    {{ __('Email address') }} <span class="text-red-500">*</span>
-                                </x-shopper-label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <svg class="h-5 w-5 text-gray-400 dark:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-                                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                                            </svg>
-                                        </div>
-                                        <x-shopper-input.text id="email" name="shop_email" type="email" class="pl-10" required />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5 dark:border-gray-700">
-                                <x-shopper-label for="country" class="sm:mt-px sm:pt-2">
-                                    {{ __('Country') }} <span class="text-red-500">*</span>
-                                </x-shopper-label>
-                                <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                                    <div class="rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </main>
-        </div>
+        <livewire:shopper-initialization />
 
     </div>
 
@@ -194,6 +125,8 @@
     @bukScripts(true)
 
     <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
 
 </body>
 </html>

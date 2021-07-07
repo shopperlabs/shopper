@@ -51,12 +51,6 @@ class General extends Component
         $this->shop_twitter_link = ($twitter = Setting::query()->where('key', 'shop_twitter_link')->first()) ? $twitter->value: '';
     }
 
-    /**
-     * Change currency when country value updated.
-     *
-     * @param  string  $value
-     * @return void
-     */
     public function updatedShopCountryId($value)
     {
         $country = Country::query()->find($value);

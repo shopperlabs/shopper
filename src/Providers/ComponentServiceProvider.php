@@ -41,7 +41,6 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('button');
             $this->registerComponent('breadcrumb');
             $this->registerComponent('breadcrumb-link');
-            $this->registerComponent('configuration-step');
             $this->registerComponent('confirm-modal');
             $this->registerComponent('confirms-password');
             $this->registerComponent('datetime-picker');

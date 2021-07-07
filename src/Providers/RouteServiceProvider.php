@@ -38,8 +38,6 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapBackendRoutes();
 
-        $this->mapApiRoutes();
-
         $this->mapCustomBackendRoute();
     }
 
@@ -87,20 +85,5 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace(config('shopper.system.controllers.namespace'))
                 ->group(config('shopper.routes.custom_file'));
         }
-    }
-
-    /**
-     * Define the "api" routes for the application.
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::middleware('api')
-            ->prefix('api')
-            ->as('shopper.api.')
-            ->namespace($this->namespace . '\Api')
-            ->group(realpath(SHOPPER_PATH . '/routes/api.php'));
     }
 }
