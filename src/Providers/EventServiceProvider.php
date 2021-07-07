@@ -6,10 +6,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Shopper\Framework\Events\Products\ProductCreated;
 use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Events\Products\ProductUpdated;
-use Shopper\Framework\Events\StoreCreated;
-use Shopper\Framework\Listeners\ChannelSubscriber;
 use Shopper\Framework\Listeners\Products\CreateProductSubscriber;
-use Shopper\Framework\Listeners\InventorySubscriber;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -19,21 +16,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        StoreCreated::class => [
-            ChannelSubscriber::class,
-            InventorySubscriber::class
-        ],
-
         ProductCreated::class => [
             CreateProductSubscriber::class,
         ],
 
-        ProductUpdated::class => [
+        ProductUpdated::class => [],
 
-        ],
-
-        ProductRemoved::class => [
-
-        ],
+        ProductRemoved::class => [],
     ];
 }

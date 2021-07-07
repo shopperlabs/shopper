@@ -2007,6 +2007,13 @@ for (var i = 0; i < darkModeToggles.length; i++) {
   };
 }
 
+window.scrollToPosition = function (selector) {
+  return document.querySelector(selector).scrollIntoView({
+    behavior: 'smooth',
+    block: 'end'
+  });
+};
+
 /***/ }),
 
 /***/ "./node_modules/flatpickr/dist/esm/index.js":

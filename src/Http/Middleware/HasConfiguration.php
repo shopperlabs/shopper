@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Shopper\Framework\Models\System\Setting;
 
 class HasConfiguration
@@ -14,7 +15,7 @@ class HasConfiguration
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (Setting::query()->where('key', 'shop_email')->exists()) {
             if ($request->ajax() || $request->wantsJson()) {

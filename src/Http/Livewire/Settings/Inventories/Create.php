@@ -9,75 +9,30 @@ use Shopper\Framework\Rules\Phone;
 
 class Create extends AbstractBaseComponent
 {
-    /**
-     * Inventory default name.
-     *
-     * @var string
-     */
-    public $name;
+    public string $name = '';
 
-    /**
-     * Inventory description.
-     *
-     * @var string
-     */
-    public $description;
+    public ?string $description = null;
 
-    /**
-     * Inventory email.
-     *
-     * @var string
-     */
-    public $email;
+    public string $email = '';
 
-    /**
-     * City where a locate th inventory.
-     *
-     * @var string
-     */
-    public $city;
+    public string $city = '';
 
-    /**
-     * Street address to locate inventory on a map.
-     *
-     * @var string
-     */
-    public $street_address;
+    public string $street_address = '';
 
-    /**
-     * Street address secondary.
-     *
-     * @var string
-     */
-    public $street_address_plus;
+    public ?string $street_address_plus = null;
 
-    /**
-     * Zipcode.
-     *
-     * @var string
-     */
-    public $zipcode;
+    public ?string $zipcode = null;
 
-    /**
-     * Phone number.
-     *
-     * @var string
-     */
-    public $phone_number;
+    public ?string $phone_number = null;
 
-    /**
-     * Country who inventory is localize.
-     *
-     * @var integer
-     */
-    public $country_id;
+    public ?int $country_id = null;
 
     /**
      * Define if the inventory is the default.
      *
      * @var bool
      */
-    public $isDefault = false;
+    public bool $isDefault = false;
 
     /**
      * Store/Update a entry to the storage.
@@ -103,15 +58,11 @@ class Create extends AbstractBaseComponent
         ]);
 
         session()->flash('success', __('Inventory Successfully Added.'));
+
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules()
+    protected function rules(): array
     {
         return [
             'email' => 'required|email|unique:'.shopper_table('inventories'),
@@ -124,15 +75,10 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.inventories.create', [
-            'countries'  => Country::query()->orderBy('name')->get(),
+            'countries'  => Country::select('name', 'id')->orderBy('name')->get(),
         ]);
     }
 }
