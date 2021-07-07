@@ -288,6 +288,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="discounts" link="#" />
+    <x-shopper-learn-more name="discounts" link="https://docs.laravelshopper.io/docs/discounts" />
 
 </div>

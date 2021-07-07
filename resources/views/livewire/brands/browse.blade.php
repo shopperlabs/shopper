@@ -253,6 +253,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="brands" link="#" />
+    <x-shopper-learn-more name="brands" link="https://docs.laravelshopper.io/docs/brands" />
 
 </div>
