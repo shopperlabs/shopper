@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Illuminate\Support\Facades\Artisan;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\Setting;
 
@@ -86,15 +86,15 @@ class Analytics extends Component
     public function store()
     {
         setEnvironmentValue([
-            'analytics_tracking_id'         => $this->google_analytics_tracking_id,
-            'analytics_view_id'             => $this->google_analytics_view_id,
+            'analytics_tracking_id' => $this->google_analytics_tracking_id,
+            'analytics_view_id' => $this->google_analytics_view_id,
             'google_tag_manager_account_id' => $this->google_tag_manager_account_id,
-            'facebook_pixel_account_id'     => $this->facebook_pixel_account_id,
+            'facebook_pixel_account_id' => $this->facebook_pixel_account_id,
         ]);
 
         Setting::query()->updateOrCreate(['key' => 'google_analytics_add_js'], [
             'key' => 'google_analytics_add_js',
-            'value'  => $this->google_analytics_add_js,
+            'value' => $this->google_analytics_add_js,
             'locked' => true,
             'display_name' => Setting::lockedAttributesDisplayName('google_analytics_add_js'),
         ]);
@@ -111,21 +111,15 @@ class Analytics extends Component
 
         $this->notify([
             'title' => __('Updated'),
-            'message' => __("Your analytics configurations have been correctly updated")
+            'message' => __('Your analytics configurations have been correctly updated'),
         ]);
     }
 
-    public function downloadJson()
+    public function downloadJson(): string
     {
-        //storage_path('app/analytics/service-account-credentials.json')
         return Storage::url('app/analytics/service-account-credentials.json');
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.analytics');

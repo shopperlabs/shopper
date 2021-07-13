@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -27,17 +26,12 @@ class Orders extends Component
         $this->customer = $customer;
     }
 
-    /**
-     * Return the component view.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.customers.orders', [
             'orders' => $this->customer->orders()
                 ->with(['customer', 'items', 'shippingAddress', 'paymentMethod'])
-                ->simplePaginate(3)
+                ->simplePaginate(3),
         ]);
     }
 }

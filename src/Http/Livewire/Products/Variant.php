@@ -15,8 +15,6 @@ class Variant extends Component
         WithUploadProcess,
         WithAttributes;
 
-    protected $listeners = ['fileDeleted', 'onVariantUpdated' => 'render'];
-
     /**
      * Product Model.
      *
@@ -45,12 +43,15 @@ class Variant extends Component
      */
     public string $currency;
 
+    protected $listeners = ['fileDeleted', 'onVariantUpdated' => 'render'];
+
     /**
      * Component Mount instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
      * @param  \Illuminate\Database\Eloquent\Model  $variant
      * @param  string  $currency
+     *
      * @return void
      */
     public function mount($product, $variant, string $currency)
@@ -77,11 +78,11 @@ class Variant extends Component
                 Rule::unique(shopper_table('products'), 'name')->ignore($this->variant->id),
             ],
             'file' => 'nullable|image|max:1024',
-            'sku'  => [
+            'sku' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'sku')->ignore($this->variant->id),
             ],
-            'barcode'  => [
+            'barcode' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'barcode')->ignore($this->variant->id),
             ],

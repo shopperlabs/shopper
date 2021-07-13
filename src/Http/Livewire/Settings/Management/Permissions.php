@@ -18,7 +18,7 @@ class Permissions extends Component
     /**
      * Component listeners.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $listeners = ['togglePermission', 'permissionAdded'];
 
@@ -27,15 +27,16 @@ class Permissions extends Component
      *
      * @param  int  $id
      */
-    public function permissionAdded(int  $id)
+    public function permissionAdded(int $id)
     {
-        $this->role = Role::query()->findOrFail($id);
+        $this->role = Role::find($id);
     }
 
     /**
      * Toggle permission on the role.
      *
      * @param  int  $id
+     *
      * @return void
      */
     public function togglePermission(int $id)
@@ -61,6 +62,7 @@ class Permissions extends Component
      * Removed a permission to the storage.
      *
      * @param  int  $id
+     *
      * @throws \Exception
      */
     public function removePermission(int $id)
@@ -69,15 +71,10 @@ class Permissions extends Component
 
         $this->notify([
             'title' => __('Deleted'),
-            'message' => __("The permission has been correctly removed.")
+            'message' => __('The permission has been correctly removed.'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.management.permissions', [
@@ -85,7 +82,7 @@ class Permissions extends Component
                 ->with('users')
                 ->orderBy('created_at')
                 ->get()
-                ->groupBy('group_name')
+                ->groupBy('group_name'),
         ]);
     }
 }

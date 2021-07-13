@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use Illuminate\View\View;
 use Livewire\WithFileUploads;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -22,8 +21,6 @@ class Create extends AbstractBaseComponent
         WithSeoAttributes,
         WithUploadProcess;
 
-    protected $listeners = ['productAdded'];
-
     /**
      * Default product stock quantity.
      *
@@ -36,6 +33,8 @@ class Create extends AbstractBaseComponent
     public array $collection_ids = [];
 
     public ?Channel $defaultChannel;
+
+    protected $listeners = ['productAdded'];
 
     /**
      * Component Mount method.
@@ -67,21 +66,21 @@ class Create extends AbstractBaseComponent
             'old_price_amount' => $this->old_price_amount,
             'price_amount' => $this->price_amount,
             'cost_amount' => $this->cost_amount,
-            'type'  => $this->type,
+            'type' => $this->type,
             'requires_shipping' => $this->requiresShipping,
             'backorder' => $this->backorder,
-            'published_at'  => $this->publishedAt ?? now(),
-            'seo_title'     => $this->seoTitle,
+            'published_at' => $this->publishedAt ?? now(),
+            'seo_title' => $this->seoTitle,
             'seo_description' => str_limit($this->seoDescription, 157),
-            'weight_value'  => $this->weightValue ?? null,
-            'weight_unit'   => $this->weightUnit,
-            'height_value'  => $this->heightValue ?? null,
-            'height_unit'   => $this->heightUnit,
-            'width_value'   => $this->widthValue ?? null,
-            'width_unit'    => $this->widthUnit,
-            'volume_value'  => $this->volumeValue ?? null,
-            'volume_unit'   => $this->volumeUnit,
-            'brand_id'  => $this->brand_id ?? null,
+            'weight_value' => $this->weightValue ?? null,
+            'weight_unit' => $this->weightUnit,
+            'height_value' => $this->heightValue ?? null,
+            'height_unit' => $this->heightUnit,
+            'width_value' => $this->widthValue ?? null,
+            'width_unit' => $this->widthUnit,
+            'volume_value' => $this->volumeValue ?? null,
+            'volume_unit' => $this->volumeUnit,
+            'brand_id' => $this->brand_id ?? null,
         ]);
 
         if ($this->file) {
@@ -116,22 +115,6 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.products.index');
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules(): array
-    {
-        return [
-            'name'  => 'bail|required',
-            'sku'  => 'nullable|unique:'.shopper_table('products'),
-            'barcode'  => 'nullable|unique:'.shopper_table('products'),
-            'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
-        ];
-    }
-
     public function render()
     {
         return view('shopper::livewire.products.create', [
@@ -152,5 +135,21 @@ class Create extends AbstractBaseComponent
                 ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.system.barcode_type'))
                 : null,
         ]);
+    }
+
+    /**
+     * Component validation rules.
+     *
+     * @return array<string>
+     */
+    protected function rules(): array
+    {
+        return [
+            'name' => 'bail|required',
+            'sku' => 'nullable|unique:'.shopper_table('products'),
+            'barcode' => 'nullable|unique:'.shopper_table('products'),
+            'file' => 'nullable|image|max:1024',
+            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
+        ];
     }
 }

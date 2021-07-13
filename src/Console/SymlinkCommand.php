@@ -24,6 +24,7 @@ class SymlinkCommand extends Command
      * Execute the console command.
      *
      * @return void
+     *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function handle()

@@ -10,6 +10,7 @@ trait TruncateTable
      * Truncate Table
      *
      * @param string $table
+     *
      * @return mixed
      */
     protected function truncate($table)
@@ -19,9 +20,10 @@ trait TruncateTable
                 return DB::table($table)->truncate();
 
             case 'pgsql':
-                return  DB::statement('TRUNCATE TABLE '.$table.' RESTART IDENTITY CASCADE');
+                return DB::statement('TRUNCATE TABLE '.$table.' RESTART IDENTITY CASCADE');
 
-            case 'sqlite': case 'sqlsrv':
+            case 'sqlite':
+                case 'sqlsrv':
             return DB::statement('DELETE FROM '.$table);
         }
 

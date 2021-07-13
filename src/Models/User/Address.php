@@ -8,8 +8,8 @@ use Shopper\Framework\Models\System\Country;
 
 class Address extends Model
 {
-    const TYPE_BILLING = 'billing';
-    const TYPE_SHIPPING = 'shipping';
+    public const TYPE_BILLING = 'billing';
+    public const TYPE_SHIPPING = 'shipping';
 
     /**
      * The attributes that are mass assignable.
@@ -55,7 +55,7 @@ class Address extends Model
      * @var array
      */
     protected $with = [
-        'country'
+        'country',
     ];
 
     /**
@@ -66,24 +66,6 @@ class Address extends Model
     public function getTable(): string
     {
         return shopper_table('user_addresses');
-    }
-
-    /**
-     * Bootstrap the model and its traits.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($address) {
-            if ($address->is_default) {
-                $address->user->addresses()->where('type', $address->type)->update([
-                    'is_default' => false
-                ]);
-            }
-        });
     }
 
     /**
@@ -116,5 +98,23 @@ class Address extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
+     * Bootstrap the model and its traits.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($address) {
+            if ($address->is_default) {
+                $address->user->addresses()->where('type', $address->type)->update([
+                    'is_default' => false,
+                ]);
+            }
+        });
     }
 }

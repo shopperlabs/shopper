@@ -21,7 +21,7 @@ class GeneralException extends Exception
      * @param  int  $code
      * @param  Throwable|null  $previous
      */
-    public function __construct($message = '', $code = 0, Throwable $previous = null)
+    public function __construct($message = '', $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
@@ -31,13 +31,13 @@ class GeneralException extends Exception
      */
     public function report()
     {
-        //
     }
 
     /**
      * Render the exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function render($request)

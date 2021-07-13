@@ -15,7 +15,7 @@ class ModelServiceProvider extends ServiceProvider
             'category' => config('shopper.system.models.category'),
             'collection' => config('shopper.system.models.collection'),
             'product' => config('shopper.system.models.product'),
-            'channel' => Channel::class
+            'channel' => Channel::class,
         ]);
     }
 }

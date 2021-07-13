@@ -9,13 +9,13 @@ use Shopper\Framework\Models\Shop\Product\AttributeValue;
 
 class Values extends Component
 {
-    protected $listeners = ['updateValues'];
-
     public Attribute $attribute;
 
     public Collection $values;
 
     public string $type = 'select';
+
+    protected $listeners = ['updateValues'];
 
     public function mount(Attribute $attribute)
     {

@@ -12,7 +12,7 @@ class SettingController extends Controller
         return view('shopper::pages.settings.initialize');
     }
 
-	public function role(Role $role)
+    public function role(Role $role)
     {
         return view('shopper::pages.settings.management.role', compact('role'));
     }

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Repositories;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Exceptions\GeneralException;
 
 abstract class BaseRepository implements RepositoryContract
@@ -73,6 +73,21 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
+     * Add the given query scope.
+     *
+     * @param string $scope
+     * @param array $args
+     *
+     * @return $this
+     */
+    public function __call($scope, $args)
+    {
+        $this->scopes[$scope] = $args;
+
+        return $this;
+    }
+
+    /**
      * Specify Model class name.
      *
      * @return mixed
@@ -81,6 +96,7 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|Model|mixed
+     *
      * @throws GeneralException
      */
     public function makeModel()
@@ -99,7 +115,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @param array $columns
      *
-     * @return Collection|static[]
+     * @return Collection|array<static>
      */
     public function all(array $columns = ['*'])
     {
@@ -117,7 +133,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @return int
      */
-    public function count() : int
+    public function count(): int
     {
         return $this->model->count();
     }
@@ -176,9 +192,10 @@ abstract class BaseRepository implements RepositoryContract
      * @param $id
      *
      * @throws \Exception
+     *
      * @return bool|null
      */
-    public function deleteById($id) : bool
+    public function deleteById($id): bool
     {
         $this->unsetClauses();
 
@@ -192,7 +209,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @return int
      */
-    public function deleteMultipleById(array $ids) : int
+    public function deleteMultipleById(array $ids): int
     {
         return $this->model->destroy($ids);
     }
@@ -220,7 +237,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @param array $columns
      *
-     * @return Collection|static[]
+     * @return Collection|array<static>
      */
     public function get(array $columns = ['*'])
     {
@@ -255,7 +272,7 @@ abstract class BaseRepository implements RepositoryContract
      * @param  string  $column
      * @param  array  $columns
      *
-     * @return Model|null|static
+     * @return Model|static|null
      */
     public function getByColumn($item, $column, array $columns = ['*'])
     {
@@ -324,6 +341,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @param  string  $column
      * @param  string  $direction
+     *
      * @return $this
      */
     public function orderBy($column, $direction = 'asc')
@@ -382,6 +400,25 @@ abstract class BaseRepository implements RepositoryContract
         $this->with = $relations;
 
         return $this;
+    }
+
+    /**
+     * Get an array with the values of a given column.
+     *
+     * @param $column
+     * @param null $key
+     *
+     * @return \Illuminate\Support\Collection|mixed
+     */
+    public function pluck($column, $key = null)
+    {
+        $this->newQuery();
+
+        $results = $this->query->pluck($column, $key);
+
+        $this->unsetClauses();
+
+        return $results;
     }
 
     /**
@@ -463,38 +500,5 @@ abstract class BaseRepository implements RepositoryContract
         $this->take = null;
 
         return $this;
-    }
-
-    /**
-     * Add the given query scope.
-     *
-     * @param string $scope
-     * @param array $args
-     *
-     * @return $this
-     */
-    public function __call($scope, $args)
-    {
-        $this->scopes[$scope] = $args;
-
-        return $this;
-    }
-
-    /**
-     * Get an array with the values of a given column.
-     *
-     * @param $column
-     * @param null $key
-     * @return \Illuminate\Support\Collection|mixed
-     */
-    public function pluck($column, $key = null)
-    {
-        $this->newQuery();
-
-        $results = $this->query->pluck($column, $key);
-
-        $this->unsetClauses();
-
-        return $results;
     }
 }

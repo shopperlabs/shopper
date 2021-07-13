@@ -9,13 +9,6 @@ use Shopper\Framework\Repositories\UserRepository;
 class Show extends AbstractBaseComponent
 {
     /**
-     * Listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['profileUpdate'];
-
-    /**
      * Customer Model.
      *
      * @var \Illuminate\Database\Eloquent\Model
@@ -32,10 +25,13 @@ class Show extends AbstractBaseComponent
 
     public string $picture;
 
+    protected $listeners = ['profileUpdate'];
+
     /**
      * Component mounted action.
      *
      * @param  $customer
+     *
      * @return void
      */
     public function mount($customer)
@@ -76,14 +72,15 @@ class Show extends AbstractBaseComponent
             'first_name' => $this->first_name,
         ]);
 
-        session()->flash('success', __("Customer successfully updated!"));
+        session()->flash('success', __('Customer successfully updated!'));
+
         $this->redirectRoute('shopper.customers.index');
     }
 
     /**
      * Component validation rules.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function rules(): array
     {

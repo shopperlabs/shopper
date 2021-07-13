@@ -74,7 +74,9 @@ class Browse extends Component
      * Archived an order.
      *
      * @param  int  $id
+     *
      * @throws \Exception
+     *
      * @return void
      */
     public function archived(int $id): void
@@ -83,15 +85,10 @@ class Browse extends Component
 
         $this->notify([
             'title' => __('Archived'),
-            'message' => __('You have successfully archived this order.')
+            'message' => __('You have successfully archived this order.'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.orders.browse', [

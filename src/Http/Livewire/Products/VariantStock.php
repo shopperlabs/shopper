@@ -23,6 +23,7 @@ class VariantStock extends Component
      * Component Mount instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $variant
+     *
      * @return void
      */
     public function mount($variant)
@@ -50,7 +51,7 @@ class VariantStock extends Component
                 ->where('stockable_id', $this->product->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(3),
-            'inventories' => (new InventoryRepository())->all()
+            'inventories' => (new InventoryRepository())->all(),
         ]);
     }
 }

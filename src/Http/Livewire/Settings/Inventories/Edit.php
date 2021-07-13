@@ -72,27 +72,27 @@ class Edit extends AbstractBaseComponent
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
+    public function render()
+    {
+        return view('shopper::livewire.settings.inventories.edit', [
+            'countries' => Country::query()->orderBy('name')->get(),
+        ]);
+    }
+
     protected function rules(): array
     {
         return [
             'email' => [
                 'required',
                 'email',
-                Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId)
+                Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId),
             ],
             'name' => 'required|max:100',
             'city' => 'required',
             'street_address' => 'required',
-            'zipcode'  => 'required',
-            'phone_number'  => ['nullable', new Phone()],
+            'zipcode' => 'required',
+            'phone_number' => ['nullable', new Phone()],
             'country_id' => 'required|exists:'.shopper_table('system_countries').',id',
         ];
-    }
-
-    public function render()
-    {
-        return view('shopper::livewire.settings.inventories.edit', [
-            'countries'  => Country::query()->orderBy('name')->get(),
-        ]);
     }
 }

@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ProductAttributeValue extends Model
 {
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -15,15 +21,8 @@ class ProductAttributeValue extends Model
     protected $fillable = [
         'product_attribute_id',
         'attribute_value_id',
-        'product_custom_value'
+        'product_custom_value',
     ];
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * The relations to eager load on every query.

@@ -13,6 +13,7 @@ class ConfirmPassword
      * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
      * @param  mixed  $user
      * @param  string  $password
+     *
      * @return bool
      */
     public function __invoke(StatefulGuard $guard, $user, string $password): bool

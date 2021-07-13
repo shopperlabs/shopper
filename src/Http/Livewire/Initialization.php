@@ -4,7 +4,6 @@ namespace Shopper\Framework\Http\Livewire;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Events\StoreCreated;
 use Shopper\Framework\Models\System\Country;
 use Shopper\Framework\Models\System\Currency;
 use Shopper\Framework\Models\System\Setting;
@@ -36,13 +35,13 @@ class Initialization extends Component
     public $logo;
 
     protected $rules = [
-        'shop_name'           => 'required|max:100',
-        'shop_email'          => 'required|email',
-        'logo'                => 'nullable|image|max:1024',
-        'shop_country_id'     => 'required',
+        'shop_name' => 'required|max:100',
+        'shop_email' => 'required|email',
+        'logo' => 'nullable|image|max:1024',
+        'shop_country_id' => 'required',
         'shop_street_address' => 'required|string',
-        'shop_zipcode'        => 'required',
-        'shop_city'           => 'required',
+        'shop_zipcode' => 'required',
+        'shop_city' => 'required',
     ];
 
     public function mount()
@@ -111,7 +110,7 @@ class Initialization extends Component
 
         foreach ($keys as $key) {
             Setting::query()->updateOrCreate(['key' => $key], [
-                'value'  => $this->{$key},
+                'value' => $this->{$key},
                 'display_name' => Setting::lockedAttributesDisplayName($key),
                 'locked' => true,
             ]);
@@ -119,7 +118,7 @@ class Initialization extends Component
 
         if ($this->logo) {
             Setting::query()->updateOrCreate(['key' => 'shop_logo'], [
-                'value'  => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
+                'value' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
                 'display_name' => Setting::lockedAttributesDisplayName('shop_logo'),
                 'locked' => true,
             ]);
@@ -132,17 +131,9 @@ class Initialization extends Component
         $this->redirectRoute('shopper.dashboard');
     }
 
-    protected function messages(): array
-    {
-        return [
-            'shop_country_id.required' => __('The country is required'),
-            'shop_name.required' => __('The store name is required')
-        ];
-    }
-
     public function storeHasSetup()
     {
-        (new InventoryRepository)->create([
+        (new InventoryRepository())->create([
             'name' => $this->shop_name,
             'code' => str_slug($this->shop_name),
             'email' => $this->shop_email,
@@ -156,7 +147,7 @@ class Initialization extends Component
             'is_default' => $this->isDefault,
         ]);
 
-        (new ChannelRepository)->create([
+        (new ChannelRepository())->create([
             'name' => $name = __('Web Store'),
             'slug' => str_slug($name),
             'url' => env('APP_URL'),
@@ -170,5 +161,13 @@ class Initialization extends Component
             'countries' => Country::select('name', 'id')->orderBy('name')->get(),
             'currencies' => Currency::select('name', 'code', 'id')->orderBy('name')->get(),
         ]);
+    }
+
+    protected function messages(): array
+    {
+        return [
+            'shop_country_id.required' => __('The country is required'),
+            'shop_name.required' => __('The store name is required'),
+        ];
     }
 }

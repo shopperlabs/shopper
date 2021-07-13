@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Currency extends Model
 {
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -18,13 +24,6 @@ class Currency extends Model
         'format',
         'exchange_rate',
     ];
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * Get the table associated with the model.

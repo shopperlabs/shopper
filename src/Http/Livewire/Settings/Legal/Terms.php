@@ -15,7 +15,7 @@ class Terms extends Component
      *
      * @var string
      */
-    public $title = 'Terms of use';
+    public string $title = 'Terms of use';
 
     /**
      * Component mount instance.
@@ -44,11 +44,6 @@ class Terms extends Component
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.legal.terms');

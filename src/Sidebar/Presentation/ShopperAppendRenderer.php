@@ -34,7 +34,7 @@ class ShopperAppendRenderer
     {
         if ($append->isAuthorized()) {
             return $this->factory->make($this->view, [
-                'append' => $append
+                'append' => $append,
             ])->render();
         }
     }

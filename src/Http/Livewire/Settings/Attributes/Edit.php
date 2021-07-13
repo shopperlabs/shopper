@@ -43,7 +43,6 @@ class Edit extends AbstractBaseComponent
      */
     public $type = 'text';
 
-
     /**
      * Attribute description.
      *
@@ -76,6 +75,7 @@ class Edit extends AbstractBaseComponent
      * Component Mount new instance.
      *
      * @param  Attribute  $attribute
+     *
      * @return void
      */
     public function mount(Attribute $attribute)
@@ -111,15 +111,32 @@ class Edit extends AbstractBaseComponent
         ]);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Attribute has been successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Attribute has been successfully updated!'),
+        ]);
+    }
+
+    /**
+     * Check if the attribute has default values.
+     *
+     * @return bool
+     */
+    public function hasValues(): bool
+    {
+        return in_array($this->type, Attribute::fieldsWithValues());
+    }
+
+    public function render()
+    {
+        return view('shopper::livewire.settings.attributes.edit', [
+            'fields' => Attribute::typesFields(),
         ]);
     }
 
     /**
      * Component validation rules.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function rules()
     {
@@ -131,27 +148,5 @@ class Edit extends AbstractBaseComponent
             ],
             'type' => 'required',
         ];
-    }
-
-    /**
-     * Check if the attribute has default values.
-     *
-     * @return bool
-     */
-    public function hasValues()
-    {
-        return in_array($this->type, Attribute::fieldsWithValues());
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function render()
-    {
-        return view('shopper::livewire.settings.attributes.edit', [
-            'fields' => Attribute::typesFields(),
-        ]);
     }
 }

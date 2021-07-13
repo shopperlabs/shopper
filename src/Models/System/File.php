@@ -58,6 +58,7 @@ class File extends Model
      * Get the formatted file_size attribute.
      *
      * @param  string  $value
+     *
      * @return string
      */
     public function getFileSizeAttribute(string $value): string

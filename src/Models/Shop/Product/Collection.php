@@ -35,7 +35,7 @@ class Collection extends Model
      * @var array
      */
     protected $casts = [
-        'published_at' => 'datetime'
+        'published_at' => 'datetime',
     ];
 
     /**

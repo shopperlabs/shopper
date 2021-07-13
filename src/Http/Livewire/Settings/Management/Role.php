@@ -4,7 +4,6 @@ namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role as RoleModel;
 
 class Role extends Component
@@ -21,6 +20,7 @@ class Role extends Component
      * Component Mount instance.
      *
      * @param  RoleModel  $role
+     *
      * @return void
      */
     public function mount(RoleModel $role)
@@ -35,7 +35,7 @@ class Role extends Component
         $this->validate([
             'name' => [
                 'required',
-                Rule::unique('roles', 'name')->ignore($this->role->id)
+                Rule::unique('roles', 'name')->ignore($this->role->id),
             ],
         ], [
             'name.required' => __('The role name is required.'),

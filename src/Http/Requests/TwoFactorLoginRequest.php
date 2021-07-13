@@ -28,7 +28,7 @@ class TwoFactorLoginRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -38,7 +38,7 @@ class TwoFactorLoginRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'code' => 'nullable|string',
@@ -50,11 +50,13 @@ class TwoFactorLoginRequest extends FormRequest
      * Determine if the request has a valid two factor code.
      *
      * @return bool
+     * @throws ValidationException
      */
-    public function hasValidCode()
+    public function hasValidCode(): bool
     {
         return $this->code && app(TwoFactorAuthenticationProvider::class)->verify(
-            decrypt($this->challengedUser()->two_factor_secret), $this->code
+            decrypt($this->challengedUser()->two_factor_secret),
+            $this->code
         );
     }
 
@@ -62,8 +64,9 @@ class TwoFactorLoginRequest extends FormRequest
      * Get the valid recovery code if one exists on the request.
      *
      * @return string|null
+     * @throws ValidationException
      */
-    public function validRecoveryCode()
+    public function validRecoveryCode(): ?string
     {
         if (! $this->recovery_code) {
             return;
@@ -78,6 +81,7 @@ class TwoFactorLoginRequest extends FormRequest
      * Get the user that is attempting the two factor challenge.
      *
      * @return mixed
+     * @throws ValidationException
      */
     public function challengedUser()
     {
@@ -108,7 +112,7 @@ class TwoFactorLoginRequest extends FormRequest
      *
      * @return bool
      */
-    public function remember()
+    public function remember(): bool
     {
         if (! $this->remember) {
             $this->remember = $this->session()->pull('login.remember', false);

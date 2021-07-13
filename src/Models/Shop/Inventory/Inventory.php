@@ -31,26 +31,6 @@ class Inventory extends Model
     ];
 
     /**
-     * Boot the model.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($inventory) {
-            if ($inventory->is_default) {
-                static::query()->update(['is_default' => false]);
-            }
-        });
-
-        static::updating(function ($inventory) {
-            if ($inventory->is_default) {
-                static::query()->update(['is_default' => false]);
-            }
-        });
-    }
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -72,5 +52,25 @@ class Inventory extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($inventory) {
+            if ($inventory->is_default) {
+                static::query()->update(['is_default' => false]);
+            }
+        });
+
+        static::updating(function ($inventory) {
+            if ($inventory->is_default) {
+                static::query()->update(['is_default' => false]);
+            }
+        });
     }
 }

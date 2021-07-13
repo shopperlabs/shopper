@@ -10,6 +10,7 @@ class CreateProductSubscriber
      * Handle the event.
      *
      * @param  ProductCreated  $event
+     *
      * @return void
      */
     public function handle(ProductCreated $event)

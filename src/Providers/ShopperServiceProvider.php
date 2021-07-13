@@ -14,7 +14,7 @@ class ShopperServiceProvider extends ServiceProvider
     /**
      * Shopper config files.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected array $configFiles = [
         'system', 'routes', 'auth', 'mails',
@@ -46,8 +46,8 @@ class ShopperServiceProvider extends ServiceProvider
     public function registerPublishing()
     {
         collect($this->configFiles)->each(function ($config) {
-            $this->mergeConfigFrom(SHOPPER_PATH . "/config/$config.php", "shopper.$config");
-            $this->publishes([SHOPPER_PATH. "/config/$config.php" => config_path("shopper/$config.php")], 'shopper-config');
+            $this->mergeConfigFrom(SHOPPER_PATH . "/config/${config}.php", "shopper.${config}");
+            $this->publishes([SHOPPER_PATH. "/config/${config}.php" => config_path("shopper/${config}.php")], 'shopper-config');
         });
 
         $this->publishes([
@@ -69,23 +69,11 @@ class ShopperServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the package resources such as routes, templates, etc.
-     *
-     * @return void
-     */
-    protected function registerResources()
-    {
-        $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
-        $this->loadTranslationsFrom(SHOPPER_PATH . '/resources/lang', 'shopper');
-        $this->loadJsonTranslationsFrom(resource_path('lang/vendor/shopper'));
-    }
-
-    /**
      * Register provider
      *
      * @return void
      */
-    public function registerProviders() : void
+    public function registerProviders(): void
     {
         foreach ($this->provides() as $provide) {
             $this->app->register($provide);
@@ -101,7 +89,7 @@ class ShopperServiceProvider extends ServiceProvider
     {
         $this->registerProviders();
 
-        if (!defined('SHOPPER_PATH')) {
+        if (! defined('SHOPPER_PATH')) {
             define('SHOPPER_PATH', realpath(__DIR__ . '/../../'));
         }
 
@@ -118,7 +106,7 @@ class ShopperServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides() : array
+    public function provides(): array
     {
         return [
             ComponentServiceProvider::class,
@@ -127,5 +115,17 @@ class ShopperServiceProvider extends ServiceProvider
             SidebarServiceProvider::class,
             ShopperSidebarServiceProvider::class,
         ];
+    }
+
+    /**
+     * Register the package resources such as routes, templates, etc.
+     *
+     * @return void
+     */
+    protected function registerResources()
+    {
+        $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
+        $this->loadTranslationsFrom(SHOPPER_PATH . '/resources/lang', 'shopper');
+        $this->loadJsonTranslationsFrom(resource_path('lang/vendor/shopper'));
     }
 }

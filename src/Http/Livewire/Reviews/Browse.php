@@ -36,6 +36,7 @@ class Browse extends Component
      * Remove a review from the storage.
      *
      * @param  int  $id
+     *
      * @throws \Exception
      */
     public function remove(int $id)
@@ -43,17 +44,12 @@ class Browse extends Component
         Review::query()->find($id)->delete();
 
         $this->notify([
-           'title' => __("Deleted"),
-           'message' => __("Review removed successfully.")
+            'title' => __('Deleted'),
+            'message' => __('Review removed successfully.'),
         ]);
         $this->dispatchBrowserEvent('close-review');
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.reviews.browse', [
@@ -67,7 +63,7 @@ class Browse extends Component
                         $query->where('approved', boolval($this->approved));
                     }
                 })
-                ->paginate(8)
+                ->paginate(8),
         ]);
     }
 }

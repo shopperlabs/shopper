@@ -15,6 +15,7 @@ class RegisterOrderSidebar extends AbstractAdminSidebar
      * Method used to define your sidebar menu groups and items
      *
      * @param  Menu  $menu
+     *
      * @return Menu
      */
     public function extendWith(Menu $menu): Menu

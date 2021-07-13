@@ -21,6 +21,7 @@ class TwoFactorAuthenticatedController extends Controller
      * Create a new controller instance.
      *
      * @param  \Illuminate\Contracts\Auth\StatefulGuard
+     *
      * @return void
      */
     public function __construct(StatefulGuard $guard)
@@ -43,7 +44,9 @@ class TwoFactorAuthenticatedController extends Controller
      * Attempt to authenticate a new session using the two factor authentication code.
      *
      * @param \Shopper\Framework\Http\Requests\TwoFactorLoginRequest $request
+     *
      * @return  mixed
+     *
      * @throws ValidationException
      */
     public function store(TwoFactorLoginRequest $request)

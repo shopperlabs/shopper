@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
@@ -56,7 +55,7 @@ class Create extends AbstractBaseComponent
                 ->makeModel()
                 ->scopes('enabled')
                 ->select('name', 'id')
-                ->get()
+                ->get(),
         ]);
     }
 }

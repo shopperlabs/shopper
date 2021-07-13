@@ -24,7 +24,7 @@ class Setting extends Model
      * @var array
      */
     protected $hidden = [
-        'locked'
+        'locked',
     ];
 
     /**

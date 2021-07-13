@@ -19,7 +19,7 @@ class Show extends Component
      *
      * @var bool
      */
-    public $approved;
+    public bool $approved;
 
     /**
      * Component Mount method instance.
@@ -39,10 +39,10 @@ class Show extends Component
      */
     public function updatedApproved()
     {
-        $this->approved = !$this->review->approved;
-        $this->review->update(['approved' => !$this->review->approved]);
+        $this->approved = ! $this->review->approved;
+        $this->review->update(['approved' => ! $this->review->approved]);
 
-        $this->notify(['title' => __('Updated'), 'message' => __("Review approved status updated.")]);
+        $this->notify(['title' => __('Updated'), 'message' => __('Review approved status updated.')]);
     }
 
     /**
@@ -54,15 +54,10 @@ class Show extends Component
     {
         $this->review->delete();
 
-        session()->flash('success', __("Review removed successfully."));
+        session()->flash('success', __('Review removed successfully.'));
         $this->redirectRoute('shopper.reviews.index');
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.reviews.show');

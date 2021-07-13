@@ -23,18 +23,6 @@ class UpdateValue extends ModalComponent
         $this->type = $type;
         $this->value = $value->value;
         $this->key = $value->key;
-
-    }
-
-    protected function rules(): array
-    {
-        return [
-            'value' => 'required|max:50',
-            'key' => [
-                'required',
-                Rule::unique(shopper_table('attribute_values'))->ignore($this->valueId)
-            ],
-        ];
     }
 
     public static function modalMaxWidth(): string
@@ -58,6 +46,17 @@ class UpdateValue extends ModalComponent
         ]);
 
         $this->closeModal();
+    }
+
+    public function rules(): array
+    {
+        return [
+            'value' => 'required|max:50',
+            'key' => [
+                'required',
+                Rule::unique(shopper_table('attribute_values'))->ignore($this->valueId),
+            ],
+        ];
     }
 
     public function render()

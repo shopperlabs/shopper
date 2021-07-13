@@ -20,8 +20,6 @@ class Variants extends Component
         WithAttributes,
         WithUploadProcess;
 
-    protected $listeners = ['onVariantAdded' => 'render'];
-
     public string $search = '';
 
     /**
@@ -40,10 +38,13 @@ class Variants extends Component
 
     public string $currency;
 
+    protected $listeners = ['onVariantAdded' => 'render'];
+
     /**
      * Component mount instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
+     *
      * @return void
      */
     public function mount($product, string $currency)
@@ -61,6 +62,7 @@ class Variants extends Component
      * Remove a record to the database.
      *
      * @param  int  $id
+     *
      * @throws \Exception
      */
     public function remove(int $id)
@@ -75,13 +77,13 @@ class Variants extends Component
 
         $this->notify([
             'title' => __('Deleted'),
-            'message' => __('The variation has successfully removed!')
+            'message' => __('The variation has successfully removed!'),
         ]);
     }
 
     public function render()
     {
-        return  view('shopper::livewire.products.forms.form-variants', [
+        return view('shopper::livewire.products.forms.form-variants', [
             'variants' => (new ProductRepository())
                 ->makeModel()
                 ->where(function (Builder $query) {

@@ -11,6 +11,7 @@ class CustomerController extends ShopperBaseController
      * Return customers list view.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -24,6 +25,7 @@ class CustomerController extends ShopperBaseController
      * Display Create view.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
@@ -37,15 +39,17 @@ class CustomerController extends ShopperBaseController
      * Display Show view.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show($id)
+    public function show(int $id)
     {
         $this->authorize('read_customers');
 
         return view('shopper::pages.customers.show', [
-            'customer' => (new UserRepository())->with(['addresses', 'orders'])->getById($id)
+            'customer' => (new UserRepository())->with(['addresses', 'orders'])->getById($id),
         ]);
     }
 }

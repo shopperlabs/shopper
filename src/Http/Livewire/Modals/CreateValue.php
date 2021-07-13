@@ -18,14 +18,6 @@ class CreateValue extends ModalComponent
         $this->type = $attribute->type;
     }
 
-    protected function rules(): array
-    {
-        return [
-            'value' => 'required|max:50',
-            'key' => 'required|unique:'. shopper_table('attribute_values'),
-        ];
-    }
-
     public static function modalMaxWidth(): string
     {
         return 'lg';
@@ -37,7 +29,7 @@ class CreateValue extends ModalComponent
 
         $this->attribute->values()->create([
             'value' => $this->value,
-            'key'  => $this->key,
+            'key' => $this->key,
         ]);
 
         $this->emit('updateValues');
@@ -48,6 +40,14 @@ class CreateValue extends ModalComponent
         ]);
 
         $this->closeModal();
+    }
+
+    public function rules(): array
+    {
+        return [
+            'value' => 'required|max:50',
+            'key' => 'required|unique:'. shopper_table('attribute_values'),
+        ];
     }
 
     public function render()

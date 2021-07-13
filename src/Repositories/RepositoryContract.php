@@ -6,6 +6,7 @@ interface RepositoryContract
 {
     /**
      * @param array $columns
+     *
      * @return mixed
      */
     public function all(array $columns = ['*']);
@@ -17,12 +18,14 @@ interface RepositoryContract
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function create(array $data);
 
     /**
      * @param array $data
+     *
      * @return mixed
      */
     public function createMultiple(array $data);
@@ -34,24 +37,28 @@ interface RepositoryContract
 
     /**
      * @param $id
+     *
      * @return mixed
      */
     public function deleteById($id);
 
     /**
      * @param array $ids
+     *
      * @return mixed
      */
     public function deleteMultipleById(array $ids);
 
     /**
      * @param array $columns
+     *
      * @return mixed
      */
     public function first(array $columns = ['*']);
 
     /**
      * @param array $columns
+     *
      * @return mixed
      */
     public function get(array $columns = ['*']);
@@ -59,6 +66,7 @@ interface RepositoryContract
     /**
      * @param $id
      * @param array $columns
+     *
      * @return mixed
      */
     public function getById($id, array $columns = ['*']);
@@ -67,6 +75,7 @@ interface RepositoryContract
      * @param $item
      * @param $column
      * @param array $columns
+     *
      * @return mixed
      */
     public function getByColumn($item, $column, array $columns = ['*']);
@@ -76,6 +85,7 @@ interface RepositoryContract
      * @param array $columns
      * @param string $pageName
      * @param null $page
+     *
      * @return mixed
      */
     public function paginate($limit = 25, array $columns = ['*'], $pageName = 'page', $page = null);
@@ -84,12 +94,14 @@ interface RepositoryContract
      * @param $id
      * @param array $data
      * @param array $options
+     *
      * @return mixed
      */
     public function updateById($id, array $data, array $options = []);
 
     /**
      * @param $limit
+     *
      * @return mixed
      */
     public function limit($limit);
@@ -97,6 +109,7 @@ interface RepositoryContract
     /**
      * @param $column
      * @param $value
+     *
      * @return mixed
      */
     public function orderBy($column, $value);
@@ -105,6 +118,7 @@ interface RepositoryContract
      * @param $column
      * @param $value
      * @param string $operator
+     *
      * @return mixed
      */
     public function where($column, $value, $operator = '=');
@@ -112,12 +126,14 @@ interface RepositoryContract
     /**
      * @param $column
      * @param $value
+     *
      * @return mixed
      */
     public function whereIn($column, $value);
 
     /**
      * @param  $relations
+     *
      * @return mixed
      */
     public function with($relations);
@@ -125,6 +141,7 @@ interface RepositoryContract
     /**
      * @param  $column
      * @param  null $key
+     *
      * @return mixed
      */
     public function pluck($column, $key = null);

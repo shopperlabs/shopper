@@ -10,6 +10,7 @@ class AttributeController extends ShopperBaseController
      * Browse Attribute view page.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -23,6 +24,7 @@ class AttributeController extends ShopperBaseController
      * Create Attribute view page.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
@@ -36,7 +38,9 @@ class AttributeController extends ShopperBaseController
      * Edit Attribute view page.
      *
      * @param  Attribute  $attribute
+     *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Attribute $attribute)

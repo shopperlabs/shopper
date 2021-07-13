@@ -10,6 +10,7 @@ trait MigrationTrait
      * Return table name.
      *
      * @param  string  $table
+     *
      * @return string
      */
     public function getTableName(string $table): string
@@ -25,7 +26,7 @@ trait MigrationTrait
      * Create fields common to all tables.
      *
      * @param  Blueprint  $table
-     * @param  boolean  $hasSoftDelete
+     * @param bool $hasSoftDelete
      */
     public function addCommonFields(Blueprint $table, bool $hasSoftDelete = false): void
     {
@@ -41,6 +42,7 @@ trait MigrationTrait
      * Create fields common to seo.
      *
      * @param  Blueprint  $table
+     *
      * @return void
      */
     public function addSeoFields(Blueprint $table): void
@@ -53,6 +55,7 @@ trait MigrationTrait
      * Create common fields for shipping.
      *
      * @param  Blueprint  $table
+     *
      * @return void
      */
     public function addShippingFields(Blueprint $table): void
@@ -85,7 +88,7 @@ trait MigrationTrait
      * @param  Blueprint  $table     Laravel Blueprint
      * @param  string  $columnName   MySQL table column name
      * @param  string  $tableName    MySQL table name
-     * @param  boolean  $nullable    Foreign key nullable status
+     * @param  bool  $nullable Foreign key nullable status
      */
     public function addForeignKey(Blueprint $table, string $columnName, string $tableName, $nullable = true): void
     {

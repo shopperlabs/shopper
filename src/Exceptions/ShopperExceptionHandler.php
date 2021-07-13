@@ -11,6 +11,7 @@ class ShopperExceptionHandler extends ExceptionHandler
      * Report or log an exception.
      *
      * @param  \Throwable  $e
+     *
      * @return void
      *
      * @throws \Throwable
@@ -25,6 +26,7 @@ class ShopperExceptionHandler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $e
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable

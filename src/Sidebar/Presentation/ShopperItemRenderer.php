@@ -50,11 +50,11 @@ class ShopperItemRenderer
             }
 
             return $this->factory->make($this->view, [
-                'item'    => $item,
-                'items'   => $items,
-                'badges'  => $badges,
+                'item' => $item,
+                'items' => $items,
+                'badges' => $badges,
                 'appends' => $appends,
-                'active'  => (new ActiveStateChecker())->isActive($item),
+                'active' => (new ActiveStateChecker())->isActive($item),
             ])->render();
         }
     }

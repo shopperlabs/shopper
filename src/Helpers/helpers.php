@@ -7,8 +7,8 @@ use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use Shopper\Framework\Models\Shop\Order\Order;
-use Shopper\Framework\Models\System\Setting;
 use Shopper\Framework\Models\System\Currency as CurrencyModel;
+use Shopper\Framework\Models\System\Setting;
 use Shopper\Framework\Shopper;
 
 if (! function_exists('app_name')) {
@@ -35,15 +35,17 @@ if (! function_exists('generate_number')) {
 
         $generator = [
             'start_sequence_from' => 1,
-            'prefix'              => '#',
-            'pad_length'          => 1,
-            'pad_string'          => '0'
+            'prefix' => '#',
+            'pad_length' => 1,
+            'pad_string' => '0',
         ];
 
         $last = $lastOrder ? $lastOrder->id : 0;
         $next = $generator['start_sequence_from'] + $last;
 
-        return sprintf('%s%s', $generator['prefix'],
+        return sprintf(
+            '%s%s',
+            $generator['prefix'],
             str_pad($next, $generator['pad_length'], $generator['pad_string'], STR_PAD_LEFT)
         );
     }
@@ -66,6 +68,7 @@ if (! function_exists('setEnvironmentValue')) {
      * Function to set or update .env variable.
      *
      * @param array $values
+     *
      * @return bool
      */
     function setEnvironmentValue(array $values): bool
@@ -89,10 +92,10 @@ if (! function_exists('setEnvironmentValue')) {
                 $endOfLinePosition = strpos($str, "\n", $keyPosition);
                 $oldLine = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
                 $space = strpos($value, ' ');
-                $envValue = ($space === false) ? $value : '"' . $value . '"';
+                $envValue = $space === false ? $value : '"' . $value . '"';
 
                 // If key does not exist, add it
-                if (!$keyPosition || !$endOfLinePosition || !$oldLine) {
+                if (! $keyPosition || ! $endOfLinePosition || ! $oldLine) {
                     $str .= "{$envKey}={$envValue}\n";
                 } else {
                     $str = str_replace($oldLine, "{$envKey}={$envValue}", $str);
@@ -103,7 +106,7 @@ if (! function_exists('setEnvironmentValue')) {
 
         $str = substr($str, 0, -1);
 
-        if (!file_put_contents($envFile, $str)) {
+        if (! file_put_contents($envFile, $str)) {
             return false;
         }
 
@@ -128,6 +131,7 @@ if (! function_exists('shopper_table')) {
      * Return Shopper current table name.
      *
      * @param  string $table
+     *
      * @return string
      */
     function shopper_table(string $table): string
@@ -148,10 +152,10 @@ if (! function_exists('shopper_currency')) {
      */
     function shopper_currency(): string
     {
-        $settingCurrency =  shopper_setting('shop_currency_id');
+        $settingCurrency = shopper_setting('shop_currency_id');
 
         if ($settingCurrency) {
-            $currency = Cache::remember('shopper-currency', 60*60*24*7, function () use ($settingCurrency) {
+            $currency = Cache::remember('shopper-currency', 60 * 60 * 24 * 7, function () use ($settingCurrency) {
                 return CurrencyModel::query()->find($settingCurrency);
             });
 
@@ -168,9 +172,10 @@ if (! function_exists('shopper_money_format')) {
      *
      * @param  mixed  $amount
      * @param  string|null  $currency
+     *
      * @return string
      */
-    function shopper_money_format($amount, string $currency = null): string
+    function shopper_money_format($amount, ?string $currency = null): string
     {
         $money = new Money($amount, new Currency($currency ?? shopper_currency()));
         $currencies = new ISOCurrencies();
@@ -200,6 +205,7 @@ if (! function_exists('shopper_asset')) {
      *
      * @param  string  $file
      * @param  string  $disk
+     *
      * @return string
      */
     function shopper_asset(string $file, string $disk = 'uploads'): string
@@ -213,11 +219,12 @@ if (! function_exists('shopper_setting')) {
      * Return shopper setting from the setting table.
      *
      * @param  string  $key
+     *
      * @return string|null
      */
     function shopper_setting(string $key): ?string
     {
-        $setting = Cache::remember("shopper-setting-$key", 60*60*24, function () use ($key) {
+        $setting = Cache::remember("shopper-setting-${key}", 60 * 60 * 24, function () use ($key) {
             return Setting::query()->where('key', $key)->first();
         });
 

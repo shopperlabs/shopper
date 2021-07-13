@@ -25,7 +25,7 @@ class CreatePaymentMethod extends ModalComponent
     {
         $this->validate([
             'title' => 'required|unique:'. shopper_table('payment_methods'),
-            'logo'  => 'nullable|image|max:1024'
+            'logo' => 'nullable|image|max:1024',
         ]);
 
         $paymentMethod = PaymentMethod::query()->create([
@@ -38,7 +38,7 @@ class CreatePaymentMethod extends ModalComponent
 
         if ($this->logo) {
             $paymentMethod->update([
-                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads'))
+                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
             ]);
         }
 

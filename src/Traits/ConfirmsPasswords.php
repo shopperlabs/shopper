@@ -34,6 +34,7 @@ trait ConfirmsPasswords
      * Start confirming the user's password.
      *
      * @param  string  $confirmableId
+     *
      * @return void
      */
     public function startConfirmingPassword(string $confirmableId)
@@ -69,6 +70,7 @@ trait ConfirmsPasswords
      * Confirm the user's password.
      *
      * @return void
+     *
      * @throws ValidationException
      */
     public function confirmPassword()
@@ -92,11 +94,12 @@ trait ConfirmsPasswords
      * Ensure that the user's password has been recently confirmed.
      *
      * @param  int|null  $maximumSecondsSinceConfirmation
+     *
      * @return void
      */
     protected function ensurePasswordIsConfirmed($maximumSecondsSinceConfirmation = null)
     {
-        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ?: config('auth.password_timeout', 900);
+        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ? $maximumSecondsSinceConfirmation : config('auth.password_timeout', 900);
 
         return $this->passwordIsConfirmed($maximumSecondsSinceConfirmation) ? null : abort(403);
     }
@@ -105,12 +108,13 @@ trait ConfirmsPasswords
      * Determine if the user's password has been recently confirmed.
      *
      * @param  int|null  $maximumSecondsSinceConfirmation
+     *
      * @return bool
      */
     protected function passwordIsConfirmed($maximumSecondsSinceConfirmation = null): bool
     {
-        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ?: config('auth.password_timeout', 900);
+        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ? $maximumSecondsSinceConfirmation : config('auth.password_timeout', 900);
 
-        return (time() - session('auth.password_confirmed_at', 0)) < $maximumSecondsSinceConfirmation;
+        return time() - session('auth.password_confirmed_at', 0) < $maximumSecondsSinceConfirmation;
     }
 }

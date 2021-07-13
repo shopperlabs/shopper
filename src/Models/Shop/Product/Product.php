@@ -68,7 +68,7 @@ class Product extends Model implements ReviewRateable
     /**
      * Cascade soft delete tables.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $softCascade = ['variations'];
 
@@ -105,11 +105,10 @@ class Product extends Model implements ReviewRateable
             return $this->price_amount
                 ? $this->formattedPrice($this->price_amount)
                 : ($this->parent->price_amount ? $this->formattedPrice($this->parent->price_amount) : null);
-        } else {
-            return $this->price_amount
+        }
+        return $this->price_amount
                 ? $this->formattedPrice($this->price_amount)
                 : null;
-        }
     }
 
     /**

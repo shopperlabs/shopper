@@ -17,7 +17,7 @@ class Category extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $fillable = [
         'name',
@@ -36,7 +36,7 @@ class Category extends Model
      * @var array
      */
     protected $casts = [
-      'is_enabled' => 'boolean',
+        'is_enabled' => 'boolean',
     ];
 
     /**

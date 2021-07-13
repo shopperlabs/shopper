@@ -73,6 +73,7 @@ trait WithDiscountActions
      * Return discount active date.
      *
      * @return string|null
+     *
      * @throws \Exception
      */
     public function getDateWord(): ?string
@@ -100,7 +101,7 @@ trait WithDiscountActions
         if ($startDate->notEqualTo($endDate) && $startDate->lessThan($endDate) && $this->dateEnd !== null) {
             return __('Active from :startDate to :endDate', [
                 'startDate' => $startDate->format('d M'),
-                'endDate'   => $endDate->format('d M'),
+                'endDate' => $endDate->format('d M'),
             ]);
         }
 

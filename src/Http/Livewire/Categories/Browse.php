@@ -11,9 +11,9 @@ class Browse extends Component
 {
     use WithPagination, WithSorting;
 
-    protected $listeners = ['onCategoriesReordered' => 'render'];
-
     public string $search = '';
+
+    protected $listeners = ['onCategoriesReordered' => 'render'];
 
     public function paginationView(): string
     {
@@ -24,6 +24,7 @@ class Browse extends Component
      * Remove a record to the database.
      *
      * @param  int  $id
+     *
      * @throws \Exception
      */
     public function remove(int $id)
@@ -32,16 +33,11 @@ class Browse extends Component
 
         $this->dispatchBrowserEvent('item-removed');
         $this->notify([
-            'title' => __("Deleted"),
-            'message' => __("The category has successfully removed!")
+            'title' => __('Deleted'),
+            'message' => __('The category has successfully removed!'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.categories.browse', [
@@ -49,7 +45,7 @@ class Browse extends Component
             'categories' => (new CategoryRepository())
                 ->where('name', '%'. $this->search .'%', 'like')
                 ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
-                ->paginate(10)
+                ->paginate(10),
         ]);
     }
 }

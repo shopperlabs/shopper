@@ -13,35 +13,35 @@ class Browse extends Component
      *
      * @var bool
      */
-    public $github = false;
+    public bool $github = false;
 
     /**
      * Twitter status integration.
      *
      * @var bool
      */
-    public $twitter = false;
+    public bool $twitter = false;
 
     /**
      * The current provider to setup.
      *
      * @var string
      */
-    public $currentProvider = '';
+    public string $currentProvider = '';
 
     /**
      * Provider description for channel update.
      *
      * @var string
      */
-    public $message = '';
+    public string $message = '';
 
     /**
      * Confirmation to launch modal to setup an integration.
      *
      * @var bool
      */
-    public $confirmModalActivation = false;
+    public bool $confirmModalActivation = false;
 
     /**
      * Component mount instance.
@@ -59,9 +59,10 @@ class Browse extends Component
      *
      * @param  string  $provider
      * @param  string|null  $message
+     *
      * @return void
      */
-    public function confirmationEnable(string $provider, string $message = null)
+    public function confirmationEnable(string $provider, ?string $message = null)
     {
         $this->currentProvider = $provider;
         $this->confirmModalActivation = true;
@@ -77,7 +78,7 @@ class Browse extends Component
      */
     public function enableProvider()
     {
-        setEnvironmentValue(['shopper_integration_'. strtolower($this->currentProvider)  => true]);
+        setEnvironmentValue(['shopper_integration_'. strtolower($this->currentProvider) => true]);
 
         $this->{$this->currentProvider} = true;
 
@@ -93,7 +94,7 @@ class Browse extends Component
 
         $this->notify([
             'title' => __('Enabled'),
-            'message' => __("You have been successfully enabled :provider", ['provider' => $provider])
+            'message' => __('You have been successfully enabled :provider', ['provider' => $provider]),
         ]);
     }
 
@@ -101,6 +102,7 @@ class Browse extends Component
      * Create a newly channel on the storage.
      *
      * @param  string  $channel
+     *
      * @return void
      */
     public function createChannel(string $channel)
@@ -109,21 +111,6 @@ class Browse extends Component
             'name' => ucfirst($channel),
             'slug' => str_slug($channel),
         ]);
-    }
-
-    /**
-     * Return the list of channel to add.
-     *
-     * @return string[]
-     */
-    protected function availableDatabaseChannels()
-    {
-        return [
-            'twitter',
-            'facebook',
-            'instagram',
-            'telegram',
-        ];
     }
 
     /**
@@ -137,13 +124,23 @@ class Browse extends Component
         $this->currentProvider = '';
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.integrations.browse');
+    }
+
+    /**
+     * Return the list of channel to add.
+     *
+     * @return array<string>
+     */
+    protected function availableDatabaseChannels(): array
+    {
+        return [
+            'twitter',
+            'facebook',
+            'instagram',
+            'telegram',
+        ];
     }
 }

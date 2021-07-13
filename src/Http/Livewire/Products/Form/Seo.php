@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
@@ -37,6 +36,7 @@ class Seo extends Component
      * Component Mount method.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
+     *
      * @return void
      */
     public function mount($product)
@@ -59,7 +59,7 @@ class Seo extends Component
             'slug' => [
                 'required',
                 Rule::unique(shopper_table('products'), 'sku')->ignore($this->productId),
-            ]
+            ],
         ]);
 
         (new ProductRepository())->getById($this->productId)->update([
@@ -71,16 +71,11 @@ class Seo extends Component
         $this->emit('productHasUpdated', $this->productId);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product SEO successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product SEO successfully updated!'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return View
-     */
     public function render()
     {
         return view('shopper::livewire.products.forms.form-seo');

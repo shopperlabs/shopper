@@ -28,7 +28,7 @@ class Legal extends Model
      * @var array
      */
     protected $casts = [
-        'is_enabled' => 'boolean'
+        'is_enabled' => 'boolean',
     ];
 
     /**

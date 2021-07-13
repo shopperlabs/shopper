@@ -155,21 +155,22 @@ trait ReviewRateable
         $quantity = $ratings->count();
         $total = $ratings->selectRaw('SUM(rating) as total')->pluck('total');
 
-        return ($quantity * $max) > 0 ? $total / (($quantity * $max) / 100) : 0;
+        return $quantity * $max > 0 ? $total / ($quantity * $max / 100) : 0;
     }
 
     /**
      * @param  array  $data
      * @param  Model  $author
      * @param  Model|null  $parent
+     *
      * @return Review
      */
-    public function rating($data, Model $author, Model $parent = null): Review
+    public function rating($data, Model $author, ?Model $parent = null): Review
     {
         return (new Review())->createRating($this, $data, $author);
     }
 
-    public function updateRating($id, $data, Model $parent = null): Review
+    public function updateRating($id, $data, ?Model $parent = null): Review
     {
         return (new Review())->updateRating($id, $data);
     }
@@ -191,7 +192,7 @@ trait ReviewRateable
 
     public function getRecentRatings($id, $limit = 5, $sort = 'desc'): Collection
     {
-        return (new Review())->getRecentRatings($id, $limit,  $sort);
+        return (new Review())->getRecentRatings($id, $limit, $sort);
     }
 
     public function getRecentUserRatings($id, $limit = 5, $approved = true, $sort = 'desc'): Collection

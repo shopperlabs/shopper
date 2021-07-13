@@ -44,7 +44,7 @@ class MenuCreator
                 'data-placement' => 'right',
                 'data-container' => 'body',
                 'data-boundary' => 'window',
-                'target' => '_blank'
+                'target' => '_blank',
             ]);
 
             if ($user->hasPermissionTo('view_analytics')) {

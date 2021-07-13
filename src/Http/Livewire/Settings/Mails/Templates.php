@@ -7,9 +7,9 @@ use Shopper\Framework\Services\Mailable;
 
 class Templates extends Component
 {
-    protected $listeners = ['onTemplateRemoved' => 'render'];
-
     public bool $isLocal = false;
+
+    protected $listeners = ['onTemplateRemoved' => 'render'];
 
     /**
      * Component Mount instance.
@@ -26,7 +26,7 @@ class Templates extends Component
     public function render()
     {
         return view('shopper::livewire.settings.mails.templates.browse', [
-            'templates' => Mailable::getTemplates()
+            'templates' => Mailable::getTemplates(),
         ]);
     }
 }

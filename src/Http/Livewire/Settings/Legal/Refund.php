@@ -15,7 +15,7 @@ class Refund extends Component
      *
      * @var string
      */
-    public $title = 'Refund policy';
+    public string $title = 'Refund policy';
 
     /**
      * Component mount instance.
@@ -44,11 +44,6 @@ class Refund extends Component
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.legal.refund');

@@ -42,7 +42,7 @@ class ShopperSidebarRenderer implements SidebarRenderer
             }
 
             return $this->factory->make($this->view, [
-                'groups' => $groups
+                'groups' => $groups,
             ]);
         }
     }
