@@ -16,10 +16,10 @@ trait WithDiscountActions
     public function isEmpty(): bool
     {
         if (
-            empty($this->code) &&
-            empty($this->minRequiredValue) &&
-            empty($this->value) &&
-            empty($this->usage_limit)
+            ! $this->code &&
+            ! $this->minRequiredValue &&
+            ! $this->value &&
+            ! $this->usage_limit
         ) {
             return true;
         }
@@ -195,6 +195,8 @@ trait WithDiscountActions
      */
     public function addCustomers(): void
     {
+        $customerArray = [];
+
         if (count($this->selectedCustomers) > 0) {
             foreach ($this->selectedCustomers as $selectedCustomer) {
                 $customer = (new UserRepository())->getById($selectedCustomer);

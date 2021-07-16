@@ -120,7 +120,7 @@ trait Mailables
                 if ($tokens[$index][0] === T_CLASS && $tokens[$index + 1][0] === T_WHITESPACE && $tokens[$index + 2][0] === T_STRING) {
                     $index += 2; // Skip class keyword and whitespace
 
-                    [$name, $extension] = explode('.', $phpFile->getFilename());
+                    [$name] = explode('.', $phpFile->getFilename());
 
                     $mailableClass = $namespace.'\\'.$tokens[$index][1];
 

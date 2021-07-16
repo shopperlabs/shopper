@@ -4,7 +4,7 @@ namespace Shopper\Framework\Traits\Database;
 
 use Illuminate\Database\Schema\Blueprint;
 
-trait MigrationTrait
+trait Migration
 {
     /**
      * Return table name.

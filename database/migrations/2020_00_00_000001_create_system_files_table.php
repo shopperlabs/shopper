@@ -3,11 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Shopper\Framework\Traits\Database\MigrationTrait;
+use Shopper\Framework\Traits\Database;
 
 class CreateSystemFilesTable extends Migration
 {
-    use MigrationTrait;
+    use Database\Migration;
 
     /**
      * Run the migrations.
@@ -18,7 +18,7 @@ class CreateSystemFilesTable extends Migration
     {
         Schema::create($this->getTableName('system_files'), function (Blueprint $table) {
             $this->addCommonFields($table);
-        
+
             $table->string('disk_name');
             $table->string('file_name');
             $table->string('file_size');

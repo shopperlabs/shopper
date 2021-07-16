@@ -13,8 +13,18 @@ trait WithStock
 
     public int $value = 0;
 
+    /**
+     * Real Stock value
+     *
+     * @var int
+     */
     public int $realStock = 0;
 
+    /**
+     * Current Inventory
+     *
+     * @var mixed
+     */
     public $inventory;
 
     public function updatedValue(int $value)

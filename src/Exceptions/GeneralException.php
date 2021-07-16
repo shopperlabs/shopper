@@ -27,20 +27,11 @@ class GeneralException extends Exception
     }
 
     /**
-     * Report the exception.
-     */
-    public function report()
-    {
-    }
-
-    /**
      * Render the exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function render($request)
+    public function render()
     {
         return redirect()
             ->back()

@@ -61,7 +61,7 @@ class Initialization extends Component
 
     public function stepTwoState(): bool
     {
-        if (! empty($this->shop_street_address) && ! empty($this->shop_city) && ! empty($this->shop_zipcode)) {
+        if (! $this->shop_street_address && ! $this->shop_city && ! $this->shop_zipcode) {
             return true;
         }
 

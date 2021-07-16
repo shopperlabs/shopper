@@ -149,8 +149,9 @@ trait HasStock
     public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
         $currentStock = $this->stock;
+        $deltaStock = $newQuantity - $currentStock;
 
-        if ($deltaStock = $newQuantity - $currentStock) {
+        if ($deltaStock) {
             return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
         }
     }

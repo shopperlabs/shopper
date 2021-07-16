@@ -18,16 +18,6 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'Shopper\Framework\Http\Controllers';
 
     /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @internal param Router $router
-     */
-    public function boot()
-    {
-        parent::boot();
-    }
-
-    /**
      * Define the routes for the application.
      *
      * @return void

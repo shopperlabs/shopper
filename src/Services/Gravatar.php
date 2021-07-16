@@ -70,7 +70,7 @@ class Gravatar
      *
      * @throws InvalidEmailException
      */
-    public function exists($email)
+    public function exists($email): bool
     {
         $this->checkEmail($email);
         $this->email = $email;
@@ -89,7 +89,7 @@ class Gravatar
      *
      * @throws InvalidEmailException
      */
-    public function get($email)
+    public function get($email): string
     {
         $this->checkEmail($email);
         $this->setConfig();
@@ -106,7 +106,7 @@ class Gravatar
      *
      * @return bool
      */
-    protected function c($value, $default = null)
+    protected function c($value, $default = null): bool
     {
         return array_key_exists($value, $this->config) ? $this->config[$value] : $default;
     }
@@ -121,7 +121,7 @@ class Gravatar
      *
      * @return $this
      */
-    private function setConfig($group = null)
+    private function setConfig($group = null): self
     {
         $default = [
             'size' => 80,
@@ -146,7 +146,7 @@ class Gravatar
      *
      * @return string
      */
-    private function hashEmail()
+    private function hashEmail(): string
     {
         return md5(strtolower(trim($this->email)));
     }
@@ -154,7 +154,7 @@ class Gravatar
     /**
      * @return string
      */
-    private function getExtension()
+    private function getExtension(): string
     {
         $v = $this->c('forceExtension');
 
@@ -164,7 +164,7 @@ class Gravatar
     /**
      * @return string
      */
-    private function buildUrl()
+    private function buildUrl(): string
     {
         $url = $this->c('secure') === true ? $this->secureBaseUrl : $this->publicBaseUrl;
         $url .= $this->hashEmail();
@@ -177,14 +177,17 @@ class Gravatar
     /**
      * @return string
      */
-    private function getUrlParameters()
+    private function getUrlParameters(): string
     {
         $build = [];
         foreach (get_class_methods($this) as $method) {
             if (substr($method, -strlen('Parameter')) !== 'Parameter') {
                 continue;
             }
-            if ($called = call_user_func([$this, $method])) {
+
+            $called = call_user_func([$this, $method]);
+
+            if ($called) {
                 $build = array_replace($build, $called);
             }
         }
