@@ -33,7 +33,7 @@ class ShopperExceptionHandler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        if (! $request->user()) {
+        if (! $request->user() && ! $request->user()->hasRole(config('shopper.system.users.admin_role'))) {
             return parent::render($request, $e);
         }
 

@@ -172,6 +172,8 @@ trait WithDiscountActions
      */
     public function addProducts(): void
     {
+        $productArray = [];
+
         if (count($this->selectedProducts) > 0) {
             foreach ($this->selectedProducts as $selectedProduct) {
                 $product = (new ProductRepository())->getById($selectedProduct);

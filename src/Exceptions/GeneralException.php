@@ -3,7 +3,7 @@
 namespace Shopper\Framework\Exceptions;
 
 use Exception;
-use Throwable;
+use Illuminate\Http\RedirectResponse;
 
 class GeneralException extends Exception
 {
@@ -14,24 +14,7 @@ class GeneralException extends Exception
      */
     public $message;
 
-    /**
-     * GeneralException constructor.
-     *
-     * @param  string  $message
-     * @param  int  $code
-     * @param  Throwable|null  $previous
-     */
-    public function __construct($message = '', $code = 0, ?Throwable $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
-
-    /**
-     * Render the exception into an HTTP response.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function render()
+    public function render(): RedirectResponse
     {
         return redirect()
             ->back()

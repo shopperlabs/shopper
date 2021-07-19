@@ -29,7 +29,7 @@ trait Templates
             ->where('template_slug', $templateSlug)->first();
 
         if (! is_null($template)) {
-            self::saveTemplates(self::getTemplates()->reject(function ($value, $key) use ($template) {
+            self::saveTemplates(self::getTemplates()->reject(function ($value) use ($template) {
                 return $value->template_slug === $template->template_slug;
             }));
 
@@ -77,7 +77,7 @@ trait Templates
                 ]);
             }
 
-            $oldForm = self::getTemplates()->reject(function ($value, $key) use ($template) {
+            $oldForm = self::getTemplates()->reject(function ($value) use ($template) {
                 return $value->template_slug === $template->template_slug;
             });
             $newForm = array_merge($oldForm->toArray(), [array_merge((array) $template, [

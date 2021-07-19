@@ -68,7 +68,6 @@ class UserCommand extends Command
         try {
             $user = tap((new $model())->forceFill($userData))->save();
 
-            // @todo via InstallCommand replace Authenticatable namespace in User Model to use shopper framework
             $user->assignRole(config('shopper.system.users.admin_role'));
         } catch (\Exception | QueryException $e) {
             $this->error($e->getMessage());
