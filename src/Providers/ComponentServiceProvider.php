@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Component;
 use Shopper\Framework\Traits\CanRegisterLivewireComponentDirectories;
@@ -97,6 +97,7 @@ class ComponentServiceProvider extends ServiceProvider
      * Register the given component.
      *
      * @param  string  $component
+     *
      * @return void
      */
     protected function registerComponent(string $component)

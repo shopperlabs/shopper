@@ -15,7 +15,7 @@ class Privacy extends Component
      *
      * @var string
      */
-    public $title = 'Privacy policy';
+    public string $title = 'Privacy policy';
 
     /**
      * Component mount instance.
@@ -44,11 +44,6 @@ class Privacy extends Component
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.legal.privacy');

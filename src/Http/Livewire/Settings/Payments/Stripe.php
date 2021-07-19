@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 use Shopper\Framework\Models\System\Currency;
-use Shopper\Framework\Models\System\Setting;
 
 class Stripe extends Component
 {
@@ -38,7 +37,6 @@ class Stripe extends Component
      * @var string
      */
     public string $stripe_mode = 'sandbox';
-
 
     /**
      * Cashier Currency.
@@ -77,7 +75,7 @@ class Stripe extends Component
             'title' => 'Stripe',
             'link_url' => 'https://laravel.com/docs/billing',
             'is_enabled' => true,
-            'description' => "Laravel Cashier provides an expressive, fluent interface to Stripe's subscription billing services. It handles almost all of the boilerplate subscription billing code you are dreading writing. In addition to basic subscription management, Cashier can handle coupons, swapping subscription, subscription 'quantities', cancellation grace periods, and even generate invoice PDFs."
+            'description' => "Laravel Cashier provides an expressive, fluent interface to Stripe's subscription billing services. It handles almost all of the boilerplate subscription billing code you are dreading writing. In addition to basic subscription management, Cashier can handle coupons, swapping subscription, subscription 'quantities', cancellation grace periods, and even generate invoice PDFs.",
         ]);
 
         $this->enabled = true;
@@ -91,18 +89,18 @@ class Stripe extends Component
     public function store()
     {
         setEnvironmentValue([
-            'stripe_mode'       => $this->stripe_mode,
-            'stripe_key'        => $this->stripe_key,
-            'stripe_secret'     => $this->stripe_secret,
+            'stripe_mode' => $this->stripe_mode,
+            'stripe_key' => $this->stripe_key,
+            'stripe_secret' => $this->stripe_secret,
             'stripe_webhook_secret' => $this->stripe_webhook_secret,
-            'cashier_currency'   => $this->currency,
+            'cashier_currency' => $this->currency,
         ]);
 
         Artisan::call('config:clear');
 
         $this->notify([
             'title' => __('Updated'),
-            'message' => __('Your Stripe payments configuration have been correctly updated!')
+            'message' => __('Your Stripe payments configuration have been correctly updated!'),
         ]);
     }
 

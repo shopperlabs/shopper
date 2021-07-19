@@ -27,7 +27,7 @@ class DeleteTemplate extends ModalComponent
 
         $this->notify([
             'title' => __('Removed'),
-            'message' => __('You have removed the :template template', ['template' => $this->name])
+            'message' => __('You have removed the :template template', ['template' => $this->name]),
         ]);
 
         $this->emit('onTemplateRemoved');

@@ -23,7 +23,7 @@ class Review extends Model
      */
     protected $casts = [
         'is_recommended' => 'boolean',
-        'approved'       => 'boolean',
+        'approved' => 'boolean',
     ];
 
     /**

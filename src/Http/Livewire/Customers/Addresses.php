@@ -24,17 +24,10 @@ class Addresses extends Component
         $this->customer = $customer;
     }
 
-    /**
-     * Return the component view.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.customers.addresses', [
-            'addresses' => Cache::remember('customer-addresses', 60*60*24, function () {
-                return $this->customer->addresses;
-            })
+            'addresses' => Cache::remember('customer-addresses', 60 * 60 * 24, fn () => $this->customer->addresses),
         ]);
     }
 }

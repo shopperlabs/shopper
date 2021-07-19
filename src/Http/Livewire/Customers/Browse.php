@@ -67,6 +67,7 @@ class Browse extends Component
      * Remove a record to the database.
      *
      * @param  int  $id
+     *
      * @throws \Exception
      */
     public function remove(int $id)
@@ -75,8 +76,8 @@ class Browse extends Component
 
         $this->dispatchBrowserEvent('item-removed');
         $this->dispatchBrowserEvent('notify', [
-            'title' => __("Deleted"),
-            'message' => __("The customer has successfully removed!")
+            'title' => __('Deleted'),
+            'message' => __('The customer has successfully removed!'),
         ]);
     }
 
@@ -84,6 +85,7 @@ class Browse extends Component
      * Render the component.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
@@ -100,7 +102,7 @@ class Browse extends Component
                 ->whereHas('roles', function (Builder $query) {
                     $query->where('name', config('shopper.system.users.default_role'));
                 })
-                ->where(function (Builder  $query) {
+                ->where(function (Builder $query) {
                     $query->where('last_name', 'like', '%'. $this->search .'%')
                         ->orWhere('first_name', 'like', '%'. $this->search .'%');
                 })
@@ -110,11 +112,11 @@ class Browse extends Component
                     }
                 })
                 ->where(function (Builder $query) {
-                    if ($this->activeAccount === "1") {
+                    if ($this->activeAccount === '1') {
                         $query->whereNotNull('email_verified_at');
                     }
 
-                    if ($this->activeAccount === "0") {
+                    if ($this->activeAccount === '0') {
                         $query->whereNull('email_verified_at');
                     }
                 })

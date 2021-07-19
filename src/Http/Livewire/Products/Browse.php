@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -49,7 +48,7 @@ class Browse extends Component
 
         $this->notify([
             'title' => __('Deleted'),
-            'message' => __('The product has successfully removed!')
+            'message' => __('The product has successfully removed!'),
         ]);
     }
 

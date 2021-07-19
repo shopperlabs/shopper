@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\View\View;
 use Livewire\Component;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
@@ -24,7 +23,7 @@ class Shipping extends Component
      *
      * @var int
      */
-    public $productId;
+    public int $productId;
 
     /**
      * Component Mount method.
@@ -70,16 +69,11 @@ class Shipping extends Component
         $this->emit('productHasUpdated', $this->productId);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product shipping successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product shipping successfully updated!'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return View
-     */
     public function render()
     {
         return view('shopper::livewire.products.forms.form-shipping');

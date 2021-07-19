@@ -21,13 +21,6 @@ class Edit extends AbstractBaseComponent
         WithSeoAttributes;
 
     /**
-     * Upload listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['fileDeleted'];
-
-    /**
      * Collection Model.
      *
      * @var \Illuminate\Database\Eloquent\Model
@@ -91,9 +84,17 @@ class Edit extends AbstractBaseComponent
     public $products;
 
     /**
+     * Upload listeners.
+     *
+     * @var array<string>
+     */
+    protected $listeners = ['fileDeleted'];
+
+    /**
      * Component mounted action.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $collection
+     *
      * @return void
      */
     public function mount($collection)
@@ -132,7 +133,6 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-
             if ($this->collection->files->isNotEmpty()) {
                 foreach ($this->collection->files as $file) {
                     Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
@@ -143,7 +143,8 @@ class Edit extends AbstractBaseComponent
             $this->uploadFile(config('shopper.system.models.collection'), $this->collection->id);
         }
 
-        session()->flash('success', __("Collection successfully updated!"));
+        session()->flash('success', __('Collection successfully updated!'));
+
         $this->redirectRoute('shopper.collections.index');
     }
 
@@ -152,7 +153,7 @@ class Edit extends AbstractBaseComponent
      *
      * @return false
      */
-    public function isUpdate()
+    public function isUpdate(): bool
     {
         return true;
     }
@@ -170,9 +171,9 @@ class Edit extends AbstractBaseComponent
     /**
      * Component validation rules.
      *
-     * @return string[]
+     * @return array<string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => [

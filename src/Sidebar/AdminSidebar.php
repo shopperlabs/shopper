@@ -3,9 +3,9 @@
 namespace Shopper\Framework\Sidebar;
 
 use Maatwebsite\Sidebar\Menu;
+use Maatwebsite\Sidebar\ShouldCache;
 use Maatwebsite\Sidebar\Sidebar;
 use Maatwebsite\Sidebar\Traits\CacheableTrait;
-use Maatwebsite\Sidebar\ShouldCache;
 use Shopper\Framework\Events\BuildingSidebar;
 
 class AdminSidebar implements Sidebar, ShouldCache
@@ -36,7 +36,7 @@ class AdminSidebar implements Sidebar, ShouldCache
     /**
      * @return Menu
      */
-    public function getMenu()
+    public function getMenu(): Menu
     {
         return $this->menu;
     }

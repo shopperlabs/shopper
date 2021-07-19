@@ -24,6 +24,7 @@ class RelatedProducts extends Component
      * Component Mount method.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $product
+     *
      * @return void
      */
     public function mount($product)
@@ -39,7 +40,7 @@ class RelatedProducts extends Component
 
         $this->notify([
             'title' => __('Added'),
-            'message' => __('Similar product added successfully')
+            'message' => __('Similar product added successfully'),
         ]);
 
         return true;
@@ -52,7 +53,7 @@ class RelatedProducts extends Component
 
         $this->notify([
             'title' => __('Removed'),
-            'message' => __('Similar product removed successfully')
+            'message' => __('Similar product removed successfully'),
         ]);
 
         return true;
@@ -62,11 +63,12 @@ class RelatedProducts extends Component
      * Render the component.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
     {
-        return  view('shopper::livewire.products.forms.form-related', [
+        return view('shopper::livewire.products.forms.form-related', [
             'products' => (new ProductRepository())
                 ->makeModel()
                 ->where(function (Builder $query) {

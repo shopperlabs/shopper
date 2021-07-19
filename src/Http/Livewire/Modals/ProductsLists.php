@@ -1,10 +1,7 @@
 <?php
 
-
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-
-use Illuminate\Support\Collection;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;

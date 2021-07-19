@@ -27,7 +27,7 @@ class DeleteMailable extends ModalComponent
 
             $this->notify([
                 'title' => __('Removed'),
-                'message' => __("You have removed the :class", ['class' => $this->item])
+                'message' => __('You have removed the :class', ['class' => $this->item]),
             ]);
         } else {
             session()->flash('error', __("This file don't exist."));

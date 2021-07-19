@@ -9,13 +9,6 @@ use Shopper\Framework\Repositories\InventoryRepository;
 class Edit extends Component
 {
     /**
-     * Product Listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['productHasUpdated'];
-
-    /**
      * Product Model.
      *
      * @var \Illuminate\Database\Eloquent\Model
@@ -36,10 +29,13 @@ class Edit extends Component
      */
     public int $inventory;
 
+    protected $listeners = ['productHasUpdated'];
+
     /**
      * Component Mount method.
      *
      * @param  mixed  $product
+     *
      * @return void
      */
     public function mount($product)
@@ -53,6 +49,7 @@ class Edit extends Component
      * Product updated Listener.
      *
      * @param  int  $id
+     *
      * @return void
      */
     public function productHasUpdated(int $id)

@@ -182,7 +182,7 @@ class Profile extends Component
                 'required',
                 'email',
                 Rule::unique(shopper_table('users'), 'email')->ignore($this->customer_id),
-            ]
+            ],
         ]);
 
         $this->updateValue(
@@ -233,7 +233,7 @@ class Profile extends Component
         $this->updateValue(
             'gender',
             $this->gender,
-            "Customer gender updated successfully."
+            'Customer gender updated successfully.'
         );
 
         $this->genderUpdate = false;
@@ -253,6 +253,11 @@ class Profile extends Component
         );
     }
 
+    public function render()
+    {
+        return view('shopper::livewire.customers.profile');
+    }
+
     /**
      * Update value from the storage.
      *
@@ -265,15 +270,5 @@ class Profile extends Component
         $this->customer->update([$field => $value]);
 
         $this->notify(['title' => __('Updated'), 'message' => __($message)]);
-    }
-
-    /**
-     * Return the component view.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function render()
-    {
-        return view('shopper::livewire.customers.profile');
     }
 }

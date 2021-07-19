@@ -63,11 +63,6 @@ class Browse extends Component
         $this->isActive = null;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.discounts.browse', [
@@ -84,7 +79,7 @@ class Browse extends Component
                     }
                 })
                 ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)
-                ->paginate(8)
+                ->paginate(8),
         ]);
     }
 }

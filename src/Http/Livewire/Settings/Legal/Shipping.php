@@ -15,7 +15,7 @@ class Shipping extends Component
      *
      * @var string
      */
-    public $title = 'Shipping policy';
+    public string $title = 'Shipping policy';
 
     /**
      * Component mount instance.
@@ -44,11 +44,6 @@ class Shipping extends Component
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.legal.shipping');

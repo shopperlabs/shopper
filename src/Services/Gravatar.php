@@ -44,13 +44,14 @@ class Gravatar
      * For more info, visit http://en.gravatar.com/site/implement/images/#default-image
      *
      * @param string|bool $fallback
+     *
      * @return $this
      */
     public function fallback($fallback)
     {
         if (
             filter_var($fallback, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)
-            || in_array($fallback, array('mm', 'identicon', 'monsterid', 'wavatar', 'retro', 'blank'))
+            || in_array($fallback, ['mm', 'identicon', 'monsterid', 'wavatar', 'retro', 'blank'])
         ) {
             $this->fallback = $fallback;
         } else {
@@ -64,10 +65,12 @@ class Gravatar
      * Check if Gravatar has an avatar for the given email address
      *
      * @param $email
+     *
      * @return bool
+     *
      * @throws InvalidEmailException
      */
-    public function exists($email)
+    public function exists($email): bool
     {
         $this->checkEmail($email);
         $this->email = $email;
@@ -81,10 +84,12 @@ class Gravatar
      * Get the gravatar url
      *
      * @param $email
+     *
      * @return string
+     *
      * @throws InvalidEmailException
      */
-    public function get($email)
+    public function get($email): string
     {
         $this->checkEmail($email);
         $this->setConfig();
@@ -94,22 +99,36 @@ class Gravatar
     }
 
     /**
+     * Helper function to retrieve config settings.
+     *
+     * @param string $value
+     * @param string|null $default
+     *
+     * @return bool
+     */
+    protected function c($value, $default = null): bool
+    {
+        return array_key_exists($value, $this->config) ? $this->config[$value] : $default;
+    }
+
+    /**
      * Helper function for setting the config based on either:
      * 1. The name of a config group
      * 2. A custom array
      * 3. The default group in the config
      *
      * @param string|array|null $group
+     *
      * @return $this
      */
-    private function setConfig($group = null)
+    private function setConfig($group = null): self
     {
         $default = [
-            'size'          => 80,
-            'fallback'      => 'mm',
-            'secure'        => false,
+            'size' => 80,
+            'fallback' => 'mm',
+            'secure' => false,
             'maximumRating' => 'g',
-            'forceDefault'  => false,
+            'forceDefault' => false,
             'forceExtension' => 'jpg',
         ];
 
@@ -123,23 +142,11 @@ class Gravatar
     }
 
     /**
-     * Helper function to retrieve config settings.
-     *
-     * @param string $value
-     * @param null|string $default
-     * @return bool
-     */
-    protected function c($value, $default = null)
-    {
-        return array_key_exists($value, $this->config) ? $this->config[$value] : $default;
-    }
-
-    /**
      * Helper function to md5 hash the email address
      *
      * @return string
      */
-    private function hashEmail()
+    private function hashEmail(): string
     {
         return md5(strtolower(trim($this->email)));
     }
@@ -147,7 +154,7 @@ class Gravatar
     /**
      * @return string
      */
-    private function getExtension()
+    private function getExtension(): string
     {
         $v = $this->c('forceExtension');
 
@@ -157,9 +164,9 @@ class Gravatar
     /**
      * @return string
      */
-    private function buildUrl()
+    private function buildUrl(): string
     {
-        $url  = $this->c('secure') === true ? $this->secureBaseUrl : $this->publicBaseUrl;
+        $url = $this->c('secure') === true ? $this->secureBaseUrl : $this->publicBaseUrl;
         $url .= $this->hashEmail();
         $url .= $this->getExtension();
         $url .= $this->getUrlParameters();
@@ -170,14 +177,17 @@ class Gravatar
     /**
      * @return string
      */
-    private function getUrlParameters()
+    private function getUrlParameters(): string
     {
         $build = [];
         foreach (get_class_methods($this) as $method) {
             if (substr($method, -strlen('Parameter')) !== 'Parameter') {
                 continue;
             }
-            if ($called = call_user_func(array($this, $method))) {
+
+            $called = call_user_func([$this, $method]);
+
+            if ($called) {
                 $build = array_replace($build, $called);
             }
         }
@@ -189,11 +199,13 @@ class Gravatar
      * Check if the provided email address is valid
      *
      * @param $email
+     *
      * @throws InvalidEmailException
      */
     private function checkEmail($email)
     {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidEmailException(__('Please specify a valid email address'));
+        }
     }
 }

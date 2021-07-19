@@ -62,6 +62,13 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
+    public function render()
+    {
+        return view('shopper::livewire.settings.inventories.create', [
+            'countries' => Country::select('name', 'id')->orderBy('name')->get(),
+        ]);
+    }
+
     protected function rules(): array
     {
         return [
@@ -69,16 +76,9 @@ class Create extends AbstractBaseComponent
             'name' => 'required|max:100',
             'city' => 'required',
             'street_address' => 'required',
-            'zipcode'  => 'required',
-            'phone_number'  => ['nullable', new Phone()],
+            'zipcode' => 'required',
+            'phone_number' => ['nullable', new Phone()],
             'country_id' => 'required|exists:'.shopper_table('system_countries').',id',
         ];
-    }
-
-    public function render()
-    {
-        return view('shopper::livewire.settings.inventories.create', [
-            'countries'  => Country::select('name', 'id')->orderBy('name')->get(),
-        ]);
     }
 }

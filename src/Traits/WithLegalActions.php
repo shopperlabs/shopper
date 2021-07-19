@@ -9,28 +9,29 @@ trait WithLegalActions
     /**
      * Legal id.
      *
-     * @var int
+     * @var int|null
      */
-    public $legalId;
+    public ?int $legalId = null;
 
     /**
      * Legal page content.
      *
-     * @var string
+     * @var string|null
      */
-    public $content;
+    public ?string $content = null;
 
     /**
      * Legal page state to determine if page is enabled.
      *
      * @var bool
      */
-    public $isEnabled = false;
+    public bool $isEnabled = false;
 
     /**
      * Initialization of values.
      *
      * @param  Legal|null  $legal
+     *
      * @return void
      */
     public function initializeValues($legal)

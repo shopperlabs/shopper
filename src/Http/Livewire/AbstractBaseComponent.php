@@ -10,7 +10,9 @@ abstract class AbstractBaseComponent extends Component
      * Real-time component validation.
      *
      * @param  string  $field
+     *
      * @throws \Illuminate\Validation\ValidationException
+     *
      * @return void
      */
     public function updated(string $field)
@@ -26,16 +28,16 @@ abstract class AbstractBaseComponent extends Component
     abstract public function store();
 
     /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    abstract protected function rules();
-
-    /**
      * Render the component.
      *
      * @return \Illuminate\View\View
      */
     abstract public function render();
+
+    /**
+     * Component validation rules.
+     *
+     * @return array<string>
+     */
+    abstract protected function rules();
 }

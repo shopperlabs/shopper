@@ -16,8 +16,8 @@ class UsersRole extends Component
         (new UserRepository())->getById($id)->delete();
         $this->dispatchBrowserEvent('user-removed');
         $this->dispatchBrowserEvent('notify', [
-            'title' => 'Deleted',
-            'message' => __("Admin deleted successfully"),
+            'title' => __('Deleted'),
+            'message' => __('Admin deleted successfully'),
         ]);
     }
 
@@ -34,4 +34,3 @@ class UsersRole extends Component
         return view('shopper::livewire.settings.management.users-role', compact('users'));
     }
 }
-

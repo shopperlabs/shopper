@@ -30,6 +30,7 @@ class TwoFactor extends Component
      * Enable two factor authentication for the user.
      *
      * @param  \Shopper\Framework\Actions\EnableTwoFactorAuthentication  $enable
+     *
      * @return void
      */
     public function enableTwoFactorAuthentication(EnableTwoFactorAuthentication $enable)
@@ -62,6 +63,7 @@ class TwoFactor extends Component
      * Generate new recovery codes for the user.
      *
      * @param  \Shopper\Framework\Actions\GenerateNewRecoveryCodes  $generate
+     *
      * @return void
      */
     public function regenerateRecoveryCodes(GenerateNewRecoveryCodes $generate)
@@ -79,6 +81,7 @@ class TwoFactor extends Component
      * Disable two factor authentication for the user.
      *
      * @param  \Shopper\Framework\Actions\DisableTwoFactorAuthentication  $disable
+     *
      * @return void
      */
     public function disableTwoFactorAuthentication(DisableTwoFactorAuthentication $disable)

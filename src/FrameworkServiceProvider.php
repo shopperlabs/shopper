@@ -10,21 +10,17 @@ use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use Shopper\Framework\Events\BuildingSidebar;
-use Shopper\Framework\Events\Handlers\{
-    RegisterDashboardSidebar,
-    RegisterOrderSidebar,
-    RegisterShopSidebar
-};
+use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
+use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
+use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
 use Shopper\Framework\Exceptions\ShopperExceptionHandler;
 use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
-use Shopper\Framework\Http\Middleware\{
-    Authenticate,
-    Dashboard,
-    HasConfiguration,
-    RedirectIfAuthenticated
-};
+use Shopper\Framework\Http\Middleware\Authenticate;
+use Shopper\Framework\Http\Middleware\Dashboard;
+use Shopper\Framework\Http\Middleware\HasConfiguration;
+use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Services\Gravatar;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticationProvider;
@@ -39,11 +35,11 @@ class FrameworkServiceProvider extends ServiceProvider
      * @var array
      */
     protected array $middlewares = [
-        'dashboard'       => Dashboard::class,
-        'role'            => RoleMiddleware::class,
-        'permission'      => PermissionMiddleware::class,
-        'shopper.guest'   => RedirectIfAuthenticated::class,
-        'shopper.setup'   => HasConfiguration::class,
+        'dashboard' => Dashboard::class,
+        'role' => RoleMiddleware::class,
+        'permission' => PermissionMiddleware::class,
+        'shopper.guest' => RedirectIfAuthenticated::class,
+        'shopper.setup' => HasConfiguration::class,
     ];
 
     /**
@@ -87,6 +83,7 @@ class FrameworkServiceProvider extends ServiceProvider
      * Register the middleware.
      *
      * @param  Router  $router
+     *
      * @return void
      */
     public function registerMiddleware(Router $router)
@@ -116,11 +113,11 @@ class FrameworkServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('shopper', function () {
-            return new Shopper;
+            return new Shopper();
         });
 
         $this->app->singleton('gravatar', function () {
-            return new Gravatar;
+            return new Gravatar();
         });
 
         $this->app->singleton(

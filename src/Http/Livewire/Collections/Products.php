@@ -6,8 +6,6 @@ use Livewire\Component;
 
 class Products extends Component
 {
-    protected $listeners = ['onProductsAddInCollection' => 'render'];
-
     /**
      * @var mixed
      */
@@ -19,10 +17,13 @@ class Products extends Component
 
     public string $direction = 'asc';
 
+    protected $listeners = ['onProductsAddInCollection' => 'render'];
+
     /**
      * Component mount instance.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $collection
+     *
      * @return void
      */
     public function mount($collection)
@@ -43,7 +44,7 @@ class Products extends Component
 
         $this->notify([
             'title' => __('Product removed'),
-            'message' => __('The product have been correctly remove to this collection.')
+            'message' => __('The product have been correctly remove to this collection.'),
         ]);
     }
 
@@ -85,7 +86,7 @@ class Products extends Component
             'products' => $this->collection
                 ->products()
                 ->orderBy($this->sortValue, $this->direction)
-                ->get()
+                ->get(),
         ]);
     }
 }

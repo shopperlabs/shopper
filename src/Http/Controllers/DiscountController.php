@@ -10,6 +10,7 @@ class DiscountController extends ShopperBaseController
      * Display Discount Index.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -23,6 +24,7 @@ class DiscountController extends ShopperBaseController
      * Display Create Discount View.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
@@ -36,7 +38,9 @@ class DiscountController extends ShopperBaseController
      * Display edit view.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(int $id)
@@ -44,7 +48,7 @@ class DiscountController extends ShopperBaseController
         $this->authorize('edit_discounts');
 
         return view('shopper::pages.discounts.edit', [
-            'discount' => (new DiscountRepository())->getById($id)
+            'discount' => (new DiscountRepository())->getById($id),
         ]);
     }
 }

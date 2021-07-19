@@ -23,14 +23,14 @@ class Permission extends SpatiePermission
     public static function groups(): array
     {
         return [
-          'system' => __("System"),
-          'brands' => __("Brands"),
-          'categories' => __("Categories"),
-          'collections' => __("Collections"),
-          'products' => __("Products"),
-          'customers' => __("Customers"),
-          'orders' => __("Orders"),
-          'discounts' => __("Discounts"),
+            'system' => __('System'),
+            'brands' => __('Brands'),
+            'categories' => __('Categories'),
+            'collections' => __('Collections'),
+            'products' => __('Products'),
+            'customers' => __('Customers'),
+            'orders' => __('Orders'),
+            'discounts' => __('Discounts'),
         ];
     }
 
@@ -40,7 +40,7 @@ class Permission extends SpatiePermission
      * @param  string  $item
      * @param  string|null  $group
      */
-    public static function generate(string $item, string $group = null): void
+    public static function generate(string $item, ?string $group = null): void
     {
         self::query()->firstOrCreate([
             'name' => 'browse_'. $item,

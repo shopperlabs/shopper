@@ -11,6 +11,7 @@ class ReOrderCategories extends ModalComponent
      * Update category parent position.
      *
      * @param  array  $items
+     *
      * @return void
      */
     public function updateGroupOrder(array $items)
@@ -29,6 +30,7 @@ class ReOrderCategories extends ModalComponent
      * Update subcategory position.
      *
      * @param  array  $groups
+     *
      * @return void
      */
     public function updateCategoryOrder(array $groups)
@@ -39,12 +41,13 @@ class ReOrderCategories extends ModalComponent
                     ->getById($item['value'])
                     ->update([
                         'parent_id' => $group['value'],
-                        'position'  => $item['order']
+                        'position' => $item['order'],
                     ]);
             }
         }
 
         $this->emitSelf('notify-saved');
+
         $this->emit('onCategoriesReordered');
     }
 

@@ -29,8 +29,8 @@ trait Templates
             ->where('template_slug', $templateSlug)->first();
 
         if (! is_null($template)) {
-            self::saveTemplates(self::getTemplates()->reject(function ($value, $key) use ($template) {
-                return $value->template_slug == $template->template_slug;
+            self::saveTemplates(self::getTemplates()->reject(function ($value) use ($template) {
+                return $value->template_slug === $template->template_slug;
             }));
 
             $template_view = 'shopper::mails.templates.'.$templateSlug;
@@ -73,18 +73,19 @@ trait Templates
             if (self::getTemplates()->contains('template_slug', '=', $templatename)) {
                 return response()->json([
                     'status' => 'failed',
-                    'message' => 'Template name already exists',
+                    'message' => __('Template name already exists'),
                 ]);
             }
 
-            $oldForm = self::getTemplates()->reject(function ($value, $key) use ($template) {
-                return $value->template_slug == $template->template_slug;
+            $oldForm = self::getTemplates()->reject(function ($value) use ($template) {
+                return $value->template_slug === $template->template_slug;
             });
             $newForm = array_merge($oldForm->toArray(), [array_merge((array) $template, [
                 'template_slug' => $templatename,
                 'template_name' => $request->title,
                 'template_description' => $request->description,
-            ])]);
+            ]),
+            ]);
 
             self::saveTemplates(collect($newForm));
 
@@ -105,7 +106,7 @@ trait Templates
 
             return response()->json([
                 'status' => 'ok',
-                'message' => 'Updated Successfully',
+                'message' => __('Updated Successfully'),
                 'template_url' => route('viewTemplate', ['templatename' => $templatename]),
             ]);
         }
@@ -124,7 +125,7 @@ trait Templates
                 $viewPath = View($template_view)->getPath();
                 $textViewPath = View($template_plaintext_view)->getPath();
 
-                $templateData = collect([
+                return collect([
                     'template' => self::templateComponentReplace(file_get_contents($viewPath), true),
                     'plain_text' => View::exists($template_plaintext_view) ? file_get_contents($textViewPath) : '',
                     'slug' => $template->template_slug,
@@ -134,8 +135,6 @@ trait Templates
                     'template_view_name' => $template->template_view_name,
                     'template_skeleton' => $template->template_skeleton,
                 ]);
-
-                return $templateData;
             }
         }
 
@@ -144,23 +143,22 @@ trait Templates
 
     public static function getTemplates(): Collection
     {
-        $template = collect(json_decode(file_get_contents(self::getTemplatesFile())));
-
-        return $template;
+        return collect(json_decode(file_get_contents(self::getTemplatesFile())));
     }
 
     /**
      * Create template from the request.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public static function createTemplate(Request $request)
     {
         if (! preg_match("/^[a-zA-Z0-9-_\s]+$/", $request->template_name)) {
-           session()->flash('error', __('Template name not valid'));
+            session()->flash('error', __('Template name not valid'));
 
-           return;
+            return;
         }
 
         $view = 'shopper::templates.'.$request->template_name;
@@ -220,6 +218,89 @@ trait Templates
                 'view_path' => $skeletonViewPath,
             ];
         }
+    }
+
+    public static function markdownedTemplateToView($save = true, $content = '', $viewPath = '', $template = false)
+    {
+        if ($template && View::exists('shopper::mails.templates.'.$viewPath)) {
+            $viewPath = View('shopper::mails.templates.'.$viewPath)->getPath();
+        }
+
+        $replaced = self::templateComponentReplace($content);
+
+        if (! $save) {
+            return $replaced;
+        }
+
+        return file_put_contents($viewPath, $replaced) === false ? false : true;
+    }
+
+    public static function previewMarkdownViewContent($simpleview, $content, $viewName, $template = false, $namespace = null)
+    {
+        $previewtoset = self::markdownedTemplateToView(false, $content);
+        $dir = dirname(__FILE__, 3).'/resources/views/draft';
+        $viewName = $template ? $viewName.'_template' : $viewName;
+
+        if (file_exists($dir)) {
+            file_put_contents($dir."/{$viewName}.blade.php", $previewtoset);
+
+            if ($template) {
+                $instance = null;
+            } else {
+                if (! is_null(self::handleMailableViewDataArgs($namespace))) {
+                    $instance = self::handleMailableViewDataArgs($namespace);
+                } else {
+                    $instance = new $namespace();
+                }
+            }
+
+            return self::renderPreview($simpleview, 'shopper::mails.draft.'.$viewName, $template, $instance);
+        }
+
+        return false;
+    }
+
+    public static function previewMarkdownHtml($instance, $view)
+    {
+        return self::renderPreview($instance, $view);
+    }
+
+    public static function getMailableTemplateData($mailableName)
+    {
+        $mailable = self::getMailable('name', $mailableName);
+
+        if ($mailable->isEmpty()) {
+            return false;
+        }
+
+        $templateData = collect($mailable->first())
+            ->only([
+                'markdown',
+                'view_path',
+                'text_view_path',
+                'text_view',
+                'view_data',
+                'data',
+                'namespace',
+            ])
+            ->all();
+
+        $templateExists = ! is_null($templateData['view_path']);
+        $textTemplateExists = ! is_null($templateData['text_view_path']);
+
+        if ($templateExists) {
+            return collect($templateData)->union([
+
+                'text_template' => $textTemplateExists ? file_get_contents($templateData['text_view_path']) : null,
+                'template' => file_get_contents($templateData['view_path']),
+                'markdowned_template' => self::markdownedTemplate($templateData['view_path']),
+                'template_name' => ! is_null($templateData['markdown']) ? $templateData['markdown'] : $templateData['data']->view,
+                'is_markdown' => ! is_null($templateData['markdown']) ? true : false,
+
+            ])->all();
+        }
+
+        return $templateData;
     }
 
     protected static function templateComponentReplace($content, $reverse = false)
@@ -282,90 +363,5 @@ trait Templates
         $viewContent = file_get_contents($viewPath);
 
         return self::templateComponentReplace($viewContent, true);
-    }
-
-    public static function markdownedTemplateToView($save = true, $content = '', $viewPath = '', $template = false)
-    {
-        if ($template && View::exists('shopper::mails.templates.'.$viewPath)) {
-            $viewPath = View('shopper::mails.templates.'.$viewPath)->getPath();
-        }
-
-        $replaced = self::templateComponentReplace($content);
-
-        if (! $save) {
-            return $replaced;
-        }
-
-        return file_put_contents($viewPath, $replaced) === false ? false : true;
-    }
-
-    public static function previewMarkdownViewContent($simpleview, $content, $viewName, $template = false, $namespace = null)
-    {
-        $previewtoset = self::markdownedTemplateToView(false, $content);
-        $dir = dirname(__FILE__, 3).'/resources/views/draft';
-        $viewName = $template ? $viewName.'_template' : $viewName;
-
-        if (file_exists($dir)) {
-            file_put_contents($dir."/{$viewName}.blade.php", $previewtoset);
-
-            if ($template) {
-                $instance = null;
-            } else {
-                if (! is_null(self::handleMailableViewDataArgs($namespace))) {
-                    $instance = self::handleMailableViewDataArgs($namespace);
-                } else {
-                    $instance = new $namespace;
-                }
-            }
-
-            return self::renderPreview($simpleview, 'shopper::mails.draft.'.$viewName, $template, $instance);
-        }
-
-        return false;
-    }
-
-    public static function previewMarkdownHtml($instance, $view)
-    {
-        return self::renderPreview($instance, $view);
-    }
-
-    public static function getMailableTemplateData($mailableName)
-    {
-        $mailable = self::getMailable('name', $mailableName);
-
-        if ($mailable->isEmpty()) {
-            return false;
-        }
-
-        $templateData = collect($mailable->first())
-            ->only([
-                'markdown',
-                'view_path',
-                'text_view_path',
-                'text_view',
-                'view_data',
-                'data',
-                'namespace'
-            ])
-            ->all();
-
-        $templateExists = ! is_null($templateData['view_path']);
-        $textTemplateExists = ! is_null($templateData['text_view_path']);
-
-        if ($templateExists) {
-            $viewPathParams = collect($templateData)->union([
-
-                'text_template' => $textTemplateExists ? file_get_contents($templateData['text_view_path']) : null,
-                'template' => file_get_contents($templateData['view_path']),
-                'markdowned_template' => self::markdownedTemplate($templateData['view_path']),
-                'template_name' => ! is_null($templateData['markdown']) ? $templateData['markdown'] : $templateData['data']->view,
-                'is_markdown' => ! is_null($templateData['markdown']) ? true : false,
-
-            ])->all();
-
-            return $viewPathParams;
-        }
-
-        return $templateData;
     }
 }

@@ -39,9 +39,9 @@ class UpdatePaymentMethod extends ModalComponent
         $this->validate([
             'title' => [
                 'required',
-                Rule::unique(shopper_table('payment_methods'), 'title')->ignore($this->paymentMethod->id)
+                Rule::unique(shopper_table('payment_methods'), 'title')->ignore($this->paymentMethod->id),
             ],
-            'logo'  => 'nullable|image|max:1024'
+            'logo' => 'nullable|image|max:1024',
         ]);
 
         $this->paymentMethod->update([
@@ -53,7 +53,7 @@ class UpdatePaymentMethod extends ModalComponent
 
         if ($this->logo) {
             $this->paymentMethod->update([
-                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads'))
+                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
             ]);
         }
 

@@ -2,9 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
-use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 
@@ -12,13 +10,13 @@ class General extends Component
 {
     use WithPagination;
 
-    protected $listeners = ['onPaymentMethodAdded' => 'render'];
-
     public string $search = '';
+
+    protected $listeners = ['onPaymentMethodAdded' => 'render'];
 
     public function toggleStatus(int $id, int $status)
     {
-        PaymentMethod::query()->find($id)->update(['is_enabled' => !($status === 1)]);
+        PaymentMethod::query()->find($id)->update(['is_enabled' => ! ($status === 1)]);
 
         $this->dispatchBrowserEvent('toggle-saved-'. $id);
 
@@ -32,6 +30,7 @@ class General extends Component
      * Removed item from the storage.
      *
      * @param  int  $id
+     *
      * @throws \Exception
      */
     public function removePayment(int $id)
@@ -53,7 +52,7 @@ class General extends Component
                 ->where('title', 'like', '%'. $this->search .'%')
                 ->where('slug', '<>', 'stripe')
                 ->orderByDesc('title')
-                ->paginate(6)
+                ->paginate(6),
         ]);
     }
 }

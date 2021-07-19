@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Shopper\Framework\Rules\Password;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Validation\Rules\Password;
 use Shopper\Framework\Rules\RealEmailValidator;
 use Shopper\Framework\Shopper;
 
@@ -43,6 +43,7 @@ class ResetPasswordController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string|null  $token
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showResetForm(Request $request, $token = null)
@@ -50,6 +51,16 @@ class ResetPasswordController extends Controller
         return view('shopper::auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
+    }
+
+    /**
+     * Get the URI the user should be redirected to after resetting their password.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        return Shopper::prefix();
     }
 
     /**
@@ -64,21 +75,8 @@ class ResetPasswordController extends Controller
             'email' => ['required', 'email', new RealEmailValidator()],
             'password' => [
                 'required',
-                (new Password())
-                    ->requireNumeric()
-                    ->requireSpecialCharacter()
-                    ->requireUppercase()
+                Password::min(8)->numbers()->symbols()->mixedCase(),
             ],
         ];
-    }
-
-    /**
-     * Get the URI the user should be redirected to after resetting their password.
-     *
-     * @return string
-     */
-    public function redirectPath()
-    {
-        return Shopper::prefix();
     }
 }

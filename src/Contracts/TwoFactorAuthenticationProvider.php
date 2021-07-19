@@ -17,6 +17,7 @@ interface TwoFactorAuthenticationProvider
      * @param  string  $companyName
      * @param  string  $companyEmail
      * @param  string  $secret
+     *
      * @return string
      */
     public function qrCodeUrl($companyName, $companyEmail, $secret);
@@ -26,6 +27,7 @@ interface TwoFactorAuthenticationProvider
      *
      * @param  string  $secret
      * @param  string  $code
+     *
      * @return bool
      */
     public function verify($secret, $code);

@@ -24,7 +24,7 @@ class Show extends Component
      *
      * @var int
      */
-    public $perPage = 3;
+    public int $perPage = 3;
 
     /**
      * Customer order notes.
@@ -44,6 +44,7 @@ class Show extends Component
      * Redirect to the specific order.
      *
      * @param  int  $id
+     *
      * @return void
      */
     public function goToOrder(int $id)
@@ -75,6 +76,7 @@ class Show extends Component
      * Archived order.
      *
      * @return void
+     *
      * @throws \Exception
      */
     public function archived()
@@ -97,7 +99,7 @@ class Show extends Component
 
         $this->notify([
             'title' => __('Cancelled'),
-            'message' => __('This order has been cancelled.')
+            'message' => __('This order has been cancelled.'),
         ]);
     }
 
@@ -114,7 +116,7 @@ class Show extends Component
 
         $this->notify([
             'title' => __('Notes added'),
-            'message' => __('Your note has been added and will be emailed to the user on their order.')
+            'message' => __('Your note has been added and will be emailed to the user on their order.'),
         ]);
     }
 
@@ -131,7 +133,7 @@ class Show extends Component
 
         $this->notify([
             'title' => __('Update Status'),
-            'message' => __('This order has been marked as register and notification has been sent to the customer by email.')
+            'message' => __('This order has been marked as register and notification has been sent to the customer by email.'),
         ]);
     }
 
@@ -146,15 +148,10 @@ class Show extends Component
 
         $this->notify([
             'title' => __('Update Status'),
-            'message' => __('This order is marked as paid.')
+            'message' => __('This order is marked as paid.'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.orders.show', [
@@ -165,7 +162,7 @@ class Show extends Component
                 ->where('user_id', $this->order->customer->id)
                 ->where('type', Address::TYPE_BILLING)
                 ->where('is_default', true)
-                ->first()
+                ->first(),
         ]);
     }
 }

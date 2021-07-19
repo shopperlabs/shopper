@@ -16,10 +16,10 @@ trait WithDiscountActions
     public function isEmpty(): bool
     {
         if (
-            empty($this->code) &&
-            empty($this->minRequiredValue) &&
-            empty($this->value) &&
-            empty($this->usage_limit)
+            ! $this->code &&
+            ! $this->minRequiredValue &&
+            ! $this->value &&
+            ! $this->usage_limit
         ) {
             return true;
         }
@@ -73,6 +73,7 @@ trait WithDiscountActions
      * Return discount active date.
      *
      * @return string|null
+     *
      * @throws \Exception
      */
     public function getDateWord(): ?string
@@ -100,7 +101,7 @@ trait WithDiscountActions
         if ($startDate->notEqualTo($endDate) && $startDate->lessThan($endDate) && $this->dateEnd !== null) {
             return __('Active from :startDate to :endDate', [
                 'startDate' => $startDate->format('d M'),
-                'endDate'   => $endDate->format('d M'),
+                'endDate' => $endDate->format('d M'),
             ]);
         }
 
@@ -171,6 +172,8 @@ trait WithDiscountActions
      */
     public function addProducts(): void
     {
+        $productArray = [];
+
         if (count($this->selectedProducts) > 0) {
             foreach ($this->selectedProducts as $selectedProduct) {
                 $product = (new ProductRepository())->getById($selectedProduct);
@@ -194,6 +197,8 @@ trait WithDiscountActions
      */
     public function addCustomers(): void
     {
+        $customerArray = [];
+
         if (count($this->selectedCustomers) > 0) {
             foreach ($this->selectedCustomers as $selectedCustomer) {
                 $customer = (new UserRepository())->getById($selectedCustomer);

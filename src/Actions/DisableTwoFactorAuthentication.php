@@ -8,6 +8,7 @@ class DisableTwoFactorAuthentication
      * Disable two factor authentication for the user.
      *
      * @param  mixed  $user
+     *
      * @return void
      */
     public function __invoke($user)

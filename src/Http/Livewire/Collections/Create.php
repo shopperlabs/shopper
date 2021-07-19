@@ -94,7 +94,6 @@ class Create extends Component
         }
 
         if ($this->type === 'auto' && count($this->conditions) > 0 && $this->rule) {
-
             foreach ($this->rule as $key => $value) {
                 CollectionRule::query()->create([
                     'collection_id' => $collection->id,
@@ -108,16 +107,17 @@ class Create extends Component
             $this->resetConditionsFields();
         }
 
-        session()->flash('success', __("Collection successfully added!"));
+        session()->flash('success', __('Collection successfully added!'));
+
         $this->redirectRoute('shopper.collections.edit', $collection);
     }
 
     /**
      * Component validation rules.
      *
-     * @return string[]
+     * @return array<string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|max:150|unique:'.shopper_table('collections'),
@@ -126,11 +126,6 @@ class Create extends Component
         ];
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.collections.create');

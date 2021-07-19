@@ -66,7 +66,7 @@ class AddVariant extends ModalComponent
 
         $this->notify([
             'title' => __('Added'),
-            'message' => __('Product variation successfully added!')
+            'message' => __('Product variation successfully added!'),
         ]);
 
         $this->emit('onVariantAdded');
@@ -77,9 +77,9 @@ class AddVariant extends ModalComponent
     public function rules(): array
     {
         return [
-            'name'  => 'required|unique:'.shopper_table('products'),
-            'sku'  => 'nullable|unique:'.shopper_table('products'),
-            'barcode'  => 'nullable|unique:'.shopper_table('products'),
+            'name' => 'required|unique:'.shopper_table('products'),
+            'sku' => 'nullable|unique:'.shopper_table('products'),
+            'barcode' => 'nullable|unique:'.shopper_table('products'),
             'file' => 'nullable|image|max:1024',
         ];
     }
@@ -92,7 +92,7 @@ class AddVariant extends ModalComponent
     public function render()
     {
         return view('shopper::livewire.modals.add-variant', [
-            'inventories' => (new InventoryRepository())->get()
+            'inventories' => (new InventoryRepository())->get(),
         ]);
     }
 }

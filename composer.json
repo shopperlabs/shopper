@@ -52,6 +52,7 @@
   "require-dev": {
     "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^5.3",
+    "nunomaduro/phpinsights": "^2.0",
     "orchestra/testbench": "^5.0|^6.0",
     "phpunit/phpunit": "^9.5"
   },

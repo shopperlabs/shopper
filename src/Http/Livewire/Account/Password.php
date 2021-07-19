@@ -29,10 +29,10 @@ class Password extends Component
 
             $this->notify([
                 'title' => __('Password Changed!'),
-                'message' => __('You have been successfully updated your password!')
+                'message' => __('You have been successfully updated your password!'),
             ]);
         } else {
-            session()->flash('error', __("That is not your current password."));
+            session()->flash('error', __('That is not your current password.'));
         }
     }
 

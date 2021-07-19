@@ -61,7 +61,7 @@ class CreateMailable extends ModalComponent
         if ($exitCode > -1) {
             $this->notify([
                 'title' => __('Mailable Created'),
-                'message' => __('You Mailable class has been created under the app/Mail folder on your project.')
+                'message' => __('You Mailable class has been created under the app/Mail folder on your project.'),
             ]);
 
             $this->emit('onMailableAction');

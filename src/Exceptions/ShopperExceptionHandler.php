@@ -11,6 +11,7 @@ class ShopperExceptionHandler extends ExceptionHandler
      * Report or log an exception.
      *
      * @param  \Throwable  $e
+     *
      * @return void
      *
      * @throws \Throwable
@@ -25,13 +26,14 @@ class ShopperExceptionHandler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $e
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable
      */
     public function render($request, Throwable $e)
     {
-        if (! $request->user()) {
+        if (! $request->user() && ! $request->user()->hasRole(config('shopper.system.users.admin_role'))) {
             return parent::render($request, $e);
         }
 

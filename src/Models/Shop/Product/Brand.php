@@ -25,7 +25,7 @@ class Brand extends Model
         'position',
         'seo_title',
         'seo_description',
-        'is_enabled'
+        'is_enabled',
     ];
 
     /**

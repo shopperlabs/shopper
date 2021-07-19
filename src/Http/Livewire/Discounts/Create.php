@@ -53,16 +53,16 @@ class Create extends AbstractBaseComponent
             'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
-            'usage_limit_per_user'  => $this->usage_limit_per_user,
+            'usage_limit_per_user' => $this->usage_limit_per_user,
             'start_at' => Carbon::createFromFormat('Y-m-d H:i', $this->dateStart)->toDateTimeString(),
-            'end_at'  => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
+            'end_at' => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
         if ($this->apply === 'products') {
             // Associate the discount to all the selected products.
             foreach ($this->productsIds as $productId) {
                 DiscountDetail::query()->create([
-                   'discount_id' => $discount->id,
+                    'discount_id' => $discount->id,
                     'condition' => 'apply_to',
                     'discountable_type' => config('shopper.system.models.product'),
                     'discountable_id' => $productId,
@@ -82,25 +82,9 @@ class Create extends AbstractBaseComponent
             }
         }
 
-        session()->flash('success', __("Discount code {$discount->code} created successfully"));
+        session()->flash('success', __('Discount code :code created successfully', ['code' => $discount->code]));
 
         $this->redirectRoute('shopper.discounts.index');
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return string[]
-     */
-    protected function rules(): array
-    {
-        return [
-            'code' => 'required|unique:'. shopper_table('discounts'),
-            'type' => 'required',
-            'value' => 'required',
-            'apply' => 'required',
-            'dateStart' => 'required',
-        ];
     }
 
     /**
@@ -130,5 +114,21 @@ class Create extends AbstractBaseComponent
             ->except($this->customersIds);
 
         return view('shopper::livewire.discounts.create');
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string>
+     */
+    protected function rules(): array
+    {
+        return [
+            'code' => 'required|unique:'. shopper_table('discounts'),
+            'type' => 'required',
+            'value' => 'required',
+            'apply' => 'required',
+            'dateStart' => 'required',
+        ];
     }
 }

@@ -10,8 +10,6 @@ use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 
 class Attributes extends Component
 {
-    protected $listeners = ['onProductAttributeAdded' => 'render'];
-
     /**
      * Product Model.
      *
@@ -21,19 +19,11 @@ class Attributes extends Component
 
     public int $productId;
 
-    /**
-     * List of available attributes from the storage.
-     *
-     * @var Collection
-     */
     public Collection $attributes;
 
-    /**
-     * List of attributes for the product.
-     *
-     * @var Collection
-     */
     public Collection $productAttributes;
+
+    protected $listeners = ['onProductAttributeAdded' => 'render'];
 
     public function mount($product)
     {
@@ -45,13 +35,14 @@ class Attributes extends Component
 
     public function updateProductAttribute(int $id)
     {
-        dd($id);
+        // ToDo
     }
 
     /**
      * Remove Attribute to product.
      *
      * @param  int  $id
+     *
      * @throws \Exception
      */
     public function removeProductAttribute(int $id)
@@ -65,6 +56,11 @@ class Attributes extends Component
             'title' => __('Attribute Removed'),
             'message' => __('You have successfully removed this attribute to product.'),
         ]);
+    }
+
+    public function render()
+    {
+        return view('shopper::livewire.products.forms.form-attributes');
     }
 
     /**
@@ -96,10 +92,5 @@ class Attributes extends Component
             ->whereNotIn('id', $this->productAttributes->pluck('attribute_id')->toArray())
             ->where('is_enabled', true)
             ->get();
-    }
-
-    public function render()
-    {
-        return view('shopper::livewire.products.forms.form-attributes');
     }
 }

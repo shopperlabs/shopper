@@ -4,18 +4,14 @@ namespace Shopper\Framework\Http\Livewire\Brands;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\System\File;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends AbstractBaseComponent
 {
     use WithFileUploads, WithUploadProcess;
-
-    protected $listeners = ['fileDeleted'];
 
     public $brand;
 
@@ -34,10 +30,13 @@ class Edit extends AbstractBaseComponent
      */
     public bool $is_enabled = false;
 
+    protected $listeners = ['fileDeleted'];
+
     /**
      * Component mount instance.
      *
      * @param  mixed  $brand
+     *
      * @return void
      */
     public function mount($brand)
@@ -63,7 +62,6 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-
             if ($this->brand->files->isNotEmpty()) {
                 foreach ($this->brand->files as $file) {
                     Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);

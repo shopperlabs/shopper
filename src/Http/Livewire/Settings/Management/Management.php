@@ -21,7 +21,7 @@ class Management extends Component
         $this->dispatchBrowserEvent('user-removed');
         $this->notify([
             'title' => __('Deleted'),
-            'message' => __("Admin deleted successfully!"),
+            'message' => __('Admin deleted successfully!'),
         ]);
     }
 
@@ -29,6 +29,7 @@ class Management extends Component
      * Render the component.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()

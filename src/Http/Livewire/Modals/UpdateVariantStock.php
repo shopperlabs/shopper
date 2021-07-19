@@ -45,7 +45,7 @@ class UpdateVariantStock extends ModalComponent
                 ->where('stockable_id', $this->product->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(3),
-            'inventories' => (new InventoryRepository())->all()
+            'inventories' => (new InventoryRepository())->all(),
         ]);
     }
 }

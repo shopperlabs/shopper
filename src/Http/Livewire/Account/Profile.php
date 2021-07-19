@@ -91,33 +91,29 @@ class Profile extends Component
         ]);
 
         auth()->user()->update([
-            'last_name'     => $this->last_name,
-            'first_name'    => $this->first_name,
-            'email'         => $this->email,
-            'phone_number'  => $this->phone_number,
+            'last_name' => $this->last_name,
+            'first_name' => $this->first_name,
+            'email' => $this->email,
+            'phone_number' => $this->phone_number,
         ]);
 
         if ($this->picture) {
             $filename = $this->picture->store('/', config('shopper.system.storage.disks.avatars'));
 
             auth()->user()->update([
-                'avatar_type'   => 'storage',
+                'avatar_type' => 'storage',
                 'avatar_location' => $filename,
             ]);
         }
 
         $this->emit('updatedProfile');
+
         $this->notify([
             'title' => __('Profile Updated'),
-            'message' => __("Your profile have been successfully updated!")
+            'message' => __('Your profile have been successfully updated!'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.account.profile');

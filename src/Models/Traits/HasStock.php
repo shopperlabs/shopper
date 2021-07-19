@@ -23,14 +23,15 @@ trait HasStock
     /**
      * Return the current stock.
      *
-     * @param  null|DateTimeInterface  $date
+     * @param DateTimeInterface|null $date
+     *
      * @return int
      */
-    public function stock(DateTimeInterface $date = null): int
+    public function stock(?DateTimeInterface $date = null): int
     {
-        $date = $date ?: Carbon::now();
+        $date = $date ? $date : Carbon::now();
 
-        if (!$date instanceof DateTimeInterface) {
+        if (! $date instanceof DateTimeInterface) {
             $date = Carbon::create($date);
         }
 
@@ -43,14 +44,15 @@ trait HasStock
      * Return the current stock of the inventory.
      *
      * @param  int  $inventoryId
-     * @param  null|string  $date
+     * @param string|null $date
+     *
      * @return int
      */
-    public function stockInventory(int $inventoryId, string $date = null): int
+    public function stockInventory(int $inventoryId, ?string $date = null): int
     {
-        $date = $date ?: Carbon::now();
+        $date = $date ? $date : Carbon::now();
 
-        if (!$date instanceof DateTimeInterface) {
+        if (! $date instanceof DateTimeInterface) {
             $date = Carbon::create($date);
         }
 
@@ -80,7 +82,7 @@ trait HasStock
      * @param  int  $inventoryId
      * @param  int  $quantity
      * @param  array  $arguments
-     * 
+     *
      * @return InventoryHistory
      */
     public function decreaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
@@ -94,7 +96,7 @@ trait HasStock
      * @param  int  $inventoryId
      * @param  int  $quantity
      * @param  array  $arguments
-     * 
+     *
      * @return InventoryHistory
      */
     public function mutateStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
@@ -105,16 +107,17 @@ trait HasStock
     /**
      * Reset a Stock for the Shop and inventory.
      *
-     * @param  null|int  $newQuantity
      * @param  int  $inventory_id
+     * @param int|null $newQuantity
      * @param  array  $arguments
+     *
      * @return bool
      */
-    public function clearStock($inventory_id, $newQuantity = null,  $arguments = [])
+    public function clearStock(int $inventory_id, ?int $newQuantity = null, array $arguments = []): bool
     {
         $this->inventoryHistories()->delete();
 
-        if (!is_null($newQuantity)) {
+        if (! is_null($newQuantity)) {
             $this->createStockMutation($newQuantity, $inventory_id, $arguments);
         }
 
@@ -125,9 +128,10 @@ trait HasStock
      * Return stock statement if the item is still in stock.
      *
      * @param  int  $quantity
+     *
      * @return bool
      */
-    public function inStock($quantity = 1)
+    public function inStock(int $quantity = 1): bool
     {
         return $this->stock > 0 && $this->stock >= $quantity;
     }
@@ -145,10 +149,16 @@ trait HasStock
     public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
         $currentStock = $this->stock;
+        $deltaStock = $newQuantity - $currentStock;
 
-        if ($deltaStock = $newQuantity - $currentStock) {
+        if ($deltaStock) {
             return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
         }
+    }
+
+    public function inventoryHistories(): morphMany
+    {
+        return $this->morphMany(InventoryHistory::class, 'stockable')->orderBy('created_at', 'desc');
     }
 
     /**
@@ -166,12 +176,12 @@ trait HasStock
         $reference = Arr::get($arguments, 'reference');
 
         $createArguments = collect([
-            'quantity'      => $quantity,
-            'old_quantity'  => Arr::get($arguments, 'old_quantity'),
-            'description'   => Arr::get($arguments, 'description'),
-            'event'         => Arr::get($arguments, 'event'),
-            'inventory_id'  => $inventoryId,
-            'user_id'       => auth()->id(),
+            'quantity' => $quantity,
+            'old_quantity' => Arr::get($arguments, 'old_quantity'),
+            'description' => Arr::get($arguments, 'description'),
+            'event' => Arr::get($arguments, 'event'),
+            'inventory_id' => $inventoryId,
+            'user_id' => auth()->id(),
         ])->when($reference, function ($collection) use ($reference) {
             return $collection
                 ->put('reference_type', $reference->getMorphClass())
@@ -179,10 +189,5 @@ trait HasStock
         })->toArray();
 
         return $this->inventoryHistories()->create($createArguments);
-    }
-
-    public function inventoryHistories(): morphMany
-    {
-        return $this->morphMany(InventoryHistory::class, 'stockable')->orderBy('created_at', 'desc');
     }
 }

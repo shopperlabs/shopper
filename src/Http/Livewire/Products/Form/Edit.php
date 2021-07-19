@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
@@ -57,15 +56,6 @@ class Edit extends AbstractBaseComponent
         $this->currency = $currency;
     }
 
-    protected function rules(): array
-    {
-        return [
-            'name' => 'required',
-            'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
-        ];
-    }
-
     public function store(): void
     {
         $this->validate($this->rules());
@@ -80,7 +70,7 @@ class Edit extends AbstractBaseComponent
             'price_amount' => $this->price_amount,
             'cost_amount' => $this->cost_amount,
             'published_at' => $this->publishedAt,
-            'brand_id'  => $this->brand_id,
+            'brand_id' => $this->brand_id,
         ]);
 
         if ($this->file) {
@@ -100,8 +90,8 @@ class Edit extends AbstractBaseComponent
         $this->emit('productHasUpdated', $this->productId);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product successfully updated!'),
         ]);
     }
 
@@ -120,5 +110,14 @@ class Edit extends AbstractBaseComponent
                 ->get(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
         ]);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'name' => 'required',
+            'file' => 'nullable|image|max:1024',
+            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
+        ];
     }
 }

@@ -14,8 +14,6 @@ class Edit extends AbstractBaseComponent
 {
     use WithFileUploads, WithUploadProcess;
 
-    protected $listeners = ['fileDeleted'];
-
     public $category;
 
     public int $categoryId;
@@ -27,6 +25,8 @@ class Edit extends AbstractBaseComponent
     public ?string $description = null;
 
     public bool $is_enabled = false;
+
+    protected $listeners = ['fileDeleted'];
 
     public function mount($category)
     {
@@ -56,7 +56,6 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-
             if ($this->category->files->isNotEmpty()) {
                 foreach ($this->category->files as $file) {
                     Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);

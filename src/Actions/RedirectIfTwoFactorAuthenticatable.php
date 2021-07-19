@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Actions;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
@@ -30,6 +31,7 @@ class RedirectIfTwoFactorAuthenticatable
      *
      * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
      * @param  \Shopper\Framework\Services\TwoFactor\LoginRateLimiter  $limiter
+     *
      * @return void
      */
     public function __construct(StatefulGuard $guard, LoginRateLimiter $limiter)
@@ -43,10 +45,12 @@ class RedirectIfTwoFactorAuthenticatable
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  callable  $next
+     *
      * @return mixed
+     *
      * @throws ValidationException
      */
-    public function handle($request, $next)
+    public function handle(Request $request, $next)
     {
         $user = $this->validateCredentials($request);
 
@@ -62,10 +66,12 @@ class RedirectIfTwoFactorAuthenticatable
      * Attempt to validate the incoming credentials.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return mixed
+     *
      * @throws ValidationException
      */
-    protected function validateCredentials($request)
+    protected function validateCredentials(Request $request)
     {
         $model = $this->guard->getProvider()->getModel();
 
@@ -80,11 +86,12 @@ class RedirectIfTwoFactorAuthenticatable
      * Throw a failed authentication validation exception.
      *
      * @param  \Illuminate\Http\Request  $request
+     *
      * @return void
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function throwFailedAuthenticationException($request)
+    protected function throwFailedAuthenticationException(Request $request)
     {
         $this->limiter->increment($request);
 
@@ -98,9 +105,10 @@ class RedirectIfTwoFactorAuthenticatable
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $user
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function twoFactorChallengeResponse($request, $user)
+    protected function twoFactorChallengeResponse(Request $request, $user)
     {
         $request->session()->put([
             'login.id' => $user->getKey(),

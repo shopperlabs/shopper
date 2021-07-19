@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -28,15 +34,8 @@ class Country extends Model
      * @var array
      */
     protected $casts = [
-      'currencies' => 'array',
+        'currencies' => 'array',
     ];
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * Get the table associated with the model.
