@@ -1,9 +1,13 @@
 <p align="center">
-    <a href="https://laravelshopper.io/" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
+    <a href="https://laravelshopper.io" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
 </p>
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Total Downloads][ico-downloads]][link-downloads]
+<p align="center">
+<a href="https://travis-ci.org/shopperlabs/framework"><img src="https://img.shields.io/travis/shopperlabs/framework/master.svg?style=flat-square" alt="Build Status"></a>
+<a href="https://packagist.org/packages/shopper/framework"><img src="https://img.shields.io/packagist/dt/shopper/framework.svg?style=flat-square" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/shopper/framework"><img src="https://img.shields.io/packagist/v/shopper/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/shopper/framework"><img src="https://img.shields.io/packagist/l/shopper/framework" alt="License"></a>
+</p>
 
 ## Introduction
 
@@ -69,12 +73,6 @@ And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
 The Shopper Framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-[ico-version]: https://img.shields.io/packagist/v/shopper/framework.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/shopper/framework.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/shopper/framework/master.svg?style=flat-square
-[link-packagist]: https://packagist.org/packages/shopper/framework
-[link-downloads]: https://packagist.org/packages/shopper/framework
-[link-travis]: https://travis-ci.org/shopper/framework
 [link-author]: https://github.com/mckenziearts
 [link-author-2]: https://github.com/sense
 [link-contributors]: ../../contributors
