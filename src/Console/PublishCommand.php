@@ -28,13 +28,13 @@ class PublishCommand extends Command
     public function handle()
     {
         $this->call('vendor:publish', [
-            '--tag' => 'shopper',
+            '--tag' => 'shopper-config',
             '--force' => $this->option('force'),
         ]);
 
         $this->call('vendor:publish', [
-            '--tag' => 'shopper-assets',
-            '--force' => true,
+            '--tag' => 'shopper-seeders',
+            '--force' => $this->option('force'),
         ]);
 
         $this->call('vendor:publish', [
