@@ -3,13 +3,20 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   mode: 'jit',
   darkMode: 'class',
-  purge: [
-    './resources/js/**/*.js',
-    './resources/views/**/*.php',
-    './resources/lang/**/*.php',
-    './src/**/*.php',
-    './vendor/livewire-ui/modal/resources/views/*.blade.php',
-  ],
+  purge: {
+    content: [
+      './resources/js/**/*.js',
+      './resources/views/**/*.php',
+      './resources/lang/**/*.php',
+      './src/**/*.php',
+      './vendor/livewire-ui/modal/resources/views/*.blade.php',
+    ],
+    options: {
+      safelist: [
+        'sm:max-w-2xl'
+      ]
+    }
+  },
   theme: {
     extend: {
       inset: {
