@@ -32,7 +32,7 @@ class Create extends AbstractBaseComponent
 
     public array $collection_ids = [];
 
-    public ?Channel $defaultChannel;
+    public ?Channel $defaultChannel = null;
 
     protected $listeners = ['productAdded'];
 
