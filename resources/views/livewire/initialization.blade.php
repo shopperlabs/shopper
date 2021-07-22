@@ -233,7 +233,15 @@
                 <div class="bg-white shadow-md sm:rounded-md p-4 dark:bg-gray-800">
                     <div class="grid gap-4 lg:grid-cols-3 lg:gap-6">
                         <div wire:ignore class="space-y-4 sm:col-span-2">
-                            <x-mapbox :markers="[[ 9.70428, 4.04827]]" :options="['zoom' => 2]" class="bg-gray-100 rounded-md h-95 overflow-hidden outline-none focus:outline-none dark:bg-gray-900" />
+                            @if(env('MAPBOX_PUBLIC_TOKEN'))
+                                <x-mapbox :markers="[[ 9.70428, 4.04827]]" :options="['zoom' => 2]" class="bg-gray-100 rounded-md h-95 overflow-hidden outline-none focus:outline-none dark:bg-gray-900" />
+                            @else
+                                <div class="bg-gray-100 rounded-md h-95 overflow-hidden outline-none focus:outline-none dark:bg-gray-900 flex items-center justify-center">
+                                    <p class="text-base leading-6 text-gray-500 font-medium dark:text-gray-400">
+                                        Mapbox has not been activated, consult the <a href="https://docs.laravelshopper.io/docs/configuration#mapbox" class="text-blue-500 hover:text-blue-400">documentation</a> to setup the map
+                                    </p>
+                                </div>
+                            @endif
                             <p class="text-sm text-gray-500 leading-5 dark:text-gray-400">
                                 Shopper uses <span class="font-medium">Mapbox</span> to make it easier to locate your store.
                                 To learn more about mapbox, consult the <a href="https://docs.mapbox.com/mapbox-gl-js/api" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-500 mr-1 dark:text-blue-500">documentation</a>
