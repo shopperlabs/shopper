@@ -19,7 +19,7 @@
 
 ## Introduction
 
-[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 7.0+ which includes all the necessary for your online market application.
+[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 8.0+ which includes all the necessary for your online market application.
 Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 
