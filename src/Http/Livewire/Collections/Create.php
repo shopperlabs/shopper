@@ -3,20 +3,21 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
+use function count;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Models\Shop\Product\CollectionRule;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Models\Shop\Product\CollectionRule;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends Component
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithConditions,
-        WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithConditions;
+    use WithSeoAttributes;
 
     /**
      * Collection name.
@@ -62,8 +63,6 @@ class Create extends Component
 
     /**
      * Live updated Formatted publishedAt attribute.
-     *
-     * @return void
      */
     public function updatedPublishedAt()
     {
@@ -72,8 +71,6 @@ class Create extends Component
 
     /**
      * Save new entry to the database.
-     *
-     * @return void
      */
     public function store()
     {
@@ -120,7 +117,7 @@ class Create extends Component
     public function rules(): array
     {
         return [
-            'name' => 'required|max:150|unique:'.shopper_table('collections'),
+            'name' => 'required|max:150|unique:' . shopper_table('collections'),
             'file' => 'nullable|image|max:1024',
             'type' => 'required',
         ];

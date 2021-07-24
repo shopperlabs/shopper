@@ -2,56 +2,54 @@
 
 namespace Shopper\Framework\Http\Livewire\Orders;
 
-use Illuminate\Database\Eloquent\Builder;
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Traits\WithSorting;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
-use Shopper\Framework\Traits\WithSorting;
 
 class Browse extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination;
+    use WithSorting;
 
     /**
      * Search.
      *
-     * @var string|null
+     * @var null|string
      */
     public $search;
 
     /**
      * Number of order to display per page.
-     *
-     * @var int
      */
     public int $perPage = 10;
 
     /**
      * Order status.
      *
-     * @var string|null
+     * @var null|string
      */
     public $status;
 
     /**
      * Filter start date.
      *
-     * @var string|null
+     * @var null|string
      */
     public $dateStart;
 
     /**
      * Filter end date.
      *
-     * @var string|null
+     * @var null|string
      */
     public $dateEnd;
 
     /**
      * Custom Livewire pagination view.
-     *
-     * @return string
      */
     public function paginationView(): string
     {
@@ -60,8 +58,6 @@ class Browse extends Component
 
     /**
      * Reset all filters.
-     *
-     * @return void
      */
     public function resetFilters(): void
     {
@@ -73,11 +69,7 @@ class Browse extends Component
     /**
      * Archived an order.
      *
-     * @param  int  $id
-     *
-     * @throws \Exception
-     *
-     * @return void
+     * @throws Exception
      */
     public function archived(int $id): void
     {
@@ -98,7 +90,7 @@ class Browse extends Component
                 ->withCount('items')
                 ->where(function (Builder $query) {
                     if ($this->search) {
-                        $query->where('number', 'like', '%'. $this->search .'%');
+                        $query->where('number', 'like', '%' . $this->search . '%');
                     }
 
                     if ($this->status) {
@@ -111,8 +103,8 @@ class Browse extends Component
                 })
                 ->orWhereHas('customer', function (Builder $query) {
                     if ($this->search) {
-                        $query->where('email', 'like', '%'. $this->search .'%')
-                            ->orWhere('first_name', 'like', '%'. $this->search .'%');
+                        $query->where('email', 'like', '%' . $this->search . '%')
+                            ->orWhere('first_name', 'like', '%' . $this->search . '%');
                     }
                 })
                 ->paginate($this->perPage),

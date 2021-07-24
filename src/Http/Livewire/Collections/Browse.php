@@ -2,15 +2,17 @@
 
 namespace Shopper\Framework\Http\Livewire\Collections;
 
-use Illuminate\Database\Eloquent\Builder;
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Traits\WithSorting;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Browse extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination;
+    use WithSorting;
 
     /**
      * Search.
@@ -39,9 +41,7 @@ class Browse extends Component
     /**
      * Remove a record to the database.
      *
-     * @param  int  $id
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(int $id)
     {
@@ -57,8 +57,6 @@ class Browse extends Component
 
     /**
      * Reset Filter on type.
-     *
-     * @return void
      */
     public function resetTypeFilter()
     {
@@ -78,7 +76,7 @@ class Browse extends Component
             'total' => (new CollectionRepository())->count(),
             'collections' => (new CollectionRepository())
                 ->makeModel()
-                ->where('name', 'like', '%'. $this->search .'%')
+                ->where('name', 'like', '%' . $this->search . '%')
                 ->where(function (Builder $query) {
                     if ($this->type !== null) {
                         $query->where('type', $this->type);

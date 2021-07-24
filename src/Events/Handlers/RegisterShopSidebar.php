@@ -2,19 +2,15 @@
 
 namespace Shopper\Framework\Events\Handlers;
 
-use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
+use Maatwebsite\Sidebar\Group;
 use Shopper\Framework\Sidebar\AbstractAdminSidebar;
 
 class RegisterShopSidebar extends AbstractAdminSidebar
 {
     /**
-     * Method used to define your sidebar menu groups and items
-     *
-     * @param  Menu  $menu
-     *
-     * @return Menu
+     * Method used to define your sidebar menu groups and items.
      */
     public function extendWith(Menu $menu): Menu
     {

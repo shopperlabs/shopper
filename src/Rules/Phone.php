@@ -9,10 +9,7 @@ class Phone implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     *
-     * @return bool
+     * @param string $attribute
      */
     public function passes($attribute, $value): bool
     {
@@ -21,8 +18,6 @@ class Phone implements Rule
 
     /**
      * Get the validation error message.
-     *
-     * @return string
      */
     public function message(): string
     {
@@ -31,9 +26,9 @@ class Phone implements Rule
 
     /**
      * Checks through all validation methods to verify it is in a
-     * phone number format of some type
+     * phone number format of some type.
      *
-     * @param  string  $value The phone number to check
+     * @param string $value The phone number to check
      *
      * @return bool is it correct format?
      */
@@ -43,28 +38,20 @@ class Phone implements Rule
     }
 
     /**
-     * Format example 5555555555, 15555555555
-     *
-     * @param  string  $value
-     *
-     * @return bool
+     * Format example 5555555555, 15555555555.
      */
     protected function isDigits(string $value): bool
     {
         $conditions = [];
-        $conditions[] = strlen($value) >= 10;
-        $conditions[] = strlen($value) <= 16;
-        $conditions[] = preg_match("/[^\d]/i", $value) === 0;
+        $conditions[] = mb_strlen($value) >= 10;
+        $conditions[] = mb_strlen($value) <= 16;
+        $conditions[] = preg_match('/[^\\d]/i', $value) === 0;
 
         return (bool) array_product($conditions);
     }
 
     /**
-     * Format example +22 555 555 1234, (607) 555 1234, (022607) 555 1234
-     *
-     * @param  string  $value
-     *
-     * @return bool
+     * Format example +22 555 555 1234, (607) 555 1234, (022607) 555 1234.
      */
     protected function isE123(string $value): bool
     {
@@ -72,35 +59,35 @@ class Phone implements Rule
     }
 
     /**
-     * Format example +15555555555
+     * Format example +15555555555.
      *
-     * @param  string  $value The phone number to check
+     * @param string $value The phone number to check
      *
      * @return bool is it correct format?
      */
     protected function isE164(string $value): bool
     {
         $conditions = [];
-        $conditions[] = strpos($value, '+') === 0;
-        $conditions[] = strlen($value) >= 9;
-        $conditions[] = strlen($value) <= 16;
-        $conditions[] = preg_match("/[^\d+]/i", $value) === 0;
+        $conditions[] = mb_strpos($value, '+') === 0;
+        $conditions[] = mb_strlen($value) >= 9;
+        $conditions[] = mb_strlen($value) <= 16;
+        $conditions[] = preg_match('/[^\\d+]/i', $value) === 0;
 
         return (bool) array_product($conditions);
     }
 
     /**
      * Format examples: (555) 555-5555, 1 (555) 555-5555, 1-555-555-5555, 555-555-5555, 1 555 555-5555
-     * https://en.wikipedia.org/wiki/National_conventions_for_writing_telephone_numbers#United_States.2C_Canada.2C_and_other_NANP_countries
+     * https://en.wikipedia.org/wiki/National_conventions_for_writing_telephone_numbers#United_States.2C_Canada.2C_and_other_NANP_countries.
      *
-     * @param  string  $value The phone number to check
+     * @param string $value The phone number to check
      *
      * @return bool is it correct format?
      */
     protected function isNANP(string $value): bool
     {
         $conditions = [];
-        $conditions[] = preg_match("/^(?:\+1|1)?\s?-?\(?\d{3}\)?(\s|-)?\d{3}-\d{4}$/i", $value) > 0;
+        $conditions[] = preg_match('/^(?:\\+1|1)?\\s?-?\\(?\\d{3}\\)?(\\s|-)?\\d{3}-\\d{4}$/i', $value) > 0;
 
         return (bool) array_product($conditions);
     }

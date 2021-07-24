@@ -2,60 +2,46 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
-use Shopper\Framework\Models\Shop\PaymentMethod;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Artisan;
 use Shopper\Framework\Models\System\Currency;
+use Shopper\Framework\Models\Shop\PaymentMethod;
 
 class Stripe extends Component
 {
     /**
      * Stripe API public key.
-     *
-     * @var string
      */
     public string $stripe_key = '';
 
     /**
      * Stripe API secret key.
-     *
-     * @var string
      */
     public string $stripe_secret = '';
 
     /**
      * Stripe API Webhook.
-     *
-     * @var string
      */
     public string $stripe_webhook_secret = '';
 
     /**
      * Stripe Mode.
-     *
-     * @var string
      */
     public string $stripe_mode = 'sandbox';
 
     /**
      * Cashier Currency.
-     *
-     * @var string
      */
     public string $currency;
 
     /**
      * Indicates if Stripe Payment is being enabled.
-     *
-     * @var bool
      */
     public bool $enabled = false;
 
     /**
      * Message display during Stripe installation.
-     *
-     * @var string
      */
     public string $message = '...';
 
@@ -107,9 +93,7 @@ class Stripe extends Component
     public function render()
     {
         return view('shopper::livewire.settings.payments.stripe', [
-            'currencies' => Cache::rememberForever('currencies', function () {
-                return Currency::all();
-            }),
+            'currencies' => Cache::rememberForever('currencies', fn () => Currency::all()),
         ]);
     }
 }

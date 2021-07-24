@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Models\Traits;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Shopper\Framework\Models\System\File;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait Filetable
 {

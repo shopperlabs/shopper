@@ -37,8 +37,6 @@ class AttributeController extends ShopperBaseController
     /**
      * Edit Attribute view page.
      *
-     * @param  Attribute  $attribute
-     *
      * @return \Illuminate\View\View
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException

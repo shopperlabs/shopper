@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
-use Shopper\Framework\Http\Controllers\ShopperBaseController;
 use Shopper\Framework\Models\Shop\Order\Order;
+use Shopper\Framework\Http\Controllers\ShopperBaseController;
 
 class OrderController extends ShopperBaseController
 {
@@ -23,8 +23,6 @@ class OrderController extends ShopperBaseController
 
     /**
      * Display order detail view.
-     *
-     * @param  Order  $order
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      *

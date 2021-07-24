@@ -37,8 +37,6 @@ class InventoryController extends ShopperBaseController
     /**
      * Display Inventory update form.
      *
-     * @param  Inventory  $inventory
-     *
      * @return \Illuminate\View\View
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException

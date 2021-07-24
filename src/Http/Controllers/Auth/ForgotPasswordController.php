@@ -2,12 +2,12 @@
 
 namespace Shopper\Framework\Http\Controllers\Auth;
 
-use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Routing\Controller;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
 {
@@ -27,8 +27,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -38,7 +36,7 @@ class ForgotPasswordController extends Controller
             return (new MailMessage())
                 ->view('shopper::mails.email')
                 ->line(__('You are receiving this email because we received a password reset request for your account.'))
-                ->action(__('Reset Password'), url(config('app.url').route('shopper.password.reset', $token, false)))
+                ->action(__('Reset Password'), url(config('app.url') . route('shopper.password.reset', $token, false)))
                 ->line(__('If you did not request a password reset, no further action is required.'));
         });
     }
@@ -56,10 +54,9 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a successful password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
+     * @param string $response
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
@@ -71,10 +68,9 @@ class ForgotPasswordController extends Controller
     /**
      * Get the response for a failed password reset link.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
+     * @param string $response
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {

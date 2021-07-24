@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 
 class Profile extends Component
 {
@@ -115,7 +115,7 @@ class Profile extends Component
     /**
      * Component Mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $customer
+     * @param \Illuminate\Database\Eloquent\Model $customer
      */
     public function mount($customer)
     {
@@ -133,8 +133,6 @@ class Profile extends Component
 
     /**
      * Update customer first name.
-     *
-     * @return void
      */
     public function saveFirstName()
     {
@@ -152,8 +150,6 @@ class Profile extends Component
 
     /**
      * Update customer last name.
-     *
-     * @return void
      */
     public function saveLastName()
     {
@@ -171,8 +167,6 @@ class Profile extends Component
 
     /**
      * Update Customer Email Address.
-     *
-     * @return void
      */
     public function saveEmail()
     {
@@ -197,8 +191,6 @@ class Profile extends Component
 
     /**
      * Cancel Email Address update.
-     *
-     * @return void
      */
     public function cancelEmail()
     {
@@ -208,8 +200,6 @@ class Profile extends Component
 
     /**
      * Update customer Birth Date.
-     *
-     * @return void
      */
     public function saveBirthDate()
     {
@@ -225,8 +215,6 @@ class Profile extends Component
 
     /**
      * Update customer gender.
-     *
-     * @return void
      */
     public function saveGender()
     {
@@ -241,8 +229,6 @@ class Profile extends Component
 
     /**
      * Updated Customer default Email Marketing Subscription.
-     *
-     * @return void
      */
     public function updatedOptIn()
     {
@@ -261,9 +247,9 @@ class Profile extends Component
     /**
      * Update value from the storage.
      *
-     * @param  string  $field
-     * @param  string  $value
-     * @param  string  $message
+     * @param string $field
+     * @param string $value
+     * @param string $message
      */
     private function updateValue($field, $value, $message)
     {

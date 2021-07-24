@@ -2,13 +2,13 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
-use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Notifications\CustomerSendCredentials;
-use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Rules\Phone;
+use Illuminate\Support\Facades\Hash;
 use Shopper\Framework\Traits\WithAddress;
+use Shopper\Framework\Models\System\Country;
+use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Notifications\CustomerSendCredentials;
 
 class Create extends Component
 {
@@ -72,8 +72,6 @@ class Create extends Component
 
     /**
      * Save new entry to the database.
-     *
-     * @return void
      */
     public function store()
     {
@@ -115,22 +113,16 @@ class Create extends Component
 
     /**
      * Generate a 10 random string characters for password.
-     *
-     * @return void
      */
     public function generate()
     {
-        $this->password = substr(strtoupper(uniqid(str_random(10))), 0, 10);
+        $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
     }
 
     /**
      * Real-time component validation.
      *
-     * @param  string  $field
-     *
      * @throws \Illuminate\Validation\ValidationException
-     *
-     * @return void
      */
     public function updated(string $field)
     {
@@ -145,7 +137,7 @@ class Create extends Component
     public function rules(): array
     {
         return array_merge($this->addressRules(), [
-            'email' => 'required|max:150|unique:'.shopper_table('users'),
+            'email' => 'required|max:150|unique:' . shopper_table('users'),
             'first_name' => 'required',
             'last_name' => 'required',
             'password' => 'required|confirmed|min:8',

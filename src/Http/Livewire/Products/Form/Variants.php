@@ -2,30 +2,29 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Builder;
+use Exception;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Traits\WithSorting;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Traits\WithSorting;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Variants extends Component
 {
-    use WithPagination,
-        WithFileUploads,
-        WithSorting,
-        WithAttributes,
-        WithUploadProcess;
+    use WithPagination;
+    use WithFileUploads;
+    use WithSorting;
+    use WithAttributes;
+    use WithUploadProcess;
 
     public string $search = '';
 
     /**
      * Default product stock quantity.
-     *
-     * @var mixed
      */
     public $quantity;
 
@@ -43,9 +42,7 @@ class Variants extends Component
     /**
      * Component mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     *
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $product
      */
     public function mount($product, string $currency)
     {
@@ -61,9 +58,7 @@ class Variants extends Component
     /**
      * Remove a record to the database.
      *
-     * @param  int  $id
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(int $id)
     {
@@ -87,7 +82,7 @@ class Variants extends Component
             'variants' => (new ProductRepository())
                 ->makeModel()
                 ->where(function (Builder $query) {
-                    $query->where('name', 'like', '%'. $this->search .'%');
+                    $query->where('name', 'like', '%' . $this->search . '%');
                     $query->where('parent_id', $this->product->id);
                 })
                 ->orderBy($this->sortBy ?? 'name', $this->sortDirection)

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {
@@ -58,10 +58,6 @@ class Create extends AbstractBaseComponent
 
     /**
      * Update slug value when writing name.
-     *
-     * @param  string  $value
-     *
-     * @return void
      */
     public function updatedName(string $value)
     {
@@ -70,8 +66,6 @@ class Create extends AbstractBaseComponent
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
@@ -107,7 +101,7 @@ class Create extends AbstractBaseComponent
     {
         return [
             'name' => 'required|max:75',
-            'slug' => 'required|unique:'. shopper_table('attributes'),
+            'slug' => 'required|unique:' . shopper_table('attributes'),
             'type' => 'required',
         ];
     }

@@ -2,16 +2,19 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use function count;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
+use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class AddVariant extends ModalComponent
 {
-    use WithFileUploads, WithAttributes, WithUploadProcess;
+    use WithFileUploads;
+    use WithAttributes;
+    use WithUploadProcess;
 
     public int $productId;
 
@@ -19,8 +22,6 @@ class AddVariant extends ModalComponent
 
     /**
      * Default product stock quantity.
-     *
-     * @var mixed
      */
     public $quantity;
 
@@ -77,9 +78,9 @@ class AddVariant extends ModalComponent
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:'.shopper_table('products'),
-            'sku' => 'nullable|unique:'.shopper_table('products'),
-            'barcode' => 'nullable|unique:'.shopper_table('products'),
+            'name' => 'required|unique:' . shopper_table('products'),
+            'sku' => 'nullable|unique:' . shopper_table('products'),
+            'barcode' => 'nullable|unique:' . shopper_table('products'),
             'file' => 'nullable|image|max:1024',
         ];
     }

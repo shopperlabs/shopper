@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Livewire\Component;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Edit extends Component
 {
@@ -17,15 +17,11 @@ class Edit extends Component
 
     /**
      * All locations available on the store.
-     *
-     * @var mixed
      */
     public $inventories;
 
     /**
      * Default inventory id.
-     *
-     * @var int
      */
     public int $inventory;
 
@@ -33,10 +29,6 @@ class Edit extends Component
 
     /**
      * Component Mount method.
-     *
-     * @param  mixed  $product
-     *
-     * @return void
      */
     public function mount($product)
     {
@@ -47,10 +39,6 @@ class Edit extends Component
 
     /**
      * Product updated Listener.
-     *
-     * @param  int  $id
-     *
-     * @return void
      */
     public function productHasUpdated(int $id)
     {

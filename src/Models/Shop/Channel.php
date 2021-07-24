@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Models\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Channel extends Model
 {
@@ -35,8 +35,6 @@ class Channel extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

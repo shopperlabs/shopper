@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 
-use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
+use Illuminate\Support\Facades\Artisan;
 use Shopper\Framework\Rules\RealEmailValidator;
 
 class Configuration extends Component

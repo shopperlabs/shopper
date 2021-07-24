@@ -3,22 +3,22 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\File;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithConditions,
-        WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithConditions;
+    use WithSeoAttributes;
 
     /**
      * Collection Model.
@@ -77,7 +77,7 @@ class Edit extends AbstractBaseComponent
     public $condition_match = 'all';
 
     /**
-     * Products of the collections
+     * Products of the collections.
      *
      * @var \Illuminate\Database\Eloquent\Collection
      */
@@ -93,9 +93,7 @@ class Edit extends AbstractBaseComponent
     /**
      * Component mounted action.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $collection
-     *
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $collection
      */
     public function mount($collection)
     {
@@ -115,8 +113,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Update collection item in the database.
-     *
-     * @return void
      */
     public function store()
     {
@@ -160,8 +156,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Live updated Formatted publishedAt attribute.
-     *
-     * @return void
      */
     public function updatedPublishedAt()
     {
@@ -190,8 +184,6 @@ class Edit extends AbstractBaseComponent
     /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {

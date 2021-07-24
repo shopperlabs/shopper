@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Traits;
 
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
-use Livewire\Component;
-use Livewire\Livewire;
 use ReflectionClass;
+use Livewire\Livewire;
+use Livewire\Component;
+use Illuminate\Support\Str;
+use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 
 trait CanRegisterLivewireComponentDirectories
@@ -19,9 +19,7 @@ trait CanRegisterLivewireComponentDirectories
                     ->append('\\', $file->getRelativePathname())
                     ->replace(['/', '.php'], ['\\', '']);
             })
-            ->filter(function ($class) {
-                return is_subclass_of($class, Component::class) && ! (new ReflectionClass($class))->isAbstract();
-            })
+            ->filter(fn ($class) => is_subclass_of($class, Component::class) && ! (new ReflectionClass($class))->isAbstract())
             ->each(function ($class) use ($namespace, $aliasPrefix) {
                 $alias = Str::of($class)
                     ->after($namespace . '\\')

@@ -2,15 +2,15 @@
 
 namespace Shopper\Framework\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Illuminate\Routing\Pipeline;
-use Illuminate\Support\Facades\Auth;
-use Shopper\Framework\Actions\AttemptToAuthenticate;
-use Shopper\Framework\Actions\RedirectIfTwoFactorAuthenticatable;
 use Shopper\Framework\Shopper;
+use Illuminate\Routing\Pipeline;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Shopper\Framework\Actions\AttemptToAuthenticate;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Shopper\Framework\Actions\RedirectIfTwoFactorAuthenticatable;
 
 class LoginController extends Controller
 {
@@ -25,12 +25,11 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers, ValidatesRequests;
+    use AuthenticatesUsers;
+    use ValidatesRequests;
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -49,8 +48,6 @@ class LoginController extends Controller
 
     /**
      * Log the user out of the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -78,9 +75,7 @@ class LoginController extends Controller
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -99,15 +94,11 @@ class LoginController extends Controller
         }
 
         // Attempt to authenticate a new session.
-        return $this->loginPipeline($request)->then(function ($request) {
-            return $this->sendLoginResponse($request);
-        });
+        return $this->loginPipeline($request)->then(fn ($request) => $this->sendLoginResponse($request));
     }
 
     /**
      * Get the login username to be used by the controller.
-     *
-     * @return string
      */
     public function username(): string
     {
@@ -116,8 +107,6 @@ class LoginController extends Controller
 
     /**
      * Get the authentication pipeline instance.
-     *
-     * @param  \Illuminate\Http\Request  $request
      *
      * @return \Illuminate\Pipeline\Pipeline
      */
@@ -132,9 +121,7 @@ class LoginController extends Controller
     /**
      * Send the response after the user was authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     protected function sendLoginResponse(Request $request)
     {

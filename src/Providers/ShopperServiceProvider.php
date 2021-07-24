@@ -2,12 +2,14 @@
 
 namespace Shopper\Framework\Providers;
 
-use Illuminate\Database\Eloquent\Builder;
+use function define;
+use function defined;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Console\UserCommand;
 use Shopper\Framework\Console\InstallCommand;
 use Shopper\Framework\Console\PublishCommand;
 use Shopper\Framework\Console\SymlinkCommand;
-use Shopper\Framework\Console\UserCommand;
 
 class ShopperServiceProvider extends ServiceProvider
 {
@@ -22,8 +24,6 @@ class ShopperServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any package services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -33,21 +33,17 @@ class ShopperServiceProvider extends ServiceProvider
 
         $this->app->register(RouteServiceProvider::class);
 
-        Builder::macro('search', function ($field, $string) {
-            return $string ? $this->where($field, 'like', '%'.$string.'%') : $this;
-        });
+        Builder::macro('search', fn ($field, $string) => $string ? $this->where($field, 'like', '%' . $string . '%') : $this);
     }
 
     /**
      * Register the package's publishable resources.
-     *
-     * @return void
      */
     public function registerPublishing()
     {
         collect($this->configFiles)->each(function ($config) {
-            $this->mergeConfigFrom(SHOPPER_PATH . "/config/${config}.php", "shopper.${config}");
-            $this->publishes([SHOPPER_PATH. "/config/${config}.php" => config_path("shopper/${config}.php")], 'shopper-config');
+            $this->mergeConfigFrom(SHOPPER_PATH . "/config/{$config}.php", "shopper.{$config}");
+            $this->publishes([SHOPPER_PATH . "/config/{$config}.php" => config_path("shopper/{$config}.php")], 'shopper-config');
         });
 
         $this->publishes([
@@ -57,8 +53,6 @@ class ShopperServiceProvider extends ServiceProvider
 
     /**
      * Register Database and seeders.
-     *
-     * @return void
      */
     public function registerDatabase()
     {
@@ -69,9 +63,7 @@ class ShopperServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register provider
-     *
-     * @return void
+     * Register provider.
      */
     public function registerProviders(): void
     {
@@ -82,8 +74,6 @@ class ShopperServiceProvider extends ServiceProvider
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -103,8 +93,6 @@ class ShopperServiceProvider extends ServiceProvider
 
     /**
      * Get the services provided by the provider.
-     *
-     * @return array
      */
     public function provides(): array
     {
@@ -119,8 +107,6 @@ class ShopperServiceProvider extends ServiceProvider
 
     /**
      * Register the package resources such as routes, templates, etc.
-     *
-     * @return void
      */
     protected function registerResources()
     {

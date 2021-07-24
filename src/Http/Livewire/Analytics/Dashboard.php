@@ -3,29 +3,29 @@
 namespace Shopper\Framework\Http\Livewire\Analytics;
 
 use Analytics;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use Spatie\Analytics\Period;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
 
 class Dashboard extends Component
 {
     /**
-     * From starting date
+     * From starting date.
      *
      * @var string
      */
     public $fromDate;
 
     /**
-     * To ending date
+     * To ending date.
      *
      * @var string
      */
     public $toDate;
 
     /**
-     * Date period
+     * Date period.
      *
      * @var string
      */
@@ -40,8 +40,6 @@ class Dashboard extends Component
 
     /**
      * Component mount instance.
-     *
-     * @return void
      *
      * @throws \Spatie\Analytics\Exceptions\InvalidPeriod
      */
@@ -59,8 +57,6 @@ class Dashboard extends Component
      * Enabled Google Analytics.
      *
      * @throws \Spatie\Analytics\Exceptions\InvalidPeriod
-     *
-     * @return void
      */
     public function enabledAnalytics()
     {
@@ -78,30 +74,22 @@ class Dashboard extends Component
         $most_visited_pages = Analytics::fetchMostVisitedPages($this->period, 5);
         $top_medium = Analytics::performQuery($this->period, 'ga:sessions', ['dimensions' => 'ga:sourceMedium', 'max-results' => 5, 'sort' => '-ga:sessions']);
         if (isset($top_medium->rows)) {
-            $top_medium = collect($top_medium->rows)->map(function ($el, $i) {
-                return ['name' => $el[0], 'sessions' => number_format($el[1], 0, '.', ' ')];
-            });
+            $top_medium = collect($top_medium->rows)->map(fn ($el, $i) => ['name' => $el[0], 'sessions' => number_format($el[1], 0, '.', ' ')]);
         }
 
         $top_devices = Analytics::performQuery($this->period, 'ga:sessions', ['dimensions' => 'ga:deviceCategory, ga:operatingSystem', 'max-results' => 5, 'sort' => '-ga:sessions']);
-        if (isset($top_devices) && isset($top_devices->rows)) {
-            $top_devices = collect($top_devices->rows)->map(function ($el, $i) {
-                return ['name' => $el[0], 'os' => $el[1], 'sessions' => number_format($el[2], 0, '.', ' ')];
-            });
+        if (isset($top_devices, $top_devices->rows)) {
+            $top_devices = collect($top_devices->rows)->map(fn ($el, $i) => ['name' => $el[0], 'os' => $el[1], 'sessions' => number_format($el[2], 0, '.', ' ')]);
         }
 
         $top_geolocations = Analytics::performQuery($this->period, 'ga:sessions', ['dimensions' => 'ga:country', 'max-results' => 5, 'sort' => '-ga:sessions']);
         if (isset($top_geolocations->rows)) {
-            $top_geolocations = collect($top_geolocations->rows)->map(function ($el, $i) {
-                return ['name' => $el[0], 'sessions' => number_format($el[1], 0, '.', ' ')];
-            });
+            $top_geolocations = collect($top_geolocations->rows)->map(fn ($el, $i) => ['name' => $el[0], 'sessions' => number_format($el[1], 0, '.', ' ')]);
         }
 
         $top_socials = Analytics::performQuery($this->period, 'ga:sessions', ['dimensions' => 'ga:socialNetwork', 'max-results' => 5, 'sort' => '-ga:sessions']);
         if (isset($top_socials->rows)) {
-            $top_socials = collect($top_socials->rows)->map(function ($el, $i) {
-                return ['name' => $el[0], 'sessions' => number_format($el[1], 0, '.', ' ')];
-            });
+            $top_socials = collect($top_socials->rows)->map(fn ($el, $i) => ['name' => $el[0], 'sessions' => number_format($el[1], 0, '.', ' ')]);
         }
 
         $this->analytics = [

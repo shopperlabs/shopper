@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 
+use function in_array;
 use Livewire\Component;
 use Shopper\Framework\Services\Mailable;
 
@@ -13,8 +14,6 @@ class Templates extends Component
 
     /**
      * Component Mount instance.
-     *
-     * @return void
      */
     public function mount()
     {

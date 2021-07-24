@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class RelatedProducts extends Component
@@ -23,9 +23,7 @@ class RelatedProducts extends Component
     /**
      * Component Mount method.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     *
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $product
      */
     public function mount($product)
     {

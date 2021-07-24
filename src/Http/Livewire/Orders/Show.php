@@ -2,11 +2,12 @@
 
 namespace Shopper\Framework\Http\Livewire\Orders;
 
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
-use Shopper\Framework\Models\User\Address;
 
 class Show extends Component
 {
@@ -14,15 +15,11 @@ class Show extends Component
 
     /**
      * Current viewer order.
-     *
-     * @var Order
      */
     public Order $order;
 
     /**
      * Order item to display on the page.
-     *
-     * @var int
      */
     public int $perPage = 3;
 
@@ -42,10 +39,6 @@ class Show extends Component
 
     /**
      * Redirect to the specific order.
-     *
-     * @param  int  $id
-     *
-     * @return void
      */
     public function goToOrder(int $id)
     {
@@ -54,8 +47,6 @@ class Show extends Component
 
     /**
      * Launch modal to archived the current order.
-     *
-     * @return void
      */
     public function openModal()
     {
@@ -64,8 +55,6 @@ class Show extends Component
 
     /**
      * Cancel action to archived order.
-     *
-     * @return void
      */
     public function cancel()
     {
@@ -75,9 +64,7 @@ class Show extends Component
     /**
      * Archived order.
      *
-     * @return void
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function archived()
     {
@@ -90,8 +77,6 @@ class Show extends Component
 
     /**
      * Cancel order.
-     *
-     * @return void
      */
     public function cancelOrder()
     {
@@ -105,8 +90,6 @@ class Show extends Component
 
     /**
      * Updated order with customer notes.
-     *
-     * @return void
      */
     public function leaveNotes()
     {
@@ -122,8 +105,6 @@ class Show extends Component
 
     /**
      * Register the order by changed order status.
-     *
-     * @return void
      */
     public function register()
     {
@@ -139,8 +120,6 @@ class Show extends Component
 
     /**
      * Mark the order as paid.
-     *
-     * @return void
      */
     public function markPaid()
     {

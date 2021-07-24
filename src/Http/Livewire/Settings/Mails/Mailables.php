@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 
+use function in_array;
 use Livewire\Component;
 use Shopper\Framework\Services\Mailable;
 
@@ -9,8 +10,6 @@ class Mailables extends Component
 {
     /**
      * Define if the we can create mailable in production.
-     *
-     * @var bool
      */
     public bool $isLocal = false;
 

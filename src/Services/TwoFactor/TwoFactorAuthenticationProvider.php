@@ -16,10 +16,6 @@ class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProvider
 
     /**
      * Create a new two factor authentication provider instance.
-     *
-     * @param  \PragmaRX\Google2FA\Google2FA  $engine
-     *
-     * @return void
      */
     public function __construct(Google2FA $engine)
     {
@@ -39,9 +35,9 @@ class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProvider
     /**
      * Get the two factor authentication QR code URL.
      *
-     * @param  string  $companyName
-     * @param  string  $companyEmail
-     * @param  string  $secret
+     * @param string $companyName
+     * @param string $companyEmail
+     * @param string $secret
      *
      * @return string
      */
@@ -53,8 +49,8 @@ class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProvider
     /**
      * Verify the given code.
      *
-     * @param  string  $secret
-     * @param  string  $code
+     * @param string $secret
+     * @param string $code
      *
      * @return bool
      */

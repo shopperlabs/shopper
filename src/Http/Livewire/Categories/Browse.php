@@ -2,14 +2,16 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithSorting;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Browse extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination;
+    use WithSorting;
 
     public string $search = '';
 
@@ -23,9 +25,7 @@ class Browse extends Component
     /**
      * Remove a record to the database.
      *
-     * @param  int  $id
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(int $id)
     {
@@ -43,7 +43,7 @@ class Browse extends Component
         return view('shopper::livewire.categories.browse', [
             'total' => (new CategoryRepository())->count(),
             'categories' => (new CategoryRepository())
-                ->where('name', '%'. $this->search .'%', 'like')
+                ->where('name', '%' . $this->search . '%', 'like')
                 ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
                 ->paginate(10),
         ]);

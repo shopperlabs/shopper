@@ -2,15 +2,16 @@
 
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Models\Shop\Discount;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Traits\WithSorting;
+use Shopper\Framework\Models\Shop\Discount;
 
 class Browse extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination;
+    use WithSorting;
 
     /**
      * Search.
@@ -27,7 +28,7 @@ class Browse extends Component
     public $isActive;
 
     /**
-     * Start/End Date of the discount
+     * Start/End Date of the discount.
      *
      * @var string
      */
@@ -45,8 +46,6 @@ class Browse extends Component
 
     /**
      * Reset date filter.
-     *
-     * @return void
      */
     public function resetDate()
     {
@@ -55,8 +54,6 @@ class Browse extends Component
 
     /**
      * Reset status filter.
-     *
-     * @return void
      */
     public function resetActiveFilter()
     {
@@ -67,10 +64,10 @@ class Browse extends Component
     {
         return view('shopper::livewire.discounts.browse', [
             'total' => Discount::query()->count(),
-            'discounts' => Discount::query()->where('code', 'like', '%'. $this->search .'%')
+            'discounts' => Discount::query()->where('code', 'like', '%' . $this->search . '%')
                 ->where(function (Builder $query) {
                     if ($this->isActive !== null) {
-                        $query->where('is_active', boolval($this->isActive));
+                        $query->where('is_active', (bool) ($this->isActive));
                     }
 
                     if ($this->date !== null) {

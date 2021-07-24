@@ -2,17 +2,18 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\File;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess;
+    use WithFileUploads;
+    use WithUploadProcess;
 
     public $category;
 
@@ -40,8 +41,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Update category record in the database.
-     *
-     * @return void
      */
     public function store()
     {
@@ -87,8 +86,6 @@ class Edit extends AbstractBaseComponent
     /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {

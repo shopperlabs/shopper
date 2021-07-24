@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 use Shopper\Framework\Rules\RealEmailValidator;
 
 class Profile extends Component
@@ -41,15 +41,11 @@ class Profile extends Component
 
     /**
      * Logged User profile picture.
-     *
-     * @var mixed
      */
     public $picture;
 
     /**
      * Component mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -61,8 +57,6 @@ class Profile extends Component
 
     /**
      * Real-Time picture validation.
-     *
-     * @return void
      */
     public function updatedPicture()
     {
@@ -73,8 +67,6 @@ class Profile extends Component
 
     /**
      * Update user profile to storage.
-     *
-     * @return void
      */
     public function save()
     {

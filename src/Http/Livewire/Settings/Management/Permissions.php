@@ -2,16 +2,15 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
+use Exception;
 use Livewire\Component;
-use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role;
+use Shopper\Framework\Models\User\Permission;
 
 class Permissions extends Component
 {
     /**
      * Role for the given permissions.
-     *
-     * @var Role
      */
     public Role $role;
 
@@ -24,8 +23,6 @@ class Permissions extends Component
 
     /**
      * Reload all Role permission in the view.
-     *
-     * @param  int  $id
      */
     public function permissionAdded(int $id)
     {
@@ -34,10 +31,6 @@ class Permissions extends Component
 
     /**
      * Toggle permission on the role.
-     *
-     * @param  int  $id
-     *
-     * @return void
      */
     public function togglePermission(int $id)
     {
@@ -61,9 +54,7 @@ class Permissions extends Component
     /**
      * Removed a permission to the storage.
      *
-     * @param  int  $id
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function removePermission(int $id)
     {

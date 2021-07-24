@@ -12,15 +12,11 @@ class Terms extends Component
 
     /**
      * Legal page title.
-     *
-     * @var string
      */
     public string $title = 'Terms of use';
 
     /**
      * Component mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -31,8 +27,6 @@ class Terms extends Component
 
     /**
      * Store/Update data from storage.
-     *
-     * @return void
      */
     public function store()
     {

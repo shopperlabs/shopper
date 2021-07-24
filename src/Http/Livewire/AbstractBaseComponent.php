@@ -9,11 +9,7 @@ abstract class AbstractBaseComponent extends Component
     /**
      * Real-time component validation.
      *
-     * @param  string  $field
-     *
      * @throws \Illuminate\Validation\ValidationException
-     *
-     * @return void
      */
     public function updated(string $field)
     {
@@ -22,8 +18,6 @@ abstract class AbstractBaseComponent extends Component
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     abstract public function store();
 

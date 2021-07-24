@@ -8,6 +8,7 @@ use Shopper\Framework\Models\Shop\Inventory\Inventory;
 class DeleteInventory extends ModalComponent
 {
     public int $inventoryId;
+
     public string $name;
 
     public function mount(int $inventoryId, string $name)

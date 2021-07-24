@@ -47,8 +47,6 @@ trait WithSeoAttributes
 
     /**
      * Display the block to update SEO values.
-     *
-     * @return void
      */
     public function updateSeo()
     {

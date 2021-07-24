@@ -2,9 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Exception;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 
@@ -41,9 +42,7 @@ class Attributes extends Component
     /**
      * Remove Attribute to product.
      *
-     * @param  int  $id
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function removeProductAttribute(int $id)
     {
@@ -65,8 +64,6 @@ class Attributes extends Component
 
     /**
      * Get Product Attributes lists.
-     *
-     * @return void
      */
     private function getProductAttributes()
     {
@@ -83,8 +80,6 @@ class Attributes extends Component
 
     /**
      * Get Attributes lists not used by the product.
-     *
-     * @return void
      */
     private function getAttributes()
     {

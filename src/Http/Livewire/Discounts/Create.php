@@ -3,23 +3,23 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Discount;
-use Shopper\Framework\Models\Shop\DiscountDetail;
-use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Models\Shop\Discount;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\Shop\DiscountDetail;
 use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithDiscountAttributes, WithDiscountActions, HasPrice;
+    use WithDiscountAttributes;
+    use WithDiscountActions;
+    use HasPrice;
 
     /**
      * Component Mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -28,8 +28,6 @@ class Create extends AbstractBaseComponent
 
     /**
      * Store a newly entry to the database.
-     *
-     * @return void
      */
     public function store()
     {
@@ -95,7 +93,7 @@ class Create extends AbstractBaseComponent
     public function render()
     {
         $this->products = (new ProductRepository())
-            ->where('name', '%'. $this->searchProduct .'%', 'like')
+            ->where('name', '%' . $this->searchProduct . '%', 'like')
             ->orderBy('name')
             ->get(['name', 'price_amount', 'id'])
             ->except($this->productsIds);
@@ -124,7 +122,7 @@ class Create extends AbstractBaseComponent
     protected function rules(): array
     {
         return [
-            'code' => 'required|unique:'. shopper_table('discounts'),
+            'code' => 'required|unique:' . shopper_table('discounts'),
             'type' => 'required',
             'value' => 'required',
             'apply' => 'required',

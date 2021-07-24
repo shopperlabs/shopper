@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Livewire\Component;
+use Jenssegers\Agent\Agent;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Jenssegers\Agent\Agent;
-use Livewire\Component;
 use Stevebauman\Location\Facades\Location;
 
 class Devices extends Component
@@ -43,8 +43,6 @@ class Devices extends Component
 
     /**
      * Create a new agent instance from the given session.
-     *
-     * @param  mixed  $session
      *
      * @return \Jenssegers\Agent\Agent
      */

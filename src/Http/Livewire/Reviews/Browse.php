@@ -2,8 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Reviews;
 
-use Illuminate\Database\Eloquent\Builder;
+use Exception;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Shop\Review;
 
 class Browse extends Component
@@ -24,8 +25,6 @@ class Browse extends Component
 
     /**
      * Reset Filter on status.
-     *
-     * @return void
      */
     public function resetStatusFilter()
     {
@@ -35,9 +34,7 @@ class Browse extends Component
     /**
      * Remove a review from the storage.
      *
-     * @param  int  $id
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(int $id)
     {
@@ -56,11 +53,11 @@ class Browse extends Component
             'total' => Review::query()->count(),
             'reviews' => Review::with(['reviewrateable', 'author'])
                 ->whereHasMorph('reviewrateable', config('shopper.system.models.product'), function (Builder $query) {
-                    $query->where('name', 'like', '%'. $this->search .'%');
+                    $query->where('name', 'like', '%' . $this->search . '%');
                 })
                 ->where(function (Builder $query) {
                     if ($this->approved !== null) {
-                        $query->where('approved', boolval($this->approved));
+                        $query->where('approved', (bool) ($this->approved));
                     }
                 })
                 ->paginate(8),

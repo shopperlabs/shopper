@@ -2,18 +2,20 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
 use Shopper\Framework\Traits\WithStock;
+use Shopper\Framework\Http\Livewire\Products\WithAttributes;
+use Shopper\Framework\Repositories\InventoryHistoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Inventory extends Component
 {
-    use WithPagination, WithAttributes, WithStock;
+    use WithPagination;
+    use WithAttributes;
+    use WithStock;
 
     /**
      * Product Model.
@@ -27,11 +29,9 @@ class Inventory extends Component
     /**
      * Component mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  \Illuminate\Database\Eloquent\Collection  $inventories
-     * @param  \Illuminate\Database\Eloquent\Model  $defaultInventory
-     *
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model      $product
+     * @param \Illuminate\Database\Eloquent\Collection $inventories
+     * @param \Illuminate\Database\Eloquent\Model      $defaultInventory
      */
     public function mount($product, $inventories, $defaultInventory)
     {
@@ -53,8 +53,6 @@ class Inventory extends Component
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {

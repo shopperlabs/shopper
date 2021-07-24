@@ -2,17 +2,18 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Shopper\Framework\Models\Traits\Filetable;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Traits\HasSlug;
+use Shopper\Framework\Models\Traits\Filetable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Category extends Model
 {
-    use Filetable, HasSlug;
+    use Filetable;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -41,8 +42,6 @@ class Category extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

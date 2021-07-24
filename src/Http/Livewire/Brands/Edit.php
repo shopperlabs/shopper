@@ -2,16 +2,17 @@
 
 namespace Shopper\Framework\Http\Livewire\Brands;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess;
+    use WithFileUploads;
+    use WithUploadProcess;
 
     public $brand;
 
@@ -25,8 +26,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Indicates if brand is being enabled.
-     *
-     * @var bool
      */
     public bool $is_enabled = false;
 
@@ -34,10 +33,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Component mount instance.
-     *
-     * @param  mixed  $brand
-     *
-     * @return void
      */
     public function mount($brand)
     {
@@ -92,8 +87,6 @@ class Edit extends AbstractBaseComponent
     /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {

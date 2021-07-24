@@ -42,8 +42,6 @@ class Discount extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -52,12 +50,10 @@ class Discount extends Model
 
     /**
      * Determine if the discount code has reached his limit usage.
-     *
-     * @return bool
      */
     public function hasReachedLimit(): bool
     {
-        if (! is_null($this->usage_limit)) {
+        if (null !== $this->usage_limit) {
             return $this->total_use === $this->usage_limit;
         }
 

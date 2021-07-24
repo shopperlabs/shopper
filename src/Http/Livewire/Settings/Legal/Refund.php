@@ -12,15 +12,11 @@ class Refund extends Component
 
     /**
      * Legal page title.
-     *
-     * @var string
      */
     public string $title = 'Refund policy';
 
     /**
      * Component mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -31,8 +27,6 @@ class Refund extends Component
 
     /**
      * Store/Update data from storage.
-     *
-     * @return void
      */
     public function store()
     {

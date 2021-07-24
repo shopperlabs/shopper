@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\User\Role;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Repositories\UserRepository;
 
 class Management extends Component

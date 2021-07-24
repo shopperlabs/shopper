@@ -2,16 +2,14 @@
 
 namespace Shopper\Framework\Exceptions;
 
-use Illuminate\Auth\AuthenticationException as BaseAuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Auth\AuthenticationException as BaseAuthenticationException;
 
 class AuthenticationException extends BaseAuthenticationException
 {
     /**
      * Render the exception.
-     *
-     * @param  \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */

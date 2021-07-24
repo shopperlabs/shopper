@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Integrations\Github;
 
-use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
+use Illuminate\Support\Facades\Artisan;
 
 class Settings extends Component
 {
@@ -30,8 +30,6 @@ class Settings extends Component
 
     /**
      * Component mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -42,8 +40,6 @@ class Settings extends Component
 
     /**
      * Updated Stripe payment.
-     *
-     * @return void
      */
     public function store()
     {

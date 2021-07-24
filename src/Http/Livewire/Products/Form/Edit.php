@@ -2,23 +2,24 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Support\Collection;
+use function count;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Collection;
+use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithAttributes,
-        WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
+    use WithSeoAttributes;
 
     public $product;
 
@@ -33,8 +34,7 @@ class Edit extends AbstractBaseComponent
     /**
      * Component Mount method.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  string  $currency
+     * @param \Illuminate\Database\Eloquent\Model $product
      */
     public function mount($product, string $currency)
     {
@@ -117,7 +117,7 @@ class Edit extends AbstractBaseComponent
         return [
             'name' => 'required',
             'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
+            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
         ];
     }
 }

@@ -2,8 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use Illuminate\Database\Eloquent\Collection;
+use function in_array;
 use LivewireUI\Modal\ModalComponent;
+use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
@@ -11,11 +12,17 @@ use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
 class AddProductAttribute extends ModalComponent
 {
     public int $productId;
+
     public string $type = 'text';
+
     public array $attributes;
+
     public ?int $attribute_id = null;
+
     public array $multipleValues = [];
+
     public Collection $values;
+
     public ?string $value = null;
 
     public function mount(int $productId, array $attributes)
