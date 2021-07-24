@@ -101,7 +101,7 @@ return $config->setRules([
         'php_unit_construct' => true,
         'php_unit_fqcn_annotation' => true,
         'php_unit_strict' => true,
-        'php_unit_test_annotation' => ['case' => 'camel', 'style' => 'annotation'],
+        'php_unit_test_annotation' => ['style' => 'annotation'],
         'php_unit_test_case_static_method_calls' => ['call_type' => 'this'],
         'phpdoc_align' => true,
         'phpdoc_annotation_without_dot' => true,
