@@ -36,8 +36,6 @@ class Browse extends Component
 
     /**
      * Sort results.
-     *
-     * @param  string  $value
      */
     public function sort(string $value)
     {
@@ -60,7 +58,7 @@ class Browse extends Component
         return view('shopper::livewire.brands.browse', [
             'total' => (new BrandRepository())->count(),
             'brands' => (new BrandRepository())
-                ->where('name', '%'. $this->search .'%', 'like')
+                ->where('name', '%' . $this->search . '%', 'like')
                 ->orderBy('created_at', $this->direction)
                 ->paginate(8),
         ]);

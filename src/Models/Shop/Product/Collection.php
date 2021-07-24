@@ -3,14 +3,15 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\Traits\HasSlug;
+use Shopper\Framework\Models\Traits\Filetable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Shopper\Framework\Models\Traits\Filetable;
-use Shopper\Framework\Models\Traits\HasSlug;
 
 class Collection extends Model
 {
-    use Filetable, HasSlug;
+    use Filetable;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -40,8 +41,6 @@ class Collection extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -50,14 +49,12 @@ class Collection extends Model
 
     /**
      * Return the correct formatted word of the first collection rule.
-     *
-     * @return string
      */
     public function firstRule(): string
     {
         $condition = $this->rules()->first();
 
-        return $condition->getFormattedRule(). ' '. $condition->getFormattedOperator(). ' '. $condition->value;
+        return $condition->getFormattedRule() . ' ' . $condition->getFormattedOperator() . ' ' . $condition->value;
     }
 
     public function products(): MorphToMany

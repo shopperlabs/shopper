@@ -9,9 +9,13 @@ use Shopper\Framework\Models\Shop\Product\AttributeValue;
 class UpdateValue extends ModalComponent
 {
     public string $name;
+
     public string $type = 'select';
+
     public int $valueId;
+
     public string $value;
+
     public string $key;
 
     public function mount(string $name, string $type, int $id)

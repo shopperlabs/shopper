@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Models\Traits;
 
-use Illuminate\Database\Eloquent\Relations\morphMany;
 use Shopper\Framework\Models\Shop\DiscountDetail;
+use Illuminate\Database\Eloquent\Relations\morphMany;
 
 trait CanHaveDiscount
 {

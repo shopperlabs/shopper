@@ -6,9 +6,6 @@ use Livewire\Component;
 
 class Products extends Component
 {
-    /**
-     * @var mixed
-     */
     public $collection;
 
     public string $sortBy = 'name';
@@ -22,9 +19,7 @@ class Products extends Component
     /**
      * Component mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $collection
-     *
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $collection
      */
     public function mount($collection)
     {
@@ -54,26 +49,32 @@ class Products extends Component
             case 'alpha_asc':
                 $this->sortValue = 'name';
                 $this->direction = 'asc';
+
                 break;
             case 'alpha_desc':
                 $this->sortValue = 'name';
                 $this->direction = 'desc';
+
                 break;
             case 'price_asc':
                 $this->sortValue = 'price_amount';
                 $this->direction = 'asc';
+
                 break;
             case 'price_desc':
                 $this->sortValue = 'price_amount';
                 $this->direction = 'desc';
+
                 break;
             case 'created_asc':
                 $this->sortValue = 'created_at';
                 $this->direction = 'asc';
+
                 break;
             case 'created_desc':
                 $this->sortValue = 'created_at';
                 $this->direction = 'desc';
+
                 break;
         }
 

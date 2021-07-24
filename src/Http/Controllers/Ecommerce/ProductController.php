@@ -38,8 +38,6 @@ class ProductController extends ShopperBaseController
     /**
      * Display Edit view.
      *
-     * @param  int  $id
-     *
      * @return \Illuminate\View\View
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
@@ -57,9 +55,6 @@ class ProductController extends ShopperBaseController
 
     /**
      * Display variant edit view.
-     *
-     * @param  int  $product
-     * @param  int  $id
      *
      * @return \Illuminate\View\View
      *

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Sidebar\Presentation;
 
-use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Badge;
+use Illuminate\Contracts\View\Factory;
 
 class ShopperBadgeRenderer
 {
@@ -17,17 +17,12 @@ class ShopperBadgeRenderer
      */
     protected $view = 'shopper::sidebar.badge';
 
-    /**
-     * @param Factory $factory
-     */
     public function __construct(Factory $factory)
     {
         $this->factory = $factory;
     }
 
     /**
-     * @param Badge $badge
-     *
      * @return \Illuminate\Contracts\View\View
      */
     public function render(Badge $badge)

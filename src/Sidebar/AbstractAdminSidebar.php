@@ -23,18 +23,13 @@ abstract class AbstractAdminSidebar implements SidebarExtender
         $this->user = auth(config('shopper.auth.guard'))->user();
     }
 
-    /**
-     * @param BuildingSidebar $sidebar
-     */
     public function handle(BuildingSidebar $sidebar)
     {
         $sidebar->add($this->extendWith($sidebar->getMenu()));
     }
 
     /**
-     * Method used to define your sidebar menu groups and items
-     *
-     * @param Menu $menu
+     * Method used to define your sidebar menu groups and items.
      *
      * @return Menu
      */

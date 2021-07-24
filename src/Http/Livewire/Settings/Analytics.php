@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\Setting;
 
 class Analytics extends Component
@@ -50,8 +50,6 @@ class Analytics extends Component
 
     /**
      * Json Credential file.
-     *
-     * @var mixed
      */
     public $json_file;
 
@@ -64,8 +62,6 @@ class Analytics extends Component
 
     /**
      * Component Mount Method.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -80,8 +76,6 @@ class Analytics extends Component
 
     /**
      * Sav/Update a entry on the storage.
-     *
-     * @return void
      */
     public function store()
     {

@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role;
+use Shopper\Framework\Models\User\Permission;
 
 class CreatePermission extends ModalComponent
 {

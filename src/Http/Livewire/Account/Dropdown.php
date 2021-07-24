@@ -26,6 +26,7 @@ class Dropdown extends Component
      * @var string
      */
     public $email;
+
     /**
      * Components custom Listeners.
      *
@@ -35,8 +36,6 @@ class Dropdown extends Component
 
     /**
      * Component mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -47,8 +46,6 @@ class Dropdown extends Component
 
     /**
      * Update profile listener implementation.
-     *
-     * @return void
      */
     public function updatedProfile()
     {

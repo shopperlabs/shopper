@@ -19,7 +19,7 @@ class Orders extends Component
     /**
      * Component Mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $customer
+     * @param \Illuminate\Database\Eloquent\Model $customer
      */
     public function mount($customer)
     {

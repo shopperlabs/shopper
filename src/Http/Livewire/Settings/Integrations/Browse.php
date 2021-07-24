@@ -2,51 +2,40 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Integrations;
 
-use Illuminate\Support\Facades\Artisan;
+use function in_array;
 use Livewire\Component;
+use Illuminate\Support\Facades\Artisan;
 use Shopper\Framework\Models\Shop\Channel;
 
 class Browse extends Component
 {
     /**
      * Github status integration.
-     *
-     * @var bool
      */
     public bool $github = false;
 
     /**
      * Twitter status integration.
-     *
-     * @var bool
      */
     public bool $twitter = false;
 
     /**
      * The current provider to setup.
-     *
-     * @var string
      */
     public string $currentProvider = '';
 
     /**
      * Provider description for channel update.
-     *
-     * @var string
      */
     public string $message = '';
 
     /**
      * Confirmation to launch modal to setup an integration.
-     *
-     * @var bool
      */
     public bool $confirmModalActivation = false;
 
     /**
      * Component mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -56,11 +45,6 @@ class Browse extends Component
 
     /**
      * Confirmation modal.
-     *
-     * @param  string  $provider
-     * @param  string|null  $message
-     *
-     * @return void
      */
     public function confirmationEnable(string $provider, ?string $message = null)
     {
@@ -73,12 +57,10 @@ class Browse extends Component
 
     /**
      * Enable provider and update environnement variables.
-     *
-     * @return void
      */
     public function enableProvider()
     {
-        setEnvironmentValue(['shopper_integration_'. strtolower($this->currentProvider) => true]);
+        setEnvironmentValue(['shopper_integration_' . mb_strtolower($this->currentProvider) => true]);
 
         $this->{$this->currentProvider} = true;
 
@@ -100,10 +82,6 @@ class Browse extends Component
 
     /**
      * Create a newly channel on the storage.
-     *
-     * @param  string  $channel
-     *
-     * @return void
      */
     public function createChannel(string $channel)
     {
@@ -115,8 +93,6 @@ class Browse extends Component
 
     /**
      * Close confirmation modal.
-     *
-     * @return void
      */
     public function closeIntegrationModal()
     {

@@ -3,13 +3,14 @@
 namespace Shopper\Framework\Http\Livewire\Brands;
 
 use Livewire\WithFileUploads;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Create extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess;
+    use WithFileUploads;
+    use WithUploadProcess;
 
     public string $name = '';
 
@@ -45,7 +46,7 @@ class Create extends AbstractBaseComponent
     public function rules(): array
     {
         return [
-            'name' => 'required|max:150|unique:'.shopper_table('brands'),
+            'name' => 'required|max:150|unique:' . shopper_table('brands'),
             'file' => 'nullable|image|max:1024',
         ];
     }

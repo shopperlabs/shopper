@@ -8,8 +8,11 @@ use Shopper\Framework\Models\Shop\Product\Attribute;
 class CreateValue extends ModalComponent
 {
     public Attribute $attribute;
+
     public string $type = 'select';
+
     public string $value = '';
+
     public string $key = '';
 
     public function mount(int $attributeId)
@@ -46,7 +49,7 @@ class CreateValue extends ModalComponent
     {
         return [
             'value' => 'required|max:50',
-            'key' => 'required|unique:'. shopper_table('attribute_values'),
+            'key' => 'required|unique:' . shopper_table('attribute_values'),
         ];
     }
 

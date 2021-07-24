@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Models\System\Country;
 use Shopper\Framework\Rules\Phone;
+use Shopper\Framework\Models\System\Country;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {
@@ -92,7 +92,7 @@ class Edit extends AbstractBaseComponent
             'street_address' => 'required',
             'zipcode' => 'required',
             'phone_number' => ['nullable', new Phone()],
-            'country_id' => 'required|exists:'.shopper_table('system_countries').',id',
+            'country_id' => 'required|exists:' . shopper_table('system_countries') . ',id',
         ];
     }
 }

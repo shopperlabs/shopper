@@ -8,15 +8,11 @@ trait Migration
 {
     /**
      * Return table name.
-     *
-     * @param  string  $table
-     *
-     * @return string
      */
     public function getTableName(string $table): string
     {
         if (config('shopper.table_prefix') !== '') {
-            return config('shopper.table_prefix').$table;
+            return config('shopper.table_prefix') . $table;
         }
 
         return $table;
@@ -24,9 +20,6 @@ trait Migration
 
     /**
      * Create fields common to all tables.
-     *
-     * @param  Blueprint  $table
-     * @param bool $hasSoftDelete
      */
     public function addCommonFields(Blueprint $table, bool $hasSoftDelete = false): void
     {
@@ -40,10 +33,6 @@ trait Migration
 
     /**
      * Create fields common to seo.
-     *
-     * @param  Blueprint  $table
-     *
-     * @return void
      */
     public function addSeoFields(Blueprint $table): void
     {
@@ -53,10 +42,6 @@ trait Migration
 
     /**
      * Create common fields for shipping.
-     *
-     * @param  Blueprint  $table
-     *
-     * @return void
      */
     public function addShippingFields(Blueprint $table): void
     {
@@ -85,10 +70,10 @@ trait Migration
     /**
      * Link table to $tableName using $columnName.
      *
-     * @param  Blueprint  $table     Laravel Blueprint
-     * @param  string  $columnName   MySQL table column name
-     * @param  string  $tableName    MySQL table name
-     * @param  bool  $nullable Foreign key nullable status
+     * @param Blueprint $table      Laravel Blueprint
+     * @param string    $columnName MySQL table column name
+     * @param string    $tableName  MySQL table name
+     * @param bool      $nullable   Foreign key nullable status
      */
     public function addForeignKey(Blueprint $table, string $columnName, string $tableName, $nullable = true): void
     {
@@ -104,8 +89,8 @@ trait Migration
     /**
      * Remove foreign key using $columnName.
      *
-     * @param  Blueprint  $table   Laravel Blueprint
-     * @param  string  $columnName  Column on the table
+     * @param Blueprint $table      Laravel Blueprint
+     * @param string    $columnName Column on the table
      */
     public function removeLink(Blueprint $table, $columnName): void
     {

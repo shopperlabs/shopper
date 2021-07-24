@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Notifications;
 
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class AdminSendCredentials extends Notification
 {
@@ -16,8 +16,6 @@ class AdminSendCredentials extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param  string  $password
      */
     public function __construct(string $password)
     {
@@ -26,8 +24,6 @@ class AdminSendCredentials extends Notification
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
      *
      * @return array
      */
@@ -38,8 +34,6 @@ class AdminSendCredentials extends Notification
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */

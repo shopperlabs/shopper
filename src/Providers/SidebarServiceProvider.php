@@ -9,9 +9,7 @@ use Shopper\Framework\Sidebar\AdminSidebar;
 class SidebarServiceProvider extends ServiceProvider
 {
     /**
-     * Sidebar Manager
-     *
-     * @param SidebarManager $manager
+     * Sidebar Manager.
      */
     public function boot(SidebarManager $manager)
     {

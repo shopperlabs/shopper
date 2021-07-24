@@ -2,16 +2,21 @@
 
 namespace Shopper\Framework\Services;
 
+use Exception;
+use Throwable;
 use ErrorException;
+use ReflectionType;
+use function is_object;
+use ReeceM\Mocker\Mocked;
 use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\View;
-use ReeceM\Mocker\Mocked;
 use Shopper\Framework\Traits\Mails\Mailables;
 use Shopper\Framework\Traits\Mails\Templates;
 
 class Mailable
 {
-    use Templates, Mailables;
+    use Templates;
+    use Mailables;
 
     /**
      * Default type examples for being passed to reflected classes.
@@ -27,11 +32,11 @@ class Mailable
      * @param $simpleview
      * @param $view
      * @param false $template
-     * @param null $instance
+     * @param null  $instance
      *
      * @return string|void
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public static function renderPreview($simpleview, $view, $template = false, $instance = null)
     {
@@ -46,7 +51,7 @@ class Mailable
 
             foreach ($_data as $key => $value) {
                 if (! is_object($value)) {
-                    $_data[$key] = '<span class="mailable-key" title="Variable">'.$key.'</span>';
+                    $_data[$key] = '<span class="mailable-key" title="Variable">' . $key . '</span>';
                 }
             }
         } else {
@@ -66,7 +71,7 @@ class Mailable
         } catch (ErrorException $e) {
             $error = '<div class="alert alert-warning">
 	    	<h5 class="alert-heading">Error:</h5>
-	    	<p>'.$e->getMessage().'</p>
+	    	<p>' . $e->getMessage() . '</p>
 	    	</div>';
 
             if ($template) {
@@ -83,10 +88,10 @@ class Mailable
     /**
      * Gets any missing params that may not be collectable in the reflection.
      *
-     * @param string $arg the argument string|
-     * @param array $params the reflection param list
+     * @param string $arg    the argument string|
+     * @param array  $params the reflection param list
      *
-     * @return array|string|\ReeceM\Mocker\Mocked
+     * @return array|\ReeceM\Mocker\Mocked|string
      */
     private static function getMissingParams($arg, $params)
     {
@@ -97,28 +102,28 @@ class Mailable
          * getName() is undocumented alternative to casting to string.
          * https://www.php.net/manual/en/class.reflectiontype.php#124658
          *
-         * @var \ReflectionType $reflection
+         * @var ReflectionType $reflection
          */
         $reflection = collect($params)->where('name', $arg)->first()->getType();
 
-        if (version_compare(phpversion(), '7.1', '>=')) {
-            $type = ! is_null($reflection)
+        if (version_compare(PHP_VERSION, '7.1', '>=')) {
+            $type = null !== $reflection
                 ? self::TYPES[$reflection->getName()]
                 : null;
         } else {
-            $type = ! is_null($reflection)
+            $type = null !== $reflection
                 ? self::TYPES[
-                    /** @scrutinizer ignore-deprecated */
+                    // @scrutinizer ignore-deprecated
                     $reflection->__toString()
                 ]
                 : null;
         }
 
         try {
-            return ! is_null($type)
+            return null !== $type
                 ? $type
                 : new Mocked($arg, \ReeceM\Mocker\Utils\VarStore::singleton());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $arg;
         }
     }

@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class ProductsLists extends ModalComponent
 {
@@ -30,7 +30,7 @@ class ProductsLists extends ModalComponent
     public function getProductsProperty()
     {
         return (new ProductRepository())
-            ->where('name', '%'. $this->search .'%', 'like')
+            ->where('name', '%' . $this->search . '%', 'like')
             ->get(['name', 'price_amount', 'id'])
             ->except($this->exceptProductIds);
     }

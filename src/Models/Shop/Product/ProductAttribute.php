@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProductAttribute extends Model
 {
@@ -14,6 +14,7 @@ class ProductAttribute extends Model
      * @var bool
      */
     public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,8 +37,6 @@ class ProductAttribute extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

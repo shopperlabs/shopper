@@ -14,9 +14,9 @@ interface TwoFactorAuthenticationProvider
     /**
      * Get the two factor authentication QR code URL.
      *
-     * @param  string  $companyName
-     * @param  string  $companyEmail
-     * @param  string  $secret
+     * @param string $companyName
+     * @param string $companyEmail
+     * @param string $secret
      *
      * @return string
      */
@@ -25,8 +25,8 @@ interface TwoFactorAuthenticationProvider
     /**
      * Verify the given token.
      *
-     * @param  string  $secret
-     * @param  string  $code
+     * @param string $secret
+     * @param string $code
      *
      * @return bool
      */

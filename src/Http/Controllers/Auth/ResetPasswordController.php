@@ -2,13 +2,13 @@
 
 namespace Shopper\Framework\Http\Controllers\Auth;
 
-use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Shopper\Framework\Shopper;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 use Shopper\Framework\Rules\RealEmailValidator;
-use Shopper\Framework\Shopper;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 
 class ResetPasswordController extends Controller
 {
@@ -28,8 +28,6 @@ class ResetPasswordController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -41,8 +39,7 @@ class ResetPasswordController extends Controller
      *
      * If no token is present, display the link request form.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string|null  $token
+     * @param null|string $token
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

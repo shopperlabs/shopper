@@ -4,14 +4,15 @@ namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Livewire\WithPagination;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Traits\WithStock;
+use Shopper\Framework\Repositories\InventoryRepository;
+use Shopper\Framework\Repositories\InventoryHistoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class UpdateVariantStock extends ModalComponent
 {
-    use WithPagination, WithStock;
+    use WithPagination;
+    use WithStock;
 
     public $product;
 

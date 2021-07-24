@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use LivewireUI\Modal\ModalComponent;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Validation\ValidationException;
 
 class LogoutOthersBrowser extends ModalComponent
 {
@@ -19,20 +19,14 @@ class LogoutOthersBrowser extends ModalComponent
     /**
      * Logout from other browser sessions.
      *
-     * @param \Illuminate\Contracts\Auth\StatefulGuard $guard
-     *
      * @throws ValidationException
-     *
-     * @return void
      */
     public function logoutOtherBrowserSessions(StatefulGuard $guard)
     {
         $this->resetErrorBag();
 
         if (! Hash::check($this->password, auth()->user()->password)) {
-            throw ValidationException::withMessages([
-                'password' => [__('This password does not match our records.')],
-            ]);
+            throw ValidationException::withMessages(['password' => [__('This password does not match our records.')], ]);
         }
 
         $guard->logoutOtherDevices($this->password);
@@ -56,8 +50,6 @@ class LogoutOthersBrowser extends ModalComponent
 
     /**
      * Delete the other browser session records from storage.
-     *
-     * @return void
      */
     protected function deleteOtherSessionRecords()
     {

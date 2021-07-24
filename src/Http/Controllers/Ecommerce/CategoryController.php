@@ -38,8 +38,6 @@ class CategoryController extends ShopperBaseController
     /**
      * Display Edit form.
      *
-     * @param  int  $id
-     *
      * @return \Illuminate\View\View
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException

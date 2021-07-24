@@ -2,16 +2,17 @@
 
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
+use Exception;
 use Carbon\Carbon;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use function count;
+use function array_slice;
 use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 trait WithDiscountActions
 {
     /**
      * Determine if the discount information are empty or not.
-     *
-     * @return bool
      */
     public function isEmpty(): bool
     {
@@ -29,8 +30,6 @@ trait WithDiscountActions
 
     /**
      * Return Apply offer product.
-     *
-     * @return string
      */
     public function getProductSize(): string
     {
@@ -49,8 +48,6 @@ trait WithDiscountActions
 
     /**
      * Return Apply offer product.
-     *
-     * @return string|null
      */
     public function getCustomSize(): ?string
     {
@@ -72,9 +69,7 @@ trait WithDiscountActions
     /**
      * Return discount active date.
      *
-     * @return string|null
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function getDateWord(): ?string
     {
@@ -116,14 +111,12 @@ trait WithDiscountActions
 
     /**
      * Return Usage limit message.
-     *
-     * @return string|null
      */
     public function getUsageLimitMessage(): ?string
     {
         if ($this->usage_number && $this->usage_limit !== null && (int) $this->usage_limit > 0) {
             $message = trans_choice('shopper::messages.discount_use', $this->usage_limit, ['count' => $this->usage_limit]);
-            $message .= $this->usage_limit_per_user ? ', '. __('one per customer') : '';
+            $message .= $this->usage_limit_per_user ? ', ' . __('one per customer') : '';
 
             return $message;
         }
@@ -137,9 +130,6 @@ trait WithDiscountActions
 
     /**
      * Remove product to the products list and the productIds restriction.
-     *
-     * @param  int  $key
-     * @param  int  $id
      */
     public function removeProduct(int $key, int $id): void
     {
@@ -152,9 +142,6 @@ trait WithDiscountActions
 
     /**
      * Remove customer to the customer list and the customersIds restriction.
-     *
-     * @param  int  $key
-     * @param  int  $id
      */
     public function removeCustomer(int $key, int $id): void
     {
@@ -167,8 +154,6 @@ trait WithDiscountActions
 
     /**
      * Add product to list of products that can be apply on the discount.
-     *
-     * @return void
      */
     public function addProducts(): void
     {
@@ -192,8 +177,6 @@ trait WithDiscountActions
 
     /**
      * Add customer to the list of customers that already can use this discount.
-     *
-     * @return void
      */
     public function addCustomers(): void
     {

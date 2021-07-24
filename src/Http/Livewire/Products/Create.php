@@ -2,29 +2,28 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use function count;
 use Livewire\WithFileUploads;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Channel;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithAttributes,
-        WithFileUploads,
-        WithSeoAttributes,
-        WithUploadProcess;
+    use WithAttributes;
+    use WithFileUploads;
+    use WithSeoAttributes;
+    use WithUploadProcess;
 
     /**
      * Default product stock quantity.
-     *
-     * @var mixed
      */
     public $quantity;
 
@@ -38,8 +37,6 @@ class Create extends AbstractBaseComponent
 
     /**
      * Component Mount method.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -48,8 +45,6 @@ class Create extends AbstractBaseComponent
 
     /**
      * Store a newly entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
@@ -146,10 +141,10 @@ class Create extends AbstractBaseComponent
     {
         return [
             'name' => 'bail|required',
-            'sku' => 'nullable|unique:'.shopper_table('products'),
-            'barcode' => 'nullable|unique:'.shopper_table('products'),
+            'sku' => 'nullable|unique:' . shopper_table('products'),
+            'barcode' => 'nullable|unique:' . shopper_table('products'),
             'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
+            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
         ];
     }
 }

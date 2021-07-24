@@ -23,8 +23,6 @@ class ReviewController extends ShopperBaseController
     /**
      * Display review show page.
      *
-     * @param  Review  $review
-     *
      * @return \Illuminate\View\View
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException

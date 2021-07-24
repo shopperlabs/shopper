@@ -3,17 +3,15 @@
 namespace Shopper\Framework\Models\Traits;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Relations\morphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\morphMany;
 use Shopper\Framework\Models\Shop\Inventory\InventoryHistory;
 
 trait HasStock
 {
     /**
      * Stock accessor.
-     *
-     * @return int
      */
     public function getStockAttribute(): int
     {
@@ -22,10 +20,6 @@ trait HasStock
 
     /**
      * Return the current stock.
-     *
-     * @param DateTimeInterface|null $date
-     *
-     * @return int
      */
     public function stock(?DateTimeInterface $date = null): int
     {
@@ -42,11 +36,6 @@ trait HasStock
 
     /**
      * Return the current stock of the inventory.
-     *
-     * @param  int  $inventoryId
-     * @param string|null $date
-     *
-     * @return int
      */
     public function stockInventory(int $inventoryId, ?string $date = null): int
     {
@@ -64,12 +53,6 @@ trait HasStock
 
     /**
      * Increase Stock for an item.
-     *
-     * @param int $inventoryId
-     * @param int $quantity
-     * @param array $arguments
-     *
-     * @return InventoryHistory
      */
     public function increaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
@@ -78,12 +61,6 @@ trait HasStock
 
     /**
      * Decrease Stock for an item.
-     *
-     * @param  int  $inventoryId
-     * @param  int  $quantity
-     * @param  array  $arguments
-     *
-     * @return InventoryHistory
      */
     public function decreaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
@@ -92,12 +69,6 @@ trait HasStock
 
     /**
      * Mutate Stock for an item.
-     *
-     * @param  int  $inventoryId
-     * @param  int  $quantity
-     * @param  array  $arguments
-     *
-     * @return InventoryHistory
      */
     public function mutateStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
@@ -106,18 +77,12 @@ trait HasStock
 
     /**
      * Reset a Stock for the Shop and inventory.
-     *
-     * @param  int  $inventory_id
-     * @param int|null $newQuantity
-     * @param  array  $arguments
-     *
-     * @return bool
      */
     public function clearStock(int $inventory_id, ?int $newQuantity = null, array $arguments = []): bool
     {
         $this->inventoryHistories()->delete();
 
-        if (! is_null($newQuantity)) {
+        if (null !== $newQuantity) {
             $this->createStockMutation($newQuantity, $inventory_id, $arguments);
         }
 
@@ -126,10 +91,6 @@ trait HasStock
 
     /**
      * Return stock statement if the item is still in stock.
-     *
-     * @param  int  $quantity
-     *
-     * @return bool
      */
     public function inStock(int $quantity = 1): bool
     {
@@ -139,12 +100,6 @@ trait HasStock
     /**
      * Set a new stock for the item. We will specify in which inventory
      * will be allocated this stock for the item.
-     *
-     * @param  int  $newQuantity
-     * @param  int  $inventoryId
-     * @param  array  $arguments
-     *
-     * @return InventoryHistory
      */
     public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
@@ -164,12 +119,6 @@ trait HasStock
     /**
      * Internal function to handle mutations (increase, decrease).
      * We create a stock mutation for a shop and for a specific inventory.
-     *
-     * @param  int  $quantity
-     * @param  int  $inventoryId
-     * @param  array  $arguments
-     *
-     * @return InventoryHistory
      */
     protected function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
     {

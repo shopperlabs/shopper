@@ -2,19 +2,17 @@
 
 namespace Shopper\Framework\Providers;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Shopper\Framework\Sidebar\Domain\DefaultItem;
 use Maatwebsite\Sidebar\Infrastructure\SidebarFlusherFactory;
 use Maatwebsite\Sidebar\Infrastructure\SidebarResolverFactory;
-use Shopper\Framework\Sidebar\Domain\DefaultItem;
 use Shopper\Framework\Sidebar\Presentation\ShopperSidebarRenderer;
 
 class ShopperSidebarServiceProvider extends ServiceProvider
 {
     /**
      * Boot the service provider.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -23,8 +21,6 @@ class ShopperSidebarServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -88,8 +84,6 @@ class ShopperSidebarServiceProvider extends ServiceProvider
 
     /**
      * Get the services provided by the provider.
-     *
-     * @return array
      */
     public function provides(): array
     {
@@ -107,8 +101,6 @@ class ShopperSidebarServiceProvider extends ServiceProvider
 
     /**
      * Register views.
-     *
-     * @return void
      */
     protected function registerViews()
     {

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Reviews;
 
+use Exception;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Review;
 
@@ -9,22 +10,16 @@ class Show extends Component
 {
     /**
      * Review to show.
-     *
-     * @var Review
      */
     public Review $review;
 
     /**
      * Review approved state.
-     *
-     * @var bool
      */
     public bool $approved;
 
     /**
      * Component Mount method instance.
-     *
-     * @param  Review  $review
      */
     public function mount(Review $review)
     {
@@ -34,8 +29,6 @@ class Show extends Component
 
     /**
      * Toggle review approved state.
-     *
-     * @return void
      */
     public function updatedApproved()
     {
@@ -48,7 +41,7 @@ class Show extends Component
     /**
      * Remove a review from the storage.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove()
     {

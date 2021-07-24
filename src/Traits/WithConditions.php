@@ -6,22 +6,16 @@ trait WithConditions
 {
     /**
      * Condition rule.
-     *
-     * @var mixed
      */
     public $rule;
 
     /**
      * Condition operator.
-     *
-     * @var mixed
      */
     public $operator;
 
     /**
      * Condition value.
-     *
-     * @var mixed
      */
     public $value;
 
@@ -41,12 +35,10 @@ trait WithConditions
      * Add new condition on the array conditions.
      *
      * @param  $i
-     *
-     * @return void
      */
     public function add($i)
     {
-        $i += 1;
+        $i++;
         $this->i = $i;
         array_push($this->conditions, $i);
     }
@@ -55,8 +47,6 @@ trait WithConditions
      * Remove a condition to the array conditions.
      *
      * @param  $i
-     *
-     * @return void
      */
     public function remove($i)
     {
@@ -143,8 +133,6 @@ trait WithConditions
 
     /**
      * Reset conditions form.
-     *
-     * @return void
      */
     private function resetConditionsFields()
     {

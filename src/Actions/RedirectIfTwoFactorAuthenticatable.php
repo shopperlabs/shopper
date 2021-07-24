@@ -2,13 +2,14 @@
 
 namespace Shopper\Framework\Actions;
 
-use Illuminate\Contracts\Auth\StatefulGuard;
+use function in_array;
 use Illuminate\Http\Request;
+use Shopper\Framework\Shopper;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
-use Shopper\Framework\Shopper;
 
 class RedirectIfTwoFactorAuthenticatable
 {
@@ -28,11 +29,6 @@ class RedirectIfTwoFactorAuthenticatable
 
     /**
      * Create a new controller instance.
-     *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
-     * @param  \Shopper\Framework\Services\TwoFactor\LoginRateLimiter  $limiter
-     *
-     * @return void
      */
     public function __construct(StatefulGuard $guard, LoginRateLimiter $limiter)
     {
@@ -43,10 +39,7 @@ class RedirectIfTwoFactorAuthenticatable
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  callable  $next
-     *
-     * @return mixed
+     * @param callable $next
      *
      * @throws ValidationException
      */
@@ -65,10 +58,6 @@ class RedirectIfTwoFactorAuthenticatable
     /**
      * Attempt to validate the incoming credentials.
      *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return mixed
-     *
      * @throws ValidationException
      */
     protected function validateCredentials(Request $request)
@@ -85,26 +74,17 @@ class RedirectIfTwoFactorAuthenticatable
     /**
      * Throw a failed authentication validation exception.
      *
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return void
-     *
      * @throws \Illuminate\Validation\ValidationException
      */
     protected function throwFailedAuthenticationException(Request $request)
     {
         $this->limiter->increment($request);
 
-        throw ValidationException::withMessages([
-            Shopper::username() => [trans('auth.failed')],
-        ]);
+        throw ValidationException::withMessages([Shopper::username() => [trans('auth.failed')], ]);
     }
 
     /**
      * Get the two factor authentication enabled response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
@@ -20,15 +20,11 @@ class Shipping extends Component
 
     /**
      * Product id.
-     *
-     * @var int
      */
     public int $productId;
 
     /**
      * Component Mount method.
-     *
-     * @return void
      */
     public function mount($product)
     {
@@ -48,8 +44,6 @@ class Shipping extends Component
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {

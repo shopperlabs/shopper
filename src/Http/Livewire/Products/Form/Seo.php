@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Illuminate\Validation\Rule;
 use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Seo extends Component
 {
@@ -35,9 +35,7 @@ class Seo extends Component
     /**
      * Component Mount method.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     *
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $product
      */
     public function mount($product)
     {
@@ -50,8 +48,6 @@ class Seo extends Component
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {

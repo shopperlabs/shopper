@@ -13,6 +13,7 @@ class ProductAttributeValue extends Model
      * @var bool
      */
     public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,8 +41,6 @@ class ProductAttributeValue extends Model
 
     /**
      * Return exact product attribute value.
-     *
-     * @return mixed
      */
     public function getRealValueAttribute()
     {
@@ -54,8 +53,6 @@ class ProductAttributeValue extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
+use Illuminate\Support\Facades\Cache;
 
 class Addresses extends Component
 {
@@ -17,7 +17,7 @@ class Addresses extends Component
     /**
      * Component Mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $customer
+     * @param \Illuminate\Database\Eloquent\Model $customer
      */
     public function mount($customer)
     {

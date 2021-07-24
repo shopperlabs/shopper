@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Models\System\Country;
 use Shopper\Framework\Rules\Phone;
+use Shopper\Framework\Models\System\Country;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {
@@ -29,15 +29,11 @@ class Create extends AbstractBaseComponent
 
     /**
      * Define if the inventory is the default.
-     *
-     * @var bool
      */
     public bool $isDefault = false;
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
@@ -72,13 +68,13 @@ class Create extends AbstractBaseComponent
     protected function rules(): array
     {
         return [
-            'email' => 'required|email|unique:'.shopper_table('inventories'),
+            'email' => 'required|email|unique:' . shopper_table('inventories'),
             'name' => 'required|max:100',
             'city' => 'required',
             'street_address' => 'required',
             'zipcode' => 'required',
             'phone_number' => ['nullable', new Phone()],
-            'country_id' => 'required|exists:'.shopper_table('system_countries').',id',
+            'country_id' => 'required|exists:' . shopper_table('system_countries') . ',id',
         ];
     }
 }

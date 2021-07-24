@@ -2,14 +2,20 @@
 
 namespace Shopper\Framework\Traits\Mails;
 
-use Illuminate\Container\Container;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use ReflectionClass;
-use ReflectionProperty;
+use const T_CLASS;
 use RegexIterator;
+use const T_STRING;
+use ReflectionClass;
+use const T_NAMESPACE;
+use function is_array;
+use const T_WHITESPACE;
+use ReflectionProperty;
+use ReflectionException;
+use RecursiveIteratorIterator;
+use RecursiveDirectoryIterator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\View;
 
 trait Mailables
 {
@@ -26,7 +32,7 @@ trait Mailables
     public static function buildMailable($instance, $type = 'call')
     {
         if ($type === 'call') {
-            if (! is_null(self::handleMailableViewDataArgs($instance))) {
+            if (null !== self::handleMailableViewDataArgs($instance)) {
                 return Container::getInstance()->call([self::handleMailableViewDataArgs($instance), 'build']);
             }
 
@@ -39,7 +45,7 @@ trait Mailables
     /**
      * Handle Mailable Constructor arguments and pass the fake ones.
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public static function handleMailableViewDataArgs($mailable)
     {
@@ -89,7 +95,7 @@ trait Mailables
      *
      * @return \Illuminate\Support\Collection
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected static function mailablesList()
     {
@@ -122,7 +128,7 @@ trait Mailables
 
                     [$name] = explode('.', $phpFile->getFilename());
 
-                    $mailableClass = $namespace.'\\'.$tokens[$index][1];
+                    $mailableClass = $namespace . '\\' . $tokens[$index][1];
 
                     if (! self::mailable_exists($mailableClass)) {
                         continue;
@@ -136,7 +142,7 @@ trait Mailables
 
                     $mailable_data = self::buildMailable($mailableClass);
 
-                    if (! is_null(self::handleMailableViewDataArgs($mailableClass))) {
+                    if (null !== self::handleMailableViewDataArgs($mailableClass)) {
                         $mailable_view_data = self::getMailableViewData(self::handleMailableViewDataArgs($mailableClass), $mailable_data);
                     } else {
                         $mailable_view_data = self::getMailableViewData(new $mailableClass(), $mailable_data);
@@ -156,16 +162,16 @@ trait Mailables
                     $fqcns[$i]['view_path'] = null;
                     $fqcns[$i]['text_view_path'] = null;
 
-                    if (! is_null($fqcns[$i]['markdown']) && View::exists($fqcns[$i]['markdown'])) {
+                    if (null !== $fqcns[$i]['markdown'] && View::exists($fqcns[$i]['markdown'])) {
                         $fqcns[$i]['view_path'] = View($fqcns[$i]['markdown'])->getPath();
                     }
 
-                    if (! is_null($fqcns[$i]['data'])) {
-                        if (! is_null($fqcns[$i]['data']->view) && View::exists($fqcns[$i]['data']->view)) {
+                    if (null !== $fqcns[$i]['data']) {
+                        if (null !== $fqcns[$i]['data']->view && View::exists($fqcns[$i]['data']->view)) {
                             $fqcns[$i]['view_path'] = View($fqcns[$i]['data']->view)->getPath();
                         }
 
-                        if (! is_null($fqcns[$i]['data']->textView) && View::exists($fqcns[$i]['data']->textView)) {
+                        if (null !== $fqcns[$i]['data']->textView && View::exists($fqcns[$i]['data']->textView)) {
                             $fqcns[$i]['text_view_path'] = View($fqcns[$i]['data']->textView)->getPath();
                             $fqcns[$i]['text_view'] = $fqcns[$i]['data']->textView;
                         }
@@ -178,11 +184,7 @@ trait Mailables
             }
         }
 
-        return collect($fqcns)->map(function ($mailable) {
-            return $mailable;
-        })->reject(function ($object) {
-            return ! method_exists($object['namespace'], 'build');
-        });
+        return collect($fqcns)->map(fn ($mailable) => $mailable)->reject(fn ($object) => ! method_exists($object['namespace'], 'build'));
     }
 
     /**
@@ -190,7 +192,7 @@ trait Mailables
      *
      * @return mixed|void
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     protected static function getMarkdownViewName($mailable)
     {
@@ -209,8 +211,6 @@ trait Mailables
 
     /**
      * Determine if the mailable class exist.
-     *
-     * @param  mixed  $mailable
      *
      * @return bool
      */
@@ -246,12 +246,9 @@ trait Mailables
     }
 
     /**
-     * @param  mixed  $mailable
-     * @param  mixed  $mailable_data
-     *
      * @return array|\Illuminate\Support\Collection
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private static function getMailableViewData($mailable, $mailable_data)
     {
@@ -277,7 +274,7 @@ trait Mailables
 
         $obj = self::buildMailable($mailable);
 
-        if (is_null($obj)) {
+        if (null === $obj) {
             $obj = [];
 
             return collect($obj);
@@ -292,8 +289,8 @@ trait Mailables
         $data = $mailableData->map(function ($parameter) use ($mailable_data) {
             return [
                 'key' => $parameter,
-                'value' => property_exists($mailable_data, $parameter) ? $mailable_data->$parameter : null,
-                'data' => property_exists($mailable_data, $parameter) ? self::viewDataInspect($mailable_data->$parameter) : null,
+                'value' => property_exists($mailable_data, $parameter) ? $mailable_data->{$parameter} : null,
+                'data' => property_exists($mailable_data, $parameter) ? self::viewDataInspect($mailable_data->{$parameter}) : null,
             ];
         });
 

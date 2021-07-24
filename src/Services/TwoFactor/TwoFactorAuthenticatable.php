@@ -2,13 +2,13 @@
 
 namespace Shopper\Framework\Services\TwoFactor;
 
-use BaconQrCode\Renderer\Color\Rgb;
-use BaconQrCode\Renderer\Image\SvgImageBackEnd;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\RendererStyle\Fill;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
+use BaconQrCode\Renderer\Color\Rgb;
+use BaconQrCode\Renderer\ImageRenderer;
 use Shopper\Framework\Actions\RecoveryCode;
+use BaconQrCode\Renderer\RendererStyle\Fill;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
 
 trait TwoFactorAuthenticatable
@@ -26,9 +26,7 @@ trait TwoFactorAuthenticatable
     /**
      * Replace the given recovery code with a new one in the user's stored codes.
      *
-     * @param  string  $code
-     *
-     * @return void
+     * @param string $code
      */
     public function replaceRecoveryCode($code)
     {
@@ -55,7 +53,7 @@ trait TwoFactorAuthenticatable
             )
         ))->writeString($this->twoFactorQrCodeUrl());
 
-        return trim(substr($svg, strpos($svg, "\n") + 1));
+        return trim(mb_substr($svg, mb_strpos($svg, "\n") + 1));
     }
 
     /**

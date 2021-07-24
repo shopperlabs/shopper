@@ -37,8 +37,6 @@ class DiscountController extends ShopperBaseController
     /**
      * Display edit view.
      *
-     * @param  int  $id
-     *
      * @return \Illuminate\View\View
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException

@@ -2,21 +2,19 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\User\Role;
-use Shopper\Framework\Notifications\AdminSendCredentials;
-use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Rules\Phone;
+use Illuminate\Support\Facades\Hash;
+use Shopper\Framework\Models\User\Role;
 use Shopper\Framework\Rules\RealEmailValidator;
+use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Notifications\AdminSendCredentials;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class CreateAdminUser extends AbstractBaseComponent
 {
     /**
      * Indicate if user will receive mail with credentials.
-     *
-     * @var bool
      */
     public bool $send_mail = false;
 
@@ -78,12 +76,10 @@ class CreateAdminUser extends AbstractBaseComponent
 
     /**
      * Generate a random 10 characters password.
-     *
-     * @return void
      */
     public function generate()
     {
-        $this->password = substr(strtoupper(uniqid(str_random(10))), 0, 10);
+        $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
 
         $this->resetErrorBag(['password']);
     }
@@ -91,11 +87,9 @@ class CreateAdminUser extends AbstractBaseComponent
     /**
      * Real-time component validation.
      *
-     * @param  string  $field
+     * @param string $field
      *
      * @throws \Illuminate\Validation\ValidationException
-     *
-     * @return void
      */
     public function updated($field)
     {
@@ -105,9 +99,7 @@ class CreateAdminUser extends AbstractBaseComponent
     /**
      * Update roleId to determine if the choose role is an admin role.
      *
-     * @param  string  $id
-     *
-     * @return void
+     * @param string $id
      */
     public function updatedRoleId($id)
     {
@@ -118,8 +110,6 @@ class CreateAdminUser extends AbstractBaseComponent
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Requests;
 
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
 
@@ -11,8 +11,6 @@ class TwoFactorLoginRequest extends FormRequest
 {
     /**
      * The user attempting the two factor challenge.
-     *
-     * @var mixed
      */
     protected $challengedUser;
 
@@ -25,8 +23,6 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -35,8 +31,6 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -48,8 +42,6 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Determine if the request has a valid two factor code.
-     *
-     * @return bool
      *
      * @throws ValidationException
      */
@@ -64,8 +56,6 @@ class TwoFactorLoginRequest extends FormRequest
     /**
      * Get the valid recovery code if one exists on the request.
      *
-     * @return string|null
-     *
      * @throws ValidationException
      */
     public function validRecoveryCode(): ?string
@@ -74,15 +64,11 @@ class TwoFactorLoginRequest extends FormRequest
             return null;
         }
 
-        return collect($this->challengedUser()->recoveryCodes())->first(function ($code) {
-            return hash_equals($this->recovery_code, $code) ? $code : null;
-        });
+        return collect($this->challengedUser()->recoveryCodes())->first(fn ($code) => hash_equals($this->recovery_code, $code) ? $code : null);
     }
 
     /**
      * Get the user that is attempting the two factor challenge.
-     *
-     * @return mixed
      *
      * @throws ValidationException
      */
@@ -99,9 +85,7 @@ class TwoFactorLoginRequest extends FormRequest
             $message = __('The provided two factor authentication code was invalid.');
 
             if ($this->wantsJson()) {
-                throw ValidationException::withMessages([
-                    'code' => [$message],
-                ]);
+                throw ValidationException::withMessages(['code' => [$message], ]);
             }
 
             return redirect()->route('shopper.login')->withErrors(['email' => $message]);
@@ -112,8 +96,6 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Determine if the user wanted to be remembered after login.
-     *
-     * @return bool
      */
     public function remember(): bool
     {

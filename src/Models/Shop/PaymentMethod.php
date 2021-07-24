@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Models\Shop;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Traits\HasSlug;
 
 class PaymentMethod extends Model
@@ -44,8 +44,6 @@ class PaymentMethod extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

@@ -12,7 +12,7 @@ trait WithSorting
     public $sortBy;
 
     /**
-     * Sort direction
+     * Sort direction.
      *
      * @var string
      */
@@ -20,10 +20,6 @@ trait WithSorting
 
     /**
      * Sort by field on the table view.
-     *
-     * @param  string  $field
-     *
-     * @return void
      */
     public function sortBy(string $field)
     {

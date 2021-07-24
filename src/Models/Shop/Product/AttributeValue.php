@@ -13,6 +13,7 @@ class AttributeValue extends Model
      * @var bool
      */
     public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,8 +28,6 @@ class AttributeValue extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

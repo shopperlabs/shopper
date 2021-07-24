@@ -2,18 +2,18 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Repositories\InventoryRepository;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Variant extends Component
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
 
     /**
      * Product Model.
@@ -31,15 +31,11 @@ class Variant extends Component
 
     /**
      * All locations available on the store.
-     *
-     * @var mixed
      */
     public $inventories;
 
     /**
      * Shopper default currency.
-     *
-     * @var string
      */
     public string $currency;
 
@@ -48,11 +44,8 @@ class Variant extends Component
     /**
      * Component Mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  \Illuminate\Database\Eloquent\Model  $variant
-     * @param  string  $currency
-     *
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $product
+     * @param \Illuminate\Database\Eloquent\Model $variant
      */
     public function mount($product, $variant, string $currency)
     {
@@ -116,8 +109,6 @@ class Variant extends Component
     /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
-use Shopper\Framework\Http\Controllers\ShopperBaseController;
 use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Http\Controllers\ShopperBaseController;
 
 class CustomerController extends ShopperBaseController
 {
@@ -37,8 +37,6 @@ class CustomerController extends ShopperBaseController
 
     /**
      * Display Show view.
-     *
-     * @param  int  $id
      *
      * @return \Illuminate\View\View
      *

@@ -2,16 +2,15 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
+use function in_array;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {
     /**
      * Current updated attribute.
-     *
-     * @var Attribute
      */
     public Attribute $attribute;
 
@@ -73,10 +72,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Component Mount new instance.
-     *
-     * @param  Attribute  $attribute
-     *
-     * @return void
      */
     public function mount(Attribute $attribute)
     {
@@ -93,8 +88,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
@@ -118,8 +111,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Check if the attribute has default values.
-     *
-     * @return bool
      */
     public function hasValues(): bool
     {

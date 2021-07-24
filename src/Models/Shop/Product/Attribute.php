@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Framework\Models\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Attribute extends Model
 {
@@ -47,8 +47,6 @@ class Attribute extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -57,8 +55,6 @@ class Attribute extends Model
 
     /**
      * Return formatted type.
-     *
-     * @return string
      */
     public function getTypeFormattedAttribute(): string
     {
@@ -81,10 +77,10 @@ class Attribute extends Model
             'checkbox' => __('Checkbox'),
             'checkbox_list' => __('Checkbox List'),
             'radio' => __('Radio'),
-          // 'toggle' => __('Toggle') ,
+            // 'toggle' => __('Toggle') ,
             'colorpicker' => __('Color picker'),
             'datepicker' => __('Date picker'),
-          // 'file' => __('File') ,
+            // 'file' => __('File') ,
         ];
     }
 

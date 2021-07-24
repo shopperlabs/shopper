@@ -3,12 +3,13 @@
 namespace Shopper\Framework\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Framework\Models\System\Country;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
     public const TYPE_BILLING = 'billing';
+
     public const TYPE_SHIPPING = 'shipping';
 
     /**
@@ -60,8 +61,6 @@ class Address extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -70,8 +69,6 @@ class Address extends Model
 
     /**
      * Return Address Full Name.
-     *
-     * @return string
      */
     public function getFullNameAttribute(): string
     {
@@ -82,8 +79,6 @@ class Address extends Model
 
     /**
      * Define if an address is default or not.
-     *
-     * @return bool
      */
     public function isDefault(): bool
     {
@@ -102,8 +97,6 @@ class Address extends Model
 
     /**
      * Bootstrap the model and its traits.
-     *
-     * @return void
      */
     protected static function boot()
     {

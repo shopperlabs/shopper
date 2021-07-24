@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Traits;
 
+use Exception;
 use Shopper\Framework\Models\System\File;
 
 trait WithUploadProcess
@@ -15,8 +16,6 @@ trait WithUploadProcess
 
     /**
      * Remove file.
-     *
-     * @return void
      */
     public function removeImage()
     {
@@ -26,11 +25,7 @@ trait WithUploadProcess
     /**
      * Removed file from the database.
      *
-     * @param  int  $id
-     *
-     * @throws \Exception
-     *
-     * @return void
+     * @throws Exception
      */
     public function deleteImage(int $id)
     {
@@ -46,11 +41,6 @@ trait WithUploadProcess
 
     /**
      * Upload file and associate with the current model.
-     *
-     * @param  string  $model
-     * @param  int  $id
-     *
-     * @return void
      */
     public function uploadFile(string $model, int $id)
     {

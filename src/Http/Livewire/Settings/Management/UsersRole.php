@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Shopper\Framework\Models\User\Role;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Repositories\UserRepository;
 
 class UsersRole extends Component
