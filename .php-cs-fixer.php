@@ -146,7 +146,7 @@ return $config->setRules([
         'strict_comparison' => true,
         'ternary_operator_spaces' => true,
         'ternary_to_null_coalescing' => true,
-        'trailing_comma_in_multiline_array' => true,
+        'trailing_comma_in_multiline' => true,
         'trim_array_spaces' => true,
         'use_arrow_functions' => true,
         'whitespace_after_comma_in_array' => true
