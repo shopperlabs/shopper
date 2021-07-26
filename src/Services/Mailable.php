@@ -6,6 +6,7 @@ use Exception;
 use Throwable;
 use ErrorException;
 use ReflectionType;
+use const PHP_VERSION;
 use function is_object;
 use ReeceM\Mocker\Mocked;
 use Illuminate\Mail\Markdown;

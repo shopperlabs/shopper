@@ -187,7 +187,6 @@ trait Templates
         }
 
         session()->flash('error', __('Template not created'));
-
     }
 
     public static function getTemplateSkeletons(): Collection
