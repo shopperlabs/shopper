@@ -32,7 +32,7 @@ Instructions on how to install Shopper can be found at the [installation guide](
 For advanced users, run this in your terminal to install Shopper from command line:
 
 ``` bash
-$ composer require shopper/framework
+composer require shopper/framework
 ```
 
 Run this command to install Shopper in your project
