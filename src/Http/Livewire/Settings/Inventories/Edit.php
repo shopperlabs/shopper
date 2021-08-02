@@ -28,7 +28,7 @@ class Edit extends AbstractBaseComponent
 
     public string $zipcode;
 
-    public string $phone_number;
+    public ?string $phone_number;
 
     public int $country_id;
 
