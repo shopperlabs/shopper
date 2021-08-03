@@ -20,7 +20,7 @@ class ShopperTestCase extends TestCase
         Mockery::close();
     }
 
-    public function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app)
     {
         $app['migrator']->path(__DIR__ . '/../database/migrations');
 

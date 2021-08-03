@@ -6,7 +6,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Shopper\Framework\Http\Requests\TwoFactorLoginRequest;
+use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
 
 class TwoFactorAuthenticatedController extends Controller
 {
@@ -28,13 +30,12 @@ class TwoFactorAuthenticatedController extends Controller
         $this->middleware('shopper.guest');
     }
 
-    /**
-     * Show the two factor authentication login view.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
+    public function create(TwoFactorLoginRequest $request)
     {
+        if (! $request->hasChallengedUser()) {
+            throw new HttpResponseException(redirect()->route('shopper.login'));
+        }
+
         return view('shopper::auth.two-factor-login');
     }
 
@@ -50,16 +51,12 @@ class TwoFactorAuthenticatedController extends Controller
         if ($code = $request->validRecoveryCode()) {
             $user->replaceRecoveryCode($code);
         } elseif (! $request->hasValidCode()) {
-            $message = __('The provided two factor authentication code was invalid.');
-
-            if ($request->wantsJson()) {
-                throw ValidationException::withMessages(['code' => [$message], ]);
-            }
-
-            return redirect()->route('shopper.login')->withErrors(['email' => $message]);
+            return app(FailedTwoFactorLoginResponse::class);
         }
 
         $this->guard->login($user, $request->remember());
+
+        $request->session()->regenerate();
 
         return $request->wantsJson()
             ? new JsonResponse([], 204)

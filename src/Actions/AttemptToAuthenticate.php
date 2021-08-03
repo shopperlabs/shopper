@@ -36,7 +36,7 @@ class AttemptToAuthenticate
     /**
      * Handle the incoming request.
      *
-     * @param callable $next
+     * @throws ValidationException
      */
     public function handle(Request $request, $next)
     {

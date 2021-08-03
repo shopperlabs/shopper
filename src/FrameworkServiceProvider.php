@@ -25,7 +25,9 @@ use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
 use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
+use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticationProvider;
+use Shopper\Framework\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 
 class FrameworkServiceProvider extends ServiceProvider
@@ -102,13 +104,9 @@ class FrameworkServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('shopper', fn () => new Shopper());
-
         $this->app->singleton('gravatar', fn () => new Gravatar());
-
-        $this->app->singleton(
-            TwoFactorAuthenticationProviderContract::class,
-            TwoFactorAuthenticationProvider::class
-        );
+        $this->app->singleton(TwoFactorAuthenticationProviderContract::class, TwoFactorAuthenticationProvider::class);
+        $this->app->singleton(FailedTwoFactorLoginResponseContract::class, FailedTwoFactorLoginResponse::class);
 
         $this->app->bind(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,

@@ -6,6 +6,9 @@
     <a href="https://github.com/shopperlabs/framework/actions">
         <img src="https://github.com/shopperlabs/framework/workflows/tests/badge.svg" alt="Build Status">
     </a>
+    <a href="https://laravel.com">
+        <img alt="Laravel v8.x" src="https://img.shields.io/badge/Laravel-v8.x-FF2D20">
+    </a>
     <a href="https://packagist.org/packages/shopper/framework">
         <img src="https://img.shields.io/packagist/dt/shopper/framework" alt="Total Downloads">
     </a>
@@ -61,7 +64,7 @@ Shopper Framework can provide premium support for a monthly fee. Find out more v
 
 ## Contributing
 
-Please see [contributing.md](contributing.md) for details and a todolist.
+Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 
 ## Security
 
@@ -72,9 +75,11 @@ We send an email about 3-4 emails per year. Sometimes less.
 
 ## Credits
 
--   [Arthur Monney][link-author]
--   [Jean-Vincent QUILICHINI][link-author-2]
--   [All Contributors][link-contributors]
+- [Arthur Monney][link-author]
+- [Jean-Vincent QUILICHINI][link-author-2]
+- [Laravel Fortify](https://github.com/laravel/fortify)
+- [MailEclipse](https://github.com/Qoraiche/laravel-mail-editor)
+- [All Contributors][link-contributors]
 
 And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
