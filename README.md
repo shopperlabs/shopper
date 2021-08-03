@@ -61,7 +61,7 @@ Shopper Framework can provide premium support for a monthly fee. Find out more v
 
 ## Contributing
 
-Please see [contributing.md](contributing.md) for details and a todolist.
+Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 
 ## Security
 
