@@ -15,8 +15,6 @@ trait TwoFactorAuthenticatable
 {
     /**
      * Get the user's two factor authentication recovery codes.
-     *
-     * @return array
      */
     public function recoveryCodes(): array
     {
@@ -25,8 +23,6 @@ trait TwoFactorAuthenticatable
 
     /**
      * Replace the given recovery code with a new one in the user's stored codes.
-     *
-     * @param string $code
      */
     public function replaceRecoveryCode(string $code)
     {
@@ -41,8 +37,6 @@ trait TwoFactorAuthenticatable
 
     /**
      * Get the QR code SVG of the user's two factor authentication QR code URL.
-     *
-     * @return string
      */
     public function twoFactorQrCodeSvg(): string
     {
@@ -58,8 +52,6 @@ trait TwoFactorAuthenticatable
 
     /**
      * Get the two factor authentication QR code URL.
-     *
-     * @return string
      */
     public function twoFactorQrCodeUrl(): string
     {

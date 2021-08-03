@@ -4,8 +4,8 @@ namespace Shopper\Framework\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
 use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
 
@@ -71,8 +71,6 @@ class TwoFactorLoginRequest extends FormRequest
 
     /**
      * Determine if there is a challenged user in the current session.
-     *
-     * @return bool
      */
     public function hasChallengedUser(): bool
     {
@@ -97,9 +95,7 @@ class TwoFactorLoginRequest extends FormRequest
 
         if (! $this->session()->has('login.id') ||
             ! $user = $model::find($this->session()->pull('login.id'))) {
-            throw new HttpResponseException(
-                app(FailedTwoFactorLoginResponse::class)->toResponse($this)
-            );
+            throw new HttpResponseException(app(FailedTwoFactorLoginResponse::class)->toResponse($this));
         }
 
         return $this->challengedUser = $user;

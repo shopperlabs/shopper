@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Http\Controllers\Auth;
 
-use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Shopper\Framework\Http\Requests\TwoFactorLoginRequest;
 use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
 
