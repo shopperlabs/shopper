@@ -85,8 +85,6 @@ class RedirectIfTwoFactorAuthenticatable
 
     /**
      * Get the two factor authentication enabled response.
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function twoFactorChallengeResponse(Request $request, $user)
     {

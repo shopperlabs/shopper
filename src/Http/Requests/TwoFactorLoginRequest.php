@@ -4,8 +4,10 @@ namespace Shopper\Framework\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
+use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
 
 class TwoFactorLoginRequest extends FormRequest
 {
@@ -68,6 +70,19 @@ class TwoFactorLoginRequest extends FormRequest
     }
 
     /**
+     * Determine if there is a challenged user in the current session.
+     *
+     * @return bool
+     */
+    public function hasChallengedUser(): bool
+    {
+        $model = app(StatefulGuard::class)->getProvider()->getModel();
+
+        return $this->session()->has('login.id') &&
+            $model::find($this->session()->get('login.id'));
+    }
+
+    /**
      * Get the user that is attempting the two factor challenge.
      *
      * @throws ValidationException
@@ -79,16 +94,12 @@ class TwoFactorLoginRequest extends FormRequest
         }
 
         $model = app(StatefulGuard::class)->getProvider()->getModel();
-        $user = $model::find($this->session()->pull('login.id'));
 
-        if (! $this->session()->has('login.id') || ! $user) {
-            $message = __('The provided two factor authentication code was invalid.');
-
-            if ($this->wantsJson()) {
-                throw ValidationException::withMessages(['code' => [$message], ]);
-            }
-
-            return redirect()->route('shopper.login')->withErrors(['email' => $message]);
+        if (! $this->session()->has('login.id') ||
+            ! $user = $model::find($this->session()->pull('login.id'))) {
+            throw new HttpResponseException(
+                app(FailedTwoFactorLoginResponse::class)->toResponse($this)
+            );
         }
 
         return $this->challengedUser = $user;

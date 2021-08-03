@@ -18,7 +18,7 @@ trait TwoFactorAuthenticatable
      *
      * @return array
      */
-    public function recoveryCodes()
+    public function recoveryCodes(): array
     {
         return json_decode(decrypt($this->two_factor_recovery_codes), true);
     }
@@ -28,7 +28,7 @@ trait TwoFactorAuthenticatable
      *
      * @param string $code
      */
-    public function replaceRecoveryCode($code)
+    public function replaceRecoveryCode(string $code)
     {
         $this->forceFill([
             'two_factor_recovery_codes' => encrypt(str_replace(
@@ -44,7 +44,7 @@ trait TwoFactorAuthenticatable
      *
      * @return string
      */
-    public function twoFactorQrCodeSvg()
+    public function twoFactorQrCodeSvg(): string
     {
         $svg = (new Writer(
             new ImageRenderer(
@@ -61,7 +61,7 @@ trait TwoFactorAuthenticatable
      *
      * @return string
      */
-    public function twoFactorQrCodeUrl()
+    public function twoFactorQrCodeUrl(): string
     {
         return app(TwoFactorAuthenticationProvider::class)->qrCodeUrl(
             config('app.name'),

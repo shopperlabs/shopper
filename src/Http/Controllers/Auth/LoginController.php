@@ -36,21 +36,11 @@ class LoginController extends Controller
         $this->middleware('shopper.guest')->except('logout');
     }
 
-    /**
-     * Show the application's login form.
-     *
-     * @return \Illuminate\View\View
-     */
     public function showLoginForm()
     {
         return view('shopper::auth.login');
     }
 
-    /**
-     * Log the user out of the application.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function logout(Request $request)
     {
         $this->guard()->logout();
@@ -62,12 +52,7 @@ class LoginController extends Controller
         return redirect($this->redirectPath());
     }
 
-    /**
-     * Get the post register / login redirect path.
-     *
-     * @return string
-     */
-    public function redirectPath()
+    public function redirectPath(): string
     {
         return route('shopper.dashboard');
     }
@@ -138,11 +123,6 @@ class LoginController extends Controller
             : redirect()->intended($this->redirectPath());
     }
 
-    /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
     protected function guard()
     {
         return Auth::guard(config('shopper.auth.guard'));

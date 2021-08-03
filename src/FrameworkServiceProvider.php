@@ -2,31 +2,33 @@
 
 namespace Shopper\Framework;
 
-use Carbon\Carbon;
 use const LC_TIME;
+use Carbon\Carbon;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
-use Shopper\Framework\Services\Gravatar;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
+use Shopper\Framework\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
 use Shopper\Framework\Events\BuildingSidebar;
+use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
+use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
+use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
+use Shopper\Framework\Exceptions\ShopperExceptionHandler;
 use Shopper\Framework\Http\Middleware\Dashboard;
 use Shopper\Framework\Http\Composers\MenuCreator;
-use Spatie\Permission\Middlewares\RoleMiddleware;
-use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
-use Shopper\Framework\Http\Middleware\Authenticate;
 use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\SidebarCreator;
+use Shopper\Framework\Http\Middleware\Authenticate;
 use Shopper\Framework\Http\Middleware\HasConfiguration;
-use Shopper\Framework\Providers\ShopperServiceProvider;
-use Spatie\Permission\Middlewares\PermissionMiddleware;
-use Shopper\Framework\Exceptions\ShopperExceptionHandler;
-use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
-use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
-use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
+use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
+use Shopper\Framework\Providers\ShopperServiceProvider;
+use Shopper\Framework\Services\Gravatar;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticationProvider;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
+use Spatie\Permission\Middlewares\RoleMiddleware;
+use Spatie\Permission\Middlewares\PermissionMiddleware;
 
 class FrameworkServiceProvider extends ServiceProvider
 {
@@ -102,13 +104,9 @@ class FrameworkServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('shopper', fn () => new Shopper());
-
         $this->app->singleton('gravatar', fn () => new Gravatar());
-
-        $this->app->singleton(
-            TwoFactorAuthenticationProviderContract::class,
-            TwoFactorAuthenticationProvider::class
-        );
+        $this->app->singleton(TwoFactorAuthenticationProviderContract::class, TwoFactorAuthenticationProvider::class);
+        $this->app->singleton(FailedTwoFactorLoginResponseContract::class, FailedTwoFactorLoginResponse::class);
 
         $this->app->bind(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
