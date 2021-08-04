@@ -3,9 +3,9 @@
 namespace Shopper\Framework\Console;
 
 use Illuminate\Console\Command;
-use Shopper\Framework\Providers\ShopperServiceProvider;
 use Spatie\Analytics\AnalyticsServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Shopper\Framework\Providers\ShopperServiceProvider;
 
 class InstallCommand extends Command
 {
@@ -30,8 +30,6 @@ class InstallCommand extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -44,8 +42,6 @@ class InstallCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -76,9 +72,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Setup database configuration and seeder
-     *
-     * @return void
+     * Setup database configuration and seeder.
      */
     protected function setupDatabaseConfig(): void
     {
@@ -95,9 +89,7 @@ class InstallCommand extends Command
     }
 
     /**
-     * Set env variables
-     *
-     * @return void
+     * Set env variables.
      */
     protected function addEnvVariable(): void
     {
@@ -116,14 +108,13 @@ class InstallCommand extends Command
 
         // Outro message
         $this->info("
-       ====================================================================
                                       ,@@@@@@@,
                               ,,,.   ,@@@@@@/@@,  .oo8888o.
-                           ,&%%&%&&%,@@@@@/@@@@@@,8888\88/8o
-                          ,%&\%&&%&&%,@@@\@@@/@@@88\88888/88'
-                          %&&%&%&/%&&%@@\@@/ /@@@88888\88888'
-                          %&&%/ %&%%&&@@\ V /@@' `88\8 `/88'
-                          `&%\ ` /%&'    |.|        \ '|8'
+                           ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o
+                          ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'
+                          %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'
+                          %&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'
+                          `&%\\ ` /%&'    |.|        \\ '|8'
                               |o|        | |         | |
                               |.|        | |         | |
        ======================== Installation Complete ======================
@@ -135,17 +126,15 @@ class InstallCommand extends Command
     protected function introMessage()
     {
         // Intro message
-        $this->info("
-        ====================================================================
-         ______    _    _     ____   ________   ________   _______   _____
-        |  ____|  | |  | |   / __ \  |  ___  \  |  ___  \  |  ____| |  __ \
-        | |____   | |__| |  | |  | | | |___|  | | |___|  | | |____  | |__) |
-        |____  |  |  __  |  | |  | | |  _____/  |  _____/  |  ____| |  _  /
-         ____| |  | |  | |  | |__| | | |        | |        | |____  | | \ \
-        |______|  |_|  |_|   \____/  |_|        |_|        |______| |_|  \_\
+        $this->info('
+                _____ __
+              / ___// /_  ____  ____  ____  ___  _____
+              \__ \/ __ \/ __ \/ __ \/ __ \/ _ \/ ___/
+             ___/ / / / / /_/ / /_/ / /_/ /  __/ /
+            /____/_/ /_/\____/ .___/ .___/\___/_/
+                            /_/   /_/
 
-                      Installation started. Please wait...
-        ====================================================================
-        ");
+            Installation started. Please wait...
+        ');
     }
 }

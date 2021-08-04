@@ -18,45 +18,51 @@
     <!--begin::Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!--end::Fonts -->
+
+    @bukStyles(true)
+
+    <livewire:styles />
+
+    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 </head>
-<body class="text-gray-500 leading-normal font-body transition ease-in-out duration-700">
+<body class="text-gray-500 font-sans transition ease-in-out duration-700 dark:text-gray-400">
 
-    <div class="min-h-screen bg-gray-100">
-        <nav id="navbar" x-data="{ open: false }" class="bg-white shadow-sm">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <nav id="navbar" x-data="{ open: false }" class="bg-white shadow-sm dark:bg-gray-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
-                            <img class="h-9 w-auto" src="{{ asset('shopper/images/logo.svg') }}" alt="Shopper Logo">
-                            <h2 class="ml-4 text-2xl leading-6 font-semibold text-gray-900 tracking-wide">Shopper</h2>
-                            <svg class="hidden h-8 w-auto" width="152" height="30" fill="none">
-                                <path d="M12.798 27.806c-.007 1.046-.751 1.907-1.732 2.057-.028.007-.056.007-.077.014a9.059 9.059 0 0 1-1.169.064C4.463 29.92.142 25.458.162 19.979c0-.335.021-.67.05-.99 0-.014 0-.028.006-.035 0-.029.007-.057.007-.086v-.007c.014-.114.042-.227.077-.334.264-.847 1.043-1.459 1.955-1.452 1.064.007 1.934.84 2.032 1.907.007.064.007.128.007.2 0 .07-.007.135-.014.206-.014.142-.028.284-.035.427 0 .064 0 .135-.007.2-.014 3.166 2.484 5.742 5.58 5.756.202 0 .404-.007.606-.029.014 0 .027-.007.041-.007.028 0 .049-.007.077-.007.07-.007.132-.007.202-.007 1.14-.007 2.052.932 2.052 2.085z" fill="#1C64F2"/>
-                                <path d="M19.445 20.093v.177a10.037 10.037 0 0 1-.807 3.75c-1.35 3.125-4.252 5.43-7.69 5.865a2.08 2.08 0 0 0 1.74-2.05c.007-1.153-.904-2.1-2.038-2.1-.07 0-.14 0-.202.008 2.29-.292 4.154-1.993 4.724-4.234l-8.467-6.27-.96-.711-.015-.007-2.477-1.836-3.13-2.32-.008-.548C.143 8.493.422 7.234.91 6.088c1.336-3.13 4.223-5.45 7.653-5.9-.974.157-1.725 1.026-1.725 2.065 0 1.152.918 2.092 2.045 2.092.07 0 .277-.03.34-.038-2.283.3-4.27 2.03-4.841 4.265 0 .007 0 .014-.007.021l3.618 2.654.007.007 11.425 8.461c.02.121.02.25.02.378z" fill="#1E429F"/>
-                                <path d="M19.413 10.044c0 .335-.014.67-.05.99v.035c0 .029-.006.057-.006.086v.007a1.8 1.8 0 0 1-.077.334c-.264.847-1.036 1.466-1.955 1.466-1.064 0-1.941-.832-2.039-1.893-.007-.064-.007-.128-.007-.199 0-.071 0-.135.007-.206a4.4 4.4 0 0 0 .028-.427v-.2c0-3.166-2.512-5.735-5.608-5.735-.202 0-.403.014-.605.035-.014 0-.028.008-.042.008-.028 0-.049.007-.077.007-.07.007-.132.007-.201.007-1.128 0-2.046-.94-2.046-2.092 0-1.046.744-1.907 1.726-2.064.027-.007.055-.007.076-.014a9.05 9.05 0 0 1 1.17-.071c5.364.007 9.706 4.447 9.706 9.926z" fill="#1C64F2"/>
-                                <path d="M45.163 26.794h-1.696v-11.55H29.383v11.55h-1.679V3.308h1.68v10.423h14.083V3.308h1.696v23.486zM72.262 15.021c0 3.725-.952 6.673-2.865 8.843-1.913 2.17-4.553 3.255-7.92 3.255-3.349 0-5.989-1.085-7.902-3.255-1.913-2.17-2.865-5.126-2.865-8.877 0-3.733.96-6.68 2.89-8.825 1.93-2.145 4.561-3.221 7.911-3.221 3.367 0 5.998 1.076 7.903 3.238 1.896 2.153 2.848 5.1 2.848 8.842zm-19.723 0c0 3.366.769 5.964 2.306 7.8 1.537 1.837 3.75 2.751 6.633 2.751 2.898 0 5.12-.914 6.658-2.733 1.537-1.82 2.297-4.426 2.297-7.826 0-3.383-.769-5.98-2.297-7.783-1.537-1.803-3.743-2.709-6.625-2.709-2.865 0-5.079.915-6.64 2.734-1.555 1.829-2.332 4.409-2.332 7.766zM92.311 10.058c0 2.272-.793 4.006-2.372 5.22-1.587 1.213-3.826 1.81-6.725 1.81h-3.726v9.706H77.81V3.308h5.906c5.73 0 8.596 2.247 8.596 6.75zM79.48 15.679h3.316c2.715 0 4.678-.436 5.89-1.307 1.211-.871 1.812-2.29 1.812-4.246 0-1.811-.568-3.153-1.712-4.024-1.145-.871-2.915-1.307-5.313-1.307H79.48v10.884zM112.068 10.058c0 2.272-.794 4.006-2.373 5.22-1.587 1.213-3.826 1.81-6.725 1.81h-3.725v9.706h-1.68V3.308h5.907c5.722 0 8.596 2.247 8.596 6.75zm-12.832 5.621h3.317c2.715 0 4.678-.436 5.889-1.307 1.211-.871 1.813-2.29 1.813-4.246 0-1.811-.568-3.153-1.713-4.024-1.144-.871-2.915-1.307-5.313-1.307h-3.993v10.884zM130.487 26.794h-13.173V3.308h13.173v1.513h-11.494v8.885h10.851v1.512h-10.851V25.29h11.494v1.503zM137.63 16.56v10.234h-1.679V3.308h5.739c2.99 0 5.196.539 6.632 1.615 1.429 1.076 2.147 2.7 2.147 4.861 0 1.572-.426 2.905-1.278 3.981-.852 1.085-2.147 1.854-3.884 2.333l6.549 10.696h-2.03l-6.215-10.235h-5.981zm0-1.41h4.603c2.03 0 3.608-.445 4.736-1.325 1.12-.88 1.679-2.187 1.679-3.913 0-1.785-.551-3.092-1.645-3.904-1.103-.812-2.891-1.222-5.38-1.222h-3.993V15.15z" fill="#1E429F"/>
-                            </svg>
+                            <x-shopper-application-logo class="w-auto h-9" />
                         </div>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">
                         <!-- Profile dropdown -->
                         <div @click.away="open = false" class="ml-3 relative">
                             <div>
-                                <button @click="open = !open" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" id="user-menu" aria-label="User menu" aria-haspopup="true" x-bind:aria-expanded="open">
+                                <button @click="open = !open" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 dark:focus:border-gray-700" id="user-menu" aria-label="User menu" aria-haspopup="true" x-bind:aria-expanded="open">
                                     <img class="h-8 w-8 rounded-full" src="{{ $logged_in_user->picture }}" alt="Avatar">
                                 </button>
                             </div>
-                            <div x-show="open" x-description="Profile dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-200" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute z-50 right-0 mt-2 w-48 rounded-md shadow-lg" style="display: none;">
-                                <div class="py-1 rounded-md bg-white shadow-xs">
+                            <div x-show="open"
+                                 x-transition:enter="transition ease-out duration-200"
+                                 x-transition:enter-start="transform opacity-0 scale-95"
+                                 x-transition:enter-end="transform opacity-100 scale-100"
+                                 x-transition:leave="transition ease-in duration-75"
+                                 x-transition:leave-start="transform opacity-100 scale-100"
+                                 x-transition:leave-end="transform opacity-0 scale-95"
+                                 class="origin-top-right absolute z-50 right-0 mt-2 w-48 rounded-md shadow-lg" style="display: none;">
+                                <div class="py-1 rounded-md bg-white shadow-xs dark:bg-gray-800">
                                     <button
                                        type="button"
-                                       class="w-full inline-flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                       class="w-full inline-flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:focus:bg-gray-900"
                                        onclick="document.getElementById('logout-form').submit();"
                                     >
                                         <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                         </svg>
-                                        {{ __("Sign out") }}
+                                        {{ __('Sign out') }}
                                     </button>
                                     <form id="logout-form" action="{{ route('shopper.logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -100,7 +106,7 @@
                             <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            {{ __("Sign out") }}
+                            {{ __('Sign out') }}
                         </button>
                         <form id="sm-logout-form" action="{{ route('shopper.logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -110,10 +116,17 @@
             </div>
         </nav>
 
-        <div id="setting-configuration"></div>
+        <livewire:shopper-initialization />
+
     </div>
 
+    <livewire:scripts />
+
+    @bukScripts(true)
+
     <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
 
 </body>
 </html>

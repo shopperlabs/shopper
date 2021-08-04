@@ -3,23 +3,23 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Discount;
-use Shopper\Framework\Models\Shop\DiscountDetail;
-use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Models\Shop\Discount;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\Shop\DiscountDetail;
 use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithDiscountAttributes, WithDiscountActions, HasPrice;
+    use WithDiscountAttributes;
+    use WithDiscountActions;
+    use HasPrice;
 
     /**
      * Component Mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -28,8 +28,6 @@ class Create extends AbstractBaseComponent
 
     /**
      * Store a newly entry to the database.
-     *
-     * @return void
      */
     public function store()
     {
@@ -53,16 +51,16 @@ class Create extends AbstractBaseComponent
             'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
-            'usage_limit_per_user'  => $this->usage_limit_per_user,
+            'usage_limit_per_user' => $this->usage_limit_per_user,
             'start_at' => Carbon::createFromFormat('Y-m-d H:i', $this->dateStart)->toDateTimeString(),
-            'end_at'  => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
+            'end_at' => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
         if ($this->apply === 'products') {
             // Associate the discount to all the selected products.
             foreach ($this->productsIds as $productId) {
                 DiscountDetail::query()->create([
-                   'discount_id' => $discount->id,
+                    'discount_id' => $discount->id,
                     'condition' => 'apply_to',
                     'discountable_type' => config('shopper.system.models.product'),
                     'discountable_id' => $productId,
@@ -82,25 +80,9 @@ class Create extends AbstractBaseComponent
             }
         }
 
-        session()->flash('success', __("Discount code {$discount->code} created successfully"));
+        session()->flash('success', __('Discount code :code created successfully', ['code' => $discount->code]));
 
         $this->redirectRoute('shopper.discounts.index');
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return string[]
-     */
-    protected function rules(): array
-    {
-        return [
-            'code' => 'required|unique:'. shopper_table('discounts'),
-            'type' => 'required',
-            'value' => 'required',
-            'apply' => 'required',
-            'dateStart' => 'required',
-        ];
     }
 
     /**
@@ -111,7 +93,7 @@ class Create extends AbstractBaseComponent
     public function render()
     {
         $this->products = (new ProductRepository())
-            ->where('name', '%'. $this->searchProduct .'%', 'like')
+            ->where('name', '%' . $this->searchProduct . '%', 'like')
             ->orderBy('name')
             ->get(['name', 'price_amount', 'id'])
             ->except($this->productsIds);
@@ -130,5 +112,21 @@ class Create extends AbstractBaseComponent
             ->except($this->customersIds);
 
         return view('shopper::livewire.discounts.create');
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string>
+     */
+    protected function rules(): array
+    {
+        return [
+            'code' => 'required|unique:' . shopper_table('discounts'),
+            'type' => 'required',
+            'value' => 'required',
+            'apply' => 'required',
+            'dateStart' => 'required',
+        ];
     }
 }

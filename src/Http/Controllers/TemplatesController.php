@@ -10,9 +10,6 @@ class TemplatesController extends ShopperBaseController
     /**
      * Create new template view.
      *
-     * @param  string  $type
-     * @param  string  $name
-     * @param  string  $skeleton
      * @return \Illuminate\View\View
      */
     public function create(string $type, string $name, string $skeleton)
@@ -27,7 +24,6 @@ class TemplatesController extends ShopperBaseController
     /**
      * Store a newly template to the resources folder.
      *
-     * @param  Request  $request
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public function store(Request $request)

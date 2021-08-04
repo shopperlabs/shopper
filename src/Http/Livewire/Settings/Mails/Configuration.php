@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 
-use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
+use Illuminate\Support\Facades\Artisan;
 use Shopper\Framework\Rules\RealEmailValidator;
 
 class Configuration extends Component
@@ -40,18 +40,18 @@ class Configuration extends Component
     {
         $this->validate([
             'mail_from_address' => ['required', 'email', new RealEmailValidator()],
-            'mail_from_name' => 'required'
+            'mail_from_name' => 'required',
         ]);
 
         setEnvironmentValue([
-            'mail_mailer'       => $this->mail_mailer,
-            'mail_host'         => $this->mail_host,
-            'mail_port'         => $this->mail_port,
-            'mail_username'     => $this->mail_username,
-            'mail_password'     => $this->mail_password,
-            'mail_encryption'   => $this->mail_encryption,
+            'mail_mailer' => $this->mail_mailer,
+            'mail_host' => $this->mail_host,
+            'mail_port' => $this->mail_port,
+            'mail_username' => $this->mail_username,
+            'mail_password' => $this->mail_password,
+            'mail_encryption' => $this->mail_encryption,
             'mail_from_address' => $this->mail_from_address,
-            'mail_from_name'    => $this->mail_from_name,
+            'mail_from_name' => $this->mail_from_name,
         ]);
 
         Artisan::call('config:clear');
@@ -62,7 +62,7 @@ class Configuration extends Component
 
         $this->notify([
             'title' => __('Updated'),
-            'message' => __('Your mail configurations have been correctly updated.')
+            'message' => __('Your mail configurations have been correctly updated.'),
         ]);
     }
 

@@ -2,51 +2,40 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Integrations;
 
-use Illuminate\Support\Facades\Artisan;
+use function in_array;
 use Livewire\Component;
+use Illuminate\Support\Facades\Artisan;
 use Shopper\Framework\Models\Shop\Channel;
 
 class Browse extends Component
 {
     /**
      * Github status integration.
-     *
-     * @var bool
      */
-    public $github = false;
+    public bool $github = false;
 
     /**
      * Twitter status integration.
-     *
-     * @var bool
      */
-    public $twitter = false;
+    public bool $twitter = false;
 
     /**
      * The current provider to setup.
-     *
-     * @var string
      */
-    public $currentProvider = '';
+    public string $currentProvider = '';
 
     /**
      * Provider description for channel update.
-     *
-     * @var string
      */
-    public $message = '';
+    public string $message = '';
 
     /**
      * Confirmation to launch modal to setup an integration.
-     *
-     * @var bool
      */
-    public $confirmModalActivation = false;
+    public bool $confirmModalActivation = false;
 
     /**
      * Component mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -56,12 +45,8 @@ class Browse extends Component
 
     /**
      * Confirmation modal.
-     *
-     * @param  string  $provider
-     * @param  string|null  $message
-     * @return void
      */
-    public function confirmationEnable(string $provider, string $message = null)
+    public function confirmationEnable(string $provider, ?string $message = null)
     {
         $this->currentProvider = $provider;
         $this->confirmModalActivation = true;
@@ -72,12 +57,10 @@ class Browse extends Component
 
     /**
      * Enable provider and update environnement variables.
-     *
-     * @return void
      */
     public function enableProvider()
     {
-        setEnvironmentValue(['shopper_integration_'. strtolower($this->currentProvider)  => true]);
+        setEnvironmentValue(['shopper_integration_' . mb_strtolower($this->currentProvider) => true]);
 
         $this->{$this->currentProvider} = true;
 
@@ -93,15 +76,12 @@ class Browse extends Component
 
         $this->notify([
             'title' => __('Enabled'),
-            'message' => __("You have been successfully enabled :provider", ['provider' => $provider])
+            'message' => __('You have been successfully enabled :provider', ['provider' => $provider]),
         ]);
     }
 
     /**
      * Create a newly channel on the storage.
-     *
-     * @param  string  $channel
-     * @return void
      */
     public function createChannel(string $channel)
     {
@@ -112,24 +92,7 @@ class Browse extends Component
     }
 
     /**
-     * Return the list of channel to add.
-     *
-     * @return string[]
-     */
-    protected function availableDatabaseChannels()
-    {
-        return [
-            'twitter',
-            'facebook',
-            'instagram',
-            'telegram',
-        ];
-    }
-
-    /**
      * Close confirmation modal.
-     *
-     * @return void
      */
     public function closeIntegrationModal()
     {
@@ -137,13 +100,23 @@ class Browse extends Component
         $this->currentProvider = '';
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.integrations.browse');
+    }
+
+    /**
+     * Return the list of channel to add.
+     *
+     * @return array<string>
+     */
+    protected function availableDatabaseChannels(): array
+    {
+        return [
+            'twitter',
+            'facebook',
+            'instagram',
+            'telegram',
+        ];
     }
 }

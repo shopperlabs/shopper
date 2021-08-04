@@ -17,7 +17,7 @@ class CreateRole extends ModalComponent
     {
         $this->validate(['name' => 'required|unique:roles'], [
             'name.required' => __('The role name is required.'),
-            'name.unique' => __('This name is already used.')
+            'name.unique' => __('This name is already used.'),
         ]);
 
         Role::create([

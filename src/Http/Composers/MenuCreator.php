@@ -2,16 +2,14 @@
 
 namespace Shopper\Framework\Http\Composers;
 
-use Illuminate\View\View;
-use Lavary\Menu\Builder;
 use Lavary\Menu\Menu;
+use Lavary\Menu\Builder;
+use Illuminate\View\View;
 
 class MenuCreator
 {
     /**
      * Bind Menu to the view.
-     *
-     * @param View $view
      */
     public function compose(View $view)
     {
@@ -44,7 +42,7 @@ class MenuCreator
                 'data-placement' => 'right',
                 'data-container' => 'body',
                 'data-boundary' => 'window',
-                'target' => '_blank'
+                'target' => '_blank',
             ]);
 
             if ($user->hasPermissionTo('view_analytics')) {

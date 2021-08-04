@@ -10,6 +10,7 @@ class ReviewController extends ShopperBaseController
      * Display Reviews Index.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -22,8 +23,8 @@ class ReviewController extends ShopperBaseController
     /**
      * Display review show page.
      *
-     * @param  Review  $review
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Review $review)

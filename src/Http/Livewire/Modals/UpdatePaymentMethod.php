@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 
@@ -12,11 +12,17 @@ class UpdatePaymentMethod extends ModalComponent
     use WithFileUploads;
 
     public PaymentMethod $paymentMethod;
+
     public string $title = '';
+
     public ?string $linkUrl = null;
+
     public ?string $description = null;
+
     public ?string $instructions = null;
+
     public ?string $logoUrl;
+
     public $logo;
 
     public function mount(int $id)
@@ -39,9 +45,9 @@ class UpdatePaymentMethod extends ModalComponent
         $this->validate([
             'title' => [
                 'required',
-                Rule::unique(shopper_table('payment_methods'), 'title')->ignore($this->paymentMethod->id)
+                Rule::unique(shopper_table('payment_methods'), 'title')->ignore($this->paymentMethod->id),
             ],
-            'logo'  => 'nullable|image|max:1024'
+            'logo' => 'nullable|image|max:1024',
         ]);
 
         $this->paymentMethod->update([
@@ -53,7 +59,7 @@ class UpdatePaymentMethod extends ModalComponent
 
         if ($this->logo) {
             $this->paymentMethod->update([
-                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads'))
+                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
             ]);
         }
 

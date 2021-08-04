@@ -3,29 +3,22 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\File;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithConditions,
-        WithSeoAttributes;
-
-    /**
-     * Upload listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['fileDeleted'];
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithConditions;
+    use WithSeoAttributes;
 
     /**
      * Collection Model.
@@ -84,17 +77,23 @@ class Edit extends AbstractBaseComponent
     public $condition_match = 'all';
 
     /**
-     * Products of the collections
+     * Products of the collections.
      *
      * @var \Illuminate\Database\Eloquent\Collection
      */
     public $products;
 
     /**
+     * Upload listeners.
+     *
+     * @var array<string>
+     */
+    protected $listeners = ['fileDeleted'];
+
+    /**
      * Component mounted action.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $collection
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $collection
      */
     public function mount($collection)
     {
@@ -114,8 +113,6 @@ class Edit extends AbstractBaseComponent
 
     /**
      * Update collection item in the database.
-     *
-     * @return void
      */
     public function store()
     {
@@ -132,7 +129,6 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-
             if ($this->collection->files->isNotEmpty()) {
                 foreach ($this->collection->files as $file) {
                     Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
@@ -143,7 +139,8 @@ class Edit extends AbstractBaseComponent
             $this->uploadFile(config('shopper.system.models.collection'), $this->collection->id);
         }
 
-        session()->flash('success', __("Collection successfully updated!"));
+        session()->flash('success', __('Collection successfully updated!'));
+
         $this->redirectRoute('shopper.collections.index');
     }
 
@@ -152,15 +149,13 @@ class Edit extends AbstractBaseComponent
      *
      * @return false
      */
-    public function isUpdate()
+    public function isUpdate(): bool
     {
         return true;
     }
 
     /**
      * Live updated Formatted publishedAt attribute.
-     *
-     * @return void
      */
     public function updatedPublishedAt()
     {
@@ -170,9 +165,9 @@ class Edit extends AbstractBaseComponent
     /**
      * Component validation rules.
      *
-     * @return string[]
+     * @return array<string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => [
@@ -189,8 +184,6 @@ class Edit extends AbstractBaseComponent
     /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {

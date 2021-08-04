@@ -36,10 +36,8 @@ class Browse extends Component
 
     /**
      * Sort results.
-     *
-     * @param  string  $value
      */
-    public function sort($value)
+    public function sort(string $value)
     {
         $this->direction = $value === 'asc' ? 'desc' : 'asc';
     }
@@ -50,24 +48,19 @@ class Browse extends Component
 
         $this->dispatchBrowserEvent('brand-removed');
         $this->dispatchBrowserEvent('notify', [
-            'title' => __("Deleted"),
-            'message' => __("The brand has successfully removed!")
+            'title' => __('Deleted'),
+            'message' => __('The brand has successfully removed!'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.brands.browse', [
             'total' => (new BrandRepository())->count(),
             'brands' => (new BrandRepository())
-                ->where('name', '%'. $this->search .'%', 'like')
+                ->where('name', '%' . $this->search . '%', 'like')
                 ->orderBy('created_at', $this->direction)
-                ->paginate(8)
+                ->paginate(8),
         ]);
     }
 }

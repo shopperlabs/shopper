@@ -98,5 +98,5 @@
         </div>
     </div>
 
-    <x-shopper-learn-more name="locations" link="#" />
+    <x-shopper-learn-more name="locations" link="https://docs.laravelshopper.io/docs/locations" />
 </div>

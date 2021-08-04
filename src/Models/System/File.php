@@ -46,8 +46,6 @@ class File extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -56,9 +54,6 @@ class File extends Model
 
     /**
      * Get the formatted file_size attribute.
-     *
-     * @param  string  $value
-     * @return string
      */
     public function getFileSizeAttribute(string $value): string
     {

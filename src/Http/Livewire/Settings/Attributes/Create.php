@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {
@@ -27,7 +27,6 @@ class Create extends AbstractBaseComponent
      * @var string
      */
     public $type = 'text';
-
 
     /**
      * Attribute description.
@@ -59,19 +58,14 @@ class Create extends AbstractBaseComponent
 
     /**
      * Update slug value when writing name.
-     *
-     * @param  string  $value
-     * @return void
      */
-    public function updatedName($value)
+    public function updatedName(string $value)
     {
-        $this->slug = str_slug($value, '-');
+        $this->slug = str_slug($value);
     }
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
@@ -87,33 +81,28 @@ class Create extends AbstractBaseComponent
             'is_filterable' => $this->isFilterable,
         ]);
 
-        session()->flash('success', __("Attribute successfully added"));
+        session()->flash('success', __('Attribute successfully added'));
         $this->redirectRoute('shopper.settings.attributes.edit', $attribute);
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules()
-    {
-        return [
-            'name' => 'required|max:75',
-            'slug' => 'required|unique:'. shopper_table('attributes'),
-            'type' => 'required',
-        ];
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.attributes.create', [
             'fields' => Attribute::typesFields(),
         ]);
+    }
+
+    /**
+     * Component validation rules.
+     *
+     * @return array<string>
+     */
+    protected function rules(): array
+    {
+        return [
+            'name' => 'required|max:75',
+            'slug' => 'required|unique:' . shopper_table('attributes'),
+            'type' => 'required',
+        ];
     }
 }

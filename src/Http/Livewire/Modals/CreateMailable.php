@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use LivewireUI\Modal\ModalComponent;
+use Illuminate\Support\Facades\Artisan;
 use Shopper\Framework\Services\Mailable;
 
 class CreateMailable extends ModalComponent
@@ -37,10 +37,11 @@ class CreateMailable extends ModalComponent
                 'name',
                 __('This mailable name already exists. Name should be unique! to override it, enable "force" option.')
             );
+
             return;
         }
 
-        if (strtolower($name) === 'mailable') {
+        if (mb_strtolower($name) === 'mailable') {
             $this->addError('name', __('You cannot use this name'));
 
             return;
@@ -61,7 +62,7 @@ class CreateMailable extends ModalComponent
         if ($exitCode > -1) {
             $this->notify([
                 'title' => __('Mailable Created'),
-                'message' => __('You Mailable class has been created under the app/Mail folder on your project.')
+                'message' => __('You Mailable class has been created under the app/Mail folder on your project.'),
             ]);
 
             $this->emit('onMailableAction');

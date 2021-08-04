@@ -2,20 +2,18 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Repositories\InventoryRepository;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Variant extends Component
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithAttributes;
-
-    protected $listeners = ['fileDeleted', 'onVariantUpdated' => 'render'];
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
 
     /**
      * Product Model.
@@ -33,25 +31,21 @@ class Variant extends Component
 
     /**
      * All locations available on the store.
-     *
-     * @var mixed
      */
     public $inventories;
 
     /**
      * Shopper default currency.
-     *
-     * @var string
      */
     public string $currency;
+
+    protected $listeners = ['fileDeleted', 'onVariantUpdated' => 'render'];
 
     /**
      * Component Mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  \Illuminate\Database\Eloquent\Model  $variant
-     * @param  string  $currency
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $product
+     * @param \Illuminate\Database\Eloquent\Model $variant
      */
     public function mount($product, $variant, string $currency)
     {
@@ -77,11 +71,11 @@ class Variant extends Component
                 Rule::unique(shopper_table('products'), 'name')->ignore($this->variant->id),
             ],
             'file' => 'nullable|image|max:1024',
-            'sku'  => [
+            'sku' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'sku')->ignore($this->variant->id),
             ],
-            'barcode'  => [
+            'barcode' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'barcode')->ignore($this->variant->id),
             ],
@@ -115,8 +109,6 @@ class Variant extends Component
     /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {

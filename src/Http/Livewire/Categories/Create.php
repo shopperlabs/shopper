@@ -2,15 +2,15 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Livewire\Component;
 use Livewire\WithFileUploads;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Create extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess;
+    use WithFileUploads;
+    use WithUploadProcess;
 
     public string $name = '';
 
@@ -44,7 +44,7 @@ class Create extends AbstractBaseComponent
     public function rules(): array
     {
         return [
-            'name' => 'required|max:150|unique:'.shopper_table('categories'),
+            'name' => 'required|max:150|unique:' . shopper_table('categories'),
             'file' => 'nullable|image|max:1024',
         ];
     }
@@ -56,7 +56,7 @@ class Create extends AbstractBaseComponent
                 ->makeModel()
                 ->scopes('enabled')
                 ->select('name', 'id')
-                ->get()
+                ->get(),
         ]);
     }
 }

@@ -2,20 +2,20 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
-use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\AttributeValue;
 
 class Values extends Component
 {
-    protected $listeners = ['updateValues'];
-
     public Attribute $attribute;
 
     public Collection $values;
 
     public string $type = 'select';
+
+    protected $listeners = ['updateValues'];
 
     public function mount(Attribute $attribute)
     {

@@ -2,15 +2,16 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Shopper\Framework\Models\Traits\Filetable;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Traits\HasSlug;
+use Shopper\Framework\Models\Traits\Filetable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Brand extends Model
 {
-    use Filetable, HasSlug;
+    use Filetable;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +26,7 @@ class Brand extends Model
         'position',
         'seo_title',
         'seo_description',
-        'is_enabled'
+        'is_enabled',
     ];
 
     /**
@@ -39,8 +40,6 @@ class Brand extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

@@ -7,7 +7,9 @@ use LivewireUI\Modal\ModalComponent;
 class ChooseSkeleton extends ModalComponent
 {
     public string $name;
+
     public string $type = 'html';
+
     public array $skeletons;
 
     public function mount(string $name, string $type, array $skeletons)

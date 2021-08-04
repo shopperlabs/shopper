@@ -3,18 +3,19 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Shopper\Framework\Models\Shop\PaymentMethod;
-use Shopper\Framework\Models\Traits\HasPrice;
-use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\User\User;
+use Shopper\Framework\Models\User\Address;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\Shop\PaymentMethod;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
-    use HasPrice, SoftDeletes;
+    use HasPrice;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -48,9 +49,6 @@ class Order extends Model
 
     /**
      * Create a new Eloquent model instance.
-     *
-     * @param  array  $attributes
-     * @return void
      */
     public function __construct(array $attributes = [])
     {
@@ -64,8 +62,6 @@ class Order extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -74,7 +70,6 @@ class Order extends Model
 
     /**
      * Return Total order price without shipping amount.
-     *
      */
     public function getTotalAttribute(): string
     {
@@ -83,8 +78,6 @@ class Order extends Model
 
     /**
      * Return status style classes.
-     *
-     * @return string
      */
     public function getStatusClassesAttribute(): string
     {
@@ -117,8 +110,6 @@ class Order extends Model
 
     /**
      * Determine if an order can be cancelled.
-     *
-     * @return bool
      */
     public function canBeCancelled(): bool
     {
@@ -131,8 +122,6 @@ class Order extends Model
 
     /**
      * Determine if an order is not cancelled.
-     *
-     * @return bool
      */
     public function isNotCancelled(): bool
     {
@@ -145,8 +134,6 @@ class Order extends Model
 
     /**
      * Determine if on order is in pending status.
-     *
-     * @return bool
      */
     public function isPending(): bool
     {
@@ -155,8 +142,6 @@ class Order extends Model
 
     /**
      * Determine if on order is in register status.
-     *
-     * @return bool
      */
     public function isRegister(): bool
     {
@@ -165,8 +150,6 @@ class Order extends Model
 
     /**
      * Return total order with shipping.
-     *
-     * @return int
      */
     public function fullPriceWithShipping(): int
     {

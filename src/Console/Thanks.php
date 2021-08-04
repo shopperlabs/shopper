@@ -2,14 +2,14 @@
 
 namespace Shopper\Framework\Console;
 
-use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
+use const PHP_OS_FAMILY;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-final class Thanks
+class Thanks
 {
-    /** @var array<int, string> */
     private const FUNDING_MESSAGES = [
         '',
         '  - Star or contribute to Shopper:',
@@ -20,7 +20,9 @@ final class Thanks
         '    <options=bold>https://github.com/sponsors/Sense</>',
     ];
 
-    /** @var OutputInterface */
+    /**
+     * @var OutputInterface
+     */
     private $output;
 
     public function __construct(OutputInterface $output)
@@ -43,13 +45,13 @@ final class Thanks
         );
 
         if ($wantsToSupport === true) {
-            if (PHP_OS_FAMILY == 'Darwin') {
+            if (PHP_OS_FAMILY === 'Darwin') {
                 exec('open https://github.com/shopperlabs/framework');
             }
-            if (PHP_OS_FAMILY == 'Windows') {
+            if (PHP_OS_FAMILY === 'Windows') {
                 exec('start https://github.com/shopperlabs/framework');
             }
-            if (PHP_OS_FAMILY == 'Linux') {
+            if (PHP_OS_FAMILY === 'Linux') {
                 exec('xdg-open https://github.com/shopperlabs/framework');
             }
         }

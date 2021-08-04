@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Livewire\Component;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 
 class Password extends Component
 {
@@ -29,10 +29,10 @@ class Password extends Component
 
             $this->notify([
                 'title' => __('Password Changed!'),
-                'message' => __('You have been successfully updated your password!')
+                'message' => __('You have been successfully updated your password!'),
             ]);
         } else {
-            session()->flash('error', __("That is not your current password."));
+            session()->flash('error', __('That is not your current password.'));
         }
     }
 

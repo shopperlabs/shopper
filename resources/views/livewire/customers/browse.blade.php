@@ -363,6 +363,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="customers" link="#" />
+    <x-shopper-learn-more name="customers" link="https://docs.laravelshopper.io/docs/customers" />
 
 </div>

@@ -21,6 +21,7 @@ composer.phar
 #
 phpunit.xml
 .phpunit.result.cache
+.php-cs-fixer.cache
 
 # OSX
 #

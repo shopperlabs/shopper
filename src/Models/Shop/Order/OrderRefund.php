@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Framework\Models\User\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderRefund extends Model
 {
@@ -17,9 +17,6 @@ class OrderRefund extends Model
 
     /**
      * Create a new Eloquent model instance.
-     *
-     * @param  array  $attributes
-     * @return void
      */
     public function __construct(array $attributes = [])
     {
@@ -33,8 +30,6 @@ class OrderRefund extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

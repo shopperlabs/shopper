@@ -1,13 +1,29 @@
 <p align="center">
-    <a href="https://laravelshopper.io/" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
+    <a href="https://laravelshopper.io" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
 </p>
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
-[![Total Downloads][ico-downloads]][link-downloads]
+<p align="center">
+    <a href="https://github.com/shopperlabs/framework/actions">
+        <img src="https://github.com/shopperlabs/framework/workflows/tests/badge.svg" alt="Build Status">
+    </a>
+    <a href="https://laravel.com">
+        <img alt="Laravel v8.x" src="https://img.shields.io/badge/Laravel-v8.x-FF2D20">
+    </a>
+    <a href="https://packagist.org/packages/shopper/framework">
+        <img src="https://img.shields.io/packagist/dt/shopper/framework" alt="Total Downloads">
+    </a>
+    <a href="https://packagist.org/packages/shopper/framework">
+        <img src="https://img.shields.io/packagist/v/shopper/framework" alt="Latest Stable Version">
+    </a>
+    <a href="https://packagist.org/packages/shopper/framework">
+        <img src="https://img.shields.io/packagist/l/shopper/framework" alt="License">
+    </a>
+</p>
 
 ## Introduction
+> ⚠️ Laravel Shopper is under development - Don't use it yet in production.
 
-[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 7.0+ which includes all the necessary for your online market application.
+[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 8.0+ which includes all the necessary for your online market application.
 Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 
@@ -20,7 +36,7 @@ Instructions on how to install Shopper can be found at the [installation guide](
 For advanced users, run this in your terminal to install Shopper from command line:
 
 ``` bash
-$ composer require shopper/framework
+composer require shopper/framework
 ```
 
 Run this command to install Shopper in your project
@@ -48,7 +64,7 @@ Shopper Framework can provide premium support for a monthly fee. Find out more v
 
 ## Contributing
 
-Please see [contributing.md](contributing.md) for details and a todolist.
+Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 
 ## Security
 
@@ -59,9 +75,11 @@ We send an email about 3-4 emails per year. Sometimes less.
 
 ## Credits
 
--   [Arthur Monney][link-author]
--   [Jean-Vincent QUILICHINI][link-author-2]
--   [All Contributors][link-contributors]
+- [Arthur Monney][link-author]
+- [Jean-Vincent QUILICHINI][link-author-2]
+- [Laravel Fortify](https://github.com/laravel/fortify)
+- [MailEclipse](https://github.com/Qoraiche/laravel-mail-editor)
+- [All Contributors][link-contributors]
 
 And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
@@ -69,12 +87,6 @@ And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
 The Shopper Framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-[ico-version]: https://img.shields.io/packagist/v/shopper/framework.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/shopper/framework.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/shopper/framework/master.svg?style=flat-square
-[link-packagist]: https://packagist.org/packages/shopper/framework
-[link-downloads]: https://packagist.org/packages/shopper/framework
-[link-travis]: https://travis-ci.org/shopper/framework
 [link-author]: https://github.com/mckenziearts
 [link-author-2]: https://github.com/sense
 [link-contributors]: ../../contributors

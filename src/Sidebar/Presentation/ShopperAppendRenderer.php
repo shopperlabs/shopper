@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Sidebar\Presentation;
 
-use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Append;
+use Illuminate\Contracts\View\Factory;
 
 class ShopperAppendRenderer
 {
@@ -17,24 +17,19 @@ class ShopperAppendRenderer
      */
     protected $view = 'shopper::sidebar.append';
 
-    /**
-     * @param Factory $factory
-     */
     public function __construct(Factory $factory)
     {
         $this->factory = $factory;
     }
 
     /**
-     * @param Append $append
-     *
      * @return \Illuminate\Contracts\View\View
      */
     public function render(Append $append)
     {
         if ($append->isAuthorized()) {
             return $this->factory->make($this->view, [
-                'append' => $append
+                'append' => $append,
             ])->render();
         }
     }

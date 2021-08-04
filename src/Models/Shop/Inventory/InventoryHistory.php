@@ -3,9 +3,9 @@
 namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Shopper\Framework\Models\User\User;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InventoryHistory extends Model
 {
@@ -33,7 +33,7 @@ class InventoryHistory extends Model
      * @var array
      */
     protected $with = [
-      'inventory',
+        'inventory',
     ];
 
     /**
@@ -42,13 +42,11 @@ class InventoryHistory extends Model
      * @var array
      */
     protected $appends = [
-      'adjustment',
+        'adjustment',
     ];
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -58,7 +56,7 @@ class InventoryHistory extends Model
     public function getAdjustmentAttribute(): string
     {
         if ($this->old_quantity > 0) {
-            return '+'. $this->old_quantity;
+            return '+' . $this->old_quantity;
         }
 
         return $this->old_quantity;

@@ -2,20 +2,20 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Traits\WithSorting;
 use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Traits\WithSorting;
 
 class Browse extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination;
+    use WithSorting;
 
     public string $search = '';
 
@@ -49,7 +49,7 @@ class Browse extends Component
 
         $this->notify([
             'title' => __('Deleted'),
-            'message' => __('The product has successfully removed!')
+            'message' => __('The product has successfully removed!'),
         ]);
     }
 
@@ -65,7 +65,7 @@ class Browse extends Component
                 ->with(['brand', 'variations'])
                 ->withCount(['variations'])
                 ->where(function (Builder $query) {
-                    $query->where('name', 'like', '%'. $this->search .'%');
+                    $query->where('name', 'like', '%' . $this->search . '%');
                     $query->where('parent_id', null);
                 })
                 ->where(function (Builder $query) {
@@ -87,7 +87,7 @@ class Browse extends Component
                 })
                 ->where(function (Builder $query) {
                     if ($this->isVisible !== null) {
-                        $query->where('is_visible', boolval($this->isVisible));
+                        $query->where('is_visible', (bool) ($this->isVisible));
                     }
                 })
                 ->orderBy($this->sortBy ?? 'name', $this->sortDirection)

@@ -6,11 +6,6 @@ use Livewire\Component;
 
 class Products extends Component
 {
-    protected $listeners = ['onProductsAddInCollection' => 'render'];
-
-    /**
-     * @var mixed
-     */
     public $collection;
 
     public string $sortBy = 'name';
@@ -19,11 +14,12 @@ class Products extends Component
 
     public string $direction = 'asc';
 
+    protected $listeners = ['onProductsAddInCollection' => 'render'];
+
     /**
      * Component mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $collection
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $collection
      */
     public function mount($collection)
     {
@@ -43,7 +39,7 @@ class Products extends Component
 
         $this->notify([
             'title' => __('Product removed'),
-            'message' => __('The product have been correctly remove to this collection.')
+            'message' => __('The product have been correctly remove to this collection.'),
         ]);
     }
 
@@ -53,26 +49,32 @@ class Products extends Component
             case 'alpha_asc':
                 $this->sortValue = 'name';
                 $this->direction = 'asc';
+
                 break;
             case 'alpha_desc':
                 $this->sortValue = 'name';
                 $this->direction = 'desc';
+
                 break;
             case 'price_asc':
                 $this->sortValue = 'price_amount';
                 $this->direction = 'asc';
+
                 break;
             case 'price_desc':
                 $this->sortValue = 'price_amount';
                 $this->direction = 'desc';
+
                 break;
             case 'created_asc':
                 $this->sortValue = 'created_at';
                 $this->direction = 'asc';
+
                 break;
             case 'created_desc':
                 $this->sortValue = 'created_at';
                 $this->direction = 'desc';
+
                 break;
         }
 
@@ -85,7 +87,7 @@ class Products extends Component
             'products' => $this->collection
                 ->products()
                 ->orderBy($this->sortValue, $this->direction)
-                ->get()
+                ->get(),
         ]);
     }
 }

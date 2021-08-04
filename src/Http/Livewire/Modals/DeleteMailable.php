@@ -20,14 +20,14 @@ class DeleteMailable extends ModalComponent
 
     public function delete()
     {
-        $mailableFile = config('shopper.mails.mailables_dir').$this->item.'.php';
+        $mailableFile = config('shopper.mails.mailables_dir') . $this->item . '.php';
 
         if (file_exists($mailableFile)) {
             unlink($mailableFile);
 
             $this->notify([
                 'title' => __('Removed'),
-                'message' => __("You have removed the :class", ['class' => $this->item])
+                'message' => __('You have removed the :class', ['class' => $this->item]),
             ]);
         } else {
             session()->flash('error', __("This file don't exist."));

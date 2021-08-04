@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
-use Shopper\Framework\Http\Controllers\ShopperBaseController;
 use Shopper\Framework\Models\Shop\Order\Order;
+use Shopper\Framework\Http\Controllers\ShopperBaseController;
 
 class OrderController extends ShopperBaseController
 {
@@ -11,6 +11,7 @@ class OrderController extends ShopperBaseController
      * Return orders list view.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -23,8 +24,8 @@ class OrderController extends ShopperBaseController
     /**
      * Display order detail view.
      *
-     * @param  Order  $order
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Order $order)
@@ -32,7 +33,7 @@ class OrderController extends ShopperBaseController
         $this->authorize('read_orders');
 
         return view('shopper::pages.orders.show', [
-            'order' => $order->load(['customer', 'items', 'shippingAddress', 'paymentMethod'])
+            'order' => $order->load(['customer', 'items', 'shippingAddress', 'paymentMethod']),
         ]);
     }
 }

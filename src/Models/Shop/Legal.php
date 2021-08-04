@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Models\Shop;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Traits\HasSlug;
 
 class Legal extends Model
@@ -28,13 +28,11 @@ class Legal extends Model
      * @var array
      */
     protected $casts = [
-        'is_enabled' => 'boolean'
+        'is_enabled' => 'boolean',
     ];
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

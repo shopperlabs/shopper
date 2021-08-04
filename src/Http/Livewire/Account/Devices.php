@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Livewire\Component;
+use Jenssegers\Agent\Agent;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Jenssegers\Agent\Agent;
-use Livewire\Component;
 use Stevebauman\Location\Facades\Location;
 
 class Devices extends Component
@@ -36,21 +36,20 @@ class Devices extends Component
         });
     }
 
+    public function render()
+    {
+        return view('shopper::livewire.account.devices');
+    }
+
     /**
      * Create a new agent instance from the given session.
      *
-     * @param  mixed  $session
      * @return \Jenssegers\Agent\Agent
      */
     protected function createAgent($session)
     {
-        return tap(new Agent, function ($agent) use ($session) {
+        return tap(new Agent(), function ($agent) use ($session) {
             $agent->setUserAgent($session->user_agent);
         });
-    }
-
-    public function render()
-    {
-        return view('shopper::livewire.account.devices');
     }
 }

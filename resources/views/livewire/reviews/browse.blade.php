@@ -366,7 +366,7 @@
             </div>
         </div>
     @else
-        <div class="mt-6 bg-white shadow sm:rounded-md">
+        <div class="mt-6 bg-white shadow sm:rounded-md dark:bg-gray-800">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="relative z-20 flex items-center space-x-4">
                     <x-shopper-input.search label="Search review" placeholder="Search review by product name" />
@@ -560,6 +560,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="reviews" link="#" />
+    <x-shopper-learn-more name="reviews" link="https://docs.laravelshopper.io/docs/reviews" />
 
 </div>

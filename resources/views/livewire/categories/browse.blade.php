@@ -224,7 +224,7 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="categories" link="#" />
+    <x-shopper-learn-more name="categories" link="https://docs.laravelshopper.io/docs/categories" />
 
 </div>
 

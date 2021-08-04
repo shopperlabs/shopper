@@ -28,13 +28,13 @@ trait HasSlug
 
         while ($this->slugExists($slug, $this->exists ? $this->id : null)) {
             $counter++;
-            $slug = $originalSlug.'-'.$counter;
+            $slug = $originalSlug . '-' . $counter;
         }
 
         return $slug;
     }
 
-    private function slugExists(string $slug, int $ignoreId = null): bool
+    private function slugExists(string $slug, ?int $ignoreId = null): bool
     {
         $query = $this->where('slug', $slug);
 

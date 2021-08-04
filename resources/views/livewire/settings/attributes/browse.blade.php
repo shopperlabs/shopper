@@ -210,6 +210,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="attributes" link="#" />
+    <x-shopper-learn-more name="attributes" link="https://docs.laravelshopper.io/docs/attributes" />
 
 </div>

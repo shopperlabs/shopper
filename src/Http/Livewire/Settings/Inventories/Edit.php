@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Models\System\Country;
 use Shopper\Framework\Rules\Phone;
+use Shopper\Framework\Models\System\Country;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {
@@ -28,7 +28,7 @@ class Edit extends AbstractBaseComponent
 
     public string $zipcode;
 
-    public string $phone_number;
+    public ?string $phone_number;
 
     public int $country_id;
 
@@ -72,27 +72,27 @@ class Edit extends AbstractBaseComponent
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
+    public function render()
+    {
+        return view('shopper::livewire.settings.inventories.edit', [
+            'countries' => Country::query()->orderBy('name')->get(),
+        ]);
+    }
+
     protected function rules(): array
     {
         return [
             'email' => [
                 'required',
                 'email',
-                Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId)
+                Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId),
             ],
             'name' => 'required|max:100',
             'city' => 'required',
             'street_address' => 'required',
-            'zipcode'  => 'required',
-            'phone_number'  => ['nullable', new Phone()],
-            'country_id' => 'required|exists:'.shopper_table('system_countries').',id',
+            'zipcode' => 'required',
+            'phone_number' => ['nullable', new Phone()],
+            'country_id' => 'required|exists:' . shopper_table('system_countries') . ',id',
         ];
-    }
-
-    public function render()
-    {
-        return view('shopper::livewire.settings.inventories.edit', [
-            'countries'  => Country::query()->orderBy('name')->get(),
-        ]);
     }
 }

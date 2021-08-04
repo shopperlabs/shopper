@@ -2,19 +2,18 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 
+use function in_array;
 use Livewire\Component;
 use Shopper\Framework\Services\Mailable;
 
 class Templates extends Component
 {
-    protected $listeners = ['onTemplateRemoved' => 'render'];
-
     public bool $isLocal = false;
+
+    protected $listeners = ['onTemplateRemoved' => 'render'];
 
     /**
      * Component Mount instance.
-     *
-     * @return void
      */
     public function mount()
     {
@@ -26,7 +25,7 @@ class Templates extends Component
     public function render()
     {
         return view('shopper::livewire.settings.mails.templates.browse', [
-            'templates' => Mailable::getTemplates()
+            'templates' => Mailable::getTemplates(),
         ]);
     }
 }

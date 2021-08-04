@@ -8,10 +8,12 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 class DeleteProduct extends ModalComponent
 {
     public int $productId;
+
     public string $type;
+
     public ?string $route;
 
-    public function mount(int $id, string $type = 'product', string $route = null)
+    public function mount(int $id, string $type = 'product', ?string $route = null)
     {
         $this->productId = $id;
         $this->type = $type;

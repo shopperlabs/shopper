@@ -2,7 +2,8 @@
 
 namespace Shopper\Framework\Exceptions;
 
-class InvalidEmailException extends \Exception
-{
+use Exception;
 
+class InvalidEmailException extends Exception
+{
 }

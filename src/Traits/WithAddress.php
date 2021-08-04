@@ -72,21 +72,21 @@ trait WithAddress
     /**
      * Address validation.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function addressRules()
     {
         return [
-            'address_first_name'  => 'required',
-            'address_last_name'   => 'required',
-            'street_address'      => 'required',
-            'country_id'          => 'required',
-            'zipcode'             => 'required',
-            'city'                => 'required',
-            'address_phone_number'=> [
+            'address_first_name' => 'required',
+            'address_last_name' => 'required',
+            'street_address' => 'required',
+            'country_id' => 'required',
+            'zipcode' => 'required',
+            'city' => 'required',
+            'address_phone_number' => [
                 'nullable',
-                new Phone()
-            ]
+                new Phone(),
+            ],
         ];
     }
 }

@@ -2,24 +2,24 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
+use function count;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Collection;
+use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithAttributes,
-        WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
+    use WithSeoAttributes;
 
     public $product;
 
@@ -34,8 +34,7 @@ class Edit extends AbstractBaseComponent
     /**
      * Component Mount method.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  string  $currency
+     * @param \Illuminate\Database\Eloquent\Model $product
      */
     public function mount($product, string $currency)
     {
@@ -57,15 +56,6 @@ class Edit extends AbstractBaseComponent
         $this->currency = $currency;
     }
 
-    protected function rules(): array
-    {
-        return [
-            'name' => 'required',
-            'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
-        ];
-    }
-
     public function store(): void
     {
         $this->validate($this->rules());
@@ -80,7 +70,7 @@ class Edit extends AbstractBaseComponent
             'price_amount' => $this->price_amount,
             'cost_amount' => $this->cost_amount,
             'published_at' => $this->publishedAt,
-            'brand_id'  => $this->brand_id,
+            'brand_id' => $this->brand_id,
         ]);
 
         if ($this->file) {
@@ -100,8 +90,8 @@ class Edit extends AbstractBaseComponent
         $this->emit('productHasUpdated', $this->productId);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product successfully updated!'),
         ]);
     }
 
@@ -120,5 +110,14 @@ class Edit extends AbstractBaseComponent
                 ->get(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
         ]);
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'name' => 'required',
+            'file' => 'nullable|image|max:1024',
+            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
+        ];
     }
 }

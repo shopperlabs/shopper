@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Providers;
 
+use Shopper\Framework\Shopper;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Shopper\Framework\Shopper;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -18,19 +18,7 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'Shopper\Framework\Http\Controllers';
 
     /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @internal param Router $router
-     */
-    public function boot()
-    {
-        parent::boot();
-    }
-
-    /**
      * Define the routes for the application.
-     *
-     * @return void
      */
     public function map()
     {
@@ -38,16 +26,26 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapBackendRoutes();
 
-        $this->mapApiRoutes();
-
         $this->mapCustomBackendRoute();
+    }
+
+    /**
+     * Define the "custom backend" routes for the application.
+     * These routes all receive session state, CSRF protection, etc.
+     */
+    public function mapCustomBackendRoute()
+    {
+        if (config('shopper.routes.custom_file')) {
+            Route::middleware(['shopper', 'dashboard'])
+                ->prefix(Shopper::prefix())
+                ->namespace(config('shopper.system.controllers.namespace'))
+                ->group(config('shopper.routes.custom_file'));
+        }
     }
 
     /**
      * Define the "auth" routes for the application.
      * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
      */
     protected function mapAuthRoutes()
     {
@@ -61,8 +59,6 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define the "backend" routes for the application.
      * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
      */
     protected function mapBackendRoutes()
     {
@@ -71,36 +67,5 @@ class RouteServiceProvider extends ServiceProvider
             ->as('shopper.')
             ->namespace($this->namespace)
             ->group(realpath(SHOPPER_PATH . '/routes/backend.php'));
-    }
-
-    /**
-     * Define the "custom backend" routes for the application.
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    public function mapCustomBackendRoute()
-    {
-        if (config('shopper.routes.custom_file')) {
-            Route::middleware(['shopper', 'dashboard'])
-                ->prefix(Shopper::prefix())
-                ->namespace(config('shopper.system.controllers.namespace'))
-                ->group(config('shopper.routes.custom_file'));
-        }
-    }
-
-    /**
-     * Define the "api" routes for the application.
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
-    {
-        Route::middleware('api')
-            ->prefix('api')
-            ->as('shopper.api.')
-            ->namespace($this->namespace . '\Api')
-            ->group(realpath(SHOPPER_PATH . '/routes/api.php'));
     }
 }

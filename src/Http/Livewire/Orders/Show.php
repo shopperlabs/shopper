@@ -2,11 +2,12 @@
 
 namespace Shopper\Framework\Http\Livewire\Orders;
 
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
-use Shopper\Framework\Models\User\Address;
 
 class Show extends Component
 {
@@ -14,17 +15,13 @@ class Show extends Component
 
     /**
      * Current viewer order.
-     *
-     * @var Order
      */
     public Order $order;
 
     /**
      * Order item to display on the page.
-     *
-     * @var int
      */
-    public $perPage = 3;
+    public int $perPage = 3;
 
     /**
      * Customer order notes.
@@ -42,9 +39,6 @@ class Show extends Component
 
     /**
      * Redirect to the specific order.
-     *
-     * @param  int  $id
-     * @return void
      */
     public function goToOrder(int $id)
     {
@@ -53,8 +47,6 @@ class Show extends Component
 
     /**
      * Launch modal to archived the current order.
-     *
-     * @return void
      */
     public function openModal()
     {
@@ -63,8 +55,6 @@ class Show extends Component
 
     /**
      * Cancel action to archived order.
-     *
-     * @return void
      */
     public function cancel()
     {
@@ -74,8 +64,7 @@ class Show extends Component
     /**
      * Archived order.
      *
-     * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function archived()
     {
@@ -88,8 +77,6 @@ class Show extends Component
 
     /**
      * Cancel order.
-     *
-     * @return void
      */
     public function cancelOrder()
     {
@@ -97,14 +84,12 @@ class Show extends Component
 
         $this->notify([
             'title' => __('Cancelled'),
-            'message' => __('This order has been cancelled.')
+            'message' => __('This order has been cancelled.'),
         ]);
     }
 
     /**
      * Updated order with customer notes.
-     *
-     * @return void
      */
     public function leaveNotes()
     {
@@ -114,14 +99,12 @@ class Show extends Component
 
         $this->notify([
             'title' => __('Notes added'),
-            'message' => __('Your note has been added and will be emailed to the user on their order.')
+            'message' => __('Your note has been added and will be emailed to the user on their order.'),
         ]);
     }
 
     /**
      * Register the order by changed order status.
-     *
-     * @return void
      */
     public function register()
     {
@@ -131,14 +114,12 @@ class Show extends Component
 
         $this->notify([
             'title' => __('Update Status'),
-            'message' => __('This order has been marked as register and notification has been sent to the customer by email.')
+            'message' => __('This order has been marked as register and notification has been sent to the customer by email.'),
         ]);
     }
 
     /**
      * Mark the order as paid.
-     *
-     * @return void
      */
     public function markPaid()
     {
@@ -146,15 +127,10 @@ class Show extends Component
 
         $this->notify([
             'title' => __('Update Status'),
-            'message' => __('This order is marked as paid.')
+            'message' => __('This order is marked as paid.'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.orders.show', [
@@ -165,7 +141,7 @@ class Show extends Component
                 ->where('user_id', $this->order->customer->id)
                 ->where('type', Address::TYPE_BILLING)
                 ->where('is_default', true)
-                ->first()
+                ->first(),
         ]);
     }
 }

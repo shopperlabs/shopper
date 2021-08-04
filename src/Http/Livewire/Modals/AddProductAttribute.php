@@ -2,8 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use Illuminate\Database\Eloquent\Collection;
+use function in_array;
 use LivewireUI\Modal\ModalComponent;
+use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
@@ -11,11 +12,17 @@ use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
 class AddProductAttribute extends ModalComponent
 {
     public int $productId;
+
     public string $type = 'text';
+
     public array $attributes;
+
     public ?int $attribute_id = null;
+
     public array $multipleValues = [];
+
     public Collection $values;
+
     public ?string $value = null;
 
     public function mount(int $productId, array $attributes)
@@ -40,17 +47,17 @@ class AddProductAttribute extends ModalComponent
         if ($this->type === 'checkbox' || $this->type === 'checkbox_list') {
             foreach ($this->multipleValues as $checkboxValue) {
                 ProductAttributeValue::query()->create([
-                    'attribute_value_id'    => $checkboxValue,
-                    'product_attribute_id'  => $productAttribute->id,
+                    'attribute_value_id' => $checkboxValue,
+                    'product_attribute_id' => $productAttribute->id,
                 ]);
             }
         } else {
             ProductAttributeValue::query()->create([
-                'attribute_value_id'    => in_array($this->type, Attribute::fieldsWithStringValues())
+                'attribute_value_id' => in_array($this->type, Attribute::fieldsWithStringValues())
                     ? null
                     : $this->value,
-                'product_attribute_id'  => $productAttribute->id,
-                'product_custom_value'  => in_array($this->type, Attribute::fieldsWithStringValues())
+                'product_attribute_id' => $productAttribute->id,
+                'product_custom_value' => in_array($this->type, Attribute::fieldsWithStringValues())
                     ? $this->value
                     : null,
             ]);
@@ -68,7 +75,7 @@ class AddProductAttribute extends ModalComponent
 
     public function updatedAttributeId(string $value)
     {
-        if ($value === "0") {
+        if ($value === '0') {
             return;
         }
 

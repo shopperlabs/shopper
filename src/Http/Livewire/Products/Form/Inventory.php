@@ -2,23 +2,20 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Http\Response;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Maatwebsite\Excel\Excel;
+use Illuminate\Validation\Rule;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Framework\Exports\ProductInventoryExport;
-use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Traits\WithStock;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Shopper\Framework\Http\Livewire\Products\WithAttributes;
+use Shopper\Framework\Repositories\InventoryHistoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Inventory extends Component
 {
-    use WithPagination, WithAttributes, WithStock;
+    use WithPagination;
+    use WithAttributes;
+    use WithStock;
 
     /**
      * Product Model.
@@ -32,10 +29,9 @@ class Inventory extends Component
     /**
      * Component mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  \Illuminate\Database\Eloquent\Collection  $inventories
-     * @param  \Illuminate\Database\Eloquent\Model  $defaultInventory
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model      $product
+     * @param \Illuminate\Database\Eloquent\Collection $inventories
+     * @param \Illuminate\Database\Eloquent\Model      $defaultInventory
      */
     public function mount($product, $inventories, $defaultInventory)
     {
@@ -57,17 +53,15 @@ class Inventory extends Component
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
         $this->validate([
-            'sku'  => [
+            'sku' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'sku')->ignore($this->product->id),
             ],
-            'barcode'  => [
+            'barcode' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'barcode')->ignore($this->product->id),
             ],
@@ -85,11 +79,6 @@ class Inventory extends Component
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.products.forms.form-inventory', [

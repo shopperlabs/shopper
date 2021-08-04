@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Component;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 use Shopper\Framework\Traits\CanRegisterLivewireComponentDirectories;
 
 class ComponentServiceProvider extends ServiceProvider
@@ -14,8 +14,6 @@ class ComponentServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -29,8 +27,6 @@ class ComponentServiceProvider extends ServiceProvider
 
     /**
      * Register customs Blade Components.
-     *
-     * @return void
      */
     public function registerBladeComponents()
     {
@@ -81,8 +77,6 @@ class ComponentServiceProvider extends ServiceProvider
 
     /**
      * Register Livewire components.
-     *
-     * @return void
      */
     public function registerLivewireComponents()
     {
@@ -95,12 +89,9 @@ class ComponentServiceProvider extends ServiceProvider
 
     /**
      * Register the given component.
-     *
-     * @param  string  $component
-     * @return void
      */
     protected function registerComponent(string $component)
     {
-        Blade::component('shopper::components.'.$component, 'shopper-'.$component);
+        Blade::component('shopper::components.' . $component, 'shopper-' . $component);
     }
 }

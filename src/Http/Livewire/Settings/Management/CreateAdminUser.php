@@ -2,21 +2,19 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\User\Role;
-use Shopper\Framework\Notifications\AdminSendCredentials;
-use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Rules\Phone;
+use Illuminate\Support\Facades\Hash;
+use Shopper\Framework\Models\User\Role;
 use Shopper\Framework\Rules\RealEmailValidator;
+use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Notifications\AdminSendCredentials;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class CreateAdminUser extends AbstractBaseComponent
 {
     /**
      * Indicate if user will receive mail with credentials.
-     *
-     * @var bool
      */
     public bool $send_mail = false;
 
@@ -65,7 +63,7 @@ class CreateAdminUser extends AbstractBaseComponent
     /**
      * Admin define role id.
      *
-     * @var integer
+     * @var int
      */
     public $role_id;
 
@@ -78,12 +76,10 @@ class CreateAdminUser extends AbstractBaseComponent
 
     /**
      * Generate a random 10 characters password.
-     *
-     * @return void
      */
     public function generate()
     {
-        $this->password = substr(strtoupper(uniqid(str_random(10))), 0, 10);
+        $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
 
         $this->resetErrorBag(['password']);
     }
@@ -91,9 +87,9 @@ class CreateAdminUser extends AbstractBaseComponent
     /**
      * Real-time component validation.
      *
-     * @param  string  $field
+     * @param string $field
+     *
      * @throws \Illuminate\Validation\ValidationException
-     * @return void
      */
     public function updated($field)
     {
@@ -103,8 +99,7 @@ class CreateAdminUser extends AbstractBaseComponent
     /**
      * Update roleId to determine if the choose role is an admin role.
      *
-     * @param  string  $id
-     * @return void
+     * @param string $id
      */
     public function updatedRoleId($id)
     {
@@ -115,18 +110,16 @@ class CreateAdminUser extends AbstractBaseComponent
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
         $this->validate($this->rules(), $this->messages());
 
         $user = (new UserRepository())->create([
-            'email'        => $this->email,
-            'first_name'   => $this->first_name,
-            'last_name'    => $this->last_name,
-            'password'     => Hash::make($this->password),
+            'email' => $this->email,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'password' => Hash::make($this->password),
             'phone_number' => $this->phone_number,
             'gender' => $this->gender,
             'email_verified_at' => now()->toDateTimeString(),
@@ -147,7 +140,7 @@ class CreateAdminUser extends AbstractBaseComponent
     /**
      * Component validation rules.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function rules()
     {
@@ -156,7 +149,7 @@ class CreateAdminUser extends AbstractBaseComponent
                 'required',
                 'email',
                 Rule::unique(shopper_table('users'), 'email'),
-                new RealEmailValidator()
+                new RealEmailValidator(),
             ],
             'first_name' => 'required',
             'last_name' => 'required',
@@ -164,27 +157,27 @@ class CreateAdminUser extends AbstractBaseComponent
             'role_id' => 'required',
             'phone_number' => [
                 'nullable',
-                new Phone()
-            ]
+                new Phone(),
+            ],
         ];
     }
 
     /**
      * Custom error messages.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function messages()
     {
         return [
-          'email.required' => __("Email is required"),
-          'email.email' => __("This Email is not a valid email address"),
-          'email.unique' => __("This email adresse is already used"),
-          'first_name.required' => __("Admin first name is required"),
-          'last_name.required' => __("Admin last name is required"),
-          'password.required' => __("Password is required"),
-          'role_id.required' => __("The admin role is required"),
-          'phone_number.*' => __("This phone number is not a valid number"),
+            'email.required' => __('Email is required'),
+            'email.email' => __('This Email is not a valid email address'),
+            'email.unique' => __('This email adresse is already used'),
+            'first_name.required' => __('Admin first name is required'),
+            'last_name.required' => __('Admin last name is required'),
+            'password.required' => __('Password is required'),
+            'role_id.required' => __('The admin role is required'),
+            'phone_number.*' => __('This phone number is not a valid number'),
         ];
     }
 
@@ -199,7 +192,7 @@ class CreateAdminUser extends AbstractBaseComponent
             'roles' => Role::query()
                 ->select(['id', 'display_name', 'name'])
                 ->where('name', '<>', config('shopper.system.users.default_role'))
-                ->get()
+                ->get(),
         ]);
     }
 }

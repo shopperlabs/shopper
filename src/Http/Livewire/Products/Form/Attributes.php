@@ -2,16 +2,15 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Exception;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 
 class Attributes extends Component
 {
-    protected $listeners = ['onProductAttributeAdded' => 'render'];
-
     /**
      * Product Model.
      *
@@ -21,19 +20,11 @@ class Attributes extends Component
 
     public int $productId;
 
-    /**
-     * List of available attributes from the storage.
-     *
-     * @var Collection
-     */
     public Collection $attributes;
 
-    /**
-     * List of attributes for the product.
-     *
-     * @var Collection
-     */
     public Collection $productAttributes;
+
+    protected $listeners = ['onProductAttributeAdded' => 'render'];
 
     public function mount($product)
     {
@@ -45,14 +36,13 @@ class Attributes extends Component
 
     public function updateProductAttribute(int $id)
     {
-        dd($id);
+        // ToDo
     }
 
     /**
      * Remove Attribute to product.
      *
-     * @param  int  $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function removeProductAttribute(int $id)
     {
@@ -67,10 +57,13 @@ class Attributes extends Component
         ]);
     }
 
+    public function render()
+    {
+        return view('shopper::livewire.products.forms.form-attributes');
+    }
+
     /**
      * Get Product Attributes lists.
-     *
-     * @return void
      */
     private function getProductAttributes()
     {
@@ -87,8 +80,6 @@ class Attributes extends Component
 
     /**
      * Get Attributes lists not used by the product.
-     *
-     * @return void
      */
     private function getAttributes()
     {
@@ -96,10 +87,5 @@ class Attributes extends Component
             ->whereNotIn('id', $this->productAttributes->pluck('attribute_id')->toArray())
             ->where('is_enabled', true)
             ->get();
-    }
-
-    public function render()
-    {
-        return view('shopper::livewire.products.forms.form-attributes');
     }
 }

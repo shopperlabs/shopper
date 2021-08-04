@@ -8,28 +8,22 @@ class Shopper
 {
     /**
      * Get the current Shopper version.
-     *
-     * @return string
      */
     public static function version(): string
     {
-        return '2.0.0';
+        return '1.0.0';
     }
 
     /**
      * Get the URI path prefix utilized by Shopper.
-     *
-     * @return string
      */
     public static function prefix(): string
     {
-        return config('shopper.routes.prefix');
+        return config('shopper.routes.prefix', 'shopper');
     }
 
     /**
      * Get the username used for authentication.
-     *
-     * @return string
      */
     public static function username(): string
     {

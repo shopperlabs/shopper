@@ -2,20 +2,17 @@
 
 namespace Shopper\Framework\Events\Handlers;
 
-use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
+use Maatwebsite\Sidebar\Group;
 use Shopper\Framework\Models\Shop\Order\Order;
-use Shopper\Framework\Models\Shop\Order\OrderStatus;
 use Shopper\Framework\Sidebar\AbstractAdminSidebar;
+use Shopper\Framework\Models\Shop\Order\OrderStatus;
 
 class RegisterOrderSidebar extends AbstractAdminSidebar
 {
     /**
-     * Method used to define your sidebar menu groups and items
-     *
-     * @param  Menu  $menu
-     * @return Menu
+     * Method used to define your sidebar menu groups and items.
      */
     public function extendWith(Menu $menu): Menu
     {

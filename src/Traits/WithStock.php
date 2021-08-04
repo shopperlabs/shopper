@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Traits;
 
-use Illuminate\Http\Response;
 use Maatwebsite\Excel\Excel;
+use Illuminate\Http\Response;
 use Shopper\Framework\Exports\ProductInventoryExport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -13,8 +13,14 @@ trait WithStock
 
     public int $value = 0;
 
+    /**
+     * Real Stock value.
+     */
     public int $realStock = 0;
 
+    /**
+     * Current Inventory.
+     */
     public $inventory;
 
     public function updatedValue(int $value)
@@ -83,7 +89,7 @@ trait WithStock
     /**
      * Export default product stock movement.
      *
-     * @return Response|BinaryFileResponse
+     * @return BinaryFileResponse|Response
      */
     public function export()
     {

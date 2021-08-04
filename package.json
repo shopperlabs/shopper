@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "dev": "npm run development",
     "development": "mix",
     "watch": "mix watch",
     "watch-poll": "mix watch -- --watch-options-poll=1000",
@@ -17,8 +18,8 @@
     "laravel-mix": "^6.0.19",
     "lodash": "^4.17.13",
     "popper.js": "^1.16.0",
-    "postcss": "^8.3.0",
-    "tailwindcss": "^2.2.2"
+    "postcss": "^8.3.5",
+    "tailwindcss": "^2.2.4"
   },
   "devDependencies": {
     "resolve-url-loader": "^2.3.1",

@@ -14,7 +14,7 @@ trait WithSeoAttributes
     /**
      * Map default SEO title and Description to a Model.
      *
-     * @var string[]
+     * @var array<string>
      */
     public $seoAttributes = [
         'name' => 'name',
@@ -47,8 +47,6 @@ trait WithSeoAttributes
 
     /**
      * Display the block to update SEO values.
-     *
-     * @return void
      */
     public function updateSeo()
     {

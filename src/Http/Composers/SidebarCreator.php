@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Composers;
 
-use Maatwebsite\Sidebar\Presentation\SidebarRenderer;
 use Shopper\Framework\Sidebar\AdminSidebar;
+use Maatwebsite\Sidebar\Presentation\SidebarRenderer;
 
 class SidebarCreator
 {
@@ -17,10 +17,6 @@ class SidebarCreator
      */
     protected $renderer;
 
-    /**
-     * @param AdminSidebar    $sidebar
-     * @param SidebarRenderer $renderer
-     */
     public function __construct(AdminSidebar $sidebar, SidebarRenderer $renderer)
     {
         $this->sidebar = $sidebar;

@@ -2,21 +2,18 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Str;
+use function in_array;
 use Livewire\Component;
 use Shopper\Framework\Services\Mailable;
 
 class Mailables extends Component
 {
-    protected $listeners = ['onMailableAction' => 'render'];
-
     /**
      * Define if the we can create mailable in production.
-     *
-     * @var bool
      */
     public bool $isLocal = false;
+
+    protected $listeners = ['onMailableAction' => 'render'];
 
     public function mount()
     {
@@ -30,7 +27,7 @@ class Mailables extends Component
         return view('shopper::livewire.settings.mails.mailables', [
             'mailables' => (null !== $mailables = Mailable::getMailables())
                 ? $mailables->sortBy('name')
-                : collect([])
+                : collect([]),
         ]);
     }
 }

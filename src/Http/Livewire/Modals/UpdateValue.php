@@ -9,9 +9,13 @@ use Shopper\Framework\Models\Shop\Product\AttributeValue;
 class UpdateValue extends ModalComponent
 {
     public string $name;
+
     public string $type = 'select';
+
     public int $valueId;
+
     public string $value;
+
     public string $key;
 
     public function mount(string $name, string $type, int $id)
@@ -23,18 +27,6 @@ class UpdateValue extends ModalComponent
         $this->type = $type;
         $this->value = $value->value;
         $this->key = $value->key;
-
-    }
-
-    protected function rules(): array
-    {
-        return [
-            'value' => 'required|max:50',
-            'key' => [
-                'required',
-                Rule::unique(shopper_table('attribute_values'))->ignore($this->valueId)
-            ],
-        ];
     }
 
     public static function modalMaxWidth(): string
@@ -58,6 +50,17 @@ class UpdateValue extends ModalComponent
         ]);
 
         $this->closeModal();
+    }
+
+    public function rules(): array
+    {
+        return [
+            'value' => 'required|max:50',
+            'key' => [
+                'required',
+                Rule::unique(shopper_table('attribute_values'))->ignore($this->valueId),
+            ],
+        ];
     }
 
     public function render()

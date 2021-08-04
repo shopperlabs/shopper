@@ -8,6 +8,7 @@ use Shopper\Framework\Services\Mailable;
 class DeleteTemplate extends ModalComponent
 {
     public string $name;
+
     public string $slug;
 
     public function mount(string $name, string $slug)
@@ -27,7 +28,7 @@ class DeleteTemplate extends ModalComponent
 
         $this->notify([
             'title' => __('Removed'),
-            'message' => __('You have removed the :template template', ['template' => $this->name])
+            'message' => __('You have removed the :template template', ['template' => $this->name]),
         ]);
 
         $this->emit('onTemplateRemoved');

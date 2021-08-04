@@ -10,7 +10,7 @@ class AddTemplate extends Component
     public function render()
     {
         return view('shopper::livewire.settings.mails.templates.add-template', [
-            'skeletons' => Mailable::getTemplateSkeletons()
+            'skeletons' => Mailable::getTemplateSkeletons(),
         ]);
     }
 }

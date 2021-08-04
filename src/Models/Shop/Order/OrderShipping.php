@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Framework\Models\Shop\Carrier;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderShipping extends Model
 {
@@ -28,8 +28,6 @@ class OrderShipping extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

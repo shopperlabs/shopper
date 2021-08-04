@@ -11,9 +11,13 @@ class CreatePaymentMethod extends ModalComponent
     use WithFileUploads;
 
     public string $title = '';
+
     public ?string $linkUrl = null;
+
     public ?string $description = null;
+
     public ?string $instructions = null;
+
     public $logo;
 
     public static function modalMaxWidth(): string
@@ -24,8 +28,8 @@ class CreatePaymentMethod extends ModalComponent
     public function save()
     {
         $this->validate([
-            'title' => 'required|unique:'. shopper_table('payment_methods'),
-            'logo'  => 'nullable|image|max:1024'
+            'title' => 'required|unique:' . shopper_table('payment_methods'),
+            'logo' => 'nullable|image|max:1024',
         ]);
 
         $paymentMethod = PaymentMethod::query()->create([
@@ -38,7 +42,7 @@ class CreatePaymentMethod extends ModalComponent
 
         if ($this->logo) {
             $paymentMethod->update([
-                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads'))
+                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
             ]);
         }
 

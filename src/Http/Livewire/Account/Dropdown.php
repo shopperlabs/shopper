@@ -7,13 +7,6 @@ use Livewire\Component;
 class Dropdown extends Component
 {
     /**
-     * Components custom Listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['updatedProfile'];
-
-    /**
      * Logged user full name.
      *
      * @var string
@@ -35,9 +28,14 @@ class Dropdown extends Component
     public $email;
 
     /**
-     * Component mount instance.
+     * Components custom Listeners.
      *
-     * @return void
+     * @var array<string>
+     */
+    protected $listeners = ['updatedProfile'];
+
+    /**
+     * Component mount instance.
      */
     public function mount()
     {
@@ -48,8 +46,6 @@ class Dropdown extends Component
 
     /**
      * Update profile listener implementation.
-     *
-     * @return void
      */
     public function updatedProfile()
     {
@@ -59,11 +55,6 @@ class Dropdown extends Component
         $this->email = auth()->user()->email;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.account.dropdown');

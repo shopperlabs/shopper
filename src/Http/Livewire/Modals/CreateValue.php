@@ -8,22 +8,17 @@ use Shopper\Framework\Models\Shop\Product\Attribute;
 class CreateValue extends ModalComponent
 {
     public Attribute $attribute;
+
     public string $type = 'select';
+
     public string $value = '';
+
     public string $key = '';
 
     public function mount(int $attributeId)
     {
         $this->attribute = $attribute = Attribute::find($attributeId);
         $this->type = $attribute->type;
-    }
-
-    protected function rules(): array
-    {
-        return [
-            'value' => 'required|max:50',
-            'key' => 'required|unique:'. shopper_table('attribute_values'),
-        ];
     }
 
     public static function modalMaxWidth(): string
@@ -37,7 +32,7 @@ class CreateValue extends ModalComponent
 
         $this->attribute->values()->create([
             'value' => $this->value,
-            'key'  => $this->key,
+            'key' => $this->key,
         ]);
 
         $this->emit('updateValues');
@@ -48,6 +43,14 @@ class CreateValue extends ModalComponent
         ]);
 
         $this->closeModal();
+    }
+
+    public function rules(): array
+    {
+        return [
+            'value' => 'required|max:50',
+            'key' => 'required|unique:' . shopper_table('attribute_values'),
+        ];
     }
 
     public function render()

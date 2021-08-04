@@ -2,32 +2,32 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
-use Askedio\SoftCascade\Traits\SoftCascadeTrait;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Shopper\Framework\Contracts\ReviewRateable;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Shop\Channel;
-use Shopper\Framework\Models\Traits\CanHaveDiscount;
-use Shopper\Framework\Models\Traits\Filetable;
-use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasSlug;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasStock;
+use Shopper\Framework\Models\Traits\Filetable;
+use Shopper\Framework\Contracts\ReviewRateable;
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
 
 class Product extends Model implements ReviewRateable
 {
-    use Filetable,
-        HasStock,
-        HasPrice,
-        HasSlug,
-        CanHaveDiscount,
-        SoftDeletes,
-        SoftCascadeTrait,
-        ReviewRateableTrait;
+    use Filetable;
+    use HasStock;
+    use HasPrice;
+    use HasSlug;
+    use CanHaveDiscount;
+    use SoftDeletes;
+    use SoftCascadeTrait;
+    use ReviewRateableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -68,7 +68,7 @@ class Product extends Model implements ReviewRateable
     /**
      * Cascade soft delete tables.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $softCascade = ['variations'];
 
@@ -86,8 +86,6 @@ class Product extends Model implements ReviewRateable
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -96,8 +94,6 @@ class Product extends Model implements ReviewRateable
 
     /**
      * Get the formatted price value.
-     *
-     * @return string|null
      */
     public function getFormattedPriceAttribute(): ?string
     {
@@ -105,17 +101,15 @@ class Product extends Model implements ReviewRateable
             return $this->price_amount
                 ? $this->formattedPrice($this->price_amount)
                 : ($this->parent->price_amount ? $this->formattedPrice($this->parent->price_amount) : null);
-        } else {
-            return $this->price_amount
+        }
+
+        return $this->price_amount
                 ? $this->formattedPrice($this->price_amount)
                 : null;
-        }
     }
 
     /**
      * Get the stock of all variations.
-     *
-     * @return int
      */
     public function getVariationsStockAttribute(): int
     {

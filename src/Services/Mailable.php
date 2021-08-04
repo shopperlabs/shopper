@@ -2,79 +2,42 @@
 
 namespace Shopper\Framework\Services;
 
+use Exception;
+use Throwable;
 use ErrorException;
+use ReflectionType;
+use const PHP_VERSION;
+use function is_object;
+use ReeceM\Mocker\Mocked;
 use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\View;
-use ReeceM\Mocker\Mocked;
 use Shopper\Framework\Traits\Mails\Mailables;
 use Shopper\Framework\Traits\Mails\Templates;
 
 class Mailable
 {
-    use Templates, Mailables;
+    use Templates;
+    use Mailables;
 
     /**
      * Default type examples for being passed to reflected classes.
-     *
-     * @var  array  TYPES
      */
     public const TYPES = [
-        'int'    => 31,
+        'int' => 31,
         'string' => null,
-        'bool'   => false,
-        'float'  =>  3.14159,
+        'bool' => false,
+        'float' => 3.14159,
     ];
-
-    /**
-     * Gets any missing params that may not be collectable in the reflection.
-     *
-     * @param string $arg the argument string|
-     * @param array $params the reflection param list
-     *
-     * @return array|string|\ReeceM\Mocker\Mocked
-     */
-    private static function getMissingParams($arg, $params)
-    {
-        /**
-         * Determine if a builtin type can be found.
-         * Not a string or object as a Mocked::class can work there.
-         *
-         * getName() is undocumented alternative to casting to string.
-         * https://www.php.net/manual/en/class.reflectiontype.php#124658
-         *
-         * @var \ReflectionType $reflection
-         */
-        $reflection = collect($params)->where('name', $arg)->first()->getType();
-
-        if (version_compare(phpversion(), '7.1', '>=')) {
-            $type = ! is_null($reflection)
-                ? self::TYPES[$reflection->getName()]
-                : null;
-        } else {
-            $type = ! is_null($reflection)
-                ? self::TYPES[
-                    /** @scrutinizer ignore-deprecated */
-                    $reflection->__toString()
-                ]
-                : null;
-        }
-
-        try {
-            return ! is_null($type)
-                ? $type
-                : new Mocked($arg, \ReeceM\Mocker\Utils\VarStore::singleton());
-        } catch (\Exception $e) {
-            return $arg;
-        }
-    }
 
     /**
      * @param $simpleview
      * @param $view
      * @param false $template
-     * @param null $instance
+     * @param null  $instance
+     *
      * @return string|void
-     * @throws \Throwable
+     *
+     * @throws Throwable
      */
     public static function renderPreview($simpleview, $view, $template = false, $instance = null)
     {
@@ -89,7 +52,7 @@ class Mailable
 
             foreach ($_data as $key => $value) {
                 if (! is_object($value)) {
-                    $_data[$key] = '<span class="mailable-key" title="Variable">'.$key.'</span>';
+                    $_data[$key] = '<span class="mailable-key" title="Variable">' . $key . '</span>';
                 }
             }
         } else {
@@ -109,7 +72,7 @@ class Mailable
         } catch (ErrorException $e) {
             $error = '<div class="alert alert-warning">
 	    	<h5 class="alert-heading">Error:</h5>
-	    	<p>'.$e->getMessage().'</p>
+	    	<p>' . $e->getMessage() . '</p>
 	    	</div>';
 
             if ($template) {
@@ -120,6 +83,49 @@ class Mailable
             }
 
             return $error;
+        }
+    }
+
+    /**
+     * Gets any missing params that may not be collectable in the reflection.
+     *
+     * @param string $arg    the argument string|
+     * @param array  $params the reflection param list
+     *
+     * @return array|\ReeceM\Mocker\Mocked|string
+     */
+    private static function getMissingParams($arg, $params)
+    {
+        /**
+         * Determine if a builtin type can be found.
+         * Not a string or object as a Mocked::class can work there.
+         *
+         * getName() is undocumented alternative to casting to string.
+         * https://www.php.net/manual/en/class.reflectiontype.php#124658
+         *
+         * @var ReflectionType $reflection
+         */
+        $reflection = collect($params)->where('name', $arg)->first()->getType();
+
+        if (version_compare(PHP_VERSION, '7.1', '>=')) {
+            $type = null !== $reflection
+                ? self::TYPES[$reflection->getName()]
+                : null;
+        } else {
+            $type = null !== $reflection
+                ? self::TYPES[
+                    // @scrutinizer ignore-deprecated
+                    $reflection->__toString()
+                ]
+                : null;
+        }
+
+        try {
+            return null !== $type
+                ? $type
+                : new Mocked($arg, \ReeceM\Mocker\Utils\VarStore::singleton());
+        } catch (Exception $e) {
+            return $arg;
         }
     }
 }

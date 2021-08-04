@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Models\Traits;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Shop\Review;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait ReviewRateable
 {
@@ -20,7 +20,7 @@ trait ReviewRateable
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(rating), '.$round.') as averageReviewRateable')
+                ->selectRaw('ROUND(AVG(rating), ' . $round . ') as averageReviewRateable')
                 ->where($where)
                 ->pluck('averageReviewRateable');
         }
@@ -37,7 +37,7 @@ trait ReviewRateable
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(customer_service_rating), '. $round .') as averageCustomerServiceReviewRateable')
+                ->selectRaw('ROUND(AVG(customer_service_rating), ' . $round . ') as averageCustomerServiceReviewRateable')
                 ->where($where)
                 ->pluck('averageCustomerServiceReviewRateable');
         }
@@ -54,7 +54,7 @@ trait ReviewRateable
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(quality_rating), '. $round .') as averageQualityReviewRateable')
+                ->selectRaw('ROUND(AVG(quality_rating), ' . $round . ') as averageQualityReviewRateable')
                 ->where($where)
                 ->pluck('averageQualityReviewRateable');
         }
@@ -71,7 +71,7 @@ trait ReviewRateable
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(friendly_rating), '. $round .') as averageFriendlyReviewRateable')
+                ->selectRaw('ROUND(AVG(friendly_rating), ' . $round . ') as averageFriendlyReviewRateable')
                 ->where($where)
                 ->pluck('averageFriendlyReviewRateable');
         }
@@ -88,7 +88,7 @@ trait ReviewRateable
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(pricing_rating), '. $round .') as averagePricingReviewRateable')
+                ->selectRaw('ROUND(AVG(pricing_rating), ' . $round . ') as averagePricingReviewRateable')
                 ->where($where)
                 ->pluck('averagePricingReviewRateable');
         }
@@ -99,9 +99,6 @@ trait ReviewRateable
             ->pluck('averagePricingReviewRateable');
     }
 
-    /**
-     * @return mixed
-     */
     public function countRating()
     {
         return $this->ratings()
@@ -155,21 +152,18 @@ trait ReviewRateable
         $quantity = $ratings->count();
         $total = $ratings->selectRaw('SUM(rating) as total')->pluck('total');
 
-        return ($quantity * $max) > 0 ? $total / (($quantity * $max) / 100) : 0;
+        return $quantity * $max > 0 ? $total / ($quantity * $max / 100) : 0;
     }
 
     /**
-     * @param  array  $data
-     * @param  Model  $author
-     * @param  Model|null  $parent
-     * @return Review
+     * @param array $data
      */
-    public function rating($data, Model $author, Model $parent = null): Review
+    public function rating($data, Model $author, ?Model $parent = null): Review
     {
         return (new Review())->createRating($this, $data, $author);
     }
 
-    public function updateRating($id, $data, Model $parent = null): Review
+    public function updateRating($id, $data, ?Model $parent = null): Review
     {
         return (new Review())->updateRating($id, $data);
     }
@@ -191,7 +185,7 @@ trait ReviewRateable
 
     public function getRecentRatings($id, $limit = 5, $sort = 'desc'): Collection
     {
-        return (new Review())->getRecentRatings($id, $limit,  $sort);
+        return (new Review())->getRecentRatings($id, $limit, $sort);
     }
 
     public function getRecentUserRatings($id, $limit = 5, $approved = true, $sort = 'desc'): Collection

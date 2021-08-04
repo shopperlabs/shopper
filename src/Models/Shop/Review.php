@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Models\Shop;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
@@ -23,13 +23,11 @@ class Review extends Model
      */
     protected $casts = [
         'is_recommended' => 'boolean',
-        'approved'       => 'boolean',
+        'approved' => 'boolean',
     ];
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {

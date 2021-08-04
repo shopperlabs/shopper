@@ -3,20 +3,21 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
+use function count;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Models\Shop\Product\CollectionRule;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Models\Shop\Product\CollectionRule;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends Component
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithConditions,
-        WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithConditions;
+    use WithSeoAttributes;
 
     /**
      * Collection name.
@@ -62,8 +63,6 @@ class Create extends Component
 
     /**
      * Live updated Formatted publishedAt attribute.
-     *
-     * @return void
      */
     public function updatedPublishedAt()
     {
@@ -72,8 +71,6 @@ class Create extends Component
 
     /**
      * Save new entry to the database.
-     *
-     * @return void
      */
     public function store()
     {
@@ -94,7 +91,6 @@ class Create extends Component
         }
 
         if ($this->type === 'auto' && count($this->conditions) > 0 && $this->rule) {
-
             foreach ($this->rule as $key => $value) {
                 CollectionRule::query()->create([
                     'collection_id' => $collection->id,
@@ -108,29 +104,25 @@ class Create extends Component
             $this->resetConditionsFields();
         }
 
-        session()->flash('success', __("Collection successfully added!"));
+        session()->flash('success', __('Collection successfully added!'));
+
         $this->redirectRoute('shopper.collections.edit', $collection);
     }
 
     /**
      * Component validation rules.
      *
-     * @return string[]
+     * @return array<string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name' => 'required|max:150|unique:'.shopper_table('collections'),
+            'name' => 'required|max:150|unique:' . shopper_table('collections'),
             'file' => 'nullable|image|max:1024',
             'type' => 'required',
         ];
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.collections.create');

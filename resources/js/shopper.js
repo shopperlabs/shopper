@@ -37,3 +37,5 @@ for (let i = 0; i < darkModeToggles.length; i++) {
     }
   };
 }
+
+window.scrollToPosition = (selector) => document.querySelector(selector).scrollIntoView({behavior: 'smooth', block: 'end'});
