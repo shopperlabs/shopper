@@ -127,7 +127,7 @@ class InstallCommand extends Command
     {
         // Intro message
         $this->info('
-                _____ __
+               _____ __
               / ___// /_  ____  ____  ____  ___  _____
               \__ \/ __ \/ __ \/ __ \/ __ \/ _ \/ ___/
              ___/ / / / / /_/ / /_/ / /_/ /  __/ /
