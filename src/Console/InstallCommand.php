@@ -148,5 +148,8 @@ class InstallCommand extends Command
     {
         Traitor::addTrait(ShopperUser::class)
             ->toClass(config('shopper.system.users.user_model', '\\App\\Models\\User'));
+
+        $this->progressBar->advance();
+        $this->info('Added ShopperUser trait to your User model');
     }
 }
