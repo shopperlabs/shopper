@@ -2,28 +2,29 @@
 
 namespace Shopper\Framework\Models\Traits;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Storage;
+use function count;
 use Laravel\Cashier\Billable;
-use Shopper\Framework\Models\Shop\Order\Order;
-use Shopper\Framework\Models\User\Address;
-use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
+use Shopper\Framework\Models\User\Address;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Framework\Models\Shop\Order\Order;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 
 /**
- * Trait ShopperUser
- * @package Shopper\Framework\Models\Traits
+ * Trait ShopperUser.
+ *
  * @mixin \Shopper\Framework\Models\User\User
  */
 trait ShopperUser
 {
-    use HasRoles,
-        CanHaveDiscount,
-        SoftDeletes,
-        TwoFactorAuthenticatable,
-        Billable;
+    use HasRoles;
+    use CanHaveDiscount;
+    use SoftDeletes;
+    use TwoFactorAuthenticatable;
+    use Billable;
 
     /**
      * ShopperUser constructor.
@@ -55,14 +56,12 @@ trait ShopperUser
 
     /**
      * Bootstrap the model and its traits.
-     *
-     * @return void
      */
     public static function boot()
     {
         Authenticatable::boot();
 
-        static::deleting(function($model) {
+        static::deleting(function ($model) {
             $model->addresses()->delete();
             $model->roles()->detach();
             $model->orders()->delete();
@@ -71,8 +70,6 @@ trait ShopperUser
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -80,9 +77,7 @@ trait ShopperUser
     }
 
     /**
-     * Define if user is an admin
-     *
-     * @return bool
+     * Define if user is an admin.
      */
     public function isAdmin(): bool
     {
@@ -91,8 +86,6 @@ trait ShopperUser
 
     /**
      * Define if an user account is verified.
-     *
-     * @return bool
      */
     public function isVerified(): bool
     {
@@ -101,8 +94,6 @@ trait ShopperUser
 
     /**
      * Return User Full Name.
-     *
-     * @return string
      */
     public function getFullNameAttribute(): string
     {
@@ -122,17 +113,13 @@ trait ShopperUser
 
     /**
      * Get User roles name.
-     *
-     * @return string
      */
     public function getRolesLabelAttribute(): string
     {
         $roles = $this->roles()->pluck('display_name')->toArray();
 
-        if (\count($roles)) {
-            return implode(', ', array_map(function ($item) {
-                return ucwords($item);
-            }, $roles));
+        if (count($roles)) {
+            return implode(', ', array_map(fn ($item) => ucwords($item), $roles));
         }
 
         return 'N/A';
