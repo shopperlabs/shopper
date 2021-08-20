@@ -15,7 +15,7 @@
     </div>
 
     <div class="min-h-0 flex-1 overflow-y-auto">
-        <div class="p-6 sm:px-8 pb-10">
+        <div class="py-6 sm:px-8 pb-10">
             <div class="pb-5 border-b border-gray-200 sm:flex sm:items-center sm:justify-between dark:border-gray-700">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                     {{ __('Templates') }}

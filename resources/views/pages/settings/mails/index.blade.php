@@ -9,7 +9,15 @@
     </x:shopper-breadcrumb>
 
     <div
-        x-data="{ currentTab: 'config' }"
+        x-data="{
+            options: ['config', 'templates', 'mailables'],
+            words: {
+                'config': '{{ __('Configuration') }}',
+                'templates': '{{ __('Templates') }}',
+                'mailables': '{{ __("Mailables") }}'
+            },
+            currentTab: 'config'
+        }"
         class="sm:-mx-8"
     >
         <div class="mt-3 bg-gray-100 z-30 relative pb-5 border-b border-gray-200 md:flex md:items-center md:justify-between dark:bg-gray-900 dark:border-gray-700">
@@ -93,6 +101,18 @@
             </aside>
             <section aria-labelledby="configuration-heading" class="min-w-0 flex-1 h-full flex flex-col overflow-hidden">
                 <div class="min-h-(screen-content) flex-1 overflow-y-auto">
+                    <div class="lg:hidden py-6 border-b border-gray-200 sm:px-4 max-w-2xl mx-auto">
+                        <x-shopper-input.select x-model="currentTab" aria-label="Selected tab" class="block w-full pl-3 pr-10 py-2">
+                            <template x-for="option in options" :key="option">
+                                <option
+                                    x-bind:value="option"
+                                    x-text="words[option]"
+                                    x-bind:selected="option === currentTab"
+                                ></option>
+                            </template>
+                        </x-shopper-input.select>
+                    </div>
+
                     <div x-show="currentTab === 'config'">
                         <livewire:shopper-settings.mails.configuration />
                     </div>

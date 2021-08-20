@@ -1,4 +1,4 @@
-<div class="p-6 sm:px-8 py-10 max-w-2xl mx-auto">
+<div class="py-6 sm:px-8 sm:py-10 max-w-2xl mx-auto">
     <div class="space-y-8 divide-y divide-gray-200 dark:divide-gray-700">
         <div>
             <div>
