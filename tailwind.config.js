@@ -38,7 +38,7 @@ module.exports = {
         '(screen-content)': 'calc(100vh - 9.625rem)',
       },
       fontFamily: {
-        sans: ['Manrope', ...defaultTheme.fontFamily.sans]
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans]
       }
     },
   },
