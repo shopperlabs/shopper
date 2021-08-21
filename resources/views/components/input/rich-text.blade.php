@@ -4,7 +4,6 @@
 ])
 
 <div
-    class="rounded-md shadow-sm"
     wire:ignore
     {{ $attributes }}
     x-data
