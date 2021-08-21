@@ -7,7 +7,7 @@ trait WithDiscountAttributes
     /**
      * Discount code.
      */
-    public ?string $code;
+    public ?string $code = '';
 
     /**
      * Discount coupon type.
@@ -17,7 +17,7 @@ trait WithDiscountAttributes
     /**
      * Value of the discount.
      */
-    public ?string $value;
+    public ?string $value = '';
 
     /**
      * Apply item of the discount. Can be order or product.
@@ -32,7 +32,7 @@ trait WithDiscountAttributes
     /**
      * Minimum value required to apply the discount coupon.
      */
-    public string $minRequiredValue;
+    public ?string $minRequiredValue = '';
 
     /**
      * Discount active status.
