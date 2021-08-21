@@ -59,7 +59,7 @@
                         </div>
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <x-shopper-input.checkbox wire:model.lazy="isDefault" id="isDefault" />
+                                <x-shopper-input.checkbox wire:model.defer="isDefault" id="isDefault" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <label for="isDefault" class="font-medium text-gray-700 cursor-pointer dark:text-gray-200">{{ __('Set as default inventory') }}</label>

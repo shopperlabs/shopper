@@ -55,7 +55,7 @@
                         </div>
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <input wire:model="isDefault" id="isDefault" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" />
+                                <x-shopper-input.checkbox wire:model.defer="isDefault" id="isDefault" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <label for="isDefault" class="font-medium text-gray-700 cursor-pointer dark:text-gray-200">{{ __('Set as default inventory') }}</label>
@@ -109,7 +109,7 @@
                             <div class="sm:col-span-6">
                                 <div class="flex items-center justify-between">
                                     <x-shopper-label :value="__('Apartment, suite, etc.')" for="street_address_plus" />
-                                    <span class="ml-4 text-sm text-gray-500 leading-5">{{ __("Optional") }}</span>
+                                    <span class="ml-4 text-sm text-gray-500 leading-5">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
                                     <x-shopper-input.text wire:model="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
