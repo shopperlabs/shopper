@@ -55,6 +55,7 @@ return [
     */
 
     'users' => [
+        'user_model' => '\\App\\Models\\User',
         'admin_role' => 'administrator',
         'default_role' => 'user',
     ],

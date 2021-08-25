@@ -2,8 +2,10 @@
 
 namespace Shopper\Framework\Console;
 
+use Traitor\Traitor;
 use Illuminate\Console\Command;
 use Spatie\Analytics\AnalyticsServiceProvider;
+use Shopper\Framework\Models\Traits\ShopperUser;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 
@@ -59,6 +61,7 @@ class InstallCommand extends Command
         $this->call('vendor:publish', ['--provider' => AnalyticsServiceProvider::class]);
         $this->progressBar->advance();
 
+        $this->addShopperTrait();
         $this->setupDatabaseConfig();
         $this->addEnvVariable();
         $this->call('shopper:link');
@@ -136,5 +139,17 @@ class InstallCommand extends Command
 
             Installation started. Please wait...
         ');
+    }
+
+    /**
+     * Integrates shopper with your existing user model.
+     */
+    protected function addShopperTrait(): void
+    {
+        Traitor::addTrait(ShopperUser::class)
+            ->toClass(config('shopper.system.users.user_model', '\\App\\Models\\User'));
+
+        $this->progressBar->advance();
+        $this->info('Added ShopperUser trait to your User model');
     }
 }
