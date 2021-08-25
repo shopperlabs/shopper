@@ -33,7 +33,6 @@
     "doctrine/dbal": "^3.0",
     "illuminate/support": "^8.0",
     "jenssegers/agent": "^2.6",
-    "kkszymanowski/traitor": "^0.2.5",
     "laravel/cashier": "^12.10",
     "laravel/helpers": "^1.4.1",
     "laravel/ui": "^3.2",

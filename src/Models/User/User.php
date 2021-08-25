@@ -6,16 +6,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Storage;
-use Shopper\Framework\Models\Traits\{CanHaveDiscount, ShopperUser};
+use Laravel\Cashier\Billable;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use CanHaveDiscount;
     use SoftDeletes;
     use TwoFactorAuthenticatable;
-    use ShopperUser;
+    use HasRoles;
+    use Billable;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -66,6 +69,24 @@ class User extends Authenticatable
             $model->roles()->detach();
             $model->orders()->delete();
         });
+    }
+
+    /**
+     * Get the table associated with the model.
+     *
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return shopper_table('users');
+    }
+
+    /**
+     * Define if user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(config('shopper.system.users.admin_role'));
     }
 
     public function isVerified(): bool
