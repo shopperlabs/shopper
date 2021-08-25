@@ -14,9 +14,6 @@ trait WithUploadProcess
      */
     public $file;
 
-    /**
-     * Remove file.
-     */
     public function removeImage()
     {
         $this->file = null;
@@ -45,7 +42,7 @@ trait WithUploadProcess
     public function uploadFile(string $model, int $id)
     {
         File::query()->create([
-            'disk_name' => $filename = $this->file->store('/', config('shopper.system.storage.disks.uploads')),
+            'disk_name' => $this->file->store('/', config('shopper.system.storage.disks.uploads')),
             'file_name' => $this->file->getClientOriginalName(),
             'file_size' => $this->file->getSize(),
             'content_type' => $this->file->getClientMimeType(),
