@@ -14,26 +14,10 @@ class Browse extends Component
     use WithPagination;
     use WithSorting;
 
-    /**
-     * Search.
-     *
-     * @var string
-     */
-    public $search;
+    public string $search = '';
+    public ?string $type = null;
 
-    /**
-     * Collection type filter.
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
@@ -63,13 +47,6 @@ class Browse extends Component
         $this->type = null;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
     public function render()
     {
         return view('shopper::livewire.collections.browse', [

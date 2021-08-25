@@ -167,13 +167,13 @@
                             <div class="rounded-md bg-white dark:bg-gray-800 shadow-xs">
                                 <div class="py-1">
                                     <div class="flex items-center py-2 px-4">
-                                        <input wire:model.defer="type" id="type_manual" name="type" type="radio" value="manual" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                        <input wire:model="type" id="type_manual" name="type" type="radio" value="manual" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="type_manual" class="cursor-pointer ml-3">
                                             <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ __('Manual') }}</span>
                                         </label>
                                     </div>
                                     <div class="flex items-center py-2 px-4">
-                                        <input wire:model.defer="type" id="type_auto" name="type" type="radio" value="auto" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                        <input wire:model="type" id="type_auto" name="type" type="radio" value="auto" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="type_auto" class="cursor-pointer ml-3">
                                             <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ __('Automatic') }}</span>
                                         </label>
