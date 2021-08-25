@@ -6,7 +6,7 @@ module.exports = {
   purge: {
     content: [
       './resources/js/**/*.js',
-      './resources/views/**/*.php',
+      './resources/views/**/*.blade.php',
       './resources/lang/**/*.php',
       './src/**/*.php',
       './vendor/livewire-ui/modal/resources/views/*.blade.php',
