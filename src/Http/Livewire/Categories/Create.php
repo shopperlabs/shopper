@@ -13,12 +13,17 @@ class Create extends AbstractBaseComponent
     use WithUploadProcess;
 
     public string $name = '';
-
     public ?int $parent_id = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = true;
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|max:150|unique:' . shopper_table('categories'),
+            'file' => 'nullable|image|max:1024',
+        ];
+    }
 
     public function store(): void
     {
@@ -33,20 +38,12 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.category'), $category->id);
+            $this->uploadFile('category', $category->id);
         }
 
         session()->flash('success', __('Category successfully added!'));
 
         $this->redirectRoute('shopper.categories.index');
-    }
-
-    public function rules(): array
-    {
-        return [
-            'name' => 'required|max:150|unique:' . shopper_table('categories'),
-            'file' => 'nullable|image|max:1024',
-        ];
     }
 
     public function render()

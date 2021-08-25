@@ -16,15 +16,10 @@ class Edit extends AbstractBaseComponent
     use WithUploadProcess;
 
     public $category;
-
     public int $categoryId;
-
     public string $name = '';
-
     public ?int $parent_id = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = false;
 
     protected $listeners = ['fileDeleted'];
@@ -39,9 +34,19 @@ class Edit extends AbstractBaseComponent
         $this->is_enabled = $category->is_enabled;
     }
 
-    /**
-     * Update category record in the database.
-     */
+    public function rules(): array
+    {
+        return [
+            'name' => [
+                'sometimes',
+                'required',
+                'max:150',
+                Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
+            ],
+            'file' => 'sometimes|nullable|image|max:1024',
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules());
@@ -62,25 +67,12 @@ class Edit extends AbstractBaseComponent
                 File::query()->where('filetable_id', $this->categoryId)->delete();
             }
 
-            $this->uploadFile(config('shopper.system.models.category'), $this->category->id);
+            $this->uploadFile('category', $this->category->id);
         }
 
         session()->flash('success', __('Category successfully updated!'));
 
         $this->redirectRoute('shopper.categories.index');
-    }
-
-    public function rules(): array
-    {
-        return [
-            'name' => [
-                'sometimes',
-                'required',
-                'max:150',
-                Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
-            ],
-            'file' => 'sometimes|nullable|image|max:1024',
-        ];
     }
 
     /**
@@ -102,7 +94,7 @@ class Edit extends AbstractBaseComponent
                 ->get()
                 ->except($this->category->id),
             'media' => $this->category->files->isNotEmpty()
-                ? $this->category->files->first()
+                ? $this->category->getFirstImage()
                 : null,
         ]);
     }
