@@ -40,7 +40,7 @@
 
                         <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 0), 'bg-blue-50 border-blue-200 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-blue-50 border-blue-200 z-10">
                             <div class="flex items-center h-5">
-                                <input wire:model="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer" checked="">
+                                <input wire:model.defer="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer" checked="">
                             </div>
                             <label for="collection-type-0" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-blue-900': active === 0, 'text-gray-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-blue-900">
@@ -54,7 +54,7 @@
 
                         <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 1), 'bg-blue-50 border-blue-200 z-10': active === 1 }" class="relative border rounded-md border-gray-200 p-4 flex">
                             <div class="flex items-center h-5">
-                                <input wire:model="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
+                                <input wire:model.defer="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
                             </div>
                             <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-blue-900': active === 1, 'text-gray-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-gray-900">
@@ -92,7 +92,7 @@
                                     <div wire:key="condition-{{ $conditionKey }}"  class="flex items-center space-x-4">
                                         <div class="grid grid-cols-3 gap-4">
                                             <div>
-                                                <x-shopper-input.select wire:model="rule.{{ $conditionValue }}" aria-label="{{ __('Rules') }}">
+                                                <x-shopper-input.select wire:model.lazy="rule.{{ $conditionValue }}" aria-label="{{ __('Rules') }}">
                                                     <option>{{ __('Choose a rule') }}</option>
                                                     @foreach($this->collectionRules as $ruleKey => $ruleValue)
                                                         <option value="{{ $ruleKey }}" @if($loop->first) selected @endif>{{ $ruleValue['name'] }}</option>
@@ -101,7 +101,7 @@
                                                 @error('rule.'.$conditionValue) <p class="mt-1 text-sm leading-5 text-red-500">{{ $message }}</p> @enderror
                                             </div>
                                             <div>
-                                                <x-shopper-input.select wire:model="operator.{{ $conditionValue }}" aria-label="{{ __('Conditions') }}">
+                                                <x-shopper-input.select wire:model.lazy="operator.{{ $conditionValue }}" aria-label="{{ __('Conditions') }}">
                                                     <option>{{ __('Select Operator') }}</option>
                                                     @foreach($this->operators as $operatorKey => $operatorValue)
                                                         <option value="{{ $operatorKey }}" @if($loop->first) selected @endif>{{ $operatorValue['name'] }}</option>
@@ -111,7 +111,7 @@
                                             </div>
                                             <div>
                                                 <div class="relative rounded-md shadow-sm">
-                                                    <x-shopper-input.text wire:model="value.{{ $conditionValue }}" type="text" class="w-full pr-12" aria-label="{{ __('Value') }}" placeholder="{{ __('your value here') }}" />
+                                                    <x-shopper-input.text wire:model.lazy="value.{{ $conditionValue }}" type="text" class="w-full pr-12" aria-label="{{ __('Value') }}" placeholder="{{ __('your value here') }}" />
                                                 </div>
                                                 @error('value.'.$conditionValue) <p class="mt-1 text-sm leading-5 text-red-500">{{ $message }}</p> @enderror
                                             </div>
@@ -162,7 +162,7 @@
                 @if($updateSeo)
                     <div class="px-4 py-5 sm:px-6 space-y-5">
                         <x-shopper-input.group for="seo_title" label="Title">
-                            <x-shopper-input.text wire:model="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                            <x-shopper-input.text wire:model.defer="seoTitle" id="seo_title" type="text" autocomplete="off" />
                         </x-shopper-input.group>
                         <div>
                             <div class="flex items-center justify-between">
@@ -170,7 +170,7 @@
                                 <span class="ml-4 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('160 characters') }}</span>
                             </div>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <x-shopper-input.textarea wire:model="seoDescription" id="seo_description" />
+                                <x-shopper-input.textarea wire:model.defer="seoDescription" id="seo_description" />
                             </div>
                         </div>
                     </div>
@@ -189,7 +189,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <x-heroicon-o-calendar class="h-5 w-5 text-gray-400 dark:text-gray-500" />
                         </div>
-                        <x-shopper-input.text wire:model="publishedAt" x-ref="input" id="date" type="text" class="pl-10" placeholder="{{ __('Choose a date') }}" readonly />
+                        <x-shopper-input.text wire:model.defer="publishedAt" x-ref="input" id="date" type="text" class="pl-10" placeholder="{{ __('Choose a date') }}" readonly />
                     </div>
                     @if($publishedAt)
                         <div class="mt-2 flex items-start">
