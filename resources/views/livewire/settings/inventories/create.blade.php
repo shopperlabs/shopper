@@ -94,7 +94,7 @@
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                             <div class="sm:col-span-6">
                                 <x-shopper-input.group label="Street address" for="street_address" :error="$errors->first('street_address')">
-                                    <x-shopper-input.text wire:model="street_address" id="street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
+                                    <x-shopper-input.text wire:model.defer="street_address" id="street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
                                 </x-shopper-input.group>
                             </div>
 
@@ -104,13 +104,13 @@
                                     <span class="ml-4 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
-                                    <x-shopper-input.text wire:model="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
                                 </div>
                             </div>
 
                             <div class="sm:col-span-6">
                                 <x-shopper-input.group for="country_id" label="Country" :error="$errors->first('country_id')">
-                                    <x-shopper-input.select wire:model="country_id" id="country_id">
+                                    <x-shopper-input.select wire:model.defer="country_id" id="country_id">
                                         <option value="0">{{ __('Choose a Country') }}</option>
                                         @foreach($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
@@ -121,13 +121,13 @@
 
                             <div class="sm:col-span-3">
                                 <x-shopper-input.group label="City" for="city" :error="$errors->first('city')">
-                                    <x-shopper-input.text wire:model="city" id="city" type="text" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="city" id="city" type="text" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
 
                             <div class="sm:col-span-3">
                                 <x-shopper-input.group label="Postal / Zip code" for="zipcode" :error="$errors->first('zipcode')">
-                                    <x-shopper-input.text wire:model="zipcode" id="zipcode" type="text" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="zipcode" id="zipcode" type="text" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
 
@@ -141,7 +141,7 @@
                                         initialCountry: 'auto',
                                         geoIpLookup: function(success, failure) {
                                             $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                var countryCode = (resp && resp.country) ? resp.country : '';
+                                                var countryCode = (resp && resp.country) ? resp.country : 'CM';
                                                 success(countryCode);
                                             });
                                         },
@@ -158,7 +158,7 @@
                                 class="sm:col-span-6"
                             >
                                 <x-shopper-input.group label="Phone number" for="phone_number" :error="$errors->first('phone_number')">
-                                    <x-shopper-input.text wire:model="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
                                     @error('phone_number')
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                             <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
