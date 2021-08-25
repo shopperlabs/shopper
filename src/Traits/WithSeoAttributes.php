@@ -12,16 +12,6 @@ trait WithSeoAttributes
     public $updateSeo = false;
 
     /**
-     * Map default SEO title and Description to a Model.
-     *
-     * @var array<string>
-     */
-    public $seoAttributes = [
-        'name' => 'name',
-        'description' => 'description',
-    ];
-
-    /**
      * Seo Display title.
      *
      * @var string

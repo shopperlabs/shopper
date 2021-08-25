@@ -3,8 +3,8 @@
 @endpush
 
 <div>
-    <div class="mt-6 grid sm:grid-cols-6 gap-4 lg:gap-6">
-        <div class="sm:col-span-4 space-y-5">
+    <div class="mt-6 grid xl:grid-cols-6 gap-4 lg:gap-6">
+        <div class="xl:col-span-4 space-y-5">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div class="sm:col-span-2">
+        <div class="xl:col-span-2">
             <aside class="space-y-5">
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden divide-y divide-gray-200 dark:divide-gray-700">
                     <div class="p-4 sm:p-5">

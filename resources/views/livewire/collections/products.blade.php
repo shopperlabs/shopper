@@ -36,7 +36,7 @@
                             <div class="flex items-center">
                                 @if($product->getFirstImage())
                                     <span class="flex-shrink-0 h-10 w-10 rounded-md overflow-hidden">
-                                        <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstImage()->file_path }}" alt="" />
+                                        <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstImage()->image_full_path }}" alt="" />
                                     </span>
                                 @else
                                     <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md dark:bg-gray-700 dark:text-gray-400">

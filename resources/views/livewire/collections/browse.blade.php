@@ -167,13 +167,13 @@
                             <div class="rounded-md bg-white dark:bg-gray-800 shadow-xs">
                                 <div class="py-1">
                                     <div class="flex items-center py-2 px-4">
-                                        <input wire:model="type" id="type_manual" name="type" type="radio" value="manual" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                        <input wire:model.defer="type" id="type_manual" name="type" type="radio" value="manual" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="type_manual" class="cursor-pointer ml-3">
                                             <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ __('Manual') }}</span>
                                         </label>
                                     </div>
                                     <div class="flex items-center py-2 px-4">
-                                        <input wire:model="type" id="type_auto" name="type" type="radio" value="auto" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                        <input wire:model.defer="type" id="type_auto" name="type" type="radio" value="auto" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
                                         <label for="type_auto" class="cursor-pointer ml-3">
                                             <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ __('Automatic') }}</span>
                                         </label>
@@ -206,8 +206,8 @@
                                     <td class="px-6 py-3 max-w-lg whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="flex items-center">
-                                                @if($collection->files->count() > 0)
-                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $collection->files->first()->file_path }}" alt="">
+                                                @if($collection->getFirstImage())
+                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $collection->getFirstImage()->image_full_path }}" alt=""/>
                                                 @else
                                                     <div class="bg-gray-200 flex items-center justify-center h-8 w-8 rounded dark:bg-gray-700">
                                                         <x-heroicon-o-photograph class="w-5 h-5 text-gray-400 dark:txt-gray-500" />

@@ -20,61 +20,14 @@ class Edit extends AbstractBaseComponent
     use WithConditions;
     use WithSeoAttributes;
 
-    /**
-     * Collection Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $collection;
-
-    /**
-     * Collection Id.
-     *
-     * @var int
-     */
-    public $collectionId;
-
-    /**
-     * Collection name.
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Collection sample description.
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Type of collection that's be created.
-     *
-     * @var string
-     */
-    public $type = 'auto';
-
-    /**
-     * Publish date for the collection.
-     *
-     * @var string
-     */
-    public $publishedAt;
-
-    /**
-     * Formatted publishedAt date.
-     *
-     * @var string
-     */
-    public $publishedAtFormatted;
-
-    /**
-     * The condition apply to the product of the collection.
-     *
-     * @var string
-     */
-    public $condition_match = 'all';
+    public int $collectionId;
+    public string $name = '';
+    public ?string $description = null;
+    public string $type = 'auto';
+    public ?string $publishedAt = null;
+    public ?string $publishedAtFormatted = null;
+    public string $condition_match = 'all';
 
     /**
      * Products of the collections.
@@ -83,18 +36,13 @@ class Edit extends AbstractBaseComponent
      */
     public $products;
 
-    /**
-     * Upload listeners.
-     *
-     * @var array<string>
-     */
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
+
     protected $listeners = ['fileDeleted'];
 
-    /**
-     * Component mounted action.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $collection
-     */
     public function mount($collection)
     {
         $this->collection = $collection;
@@ -111,9 +59,20 @@ class Edit extends AbstractBaseComponent
         $this->seoDescription = $collection->seo_description;
     }
 
-    /**
-     * Update collection item in the database.
-     */
+    public function rules(): array
+    {
+        return [
+            'name' => [
+                'sometimes',
+                'required',
+                'max:150',
+                Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
+            ],
+            'file' => 'sometimes|nullable|image|max:1024',
+            'type' => 'sometimes|required',
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules());
@@ -163,25 +122,6 @@ class Edit extends AbstractBaseComponent
     }
 
     /**
-     * Component validation rules.
-     *
-     * @return array<string>
-     */
-    public function rules(): array
-    {
-        return [
-            'name' => [
-                'sometimes',
-                'required',
-                'max:150',
-                Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
-            ],
-            'file' => 'sometimes|nullable|image|max:1024',
-            'type' => 'sometimes|required',
-        ];
-    }
-
-    /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
      */
@@ -190,16 +130,11 @@ class Edit extends AbstractBaseComponent
         $this->media = null;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.collections.edit', [
             'media' => $this->collection->files->isNotEmpty()
-                ? $this->collection->files->first()
+                ? $this->collection->getFirstImage()
                 : null,
         ]);
     }

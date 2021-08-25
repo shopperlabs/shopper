@@ -9,18 +9,11 @@ class Products extends Component
     public $collection;
 
     public string $sortBy = 'name';
-
     public string $sortValue = 'name';
-
     public string $direction = 'asc';
 
     protected $listeners = ['onProductsAddInCollection' => 'render'];
 
-    /**
-     * Component mount instance.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $collection
-     */
     public function mount($collection)
     {
         $this->collection = $collection;

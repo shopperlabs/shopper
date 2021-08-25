@@ -22,16 +22,16 @@ class Create extends AbstractBaseComponent
     use WithSeoAttributes;
     use WithUploadProcess;
 
-    /**
-     * Default product stock quantity.
-     */
-    public $quantity;
-
+    public mixed $quantity;
     public array $category_ids = [];
-
     public array $collection_ids = [];
 
     public ?Channel $defaultChannel = null;
+
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
 
     protected $listeners = ['productAdded'];
 
@@ -87,7 +87,7 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.product'), $product->id);
+            $this->uploadFile('product', $product->id);
         }
 
         if (count($this->category_ids) > 0) {

@@ -11,32 +11,15 @@ class Seo extends Component
 {
     use WithSeoAttributes;
 
-    /**
-     * Product Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $product;
+    public int $productId;
+    public string $slug;
 
-    /**
-     * Product id.
-     *
-     * @var int
-     */
-    public $productId;
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
 
-    /**
-     * Product slug url.
-     *
-     * @var string
-     */
-    public $slug;
-
-    /**
-     * Component Mount method.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $product
-     */
     public function mount($product)
     {
         $this->product = $product;

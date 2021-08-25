@@ -22,20 +22,11 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $product;
-
     public int $productId;
-
     public string $currency;
-
     public Collection $category_ids;
-
     public Collection $collection_ids;
 
-    /**
-     * Component Mount method.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $product
-     */
     public function mount($product, string $currency)
     {
         $this->product = $product;
@@ -61,7 +52,7 @@ class Edit extends AbstractBaseComponent
         return [
             'name' => 'required',
             'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
+            'brand_id' => 'nullable|exists:' . shopper_table('brands') . ',id',
         ];
     }
 
@@ -83,7 +74,7 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.product'), $this->productId);
+            $this->uploadFile('product', $this->productId);
         }
 
         if (count($this->category_ids) > 0) {

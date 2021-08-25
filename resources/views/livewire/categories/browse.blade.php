@@ -141,8 +141,8 @@
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $category->is_enabled ? 'bg-green-600': 'bg-gray-400 dark:bg-gray-600' }}"></div>
                                             <div class="flex items-center">
-                                                @if($category->files->count() > 0)
-                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $category->files->first()->file_path }}" alt="">
+                                                @if($category->getFirstImage() > 0)
+                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $category->getFirstImage()->image_full_path }}" alt="" />
                                                 @else
                                                     <div class="flex items-center justify-center h-8 w-8 bg-gray-200 rounded dark:bg-gray-700">
                                                         <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />

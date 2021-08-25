@@ -19,47 +19,17 @@ class Create extends Component
     use WithConditions;
     use WithSeoAttributes;
 
-    /**
-     * Collection name.
-     *
-     * @var string
-     */
-    public $name;
+    public string $name = '';
+    public ?string $description = null;
+    public string $type = 'auto';
+    public ?string $publishedAt = null;
+    public ?string $publishedAtFormatted = null;
+    public string $condition_match = 'all';
 
-    /**
-     * Collection sample description.
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Type of collection that's be created.
-     *
-     * @var string
-     */
-    public $type = 'auto';
-
-    /**
-     * Publish date for the collection.
-     *
-     * @var string
-     */
-    public $publishedAt;
-
-    /**
-     * Formatted publishedAt date.
-     *
-     * @var string
-     */
-    public $publishedAtFormatted;
-
-    /**
-     * The condition apply to the product of the collection.
-     *
-     * @var string
-     */
-    public $condition_match = 'all';
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
 
     /**
      * Live updated Formatted publishedAt attribute.
