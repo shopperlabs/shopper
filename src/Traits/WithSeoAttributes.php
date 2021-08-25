@@ -4,33 +4,16 @@ namespace Shopper\Framework\Traits;
 
 trait WithSeoAttributes
 {
-    /**
-     * Update SEO elements.
-     *
-     * @var bool
-     */
-    public $updateSeo = false;
-
-    /**
-     * Seo Display title.
-     *
-     * @var string
-     */
-    public $seoTitle;
-
-    /**
-     * Seo description.
-     *
-     * @var string
-     */
-    public $seoDescription;
+    public bool $updateSeo = false;
+    public ?string $seoTitle = null;
+    public ?string $seoDescription = null;
 
     /**
      * Define is the current action is create or update.
      *
      * @return false
      */
-    public function isUpdate()
+    public function isUpdate(): bool
     {
         return false;
     }

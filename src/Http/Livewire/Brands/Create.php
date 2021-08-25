@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Brands;
 
 use Livewire\WithFileUploads;
+use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
@@ -11,11 +12,17 @@ class Create extends AbstractBaseComponent
 {
     use WithFileUploads;
     use WithUploadProcess;
+    use WithSeoAttributes;
 
     public string $name = '';
     public ?string $website = null;
     public ?string $description = null;
     public bool $is_enabled = true;
+
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
 
     public function store(): void
     {
@@ -27,6 +34,8 @@ class Create extends AbstractBaseComponent
             'website' => $this->website,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
+            'seo_title' => $this->seoTitle,
+            'seo_description' => $this->seoDescription,
         ]);
 
         if ($this->file) {

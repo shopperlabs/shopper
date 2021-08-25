@@ -162,7 +162,7 @@
                 @if($updateSeo)
                     <div class="px-4 py-5 sm:px-6 space-y-5">
                         <x-shopper-input.group for="seo_title" label="Title">
-                            <x-shopper-input.text wire:model.defer="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                            <x-shopper-input.text wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
                         </x-shopper-input.group>
                         <div>
                             <div class="flex items-center justify-between">
@@ -170,7 +170,7 @@
                                 <span class="ml-4 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('160 characters') }}</span>
                             </div>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <x-shopper-input.textarea wire:model.defer="seoDescription" id="seo_description" />
+                                <x-shopper-input.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\File;
+use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
@@ -13,6 +14,7 @@ class Edit extends AbstractBaseComponent
 {
     use WithFileUploads;
     use WithUploadProcess;
+    use WithSeoAttributes;
 
     public $brand;
 
@@ -21,6 +23,11 @@ class Edit extends AbstractBaseComponent
     public ?string $website = null;
     public ?string $description = null;
     public bool $is_enabled = false;
+
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
 
     protected $listeners = ['fileDeleted'];
 
@@ -35,6 +42,19 @@ class Edit extends AbstractBaseComponent
         $this->website = $brand->website;
         $this->description = $brand->description;
         $this->is_enabled = $brand->is_enabled;
+        $this->updateSeo = true;
+        $this->seoTitle = $brand->seo_title;
+        $this->seoDescription = $brand->seo_description;
+    }
+
+    /**
+     * Define is the current action is create or update for the SEO Trait.
+     *
+     * @return false
+     */
+    public function isUpdate(): bool
+    {
+        return true;
     }
 
     public function store(): void
@@ -47,6 +67,8 @@ class Edit extends AbstractBaseComponent
             'website' => $this->website,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
+            'seo_title' => $this->seoTitle,
+            'seo_description' => str_limit($this->seoDescription, 157),
         ]);
 
         if ($this->file) {

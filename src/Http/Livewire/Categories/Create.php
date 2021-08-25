@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Livewire\WithFileUploads;
+use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
@@ -11,11 +12,17 @@ class Create extends AbstractBaseComponent
 {
     use WithFileUploads;
     use WithUploadProcess;
+    use WithSeoAttributes;
 
     public string $name = '';
     public ?int $parent_id = null;
     public ?string $description = null;
     public bool $is_enabled = true;
+
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
 
     public function rules(): array
     {
@@ -35,6 +42,8 @@ class Create extends AbstractBaseComponent
             'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
+            'seo_title' => $this->seoTitle,
+            'seo_description' => $this->seoDescription,
         ]);
 
         if ($this->file) {

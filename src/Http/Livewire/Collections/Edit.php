@@ -54,7 +54,7 @@ class Edit extends AbstractBaseComponent
         $this->condition_match = $collection->match_conditions;
         $this->publishedAt = $collection->published_at;
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $collection->published_at->toDateString())->toRfc7231String();
-        $this->updateSeo = $collection->seo_title !== null;
+        $this->updateSeo = true;
         $this->seoTitle = $collection->seo_title;
         $this->seoDescription = $collection->seo_description;
     }
@@ -104,7 +104,7 @@ class Edit extends AbstractBaseComponent
     }
 
     /**
-     * Define is the current action is create or update.
+     * Define is the current action is create or update for the SEO Trait.
      *
      * @return false
      */

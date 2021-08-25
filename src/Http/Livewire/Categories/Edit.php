@@ -6,6 +6,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\File;
+use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
@@ -14,6 +15,7 @@ class Edit extends AbstractBaseComponent
 {
     use WithFileUploads;
     use WithUploadProcess;
+    use WithSeoAttributes;
 
     public $category;
     public int $categoryId;
@@ -21,6 +23,11 @@ class Edit extends AbstractBaseComponent
     public ?int $parent_id = null;
     public ?string $description = null;
     public bool $is_enabled = false;
+
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
 
     protected $listeners = ['fileDeleted'];
 
@@ -32,6 +39,19 @@ class Edit extends AbstractBaseComponent
         $this->parent_id = $category->parent_id;
         $this->description = $category->description;
         $this->is_enabled = $category->is_enabled;
+        $this->updateSeo = true;
+        $this->seoTitle = $category->seo_title;
+        $this->seoDescription = $category->seo_description;
+    }
+
+    /**
+     * Define is the current action is create or update for the SEO Trait.
+     *
+     * @return false
+     */
+    public function isUpdate(): bool
+    {
+        return true;
     }
 
     public function rules(): array
@@ -57,6 +77,8 @@ class Edit extends AbstractBaseComponent
             'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
+            'seo_title' => $this->seoTitle,
+            'seo_description' => str_limit($this->seoDescription, 157),
         ]);
 
         if ($this->file) {
