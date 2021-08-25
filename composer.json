@@ -23,7 +23,7 @@
     }
   ],
   "require": {
-    "php": "^7.4|^8",
+    "php": "^8",
     "ext-intl": "*",
     "ext-json": "*",
     "askedio/laravel-soft-cascade": "^8.1",
