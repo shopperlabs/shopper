@@ -24,7 +24,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
+                        <x-shopper-input.text wire:model.lazy="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-4">
@@ -32,7 +32,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 dark:text-gray-400 sm:text-sm sm:leading-5">https://</span>
                         </div>
-                        <x-shopper-input.text wire:model="website" id="website" type="text" class="pl-16" placeholder="www.example.com" />
+                        <x-shopper-input.text wire:model.defer="website" id="website" type="text" class="pl-16" placeholder="www.example.com" />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-5 border-t border-b border-gray-200 dark:border-gray-700 py-4">
@@ -68,7 +68,7 @@
                             <div class="mt-4 p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-dashed border-gray-200 dark:border-gray-600 flex items-center justify-between">
                                 <div class="flex flex-1 items-center space-x-2 truncate">
                                     <div class="flex-shrink-0 w-10 h-10 overflow-hidden rounded-md">
-                                        <img class="h-full w-full object-cover" src="{{ $media->file_path }}" alt="">
+                                        <img class="h-full w-full object-cover" src="{{ $media->image_full_path }}" alt="">
                                     </div>
                                     <div class="truncate">
                                         <h4 class="text-sm leading-5 text-gray-500 dark:text-gray-400 truncate">{{ $media->file_name }}</h4>
