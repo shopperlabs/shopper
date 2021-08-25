@@ -2,13 +2,14 @@
 
 namespace Shopper\Framework\Models\User;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use function count;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable;
-use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Models\Shop\Order\Order;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 

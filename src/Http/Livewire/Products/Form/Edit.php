@@ -22,9 +22,13 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $product;
+
     public int $productId;
+
     public string $currency;
+
     public Collection $category_ids;
+
     public Collection $collection_ids;
 
     public function mount($product, string $currency)

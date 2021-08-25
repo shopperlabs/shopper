@@ -14,13 +14,21 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 class CreateAdminUser extends AbstractBaseComponent
 {
     public bool $send_mail = false;
+
     public string $email;
+
     public string $password;
+
     public string $first_name;
+
     public string $last_name;
+
     public string $gender = 'male';
+
     public string $phone_number;
+
     public int $role_id;
+
     public bool $is_admin = false;
 
     public function generate()

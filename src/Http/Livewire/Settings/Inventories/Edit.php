@@ -11,16 +11,27 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 class Edit extends AbstractBaseComponent
 {
     public Inventory $inventory;
+
     public int $inventoryId;
+
     public string $name;
+
     public ?string $description;
+
     public string $email;
+
     public string $city;
+
     public string $street_address;
+
     public ?string $street_address_plus;
+
     public string $zipcode;
+
     public ?string $phone_number;
+
     public int $country_id;
+
     public bool $isDefault = false;
 
     public function mount(Inventory $inventory)

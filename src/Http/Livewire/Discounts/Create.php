@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
-use JetBrains\PhpStorm\ArrayShape;
 use Shopper\Framework\Models\User\User;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Shop\Discount;

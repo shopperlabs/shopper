@@ -15,6 +15,7 @@ class Browse extends Component
     use WithSorting;
 
     public string $search = '';
+
     public ?string $type = null;
 
     public function paginationView(): string
