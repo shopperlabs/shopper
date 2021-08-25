@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\System;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Storage;
 
 class File extends Model
@@ -41,7 +42,7 @@ class File extends Model
      * @var array
      */
     protected $appends = [
-        'file_path',
+        'image_full_path',
     ];
 
     /**
@@ -66,22 +67,12 @@ class File extends Model
         return round($value, 2) . ' ' . $units[$i];
     }
 
-    /**
-     * Get the file full path.
-     *
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
-     */
-    public function getFilePathAttribute()
+    public function getImageFullPathAttribute(): string
     {
         return Storage::disk(config('shopper.system.storage.disks.uploads'))->url($this->disk_name);
     }
 
-    /**
-     * Get all of the owning filetable models.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function filetable()
+    public function filetable(): MorphTo
     {
         return $this->morphTo();
     }
