@@ -2,12 +2,14 @@
 
 namespace Shopper\Framework\Models\User;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use function count;
 use Illuminate\Support\Facades\Storage;
-use Shopper\Framework\Models\Traits\{CanHaveDiscount, ShopperUser};
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Models\Shop\Order\Order;
+use Shopper\Framework\Models\Traits\ShopperUser;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 
 class User extends Authenticatable

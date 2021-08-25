@@ -13,13 +13,21 @@ class Edit extends AbstractBaseComponent
      * Current updated attribute.
      */
     public Attribute $attribute;
+
     public $attributeId;
+
     public string $name;
+
     public string $slug;
+
     public string $type = 'text';
+
     public ?string $description = null;
+
     public bool $isEnabled = false;
+
     public bool $isSearchable = false;
+
     public bool $isFilterable = false;
 
     /**

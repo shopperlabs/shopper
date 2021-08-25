@@ -12,7 +12,9 @@ class Seo extends Component
     use WithSeoAttributes;
 
     public $product;
+
     public int $productId;
+
     public string $slug;
 
     public $seoAttributes = [

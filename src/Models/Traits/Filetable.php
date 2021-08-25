@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait Filetable
 {
+    public function getFirstImage(): ?File
+    {
+        return $this->files->first();
+    }
+
+    public function files(): MorphMany
+    {
+        return $this->morphMany(File::class, 'filetable');
+    }
+
     protected static function booted()
     {
         static::deleting(function ($model) {
@@ -18,15 +28,5 @@ trait Filetable
                 $model->files()->delete();
             }
         });
-    }
-
-    public function getFirstImage(): ?File
-    {
-        return $this->files->first();
-    }
-
-    public function files(): MorphMany
-    {
-        return $this->morphMany(File::class, 'filetable');
     }
 }

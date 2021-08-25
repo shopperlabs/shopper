@@ -10,14 +10,23 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 class Create extends AbstractBaseComponent
 {
     public string $name = '';
+
     public ?string $description = null;
+
     public string $email = '';
+
     public string $city = '';
+
     public string $street_address = '';
+
     public ?string $street_address_plus = null;
+
     public ?string $zipcode = null;
+
     public ?string $phone_number = null;
+
     public ?int $country_id = null;
+
     public bool $isDefault = false;
 
     public function rules(): array

@@ -5,7 +5,9 @@ namespace Shopper\Framework\Traits;
 trait WithSeoAttributes
 {
     public bool $updateSeo = false;
+
     public ?string $seoTitle = null;
+
     public ?string $seoDescription = null;
 
     /**
