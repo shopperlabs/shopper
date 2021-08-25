@@ -17,16 +17,9 @@ class Edit extends AbstractBaseComponent
     public $brand;
 
     public int $brand_id;
-
     public string $name;
-
     public ?string $website = null;
-
     public ?string $description = null;
-
-    /**
-     * Indicates if brand is being enabled.
-     */
     public bool $is_enabled = false;
 
     protected $listeners = ['fileDeleted'];
@@ -64,7 +57,7 @@ class Edit extends AbstractBaseComponent
                 File::query()->where('filetable_id', $this->brand_id)->delete();
             }
 
-            $this->uploadFile(config('shopper.system.models.brand'), $this->brand->id);
+            $this->uploadFile('brand', $this->brand->id);
         }
 
         session()->flash('success', __('Brand successfully updated!'));
@@ -97,7 +90,7 @@ class Edit extends AbstractBaseComponent
     {
         return view('shopper::livewire.brands.edit', [
             'media' => $this->brand->files->isNotEmpty()
-                ? $this->brand->files->first()
+                ? $this->brand->getFirstImage()
                 : null,
         ]);
     }

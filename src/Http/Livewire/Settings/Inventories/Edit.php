@@ -11,27 +11,16 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 class Edit extends AbstractBaseComponent
 {
     public Inventory $inventory;
-
     public int $inventoryId;
-
     public string $name;
-
     public ?string $description;
-
     public string $email;
-
     public string $city;
-
     public string $street_address;
-
     public ?string $street_address_plus;
-
     public string $zipcode;
-
     public ?string $phone_number;
-
     public int $country_id;
-
     public bool $isDefault = false;
 
     public function mount(Inventory $inventory)
@@ -48,6 +37,23 @@ class Edit extends AbstractBaseComponent
         $this->zipcode = $inventory->zipcode;
         $this->isDefault = $inventory->is_default;
         $this->phone_number = $inventory->phone_number;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'email' => [
+                'required',
+                'email',
+                Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId),
+            ],
+            'name' => 'required|max:100',
+            'city' => 'required',
+            'street_address' => 'required',
+            'zipcode' => 'required',
+            'phone_number' => ['nullable', new Phone()],
+            'country_id' => 'required|exists:' . shopper_table('system_countries') . ',id',
+        ];
     }
 
     public function store()
@@ -77,22 +83,5 @@ class Edit extends AbstractBaseComponent
         return view('shopper::livewire.settings.inventories.edit', [
             'countries' => Country::query()->orderBy('name')->get(),
         ]);
-    }
-
-    protected function rules(): array
-    {
-        return [
-            'email' => [
-                'required',
-                'email',
-                Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId),
-            ],
-            'name' => 'required|max:100',
-            'city' => 'required',
-            'street_address' => 'required',
-            'zipcode' => 'required',
-            'phone_number' => ['nullable', new Phone()],
-            'country_id' => 'required|exists:' . shopper_table('system_countries') . ',id',
-        ];
     }
 }

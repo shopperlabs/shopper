@@ -13,13 +13,8 @@ class Create extends AbstractBaseComponent
     use WithUploadProcess;
 
     public string $name = '';
-
-    public string $slug;
-
     public ?string $website = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = true;
 
     public function store(): void
@@ -35,7 +30,7 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.brand'), $brand->id);
+            $this->uploadFile('brand', $brand->id);
         }
 
         session()->flash('success', __('Brand successfully added!'));

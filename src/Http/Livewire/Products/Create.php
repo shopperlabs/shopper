@@ -43,9 +43,17 @@ class Create extends AbstractBaseComponent
         $this->defaultChannel = Channel::query()->where('slug', 'web-store')->first();
     }
 
-    /**
-     * Store a newly entry to the storage.
-     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'bail|required',
+            'sku' => 'nullable|unique:' . shopper_table('products'),
+            'barcode' => 'nullable|unique:' . shopper_table('products'),
+            'file' => 'nullable|image|max:1024',
+            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules());
@@ -130,21 +138,5 @@ class Create extends AbstractBaseComponent
                 ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.system.barcode_type'))
                 : null,
         ]);
-    }
-
-    /**
-     * Component validation rules.
-     *
-     * @return array<string>
-     */
-    protected function rules(): array
-    {
-        return [
-            'name' => 'bail|required',
-            'sku' => 'nullable|unique:' . shopper_table('products'),
-            'barcode' => 'nullable|unique:' . shopper_table('products'),
-            'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
-        ];
     }
 }

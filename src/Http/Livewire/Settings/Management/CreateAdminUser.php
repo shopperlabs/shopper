@@ -13,70 +13,16 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class CreateAdminUser extends AbstractBaseComponent
 {
-    /**
-     * Indicate if user will receive mail with credentials.
-     */
     public bool $send_mail = false;
+    public string $email;
+    public string $password;
+    public string $first_name;
+    public string $last_name;
+    public string $gender = 'male';
+    public string $phone_number;
+    public int $role_id;
+    public bool $is_admin = false;
 
-    /**
-     * Admin email address.
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Admin password.
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Admin first name.
-     *
-     * @var string
-     */
-    public $first_name;
-
-    /**
-     * Admin last name.
-     *
-     * @var string
-     */
-    public $last_name;
-
-    /**
-     * Admin default gender.
-     *
-     * @var string
-     */
-    public $gender = 'male';
-
-    /**
-     * Phone number attribute.
-     *
-     * @var string
-     */
-    public $phone_number;
-
-    /**
-     * Admin define role id.
-     *
-     * @var int
-     */
-    public $role_id;
-
-    /**
-     * Define if the choose role is an admin role.
-     *
-     * @var bool
-     */
-    public $is_admin = false;
-
-    /**
-     * Generate a random 10 characters password.
-     */
     public function generate()
     {
         $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
@@ -84,33 +30,38 @@ class CreateAdminUser extends AbstractBaseComponent
         $this->resetErrorBag(['password']);
     }
 
-    /**
-     * Real-time component validation.
-     *
-     * @param string $field
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function updated($field)
+    public function updated(string $field)
     {
         $this->validateOnly($field, $this->rules(), $this->messages());
     }
 
-    /**
-     * Update roleId to determine if the choose role is an admin role.
-     *
-     * @param string $id
-     */
-    public function updatedRoleId($id)
+    public function updatedRoleId(int $id)
     {
         $chooseRole = Role::findById($id);
 
         $this->is_admin = $chooseRole->name === config('shopper.system.users.admin_role');
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     */
+    public function rules(): array
+    {
+        return [
+            'email' => [
+                'required',
+                'email',
+                Rule::unique(shopper_table('users'), 'email'),
+                new RealEmailValidator(),
+            ],
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'password' => 'required|min:8',
+            'role_id' => 'required',
+            'phone_number' => [
+                'nullable',
+                new Phone(),
+            ],
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules(), $this->messages());
@@ -137,37 +88,7 @@ class CreateAdminUser extends AbstractBaseComponent
         $this->redirectRoute('shopper.settings.users');
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return array<string>
-     */
-    public function rules()
-    {
-        return [
-            'email' => [
-                'required',
-                'email',
-                Rule::unique(shopper_table('users'), 'email'),
-                new RealEmailValidator(),
-            ],
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'password' => 'required|min:8',
-            'role_id' => 'required',
-            'phone_number' => [
-                'nullable',
-                new Phone(),
-            ],
-        ];
-    }
-
-    /**
-     * Custom error messages.
-     *
-     * @return array<string>
-     */
-    public function messages()
+    public function messages(): array
     {
         return [
             'email.required' => __('Email is required'),
@@ -181,11 +102,6 @@ class CreateAdminUser extends AbstractBaseComponent
         ];
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.management.create', [

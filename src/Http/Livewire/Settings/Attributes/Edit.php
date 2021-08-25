@@ -13,62 +13,14 @@ class Edit extends AbstractBaseComponent
      * Current updated attribute.
      */
     public Attribute $attribute;
-
-    /**
-     * Attribute id for validation.
-     *
-     * @var int
-     */
     public $attributeId;
-
-    /**
-     * Attribute name.
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Attribute slug code.
-     *
-     * @var string
-     */
-    public $slug;
-
-    /**
-     * Attribute type.
-     *
-     * @var string
-     */
-    public $type = 'text';
-
-    /**
-     * Attribute description.
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Define if the attribute is enabled for the client side.
-     *
-     * @var bool
-     */
-    public $isEnabled = false;
-
-    /**
-     * Define if the attribute can be searchable.
-     *
-     * @var bool
-     */
-    public $isSearchable = false;
-
-    /**
-     * Define if the attribute can be filterable.
-     *
-     * @var bool
-     */
-    public $isFilterable = false;
+    public string $name;
+    public string $slug;
+    public string $type = 'text';
+    public ?string $description = null;
+    public bool $isEnabled = false;
+    public bool $isSearchable = false;
+    public bool $isFilterable = false;
 
     /**
      * Component Mount new instance.
@@ -86,16 +38,25 @@ class Edit extends AbstractBaseComponent
         $this->isFilterable = $attribute->is_filterable;
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     */
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|max:75',
+            'slug' => [
+                'required',
+                Rule::unique(shopper_table('attributes'), 'slug')->ignore($this->attributeId),
+            ],
+            'type' => 'required',
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules());
 
         Attribute::query()->find($this->attributeId)->update([
             'name' => $this->name,
-            'slug' => str_slug($this->slug, '-'),
+            'slug' => $this->slug,
             'type' => $this->type,
             'description' => $this->description,
             'is_enabled' => $this->isEnabled,
@@ -109,9 +70,6 @@ class Edit extends AbstractBaseComponent
         ]);
     }
 
-    /**
-     * Check if the attribute has default values.
-     */
     public function hasValues(): bool
     {
         return in_array($this->type, Attribute::fieldsWithValues());
@@ -122,22 +80,5 @@ class Edit extends AbstractBaseComponent
         return view('shopper::livewire.settings.attributes.edit', [
             'fields' => Attribute::typesFields(),
         ]);
-    }
-
-    /**
-     * Component validation rules.
-     *
-     * @return array<string>
-     */
-    protected function rules()
-    {
-        return [
-            'name' => 'required|max:75',
-            'slug' => [
-                'required',
-                Rule::unique(shopper_table('attributes'), 'slug')->ignore($this->attributeId),
-            ],
-            'type' => 'required',
-        ];
     }
 }

@@ -10,31 +10,29 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 class Create extends AbstractBaseComponent
 {
     public string $name = '';
-
     public ?string $description = null;
-
     public string $email = '';
-
     public string $city = '';
-
     public string $street_address = '';
-
     public ?string $street_address_plus = null;
-
     public ?string $zipcode = null;
-
     public ?string $phone_number = null;
-
     public ?int $country_id = null;
-
-    /**
-     * Define if the inventory is the default.
-     */
     public bool $isDefault = false;
 
-    /**
-     * Store/Update a entry to the storage.
-     */
+    public function rules(): array
+    {
+        return [
+            'email' => 'required|email|unique:' . shopper_table('inventories'),
+            'name' => 'required|max:100',
+            'city' => 'required',
+            'street_address' => 'required',
+            'zipcode' => 'required',
+            'phone_number' => ['nullable', new Phone()],
+            'country_id' => 'required|exists:' . shopper_table('system_countries') . ',id',
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules());
@@ -63,18 +61,5 @@ class Create extends AbstractBaseComponent
         return view('shopper::livewire.settings.inventories.create', [
             'countries' => Country::select('name', 'id')->orderBy('name')->get(),
         ]);
-    }
-
-    protected function rules(): array
-    {
-        return [
-            'email' => 'required|email|unique:' . shopper_table('inventories'),
-            'name' => 'required|max:100',
-            'city' => 'required',
-            'street_address' => 'required',
-            'zipcode' => 'required',
-            'phone_number' => ['nullable', new Phone()],
-            'country_id' => 'required|exists:' . shopper_table('system_countries') . ',id',
-        ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
+use JetBrains\PhpStorm\ArrayShape;
 use Shopper\Framework\Models\User\User;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Shop\Discount;
@@ -26,9 +27,17 @@ class Create extends AbstractBaseComponent
         $this->dateStart = now()->format('Y-m-d H:i');
     }
 
-    /**
-     * Store a newly entry to the database.
-     */
+    public function rules(): array
+    {
+        return [
+            'code' => 'required|unique:' . shopper_table('discounts'),
+            'type' => 'required',
+            'value' => 'required',
+            'apply' => 'required',
+            'dateStart' => 'required',
+        ];
+    }
+
     public function store()
     {
         if ($this->minRequired !== 'none') {
@@ -112,21 +121,5 @@ class Create extends AbstractBaseComponent
             ->except($this->customersIds);
 
         return view('shopper::livewire.discounts.create');
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string>
-     */
-    protected function rules(): array
-    {
-        return [
-            'code' => 'required|unique:' . shopper_table('discounts'),
-            'type' => 'required',
-            'value' => 'required',
-            'apply' => 'required',
-            'dateStart' => 'required',
-        ];
     }
 }

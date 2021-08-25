@@ -10,36 +10,11 @@ class Browse extends Component
 {
     use WithPagination;
 
-    /**
-     * Search.
-     *
-     * @var string
-     */
-    public $search = '';
+    public string $search = '';
 
-    /**
-     * Sort direction.
-     *
-     * @var string
-     */
-    public $direction = 'desc';
-
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
-    }
-
-    /**
-     * Sort results.
-     */
-    public function sort(string $value)
-    {
-        $this->direction = $value === 'asc' ? 'desc' : 'asc';
     }
 
     public function remove(int $id)
@@ -59,7 +34,6 @@ class Browse extends Component
             'total' => (new BrandRepository())->count(),
             'brands' => (new BrandRepository())
                 ->where('name', '%' . $this->search . '%', 'like')
-                ->orderBy('created_at', $this->direction)
                 ->paginate(8),
         ]);
     }

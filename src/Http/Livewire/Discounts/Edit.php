@@ -78,9 +78,21 @@ class Edit extends AbstractBaseComponent
         }
     }
 
-    /**
-     * Store a newly entry to the database.
-     */
+    public function rules(): array
+    {
+        return [
+            'code' => [
+                'sometimes',
+                'required',
+                Rule::unique(shopper_table('discounts'), 'code')->ignore($this->discountId),
+            ],
+            'type' => 'sometimes|required',
+            'value' => 'sometimes|required',
+            'apply' => 'sometimes|required',
+            'dateStart' => 'sometimes|required',
+        ];
+    }
+
     public function store()
     {
         if ($this->minRequired !== 'none') {
@@ -192,23 +204,5 @@ class Edit extends AbstractBaseComponent
             ->except($this->customersIds);
 
         return view('shopper::livewire.discounts.edit');
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     */
-    protected function rules(): array
-    {
-        return [
-            'code' => [
-                'sometimes',
-                'required',
-                Rule::unique(shopper_table('discounts'), 'code')->ignore($this->discountId),
-            ],
-            'type' => 'sometimes|required',
-            'value' => 'sometimes|required',
-            'apply' => 'sometimes|required',
-            'dateStart' => 'sometimes|required',
-        ];
     }
 }

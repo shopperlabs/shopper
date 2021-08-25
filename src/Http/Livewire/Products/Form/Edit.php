@@ -56,6 +56,15 @@ class Edit extends AbstractBaseComponent
         $this->currency = $currency;
     }
 
+    public function rules(): array
+    {
+        return [
+            'name' => 'required',
+            'file' => 'nullable|image|max:1024',
+            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
+        ];
+    }
+
     public function store(): void
     {
         $this->validate($this->rules());
@@ -110,14 +119,5 @@ class Edit extends AbstractBaseComponent
                 ->get(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
         ]);
-    }
-
-    protected function rules(): array
-    {
-        return [
-            'name' => 'required',
-            'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
-        ];
     }
 }
