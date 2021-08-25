@@ -2,10 +2,8 @@
 
 namespace Shopper\Framework\Console;
 
-use Traitor\Traitor;
 use Illuminate\Console\Command;
 use Spatie\Analytics\AnalyticsServiceProvider;
-use Shopper\Framework\Models\Traits\ShopperUser;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 
@@ -122,7 +120,7 @@ class InstallCommand extends Command
        ======================== Installation Complete ======================
         ");
 
-        $this->comment("Before create an admin user you have to change the extend class of your User Model to The Shopper User Model 'Shopper\Framework\Models\User\User'");
+        $this->comment("Before create an admin user you have to change the extend class of your User Model to The Shopper User Model 'Shopper\\Framework\\Models\\User\\User'");
         $this->comment("To create a user, run 'php artisan shopper:admin'");
     }
 
