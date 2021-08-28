@@ -12,9 +12,16 @@
 
 import Alpine from "alpinejs";
 import flatpickr from 'flatpickr';
+import Choices from 'choices.js';
 
-window.flatpickr = flatpickr;
+// Add Alpine to window object.
 window.Alpine = Alpine;
+window.flatpickr = flatpickr;
+
+// Create a multiselect element.
+window.choices = (element) => {
+  return new Choices(element, { removeItemButton: true });
+};
 
 Alpine.start();
 
