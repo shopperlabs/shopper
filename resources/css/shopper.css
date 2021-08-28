@@ -9,21 +9,10 @@
 @import '~choices.js/public/assets/styles/choices.css';
 @import '~flatpickr/dist/themes/light.css';
 
-// 1: Tailwind
-@tailwind base;
-@import "base";
 
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-.dark trix-toolbar .trix-button-group {
-  @apply border-gray-700
-}
-
-.dark trix-toolbar .trix-button {
-  @apply text-gray-400 border-gray-700
-}
-
-@tailwind components;
-@import "components";
-
-@tailwind utilities;
-@import "utilities";
+@import "base.css";
+@import "components.css";

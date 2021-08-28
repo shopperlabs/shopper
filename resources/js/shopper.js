@@ -10,10 +10,13 @@
  * @since May 2021
  */
 
-import 'alpinejs';
+import Alpine from "alpinejs";
 import flatpickr from 'flatpickr';
 
 window.flatpickr = flatpickr;
+window.Alpine = Alpine;
+
+Alpine.start();
 
 // Make dark mode switch.
 const darkModeToggles = document.getElementsByClassName('darkModeToggle');
