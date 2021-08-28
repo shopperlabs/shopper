@@ -22,14 +22,10 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $product;
-
     public int $productId;
-
     public string $currency;
-
-    public Collection $category_ids;
-
-    public Collection $collection_ids;
+    public array $category_ids = [];
+    public array $collection_ids = [];
 
     public function mount($product, string $currency)
     {
@@ -46,8 +42,8 @@ class Edit extends AbstractBaseComponent
         $this->type = $product->type;
         $this->publishedAt = $product->published_at->format('Y-m-d');
         $this->publishedAtFormatted = $product->published_at->toRfc7231String();
-        $this->collection_ids = $product->collections->pluck('id');
-        $this->category_ids = $product->categories->pluck('id');
+        $this->collection_ids = $product->collections->pluck('id')->toArray();
+        $this->category_ids = $product->categories->pluck('id')->toArray();
         $this->currency = $currency;
     }
 

@@ -114,11 +114,19 @@
                                 @endforeach
                             </x-shopper-input.select>
                         </x-shopper-input.group>
-                        <x-shopper-input.group class="p-4 sm:p-5" label="Categories" for="categories">
-                            <x-shopper-input.select wire:model="category_ids" id="categories" :items="$categories" multiple />
+                        <x-shopper-input.group class="p-4 sm:p-5" label="Categories" for="categories" wire:ignore>
+                            <x-shopper-input.select wire:model="category_ids" id="categories" multiple x-data="{}" x-init="function () { choices($el) }">
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" @if(in_array($category->id, $category_ids)) selected @endif>{{ $category->name }}</option>
+                                @endforeach
+                            </x-shopper-input.select>
                         </x-shopper-input.group>
-                        <x-shopper-input.group class="p-4 sm:p-5" label="Collections" for="collections">
-                            <x-shopper-input.select wire:model="collection_ids" id="collections" :items="$collections" multiple />
+                        <x-shopper-input.group class="p-4 sm:p-5" label="Collections" for="collections" wire:ignore>
+                            <x-shopper-input.select wire:model="collection_ids" id="collections" multiple  x-data="{}" x-init="function () { choices($el) }">
+                                @foreach($collections as $collection)
+                                    <option value="{{ $collection->id }}" @if(in_array($collection->id, $collection_ids)) selected @endif>{{ $collection->name }}</option>
+                                @endforeach
+                            </x-shopper-input.select>
                         </x-shopper-input.group>
                     </div>
                 </div>
