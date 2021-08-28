@@ -14,12 +14,10 @@ const path = require('path');
 
 mix.disableNotifications();
 
-mix.setPublicPath('public')
-  .setResourceRoot('../')
-  .js('./resources/js/shopper.js', 'js')
-  .sass('./resources/sass/shopper.scss', 'css')
-  .options({
-    processCssUrls: false,
+mix.setPublicPath('public').setResourceRoot('../');
+
+mix.js('./resources/js/shopper.js', 'js')
+  .postCss('resources/css/shopper.css', 'css').options({
     postCss: [
       require('tailwindcss'),
       require('autoprefixer'),
@@ -31,8 +29,10 @@ mix.setPublicPath('public')
       extensions: ['*', '.js', '.jsx'],
       alias: {
         '@': path.resolve('./resources/js'),
-        '@utils': path.resolve('./resources/js/src/utils'),
       },
     }
-  })
-  .version();
+  });
+
+if (mix.inProduction()) {
+  mix.version();
+}

@@ -11,9 +11,10 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.3.2",
     "@tailwindcss/line-clamp": "^0.2.0",
-    "alpinejs": "^2.8.2",
+    "alpinejs": "^3.2.4",
     "autoprefixer": "^10.2.5",
     "axios": "^0.21",
+    "choices.js": "^9.0.1",
     "flatpickr": "^4.6.9",
     "laravel-mix": "^6.0.19",
     "lodash": "^4.17.13",
