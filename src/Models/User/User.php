@@ -22,6 +22,13 @@ class User extends Authenticatable
     use Billable;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var string[]|bool
+     */
+    protected $guarded = [];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
