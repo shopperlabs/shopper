@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Shopper\Framework\Rules\Phone;
 use Illuminate\Support\Facades\Hash;
 use Shopper\Framework\Models\User\Role;
@@ -14,22 +15,14 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 class CreateAdminUser extends AbstractBaseComponent
 {
     public bool $send_mail = false;
-
-    public string $email;
-
-    public string $password;
-
-    public string $first_name;
-
-    public string $last_name;
-
+    public ?string $email = null;
+    public ?string $password = null;
+    public ?string $first_name = null;
+    public ?string $last_name = null;
     public string $gender = 'male';
-
-    public string $phone_number;
-
-    public int $role_id;
-
+    public ?string $phone_number = null;
     public bool $is_admin = false;
+    public $role_id;
 
     public function generate()
     {
@@ -61,7 +54,7 @@ class CreateAdminUser extends AbstractBaseComponent
             ],
             'first_name' => 'required',
             'last_name' => 'required',
-            'password' => 'required|min:8',
+            'password' => Password::min(8)->letters()->mixedCase(),
             'role_id' => 'required',
             'phone_number' => [
                 'nullable',
