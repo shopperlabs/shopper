@@ -1213,6 +1213,11 @@ input[type="number"] {
   border-color: rgba(55, 65, 81, var(--tw-border-opacity));
 }
 
+.dark trix-toolbar .trix-button:not(:first-child) {
+  --tw-border-opacity: 1;
+  border-color: rgba(55, 65, 81, var(--tw-border-opacity));
+}
+
 .dark trix-toolbar .trix-button {
   --tw-border-opacity: 1;
   border-color: rgba(55, 65, 81, var(--tw-border-opacity));

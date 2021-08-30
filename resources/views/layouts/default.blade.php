@@ -18,13 +18,9 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->
     @stack('styles')
-
-    @bukStyles(true)
-
-    <livewire:styles />
-
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
+    <livewire:styles />
     <script src="{{ mix('/js/shopper.js','shopper') }}" defer></script>
 
     @if(! empty(config('shopper.system.resources.stylesheets')))
@@ -40,7 +36,7 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased dark:bg-gray-900">
 
-    <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false, modalDemo: false, }" @keydown.window.escape="sidebarOpen = false">
+    <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false, modalDemo: false }" @keydown.window.escape="sidebarOpen = false">
         <!-- Off-canvas menu for mobile -->
         @include('shopper::partials.default.sidebar-mobile')
 
@@ -63,7 +59,7 @@
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                                     </svg>
                                 </div>
-                                <input aria-label="{{ __('Search') }}" id="search_field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm" placeholder="{{ __('Search') }}" type="search">
+                                <input aria-label="{{ __('Search') }}" id="search_field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm" placeholder="{{ __('Search') }}" type="search" />
                             </div>
                         </form>
                         <div class="hidden md:block relative w-full max-w-md">
@@ -97,8 +93,6 @@
     @livewire('livewire-ui-modal')
 
     <livewire:scripts />
-
-    @bukScripts(true)
 
     @stack('scripts')
 

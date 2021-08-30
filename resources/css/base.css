@@ -28,6 +28,10 @@ input[type="number"] {
     @apply border-gray-700
 }
 
+.dark trix-toolbar .trix-button:not(:first-child) {
+    @apply border-gray-700
+}
+
 .dark trix-toolbar .trix-button {
     @apply text-gray-400 border-gray-700
 }
