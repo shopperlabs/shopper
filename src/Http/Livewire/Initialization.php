@@ -16,35 +16,20 @@ class Initialization extends Component
     use WithFileUploads;
 
     public string $shop_name = '';
-
     public string $shop_email = '';
-
     public string $shop_street_address = '';
-
     public string $shop_zipcode = '';
-
     public string $shop_city = '';
-
     public ?string $shop_phone_number = null;
-
-    public ?string $shop_about = null;
-
+    public string $shop_about = '';
     public ?int $shop_country_id = null;
-
     public ?string $shop_facebook_link = null;
-
     public ?string $shop_instagram_link = null;
-
     public ?string $shop_twitter_link = null;
-
     public bool $isDefault = true;
-
     public ?string $shop_lng = null;
-
     public ?string $shop_lat = null;
-
     public int $shop_currency_id;
-
     public $logo;
 
     protected $rules = [
@@ -57,10 +42,19 @@ class Initialization extends Component
         'shop_city' => 'required',
     ];
 
+    protected $listeners = [
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
+
     public function mount()
     {
         $defaultCurrency = Currency::where('code', shopper_currency())->first();
         $this->shop_currency_id = (int) $defaultCurrency->id;
+    }
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->shop_about = $value;
     }
 
     public function stepOneState(): bool
@@ -100,6 +94,14 @@ class Initialization extends Component
                 $this->shop_currency_id = $currency->id;
             }
         }
+    }
+
+    public function messages(): array
+    {
+        return [
+            'shop_country_id.required' => __('The country is required'),
+            'shop_name.required' => __('The store name is required'),
+        ];
     }
 
     public function store()
@@ -174,13 +176,5 @@ class Initialization extends Component
             'countries' => Country::select('name', 'id')->orderBy('name')->get(),
             'currencies' => Currency::select('name', 'code', 'id')->orderBy('name')->get(),
         ]);
-    }
-
-    protected function messages(): array
-    {
-        return [
-            'shop_country_id.required' => __('The country is required'),
-            'shop_name.required' => __('The store name is required'),
-        ];
     }
 }

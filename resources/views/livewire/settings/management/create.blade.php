@@ -49,7 +49,7 @@
                         </button>
                         <button
                           @click="show = !show"
-                          x-text="show ? '{{ __("Hide") }}' : '{{ __("Show") }}'"
+                          x-text="show ? '{{ __('Hide') }}' : '{{ __('Show') }}'"
                           type="button"
                           class="text-sm text-leading-5 text-blue-600 hover:text-blue-500 focus:outline-none focus:text-blue-700 hover:underline">
                         </button>
@@ -150,7 +150,7 @@
                         initialCountry: 'auto',
                         geoIpLookup: function(success, failure) {
                             $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                var countryCode = (resp && resp.country) ? resp.country : '';
+                                var countryCode = (resp && resp.country) ? resp.country : 'CM';
                                 success(countryCode);
                             });
                         },

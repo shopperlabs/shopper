@@ -27,6 +27,15 @@ class Edit extends AbstractBaseComponent
     public array $category_ids = [];
     public array $collection_ids = [];
 
+    protected $listeners = [
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
+    }
+
     public function mount($product, string $currency)
     {
         $this->product = $product;

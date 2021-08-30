@@ -18,15 +18,10 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $category;
-
     public int $categoryId;
-
     public string $name = '';
-
     public ?int $parent_id = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = false;
 
     public $seoAttributes = [
@@ -34,7 +29,10 @@ class Edit extends AbstractBaseComponent
         'description' => 'description',
     ];
 
-    protected $listeners = ['fileDeleted'];
+    protected $listeners = [
+        'fileDeleted',
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
 
     public function mount($category)
     {
@@ -47,6 +45,11 @@ class Edit extends AbstractBaseComponent
         $this->updateSeo = true;
         $this->seoTitle = $category->seo_title;
         $this->seoDescription = $category->seo_description;
+    }
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
     }
 
     /**

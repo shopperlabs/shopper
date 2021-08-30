@@ -15,17 +15,23 @@ class Create extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public string $name = '';
-
     public ?string $website = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = true;
 
     public $seoAttributes = [
         'name' => 'name',
         'description' => 'description',
     ];
+
+    protected $listeners = [
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
+    }
 
     public function store(): void
     {

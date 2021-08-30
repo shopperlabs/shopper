@@ -15,16 +15,17 @@ class Create extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public string $name = '';
-
     public ?int $parent_id = null;
-
-    public ?string $description = null;
-
+    public string $description = '';
     public bool $is_enabled = true;
 
     public $seoAttributes = [
         'name' => 'name',
         'description' => 'description',
+    ];
+
+    protected $listeners = [
+        'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
     public function rules(): array
@@ -33,6 +34,11 @@ class Create extends AbstractBaseComponent
             'name' => 'required|max:150|unique:' . shopper_table('categories'),
             'file' => 'nullable|image|max:1024',
         ];
+    }
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
     }
 
     public function store(): void

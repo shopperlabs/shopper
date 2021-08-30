@@ -55,7 +55,7 @@
                                         initialCountry: 'auto',
                                         geoIpLookup: function(success, failure) {
                                             $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                var countryCode = (resp && resp.country) ? resp.country : '';
+                                                var countryCode = (resp && resp.country) ? resp.country : 'CM';
                                                 success(countryCode);
                                             });
                                         },

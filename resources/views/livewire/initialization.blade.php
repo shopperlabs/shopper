@@ -197,7 +197,7 @@
                         <x-shopper-label for="about" class="sm:mt-px sm:pt-2" value="About" />
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             <div class="flex rounded-md shadow-sm sm:max-w-lg overflow-x-auto lg:w-full lg:overflow-visible">
-                                <x-shopper-input.rich-text wire:model.lazy="shop_about" id="about" />
+                                <livewire:shopper-trix :value="$shop_about" />
                             </div>
                             <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('You can view this information on the About page on your website.') }}</p>
                         </div>
@@ -234,7 +234,11 @@
                     <div class="grid gap-4 lg:grid-cols-3 lg:gap-6">
                         <div wire:ignore class="space-y-4 sm:col-span-2">
                             @if(env('MAPBOX_PUBLIC_TOKEN'))
-                                <x-mapbox :markers="[[ 9.70428, 4.04827]]" :options="['zoom' => 2]" class="bg-gray-100 rounded-md h-95 overflow-hidden outline-none focus:outline-none dark:bg-gray-900" />
+                                <div class="bg-gray-100 rounded-md h-95 overflow-hidden outline-none focus:outline-none dark:bg-gray-900 flex items-center justify-center">
+                                    <p class="text-base leading-6 text-gray-500 font-medium dark:text-gray-400">
+                                        This will load very soon as possible
+                                    </p>
+                                </div>
                             @else
                                 <div class="bg-gray-100 rounded-md h-95 overflow-hidden outline-none focus:outline-none dark:bg-gray-900 flex items-center justify-center">
                                     <p class="text-base leading-6 text-gray-500 font-medium dark:text-gray-400">

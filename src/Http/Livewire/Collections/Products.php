@@ -7,11 +7,8 @@ use Livewire\Component;
 class Products extends Component
 {
     public $collection;
-
     public string $sortBy = 'name';
-
     public string $sortValue = 'name';
-
     public string $direction = 'asc';
 
     protected $listeners = ['onProductsAddInCollection' => 'render'];

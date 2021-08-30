@@ -27,7 +27,7 @@
                 </div>
                 <div class="mt-5 border-t border-gray-200 dark:border-gray-700 pt-4">
                     <x-shopper-input.group label="Description" for="description">
-                        <x-shopper-input.rich-text wire:model.lazy="description" id="description" />
+                        <livewire:shopper-trix :value="$description" />
                     </x-shopper-input.group>
                 </div>
             </div>

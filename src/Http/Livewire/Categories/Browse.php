@@ -44,7 +44,7 @@ class Browse extends Component
             'total' => (new CategoryRepository())->count(),
             'categories' => (new CategoryRepository())
                 ->where('name', '%' . $this->search . '%', 'like')
-                ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
+                ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)
                 ->paginate(10),
         ]);
     }

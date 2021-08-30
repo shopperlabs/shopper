@@ -33,17 +33,7 @@
                             <input wire:model="value" x-ref="input" id="value" type="text" class="w-full pl-10 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm" placeholder="{{ __('Choose a date') }}" readonly />
                         </div>
                     @elseif($type === 'richtext')
-                        <div
-                            wire:ignore
-                            class="rounded-md shadow-sm"
-                            wire:model="value"
-                            id="value"
-                            x-data
-                            @trix-blur="$dispatch('change', $event.target.value)"
-                        >
-                            <input id="richtext" value="{{ $value }}" type="hidden" class="sr-only">
-                            <trix-editor input="richtext" class="block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm max-h-96 overflow-y-scroll"></trix-editor>
-                        </div>
+                        <livewire:shopper-trix :value="$value" />
                     @elseif($type === 'markdown')
                         <div
                             x-data

@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-span-6">
                             <x-shopper-input.group label="Content" for="shipping-content">
-                                <x-shopper-input.rich-text wire:model.lazy="content" id="shipping-content" :initial-value="$content" />
+                                <livewire:shopper-trix :value="$content" />
                             </x-shopper-input.group>
                         </div>
                     </div>

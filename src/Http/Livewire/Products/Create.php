@@ -32,14 +32,19 @@ class Create extends AbstractBaseComponent
         'description' => 'description',
     ];
 
-    protected $listeners = ['productAdded'];
+    protected $listeners = [
+        'productAdded',
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
 
-    /**
-     * Component Mount method.
-     */
     public function mount()
     {
         $this->defaultChannel = Channel::query()->where('slug', 'web-store')->first();
+    }
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
     }
 
     public function rules(): array

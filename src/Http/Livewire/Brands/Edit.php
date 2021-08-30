@@ -17,15 +17,10 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $brand;
-
     public int $brand_id;
-
     public string $name;
-
     public ?string $website = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = false;
 
     public $seoAttributes = [
@@ -33,7 +28,15 @@ class Edit extends AbstractBaseComponent
         'description' => 'description',
     ];
 
-    protected $listeners = ['fileDeleted'];
+    protected $listeners = [
+        'fileDeleted',
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
+    }
 
     /**
      * Component mount instance.

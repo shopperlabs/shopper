@@ -51,7 +51,7 @@
                 </div>
                 <div class="mt-5">
                     <x-shopper-input.group label="Description" for="description">
-                        <x-shopper-input.rich-text wire:model.lazy="description" id="description" :initial-value="$description" />
+                        <livewire:shopper-trix :value="$description" />
                     </x-shopper-input.group>
                 </div>
             </div>

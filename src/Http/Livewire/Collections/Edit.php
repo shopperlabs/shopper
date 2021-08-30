@@ -21,19 +21,12 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $collection;
-
     public int $collectionId;
-
     public string $name = '';
-
     public ?string $description = null;
-
     public string $type = 'auto';
-
     public ?string $publishedAt = null;
-
     public ?string $publishedAtFormatted = null;
-
     public string $condition_match = 'all';
 
     /**
@@ -48,7 +41,10 @@ class Edit extends AbstractBaseComponent
         'description' => 'description',
     ];
 
-    protected $listeners = ['fileDeleted'];
+    protected $listeners = [
+        'fileDeleted',
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
 
     public function mount($collection)
     {
@@ -64,6 +60,11 @@ class Edit extends AbstractBaseComponent
         $this->updateSeo = true;
         $this->seoTitle = $collection->seo_title;
         $this->seoDescription = $collection->seo_description;
+    }
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
     }
 
     public function rules(): array

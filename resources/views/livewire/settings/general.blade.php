@@ -223,7 +223,7 @@
 
                             <div class="col-span-6">
                                 <x-shopper-input.group label="About" for="about">
-                                    <x-shopper-input.rich-text wire:model.lazy="shop_about" id="about" :initial-value="$shop_about" />
+                                    <livewire:shopper-trix :value="$shop_about" />
                                 </x-shopper-input.group>
                             </div>
 
