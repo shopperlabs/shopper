@@ -22,7 +22,7 @@ class Create extends AbstractBaseComponent
     use WithSeoAttributes;
     use WithUploadProcess;
 
-    public mixed $quantity;
+    public $quantity;
     public array $category_ids = [];
     public array $collection_ids = [];
     public ?Channel $defaultChannel = null;

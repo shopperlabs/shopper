@@ -26,13 +26,6 @@ class Inventory extends Component
 
     public $inventories;
 
-    /**
-     * Component mount instance.
-     *
-     * @param \Illuminate\Database\Eloquent\Model      $product
-     * @param \Illuminate\Database\Eloquent\Collection $inventories
-     * @param \Illuminate\Database\Eloquent\Model      $defaultInventory
-     */
     public function mount($product, $inventories, $defaultInventory)
     {
         $this->inventories = $inventories;
