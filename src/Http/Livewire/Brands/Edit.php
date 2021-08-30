@@ -17,10 +17,15 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $brand;
+
     public int $brand_id;
+
     public string $name;
+
     public ?string $website = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = false;
 
     public $seoAttributes = [

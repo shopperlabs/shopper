@@ -13,8 +13,6 @@ trait WithSorting
 
     /**
      * Sort direction.
-     *
-     * @var string
      */
     public string $sortDirection = 'desc';
 

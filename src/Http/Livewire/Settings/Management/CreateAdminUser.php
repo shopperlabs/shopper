@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 use Shopper\Framework\Rules\Phone;
 use Illuminate\Support\Facades\Hash;
 use Shopper\Framework\Models\User\Role;
+use Illuminate\Validation\Rules\Password;
 use Shopper\Framework\Rules\RealEmailValidator;
 use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Notifications\AdminSendCredentials;
@@ -15,13 +15,21 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 class CreateAdminUser extends AbstractBaseComponent
 {
     public bool $send_mail = false;
+
     public ?string $email = null;
+
     public ?string $password = null;
+
     public ?string $first_name = null;
+
     public ?string $last_name = null;
+
     public string $gender = 'male';
+
     public ?string $phone_number = null;
+
     public bool $is_admin = false;
+
     public $role_id;
 
     public function generate()

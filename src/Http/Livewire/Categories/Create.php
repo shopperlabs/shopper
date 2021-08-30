@@ -15,8 +15,11 @@ class Create extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public string $name = '';
+
     public ?int $parent_id = null;
+
     public string $description = '';
+
     public bool $is_enabled = true;
 
     public $seoAttributes = [

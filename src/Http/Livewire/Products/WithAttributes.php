@@ -7,12 +7,19 @@ use Carbon\Carbon;
 trait WithAttributes
 {
     public ?string $name = null;
+
     public ?string $sku = null;
+
     public ?string $barcode = null;
+
     public ?int $brand_id = null;
+
     public ?string $description = null;
+
     public ?string $price_amount = null;
+
     public ?string $old_price_amount = null;
+
     public ?string $cost_amount = null;
 
     /**

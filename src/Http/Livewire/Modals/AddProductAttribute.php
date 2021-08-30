@@ -12,11 +12,17 @@ use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
 class AddProductAttribute extends ModalComponent
 {
     public int $productId;
+
     public string $type = 'text';
+
     public array $attributes;
+
     public ?int $attribute_id = null;
+
     public array $multipleValues = [];
+
     public Collection $values;
+
     public ?string $value = null;
 
     protected $listeners = [
