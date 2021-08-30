@@ -14,21 +14,37 @@ class General extends Component
     use WithFileUploads;
 
     public string $shop_name;
+
     public ?string $shop_legal_name = null;
+
     public string $shop_email;
+
     public ?string $shop_phone_number = null;
+
     public ?string $shop_about = null;
+
     public string $shop_street_address;
+
     public string $shop_zipcode;
+
     public string $shop_city;
+
     public ?string $shop_facebook_link = null;
+
     public ?string $shop_instagram_link = null;
+
     public ?string $shop_twitter_link = null;
+
     public $shop_country_id;
+
     public $shop_currency_id;
+
     public $shop_logo;
+
     public $logo;
+
     public $shop_cover;
+
     public $cover;
 
     protected $listeners = [

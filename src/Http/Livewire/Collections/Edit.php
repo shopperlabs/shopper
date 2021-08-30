@@ -21,12 +21,19 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $collection;
+
     public int $collectionId;
+
     public string $name = '';
+
     public ?string $description = null;
+
     public string $type = 'auto';
+
     public ?string $publishedAt = null;
+
     public ?string $publishedAtFormatted = null;
+
     public string $condition_match = 'all';
 
     /**

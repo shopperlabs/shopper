@@ -17,8 +17,11 @@ class Attributes extends Component
      * @var Model
      */
     public $product;
+
     public int $productId;
+
     public Collection $attributes;
+
     public Collection $productAttributes;
 
     protected $listeners = ['onProductAttributeAdded' => 'render'];

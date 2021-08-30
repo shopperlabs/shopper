@@ -18,10 +18,15 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $category;
+
     public int $categoryId;
+
     public string $name = '';
+
     public ?int $parent_id = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = false;
 
     public $seoAttributes = [

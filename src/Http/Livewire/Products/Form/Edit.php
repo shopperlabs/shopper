@@ -4,7 +4,6 @@ namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use function count;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Collection;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
@@ -22,9 +21,13 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $product;
+
     public int $productId;
+
     public string $currency;
+
     public array $category_ids = [];
+
     public array $collection_ids = [];
 
     protected $listeners = [

@@ -16,20 +16,35 @@ class Initialization extends Component
     use WithFileUploads;
 
     public string $shop_name = '';
+
     public string $shop_email = '';
+
     public string $shop_street_address = '';
+
     public string $shop_zipcode = '';
+
     public string $shop_city = '';
+
     public ?string $shop_phone_number = null;
+
     public string $shop_about = '';
+
     public ?int $shop_country_id = null;
+
     public ?string $shop_facebook_link = null;
+
     public ?string $shop_instagram_link = null;
+
     public ?string $shop_twitter_link = null;
+
     public bool $isDefault = true;
+
     public ?string $shop_lng = null;
+
     public ?string $shop_lat = null;
+
     public int $shop_currency_id;
+
     public $logo;
 
     protected $rules = [

@@ -17,6 +17,7 @@ class AddVariant extends ModalComponent
     use WithUploadProcess;
 
     public int $productId;
+
     public string $currency;
 
     /**
