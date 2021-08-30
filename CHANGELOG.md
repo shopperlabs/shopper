@@ -1,5 +1,20 @@
 # Release Notes
 
+## v0.0.5 (2021-08-30)
+
+### Added
+- Livewire Trix component
+- Multiselect with **Choices.js** input to create and update product
+
+### Updated
+- AlpineJS from V2 to V3
+- improve user experience
+
+### Fixed
+- Fix error on create product (issue [#62](https://github.com/shopperlabs/framework/issues/62))
+- Fix bug on create new admin user
+- Fix bug on User Model fillable attributes
+
 ## v0.0.4 (2021-08-25)
 
 ### Added
