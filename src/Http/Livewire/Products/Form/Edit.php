@@ -21,22 +21,24 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $product;
-
     public int $productId;
-
     public string $currency;
-
     public array $category_ids = [];
-
     public array $collection_ids = [];
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
+        'mediaDeleted',
     ];
 
     public function onTrixValueUpdate($value)
     {
         $this->description = $value;
+    }
+
+    public function mediaDeleted()
+    {
+        $this->images = $this->product->getMedia('uploads');
     }
 
     public function mount($product, string $currency)
@@ -63,7 +65,7 @@ class Edit extends AbstractBaseComponent
     {
         return [
             'name' => 'required',
-            'file' => 'nullable|image|max:1024',
+            'files.*' => 'nullable|image|max:1024',
             'brand_id' => 'nullable|exists:' . shopper_table('brands') . ',id',
         ];
     }
@@ -85,8 +87,8 @@ class Edit extends AbstractBaseComponent
             'brand_id' => $this->brand_id,
         ]);
 
-        if ($this->file) {
-            $this->uploadFile('product', $this->productId);
+        if (count($this->files) > 0) {
+            collect($this->files)->each(fn ($file) => $this->product->addMedia($file->getRealPath())->toMediaCollection('uploads'));
         }
 
         if (count($this->category_ids) > 0) {
