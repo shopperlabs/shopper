@@ -22,9 +22,7 @@ class Create extends AbstractBaseComponent
         WithSeoAttributes,
         WithUploadProcess;
 
-    public array $files = [];
-
-    public mixed $quantity;
+    public $quantity;
 
     public array $category_ids = [];
 
@@ -96,10 +94,6 @@ class Create extends AbstractBaseComponent
             'brand_id' => $this->brand_id ?? null,
         ]);
 
-        if ($this->file) {
-            $this->uploadFile('product', $product->id);
-        }
-
         if (count($this->category_ids) > 0) {
             $product->categories()->sync($this->category_ids);
         }
@@ -109,6 +103,8 @@ class Create extends AbstractBaseComponent
         }
 
         $product->channels()->attach($this->defaultChannel->id);
+
+        collect($this->files)->each(fn ($file) => $product->addMedia($file->getRealPath())->toMediaCollection('uploads'));
 
         if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
@@ -126,17 +122,6 @@ class Create extends AbstractBaseComponent
         session()->flash('success', __('Product successfully added!'));
 
         $this->redirectRoute('shopper.products.index');
-    }
-
-    /**
-     * Remove file to the array.
-     *
-     * @param  int  $index
-     * @return void
-     */
-    public function removeFile(int $index)
-    {
-        unset($this->files[$index]);
     }
 
     public function render()

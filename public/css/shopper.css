@@ -2965,6 +2965,12 @@ select{
 .cursor-move{
 	cursor: move;
 }
+.select-none{
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	    -ms-user-select: none;
+	        user-select: none;
+}
 .resize{
 	resize: both;
 }
@@ -3215,11 +3221,17 @@ select{
 .rounded-tl{
 	border-top-left-radius: 0.25rem;
 }
+.rounded-bl{
+	border-bottom-left-radius: 0.25rem;
+}
 .border{
 	border-width: 1px;
 }
 .border-2{
 	border-width: 2px;
+}
+.border-4{
+	border-width: 4px;
 }
 .border-b{
 	border-bottom-width: 1px;
@@ -3449,6 +3461,9 @@ select{
 }
 .bg-opacity-75{
 	--tw-bg-opacity: 0.75;
+}
+.bg-opacity-50{
+	--tw-bg-opacity: 0.5;
 }
 .bg-gradient-to-r{
 	background-image: linear-gradient(to right, var(--tw-gradient-stops));
@@ -4556,6 +4571,18 @@ select{
 }
 .dark .dark\:bg-transparent{
 	background-color: transparent;
+}
+.dark .dark\:bg-opacity-30{
+	--tw-bg-opacity: 0.3;
+}
+.dark .dark\:bg-opacity-25{
+	--tw-bg-opacity: 0.25;
+}
+.dark .dark\:bg-opacity-40{
+	--tw-bg-opacity: 0.4;
+}
+.dark .dark\:bg-opacity-70{
+	--tw-bg-opacity: 0.7;
 }
 .dark .dark\:from-gray-600{
 	--tw-gradient-from: #4b5563;
@@ -5714,6 +5741,11 @@ select{
 
 	.lg\:grid-cols-4{
 		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+
+	.lg\:grid-cols-6{
+		grid-template-columns: repeat(6, minmax(0, 1fr));
 	}
 
 

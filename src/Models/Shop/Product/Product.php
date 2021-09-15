@@ -2,28 +2,31 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Models\Shop\Channel;
-use Shopper\Framework\Models\Traits\HasSlug;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Shopper\Framework\Models\Traits\HasPrice;
-use Shopper\Framework\Models\Traits\HasStock;
-use Shopper\Framework\Models\Traits\Filetable;
-use Shopper\Framework\Contracts\ReviewRateable;
-use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Framework\Contracts\ReviewRateable;
+use Shopper\Framework\Models\Shop\Channel;
+use Shopper\Framework\Models\Traits\Filetable;
+use Shopper\Framework\Models\Traits\HasSlug;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\Traits\HasStock;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Product extends Model implements ReviewRateable
+class Product extends Model implements ReviewRateable, HasMedia
 {
     use Filetable;
     use HasStock;
     use HasPrice;
     use HasSlug;
+    use InteractsWithMedia;
     use CanHaveDiscount;
     use SoftDeletes;
     use SoftCascadeTrait;
@@ -122,6 +125,12 @@ class Product extends Model implements ReviewRateable
         }
 
         return $stock;
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('uploads')
+            ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png', 'image/gif', 'video/avi', 'video/mpeg', 'video/quicktime']);
     }
 
     public function scopePublish(Builder $query): Builder

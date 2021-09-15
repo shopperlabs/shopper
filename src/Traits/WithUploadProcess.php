@@ -12,7 +12,9 @@ trait WithUploadProcess
      *
      * @var \Illuminate\Http\UploadedFile
      */
-    public $file;
+    public mixed $file;
+
+    public $files = [];
 
     public function removeImage()
     {
@@ -34,6 +36,11 @@ trait WithUploadProcess
             'title' => __('Removed'),
             'message' => __('Image removed from the storage.'),
         ]);
+    }
+
+    public function removeMedia(int $id)
+    {
+        dd($id);
     }
 
     /**
