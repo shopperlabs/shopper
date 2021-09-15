@@ -2,111 +2,88 @@
 
 namespace Shopper\Framework\Http\Livewire\Brands;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\File;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithSeoAttributes;
 
-    /**
-     * Upload listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['fileDeleted'];
-
-    /**
-     * Brand Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $brand;
 
-    /**
-     * Brand Model id.
-     *
-     * @var int
-     */
-    public $brand_id;
+    public int $brand_id;
 
-    /**
-     * Name attribute.
-     *
-     * @var string
-     */
-    public $name = '';
+    public string $name;
 
-    /**
-     * Slug for custom url.
-     *
-     * @var string
-     */
-    public $slug;
+    public ?string $website = null;
 
-    /**
-     * Brand url website.
-     *
-     * @var string
-     */
-    public $website = '';
+    public ?string $description = null;
 
-    /**
-     * Brand sample description.
-     *
-     * @var string
-     */
-    public $description = '';
+    public bool $is_enabled = false;
 
-    /**
-     * Indicates if brand is being enabled.
-     *
-     * @var bool
-     */
-    public $is_enabled = false;
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
+
+    protected $listeners = [
+        'fileDeleted',
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
+    }
 
     /**
      * Component mount instance.
-     *
-     * @param  $brand
-     * @return void
      */
     public function mount($brand)
     {
         $this->brand = $brand;
         $this->brand_id = $brand->id;
         $this->name = $brand->name;
-        $this->slug = $brand->slug;
         $this->website = $brand->website;
         $this->description = $brand->description;
         $this->is_enabled = $brand->is_enabled;
+        $this->updateSeo = true;
+        $this->seoTitle = $brand->seo_title;
+        $this->seoDescription = $brand->seo_description;
     }
 
     /**
-     * Update brand record in the database.
+     * Define is the current action is create or update for the SEO Trait.
      *
-     * @return void
+     * @return false
      */
-    public function store()
+    public function isUpdate(): bool
+    {
+        return true;
+    }
+
+    public function store(): void
     {
         $this->validate($this->rules());
 
-        (new BrandRepository())->getById($this->brand->id)->update([
+        $this->brand->update([
             'name' => $this->name,
-            'slug' => $this->slug,
+            'slug' => $this->name,
             'website' => $this->website,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
+            'seo_title' => $this->seoTitle,
+            'seo_description' => str_limit($this->seoDescription, 157),
         ]);
 
         if ($this->file) {
-
             if ($this->brand->files->isNotEmpty()) {
                 foreach ($this->brand->files as $file) {
                     Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
@@ -114,40 +91,21 @@ class Edit extends AbstractBaseComponent
                 File::query()->where('filetable_id', $this->brand_id)->delete();
             }
 
-            $this->uploadFile(config('shopper.system.models.brand'), $this->brand->id);
+            $this->uploadFile('brand', $this->brand->id);
         }
 
-        session()->flash('success', __("Brand successfully updated!"));
+        session()->flash('success', __('Brand successfully updated!'));
+
         $this->redirectRoute('shopper.brands.index');
     }
 
-    /**
-     * Update slug value when name if updated.
-     *
-     * @param  string  $value
-     * @return void
-     */
-    public function updatedName(string $value)
-    {
-        $this->slug = str_slug($value, '-');
-    }
-
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => [
                 'required',
                 'max:150',
                 Rule::unique(shopper_table('brands'), 'name')->ignore($this->brand_id),
-            ],
-            'slug' => [
-                'required',
-                Rule::unique(shopper_table('brands'), 'slug')->ignore($this->brand_id),
             ],
             'file' => 'nullable|image|max:1024',
         ];
@@ -156,24 +114,17 @@ class Edit extends AbstractBaseComponent
     /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {
         $this->media = null;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.brands.edit', [
             'media' => $this->brand->files->isNotEmpty()
-                ? $this->brand->files->first()
+                ? $this->brand->getFirstImage()
                 : null,
         ]);
     }

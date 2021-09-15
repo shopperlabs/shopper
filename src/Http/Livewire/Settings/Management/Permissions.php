@@ -2,41 +2,35 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
+use Exception;
 use Livewire\Component;
-use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role;
+use Shopper\Framework\Models\User\Permission;
 
 class Permissions extends Component
 {
     /**
      * Role for the given permissions.
-     *
-     * @var Role
      */
     public Role $role;
 
     /**
      * Component listeners.
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $listeners = ['togglePermission', 'permissionAdded'];
 
     /**
      * Reload all Role permission in the view.
-     *
-     * @param  int  $id
      */
-    public function permissionAdded(int  $id)
+    public function permissionAdded(int $id)
     {
-        $this->role = Role::query()->findOrFail($id);
+        $this->role = Role::find($id);
     }
 
     /**
      * Toggle permission on the role.
-     *
-     * @param  int  $id
-     * @return void
      */
     public function togglePermission(int $id)
     {
@@ -60,8 +54,7 @@ class Permissions extends Component
     /**
      * Removed a permission to the storage.
      *
-     * @param  int  $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function removePermission(int $id)
     {
@@ -69,15 +62,10 @@ class Permissions extends Component
 
         $this->notify([
             'title' => __('Deleted'),
-            'message' => __("The permission has been correctly removed.")
+            'message' => __('The permission has been correctly removed.'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.management.permissions', [
@@ -85,7 +73,7 @@ class Permissions extends Component
                 ->with('users')
                 ->orderBy('created_at')
                 ->get()
-                ->groupBy('group_name')
+                ->groupBy('group_name'),
         ]);
     }
 }

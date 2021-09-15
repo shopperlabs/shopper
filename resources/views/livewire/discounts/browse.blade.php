@@ -1,23 +1,24 @@
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
 <div x-data="{ open: false }" x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});">
 
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Discounts') }}</h2>
-        @if($total > 0)
-            @can('add_discounts')
-                <div class="flex space-x-3">
-                    <span class="shadow-sm rounded-md">
-                        <a href="{{ route('shopper.discounts.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
-                            {{ __("Create") }}
-                        </a>
-                    </span>
-                </div>
-            @endcan
-        @endif
-    </div>
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('Discounts') }}
+        </x-slot>
+
+        <x-slot name="action">
+            @if($total > 0)
+                @can('add_discounts')
+                    <div class="flex space-x-3">
+                        <span class="shadow-sm rounded-md">
+                            <x-shopper-button :link="route('shopper.discounts.create')">
+                                {{ __('Create') }}
+                            </x-shopper-button>
+                        </span>
+                    </div>
+                @endcan
+            @endif
+        </x-slot>
+    </x-shopper-heading>
 
     @if($total === 0)
         <x-shopper-empty-state
@@ -141,76 +142,53 @@
             </div>
         </x-shopper-empty-state>
     @else
-
-        <div class="mt-6 bg-white shadow rounded-md">
+        <div class="mt-6 bg-white dark:bg-gray-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-start space-x-4">
-                    <div class="flex flex-1">
-                        <label for="filter" class="sr-only">{{ __('Search discounts') }}</label>
-                        <div class="flex flex-1 rounded-md shadow-sm">
-                            <div class="relative flex-grow focus-within:z-10">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                                    </svg>
-                                </div>
-                                <input id="filter" wire:model.debounce.300ms="search" autocomplete="off" class="form-input block w-full rounded-none rounded-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search discounts code') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <x-shopper-input.search label="Search code" placeholder="Search discount code" />
                     <div class="flex items-center space-x-3">
                         <div class="relative z-10 inline-flex shadow-sm rounded-md">
                             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
-                                <button @click="open = !open" type="button" class="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                                    {{ __("Status") }}
-                                    <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                                <div x-cloak x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
-                                    <div class="rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <x-shopper-default-button @click="open = !open" type="button">
+                                    {{ __('Status') }}
+                                    <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
+                                </x-shopper-default-button>
+                                <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
+                                    <div class="rounded-md bg-white shadow-xs dark:bg-gray-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">
                                             <div class="flex items-center py-2 px-4">
-                                                <input wire:model="isActive" id="isActive_enabled" name="is_active" type="radio" value="1" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
                                                 <label for="isActive_enabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Active") }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Active') }}</span>
                                                 </label>
                                             </div>
                                             <div class="flex items-center py-2 px-4">
-                                                <input wire:model="isActive" id="isActive_disabled" name="is_active" type="radio" value="0" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
                                                 <label for="isActive_disabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Not Active") }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Not Active') }}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="border-t border-gray-100"></div>
+                                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
                                         <div class="py-1">
-                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600">{{ __("Clear") }}</button>
+                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500">{{ __('Clear') }}</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="relative flex items-center rounded-md shadow-sm">
-                            <label for="date" class="block text-sm font-medium leading-5 text-gray-700 sr-only">{{ __("Date") }}</label>
+                            <x-shopper-label for="date" class="sr-only" :value="__('Date')" />
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
+                                <x-heroicon-o-calendar class="h-5 w-5 text-gray-400" />
                             </div>
                             <input
                                 wire:model="date"
                                 x-ref="input"
                                 id="date"
-                                class="form-input block w-48 pl-10 sm:text-sm sm:leading-5"
+                                class="w-48 pl-10 py-2 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm"
                                 autocomplete="off"
-                                placeholder="{{ __("Choose date") }}"
+                                placeholder="{{ __('Choose date') }}"
                                 readonly
                             >
                             <button wire:click="resetDate" type="button" class="absolute z-30 inset-y-0 right-0 pr-3 flex items-center @if($date === '') hidden @endif">
@@ -222,20 +200,20 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white">
-                <ul class="divide-y divide-gray-200">
+            <div class="border-t border-gray-200 dark:border-gray-700">
+                <ul class="divide-y divide-gray-200 dark:divide-gray-700">
                     @foreach($discounts as $discount)
                         <li>
-                            <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out">
+                            <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-700">
                                 <div class="px-4 py-4 flex items-center sm:px-6">
                                     <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                         <div>
-                                            <div class="text-sm leading-5 font-semibold text-brand-500 truncate">
+                                            <div class="text-sm leading-5 font-semibold text-blue-500 truncate dark:text-blue-400">
                                                 {{ $discount->code }}
                                             </div>
                                             <div class="mt-2 flex">
-                                                <ul class="divide-x divide-y-100 flex items-center text-sm leading-5 text-gray-500">
-                                                    <li class="pr-2"><span>{{ $discount->total_use }}/{{ $discount->usage_limit ?? __('unlimited') }} {{ __("used") }}</span></li>
+                                                <ul class="divide-x divide-gray-200 flex items-center text-sm leading-5 text-gray-500 dark:text-gray-400 dark:divide-gray-600">
+                                                    <li class="pr-2"><span>{{ $discount->total_use }}/{{ $discount->usage_limit ?? __('unlimited') }} {{ __('used') }}</span></li>
                                                     @if($discount->usage_limit_per_user)
                                                         <li class="px-2"><span>{{ __('Once per user') }}</span></li>
                                                     @endif
@@ -254,25 +232,25 @@
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
                                                         </svg>
-                                                        {{ __("Scheduled") }}
+                                                        {{ __('Scheduled') }}
                                                     </span>
                                                 @endif
                                                 @if($discount->start_at <= now())
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-teal-100 text-teal-800">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-purple-100 text-purple-800">
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-teal-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
                                                         </svg>
-                                                        {{ __("Active For users") }}
+                                                        {{ __('Active For users') }}
                                                     </span>
                                                 @endif
                                             </div>
                                             <div class="flex items-center space-x-2">
                                                 @if($discount->end_at)
-                                                    <span class="text-sm text-gray-500">{{ $discount->start_at->format('d M') }}</span>
+                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $discount->start_at->format('d M') }}</span>
                                                     <span>-</span>
-                                                    <span class="text-sm text-gray-500">{{ $discount->end_at->format('d M') }}</span>
+                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $discount->end_at->format('d M') }}</span>
                                                 @else
-                                                    <span class="text-sm text-gray-500">{{ __("From :date", ['date' => $discount->start_at->format('d M')]) }}</span>
+                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ __("From :date", ['date' => $discount->start_at->format('d M')]) }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -288,13 +266,13 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="bg-white px-4 py-3 border-t border-gray-200 rounded-b-md  flex items-center justify-between sm:px-6">
+            <div class="px-4 py-3 border-t border-gray-200 rounded-b-md  flex items-center justify-between sm:px-6 dark:border-gray-700">
                 <div class="flex-1 flex justify-between sm:hidden">
                     {{ $discounts->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm leading-5 text-gray-700">
+                        <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
                             {{ __('Showing') }}
                             <span class="font-medium">{{ ($discounts->currentPage() - 1) * $discounts->perPage() + 1 }}</span>
                             {{ __('to') }}
@@ -310,10 +288,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="discounts" link="#" />
+    <x-shopper-learn-more name="discounts" link="https://docs.laravelshopper.io/docs/discounts" />
 
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endpush

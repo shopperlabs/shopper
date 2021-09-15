@@ -16,8 +16,6 @@ class CustomerSendCredentials extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param  string  $password
      */
     public function __construct(string $password)
     {
@@ -27,7 +25,6 @@ class CustomerSendCredentials extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -38,18 +35,17 @@ class CustomerSendCredentials extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-            ->subject(__("Welcome to "). env('APP_NAME'))
-            ->greeting(__("Hello :full_name", ['full_name' => $notifiable->full_name]))
-            ->line(__("An account has been created for you on the website ") . env('APP_URL'))
-            ->line(__("Email: :email - Password: :password", ['email' => $notifiable->email, 'password' => $this->password]))
-            ->line(__("You can access to the website to login"))
+        return (new MailMessage())
+            ->subject(__('Welcome to ') . env('APP_NAME'))
+            ->greeting(__('Hello :full_name', ['full_name' => $notifiable->full_name]))
+            ->line(__('An account has been created for you on the website ') . env('APP_URL'))
+            ->line(__('Email: :email - Password: :password', ['email' => $notifiable->email, 'password' => $this->password]))
+            ->line(__('You can access to the website to login'))
             ->action(__('Browse the website'), url('/'))
-            ->line(__("After logging in you have to change your password."));
+            ->line(__('After logging in you have to change your password.'));
     }
 }

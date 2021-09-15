@@ -3,11 +3,15 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\Traits\HasSlug;
 use Shopper\Framework\Models\Traits\Filetable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Collection extends Model
 {
     use Filetable;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -27,87 +31,38 @@ class Collection extends Model
     ];
 
     /**
-     * The relations to eager load on every query.
+     * The attributes that should be cast.
      *
      * @var array
      */
-    public $with = [
-        'rules',
+    protected $casts = [
+        'published_at' => 'datetime',
     ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'published_at'
-    ];
-
-    /**
-     * Boot the model.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($model) {
-            $model->update(['slug' => $model->name]);
-        });
-    }
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('collections');
     }
 
     /**
      * Return the correct formatted word of the first collection rule.
-     *
-     * @return string
      */
-    public function firstRule()
+    public function firstRule(): string
     {
         $condition = $this->rules()->first();
 
-        return $condition->getFormattedRule(). ' '. $condition->getFormattedOperator(). ' '. $condition->value;
+        return $condition->getFormattedRule() . ' ' . $condition->getFormattedOperator() . ' ' . $condition->value;
     }
 
-    /**
-     * Set the proper slug attribute.
-     *
-     * @param  string  $value
-     */
-    public function setSlugAttribute($value)
+    public function products(): MorphToMany
     {
-        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
-            $slug = "{$slug}-{$this->id}";
-        }
-
-        $this->attributes['slug'] = $slug;
+        return $this->morphToMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
     }
 
-    /**
-     * Return products associated to the collection.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function products()
-    {
-        return $this->belongsToMany(config('shopper.system.models.product'), shopper_table('collection_product'), 'collection_id');
-    }
-
-    /**
-     * Get all rules of the current collection.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function rules()
+    public function rules(): HasMany
     {
         return $this->hasMany(CollectionRule::class, 'collection_id');
     }

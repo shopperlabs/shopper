@@ -2,36 +2,23 @@
 
 namespace Shopper\Framework\Http\Livewire\Collections;
 
-use Illuminate\Database\Eloquent\Builder;
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Traits\WithSorting;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Browse extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination;
+    use WithSorting;
 
-    /**
-     * Search.
-     *
-     * @var string
-     */
-    public $search;
+    public string $search = '';
 
-    /**
-     * Collection type filter.
-     *
-     * @var string
-     */
-    public $type;
+    public ?string $type = null;
 
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
@@ -39,50 +26,42 @@ class Browse extends Component
     /**
      * Remove a record to the database.
      *
-     * @param  int  $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(int $id)
     {
         (new CollectionRepository())->getById($id)->delete();
 
         $this->dispatchBrowserEvent('item-removed');
+
         $this->notify([
-            'title' => __("Deleted"),
-            'message' => __("The collection has successfully removed!")
+            'title' => __('Deleted'),
+            'message' => __('The collection has successfully removed!'),
         ]);
     }
 
     /**
      * Reset Filter on type.
-     *
-     * @return void
      */
     public function resetTypeFilter()
     {
         $this->type = null;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
     public function render()
     {
         return view('shopper::livewire.collections.browse', [
             'total' => (new CollectionRepository())->count(),
             'collections' => (new CollectionRepository())
                 ->makeModel()
-                ->where('name', 'like', '%'. $this->search .'%')
+                ->where('name', 'like', '%' . $this->search . '%')
                 ->where(function (Builder $query) {
                     if ($this->type !== null) {
                         $query->where('type', $this->type);
                     }
                 })
                 ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
-                ->paginate(10)
+                ->paginate(10),
         ]);
     }
 }

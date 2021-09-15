@@ -2,19 +2,17 @@
 
 namespace Shopper\Framework\Providers;
 
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Shopper\Framework\Sidebar\Domain\DefaultItem;
 use Maatwebsite\Sidebar\Infrastructure\SidebarFlusherFactory;
 use Maatwebsite\Sidebar\Infrastructure\SidebarResolverFactory;
-use Shopper\Framework\Sidebar\Domain\DefaultItem;
 use Shopper\Framework\Sidebar\Presentation\ShopperSidebarRenderer;
 
 class ShopperSidebarServiceProvider extends ServiceProvider
 {
     /**
      * Boot the service provider.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -23,14 +21,11 @@ class ShopperSidebarServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
         // Bind SidebarResolver
         $this->app->bind('Maatwebsite\Sidebar\Infrastructure\SidebarResolver', function (Application $app) {
-
             $resolver = SidebarResolverFactory::getClassName(
                 $app['config']->get('shopper.config.cache.method')
             );
@@ -40,7 +35,6 @@ class ShopperSidebarServiceProvider extends ServiceProvider
 
         // Bind SidebarFlusher
         $this->app->bind('Maatwebsite\Sidebar\Infrastructure\SidebarFlusher', function (Application $app) {
-
             $resolver = SidebarFlusherFactory::getClassName(
                 $app['config']->get('shopper.config.cache.method')
             );
@@ -89,19 +83,9 @@ class ShopperSidebarServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register views.
-     * @return void
-     */
-    protected function registerViews()
-    {
-        $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
-    }
-
-    /**
      * Get the services provided by the provider.
-     * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return [
             'Maatwebsite\Sidebar\Menu',
@@ -111,7 +95,15 @@ class ShopperSidebarServiceProvider extends ServiceProvider
             'Maatwebsite\Sidebar\Append',
             'Maatwebsite\Sidebar\SidebarManager',
             'Maatwebsite\Sidebar\Presentation\SidebarRenderer',
-            'Maatwebsite\Sidebar\Infrastructure\SidebarResolver'
+            'Maatwebsite\Sidebar\Infrastructure\SidebarResolver',
         ];
+    }
+
+    /**
+     * Register views.
+     */
+    protected function registerViews()
+    {
+        $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
     }
 }

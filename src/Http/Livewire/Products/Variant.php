@@ -2,27 +2,18 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Events\Products\ProductUpdated;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
+use Illuminate\Validation\Rule;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Events\Products\ProductUpdated;
+use Shopper\Framework\Repositories\InventoryRepository;
 
 class Variant extends Component
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithAttributes;
-
-    /**
-     * Upload listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['fileDeleted'];
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
 
     /**
      * Product Model.
@@ -40,33 +31,23 @@ class Variant extends Component
 
     /**
      * All locations available on the store.
-     *
-     * @var mixed
      */
     public $inventories;
 
     /**
-     * Confirm action to delete product.
-     *
-     * @var bool
+     * Shopper default currency.
      */
-    public $confirmDeleteProduct = false;
+    public string $currency;
 
-    /**
-     * Display inventory modal.
-     *
-     * @var bool
-     */
-    public $showModalInventories = false;
+    protected $listeners = ['fileDeleted', 'onVariantUpdated' => 'render'];
 
     /**
      * Component Mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     * @param  \Illuminate\Database\Eloquent\Model  $variant
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $product
+     * @param \Illuminate\Database\Eloquent\Model $variant
      */
-    public function mount($product, $variant)
+    public function mount($product, $variant, string $currency)
     {
         $this->inventories = (new InventoryRepository())->get(['name', 'id']);
         $this->product = $product;
@@ -78,43 +59,9 @@ class Variant extends Component
         $this->price_amount = $variant->price_amount;
         $this->old_price_amount = $variant->old_price_amount;
         $this->cost_amount = $variant->cost_amount;
+        $this->currency = $currency;
     }
 
-    /**
-     * Launch modale to remove product.
-     *
-     * @param  string  $type
-     * @return void
-     */
-    public function openModal(string $type = 'delete')
-    {
-        if ($type === 'delete') {
-            $this->confirmDeleteProduct = true;
-        } else {
-            $this->showModalInventories = true;
-        }
-    }
-
-    /**
-     * Close modale.
-     *
-     * @param  string  $type
-     * @return void
-     */
-    public function closeModal(string $type = 'delete')
-    {
-        if ($type === 'delete') {
-            $this->confirmDeleteProduct = false;
-        } else {
-            $this->showModalInventories = false;
-        }
-    }
-
-    /**
-     * Update variant record in the database.
-     *
-     * @return void
-     */
     public function store()
     {
         $this->validate([
@@ -124,18 +71,19 @@ class Variant extends Component
                 Rule::unique(shopper_table('products'), 'name')->ignore($this->variant->id),
             ],
             'file' => 'nullable|image|max:1024',
-            'sku'  => [
+            'sku' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'sku')->ignore($this->variant->id),
             ],
-            'barcode'  => [
+            'barcode' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'barcode')->ignore($this->variant->id),
             ],
         ]);
 
-        (new ProductRepository())->getById($this->variant->id)->update([
+        $this->variant->update([
             'name' => $this->name,
+            'slug' => $this->name,
             'old_price_amount' => $this->old_price_amount ?? null,
             'price_amount' => $this->price_amount ?? null,
             'cost_amount' => $this->cost_amount ?? null,
@@ -150,45 +98,26 @@ class Variant extends Component
 
         event(new ProductUpdated($this->variant));
 
+        $this->emitSelf('onVariantUpdated');
+
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Variant successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Variant successfully updated!'),
         ]);
     }
 
     /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {
         $this->media = null;
     }
 
-    /**
-     * Removed a product to the storage.
-     *
-     * @throws \Exception
-     */
-    public function destroy()
-    {
-        (new ProductRepository())->getById($this->variant->id)->delete();
-
-        session()->flash('success', __("The variation has been correctly removed!"));
-        $this->redirectRoute('shopper.products.edit', $this->product);
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.products.variant', [
-            'currency' => shopper_currency(),
             'media' => $this->variant->files->isNotEmpty()
                 ? $this->variant->files->first()
                 : null,

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Sidebar\Presentation;
 
-use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Group;
+use Illuminate\Contracts\View\Factory;
 
 class ShopperGroupRenderer
 {
@@ -17,17 +17,12 @@ class ShopperGroupRenderer
      */
     protected $view = 'shopper::sidebar.group';
 
-    /**
-     * @param Factory $factory
-     */
     public function __construct(Factory $factory)
     {
         $this->factory = $factory;
     }
 
     /**
-     * @param Group $group
-     *
      * @return \Illuminate\Contracts\View\View
      */
     public function render(Group $group)
@@ -40,7 +35,7 @@ class ShopperGroupRenderer
 
             return $this->factory->make($this->view, [
                 'group' => $group,
-                'items' => $items
+                'items' => $items,
             ])->render();
         }
     }

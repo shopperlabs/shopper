@@ -2,11 +2,14 @@
 
 namespace Shopper\Framework\Models\Shop;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Models\Traits\HasSlug;
 
 class Legal extends Model
 {
+    use HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,26 +28,18 @@ class Legal extends Model
      * @var array
      */
     protected $casts = [
-        'is_enabled' => 'boolean'
+        'is_enabled' => 'boolean',
     ];
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('legals');
     }
 
-    /**
-     * Filter Model data to get only enabled values.
-     *
-     * @param  Builder  $query
-     * @return Builder
-     */
-    public function scopeEnabled(Builder $query)
+    public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
     }

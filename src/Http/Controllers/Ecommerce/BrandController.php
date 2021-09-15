@@ -11,6 +11,7 @@ class BrandController extends ShopperBaseController
      * Return brands list view.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -24,6 +25,7 @@ class BrandController extends ShopperBaseController
      * Display Create view.
      *
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create()
@@ -36,16 +38,16 @@ class BrandController extends ShopperBaseController
     /**
      * Display Edit form.
      *
-     * @param  int  $id
      * @return \Illuminate\View\View
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $this->authorize('edit_brands');
 
         return view('shopper::pages.brands.edit', [
-            'brand' => (new BrandRepository())->getById($id)
+            'brand' => (new BrandRepository())->getById($id),
         ]);
     }
 }

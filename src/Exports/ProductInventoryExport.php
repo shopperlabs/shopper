@@ -2,11 +2,10 @@
 
 namespace Shopper\Framework\Exports;
 
-use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 use Shopper\Framework\Models\Shop\Inventory\InventoryHistory;
 
 class ProductInventoryExport implements FromQuery, WithHeadings, WithMapping
@@ -49,8 +48,7 @@ class ProductInventoryExport implements FromQuery, WithHeadings, WithMapping
     /**
      * Get product to export all movements.
      *
-     * @param  int  $product
-     * @return  $this
+     * @return $this
      */
     public function forProduct(int $product)
     {

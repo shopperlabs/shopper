@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Traits;
 
+use Exception;
 use Shopper\Framework\Models\System\File;
 
 trait WithUploadProcess
@@ -13,11 +14,6 @@ trait WithUploadProcess
      */
     public $file;
 
-    /**
-     * Remove file.
-     *
-     * @return void
-     */
     public function removeImage()
     {
         $this->file = null;
@@ -26,9 +22,7 @@ trait WithUploadProcess
     /**
      * Removed file from the database.
      *
-     * @param  int  $id
-     * @throws \Exception
-     * @return void
+     * @throws Exception
      */
     public function deleteImage(int $id)
     {
@@ -37,27 +31,23 @@ trait WithUploadProcess
         $this->emitSelf('fileDeleted');
 
         $this->notify([
-            'title' => __("Removed"),
-            'message' => __("Image removed from the storage.")
+            'title' => __('Removed'),
+            'message' => __('Image removed from the storage.'),
         ]);
     }
 
     /**
      * Upload file and associate with the current model.
-     *
-     * @param  string  $model
-     * @param  int  $id
-     * @return void
      */
     public function uploadFile(string $model, int $id)
     {
         File::query()->create([
-            'disk_name'     => $filename = $this->file->store('/', config('shopper.system.storage.disks.uploads')),
-            'file_name'     => $this->file->getClientOriginalName(),
-            'file_size'     => $this->file->getSize(),
-            'content_type'  => $this->file->getClientMimeType(),
+            'disk_name' => $this->file->store('/', config('shopper.system.storage.disks.uploads')),
+            'file_name' => $this->file->getClientOriginalName(),
+            'file_size' => $this->file->getSize(),
+            'content_type' => $this->file->getClientMimeType(),
             'filetable_type' => $model,
-            'filetable_id'   => $id,
+            'filetable_id' => $id,
         ]);
     }
 }

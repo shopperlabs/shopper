@@ -3,19 +3,19 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("Stripe") }}</h3>
-                <p class="mt-4 text-sm leading-5 text-gray-600">
-                    {{ __("Accept payments on your store using third-party providers such as Stripe.") }}
+                <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Stripe') }}</h3>
+                <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    {{ __('Accept payments on your store using third-party providers such as Stripe.') }}
                 </p>
             </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="shadow rounded-md overflow-hidden">
-                <div class="bg-white p-4 sm:px-6 border-b border-gray-200">
+            <div class="bg-white shadow rounded-md overflow-hidden dark:bg-gray-800">
+                <div class="p-4 sm:px-6 border-b border-gray-200 dark:border-gray-700">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-gray-400' }}"></div>
-                            <h3 class="text-base leading-6 font-medium text-gray-900">
+                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-gray-400 dark:bg-gray-600' }}"></div>
+                            <h3 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
                                 @if ($this->enabled)
                                     {{ __('Stripe is available for your store.') }}
                                 @else
@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="px-4 py-5 sm:p-6">
                     <div class="flex-shrink-0">
                         <svg class="h-12 w-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.779 40.164">
                             <g transform="translate(24.946 -325.034)">
@@ -42,19 +42,16 @@
                         </svg>
                     </div>
                     <div class="mt-4">
-                        <p class="text-gray-500 text-sm">
-                            {{ __("This provider allows you to integrate Laravel Cashier into your store to allow your customers to make payments, subscriptions using Stripe.") }}
-                            <a href="https://laravel.com/docs/billing" target="_blank" class="text-blue-600 hover:text-blue-500 transition-colors duration-150 ease-in-out">{{ __("Learn more about Laravel Cashier") }}</a>
+                        <p class="text-gray-500 text-sm leading-5 dark:text-gray-400">
+                            {{ __('This provider allows you to integrate Laravel Cashier into your store to allow your customers to make payments, subscriptions using Stripe.') }}
+                            <a href="https://laravel.com/docs/billing" target="_blank" class="text-blue-600 hover:text-blue-500 dark:text-blue-500">{{ __('Learn more about Laravel Cashier') }}</a>
                         </p>
                         @if(! $this->enabled)
                             <span class="mt-4 inline-flex rounded-md shadow-sm">
-                                <button wire:click="enabledStripe" wire.loading.attr="disabled" type="button" class="inline-flex items-center py-2 px-4 border border-gray-300 rounded-md text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:border-light-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out">
-                                    <svg wire:loading wire:target="enabledStripe" class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                                    </svg>
-                                    {{ __("Enabled Stripe Payment") }}
-                                </button>
+                                <x-shopper-default-button wire:click="enabledStripe" wire.loading.attr="disabled" type="button">
+                                    <x-shopper-loader wire:loading wire:target="enabledStripe" class="text-gray-600 dark:text-gray-300" />
+                                    {{ __('Enabled Stripe Payment') }}
+                                </x-shopper-default-button>
                             </span>
                         @endif
                     </div>
@@ -67,7 +64,7 @@
 
         <div class="hidden sm:block">
             <div class="py-5">
-                <div class="border-t border-gray-200"></div>
+                <div class="border-t border-gray-200 dark:border-gray-700"></div>
             </div>
         </div>
 
@@ -75,46 +72,39 @@
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("Environnement") }}</h3>
-                        <p class="mt-4 text-sm leading-5 text-gray-600">
-                            {{ __("Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.") }}
-                            {{ __("API Keys can be grabbed from") }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-blue-700 hover:text-blue-600">https://dashboard.stripe.com/account/apikeys</a>
-                            {{ __("To enable Sandbox switch Sandbox mode to True.") }}
+                        <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Environnement') }}</h3>
+                        <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                            {{ __('Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.') }}
+                            {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-blue-600 dark:text-blue-400">https://dashboard.stripe.com/account/apikeys</a>
+                            {{ __('To enable Sandbox switch Sandbox mode to True.') }}
                         </p>
                     </div>
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
                     <div class="shadow rounded-md overflow-hidden">
-                        <div class="px-4 py-5 bg-white sm:p-6 space-y-4">
+                        <div class="px-4 py-5 sm:p-6 space-y-4 bg-white dark:bg-gray-800">
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                                <div class="col-span-6">
-                                    <label for="stripe_mode" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Stripe Mode") }}</label>
-                                    <div class="mt-1 rounded-md shadow-sm">
-                                        <select wire:model="stripe_mode" id="stripe_mode" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                            <option value="sandbox">Sandbox</option>
-                                            <option value="live">Live</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <x-shopper-input.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
+                                    <x-shopper-input.select wire:model.lazy="stripe_mode" id="stripe_mode">
+                                        <option value="sandbox">Sandbox</option>
+                                        <option value="live">Live</option>
+                                    </x-shopper-input.select>
+                                </x-shopper-input.group>
 
-                                <div class="sm:col-span-3">
-                                    <x-shopper-input.group label="Public key" for="public_key">
-                                        <input wire:model="stripe_key" id="public_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
-                                    </x-shopper-input.group>
-                                </div>
+                                <x-shopper-input.group label="Public key" for="public_key" class="sm:col-span-3">
+                                    <x-shopper-input.text wire:model.lazy="stripe_key" id="public_key" type="text" autocomplete="off" />
+                                </x-shopper-input.group>
 
-                                <div class="sm:col-span-3">
-                                    <x-shopper-input.group label="Secret key" for="secret_key">
-                                        <input wire:model="stripe_secret" id="secret_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
-                                    </x-shopper-input.group>
-                                </div>
+                                <x-shopper-input.group label="Secret key" for="secret_key" class="sm:col-span-3">
+                                    <x-shopper-input.text wire:model.lazy="stripe_secret" id="secret_key" type="text" />
+                                </x-shopper-input.group>
 
                                 <div class="sm:col-span-6">
                                     <x-shopper-input.group label="Webhook key" for="webhook_key">
-                                        <input wire:model="stripe_webhook_secret" id="webhook_key" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
+                                        <x-shopper-input.text wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
                                     </x-shopper-input.group>
-                                    <p class="mt-2 text-gray-500 text-sm leading-5">
-                                        {{ __("Webhooks Key can be grabbed from") }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-blue-600 hover:text-blue-500">https://dashboard.stripe.com/account/webhooks</a>
+                                    <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                                        {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-blue-500 dark:text-blue-400">https://dashboard.stripe.com/account/webhooks</a>
                                     </p>
                                 </div>
                             </div>
@@ -126,7 +116,7 @@
 
         <div class="hidden sm:block">
             <div class="py-5">
-                <div class="border-t border-gray-200"></div>
+                <div class="border-t border-gray-200  dark:border-gray-700"></div>
             </div>
         </div>
 
@@ -134,26 +124,23 @@
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("Cashier currency") }}</h3>
-                        <p class="mt-4 text-sm leading-5 text-gray-500">
-                            {{ __("The default currency that will be used when generating charges from your store.") }}
+                        <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Cashier currency') }}</h3>
+                        <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                            {{ __('The default currency that will be used when generating charges from your store.') }}
                         </p>
                     </div>
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
                     <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white sm:p-6">
+                        <div class="px-4 py-5 sm:p-6 bg-white dark:bg-gray-800">
                             <div class="grid grid-cols-6 gap-6">
-                                <div class="col-span-6">
-                                    <label for="currency" class="block text-sm font-medium leading-5 text-gray-700">{{ __("Default Currency") }}</label>
-                                    <div class="mt-1 rounded-md shadow-sm">
-                                        <select wire:model="currency" id="currency" class="form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5">
-                                            @foreach($currencies as $currency)
-                                                <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                                <x-shopper-input.group label="Default Currency" for="currency" class="col-span-6">
+                                    <x-shopper-input.select wire:model="currency" id="currency">
+                                        @foreach($currencies as $currency)
+                                            <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
+                                        @endforeach
+                                    </x-shopper-input.select>
+                                </x-shopper-input.group>
                             </div>
                         </div>
                     </div>
@@ -161,72 +148,15 @@
             </div>
         </div>
 
-        <div class="mt-6 border-t border-gray-200 pt-5">
+        <div class="mt-6 pt-5 border-t border-gray-200 dark:border-gray-700">
             <div class="flex justify-end">
                 <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
-                    <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                    </svg>
-                    {{ __("Update Configuration") }}
+                    <x-shopper-loader wire:loading wire:target="store" class="text-white" />
+                    {{ __('Update Configuration') }}
                 </x-shopper-button>
             </div>
         </div>
 
     @endif
-
-    <x-shopper-modal wire:model="confirmInstallation" maxWidth="lg">
-        <div class="p-4 sm:p-6 space-y-5">
-            <div>
-                <div class="py-4">
-                    <h3 class="text-xs leading-4 font-medium text-gray-900 tracking-wide uppercase">{{ __("What's included") }}</h3>
-                    <ul class="mt-6 space-y-2">
-                        <li class="flex space-x-2">
-                            <svg class="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" x-description="Heroicon name: check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-sm leading-5 text-gray-500">{{ __("Download Laravel Cashier from composer") }}</span>
-                        </li>
-                        <li class="flex space-x-2">
-                            <svg class="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" x-description="Heroicon name: check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-sm leading-5 text-gray-500">{{ __("Run package migrations") }}</span>
-                        </li>
-                        <li class="flex space-x-2">
-                            <svg class="flex-shrink-0 h-5 w-5 text-green-500" aria-hidden="true" x-description="Heroicon name: check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                            </svg>
-                            <span class="text-sm leading-5 text-gray-500">{{ __("Set up environnement variables") }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="relative bg-gray-900 shadow rounded-md h-28 overflow-y-auto overflow-hidden p-3">
-                <div class="absolute left-0 top-0 px-2">
-                    <span class="text-gray-600 text-xs leading-4">{{ __("output") }}</span>
-                </div>
-                <div class="mt-2 text-gray-500 text-sm leading-5">
-                    {{ $message }}
-                </div>
-            </div>
-            <div class="sm:mt-4 sm:flex sm:flex-row-reverse">
-                <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <x-shopper-button wire:click="install" type="button" wire.loading.attr="disabled">
-                        <svg wire:loading wire:target="install" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                        </svg>
-                        {{ __("Proceed to installation") }}
-                    </x-shopper-button>
-                </span>
-                <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <button wire:click="closeModal" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-                        {{ __("Cancel") }}
-                    </button>
-                </span>
-            </div>
-        </div>
-    </x-shopper-modal>
 
 </div>

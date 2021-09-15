@@ -7,36 +7,36 @@ class OrderStatus
     /**
      * Pending orders are brand new orders that have not been processed yet.
      */
-    const PENDING = 'pending';
+    public const PENDING = 'pending';
 
     /**
      * Orders that has been registered..
      */
-    const REGISTER = 'register';
+    public const REGISTER = 'register';
 
     /**
      * Orders that has been paid..
      */
-    const PAID = 'paid';
+    public const PAID = 'paid';
 
     /**
      * Orders fulfilled completely.
      */
-    const COMPLETED = 'completed';
+    public const COMPLETED = 'completed';
 
     /**
      * Order that has been cancelled.
      */
-    const CANCELLED = 'cancelled';
+    public const CANCELLED = 'cancelled';
 
-    public static function values()
+    public static function values(): array
     {
         return [
-            self::PENDING    => __('Pending'),
-            self::REGISTER   => __('Registered'),
-            self::COMPLETED  => __('Completed'),
-            self::CANCELLED  => __('Cancelled'),
-            self::PAID       => __('Paid'),
+            self::PENDING => __('Pending'),
+            self::REGISTER => __('Registered'),
+            self::COMPLETED => __('Completed'),
+            self::CANCELLED => __('Cancelled'),
+            self::PAID => __('Paid'),
         ];
     }
 }

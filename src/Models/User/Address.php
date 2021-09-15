@@ -4,9 +4,14 @@ namespace Shopper\Framework\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\System\Country;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
+    public const TYPE_BILLING = 'billing';
+
+    public const TYPE_SHIPPING = 'shipping';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +33,15 @@ class Address extends Model
     ];
 
     /**
+     * The dynamic attributes from mutators that should be returned with the user object.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'full_name',
+    ];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array
@@ -37,19 +51,52 @@ class Address extends Model
     ];
 
     /**
-     * Get the table associated with the model.
+     * The relations to eager load on every query.
      *
-     * @return string
+     * @var array
      */
-    public function getTable()
+    protected $with = [
+        'country',
+    ];
+
+    /**
+     * Get the table associated with the model.
+     */
+    public function getTable(): string
     {
         return shopper_table('user_addresses');
     }
 
     /**
+     * Return Address Full Name.
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->last_name
+            ? $this->first_name . ' ' . $this->last_name
+            : $this->first_name;
+    }
+
+    /**
+     * Define if an address is default or not.
+     */
+    public function isDefault(): bool
+    {
+        return $this->is_default === true;
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
+    }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
      * Bootstrap the model and its traits.
-     *
-     * @return void
      */
     protected static function boot()
     {
@@ -58,39 +105,9 @@ class Address extends Model
         static::creating(function ($address) {
             if ($address->is_default) {
                 $address->user->addresses()->where('type', $address->type)->update([
-                    'is_default' => false
+                    'is_default' => false,
                 ]);
             }
         });
-    }
-
-    /**
-     * Define if an address is default or not.
-     *
-     * @return bool
-     */
-    public function isDefault()
-    {
-        return $this->is_default === true;
-    }
-
-    /**
-     * Return the user's information.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
-    }
-
-    /**
-     * Return the address country information.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function country()
-    {
-        return $this->belongsTo(Country::class, 'country_id');
     }
 }

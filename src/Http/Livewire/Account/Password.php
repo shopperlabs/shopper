@@ -2,39 +2,19 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
-use Shopper\Framework\Rules\Password as PasswordRules;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 
 class Password extends Component
 {
-    /**
-     * User current password.
-     *
-     * @var string
-     */
-    public $current_password;
+    public string $current_password = '';
 
-    /**
-     * User new password.
-     *
-     * @var string
-     */
-    public $password;
+    public string $password = '';
 
-    /**
-     * Password confirmation.
-     *
-     * @var string
-     */
-    public $password_confirmation;
+    public string $password_confirmation = '';
 
-    /**
-     * Update user password.
-     *
-     * @return void
-     */
-    public function save()
+    public function save(): void
     {
         $this->validate($this->rules());
 
@@ -49,39 +29,25 @@ class Password extends Component
 
             $this->notify([
                 'title' => __('Password Changed!'),
-                'message' => __("You have been successfully updated your password!")
+                'message' => __('You have been successfully updated your password!'),
             ]);
         } else {
-            session()->flash('error', __("That is not your current password."));
+            session()->flash('error', __('That is not your current password.'));
         }
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             'current_password' => 'required',
             'password' => [
                 'required',
                 'confirmed',
-                (new PasswordRules())
-                    ->requireUppercase()
-                    ->requireSpecialCharacter()
-                    ->requireNumeric()
-                ,
+                Rules\Password::min(8)->numbers()->symbols()->mixedCase(),
             ],
         ];
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.account.password');

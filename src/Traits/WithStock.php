@@ -2,85 +2,41 @@
 
 namespace Shopper\Framework\Traits;
 
-use Illuminate\Http\Response;
 use Maatwebsite\Excel\Excel;
+use Illuminate\Http\Response;
 use Shopper\Framework\Exports\ProductInventoryExport;
-use Shopper\Framework\Repositories\InventoryRepository;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 trait WithStock
 {
-    /**
-     * Stock product value
-     *
-     * @var int
-     */
-    public $stock;
+    public int $stock = 0;
+
+    public int $value = 0;
 
     /**
-     * @var int
+     * Real Stock value.
      */
-    public $value = 0;
+    public int $realStock = 0;
 
     /**
-     * @var int
-     */
-    public $realStock = 0;
-
-    /**
-     * All locations available on the store.
-     *
-     * @var mixed
-     */
-    public $inventories;
-
-    /**
-     * Default inventory id.
-     *
-     * @var int
+     * Current Inventory.
      */
     public $inventory;
 
-    /**
-     * Load all inventories.
-     *
-     * @return void
-     */
-    public function loadInventories()
-    {
-        $this->inventories = $inventories = (new InventoryRepository())->get();
-        $this->inventory = $inventories->where('is_default', true)->first()->id;
-    }
-
-    /**
-     * Update stock value.
-     *
-     * @param  int  $value
-     */
-    public function updatedValue($value)
+    public function updatedValue(int $value)
     {
         $this->value = $value;
-        $this->realStock = $this->stock + (int) $this->value;
+        $this->realStock = $this->stock + $this->value;
     }
 
-    /**
-     * Increment product stock.
-     *
-     * @return void
-     */
     public function incrementStock()
     {
         $this->validate(['value' => 'required|integer']);
 
         $this->value++;
-        $this->realStock = $this->stock + (int) $this->value;
+        $this->realStock = $this->stock + $this->value;
     }
 
-    /**
-     * Decrement product stock.
-     *
-     * @return void
-     */
     public function decrementStock()
     {
         if ($this->realStock === 0) {
@@ -90,14 +46,9 @@ trait WithStock
         $this->validate(['value' => 'required|integer']);
 
         $this->value--;
-        $this->realStock = $this->stock + (int) $this->value;
+        $this->realStock = $this->stock + $this->value;
     }
 
-    /**
-     * Update stock.
-     *
-     * @return void
-     */
     public function updateCurrentStock()
     {
         if ($this->value === 0) {
@@ -131,14 +82,14 @@ trait WithStock
 
         $this->notify([
             'title' => __('Updated'),
-            'message' => __("Stock successfully Updated"),
+            'message' => __('Stock successfully Updated'),
         ]);
     }
 
     /**
      * Export default product stock movement.
      *
-     * @return Response|BinaryFileResponse
+     * @return BinaryFileResponse|Response
      */
     public function export()
     {

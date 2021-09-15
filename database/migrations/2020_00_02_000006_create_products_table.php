@@ -3,11 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Shopper\Framework\Traits\Database\MigrationTrait;
+use Shopper\Framework\Traits\Database;
 
 class CreateProductsTable extends Migration
 {
-    use MigrationTrait;
+    use Database\Migration;
 
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create($this->getTableName('products'), function (Blueprint $table) {
-            $this->addCommonFields($table);
+            $this->addCommonFields($table, true);
 
             $table->string('name');
             $table->string('slug')->unique()->nullable();
@@ -41,21 +41,6 @@ class CreateProductsTable extends Migration
             $this->addForeignKey($table, 'parent_id', $this->getTableName('products'));
             $this->addForeignKey($table, 'brand_id', $this->getTableName('brands'));
         });
-
-        Schema::create($this->getTableName('category_product'), function (Blueprint $table) {
-            $this->addForeignKey($table, 'category_id', $this->getTableName('categories'), false);
-            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
-        });
-
-        Schema::create($this->getTableName('channel_product'), function (Blueprint $table) {
-            $this->addForeignKey($table, 'channel_id', $this->getTableName('channels'), false);
-            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
-        });
-
-        Schema::create($this->getTableName('collection_product'), function (Blueprint $table) {
-            $this->addForeignKey($table, 'collection_id', $this->getTableName('collections'), false);
-            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
-        });
     }
 
     /**
@@ -65,9 +50,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists($this->getTableName('collection_product'));
-        Schema::dropIfExists($this->getTableName('channel_product'));
-        Schema::dropIfExists($this->getTableName('category_product'));
         Schema::dropIfExists($this->getTableName('products'));
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 trait DisableForeignKeys
 {
     /**
-     * Command to disable foreign key for each database management
+     * Command to disable foreign key for each database management.
      *
      * @var array
      */
@@ -48,8 +48,6 @@ trait DisableForeignKeys
 
     /**
      * Return current driver enable command.
-     *
-     * @return mixed
      */
     private function getEnableStatement()
     {
@@ -58,8 +56,6 @@ trait DisableForeignKeys
 
     /**
      * Return current driver disable command.
-     *
-     * @return mixed
      */
     private function getDisableStatement()
     {
@@ -68,8 +64,6 @@ trait DisableForeignKeys
 
     /**
      * Returns command array for current db driver.
-     *
-     * @return mixed
      */
     private function getDriverCommands()
     {

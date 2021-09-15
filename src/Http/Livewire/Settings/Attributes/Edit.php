@@ -2,81 +2,36 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
+use function in_array;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {
     /**
      * Current updated attribute.
-     *
-     * @var Attribute
      */
     public Attribute $attribute;
 
-    /**
-     * Attribute id for validation.
-     *
-     * @var int
-     */
     public $attributeId;
 
-    /**
-     * Attribute name.
-     *
-     * @var string
-     */
-    public $name;
+    public string $name;
 
-    /**
-     * Attribute slug code.
-     *
-     * @var string
-     */
-    public $slug;
+    public string $slug;
 
-    /**
-     * Attribute type.
-     *
-     * @var string
-     */
-    public $type = 'text';
+    public string $type = 'text';
 
+    public ?string $description = null;
 
-    /**
-     * Attribute description.
-     *
-     * @var string
-     */
-    public $description;
+    public bool $isEnabled = false;
 
-    /**
-     * Define if the attribute is enabled for the client side.
-     *
-     * @var bool
-     */
-    public $isEnabled = false;
+    public bool $isSearchable = false;
 
-    /**
-     * Define if the attribute can be searchable.
-     *
-     * @var bool
-     */
-    public $isSearchable = false;
-
-    /**
-     * Define if the attribute can be filterable.
-     *
-     * @var bool
-     */
-    public $isFilterable = false;
+    public bool $isFilterable = false;
 
     /**
      * Component Mount new instance.
-     *
-     * @param  Attribute  $attribute
-     * @return void
      */
     public function mount(Attribute $attribute)
     {
@@ -91,37 +46,7 @@ class Edit extends AbstractBaseComponent
         $this->isFilterable = $attribute->is_filterable;
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     *
-     * @return void
-     */
-    public function store()
-    {
-        $this->validate($this->rules());
-
-        Attribute::query()->find($this->attributeId)->update([
-            'name' => $this->name,
-            'slug' => str_slug($this->slug, '-'),
-            'type' => $this->type,
-            'description' => $this->description,
-            'is_enabled' => $this->isEnabled,
-            'is_searchable' => $this->isSearchable,
-            'is_filterable' => $this->isFilterable,
-        ]);
-
-        $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Attribute has been successfully updated!"),
-        ]);
-    }
-
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|max:75',
@@ -133,21 +58,31 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    /**
-     * Check if the attribute has default values.
-     *
-     * @return bool
-     */
-    public function hasValues()
+    public function store()
+    {
+        $this->validate($this->rules());
+
+        Attribute::query()->find($this->attributeId)->update([
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'type' => $this->type,
+            'description' => $this->description,
+            'is_enabled' => $this->isEnabled,
+            'is_searchable' => $this->isSearchable,
+            'is_filterable' => $this->isFilterable,
+        ]);
+
+        $this->notify([
+            'title' => __('Updated'),
+            'message' => __('Attribute has been successfully updated!'),
+        ]);
+    }
+
+    public function hasValues(): bool
     {
         return in_array($this->type, Attribute::fieldsWithValues());
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.attributes.edit', [

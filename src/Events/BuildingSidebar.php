@@ -7,7 +7,7 @@ use Maatwebsite\Sidebar\Menu;
 class BuildingSidebar
 {
     /**
-     * Menu
+     * Menu.
      *
      * @var Menu
      */
@@ -15,8 +15,6 @@ class BuildingSidebar
 
     /**
      * BuildingSidebar constructor.
-     *
-     * @param Menu $menu
      */
     public function __construct(Menu $menu)
     {
@@ -24,9 +22,7 @@ class BuildingSidebar
     }
 
     /**
-     * Add a menu group to the menu
-     *
-     * @param Menu $menu
+     * Add a menu group to the menu.
      */
     public function add(Menu $menu)
     {
@@ -34,7 +30,7 @@ class BuildingSidebar
     }
 
     /**
-     * Get the current Laravel-Sidebar menu
+     * Get the current Laravel-Sidebar menu.
      *
      * @return Menu
      */

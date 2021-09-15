@@ -1,42 +1,60 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+  mode: 'jit',
+  darkMode: 'class',
   purge: {
-    enable: true,
     content: [
-      "./resources/assets/js/**/*.js",
-      "./resources/views/**/*.php",
-      "./src/**/*.php",
+      './resources/js/**/*.js',
+      './resources/views/**/*.blade.php',
+      './resources/lang/**/*.php',
+      './src/**/*.php',
+      './vendor/livewire-ui/modal/resources/views/*.blade.php',
     ],
     options: {
-      defaultExtractor: content => content.match(/[\w-/.:]+(?<!:)/g) || [],
-      whitelistPatterns: [/-active$/, /-enter$/, /-leave-to$/, /show$/]
+      safelist: [
+        'sm:max-w-2xl'
+      ]
     }
   },
   theme: {
     extend: {
-      colors: {},
+      inset: {
+        '-0.5': '-0.125rem',
+      },
       spacing: {
+        44: '11rem',
         18: '4.5rem',
         44: '11rem',
         95: "23.75rem",
         125: "31.25rem",
         140: "35rem"
       },
+      opacity: {
+        15: '.15',
+        30: '0.3',
+        40: '0.4',
+      },
+      minHeight: {
+        '(screen-content)': 'calc(100vh - 9.625rem)',
+      },
       fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans]
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans]
       }
     },
   },
   variants: {
-    translate: ["responsive", "hover", "focus", "active", "group-hover"],
-    backgroundColor: ["responsive", "hover", "focus", "group-hover", "focus-within", "odd"],
-    textColor: ["responsive", "hover", "focus", "group-hover", "focus-within", "odd"],
-    borderWidth: ["responsive", "odd", "hover", "focus", "odd"],
+    extend: {
+      backgroundColor: ['group-hover', 'focus-within', 'odd'],
+      borderWidth: ['odd'],
+      display: ['dark'],
+      textColor: ['group-hover', 'focus-within', 'odd'],
+      opacity: ['group-hover'],
+      translate: ['group-hover', 'dark'],
+    }
   },
   plugins: [
-    require("@tailwindcss/ui")({
-      layout: 'sidebar',
-    }),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
   ]
 };

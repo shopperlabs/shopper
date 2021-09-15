@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Component;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 use Shopper\Framework\Traits\CanRegisterLivewireComponentDirectories;
 
 class ComponentServiceProvider extends ServiceProvider
@@ -14,8 +14,6 @@ class ComponentServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -29,16 +27,16 @@ class ComponentServiceProvider extends ServiceProvider
 
     /**
      * Register customs Blade Components.
-     *
-     * @return void
      */
     public function registerBladeComponents()
     {
         $this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('alert');
+            $this->registerComponent('application-icon');
             $this->registerComponent('application-logo');
             $this->registerComponent('button');
             $this->registerComponent('breadcrumb');
+            $this->registerComponent('breadcrumb-link');
             $this->registerComponent('confirm-modal');
             $this->registerComponent('confirms-password');
             $this->registerComponent('datetime-picker');
@@ -46,13 +44,17 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('default-button');
             $this->registerComponent('delete-action');
             $this->registerComponent('dialog-modal');
+            $this->registerComponent('dropdown');
+            $this->registerComponent('dropdown-button');
+            $this->registerComponent('dropdown-link');
             $this->registerComponent('empty-state');
+            $this->registerComponent('heading');
             $this->registerComponent('input.checkbox');
             $this->registerComponent('input.file-upload');
             $this->registerComponent('input.group');
             $this->registerComponent('input.markdown');
             $this->registerComponent('input.multiple-upload');
-            $this->registerComponent('input.rich-text');
+            $this->registerComponent('input.radio');
             $this->registerComponent('input.search');
             $this->registerComponent('input.select');
             $this->registerComponent('input.single-upload');
@@ -63,6 +65,9 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('loader');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
+            $this->registerComponent('tables.table-head');
+            $this->registerComponent('tables.table-td');
+            $this->registerComponent('time');
             $this->registerComponent('validation-errors');
             $this->registerComponent('wip');
             $this->registerComponent('wip-placeholder');
@@ -71,8 +76,6 @@ class ComponentServiceProvider extends ServiceProvider
 
     /**
      * Register Livewire components.
-     *
-     * @return void
      */
     public function registerLivewireComponents()
     {
@@ -85,12 +88,9 @@ class ComponentServiceProvider extends ServiceProvider
 
     /**
      * Register the given component.
-     *
-     * @param  string  $component
-     * @return void
      */
     protected function registerComponent(string $component)
     {
-        Blade::component('shopper::components.'.$component, 'shopper-'.$component);
+        Blade::component('shopper::components.' . $component, 'shopper-' . $component);
     }
 }

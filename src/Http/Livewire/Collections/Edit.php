@@ -3,99 +3,56 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\File;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
-class Edit extends Component
+class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithConditions,
-        WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithConditions;
+    use WithSeoAttributes;
 
-    /**
-     * Upload listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['fileDeleted'];
-
-    /**
-     * Collection Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $collection;
 
-    /**
-     * Collection Id.
-     *
-     * @var int
-     */
-    public $collectionId;
+    public int $collectionId;
+
+    public string $name = '';
+
+    public ?string $description = null;
+
+    public string $type = 'auto';
+
+    public ?string $publishedAt = null;
+
+    public ?string $publishedAtFormatted = null;
+
+    public string $condition_match = 'all';
 
     /**
-     * Collection name.
-     *
-     * @var string
-     */
-    public $name = '';
-
-    /**
-     * Collection sample description.
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Type of collection that's be created.
-     *
-     * @var string
-     */
-    public $type = 'auto';
-
-    /**
-     * Publish date for the collection.
-     *
-     * @var string
-     */
-    public $publishedAt;
-
-    /**
-     * Formatted publishedAt date.
-     *
-     * @var string
-     */
-    public $publishedAtFormatted;
-
-    /**
-     * The condition apply to the product of the collection.
-     *
-     * @var string
-     */
-    public $condition_match = 'all';
-
-    /**
-     * Products of the collections
+     * Products of the collections.
      *
      * @var \Illuminate\Database\Eloquent\Collection
      */
     public $products;
 
-    /**
-     * Component mounted action.
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $collection
-     * @return void
-     */
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
+
+    protected $listeners = [
+        'fileDeleted',
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
+
     public function mount($collection)
     {
         $this->collection = $collection;
@@ -107,16 +64,30 @@ class Edit extends Component
         $this->condition_match = $collection->match_conditions;
         $this->publishedAt = $collection->published_at;
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $collection->published_at->toDateString())->toRfc7231String();
-        $this->updateSeo = $collection->seo_title !== null;
+        $this->updateSeo = true;
         $this->seoTitle = $collection->seo_title;
         $this->seoDescription = $collection->seo_description;
     }
 
-    /**
-     * Update collection item in the database.
-     *
-     * @return void
-     */
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => [
+                'sometimes',
+                'required',
+                'max:150',
+                Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
+            ],
+            'file' => 'sometimes|nullable|image|max:1024',
+            'type' => 'sometimes|required',
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules());
@@ -132,7 +103,6 @@ class Edit extends Component
         ]);
 
         if ($this->file) {
-
             if ($this->collection->files->isNotEmpty()) {
                 foreach ($this->collection->files as $file) {
                     Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
@@ -143,36 +113,23 @@ class Edit extends Component
             $this->uploadFile(config('shopper.system.models.collection'), $this->collection->id);
         }
 
-        session()->flash('success', __("Collection successfully updated!"));
+        session()->flash('success', __('Collection successfully updated!'));
+
         $this->redirectRoute('shopper.collections.index');
     }
 
     /**
-     * Define is the current action is create or update.
+     * Define is the current action is create or update for the SEO Trait.
      *
      * @return false
      */
-    public function isUpdate()
+    public function isUpdate(): bool
     {
         return true;
     }
 
     /**
-     * Real-time component validation.
-     *
-     * @param  string  $field
-     * @throws \Illuminate\Validation\ValidationException
-     * @return void
-     */
-    public function updated($field)
-    {
-        $this->validateOnly($field, $this->rules());
-    }
-
-    /**
      * Live updated Formatted publishedAt attribute.
-     *
-     * @return void
      */
     public function updatedPublishedAt()
     {
@@ -180,45 +137,19 @@ class Edit extends Component
     }
 
     /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    public function rules()
-    {
-        return [
-            'name' => [
-                'sometimes',
-                'required',
-                'max:150',
-                Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
-            ],
-            'file' => 'sometimes|nullable|image|max:1024',
-            'type' => 'sometimes|required',
-        ];
-    }
-
-    /**
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
-     *
-     * @return void
      */
     public function fileDeleted()
     {
         $this->media = null;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.collections.edit', [
             'media' => $this->collection->files->isNotEmpty()
-                ? $this->collection->files->first()
+                ? $this->collection->getFirstImage()
                 : null,
         ]);
     }

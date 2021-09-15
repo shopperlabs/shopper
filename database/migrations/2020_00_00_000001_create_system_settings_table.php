@@ -3,11 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Shopper\Framework\Traits\Database\MigrationTrait;
+use Shopper\Framework\Traits\Database;
 
 class CreateSystemSettingsTable extends Migration
 {
-    use MigrationTrait;
+    use Database\Migration;
 
     /**
      * Run the migrations.

@@ -1,4 +1,4 @@
-@extends('shopper::layouts.'. config('shopper.system.theme'))
+@extends('shopper::layouts.default')
 @section('title', __('User Roles & Access Management'))
 
 @section('content')

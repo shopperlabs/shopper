@@ -2,17 +2,18 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use Illuminate\View\View;
+use function count;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Framework\Models\Shop\Channel;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends AbstractBaseComponent
 {
@@ -21,69 +22,55 @@ class Create extends AbstractBaseComponent
         WithSeoAttributes,
         WithUploadProcess;
 
-    /**
-     * Products images.
-     *
-     * @var array
-     */
-    public $files = [];
+    public array $files = [];
 
-    /**
-     * Product custom event listeners.
-     *
-     * @var string[]
-     */
-    protected $listeners = ['productAdded'];
+    public mixed $quantity;
 
-    /**
-     * Default product stock quantity.
-     *
-     * @var mixed
-     */
-    public $quantity;
+    public array $category_ids = [];
 
-    /**
-     * Product categories associate id.
-     *
-     * @var array
-     */
-    public $category_ids = [];
+    public array $collection_ids = [];
 
-    /**
-     * Product collections associate ids.
-     *
-     * @var array
-     */
-    public $collection_ids = [];
+    public ?Channel $defaultChannel = null;
 
-    /**
-     * Product default published channel.
-     *
-     * @var Channel
-     */
-    public $defaultChannel;
+    public array $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
 
-    /**
-     * Component Mount method.
-     *
-     * @return void
-     */
+    protected $listeners = [
+        'productAdded',
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
+
     public function mount()
     {
         $this->defaultChannel = Channel::query()->where('slug', 'web-store')->first();
     }
 
-    /**
-     * Store a newly entry to the storage.
-     *
-     * @return void
-     */
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'bail|required',
+            'sku' => 'nullable|unique:' . shopper_table('products'),
+            'barcode' => 'nullable|unique:' . shopper_table('products'),
+            'file' => 'nullable|image|max:1024',
+            'files.*' => 'nullable|image|max:1024',
+            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules());
 
         $product = (new ProductRepository())->create([
             'name' => $this->name,
+            'slug' => $this->name,
             'sku' => $this->sku,
             'barcode' => $this->barcode,
             'description' => $this->description,
@@ -92,25 +79,25 @@ class Create extends AbstractBaseComponent
             'old_price_amount' => $this->old_price_amount,
             'price_amount' => $this->price_amount,
             'cost_amount' => $this->cost_amount,
-            'type'  => $this->type,
+            'type' => $this->type,
             'requires_shipping' => $this->requiresShipping,
             'backorder' => $this->backorder,
-            'published_at'  => $this->publishedAt ?? now(),
-            'seo_title'     => $this->seoTitle,
+            'published_at' => $this->publishedAt ?? now(),
+            'seo_title' => $this->seoTitle,
             'seo_description' => str_limit($this->seoDescription, 157),
-            'weight_value'  => $this->weightValue ?? null,
-            'weight_unit'   => $this->weightUnit,
-            'height_value'  => $this->heightValue ?? null,
-            'height_unit'   => $this->heightUnit,
-            'width_value'   => $this->widthValue ?? null,
-            'width_unit'    => $this->widthUnit,
-            'volume_value'  => $this->volumeValue ?? null,
-            'volume_unit'   => $this->volumeUnit,
-            'brand_id'  => $this->brand_id ?? null,
+            'weight_value' => $this->weightValue ?? null,
+            'weight_unit' => $this->weightUnit,
+            'height_value' => $this->heightValue ?? null,
+            'height_unit' => $this->heightUnit,
+            'width_value' => $this->widthValue ?? null,
+            'width_unit' => $this->widthUnit,
+            'volume_value' => $this->volumeValue ?? null,
+            'volume_unit' => $this->volumeUnit,
+            'brand_id' => $this->brand_id ?? null,
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.product'), $product->id);
+            $this->uploadFile('product', $product->id);
         }
 
         if (count($this->category_ids) > 0) {
@@ -136,8 +123,9 @@ class Create extends AbstractBaseComponent
             }
         }
 
-        session()->flash('success', __("Product successfully added!"));
-        $this->redirectRoute('shopper.products.edit', $product);
+        session()->flash('success', __('Product successfully added!'));
+
+        $this->redirectRoute('shopper.products.index');
     }
 
     /**
@@ -146,34 +134,12 @@ class Create extends AbstractBaseComponent
      * @param  int  $index
      * @return void
      */
-    public function removeFile($index)
+    public function removeFile(int $index)
     {
         unset($this->files[$index]);
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules()
-    {
-        return [
-            'name'  => 'bail|required',
-            'sku'  => 'nullable|unique:'.shopper_table('products'),
-            'barcode'  => 'nullable|unique:'.shopper_table('products'),
-            'files.*' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
-        ];
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return View
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
-    public function render(): View
+    public function render()
     {
         return view('shopper::livewire.products.create', [
             'brands' => (new BrandRepository())
@@ -189,6 +155,9 @@ class Create extends AbstractBaseComponent
             'collections' => (new CollectionRepository())->get(['name', 'id']),
             'inventories' => Inventory::query()->get(['name', 'id']),
             'currency' => shopper_currency(),
+            'barcodeImage' => $this->barcode
+                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.system.barcode_type'))
+                : null,
         ]);
     }
 }

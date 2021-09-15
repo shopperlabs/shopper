@@ -6,171 +6,96 @@ use Carbon\Carbon;
 
 trait WithAttributes
 {
-    /**
-     * Product name.
-     *
-     * @var string
-     */
-    public $name;
+    public ?string $name = null;
+
+    public ?string $sku = null;
+
+    public ?string $barcode = null;
+
+    public ?int $brand_id = null;
+
+    public ?string $description = null;
+
+    public ?string $price_amount = null;
+
+    public ?string $old_price_amount = null;
+
+    public ?string $cost_amount = null;
 
     /**
-     * Product unique SKU.
-     *
-     * @var string
+     * Define if the product can be return after ordering.
      */
-    public $sku;
-
-    /**
-     * Product Barcode.
-     *
-     * @var string
-     */
-    public $barcode;
-
-    /**
-     * Brand id.
-     *
-     * @var int
-     */
-    public $brand_id;
-
-    /**
-     * Product sample description.
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Price Amount.
-     *
-     * @var string
-     */
-    public $price_amount;
-
-    /**
-     * Old Price Amount (to compare and add promotion).
-     *
-     * @var string
-     */
-    public $old_price_amount;
-
-    /**
-     * Product cost amount.
-     *
-     * @var string
-     */
-    public $cost_amount;
-
-    /**
-     * Define if th product can be return after ordering.
-     *
-     * @var bool
-     */
-    public $backorder = false;
+    public bool $backorder = false;
 
     /**
      * Define if the product can be shipping.
-     *
-     * @var bool
      */
-    public $requiresShipping = false;
+    public bool $requiresShipping = false;
 
     /**
      * Define if the product is visible for the customer.
-     *
-     * @var bool
      */
-    public $isVisible = true;
+    public bool $isVisible = true;
 
     /**
      * Product Safety stock.
-     *
-     * @var int
      */
-    public $securityStock = 0;
+    public int $securityStock = 0;
 
-    /**
-     * Publish date for the collection.
-     *
-     * @var string
-     */
-    public $publishedAt;
+    public ?string $publishedAt = null;
 
     /**
      * Formatted publishedAt date.
-     *
-     * @var string
      */
-    public $publishedAtFormatted;
+    public ?string $publishedAtFormatted = null;
 
     /**
      * Type of product that's be created.
-     *
-     * @var string
      */
-    public $type = 'deliverable';
+    public string $type = 'deliverable';
 
     /**
      * Product dimension: weight Value.
-     *
-     * @var mixed
      */
-    public $weightValue;
+    public ?float $weightValue = null;
 
     /**
      * Product dimension: weight Unit.
-     *
-     * @var string
      */
-    public $weightUnit = 'kg';
+    public string $weightUnit = 'kg';
 
     /**
      * Product dimension: height Value.
-     *
-     * @var mixed
      */
-    public $heightValue;
+    public ?float $heightValue = null;
 
     /**
      * Product dimension: height Unit.
-     *
-     * @var string
      */
-    public $heightUnit = 'cm';
+    public string $heightUnit = 'cm';
 
     /**
      * Product dimension: width Value.
-     *
-     * @var mixed
      */
-    public $widthValue;
+    public ?float $widthValue = null;
 
     /**
      * Product dimension: width Unit.
-     *
-     * @var string
      */
-    public $widthUnit = 'cm';
+    public string $widthUnit = 'cm';
 
     /**
      * Product dimension: volume Value.
-     *
-     * @var mixed
      */
-    public $volumeValue;
+    public ?float $volumeValue;
 
     /**
      * Product dimension: volume Unit.
-     *
-     * @var string
      */
-    public $volumeUnit = 'l';
+    public string $volumeUnit = 'l';
 
     /**
      * Live updated Formatted publishedAt attribute.
-     *
-     * @return void
      */
     public function updatedPublishedAt()
     {

@@ -2,29 +2,29 @@
 
 namespace Shopper\Framework\Models\User;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
+use function count;
 use Laravel\Cashier\Billable;
-use Shopper\Framework\Models\Shop\Order\Order;
-use Shopper\Framework\Models\Traits\CanHaveDiscount;
-use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Framework\Models\Shop\Order\Order;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable,
-        HasRoles,
-        CanHaveDiscount,
-        SoftDeletes,
-        TwoFactorAuthenticatable,
-        Billable;
+    use CanHaveDiscount;
+    use SoftDeletes;
+    use TwoFactorAuthenticatable;
+    use HasRoles;
+    use Billable;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that aren't mass assignable.
      *
-     * @var array
+     * @var bool|string[]
      */
     protected $guarded = [];
 
@@ -50,15 +50,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $dates = [
-        'email_verified_at',
-        'last_login_at',
-        'birth_date',
+        'birth_date' => 'datetime',
     ];
 
     /**
@@ -75,14 +67,12 @@ class User extends Authenticatable
 
     /**
      * Bootstrap the model and its traits.
-     *
-     * @return void
      */
     public static function boot()
     {
         parent::boot();
 
-        static::deleting(function($model) {
+        static::deleting(function ($model) {
             $model->addresses()->delete();
             $model->roles()->detach();
             $model->orders()->delete();
@@ -91,8 +81,6 @@ class User extends Authenticatable
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
     public function getTable(): string
     {
@@ -100,43 +88,26 @@ class User extends Authenticatable
     }
 
     /**
-     * Define if user is an admin
-     *
-     * @return bool
+     * Define if user is an admin.
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->hasRole(config('shopper.system.users.admin_role'));
     }
 
-    /**
-     * Define if an user account is verified.
-     *
-     * @return bool
-     */
-    public function isVerified()
+    public function isVerified(): bool
     {
         return $this->email_verified_at !== null;
     }
 
-    /**
-     * Return User Full Name.
-     *
-     * @return string
-     */
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
         return $this->last_name
             ? $this->first_name . ' ' . $this->last_name
             : $this->first_name;
     }
 
-    /**
-     * Return Formatted Birth Date Attribute.
-     *
-     * @return \Illuminate\Contracts\Translation\Translator|string
-     */
-    public function getBirthDateFormattedAttribute()
+    public function getBirthDateFormattedAttribute(): string
     {
         if ($this->birth_date) {
             return $this->birth_date->formatLocalized('%d, %B %Y');
@@ -145,30 +116,18 @@ class User extends Authenticatable
         return __('Not defined');
     }
 
-    /**
-     * Get User roles name.
-     *
-     * @return string
-     */
-    public function getRolesLabelAttribute()
+    public function getRolesLabelAttribute(): string
     {
         $roles = $this->roles()->pluck('display_name')->toArray();
 
-        if (\count($roles)) {
-            return implode(', ', array_map(function ($item) {
-                return ucwords($item);
-            }, $roles));
+        if (count($roles)) {
+            return implode(', ', array_map(fn ($item) => ucwords($item), $roles));
         }
 
         return 'N/A';
     }
 
-    /**
-     * Get user profile picture.
-     *
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
-     */
-    public function getPictureAttribute()
+    public function getPictureAttribute(): string
     {
         switch ($this->avatar_type) {
             case 'gravatar':
@@ -179,22 +138,12 @@ class User extends Authenticatable
         }
     }
 
-    /**
-     * Get all User Addresses.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function addresses()
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }
 
-    /**
-     * Return user orders list.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }

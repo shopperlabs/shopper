@@ -2,12 +2,15 @@
 
 namespace Shopper\Framework\Models\Shop;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Models\Traits\HasSlug;
 
 class PaymentMethod extends Model
 {
+    use HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,47 +43,14 @@ class PaymentMethod extends Model
     protected $appends = ['logo_url'];
 
     /**
-     * Boot the model.
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($model) {
-            $model->update(['slug' => $model->title]);
-        });
-    }
-
-    /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('payment_methods');
     }
 
-    /**
-     * Set the proper slug attribute.
-     *
-     * @param  string  $value
-     */
-    public function setSlugAttribute($value)
-    {
-        if (static::query()->where('slug', $slug = str_slug($value))->exists()) {
-            $slug = "{$slug}-{$this->id}";
-        }
-
-        $this->attributes['slug'] = $slug;
-    }
-
-    /**
-     * Get user profile picture.
-     *
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|mixed|string
-     */
-    public function getLogoUrlAttribute()
+    public function getLogoUrlAttribute(): ?string
     {
         if ($this->logo) {
             return Storage::disk(config('shopper.system.storage.disks.uploads'))->url($this->logo);
@@ -89,13 +59,7 @@ class PaymentMethod extends Model
         return null;
     }
 
-    /**
-     * Scope a query to only include enabled categories.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeEnabled(Builder $query)
+    public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
     }

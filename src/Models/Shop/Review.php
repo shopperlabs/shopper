@@ -3,6 +3,9 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Review extends Model
 {
@@ -20,44 +23,28 @@ class Review extends Model
      */
     protected $casts = [
         'is_recommended' => 'boolean',
-        'approved'       => 'boolean',
+        'approved' => 'boolean',
     ];
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('reviews');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function reviewrateable()
+    public function reviewrateable(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /**
-     * Return the author's information.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->morphTo('author');
     }
 
-    /**
-     * @param  Model  $reviewrateable
-     * @param  array  $data
-     * @param  Model  $author
-     * @return static
-     */
-    public function createRating(Model $reviewrateable, $data, Model $author)
+    public function createRating(Model $reviewrateable, array $data, Model $author): self
     {
         $rating = new static();
         $rating->fill(array_merge($data, [
@@ -70,12 +57,7 @@ class Review extends Model
         return $rating;
     }
 
-    /**
-     * @param  int  $id
-     * @param  array  $data
-     * @return Model
-     */
-    public function updateRating($id, $data)
+    public function updateRating(int $id, array $data): self
     {
         $rating = static::find($id);
         $rating->update($data);
@@ -83,12 +65,7 @@ class Review extends Model
         return $rating;
     }
 
-    /**
-     * @param  int  $id
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getAllRatings($id, $sort = 'desc')
+    public function getAllRatings(int $id, string $sort = 'desc'): Collection
     {
         return $this->newQuery()->select('*')
             ->where('reviewrateable_id', $id)
@@ -96,12 +73,7 @@ class Review extends Model
             ->get();
     }
 
-    /**
-     * @param  int  $id
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getApprovedRatings($id, $sort = 'desc')
+    public function getApprovedRatings(int $id, string $sort = 'desc'): Collection
     {
         return $this->newQuery()->select('*')
             ->where('reviewrateable_id', $id)
@@ -110,12 +82,7 @@ class Review extends Model
             ->get();
     }
 
-    /**
-     * @param  int  $id
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getNotApprovedRatings($id, $sort = 'desc')
+    public function getNotApprovedRatings(int $id, string $sort = 'desc'): Collection
     {
         return $this->newQuery()->select('*')
             ->where('reviewrateable_id', $id)
@@ -124,13 +91,7 @@ class Review extends Model
             ->get();
     }
 
-    /**
-     * @param  int  $id
-     * @param  int  $limit
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getRecentRatings($id, $limit = 5, $sort = 'desc')
+    public function getRecentRatings(int $id, int $limit = 5, string $sort = 'desc'): Collection
     {
         return $this->newQuery()->select('*')
             ->where('reviewrateable_id', $id)
@@ -140,14 +101,7 @@ class Review extends Model
             ->get();
     }
 
-    /**
-     * @param  int  $id
-     * @param  int  $limit
-     * @param  bool  $approved
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getRecentUserRatings($id, $limit = 5, $approved = true, $sort = 'desc')
+    public function getRecentUserRatings(int $id, int $limit = 5, bool $approved = true, string $sort = 'desc'): Collection
     {
         return $this->newQuery()->select('*')
             ->where('author_id', $id)
@@ -157,14 +111,7 @@ class Review extends Model
             ->get();
     }
 
-    /**
-     * Remove a rating from the storage.
-     *
-     * @param  int  $id
-     * @return mixed
-     * @throws \Exception
-     */
-    public function deleteRating($id)
+    public function deleteRating(int $id): ?bool
     {
         return static::query()->find($id)->delete();
     }

@@ -3,6 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderItem extends Model
 {
@@ -23,50 +25,28 @@ class OrderItem extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('order_items');
     }
 
-    /**
-     * Return total item price.
-     *
-     * @return float|int
-     */
-    public function total()
+    public function total(): int
     {
         return $this->unit_price_amount * $this->quantity;
     }
 
-    /**
-     * Property accessor alias to the total() method
-     *
-     * @return float
-     */
-    public function getTotalAttribute()
+    public function getTotalAttribute(): int
     {
         return $this->total();
     }
 
-    /**
-     * Get all of the owning product models.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function product()
+    public function product(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /**
-     * Get order of the current item.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function order()
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id');
     }

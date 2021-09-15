@@ -4,12 +4,14 @@ namespace Shopper\Framework\Http\Livewire\Products;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
 use Shopper\Framework\Traits\WithStock;
+use Shopper\Framework\Repositories\InventoryRepository;
+use Shopper\Framework\Repositories\InventoryHistoryRepository;
 
 class VariantStock extends Component
 {
-    use WithPagination, WithStock;
+    use WithPagination;
+    use WithStock;
 
     /**
      * Variation Model instance.
@@ -21,33 +23,20 @@ class VariantStock extends Component
     /**
      * Component Mount instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $variant
-     * @return void
+     * @param \Illuminate\Database\Eloquent\Model $variant
      */
     public function mount($variant)
     {
-        $this->loadInventories();
-
         $this->product = $variant;
         $this->stock = $variant->stock;
         $this->realStock = $variant->stock;
     }
 
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.products.variant-stock', [
@@ -61,6 +50,7 @@ class VariantStock extends Component
                 ->where('stockable_id', $this->product->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(3),
+            'inventories' => (new InventoryRepository())->all(),
         ]);
     }
 }

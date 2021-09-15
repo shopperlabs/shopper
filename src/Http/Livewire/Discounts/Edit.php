@@ -2,39 +2,36 @@
 
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
+use Exception;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Discount;
-use Shopper\Framework\Models\Shop\DiscountDetail;
-use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Illuminate\Database\Eloquent\Builder;
+use Shopper\Framework\Models\Shop\Discount;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\Shop\DiscountDetail;
 use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithDiscountAttributes, WithDiscountActions, HasPrice;
+    use WithDiscountAttributes;
+    use WithDiscountActions;
+    use HasPrice;
 
     /**
      * Current updated discount.
-     *
-     * @var Discount
      */
     public Discount $discount;
 
     /**
      * Discount id for validation.
-     *
-     * @var int
      */
-    public $discountId;
+    public int $discountId;
 
     /**
      * Component Mount instance.
-     *
-     * @param  Discount  $discount
      */
     public function mount(Discount $discount)
     {
@@ -81,11 +78,21 @@ class Edit extends AbstractBaseComponent
         }
     }
 
-    /**
-     * Store a newly entry to the database.
-     *
-     * @return void
-     */
+    public function rules(): array
+    {
+        return [
+            'code' => [
+                'sometimes',
+                'required',
+                Rule::unique(shopper_table('discounts'), 'code')->ignore($this->discountId),
+            ],
+            'type' => 'sometimes|required',
+            'value' => 'sometimes|required',
+            'apply' => 'sometimes|required',
+            'dateStart' => 'sometimes|required',
+        ];
+    }
+
     public function store()
     {
         if ($this->minRequired !== 'none') {
@@ -108,9 +115,9 @@ class Edit extends AbstractBaseComponent
             'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
-            'usage_limit_per_user'  => $this->usage_limit_per_user,
+            'usage_limit_per_user' => $this->usage_limit_per_user,
             'start_at' => Carbon::createFromFormat('Y-m-d H:i', $this->dateStart)->toDateTimeString(),
-            'end_at'  => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
+            'end_at' => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
         if ($this->apply === 'products') {
@@ -152,53 +159,34 @@ class Edit extends AbstractBaseComponent
         }
 
         session()->flash('success', __("Discount code {$this->code} updated successfully!"));
-        $this->redirectRoute('shopper.discounts.index');
-    }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    protected function rules()
-    {
-        return [
-            'code' => [
-                'sometimes',
-                'required',
-                Rule::unique(shopper_table('discounts'), 'code')->ignore($this->discountId)
-            ],
-            'type' => 'sometimes|required',
-            'value' => 'sometimes|required',
-            'apply' => 'sometimes|required',
-            'dateStart' => 'sometimes|required',
-        ];
+        $this->redirectRoute('shopper.discounts.index');
     }
 
     /**
      * Remove a entry to the storage.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove()
     {
         Discount::query()->find($this->discountId)->delete();
 
-        session()->flash('success', __("Remove discount successfully"));
+        session()->flash('success', __('Remove discount successfully'));
+
         $this->redirectRoute('shopper.discounts.index');
     }
 
     /**
      * Render the component.
      *
-     * @return \Illuminate\View\View
      * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
     {
         $this->products = (new ProductRepository())
             ->orderBy('name', 'asc')
-            ->where('name', '%'. $this->searchProduct .'%', 'like')
+            ->where('name', '%' . $this->searchProduct . '%', 'like')
             ->get(['name', 'price_amount', 'id'])
             ->except($this->productsIds);
 

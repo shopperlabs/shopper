@@ -2,43 +2,26 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 use Livewire\Component;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Illuminate\Validation\Rule;
 use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Seo extends Component
 {
     use WithSeoAttributes;
 
-    /**
-     * Product Model.
-     *
-     * @var Model
-     */
     public $product;
 
-    /**
-     * Product id.
-     *
-     * @var int
-     */
-    public $productId;
+    public int $productId;
 
-    /**
-     * Product slug url.
-     *
-     * @var string
-     */
-    public $slug;
+    public string $slug;
 
-    /**
-     * Component Mount method.
-     *
-     * @return void
-     */
+    public $seoAttributes = [
+        'name' => 'name',
+        'description' => 'description',
+    ];
+
     public function mount($product)
     {
         $this->product = $product;
@@ -50,8 +33,6 @@ class Seo extends Component
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
@@ -59,7 +40,7 @@ class Seo extends Component
             'slug' => [
                 'required',
                 Rule::unique(shopper_table('products'), 'sku')->ignore($this->productId),
-            ]
+            ],
         ]);
 
         (new ProductRepository())->getById($this->productId)->update([
@@ -71,16 +52,11 @@ class Seo extends Component
         $this->emit('productHasUpdated', $this->productId);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product SEO successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product SEO successfully updated!'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return View
-     */
     public function render()
     {
         return view('shopper::livewire.products.forms.form-seo');

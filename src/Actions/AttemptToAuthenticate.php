@@ -2,10 +2,11 @@
 
 namespace Shopper\Framework\Actions;
 
+use Illuminate\Http\Request;
+use Shopper\Framework\Shopper;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
-use Shopper\Framework\Shopper;
 
 class AttemptToAuthenticate
 {
@@ -25,10 +26,6 @@ class AttemptToAuthenticate
 
     /**
      * Create a new controller instance.
-     *
-     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
-     * @param  \Shopper\Framework\Services\TwoFactor\LoginRateLimiter  $limiter
-     * @return void
      */
     public function __construct(StatefulGuard $guard, LoginRateLimiter $limiter)
     {
@@ -39,15 +36,14 @@ class AttemptToAuthenticate
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  callable  $next
-     * @return mixed
+     * @throws ValidationException
      */
-    public function handle($request, $next)
+    public function handle(Request $request, $next)
     {
         if ($this->guard->attempt(
             $request->only(Shopper::username(), 'password'),
-            $request->filled('remember'))
+            $request->filled('remember')
+        )
         ) {
             return $next($request);
         }
@@ -58,17 +54,12 @@ class AttemptToAuthenticate
     /**
      * Throw a failed authentication validation exception.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return void
-     *
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function throwFailedAuthenticationException($request)
+    protected function throwFailedAuthenticationException(Request $request)
     {
         $this->limiter->increment($request);
 
-        throw ValidationException::withMessages([
-            Shopper::username() => [trans('auth.failed')],
-        ]);
+        throw ValidationException::withMessages([Shopper::username() => [trans('auth.failed')], ]);
     }
 }

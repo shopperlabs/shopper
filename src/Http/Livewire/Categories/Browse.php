@@ -2,35 +2,22 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithSorting;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Browse extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination;
+    use WithSorting;
 
-    /**
-     * Search.
-     *
-     * @var string
-     */
-    public $search;
+    public string $search = '';
 
-    /**
-     * Open reorder Modal.
-     *
-     * @var bool
-     */
-    public $reorderModal = false;
+    protected $listeners = ['onCategoriesReordered' => 'render'];
 
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
@@ -38,8 +25,7 @@ class Browse extends Component
     /**
      * Remove a record to the database.
      *
-     * @param  int  $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(int $id)
     {
@@ -47,88 +33,19 @@ class Browse extends Component
 
         $this->dispatchBrowserEvent('item-removed');
         $this->notify([
-            'title' => __("Deleted"),
-            'message' => __("The category has successfully removed!")
+            'title' => __('Deleted'),
+            'message' => __('The category has successfully removed!'),
         ]);
     }
 
-    /**
-     * Update category parent position.
-     *
-     * @param  array  $items
-     * @return void
-     */
-    public function updateGroupOrder($items)
-    {
-        foreach ($items as $item) {
-            (new CategoryRepository())
-                ->getById($item['value'])
-                ->update(['position' => $item['order']]);
-        }
-
-        $this->emitSelf('notify-saved');
-    }
-
-    /**
-     * Update subcategory position.
-     *
-     * @param  array  $groups
-     * @return void
-     */
-    public function updateCategoryOrder($groups)
-    {
-        foreach ($groups as $group) {
-            foreach ($group['items'] as $item) {
-                (new CategoryRepository())
-                    ->getById($item['value'])
-                    ->update([
-                        'parent_id' => $group['value'],
-                        'position'  => $item['order']
-                    ]);
-            }
-        }
-
-        $this->emitSelf('notify-saved');
-    }
-
-    /**
-     * Close reorder modal.
-     *
-     * @return void
-     */
-    public function closeModale()
-    {
-        $this->reorderModal = false;
-    }
-
-    /**
-     * Launch reorder modale.
-     *
-     * @return void
-     */
-    public function launchModale()
-    {
-        $this->reorderModal = true;
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.categories.browse', [
             'total' => (new CategoryRepository())->count(),
             'categories' => (new CategoryRepository())
-                ->where('name', '%'. $this->search .'%', 'like')
-                ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
+                ->where('name', '%' . $this->search . '%', 'like')
+                ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)
                 ->paginate(10),
-            'parentCategories' => (new CategoryRepository())
-                ->with('childs')
-                ->where('parent_id', null)
-                ->orderBy('position', 'asc')
-                ->get(),
         ]);
     }
 }

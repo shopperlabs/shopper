@@ -1,19 +1,24 @@
 <div>
 
-    <div class="mt-4 pb-5 border-b border-gray-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
-        <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Customers') }}</h2>
-        @if($total > 0)
-            @can('add_customers')
-                <div class="flex space-x-3">
-                    <span class="shadow-sm rounded-md">
-                        <a href="{{ route('shopper.customers.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
-                            {{ __("Create") }}
-                        </a>
-                    </span>
-                </div>
-            @endcan
-        @endif
-    </div>
+    <x-shopper-heading>
+        <x-slot name="title">
+            {{ __('Customers') }}
+        </x-slot>
+
+        <x-slot name="action">
+            @if($total > 0)
+                @can('add_customers')
+                    <div class="flex space-x-3">
+                        <span class="shadow-sm rounded-md">
+                            <x-shopper-button :link="route('shopper.customers.create')">
+                                {{ __('Create') }}
+                            </x-shopper-button>
+                        </span>
+                    </div>
+                @endcan
+            @endif
+        </x-slot>
+    </x-shopper-heading>
 
     @if($total === 0)
         <x-shopper-empty-state
@@ -168,86 +173,72 @@
             </div>
         </x-shopper-empty-state>
     @else
-        <div class="mt-6 bg-white shadow rounded-md">
+        <div class="mt-6 bg-white shadow rounded-md dark:bg-gray-800">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-center space-x-4">
-                    <div class="flex flex-1">
-                        <label for="filter" class="sr-only">{{ __('Search customers') }}</label>
-                        <div class="flex flex-1 rounded-md shadow-sm">
-                            <div class="relative flex-grow focus-within:z-10">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
-                                    </svg>
-                                </div>
-                                <input id="filter" wire:model.debounce.300ms="search" class="form-input block w-full rounded-none rounded-md pl-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" placeholder="{{ __('Search customer by first name / last name') }}" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <svg wire:loading wire:target="search" class="animate-spin h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <x-shopper-input.search label="Search customer" placeholder="Search customer by first name / last name" />
                     <div class="flex items-center space-x-4">
                         <div class="relative z-10 inline-flex shadow-sm rounded-md">
                             <div x-data="{ open: false }" @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
-                                <button @click="open = !open" type="button" class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                                    {{ __("Account Status") }}
-                                    <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                                <div x-cloak x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
-                                    <div class="rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                <x-shopper-default-button @click="open = !open" type="button" class="relative rounded-r-none rounded-l-md dark:border-gray-700">
+                                    {{ __('Account Status') }}
+                                    <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
+                                </x-shopper-default-button>
+                                <div x-cloak x-show="open"
+                                     x-transition:enter="transition ease-out duration-100"
+                                     x-transition:enter-start="transform opacity-0 scale-95"
+                                     x-transition:enter-end="transform opacity-100 scale-100"
+                                     x-transition:leave="transition ease-in duration-75"
+                                     x-transition:leave-start="transform opacity-100 scale-100"
+                                     x-transition:leave-end="transform opacity-0 scale-95"
+                                     class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg"
+                                >
+                                    <div class="rounded-md bg-white shadow-xs dark:bg-gray-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">
                                             <div class="flex items-center py-2 px-4">
-                                                <input wire:model="activeAccount" id="activeAccount_enabled" name="activeAccount" type="radio" value="1" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <x-shopper-input.radio wire:model="activeAccount" id="activeAccount_enabled" name="activeAccount" type="radio" value="1" />
                                                 <label for="activeAccount_enabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Active account") }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Active account') }}</span>
                                                 </label>
                                             </div>
                                             <div class="flex items-center py-2 px-4">
-                                                <input wire:model="activeAccount" id="activeAccount_disabled" name="activeAccount" type="radio" value="0" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <x-shopper-input.radio wire:model="activeAccount" id="activeAccount_disabled" name="activeAccount" type="radio" value="0" />
                                                 <label for="activeAccount_disabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Inactive account") }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Inactive account') }}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="border-t border-gray-100"></div>
+                                        <div class="border-t border-gray-100 dark:border-gray-600"></div>
                                         <div class="py-1">
-                                            <button wire:click="resetActiveAccountFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600">{{ __("Clear") }}</button>
+                                            <button wire:click="resetActiveAccountFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500">{{ __('Clear') }}</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div x-data="{ open: false }" @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
-                                <button @click="open = !open" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                                    {{ __("Email Subscription") }}
-                                    <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
+                                <x-shopper-default-button @click="open = !open" type="button" class="-ml-px rounded-l-none rounded-r-md focus:z-10">
+                                    {{ __('Email Subscription') }}
+                                    <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
+                                </x-shopper-default-button>
                                 <div x-cloak x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
-                                    <div class="rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                    <div class="rounded-md bg-white shadow-xs dark:bg-gray-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">
                                             <div class="flex items-center py-2 px-4">
-                                                <input wire:model="emailSubscription" id="emailSubscription_enabled" name="emailSubscription" type="radio" value="1" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <x-shopper-input.radio wire:model="emailSubscription" id="emailSubscription_enabled" name="emailSubscription" value="1" />
                                                 <label for="emailSubscription_enabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Subscribed") }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Subscribed') }}</span>
                                                 </label>
                                             </div>
                                             <div class="flex items-center py-2 px-4">
-                                                <input wire:model="emailSubscription" id="emailSubscription_disabled" name="emailSubscription" type="radio" value="0" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                                <x-shopper-input.radio wire:model="emailSubscription" id="emailSubscription_disabled" name="emailSubscription" value="0" />
                                                 <label for="emailSubscription_disabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700">{{ __("Not subscribed") }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Not subscribed') }}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="border-t border-gray-100"></div>
+                                        <div class="border-t border-gray-100 dark:border-gray-600"></div>
                                         <div class="py-1">
-                                            <button wire:click="resetEmailFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600">{{ __("Clear") }}</button>
+                                            <button wire:click="resetEmailFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500">{{ __('Clear') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -260,29 +251,29 @@
                 <div class="align-middle inline-block min-w-full">
                     <table class="min-w-full">
                         <thead>
-                        <tr class="border-t border-gray-200">
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                <span class="lg:pl-2">{{ __("Full Name") }}</span>
-                            </th>
-                            <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                <span class="lg:pl-2">{{ __("Email") }}</span>
-                            </th>
-                            <th class="hidden md:table-cell px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                <span class="lg:pl-2">{{ __("Registered At") }}</span>
-                            </th>
-                            <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
-                        </tr>
+                            <tr class="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-700">
+                                <x-shopper-tables.table-head>
+                                    <span class="lg:pl-2">{{ __('Full Name') }}</span>
+                                </x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head class="hidden md:table-cell text-right">
+                                    <span class="lg:pl-2">{{ __('Email') }}</span>
+                                </x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head class="hidden md:table-cell text-right">
+                                    <span class="lg:pl-2">{{ __('Registered At') }}</span>
+                                </x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head class="pr-6 text-right" />
+                            </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-100" x-max="1">
+                        <tbody class="divide-y divide-gray-100 dark:border-gray-700" x-max="1">
                             @forelse($customers as $customer)
                                 <tr>
-                                    <td class="px-6 py-3 max-w-md whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td class="px-6 py-3 max-w-md whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex items-center lg:pl-2">
                                             <div class="flex-shrink-0 h-10 w-10">
                                                 <img class="h-10 w-10 rounded-lg" src="{{ $customer->picture }}" alt="">
                                             </div>
                                             <div class="ml-4">
-                                                <div class="text-sm leading-5 font-medium text-gray-900">
+                                                <div class="text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                                     {{ $customer->full_name }}
                                                 </div>
                                                 <div class="flex items-center">
@@ -295,59 +286,53 @@
                                                             <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clip-rule="evenodd" />
                                                         </svg>
                                                     @endif
-                                                    <span class="ml-1.5 text-sm leading-5 text-gray-500">{{ $customer->email }}</span>
+                                                    <span class="ml-1.5 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ $customer->email }}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-3 text-sm leading-5 text-gray-500 font-medium text-right">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $customer->opt_in ? 'bg-green-100 text-green-800': 'bg-gray-100 text-gray-800' }}">
-                                            {{ $customer->opt_in ? __("Subscribed") : __("Not subscribed") }}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $customer->opt_in ? 'bg-green-100 text-green-800': 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }}">
+                                            {{ $customer->opt_in ? __('Subscribed') : __('Not subscribed') }}
                                         </span>
                                     </td>
-                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
+                                    <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right dark:text-gray-400">
                                         <time datetime="{{ $customer->created_at->format('Y-m-d') }}" class="capitalize">{{ $customer->created_at->formatLocalized('%d %B %Y') }}</time>
                                     </td>
                                     <td class="pr-6">
-                                        <div x-data="{ open: false }" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
-                                            <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                                </svg>
-                                            </button>
-                                            <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
-                                                <div class="z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
-                                                    <div class="py-1">
-                                                        <a href="{{ route('shopper.customers.show', $customer) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: pencil-alt" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
-                                                            </svg>
-                                                            {{ __("Detail") }}
-                                                        </a>
-                                                    </div>
-                                                    <div class="border-t border-gray-100"></div>
-                                                    <div class="py-1">
-                                                        <button wire:click="remove({{ $customer->id }})" type="button" class="group w-full flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                                                            <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                                            </svg>
-                                                            {{ __("Delete") }}
-                                                        </button>
-                                                    </div>
+                                        <x-shopper-dropdown customAlignmentClasses="right-7 top-0">
+                                            <x-slot name="trigger">
+                                                <button id="product-options-menu" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 dark:focus:bg-gray-700">
+                                                    <x-heroicon-s-dots-vertical class="w-5 h-5" />
+                                                </button>
+                                            </x-slot>
+
+                                            <x-slot name="content">
+                                                <div class="py-1">
+                                                    <a href="{{ route('shopper.customers.show', $customer) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white" role="menuitem">
+                                                        <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                                                        {{ __('Detail') }}
+                                                    </a>
                                                 </div>
-                                            </div>
-                                        </div>
+                                                <div class="border-t border-gray-100 dark:border-gray-600"></div>
+                                                <div class="py-1">
+                                                    <button wire:click="remove({{ $customer->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white" role="menuitem">
+                                                        <x-heroicon-s-trash class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" />
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </div>
+                                            </x-slot>
+                                        </x-shopper-dropdown>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
+                                    <td colspan="4" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex justify-center items-center space-x-2">
-                                            <svg class="h-8 w-8 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                             </svg>
-                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No customer found") }}...</span>
+                                            <span class="font-medium py-8 text-gray-400 text-xl">{{ __('No customer found') }}...</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -356,13 +341,13 @@
                     </table>
                 </div>
             </div>
-            <div class="bg-white px-4 py-3 flex items-center rounded-b-md justify-between border-t border-gray-200 sm:px-6">
+            <div class="px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 dark:border-gray-700">
                 <div class="flex-1 flex justify-between sm:hidden">
                     {{ $customers->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm leading-5 text-gray-700">
+                        <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
                             {{ __('Showing') }}
                             <span class="font-medium">{{ ($customers->currentPage() - 1) * $customers->perPage() + 1 }}</span>
                             {{ __('to') }}
@@ -378,6 +363,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="customers" link="#" />
+    <x-shopper-learn-more name="customers" link="https://docs.laravelshopper.io/docs/customers" />
 
 </div>

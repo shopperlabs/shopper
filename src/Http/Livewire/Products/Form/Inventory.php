@@ -2,22 +2,20 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Http\Response;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Maatwebsite\Excel\Excel;
-use Shopper\Framework\Exports\ProductInventoryExport;
-use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
+use Illuminate\Validation\Rule;
+use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Framework\Traits\WithStock;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Shopper\Framework\Http\Livewire\Products\WithAttributes;
+use Shopper\Framework\Repositories\InventoryHistoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Inventory extends Component
 {
-    use WithPagination, WithAttributes, WithStock;
+    use WithPagination;
+    use WithAttributes;
+    use WithStock;
 
     /**
      * Product Model.
@@ -26,14 +24,12 @@ class Inventory extends Component
      */
     public $product;
 
-    /**
-     * Component mount instance.
-     *
-     * @param  \Illuminate\Database\Eloquent\Model  $product
-     */
-    public function mount($product)
+    public $inventories;
+
+    public function mount($product, $inventories, $defaultInventory)
     {
-        $this->loadInventories();
+        $this->inventories = $inventories;
+        $this->inventory = $defaultInventory;
 
         $this->product = $product;
         $this->stock = $product->stock;
@@ -43,29 +39,22 @@ class Inventory extends Component
         $this->securityStock = $product->security_stock;
     }
 
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
 
     /**
      * Store/Update a entry to the storage.
-     *
-     * @return void
      */
     public function store()
     {
         $this->validate([
-            'sku'  => [
+            'sku' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'sku')->ignore($this->product->id),
             ],
-            'barcode'  => [
+            'barcode' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'barcode')->ignore($this->product->id),
             ],
@@ -78,16 +67,11 @@ class Inventory extends Component
         ]);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product Stock attribute successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product Stock attribute successfully updated!'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.products.forms.form-inventory', [
@@ -101,6 +85,9 @@ class Inventory extends Component
                 ->where('stockable_id', $this->product->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(5),
+            'barcodeImage' => $this->barcode
+                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.system.barcode_type'))
+                : null,
         ]);
     }
 }

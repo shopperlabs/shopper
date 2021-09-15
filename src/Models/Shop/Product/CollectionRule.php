@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CollectionRule extends Model
 {
@@ -20,20 +21,13 @@ class CollectionRule extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('collection_rules');
     }
 
-    /**
-     * Return the formatted words for a rule.
-     *
-     * @return mixed
-     */
-    public function getFormattedRule()
+    public function getFormattedRule(): string
     {
         return [
             'product_title' => __('Product title'),
@@ -45,12 +39,7 @@ class CollectionRule extends Model
         ][$this->rule];
     }
 
-    /**
-     * Return the formatted words for an operator.
-     *
-     * @return mixed
-     */
-    public function getFormattedOperator()
+    public function getFormattedOperator(): string
     {
         return [
             'equals_to' => __('Equals to'),
@@ -64,12 +53,7 @@ class CollectionRule extends Model
         ][$this->operator];
     }
 
-    /**
-     * Return collection related to the current collection rule.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function collection()
+    public function collection(): BelongsTo
     {
         return $this->belongsTo(config('shopper.system.models.collection'), 'collection_id');
     }

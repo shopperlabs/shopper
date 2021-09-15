@@ -1,7 +1,5 @@
-const mix = require("laravel-mix");
+const mix = require('laravel-mix');
 const path = require('path');
-
-require('laravel-mix-tailwind');
 
 /*
  |--------------------------------------------------------------------------
@@ -16,38 +14,25 @@ require('laravel-mix-tailwind');
 
 mix.disableNotifications();
 
-mix.setPublicPath("public")
-  .setResourceRoot("../") // turns assets paths in css relative to css file
-  .sass("./resources/sass/shopper.scss", "css")
-  .react("./resources/js/shopper.js", "js")
-  .options({ processCssUrls: false })
-  .tailwind("./tailwind.config.js")
+mix.setPublicPath('public').setResourceRoot('../');
+
+mix.js('./resources/js/shopper.js', 'js')
+  .postCss('resources/css/shopper.css', 'css').options({
+    postCss: [
+      require('tailwindcss'),
+      require('autoprefixer'),
+    ],
+  })
   .webpackConfig({
     output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
     resolve: {
-      extensions: ["*", ".js", ".jsx"],
+      extensions: ['*', '.js', '.jsx'],
       alias: {
         '@': path.resolve('./resources/js'),
-        '@components': path.resolve('./resources/js/src/components'),
-        '@hooks': path.resolve('./resources/js/src/hooks'),
-        '@pages': path.resolve('./resources/js/src/pages'),
-        '@utils': path.resolve('./resources/js/src/utils'),
       },
     }
-  })
-  .sourceMaps();
+  });
 
 if (mix.inProduction()) {
-  mix.version()
-    .options({
-      // optimize js minification process
-      terser: {
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-      },
-    });
-} else {
-  // Uses inline source-maps on development
-  mix.webpackConfig({ devtool: 'inline-source-map' });
+  mix.version();
 }

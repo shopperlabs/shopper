@@ -3,15 +3,11 @@
 namespace Shopper\Framework\Models\Traits;
 
 use Shopper\Framework\Models\InventoryHistory;
+use Illuminate\Database\Eloquent\Relations\morphMany;
 
 trait ReferencedByInventoryHistories
 {
-    /**
-     * Relation with StockMutation.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\morphMany
-     */
-    public function stockMutations()
+    public function stockMutations(): morphMany
     {
         return $this->morphMany(InventoryHistory::class, 'reference');
     }

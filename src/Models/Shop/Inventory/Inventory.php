@@ -4,6 +4,7 @@ namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\System\Country;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Inventory extends Model
 {
@@ -30,6 +31,28 @@ class Inventory extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_default' => 'boolean',
+    ];
+
+    /**
+     * Get the table associated with the model.
+     */
+    public function getTable(): string
+    {
+        return shopper_table('inventories');
+    }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
      * Boot the model.
      */
     protected static function boot()
@@ -47,34 +70,5 @@ class Inventory extends Model
                 static::query()->update(['is_default' => false]);
             }
         });
-    }
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'is_default' => 'boolean',
-    ];
-
-    /**
-     * Get the table associated with the model.
-     *
-     * @return string
-     */
-    public function getTable()
-    {
-        return shopper_table('inventories');
-    }
-
-    /**
-     * Country relationship for the inventory.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function country()
-    {
-        return $this->belongsTo(Country::class, 'country_id');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Traits;
 
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Actions\ConfirmPassword;
 
@@ -11,30 +11,21 @@ trait ConfirmsPasswords
 {
     /**
      * Indicates if the user's password is being confirmed.
-     *
-     * @var bool
      */
-    public $confirmingPassword = false;
+    public bool $confirmingPassword = false;
 
     /**
      * The ID of the operation being confirmed.
-     *
-     * @var string|null
      */
-    public $confirmableId = null;
+    public ?string $confirmableId = null;
 
     /**
      * The user's password.
-     *
-     * @var string
      */
-    public $confirmablePassword = '';
+    public string $confirmablePassword = '';
 
     /**
      * Start confirming the user's password.
-     *
-     * @param  string  $confirmableId
-     * @return void
      */
     public function startConfirmingPassword(string $confirmableId)
     {
@@ -55,8 +46,6 @@ trait ConfirmsPasswords
 
     /**
      * Stop confirming the user's password.
-     *
-     * @return void
      */
     public function stopConfirmingPassword()
     {
@@ -68,14 +57,12 @@ trait ConfirmsPasswords
     /**
      * Confirm the user's password.
      *
-     * @return void
+     * @throws ValidationException
      */
     public function confirmPassword()
     {
         if (! app(ConfirmPassword::class)(app(StatefulGuard::class), Auth::user(), $this->confirmablePassword)) {
-            throw ValidationException::withMessages([
-                'confirmable_password' => [__('This password does not match our records.')],
-            ]);
+            throw ValidationException::withMessages(['confirmable_password' => [__('This password does not match our records.')], ]);
         }
 
         session(['auth.password_confirmed_at' => time()]);
@@ -90,12 +77,11 @@ trait ConfirmsPasswords
     /**
      * Ensure that the user's password has been recently confirmed.
      *
-     * @param  int|null  $maximumSecondsSinceConfirmation
-     * @return void
+     * @param null|int $maximumSecondsSinceConfirmation
      */
     protected function ensurePasswordIsConfirmed($maximumSecondsSinceConfirmation = null)
     {
-        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ?: config('auth.password_timeout', 900);
+        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ? $maximumSecondsSinceConfirmation : config('auth.password_timeout', 900);
 
         return $this->passwordIsConfirmed($maximumSecondsSinceConfirmation) ? null : abort(403);
     }
@@ -103,13 +89,12 @@ trait ConfirmsPasswords
     /**
      * Determine if the user's password has been recently confirmed.
      *
-     * @param  int|null  $maximumSecondsSinceConfirmation
-     * @return bool
+     * @param null|int $maximumSecondsSinceConfirmation
      */
-    protected function passwordIsConfirmed($maximumSecondsSinceConfirmation = null)
+    protected function passwordIsConfirmed($maximumSecondsSinceConfirmation = null): bool
     {
-        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ?: config('auth.password_timeout', 900);
+        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ? $maximumSecondsSinceConfirmation : config('auth.password_timeout', 900);
 
-        return (time() - session('auth.password_confirmed_at', 0)) < $maximumSecondsSinceConfirmation;
+        return time() - session('auth.password_confirmed_at', 0) < $maximumSecondsSinceConfirmation;
     }
 }

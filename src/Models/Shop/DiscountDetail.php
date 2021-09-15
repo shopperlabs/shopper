@@ -3,6 +3,8 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DiscountDetail extends Model
 {
@@ -27,30 +29,18 @@ class DiscountDetail extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('discountables');
     }
 
-    /**
-     * Get the discount associated with this content.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function discount()
+    public function discount(): BelongsTo
     {
         return $this->belongsTo(Discount::class, 'discount_id');
     }
 
-    /**
-     * Morph Relation.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function discountable()
+    public function discountable(): MorphTo
     {
         return $this->morphTo();
     }

@@ -8,30 +8,23 @@ trait WithLegalActions
 {
     /**
      * Legal id.
-     *
-     * @var int
      */
-    public $legalId;
+    public ?int $legalId = null;
 
     /**
      * Legal page content.
-     *
-     * @var string
      */
-    public $content;
+    public ?string $content = null;
 
     /**
      * Legal page state to determine if page is enabled.
-     *
-     * @var bool
      */
-    public $isEnabled = false;
+    public bool $isEnabled = false;
 
     /**
      * Initialization of values.
      *
-     * @param  Legal|null  $legal
-     * @return void
+     * @param null|Legal $legal
      */
     public function initializeValues($legal)
     {
@@ -42,10 +35,6 @@ trait WithLegalActions
 
     /**
      * Update/Create values on the storage.
-     *
-     * @param  string  $title
-     * @param  mixed  $content
-     * @param  bool  $isEnabled
      */
     public function storeValues(string $title, $content, bool $isEnabled = false)
     {

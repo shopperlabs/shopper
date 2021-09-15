@@ -2,60 +2,44 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\View\View;
+use function count;
 use Livewire\WithFileUploads;
+use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads,
-        WithUploadProcess,
-        WithAttributes,
-        WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
+    use WithSeoAttributes;
 
-    /**
-     * Product Model.
-     *
-     * @var Model
-     */
     public $product;
 
-    /**
-     * Product Id.
-     *
-     * @var int
-     */
-    public $productId;
+    public int $productId;
 
-    /**
-     * Product categories associate id.
-     *
-     * @var array
-     */
-    public $category_ids = [];
+    public string $currency;
 
-    /**
-     * Product collections associate ids.
-     *
-     * @var array
-     */
-    public $collection_ids = [];
+    public array $category_ids = [];
 
-    /**
-     * Component Mount method.
-     *
-     * @return void
-     */
-    public function mount($product)
+    public array $collection_ids = [];
+
+    protected $listeners = [
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
+    }
+
+    public function mount($product, string $currency)
     {
         $this->product = $product;
         $this->productId = $product->id;
@@ -70,35 +54,27 @@ class Edit extends AbstractBaseComponent
         $this->type = $product->type;
         $this->publishedAt = $product->published_at->format('Y-m-d');
         $this->publishedAtFormatted = $product->published_at->toRfc7231String();
-        $this->collection_ids = $product->collections->pluck('id');
-        $this->category_ids = $product->categories->pluck('id');
+        $this->collection_ids = $product->collections->pluck('id')->toArray();
+        $this->category_ids = $product->categories->pluck('id')->toArray();
+        $this->currency = $currency;
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required',
             'file' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:'.shopper_table('brands').',id',
+            'brand_id' => 'nullable|exists:' . shopper_table('brands') . ',id',
         ];
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     *
-     * @return void
-     */
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
-        (new ProductRepository())->getById($this->product->id)->update([
+        $this->product->update([
             'name' => $this->name,
+            'slug' => $this->name,
             'description' => $this->description,
             'type' => $this->type,
             'is_visible' => $this->isVisible,
@@ -106,11 +82,11 @@ class Edit extends AbstractBaseComponent
             'price_amount' => $this->price_amount,
             'cost_amount' => $this->cost_amount,
             'published_at' => $this->publishedAt,
-            'brand_id'  => $this->brand_id,
+            'brand_id' => $this->brand_id,
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.product'), $this->productId);
+            $this->uploadFile('product', $this->productId);
         }
 
         if (count($this->category_ids) > 0) {
@@ -126,18 +102,12 @@ class Edit extends AbstractBaseComponent
         $this->emit('productHasUpdated', $this->productId);
 
         $this->notify([
-            'title' => __("Updated"),
-            'message' => __("Product successfully updated!"),
+            'title' => __('Updated'),
+            'message' => __('Product successfully updated!'),
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return View
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
-    public function render(): View
+    public function render()
     {
         return view('shopper::livewire.products.forms.form-edit', [
             'brands' => (new BrandRepository())
@@ -151,7 +121,6 @@ class Edit extends AbstractBaseComponent
                 ->select('name', 'id')
                 ->get(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
-            'currency' => shopper_currency(),
         ]);
     }
 }

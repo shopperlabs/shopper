@@ -2,31 +2,25 @@
 
 namespace Shopper\Framework\Models\Traits;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Shop\Review;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait ReviewRateable
 {
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function ratings()
+    public function ratings(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewrateable');
     }
 
-    /**
-     * @param  null  $round
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function averageRating($round = null, $onlyApproved = false)
+    public function averageRating($round = null, bool $onlyApproved = false): Collection
     {
         $where = $onlyApproved ? [['approved', '1']] : [];
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(rating), '.$round.') as averageReviewRateable')
+                ->selectRaw('ROUND(AVG(rating), ' . $round . ') as averageReviewRateable')
                 ->where($where)
                 ->pluck('averageReviewRateable');
         }
@@ -37,18 +31,13 @@ trait ReviewRateable
             ->pluck('averageReviewRateable');
     }
 
-    /**
-     * @param  null  $round
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function averageCustomerServiceRating($round = null, $onlyApproved = false)
+    public function averageCustomerServiceRating($round = null, bool $onlyApproved = false): Collection
     {
         $where = $onlyApproved ? [['approved', '1']] : [];
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(customer_service_rating), '. $round .') as averageCustomerServiceReviewRateable')
+                ->selectRaw('ROUND(AVG(customer_service_rating), ' . $round . ') as averageCustomerServiceReviewRateable')
                 ->where($where)
                 ->pluck('averageCustomerServiceReviewRateable');
         }
@@ -59,18 +48,13 @@ trait ReviewRateable
             ->pluck('averageCustomerServiceReviewRateable');
     }
 
-    /**
-     * @param  null  $round
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function averageQualityRating($round = null, $onlyApproved = false)
+    public function averageQualityRating($round = null, bool $onlyApproved = false): Collection
     {
         $where = $onlyApproved ? [['approved', '1']] : [];
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(quality_rating), '. $round .') as averageQualityReviewRateable')
+                ->selectRaw('ROUND(AVG(quality_rating), ' . $round . ') as averageQualityReviewRateable')
                 ->where($where)
                 ->pluck('averageQualityReviewRateable');
         }
@@ -81,18 +65,13 @@ trait ReviewRateable
             ->pluck('averageQualityReviewRateable');
     }
 
-    /**
-     * @param  null  $round
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function averageFriendlyRating($round = null, $onlyApproved = false)
+    public function averageFriendlyRating($round = null, bool $onlyApproved = false): Collection
     {
         $where = $onlyApproved ? [['approved', '1']] : [];
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(friendly_rating), '. $round .') as averageFriendlyReviewRateable')
+                ->selectRaw('ROUND(AVG(friendly_rating), ' . $round . ') as averageFriendlyReviewRateable')
                 ->where($where)
                 ->pluck('averageFriendlyReviewRateable');
         }
@@ -103,18 +82,13 @@ trait ReviewRateable
             ->pluck('averageFriendlyReviewRateable');
     }
 
-    /**
-     * @param  null  $round
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function averagePricingRating($round = null, $onlyApproved = false)
+    public function averagePricingRating($round = null, bool $onlyApproved = false): Collection
     {
         $where = $onlyApproved ? [['approved', '1']] : [];
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(pricing_rating), '. $round .') as averagePricingReviewRateable')
+                ->selectRaw('ROUND(AVG(pricing_rating), ' . $round . ') as averagePricingReviewRateable')
                 ->where($where)
                 ->pluck('averagePricingReviewRateable');
         }
@@ -125,9 +99,6 @@ trait ReviewRateable
             ->pluck('averagePricingReviewRateable');
     }
 
-    /**
-     * @return mixed
-     */
     public function countRating()
     {
         return $this->ratings()
@@ -135,11 +106,7 @@ trait ReviewRateable
             ->pluck('countReviewRateable')->first();
     }
 
-    /**
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function countCustomerServiceRating($onlyApproved = false)
+    public function countCustomerServiceRating(bool $onlyApproved = false): Collection
     {
         return $this->ratings()
             ->selectRaw('count(customer_service_rating) as countCustomerServiceReviewRateable')
@@ -147,11 +114,7 @@ trait ReviewRateable
             ->pluck('countCustomerServiceReviewRateable');
     }
 
-    /**
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function countQualityRating($onlyApproved = false)
+    public function countQualityRating(bool $onlyApproved = false): Collection
     {
         return $this->ratings()
             ->selectRaw('count(quality_rating) as countQualityReviewRateable')
@@ -159,33 +122,23 @@ trait ReviewRateable
             ->pluck('countQualityReviewRateable');
     }
 
-    /**
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function countFriendlyRating($onlyApproved = false) {
+    public function countFriendlyRating(bool $onlyApproved = false): Collection
+    {
         return $this->ratings()
             ->selectRaw('count(friendly_rating) as countFriendlyReviewRateable')
             ->where($onlyApproved ? [['approved', '1']] : [])
             ->pluck('countFriendlyReviewRateable');
     }
 
-    /**
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function countPriceRating($onlyApproved = false) {
+    public function countPriceRating(bool $onlyApproved = false): Collection
+    {
         return $this->ratings()
             ->selectRaw('count(price_rating) as countPriceReviewRateable')
             ->where($onlyApproved ? [['approved', '1']] : [])
             ->pluck('countPriceReviewRateable');
     }
 
-    /**
-     * @param  bool  $onlyApproved
-     * @return \Illuminate\Support\Collection
-     */
-    public function sumRating($onlyApproved = false)
+    public function sumRating(bool $onlyApproved = false): Collection
     {
         return $this->ratings()
             ->selectRaw('SUM(rating) as sumReviewRateable')
@@ -193,99 +146,54 @@ trait ReviewRateable
             ->pluck('sumReviewRateable');
     }
 
-    /**
-     * @param  int  $max
-     * @return float|int
-     */
     public function ratingPercent($max = 5)
     {
         $ratings = $this->ratings();
         $quantity = $ratings->count();
         $total = $ratings->selectRaw('SUM(rating) as total')->pluck('total');
 
-        return ($quantity * $max) > 0 ? $total / (($quantity * $max) / 100) : 0;
+        return $quantity * $max > 0 ? $total / ($quantity * $max / 100) : 0;
     }
 
     /**
-     * @param  array  $data
-     * @param  Model  $author
-     * @param  Model|null  $parent
-     * @return Review
+     * @param array $data
      */
-    public function rating($data, Model $author, Model $parent = null)
+    public function rating($data, Model $author, ?Model $parent = null): Review
     {
         return (new Review())->createRating($this, $data, $author);
     }
 
-    /**
-     * @param  int  $id
-     * @param  array  $data
-     * @param  Model|null  $parent
-     * @return Model
-     */
-    public function updateRating($id, $data, Model $parent = null)
+    public function updateRating($id, $data, ?Model $parent = null): Review
     {
         return (new Review())->updateRating($id, $data);
     }
 
-    /**
-     * @param $id
-     * @param string $sort
-     * @return mixed
-     */
-    public function getAllRatings($id, $sort = 'desc')
+    public function getAllRatings($id, $sort = 'desc'): Collection
     {
         return (new Review())->getAllRatings($id, $sort);
     }
 
-    /**
-     * @param  int  $id
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getApprovedRatings($id, $sort = 'desc')
+    public function getApprovedRatings($id, $sort = 'desc'): Collection
     {
         return (new Review())->getApprovedRatings($id, $sort);
     }
 
-    /**
-     * @param  int  $id
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getNotApprovedRatings($id, $sort = 'desc')
+    public function getNotApprovedRatings($id, $sort = 'desc'): Collection
     {
         return (new Review())->getNotApprovedRatings($id, $sort);
     }
 
-    /**
-     * @param  int  $id
-     * @param  int  $limit
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getRecentRatings($id, $limit = 5, $sort = 'desc')
+    public function getRecentRatings($id, $limit = 5, $sort = 'desc'): Collection
     {
-        return (new Review())->getRecentRatings($id, $limit,  $sort);
+        return (new Review())->getRecentRatings($id, $limit, $sort);
     }
 
-    /**
-     * @param  int  $id
-     * @param  int  $limit
-     * @param  bool  $approved
-     * @param  string  $sort
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function getRecentUserRatings($id, $limit = 5, $approved = true, $sort = 'desc')
+    public function getRecentUserRatings($id, $limit = 5, $approved = true, $sort = 'desc'): Collection
     {
         return (new Review())->getRecentUserRatings($id, $limit, $approved, $sort);
     }
 
-    /**
-     * @param  int  $id
-     * @return mixed
-     */
-    public function deleteRating($id)
+    public function deleteRating($id): ?bool
     {
         return (new Review())->deleteRating($id);
     }

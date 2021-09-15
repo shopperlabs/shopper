@@ -2,6 +2,10 @@
 
 namespace Shopper\Framework\Repositories;
 
+use Exception;
+use function is_array;
+use function is_string;
+use function func_get_args;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Exceptions\GeneralException;
@@ -73,14 +77,28 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * Specify Model class name.
+     * Add the given query scope.
      *
-     * @return mixed
+     * @param string $scope
+     * @param array  $args
+     *
+     * @return $this
+     */
+    public function __call($scope, $args)
+    {
+        $this->scopes[$scope] = $args;
+
+        return $this;
+    }
+
+    /**
+     * Specify Model class name.
      */
     abstract public function model();
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|Model|mixed
+     * @return \Illuminate\Contracts\Foundation\Application|mixed|Model
+     *
      * @throws GeneralException
      */
     public function makeModel()
@@ -88,7 +106,7 @@ abstract class BaseRepository implements RepositoryContract
         $model = resolve($this->model());
 
         if (! $model instanceof Model) {
-            throw new GeneralException("Class {$this->model()} must be an instance of ". Model::class);
+            throw new GeneralException("Class {$this->model()} must be an instance of " . Model::class);
         }
 
         return $this->model = $model;
@@ -97,9 +115,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Get all the model records in the database.
      *
-     * @param array $columns
-     *
-     * @return Collection|static[]
+     * @return array<static>|Collection
      */
     public function all(array $columns = ['*'])
     {
@@ -114,18 +130,14 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Count the number of specified model records in the database.
-     *
-     * @return int
      */
-    public function count() : int
+    public function count(): int
     {
         return $this->model->count();
     }
 
     /**
      * Create a new model record in the database.
-     *
-     * @param array $data
      *
      * @return \Illuminate\Database\Eloquent\Model
      */
@@ -138,8 +150,6 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Create one or more new model records in the database.
-     *
-     * @param array $data
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -156,8 +166,6 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Delete one or more model records from the database.
-     *
-     * @return mixed
      */
     public function delete()
     {
@@ -175,10 +183,11 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @param $id
      *
-     * @throws \Exception
-     * @return bool|null
+     * @throws Exception
+     *
+     * @return null|bool
      */
-    public function deleteById($id) : bool
+    public function deleteById($id): bool
     {
         $this->unsetClauses();
 
@@ -187,20 +196,14 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Delete multiple records.
-     *
-     * @param array $ids
-     *
-     * @return int
      */
-    public function deleteMultipleById(array $ids) : int
+    public function deleteMultipleById(array $ids): int
     {
         return $this->model->destroy($ids);
     }
 
     /**
      * Get the first specified model record from the database.
-     *
-     * @param array $columns
      *
      * @return Model|static
      */
@@ -218,9 +221,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Get all the specified model records in the database.
      *
-     * @param array $columns
-     *
-     * @return Collection|static[]
+     * @return array<static>|Collection
      */
     public function get(array $columns = ['*'])
     {
@@ -236,8 +237,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Get the specified model record from the database.
      *
-     * @param       $id
-     * @param array $columns
+     * @param $id
      *
      * @return Collection|Model
      */
@@ -251,11 +251,10 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * @param  string  $item
-     * @param  string  $column
-     * @param  array  $columns
+     * @param string $item
+     * @param string $column
      *
-     * @return Model|null|static
+     * @return null|Model|static
      */
     public function getByColumn($item, $column, array $columns = ['*'])
     {
@@ -267,10 +266,9 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * @param  int  $limit
-     * @param  array  $columns
-     * @param  string  $pageName
-     * @param  null  $page
+     * @param int    $limit
+     * @param string $pageName
+     * @param null   $page
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
@@ -288,9 +286,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Update the specified model record in the database.
      *
-     * @param       $id
-     * @param array $data
-     * @param array $options
+     * @param $id
      *
      * @return Collection|Model
      */
@@ -322,8 +318,9 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set an ORDER BY clause.
      *
-     * @param  string  $column
-     * @param  string  $direction
+     * @param string $column
+     * @param string $direction
+     *
      * @return $this
      */
     public function orderBy($column, $direction = 'asc')
@@ -353,7 +350,6 @@ abstract class BaseRepository implements RepositoryContract
      * Add a simple where in clause to the query.
      *
      * @param string $column
-     * @param mixed  $values
      *
      * @return $this
      */
@@ -382,6 +378,25 @@ abstract class BaseRepository implements RepositoryContract
         $this->with = $relations;
 
         return $this;
+    }
+
+    /**
+     * Get an array with the values of a given column.
+     *
+     * @param $column
+     * @param null $key
+     *
+     * @return \Illuminate\Support\Collection|mixed
+     */
+    public function pluck($column, $key = null)
+    {
+        $this->newQuery();
+
+        $results = $this->query->pluck($column, $key);
+
+        $this->unsetClauses();
+
+        return $results;
     }
 
     /**
@@ -429,7 +444,7 @@ abstract class BaseRepository implements RepositoryContract
             $this->query->orderBy($orders['column'], $orders['direction']);
         }
 
-        if (isset($this->take) and ! is_null($this->take)) {
+        if (isset($this->take) && null !== $this->take) {
             $this->query->take($this->take);
         }
 
@@ -444,7 +459,7 @@ abstract class BaseRepository implements RepositoryContract
     protected function setScopes()
     {
         foreach ($this->scopes as $method => $args) {
-            $this->query->$method(...$args);
+            $this->query->{$method}(...$args);
         }
 
         return $this;
@@ -463,38 +478,5 @@ abstract class BaseRepository implements RepositoryContract
         $this->take = null;
 
         return $this;
-    }
-
-    /**
-     * Add the given query scope.
-     *
-     * @param string $scope
-     * @param array $args
-     *
-     * @return $this
-     */
-    public function __call($scope, $args)
-    {
-        $this->scopes[$scope] = $args;
-
-        return $this;
-    }
-
-    /**
-     * Get an array with the values of a given column.
-     *
-     * @param $column
-     * @param null $key
-     * @return \Illuminate\Support\Collection|mixed
-     */
-    public function pluck($column, $key = null)
-    {
-        $this->newQuery();
-
-        $results = $this->query->pluck($column, $key);
-
-        $this->unsetClauses();
-
-        return $results;
     }
 }

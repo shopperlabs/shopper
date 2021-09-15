@@ -3,9 +3,13 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Models\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Attribute extends Model
 {
+    use HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -38,25 +42,21 @@ class Attribute extends Model
      * @var array
      */
     protected $appends = [
-      'type_formatted',
+        'type_formatted',
     ];
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('attributes');
     }
 
     /**
      * Return formatted type.
-     *
-     * @return string
      */
-    public function getTypeFormattedAttribute()
+    public function getTypeFormattedAttribute(): string
     {
         return self::typesFields()[$this->type];
     }
@@ -64,32 +64,32 @@ class Attribute extends Model
     /**
      * Return available fields types.
      *
-     * @return string[]
+     * @return array<string>
      */
-    public static function typesFields()
+    public static function typesFields(): array
     {
         return [
-          'text' => __('Text field :type', ['type' => '(input)']),
-          'number' => __('Text field :type', ['type' => '(number)']) ,
-          'richtext' => __('Richtext') ,
-          'markdown' => __('Markdown') ,
-          'select' => __('Select') ,
-          'checkbox' => __('Checkbox') ,
-          'checkbox_list' => __('Checkbox List') ,
-          'radio' => __('Radio') ,
-          // 'toggle' => __('Toggle') ,
-          'colorpicker' => __('Color picker') ,
-          'datepicker' => __('Date picker') ,
-          // 'file' => __('File') ,
+            'text' => __('Text field :type', ['type' => '(input)']),
+            'number' => __('Text field :type', ['type' => '(number)']),
+            'richtext' => __('Richtext'),
+            'markdown' => __('Markdown'),
+            'select' => __('Select'),
+            'checkbox' => __('Checkbox'),
+            'checkbox_list' => __('Checkbox List'),
+            'radio' => __('Radio'),
+            // 'toggle' => __('Toggle') ,
+            'colorpicker' => __('Color picker'),
+            'datepicker' => __('Date picker'),
+            // 'file' => __('File') ,
         ];
     }
 
     /**
      * Return attributes fields that has values by default.
      *
-     * @return string[]
+     * @return array<string>
      */
-    public static function fieldsWithValues()
+    public static function fieldsWithValues(): array
     {
         return [
             'select',
@@ -103,23 +103,20 @@ class Attribute extends Model
     /**
      * Return attributes fields that has custom string values.
      *
-     * @return string[]
+     * @return array<string>
      */
-    public static function fieldsWithStringValues()
+    public static function fieldsWithStringValues(): array
     {
         return [
             'text',
             'number',
             'richtext',
             'markdown',
-            'datepicker'
+            'datepicker',
         ];
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function values()
+    public function values(): HasMany
     {
         return $this->hasMany(AttributeValue::class);
     }

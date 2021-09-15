@@ -2,22 +2,20 @@
 
 namespace Shopper\Framework\Http\Composers;
 
-use Illuminate\View\View;
-use Lavary\Menu\Builder;
 use Lavary\Menu\Menu;
+use Lavary\Menu\Builder;
+use Illuminate\View\View;
 
 class MenuCreator
 {
     /**
      * Bind Menu to the view.
-     *
-     * @param View $view
      */
     public function compose(View $view)
     {
         $user = auth()->user();
         $menu = new Menu();
-        $class = 'block p-2 text-base leading-6 font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:text-white focus:bg-blue-900 transition ease-in-out duration-150';
+        $class = 'block p-2 text-base leading-6 font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:text-white focus:bg-blue-900 transition ease-in-out duration-200';
         $svgClass = 'h-6 w-6 text-white transition ease-in-out duration-150';
 
         $menu->make('primaryMenu', function (Builder $item) use ($class, $svgClass, $user) {
@@ -44,14 +42,14 @@ class MenuCreator
                 'data-placement' => 'right',
                 'data-container' => 'body',
                 'data-boundary' => 'window',
-                'target' => '_blank'
+                'target' => '_blank',
             ]);
 
             if ($user->hasPermissionTo('view_analytics')) {
                 $analyticsIcon = '<svg class=' . $svgClass . ' fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                  </svg>';
-                $analytics = $item->add($analyticsIcon, ['url' => '#', 'class' => $class]);
+                $analytics = $item->add($analyticsIcon, ['route' => 'shopper.analytics', 'class' => $class]);
                 $analytics->link->attr([
                     'class' => '',
                     'data-toggle' => 'tooltip',

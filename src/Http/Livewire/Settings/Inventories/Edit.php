@@ -3,102 +3,37 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Models\System\Country;
 use Shopper\Framework\Rules\Phone;
+use Shopper\Framework\Models\System\Country;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {
-    /**
-     * Current Updated inventory
-     *
-     * @var Inventory
-     */
     public Inventory $inventory;
 
-    /**
-     * Inventory id for validation rules.
-     *
-     * @var int
-     */
-    public $inventoryId;
+    public int $inventoryId;
 
-    /**
-     * Inventory default name.
-     *
-     * @var string
-     */
-    public $name;
+    public string $name;
 
-    /**
-     * Inventory description.
-     *
-     * @var string
-     */
-    public $description;
+    public ?string $description;
 
-    /**
-     * Inventory email.
-     *
-     * @var string
-     */
-    public $email;
+    public string $email;
 
-    /**
-     * City where a locate th inventory.
-     *
-     * @var string
-     */
-    public $city;
+    public string $city;
 
-    /**
-     * Street address to locate inventory on a map.
-     *
-     * @var string
-     */
-    public $street_address;
+    public string $street_address;
 
-    /**
-     * Street address secondary.
-     *
-     * @var string
-     */
-    public $street_address_plus;
+    public ?string $street_address_plus;
 
-    /**
-     * Zipcode.
-     *
-     * @var string
-     */
-    public $zipcode;
+    public string $zipcode;
 
-    /**
-     * Phone number.
-     *
-     * @var string
-     */
-    public $phone_number;
+    public ?string $phone_number;
 
-    /**
-     * Country who inventory is localize.
-     *
-     * @var integer
-     */
-    public $country_id;
+    public int $country_id;
 
-    /**
-     * Define if the inventory is the default.
-     *
-     * @var bool
-     */
-    public $isDefault = false;
+    public bool $isDefault = false;
 
-    /**
-     * Component Mount method instance.
-     *
-     * @param  Inventory  $inventory
-     */
     public function mount(Inventory $inventory)
     {
         $this->inventory = $inventory;
@@ -115,16 +50,28 @@ class Edit extends AbstractBaseComponent
         $this->phone_number = $inventory->phone_number;
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     *
-     * @return void
-     */
+    public function rules(): array
+    {
+        return [
+            'email' => [
+                'required',
+                'email',
+                Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId),
+            ],
+            'name' => 'required|max:100',
+            'city' => 'required',
+            'street_address' => 'required',
+            'zipcode' => 'required',
+            'phone_number' => ['nullable', new Phone()],
+            'country_id' => 'required|exists:' . shopper_table('system_countries') . ',id',
+        ];
+    }
+
     public function store()
     {
         $this->validate($this->rules());
 
-        Inventory::query()->find($this->inventoryId)->update([
+        $this->inventory->update([
             'name' => $this->name,
             'email' => $this->email,
             'city' => $this->city,
@@ -138,54 +85,14 @@ class Edit extends AbstractBaseComponent
         ]);
 
         session()->flash('success', __('Inventory Successfully updated.'));
+
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
-    /**
-     * Remove a location to the storage.
-     *
-     * @throws \Exception
-     * @return void
-     */
-    public function remove()
-    {
-        Inventory::query()->find($this->inventoryId)->delete();
-
-        session()->flash('success', __('Inventory Successfully removed.'));
-        $this->redirectRoute('shopper.settings.inventories.index');
-    }
-
-    /**
-     * Component validation rules.
-     *
-     * @return string[]
-     */
-    protected function rules()
-    {
-        return [
-            'email' => [
-                'required',
-                'email',
-                Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId)
-            ],
-            'name' => 'required|max:100',
-            'city' => 'required',
-            'street_address' => 'required',
-            'zipcode'  => 'required',
-            'phone_number'  => ['nullable', new Phone()],
-            'country_id' => 'required|exists:'.shopper_table('system_countries').',id',
-        ];
-    }
-
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('shopper::livewire.settings.inventories.edit', [
-            'countries'  => Country::query()->orderBy('name')->get(),
+            'countries' => Country::query()->orderBy('name')->get(),
         ]);
     }
 }

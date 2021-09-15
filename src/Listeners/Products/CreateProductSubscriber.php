@@ -2,15 +2,13 @@
 
 namespace Shopper\Framework\Listeners\Products;
 
+use function count;
 use Shopper\Framework\Events\Products\ProductCreated;
 
 class CreateProductSubscriber
 {
     /**
      * Handle the event.
-     *
-     * @param  ProductCreated  $event
-     * @return void
      */
     public function handle(ProductCreated $event)
     {

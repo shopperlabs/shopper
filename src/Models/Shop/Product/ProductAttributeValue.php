@@ -3,9 +3,17 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProductAttributeValue extends Model
 {
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -14,15 +22,8 @@ class ProductAttributeValue extends Model
     protected $fillable = [
         'product_attribute_id',
         'attribute_value_id',
-        'product_custom_value'
+        'product_custom_value',
     ];
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
     /**
      * The relations to eager load on every query.
@@ -40,8 +41,6 @@ class ProductAttributeValue extends Model
 
     /**
      * Return exact product attribute value.
-     *
-     * @return mixed
      */
     public function getRealValueAttribute()
     {
@@ -54,18 +53,13 @@ class ProductAttributeValue extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('attribute_value_product_attribute');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function value()
+    public function value(): BelongsTo
     {
         return $this->belongsTo(AttributeValue::class, 'attribute_value_id');
     }

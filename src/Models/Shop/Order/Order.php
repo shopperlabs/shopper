@@ -3,12 +3,20 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Shop\PaymentMethod;
-use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\User\User;
+use Shopper\Framework\Models\User\Address;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\Shop\PaymentMethod;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Order extends Model
 {
+    use HasPrice;
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -29,10 +37,18 @@ class Order extends Model
     ];
 
     /**
-     * Create a new Eloquent model instance.
+     * The accessors to append to the model's array form.
      *
-     * @param  array  $attributes
-     * @return void
+     * @var array
+     */
+    protected $appends = [
+        'total',
+        'status_classes',
+        'formatted_status',
+    ];
+
+    /**
+     * Create a new Eloquent model instance.
      */
     public function __construct(array $attributes = [])
     {
@@ -46,80 +62,126 @@ class Order extends Model
 
     /**
      * Get the table associated with the model.
-     *
-     * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return shopper_table('orders');
     }
 
     /**
-     * Return total order.
+     * Return Total order price without shipping amount.
+     */
+    public function getTotalAttribute(): string
+    {
+        return $this->formattedPrice($this->total());
+    }
+
+    /**
+     * Return status style classes.
+     */
+    public function getStatusClassesAttribute(): string
+    {
+        switch ($this->status) {
+            case OrderStatus::PENDING:
+                return 'border-yellow-200 bg-yellow-100 text-yellow-800';
+            case OrderStatus::REGISTER:
+                return 'border-blue-200 bg-blue-100 text-blue-800';
+            case OrderStatus::PAID:
+                return 'border-green-200 bg-green-100 text-green-800';
+            case OrderStatus::CANCELLED:
+                return 'border-red-200 bg-red-100 text-red-800';
+        }
+    }
+
+    /**
+     * Return the correct order status formatted.
      *
      * @return mixed
      */
-    public function total()
+    public function getFormattedStatusAttribute(): string
+    {
+        return OrderStatus::values()[$this->status];
+    }
+
+    public function total(): int
     {
         return $this->items->sum('total');
     }
 
     /**
-     * Get the user Shipping Address for the order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Determine if an order can be cancelled.
      */
-    public function shippingAddress()
+    public function canBeCancelled(): bool
+    {
+        if ($this->status === OrderStatus::COMPLETED || $this->status === OrderStatus::PAID) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Determine if an order is not cancelled.
+     */
+    public function isNotCancelled(): bool
+    {
+        if ($this->status === OrderStatus::CANCELLED) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Determine if on order is in pending status.
+     */
+    public function isPending(): bool
+    {
+        return $this->status === OrderStatus::PENDING;
+    }
+
+    /**
+     * Determine if on order is in register status.
+     */
+    public function isRegister(): bool
+    {
+        return $this->status === OrderStatus::REGISTER;
+    }
+
+    /**
+     * Return total order with shipping.
+     */
+    public function fullPriceWithShipping(): int
+    {
+        return $this->total() + $this->shipping_total;
+    }
+
+    public function shippingAddress(): BelongsTo
     {
         return $this->belongsTo(Address::class, 'shipping_address_id');
     }
 
-    /**
-     * Return the associate User for this order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function customer()
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
-    /**
-     * Return the associate Payment method for this order if exist.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function paymentMethod()
+    public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
     }
 
-    /**
-     * Return the refund instance of the order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function refund()
+    public function refund(): HasOne
     {
         return $this->hasOne(OrderRefund::class);
     }
 
-    /**
-     * Get all items of the order.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    /**
-     * Set a default value to an order.
-     *
-     * @return void
-     */
-    protected function setDefaultOrderStatus()
+    protected function setDefaultOrderStatus(): void
     {
         $this->setRawAttributes(
             array_merge(

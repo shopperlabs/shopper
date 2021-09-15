@@ -3,7 +3,7 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Shop\Shop;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Discount extends Model
 {
@@ -26,28 +26,7 @@ class Discount extends Model
         'total_use',
         'start_at',
         'end_at',
-        'shop_id',
     ];
-    
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'start_at',
-        'end_at'
-    ];
-
-    /**
-     * Get the table associated with the model.
-     *
-     * @return string
-     */
-    public function getTable()
-    {
-        return shopper_table('discounts');
-    }
 
     /**
      * The attributes that should be cast.
@@ -57,28 +36,31 @@ class Discount extends Model
     protected $casts = [
         'is_active' => 'boolean',
         'usage_limit_per_user' => 'boolean',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
     ];
 
     /**
-     * Determine if the discount code has reached his limit usage.
-     *
-     * @return bool
+     * Get the table associated with the model.
      */
-    public function hasReachedLimit()
+    public function getTable(): string
     {
-        if (!is_null($this->usage_limit)) {
+        return shopper_table('discounts');
+    }
+
+    /**
+     * Determine if the discount code has reached his limit usage.
+     */
+    public function hasReachedLimit(): bool
+    {
+        if (null !== $this->usage_limit) {
             return $this->total_use === $this->usage_limit;
         }
 
         return false;
     }
 
-    /**
-     * Get all associate model that's used this discount.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(DiscountDetail::class, 'discount_id');
     }

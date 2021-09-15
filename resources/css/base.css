@@ -1,0 +1,37 @@
+input {
+  width: 100%;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+}
+
+[x-cloak] {
+  display: none;
+}
+
+.primary-menu .active {
+    @apply bg-blue-900;
+}
+
+.primary-menu .active:hover, .primary-menu .active:focus {
+    @apply bg-blue-900;
+}
+
+.dark trix-toolbar .trix-button-group {
+    @apply border-gray-700
+}
+
+.dark trix-toolbar .trix-button:not(:first-child) {
+    @apply border-gray-700
+}
+
+.dark trix-toolbar .trix-button {
+    @apply text-gray-400 border-gray-700
+}

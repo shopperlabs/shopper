@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Sidebar;
 
-use Illuminate\Contracts\Auth\Guard;
 use Maatwebsite\Sidebar\Menu;
 use Maatwebsite\Sidebar\SidebarExtender;
 use Shopper\Framework\Events\BuildingSidebar;
@@ -24,18 +23,14 @@ abstract class AbstractAdminSidebar implements SidebarExtender
         $this->user = auth(config('shopper.auth.guard'))->user();
     }
 
-    /**
-     * @param BuildingSidebar $sidebar
-     */
     public function handle(BuildingSidebar $sidebar)
     {
         $sidebar->add($this->extendWith($sidebar->getMenu()));
     }
 
     /**
-     * Method used to define your sidebar menu groups and items
+     * Method used to define your sidebar menu groups and items.
      *
-     * @param Menu $menu
      * @return Menu
      */
     abstract public function extendWith(Menu $menu);

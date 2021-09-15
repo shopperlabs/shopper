@@ -1,4 +1,4 @@
-@extends('shopper::layouts.'. config('shopper.system.theme'))
+@extends('shopper::layouts.default')
 @section('title', __('Handling Error - :message', ['message' => $exception->getMessage()]))
 
 @section('content')
@@ -6,7 +6,7 @@
     <div class="mt-10 relative w-full md:flex md:items-center py-12 lg:py-16">
         <div class="w-full md:w-1/2 relative flex justify-center md:block">
             <div class="flex-shrink-0">
-                <svg class="w-auto h-auto lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 528 380">
+                <svg class="w-auto h-auto " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 528 380">
                     <style>
                         .st0{fill:#e1e1e1}.st1{fill:#ececec}.st2{fill:#f5f5f5}.st3{fill:#0064f5}.st5{fill:#1a2e35}.st6{fill:#fff}.st8{fill:#ffbf9d}.st9{fill:#ff9a6c}.st10{fill:#375a64}.st12{fill:#c78976}.st13{fill:#bf654e}
                     </style>
@@ -166,14 +166,14 @@
 
         <div class="mt-10 w-full md:mt-0 md:w-1/2 relative lg:py-20 flex items-center justify-center">
             <div class="w-full text-center sm:max-w-md md:text-left">
-                <h3 class="text-lg leading-6 sm:text-2xl lg:text-6xl sm:leading-7 lg:leading-none font-extrabold text-gray-900">403</h3>
-                <p class="mt-4 text-gray-600 text-base sm:text-lg font-medium leading-6 sm:leading-8">{{ __($exception->getMessage()) }}</p>
-                <p class="mt-1 text-gray-500 text-base leading-6">
-                    {{ __("You don't have permission to access requested page.") }}
+                <h3 class="text-lg leading-6 sm:text-2xl lg:text-6xl sm:leading-7 lg:leading-none font-extrabold text-gray-900 dark:text-white">{{ __($exception->getCode()) }}</h3>
+                <p class="mt-4 text-gray-600 text-base sm:text-lg font-medium leading-6 sm:leading-8 dark:text-gray-300">{{ __($exception->getMessage()) }}</p>
+                <p class="mt-1 text-gray-500 text-base leading-6 dark:text-gray-400">
+                    {{ __("You don't have permission/authorization to access requested page.") }}
                 </p>
-                <a href="{{ url()->previous() }}" class="mt-5 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out">
+                <x-shopper-button :link="url()->previous()" class="mt-5">
                     {{ __('Go Back') }}
-                </a>
+                </x-shopper-button>
             </div>
         </div>
     </div>

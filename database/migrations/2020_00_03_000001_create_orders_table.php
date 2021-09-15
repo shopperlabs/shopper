@@ -3,11 +3,11 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Shopper\Framework\Traits\Database\MigrationTrait;
+use Shopper\Framework\Traits\Database;
 
 class CreateOrdersTable extends Migration
 {
-    use MigrationTrait;
+    use Database\Migration;
 
     /**
      * Run the migrations.
@@ -17,13 +17,13 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create($this->getTableName('orders'), function (Blueprint $table) {
-            $this->addCommonFields($table);
+            $this->addCommonFields($table, true);
 
             $table->string('number', 32);
             $table->integer('price_amount')->nullable();
             $table->string('status', 32);
             $table->string('currency');
-            $table->integer('shipping_total');
+            $table->integer('shipping_total')->nullable();
             $table->string('shipping_method')->nullable();
             $table->text('notes')->nullable();
 

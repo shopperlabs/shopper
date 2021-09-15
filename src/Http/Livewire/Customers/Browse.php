@@ -2,15 +2,17 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Illuminate\Database\Eloquent\Builder;
+use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\UserRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Traits\WithSorting;
+use Shopper\Framework\Repositories\UserRepository;
 
 class Browse extends Component
 {
-    use WithPagination, WithSorting;
+    use WithPagination;
+    use WithSorting;
 
     /**
      * Search.
@@ -45,8 +47,6 @@ class Browse extends Component
 
     /**
      * Reset Filter on email subscription.
-     *
-     * @return void
      */
     public function resetEmailFilter()
     {
@@ -55,8 +55,6 @@ class Browse extends Component
 
     /**
      * Reset Filter on active account.
-     *
-     * @return void
      */
     public function resetActiveAccountFilter()
     {
@@ -66,8 +64,7 @@ class Browse extends Component
     /**
      * Remove a record to the database.
      *
-     * @param  int  $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(int $id)
     {
@@ -75,8 +72,8 @@ class Browse extends Component
 
         $this->dispatchBrowserEvent('item-removed');
         $this->dispatchBrowserEvent('notify', [
-            'title' => __("Deleted"),
-            'message' => __("The customer has successfully removed!")
+            'title' => __('Deleted'),
+            'message' => __('The customer has successfully removed!'),
         ]);
     }
 
@@ -84,6 +81,8 @@ class Browse extends Component
      * Render the component.
      *
      * @return \Illuminate\View\View
+     *
+     * @throws \Shopper\Framework\Exceptions\GeneralException
      */
     public function render()
     {
@@ -99,9 +98,9 @@ class Browse extends Component
                 ->whereHas('roles', function (Builder $query) {
                     $query->where('name', config('shopper.system.users.default_role'));
                 })
-                ->where(function (Builder  $query) {
-                    $query->where('last_name', 'like', '%'. $this->search .'%')
-                        ->orWhere('first_name', 'like', '%'. $this->search .'%');
+                ->where(function (Builder $query) {
+                    $query->where('last_name', 'like', '%' . $this->search . '%')
+                        ->orWhere('first_name', 'like', '%' . $this->search . '%');
                 })
                 ->where(function (Builder $query) {
                     if ($this->emailSubscription !== null) {
@@ -109,15 +108,15 @@ class Browse extends Component
                     }
                 })
                 ->where(function (Builder $query) {
-                    if ($this->activeAccount === "1") {
+                    if ($this->activeAccount === '1') {
                         $query->whereNotNull('email_verified_at');
                     }
 
-                    if ($this->activeAccount === "0") {
+                    if ($this->activeAccount === '0') {
                         $query->whereNull('email_verified_at');
                     }
                 })
-                ->orderBy($this->sortBy ?? 'first_name', $this->sortDirection)
+                ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)
                 ->paginate(10),
         ]);
     }

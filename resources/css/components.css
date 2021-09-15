@@ -1,0 +1,60 @@
+.iti {
+  display: block;
+}
+
+.iti__selected-flag {
+  padding: 0 10px;
+}
+
+/** Choices.js **/
+.choices__input.choices__input--cloned {
+  @apply hidden;
+}
+
+.choices__inner {
+  @apply rounded border border-gray-300 dark:border-gray-700 w-full bg-white dark:bg-gray-700 h-[38px] p-2 flex items-center !important;
+}
+
+.choices__list--dropdown {
+  @apply border border-gray-300 dark:border-gray-700 !important;
+}
+
+.choices__list--single {
+  @apply p-0 !important;
+}
+
+.choices__item {
+  @apply text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 cursor-pointer rounded px-2 py-1 my-0 border-0 !important;
+}
+
+.choices__item.choices__item--choice {
+  @apply rounded-md py-2 !important;
+}
+
+.choices__item.choices__item--choice.choices__item--selectable {
+  @apply bg-white dark:bg-gray-700 rounded-none text-gray-700 dark:text-gray-300 p-2 mb-0 !important;
+}
+
+.choices__item.choices__item--choice.choices__item--selectable:hover {
+  @apply bg-gray-200 dark:bg-gray-600 !important;
+}
+
+.choices__item.choices__item--selectable {
+  @apply bg-blue-500 border-blue-500 text-white mb-1 !important;
+}
+
+.choices__list--single > .choices__item.choices__item--selectable {
+  @apply bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 !important;
+}
+
+.choices__item.is-highlighted {
+  @apply bg-blue-600 border-blue-600 text-white !important;
+}
+
+.choices[data-type*='select-one']:after {
+  border-color: theme('colors.gray.500') transparent transparent transparent !important;
+}
+
+.choices[data-type*='select-one'] .choices__input {
+  @apply rounded-none border-b-2 border-gray-300 dark:border-gray-700 !important;
+}

@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Http\Livewire\Account;
 
 use Livewire\Component;
-use Shopper\Framework\Actions\DisableTwoFactorAuthentication;
-use Shopper\Framework\Actions\EnableTwoFactorAuthentication;
-use Shopper\Framework\Actions\GenerateNewRecoveryCodes;
 use Shopper\Framework\Traits\ConfirmsPasswords;
+use Shopper\Framework\Actions\GenerateNewRecoveryCodes;
+use Shopper\Framework\Actions\EnableTwoFactorAuthentication;
+use Shopper\Framework\Actions\DisableTwoFactorAuthentication;
 
 class TwoFactor extends Component
 {
@@ -14,23 +14,16 @@ class TwoFactor extends Component
 
     /**
      * Indicates if two factor authentication QR code is being displayed.
-     *
-     * @var bool
      */
-    public $showingQrCode = false;
+    public bool $showingQrCode = false;
 
     /**
      * Indicates if two factor authentication recovery codes are being displayed.
-     *
-     * @var bool
      */
-    public $showingRecoveryCodes = false;
+    public bool $showingRecoveryCodes = false;
 
     /**
      * Enable two factor authentication for the user.
-     *
-     * @param  \Shopper\Framework\Actions\EnableTwoFactorAuthentication  $enable
-     * @return void
      */
     public function enableTwoFactorAuthentication(EnableTwoFactorAuthentication $enable)
     {
@@ -46,8 +39,6 @@ class TwoFactor extends Component
 
     /**
      * Display the user's recovery codes.
-     *
-     * @return void
      */
     public function showRecoveryCodes()
     {
@@ -60,9 +51,6 @@ class TwoFactor extends Component
 
     /**
      * Generate new recovery codes for the user.
-     *
-     * @param  \Shopper\Framework\Actions\GenerateNewRecoveryCodes  $generate
-     * @return void
      */
     public function regenerateRecoveryCodes(GenerateNewRecoveryCodes $generate)
     {
@@ -77,9 +65,6 @@ class TwoFactor extends Component
 
     /**
      * Disable two factor authentication for the user.
-     *
-     * @param  \Shopper\Framework\Actions\DisableTwoFactorAuthentication  $disable
-     * @return void
      */
     public function disableTwoFactorAuthentication(DisableTwoFactorAuthentication $disable)
     {
@@ -92,8 +77,6 @@ class TwoFactor extends Component
 
     /**
      * Get the current user of the application.
-     *
-     * @return mixed
      */
     public function getUserProperty()
     {
@@ -102,10 +85,8 @@ class TwoFactor extends Component
 
     /**
      * Determine if two factor authentication is enabled.
-     *
-     * @return bool
      */
-    public function getEnabledProperty()
+    public function getEnabledProperty(): bool
     {
         return ! empty($this->user->two_factor_secret);
     }

@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 </head>
-<body class="bg-gray-50 text-gray-500 leading-normal transition duration-100 ease-in-out">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 transition duration-200 ease-in-out">
 
     @yield('content')
 
