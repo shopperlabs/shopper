@@ -17,17 +17,12 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithAttributes,
-        WithFileUploads,
-        WithSeoAttributes,
-        WithUploadProcess;
+    use WithAttributes, WithFileUploads, WithSeoAttributes, WithUploadProcess;
 
     public $quantity;
 
     public array $category_ids = [];
-
     public array $collection_ids = [];
-
     public ?Channel $defaultChannel = null;
 
     public array $seoAttributes = [
@@ -94,14 +89,17 @@ class Create extends AbstractBaseComponent
         ]);
 
         if (collect($this->files)->isNotEmpty()) {
-            collect($this->files)->each(fn ($file) => $product->addMedia($file->getRealPath())->toMediaCollection('uploads'));
+            collect($this->files)->each(fn ($file) =>
+                $product->addMedia($file->getRealPath())
+                    ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+            );
         }
 
-        if (count($this->category_ids) > 0) {
+        if (collect($this->category_ids)->isNotEmpty()) {
             $product->categories()->attach($this->category_ids);
         }
 
-        if (count($this->collection_ids) > 0) {
+        if (collect($this->collection_ids)->isNotEmpty()) {
             $product->collections()->attach($this->collection_ids);
         }
 

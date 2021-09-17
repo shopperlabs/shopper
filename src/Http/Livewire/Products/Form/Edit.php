@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use function count;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
@@ -15,12 +14,10 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads;
-    use WithUploadProcess;
-    use WithAttributes;
-    use WithSeoAttributes;
+    use WithFileUploads, WithUploadProcess, WithAttributes, WithSeoAttributes;
 
     public $product;
+    public $images = [];
     public int $productId;
     public string $currency;
     public array $category_ids = [];
@@ -30,16 +27,6 @@ class Edit extends AbstractBaseComponent
         'trix:valueUpdated' => 'onTrixValueUpdate',
         'mediaDeleted',
     ];
-
-    public function onTrixValueUpdate($value)
-    {
-        $this->description = $value;
-    }
-
-    public function mediaDeleted()
-    {
-        $this->images = $this->product->getMedia('uploads');
-    }
 
     public function mount($product, string $currency)
     {
@@ -59,6 +46,17 @@ class Edit extends AbstractBaseComponent
         $this->collection_ids = $product->collections->pluck('id')->toArray();
         $this->category_ids = $product->categories->pluck('id')->toArray();
         $this->currency = $currency;
+        $this->images = $product->getMedia(config('shopper.system.storage.disks.uploads'));
+    }
+
+    public function onTrixValueUpdate($value)
+    {
+        $this->description = $value;
+    }
+
+    public function mediaDeleted()
+    {
+        $this->images = $this->product->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
     public function rules(): array
@@ -87,15 +85,18 @@ class Edit extends AbstractBaseComponent
             'brand_id' => $this->brand_id,
         ]);
 
-        if (count($this->files) > 0) {
-            collect($this->files)->each(fn ($file) => $this->product->addMedia($file->getRealPath())->toMediaCollection('uploads'));
+        if (collect($this->files)->isNotEmpty()) {
+            collect($this->files)->each(fn ($file) =>
+                $this->product->addMedia($file->getRealPath())
+                    ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+            );
         }
 
-        if (count($this->category_ids) > 0) {
+        if (collect($this->category_ids)->isNotEmpty()) {
             $this->product->categories()->sync($this->category_ids);
         }
 
-        if (count($this->collection_ids) > 0) {
+        if (collect($this->collection_ids)->isNotEmpty()) {
             $this->product->collections()->sync($this->collection_ids);
         }
 

@@ -116,7 +116,7 @@ class Product extends Model implements ReviewRateable, HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('uploads')
+        $this->addMediaCollection(config('shopper.system.storage.disks.uploads'))
             ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png', 'image/gif']);
     }
 
