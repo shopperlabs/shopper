@@ -10,7 +10,7 @@
  * @since May 2021
  */
 
-import Alpine from "alpinejs";
+import Alpine from 'alpinejs';
 import flatpickr from 'flatpickr';
 import Choices from 'choices.js';
 
