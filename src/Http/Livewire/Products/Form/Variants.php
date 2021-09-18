@@ -7,7 +7,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Traits\WithSorting;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
@@ -15,35 +14,15 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Variants extends Component
 {
-    use WithPagination;
-    use WithFileUploads;
-    use WithSorting;
-    use WithAttributes;
-    use WithUploadProcess;
+    use WithPagination, WithFileUploads, WithAttributes, WithUploadProcess;
 
     public string $search = '';
-
-    /**
-     * Default product stock quantity.
-     */
     public $quantity;
-
-    /**
-     * Product Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $product;
-
     public string $currency;
 
     protected $listeners = ['onVariantAdded' => 'render'];
 
-    /**
-     * Component mount instance.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $product
-     */
     public function mount($product, string $currency)
     {
         $this->product = $product;
@@ -85,7 +64,7 @@ class Variants extends Component
                     $query->where('name', 'like', '%' . $this->search . '%');
                     $query->where('parent_id', $this->product->id);
                 })
-                ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
+                ->orderBy('created_at', 'desc')
                 ->paginate(10),
         ]);
     }

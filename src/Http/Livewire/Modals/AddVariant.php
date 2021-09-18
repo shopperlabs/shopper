@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use function count;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Traits\WithUploadProcess;
@@ -12,17 +11,10 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class AddVariant extends ModalComponent
 {
-    use WithFileUploads;
-    use WithAttributes;
-    use WithUploadProcess;
+    use WithFileUploads, WithAttributes, WithUploadProcess;
 
     public int $productId;
-
     public string $currency;
-
-    /**
-     * Default product stock quantity.
-     */
     public $quantity;
 
     public function mount(int $productId, string $currency)
@@ -49,7 +41,7 @@ class AddVariant extends ModalComponent
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.product'), $this->productId);
+            $product->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         if ($this->quantity && count($this->quantity) > 0) {
@@ -93,7 +85,7 @@ class AddVariant extends ModalComponent
     public function render()
     {
         return view('shopper::livewire.modals.add-variant', [
-            'inventories' => (new InventoryRepository())->get(),
+            'inventories' => [],
         ]);
     }
 }
