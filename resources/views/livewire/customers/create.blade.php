@@ -48,7 +48,7 @@
                                         nationalMode: true,
                                         geoIpLookup: function(success, failure) {
                                             $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                var countryCode = (resp && resp.country) ? resp.country : '';
+                                                var countryCode = (resp && resp.country) ? resp.country : 'CM';
                                                 success(countryCode);
                                             });
                                         },
@@ -164,7 +164,7 @@
                                 <x-shopper-input.text wire:model="address_last_name" id="address_last_name" type="text" autocomplete="off" />
                             </x-shopper-input.group>
 
-                            <x-shopper-input.group class="col-span-6" label="Company name" for="company_name">
+                            <x-shopper-input.group class="col-span-6" label="Company name" for="company_name" optional>
                                 <x-shopper-input.text wire:model.lazy="company_name" id="company_name" type="text" autocomplete="off" />
                             </x-shopper-input.group>
 
@@ -172,7 +172,7 @@
                                 <x-shopper-input.text wire:model.lazy="street_address" id="street_address" type="text" autocomplete="off" />
                             </x-shopper-input.group>
 
-                            <x-shopper-input.group class="col-span-6" label="Apartment, suite, etc." for="street_address_plus">
+                            <x-shopper-input.group class="col-span-6" label="Apartment, suite, etc." for="street_address_plus" optional>
                                 <x-shopper-input.text wire:model.lazy="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
                             </x-shopper-input.group>
 

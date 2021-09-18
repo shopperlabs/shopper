@@ -14,61 +14,14 @@ class Create extends Component
 {
     use WithAddress;
 
-    /**
-     * Last Name attribute.
-     *
-     * @var string
-     */
-    public $last_name = '';
-
-    /**
-     * First Name attribute.
-     *
-     * @var string
-     */
-    public $first_name = '';
-
-    /**
-     * Customer email address.
-     *
-     * @var string
-     */
-    public $email = '';
-
-    /**
-     * Customer phone number.
-     *
-     * @var string
-     */
-    public $phone_number = '';
-
-    /**
-     * Customer generate password.
-     *
-     * @var string
-     */
+    public string $last_name = '';
+    public string $first_name = '';
+    public string $email = '';
+    public string $phone_number = '';
+    public bool $opt_in = false;
+    public bool $send_mail = false;
     public $password;
-
-    /**
-     * Customer password confirmation.
-     *
-     * @var string
-     */
     public $password_confirmation;
-
-    /**
-     * Define if the user subscribe to marketing email.
-     *
-     * @var bool
-     */
-    public $opt_in = false;
-
-    /**
-     * Define if we send an email to the customer.
-     *
-     * @var bool
-     */
-    public $send_mail = false;
 
     /**
      * Save new entry to the database.
@@ -140,6 +93,8 @@ class Create extends Component
             'email' => 'required|max:150|unique:' . shopper_table('users'),
             'first_name' => 'required',
             'last_name' => 'required',
+            'country_id' => 'required',
+            'street_address' => 'required',
             'password' => 'required|confirmed|min:8',
             'phone_number' => [
                 'nullable',

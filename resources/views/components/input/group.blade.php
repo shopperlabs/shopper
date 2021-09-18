@@ -5,13 +5,19 @@
     'isRequired' => false,
     'error' => false,
     'helpText' => false,
+    'optional' => false,
 ])
 
 <div {{ $attributes }}>
     @if($label)
-        <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">
-            {{ __($label) }} @if($isRequired) <span class="text-red-500">*</span> @endif
-        </label>
+        <div class="flex items-center justify-between">
+            <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">
+                {{ __($label) }} @if($isRequired) <span class="text-red-500">*</span> @endif
+            </label>
+            @if($optional)
+                <span class="text-gray-500 text-sm leading-5 dark:text-gray-400">{{ __('Optional') }}</span>
+            @endif
+        </div>
     @endif
 
     <div class="@if($label) mt-1 @endif relative @if(!$noShadow) rounded-md shadow-sm @endif">
