@@ -6,16 +6,13 @@ use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Traits\WithSorting;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Browse extends Component
 {
     use WithPagination;
-    use WithSorting;
 
     public string $search = '';
-
     public ?string $type = null;
 
     public function paginationView(): string
@@ -54,13 +51,14 @@ class Browse extends Component
             'total' => (new CollectionRepository())->count(),
             'collections' => (new CollectionRepository())
                 ->makeModel()
+                ->with('rules')
                 ->where('name', 'like', '%' . $this->search . '%')
                 ->where(function (Builder $query) {
                     if ($this->type !== null) {
                         $query->where('type', $this->type);
                     }
                 })
-                ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
+                ->orderBy('created_at', 'desc')
                 ->paginate(10),
         ]);
     }

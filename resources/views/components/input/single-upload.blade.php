@@ -1,7 +1,4 @@
-@props([
-    'file' => false,
-    'error' => false,
-])
+@props(['file' => false, 'error' => false])
 
 <div x-data="{ focused: false }">
     @if($file)

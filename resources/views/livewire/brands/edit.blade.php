@@ -99,21 +99,21 @@
                     <div class="p-4 sm:p-5">
                         <x-shopper-label :value="__('Image preview')" />
                         <div class="mt-1">
-                            <x-shopper-input.single-upload id="file" wire:click="removeImage" wire:model="file" :file="$file" :error="$errors->first('file')" />
+                            <x-shopper-input.single-upload id="file" wire:click="removeSingleMediaPlaceholder" wire:model="file" :file="$file" :error="$errors->first('file')" />
                         </div>
                         @if($media)
                             <div class="mt-4 p-2 bg-gray-50 dark:bg-gray-700 rounded-md border border-dashed border-gray-200 dark:border-gray-600 flex items-center justify-between">
                                 <div class="flex flex-1 items-center space-x-2 truncate">
                                     <div class="flex-shrink-0 w-10 h-10 overflow-hidden rounded-md">
-                                        <img class="h-full w-full object-cover" src="{{ $media->image_full_path }}" alt="">
+                                        <img class="h-full w-full object-cover" src="{{ $media->getFullUrl() }}" alt="">
                                     </div>
                                     <div class="truncate">
                                         <h4 class="text-sm leading-5 text-gray-500 dark:text-gray-400 truncate">{{ $media->file_name }}</h4>
-                                        <p class="text-xs leading-4 text-gray-400 dark:text-gray-500">{{ $media->file_size }}</p>
+                                        <p class="text-xs leading-4 text-gray-400 dark:text-gray-500">{{ $media->human_readable_size }}</p>
                                     </div>
                                 </div>
-                                <button wire:click="deleteImage({{ $media->id }})" wire:loading.attr="disabled" type="button" class="ml-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
-                                    <x-shopper-loader wire:loading wire:target="deleteImage" class="text-white" />
+                                <button wire:click="removeMedia({{ $media->id }})" wire:loading.attr="disabled" type="button" class="ml-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
+                                    <x-shopper-loader wire:loading wire:target="removeMedia" class="text-white" />
                                     <x-heroicon-o-trash wire:loading.remove class="h-5 w-5" />
                                 </button>
                             </div>

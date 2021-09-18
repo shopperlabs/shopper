@@ -3,23 +3,17 @@
 namespace Shopper\Framework\Http\Livewire\Brands;
 
 use Livewire\WithFileUploads;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Traits\{WithSeoAttributes, WithUploadProcess};
 
 class Create extends AbstractBaseComponent
 {
-    use WithFileUploads;
-    use WithUploadProcess;
-    use WithSeoAttributes;
+    use WithFileUploads, WithUploadProcess, WithSeoAttributes;
 
     public string $name = '';
-
     public ?string $website = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = true;
 
     public $seoAttributes = [
@@ -51,7 +45,7 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            $this->uploadFile('brand', $brand->id);
+            $brand->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Brand successfully added!'));

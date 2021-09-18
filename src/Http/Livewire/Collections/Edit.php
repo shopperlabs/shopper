@@ -15,33 +15,17 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads;
-    use WithUploadProcess;
-    use WithConditions;
-    use WithSeoAttributes;
+    use WithFileUploads, WithUploadProcess, WithConditions, WithSeoAttributes;
 
     public $collection;
-
-    public int $collectionId;
-
-    public string $name = '';
-
-    public ?string $description = null;
-
-    public string $type = 'auto';
-
-    public ?string $publishedAt = null;
-
-    public ?string $publishedAtFormatted = null;
-
-    public string $condition_match = 'all';
-
-    /**
-     * Products of the collections.
-     *
-     * @var \Illuminate\Database\Eloquent\Collection
-     */
     public $products;
+    public int $collectionId;
+    public string $name = '';
+    public ?string $description = null;
+    public string $type = 'auto';
+    public ?string $publishedAt = null;
+    public ?string $publishedAtFormatted = null;
+    public string $condition_match = 'all';
 
     public $seoAttributes = [
         'name' => 'name',
@@ -49,7 +33,7 @@ class Edit extends AbstractBaseComponent
     ];
 
     protected $listeners = [
-        'fileDeleted',
+        'mediaDeleted',
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
@@ -74,20 +58,6 @@ class Edit extends AbstractBaseComponent
         $this->description = $value;
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => [
-                'sometimes',
-                'required',
-                'max:150',
-                Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
-            ],
-            'file' => 'sometimes|nullable|image|max:1024',
-            'type' => 'sometimes|required',
-        ];
-    }
-
     public function store()
     {
         $this->validate($this->rules());
@@ -103,19 +73,26 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            if ($this->collection->files->isNotEmpty()) {
-                foreach ($this->collection->files as $file) {
-                    Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
-                }
-                File::query()->where('filetable_id', $this->collectionId)->delete();
-            }
-
-            $this->uploadFile(config('shopper.system.models.collection'), $this->collection->id);
+            $this->collection->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Collection successfully updated!'));
 
         $this->redirectRoute('shopper.collections.index');
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => [
+                'sometimes',
+                'required',
+                'max:150',
+                Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
+            ],
+            'file' => 'sometimes|nullable|image|max:1024',
+            'type' => 'sometimes|required',
+        ];
     }
 
     /**
@@ -148,9 +125,7 @@ class Edit extends AbstractBaseComponent
     public function render()
     {
         return view('shopper::livewire.collections.edit', [
-            'media' => $this->collection->files->isNotEmpty()
-                ? $this->collection->getFirstImage()
-                : null,
+            'media' => $this->collection->getFirstMedia(config('shopper.system.storage.disks.uploads')),
         ]);
     }
 }

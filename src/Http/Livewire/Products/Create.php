@@ -2,18 +2,15 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use function count;
 use Livewire\WithFileUploads;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Framework\Models\Shop\Channel;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Models\Shop\Channel;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Traits\{WithSeoAttributes, WithUploadProcess};
+use Shopper\Framework\Repositories\Ecommerce\{
+    BrandRepository, ProductRepository, CategoryRepository, CollectionRepository
+};
 
 class Create extends AbstractBaseComponent
 {

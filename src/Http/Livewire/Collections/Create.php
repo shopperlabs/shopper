@@ -14,21 +14,13 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends Component
 {
-    use WithFileUploads;
-    use WithUploadProcess;
-    use WithConditions;
-    use WithSeoAttributes;
+    use WithFileUploads, WithUploadProcess, WithConditions, WithSeoAttributes;
 
     public string $name = '';
-
     public ?string $description = null;
-
     public string $type = 'auto';
-
     public ?string $publishedAt = null;
-
     public ?string $publishedAtFormatted = null;
-
     public string $condition_match = 'all';
 
     public $seoAttributes = [
@@ -71,7 +63,7 @@ class Create extends Component
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.collection'), $collection->id);
+            $collection->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         if ($this->type === 'auto' && count($this->conditions) > 0 && $this->rule) {

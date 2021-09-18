@@ -5,13 +5,11 @@ namespace Shopper\Framework\Http\Livewire\Categories;
 use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Traits\WithSorting;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Browse extends Component
 {
     use WithPagination;
-    use WithSorting;
 
     public string $search = '';
 
@@ -44,7 +42,7 @@ class Browse extends Component
             'total' => (new CategoryRepository())->count(),
             'categories' => (new CategoryRepository())
                 ->where('name', '%' . $this->search . '%', 'like')
-                ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)
+                ->orderBy('created_at', 'desc')
                 ->paginate(10),
         ]);
     }

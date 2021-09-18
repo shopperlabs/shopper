@@ -2,10 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
-use Shopper\Framework\Models\System\File;
+use Livewire\WithFileUploads;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -13,20 +11,13 @@ use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads;
-    use WithUploadProcess;
-    use WithSeoAttributes;
+    use WithFileUploads, WithUploadProcess, WithSeoAttributes;
 
     public $category;
-
     public int $categoryId;
-
     public string $name = '';
-
     public ?int $parent_id = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = false;
 
     public $seoAttributes = [
@@ -35,7 +26,7 @@ class Edit extends AbstractBaseComponent
     ];
 
     protected $listeners = [
-        'fileDeleted',
+        'mediaDeleted',
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
@@ -67,19 +58,6 @@ class Edit extends AbstractBaseComponent
         return true;
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => [
-                'sometimes',
-                'required',
-                'max:150',
-                Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
-            ],
-            'file' => 'sometimes|nullable|image|max:1024',
-        ];
-    }
-
     public function store()
     {
         $this->validate($this->rules());
@@ -95,19 +73,25 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            if ($this->category->files->isNotEmpty()) {
-                foreach ($this->category->files as $file) {
-                    Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
-                }
-                File::query()->where('filetable_id', $this->categoryId)->delete();
-            }
-
-            $this->uploadFile('category', $this->category->id);
+            $this->category->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Category successfully updated!'));
 
         $this->redirectRoute('shopper.categories.index');
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => [
+                'sometimes',
+                'required',
+                'max:150',
+                Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
+            ],
+            'file' => 'sometimes|nullable|image|max:1024',
+        ];
     }
 
     /**
@@ -128,9 +112,7 @@ class Edit extends AbstractBaseComponent
                 ->select('name', 'id')
                 ->get()
                 ->except($this->category->id),
-            'media' => $this->category->files->isNotEmpty()
-                ? $this->category->getFirstImage()
-                : null,
+            'media' => $this->category->getFirstMedia(config('shopper.system.storage.disks.uploads')),
         ]);
     }
 }
