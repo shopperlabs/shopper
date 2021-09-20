@@ -14,13 +14,21 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends Component
 {
-    use WithFileUploads, WithUploadProcess, WithConditions, WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithConditions;
+    use WithSeoAttributes;
 
     public string $name = '';
+
     public ?string $description = null;
+
     public string $type = 'auto';
+
     public ?string $publishedAt = null;
+
     public ?string $publishedAtFormatted = null;
+
     public string $condition_match = 'all';
 
     public $seoAttributes = [

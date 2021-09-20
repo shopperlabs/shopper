@@ -14,11 +14,17 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Variants extends Component
 {
-    use WithPagination, WithFileUploads, WithAttributes, WithUploadProcess;
+    use WithPagination;
+    use WithFileUploads;
+    use WithAttributes;
+    use WithUploadProcess;
 
     public string $search = '';
+
     public $quantity;
+
     public $product;
+
     public string $currency;
 
     protected $listeners = ['onVariantAdded' => 'render'];

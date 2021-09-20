@@ -12,6 +12,7 @@ use Shopper\Framework\Repositories\UserRepository;
 class Browse extends Component
 {
     use WithPagination;
+
     use WithSorting;
 
     /**

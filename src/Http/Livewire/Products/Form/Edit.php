@@ -14,13 +14,21 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess, WithAttributes, WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
+    use WithSeoAttributes;
 
     public $product;
+
     public $images = [];
+
     public int $productId;
+
     public string $currency;
+
     public array $category_ids = [];
+
     public array $collection_ids = [];
 
     protected $listeners = [
@@ -86,8 +94,8 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if (collect($this->files)->isNotEmpty()) {
-            collect($this->files)->each(fn ($file) =>
-                $this->product->addMedia($file->getRealPath())
+            collect($this->files)->each(
+                fn ($file) => $this->product->addMedia($file->getRealPath())
                     ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
             );
         }

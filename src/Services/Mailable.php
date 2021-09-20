@@ -17,6 +17,7 @@ use Shopper\Framework\Traits\Mails\Templates;
 class Mailable
 {
     use Templates;
+
     use Mailables;
 
     /**

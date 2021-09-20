@@ -11,7 +11,8 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class UpdateVariantStock extends ModalComponent
 {
-    use WithPagination, WithStock;
+    use WithPagination;
+    use WithStock;
 
     public $product;
 

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use function count;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Traits\WithUploadProcess;
@@ -11,10 +12,14 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class AddVariant extends ModalComponent
 {
-    use WithFileUploads, WithAttributes, WithUploadProcess;
+    use WithFileUploads;
+    use WithAttributes;
+    use WithUploadProcess;
 
     public int $productId;
+
     public string $currency;
+
     public $quantity;
 
     public function mount(int $productId, string $currency)

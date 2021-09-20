@@ -13,6 +13,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 class ResetPasswordController extends Controller
 {
     use ValidatesRequests;
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller

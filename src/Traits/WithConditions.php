@@ -34,7 +34,7 @@ trait WithConditions
     /**
      * Add new condition on the array conditions.
      *
-     * @param  $i
+     * @param $i
      */
     public function add($i)
     {
@@ -46,7 +46,7 @@ trait WithConditions
     /**
      * Remove a condition to the array conditions.
      *
-     * @param  $i
+     * @param $i
      */
     public function remove($i)
     {

@@ -4,18 +4,26 @@ namespace Shopper\Framework\Http\Livewire\Brands;
 
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Traits\{WithSeoAttributes, WithUploadProcess};
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess, WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithSeoAttributes;
 
     public $brand;
+
     public int $brand_id;
+
     public string $name;
+
     public ?string $website = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = false;
 
     public $seoAttributes = [

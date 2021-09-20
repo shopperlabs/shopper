@@ -73,12 +73,12 @@ interface RepositoryContract
     public function whereIn($column, $value);
 
     /**
-     * @param  $relations
+     * @param $relations
      */
     public function with($relations);
 
     /**
-     * @param  $column
+     * @param      $column
      * @param null $key
      */
     public function pluck($column, $key = null);

@@ -15,12 +15,19 @@ class Create extends Component
     use WithAddress;
 
     public string $last_name = '';
+
     public string $first_name = '';
+
     public string $email = '';
+
     public string $phone_number = '';
+
     public bool $opt_in = false;
+
     public bool $send_mail = false;
+
     public $password;
+
     public $password_confirmation;
 
     /**

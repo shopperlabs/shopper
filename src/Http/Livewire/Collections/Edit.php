@@ -15,16 +15,27 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess, WithConditions, WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithConditions;
+    use WithSeoAttributes;
 
     public $collection;
+
     public $products;
+
     public int $collectionId;
+
     public string $name = '';
+
     public ?string $description = null;
+
     public string $type = 'auto';
+
     public ?string $publishedAt = null;
+
     public ?string $publishedAtFormatted = null;
+
     public string $condition_match = 'all';
 
     public $seoAttributes = [

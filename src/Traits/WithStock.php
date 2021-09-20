@@ -10,8 +10,11 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 trait WithStock
 {
     public int $stock = 0;
+
     public int $value = 0;
+
     public int $realStock = 0;
+
     public $inventory;
 
     public function updatedValue(int $value)

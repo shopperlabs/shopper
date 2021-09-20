@@ -11,16 +11,21 @@ use Shopper\Framework\Repositories\InventoryRepository;
 
 class Variant extends Component
 {
-    use WithFileUploads, WithUploadProcess, WithAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
 
     public $product;
+
     public $variant;
+
     public $inventories;
+
     public string $currency;
 
     protected $listeners = [
         'mediaDeleted',
-        'onVariantUpdated' => 'render'
+        'onVariantUpdated' => 'render',
     ];
 
     public function mount($product, $variant, string $currency)

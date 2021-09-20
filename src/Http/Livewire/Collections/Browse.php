@@ -13,6 +13,7 @@ class Browse extends Component
     use WithPagination;
 
     public string $search = '';
+
     public ?string $type = null;
 
     public function paginationView(): string

@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class ShopperBaseController extends Controller
 {
     use AuthorizesRequests;
+
     use DispatchesJobs;
+
     use ValidatesRequests;
 }

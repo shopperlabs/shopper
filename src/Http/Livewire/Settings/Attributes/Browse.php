@@ -11,6 +11,7 @@ use Shopper\Framework\Models\Shop\Product\Attribute;
 class Browse extends Component
 {
     use WithPagination;
+
     use WithSorting;
 
     /**

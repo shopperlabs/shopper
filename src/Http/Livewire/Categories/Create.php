@@ -10,11 +10,16 @@ use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess, WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithSeoAttributes;
 
     public string $name = '';
+
     public ?int $parent_id = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = true;
 
     public $seoAttributes = [

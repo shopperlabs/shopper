@@ -8,6 +8,7 @@ use Spatie\Permission\Traits\HasRoles;
 trait ShopperUser
 {
     use HasRoles;
+
     use Billable;
 
     /**

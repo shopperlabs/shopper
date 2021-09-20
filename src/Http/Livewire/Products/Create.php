@@ -2,24 +2,32 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use function count;
 use Livewire\WithFileUploads;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Channel;
+use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Traits\{WithSeoAttributes, WithUploadProcess};
-use Shopper\Framework\Repositories\Ecommerce\{
-    BrandRepository, ProductRepository, CategoryRepository, CollectionRepository
-};
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithAttributes, WithFileUploads, WithSeoAttributes, WithUploadProcess;
+    use WithAttributes;
+    use WithFileUploads;
+    use WithSeoAttributes;
+    use WithUploadProcess;
 
     public $quantity;
 
     public array $category_ids = [];
+
     public array $collection_ids = [];
+
     public ?Channel $defaultChannel = null;
 
     public array $seoAttributes = [
@@ -86,8 +94,8 @@ class Create extends AbstractBaseComponent
         ]);
 
         if (collect($this->files)->isNotEmpty()) {
-            collect($this->files)->each(fn ($file) =>
-                $product->addMedia($file->getRealPath())
+            collect($this->files)->each(
+                fn ($file) => $product->addMedia($file->getRealPath())
                     ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
             );
         }

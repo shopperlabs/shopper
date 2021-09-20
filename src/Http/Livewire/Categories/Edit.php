@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -11,13 +11,20 @@ use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads, WithUploadProcess, WithSeoAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithSeoAttributes;
 
     public $category;
+
     public int $categoryId;
+
     public string $name = '';
+
     public ?int $parent_id = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = false;
 
     public $seoAttributes = [

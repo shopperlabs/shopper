@@ -15,12 +15,17 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 class Browse extends Component
 {
     use WithPagination;
+
     use WithSorting;
 
     public string $search = '';
+
     public ?string $isVisible = null;
+
     public ?int $brand_id = null;
+
     public ?int $category_id = null;
+
     public ?int $collection_id = null;
 
     public function paginationView(): string
