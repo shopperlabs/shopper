@@ -15,8 +15,11 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 class Variants extends Component
 {
     use WithPagination;
+
     use WithFileUploads;
+
     use WithAttributes;
+
     use WithUploadProcess;
 
     public string $search = '';

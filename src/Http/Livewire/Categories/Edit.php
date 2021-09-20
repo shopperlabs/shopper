@@ -12,7 +12,9 @@ use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 class Edit extends AbstractBaseComponent
 {
     use WithFileUploads;
+
     use WithUploadProcess;
+
     use WithSeoAttributes;
 
     public $category;

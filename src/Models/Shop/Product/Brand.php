@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Brand extends Model implements HasMedia
 {
     use HasSlug;
+
     use InteractsWithMedia;
 
     /**

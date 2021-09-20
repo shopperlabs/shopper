@@ -15,8 +15,11 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 class Create extends Component
 {
     use WithFileUploads;
+
     use WithUploadProcess;
+
     use WithConditions;
+
     use WithSeoAttributes;
 
     public string $name = '';

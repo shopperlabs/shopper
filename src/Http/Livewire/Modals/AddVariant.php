@@ -13,7 +13,9 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 class AddVariant extends ModalComponent
 {
     use WithFileUploads;
+
     use WithAttributes;
+
     use WithUploadProcess;
 
     public int $productId;

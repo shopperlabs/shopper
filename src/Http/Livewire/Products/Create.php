@@ -18,8 +18,11 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 class Create extends AbstractBaseComponent
 {
     use WithAttributes;
+
     use WithFileUploads;
+
     use WithSeoAttributes;
+
     use WithUploadProcess;
 
     public $quantity;

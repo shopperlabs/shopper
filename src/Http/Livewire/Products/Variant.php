@@ -12,7 +12,9 @@ use Shopper\Framework\Repositories\InventoryRepository;
 class Variant extends Component
 {
     use WithFileUploads;
+
     use WithUploadProcess;
+
     use WithAttributes;
 
     public $product;

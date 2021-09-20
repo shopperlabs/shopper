@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Category extends Model implements HasMedia
 {
     use HasSlug;
+
     use InteractsWithMedia;
 
     /**

@@ -16,8 +16,11 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 class Edit extends AbstractBaseComponent
 {
     use WithFileUploads;
+
     use WithUploadProcess;
+
     use WithConditions;
+
     use WithSeoAttributes;
 
     public $collection;

@@ -11,7 +11,9 @@ use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 class Create extends AbstractBaseComponent
 {
     use WithFileUploads;
+
     use WithUploadProcess;
+
     use WithSeoAttributes;
 
     public string $name = '';

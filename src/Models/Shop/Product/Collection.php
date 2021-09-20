@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Collection extends Model implements HasMedia
 {
     use HasSlug;
+
     use InteractsWithMedia;
 
     /**

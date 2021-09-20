@@ -11,7 +11,9 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 class Edit extends AbstractBaseComponent
 {
     use WithFileUploads;
+
     use WithUploadProcess;
+
     use WithSeoAttributes;
 
     public $brand;
