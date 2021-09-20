@@ -79,13 +79,13 @@ class AddVariant extends ModalComponent
 
     public static function modalMaxWidth(): string
     {
-        return '4xl';
+        return '3xl';
     }
 
     public function render()
     {
         return view('shopper::livewire.modals.add-variant', [
-            'inventories' => [],
+            'inventories' => (new InventoryRepository())->get(),
         ]);
     }
 }

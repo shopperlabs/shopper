@@ -11,7 +11,7 @@
     <x-slot name="content">
         <div class="h-96 overflow-y-scroll">
             <div class="overflow-hidden">
-                @if($inventories->count() > 1)
+                @if($inventories->isNotEmpty())
                     <div class="p-4 sm:px-5 relative flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
                         <span class="relative z-0 inline-flex shadow-sm rounded-md">
                             <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700">
@@ -19,6 +19,7 @@
                             </span>
                             <x-shopper-input.select wire:model="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
                                 @foreach($inventories as $inventory)
+                                    <option value="0">{{ __('Select Inventory') }}</option>
                                     <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                                 @endforeach
                             </x-shopper-input.select>
@@ -80,7 +81,7 @@
                     </div>
                 </div>
 
-                @if($histories->isEmpty())
+                @if($histories->total() === 0)
                     <div class="flex flex-col items-center justify-center p-4 sm:p-6">
                         <span class="flex-shrink-0">
                             <x-heroicon-o-document-text class="h-12 w-12 text-gray-400" />
@@ -96,9 +97,9 @@
                                         <tr class="bg-gray-50 border-b border-gray-200 dark:bg-gray-700 dark:border-gray-700">
                                             <x-shopper-tables.table-head>{{ __('Date') }}</x-shopper-tables.table-head>
                                             <x-shopper-tables.table-head>{{ __('Event') }}</x-shopper-tables.table-head>
-                                            <x-shopper-tables.table-head>{{ __('Inventory Place') }}</x-shopper-tables.table-head>
+                                            <x-shopper-tables.table-head>{{ __('Inventory') }}</x-shopper-tables.table-head>
                                             <x-shopper-tables.table-head class="text-right">{{ __('Adjustment') }}</x-shopper-tables.table-head>
-                                            <x-shopper-tables.table-head class="text-right">{{ __('Quantity Movement') }}</x-shopper-tables.table-head>
+                                            <x-shopper-tables.table-head class="text-right">{{ __('Quantity') }}</x-shopper-tables.table-head>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-100 dark:bg-gray-800 dark:divide-gray-700">

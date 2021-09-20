@@ -5486,16 +5486,6 @@ select{
 	}
 
 
-	.md\:h-\[125\]{
-		height: 125;
-	}
-
-
-	.md\:h-\[750px\]{
-		height: 750px;
-	}
-
-
 	.md\:h-125{
 		height: 31.25rem;
 	}

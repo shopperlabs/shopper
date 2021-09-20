@@ -11,8 +11,7 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class UpdateVariantStock extends ModalComponent
 {
-    use WithPagination;
-    use WithStock;
+    use WithPagination, WithStock;
 
     public $product;
 
@@ -25,7 +24,7 @@ class UpdateVariantStock extends ModalComponent
 
     public static function modalMaxWidth(): string
     {
-        return '4xl';
+        return '3xl';
     }
 
     public function paginationView(): string

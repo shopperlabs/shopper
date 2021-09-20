@@ -98,7 +98,7 @@ class Edit extends AbstractBaseComponent
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
      */
-    public function fileDeleted()
+    public function mediaDeleted()
     {
         $this->media = null;
     }

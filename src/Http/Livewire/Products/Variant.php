@@ -11,42 +11,18 @@ use Shopper\Framework\Repositories\InventoryRepository;
 
 class Variant extends Component
 {
-    use WithFileUploads;
-    use WithUploadProcess;
-    use WithAttributes;
+    use WithFileUploads, WithUploadProcess, WithAttributes;
 
-    /**
-     * Product Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $product;
-
-    /**
-     * Variation Model instance.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $variant;
-
-    /**
-     * All locations available on the store.
-     */
     public $inventories;
-
-    /**
-     * Shopper default currency.
-     */
     public string $currency;
 
-    protected $listeners = ['fileDeleted', 'onVariantUpdated' => 'render'];
+    protected $listeners = [
+        'mediaDeleted',
+        'onVariantUpdated' => 'render'
+    ];
 
-    /**
-     * Component Mount instance.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $product
-     * @param \Illuminate\Database\Eloquent\Model $variant
-     */
     public function mount($product, $variant, string $currency)
     {
         $this->inventories = (new InventoryRepository())->get(['name', 'id']);
@@ -93,7 +69,7 @@ class Variant extends Component
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.product'), $this->variant->id);
+            $this->variant->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         event(new ProductUpdated($this->variant));
@@ -110,7 +86,7 @@ class Variant extends Component
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
      */
-    public function fileDeleted()
+    public function mediaDeleted()
     {
         $this->media = null;
     }
@@ -118,9 +94,7 @@ class Variant extends Component
     public function render()
     {
         return view('shopper::livewire.products.variant', [
-            'media' => $this->variant->files->isNotEmpty()
-                ? $this->variant->files->first()
-                : null,
+            'media' => $this->variant->getFirstMedia(config('shopper.system.storage.disks.uploads')),
         ]);
     }
 }
