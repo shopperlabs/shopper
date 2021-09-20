@@ -48,6 +48,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('dropdown-link');
             $this->registerComponent('empty-state');
             $this->registerComponent('heading');
+            $this->registerComponent('input.avatar-upload');
             $this->registerComponent('input.checkbox');
             $this->registerComponent('input.group');
             $this->registerComponent('input.markdown');

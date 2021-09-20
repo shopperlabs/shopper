@@ -117,7 +117,7 @@
                 <div class="shadow bg-white dark:bg-gray-800 rounded-md overflow-hidden">
                     <div class="px-4 py-5 sm:p-6">
                         <x-shopper-input.group label="Logo" for="logo" :error="$errors->first('shop_logo')" noShadow>
-                            <x-shopper-input.file-upload wire:model="shop_logo" id="photo">
+                            <x-shopper-input.avatar-upload wire:model="shop_logo" id="photo">
                                 <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                                     @if ($shop_logo)
                                         <img class="h-12 w-12 object-cover" src="{{ $shop_logo->temporaryUrl() }}" alt="Store logo">
@@ -129,7 +129,7 @@
                                         </svg>
                                     @endif
                                 </span>
-                            </x-shopper-input.file-upload>
+                            </x-shopper-input.avatar-upload>
                         </x-shopper-input.group>
 
                         <div class="mt-6">

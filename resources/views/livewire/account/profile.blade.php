@@ -17,7 +17,7 @@
                 <div class="bg-white dark:bg-gray-800 shadow rounded-md">
                     <div class="px-4 py-5 sm:p-6">
                         <x-shopper-input.group label="Photo" for="picture" :error="$errors->first('picture')" noShadow>
-                            <x-shopper-input.file-upload wire:model="picture" id="picture">
+                            <x-shopper-input.avatar-upload wire:model="picture" id="picture">
                                 <span class="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
                                     @if($picture)
                                         <img class="h-full w-full bg-cover" src="{{ $picture->temporaryUrl() }}" alt="">
@@ -25,7 +25,7 @@
                                         <img class="h-full w-full bg-cover" src="{{ $logged_in_user->picture }}" alt="{{ $logged_in_user->email }}">
                                     @endif
                                 </span>
-                            </x-shopper-input.file-upload>
+                            </x-shopper-input.avatar-upload>
                         </x-shopper-input.group>
                         <div class="grid gap-4 grid-cols-6 sm:gap-5 mt-5">
                             <x-shopper-input.group for="first_name" label="First name" class="col-span-6 sm:col-span-3" :error="$errors->first('first_name')">
