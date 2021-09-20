@@ -44,7 +44,17 @@
                                 <h4 class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">{{ __('Image') }}</h4>
                                 <div class="mt-1 @if($media) grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 @endif">
                                     <div>
-                                        <x-shopper-input.single-upload id="file" wire:click="removeSingleMediaPlaceholder" wire:model="file" :file="$file" :error="$errors->first('file')" />
+                                        <x-shopper-input.filepond
+                                            wire:model="file"
+                                            allowImagePreview
+                                            imagePreviewMaxHeight="200"
+                                            allowFileTypeValidation
+                                            allowFileSizeValidation
+                                            maxFileSize="1mb"
+                                        />
+                                        @error('file')
+                                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     @if($media)
                                         <div class="p-2 bg-gray-50 rounded-md border border-dashed border-gray-200 dark:bg-gray-700 dark:border-gray-700">
