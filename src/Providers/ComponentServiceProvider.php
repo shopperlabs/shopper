@@ -39,7 +39,6 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('breadcrumb-link');
             $this->registerComponent('confirm-modal');
             $this->registerComponent('confirms-password');
-            $this->registerComponent('datetime-picker');
             $this->registerComponent('danger-button');
             $this->registerComponent('default-button');
             $this->registerComponent('delete-action');
@@ -50,7 +49,6 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('empty-state');
             $this->registerComponent('heading');
             $this->registerComponent('input.checkbox');
-            $this->registerComponent('input.file-upload');
             $this->registerComponent('input.group');
             $this->registerComponent('input.markdown');
             $this->registerComponent('input.multiple-upload');
