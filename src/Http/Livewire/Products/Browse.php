@@ -15,6 +15,7 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 class Browse extends Component
 {
     use WithPagination;
+
     use WithSorting;
 
     public string $search = '';
@@ -90,7 +91,7 @@ class Browse extends Component
                         $query->where('is_visible', (bool) ($this->isVisible));
                     }
                 })
-                ->orderBy($this->sortBy ?? 'name', $this->sortDirection)
+                ->orderBy('created_at', $this->sortDirection)
                 ->paginate(10),
         ]);
     }

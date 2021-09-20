@@ -40,7 +40,7 @@ trait WithAttributes
     /**
      * Product Safety stock.
      */
-    public int $securityStock = 0;
+    public int|string $securityStock = 0;
 
     public ?string $publishedAt = null;
 

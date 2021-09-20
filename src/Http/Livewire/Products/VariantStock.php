@@ -11,6 +11,7 @@ use Shopper\Framework\Repositories\InventoryHistoryRepository;
 class VariantStock extends Component
 {
     use WithPagination;
+
     use WithStock;
 
     /**

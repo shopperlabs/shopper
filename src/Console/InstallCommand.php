@@ -5,6 +5,7 @@ namespace Shopper\Framework\Console;
 use Illuminate\Console\Command;
 use Spatie\Analytics\AnalyticsServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 
 class InstallCommand extends Command
@@ -57,6 +58,7 @@ class InstallCommand extends Command
 
         $this->call('vendor:publish', ['--provider' => ShopperServiceProvider::class]);
         $this->call('vendor:publish', ['--provider' => AnalyticsServiceProvider::class]);
+        $this->call('vendor:publish', ['--provider' => MediaLibraryServiceProvider::class, '--tag' => 'migrations']);
         $this->progressBar->advance();
 
         $this->setupDatabaseConfig();

@@ -18,7 +18,7 @@ class Create extends AbstractBaseComponent
 
     public ?int $parent_id = null;
 
-    public string $description = '';
+    public ?string $description = null;
 
     public bool $is_enabled = true;
 
@@ -30,14 +30,6 @@ class Create extends AbstractBaseComponent
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
-
-    public function rules(): array
-    {
-        return [
-            'name' => 'required|max:150|unique:' . shopper_table('categories'),
-            'file' => 'nullable|image|max:1024',
-        ];
-    }
 
     public function onTrixValueUpdate($value)
     {
@@ -59,12 +51,20 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            $this->uploadFile('category', $category->id);
+            $category->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Category successfully added!'));
 
         $this->redirectRoute('shopper.categories.index');
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|max:150|unique:' . shopper_table('categories'),
+            'file' => 'nullable|image|max:1024',
+        ];
     }
 
     public function render()

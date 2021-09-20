@@ -42,60 +42,35 @@
                             </x-shopper-input.group>
                             <div class="sm:col-span-4">
                                 <h4 class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">{{ __('Image') }}</h4>
-                                <div class="mt-1 flex items-start space-x-4">
+                                <div class="mt-1 @if($media) grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 @endif">
                                     <div>
-                                        @if($file)
-                                            <div class="flex-shrink-0 rounded-md overflow-hidden">
-                                                <img class="h-32 w-32 object-cover rounded-md" src="{{ $file->temporaryUrl() }}" alt="">
-                                                <div class="flex items-center mt-2">
-                                                    <button wire:click="removeImage" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
-                                                        <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2.5" />
-                                                        {{ __('Remove') }}
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="w-full">
-                                                <label for="file" class="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer dark:border-gray-600">
-                                                    <div class="text-center">
-                                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                                        </svg>
-                                                        <p class="mt-1 text-sm text-gray-600">
-                                                        <span class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                                                            {{ __('Upload a file') }}
-                                                        </span>
-                                                            {{ __('or drag and drop') }}
-                                                        </p>
-                                                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                                            {{ __('PNG, JPG, GIF up to 1MB') }}
-                                                        </p>
-                                                        <input id="file" type="file" wire:model="file" class="sr-only">
-                                                    </div>
-                                                </label>
-                                            </div>
-                                        @endif
+                                        <x-shopper-input.filepond
+                                            wire:model="file"
+                                            allowImagePreview
+                                            imagePreviewMaxHeight="200"
+                                            allowFileTypeValidation
+                                            allowFileSizeValidation
+                                            maxFileSize="1mb"
+                                        />
                                         @error('file')
-                                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     @if($media)
                                         <div class="p-2 bg-gray-50 rounded-md border border-dashed border-gray-200 dark:bg-gray-700 dark:border-gray-700">
                                             <div class="flex-1 truncate">
                                                 <div class="flex-shrink-0 w-40 h-32 overflow-hidden rounded-md">
-                                                    <img class="h-32 w-full object-cover" src="{{ $media->file_path }}" alt="" />
+                                                    <img class="h-32 w-full object-cover" src="{{ $media->getFullUrl() }}" alt="" />
                                                 </div>
                                             </div>
                                             <div class="mt-1 flex items-center space-x-2">
                                                 <div class="truncate">
                                                     <h4 class="text-sm leading-5 text-gray-500 truncate dark:text-gray-400">{{ $media->file_name }}</h4>
-                                                    <p class="text-xs leading-4 text-gray-400 dark:text-gray-500">{{ $media->file_size }}</p>
+                                                    <p class="text-xs leading-4 text-gray-400 dark:text-gray-500">{{ $media->human_readable_size }}</p>
                                                 </div>
-                                                <button wire:click="deleteImage({{ $media->id }})" wire:loading.attr="disabled" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
-                                                    <x-shopper-loader wire:loading wire:target="deleteImage" class="text-white" />
-                                                    <svg wire:loading.remove class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
+                                                <button wire:click="removeMedia({{ $media->id }})" wire:loading.attr="disabled" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
+                                                    <x-shopper-loader wire:loading wire:target="removeMedia" class="text-white" />
+                                                    <x-heroicon-o-trash wire:loading.remove class="h-5 w-5" />
                                                 </button>
                                             </div>
                                         </div>

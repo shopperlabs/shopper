@@ -206,11 +206,11 @@
                                     <td class="px-6 py-3 max-w-lg whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="flex items-center">
-                                                @if($collection->getFirstImage())
-                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $collection->getFirstImage()->image_full_path }}" alt=""/>
+                                                @if($collection->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
+                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $collection->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'))}}" alt="" />
                                                 @else
-                                                    <div class="bg-gray-200 flex items-center justify-center h-8 w-8 rounded dark:bg-gray-700">
-                                                        <x-heroicon-o-photograph class="w-5 h-5 text-gray-400 dark:txt-gray-500" />
+                                                    <div class="bg-gray-200 dark:bg-gray-700 flex items-center justify-center h-8 w-8 rounded">
+                                                        <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />
                                                     </div>
                                                 @endif
                                                 <a href="{{ route('shopper.collections.edit', $collection) }}" class="ml-2 truncate hover:text-gray-700 dark:hover:text-gray-300">

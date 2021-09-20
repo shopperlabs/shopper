@@ -34,7 +34,18 @@
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-5 overflow-hidden">
                 <h4 class="block text-base font-medium leading-6 text-gray-900 dark:text-white">{{ __('Product Media') }}</h4>
                 <div class="mt-4">
-                    <x-shopper-input.drag-upload id="file" wire:click="removeImage" wire:model="file" :file="$file" :error="$errors->first('file')" />
+                    <x-shopper-input.filepond
+                        wire:model="files"
+                        multiple
+                        allowImagePreview
+                        imagePreviewMaxHeight="200"
+                        allowFileTypeValidation
+                        allowFileSizeValidation
+                        maxFileSize="1mb"
+                    />
+                    @error('files.*')
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">

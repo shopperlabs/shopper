@@ -45,6 +45,7 @@
     "pragmarx/google2fa": "^7.0|^8.0",
     "reecem/mocker": "1.1.*",
     "spatie/laravel-analytics": "^3.11",
+    "spatie/laravel-medialibrary": "^9.0.0",
     "spatie/laravel-permission": "^3.2",
     "stevebauman/location": "^5.2"
   },

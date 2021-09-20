@@ -2,31 +2,33 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Shop\Channel;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Shopper\Framework\Models\Traits\HasSlug;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasStock;
-use Shopper\Framework\Models\Traits\Filetable;
 use Shopper\Framework\Contracts\ReviewRateable;
-use Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
 
-class Product extends Model implements ReviewRateable
+class Product extends Model implements HasMedia, ReviewRateable
 {
-    use Filetable;
     use HasStock;
+
     use HasPrice;
+
     use HasSlug;
+
+    use InteractsWithMedia;
+
     use CanHaveDiscount;
-    use SoftDeletes;
-    use SoftCascadeTrait;
+
     use ReviewRateableTrait;
 
     /**
@@ -64,13 +66,6 @@ class Product extends Model implements ReviewRateable
         'seo_title',
         'seo_description',
     ];
-
-    /**
-     * Cascade soft delete tables.
-     *
-     * @var array<string>
-     */
-    protected $softCascade = ['variations'];
 
     /**
      * The attributes that should be cast.
@@ -122,6 +117,12 @@ class Product extends Model implements ReviewRateable
         }
 
         return $stock;
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(config('shopper.system.storage.disks.uploads'))
+            ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png', 'image/gif']);
     }
 
     public function scopePublish(Builder $query): Builder

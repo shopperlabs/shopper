@@ -3,15 +3,16 @@
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
+use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class DeleteProduct extends ModalComponent
 {
     public int $productId;
 
-    public string $type;
+    public string $type = 'product';
 
-    public ?string $route;
+    public ?string $route = null;
 
     public function mount(int $id, string $type = 'product', ?string $route = null)
     {
@@ -22,10 +23,14 @@ class DeleteProduct extends ModalComponent
 
     public function delete()
     {
+        $product = (new ProductRepository())->getById($this->productId);
+
+        event(new ProductRemoved($product));
+
         if ($this->type === 'product') {
-            (new ProductRepository())->getById($this->productId)->delete();
+            $product->delete();
         } else {
-            (new ProductRepository())->getById($this->productId)->forceDelete();
+            $product->forceDelete();
         }
 
         session()->flash('success', __('The :item has been correctly removed.', ['item' => $this->type]));

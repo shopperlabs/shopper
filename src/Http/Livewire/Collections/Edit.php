@@ -22,6 +22,8 @@ class Edit extends AbstractBaseComponent
 
     public $collection;
 
+    public $products;
+
     public int $collectionId;
 
     public string $name = '';
@@ -36,20 +38,13 @@ class Edit extends AbstractBaseComponent
 
     public string $condition_match = 'all';
 
-    /**
-     * Products of the collections.
-     *
-     * @var \Illuminate\Database\Eloquent\Collection
-     */
-    public $products;
-
     public $seoAttributes = [
         'name' => 'name',
         'description' => 'description',
     ];
 
     protected $listeners = [
-        'fileDeleted',
+        'mediaDeleted',
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
@@ -74,20 +69,6 @@ class Edit extends AbstractBaseComponent
         $this->description = $value;
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => [
-                'sometimes',
-                'required',
-                'max:150',
-                Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
-            ],
-            'file' => 'sometimes|nullable|image|max:1024',
-            'type' => 'sometimes|required',
-        ];
-    }
-
     public function store()
     {
         $this->validate($this->rules());
@@ -103,19 +84,26 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            if ($this->collection->files->isNotEmpty()) {
-                foreach ($this->collection->files as $file) {
-                    Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
-                }
-                File::query()->where('filetable_id', $this->collectionId)->delete();
-            }
-
-            $this->uploadFile(config('shopper.system.models.collection'), $this->collection->id);
+            $this->collection->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Collection successfully updated!'));
 
         $this->redirectRoute('shopper.collections.index');
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => [
+                'sometimes',
+                'required',
+                'max:150',
+                Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
+            ],
+            'file' => 'sometimes|nullable|image|max:1024',
+            'type' => 'sometimes|required',
+        ];
     }
 
     /**
@@ -140,7 +128,7 @@ class Edit extends AbstractBaseComponent
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
      */
-    public function fileDeleted()
+    public function mediaDeleted()
     {
         $this->media = null;
     }
@@ -148,9 +136,7 @@ class Edit extends AbstractBaseComponent
     public function render()
     {
         return view('shopper::livewire.collections.edit', [
-            'media' => $this->collection->files->isNotEmpty()
-                ? $this->collection->getFirstImage()
-                : null,
+            'media' => $this->collection->getFirstMedia(config('shopper.system.storage.disks.uploads')),
         ]);
     }
 }

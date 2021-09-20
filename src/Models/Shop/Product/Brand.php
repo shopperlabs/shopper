@@ -2,16 +2,17 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Shopper\Framework\Models\Traits\HasSlug;
-use Shopper\Framework\Models\Traits\Filetable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Brand extends Model
+class Brand extends Model implements HasMedia
 {
-    use Filetable;
     use HasSlug;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +45,13 @@ class Brand extends Model
     public function getTable(): string
     {
         return shopper_table('brands');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(config('shopper.system.storage.disks.uploads'))
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png']);
     }
 
     public function scopeEnabled(Builder $query): Builder

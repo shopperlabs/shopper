@@ -17,7 +17,9 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 class Edit extends AbstractBaseComponent
 {
     use WithDiscountAttributes;
+
     use WithDiscountActions;
+
     use HasPrice;
 
     /**

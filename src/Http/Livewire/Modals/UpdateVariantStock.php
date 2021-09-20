@@ -25,7 +25,7 @@ class UpdateVariantStock extends ModalComponent
 
     public static function modalMaxWidth(): string
     {
-        return '4xl';
+        return '3xl';
     }
 
     public function paginationView(): string

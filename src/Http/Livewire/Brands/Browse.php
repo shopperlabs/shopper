@@ -34,6 +34,7 @@ class Browse extends Component
             'total' => (new BrandRepository())->count(),
             'brands' => (new BrandRepository())
                 ->where('name', '%' . $this->search . '%', 'like')
+                ->orderBy('created_at', 'desc')
                 ->paginate(8),
         ]);
     }

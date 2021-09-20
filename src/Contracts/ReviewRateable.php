@@ -12,29 +12,29 @@ interface ReviewRateable
     public function ratings();
 
     /**
-     * @param  $round
+     * @param $round
      *
      * @return float
      */
     public function averageRating($round = null);
 
     /**
-     * @param  $round
+     * @param $round
      */
     public function averageCustomerServiceRating($round = null);
 
     /**
-     * @param  $round
+     * @param $round
      */
     public function averageQualityRating($round = null);
 
     /**
-     * @param  $round
+     * @param $round
      */
     public function averageFriendlyRating($round = null);
 
     /**
-     * @param  $round
+     * @param $round
      */
     public function averagePricingRating($round = null);
 

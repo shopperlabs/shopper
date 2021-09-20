@@ -20,9 +20,6 @@ class AddVariant extends ModalComponent
 
     public string $currency;
 
-    /**
-     * Default product stock quantity.
-     */
     public $quantity;
 
     public function mount(int $productId, string $currency)
@@ -49,7 +46,7 @@ class AddVariant extends ModalComponent
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.product'), $this->productId);
+            $product->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         if ($this->quantity && count($this->quantity) > 0) {
@@ -87,7 +84,7 @@ class AddVariant extends ModalComponent
 
     public static function modalMaxWidth(): string
     {
-        return '4xl';
+        return '3xl';
     }
 
     public function render()

@@ -30,7 +30,7 @@ class Show extends AbstractBaseComponent
     /**
      * Component mounted action.
      *
-     * @param  $customer
+     * @param $customer
      */
     public function mount($customer)
     {

@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 class ForgotPasswordController extends Controller
 {
     use ValidatesRequests;
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller

@@ -2,52 +2,28 @@
 
 namespace Shopper\Framework\Traits;
 
-use Exception;
-use Shopper\Framework\Models\System\File;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 trait WithUploadProcess
 {
-    /**
-     * Upload file.
-     *
-     * @var \Illuminate\Http\UploadedFile
-     */
     public $file;
 
-    public function removeImage()
+    public $files = [];
+
+    public function removeSingleMediaPlaceholder()
     {
         $this->file = null;
     }
 
-    /**
-     * Removed file from the database.
-     *
-     * @throws Exception
-     */
-    public function deleteImage(int $id)
+    public function removeMedia(int $id)
     {
-        File::query()->find($id)->delete();
+        Media::find($id)->delete();
 
-        $this->emitSelf('fileDeleted');
+        $this->emitSelf('mediaDeleted');
 
         $this->notify([
             'title' => __('Removed'),
-            'message' => __('Image removed from the storage.'),
-        ]);
-    }
-
-    /**
-     * Upload file and associate with the current model.
-     */
-    public function uploadFile(string $model, int $id)
-    {
-        File::query()->create([
-            'disk_name' => $this->file->store('/', config('shopper.system.storage.disks.uploads')),
-            'file_name' => $this->file->getClientOriginalName(),
-            'file_size' => $this->file->getSize(),
-            'content_type' => $this->file->getClientMimeType(),
-            'filetable_type' => $model,
-            'filetable_id' => $id,
+            'message' => __('Media removed from the storage.'),
         ]);
     }
 }

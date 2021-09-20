@@ -410,16 +410,16 @@
                         <thead>
                             <tr class="border-t border-gray-200">
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    <span class="lg:pl-2">{{ __("Product") }}</span>
+                                    <span class="lg:pl-2">{{ __('Product') }}</span>
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Reviewer") }}
+                                    {{ __('Reviewer') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Review") }}
+                                    {{ __('Review') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __("Status") }}
+                                    {{ __('Status') }}
                                 </th>
                                 <th class="pr-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></th>
                             </tr>
@@ -427,22 +427,20 @@
                         <tbody class="bg-white divide-y divide-gray-100" x-max="1">
                             @forelse($reviews as $review)
                                 <tr>
-                                    <td class="px-6 py-3 max-w-0 w-full text-sm leading-5 font-medium text-gray-900">
+                                    <td class="px-6 py-3 max-w-0 w-full text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $review->approved ? 'bg-green-600': 'bg-gray-400' }}"></div>
                                             <div class="flex items-center">
-                                                @if($review->reviewrateable->files->count() > 0)
-                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $review->reviewrateable->files->first()->file_path }}" alt="">
+                                                @if($review->reviewrateable->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
+                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $review->reviewrateable->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="">
                                                 @else
-                                                    <div class="bg-gray-200 flex items-center justify-center h-8 w-8 rounded">
-                                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
+                                                    <div class="bg-gray-200 dark:bg-gray-700 flex items-center justify-center h-8 w-8 rounded">
+                                                        <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />
                                                     </div>
                                                 @endif
                                                 <span class="ml-2 truncate flex flex-col">
                                                     <span>{{ $review->reviewrateable->name }}</span>
-                                                    <span class="text-xs leading-4 text-gray-500">{{ $review->reviewrateable->formatted_price ?? __("N/A") }}</span>
+                                                    <span class="text-xs leading-4 text-gray-500 dark:text-gray-400">{{ $review->reviewrateable->formatted_price ?? __('N/A') }}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -487,17 +485,15 @@
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500">
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $review->approved ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
-                                            {{ $review->approved ? __("Published") : __("Pending") }}
+                                            {{ $review->approved ? __('Published') : __('Pending') }}
                                         </span>
                                     </td>
                                     <td class="pr-6">
                                         <div x-data="{ open: false }" x-on:item-removed.window="open = false" @keydown.escape="open = false" @click.away="open = false" class="relative flex justify-end items-center">
-                                            <button id="project-options-menu-0" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
-                                                <svg class="w-5 h-5" x-description="Heroicon name: dots-vertical" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                                </svg>
+                                            <button id="review-{{ $review->id }}" aria-has-popup="true" :aria-expanded="open" type="button" @click="open = !open" class="w-8 h-8 inline-flex items-center justify-center text-gray-400 rounded-full bg-transparent hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition ease-in-out duration-150">
+                                                <x-heroicon-s-dots-vertical class="w-5 h-5" />
                                             </button>
-                                            <div x-show="open" x-description="Dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
+                                            <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg" style="display: none;">
                                                 <div class="relative z-10 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical" aria-labelledby="project-options-menu-0">
                                                     <div class="py-1">
                                                         <a href="{{ route('shopper.reviews.show', $review) }}" type="button" class="group w-full flex items-center px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
@@ -505,7 +501,7 @@
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                             </svg>
-                                                            {{ __("View") }}
+                                                            {{ __('View') }}
                                                         </a>
                                                     </div>
                                                     <div class="border-t border-gray-100"></div>
@@ -514,7 +510,7 @@
                                                             <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" x-description="Heroicon name: trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                                             </svg>
-                                                            {{ __("Delete") }}
+                                                            {{ __('Delete') }}
                                                         </button>
                                                     </div>
                                                 </div>
@@ -529,7 +525,7 @@
                                             <svg class="h-8 w-8 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                                             </svg>
-                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __("No review found") }}...</span>
+                                            <span class="font-medium py-8 text-cool-gray-400 text-xl">{{ __('No review found') }}...</span>
                                         </div>
                                     </td>
                                 </tr>

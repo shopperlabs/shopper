@@ -15,11 +15,11 @@ use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
+    use Billable;
     use CanHaveDiscount;
+    use HasRoles;
     use SoftDeletes;
     use TwoFactorAuthenticatable;
-    use HasRoles;
-    use Billable;
 
     /**
      * The attributes that aren't mass assignable.

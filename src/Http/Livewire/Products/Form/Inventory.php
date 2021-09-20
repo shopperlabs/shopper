@@ -14,7 +14,9 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 class Inventory extends Component
 {
     use WithPagination;
+
     use WithAttributes;
+
     use WithStock;
 
     /**

@@ -13,6 +13,7 @@ use Shopper\Framework\Models\Shop\Order\OrderStatus;
 class Browse extends Component
 {
     use WithPagination;
+
     use WithSorting;
 
     /**

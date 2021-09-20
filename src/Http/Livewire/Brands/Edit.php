@@ -4,8 +4,6 @@ namespace Shopper\Framework\Http\Livewire\Brands;
 
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
-use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -34,7 +32,7 @@ class Edit extends AbstractBaseComponent
     ];
 
     protected $listeners = [
-        'fileDeleted',
+        'mediaDeleted',
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
@@ -84,14 +82,7 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->file) {
-            if ($this->brand->files->isNotEmpty()) {
-                foreach ($this->brand->files as $file) {
-                    Storage::disk(config('shopper.system.storage.disks.uploads'))->delete($file->disk_name);
-                }
-                File::query()->where('filetable_id', $this->brand_id)->delete();
-            }
-
-            $this->uploadFile('brand', $this->brand->id);
+            $this->brand->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Brand successfully updated!'));
@@ -115,7 +106,7 @@ class Edit extends AbstractBaseComponent
      * Listen when a file is removed from the storage
      * and update the user screen and remove image preview.
      */
-    public function fileDeleted()
+    public function mediaDeleted()
     {
         $this->media = null;
     }
@@ -123,9 +114,7 @@ class Edit extends AbstractBaseComponent
     public function render()
     {
         return view('shopper::livewire.brands.edit', [
-            'media' => $this->brand->files->isNotEmpty()
-                ? $this->brand->getFirstImage()
-                : null,
+            'media' => $this->brand->getFirstMedia(config('shopper.system.storage.disks.uploads')),
         ]);
     }
 }

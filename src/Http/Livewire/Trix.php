@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Trix extends Component
 {
-    public ?string $value;
+    public ?string $value = null;
 
     public string $trixId;
 

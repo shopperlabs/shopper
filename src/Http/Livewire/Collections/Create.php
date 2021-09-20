@@ -71,7 +71,7 @@ class Create extends Component
         ]);
 
         if ($this->file) {
-            $this->uploadFile(config('shopper.system.models.collection'), $collection->id);
+            $collection->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         if ($this->type === 'auto' && count($this->conditions) > 0 && $this->rule) {

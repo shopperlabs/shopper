@@ -14,7 +14,7 @@
                 <x-shopper-input.search label="Search variant" placeholder="Search product variant" />
                 <div>
                     <span class="shadow-sm rounded-md">
-                        <x-shopper-button type="button" wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})">
+                        <x-shopper-button wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})" type="button">
                             {{ __('Add variant') }}
                         </x-shopper-button>
                     </span>
@@ -47,8 +47,8 @@
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $variant->is_visible ? 'bg-green-600': 'bg-gray-400' }}"></div>
                                             <div class="flex items-center">
-                                                @if($variant->files->count() > 0)
-                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $variant->files->first()->file_path }}" alt="">
+                                                @if($variant->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
+                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $variant->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />
                                                 @else
                                                     <div class="bg-gray-200 dark:bg-gray-700 flex items-center justify-center h-8 w-8 rounded">
                                                         <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />

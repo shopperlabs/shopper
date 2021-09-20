@@ -11,37 +11,14 @@ class Profile extends Component
 {
     use WithFileUploads;
 
-    /**
-     * Logged User first name attribute.
-     *
-     * @var string
-     */
     public $first_name;
 
-    /**
-     * Logged User last name attribute.
-     *
-     * @var string
-     */
     public $last_name;
 
-    /**
-     * Logged User email attribute.
-     *
-     * @var string
-     */
     public $email;
 
-    /**
-     * Logged User phone number attribute.
-     *
-     * @var string
-     */
     public $phone_number;
 
-    /**
-     * Logged User profile picture.
-     */
     public $picture;
 
     /**

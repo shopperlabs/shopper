@@ -30,7 +30,7 @@ class Create extends AbstractBaseComponent
 
     public ?Channel $defaultChannel = null;
 
-    public $seoAttributes = [
+    public array $seoAttributes = [
         'name' => 'name',
         'description' => 'description',
     ];
@@ -56,7 +56,7 @@ class Create extends AbstractBaseComponent
             'name' => 'bail|required',
             'sku' => 'nullable|unique:' . shopper_table('products'),
             'barcode' => 'nullable|unique:' . shopper_table('products'),
-            'file' => 'nullable|image|max:1024',
+            'files.*' => 'nullable|image|max:1024',
             'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
         ];
     }
@@ -93,16 +93,19 @@ class Create extends AbstractBaseComponent
             'brand_id' => $this->brand_id ?? null,
         ]);
 
-        if ($this->file) {
-            $this->uploadFile('product', $product->id);
+        if (collect($this->files)->isNotEmpty()) {
+            collect($this->files)->each(
+                fn ($file) => $product->addMedia($file->getRealPath())
+                    ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+            );
         }
 
-        if (count($this->category_ids) > 0) {
-            $product->categories()->sync($this->category_ids);
+        if (collect($this->category_ids)->isNotEmpty()) {
+            $product->categories()->attach($this->category_ids);
         }
 
-        if (count($this->collection_ids) > 0) {
-            $product->collections()->sync($this->collection_ids);
+        if (collect($this->collection_ids)->isNotEmpty()) {
+            $product->collections()->attach($this->collection_ids);
         }
 
         $product->channels()->attach($this->defaultChannel->id);
