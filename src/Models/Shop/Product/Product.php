@@ -19,17 +19,12 @@ use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
 
 class Product extends Model implements HasMedia, ReviewRateable
 {
-    use HasStock;
-
-    use HasPrice;
-
-    use HasSlug;
-
-    use InteractsWithMedia;
-
-    use CanHaveDiscount;
-
-    use ReviewRateableTrait;
+    use HasStock,
+        HasPrice,
+        HasSlug,
+        InteractsWithMedia,
+        CanHaveDiscount,
+        ReviewRateableTrait;
 
     /**
      * The attributes that are mass assignable.
