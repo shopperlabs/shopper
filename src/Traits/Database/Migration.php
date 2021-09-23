@@ -75,7 +75,7 @@ trait Migration
      * @param string    $tableName  MySQL table name
      * @param bool      $nullable   Foreign key nullable status
      */
-    public function addForeignKey(Blueprint $table, string $columnName, string $tableName, $nullable = true): void
+    public function addForeignKey(Blueprint $table, string $columnName, string $tableName, bool $nullable = true): void
     {
         if ($nullable) {
             $table->unsignedBigInteger($columnName)->index()->nullable();
@@ -92,7 +92,7 @@ trait Migration
      * @param Blueprint $table      Laravel Blueprint
      * @param string    $columnName Column on the table
      */
-    public function removeLink(Blueprint $table, $columnName): void
+    public function removeLink(Blueprint $table, string $columnName): void
     {
         $table->dropForeign([$columnName]);
         $table->dropColumn([$columnName]);
