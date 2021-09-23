@@ -19,17 +19,12 @@ use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
 
 class Product extends Model implements HasMedia, ReviewRateable
 {
-    use HasStock;
-
-    use HasPrice;
-
-    use HasSlug;
-
-    use InteractsWithMedia;
-
-    use CanHaveDiscount;
-
-    use ReviewRateableTrait;
+    use HasStock,
+        HasPrice,
+        HasSlug,
+        InteractsWithMedia,
+        CanHaveDiscount,
+        ReviewRateableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -85,6 +80,20 @@ class Product extends Model implements HasMedia, ReviewRateable
     public function getTable(): string
     {
         return shopper_table('products');
+    }
+
+    /**
+     * The "boot" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($model) {
+            $model->variations()->detele();
+        });
     }
 
     /**
