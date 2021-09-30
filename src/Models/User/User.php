@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Models\User;
 
-use function count;
 use Laravel\Cashier\Billable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Storage;
@@ -15,15 +14,11 @@ use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
-    use Billable;
-
-    use CanHaveDiscount;
-
-    use HasRoles;
-
-    use SoftDeletes;
-
-    use TwoFactorAuthenticatable;
+    use Billable,
+        CanHaveDiscount,
+        HasRoles,
+        SoftDeletes,
+        TwoFactorAuthenticatable;
 
     /**
      * The attributes that aren't mass assignable.

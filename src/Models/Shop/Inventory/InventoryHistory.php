@@ -3,9 +3,9 @@
 namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\User\User;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Framework\Models\User\User;
 
 class InventoryHistory extends Model
 {

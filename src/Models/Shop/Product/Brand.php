@@ -2,18 +2,16 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Shopper\Framework\Models\Traits\HasSlug;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Brand extends Model implements HasMedia
 {
-    use HasSlug;
-
-    use InteractsWithMedia;
+    use HasSlug, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.

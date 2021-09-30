@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\System\Country;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Framework\Models\System\Country;
 
 class Inventory extends Model
 {

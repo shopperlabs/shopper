@@ -13,9 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Category extends Model implements HasMedia
 {
-    use HasSlug;
-
-    use InteractsWithMedia;
+    use HasSlug, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
