@@ -1,5 +1,26 @@
 # Release Notes
 
+## v0.0.6 (2021-09-30)
+
+### Added
+- Add [Spatie/media-library](https://spatie.be/docs/laravel-medialibrary/v9/introduction) in place of `File` to save files in database
+- Add Filepond to upload files
+- Multiple upload files on product create and edit component
+- Publish Spatie media library package on shopper installation
+
+### Updated
+- Use `uploads` filesystem as collections name to save products, category and brand files.
+- Method to retrieve product (or category, collection) first image.
+
+### Fixed
+- Livewire upload error on update product
+- Variant update stock
+
+### Removed
+- `File` Class for managing file. No longer used
+- phpcs
+- phpinsights
+
 ## v0.0.5 (2021-08-30)
 
 ### Added
