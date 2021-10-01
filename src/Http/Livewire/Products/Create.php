@@ -2,35 +2,28 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use function count;
 use Livewire\WithFileUploads;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Framework\Models\Shop\Channel;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Repositories\Ecommerce\{
+    BrandRepository,
+    ProductRepository,
+    CategoryRepository,
+    CollectionRepository
+};
+use Shopper\Framework\Traits\{WithProductAssociations, WithSeoAttributes, WithUploadProcess};
 
 class Create extends AbstractBaseComponent
 {
-    use WithAttributes;
-
-    use WithFileUploads;
-
-    use WithSeoAttributes;
-
-    use WithUploadProcess;
+    use WithAttributes,
+        WithFileUploads,
+        WithProductAssociations,
+        WithSeoAttributes,
+        WithUploadProcess;
 
     public $quantity;
-
-    public array $category_ids = [];
-
-    public array $collection_ids = [];
-
     public ?Channel $defaultChannel = null;
 
     public array $seoAttributes = [
@@ -60,7 +53,7 @@ class Create extends AbstractBaseComponent
             'sku' => 'nullable|unique:' . shopper_table('products'),
             'barcode' => 'nullable|unique:' . shopper_table('products'),
             'files.*' => 'nullable|image|max:1024',
-            'brand_id' => 'integer|nullable|exists:' . shopper_table('brands') . ',id',
+            'brand_id' => 'nullable|integer|exists:' . shopper_table('brands') . ',id',
         ];
     }
 
@@ -98,17 +91,16 @@ class Create extends AbstractBaseComponent
 
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
-                fn ($file) => $product->addMedia($file->getRealPath())
-                    ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+                fn ($file) => $product->addMedia($file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'))
             );
         }
 
-        if (collect($this->category_ids)->isNotEmpty()) {
-            $product->categories()->attach($this->category_ids);
+        if (collect($this->associateCategories)->isNotEmpty()) {
+            $product->categories()->attach($this->associateCategories);
         }
 
-        if (collect($this->collection_ids)->isNotEmpty()) {
-            $product->collections()->attach($this->collection_ids);
+        if (collect($this->associateCollections)->isNotEmpty()) {
+            $product->collections()->attach($this->associateCollections);
         }
 
         $product->channels()->attach($this->defaultChannel->id);
