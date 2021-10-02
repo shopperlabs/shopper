@@ -178,7 +178,7 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5 dark:border-gray-700">
                         <x-shopper-label for="photo" class="sm:mt-px sm:pt-2" value="Logo" />
                         <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                            <x-shopper-input.file-upload wire:model.defer="logo" id="photo">
+                            <shopper-input.file-upload wire:model.defer="logo" id="photo">
                                 <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                                     @if($logo)
                                         <img class="h-full w-full object-cover" src="{{ $logo->temporaryUrl() }}" alt="Store logo">
@@ -188,7 +188,7 @@
                                         </svg>
                                     @endif
                                 </span>
-                            </x-shopper-input.file-upload>
+                            </shopper-input.file-upload>
                             <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('The logo of your store that will be visible on your site. This assets will appear on your invoices.') }}</p>
                         </div>
                     </div>
