@@ -13,10 +13,12 @@
 import Alpine from 'alpinejs';
 import flatpickr from 'flatpickr';
 import Choices from 'choices.js';
+import Sortable from 'sortablejs';
 
 // Add Alpine to window object.
 window.Alpine = Alpine;
 window.flatpickr = flatpickr;
+window.Sortable = Sortable;
 
 // Create a multiselect element.
 window.choices = (element) => {

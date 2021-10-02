@@ -91,9 +91,7 @@
 
 
     @livewire('livewire-ui-modal')
-
     <livewire:scripts />
-
     @stack('scripts')
 
     @if(! empty(config('shopper.system.resources.scripts')))
