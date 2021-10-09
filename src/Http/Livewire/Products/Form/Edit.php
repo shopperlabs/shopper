@@ -40,7 +40,6 @@ class Edit extends AbstractBaseComponent
         $this->price_amount = $product->price_amount;
         $this->old_price_amount = $product->old_price_amount;
         $this->cost_amount = $product->cost_amount;
-        $this->type = $product->type;
         $this->publishedAt = $product->published_at->format('Y-m-d');
         $this->publishedAtFormatted = $product->published_at->toRfc7231String();
         $this->associateCollections = $this->collection_ids = $product->collections->pluck('id')->toArray();
@@ -76,7 +75,6 @@ class Edit extends AbstractBaseComponent
             'name' => $this->name,
             'slug' => $this->name,
             'description' => $this->description,
-            'type' => $this->type,
             'is_visible' => $this->isVisible,
             'old_price_amount' => $this->old_price_amount,
             'price_amount' => $this->price_amount,

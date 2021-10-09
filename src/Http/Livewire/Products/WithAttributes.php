@@ -45,7 +45,7 @@ trait WithAttributes
     /**
      * Type of product that's be created.
      */
-    public string $type = 'deliverable';
+    public ?string $type = 'deliverable';
 
     /**
      * Product dimension: weight Value.
