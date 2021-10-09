@@ -1,5 +1,15 @@
 # Release Notes
 
+## v0.0.7 (2021-10-09)
+
+### Updated
+- Dark mode on product reviews
+
+### Fixed
+- Bug on product association with collections and categories
+- Bug on product edit `type` attribute
+- Bug on display selected product with image when create and update discount
+
 ## v0.0.6 (2021-09-30)
 
 ### Added
