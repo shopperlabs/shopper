@@ -11,12 +11,31 @@
     <section aria-labelledby="similar_products_heading">
         <div class="mt-5 bg-white dark:bg-gray-800 p-4 sm:p-6 shadow rounded-md">
             <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-5">
-                    <x-shopper-input.select aria-label="{{ __('Products') }}" name="from[]" id="multiselect" size="8" multiple>
+                <div class="col-span-5 bg-gray-100 rounded-md px-3 py-4 dark:bg-gray-900">
+                    <x-laravel-blade-sortable::sortable
+                        group="products"
+                        name="products"
+                        :allow-sort="false"
+                        ghost-class="opacity-25"
+                        wire:onSortOrderChange="handleOnSortOrderChanged"
+                        style="min-height:20rem;"
+                    >
                         @foreach($products as $product)
-                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                            <x-laravel-blade-sortable::sortable-item
+                                sort-key="{{ $product->id }}"
+                                class="flex items-center border border-gray-300 bg-white rounded-md shadow-sm py-2 px-3 dark:border-gray-700 dark:bg-gray-800"
+                            >
+                                @if($product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
+                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />
+                                @else
+                                    <div class="bg-gray-200 dark:bg-gray-700 flex items-center justify-center h-8 w-8 rounded">
+                                        <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />
+                                    </div>
+                                @endif
+                                <span class="ml-3 truncate text-sm text-gray-500 dark:text-gray-400">{{ $product->name }}</span>
+                            </x-laravel-blade-sortable::sortable-item>
                         @endforeach
-                    </x-shopper-input.select>
+                    </x-laravel-blade-sortable::sortable>
                 </div>
 
                 <div class="col-span-2 flex items-center">
@@ -34,12 +53,31 @@
                     </div>
                 </div>
 
-                <div class="col-span-5">
-                    <x-shopper-input.select aria-label="{{ __('Similar Products') }}" name="to[]" id="multiselect_to" size="8" multiple>
+                <div class="col-span-5 bg-gray-100 rounded-md px-3 py-4 dark:bg-gray-900">
+                    <x-laravel-blade-sortable::sortable
+                        group="products"
+                        name="related"
+                        :allow-sort="false"
+                        ghost-class="opacity-25"
+                        wire:onSortOrderChange="handleOnSortOrderChanged"
+                        style="min-height:20rem;"
+                    >
                         @foreach($relatedProducts as $related)
-                            <option value="{{ $related->id }}">{{ $related->name }}</option>
+                            <x-laravel-blade-sortable::sortable-item
+                                sort-key="{{ $related->id }}"
+                                class="flex items-center border border-gray-300 rounded-md shadow-sm py-2 px-3 dark:border-gray-700 dark:bg-gray-800"
+                            >
+                                @if($related->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
+                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $related->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />
+                                @else
+                                    <div class="bg-gray-200 dark:bg-gray-700 flex items-center justify-center h-8 w-8 rounded">
+                                        <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />
+                                    </div>
+                                @endif
+                                <span class="ml-3 truncate text-sm text-gray-500 dark:text-gray-400">{{ $related->name }}</span>
+                            </x-laravel-blade-sortable::sortable-item>
                         @endforeach
-                    </x-shopper-input.select>
+                    </x-laravel-blade-sortable::sortable>
                 </div>
             </div>
         </div>
@@ -47,18 +85,5 @@
 </div>
 
 @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/multiselect-two-sides@2.5.7/dist/js/multiselect.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#multiselect').multiselect({
-                afterMoveToRight: function($left, $right, $options) {
-                    @this.add($options[0].value);
-                },
-                afterMoveToLeft: function($left, $right, $options) {
-                    @this.remove($options[0].value);
-                }
-            });
-        });
-    </script>
+    <x-laravel-blade-sortable::scripts/>
 @endpush

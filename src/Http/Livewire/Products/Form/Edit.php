@@ -3,36 +3,25 @@
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Livewire\WithFileUploads;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Repositories\Ecommerce\{BrandRepository, CategoryRepository, CollectionRepository};
+use Shopper\Framework\Traits\{WithProductAssociations, WithSeoAttributes, WithUploadProcess};
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads;
-
-    use WithUploadProcess;
-
-    use WithAttributes;
-
-    use WithSeoAttributes;
+    use WithAttributes,
+        WithFileUploads,
+        WithProductAssociations,
+        WithUploadProcess,
+        WithSeoAttributes;
 
     public $product;
 
-    public $images = [];
-
     public int $productId;
-
     public string $currency;
-
-    public array $category_ids = [];
-
-    public array $collection_ids = [];
+    public $images = [];
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
@@ -51,11 +40,10 @@ class Edit extends AbstractBaseComponent
         $this->price_amount = $product->price_amount;
         $this->old_price_amount = $product->old_price_amount;
         $this->cost_amount = $product->cost_amount;
-        $this->type = $product->type;
         $this->publishedAt = $product->published_at->format('Y-m-d');
         $this->publishedAtFormatted = $product->published_at->toRfc7231String();
-        $this->collection_ids = $product->collections->pluck('id')->toArray();
-        $this->category_ids = $product->categories->pluck('id')->toArray();
+        $this->associateCollections = $this->collection_ids = $product->collections->pluck('id')->toArray();
+        $this->associateCategories = $this->category_ids = $product->categories->pluck('id')->toArray();
         $this->currency = $currency;
         $this->images = $product->getMedia(config('shopper.system.storage.disks.uploads'));
     }
@@ -75,7 +63,7 @@ class Edit extends AbstractBaseComponent
         return [
             'name' => 'required',
             'files.*' => 'nullable|image|max:1024',
-            'brand_id' => 'nullable|exists:' . shopper_table('brands') . ',id',
+            'brand_id' => 'nullable|integer|exists:' . shopper_table('brands') . ',id',
         ];
     }
 
@@ -87,7 +75,6 @@ class Edit extends AbstractBaseComponent
             'name' => $this->name,
             'slug' => $this->name,
             'description' => $this->description,
-            'type' => $this->type,
             'is_visible' => $this->isVisible,
             'old_price_amount' => $this->old_price_amount,
             'price_amount' => $this->price_amount,
@@ -103,12 +90,12 @@ class Edit extends AbstractBaseComponent
             );
         }
 
-        if (collect($this->category_ids)->isNotEmpty()) {
-            $this->product->categories()->sync($this->category_ids);
+        if (collect($this->associateCategories)->isNotEmpty()) {
+            $this->product->categories()->sync($this->associateCategories);
         }
 
-        if (collect($this->collection_ids)->isNotEmpty()) {
-            $this->product->collections()->sync($this->collection_ids);
+        if (collect($this->associateCollections)->isNotEmpty()) {
+            $this->product->collections()->sync($this->associateCollections);
         }
 
         event(new ProductUpdated($this->product));

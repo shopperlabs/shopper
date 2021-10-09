@@ -8,27 +8,22 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class RelatedProducts extends Component
 {
-    /**
-     * Product Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
     public $product;
-
-    /**
-     * @var \Illuminate\Database\Eloquent\Collection
-     */
     public $relatedProducts;
 
-    /**
-     * Component Mount method.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $product
-     */
     public function mount($product)
     {
         $this->product = $product;
         $this->relatedProducts = $product->relatedProducts;
+    }
+
+    public function handleOnSortOrderChanged($sortOrder, $previousSortOrder, $name, $from, $to)
+    {
+        $this->$name = $sortOrder;
+
+        /*$this->events = collect($this->events)
+            ->push("{$name}. Dragged from $from to $to. Previous:" . collect($previousSortOrder)->join(','))
+            ->toArray();*/
     }
 
     public function add(int $id)
@@ -57,13 +52,6 @@ class RelatedProducts extends Component
         return true;
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
     public function render()
     {
         return view('shopper::livewire.products.forms.form-related', [

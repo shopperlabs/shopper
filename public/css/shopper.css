@@ -3442,14 +3442,6 @@ select{
 	--tw-bg-opacity: 1;
 	background-color: rgba(30, 64, 175, var(--tw-bg-opacity));
 }
-.bg-green-500{
-	--tw-bg-opacity: 1;
-	background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
-}
-.bg-blue-500{
-	--tw-bg-opacity: 1;
-	background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
-}
 .bg-opacity-75{
 	--tw-bg-opacity: 0.75;
 }
@@ -5553,11 +5545,6 @@ select{
 
 	.md\:bg-transparent{
 		background-color: transparent;
-	}
-
-
-	.md\:p-6{
-		padding: 1.5rem;
 	}
 
 

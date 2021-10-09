@@ -20,6 +20,7 @@
     "lodash": "^4.17.13",
     "popper.js": "^1.16.0",
     "postcss": "^8.3.5",
+    "sortablejs": "^1.14.0",
     "tailwindcss": "^2.2.4"
   },
   "devDependencies": {

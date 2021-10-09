@@ -7,19 +7,12 @@ use Carbon\Carbon;
 trait WithAttributes
 {
     public ?string $name = null;
-
     public ?string $sku = null;
-
     public ?string $barcode = null;
-
     public ?int $brand_id = null;
-
     public ?string $description = null;
-
     public ?string $price_amount = null;
-
     public ?string $old_price_amount = null;
-
     public ?string $cost_amount = null;
 
     /**
@@ -52,7 +45,7 @@ trait WithAttributes
     /**
      * Type of product that's be created.
      */
-    public string $type = 'deliverable';
+    public ?string $type = 'deliverable';
 
     /**
      * Product dimension: weight Value.

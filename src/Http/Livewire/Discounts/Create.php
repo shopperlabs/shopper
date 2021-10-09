@@ -14,11 +14,7 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithDiscountAttributes;
-
-    use WithDiscountActions;
-
-    use HasPrice;
+    use WithDiscountAttributes, WithDiscountActions, HasPrice;
 
     /**
      * Component Mount instance.
