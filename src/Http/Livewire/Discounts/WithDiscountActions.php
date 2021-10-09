@@ -164,7 +164,7 @@ trait WithDiscountActions
                 $product = (new ProductRepository())->getById($selectedProduct);
                 $productArray['id'] = $product->id;
                 $productArray['name'] = $product->name;
-                $productArray['image'] = $product->files->first()->file_path ?? null;
+                $productArray['image'] = $product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'));
 
                 array_push($this->productsDetails, $productArray);
                 array_push($this->productsIds, $product->id);
