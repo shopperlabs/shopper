@@ -4,12 +4,6 @@
         <x-shopper-breadcrumb-link :link="route('shopper.reviews.index')" title="Products reviews" />
     </x-shopper-breadcrumb>
 
-    <div class="mt-3 pb-5 border-b border-gray-200 space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
-        <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
-            {{ $review->reviewrateable->name }}
-        </h3>
-    </div>
-
     <x-shopper-heading class="mt-3">
         <x-slot name="title">
             {{ $review->reviewrateable->name }}
@@ -138,6 +132,5 @@
                 </div>
             </dl>
         </div>
-
     </div>
 </div>
