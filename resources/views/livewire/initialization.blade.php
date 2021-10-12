@@ -1,3 +1,7 @@
+@push('styles')
+    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
+@endpush
+
 <div>
     <header class="hidden lg:block relative z-30 sticky top-0 bg-white shadow-md lg:border-t lg:border-b lg:border-gray-200 dark:bg-gray-800 lg:dark:border-gray-700">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -178,7 +182,7 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-gray-200 sm:pt-5 dark:border-gray-700">
                         <x-shopper-label for="photo" class="sm:mt-px sm:pt-2" value="Logo" />
                         <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                            <x-shopper-input.file-upload wire:model.defer="logo" id="photo">
+                            <x-shopper-input.avatar-upload wire:model.defer="logo" id="photo">
                                 <span class="h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                                     @if($logo)
                                         <img class="h-full w-full object-cover" src="{{ $logo->temporaryUrl() }}" alt="Store logo">
@@ -188,7 +192,7 @@
                                         </svg>
                                     @endif
                                 </span>
-                            </x-shopper-input.file-upload>
+                            </x-shopper-input.avatar-upload>
                             <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('The logo of your store that will be visible on your site. This assets will appear on your invoices.') }}</p>
                         </div>
                     </div>
@@ -242,14 +246,14 @@
                             @else
                                 <div class="bg-gray-100 rounded-md h-95 overflow-hidden outline-none focus:outline-none dark:bg-gray-900 flex items-center justify-center">
                                     <p class="text-base leading-6 text-gray-500 font-medium dark:text-gray-400">
-                                        Mapbox has not been activated, consult the <a href="https://docs.laravelshopper.io/docs/configuration#mapbox" class="text-blue-500 hover:text-blue-400">documentation</a> to setup the map
+                                        Mapbox has not been activated.
                                     </p>
                                 </div>
                             @endif
                             <p class="text-sm text-gray-500 leading-5 dark:text-gray-400">
                                 Shopper uses <span class="font-medium">Mapbox</span> to make it easier to locate your store.
                                 To learn more about mapbox, consult the <a href="https://docs.mapbox.com/mapbox-gl-js/api" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-500 mr-1 dark:text-blue-500">documentation</a>
-                                and take a look at the <a href="https://docs.laravelshopper.io" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-500 dark:text-blue-500">configuration</a> with Shopper.
+                                and it will be available very soon with Shopper.
                             </p>
                         </div>
                         <div class="py-2 pr-2">
@@ -266,32 +270,7 @@
                                     <x-shopper-input.text wire:model.lazy="shop_city" id="city" type="text" autocomplete="off" required />
                                 </x-shopper-input.group>
 
-                                <div
-                                    x-data
-                                    wire:ignore
-                                    x-init="
-                                        phoneNumber = document.querySelector('#phone_number');
-                                        iti = intlTelInput(document.querySelector('#phone_number'), {
-                                            nationalMode: true,
-                                            initialCountry: 'auto',
-                                            geoIpLookup: function(success, failure) {
-                                                $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                    var countryCode = (resp && resp.country) ? resp.country : 'CM';
-                                                    success(countryCode);
-                                                });
-                                            },
-                                            utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-                                        });
-                                        var handleChange = () => {
-                                            if (iti.isValidNumber()) {
-                                                phoneNumber.value = iti.getNumber();
-                                            }
-                                          };
-                                        phoneNumber.addEventListener('change', handleChange);
-                                        phoneNumber.addEventListener('keyup', handleChange);
-                                       "
-                                    class="sm:col-span-4"
-                                >
+                                <div class="sm:col-span-4">
                                     <x-shopper-label for="phone_number" class="sm:mt-px sm:pt-2" value="Phone number" />
                                     <div class="mt-1 sm:mt-0 sm:col-span-2">
                                         <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
@@ -395,3 +374,9 @@
         </form>
     </main>
 </div>
+
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
+@endpush
+

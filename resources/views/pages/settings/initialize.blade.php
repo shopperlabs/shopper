@@ -16,15 +16,13 @@
 
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <!--begin::Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->
-
-    @bukStyles(true)
+    @stack('styles')
+    <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
     <livewire:styles />
-
-    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
+    <script src="{{ mix('/js/shopper.js','shopper') }}" defer></script>
 </head>
 <body class="text-gray-500 font-sans transition ease-in-out duration-700 dark:text-gray-400">
 
@@ -117,16 +115,10 @@
         </nav>
 
         <livewire:shopper-initialization />
-
     </div>
 
     <livewire:scripts />
-
-    @bukScripts(true)
-
-    <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
+    @stack('scripts')
 
 </body>
 </html>
