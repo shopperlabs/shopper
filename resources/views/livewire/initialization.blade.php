@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
-@endpush
-
 <div>
     <header class="hidden lg:block relative z-30 sticky top-0 bg-white shadow-md lg:border-t lg:border-b lg:border-gray-200 dark:bg-gray-800 lg:dark:border-gray-700">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -270,7 +266,32 @@
                                     <x-shopper-input.text wire:model.lazy="shop_city" id="city" type="text" autocomplete="off" required />
                                 </x-shopper-input.group>
 
-                                <div class="sm:col-span-4">
+                                <div
+                                    x-data
+                                    wire:ignore
+                                    x-init="
+                                        phoneNumber = document.querySelector('#phone_number');
+                                        iti = intlTelInput(document.querySelector('#phone_number'), {
+                                            nationalMode: true,
+                                            initialCountry: 'auto',
+                                            geoIpLookup: function(success, failure) {
+                                                $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
+                                                    var countryCode = (resp && resp.country) ? resp.country : 'CM';
+                                                    success(countryCode);
+                                                });
+                                            },
+                                            utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
+                                        });
+                                        var handleChange = () => {
+                                            if (iti.isValidNumber()) {
+                                                phoneNumber.value = iti.getNumber();
+                                            }
+                                          };
+                                        phoneNumber.addEventListener('change', handleChange);
+                                        phoneNumber.addEventListener('keyup', handleChange);
+                                   "
+                                    class="sm:col-span-4"
+                                >
                                     <x-shopper-label for="phone_number" class="sm:mt-px sm:pt-2" value="Phone number" />
                                     <div class="mt-1 sm:mt-0 sm:col-span-2">
                                         <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
