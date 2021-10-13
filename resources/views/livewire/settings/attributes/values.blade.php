@@ -1,3 +1,9 @@
+@push('styles')
+    @once
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css"/>
+    @endonce
+@endpush
+
 <div class="pb-10">
     <div class="hidden sm:block">
         <div class="py-5">
@@ -55,8 +61,11 @@
                                             <td class="pl-2 pr-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400">
                                                 {{ $v->value }}
                                             </td>
-                                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400">
-                                                {{ $v->key }}
+                                            <td class="px-6 py-4 flex items-center space-x-3 whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400">
+                                                @if($v->attribute->type === 'colorpicker')
+                                                    <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full" style="background-color: {{ $v->value }}" aria-hidden="true"></div>
+                                                @endif
+                                                <span>{{ $v->key }}</span>
                                             </td>
                                             <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                                 <div class="flex-1 flex justify-end items-center space-x-4">
@@ -91,3 +100,9 @@
     </section>
 
 </div>
+
+@push('scripts')
+    @once
+        <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    @endonce
+@endpush
