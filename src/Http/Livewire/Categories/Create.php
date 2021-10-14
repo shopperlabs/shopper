@@ -2,27 +2,21 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Livewire\WithFileUploads;
 use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithFileUploads;
-
-    use WithUploadProcess;
-
     use WithSeoAttributes;
 
     public string $name = '';
-
     public ?int $parent_id = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = true;
+    public array $selectedCategory = [];
+    public ?string $fileUrl = null;
+    public $parent;
 
     public $seoAttributes = [
         'name' => 'name',
@@ -31,11 +25,28 @@ class Create extends AbstractBaseComponent
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
+        'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
     public function onTrixValueUpdate($value)
     {
         $this->description = $value;
+    }
+
+    public function onFileUpdate($file)
+    {
+        $this->fileUrl = $file;
+    }
+
+    public function updatedSelectedCategory($choice)
+    {
+        if (count($choice) > 0 && $choice['value'] !== "0") {
+            $this->parent_id = (int) $choice['value'];
+            $this->parent = (new CategoryRepository())->getById($this->parent_id);
+        } else {
+            $this->parent_id = null;
+            $this->parent = null;
+        }
     }
 
     public function store(): void
@@ -44,7 +55,7 @@ class Create extends AbstractBaseComponent
 
         $category = (new CategoryRepository())->create([
             'name' => $this->name,
-            'slug' => $this->name,
+            'slug' => $this->parent ? $this->parent->slug. '-' .$this->name : $this->name,
             'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
@@ -52,8 +63,8 @@ class Create extends AbstractBaseComponent
             'seo_description' => $this->seoDescription,
         ]);
 
-        if ($this->file) {
-            $category->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+        if ($this->fileUrl) {
+            $category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Category successfully added!'));
@@ -65,7 +76,6 @@ class Create extends AbstractBaseComponent
     {
         return [
             'name' => 'required|max:150|unique:' . shopper_table('categories'),
-            'file' => 'nullable|image|max:1024',
         ];
     }
 

@@ -2,32 +2,24 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads;
-
-    use WithUploadProcess;
-
-    use WithSeoAttributes;
+   use WithSeoAttributes;
 
     public $category;
-
     public int $categoryId;
-
     public string $name = '';
-
     public ?int $parent_id = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = false;
+    public ?string $fileUrl = null;
+    public $selectedCategory = [];
+    public $parent;
 
     public $seoAttributes = [
         'name' => 'name',
@@ -35,8 +27,8 @@ class Edit extends AbstractBaseComponent
     ];
 
     protected $listeners = [
-        'mediaDeleted',
         'trix:valueUpdated' => 'onTrixValueUpdate',
+        'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
     public function mount($category)
@@ -50,11 +42,29 @@ class Edit extends AbstractBaseComponent
         $this->updateSeo = true;
         $this->seoTitle = $category->seo_title;
         $this->seoDescription = $category->seo_description;
+        $this->selectedCategory = $category->parent_id ? $this->selectedCategory['value'] = $category->parent_id : [];
+        $this->parent = $category->parent_id ? $category->parent : null;
     }
 
     public function onTrixValueUpdate($value)
     {
         $this->description = $value;
+    }
+
+    public function onFileUpdate($file)
+    {
+        $this->fileUrl = $file;
+    }
+
+    public function updatedSelectedCategory($choice)
+    {
+        if (count($choice) > 0 && $choice['value'] !== "0") {
+            $this->parent_id = (int) $choice['value'];
+            $this->parent = (new CategoryRepository())->getById($this->parent_id);
+        } else {
+            $this->parent_id = null;
+            $this->parent = null;
+        }
     }
 
     /**
@@ -73,7 +83,7 @@ class Edit extends AbstractBaseComponent
 
         $this->category->update([
             'name' => $this->name,
-            'slug' => $this->name,
+            'slug' => $this->parent ? $this->parent->slug. '-' .$this->name : $this->name,
             'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,
@@ -81,8 +91,8 @@ class Edit extends AbstractBaseComponent
             'seo_description' => str_limit($this->seoDescription, 157),
         ]);
 
-        if ($this->file) {
-            $this->category->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+        if ($this->fileUrl) {
+            $this->category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Category successfully updated!'));
@@ -99,17 +109,7 @@ class Edit extends AbstractBaseComponent
                 'max:150',
                 Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
             ],
-            'file' => 'sometimes|nullable|image|max:1024',
         ];
-    }
-
-    /**
-     * Listen when a file is removed from the storage
-     * and update the user screen and remove image preview.
-     */
-    public function mediaDeleted()
-    {
-        $this->media = null;
     }
 
     public function render()
@@ -121,7 +121,6 @@ class Edit extends AbstractBaseComponent
                 ->select('name', 'id')
                 ->get()
                 ->except($this->category->id),
-            'media' => $this->category->getFirstMedia(config('shopper.system.storage.disks.uploads')),
         ]);
     }
 }
