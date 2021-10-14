@@ -29,18 +29,32 @@
                 </x-shopper-input.group>
                 <div class="mt-5">
                     <x-shopper-input.group label="Description" for="description">
-                        <livewire:shopper-trix :value="$description" />
+                        <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper-input.group>
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow overflow-hidden pt-4 sm:pt-5 dark:bg-gray-800">
                 <h3 class="text-base text-gray-900 leading-6 px-4 sm:px-5 font-medium dark:text-white">{{ __('Collection type') }}</h3>
-                <div class="p-4 sm:p-5" x-data="radioGroup()">
+                <div
+                    x-data="{
+                        active: {{ $type === 'auto' ? 1 : 0 }},
+                        onArrowUp(index) {
+                            this.select(this.active - 1 < 0 ? this.$refs.radiogroup.children.length - 1 : this.active - 1);
+                        },
+                        onArrowDown(index) {
+                            this.select(this.active + 1 > this.$refs.radiogroup.children.length - 1 ? 0 : this.active + 1);
+                        },
+                        select(index) {
+                            this.active = index;
+                        },
+                    }"
+                    class="p-4 sm:p-5"
+                >
                     <div class="bg-white rounded-md grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-gray-800" x-ref="radiogroup">
 
                         <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 0), 'bg-blue-50 border-blue-200 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-blue-50 border-blue-200 z-10">
                             <div class="flex items-center h-5">
-                                <input wire:model.defer="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer" checked="">
+                                <input wire:model="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
                             </div>
                             <label for="collection-type-0" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-blue-900': active === 0, 'text-gray-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-blue-900">
@@ -54,7 +68,7 @@
 
                         <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 1), 'bg-blue-50 border-blue-200 z-10': active === 1 }" class="relative border rounded-md border-gray-200 p-4 flex">
                             <div class="flex items-center h-5">
-                                <input wire:model.defer="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
+                                <input wire:model="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
                             </div>
                             <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-blue-900': active === 1, 'text-gray-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-gray-900">
@@ -208,7 +222,7 @@
                 <div class="bg-white rounded-md shadow overflow-hidden p-4 sm:p-5 dark:bg-gray-800">
                     <h4 class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">{{ __('Image preview') }}</h4>
                     <div class="mt-1">
-                        <x-shopper-input.single-upload id="file" wire:click="removeSingleMediaPlaceholder" wire:model="file" :file="$file" :error="$errors->first('file')" />
+                        <livewire:shopper-forms.uploads.single-upload />
                     </div>
                 </div>
             </aside>
@@ -227,20 +241,4 @@
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        function radioGroup() {
-            return {
-                active: {{ $type === 'manual' ? 0 : 1 }},
-                onArrowUp(index) {
-                    this.select(this.active - 1 < 0 ? this.$refs.radiogroup.children.length - 1 : this.active - 1);
-                },
-                onArrowDown(index) {
-                    this.select(this.active + 1 > this.$refs.radiogroup.children.length - 1 ? 0 : this.active + 1);
-                },
-                select(index) {
-                    this.active = index;
-                },
-            };
-        }
-    </script>
 @endpush

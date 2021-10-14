@@ -194,7 +194,7 @@
                         <thead>
                             <tr class="border-t border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-700">
                                 <x-shopper-tables.table-head><span class="lg:pl-2">{{ __('Name') }}</span></x-shopper-tables.table-head>
-                                <x-shopper-tables.table-head>{{ __('Type') }}</x-shopper-tables.table-head>
+                                <x-shopper-tables.table-head class="text-right">{{ __('Type') }}</x-shopper-tables.table-head>
                                 <x-shopper-tables.table-head>{{ __('Product Conditions') }}</x-shopper-tables.table-head>
                                 <x-shopper-tables.table-head class="hidden md:table-cell text-right">{{ __('Published at') }}</x-shopper-tables.table-head>
                                 <x-shopper-tables.table-head class="pr-6 text-right" />
@@ -224,12 +224,12 @@
                                             <svg class="-ml-1 mr-1.5 h-2 w-2 {{ $collection->type === "auto" ? 'text-green-400' :  'text-blue-400' }}" fill="currentColor" viewBox="0 0 8 8">
                                                 <circle cx="4" cy="4" r="3" />
                                             </svg>
-                                            {{ $collection->type === "auto" ? __('Automatic') : __('Manual') }}
+                                            {{ $collection->type === 'auto' ? __('Automatic') : __('Manual') }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400">
                                         @if($collection->rules->isNotEmpty())
-                                            {{ ucfirst(strtolower($collection->firstRule())) }}
+                                            {{ ucfirst($collection->firstRule()) }}
                                         @endif
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right dark:text-gray-400">

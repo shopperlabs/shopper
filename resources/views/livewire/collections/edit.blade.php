@@ -29,7 +29,7 @@
                 </x-shopper-input.group>
                 <div class="mt-5">
                     <x-shopper-input.group label="Description" for="description">
-                        <livewire:shopper-trix :value="$description" />
+                        <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper-input.group>
                 </div>
             </div>
@@ -105,25 +105,8 @@
                 <div class="bg-white rounded-md shadow overflow-hidden p-4 sm:p-5 dark:bg-gray-800">
                     <h4 class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">{{ __('Image preview') }}</h4>
                     <div class="mt-1">
-                        <x-shopper-input.single-upload id="file" wire:click="removeSingleMediaPlaceholder" wire:model="file" :file="$file" :error="$errors->first('file')" />
+                        <livewire:shopper-forms.uploads.single-upload :media="$collection->getFirstMedia(config('shopper.system.storage.disks.uploads'))" />
                     </div>
-                    @if($media)
-                        <div class="flex items-center justify-between mt-4 p-2 bg-gray-50 rounded-md border border-dashed border-gray-200 dark:bg-gray-700 dark:border-gray-700">
-                            <div class="flex flex-1 items-center space-x-2 truncate">
-                                <div class="flex-shrink-0 w-10 h-10 overflow-hidden rounded-md">
-                                    <img class="h-full w-full object-cover" src="{{ $media->getFullUrl() }}" alt="">
-                                </div>
-                                <div class="truncate">
-                                    <h4 class="text-sm leading-5 text-gray-500 dark:text-gray-400 truncate">{{ $media->file_name }}</h4>
-                                    <p class="text-xs leading-4 text-gray-400 dark:text-gray-500">{{ $media->human_readable_size }}</p>
-                                </div>
-                            </div>
-                            <button wire:click="removeMedia({{ $media->id }})" wire:loading.attr="disabled" type="button" class="ml-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
-                                <x-shopper-loader wire:loading wire:target="removeMedia" class="text-white" />
-                                <x-heroicon-o-trash wire:loading.remove class="h-5 w-5" />
-                            </button>
-                        </div>
-                    @endif
                 </div>
             </aside>
         </div>
@@ -141,20 +124,4 @@
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        function radioGroup() {
-            return {
-                active: {{ $type === 'manual' ? 0 : 1 }},
-                onArrowUp(index) {
-                    this.select(this.active - 1 < 0 ? this.$refs.radiogroup.children.length - 1 : this.active - 1);
-                },
-                onArrowDown(index) {
-                    this.select(this.active + 1 > this.$refs.radiogroup.children.length - 1 ? 0 : this.active + 1);
-                },
-                select(index) {
-                    this.active = index;
-                },
-            };
-        }
-    </script>
 @endpush

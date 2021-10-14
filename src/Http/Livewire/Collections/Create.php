@@ -14,23 +14,14 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Create extends Component
 {
-    use WithFileUploads;
-
-    use WithUploadProcess;
-
-    use WithConditions;
-
-    use WithSeoAttributes;
+    use WithConditions, WithSeoAttributes;
 
     public string $name = '';
-
     public ?string $description = null;
-
     public string $type = 'auto';
-
     public ?string $publishedAt = null;
-
     public ?string $publishedAtFormatted = null;
+    public ?string $fileUrl = null;
 
     public string $condition_match = 'all';
 
@@ -41,11 +32,17 @@ class Create extends Component
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
+        'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
     public function onTrixValueUpdate($value)
     {
         $this->description = $value;
+    }
+
+    public function onFileUpdate($file)
+    {
+        $this->fileUrl = $file;
     }
 
     /**
@@ -65,6 +62,7 @@ class Create extends Component
 
         $collection = (new CollectionRepository())->create([
             'name' => $this->name,
+            'slug' => $this->name,
             'description' => $this->description,
             'type' => $this->type,
             'match_conditions' => $this->condition_match,
@@ -73,8 +71,8 @@ class Create extends Component
             'published_at' => $this->publishedAt ?? now(),
         ]);
 
-        if ($this->file) {
-            $collection->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+        if ($this->fileUrl) {
+            $collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         if ($this->type === 'auto' && count($this->conditions) > 0 && $this->rule) {
@@ -96,16 +94,10 @@ class Create extends Component
         $this->redirectRoute('shopper.collections.edit', $collection);
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return array<string>
-     */
     public function rules(): array
     {
         return [
             'name' => 'required|max:150|unique:' . shopper_table('collections'),
-            'file' => 'nullable|image|max:1024',
             'type' => 'required',
         ];
     }
