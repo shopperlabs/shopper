@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
-@endpush
-
 <div>
     <x:shopper-breadcrumb back="shopper.customers.index">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
@@ -39,37 +35,13 @@
                             <x-shopper-input.text wire:model.debounce.350ms="email" id="email" type="email" autocomplete="off" />
                         </x-shopper-input.group>
 
-                        <div
-                            x-data
-                            wire:ignore
-                            x-init="
-                                    phoneNumber = document.querySelector('#phone_number');
-                                    iti = intlTelInput(document.querySelector('#phone_number'), {
-                                        nationalMode: true,
-                                        geoIpLookup: function(success, failure) {
-                                            $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                var countryCode = (resp && resp.country) ? resp.country : 'CM';
-                                                success(countryCode);
-                                            });
-                                        },
-                                        utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-                                    });
-                                    var handleChange = () => {
-                                        if (iti.isValidNumber()) {
-                                            phoneNumber.value = iti.getNumber();
-                                        }
-                                      };
-                                    phoneNumber.addEventListener('change', handleChange);
-                                    phoneNumber.addEventListener('keyup', handleChange);
-                               "
-                            class="col-span-6"
-                        >
+                        <div wire:ignore x-data="internationalNumber('#phone')" class="col-span-6">
                             <div class="flex items-center justify-between">
-                                <x-shopper-label for="phone_number" :value="__('Phone number')" />
+                                <x-shopper-label for="phone" :value="__('Phone number')" />
                                 <span class="text-gray-500 text-sm leading-5 dark:text-gray-400">{{ __('Optional') }}</span>
                             </div>
                             <div class="mt-1 relative">
-                                <x-shopper-input.text wire:model="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
+                                <x-shopper-input.text wire:model="phone_number" id="phone" type="tel" class="pr-10" autocomplete="off" />
                             </div>
                         </div>
                     </div>
@@ -193,36 +165,12 @@
                                 <x-shopper-input.text wire:model="zipcode" id="zipcode" type="text" autocomplete="off" />
                             </x-shopper-input.group>
 
-                            <div
-                                x-data
-                                wire:ignore
-                                x-init="
-                                    phoneNumber = document.querySelector('#address_phone_number');
-                                    iti = intlTelInput(document.querySelector('#address_phone_number'), {
-                                        nationalMode: true,
-                                        geoIpLookup: function(success, failure) {
-                                            $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                var countryCode = (resp && resp.country) ? resp.country : '';
-                                                success(countryCode);
-                                            });
-                                        },
-                                        utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-                                    });
-                                    var handleChange = () => {
-                                        if (iti.isValidNumber()) {
-                                            phoneNumber.value = iti.getNumber();
-                                        }
-                                      };
-                                    phoneNumber.addEventListener('change', handleChange);
-                                    phoneNumber.addEventListener('keyup', handleChange);
-                               "
-                                class="col-span-6"
-                            >
+                            <div wire:ignore x-data="internationalNumber('#phone_number')" class="col-span-6">
                                 <div class="flex items-center justify-between">
-                                    <x-shopper-label for="address_phone_number" :value="__('Phone number')" />
+                                    <x-shopper-label for="phone_number" :value="__('Phone number')" />
                                 </div>
                                 <div class="mt-1 relative">
-                                    <x-shopper-input.text wire:model="address_phone_number" id="address_phone_number" type="tel" class="pr-10" autocomplete="off" />
+                                    <x-shopper-input.text wire:model="address_phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
                                 </div>
                             </div>
                         </div>
@@ -289,7 +237,3 @@
 
 </div>
 
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
-@endpush

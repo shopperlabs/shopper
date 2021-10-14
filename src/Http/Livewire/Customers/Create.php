@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Livewire\Component;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Rules\Phone;
 use Illuminate\Support\Facades\Hash;
 use Shopper\Framework\Traits\WithAddress;
@@ -10,24 +10,17 @@ use Shopper\Framework\Models\System\Country;
 use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Notifications\CustomerSendCredentials;
 
-class Create extends Component
+class Create extends AbstractBaseComponent
 {
     use WithAddress;
 
     public string $last_name = '';
-
     public string $first_name = '';
-
     public string $email = '';
-
     public string $phone_number = '';
-
     public bool $opt_in = false;
-
     public bool $send_mail = false;
-
     public $password;
-
     public $password_confirmation;
 
     /**
@@ -77,16 +70,6 @@ class Create extends Component
     public function generate()
     {
         $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
-    }
-
-    /**
-     * Real-time component validation.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function updated(string $field)
-    {
-        $this->validateOnly($field, $this->rules());
     }
 
     /**
