@@ -13,19 +13,21 @@
             <div class="sm:col-span-2">
                 @if($type === 'colorpicker')
                     <div wire:ignore>
-                        <label for="value" class="block text-sm font-medium leading-5 text-gray-700">{{ __('Value') }}</label>
-                        <div class="mt-1 relative">
-                            <x-color-picker name="value" wire:model.lazy="value" />
-                        </div>
+                        <x-shopper-label :value="__('Key')" />
+                        <x-shopper-input.color-picker name="key" wire:model="key" placeholder="#9800BK" />
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format') }}</p>
                     </div>
+                    @error('key')
+                        <p class="mt-1 text-sm text-red-500 dark:text-red-400">{{ $message }}</p>
+                    @enderror
                 @else
-                    <x-shopper-input.group label="Value" for="value" :error="$errors->first('value')">
-                        <x-shopper-input.text wire:model.lazy="value" type="text" id="value" placeholder="My value" />
+                    <x-shopper-input.group label="Key" for="key" class="sm:col-span-2" :error="$errors->first('key')" helpText="The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format">
+                        <x-shopper-input.text wire:model.lazy="key" type="text" id="key" placeholder="my_key" />
                     </x-shopper-input.group>
                 @endif
             </div>
-            <x-shopper-input.group label="Key" for="key" class="sm:col-span-2" :error="$errors->first('key')" helpText="The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format">
-                <x-shopper-input.text wire:model.lazy="key" type="text" id="key" placeholder="my_key" />
+            <x-shopper-input.group label="Value" for="value" class="sm:col-span-2" :error="$errors->first('value')">
+                <x-shopper-input.text wire:model.lazy="value" type="text" id="value" placeholder="My value" />
             </x-shopper-input.group>
         </div>
     </x-slot>

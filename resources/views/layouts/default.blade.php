@@ -21,7 +21,6 @@
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
     <livewire:styles />
-    <script src="{{ mix('/js/shopper.js','shopper') }}" defer></script>
 
     @if(! empty(config('shopper.system.resources.stylesheets')))
         <!-- Additional CSS -->
@@ -92,6 +91,7 @@
 
     @livewire('livewire-ui-modal')
     <livewire:scripts />
+    <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
     @stack('scripts')
 
     @if(! empty(config('shopper.system.resources.scripts')))
