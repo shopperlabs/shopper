@@ -8,6 +8,7 @@
 */
 @import '~choices.js/public/assets/styles/choices.css';
 @import '~flatpickr/dist/themes/light.css';
+@import '~intl-tel-input/build/css/intlTelInput.css';
 
 
 @import 'tailwindcss/base';

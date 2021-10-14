@@ -16,6 +16,7 @@
     "axios": "^0.21",
     "choices.js": "^9.0.1",
     "flatpickr": "^4.6.9",
+    "intl-tel-input": "^17.0.13",
     "laravel-mix": "^6.0.19",
     "lodash": "^4.17.13",
     "popper.js": "^1.16.0",

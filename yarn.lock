@@ -3874,6 +3874,11 @@ interpret@^2.2.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-2.2.0.tgz#1a78a0b5965c40a5416d007ad6f50ad27c417df9"
   integrity sha512-Ju0Bz/cEia55xDwUWEa8+olFpCiQoypjnQySseKtmjNrnps3P+xfpUmGr90T7yjlVJmOtybRvPXhKMbHr+fWnw==
 
+intl-tel-input@^17.0.13:
+  version "17.0.13"
+  resolved "https://registry.yarnpkg.com/intl-tel-input/-/intl-tel-input-17.0.13.tgz#74a51db3b44f47ae8264df7d101a0810e53c77a6"
+  integrity sha512-+jPgPKUcgbhSSRN0BZLJOdntTaMv8tqowLrVQ3CGCNGpMKb4B9PRyzOZQpwo1FeA+LTOzvErOlBhbCuQog7R3g==
+
 ip-regex@^4.0.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-4.3.0.tgz#687275ab0f57fa76978ff8f4dddc8a23d5990db5"
