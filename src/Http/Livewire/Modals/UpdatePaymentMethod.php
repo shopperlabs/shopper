@@ -12,17 +12,11 @@ class UpdatePaymentMethod extends ModalComponent
     use WithFileUploads;
 
     public PaymentMethod $paymentMethod;
-
     public string $title = '';
-
     public ?string $linkUrl = null;
-
     public ?string $description = null;
-
     public ?string $instructions = null;
-
     public ?string $logoUrl;
-
     public $logo;
 
     public function mount(int $id)
@@ -47,11 +41,12 @@ class UpdatePaymentMethod extends ModalComponent
                 'required',
                 Rule::unique(shopper_table('payment_methods'), 'title')->ignore($this->paymentMethod->id),
             ],
-            'logo' => 'nullable|image|max:1024',
+            'logo' => 'nullable|image|max:2048',
         ]);
 
         $this->paymentMethod->update([
             'title' => $this->title,
+            'slug' => $this->title,
             'link_url' => $this->linkUrl,
             'description' => $this->description,
             'instructions' => $this->instructions,
