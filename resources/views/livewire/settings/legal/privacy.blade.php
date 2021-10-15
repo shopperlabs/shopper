@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-span-6">
                             <x-shopper-input.group label="Content" for="privacy-content">
-                                <livewire:shopper-trix :value="$content" />
+                                <livewire:shopper-forms.trix :value="$content" />
                             </x-shopper-input.group>
                         </div>
                     </div>

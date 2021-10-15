@@ -10,23 +10,15 @@ use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads;
-
-    use WithUploadProcess;
-
     use WithSeoAttributes;
 
     public $brand;
-
     public int $brand_id;
-
     public string $name;
-
     public ?string $website = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = false;
+    public ?string $fileUrl = null;
 
     public $seoAttributes = [
         'name' => 'name',
@@ -34,13 +26,18 @@ class Edit extends AbstractBaseComponent
     ];
 
     protected $listeners = [
-        'mediaDeleted',
+        'shopper:fileUpdated' => 'onFileUpdate',
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
     public function onTrixValueUpdate($value)
     {
         $this->description = $value;
+    }
+
+    public function onFileUpdate($file)
+    {
+        $this->fileUrl = $file;
     }
 
     /**
@@ -83,8 +80,8 @@ class Edit extends AbstractBaseComponent
             'seo_description' => str_limit($this->seoDescription, 157),
         ]);
 
-        if ($this->file) {
-            $this->brand->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+        if ($this->fileUrl) {
+            $this->brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Brand successfully updated!'));
@@ -100,23 +97,11 @@ class Edit extends AbstractBaseComponent
                 'max:150',
                 Rule::unique(shopper_table('brands'), 'name')->ignore($this->brand_id),
             ],
-            'file' => 'nullable|image|max:1024',
         ];
-    }
-
-    /**
-     * Listen when a file is removed from the storage
-     * and update the user screen and remove image preview.
-     */
-    public function mediaDeleted()
-    {
-        $this->media = null;
     }
 
     public function render()
     {
-        return view('shopper::livewire.brands.edit', [
-            'media' => $this->brand->getFirstMedia(config('shopper.system.storage.disks.uploads')),
-        ]);
+        return view('shopper::livewire.brands.edit');
     }
 }

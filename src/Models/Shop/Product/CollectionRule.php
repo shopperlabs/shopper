@@ -53,6 +53,15 @@ class CollectionRule extends Model
         ][$this->operator];
     }
 
+    public function getFormattedValue(): string
+    {
+        if ($this->rule === 'product_price') {
+            return shopper_money_format(strtoupper($this->value));
+        }
+
+        return $this->value;
+    }
+
     public function collection(): BelongsTo
     {
         return $this->belongsTo(config('shopper.system.models.collection'), 'collection_id');

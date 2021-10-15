@@ -9,12 +9,12 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 h-96 overflow-y-scroll">
+        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 h-96 overflow-y-scroll hide-scroll">
             <div class="sm:col-span-2">
                 <div>
                     <x-shopper-label value="{{ __('Provider Logo') }}" />
                     <div class="mt-2">
-                        <x-shopper-input.file-upload id="logo" wire:model.lazy='logo'>
+                        <x-shopper-input.avatar-upload id="logo" wire:model.lazy='logo'>
                             <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
                                 @if($logo)
                                     <img class="h-full w-full bg-center" src="{{ $logo->temporaryUrl() }}" alt="">
@@ -24,7 +24,7 @@
                                     </span>
                                 @endif
                             </span>
-                        </x-shopper-input.file-upload>
+                        </x-shopper-input.avatar-upload>
                     </div>
                 </div>
             </div>

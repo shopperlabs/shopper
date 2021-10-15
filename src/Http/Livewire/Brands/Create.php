@@ -10,19 +10,13 @@ use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 
 class Create extends AbstractBaseComponent
 {
-    use WithFileUploads;
-
-    use WithUploadProcess;
-
     use WithSeoAttributes;
 
     public string $name = '';
-
     public ?string $website = null;
-
     public ?string $description = null;
-
     public bool $is_enabled = true;
+    public ?string $fileUrl = null;
 
     public $seoAttributes = [
         'name' => 'name',
@@ -31,11 +25,17 @@ class Create extends AbstractBaseComponent
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
+        'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
     public function onTrixValueUpdate($value)
     {
         $this->description = $value;
+    }
+
+    public function onFileUpdate($file)
+    {
+        $this->fileUrl = $file;
     }
 
     public function store(): void
@@ -52,8 +52,8 @@ class Create extends AbstractBaseComponent
             'seo_description' => $this->seoDescription,
         ]);
 
-        if ($this->file) {
-            $brand->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+        if ($this->fileUrl) {
+            $brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Brand successfully added!'));
@@ -65,7 +65,6 @@ class Create extends AbstractBaseComponent
     {
         return [
             'name' => 'required|max:150|unique:' . shopper_table('brands'),
-            'file' => 'nullable|image|max:1024',
         ];
     }
 

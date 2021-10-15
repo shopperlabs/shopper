@@ -9,11 +9,8 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 class ProductsLists extends ModalComponent
 {
     public $collection;
-
     public string $search = '';
-
     public array $exceptProductIds;
-
     public array $selectedProducts = [];
 
     public function mount(int $id, array $exceptProductIds = [])
@@ -39,7 +36,7 @@ class ProductsLists extends ModalComponent
     {
         $this->collection->products()->sync($this->selectedProducts);
 
-        $this->emit('onProductsAddInCollection');
+        $this->emitUp('onProductsAddInCollection');
 
         $this->closeModal();
     }

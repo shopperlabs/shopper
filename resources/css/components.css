@@ -12,7 +12,7 @@
 }
 
 .choices__inner {
-  @apply rounded border border-gray-300 dark:border-gray-700 w-full bg-white dark:bg-gray-700 h-[38px] p-2 flex items-center !important;
+  @apply rounded-md shadow-sm border border-gray-300 dark:border-gray-700 w-full bg-white dark:bg-gray-700 h-[38px] p-2 flex items-center !important;
 }
 
 .choices__list--dropdown {
@@ -44,7 +44,7 @@
 }
 
 .choices__list--single > .choices__item.choices__item--selectable {
-  @apply bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 !important;
+  @apply bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 mb-0 !important;
 }
 
 .choices__item.is-highlighted {

@@ -2,32 +2,33 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use function count;
-use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class AddVariant extends ModalComponent
 {
-    use WithFileUploads;
-
     use WithAttributes;
 
-    use WithUploadProcess;
-
     public int $productId;
-
     public string $currency;
-
     public $quantity;
+    public $files = [];
+
+    protected $listeners = [
+        'shopper:filesUpdated' => 'onFilesUpdated',
+    ];
 
     public function mount(int $productId, string $currency)
     {
         $this->productId = $productId;
         $this->currency = $currency;
+    }
+
+    public function onFilesUpdated($files)
+    {
+        $this->files = $files;
     }
 
     public function save()
@@ -38,6 +39,7 @@ class AddVariant extends ModalComponent
             'name' => $this->name,
             'slug' => $this->name,
             'sku' => $this->sku,
+            'type' => $this->type,
             'barcode' => $this->barcode,
             'is_visible' => true,
             'security_stock' => $this->securityStock,
@@ -47,8 +49,10 @@ class AddVariant extends ModalComponent
             'parent_id' => $this->productId,
         ]);
 
-        if ($this->file) {
-            $product->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+        if (collect($this->files)->isNotEmpty()) {
+            collect($this->files)->each(
+                fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+            );
         }
 
         if ($this->quantity && count($this->quantity) > 0) {
@@ -80,7 +84,6 @@ class AddVariant extends ModalComponent
             'name' => 'required|unique:' . shopper_table('products'),
             'sku' => 'nullable|unique:' . shopper_table('products'),
             'barcode' => 'nullable|unique:' . shopper_table('products'),
-            'file' => 'nullable|image|max:1024',
         ];
     }
 

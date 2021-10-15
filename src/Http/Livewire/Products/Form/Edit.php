@@ -62,7 +62,7 @@ class Edit extends AbstractBaseComponent
     {
         return [
             'name' => 'required',
-            'files.*' => 'nullable|image|max:1024',
+            'files.*' => 'nullable|image|max:10024',
             'brand_id' => 'nullable|integer|exists:' . shopper_table('brands') . ',id',
         ];
     }

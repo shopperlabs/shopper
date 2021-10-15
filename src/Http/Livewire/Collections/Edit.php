@@ -3,43 +3,26 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
-use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
-use Shopper\Framework\Models\System\File;
 use Shopper\Framework\Traits\WithConditions;
 use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithFileUploads;
-
-    use WithUploadProcess;
-
-    use WithConditions;
-
-    use WithSeoAttributes;
+    use WithConditions, WithSeoAttributes;
 
     public $collection;
-
     public $products;
-
     public int $collectionId;
-
     public string $name = '';
-
     public ?string $description = null;
-
     public string $type = 'auto';
-
     public ?string $publishedAt = null;
-
     public ?string $publishedAtFormatted = null;
-
     public string $condition_match = 'all';
+    public ?string $fileUrl = null;
 
     public $seoAttributes = [
         'name' => 'name',
@@ -47,7 +30,7 @@ class Edit extends AbstractBaseComponent
     ];
 
     protected $listeners = [
-        'mediaDeleted',
+        'shopper:fileUpdated' => 'onFileUpdate',
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
@@ -72,12 +55,18 @@ class Edit extends AbstractBaseComponent
         $this->description = $value;
     }
 
+    public function onFileUpdate($file)
+    {
+        $this->fileUrl = $file;
+    }
+
     public function store()
     {
         $this->validate($this->rules());
 
         (new CollectionRepository())->getById($this->collection->id)->update([
             'name' => $this->name,
+            'slug' => $this->name,
             'description' => $this->description,
             'type' => $this->type,
             'match_conditions' => $this->condition_match,
@@ -86,8 +75,8 @@ class Edit extends AbstractBaseComponent
             'published_at' => $this->publishedAt,
         ]);
 
-        if ($this->file) {
-            $this->collection->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+        if ($this->fileUrl) {
+            $this->collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Collection successfully updated!'));
@@ -104,7 +93,6 @@ class Edit extends AbstractBaseComponent
                 'max:150',
                 Rule::unique(shopper_table('collections'), 'name')->ignore($this->collectionId),
             ],
-            'file' => 'sometimes|nullable|image|max:1024',
             'type' => 'sometimes|required',
         ];
     }
@@ -127,19 +115,8 @@ class Edit extends AbstractBaseComponent
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $this->publishedAt)->toRfc7231String();
     }
 
-    /**
-     * Listen when a file is removed from the storage
-     * and update the user screen and remove image preview.
-     */
-    public function mediaDeleted()
-    {
-        $this->media = null;
-    }
-
     public function render()
     {
-        return view('shopper::livewire.collections.edit', [
-            'media' => $this->collection->getFirstMedia(config('shopper.system.storage.disks.uploads')),
-        ]);
+        return view('shopper::livewire.collections.edit');
     }
 }

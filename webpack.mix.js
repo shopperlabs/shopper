@@ -12,9 +12,10 @@ const path = require('path');
  |
  */
 
-mix.disableNotifications();
+mix.disableSuccessNotifications();
 
-mix.setPublicPath('public').setResourceRoot('../');
+mix.setPublicPath('public')
+  .setResourceRoot('../');
 
 mix.js('./resources/js/shopper.js', 'js')
   .postCss('resources/css/shopper.css', 'css').options({

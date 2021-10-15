@@ -12,9 +12,9 @@ input[type="number"] {
   margin: 0;
 }
 
-[x-cloak] {
-  display: none;
-}
+.hide-scroll::-webkit-scrollbar { display: none; }
+
+[x-cloak] {display: none; }
 
 .primary-menu .active {
     @apply bg-blue-900;

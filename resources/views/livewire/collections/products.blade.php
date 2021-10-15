@@ -34,9 +34,9 @@
                     @foreach($products as $product)
                         <div class="flex items-center justify-between py-2">
                             <div class="flex items-center">
-                                @if($product->getFirstImage())
+                                @if($product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
                                     <span class="flex-shrink-0 h-10 w-10 rounded-md overflow-hidden">
-                                        <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstImage()->image_full_path }}" alt="" />
+                                        <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="{{ $product->name }}" />
                                     </span>
                                 @else
                                     <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md dark:bg-gray-700 dark:text-gray-400">
