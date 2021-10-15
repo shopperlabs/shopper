@@ -6,13 +6,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 trait WithUploadProcess
 {
-    public $file;
     public $files = [];
-
-    public function removeSingleMediaPlaceholder()
-    {
-        $this->file = null;
-    }
 
     public function removeMedia(int $id)
     {

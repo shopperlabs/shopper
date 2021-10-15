@@ -222,7 +222,7 @@
                 <div class="bg-white rounded-md shadow overflow-hidden p-4 sm:p-5 dark:bg-gray-800">
                     <h4 class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">{{ __('Image preview') }}</h4>
                     <div class="mt-1">
-                        <livewire:shopper-forms.uploads.single-upload />
+                        <livewire:shopper-forms.uploads.single />
                     </div>
                 </div>
             </aside>

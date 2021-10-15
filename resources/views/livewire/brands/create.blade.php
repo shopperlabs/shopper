@@ -97,7 +97,7 @@
                     <div class="p-4 sm:p-5">
                         <x-shopper-label :value="__('Image preview')" />
                         <div class="mt-1">
-                            <livewire:shopper-forms.uploads.single-upload />
+                            <livewire:shopper-forms.uploads.single />
                         </div>
                     </div>
                 </div>

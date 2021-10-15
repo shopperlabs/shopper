@@ -14,6 +14,7 @@ import Alpine from 'alpinejs';
 import flatpickr from 'flatpickr';
 import Choices from 'choices.js';
 import Sortable from 'sortablejs';
+import * as FilePond from 'filepond';
 
 import internationalNumber from "./plugins/internationalNumber";
 
@@ -21,6 +22,7 @@ import internationalNumber from "./plugins/internationalNumber";
 window.Alpine = Alpine;
 window.flatpickr = flatpickr;
 window.Sortable = Sortable;
+window.FilePond = FilePond;
 
 // Create a multiselect element.
 window.choices = (element) => {

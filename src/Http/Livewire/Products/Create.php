@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
-use Livewire\WithFileUploads;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
@@ -13,18 +12,17 @@ use Shopper\Framework\Repositories\Ecommerce\{
     CategoryRepository,
     CollectionRepository
 };
-use Shopper\Framework\Traits\{WithProductAssociations, WithSeoAttributes, WithUploadProcess};
+use Shopper\Framework\Traits\{WithProductAssociations, WithSeoAttributes};
 
 class Create extends AbstractBaseComponent
 {
     use WithAttributes,
-        WithFileUploads,
         WithProductAssociations,
-        WithSeoAttributes,
-        WithUploadProcess;
+        WithSeoAttributes;
 
     public $quantity;
     public ?Channel $defaultChannel = null;
+    public $files = [];
 
     public array $seoAttributes = [
         'name' => 'name',
@@ -34,6 +32,7 @@ class Create extends AbstractBaseComponent
     protected $listeners = [
         'productAdded',
         'trix:valueUpdated' => 'onTrixValueUpdate',
+        'shopper:filesUpdated' => 'onFilesUpdated',
     ];
 
     public function mount()
@@ -46,13 +45,17 @@ class Create extends AbstractBaseComponent
         $this->description = $value;
     }
 
+    public function onFilesUpdated($files)
+    {
+        $this->files = $files;
+    }
+
     public function rules(): array
     {
         return [
             'name' => 'bail|required',
             'sku' => 'nullable|unique:' . shopper_table('products'),
             'barcode' => 'nullable|unique:' . shopper_table('products'),
-            'files.*' => 'nullable|image|max:1024',
             'brand_id' => 'nullable|integer|exists:' . shopper_table('brands') . ',id',
         ];
     }
@@ -91,7 +94,7 @@ class Create extends AbstractBaseComponent
 
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
-                fn ($file) => $product->addMedia($file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+                fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.system.storage.disks.uploads'))
             );
         }
 
