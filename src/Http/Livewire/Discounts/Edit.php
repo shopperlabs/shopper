@@ -16,11 +16,7 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithDiscountAttributes;
-
-    use WithDiscountActions;
-
-    use HasPrice;
+    use HasPrice, WithDiscountAttributes, WithDiscountActions;
 
     /**
      * Current updated discount.
@@ -72,7 +68,7 @@ class Edit extends AbstractBaseComponent
             foreach ($productConditions as $productCondition) {
                 $productArray['id'] = $productCondition->discountable->id;
                 $productArray['name'] = $productCondition->discountable->name;
-                $productArray['image'] = $productCondition->discountable->files->first()->file_path ?? null;
+                $productArray['image'] = $productCondition->discountable->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'));
 
                 array_push($this->productsDetails, $productArray);
                 array_push($this->productsIds, $productCondition->discountable->id);
