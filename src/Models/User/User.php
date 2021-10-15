@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Models\User;
 
+use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use Billable,
         CanHaveDiscount,
         HasRoles,
+        Notifiable,
         SoftDeletes,
         TwoFactorAuthenticatable;
 

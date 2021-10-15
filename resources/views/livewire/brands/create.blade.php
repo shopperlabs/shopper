@@ -49,7 +49,7 @@
                 </div>
                 <div class="mt-5">
                     <x-shopper-input.group label="Description" for="description">
-                        <livewire:shopper-trix :value="$description" />
+                        <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper-input.group>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                     <div class="p-4 sm:p-5">
                         <x-shopper-label :value="__('Image preview')" />
                         <div class="mt-1">
-                            <x-shopper-input.single-upload id="file" wire:click="removeSingleMediaPlaceholder" wire:model="file" :file="$file" :error="$errors->first('file')" />
+                            <livewire:shopper-forms.uploads.single />
                         </div>
                     </div>
                 </div>

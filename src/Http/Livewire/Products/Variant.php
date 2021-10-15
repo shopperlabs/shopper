@@ -11,19 +11,13 @@ use Shopper\Framework\Repositories\InventoryRepository;
 
 class Variant extends Component
 {
-    use WithFileUploads;
-
-    use WithUploadProcess;
-
-    use WithAttributes;
+    use WithFileUploads, WithUploadProcess, WithAttributes;
 
     public $product;
-
     public $variant;
-
     public $inventories;
-
     public string $currency;
+    public $images = [];
 
     protected $listeners = [
         'mediaDeleted',
@@ -43,6 +37,7 @@ class Variant extends Component
         $this->old_price_amount = $variant->old_price_amount;
         $this->cost_amount = $variant->cost_amount;
         $this->currency = $currency;
+        $this->images = $variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
     public function store()
@@ -53,7 +48,7 @@ class Variant extends Component
                 'max:150',
                 Rule::unique(shopper_table('products'), 'name')->ignore($this->variant->id),
             ],
-            'file' => 'nullable|image|max:1024',
+            'files.*' => 'nullable|image|max:10024',
             'sku' => [
                 'nullable',
                 Rule::unique(shopper_table('products'), 'sku')->ignore($this->variant->id),
@@ -75,8 +70,11 @@ class Variant extends Component
             'security_stock' => $this->securityStock ?? null,
         ]);
 
-        if ($this->file) {
-            $this->variant->addMedia($this->file->getRealPath())->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+        if (collect($this->files)->isNotEmpty()) {
+            collect($this->files)->each(
+                fn ($file) => $this->variant->addMedia($file->getRealPath())
+                    ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+            );
         }
 
         event(new ProductUpdated($this->variant));
@@ -95,7 +93,7 @@ class Variant extends Component
      */
     public function mediaDeleted()
     {
-        $this->media = null;
+        $this->images = $this->variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
     public function render()

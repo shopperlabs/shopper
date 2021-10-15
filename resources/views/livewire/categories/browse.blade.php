@@ -156,7 +156,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium dark:text-gray-400">
+                                    <td class="px-6 py-3 table-cell whitespace-no-wrap text-sm leading-5 text-gray-500 font-medium dark:text-gray-400 truncate">
                                         {{ $category->slug }}
                                     </td>
                                     <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right dark:text-gray-400">

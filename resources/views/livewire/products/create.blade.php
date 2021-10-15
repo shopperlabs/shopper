@@ -27,25 +27,14 @@
                 </div>
                 <div class="mt-5 border-t border-gray-200 dark:border-gray-700 pt-4">
                     <x-shopper-input.group label="Description" for="description">
-                        <livewire:shopper-trix :value="$description" />
+                        <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper-input.group>
                 </div>
             </div>
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 sm:p-5 overflow-hidden">
                 <h4 class="block text-base font-medium leading-6 text-gray-900 dark:text-white">{{ __('Product Media') }}</h4>
                 <div class="mt-4">
-                    <x-shopper-input.filepond
-                        wire:model="files"
-                        multiple
-                        allowImagePreview
-                        imagePreviewMaxHeight="200"
-                        allowFileTypeValidation
-                        allowFileSizeValidation
-                        maxFileSize="1mb"
-                    />
-                    @error('files.*')
-                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ $message }}</p>
-                    @enderror
+                    <livewire:shopper-forms.uploads.multiple />
                 </div>
             </div>
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">
@@ -259,9 +248,9 @@
                                 <span class="font-semibold ml-3 text-sm">{{ __('Visible') }}</span>
                             </div>
                             <div>
-                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0" @click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" :class="{ 'bg-gray-200 dark:bg-gray-600': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
-                                    <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
+                                    <span aria-hidden="true" :class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
                                 </span>
                             </div>
                         </div>

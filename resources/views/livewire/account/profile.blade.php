@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
-@endpush
-
 <div class="mt-6">
     <form wire:submit.prevent="save">
         <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -45,32 +41,7 @@
                                 </div>
                             </x-shopper-input.group>
 
-                            <div
-                                x-data
-                                wire:ignore
-                                x-init="
-                                    phoneNumber = document.querySelector('#phone_number');
-                                    iti = intlTelInput(document.querySelector('#phone_number'), {
-                                        nationalMode: true,
-                                        initialCountry: 'auto',
-                                        geoIpLookup: function(success, failure) {
-                                            $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                var countryCode = (resp && resp.country) ? resp.country : 'CM';
-                                                success(countryCode);
-                                            });
-                                        },
-                                        utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-                                    });
-                                    var handleChange = () => {
-                                        if (iti.isValidNumber()) {
-                                            phoneNumber.value = iti.getNumber();
-                                        }
-                                      };
-                                    phoneNumber.addEventListener('change', handleChange);
-                                    phoneNumber.addEventListener('keyup', handleChange);
-                               "
-                                class="col-span-6 sm:col-span-3"
-                            >
+                            <div wire:ignore x-data="internationalNumber('#phone_number')" class="col-span-6 sm:col-span-3">
                                 <div class="flex items-center justify-between">
                                     <x-shopper-label for="phone_number" :value="__('Phone number')" />
                                     <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('Optional') }}</span>
@@ -95,7 +66,3 @@
     </form>
 </div>
 
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
-@endpush

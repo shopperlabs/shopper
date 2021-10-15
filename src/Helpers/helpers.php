@@ -190,6 +190,6 @@ if (! \function_exists('shopper_setting')) {
     {
         $setting = Cache::remember("shopper-setting-{$key}", 60 * 60 * 24, fn () => Setting::query()->where('key', $key)->first());
 
-        return $setting ? $setting->value : null;
+        return $setting?->value;
     }
 }

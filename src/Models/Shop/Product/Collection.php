@@ -61,7 +61,7 @@ class Collection extends Model implements HasMedia
     {
         $condition = $this->rules()->first();
 
-        return $condition->getFormattedRule() . ' ' . $condition->getFormattedOperator() . ' ' . $condition->value;
+        return $condition->getFormattedRule() . ' ' . $condition->getFormattedOperator() . ' ' . $condition->getFormattedValue();
     }
 
     public function products(): MorphToMany

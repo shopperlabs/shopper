@@ -4,8 +4,8 @@
 >
 
     <x-slot name="content">
-        <div class="px-4 py-5 sm:p-6 w-full h-auto md:h-125 overflow-y-auto">
-            <div class="space-5-4">
+        <div class="px-4 py-5 sm:p-6 w-full h-auto md:h-125 overflow-y-auto hide-scroll">
+            <div class="space-y-5">
                 <div class="space-y-5">
                     <div>
                         <h2 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ __('About the variation') }}</h2>
@@ -50,21 +50,11 @@
 
                         <div class="mt-5 flex-shrink-0">
                             <p class="text-sm leading-5 font-medium text-gray-700 dark:text-gray-400 mb-2" aria-hidden="true">
-                                {{ __('Product image') }}
+                                {{ __('Variant images') }}
                             </p>
 
                             <div class="block">
-                                <x-shopper-input.filepond
-                                    wire:model="file"
-                                    allowImagePreview
-                                    imagePreviewMaxHeight="200"
-                                    allowFileTypeValidation
-                                    allowFileSizeValidation
-                                    maxFileSize="1mb"
-                                />
-                                @error('file')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                                <livewire:shopper-forms.uploads.multiple />
                             </div>
                         </div>
                     </div>

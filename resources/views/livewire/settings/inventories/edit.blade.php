@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
-@endpush
-
 <div>
     <x:shopper-breadcrumb back="shopper.settings.inventories.index">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
@@ -134,29 +130,8 @@
                             </x-shopper-input.group>
 
                             <div
-                                x-data
                                 wire:ignore
-                                x-init="
-                                    phoneNumber = document.querySelector('#phone_number');
-                                    iti = intlTelInput(document.querySelector('#phone_number'), {
-                                        nationalMode: true,
-                                        initialCountry: 'auto',
-                                        geoIpLookup: function(success, failure) {
-                                            $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                var countryCode = (resp && resp.country) ? resp.country : '';
-                                                success(countryCode);
-                                            });
-                                        },
-                                        utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-                                    });
-                                    var handleChange = () => {
-                                        if (iti.isValidNumber()) {
-                                            phoneNumber.value = iti.getNumber();
-                                        }
-                                      };
-                                    phoneNumber.addEventListener('change', handleChange);
-                                    phoneNumber.addEventListener('keyup', handleChange);
-                               "
+                                x-data="internationalNumber('#phone_number')"
                                 class="sm:col-span-6"
                             >
                                 <x-shopper-input.group label="Phone number" for="phone_number" :error="$errors->first('phone_number')">
@@ -197,8 +172,3 @@
     </div>
 
 </div>
-
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
-@endpush

@@ -1,6 +1,6 @@
 <?php
 
-namespace Shopper\Framework\Http\Livewire;
+namespace Shopper\Framework\Http\Livewire\Forms;
 
 use Livewire\Component;
 
@@ -23,6 +23,6 @@ class Trix extends Component
 
     public function render()
     {
-        return view('shopper::livewire.trix');
+        return view('shopper::livewire.forms.trix');
     }
 }

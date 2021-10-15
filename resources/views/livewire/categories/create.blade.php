@@ -26,11 +26,11 @@
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-4">
-                    <x-shopper-input.group label="Parent" for="parentId">
-                        <x-shopper-input.select wire:model="parent_id" id="parentId">
-                            <option>{{ __('Select parent category') }}</option>
+                    <x-shopper-input.group label="Parent" for="category" wire:ignore>
+                        <x-shopper-input.select wire:model="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
+                            <option value="0">{{ __('No parent category') }}</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" @if($category->id === $parent_id) selected @endif>{{ $category->name }}</option>
                             @endforeach
                         </x-shopper-input.select>
                     </x-shopper-input.group>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="mt-5">
                     <x-shopper-input.group label="Description" for="description">
-                        <livewire:shopper-trix :value="$description" />
+                        <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper-input.group>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                     <div class="p-4 sm:p-5">
                         <x-shopper-label :value="__('Image preview')" />
                         <div class="mt-1">
-                            <x-shopper-input.single-upload id="file" wire:click="removeSingleMediaPlaceholder" wire:model="file" :file="$file" :error="$errors->first('file')" />
+                            <livewire:shopper-forms.uploads.single />
                         </div>
                     </div>
                 </div>

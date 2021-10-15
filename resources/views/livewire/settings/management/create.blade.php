@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
-@endpush
-
 <div>
     <x:shopper-breadcrumb back="shopper.settings.users">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
@@ -141,29 +137,8 @@
             </div>
 
             <div
-                x-data
                 wire:ignore
-                x-init="
-                    phoneNumber = document.querySelector('#phone_number');
-                    iti = intlTelInput(document.querySelector('#phone_number'), {
-                        nationalMode: true,
-                        initialCountry: 'auto',
-                        geoIpLookup: function(success, failure) {
-                            $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                var countryCode = (resp && resp.country) ? resp.country : 'CM';
-                                success(countryCode);
-                            });
-                        },
-                        utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-                    });
-                    var handleChange = () => {
-                        if (iti.isValidNumber()) {
-                            phoneNumber.value = iti.getNumber();
-                        }
-                      };
-                    phoneNumber.addEventListener('change', handleChange);
-                    phoneNumber.addEventListener('keyup', handleChange);
-               "
+                x-data="internationalNumber('#phone_number')"
                 class="mt-6 sm:mt-5 sm:pt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:dark:border-gray-700"
             >
                 <x-shopper-label for="phone_number" class="sm:mt-px sm:pt-2">
@@ -263,8 +238,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
-@endpush
