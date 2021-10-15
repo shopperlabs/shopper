@@ -30,7 +30,9 @@
                         <x-shopper-input.select wire:model="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
                             <option value="0">{{ __('No parent category') }}</option>
                             @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}" @if($cat->id === $parent_id) selected @endif>{{ $cat->name }}</option>
+                                <option value="{{ $cat->id }}" @if($cat->id === $parent_id) selected @endif>
+                                    {{ $cat->name }} @if($cat->parent) ({{ $cat->parent->name }}) @endif
+                                </option>
                             @endforeach
                         </x-shopper-input.select>
                     </x-shopper-input.group>

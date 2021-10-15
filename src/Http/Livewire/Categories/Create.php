@@ -75,7 +75,7 @@ class Create extends AbstractBaseComponent
     public function rules(): array
     {
         return [
-            'name' => 'required|max:150|unique:' . shopper_table('categories'),
+            'name' => 'required|max:150',
         ];
     }
 
@@ -84,8 +84,9 @@ class Create extends AbstractBaseComponent
         return view('shopper::livewire.categories.create', [
             'categories' => (new CategoryRepository())
                 ->makeModel()
+                ->with('parent')
                 ->scopes('enabled')
-                ->select('name', 'id')
+                ->select('name', 'id', 'parent_id')
                 ->get(),
         ]);
     }

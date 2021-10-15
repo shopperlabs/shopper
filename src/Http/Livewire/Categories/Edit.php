@@ -117,8 +117,9 @@ class Edit extends AbstractBaseComponent
         return view('shopper::livewire.categories.edit', [
             'categories' => (new CategoryRepository())
                 ->makeModel()
+                ->with('parent')
                 ->scopes('enabled')
-                ->select('name', 'id')
+                ->select('name', 'id', 'parent_id')
                 ->get()
                 ->except($this->category->id),
         ]);
