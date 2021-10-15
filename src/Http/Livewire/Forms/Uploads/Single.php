@@ -6,7 +6,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class SingleUpload extends Component
+class Single extends Component
 {
     use WithFileUploads;
 
@@ -48,6 +48,6 @@ class SingleUpload extends Component
 
     public function render()
     {
-        return view('shopper::livewire.forms.uploads.single-upload');
+        return view('shopper::livewire.forms.uploads.single');
     }
 }
