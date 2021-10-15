@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/intl-tel-input@17.0.3/build/css/intlTelInput.min.css">
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
 
     <livewire:styles />

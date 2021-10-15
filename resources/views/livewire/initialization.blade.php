@@ -197,7 +197,7 @@
                         <x-shopper-label for="about" class="sm:mt-px sm:pt-2" value="About" />
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             <div class="flex rounded-md shadow-sm sm:max-w-lg overflow-x-auto lg:w-full lg:overflow-visible">
-                                <livewire:shopper-trix :value="$shop_about" />
+                                <livewire:shopper-forms.trix :value="$shop_about" />
                             </div>
                             <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('You can view this information on the About page on your website.') }}</p>
                         </div>
@@ -266,32 +266,7 @@
                                     <x-shopper-input.text wire:model.lazy="shop_city" id="city" type="text" autocomplete="off" required />
                                 </x-shopper-input.group>
 
-                                <div
-                                    x-data
-                                    wire:ignore
-                                    x-init="
-                                        phoneNumber = document.querySelector('#phone_number');
-                                        iti = intlTelInput(document.querySelector('#phone_number'), {
-                                            nationalMode: true,
-                                            initialCountry: 'auto',
-                                            geoIpLookup: function(success, failure) {
-                                                $.get('https://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
-                                                    var countryCode = (resp && resp.country) ? resp.country : 'CM';
-                                                    success(countryCode);
-                                                });
-                                            },
-                                            utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-                                        });
-                                        var handleChange = () => {
-                                            if (iti.isValidNumber()) {
-                                                phoneNumber.value = iti.getNumber();
-                                            }
-                                          };
-                                        phoneNumber.addEventListener('change', handleChange);
-                                        phoneNumber.addEventListener('keyup', handleChange);
-                                   "
-                                    class="sm:col-span-4"
-                                >
+                                <div wire:ignore x-data="internationalNumber('#phone_number')" class="sm:col-span-4">
                                     <x-shopper-label for="phone_number" class="sm:mt-px sm:pt-2" value="Phone number" />
                                     <div class="mt-1 sm:mt-0 sm:col-span-2">
                                         <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
@@ -395,9 +370,3 @@
         </form>
     </main>
 </div>
-
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://unpkg.com/intl-tel-input@17.0.3/build/js/intlTelInput.min.js"></script>
-@endpush
-
