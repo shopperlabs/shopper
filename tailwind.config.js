@@ -13,7 +13,8 @@ module.exports = {
     ],
     options: {
       safelist: [
-        'sm:max-w-2xl'
+        'sm:max-w-2xl',
+        'sm:max-w-4xl'
       ]
     }
   },
