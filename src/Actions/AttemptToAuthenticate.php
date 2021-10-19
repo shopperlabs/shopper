@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Actions;
 
-use Illuminate\Http\Request;
-use Shopper\Framework\Shopper;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
+use Shopper\Framework\Shopper;
 
 class AttemptToAuthenticate
 {
@@ -60,6 +60,6 @@ class AttemptToAuthenticate
     {
         $this->limiter->increment($request);
 
-        throw ValidationException::withMessages([Shopper::username() => [trans('auth.failed')], ]);
+        throw ValidationException::withMessages([Shopper::username() => [trans('auth.failed')]]);
     }
 }

@@ -6,8 +6,12 @@ use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\{BrandRepository, CategoryRepository, CollectionRepository};
-use Shopper\Framework\Traits\{WithProductAssociations, WithSeoAttributes, WithUploadProcess};
+use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Traits\WithProductAssociations;
+use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Framework\Traits\WithUploadProcess;
 
 class Edit extends AbstractBaseComponent
 {

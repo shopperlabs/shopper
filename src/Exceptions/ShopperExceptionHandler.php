@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Exceptions;
 
-use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class ShopperExceptionHandler extends ExceptionHandler
 {

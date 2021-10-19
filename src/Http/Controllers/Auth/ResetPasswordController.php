@@ -2,18 +2,17 @@
 
 namespace Shopper\Framework\Http\Controllers\Auth;
 
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Shopper\Framework\Shopper;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 use Shopper\Framework\Rules\RealEmailValidator;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Shopper\Framework\Shopper;
 
 class ResetPasswordController extends Controller
 {
     use ValidatesRequests;
-
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller

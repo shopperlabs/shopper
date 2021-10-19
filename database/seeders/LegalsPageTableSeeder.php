@@ -17,44 +17,44 @@ class LegalsPageTableSeeder extends Seeder
     {
         $this->disableForeignKeys();
 
-        /**
+        /*
          * Refund Policy.
          */
         Legal::query()->create([
             'title' => $title = __('Refund policy'),
             'slug' => str_slug($title),
             'is_enabled' => true,
-            'content' => null
+            'content' => null,
         ]);
 
-        /**
+        /*
          * Privacy Policy.
          */
         Legal::query()->create([
             'title' => $title = __('Privacy policy'),
             'slug' => str_slug($title),
             'is_enabled' => true,
-            'content' => null
+            'content' => null,
         ]);
 
-        /**
+        /*
          * Terms of uses.
          */
         Legal::query()->create([
             'title' => $title = __('Terms of use'),
             'slug' => str_slug($title),
             'is_enabled' => true,
-            'content' => null
+            'content' => null,
         ]);
 
-        /**
+        /*
          * Terms of uses.
          */
         Legal::query()->create([
             'title' => $title = __('Shipping policy'),
             'slug' => str_slug($title),
             'is_enabled' => true,
-            'content' => null
+            'content' => null,
         ]);
 
         $this->enableForeignKeys();

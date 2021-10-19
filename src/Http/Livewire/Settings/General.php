@@ -2,12 +2,12 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings;
 
-use Livewire\Component;
 use function array_slice;
+use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Models\System\Setting;
 use Shopper\Framework\Models\System\Currency;
+use Shopper\Framework\Models\System\Setting;
 
 class General extends Component
 {

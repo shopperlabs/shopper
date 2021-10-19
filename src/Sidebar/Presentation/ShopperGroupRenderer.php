@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Sidebar\Presentation;
 
-use Maatwebsite\Sidebar\Group;
 use Illuminate\Contracts\View\Factory;
+use Maatwebsite\Sidebar\Group;
 
 class ShopperGroupRenderer
 {

@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use LivewireUI\Modal\ModalComponent;
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Validation\ValidationException;
+use LivewireUI\Modal\ModalComponent;
 
 class LogoutOthersBrowser extends ModalComponent
 {
@@ -26,7 +26,7 @@ class LogoutOthersBrowser extends ModalComponent
         $this->resetErrorBag();
 
         if (! Hash::check($this->password, auth()->user()->password)) {
-            throw ValidationException::withMessages(['password' => [__('This password does not match our records.')], ]);
+            throw ValidationException::withMessages(['password' => [__('This password does not match our records.')]]);
         }
 
         $guard->logoutOtherDevices($this->password);

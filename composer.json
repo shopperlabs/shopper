@@ -51,6 +51,7 @@
     "stevebauman/location": "^5.2"
   },
   "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.2",
     "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^5.3",
     "orchestra/testbench": "^5.0|^6.0",
@@ -82,7 +83,10 @@
   },
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "lint": [
+      "./vendor/bin/php-cs-fixer fix -vvv --show-progress=dots"
+    ]
   },
   "config": {
     "sort-packages": true

@@ -2,9 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use function in_array;
-use LivewireUI\Modal\ModalComponent;
 use Illuminate\Database\Eloquent\Collection;
+use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
@@ -12,17 +11,11 @@ use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
 class AddProductAttribute extends ModalComponent
 {
     public int $productId;
-
     public string $type = 'text';
-
     public array $attributes;
-
     public ?int $attribute_id = null;
-
     public array $multipleValues = [];
-
     public Collection $values;
-
     public ?string $value = null;
 
     protected $listeners = [
@@ -42,7 +35,7 @@ class AddProductAttribute extends ModalComponent
 
     public function save()
     {
-        if ($this->type === 'checkbox' || $this->type === 'checkbox_list') {
+        if ($this->type === 'checkbox' || $this->type === 'colorpicker') {
             $this->validate(['multipleValues' => 'required|array']);
         } else {
             $this->validate(['value' => 'required', 'attribute_id' => 'required|int']);
@@ -53,7 +46,7 @@ class AddProductAttribute extends ModalComponent
             'attribute_id' => $this->attribute_id,
         ]);
 
-        if ($this->type === 'checkbox' || $this->type === 'checkbox_list') {
+        if ($this->type === 'checkbox' || $this->type === 'colorpicker') {
             foreach ($this->multipleValues as $checkboxValue) {
                 ProductAttributeValue::query()->create([
                     'attribute_value_id' => $checkboxValue,

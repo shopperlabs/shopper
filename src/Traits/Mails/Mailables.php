@@ -2,20 +2,20 @@
 
 namespace Shopper\Framework\Traits\Mails;
 
-use const T_CLASS;
-use RegexIterator;
-use const T_STRING;
-use ReflectionClass;
-use const T_NAMESPACE;
-use function is_array;
-use const T_WHITESPACE;
-use ReflectionProperty;
-use ReflectionException;
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use function is_array;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionProperty;
+use RegexIterator;
+use const T_CLASS;
+use const T_NAMESPACE;
+use const T_STRING;
+use const T_WHITESPACE;
 
 trait Mailables
 {

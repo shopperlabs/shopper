@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Providers;
 
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Shopper\Framework\Events\Products\ProductCreated;
 use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Listeners\Products\CreateProductSubscriber;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {

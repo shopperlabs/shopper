@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Livewire\Component;
 use Illuminate\Support\Facades\Cache;
+use Livewire\Component;
 
 class Addresses extends Component
 {

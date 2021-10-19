@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Events\Handlers;
 
+use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
-use Maatwebsite\Sidebar\Group;
 use Shopper\Framework\Sidebar\AbstractAdminSidebar;
 
 class RegisterDashboardSidebar extends AbstractAdminSidebar

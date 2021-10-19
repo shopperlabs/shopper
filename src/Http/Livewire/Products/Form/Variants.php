@@ -3,23 +3,20 @@
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Exception;
-use Livewire\Component;
-use Livewire\WithPagination;
-use Livewire\WithFileUploads;
 use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Traits\WithUploadProcess;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Traits\WithUploadProcess;
 
 class Variants extends Component
 {
     use WithPagination;
-
     use WithFileUploads;
-
     use WithAttributes;
-
     use WithUploadProcess;
 
     public string $search = '';

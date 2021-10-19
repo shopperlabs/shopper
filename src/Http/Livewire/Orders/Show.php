@@ -5,9 +5,9 @@ namespace Shopper\Framework\Http\Livewire\Orders;
 use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Models\User\Address;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
+use Shopper\Framework\Models\User\Address;
 
 class Show extends Component
 {

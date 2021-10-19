@@ -3,14 +3,14 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
-use Shopper\Framework\Models\User\User;
 use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Models\Shop\Discount;
-use Shopper\Framework\Models\Traits\HasPrice;
-use Shopper\Framework\Models\Shop\DiscountDetail;
-use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Models\Shop\Discount;
+use Shopper\Framework\Models\Shop\DiscountDetail;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\User\User;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\UserRepository;
 
 class Create extends AbstractBaseComponent
 {

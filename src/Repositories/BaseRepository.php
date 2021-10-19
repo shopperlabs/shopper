@@ -3,11 +3,11 @@
 namespace Shopper\Framework\Repositories;
 
 use Exception;
+use function func_get_args;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use function is_array;
 use function is_string;
-use function func_get_args;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Exceptions\GeneralException;
 
 abstract class BaseRepository implements RepositoryContract

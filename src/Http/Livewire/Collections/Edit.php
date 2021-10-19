@@ -4,10 +4,10 @@ namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Traits\WithConditions;
-use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Traits\WithConditions;
+use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {

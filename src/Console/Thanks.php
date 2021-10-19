@@ -3,9 +3,9 @@
 namespace Shopper\Framework\Console;
 
 use const PHP_OS_FAMILY;
+use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class Thanks

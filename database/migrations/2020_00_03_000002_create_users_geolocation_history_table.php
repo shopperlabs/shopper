@@ -16,7 +16,7 @@ class CreateUsersGeolocationHistoryTable extends Migration
      */
     public function up()
     {
-        /**
+        /*
          * Users & Customers table
          */
         Schema::create($this->getTableName('users_geolocation_history'), function (Blueprint $table) {

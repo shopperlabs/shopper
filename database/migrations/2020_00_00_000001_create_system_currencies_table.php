@@ -16,7 +16,7 @@ class CreateSystemCurrenciesTable extends Migration
      */
     public function up()
     {
-        /**
+        /*
          * System settings table
          */
         Schema::create($this->getTableName('system_currencies'), function (Blueprint $table) {

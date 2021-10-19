@@ -5,12 +5,10 @@ namespace Shopper\Framework\Http\Livewire\Collections;
 use Carbon\Carbon;
 use function count;
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Shopper\Framework\Traits\WithConditions;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Models\Shop\Product\CollectionRule;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Traits\WithConditions;
+use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends Component
 {

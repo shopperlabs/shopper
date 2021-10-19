@@ -16,7 +16,7 @@ class CreateSystemSettingsTable extends Migration
      */
     public function up()
     {
-        /**
+        /*
          * System settings table
          */
         Schema::create($this->getTableName('system_settings'), function (Blueprint $table) {

@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Framework\Models\Traits\HasSlug;
 
 class Attribute extends Model
 {
@@ -72,15 +72,11 @@ class Attribute extends Model
             'text' => __('Text field :type', ['type' => '(input)']),
             'number' => __('Text field :type', ['type' => '(number)']),
             'richtext' => __('Richtext'),
-            'markdown' => __('Markdown'),
             'select' => __('Select'),
             'checkbox' => __('Checkbox'),
-            'checkbox_list' => __('Checkbox List'),
             'radio' => __('Radio'),
-            // 'toggle' => __('Toggle') ,
             'colorpicker' => __('Color picker'),
             'datepicker' => __('Date picker'),
-            // 'file' => __('File') ,
         ];
     }
 
@@ -94,7 +90,6 @@ class Attribute extends Model
         return [
             'select',
             'checkbox',
-            'checkbox_list',
             'colorpicker',
             'radio',
         ];
@@ -111,7 +106,6 @@ class Attribute extends Model
             'text',
             'number',
             'richtext',
-            'markdown',
             'datepicker',
         ];
     }

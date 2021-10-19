@@ -547,8 +547,7 @@ return [
         'format' => '1,0.₭',
         'exchange_rate' => 0.00,
     ],
-    'LBP' =>
-        [
+    'LBP' => [
         'name' => 'Lebanese Pound',
         'symbol' => 'ل.ل.‏',
         'format' => 'ل.ل.‏ 1,0.00',

@@ -1,0 +1,24 @@
+name: Check, fix styling & Format (PHP)
+
+on: [push, pull_request, pull_request_target]
+
+jobs:
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+
+    steps:
+      -   name: Checkout code
+          uses: actions/checkout@v2
+          with:
+            ref: ${{ github.head_ref }}
+
+      -   name: Install Composer
+          run: composer install
+
+      -   name: Run PHP CS Fixer
+          run: composer lint
+
+      -   name: Commit changes
+          uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_message: Apply php-cs-fixer changes

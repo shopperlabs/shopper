@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Models\Traits;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Shop\Review;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
+use Shopper\Framework\Models\Shop\Review;
 
 trait ReviewRateable
 {

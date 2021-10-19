@@ -73,7 +73,7 @@ class PermissionsTableSeeder extends Seeder
             'can_be_removed' => false,
         ]);
 
-        /**
+        /*
          * Shop management default permissions.
          */
         Permission::generate('brands');

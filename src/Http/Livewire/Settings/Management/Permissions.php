@@ -4,8 +4,8 @@ namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
 use Exception;
 use Livewire\Component;
-use Shopper\Framework\Models\User\Role;
 use Shopper\Framework\Models\User\Permission;
+use Shopper\Framework\Models\User\Role;
 
 class Permissions extends Component
 {

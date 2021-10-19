@@ -2,14 +2,14 @@
 
 namespace Shopper\Framework\Services;
 
+use function array_key_exists;
+use function call_user_func;
+use const FILTER_FLAG_PATH_REQUIRED;
+use const FILTER_VALIDATE_EMAIL;
+use const FILTER_VALIDATE_URL;
+use Illuminate\Support\Arr;
 use function in_array;
 use function is_array;
-use Illuminate\Support\Arr;
-use function call_user_func;
-use const FILTER_VALIDATE_URL;
-use function array_key_exists;
-use const FILTER_VALIDATE_EMAIL;
-use const FILTER_FLAG_PATH_REQUIRED;
 use Shopper\Framework\Exceptions\InvalidEmailException;
 
 class Gravatar

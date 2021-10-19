@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class RelatedProducts extends Component

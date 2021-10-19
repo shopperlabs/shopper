@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 

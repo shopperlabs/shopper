@@ -2,17 +2,16 @@
 
 namespace Shopper\Framework\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Routing\Controller;
 
 class ForgotPasswordController extends Controller
 {
     use ValidatesRequests;
-
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller

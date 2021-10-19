@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
-use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Http\Controllers\ShopperBaseController;
+use Shopper\Framework\Repositories\UserRepository;
 
 class CustomerController extends ShopperBaseController
 {

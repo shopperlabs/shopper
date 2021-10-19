@@ -3,14 +3,14 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Models\User\Address;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Shopper\Framework\Models\Traits\HasPrice;
-use Shopper\Framework\Models\Shop\PaymentMethod;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Framework\Models\Shop\PaymentMethod;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\User\Address;
+use Shopper\Framework\Models\User\User;
 
 class Order extends Model
 {

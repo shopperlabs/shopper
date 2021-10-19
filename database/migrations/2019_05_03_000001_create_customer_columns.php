@@ -17,12 +17,10 @@ class CreateCustomerColumns extends Migration
     public function up()
     {
         Schema::table($this->getTableName('users'), function (Blueprint $table) {
-
             $table->dropColumn('name');
             $table->string('password')->nullable()->change();
 
             $table->after('id', function ($table) {
-
                 $table->string('first_name')->nullable();
                 $table->string('last_name');
                 $table->enum('gender', ['male', 'female']);
@@ -43,7 +41,6 @@ class CreateCustomerColumns extends Migration
 
             $table->softDeletes();
         });
-
     }
 
     /**
@@ -54,7 +51,6 @@ class CreateCustomerColumns extends Migration
     public function down()
     {
         Schema::table($this->getTableName('users'), function (Blueprint $table) {
-
             $table->dropColumn([
                 'first_name',
                 'last_name',

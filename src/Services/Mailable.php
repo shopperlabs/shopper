@@ -2,22 +2,21 @@
 
 namespace Shopper\Framework\Services;
 
-use Exception;
-use Throwable;
 use ErrorException;
-use ReflectionType;
-use const PHP_VERSION;
-use function is_object;
-use ReeceM\Mocker\Mocked;
+use Exception;
 use Illuminate\Mail\Markdown;
 use Illuminate\Support\Facades\View;
+use function is_object;
+use const PHP_VERSION;
+use ReeceM\Mocker\Mocked;
+use ReflectionType;
 use Shopper\Framework\Traits\Mails\Mailables;
 use Shopper\Framework\Traits\Mails\Templates;
+use Throwable;
 
 class Mailable
 {
     use Templates;
-
     use Mailables;
 
     /**

@@ -2,16 +2,16 @@
 
 namespace Shopper\Framework\Models\User;
 
-use Illuminate\Notifications\Notifiable;
-use Laravel\Cashier\Billable;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Shopper\Framework\Models\Shop\Order\Order;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Laravel\Cashier\Billable;
+use Shopper\Framework\Models\Shop\Order\Order;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {

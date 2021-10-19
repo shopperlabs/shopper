@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
-use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Http\Controllers\ShopperBaseController;
+use Shopper\Framework\Models\Shop\Order\Order;
 
 class OrderController extends ShopperBaseController
 {

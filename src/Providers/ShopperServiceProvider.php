@@ -4,12 +4,12 @@ namespace Shopper\Framework\Providers;
 
 use function define;
 use function defined;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Console\UserCommand;
+use Illuminate\Support\ServiceProvider;
 use Shopper\Framework\Console\InstallCommand;
 use Shopper\Framework\Console\PublishCommand;
 use Shopper\Framework\Console\SymlinkCommand;
+use Shopper\Framework\Console\UserCommand;
 
 class ShopperServiceProvider extends ServiceProvider
 {

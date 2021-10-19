@@ -4,8 +4,8 @@ namespace Shopper\Framework\Console;
 
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Hash;
 
 class UserCommand extends Command
 {

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
-use Livewire\Component;
 use Illuminate\Validation\Rule;
+use Livewire\Component;
 use Shopper\Framework\Models\User\Role as RoleModel;
 
 class Role extends Component

@@ -2,12 +2,12 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
-use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Shopper\Framework\Models\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Framework\Models\Traits\HasSlug;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Collection extends Model implements HasMedia
 {

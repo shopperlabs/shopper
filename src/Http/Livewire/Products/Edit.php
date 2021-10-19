@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Livewire\Component;
-use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\InventoryRepository;
 
 class Edit extends Component
 {

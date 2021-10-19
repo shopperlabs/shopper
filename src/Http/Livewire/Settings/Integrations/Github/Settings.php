@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Integrations\Github;
 
-use Livewire\Component;
 use Illuminate\Support\Facades\Artisan;
+use Livewire\Component;
 
 class Settings extends Component
 {

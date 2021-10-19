@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings;
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\System\Setting;
 
 class Analytics extends Component

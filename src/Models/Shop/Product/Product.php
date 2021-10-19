@@ -2,20 +2,20 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Models\Shop\Channel;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Shopper\Framework\Models\Traits\HasSlug;
-use Shopper\Framework\Models\Traits\HasPrice;
-use Shopper\Framework\Models\Traits\HasStock;
-use Shopper\Framework\Contracts\ReviewRateable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Framework\Contracts\ReviewRateable;
+use Shopper\Framework\Models\Shop\Channel;
+use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Framework\Models\Traits\HasSlug;
+use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Product extends Model implements HasMedia, ReviewRateable
 {

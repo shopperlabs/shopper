@@ -2,14 +2,14 @@
 
 namespace Shopper\Framework\Actions;
 
-use function in_array;
-use Illuminate\Http\Request;
-use Shopper\Framework\Shopper;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use function in_array;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
+use Shopper\Framework\Shopper;
 
 class RedirectIfTwoFactorAuthenticatable
 {
@@ -80,7 +80,7 @@ class RedirectIfTwoFactorAuthenticatable
     {
         $this->limiter->increment($request);
 
-        throw ValidationException::withMessages([Shopper::username() => [trans('auth.failed')], ]);
+        throw ValidationException::withMessages([Shopper::username() => [trans('auth.failed')]]);
     }
 
     /**

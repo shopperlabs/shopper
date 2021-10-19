@@ -104,7 +104,7 @@ return [
 
     'models' => [
 
-        /**
+        /*
          * Eloquent model should be used to retrieve your brands. Of course,
          * it is often just the "Brand" model but you may use whatever you like.
          *
@@ -114,7 +114,7 @@ return [
 
         'brand' => \Shopper\Framework\Models\Shop\Product\Brand::class,
 
-        /**
+        /*
          * Eloquent model should be used to retrieve your categories. Of course,
          * it is often just the "Category" model but you may use whatever you like.
          *
@@ -124,7 +124,7 @@ return [
 
         'category'  => \Shopper\Framework\Models\Shop\Product\Category::class,
 
-        /**
+        /*
          * Eloquent model should be used to retrieve your collections. Of course,
          * it is often just the "Collection" model but you may use whatever you like.
          *
@@ -134,7 +134,7 @@ return [
 
         'collection'  => \Shopper\Framework\Models\Shop\Product\Collection::class,
 
-        /**
+        /*
          * Eloquent model should be used to retrieve your products. Of course,
          * it is often just the "Product" model but you may use whatever you like.
          *
@@ -160,14 +160,14 @@ return [
 
         'disks' => [
 
-            /**
+            /*
              * Avatars folder uploads picture.
              *
              * Create this disk under the `filesystems.php` config file if not exist.
              */
             'avatars' => 'avatars',
 
-            /**
+            /*
              * Uploads folders uploads files.
              *
              * Create this disk under the filesystems.php config file if not exist.
@@ -188,6 +188,6 @@ return [
     |
     */
 
-    'barcode_type' => 'C128'
+    'barcode_type' => 'C128',
 
 ];

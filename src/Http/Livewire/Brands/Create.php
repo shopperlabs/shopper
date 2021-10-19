@@ -2,11 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Brands;
 
-use Livewire\WithFileUploads;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {

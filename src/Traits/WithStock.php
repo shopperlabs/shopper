@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Traits;
 
-use Maatwebsite\Excel\Excel;
 use Illuminate\Http\Response;
+use Maatwebsite\Excel\Excel;
 use Shopper\Framework\Exports\ProductInventoryExport;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 

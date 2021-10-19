@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Providers;
 
-use Shopper\Framework\Shopper;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Shopper\Framework\Shopper;
 
 class RouteServiceProvider extends ServiceProvider
 {

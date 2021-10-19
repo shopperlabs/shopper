@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Sidebar\Presentation;
 
-use Maatwebsite\Sidebar\Append;
 use Illuminate\Contracts\View\Factory;
+use Maatwebsite\Sidebar\Append;
 
 class ShopperAppendRenderer
 {

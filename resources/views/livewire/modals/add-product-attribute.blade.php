@@ -33,34 +33,19 @@
                             <input wire:model="value" x-ref="input" id="value" type="text" class="w-full pl-10 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm" placeholder="{{ __('Choose a date') }}" readonly />
                         </div>
                     @elseif($type === 'richtext')
-                        <livewire:shopper-trix :value="$value" />
-                    @elseif($type === 'markdown')
-                        <div
-                            x-data
-                            x-init="
-                                (function(easyMDE) {
-                                    easyMDE.codemirror.on('change', function () {
-                                        @this.set('value', easyMDE.value());
-                                    });
-                                } (new EasyMDE({ element: $refs.textarea })))
-                            "
-                            wire:ignore
-                            {{ $attributes }}
-                        >
-                            <textarea name="body" id="body" x-ref="textarea" class="block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm">{{ $value }}</textarea>
-                        </div>
+                        <livewire:shopper-forms.trix :value="$value" />
                     @elseif($type === 'select')
                         <x-shopper-input.select wire:model.lazy="value" id="value" required>
                             @foreach($values as $v)
                                 <option value="{{ $v->id }}">{{ $v->value }}</option>
                             @endforeach
                         </x-shopper-input.select>
-                    @elseif($type === 'checkbox' || $type === 'checkbox_list')
+                    @elseif($type === 'checkbox' || $type === 'colorpicker')
                         <div class="grid grid-cols-2 gap-4 mt-2">
                             @foreach($values as $v)
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                        <input wire:model="multipleValues" id="value_{{ $v->id }}" value="{{ $v->id }}" type="checkbox" class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" />
+                                        <x-shopper-input.checkbox wire:model="multipleValues" id="value_{{ $v->id }}" value="{{ $v->id }}" />
                                     </div>
                                     <div class="ml-3 text-sm leading-5">
                                         <label for="value_{{ $v->id }}" class="font-medium text-gray-700 cursor-pointer dark:text-gray-400">{{ $v->value }}</label>
@@ -72,7 +57,7 @@
                         <div class="grid grid-cols-3 gap-4 mt-2">
                             @foreach($values as $v)
                                 <div class="flex items-center">
-                                    <input wire:model="value" id="value_{{ $v->id }}" type="radio" value="{{ $v->id }}" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out">
+                                    <x-shopper-input.radio wire:model="value" id="value_{{ $v->id }}" value="{{ $v->id }}" />
                                     <label for="value_{{ $v->id }}" class="ml-3">
                                         <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ $v->value }}</span>
                                     </label>

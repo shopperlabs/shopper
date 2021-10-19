@@ -1,15 +1,15 @@
 <?php
 
-use Money\Money;
-use Money\Currency;
-use Shopper\Framework\Shopper;
-use Money\Currencies\ISOCurrencies;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Money\Currencies\ISOCurrencies;
+use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
-use Shopper\Framework\Models\System\Setting;
+use Money\Money;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\System\Currency as CurrencyModel;
+use Shopper\Framework\Models\System\Setting;
+use Shopper\Framework\Shopper;
 
 if (! \function_exists('app_name')) {
     /**

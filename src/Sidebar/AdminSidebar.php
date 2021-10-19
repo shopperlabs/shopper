@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Sidebar;
 
 use Maatwebsite\Sidebar\Menu;
-use Maatwebsite\Sidebar\Sidebar;
 use Maatwebsite\Sidebar\ShouldCache;
-use Shopper\Framework\Events\BuildingSidebar;
+use Maatwebsite\Sidebar\Sidebar;
 use Maatwebsite\Sidebar\Traits\CacheableTrait;
+use Shopper\Framework\Events\BuildingSidebar;
 
 class AdminSidebar implements ShouldCache, Sidebar
 {

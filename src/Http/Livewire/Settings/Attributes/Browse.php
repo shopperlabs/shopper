@@ -5,13 +5,12 @@ namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Traits\WithSorting;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use Shopper\Framework\Traits\WithSorting;
 
 class Browse extends Component
 {
     use WithPagination;
-
     use WithSorting;
 
     /**

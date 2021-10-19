@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Traits;
 
-use ReflectionClass;
-use Livewire\Livewire;
-use Livewire\Component;
-use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
+use Livewire\Component;
+use Livewire\Livewire;
+use ReflectionClass;
 use Symfony\Component\Finder\SplFileInfo;
 
 trait CanRegisterLivewireComponentDirectories

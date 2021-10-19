@@ -4,14 +4,13 @@ namespace Shopper\Framework\Http\Livewire\Products;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Traits\WithStock;
-use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Repositories\InventoryHistoryRepository;
+use Shopper\Framework\Repositories\InventoryRepository;
+use Shopper\Framework\Traits\WithStock;
 
 class VariantStock extends Component
 {
     use WithPagination;
-
     use WithStock;
 
     /**

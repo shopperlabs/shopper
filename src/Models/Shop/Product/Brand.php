@@ -5,9 +5,9 @@ namespace Shopper\Framework\Models\Shop\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Framework\Models\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Shopper\Framework\Models\Traits\HasSlug;
 
 class Brand extends Model implements HasMedia
 {
