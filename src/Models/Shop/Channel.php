@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Framework\Models\Traits\HasSlug;
 
 class Channel extends Model
 {

@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
@@ -40,7 +40,7 @@ class Create extends AbstractBaseComponent
 
     public function updatedSelectedCategory($choice)
     {
-        if (count($choice) > 0 && $choice['value'] !== "0") {
+        if (count($choice) > 0 && $choice['value'] !== '0') {
             $this->parent_id = (int) $choice['value'];
             $this->parent = (new CategoryRepository())->getById($this->parent_id);
         } else {
@@ -55,7 +55,7 @@ class Create extends AbstractBaseComponent
 
         $category = (new CategoryRepository())->create([
             'name' => $this->name,
-            'slug' => $this->parent ? $this->parent->slug. '-' .$this->name : $this->name,
+            'slug' => $this->parent ? $this->parent->slug . '-' . $this->name : $this->name,
             'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,

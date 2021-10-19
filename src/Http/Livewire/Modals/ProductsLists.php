@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class ProductsLists extends ModalComponent
 {

@@ -2,13 +2,13 @@
 
 namespace Shopper\Framework\Services\TwoFactor;
 
-use BaconQrCode\Writer;
 use BaconQrCode\Renderer\Color\Rgb;
-use BaconQrCode\Renderer\ImageRenderer;
-use Shopper\Framework\Actions\RecoveryCode;
-use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
+use Shopper\Framework\Actions\RecoveryCode;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
 
 trait TwoFactorAuthenticatable

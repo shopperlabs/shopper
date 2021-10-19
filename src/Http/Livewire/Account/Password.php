@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
-use Livewire\Component;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Livewire\Component;
 
 class Password extends Component
 {

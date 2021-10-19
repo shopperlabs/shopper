@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Tests;
 
+use Livewire\LivewireServiceProvider;
 use Mockery;
 use Orchestra\Testbench\TestCase;
-use Livewire\LivewireServiceProvider;
-use Shopper\Framework\Models\User\User;
 use Shopper\Framework\FrameworkServiceProvider;
+use Shopper\Framework\Models\User\User;
 
 class ShopperTestCase extends TestCase
 {

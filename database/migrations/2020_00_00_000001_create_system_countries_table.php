@@ -16,7 +16,7 @@ class CreateSystemCountriesTable extends Migration
      */
     public function up()
     {
-        /**
+        /*
          * System settings table
          */
         Schema::create($this->getTableName('system_countries'), function (Blueprint $table) {

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Sidebar\Presentation;
 
-use Maatwebsite\Sidebar\Badge;
 use Illuminate\Contracts\View\Factory;
+use Maatwebsite\Sidebar\Badge;
 
 class ShopperBadgeRenderer
 {

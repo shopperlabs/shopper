@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Models\Shop;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Models\Traits\HasSlug;
 
 class PaymentMethod extends Model

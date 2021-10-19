@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Reviews;
 
 use Exception;
-use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 use Shopper\Framework\Models\Shop\Review;
 
 class Browse extends Component

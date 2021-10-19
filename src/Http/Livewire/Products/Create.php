@@ -3,16 +3,15 @@
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Milon\Barcode\Facades\DNS1DFacade;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Repositories\Ecommerce\{
-    BrandRepository,
-    ProductRepository,
-    CategoryRepository,
-    CollectionRepository
-};
-use Shopper\Framework\Traits\{WithProductAssociations, WithSeoAttributes};
+use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Traits\WithProductAssociations;
+use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {

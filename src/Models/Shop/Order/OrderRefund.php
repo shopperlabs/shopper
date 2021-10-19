@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\User\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Framework\Models\User\User;
 
 class OrderRefund extends Model
 {

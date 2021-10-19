@@ -22,7 +22,7 @@ class CurrenciesTableSeeder extends Seeder
      */
     public function __construct()
     {
-        $this->currencies = include(__DIR__ . '/currencies.php');
+        $this->currencies = include __DIR__ . '/currencies.php';
     }
 
     /**

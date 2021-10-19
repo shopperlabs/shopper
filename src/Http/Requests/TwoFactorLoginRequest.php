@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
 use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
 

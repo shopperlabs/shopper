@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Http\Livewire\Analytics;
 
 use Analytics;
-use Livewire\Component;
-use Spatie\Analytics\Period;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
+use Livewire\Component;
+use Spatie\Analytics\Period;
 
 class Dashboard extends Component
 {

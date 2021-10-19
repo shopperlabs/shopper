@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Models\Traits;
 
-use Money\Money;
-use Money\Currency;
-use NumberFormatter;
 use Money\Currencies\ISOCurrencies;
+use Money\Currency;
 use Money\Formatter\IntlMoneyFormatter;
+use Money\Money;
+use NumberFormatter;
 
 trait HasPrice
 {

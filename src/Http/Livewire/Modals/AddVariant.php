@@ -3,9 +3,9 @@
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\InventoryRepository;
 
 class AddVariant extends ModalComponent
 {

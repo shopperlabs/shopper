@@ -2,21 +2,19 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Validation\Rule;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Framework\Traits\WithStock;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\InventoryHistoryRepository;
+use Shopper\Framework\Traits\WithStock;
 
 class Inventory extends Component
 {
     use WithPagination;
-
     use WithAttributes;
-
     use WithStock;
 
     /**

@@ -2,12 +2,12 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
-use Shopper\Framework\Traits\WithUploadProcess;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Repositories\InventoryRepository;
+use Shopper\Framework\Traits\WithUploadProcess;
 
 class Variant extends Component
 {

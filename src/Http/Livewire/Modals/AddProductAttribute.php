@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
-use LivewireUI\Modal\ModalComponent;
 use Illuminate\Database\Eloquent\Collection;
+use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;

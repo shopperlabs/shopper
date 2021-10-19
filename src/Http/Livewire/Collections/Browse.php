@@ -3,9 +3,9 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class Browse extends Component

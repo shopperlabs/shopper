@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Notifications;
 
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class AdminSendCredentials extends Notification
 {

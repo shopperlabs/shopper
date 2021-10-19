@@ -3,9 +3,9 @@
 namespace Shopper\Framework\Models\Traits;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Relations\morphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
-use Illuminate\Database\Eloquent\Relations\morphMany;
 use Shopper\Framework\Models\Shop\Inventory\InventoryHistory;
 
 trait HasStock

@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
-use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Models\Shop\Product\Attribute;
 
 class Create extends AbstractBaseComponent
 {

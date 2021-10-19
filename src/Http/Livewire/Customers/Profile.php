@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Livewire\Component;
 use Illuminate\Validation\Rule;
+use Livewire\Component;
 
 class Profile extends Component
 {

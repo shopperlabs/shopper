@@ -3,16 +3,15 @@
 namespace Shopper\Framework\Http\Livewire\Customers;
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Database\Eloquent\Builder;
-use Shopper\Framework\Traits\WithSorting;
 use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Traits\WithSorting;
 
 class Browse extends Component
 {
     use WithPagination;
-
     use WithSorting;
 
     /**

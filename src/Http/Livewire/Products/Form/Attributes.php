@@ -3,9 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Exception;
-use Livewire\Component;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;

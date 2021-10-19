@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Http\Livewire\Account;
 
 use Livewire\Component;
-use Shopper\Framework\Traits\ConfirmsPasswords;
-use Shopper\Framework\Actions\GenerateNewRecoveryCodes;
-use Shopper\Framework\Actions\EnableTwoFactorAuthentication;
 use Shopper\Framework\Actions\DisableTwoFactorAuthentication;
+use Shopper\Framework\Actions\EnableTwoFactorAuthentication;
+use Shopper\Framework\Actions\GenerateNewRecoveryCodes;
+use Shopper\Framework\Traits\ConfirmsPasswords;
 
 class TwoFactor extends Component
 {

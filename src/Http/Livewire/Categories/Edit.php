@@ -3,13 +3,13 @@
 namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {
-   use WithSeoAttributes;
+    use WithSeoAttributes;
 
     public $category;
     public int $categoryId;
@@ -58,7 +58,7 @@ class Edit extends AbstractBaseComponent
 
     public function updatedSelectedCategory($choice)
     {
-        if (count($choice) > 0 && $choice['value'] !== "0") {
+        if (count($choice) > 0 && $choice['value'] !== '0') {
             $this->parent_id = (int) $choice['value'];
             $this->parent = (new CategoryRepository())->getById($this->parent_id);
         } else {
@@ -83,7 +83,7 @@ class Edit extends AbstractBaseComponent
 
         $this->category->update([
             'name' => $this->name,
-            'slug' => $this->parent ? $this->parent->slug. '-' .$this->name : $this->name,
+            'slug' => $this->parent ? $this->parent->slug . '-' . $this->name : $this->name,
             'parent_id' => $this->parent_id,
             'description' => $this->description,
             'is_enabled' => $this->is_enabled,

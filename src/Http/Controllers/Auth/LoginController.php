@@ -2,15 +2,15 @@
 
 namespace Shopper\Framework\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Shopper\Framework\Shopper;
-use Illuminate\Routing\Pipeline;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Shopper\Framework\Actions\AttemptToAuthenticate;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Routing\Pipeline;
+use Illuminate\Support\Facades\Auth;
+use Shopper\Framework\Actions\AttemptToAuthenticate;
 use Shopper\Framework\Actions\RedirectIfTwoFactorAuthenticatable;
+use Shopper\Framework\Shopper;
 
 class LoginController extends Controller
 {
@@ -26,7 +26,6 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-
     use ValidatesRequests;
 
     /**

@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Customers;
 
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Repositories\UserRepository;
 
 class Show extends AbstractBaseComponent
 {

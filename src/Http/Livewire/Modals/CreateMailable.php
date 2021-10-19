@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use LivewireUI\Modal\ModalComponent;
-use Illuminate\Support\Facades\Artisan;
 use Shopper\Framework\Services\Mailable;
 
 class CreateMailable extends ModalComponent

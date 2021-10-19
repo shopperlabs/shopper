@@ -2,12 +2,12 @@
 
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
-use Exception;
+use function array_slice;
 use Carbon\Carbon;
 use function count;
-use function array_slice;
-use Shopper\Framework\Repositories\UserRepository;
+use Exception;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Repositories\UserRepository;
 
 trait WithDiscountActions
 {

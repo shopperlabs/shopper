@@ -3,8 +3,8 @@
 namespace Shopper\Framework\Models\Shop\Order;
 
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Framework\Models\Shop\Carrier;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Framework\Models\Shop\Carrier;
 
 class OrderShipping extends Model
 {

@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
-use Shopper\Framework\Rules\Phone;
-use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Framework\Models\System\Country;
+use Shopper\Framework\Rules\Phone;
 
 class Create extends AbstractBaseComponent
 {

@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Sidebar\Presentation;
 
-use Maatwebsite\Sidebar\Sidebar;
 use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Presentation\SidebarRenderer;
+use Maatwebsite\Sidebar\Sidebar;
 
 class ShopperSidebarRenderer implements SidebarRenderer
 {

@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Livewire\Component;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Traits\WithSeoAttributes;
+use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Seo extends Component
 {

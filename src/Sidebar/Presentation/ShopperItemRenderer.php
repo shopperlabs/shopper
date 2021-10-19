@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Sidebar\Presentation;
 
-use Maatwebsite\Sidebar\Item;
 use Illuminate\Contracts\View\Factory;
+use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Presentation\ActiveStateChecker;
 
 class ShopperItemRenderer

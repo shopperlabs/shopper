@@ -2,23 +2,19 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
 use Shopper\Framework\Rules\RealEmailValidator;
 
 class Profile extends Component
 {
     use WithFileUploads;
 
-    public $first_name;
-
-    public $last_name;
-
-    public $email;
-
-    public $phone_number;
-
+    public string $first_name;
+    public string $last_name;
+    public string $email;
+    public string $phone_number;
     public $picture;
 
     /**

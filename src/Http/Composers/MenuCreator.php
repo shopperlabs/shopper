@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Composers;
 
-use Lavary\Menu\Menu;
-use Lavary\Menu\Builder;
 use Illuminate\View\View;
+use Lavary\Menu\Builder;
+use Lavary\Menu\Menu;
 
 class MenuCreator
 {

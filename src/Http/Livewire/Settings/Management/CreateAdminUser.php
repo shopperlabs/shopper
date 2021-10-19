@@ -2,15 +2,15 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
-use Illuminate\Validation\Rule;
-use Shopper\Framework\Rules\Phone;
 use Illuminate\Support\Facades\Hash;
-use Shopper\Framework\Models\User\Role;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
-use Shopper\Framework\Rules\RealEmailValidator;
-use Shopper\Framework\Repositories\UserRepository;
-use Shopper\Framework\Notifications\AdminSendCredentials;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
+use Shopper\Framework\Models\User\Role;
+use Shopper\Framework\Notifications\AdminSendCredentials;
+use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Rules\Phone;
+use Shopper\Framework\Rules\RealEmailValidator;
 
 class CreateAdminUser extends AbstractBaseComponent
 {

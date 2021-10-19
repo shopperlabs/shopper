@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Models\Shop;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Models\Traits\HasSlug;
 
 class Legal extends Model

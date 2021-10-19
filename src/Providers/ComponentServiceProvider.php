@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Providers;
 
-use Livewire\Component;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Livewire\Component;
 use Shopper\Framework\Traits\CanRegisterLivewireComponentDirectories;
 
 class ComponentServiceProvider extends ServiceProvider

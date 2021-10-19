@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Traits;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Actions\ConfirmPassword;
 
@@ -62,7 +62,7 @@ trait ConfirmsPasswords
     public function confirmPassword()
     {
         if (! app(ConfirmPassword::class)(app(StatefulGuard::class), Auth::user(), $this->confirmablePassword)) {
-            throw ValidationException::withMessages(['confirmable_password' => [__('This password does not match our records.')], ]);
+            throw ValidationException::withMessages(['confirmable_password' => [__('This password does not match our records.')]]);
         }
 
         session(['auth.password_confirmed_at' => time()]);

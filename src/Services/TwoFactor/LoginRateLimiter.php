@@ -2,10 +2,10 @@
 
 namespace Shopper\Framework\Services\TwoFactor;
 
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Shopper\Framework\Shopper;
 use Illuminate\Cache\RateLimiter;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Shopper\Framework\Shopper;
 
 class LoginRateLimiter
 {

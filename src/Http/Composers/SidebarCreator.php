@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Composers;
 
-use Shopper\Framework\Sidebar\AdminSidebar;
 use Maatwebsite\Sidebar\Presentation\SidebarRenderer;
+use Shopper\Framework\Sidebar\AdminSidebar;
 
 class SidebarCreator
 {

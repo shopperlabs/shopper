@@ -2,9 +2,9 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Integrations;
 
+use Illuminate\Support\Facades\Artisan;
 use function in_array;
 use Livewire\Component;
-use Illuminate\Support\Facades\Artisan;
 use Shopper\Framework\Models\Shop\Channel;
 
 class Browse extends Component

@@ -2,13 +2,13 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Rules\Phone;
 use Illuminate\Support\Facades\Hash;
-use Shopper\Framework\Traits\WithAddress;
+use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Repositories\UserRepository;
 use Shopper\Framework\Notifications\CustomerSendCredentials;
+use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Framework\Rules\Phone;
+use Shopper\Framework\Traits\WithAddress;
 
 class Create extends AbstractBaseComponent
 {

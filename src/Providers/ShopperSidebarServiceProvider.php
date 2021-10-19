@@ -2,11 +2,11 @@
 
 namespace Shopper\Framework\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
-use Shopper\Framework\Sidebar\Domain\DefaultItem;
+use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Sidebar\Infrastructure\SidebarFlusherFactory;
 use Maatwebsite\Sidebar\Infrastructure\SidebarResolverFactory;
+use Shopper\Framework\Sidebar\Domain\DefaultItem;
 use Shopper\Framework\Sidebar\Presentation\ShopperSidebarRenderer;
 
 class ShopperSidebarServiceProvider extends ServiceProvider
