@@ -8,23 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
+use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
 
 class Attributes extends Component
 {
-    /**
-     * Product Model.
-     *
-     * @var Model
-     */
     public $product;
-
     public int $productId;
-
     public Collection $attributes;
-
     public Collection $productAttributes;
 
-    protected $listeners = ['onProductAttributeAdded' => 'render'];
+    protected $listeners = ['onProductAttributeAdded'];
 
     public function mount($product)
     {
@@ -34,9 +27,22 @@ class Attributes extends Component
         $this->getAttributes();
     }
 
-    public function updateProductAttribute(int $id)
+    public function onProductAttributeAdded()
     {
-        // ToDo
+        $this->getProductAttributes();
+        $this->getAttributes();
+    }
+
+    public function removeProductAttributeValue(int $id): void
+    {
+        ProductAttributeValue::find($id)->delete();
+
+        $this->notify([
+            'title' => __('Attribute value removed'),
+            'message' => __('You have successfully removed the value of this attribute.'),
+        ]);
+
+        $this->emitSelf('onProductAttributeAdded');
     }
 
     /**
@@ -62,6 +68,15 @@ class Attributes extends Component
         return view('shopper::livewire.products.forms.form-attributes');
     }
 
+    private function attributeModelValue(string $type): string
+    {
+        if (in_array($type, ['text', 'number', 'richtext', 'select', 'datepicker', 'radio'])) {
+            return 'single';
+        } else {
+            return 'multiple';
+        }
+    }
+
     /**
      * Get Product Attributes lists.
      */
@@ -73,6 +88,7 @@ class Attributes extends Component
             ->get()
             ->map(function ($pa) {
                 $pa['type'] = $pa->attribute->type;
+                $pa['model'] = $this->attributeModelValue($pa->attribute->type);
 
                 return $pa;
             });
