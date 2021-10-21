@@ -13,29 +13,9 @@ class Show extends Component
 {
     use WithPagination;
 
-    /**
-     * Current viewer order.
-     */
     public Order $order;
-
-    /**
-     * Order item to display on the page.
-     */
     public int $perPage = 3;
-
-    /**
-     * Customer order notes.
-     *
-     * @var string
-     */
-    public $notes;
-
-    /**
-     * Confirm modal to archived order.
-     *
-     * @var bool
-     */
-    public $confirmationArchived = false;
+    public ?string $notes = null;
 
     /**
      * Redirect to the specific order.
@@ -43,36 +23,6 @@ class Show extends Component
     public function goToOrder(int $id)
     {
         $this->redirectRoute('shopper.orders.show', $id);
-    }
-
-    /**
-     * Launch modal to archived the current order.
-     */
-    public function openModal()
-    {
-        $this->confirmationArchived = true;
-    }
-
-    /**
-     * Cancel action to archived order.
-     */
-    public function cancel()
-    {
-        $this->confirmationArchived = false;
-    }
-
-    /**
-     * Archived order.
-     *
-     * @throws Exception
-     */
-    public function archived()
-    {
-        $this->order->delete();
-
-        session()->flash('success', __('Order successfully archived'));
-
-        $this->redirectRoute('shopper.orders.index');
     }
 
     /**
@@ -103,9 +53,6 @@ class Show extends Component
         ]);
     }
 
-    /**
-     * Register the order by changed order status.
-     */
     public function register()
     {
         $this->order->update(['status' => OrderStatus::REGISTER]);
@@ -118,9 +65,6 @@ class Show extends Component
         ]);
     }
 
-    /**
-     * Mark the order as paid.
-     */
     public function markPaid()
     {
         $this->order->update(['status' => OrderStatus::PAID]);
@@ -128,6 +72,16 @@ class Show extends Component
         $this->notify([
             'title' => __('Update Status'),
             'message' => __('This order is marked as paid.'),
+        ]);
+    }
+
+    public function markComplete()
+    {
+        $this->order->update(['status' => OrderStatus::COMPLETED]);
+
+        $this->notify([
+            'title' => __('Update Status'),
+            'message' => __('This order is marked as complete.'),
         ]);
     }
 

@@ -89,6 +89,8 @@ class Order extends Model
                 return 'border-green-200 bg-green-100 text-green-800';
             case OrderStatus::CANCELLED:
                 return 'border-red-200 bg-red-100 text-red-800';
+            case OrderStatus::COMPLETED:
+                return 'border-purple-200 bg-purple-100 text-purple-800';
         }
     }
 
@@ -107,9 +109,6 @@ class Order extends Model
         return $this->items->sum('total');
     }
 
-    /**
-     * Determine if an order can be cancelled.
-     */
     public function canBeCancelled(): bool
     {
         if ($this->status === OrderStatus::COMPLETED || $this->status === OrderStatus::PAID) {
@@ -119,9 +118,6 @@ class Order extends Model
         return true;
     }
 
-    /**
-     * Determine if an order is not cancelled.
-     */
     public function isNotCancelled(): bool
     {
         if ($this->status === OrderStatus::CANCELLED) {
@@ -131,20 +127,24 @@ class Order extends Model
         return true;
     }
 
-    /**
-     * Determine if on order is in pending status.
-     */
     public function isPending(): bool
     {
         return $this->status === OrderStatus::PENDING;
     }
 
-    /**
-     * Determine if on order is in register status.
-     */
     public function isRegister(): bool
     {
         return $this->status === OrderStatus::REGISTER;
+    }
+
+    public function isPaid(): bool
+    {
+        return $this->status === OrderStatus::PAID;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->status === OrderStatus::COMPLETED;
     }
 
     /**
