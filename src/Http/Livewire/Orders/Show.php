@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Orders;
 
-use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\Order\Order;
