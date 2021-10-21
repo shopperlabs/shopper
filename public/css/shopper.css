@@ -4266,6 +4266,10 @@ select{
 	--tw-border-opacity: 1;
 	border-color: rgba(167, 243, 208, var(--tw-border-opacity));
 }
+.border-purple-200{
+	--tw-border-opacity: 1;
+	border-color: rgba(221, 214, 254, var(--tw-border-opacity));
+}
 .border-opacity-75{
 	--tw-border-opacity: 0.75;
 }
