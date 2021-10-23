@@ -14,7 +14,7 @@ class Profile extends Component
     public string $first_name;
     public string $last_name;
     public string $email;
-    public string $phone_number;
+    public ?string $phone_number = null;
     public $picture;
 
     /**
