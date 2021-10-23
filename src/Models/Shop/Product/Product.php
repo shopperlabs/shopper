@@ -83,20 +83,6 @@ class Product extends Model implements HasMedia, ReviewRateable
     }
 
     /**
-     * The "boot" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function ($model) {
-            $model->variations()->detele();
-        });
-    }
-
-    /**
      * Get the formatted price value.
      */
     public function getFormattedPriceAttribute(): ?string
@@ -142,7 +128,7 @@ class Product extends Model implements HasMedia, ReviewRateable
 
     public function variations(): HasMany
     {
-        return $this->hasMany(self::class, 'parent_id');
+        return $this->hasMany(config('shopper.system.models.product'), 'parent_id');
     }
 
     public function parent(): BelongsTo
