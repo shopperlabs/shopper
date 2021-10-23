@@ -19,7 +19,7 @@ class Multiple extends Component
     ];
 
     protected $rules = [
-        'files.*' => 'nullable|max:10240',
+        'files.*' => 'nullable|max:5242880',
     ];
 
     public function mount($images = [])

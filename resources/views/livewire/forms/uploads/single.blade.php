@@ -21,7 +21,7 @@
                     </span>
                 </p>
                 <p :class="{ 'text-gray-400': focused }" class="mt-1 text-xs text-gray-500 group-hover:text-gray-400 dark:text-gray-400 dark:group-hover:text-gray-300">
-                    {{ __('PNG, JPG, GIF up to 10MB') }}
+                    {{ __('PNG, JPG, GIF up to 5MB') }}
                 </p>
                 <input @focus="focused = true" @blur="focused = false" class="sr-only" type="file" wire:model="file" id="{{ $inputId }}" />
             </div>

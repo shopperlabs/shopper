@@ -22,7 +22,7 @@
                 {{ __('or drag and drop') }}
             </p>
             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                {{ __('PNG, JPG, GIF up to 1MB') }}
+                {{ __('PNG, JPG, GIF up to 5MB') }}
             </p>
             <div class="mt-1" wire:loading.flex wire.target="files">
                 <x-shopper-loader class="text-blue-600" />

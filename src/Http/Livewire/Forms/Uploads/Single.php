@@ -15,7 +15,7 @@ class Single extends Component
     public string $inputId;
 
     protected $rules = [
-        'file' => 'nullable|image|max:10240',
+        'file' => 'nullable|image|max:5242880',
     ];
 
     public function mount($media = null)
