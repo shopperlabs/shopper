@@ -66,6 +66,16 @@ Shopper Framework can provide premium support for a monthly fee. Find out more v
 
 Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 
+## ToDo/Roadmap
+- [ ] Add `laravel-livewire-datatable` to replace all tables (https://github.com/rappasoft/laravel-livewire-tables)
+- [ ] Replace all Shopper forms input components to `wire-ui` form components (https://livewire-wireui.com)
+- [ ] Add PayPal as default payment method
+- [ ] Add Shipping Methods
+- [ ] Add Tax rates
+- [ ] Publish Documentation 
+- [ ] Many channels support (Facebook, Twitter, Instagram & Telegram)
+- [ ] Fix Mailable class with parameters
+
 ## Security
 
 If you discover any security related issues, please email contact@shopperlabs.io instead of using the issue tracker.
