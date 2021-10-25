@@ -107,7 +107,6 @@ class Edit extends AbstractBaseComponent
                 'sometimes',
                 'required',
                 'max:150',
-                Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
             ],
         ];
     }
