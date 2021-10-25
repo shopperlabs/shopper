@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
@@ -107,7 +106,6 @@ class Edit extends AbstractBaseComponent
                 'sometimes',
                 'required',
                 'max:150',
-                Rule::unique(shopper_table('categories'), 'name')->ignore($this->categoryId),
             ],
         ];
     }
