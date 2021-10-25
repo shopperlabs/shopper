@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
-use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
