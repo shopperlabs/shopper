@@ -10,6 +10,7 @@ module.exports = {
       './resources/lang/**/*.php',
       './src/**/*.php',
       './vendor/livewire-ui/modal/resources/views/*.blade.php',
+      './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
     ],
     options: {
       safelist: [
