@@ -5,9 +5,9 @@ namespace Shopper\Framework\Http\Livewire\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
-class BrandsTable extends DataTableComponent
+class CategoriesTable extends DataTableComponent
 {
     public string $defaultSortColumn = 'name';
 
@@ -26,28 +26,14 @@ class BrandsTable extends DataTableComponent
         $this->queryString['columnSearch'] = ['except' => null];
     }
 
-    public function columns(): array
-    {
-        return [
-            Column::make('Name')
-                ->sortable()
-                ->searchable(),
-            Column::make('Website')->sortable(),
-            Column::make('Url', 'slug')->sortable(),
-            Column::make('Updated At', 'updated_at')
-                ->sortable()
-                ->addClass('hidden md:table-cell'),
-        ];
-    }
-
     public function deleteSelected()
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
+            (new CategoryRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
 
             $this->notify([
                 'title' => __('Deleted'),
-                'message' => __('The brands has successfully removed!'),
+                'message' => __('The categories has successfully removed!'),
             ]);
         }
 
@@ -59,11 +45,11 @@ class BrandsTable extends DataTableComponent
     public function enabled(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => true]);
+            (new CategoryRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => true]);
 
             $this->notify([
                 'title' => __('Updated'),
-                'message' => __('The brands has successfully enabled!'),
+                'message' => __('The categories has successfully enabled!'),
             ]);
         }
 
@@ -75,25 +61,37 @@ class BrandsTable extends DataTableComponent
     public function disabled(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
+            (new CategoryRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
 
             $this->notify([
                 'title' => __('Updated'),
-                'message' => __('The brands has successfully disabled!'),
+                'message' => __('The categories has successfully disabled!'),
             ]);
         }
 
         $this->resetBulk();
     }
 
+    public function columns(): array
+    {
+        return [
+            Column::make('Name')
+                ->sortable()
+                ->searchable(),
+            Column::make('Url', 'slug')->sortable(),
+            Column::make('Updated At', 'updated_at')
+                ->sortable(),
+        ];
+    }
+
     public function query(): Builder
     {
-        return (new BrandRepository())->makeModel()->newQuery()
+        return (new CategoryRepository())->makeModel()->newQuery()
             ->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('name', 'like', '%' . $name . '%'));
     }
 
     public function rowView(): string
     {
-        return 'shopper::livewire.tables.rows.brands-table';
+        return 'shopper::livewire.tables.rows.categories-table';
     }
 }

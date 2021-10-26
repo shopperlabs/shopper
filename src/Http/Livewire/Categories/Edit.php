@@ -102,11 +102,7 @@ class Edit extends AbstractBaseComponent
     public function rules(): array
     {
         return [
-            'name' => [
-                'sometimes',
-                'required',
-                'max:150',
-            ],
+            'name' => 'sometimes|required|max:150',
         ];
     }
 
@@ -118,6 +114,8 @@ class Edit extends AbstractBaseComponent
                 ->with('parent')
                 ->scopes('enabled')
                 ->select('name', 'id', 'parent_id')
+                ->whereNull('parent_id')
+                ->orderBy('name')
                 ->get()
                 ->except($this->category->id),
         ]);

@@ -26,13 +26,33 @@
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-4">
-                    <x-shopper-input.group label="Parent" for="category">
+                    <x-shopper-input.group label="Parent" for="category" wire:ignore>
                         <x-shopper-input.select wire:model="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
                             <option value="0">{{ __('No parent category') }}</option>
                             @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}" @if($cat->id === $parent_id) selected @endif>
-                                    {{ $cat->name }} @if($cat->parent) ({{ $cat->parent->name }}) @endif
-                                </option>
+                                @if($cat->id !== $categoryId)
+                                    <option value="{{ $cat->id }}" @if($cat->id === $parent_id) selected @endif>
+                                        {{ $cat->name }}
+                                    </option>
+                                    @if($cat->childs->isNotEmpty())
+                                        @foreach($cat->childs as $child)
+                                            @if($child->id !== $categoryId)
+                                                <option value="{{ $child->id }}">
+                                                    {{ $cat->name }} / {{ $child->name }}
+                                                </option>
+                                                @if($child->childs->isNotEmpty())
+                                                    @foreach($child->childs as $children)
+                                                        @if($children->id !== $categoryId)
+                                                            <option value="{{ $children->id }}">
+                                                                {{ $cat->name }} / {{ $child->name }} / {{ $children->name }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endif
                             @endforeach
                         </x-shopper-input.select>
                     </x-shopper-input.group>
