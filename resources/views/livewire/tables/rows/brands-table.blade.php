@@ -9,7 +9,7 @@
                     <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />
                 </div>
             @endif
-            <a href="{{ route('shopper.brands.edit', $row) }}" class="ml-2 truncate hover:text-gray-600 dark:hover:text-gray-400">
+            <a href="{{ route('shopper.brands.edit', $row) }}" class="ml-2 truncate hover:text-gray-600 dark:hover:text-gray-400 font-medium">
                 <span>{{ $row->name }} </span>
             </a>
         </div>

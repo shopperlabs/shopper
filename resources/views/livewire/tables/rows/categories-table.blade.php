@@ -9,7 +9,7 @@
                     <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />
                 </div>
             @endif
-            <a href="{{ route('shopper.categories.edit', $row) }}" class="ml-2 truncate hover:text-gray-600">
+            <a href="{{ route('shopper.categories.edit', $row) }}" class="ml-2 truncate hover:text-gray-600 font-medium">
                 <span>
                     {{ $row->name }} @if($row->parent_id)<span class="text-gray-500 font-normal dark:text-gray-400">{{ __('in :parent', ['parent' => $row->parent_name]) }}</span>@endif
                 </span>

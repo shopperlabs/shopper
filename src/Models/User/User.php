@@ -4,6 +4,7 @@ namespace Shopper\Framework\Models\User;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -137,6 +138,15 @@ class User extends Authenticatable
             case 'storage':
                 return Storage::disk(config('shopper.system.storage.disks.avatars'))->url($this->avatar_location);
         }
+    }
+
+    public function scopeResearch(Builder $query, $term): Builder
+    {
+        return $query->where(
+            fn ($query) => $query->where('last_name', 'like', '%'.$term.'%')
+                ->orWhere('first_name', 'like', '%'.$term.'%')
+                ->orWhere('email', 'like', '%'.$term.'%')
+        );
     }
 
     public function addresses(): HasMany

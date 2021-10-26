@@ -3321,12 +3321,6 @@ select{
 .top-6{
 	top: 1.5rem;
 }
-.right-12{
-	right: 3rem;
-}
-.-bottom-1{
-	bottom: -0.25rem;
-}
 .right-7{
 	right: 1.75rem;
 }
@@ -3338,6 +3332,12 @@ select{
 }
 .top-16{
 	top: 4rem;
+}
+.right-12{
+	right: 3rem;
+}
+.-bottom-1{
+	bottom: -0.25rem;
 }
 .top-4{
 	top: 1rem;
@@ -3529,14 +3529,14 @@ select{
 .mr-0{
 	margin-right: 0px;
 }
-.-mr-1{
-	margin-right: -0.25rem;
-}
 .ml-2\.5{
 	margin-left: 0.625rem;
 }
 .mt-2\.5{
 	margin-top: 0.625rem;
+}
+.-mr-1{
+	margin-right: -0.25rem;
 }
 .mr-2\.5{
 	margin-right: 0.625rem;
@@ -3817,14 +3817,14 @@ select{
 .max-w-xl{
 	max-width: 36rem;
 }
-.max-w-lg{
-	max-width: 32rem;
-}
 .max-w-2xl{
 	max-width: 42rem;
 }
 .max-w-full{
 	max-width: 100%;
+}
+.max-w-lg{
+	max-width: 32rem;
 }
 .max-w-none{
 	max-width: none;
