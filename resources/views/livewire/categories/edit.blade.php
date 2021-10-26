@@ -36,20 +36,7 @@
                                     </option>
                                     @if($cat->childs->isNotEmpty())
                                         @foreach($cat->childs as $child)
-                                            @if($child->id !== $categoryId)
-                                                <option value="{{ $child->id }}">
-                                                    {{ $cat->name }} / {{ $child->name }}
-                                                </option>
-                                                @if($child->childs->isNotEmpty())
-                                                    @foreach($child->childs as $children)
-                                                        @if($children->id !== $categoryId)
-                                                            <option value="{{ $children->id }}">
-                                                                {{ $cat->name }} / {{ $child->name }} / {{ $children->name }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            @endif
+                                            @includeWhen($child->id !== $categoryId ,'shopper::components.input.option-category', ['name' => $cat->name, 'category' => $child])
                                         @endforeach
                                     @endif
                                 @endif
