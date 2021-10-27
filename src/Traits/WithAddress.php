@@ -21,7 +21,7 @@ trait WithAddress
     public $address_last_name;
 
     /**
-     * Companyt name.
+     * Company name.
      *
      * @var string
      */
@@ -69,12 +69,7 @@ trait WithAddress
      */
     public $address_phone_number;
 
-    /**
-     * Address validation.
-     *
-     * @return array<string>
-     */
-    public function addressRules()
+    public function addressRules(): array
     {
         return [
             'address_first_name' => 'required',

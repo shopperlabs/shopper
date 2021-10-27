@@ -100,7 +100,7 @@
                 <livewire:shopper-customers.profile :customer="$customer" />
             </div>
             <div x-cloak x-show="currentTab === 'address'">
-                <livewire:shopper-customers.addresses :customer="$customer" />
+                <livewire:shopper-customers.addresses :adresses="$customer->addresses" />
             </div>
             <div x-cloak x-show="currentTab === 'orders'">
                 <livewire:shopper-customers.orders :customer="$customer" />

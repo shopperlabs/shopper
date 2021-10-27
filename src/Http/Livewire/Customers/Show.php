@@ -16,13 +16,9 @@ class Show extends AbstractBaseComponent
     public $customer;
 
     public int $user_id;
-
     public string $last_name;
-
     public string $first_name;
-
     public string $email;
-
     public string $picture;
 
     protected $listeners = ['profileUpdate'];
@@ -34,7 +30,7 @@ class Show extends AbstractBaseComponent
      */
     public function mount($customer)
     {
-        $this->customer = $customer;
+        $this->customer = $customer->load('addresses');
         $this->user_id = $customer->id;
         $this->email = $customer->email;
         $this->last_name = $customer->last_name;

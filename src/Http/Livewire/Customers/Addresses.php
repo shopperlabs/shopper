@@ -12,22 +12,17 @@ class Addresses extends Component
      *
      * @var \Illuminate\Database\Eloquent\Model
      */
-    public $customer;
+    public $addresses;
 
-    /**
-     * Component Mount instance.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $customer
-     */
-    public function mount($customer)
+    public function mount($adresses)
     {
-        $this->customer = $customer;
+        $this->addresses = $adresses;
     }
 
     public function render()
     {
         return view('shopper::livewire.customers.addresses', [
-            'addresses' => Cache::remember('customer-addresses', 60 * 60 * 24, fn () => $this->customer->addresses),
+            'addresses' => Cache::remember('customer-addresses', 60 * 60 * 24, fn () => $this->addresses),
         ]);
     }
 }

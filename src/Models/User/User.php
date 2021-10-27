@@ -129,7 +129,7 @@ class User extends Authenticatable
         return 'N/A';
     }
 
-    public function getPictureAttribute(): string
+    public function getPictureAttribute(): ?string
     {
         switch ($this->avatar_type) {
             case 'gravatar':
@@ -138,6 +138,8 @@ class User extends Authenticatable
             case 'storage':
                 return Storage::disk(config('shopper.system.storage.disks.avatars'))->url($this->avatar_location);
         }
+
+        return null;
     }
 
     public function scopeResearch(Builder $query, $term): Builder
