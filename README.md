@@ -69,6 +69,7 @@ Shopper Framework can provide premium support for a monthly fee. Find out more v
 - [ ] Add Shipping Methods
 - [ ] Add Tax rates
 - [ ] Publish Documentation 
+- [ ] Publish Demo Website (Private repository only for sponsors)
 - [ ] Many channels support (Facebook, Twitter, Instagram & Telegram)
 - [ ] Fix Mailable class with parameters
 
