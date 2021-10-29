@@ -88,7 +88,6 @@ class CustomersTable extends DataTableComponent
         ];
     }
 
-
     public function query(): Builder
     {
         return (new UserRepository())->makeModel()->newQuery()
