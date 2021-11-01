@@ -28,8 +28,8 @@ trait WithLegalActions
      */
     public function initializeValues($legal)
     {
-        $this->legalId = $legal ? $legal->id : null;
-        $this->content = $legal ? $legal->content : null;
+        $this->legalId = $legal?->id;
+        $this->content = $legal?->content;
         $this->isEnabled = $legal ? $legal->is_enabled : false;
     }
 

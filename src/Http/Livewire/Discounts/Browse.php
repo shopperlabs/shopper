@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\Discount;
-use Shopper\Framework\Traits\WithSorting;
 
 class Browse extends Component
 {
     use WithPagination;
-    use WithSorting;
 
     /**
      * Search.
@@ -39,7 +37,7 @@ class Browse extends Component
      *
      * @return string
      */
-    public function paginationView()
+    public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
@@ -75,7 +73,7 @@ class Browse extends Component
                             ->orWhereDate('end_at', $this->date);
                     }
                 })
-                ->orderBy($this->sortBy ?? 'created_at', $this->sortDirection)
+                ->orderBy('created_at')
                 ->paginate(8),
         ]);
     }

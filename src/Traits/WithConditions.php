@@ -58,7 +58,7 @@ trait WithConditions
      *
      * @return array
      */
-    public function getCollectionRulesProperty()
+    public function getCollectionRulesProperty(): array
     {
         return [
             'product_title' => [
@@ -93,7 +93,7 @@ trait WithConditions
      *
      * @return array
      */
-    public function getOperatorsProperty()
+    public function getOperatorsProperty(): array
     {
         return [
             'equals_to' => [
