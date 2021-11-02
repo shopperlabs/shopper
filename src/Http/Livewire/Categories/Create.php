@@ -84,9 +84,11 @@ class Create extends AbstractBaseComponent
         return view('shopper::livewire.categories.create', [
             'categories' => (new CategoryRepository())
                 ->makeModel()
-                ->with('parent')
                 ->scopes('enabled')
+                ->whereNull('parent_id')
+                ->with('childs')
                 ->select('name', 'id', 'parent_id')
+                ->orderBy('name')
                 ->get(),
         ]);
     }

@@ -79,9 +79,9 @@ trait ConfirmsPasswords
      *
      * @param null|int $maximumSecondsSinceConfirmation
      */
-    protected function ensurePasswordIsConfirmed($maximumSecondsSinceConfirmation = null)
+    protected function ensurePasswordIsConfirmed(int $maximumSecondsSinceConfirmation = null)
     {
-        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ? $maximumSecondsSinceConfirmation : config('auth.password_timeout', 900);
+        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ?? config('auth.password_timeout', 900);
 
         return $this->passwordIsConfirmed($maximumSecondsSinceConfirmation) ? null : abort(403);
     }
@@ -91,9 +91,9 @@ trait ConfirmsPasswords
      *
      * @param null|int $maximumSecondsSinceConfirmation
      */
-    protected function passwordIsConfirmed($maximumSecondsSinceConfirmation = null): bool
+    protected function passwordIsConfirmed(int $maximumSecondsSinceConfirmation = null): bool
     {
-        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ? $maximumSecondsSinceConfirmation : config('auth.password_timeout', 900);
+        $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ?? config('auth.password_timeout', 900);
 
         return time() - session('auth.password_confirmed_at', 0) < $maximumSecondsSinceConfirmation;
     }

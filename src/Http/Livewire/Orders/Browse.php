@@ -8,12 +8,10 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
-use Shopper\Framework\Traits\WithSorting;
 
 class Browse extends Component
 {
     use WithPagination;
-    use WithSorting;
 
     /**
      * Search.

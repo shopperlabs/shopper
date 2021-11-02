@@ -30,36 +30,46 @@
                     </div>
                 </div>
                 <div class="flex space-x-3">
-                    <span class="hidden sm:block">
-                        <x-shopper-danger-button wire:click="$emit('openModal', 'shopper-modals.archived-order', {{ json_encode([$order->id]) }})" type="button">
-                            <x-heroicon-s-archive class="w-5 h-5 -ml-1 mr-2" />
-                            {{ __('Archived') }}
-                        </x-shopper-danger-button>
-                    </span>
+                    @if(! $order->isCompleted())
 
-                    <x-shopper-dropdown>
-                        <x-slot name="trigger">
-                            <x-shopper-default-button>
-                                {{ __('More actions') }}
-                                <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                </svg>
-                            </x-shopper-default-button>
-                        </x-slot>
+                        @if(! $order->isPaid())
+                            <span class="hidden sm:block">
+                                <x-shopper-danger-button wire:click="$emit('openModal', 'shopper-modals.archived-order', {{ json_encode([$order->id]) }})" type="button">
+                                    <x-heroicon-s-archive class="w-5 h-5 -ml-1 mr-2" />
+                                    {{ __('Archived') }}
+                                </x-shopper-danger-button>
+                            </span>
+                        @endif
 
-                        <x-slot name="content">
-                            <div class="py-1">
-                                @if($order->canBeCancelled())
-                                    <x-shopper-dropdown-button wire:click="cancelOrder" role="menuitem">
-                                        <svg class="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                        </svg>
-                                        {{ __('Cancel Order') }}
-                                    </x-shopper-dropdown-button>
-                                @endif
-                            </div>
-                        </x-slot>
-                    </x-shopper-dropdown>
+                        <x-shopper-dropdown>
+                            <x-slot name="trigger">
+                                <x-shopper-default-button>
+                                    {{ __('More actions') }}
+                                    <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                    </svg>
+                                </x-shopper-default-button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <div class="py-1">
+                                    @if($order->canBeCancelled())
+                                        <x-shopper-dropdown-button wire:click="cancelOrder" role="menuitem">
+                                            <x-heroicon-s-x class="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:text-gray-500" />
+                                            {{ __('Cancel Order') }}
+                                        </x-shopper-dropdown-button>
+                                    @endif
+
+                                    @if($order->isPaid())
+                                        <x-shopper-dropdown-button wire:click="markComplete" role="menuitem">
+                                            <x-heroicon-o-check-circle class="mr-3 h-5 w-5 text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:text-gray-500" />
+                                            {{ __('Mark complete') }}
+                                        </x-shopper-dropdown-button>
+                                    @endif
+                                </div>
+                            </x-slot>
+                        </x-shopper-dropdown>
+                    @endif
 
                     <span class="relative z-0 inline-flex shadow-sm">
                         <button @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif type="button" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm leading-5 font-medium text-gray-500 dark:text-gray-400 hover:text-gray-400 dark:hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue dark:text-gray-400 transition ease-in-out duration-150 @if(! $prevOrder) bg-gray-100 dark:bg-gray-800 hover:text-gray-500 dark:text-gray-400 disabled:opacity-50 @endif" aria-label="{{ __('Previous order') }}" @if(! $prevOrder) disabled @endif>

@@ -69,9 +69,14 @@ class Category extends Model implements HasMedia
         return null;
     }
 
-    public function childs(): HasMany
+    public function categories(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
+    }
+
+    public function childs(): HasMany
+    {
+        return $this->hasMany(self::class, 'parent_id')->with('categories');
     }
 
     public function parent(): BelongsTo

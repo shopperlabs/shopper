@@ -102,11 +102,7 @@ class Edit extends AbstractBaseComponent
     public function rules(): array
     {
         return [
-            'name' => [
-                'sometimes',
-                'required',
-                'max:150',
-            ],
+            'name' => 'sometimes|required|max:150',
         ];
     }
 
@@ -115,9 +111,11 @@ class Edit extends AbstractBaseComponent
         return view('shopper::livewire.categories.edit', [
             'categories' => (new CategoryRepository())
                 ->makeModel()
-                ->with('parent')
+                ->with('childs')
                 ->scopes('enabled')
                 ->select('name', 'id', 'parent_id')
+                ->whereNull('parent_id')
+                ->orderBy('name')
                 ->get()
                 ->except($this->category->id),
         ]);

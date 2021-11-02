@@ -28,11 +28,17 @@
                 <div class="mt-4">
                     <x-shopper-input.group label="Parent" for="category" wire:ignore>
                         <x-shopper-input.select wire:model="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
-                            <option value="0">{{ __('No parent category') }}</option>
+                            <option value="0">{{ __('--- No category ---') }}</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" @if($category->id === $parent_id) selected @endif>
-                                    {{ $category->name }} @if($category->parent_id) ({{ $category->parent_name }}) @endif
+                                    {{ $category->name }}
                                 </option>
+
+                                @if($category->childs->isNotEmpty())
+                                    @foreach($category->childs as $child)
+                                        @include('shopper::components.input.option-category', ['name' => $category->name, 'category' => $child])
+                                    @endforeach
+                                @endif
                             @endforeach
                         </x-shopper-input.select>
                     </x-shopper-input.group>

@@ -44,6 +44,7 @@
     "milon/barcode": "^8.0.1",
     "moneyphp/money": "^3.3",
     "pragmarx/google2fa": "^7.0|^8.0",
+    "rappasoft/laravel-livewire-tables": "^1.19",
     "reecem/mocker": "1.1.*",
     "spatie/laravel-analytics": "^3.11",
     "spatie/laravel-medialibrary": "^9.0.0",

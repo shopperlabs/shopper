@@ -46,6 +46,8 @@ class Show extends Component
 
         $this->order->update(['notes' => $this->notes]);
 
+        // TODO Send notification to the customer about order notes.
+
         $this->notify([
             'title' => __('Notes added'),
             'message' => __('Your note has been added and will be emailed to the user on their order.'),
@@ -56,7 +58,7 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::REGISTER]);
 
-        // Send notification to the customer
+        // TODO Send notification to the customer about order registration.
 
         $this->notify([
             'title' => __('Update Status'),

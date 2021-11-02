@@ -62,10 +62,6 @@ You can communicate with us using the following mediums:
 
 Shopper Framework can provide premium support for a monthly fee. Find out more via the [Sponsor Support Program](https://github.com/sponsors/sense).
 
-## Contributing
-
-Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
-
 ## ToDo/Roadmap
 - [ ] Add `laravel-livewire-datatable` to replace all tables (https://github.com/rappasoft/laravel-livewire-tables)
 - [ ] Replace all Shopper forms input components to `wire-ui` form components (https://livewire-wireui.com)
@@ -73,8 +69,13 @@ Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 - [ ] Add Shipping Methods
 - [ ] Add Tax rates
 - [ ] Publish Documentation 
+- [ ] Publish Demo Website (Private repository only for sponsors)
 - [ ] Many channels support (Facebook, Twitter, Instagram & Telegram)
 - [ ] Fix Mailable class with parameters
+
+## Contributing
+
+Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 
 ## Security
 

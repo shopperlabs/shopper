@@ -1,0 +1,149 @@
+<?php
+
+namespace Shopper\Framework\Http\Livewire\Tables;
+
+use Illuminate\Database\Eloquent\Builder;
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Filter;
+use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+
+class ProductsTable extends DataTableComponent
+{
+    public bool $columnSelect = true;
+
+    public $columnSearch = [
+        'name' => null,
+        'price_amount' => null,
+    ];
+
+    public function boot()
+    {
+        $this->queryString['columnSearch'] = ['except' => null];
+    }
+
+    public function bulkActions(): array
+    {
+        return [
+            'delete'   => __('Delete'),
+            'activate' => __('Activate'),
+            'deactivate' => __('Deactivate'),
+        ];
+    }
+
+    public function delete()
+    {
+        if ($this->selectedRowsQuery->count() > 0) {
+            (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
+
+            $this->notify([
+                'title' => __('Deleted'),
+                'message' => __('The products has successfully removed!'),
+            ]);
+        }
+
+        $this->selected = [];
+
+        $this->resetAll();
+    }
+
+    public function deactivate()
+    {
+        if ($this->selectedRowsQuery->count() > 0) {
+            (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_visible' => false]);
+
+            $this->notify([
+                'title' => __('Visibility'),
+                'message' => __('The products has successfully updated visibility status!'),
+            ]);
+        }
+
+        $this->selected = [];
+
+        $this->resetAll();
+    }
+
+    public function activate()
+    {
+        if ($this->selectedRowsQuery->count() > 0) {
+            (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_visible' => true]);
+
+            $this->notify([
+                'title' => __('Visibility'),
+                'message' => __('The products has successfully updated visibility status!'),
+            ]);
+        }
+
+        $this->selected = [];
+
+        $this->resetAll();
+    }
+
+    public function filters(): array
+    {
+        return [
+            'is_visible' => Filter::make('Visible')
+                ->select([
+                    '' => __('Any'),
+                    'yes' => __('Yes'),
+                    'no' => __('No'),
+                ]),
+            'brands' => Filter::make('Brands')
+                ->multiSelect(
+                    (new BrandRepository())->makeModel()->newQuery()
+                        ->orderBy('name')
+                        ->get()
+                        ->keyBy('id')
+                        ->map(fn ($name) => $name->name)
+                        ->toArray()
+                ),
+        ];
+    }
+
+    public function columns(): array
+    {
+        return [
+            Column::make('Name')
+                ->excludeFromSelectable()
+                ->searchable()
+                ->sortable()
+                ->format(function ($value, $column, $row) {
+                    return view('shopper::livewire.tables.cells.products.name')->with('product', $row);
+                }),
+            Column::make('Price', 'price_amount')
+                ->sortable()
+                ->searchable()
+                ->format(function ($value) {
+                    return $value ? '<span class="text-gray-500 dark:text-gray-400 font-medium">' . shopper_money_format($value) . '</span>' : null;
+                })->asHtml(),
+            Column::make('Sku', 'sku')
+                ->sortable()
+                ->format(function ($value) {
+                    return $value ? '<span class="text-gray-500 dark:text-gray-400 font-medium">' . $value . '</span>' : '<span class="inline-flex text-gray-700 dark:text-gray-500">&mdash;</span>';
+                })->asHtml(),
+            Column::make('Brand', 'brand')
+                ->format(function ($value) {
+                    return view('shopper::livewire.tables.cells.products.brand')->with('brand', $value);
+                }),
+            Column::make('Stock')
+                ->format(function ($value, $column, $row) {
+                    return view('shopper::livewire.tables.cells.products.stock')->with('product', $row);
+                }),
+            Column::make('Published At', 'published_at')
+                ->sortable()
+                ->format(function ($value) {
+                    return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>" . $value->formatLocalized('%d %B, %Y') . '</time>' : '';
+                })->asHtml(),
+        ];
+    }
+
+    public function query(): Builder
+    {
+        return (new ProductRepository())->makeModel()->newQuery()->with(['brand', 'variations'])
+            ->withCount(['variations'])
+            ->where('parent_id', null)
+            ->when($this->getFilter('brands'), fn ($query, $brands) => $query->whereHas('brand', fn ($query) => $query->whereIn('brand_id', $brands)))
+            ->when($this->getFilter('is_visible'), fn ($query, $active) => $query->where('is_visible', $active === 'yes'));
+    }
+}

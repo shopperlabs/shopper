@@ -56,5 +56,10 @@
 }
 
 .choices[data-type*='select-one'] .choices__input {
-  @apply rounded-none border-b-2 border-gray-300 dark:border-gray-700 !important;
+  @apply rounded-none border-b-2 bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700 !important;
+}
+
+.choices__item.choices__item--choice.is-selected.choices__item--selectable.is-highlighted,
+.choices__item.choices__item--choice.is-selected.choices__item--selectable {
+    @apply bg-blue-600 border-blue-600 text-white !important;
 }

@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 module.exports = {
   mode: 'jit',
@@ -10,6 +11,7 @@ module.exports = {
       './resources/lang/**/*.php',
       './src/**/*.php',
       './vendor/livewire-ui/modal/resources/views/*.blade.php',
+      './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
     ],
     options: {
       safelist: [
@@ -20,6 +22,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      colors: {
+        orange: colors.orange,
+      },
       inset: {
         '-0.5': '-0.125rem',
       },
