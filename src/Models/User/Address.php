@@ -2,12 +2,15 @@
 
 namespace Shopper\Framework\Models\User;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Framework\Models\System\Country;
 
 class Address extends Model
 {
+    use HasFactory;
+
     public const TYPE_BILLING = 'billing';
 
     public const TYPE_SHIPPING = 'shipping';

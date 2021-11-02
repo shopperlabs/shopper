@@ -2,13 +2,14 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Framework\Models\Traits\HasSlug;
 
 class Attribute extends Model
 {
-    use HasSlug;
+    use HasFactory, HasSlug;
 
     /**
      * The attributes that are mass assignable.

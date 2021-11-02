@@ -2,13 +2,14 @@
 
 namespace Shopper\Framework\Models\Shop;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Models\Traits\HasSlug;
 
 class Channel extends Model
 {
-    use HasSlug;
+    use HasFactory, HasSlug;
 
     /**
      * The attributes that are mass assignable.
