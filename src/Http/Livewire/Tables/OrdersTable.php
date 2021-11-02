@@ -67,7 +67,7 @@ class OrdersTable extends DataTableComponent
             Column::make('Date', 'created_at')
                 ->sortable()
                 ->format(function ($value) {
-                    return $value ? "<time datetime='". $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>". $value->diffForHumans() ."</time>": '';
+                    return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>" . $value->diffForHumans() . '</time>' : '';
                 })->asHtml(),
             Column::make('Status', 'status')
                 ->sortable()
@@ -77,8 +77,8 @@ class OrdersTable extends DataTableComponent
             Column::make('Customer', 'user_id')
                 ->searchable(function (Builder $query, $searchTerm) {
                     $query->whereHas('customer', function (Builder $query) use ($searchTerm) {
-                        $query->where('first_name', 'like', '%'. $searchTerm .'%')
-                            ->orWhere('last_name', 'like', '%'. $searchTerm .'%');
+                        $query->where('first_name', 'like', '%' . $searchTerm . '%')
+                            ->orWhere('last_name', 'like', '%' . $searchTerm . '%');
                     });
                 })
                 ->sortable()
@@ -92,7 +92,7 @@ class OrdersTable extends DataTableComponent
             Column::make('Total')
                 ->addClass('text-right')
                 ->format(function ($value, $column, $row) {
-                    return "<span class='text-gray-500 dark:text-gray-400'>". $row->total ."</span>";
+                    return "<span class='text-gray-500 dark:text-gray-400'>" . $row->total . '</span>';
                 })->asHtml(),
         ];
     }
@@ -100,6 +100,6 @@ class OrdersTable extends DataTableComponent
     public function query(): Builder
     {
         return Order::query()->with(['customer', 'items'])->withCount('items')
-            ->when($this->getFilter('status'), fn($query, $status) => $query->where('status', $status));
+            ->when($this->getFilter('status'), fn ($query, $status) => $query->where('status', $status));
     }
 }

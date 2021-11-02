@@ -95,7 +95,7 @@ class ProductsTable extends DataTableComponent
                         ->orderBy('name')
                         ->get()
                         ->keyBy('id')
-                        ->map(fn($name) => $name->name)
+                        ->map(fn ($name) => $name->name)
                         ->toArray()
                 ),
         ];
@@ -115,12 +115,12 @@ class ProductsTable extends DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->format(function ($value) {
-                    return $value ? '<span class="text-gray-500 dark:text-gray-400 font-medium">'. shopper_money_format($value) .'</span>' : null;
+                    return $value ? '<span class="text-gray-500 dark:text-gray-400 font-medium">' . shopper_money_format($value) . '</span>' : null;
                 })->asHtml(),
             Column::make('Sku', 'sku')
                 ->sortable()
                 ->format(function ($value) {
-                    return $value ? '<span class="text-gray-500 dark:text-gray-400 font-medium">'. $value .'</span>' : '<span class="inline-flex text-gray-700 dark:text-gray-500">&mdash;</span>';
+                    return $value ? '<span class="text-gray-500 dark:text-gray-400 font-medium">' . $value . '</span>' : '<span class="inline-flex text-gray-700 dark:text-gray-500">&mdash;</span>';
                 })->asHtml(),
             Column::make('Brand', 'brand')
                 ->format(function ($value) {
@@ -133,7 +133,7 @@ class ProductsTable extends DataTableComponent
             Column::make('Published At', 'published_at')
                 ->sortable()
                 ->format(function ($value) {
-                    return $value ? "<time datetime='". $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>". $value->formatLocalized('%d %B, %Y') ."</time>": '';
+                    return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>" . $value->formatLocalized('%d %B, %Y') . '</time>' : '';
                 })->asHtml(),
         ];
     }
@@ -143,7 +143,7 @@ class ProductsTable extends DataTableComponent
         return (new ProductRepository())->makeModel()->newQuery()->with(['brand', 'variations'])
             ->withCount(['variations'])
             ->where('parent_id', null)
-            ->when($this->getFilter('brands'), fn($query, $brands) => $query->whereHas('brand', fn($query) => $query->whereIn('brand_id', $brands)))
-            ->when($this->getFilter('is_visible'), fn($query, $active) => $query->where('is_visible', $active === 'yes'));
+            ->when($this->getFilter('brands'), fn ($query, $brands) => $query->whereHas('brand', fn ($query) => $query->whereIn('brand_id', $brands)))
+            ->when($this->getFilter('is_visible'), fn ($query, $active) => $query->where('is_visible', $active === 'yes'));
     }
 }

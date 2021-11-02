@@ -122,7 +122,7 @@ class AttributesTable extends DataTableComponent
                 ->sortable()
                 ->addClass('hidden md:table-cell')
                 ->format(function ($value) {
-                    return $value ? "<time datetime='". $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>". $value->formatLocalized('%d %B, %Y') ."</time>": '';
+                    return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>" . $value->formatLocalized('%d %B, %Y') . '</time>' : '';
                 })->asHtml(),
         ];
     }
@@ -130,7 +130,7 @@ class AttributesTable extends DataTableComponent
     public function query(): Builder
     {
         return Attribute::query()
-            ->when($this->getFilter('is_searchable'), fn($query, $active) => $query->where('is_searchable', $active === 'yes'))
-            ->when($this->getFilter('is_searchable'), fn($query, $active) => $query->where('is_searchable', $active === 'yes'));
+            ->when($this->getFilter('is_searchable'), fn ($query, $active) => $query->where('is_searchable', $active === 'yes'))
+            ->when($this->getFilter('is_searchable'), fn ($query, $active) => $query->where('is_searchable', $active === 'yes'));
     }
 }

@@ -96,7 +96,7 @@ class ReviewsTable extends DataTableComponent
             Column::make('Product', 'name')
                 ->sortable()
                 ->asHtml()
-                ->secondaryHeader(function() {
+                ->secondaryHeader(function () {
                     return view('shopper::livewire.tables.cells.input-search', ['field' => 'name', 'columnSearch' => $this->columnSearch]);
                 }),
             Column::make('Reviewer')->sortable(),

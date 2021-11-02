@@ -96,7 +96,7 @@ class CustomersTable extends DataTableComponent
             })
             ->when($this->getFilter('search'), fn ($query, $term) => $query->research($term))
             ->when($this->getFilter('mailing'), fn ($query, $active) => $query->where('opt_in', $active === 'yes'))
-            ->when($this->getFilter('verified'), fn ($query, $verified) => $verified === 'yes' ? $query->whereNotNull('email_verified_at') : $query->whereNull('email_verified_at'));;
+            ->when($this->getFilter('verified'), fn ($query, $verified) => $verified === 'yes' ? $query->whereNotNull('email_verified_at') : $query->whereNull('email_verified_at'));
     }
 
     public function rowView(): string
