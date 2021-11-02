@@ -97,8 +97,8 @@ class Create extends AbstractBaseComponent
             );
         }
 
-        if (collect($this->associateCategories)->isNotEmpty()) {
-            $product->categories()->attach($this->associateCategories);
+        if (collect($this->category_ids)->isNotEmpty()) {
+            $product->categories()->attach($this->category_ids);
         }
 
         if (collect($this->associateCollections)->isNotEmpty()) {
@@ -135,8 +135,10 @@ class Create extends AbstractBaseComponent
                 ->get(),
             'categories' => (new CategoryRepository())
                 ->makeModel()
+                ->with('childs')
                 ->scopes('enabled')
-                ->select('name', 'id')
+                ->whereNull('parent_id')
+                ->select('name', 'id', 'parent_id')
                 ->get(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
             'inventories' => Inventory::query()->get(['name', 'id']),
