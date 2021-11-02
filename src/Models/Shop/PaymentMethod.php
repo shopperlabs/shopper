@@ -3,13 +3,14 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Shopper\Framework\Models\Traits\HasSlug;
 
 class PaymentMethod extends Model
 {
-    use HasSlug;
+    use HasFactory, HasSlug;
 
     /**
      * The attributes that are mass assignable.

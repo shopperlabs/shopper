@@ -2,12 +2,15 @@
 
 namespace Shopper\Framework\Models\Shop\Order;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class OrderItem extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *

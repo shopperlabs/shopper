@@ -47,7 +47,7 @@ class Edit extends AbstractBaseComponent
         $this->publishedAt = $product->published_at->format('Y-m-d');
         $this->publishedAtFormatted = $product->published_at->toRfc7231String();
         $this->associateCollections = $this->collection_ids = $product->collections->pluck('id')->toArray();
-        $this->associateCategories = $this->category_ids = $product->categories->pluck('id')->toArray();
+        $this->category_ids = $product->categories->pluck('id')->toArray();
         $this->currency = $currency;
         $this->images = $product->getMedia(config('shopper.system.storage.disks.uploads'));
     }
@@ -94,8 +94,8 @@ class Edit extends AbstractBaseComponent
             );
         }
 
-        if (collect($this->associateCategories)->isNotEmpty()) {
-            $this->product->categories()->sync($this->associateCategories);
+        if (collect($this->category_ids)->isNotEmpty()) {
+            $this->product->categories()->sync($this->category_ids);
         }
 
         if (collect($this->associateCollections)->isNotEmpty()) {
@@ -122,8 +122,10 @@ class Edit extends AbstractBaseComponent
                 ->get(),
             'categories' => (new CategoryRepository())
                 ->makeModel()
+                ->with('childs')
                 ->scopes('enabled')
-                ->select('name', 'id')
+                ->whereNull('parent_id')
+                ->select('name', 'id', 'parent_id')
                 ->get(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
         ]);

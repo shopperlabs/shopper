@@ -126,13 +126,6 @@
                                 @endforeach
                             </x-shopper-input.select>
                         </x-shopper-input.group>
-                        <x-shopper-input.group class="p-4 sm:p-5" label="Categories" for="categories" wire:ignore>
-                            <x-shopper-input.select wire:model="category_ids" id="categories" multiple x-data="{}" x-init="function () { choices($el) }">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" @if(in_array($category->id, $category_ids)) selected @endif>{{ $category->name }}</option>
-                                @endforeach
-                            </x-shopper-input.select>
-                        </x-shopper-input.group>
                         <x-shopper-input.group class="p-4 sm:p-5" label="Collections" for="collections" wire:ignore>
                             <x-shopper-input.select wire:model="collection_ids" id="collections" multiple  x-data="{}" x-init="function () { choices($el) }">
                                 @foreach($collections as $collection)
@@ -140,6 +133,33 @@
                                 @endforeach
                             </x-shopper-input.select>
                         </x-shopper-input.group>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="px-4 pt-4 sm:px-5 sm:pt-5">
+                        <h4 class="block text-base font-medium leading-6 text-gray-900 dark:text-white">{{ __('Product categories') }}</h4>
+                    </div>
+                    <div class="px-4 py-3">
+                        <div class="space-y-3 p-2 max-h-96 border border-gray-200 rounded-md shadow-sm overflow-scroll hide-scroll dark:border-gray-700">
+                            @foreach($categories as $category)
+                                <div class="relative flex items-start">
+                                    <div class="flex items-center h-5">
+                                        <x-shopper-input.checkbox id="category-{{ $category->id }}" wire:model="category_ids" value="{{ $category->id }}" />
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <label for="category-{{ $category->id }}" class="font-medium text-gray-700 dark:text-gray-300">{{ $category->name }}</label>
+                                    </div>
+                                </div>
+
+                                @if($category->childs->isNotEmpty())
+                                    <div class="ml-4 space-y-3">
+                                        @foreach($category->childs as $child)
+                                            @include('shopper::components.input.checkbox-category', ['parent' => $category->parent_id, 'category' => $child])
+                                        @endforeach
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </aside>

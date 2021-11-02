@@ -3,12 +3,15 @@
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Review extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that aren't mass assignable.
      *

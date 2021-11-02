@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -11,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Collection extends Model implements HasMedia
 {
-    use HasSlug, InteractsWithMedia;
+    use HasFactory, HasSlug, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.

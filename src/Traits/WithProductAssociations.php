@@ -6,18 +6,7 @@ trait WithProductAssociations
 {
     public array $category_ids = [];
     public array $collection_ids = [];
-    public array $associateCategories = [];
     public array $associateCollections = [];
-
-    public function updatedCategoryIds($choices)
-    {
-        if (! in_array($choices['value'], $this->associateCategories)) {
-            array_push($this->associateCategories, $choices['value']);
-        } else {
-            $key = array_search($choices['value'], $this->associateCategories);
-            unset($this->associateCategories[$key]);
-        }
-    }
 
     public function updatedCollectionIds($choices)
     {
