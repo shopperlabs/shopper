@@ -63,7 +63,7 @@ You can communicate with us using the following mediums:
 Shopper Framework can provide premium support for a monthly fee. Find out more via the [Sponsor Support Program](https://github.com/sponsors/sense).
 
 ## ToDo/Roadmap
-- [ ] Add `laravel-livewire-datatable` to replace all tables (https://github.com/rappasoft/laravel-livewire-tables)
+- [x] Add `laravel-livewire-datatable` to replace all tables (https://github.com/rappasoft/laravel-livewire-tables)
 - [ ] Replace all Shopper forms input components to `wire-ui` form components (https://livewire-wireui.com)
 - [ ] Add PayPal as default payment method
 - [ ] Add Shipping Methods
