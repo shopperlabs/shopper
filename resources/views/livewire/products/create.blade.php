@@ -102,7 +102,7 @@
                         <div class="p-4 sm:p-5">
                             <div class="flex items-center justify-between">
                                 <h4 class="block text-sm font-medium leading-5 text-gray-900 dark:text-white">{{ __('Quantity Inventory') }}</h4>
-                                <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">{{ __("Manage Inventories") }}</a>
+                                <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 transition duration-150 ease-in-out">{{ __("Manage Inventories") }}</a>
                             </div>
                             <div class="mt-4 divide-y divide-gray-200 dark:divide-gray-700">
                                 <div class="grid grid-cols-3 py-4">
@@ -202,7 +202,7 @@
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ __('Search engine listing preview') }}</h3>
                         @if(! $updateSeo)
-                            <button wire:click="updateSeo" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">{{ __('Edit SEO preview') }}</button>
+                            <button wire:click="updateSeo" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 transition duration-150 ease-in-out">{{ __('Edit SEO preview') }}</button>
                         @endif
                     </div>
                     <div class="mt-4">
@@ -210,7 +210,7 @@
                             <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('Add a title and description to see how this product might appear in a search engine listing.') }}</p>
                         @else
                             <div class="flex flex-col">
-                                <h3 class="text-base text-blue-800 font-medium leading-6">{{ $seoTitle }}</h3>
+                                <h3 class="text-base text-primary-800 font-medium leading-6">{{ $seoTitle }}</h3>
                                 <span class="mt-1 text-green-600 text-sm leading-5">{{ env('APP_URL') }}/products/{{ str_slug($name) }}</span>
                                 <p class="mt-1 text-gray-500 dark:text-gray-400 text-sm leading-5">{{ str_limit($seoDescription, 160) }}</p>
                             </div>
@@ -240,15 +240,15 @@
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden divide-y divide-gray-200 dark:divide-gray-700">
                     <div class="p-4 sm:p-5">
                         <x-shopper-label value="{{ __('Product status') }}" />
-                        <div class="mt-4 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
+                        <div class="mt-4 px-3 py-2.5 bg-primary-50 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
-                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
+                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 flex-shrink-0">
                                     <x-heroicon-o-eye class="h-5 w-5 text-white" />
                                 </span>
                                 <span class="font-semibold ml-3 text-sm">{{ __('Visible') }}</span>
                             </div>
                             <div>
-                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0" @click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" :class="{ 'bg-gray-200 dark:bg-gray-600': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0" @click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" :class="{ 'bg-gray-200 dark:bg-gray-600': !on, 'bg-primary-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-gray-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                     <span aria-hidden="true" :class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
                                 </span>
@@ -268,11 +268,11 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <x-heroicon-o-calendar class="h-5 w-5 text-gray-400" />
                             </div>
-                            <input wire:model="publishedAt" x-ref="input" id="date" type="text" class="w-full pl-10 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm" placeholder="{{ __('Choose a date') }}" readonly />
+                            <input wire:model="publishedAt" x-ref="input" id="date" type="text" class="w-full pl-10 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm" placeholder="{{ __('Choose a date') }}" readonly />
                         </div>
                         @if($publishedAt)
                             <div class="mt-2 flex items-start">
-                                <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-blue-600"></div>
+                                <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                                 <p class="ml-2.5 text-sm text-gray-500 leading-5">
                                     {{ __('Will be published on:') }} <br>
                                     {{ $publishedAtFormatted }}

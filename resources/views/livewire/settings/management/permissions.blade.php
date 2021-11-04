@@ -17,7 +17,7 @@
                                    id="permission_{{ $permission->id }}"
                                    name="permissions"
                                    type="checkbox"
-                                   class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:offset-gray-800"
+                                   class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:offset-gray-800"
                                    wire:key="{{ $permission->id }}"
                                    value="{{ $permission->id }}"
                                    @click="togglePermission({{ $permission->id }})"

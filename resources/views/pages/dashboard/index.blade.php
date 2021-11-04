@@ -8,7 +8,7 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8 3.6a1.2 1.2 0 1 1 2.4 0v6.6a.6.6 0 1 0 1.2 0V4.8a1.2 1.2 0 1 1 2.4 0v5.4a.6.6 0 1 0 1.2 0v-3a1.2 1.2 0 1 1 2.4 0v6a8.401 8.401 0 0 1-16.16 3.215A8.4 8.4 0 0 1 3.6 13.2v-2.4a1.2 1.2 0 0 1 2.4 0v3a.6.6 0 1 0 1.2 0v-9a1.2 1.2 0 0 1 2.4 0v5.4a.6.6 0 1 0 1.2 0V3.6z" />
         </svg>
         <h2 class="text-3xl leading-8 font-bold text-gray-900 dark:text-white sm:leading-9 sm:truncate">
-            @lang('shopper::messages.dashboard.title')
+            Welcome to <span class='font-medium bg-clip-text text-transparent bg-gradient-to-r from-secondary-500 to-primary-600'>Shopper</span> Dashboard
         </h2>
     </div>
 
@@ -19,14 +19,15 @@
             </div>
 
             <div class="mt-4 text-gray-500 dark:text-gray-400">
-                @lang('shopper::messages.dashboard.description')
+                To begin building your new store with Laravel Shopper v2, we recommend starting with these steps. The framework allows you to create
+                your store and configure it exactly as you want. You can make <span class='text-gray-600 dark:text-white font-medium'>integrations</span> to go faster if you want.
             </div>
         </div>
 
         <div class="bg-gray-50 dark:bg-gray-700 grid grid-cols-1 md:grid-cols-2">
             <div class="px-6 py-5">
                 <div class="flex items-center">
-                    <x-heroicon-o-code class="w-6 h-6 text-blue-600" />
+                    <x-heroicon-o-code class="w-6 h-6 text-primary-600" />
                     <h4 class="ml-4 text-base text-gray-900 dark:text-white leading-6 font-medium">Documentation</h4>
                 </div>
 
@@ -36,10 +37,10 @@
                     </div>
 
                     <a href="https://docs.laravelshopper.io" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
+                        <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
                             <span>{{ __('Visit the documentation') }}</span>
 
-                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
+                            <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
                                 <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                             </span>
                         </div>
@@ -49,7 +50,7 @@
 
             <div class="px-6 py-5 border-t border-gray-200 dark:border-gray-600 sm:border-t-0">
                 <div class="flex items-center">
-                    <x-heroicon-o-film class="w-6 h-6 text-blue-600" />
+                    <x-heroicon-o-film class="w-6 h-6 text-primary-600" />
                     <h4 class="ml-4 text-base text-gray-900 dark:text-white leading-6 font-medium">{{ __('Screencasts') }}</h4>
                 </div>
 
@@ -59,10 +60,10 @@
                     </div>
 
                     <a href="https://docs.laravelshopper.io/screencasts" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
+                        <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
                             <span>{{ __('Start watching Shopper') }}</span>
 
-                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
+                            <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
                                 <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                             </span>
                         </div>
@@ -72,7 +73,7 @@
 
             <div class="px-6 py-5 border-t border-gray-200 dark:border-gray-600">
                 <div class="flex items-center">
-                    <x-heroicon-o-color-swatch class="w-6 h-6 text-blue-600" />
+                    <x-heroicon-o-color-swatch class="w-6 h-6 text-primary-600" />
                     <h4 class="ml-4 text-base text-gray-900 dark:text-white leading-6 font-medium">{{ __('Themes') }}</h4>
                 </div>
 
@@ -82,10 +83,10 @@
                     </div>
 
                     <a href="#" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
+                        <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
                             <span>{{ __('Find a Theme') }}</span>
 
-                            <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
+                            <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
                                 <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                             </span>
                         </div>
@@ -95,7 +96,7 @@
 
             <div class="px-6 py-5 border-t border-gray-200 dark:border-gray-600">
                 <div class="flex items-center">
-                    <x-heroicon-o-book-open class="w-6 h-6 text-blue-600" />
+                    <x-heroicon-o-book-open class="w-6 h-6 text-primary-600" />
                     <h4 class="ml-4 text-base text-gray-900 dark:text-white leading-6 font-medium">{{ __('Add product') }}</h4>
                 </div>
 
@@ -106,10 +107,10 @@
 
                     @can('add_products')
                         <a href="{{ route('shopper.products.create') }}" class="group">
-                            <div class="mt-3 flex items-center text-sm font-medium text-blue-600">
+                            <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
                                 <span>{{ __('Add product to your store') }}</span>
 
-                                <span class="ml-1 text-blue-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
+                                <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
                                     <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                                 </span>
                             </div>

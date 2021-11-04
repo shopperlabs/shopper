@@ -17,11 +17,11 @@ input[type="number"] {
 [x-cloak] {display: none !important; }
 
 .primary-menu .active {
-    @apply bg-blue-900;
+    background-color: theme('colors.primary.900');
 }
 
 .primary-menu .active:hover, .primary-menu .active:focus {
-    @apply bg-blue-900;
+    background-color: theme('colors.primary.900');
 }
 
 .dark trix-toolbar .trix-button-group {

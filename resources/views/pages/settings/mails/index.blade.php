@@ -30,7 +30,7 @@
                 <div class="h-full relative flex flex-col w-80 border-r border-gray-200 bg-white dark:bg-gray-900 dark:border-gray-800">
                     <nav aria-label="{{ __('Email menu') }}" class="min-h-(screen-content) flex-1 overflow-y-auto">
                         <ul class="border-b border-gray-200 divide-y divide-gray-200 dark:divide-gray-700 dark:border-gray-700">
-                            <li class="relative py-5 px-6 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 dark:hover:bg-gray-800" :class="{ 'bg-gray-50 dark:bg-gray-800': currentTab === 'config' }">
+                            <li class="relative py-5 px-6 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-gray-800" :class="{ 'bg-gray-50 dark:bg-gray-800': currentTab === 'config' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="flex-shrink-0 text-gray-500 dark:text-gray-400">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="relative py-5 px-6 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 dark:hover:bg-gray-800" :class="{ 'bg-gray-50 dark:bg-gray-800': currentTab === 'templates' }">
+                            <li class="relative py-5 px-6 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-gray-800" :class="{ 'bg-gray-50 dark:bg-gray-800': currentTab === 'templates' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="flex-shrink-0 text-gray-500 dark:text-gray-400">
                                         <x-heroicon-o-template class="w-6 h-6" />
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="relative py-5 px-6 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 dark:hover:bg-gray-800" :class="{ 'bg-gray-50 dark:bg-gray-800': currentTab === 'mailables' }">
+                            <li class="relative py-5 px-6 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-gray-800" :class="{ 'bg-gray-50 dark:bg-gray-800': currentTab === 'mailables' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="flex-shrink-0 text-gray-500 dark:text-gray-400">
                                         <x-heroicon-o-mail class="w-6 h-6" />

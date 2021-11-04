@@ -230,7 +230,7 @@
                               <table cellpadding="0" cellspacing="0">
                                 <tr>
                                   <td style="font-size:12px; padding-top:5px; text-align:left;">
-                                    User: <a style="color:blue;" href="">Jon Doe</a>
+                                    User: <a style="color:primary;" href="">Jon Doe</a>
                                   </td>
                                 </tr>
                               </table>

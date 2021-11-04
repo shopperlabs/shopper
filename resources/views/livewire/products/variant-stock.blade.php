@@ -38,10 +38,10 @@
                             <div class="relative flex items-stretch flex-grow focus-within:z-10">
                                 <input wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="form-input block w-32 transition duration-150 rounded-none rounded-l-md ease-in-out sm:text-sm sm:leading-5" placeholder="12" />
                             </div>
-                            <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-none text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus-border-2 focus:border-blue-500 focus:border-blue-500">
+                            <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-none text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus-border-2 focus:border-primary-500 focus:border-primary-500">
                                 <span>&minus;</span>
                             </button>
-                            <button wire:click="incrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus-border-2 focus:border-blue-500 focus:border-blue-500">
+                            <button wire:click="incrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus-border-2 focus:border-primary-500 focus:border-primary-500">
                                 <span>&plus;</span>
                             </button>
                         </div>

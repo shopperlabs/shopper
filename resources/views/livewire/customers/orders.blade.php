@@ -90,7 +90,7 @@
                     </span>
                     {{ __('No Assigned.') }}
                 </p>
-                <a class="text-blue-600 hover:text-blue-500 underline text-sm leading-5 dark:text-blue-400" href="{{ route('shopper.orders.show', $order) }}">
+                <a class="text-primary-600 hover:text-primary-500 underline text-sm leading-5 dark:text-primary-400" href="{{ route('shopper.orders.show', $order) }}">
                     {{ __('View order') }}
                 </a>
             </div>

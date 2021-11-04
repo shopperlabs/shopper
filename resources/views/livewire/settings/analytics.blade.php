@@ -55,7 +55,7 @@
                                 <div x-data="{ focused: false }">
                                     <span>
                                         <input @focus="focused = true" @blur="focused = false" class="sr-only" type="file" id="json_file" wire:model="json_file">
-                                        <label for="json_file" :class="{ 'outline-none border-blue-300 shadow-outline-blue': focused }" class="cursor-pointer inline-flex items-center py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 rounded-md shadow-sm dark:border-gray-700 dark:text-gray-400 dark:hover:text-white">
+                                        <label for="json_file" :class="{ 'outline-none border-primary-300 shadow-outline-primary': focused }" class="cursor-pointer inline-flex items-center py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 hover:text-gray-500 rounded-md shadow-sm dark:border-gray-700 dark:text-gray-400 dark:hover:text-white">
                                             <x-heroicon-o-download class="h-5 w-5 mr-1.5" />
                                             {{ __('Upload') }}
                                         </label>
@@ -110,7 +110,7 @@
                                     <x-shopper-input.text wire:model="google_tag_manager_account_id" type="text" id="google_tag_id" placeholder="GTM-XXX" />
                                 </x-shopper-input.group>
                                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                    {{ __('Read more about') }} <a href="https://marketingplatform.google.com/about/tag-manager" target="_blank" class="text-blue-500 hover:text-blue-400">Google Tag Manager</a>.
+                                    {{ __('Read more about') }} <a href="https://marketingplatform.google.com/about/tag-manager" target="_blank" class="text-primary-500 hover:text-primary-400">Google Tag Manager</a>.
                                 </p>
                             </div>
                         </div>
@@ -150,7 +150,7 @@
                                     <x-shopper-input.text wire:model="facebook_pixel_account_id" type="text" id="pixel_facebook_id" placeholder="12345678" />
                                 </x-shopper-input.group>
                                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                                    {{ __('Read more about') }} <a href="https://www.facebook.com/business/learn/facebook-ads-pixel" target="_blank" class="text-blue-500 hover:text-blue-400">Facebook Pixel</a>.
+                                    {{ __('Read more about') }} <a href="https://www.facebook.com/business/learn/facebook-ads-pixel" target="_blank" class="text-primary-500 hover:text-primary-400">Facebook Pixel</a>.
                                 </p>
                             </div>
                         </div>

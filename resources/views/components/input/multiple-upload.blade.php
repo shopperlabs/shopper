@@ -19,11 +19,11 @@
             @if(count($files) <= 8)
                 <li class="col-span-1">
                     <div x-ref="dragContainer"
-                         :class="focused ? 'bg-blue-50 border-blue-200 ' : 'border-gray-300 dark:border-gray-700 bg-transparent'"
-                         class="relative group flex justify-center p-5 border-2 border-gray-300 border-dashed hover:border-blue-200 hover:bg-blue-50 rounded-md cursor-pointer transition duration-150 ease-in-out"
+                         :class="focused ? 'bg-primary-50 border-primary-200 ' : 'border-gray-300 dark:border-gray-700 bg-transparent'"
+                         class="relative group flex justify-center p-5 border-2 border-gray-300 border-dashed hover:border-primary-200 hover:bg-primary-50 rounded-md cursor-pointer transition duration-150 ease-in-out"
                     >
                         <div class="text-center">
-                            <svg class="mx-auto h-8 w-8 text-gray-400 group-hover:text-blue-500" :class="{ 'text-blue-500': focused }" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                            <svg class="mx-auto h-8 w-8 text-gray-400 group-hover:text-primary-500" :class="{ 'text-primary-500': focused }" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                 <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </div>
@@ -35,9 +35,9 @@
                             @focus="focused = true"
                             @blur="focused = false"
                             @change="addFiles($event)"
-                            @dragover="$refs.dragContainer.classList.add('border-blue-200'); $refs.dragContainer.classList.add('ring-2'); $refs.dragContainer.classList.add('ring-inset');"
-                            @dragleave="$refs.dragContainer.classList.remove('border-blue-200'); $refs.dragContainer.classList.remove('ring-2'); $refs.dragContainer.classList.remove('ring-inset');"
-                            @drop="$refs.dragContainer.classList.remove('border-blue-200'); $refs.dragContainer.classList.remove('ring-2'); $refs.dragContainer.classList.remove('ring-inset');"
+                            @dragover="$refs.dragContainer.classList.add('border-primary-200'); $refs.dragContainer.classList.add('ring-2'); $refs.dragContainer.classList.add('ring-inset');"
+                            @dragleave="$refs.dragContainer.classList.remove('border-primary-200'); $refs.dragContainer.classList.remove('ring-2'); $refs.dragContainer.classList.remove('ring-inset');"
+                            @drop="$refs.dragContainer.classList.remove('border-primary-200'); $refs.dragContainer.classList.remove('ring-2'); $refs.dragContainer.classList.remove('ring-inset');"
                             {{ $attributes }}
                         />
                     </div>
@@ -46,15 +46,15 @@
         </ul>
     @else
         <div x-ref="dragContainer"
-             :class="focused ? 'bg-blue-50 border-blue-200 ' : 'border-gray-300 dark:border-gray-700 bg-transparent'"
-             class="relative flex-1 w-full px-6 py-10 group flex justify-center border-2 border-gray-300 border-dashed hover:border-blue-200 dark:border-gray-700 hover:bg-blue-50 dark:hover:bg-gray-900 rounded-md cursor-pointer transition duration-150 ease-in-out"
+             :class="focused ? 'bg-primary-50 border-primary-200 ' : 'border-gray-300 dark:border-gray-700 bg-transparent'"
+             class="relative flex-1 w-full px-6 py-10 group flex justify-center border-2 border-gray-300 border-dashed hover:border-primary-200 dark:border-gray-700 hover:bg-primary-50 dark:hover:bg-gray-900 rounded-md cursor-pointer transition duration-150 ease-in-out"
         >
             <div class="space-y-1 text-center" wire:loading.remove wire:target="files">
-                <svg class="mx-auto h-8 w-8 text-gray-400 group-hover:text-blue-500" :class="{ 'text-blue-500': focused }" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <svg class="mx-auto h-8 w-8 text-gray-400 group-hover:text-primary-500" :class="{ 'text-primary-500': focused }" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                    <span class="font-medium text-blue-600 group-hover:text-blue-500 dark:text-blue-400 dark:group-hover:text-blue-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                    <span class="font-medium text-primary-600 group-hover:text-primary-500 dark:text-primary-400 dark:group-hover:text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
                         {{ __('Upload a file') }}
                     </span>
                     {{ __('or drag and drop') }}
@@ -71,9 +71,9 @@
                 @focus="focused = true"
                 @blur="focused = false"
                 @change="addFiles($event)"
-                @dragover="$refs.dragContainer.classList.add('border-blue-200'); $refs.dragContainer.classList.add('ring-2'); $refs.dragContainer.classList.add('ring-inset');"
-                @dragleave="$refs.dragContainer.classList.remove('border-blue-200'); $refs.dragContainer.classList.remove('ring-2'); $refs.dragContainer.classList.remove('ring-inset');"
-                @drop="$refs.dragContainer.classList.remove('border-blue-200'); $refs.dragContainer.classList.remove('ring-2'); $refs.dragContainer.classList.remove('ring-inset');"
+                @dragover="$refs.dragContainer.classList.add('border-primary-200'); $refs.dragContainer.classList.add('ring-2'); $refs.dragContainer.classList.add('ring-inset');"
+                @dragleave="$refs.dragContainer.classList.remove('border-primary-200'); $refs.dragContainer.classList.remove('ring-2'); $refs.dragContainer.classList.remove('ring-inset');"
+                @drop="$refs.dragContainer.classList.remove('border-primary-200'); $refs.dragContainer.classList.remove('ring-2'); $refs.dragContainer.classList.remove('ring-inset');"
                 {{ $attributes }}
             />
         </div>
@@ -100,7 +100,7 @@
     @endif
 
     <div class="hidden mt-2 flex items-center" wire:loading.class.remove="hidden" wire:target="files">
-        <x-shopper-loader wire:loading wire:target="files" class="text-blue-600" />
+        <x-shopper-loader wire:loading wire:target="files" class="text-primary-600" />
         <span class="ml-1.5 text-sm text-gray-500 dark:text-gray-400">{{ __('Uploading...') }}</span>
     </div>
 </div>

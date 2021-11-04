@@ -4,7 +4,7 @@
         :class="focused ? 'bg-gray-50 ' : 'border-gray-300 dark:border-gray-700 bg-transparent'"
         class="relative flex-1 w-full px-6 py-10 group flex justify-center border-2 border-gray-300 border-dashed dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md cursor-pointer transition duration-150 ease-in-out">
         <div class="space-y-1 text-center">
-            <svg class="mx-auto h-20 w-20 text-gray-400 group-hover:text-blue-500" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 332.2 214" xml:space="preserve">
+            <svg class="mx-auto h-20 w-20 text-gray-400 group-hover:text-primary-500" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 332.2 214" xml:space="preserve">
                 <style>
                     .st0,
                     .st2{fill:none;stroke:#132144;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
@@ -25,7 +25,7 @@
                 {{ __('PNG, JPG, GIF up to 5MB') }}
             </p>
             <div class="mt-1" wire:loading.flex wire.target="files">
-                <x-shopper-loader class="text-blue-600" />
+                <x-shopper-loader class="text-primary-600" />
                 <span class="text-sm leading-5 text-gray-400 dark:text-gray-500">{{ __('Processing Files..') }}</span>
             </div>
         </div>
@@ -38,9 +38,9 @@
             wire:model="files"
             @focus="focused = true"
             @blur="focused = false"
-            @dragover="$refs.dragContainer.classList.add('border-blue-200'); $refs.dragContainer.classList.add('ring-4'); $refs.dragContainer.classList.add('ring-inset');"
-            @dragleave="$refs.dragContainer.classList.remove('border-blue-200'); $refs.dragContainer.classList.remove('ring-4'); $refs.dragContainer.classList.remove('ring-inset');"
-            @drop="$refs.dragContainer.classList.remove('border-blue-200'); $refs.dragContainer.classList.remove('ring-4'); $refs.dragContainer.classList.remove('ring-inset');"
+            @dragover="$refs.dragContainer.classList.add('border-primary-200'); $refs.dragContainer.classList.add('ring-4'); $refs.dragContainer.classList.add('ring-inset');"
+            @dragleave="$refs.dragContainer.classList.remove('border-primary-200'); $refs.dragContainer.classList.remove('ring-4'); $refs.dragContainer.classList.remove('ring-inset');"
+            @drop="$refs.dragContainer.classList.remove('border-primary-200'); $refs.dragContainer.classList.remove('ring-4'); $refs.dragContainer.classList.remove('ring-inset');"
         />
     </div>
     @if(collect($files)->isNotEmpty())

@@ -30,7 +30,7 @@
                                             @click="show = !show"
                                             x-text="show ? '{{ __("Hide") }}' : '{{ __("Show") }}'"
                                             type="button"
-                                            class="pl-2 text-sm text-leading-5 text-blue-600 hover:text-blue-500 focus:outline-none focus:text-blue-700 hover:underline">
+                                            class="pl-2 text-sm text-leading-5 text-primary-600 hover:text-primary-500 focus:outline-none focus:text-primary-700 hover:underline">
                                         </button>
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                                     <input wire:model="github_webhook_url" id="webhook_url" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
                                 </x-shopper-input.group>
                                 <p class="mt-2 text-gray-500 text-sm leading-5">
-                                    {{ __("Learn more about webhooks") }} <a href="https://docs.github.com/webhooks" target="_blank" class="text-blue-600 hover:text-blue-500">https://docs.github.com/webhooks</a>
+                                    {{ __("Learn more about webhooks") }} <a href="https://docs.github.com/webhooks" target="_blank" class="text-primary-600 hover:text-primary-500">https://docs.github.com/webhooks</a>
                                 </p>
                             </div>
                         </div>

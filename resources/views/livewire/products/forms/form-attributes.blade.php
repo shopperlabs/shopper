@@ -29,7 +29,7 @@
                             {{ str_limit(strip_tags(nl2br($productAttribute->values->first()->real_value)), 157) }}
                         </div>
                         <span class="flex-shrink-0 flex items-start space-x-4">
-                            <button wire:click="removeProductAttribute({{ $productAttribute->id }})" type="button" class="font-medium text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
+                            <button wire:click="removeProductAttribute({{ $productAttribute->id }})" type="button" class="font-medium text-primary-600 hover:text-primary-500 transition duration-150 ease-in-out">
                                 {{ __('Remove') }}
                             </button>
                         </span>
@@ -51,7 +51,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <button wire:click="removeProductAttribute({{ $productAttribute->id }})" type="button" class="mt-3 w-full text-right font-medium text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
+                            <button wire:click="removeProductAttribute({{ $productAttribute->id }})" type="button" class="mt-3 w-full text-right font-medium text-primary-600 hover:text-primary-500 transition duration-150 ease-in-out">
                                 {{ __('Remove All') }}
                             </button>
                         </div>

@@ -40,7 +40,7 @@
 }
 
 .choices__item.choices__item--selectable {
-  @apply bg-blue-500 border-blue-500 text-white mb-1 !important;
+  @apply bg-primary-500 border-primary-500 text-white mb-1 !important;
 }
 
 .choices__list--single > .choices__item.choices__item--selectable {
@@ -48,7 +48,7 @@
 }
 
 .choices__item.is-highlighted {
-  @apply bg-blue-600 border-blue-600 text-white !important;
+  @apply bg-primary-600 border-primary-600 text-white !important;
 }
 
 .choices[data-type*='select-one']:after {
@@ -61,5 +61,5 @@
 
 .choices__item.choices__item--choice.is-selected.choices__item--selectable.is-highlighted,
 .choices__item.choices__item--choice.is-selected.choices__item--selectable {
-    @apply bg-blue-600 border-blue-600 text-white !important;
+    @apply bg-primary-600 border-primary-600 text-white !important;
 }

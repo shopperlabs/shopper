@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="flex-1 lg:ml-4">
                                                 <div class="flex items-center justify-between">
-                                                    <div class="text-sm leading-5 font-medium text-blue-600 truncate dark:text-blue-500">
+                                                    <div class="text-sm leading-5 font-medium text-primary-600 truncate dark:text-primary-500">
                                                         {{ $inventory->name }}
                                                     </div>
                                                     @if($inventory->is_default)

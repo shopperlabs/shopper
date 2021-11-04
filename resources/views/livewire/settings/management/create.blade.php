@@ -40,18 +40,18 @@
                 </x-shopper-label>
                 <div x-data="{ show: false }" class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="flex items-center justify-between max-w-lg">
-                        <button wire:click="generate" type="button" class="text-sm font-medium leading-5 text-blue-500 hover:text-blue-400">
+                        <button wire:click="generate" type="button" class="text-sm font-medium leading-5 text-primary-500 hover:text-primary-400">
                             {{ __('Generate') }}
                         </button>
                         <button
                           @click="show = !show"
                           x-text="show ? '{{ __('Hide') }}' : '{{ __('Show') }}'"
                           type="button"
-                          class="text-sm text-leading-5 text-blue-600 hover:text-blue-500 focus:outline-none focus:text-blue-700 hover:underline">
+                          class="text-sm text-leading-5 text-primary-600 hover:text-primary-500 focus:outline-none focus:text-primary-700 hover:underline">
                         </button>
                     </div>
                     <div class="mt-2 max-w-lg relative rounded-md shadow-sm">
-                        <input wire:model.lazy="password" id="password" :type="show ? 'text' : 'password'" autocomplete="off" class="block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm @error('password') pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 @enderror" />
+                        <input wire:model.lazy="password" id="password" :type="show ? 'text' : 'password'" autocomplete="off" class="block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm @error('password') pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 @enderror" />
                         @error('password')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
@@ -70,7 +70,7 @@
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <span wire:model="send_mail" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-data="{ on: false }" x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-blue-600': on }" class="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors  dark:bg-gray-700">
+                            <span wire:model="send_mail" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-data="{ on: false }" x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-primary-600': on }" class="bg-gray-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors  dark:bg-gray-700">
                                 <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                 <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform"></span>
                             </span>

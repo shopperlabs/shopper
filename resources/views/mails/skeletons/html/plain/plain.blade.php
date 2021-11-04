@@ -73,7 +73,7 @@
       }
 
       h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-        color: blue !important;
+        color: primary !important;
       }
 
       h1 a:active, h2 a:active, h3 a:active, h4 a:active, h5 a:active, h6 a:active {
