@@ -90,8 +90,8 @@
       color: #464646;
     }
 
-    a.blue-link {
-      color: blue;
+    a.primary-link {
+      color: primary;
       text-decoration: underline;
     }
 
@@ -356,7 +356,7 @@
                               </tr>
                               <tr>
                                 <td style="font-size:12px; padding-top:5px; text-align:left;">
-                                  User: <a style="color:blue;" href="">Jon Doe</a>
+                                  User: <a style="color:primary;" href="">Jon Doe</a>
                                 </td>
                               </tr>
                             </table>

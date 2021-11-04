@@ -72,7 +72,7 @@
                             <span class="inline-flex rounded-md shadow-sm">
                                 <x-shopper-default-button type="button">
                                     {{ __('Update conditions') }}
-                                    <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                                       {{ __('Soon') }}
                                     </span>
                                 </x-shopper-default-button>

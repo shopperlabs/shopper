@@ -90,8 +90,8 @@
       color: #464646;
     }
 
-    a.blue-link {
-      color: blue;
+    a.primary-link {
+      color: primary;
       text-decoration: underline;
     }
 

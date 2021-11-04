@@ -29,7 +29,7 @@
                 <div class="w-full mb-3">
                     <div class="flex items-center justify-between">
                         <x-shopper-label for="code" :value="__('Code')" />
-                        <button wire:click="generate" type="button" class="text-blue-600 text-sm leading-5 hover:text-blue-500 dark:text-blue-500">{{ __('Generate code') }}</button>
+                        <button wire:click="generate" type="button" class="text-primary-600 text-sm leading-5 hover:text-primary-500 dark:text-primary-500">{{ __('Generate code') }}</button>
                     </div>
                     <div class="mt-4 relative rounded-md shadow-sm">
                         <x-shopper-input.text wire:model.debounce.350ms="code" id="code" type="text" placeholder="{{ __('Eg.: NOELCMR900') }}" autocomplete="off" />
@@ -337,15 +337,15 @@
                     <div class="p-4 bg-white shadow-md rounded-md sm:p-5 dark:bg-gray-800">
                         <h4 class="text-gray-900 font-medium text-base leading-6 dark:text-white">{{ __('Visibility') }}</h4>
                         <p class="text-sm mt-4 font-normal text-gray-500 leading-5 dark:text-gray-400">{{ __('Setup discount visibility for the customers.') }}</p>
-                        <div class="mt-5 px-3 py-2.5 bg-blue-50 rounded-md text-blue-600 flex items-center justify-between">
+                        <div class="mt-5 px-3 py-2.5 bg-primary-50 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
-                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-blue-600 flex-shrink-0">
+                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 flex-shrink-0">
                                     <x-heroicon-o-eye class="h-5 w-5 text-white" />
                                 </span>
                                 <span class="font-semibold ml-3 text-sm">{{ __('Visible') }}</span>
                             </div>
                             <div>
-                                <span wire:model="is_active" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-blue-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-blue bg-gray-200">
+                                <span wire:model="is_active" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-primary-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-gray-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                     <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
                                 </span>
@@ -422,7 +422,7 @@
                             </div>
                             <x-shopper-input.text id="search" type="search" wire:model.debounce.350ms="searchProduct" autocomplete="off" class="pl-10 pr-6" placeholder="{{ __('Search product by name') }}" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <x-shopper-loader wire:loading wire:target="searchProduct" class="text-blue-600" />
+                                <x-shopper-loader wire:loading wire:target="searchProduct" class="text-primary-600" />
                             </div>
                         </div>
                     </div>
@@ -505,7 +505,7 @@
                             </div>
                             <x-shopper-input.text id="search" type="search" wire:model.debounce.350ms="searchCustomer" autocomplete="off" class="pl-10 pr-6" placeholder="{{ __('Search customer by name') }}" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <x-shopper-loader wire:loading wire:target="searchCustomer" class="text-blue-600" />
+                                <x-shopper-loader wire:loading wire:target="searchCustomer" class="text-primary-600" />
                             </div>
                         </div>
                     </div>

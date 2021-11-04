@@ -13,7 +13,7 @@
             <div class="p-4 sm:p-6 bg-white rounded-lg shadow-md overflow-hidden dark:bg-gray-800">
                 <div class="text-center">
                     <h2 class="inline-flex items-center text-xl font-medium font-heading text-center leading-9 text-gray-900 dark:text-white">
-                        <x-heroicon-o-shield-check class="w-10 h-10 text-blue-600 -ml-1 mr-2" />
+                        <x-heroicon-o-shield-check class="w-10 h-10 text-primary-600 -ml-1 mr-2" />
                         {{ __('Authenticate Your Account') }}
                     </h2>
                     <p class="mt-1 text-sm leading-5 text-center text-gray-500 dark:text-gray-400" x-show="! recovery">

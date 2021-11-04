@@ -23,7 +23,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        primary: colors.blue,
+        secondary: colors.lightBlue,
+
+        gray: colors.gray,
         orange: colors.orange,
+
+        success: colors.green,
+        danger: colors.red,
+        info: colors.lightBlue,
       },
       inset: {
         '-0.5': '-0.125rem',

@@ -14,7 +14,7 @@
         <div class="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-md overflow-hidden">
             <div class="flex items-center">
                 <h2 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ __('Administrator role available') }}</h2>
-                <button wire:click="$emit('openModal', 'shopper-modals.create-role')" type="button" class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-50 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-blue-200 transition ease-in-out duration-150">
+                <button wire:click="$emit('openModal', 'shopper-modals.create-role')" type="button" class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-primary-700 bg-primary-100 hover:bg-primary-50 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary active:bg-primary-200 transition ease-in-out duration-150">
                     <x-heroicon-s-plus-sm class="w-4 h-4 mr-1" />
                     {{ __('Add new role') }}
                 </button>
@@ -35,7 +35,7 @@
                         </div>
                         <div>
                             <h3 class="mt-4 text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ $role->display_name }}</h3>
-                            <p class="mt-1 flex items-center text-sm text-blue-600 group-hover:text-blue-500">
+                            <p class="mt-1 flex items-center text-sm text-primary-600 group-hover:text-primary-500">
                                 {{ __('View details') }}
                                 <span class="ml-2">
                                     <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />

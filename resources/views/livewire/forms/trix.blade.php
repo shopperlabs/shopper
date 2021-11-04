@@ -8,7 +8,7 @@
     @trix-change="$dispatch('change', @this.set('value', $event.target.value))"
 >
     <input id="{{ $trixId }}" value="{{ $value }}" type="hidden" class="sr-only">
-    <trix-editor input="{{ $trixId }}" class="block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm max-h-96 overflow-y-scroll"></trix-editor>
+    <trix-editor input="{{ $trixId }}" class="block w-full rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-700 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 sm:text-sm max-h-96 overflow-y-scroll"></trix-editor>
 </div>
 
 @push('scripts')

@@ -5,7 +5,7 @@
         </div>
         <div class="px-4 py-3 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-sm leading-5">
             {{ __('Learn more about') }}
-            <a href="{{ $link }}" target="_blank" class="ml-1 inline-flex items-center text-blue-600 hover:text-blue-500 transition-colors duration-150 ease-in-out">
+            <a href="{{ $link }}" target="_blank" class="ml-1 inline-flex items-center text-primary-600 hover:text-primary-500 transition-colors duration-150 ease-in-out">
                 {{ __(ucfirst($name)) }}
                 <span class="ml-1.5">
                     <x-heroicon-o-arrow-right class="w-5 h-5 text-gray-500 dark:text-gray-400" />

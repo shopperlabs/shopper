@@ -4,7 +4,7 @@
         <span class="relative z-0 inline-flex shadow-sm">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
-                <span class="relative inline-flex items-center px-2 py-2 rounded-none rounded-l-md inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium text-gray-700 dark:text-white bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900 opacity-50 cursor-not-allowed" aria-disabled="true" aria-label="{{ __('Previous') }}">
+                <span class="relative inline-flex items-center px-2 py-2 rounded-none rounded-l-md inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium text-gray-700 dark:text-white bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900 opacity-50 cursor-not-allowed" aria-disabled="true" aria-label="{{ __('Previous') }}">
                     <x-heroicon-s-chevron-left class="h-5 w-5" />
                 </span>
             @else

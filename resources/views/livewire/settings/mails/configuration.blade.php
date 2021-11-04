@@ -42,7 +42,7 @@
                 </h3>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                     {{ __("Information related to the mail server you are going to use and the associated protocol. For more information") }}
-                    <a href="https://laravel.com/docs/mail#introduction" target="_blank" class="text-blue-600 hover:text-blue-500 hover:underline dark:text-blue-500">{{ __('visit the documentation.') }}</a>
+                    <a href="https://laravel.com/docs/mail#introduction" target="_blank" class="text-primary-600 hover:text-primary-500 hover:underline dark:text-primary-500">{{ __('visit the documentation.') }}</a>
                 </p>
             </div>
             <div class="mt-6 grid gap-4 grid-cols-6 sm:gap-6">

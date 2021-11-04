@@ -15,7 +15,7 @@ class MenuCreator
     {
         $user = auth()->user();
         $menu = new Menu();
-        $class = 'block p-2 text-base leading-6 font-medium rounded-md text-white hover:bg-blue-700 focus:outline-none focus:text-white focus:bg-blue-900 transition ease-in-out duration-200';
+        $class = 'block p-2 text-base leading-6 font-medium rounded-md text-white hover:bg-primary-700 focus:outline-none focus:text-white focus:bg-primary-900 transition ease-in-out duration-200';
         $svgClass = 'h-6 w-6 text-white transition ease-in-out duration-150';
 
         $menu->make('primaryMenu', function (Builder $item) use ($class, $svgClass, $user) {

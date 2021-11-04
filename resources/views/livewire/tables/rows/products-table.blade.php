@@ -19,20 +19,20 @@
                              x-transition:leave-end="translate-x-full">
                             <form class="h-full divide-y divide-gray-200 dark:divide-gray-600 flex flex-col bg-white dark:bg-gray-800 shadow-xl">
                                 <div class="flex-1 h-0 overflow-y-auto">
-                                    <div class="py-6 px-4 bg-blue-700 sm:px-6">
+                                    <div class="py-6 px-4 bg-primary-700 sm:px-6">
                                         <div class="flex items-center justify-between">
                                             <h2 id="slide-over-heading" class="text-lg font-medium text-white">
                                                 {{ __('Products Filters') }}
                                             </h2>
                                             <div class="ml-3 h-7 flex items-center">
-                                                <button @click="show = false;" type="button" class="bg-blue-700 rounded-md text-blue-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+                                                <button @click="show = false;" type="button" class="bg-primary-700 rounded-md text-primary-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
                                                     <span class="sr-only">{{ __('Close panel') }}</span>
                                                     <x-heroicon-o-x class="h-6 w-6" />
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="mt-1">
-                                            <p class="text-sm text-blue-300">
+                                            <p class="text-sm text-primary-300">
                                                 {{ __('Apply deeper filters to your products to display those that interest you.') }}
                                             </p>
                                         </div>
@@ -95,7 +95,7 @@
                                                             <legend class="text-sm font-medium text-gray-900 dark:text-white">
                                                                 {{ __('Status') }}
                                                             </legend>
-                                                            <button wire:click="resetStatusFilter" type="button" class="block px-4 py-2 text-sm text-right leading-5 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-600 hover:underline">{{ __('Clear') }}</button>
+                                                            <button wire:click="resetStatusFilter" type="button" class="block px-4 py-2 text-sm text-right leading-5 text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-600 hover:underline">{{ __('Clear') }}</button>
                                                         </div>
                                                         <div class="mt-2 space-y-5">
                                                             <div class="relative flex items-start">

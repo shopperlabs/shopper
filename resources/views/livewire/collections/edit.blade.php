@@ -41,7 +41,7 @@
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ __('Search engine listing preview') }}</h3>
                         @if(! $updateSeo)
-                            <button wire:click="updateSeo" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 dark:text-blue-500">{{ __('Edit SEO preview') }}</button>
+                            <button wire:click="updateSeo" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 dark:text-primary-500">{{ __('Edit SEO preview') }}</button>
                         @endif
                     </div>
                     <div class="mt-4">
@@ -49,7 +49,7 @@
                             <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('Add a title and description to see how this collection might appear in a search engine listing.') }}</p>
                         @else
                             <div class="flex flex-col">
-                                <h3 class="text-base text-blue-800 font-medium leading-6 dark:text-blue-500">{{ $seoTitle }}</h3>
+                                <h3 class="text-base text-primary-800 font-medium leading-6 dark:text-primary-500">{{ $seoTitle }}</h3>
                                 <span class="mt-1 text-green-600 text-sm leading-5 dark:text-green-500">{{ env('APP_URL') }}/collections/{{ str_slug($name) }}</span>
                                 <p class="mt-1 text-gray-500 text-sm leading-5 dark:text-gray-400">{{ str_limit($seoDescription, 160) }}</p>
                             </div>
@@ -90,7 +90,7 @@
                     </div>
                     @if($publishedAt)
                         <div class="mt-2 flex items-start">
-                            <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-blue-600"></div>
+                            <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                             <p class="ml-2.5 text-sm text-gray-500 leading-5 dark:text-gray-400">
                                 {{ __('Will be published on:') }} <br>
                                 {{ $publishedAtFormatted }}

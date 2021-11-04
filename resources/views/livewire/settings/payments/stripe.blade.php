@@ -44,7 +44,7 @@
                     <div class="mt-4">
                         <p class="text-gray-500 text-sm leading-5 dark:text-gray-400">
                             {{ __('This provider allows you to integrate Laravel Cashier into your store to allow your customers to make payments, subscriptions using Stripe.') }}
-                            <a href="https://laravel.com/docs/billing" target="_blank" class="text-blue-600 hover:text-blue-500 dark:text-blue-500">{{ __('Learn more about Laravel Cashier') }}</a>
+                            <a href="https://laravel.com/docs/billing" target="_blank" class="text-primary-600 hover:text-primary-500 dark:text-primary-500">{{ __('Learn more about Laravel Cashier') }}</a>
                         </p>
                         @if(! $this->enabled)
                             <span class="mt-4 inline-flex rounded-md shadow-sm">
@@ -75,7 +75,7 @@
                         <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Environnement') }}</h3>
                         <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
                             {{ __('Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.') }}
-                            {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-blue-600 dark:text-blue-400">https://dashboard.stripe.com/account/apikeys</a>
+                            {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-400">https://dashboard.stripe.com/account/apikeys</a>
                             {{ __('To enable Sandbox switch Sandbox mode to True.') }}
                         </p>
                     </div>
@@ -104,7 +104,7 @@
                                         <x-shopper-input.text wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
                                     </x-shopper-input.group>
                                     <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
-                                        {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-blue-500 dark:text-blue-400">https://dashboard.stripe.com/account/webhooks</a>
+                                        {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-primary-500 dark:text-primary-400">https://dashboard.stripe.com/account/webhooks</a>
                                     </p>
                                 </div>
                             </div>

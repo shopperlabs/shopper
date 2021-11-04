@@ -90,8 +90,8 @@
       color: #464646;
     }
 
-    a.blue-link {
-      color: blue;
+    a.primary-link {
+      color: primary;
       text-decoration: underline;
     }
 
@@ -218,7 +218,7 @@
                       <br>
                       We would like you to know that your order has shipped! To view your order or make any changes please click the "my order" button below.<br>
                       <br>
-                      <b><a class="blue-link" href="#">Track shipping</a></b>
+                      <b><a class="primary-link" href="#">Track shipping</a></b>
                     </td>
                   </tr>
                 </table>

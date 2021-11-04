@@ -26,17 +26,17 @@
                 </div>
                 <div class="px-4 py-5 sm:p-6 space-y-6">
                     @if (! $this->enabled)
-                        <div class="rounded-md bg-blue-50 p-4">
+                        <div class="rounded-md bg-primary-50 p-4">
                             <div class="flex">
                                 <div class="flex-shrink-0">
-                                    <x-heroicon-s-information-circle class="h-5 w-5 text-blue-400" />
+                                    <x-heroicon-s-information-circle class="h-5 w-5 text-primary-400" />
                                 </div>
                                 <div class="ml-3 flex-1 md:flex md:justify-between">
-                                    <p class="text-sm leading-5 text-blue-700">
+                                    <p class="text-sm leading-5 text-primary-700">
                                         {{ __('To utilize two factor authentication, you must install the Google Authenticator application on your smartphone.') }}
                                     </p>
                                     <p class="mt-3 text-sm leading-5 md:mt-0 md:ml-6">
-                                        <a href="https://support.google.com/accounts/answer/1066447" target="_blank" class="whitespace-no-wrap font-medium text-blue-700 hover:text-blue-600 transition ease-in-out duration-150">
+                                        <a href="https://support.google.com/accounts/answer/1066447" target="_blank" class="whitespace-no-wrap font-medium text-primary-700 hover:text-primary-600 transition ease-in-out duration-150">
                                             {{ __("Details") }} &rarr;
                                         </a>
                                     </p>
@@ -47,7 +47,7 @@
                     <div class="flex items-start">
                         <div class="flex-shrink-0">
                             <span class="block w-12 w-12">
-                                <x-heroicon-o-shield-check class="w-full h-full text-blue-600" />
+                                <x-heroicon-o-shield-check class="w-full h-full text-primary-600" />
                             </span>
                         </div>
                         <div class="ml-4">
@@ -116,7 +116,7 @@
                             @else
                                 <x-shopper-confirms-password wire:then="showRecoveryCodes">
                                     <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                                        <x-shopper-default-button wire:loading.attr="disabled" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                        <x-shopper-default-button wire:loading.attr="disabled" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary transition ease-in-out duration-150 sm:text-sm sm:leading-5">
                                             {{ __('Show Recovery Codes') }}
                                         </x-shopper-default-button>
                                     </span>

@@ -26,7 +26,7 @@
                     </div>
                     <div class="ml-3">
                         <h3 class="text-base leading-6 font-medium text-gray-800">Github</h3>
-                        <p class="text-xs leading-4 text-blue-600">{{ __("Developer service") }}</p>
+                        <p class="text-xs leading-4 text-primary-600">{{ __("Developer service") }}</p>
                     </div>
                 </div>
                 <p class="mt-4 text-sm leading-5 text-gray-500">
@@ -48,7 +48,7 @@
                         </svg>
                     </a>
                 @else
-                    <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-blue-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-blue-500 focus:outline-none focus:text-blue-700 transition duration-150 ease-in-out">
+                    <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                         <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                         </svg>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="ml-3">
                         <h3 class="text-base leading-6 font-medium text-gray-800">Slack</h3>
-                        <p class="text-xs leading-4 text-blue-600">{{ __("Developer service") }}</p>
+                        <p class="text-xs leading-4 text-primary-600">{{ __("Developer service") }}</p>
                     </div>
                 </div>
                 <p class="mt-4 text-sm leading-5 text-gray-500">
@@ -81,7 +81,7 @@
                 </p>
             </div>
             <div class="bg-gray-50 grid grid-cols-2">
-                <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-blue-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-blue-500 focus:outline-none focus:text-blue-700 transition duration-150 ease-in-out">
+                <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
@@ -113,7 +113,7 @@
                     </div>
                     <div class="ml-3">
                         <h3 class="text-base leading-6 font-medium text-gray-800">Instagram</h3>
-                        <p class="text-xs leading-4 text-blue-600">{{ __("Product service") }}</p>
+                        <p class="text-xs leading-4 text-primary-600">{{ __("Product service") }}</p>
                     </div>
                 </div>
                 <p class="mt-4 text-sm leading-5 text-gray-500">
@@ -121,7 +121,7 @@
                 </p>
             </div>
             <div class="bg-gray-50 grid grid-cols-2">
-                <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-blue-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-blue-500 focus:outline-none focus:text-blue-700 transition duration-150 ease-in-out">
+                <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
@@ -143,7 +143,7 @@
                     </div>
                     <div class="ml-3">
                         <h3 class="text-base leading-6 font-medium text-gray-800">Facebook</h3>
-                        <p class="text-xs leading-4 text-blue-600">{{ __("Product service") }}</p>
+                        <p class="text-xs leading-4 text-primary-600">{{ __("Product service") }}</p>
                     </div>
                 </div>
                 <p class="mt-4 text-sm leading-5 text-gray-500">
@@ -151,7 +151,7 @@
                 </p>
             </div>
             <div class="bg-gray-50 grid grid-cols-2">
-                <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-blue-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-blue-500 focus:outline-none focus:text-blue-700 transition duration-150 ease-in-out">
+                <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
@@ -173,7 +173,7 @@
                     </div>
                     <div class="ml-3">
                         <h3 class="text-base leading-6 font-medium text-gray-800">Telegram</h3>
-                        <p class="text-xs leading-4 text-blue-600">{{ __("Product service") }}</p>
+                        <p class="text-xs leading-4 text-primary-600">{{ __("Product service") }}</p>
                     </div>
                 </div>
                 <p class="mt-4 text-sm leading-5 text-gray-500">
@@ -181,7 +181,7 @@
                 </p>
             </div>
             <div class="bg-gray-50 grid grid-cols-2">
-                <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-blue-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-blue-500 focus:outline-none focus:text-blue-700 transition duration-150 ease-in-out">
+                <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
@@ -205,7 +205,7 @@
                     </div>
                     <div class="ml-3">
                         <h3 class="text-base leading-6 font-medium text-gray-800">Twitter</h3>
-                        <p class="text-xs leading-4 text-blue-600">{{ __("Product service") }}</p>
+                        <p class="text-xs leading-4 text-primary-600">{{ __("Product service") }}</p>
                     </div>
                 </div>
                 <p class="mt-4 text-sm leading-5 text-gray-500">
@@ -227,7 +227,7 @@
                         </svg>
                     </a>
                 @else
-                    <button data-modal="confirmationEnable('twitter', 'You are about to activate the integration with Twitter. This will create a new sales channel for posting products to your Twitter account.')" type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-blue-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-blue-500 focus:outline-none focus:text-blue-700 transition duration-150 ease-in-out">
+                    <button data-modal="confirmationEnable('twitter', 'You are about to activate the integration with Twitter. This will create a new sales channel for posting products to your Twitter account.')" type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                         <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                         </svg>

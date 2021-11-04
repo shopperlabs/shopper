@@ -48,15 +48,15 @@
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
                 <nav class="-mb-px flex space-x-8">
-                    <button @click="currentTab = 'role'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" aria-current="page" :class="{ 'border-blue-500 text-blue-600 dark:text-blue-600 focus:text-blue-800 focus:border-blue-700 dark:focus:text-blue-800 dark:focus:border-blue-700': currentTab === 'role' }">
+                    <button @click="currentTab = 'role'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'role' }">
                         {{ __('Role') }}
                     </button>
 
-                    <button @click="currentTab = 'users'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" :class="{ 'border-blue-500 text-blue-600 dark:text-blue-600 focus:text-blue-800 focus:border-blue-700 dark:focus:text-blue-800 dark:focus:border-blue-700': currentTab === 'users' }">
+                    <button @click="currentTab = 'users'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'users' }">
                         {{ __('Users') }}
                     </button>
 
-                    <button @click="currentTab = 'permissions'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" :class="{ 'border-blue-500 text-blue-600 dark:text-blue-600 focus:text-blue-800 focus:border-blue-700 dark:focus:text-blue-800 dark:focus:border-blue-700': currentTab === 'permissions' }">
+                    <button @click="currentTab = 'permissions'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'permissions' }">
                         {{ __('Permissions') }}
                     </button>
                 </nav>
@@ -68,17 +68,17 @@
         <div x-show="currentTab === 'role'" class="bg-white shadow overflow-hidden sm:rounded-md dark:bg-gray-800">
             @if(config('shopper.system.users.admin_role') === $role->name)
                 <div class="pt-5 px-4 sm:px-6">
-                    <div class="rounded-md bg-blue-50 p-4">
+                    <div class="rounded-md bg-primary-50 p-4">
                         <div class="flex">
                             <div class="flex-shrink-0">
-                                <x-heroicon-s-information-circle  class="h-5 w-5 text-blue-400" />
+                                <x-heroicon-s-information-circle  class="h-5 w-5 text-primary-400" />
                             </div>
                             <div class="ml-3 flex-1 md:flex md:justify-between">
-                                <p class="text-sm leading-5 text-blue-700">
+                                <p class="text-sm leading-5 text-primary-700">
                                     {{ __('You are about to update the admin role, this could block your access to the dashboard.') }}
                                 </p>
                                 <p class="mt-3 text-sm leading-5 md:mt-0 md:ml-6">
-                                    <a href="#" class="whitespace-no-wrap font-medium text-blue-700 hover:text-blue-600 transition ease-in-out duration-150">
+                                    <a href="#" class="whitespace-no-wrap font-medium text-primary-700 hover:text-primary-600 transition ease-in-out duration-150">
                                         {{ __('Learn more') }} &rarr;
                                     </a>
                                 </p>

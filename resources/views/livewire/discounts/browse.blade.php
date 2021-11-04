@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="border-t border-gray-200 dark:border-gray-600"></div>
                                         <div class="py-1">
-                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500">{{ __('Clear') }}</button>
+                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-500">{{ __('Clear') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@
                                 wire:model="date"
                                 x-ref="input"
                                 id="date"
-                                class="w-48 pl-10 py-2 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border border-gray-300 dark:border-gray-700 focus:border-blue-300 focus:ring focus:ring-blue-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm"
+                                class="w-48 pl-10 py-2 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border border-gray-300 dark:border-gray-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm"
                                 autocomplete="off"
                                 placeholder="{{ __('Choose date') }}"
                                 readonly
@@ -208,7 +208,7 @@
                                 <div class="px-4 py-4 flex items-center sm:px-6">
                                     <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                         <div>
-                                            <div class="text-sm leading-5 font-semibold text-blue-500 truncate dark:text-blue-400">
+                                            <div class="text-sm leading-5 font-semibold text-primary-500 truncate dark:text-primary-400">
                                                 {{ $discount->code }}
                                             </div>
                                             <div class="mt-2 flex">

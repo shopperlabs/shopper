@@ -11,7 +11,7 @@
     <meta name="dashboard-url" content="{{ config('app.url').'/'.shopper_prefix() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @include('shopper::layouts.favicons')
+    @include('shopper::includes._favicons')
 
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <!--begin::Fonts -->
@@ -22,16 +22,7 @@
 
     <livewire:styles />
 
-    @if(! empty(config('shopper.system.resources.stylesheets')))
-        <!-- Additional CSS -->
-        @foreach(config('shopper.system.resources.stylesheets') as $css)
-            @if (starts_with($css, ['http://', 'https://']))
-                <link rel="stylesheet" type="text/css" href="{!! $css !!}">
-            @else
-                <link rel="stylesheet" type="text/css" href="{{ asset($css) }}">
-            @endif
-        @endforeach
-    @endif
+    @include('shopper::includes._additional-styles')
 </head>
 <body class="bg-gray-100 font-sans antialiased dark:bg-gray-900">
 
@@ -94,16 +85,7 @@
     <script src="{{ mix('/js/shopper.js','shopper') }}"></script>
     @stack('scripts')
 
-    @if(! empty(config('shopper.system.resources.scripts')))
-        <!-- Additional Javascript -->
-        @foreach(config('shopper.system.resources.scripts') as $js)
-            @if (starts_with($js, ['http://', 'https://']))
-                <script type="text/javascript" src="{!! $js !!}"></script>
-            @else
-                <script type="text/javascript" src="{{ asset($js) }}"></script>
-            @endif
-        @endforeach
-    @endif
+    @include('shopper::includes._additional-scripts')
 
 </body>
 </html>

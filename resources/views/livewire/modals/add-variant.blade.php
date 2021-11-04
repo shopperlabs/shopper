@@ -16,7 +16,7 @@
                     <div>
                         <div class="space-y-5">
                             <x-shopper-input.group label="Name" for="name_variant" isRequired :error="$errors->first('name')">
-                                <x-shopper-input.text wire:model.lazy="name" id="name_variant" type="text" autocomplete="off" placeholder="{{ __('Black 128Go, Blue 64Go...') }}" />
+                                <x-shopper-input.text wire:model.lazy="name" id="name_variant" type="text" autocomplete="off" placeholder="{{ __('Black 128Go, primary 64Go...') }}" />
                             </x-shopper-input.group>
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-4">
                                 <div class="col-span-6 sm:col-span-3">
@@ -92,7 +92,7 @@
                             <div class="py-4 sm:py-5">
                                 <div class="flex items-center justify-between">
                                     <h4 class="block text-sm font-medium leading-5 text-gray-900 dark:text-white">{{ __('Quantity Inventory') }}</h4>
-                                    <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">{{ __('Manage Inventories') }}</a>
+                                    <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 transition duration-150 ease-in-out">{{ __('Manage Inventories') }}</a>
                                 </div>
                                 <div class="mt-4 divide-y divide-gray-200 dark:divide-gray-700">
                                     <div class="grid grid-cols-3 py-4">

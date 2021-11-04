@@ -39,11 +39,11 @@
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
                 <nav class="-mb-px flex space-x-8">
-                    <button @click="currentTab = 'general'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" aria-current="page" :class="{ 'border-blue-500 text-blue-600 dark:text-blue-600 focus:text-blue-800 focus:border-blue-700 dark:focus:text-blue-800 dark:focus:border-blue-700': currentTab === 'general' }">
+                    <button @click="currentTab = 'general'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'general' }">
                         {{ __('General') }}
                     </button>
 
-                    <button @click="currentTab = 'stripe'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" :class="{ 'border-blue-500 text-blue-600 dark:text-blue-600 focus:text-blue-800 focus:border-blue-700 dark:focus:text-blue-800 dark:focus:border-blue-700': currentTab === 'stripe' }">
+                    <button @click="currentTab = 'stripe'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'stripe' }">
                         {{ __('Stripe') }}
                     </button>
                 </nav>
@@ -100,8 +100,8 @@
                                         <td class="px-6 py-3 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                             <div class="flex items-center">
                                                 <span x-data="{ on: @if($method->is_enabled) true @else false @endif }" role="checkbox" tabindex="0" wire:click="toggleStatus({{ $method->id }}, {{ $method->is_enabled ? 1 : 0 }})" x-on:toggle-saved-{{ $method->id }}.window="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" @focus="focused = true" @blur="focused = false" class="group relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none">
-                                                    <span aria-hidden="true" :class="{ 'bg-blue-600': on, 'bg-gray-200 dark:bg-gray-700': !on }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200 bg-gray-200"></span>
-                                                    <span aria-hidden="true" :class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform group-focus:shadow-outline group-focus:border-blue-300 transition-transform ease-in-out duration-200 translate-x-0"></span>
+                                                    <span aria-hidden="true" :class="{ 'bg-primary-600': on, 'bg-gray-200 dark:bg-gray-700': !on }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200 bg-gray-200"></span>
+                                                    <span aria-hidden="true" :class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform group-focus:shadow-outline group-focus:border-primary-300 transition-transform ease-in-out duration-200 translate-x-0"></span>
                                                 </span>
                                             </div>
                                         </td>

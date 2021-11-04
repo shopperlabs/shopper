@@ -52,29 +52,29 @@
                 >
                     <div class="bg-white rounded-md grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-gray-800" x-ref="radiogroup">
 
-                        <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 0), 'bg-blue-50 border-blue-200 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-blue-50 border-blue-200 z-10">
+                        <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 0), 'bg-primary-50 border-primary-200 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-primary-50 border-primary-200 z-10">
                             <div class="flex items-center h-5">
-                                <input wire:model="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
+                                <input wire:model="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-primary-600 transition duration-150 ease-in-out cursor-pointer">
                             </div>
                             <label for="collection-type-0" class="ml-3 flex flex-col cursor-pointer">
-                                <span :class="{ 'text-blue-900': active === 0, 'text-gray-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-blue-900">
+                                <span :class="{ 'text-primary-900': active === 0, 'text-gray-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-primary-900">
                                     {{ __('Manual') }}
                                 </span>
-                                <span :class="{ 'text-blue-700': active === 0, 'text-gray-500 dark:text-gray-400': !(active === 0) }" class="mt-0.5 block text-xs leading-4 text-blue-700">
+                                <span :class="{ 'text-primary-700': active === 0, 'text-gray-500 dark:text-gray-400': !(active === 0) }" class="mt-0.5 block text-xs leading-4 text-primary-700">
                                     {{ __('Add the products to this collection one by one.') }}
                                 </span>
                             </label>
                         </div>
 
-                        <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 1), 'bg-blue-50 border-blue-200 z-10': active === 1 }" class="relative border rounded-md border-gray-200 p-4 flex">
+                        <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 1), 'bg-primary-50 border-primary-200 z-10': active === 1 }" class="relative border rounded-md border-gray-200 p-4 flex">
                             <div class="flex items-center h-5">
-                                <input wire:model="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out cursor-pointer">
+                                <input wire:model="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-primary-600 transition duration-150 ease-in-out cursor-pointer">
                             </div>
                             <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
-                                <span :class="{ 'text-blue-900': active === 1, 'text-gray-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-gray-900">
+                                <span :class="{ 'text-primary-900': active === 1, 'text-gray-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-gray-900">
                                     {{ __("Automated") }}
                                 </span>
-                                <span :class="{ 'text-blue-700': active === 1, 'text-gray-500 dark:text-gray-400': !(active === 1) }" class="mt-0.5 block text-xs leading-4 text-gray-500">
+                                <span :class="{ 'text-primary-700': active === 1, 'text-gray-500 dark:text-gray-400': !(active === 1) }" class="mt-0.5 block text-xs leading-4 text-gray-500">
                                     {{ __("Products that match the conditions you set will automatically be added to collection.") }}
                                 </span>
                             </label>
@@ -158,7 +158,7 @@
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ __('Search engine listing preview') }}</h3>
                         @if(! $updateSeo)
-                            <button wire:click="updateSeo" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out dark:text-blue-500">{{ __('Edit SEO preview') }}</button>
+                            <button wire:click="updateSeo" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 transition duration-150 ease-in-out dark:text-primary-500">{{ __('Edit SEO preview') }}</button>
                         @endif
                     </div>
                     <div class="mt-4">
@@ -166,7 +166,7 @@
                             <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('Add a title and description to see how this collection might appear in a search engine listing.') }}</p>
                         @else
                             <div class="flex flex-col">
-                                <h3 class="text-base text-blue-800 font-medium leading-6 dark:text-blue-500">{{ $seoTitle }}</h3>
+                                <h3 class="text-base text-primary-800 font-medium leading-6 dark:text-primary-500">{{ $seoTitle }}</h3>
                                 <span class="mt-1 text-green-600 text-sm leading-5 dark:text-green-500">{{ env('APP_URL') }}/collections/{{ str_slug($name) }}</span>
                                 <p class="mt-1 text-gray-500 text-sm leading-5 dark:text-gray-400">{{ str_limit($seoDescription, 160) }}</p>
                             </div>
@@ -207,7 +207,7 @@
                     </div>
                     @if($publishedAt)
                         <div class="mt-2 flex items-start">
-                            <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-blue-600"></div>
+                            <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                             <p class="ml-2.5 text-sm text-gray-500 leading-5 dark:text-gray-400">
                                 {{ __('Will be published on:') }} <br>
                                 {{ $publishedAtFormatted }}

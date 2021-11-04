@@ -38,7 +38,7 @@
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-gray-800">
                         <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
                             <x-shopper-input.group label="Name" for="name" class="sm:col-span-3" :error="$errors->first('name')" isRequired>
-                                <x-shopper-input.text wire:model.lazy="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Black 128Go, Blue 64Go...') }}" />
+                                <x-shopper-input.text wire:model.lazy="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Black 128Go, primary 64Go...') }}" />
                             </x-shopper-input.group>
                             <div class="sm:col-span-4">
                                 <h4 class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">{{ __('Images') }}</h4>
@@ -142,8 +142,8 @@
                             <div class="flex items-center justify-between">
                                 <h4 class="block text-sm font-medium leading-5 text-gray-900 dark:text-white">{{ __('Quantity Inventory') }}</h4>
                                 <div class="ml-4 sm:ml-0 flex items-center space-x-3">
-                                    <button wire:click="$emit('openModal', 'shopper-modals.update-variant-stock', {{ json_encode([$variant->id]) }})" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500">{{ __('Update stock') }}</button>
-                                    <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500">{{ __('Manage Inventories') }}</a>
+                                    <button wire:click="$emit('openModal', 'shopper-modals.update-variant-stock', {{ json_encode([$variant->id]) }})" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-500">{{ __('Update stock') }}</button>
+                                    <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-500">{{ __('Manage Inventories') }}</a>
                                 </div>
                             </div>
                             <div class="mt-4 divide-y divide-gray-200 dark:divide-gray-700">

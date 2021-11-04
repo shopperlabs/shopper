@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,18 +11,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="api-connection" content="{{ config('shopper.api_connection') }}">
     <title>@yield('title') | Shopper Login</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('shopper/images/favicons/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('shopper/images/favicons/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('shopper/images/favicons/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('shopper/images/favicons/site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ asset('shopper/images/favicons/safari-pinned-tab.svg') }}" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="apple-mobile-web-app-title" content="{{ app_name() }}">
-    <meta name="application-name" content="{{ app_name()  }}">
-    <meta name="theme-color" content="#ffffff">
+
+    @include('shopper::includes._favicons')
+
     <!--begin::Fonts -->
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
+
+    @include('shopper::includes._additional-styles')
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 transition duration-200 ease-in-out">
 
@@ -31,5 +27,6 @@
     @stack('scripts')
 
     <script src="{{ mix('/js/shopper.js', 'shopper') }}"></script>
+    @include('shopper::includes._additional-scripts')
 </body>
 </html>
