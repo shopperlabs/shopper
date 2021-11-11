@@ -2,115 +2,29 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Profile extends Component
 {
-    /**
-     * Customer Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    public $customer;
+    public Model $customer;
+    public int $customer_id;
+    public string $firstName;
+    public string $lastName;
+    public string $email;
+    public ?string $birthDate = null;
 
-    /**
-     * Customer Id.
-     *
-     * @var int
-     */
-    public $customer_id;
+    public string $birthDateFormatted = '';
+    public string $gender;
 
-    /**
-     * Customer First name.
-     *
-     * @var string
-     */
-    public $firstName;
-
-    /**
-     * Define if the last name can be updated.
-     *
-     * @var bool
-     */
-    public $firstNameUpdate = false;
-
-    /**
-     * Customer Last name.
-     *
-     * @var string
-     */
-    public $lastName;
-
-    /**
-     * Define if the last name can be updated.
-     *
-     * @var bool
-     */
-    public $lastNameUpdate = false;
-
-    /**
-     * Customer Email address.
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Define if the email can be updated.
-     *
-     * @var bool
-     */
-    public $emailUpdate = false;
-
-    /**
-     * Customer gender.
-     *
-     * @var string
-     */
-    public $birthDate;
-
-    /**
-     * Customer gender.
-     *
-     * @var string
-     */
-    public $birthDateFormatted;
-
-    /**
-     * Email Marketing Subscribe status.
-     *
-     * @var bool
-     */
-    public $optIn;
-
-    /**
-     * Define if a user has enabled two factor auth.
-     *
-     * @var bool
-     */
-    public $hasEnabledTwoFactor;
-
-    /**
-     * Customer gender.
-     *
-     * @var string
-     */
-    public $gender;
-
-    /**
-     * Define if the gender can be updated.
-     *
-     * @var bool
-     */
-    public $genderUpdate = false;
-
-    /**
-     * Define if the gender can be updated.
-     *
-     * @var bool
-     */
-    public $birthDateUpdate = false;
+    public bool $firstNameUpdate = false;
+    public bool $lastNameUpdate = false;
+    public bool $emailUpdate = false;
+    public bool $genderUpdate = false;
+    public bool $birthDateUpdate = false;
+    public bool $optIn;
+    public bool $hasEnabledTwoFactor;
 
     /**
      * Component Mount instance.
@@ -128,12 +42,9 @@ class Profile extends Component
         $this->birthDate = $customer->birth_date;
         $this->birthDateFormatted = $customer->birth_date_formatted;
         $this->optIn = $customer->opt_in;
-        $this->hasEnabledTwoFactor = $customer->two_factor_secret ? true : false;
+        $this->hasEnabledTwoFactor = (bool) $customer->two_factor_secret;
     }
 
-    /**
-     * Update customer first name.
-     */
     public function saveFirstName()
     {
         $this->validate(['firstName' => 'sometimes|required']);
@@ -148,9 +59,6 @@ class Profile extends Component
         $this->emit('profileUpdate');
     }
 
-    /**
-     * Update customer last name.
-     */
     public function saveLastName()
     {
         $this->validate(['lastName' => 'sometimes|required']);
@@ -165,9 +73,6 @@ class Profile extends Component
         $this->emit('profileUpdate');
     }
 
-    /**
-     * Update Customer Email Address.
-     */
     public function saveEmail()
     {
         $this->validate([
@@ -189,18 +94,12 @@ class Profile extends Component
         $this->emit('profileUpdate');
     }
 
-    /**
-     * Cancel Email Address update.
-     */
     public function cancelEmail()
     {
         $this->emailUpdate = false;
         $this->email = $this->customer->email;
     }
 
-    /**
-     * Update customer Birth Date.
-     */
     public function saveBirthDate()
     {
         $this->updateValue(
@@ -248,10 +147,10 @@ class Profile extends Component
      * Update value from the storage.
      *
      * @param string $field
-     * @param string $value
+     * @param mixed $value
      * @param string $message
      */
-    private function updateValue($field, $value, $message)
+    private function updateValue(string $field, mixed $value, string $message)
     {
         $this->customer->update([$field => $value]);
 

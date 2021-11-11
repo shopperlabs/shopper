@@ -79,7 +79,7 @@
                                         </button>
                                         <button
                                             @click="show = !show"
-                                            x-text="show ? '{{ __("Hide") }}' : '{{ __("Show") }}'"
+                                            x-text="show ? '{{ __('Hide') }}' : '{{ __('Show') }}'"
                                             type="button"
                                             class="pl-2 text-sm text-leading-5 text-primary-600 hover:text-primary-500 focus:outline-none focus:text-primary-700 hover:underline dark:text-primary-400">
                                         </button>
@@ -148,17 +148,17 @@
                                 <x-shopper-input.text wire:model.lazy="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
                             </x-shopper-input.group>
 
-                            <x-shopper-input.group class="col-span-6" label="City" for="city" :error="$errors->first('city')">
-                                <x-shopper-input.text wire:model.lazy="city" id="city" type="text" autocomplete="off" />
-                            </x-shopper-input.group>
-
-                            <x-shopper-input.group class="col-span-6 sm:col-span-3" for="country_id" label="Country/Region" :error="$errors->first('country_id')">
+                            <x-shopper-input.group class="col-span-6 sm:col-span-4" for="country_id" label="Country/Region" :error="$errors->first('country_id')">
                                 <x-shopper-input.select wire:model.debounce.250ms="country_id" id="country_id">
                                     <option>{{ __('Country/Region') }}</option>
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->name }}</option>
                                     @endforeach
                                 </x-shopper-input.select>
+                            </x-shopper-input.group>
+
+                            <x-shopper-input.group class="col-span-6 sm:col-span-3" label="City" for="city" :error="$errors->first('city')">
+                                <x-shopper-input.text wire:model.lazy="city" id="city" type="text" autocomplete="off" />
                             </x-shopper-input.group>
 
                             <x-shopper-input.group label="Postal / Zip code" for="zipcode" class="col-span-6 sm:col-span-3" :error="$errors->first('zipcode')">

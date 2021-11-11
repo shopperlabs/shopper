@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -9,12 +10,7 @@ class Orders extends Component
 {
     use WithPagination;
 
-    /**
-     * Customer Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    public $customer;
+    public Model $customer;
 
     /**
      * Component Mount instance.

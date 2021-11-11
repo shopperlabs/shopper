@@ -2,19 +2,14 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\UserRepository;
 
 class Show extends AbstractBaseComponent
 {
-    /**
-     * Customer Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    public $customer;
-
+    public Model $customer;
     public int $user_id;
     public string $last_name;
     public string $first_name;
@@ -67,11 +62,6 @@ class Show extends AbstractBaseComponent
         $this->redirectRoute('shopper.customers.index');
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return array<string>
-     */
     public function rules(): array
     {
         return [

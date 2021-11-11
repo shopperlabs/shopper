@@ -4,17 +4,17 @@ namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Traits\WithChoicesCategories;
 use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
-    use WithSeoAttributes;
+    use WithChoicesCategories, WithSeoAttributes;
 
     public string $name = '';
     public ?int $parent_id = null;
     public ?string $description = null;
     public bool $is_enabled = true;
-    public array $selectedCategory = [];
     public ?string $fileUrl = null;
     public $parent;
 
@@ -36,17 +36,6 @@ class Create extends AbstractBaseComponent
     public function onFileUpdate($file)
     {
         $this->fileUrl = $file;
-    }
-
-    public function updatedSelectedCategory($choice)
-    {
-        if (count($choice) > 0 && $choice['value'] !== '0') {
-            $this->parent_id = (int) $choice['value'];
-            $this->parent = (new CategoryRepository())->getById($this->parent_id);
-        } else {
-            $this->parent_id = null;
-            $this->parent = null;
-        }
     }
 
     public function store(): void
@@ -74,9 +63,7 @@ class Create extends AbstractBaseComponent
 
     public function rules(): array
     {
-        return [
-            'name' => 'required|max:150',
-        ];
+        return ['name' => 'required|max:150'];
     }
 
     public function render()

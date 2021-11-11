@@ -6,9 +6,8 @@ use Livewire\Component;
 
 class Trix extends Component
 {
-    public ?string $value = null;
-
     public string $trixId;
+    public ?string $value = null;
 
     public function mount(string $value = null)
     {

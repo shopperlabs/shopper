@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Account;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
 use Livewire\Component;
@@ -13,7 +14,7 @@ class Devices extends Component
     /**
      * Get the current sessions.
      */
-    public function getSessionsProperty(): \Illuminate\Support\Collection
+    public function getSessionsProperty(): Collection
     {
         if (config('session.driver') !== 'database') {
             return collect();

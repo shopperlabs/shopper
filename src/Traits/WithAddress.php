@@ -6,68 +6,15 @@ use Shopper\Framework\Rules\Phone;
 
 trait WithAddress
 {
-    /**
-     * Address First name.
-     *
-     * @var string
-     */
-    public $address_first_name;
-
-    /**
-     * Address Last name.
-     *
-     * @var string
-     */
-    public $address_last_name;
-
-    /**
-     * Company name.
-     *
-     * @var string
-     */
-    public $company_name;
-
-    /**
-     * Country Id.
-     *
-     * @var int
-     */
-    public $country_id;
-
-    /**
-     * Address Zip code.
-     *
-     * @var string
-     */
-    public $zipcode;
-
-    /**
-     * Address city.
-     *
-     * @var string
-     */
-    public $city;
-
-    /**
-     * The default street name.
-     *
-     * @var string
-     */
-    public $street_address;
-
-    /**
-     * Street name more detail.
-     *
-     * @var string
-     */
-    public $street_address_plus;
-
-    /**
-     * Address Phone number.
-     *
-     * @var string
-     */
-    public $address_phone_number;
+    public ?string $address_first_name = null;
+    public ?string $address_last_name = null;
+    public ?string $company_name = null;
+    public ?int $country_id = null;
+    public string $zipcode = '';
+    public string $city = '';
+    public string $street_address = '';
+    public ?string $street_address_plus = null;
+    public ?string $address_phone_number = null;
 
     public function addressRules(): array
     {
@@ -78,10 +25,7 @@ trait WithAddress
             'country_id' => 'required',
             'zipcode' => 'required',
             'city' => 'required',
-            'address_phone_number' => [
-                'nullable',
-                new Phone(),
-            ],
+            'address_phone_number' => ['nullable', new Phone()],
         ];
     }
 }

@@ -91,11 +91,6 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.discounts.index');
     }
 
-    /**
-     * Render the component.
-     *
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
     public function render()
     {
         $this->products = (new ProductRepository())

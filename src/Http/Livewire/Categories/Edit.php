@@ -2,15 +2,17 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Framework\Traits\WithChoicesCategories;
 use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithSeoAttributes;
+    use WithChoicesCategories, WithSeoAttributes;
 
-    public $category;
+    public Model $category;
     public int $categoryId;
     public string $name = '';
     public ?int $parent_id = null;
@@ -55,17 +57,6 @@ class Edit extends AbstractBaseComponent
         $this->fileUrl = $file;
     }
 
-    public function updatedSelectedCategory($choice)
-    {
-        if (count($choice) > 0 && $choice['value'] !== '0') {
-            $this->parent_id = (int) $choice['value'];
-            $this->parent = (new CategoryRepository())->getById($this->parent_id);
-        } else {
-            $this->parent_id = null;
-            $this->parent = null;
-        }
-    }
-
     /**
      * Define is the current action is create or update for the SEO Trait.
      *
@@ -101,9 +92,7 @@ class Edit extends AbstractBaseComponent
 
     public function rules(): array
     {
-        return [
-            'name' => 'sometimes|required|max:150',
-        ];
+        return ['name' => 'sometimes|required|max:150'];
     }
 
     public function render()

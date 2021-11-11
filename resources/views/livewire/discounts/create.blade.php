@@ -331,7 +331,7 @@
                     <div class="p-4 bg-white shadow-md rounded-md sm:p-5 dark:bg-gray-800">
                         <h4 class="text-gray-900 font-medium text-base leading-6 dark:text-white">{{ __('Visibility') }}</h4>
                         <p class="text-sm mt-4 font-normal text-gray-500 leading-5 dark:text-gray-400">{{ __('Setup discount visibility for the customers.') }}</p>
-                        <div class="mt-3 px-3 py-2.5 bg-primary-50 rounded-md text-primary-600 flex items-center justify-between">
+                        <div class="mt-3 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
                                 <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 flex-shrink-0">
                                     <x-heroicon-o-eye class="h-5 w-5 text-white" />

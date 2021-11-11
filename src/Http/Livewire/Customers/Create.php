@@ -20,12 +20,9 @@ class Create extends AbstractBaseComponent
     public string $phone_number = '';
     public bool $opt_in = false;
     public bool $send_mail = false;
-    public $password;
-    public $password_confirmation;
+    public string $password = '';
+    public string $password_confirmation = '';
 
-    /**
-     * Save new entry to the database.
-     */
     public function store()
     {
         $this->validate($this->rules());
@@ -64,19 +61,11 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.customers.show', $customer);
     }
 
-    /**
-     * Generate a 10 random string characters for password.
-     */
     public function generate()
     {
         $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
     }
 
-    /**
-     * Component validation rules.
-     *
-     * @return array<string>
-     */
     public function rules(): array
     {
         return array_merge($this->addressRules(), [
@@ -86,10 +75,7 @@ class Create extends AbstractBaseComponent
             'country_id' => 'required',
             'street_address' => 'required',
             'password' => 'required|confirmed|min:8',
-            'phone_number' => [
-                'nullable',
-                new Phone(),
-            ],
+            'phone_number' => ['nullable', new Phone()],
         ]);
     }
 
