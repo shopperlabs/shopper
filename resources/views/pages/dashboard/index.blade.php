@@ -8,7 +8,7 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8 3.6a1.2 1.2 0 1 1 2.4 0v6.6a.6.6 0 1 0 1.2 0V4.8a1.2 1.2 0 1 1 2.4 0v5.4a.6.6 0 1 0 1.2 0v-3a1.2 1.2 0 1 1 2.4 0v6a8.401 8.401 0 0 1-16.16 3.215A8.4 8.4 0 0 1 3.6 13.2v-2.4a1.2 1.2 0 0 1 2.4 0v3a.6.6 0 1 0 1.2 0v-9a1.2 1.2 0 0 1 2.4 0v5.4a.6.6 0 1 0 1.2 0V3.6z" />
         </svg>
         <h2 class="text-3xl leading-8 font-bold text-secondary-900 dark:text-white sm:leading-9 sm:truncate">
-            Welcome to <span class='font-medium bg-clip-text text-transparent bg-gradient-to-r from-secondary-500 to-primary-600'>Shopper</span> Dashboard
+            Welcome to <span class='font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-800'>Shopper</span> Dashboard
         </h2>
     </div>
 

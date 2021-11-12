@@ -1,8 +1,10 @@
 <div class="flex flex-col justify-between bg-primary-800 text-center w-16">
     <div class="pt-3">
-        <a class="flex-shrink-0 flex items-center px-4" href="{{ route('shopper.dashboard') }}">
-            <x-shopper-application-icon class="h-12 w-auto" />
-        </a>
+        <div class="px-2">
+            <a class="flex-shrink-0 flex items-center justify-center p-2 bg-white rounded-full" href="{{ route('shopper.dashboard') }}">
+                <x-shopper-application-icon class="h-8 w-auto" />
+            </a>
+        </div>
         <div class="h-full pt-5 pb-4 overflow-y-auto">
             {!! $primaryMenu->asUl(['class' => 'primary-menu mt-5 px-2 space-y-2 flex flex-col items-center']) !!}
         </div>
@@ -17,7 +19,7 @@
                 <span class="dark:hidden opacity-100 ease-in duration-200 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity" aria-hidden="true">
                     <x-heroicon-s-sun class="h-3 w-3 text-secondary-400" />
                 </span>
-                <span class="hidden dark:flex opacity-0 ease-out duration-100 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full items-center justify-center transition-opacity opacity-100 ease-in duration-200 " aria-hidden="true">
+                <span class="hidden dark:flex opacity-0 ease-out duration-100 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full items-center justify-center transition-opacity opacity-10 ease-in duration-200 " aria-hidden="true">
                     <x-heroicon-s-moon class="h-3 w-3 text-secondary-600" />
                 </span>
             </span>

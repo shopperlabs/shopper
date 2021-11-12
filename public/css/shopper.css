@@ -4494,11 +4494,18 @@ select{
 	--tw-gradient-from: #f8fafc;
 	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(248, 250, 252, 0));
 }
+.from-primary-400{
+	--tw-gradient-from: #60a5fa;
+	--tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(96, 165, 250, 0));
+}
 .to-primary-600{
 	--tw-gradient-to: #2563eb;
 }
 .to-secondary-100{
 	--tw-gradient-to: #f1f5f9;
+}
+.to-primary-800{
+	--tw-gradient-to: #1e40af;
 }
 .bg-cover{
 	background-size: cover;
@@ -4545,6 +4552,9 @@ select{
 }
 .p-0{
 	padding: 0px;
+}
+.p-1\.5{
+	padding: 0.375rem;
 }
 .px-6{
 	padding-left: 1.5rem;
@@ -5072,6 +5082,9 @@ select{
 }
 .opacity-15{
 	opacity: .15;
+}
+.opacity-10{
+	opacity: 0.1;
 }
 .shadow-sm{
 	--tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
