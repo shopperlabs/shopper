@@ -8,28 +8,15 @@ use Shopper\Framework\Models\Shop\Review;
 
 class Show extends Component
 {
-    /**
-     * Review to show.
-     */
     public Review $review;
-
-    /**
-     * Review approved state.
-     */
     public bool $approved;
 
-    /**
-     * Component Mount method instance.
-     */
     public function mount(Review $review)
     {
         $this->review = $review->load(['reviewrateable', 'author']);
         $this->approved = $review->approved;
     }
 
-    /**
-     * Toggle review approved state.
-     */
     public function updatedApproved()
     {
         $this->approved = ! $this->review->approved;

@@ -9,16 +9,10 @@ use Shopper\Framework\Models\User\Role as RoleModel;
 class Role extends Component
 {
     public RoleModel $role;
-
     public string $name;
-
     public string $display_name = '';
-
     public ?string $description = null;
 
-    /**
-     * Component Mount instance.
-     */
     public function mount(RoleModel $role)
     {
         $this->name = $role->name;

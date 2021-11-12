@@ -8,17 +8,11 @@ use Shopper\Framework\Models\Shop\Product\Attribute;
 class Create extends AbstractBaseComponent
 {
     public string $name = '';
-
     public string $slug = '';
-
     public string $type = 'text';
-
     public ?string $description = null;
-
     public bool $isEnabled = false;
-
     public bool $isSearchable = false;
-
     public bool $isFilterable = false;
 
     public function updatedName(string $value)

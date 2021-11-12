@@ -10,39 +10,12 @@ use Shopper\Framework\Models\System\Currency;
 
 class Stripe extends Component
 {
-    /**
-     * Stripe API public key.
-     */
     public string $stripe_key = '';
-
-    /**
-     * Stripe API secret key.
-     */
     public string $stripe_secret = '';
-
-    /**
-     * Stripe API Webhook.
-     */
     public string $stripe_webhook_secret = '';
-
-    /**
-     * Stripe Mode.
-     */
     public string $stripe_mode = 'sandbox';
-
-    /**
-     * Cashier Currency.
-     */
     public string $currency;
-
-    /**
-     * Indicates if Stripe Payment is being enabled.
-     */
     public bool $enabled = false;
-
-    /**
-     * Message display during Stripe installation.
-     */
     public string $message = '...';
 
     public function mount()

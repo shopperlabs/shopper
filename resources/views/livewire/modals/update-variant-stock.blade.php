@@ -18,8 +18,8 @@
                                 <x-heroicon-o-location-marker class="h-5 w-5 text-gray-500 dark:text-gray-400" />
                             </span>
                             <x-shopper-input.select wire:model="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
+                                <option value="0">{{ __('Select Inventory') }}</option>
                                 @foreach($inventories as $inventory)
-                                    <option value="0">{{ __('Select Inventory') }}</option>
                                     <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                                 @endforeach
                             </x-shopper-input.select>

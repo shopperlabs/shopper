@@ -10,14 +10,8 @@ class Refund extends Component
 {
     use WithLegalActions;
 
-    /**
-     * Legal page title.
-     */
     public string $title = 'Refund policy';
 
-    /**
-     * Component mount instance.
-     */
     public function mount()
     {
         $legal = Legal::query()->where('slug', str_slug($this->title))->first();
@@ -25,9 +19,6 @@ class Refund extends Component
         $this->initializeValues($legal);
     }
 
-    /**
-     * Store/Update data from storage.
-     */
     public function store()
     {
         $this->storeValues($this->title, $this->content, $this->isEnabled);

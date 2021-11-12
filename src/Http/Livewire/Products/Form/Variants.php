@@ -2,8 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -14,16 +14,11 @@ use Shopper\Framework\Traits\WithUploadProcess;
 
 class Variants extends Component
 {
-    use WithPagination;
-    use WithFileUploads;
-    use WithAttributes;
-    use WithUploadProcess;
+    use WithPagination, WithFileUploads, WithAttributes, WithUploadProcess;
 
     public string $search = '';
-
+    public Model $product;
     public $quantity;
-
-    public $product;
 
     public string $currency;
 
@@ -40,11 +35,6 @@ class Variants extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    /**
-     * Remove a record to the database.
-     *
-     * @throws Exception
-     */
     public function remove(int $id)
     {
         $product = (new ProductRepository())->getById($id);

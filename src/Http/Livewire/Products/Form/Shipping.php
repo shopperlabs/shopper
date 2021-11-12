@@ -11,16 +11,7 @@ class Shipping extends Component
 {
     use WithAttributes;
 
-    /**
-     * Product Model.
-     *
-     * @var Model
-     */
-    public $product;
-
-    /**
-     * Product id.
-     */
+    public Model $product;
     public int $productId;
 
     /**

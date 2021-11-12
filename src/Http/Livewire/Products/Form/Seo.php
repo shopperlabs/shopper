@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
@@ -11,10 +12,8 @@ class Seo extends Component
 {
     use WithSeoAttributes;
 
-    public $product;
-
+    public Model $product;
     public int $productId;
-
     public string $slug;
 
     public $seoAttributes = [
@@ -31,9 +30,6 @@ class Seo extends Component
         $this->seoDescription = $product->seo_description;
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     */
     public function store()
     {
         $this->validate([

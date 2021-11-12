@@ -10,11 +10,8 @@ use Shopper\Framework\Services\Mailable;
 class CreateMailable extends ModalComponent
 {
     public string $name = '';
-
     public ?string $markdownView = null;
-
     public bool $isMarkdown = false;
-
     public bool $isForce = false;
 
     public static function modalMaxWidth(): string

@@ -8,7 +8,6 @@ use Shopper\Framework\Services\Mailable;
 class DeleteTemplate extends ModalComponent
 {
     public string $name;
-
     public string $slug;
 
     public function mount(string $name, string $slug)

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Repositories\InventoryHistoryRepository;
@@ -13,18 +14,8 @@ class VariantStock extends Component
     use WithPagination;
     use WithStock;
 
-    /**
-     * Variation Model instance.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    public $product;
+    public Model $product;
 
-    /**
-     * Component Mount instance.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $variant
-     */
     public function mount($variant)
     {
         $this->product = $variant;

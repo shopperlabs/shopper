@@ -50,7 +50,7 @@
                 <div class="flex items-center">
                     <x-shopper-button wire:click="updateCurrentStock" wire.loading.attr="disabled" type="button">
                         <x-shopper-loader wire:loading wire:target="updateCurrentStock" class="text-white" />
-                        {{ __("Update") }}
+                        {{ __('Update') }}
                     </x-shopper-button>
                     @if($histories->isNotEmpty())
                         <div class="flex items-center pl-4 space-x-4">

@@ -4,6 +4,7 @@ namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
@@ -11,7 +12,7 @@ use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
 
 class Attributes extends Component
 {
-    public $product;
+    public Model $product;
     public int $productId;
     public Collection $attributes;
     public Collection $productAttributes;
