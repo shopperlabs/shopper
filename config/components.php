@@ -36,6 +36,7 @@ return [
         'account.password' => Livewire\Account\Password::class,
         'account.profile' => Livewire\Account\Profile::class,
         'account.two-factor' => Livewire\Account\TwoFactor::class,
+        'analytics.dashboard' => Livewire\Analytics\Dashboard::class,
 
         'brands.browse' => Livewire\Brands\Browse::class,
         'brands.create' => Livewire\Brands\Create::class,
