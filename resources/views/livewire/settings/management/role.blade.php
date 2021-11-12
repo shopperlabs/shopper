@@ -6,13 +6,13 @@
     }"
 >
     <x-shopper-breadcrumb back="shopper.settings.users">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
+        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.users')" title="Users & roles" />
     </x-shopper-breadcrumb>
 
-    <div class="mt-3 pb-5 relative border-b border-gray-200 space-y-4 sm:pb-0 dark:border-gray-700">
+    <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
         <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
-            <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
+            <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
                 {{ $display_name }}
             </h3>
             <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
@@ -48,15 +48,15 @@
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
                 <nav class="-mb-px flex space-x-8">
-                    <button @click="currentTab = 'role'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'role' }">
+                    <button @click="currentTab = 'role'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'role' }">
                         {{ __('Role') }}
                     </button>
 
-                    <button @click="currentTab = 'users'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'users' }">
+                    <button @click="currentTab = 'users'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'users' }">
                         {{ __('Users') }}
                     </button>
 
-                    <button @click="currentTab = 'permissions'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-500 dark:hover:border-gray-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'permissions' }">
+                    <button @click="currentTab = 'permissions'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 dark:text-primary-600 focus:text-primary-800 focus:border-primary-700 dark:focus:text-primary-800 dark:focus:border-primary-700': currentTab === 'permissions' }">
                         {{ __('Permissions') }}
                     </button>
                 </nav>
@@ -65,7 +65,7 @@
     </div>
 
     <div class="mt-6 pb-10">
-        <div x-show="currentTab === 'role'" class="bg-white shadow overflow-hidden sm:rounded-md dark:bg-gray-800">
+        <div x-show="currentTab === 'role'" class="bg-white shadow overflow-hidden sm:rounded-md dark:bg-secondary-800">
             @if(config('shopper.system.users.admin_role') === $role->name)
                 <div class="pt-5 px-4 sm:px-6">
                     <div class="rounded-md bg-primary-50 p-4">

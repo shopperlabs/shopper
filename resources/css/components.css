@@ -12,11 +12,11 @@
 }
 
 .choices__inner {
-  @apply rounded-md shadow-sm border border-gray-300 dark:border-gray-700 w-full bg-white dark:bg-gray-700 h-[38px] p-2 flex items-center !important;
+  @apply rounded-md shadow-sm border border-secondary-300 dark:border-secondary-700 w-full bg-white dark:bg-secondary-700 h-[38px] p-2 flex items-center !important;
 }
 
 .choices__list--dropdown {
-  @apply border border-gray-300 dark:border-gray-700 !important;
+  @apply border border-secondary-300 dark:border-secondary-700 !important;
 }
 
 .choices__list--single {
@@ -24,7 +24,7 @@
 }
 
 .choices__item {
-  @apply text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 cursor-pointer rounded px-2 py-1 my-0 border-0 !important;
+  @apply text-sm bg-secondary-200 dark:bg-secondary-700 text-secondary-700 dark:text-secondary-300 cursor-pointer rounded px-2 py-1 my-0 border-0 !important;
 }
 
 .choices__item.choices__item--choice {
@@ -32,11 +32,11 @@
 }
 
 .choices__item.choices__item--choice.choices__item--selectable {
-  @apply bg-white dark:bg-gray-700 rounded-none text-gray-700 dark:text-gray-300 p-2 mb-0 !important;
+  @apply bg-white dark:bg-secondary-700 rounded-none text-secondary-700 dark:text-secondary-300 p-2 mb-0 !important;
 }
 
 .choices__item.choices__item--choice.choices__item--selectable:hover {
-  @apply bg-gray-200 dark:bg-gray-600 !important;
+  @apply bg-secondary-200 dark:bg-secondary-600 !important;
 }
 
 .choices__item.choices__item--selectable {
@@ -44,7 +44,7 @@
 }
 
 .choices__list--single > .choices__item.choices__item--selectable {
-  @apply bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 mb-0 !important;
+  @apply bg-white dark:bg-secondary-700 text-secondary-700 dark:text-secondary-300 mb-0 !important;
 }
 
 .choices__item.is-highlighted {
@@ -56,7 +56,7 @@
 }
 
 .choices[data-type*='select-one'] .choices__input {
-  @apply rounded-none border-b-2 bg-white border-gray-300 dark:bg-gray-800 dark:border-gray-700 !important;
+  @apply rounded-none border-b-2 bg-white border-secondary-300 dark:bg-secondary-800 dark:border-secondary-700 !important;
 }
 
 .choices__item.choices__item--choice.is-selected.choices__item--selectable.is-highlighted,

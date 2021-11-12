@@ -2,22 +2,22 @@
 
     <div class="mt-4 pb-5 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <div>
-            <h3 class="text-xl leading-6 sm:text-2xl sm:leading-7 sm:truncate font-bold text-gray-900">
+            <h3 class="text-xl leading-6 sm:text-2xl sm:leading-7 sm:truncate font-bold text-secondary-900">
                 {{ __('Analytics') }}
             </h3>
-            <p class="max-w-4xl text-sm text-gray-500">
+            <p class="max-w-4xl text-sm text-secondary-500">
                 {{ __('Here are your stats for the period') }}
-                <span class="font-medium text-gray-600">{{ $fromDate->format('Y-m-d') . ' - '. $toDate->format('Y-m-d') }}</span>
+                <span class="font-medium text-secondary-600">{{ $fromDate->format('Y-m-d') . ' - '. $toDate->format('Y-m-d') }}</span>
             </p>
         </div>
     </div>
 
 
 @if($can_display_analytics)
-        <h4 class="text-md leading-6 font-medium text-gray-900">
+        <h4 class="text-md leading-6 font-medium text-secondary-900">
             {{ __('Display analytics from ') }}
         </h4>
-        <select id="country" name="country" autocomplete="country" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        <select id="country" name="country" autocomplete="country" class="mt-1 block w-full py-2 px-3 border border-secondary-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             <option>{{ __('Last 7 days') }}</option>
             <option>{{ __('Last Month') }}</option>
             <option>{{ __('Last 3 Months') }}</option>
@@ -25,19 +25,19 @@
             <option>{{ __('All time') }}</option>
             <option>{{ __('Custom date') }}</option>
         </select>
-        <h3 class="text-lg leading-6 font-medium text-gray-900 mt-5">
+        <h3 class="text-lg leading-6 font-medium text-secondary-900 mt-5">
             {{ __('From') }} {{ $period->startDate->format('d/m/Y') }} {{ __('to') }} {{ $period->endDate->format('d/m/Y') }}
         </h3>
-        <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
+        <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-secondary-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
             <div>
                 <div class="px-4 py-5 sm:p-6">
-                    <dt class="text-base font-normal text-gray-900">
+                    <dt class="text-base font-normal text-secondary-900">
                         {{ __('Total Visitors') }}
                     </dt>
                     <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
                         <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
                             {{ $analytics['total_visitors'] }}
-                            <span class="ml-2 text-sm font-medium text-gray-500">
+                            <span class="ml-2 text-sm font-medium text-secondary-500">
                                 {{ __('from XX XXX') }}
                             </span>
                         </div>
@@ -57,13 +57,13 @@
 
             <div>
                 <div class="px-4 py-5 sm:p-6">
-                    <dt class="text-base font-normal text-gray-900">
+                    <dt class="text-base font-normal text-secondary-900">
                         {{ __('Total PageViews') }}
                     </dt>
                     <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
                         <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
                             {{ $analytics['total_pageviews'] }}
-                            <span class="ml-2 text-sm font-medium text-gray-500">
+                            <span class="ml-2 text-sm font-medium text-secondary-500">
                                 {{ __('from XX XXX') }}
                             </span>
                         </div>
@@ -82,17 +82,17 @@
             </div>
         </dl>
         <div class="mt-5">
-            <dt class="text-base font-normal text-gray-900">
+            <dt class="text-base font-normal text-secondary-900">
                 {{ __('Top referrers') }}
             </dt>
         </div>
         <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-5">
-            <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
+            <li class="col-span-1 bg-white rounded-lg shadow divide-y divide-secondary-200">
                 <div class="w-full flex items-center justify-between p-6 space-x-6">
                     <div class="flex-1 truncate">
                         @foreach($analytics['top_referrers'] as $referrer)
                             <div class="flex items-center space-x-3">
-                                <h3 class="text-gray-900 text-sm font-medium truncate">{{ $referrer['url'] }}</h3>
+                                <h3 class="text-secondary-900 text-sm font-medium truncate">{{ $referrer['url'] }}</h3>
                                 <span class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">{{ $referrer['pageViews'] }}</span>
                             </div>
                         @endforeach
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <p class="text-sm text-gray-500">
+                <p class="text-sm text-secondary-500">
 
                 </p>
             </div>

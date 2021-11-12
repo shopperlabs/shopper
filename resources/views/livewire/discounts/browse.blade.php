@@ -142,7 +142,7 @@
             </div>
         </x-shopper-empty-state>
     @else
-        <div class="mt-6 bg-white dark:bg-gray-800 shadow rounded-md">
+        <div class="mt-6 bg-white dark:bg-secondary-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-start space-x-4">
                     <x-shopper-input.search label="Search code" placeholder="Search discount code" />
@@ -154,24 +154,24 @@
                                     <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
                                 </x-shopper-default-button>
                                 <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
-                                    <div class="rounded-md bg-white shadow-xs dark:bg-gray-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                    <div class="rounded-md bg-white shadow-xs dark:bg-secondary-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">
                                             <div class="flex items-center py-2 px-4">
                                                 <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
                                                 <label for="isActive_enabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Active') }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Active') }}</span>
                                                 </label>
                                             </div>
                                             <div class="flex items-center py-2 px-4">
                                                 <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
                                                 <label for="isActive_disabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">{{ __('Not Active') }}</span>
+                                                    <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Not Active') }}</span>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
+                                        <div class="border-t border-secondary-200 dark:border-secondary-600"></div>
                                         <div class="py-1">
-                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-500">{{ __('Clear') }}</button>
+                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-secondary-500 hover:text-primary-600 dark:text-secondary-400 dark:hover:text-primary-500">{{ __('Clear') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -180,19 +180,19 @@
                         <div class="relative flex items-center rounded-md shadow-sm">
                             <x-shopper-label for="date" class="sr-only" :value="__('Date')" />
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <x-heroicon-o-calendar class="h-5 w-5 text-gray-400" />
+                                <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400" />
                             </div>
                             <input
                                 wire:model="date"
                                 x-ref="input"
                                 id="date"
-                                class="w-48 pl-10 py-2 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border border-gray-300 dark:border-gray-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm"
+                                class="w-48 pl-10 py-2 block w-full dark:bg-secondary-700 dark:text-white placeholder-secondary-500 dark:placeholder-secondary-400 rounded-md shadow-sm border border-secondary-300 dark:border-secondary-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-secondary-900 focus:ring-opacity-50 sm:text-sm"
                                 autocomplete="off"
                                 placeholder="{{ __('Choose date') }}"
                                 readonly
                             >
                             <button wire:click="resetDate" type="button" class="absolute z-30 inset-y-0 right-0 pr-3 flex items-center @if($date === '') hidden @endif">
-                                <svg class="text-gray-500 h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="text-secondary-500 h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                                     <path d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
                             </button>
@@ -200,11 +200,11 @@
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-200 dark:border-gray-700">
-                <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+            <div class="border-t border-secondary-200 dark:border-secondary-700">
+                <ul class="divide-y divide-secondary-200 dark:divide-secondary-700">
                     @foreach($discounts as $discount)
                         <li>
-                            <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+                            <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-secondary-50 focus:outline-none focus:bg-secondary-50 dark:hover:bg-secondary-700 dark:focus:bg-secondary-700">
                                 <div class="px-4 py-4 flex items-center sm:px-6">
                                     <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                         <div>
@@ -212,7 +212,7 @@
                                                 {{ $discount->code }}
                                             </div>
                                             <div class="mt-2 flex">
-                                                <ul class="divide-x divide-gray-200 flex items-center text-sm leading-5 text-gray-500 dark:text-gray-400 dark:divide-gray-600">
+                                                <ul class="divide-x divide-secondary-200 flex items-center text-sm leading-5 text-secondary-500 dark:text-secondary-400 dark:divide-secondary-600">
                                                     <li class="pr-2"><span>{{ $discount->total_use }}/{{ $discount->usage_limit ?? __('unlimited') }} {{ __('used') }}</span></li>
                                                     @if($discount->usage_limit_per_user)
                                                         <li class="px-2"><span>{{ __('Once per user') }}</span></li>
@@ -246,17 +246,17 @@
                                             </div>
                                             <div class="flex items-center space-x-2">
                                                 @if($discount->end_at)
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $discount->start_at->format('d M') }}</span>
+                                                    <span class="text-sm text-secondary-500 dark:text-secondary-400">{{ $discount->start_at->format('d M') }}</span>
                                                     <span>-</span>
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $discount->end_at->format('d M') }}</span>
+                                                    <span class="text-sm text-secondary-500 dark:text-secondary-400">{{ $discount->end_at->format('d M') }}</span>
                                                 @else
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ __("From :date", ['date' => $discount->start_at->format('d M')]) }}</span>
+                                                    <span class="text-sm text-secondary-500 dark:text-secondary-400">{{ __("From :date", ['date' => $discount->start_at->format('d M')]) }}</span>
                                                 @endif
                                             </div>
                                         </div>
                                     </div>
                                     <div class="ml-5 flex-shrink-0">
-                                        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                        <svg class="h-5 w-5 text-secondary-400" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                         </svg>
                                     </div>
@@ -266,13 +266,13 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="px-4 py-3 border-t border-gray-200 rounded-b-md  flex items-center justify-between sm:px-6 dark:border-gray-700">
+            <div class="px-4 py-3 border-t border-secondary-200 rounded-b-md  flex items-center justify-between sm:px-6 dark:border-secondary-700">
                 <div class="flex-1 flex justify-between sm:hidden">
                     {{ $discounts->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
+                        <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-300">
                             {{ __('Showing') }}
                             <span class="font-medium">{{ ($discounts->currentPage() - 1) * $discounts->perPage() + 1 }}</span>
                             {{ __('to') }}

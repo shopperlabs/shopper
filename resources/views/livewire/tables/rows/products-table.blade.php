@@ -17,7 +17,7 @@
                              x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700"
                              x-transition:leave-start="translate-x-0"
                              x-transition:leave-end="translate-x-full">
-                            <form class="h-full divide-y divide-gray-200 dark:divide-gray-600 flex flex-col bg-white dark:bg-gray-800 shadow-xl">
+                            <form class="h-full divide-y divide-secondary-200 dark:divide-secondary-600 flex flex-col bg-white dark:bg-secondary-800 shadow-xl">
                                 <div class="flex-1 h-0 overflow-y-auto">
                                     <div class="py-6 px-4 bg-primary-700 sm:px-6">
                                         <div class="flex items-center justify-between">
@@ -38,12 +38,12 @@
                                         </div>
                                     </div>
                                     <div class="flex-1 flex flex-col justify-between">
-                                        <div class="divide-y divide-gray-200 dark:divide-gray-700">
-                                            <div class="pt-6 divide-y divide-gray-200 dark:divide-gray-700">
+                                        <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
+                                            <div class="pt-6 divide-y divide-secondary-200 dark:divide-secondary-700">
                                                 <div class="px-4 sm:px-6 pb-5">
                                                     <div class="space-y-6">
                                                         <div>
-                                                            <x-shopper-label for="brand_id" class="text-gray-900 dark:text-white">
+                                                            <x-shopper-label for="brand_id" class="text-secondary-900 dark:text-white">
                                                                 {{ __('Brands') }}
                                                             </x-shopper-label>
                                                             <div class="mt-1">
@@ -58,7 +58,7 @@
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <x-shopper-label for="category_id" class="text-gray-900 dark:text-white">
+                                                            <x-shopper-label for="category_id" class="text-secondary-900 dark:text-white">
                                                                 {{ __('Categories') }}
                                                             </x-shopper-label>
                                                             <div class="mt-1">
@@ -73,7 +73,7 @@
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <x-shopper-label for="collection_id" class="text-gray-900 dark:text-white">
+                                                            <x-shopper-label for="collection_id" class="text-secondary-900 dark:text-white">
                                                                 {{ __('Collections') }}
                                                             </x-shopper-label>
                                                             <div class="mt-1">
@@ -92,10 +92,10 @@
                                                 <div class="p-4 sm:px-6 sm:py-5">
                                                     <fieldset>
                                                         <div class="flex items-center justify-between">
-                                                            <legend class="text-sm font-medium text-gray-900 dark:text-white">
+                                                            <legend class="text-sm font-medium text-secondary-900 dark:text-white">
                                                                 {{ __('Status') }}
                                                             </legend>
-                                                            <button wire:click="resetStatusFilter" type="button" class="block px-4 py-2 text-sm text-right leading-5 text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-600 hover:underline">{{ __('Clear') }}</button>
+                                                            <button wire:click="resetStatusFilter" type="button" class="block px-4 py-2 text-sm text-right leading-5 text-secondary-500 dark:text-secondary-400 hover:text-primary-600 dark:hover:text-primary-600 hover:underline">{{ __('Clear') }}</button>
                                                         </div>
                                                         <div class="mt-2 space-y-5">
                                                             <div class="relative flex items-start">
@@ -103,10 +103,10 @@
                                                                     <x-shopper-input.radio wire:model="isVisible" id="status_public" value="1" aria-describedby="product_status_visible" name="status" />
                                                                 </div>
                                                                 <div class="pl-7 text-sm">
-                                                                    <x-shopper-label for="status_public" class="text-gray-900 dark:text-white">
+                                                                    <x-shopper-label for="status_public" class="text-secondary-900 dark:text-white">
                                                                         {{ __('Visible') }}
                                                                     </x-shopper-label>
-                                                                    <p id="privacy_public_description" class="text-gray-500 dark:text-gray-400">
+                                                                    <p id="privacy_public_description" class="text-secondary-500 dark:text-secondary-400">
                                                                         {{ __('All store customers will be able to view these products.') }}
                                                                     </p>
                                                                 </div>
@@ -117,10 +117,10 @@
                                                                         <x-shopper-input.radio wire:model.lazy="isVisible" id="status_private" value="0" aria-describedby="product_status_invisible" name="status" />
                                                                     </div>
                                                                     <div class="pl-7 text-sm">
-                                                                        <x-shopper-label for="status_private" class="text-gray-900 dark:text-white">
+                                                                        <x-shopper-label for="status_private" class="text-secondary-900 dark:text-white">
                                                                             {{ __('Not visible') }}
                                                                         </x-shopper-label>
-                                                                        <p id="privacy_private-to-project_description" class="text-gray-500 dark:text-gray-400">
+                                                                        <p id="privacy_private-to-project_description" class="text-secondary-500 dark:text-secondary-400">
                                                                             {{ __('Products that have not yet been released to customers.') }}
                                                                         </p>
                                                                     </div>

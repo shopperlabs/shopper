@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Database\Eloquent\Model;
 use Livewire\WithPagination;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
@@ -14,7 +15,7 @@ class UpdateVariantStock extends ModalComponent
     use WithPagination;
     use WithStock;
 
-    public $product;
+    public Model $product;
 
     public function mount(int $id)
     {

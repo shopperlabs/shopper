@@ -73,19 +73,11 @@ class General extends Component
         }
     }
 
-    /**
-     * Real-Time validation.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function updated(string $field)
     {
         $this->validateOnly($field, $this->rules());
     }
 
-    /**
-     * Update setting to the storage.
-     */
     public function store()
     {
         $this->validate($this->rules());
@@ -136,11 +128,6 @@ class General extends Component
         ]);
     }
 
-    /**
-     * Validation rules.
-     *
-     * @return array<string>
-     */
     public function rules(): array
     {
         return [
@@ -157,17 +144,11 @@ class General extends Component
         ];
     }
 
-    /**
-     * Remove cover.
-     */
     public function removeCover()
     {
         $this->shop_cover = null;
     }
 
-    /**
-     * Remove cover from the storage.
-     */
     public function deleteCover()
     {
         Setting::query()->updateOrCreate(['key' => 'shop_cover'], [

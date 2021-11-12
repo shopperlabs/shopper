@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Model;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -21,8 +22,7 @@ class Edit extends AbstractBaseComponent
         WithUploadProcess,
         WithSeoAttributes;
 
-    public $product;
-
+    public Model $product;
     public int $productId;
     public string $currency;
     public $images = [];

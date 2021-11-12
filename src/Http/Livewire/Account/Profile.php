@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -17,30 +18,21 @@ class Profile extends Component
     public ?string $phone_number = null;
     public $picture;
 
-    /**
-     * Component mount instance.
-     */
     public function mount()
     {
-        $this->first_name = auth()->user()->first_name;
-        $this->last_name = auth()->user()->last_name;
-        $this->email = auth()->user()->email;
-        $this->phone_number = auth()->user()->phone_number;
+        $user = Auth::user();
+
+        $this->first_name = $user->first_name;
+        $this->last_name = $user->last_name;
+        $this->email = $user->email;
+        $this->phone_number = $user->phone_number;
     }
 
-    /**
-     * Real-Time picture validation.
-     */
     public function updatedPicture()
     {
-        $this->validate([
-            'picture' => 'nullable|image|max:1024', // 1MB Max
-        ]);
+        $this->validate(['picture' => 'nullable|image|max:1024']);
     }
 
-    /**
-     * Update user profile to storage.
-     */
     public function save()
     {
         $this->validate([
@@ -52,10 +44,12 @@ class Profile extends Component
             ],
             'first_name' => 'required',
             'last_name' => 'required',
-            'picture' => 'nullable|image|max:1024', // 1MB Max
+            'picture' => 'nullable|image|max:1024',
         ]);
 
-        auth()->user()->update([
+        $user = Auth::user();
+
+        $user->update([
             'last_name' => $this->last_name,
             'first_name' => $this->first_name,
             'email' => $this->email,
@@ -65,7 +59,7 @@ class Profile extends Component
         if ($this->picture) {
             $filename = $this->picture->store('/', config('shopper.system.storage.disks.avatars'));
 
-            auth()->user()->update([
+            $user->update([
                 'avatar_type' => 'storage',
                 'avatar_location' => $filename,
             ]);

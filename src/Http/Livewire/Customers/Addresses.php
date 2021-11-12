@@ -2,17 +2,13 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class Addresses extends Component
 {
-    /**
-     * Customer Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    public $addresses;
+    public Collection $addresses;
 
     public function mount($adresses)
     {

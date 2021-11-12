@@ -24,7 +24,7 @@
 
     @include('shopper::includes._additional-styles')
 </head>
-<body class="bg-gray-100 font-sans antialiased dark:bg-gray-900">
+<body class="bg-secondary-100 font-sans antialiased dark:bg-secondary-900">
 
     <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false, modalDemo: false }" @keydown.window.escape="sidebarOpen = false">
         <!-- Off-canvas menu for mobile -->
@@ -34,8 +34,8 @@
         @include('shopper::partials.default.sidebar')
 
         <div class="flex flex-col w-0 flex-1 overflow-hidden overflow-y-auto">
-            <div class="sticky top-0 z-30 flex-shrink-0 flex h-16 bg-white dark:bg-gray-900 md:bg-transparent md:dark:bg-transparent backdrop-filter backdrop-blur-md shadow md:shadow-none md:py-4 md:h-auto border-b border-transparent md:border-gray-200 dark:border-gray-700">
-                <button @click.stop="sidebarOpen = true" class="px-4 border-r border-gray-200 dark:border-gray-700 text-gray-500 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 focus:text-gray-600 dark:focus:text-gray-500 md:hidden" aria-label="Open sidebar">
+            <div class="sticky top-0 z-30 flex-shrink-0 flex h-16 bg-white dark:bg-secondary-900 md:bg-transparent md:dark:bg-transparent backdrop-filter backdrop-blur-md shadow md:shadow-none md:py-4 md:h-auto border-b border-transparent md:border-secondary-200 dark:border-secondary-700">
+                <button @click.stop="sidebarOpen = true" class="px-4 border-r border-secondary-200 dark:border-secondary-700 text-secondary-500 focus:outline-none focus:bg-secondary-100 dark:focus:bg-secondary-800 focus:text-secondary-600 dark:focus:text-secondary-500 md:hidden" aria-label="Open sidebar">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                     </svg>
@@ -43,13 +43,13 @@
                 <div class="flex-1 px-4 sm:px-6 md:px-8 flex justify-between">
                     <div class="flex-1 flex">
                         <form class="md:hidden w-full flex" action="#" method="GET">
-                            <div class="relative w-full text-gray-400 focus-within:text-gray-600">
+                            <div class="relative w-full text-secondary-400 focus-within:text-secondary-600">
                                 <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
                                     <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
                                     </svg>
                                 </div>
-                                <input aria-label="{{ __('Search') }}" id="search_field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm" placeholder="{{ __('Search') }}" type="search" />
+                                <input aria-label="{{ __('Search') }}" id="search_field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent dark:bg-secondary-900 text-secondary-900 dark:text-white placeholder-secondary-500 focus:outline-none focus:placeholder-secondary-400 focus:ring-0 focus:border-transparent sm:text-sm" placeholder="{{ __('Search') }}" type="search" />
                             </div>
                         </form>
                         <div class="hidden md:block relative w-full max-w-md">

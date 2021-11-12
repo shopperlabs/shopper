@@ -13,56 +13,14 @@ class Analytics extends Component
 {
     use WithFileUploads;
 
-    /**
-     * Google Analytics tracking iD.
-     *
-     * @var string
-     */
     public $google_analytics_tracking_id;
-
-    /**
-     * Google Analytics view id.
-     *
-     * @var string
-     */
     public $google_analytics_view_id;
-
-    /**
-     * Google Analytics custom js.
-     *
-     * @var string
-     */
     public $google_analytics_add_js;
-
-    /**
-     * Google Tag Manager id.
-     *
-     * @var string
-     */
     public $google_tag_manager_account_id;
-
-    /**
-     * Facebook Pixel Id.
-     *
-     * @var string
-     */
     public $facebook_pixel_account_id;
-
-    /**
-     * Json Credential file.
-     */
     public $json_file;
+    public bool $credentials_json = false;
 
-    /**
-     * Analytics credentials.
-     *
-     * @var bool
-     */
-    public $credentials_json = false;
-
-    /**
-     * Component Mount Method.
-     */
     public function mount()
     {
         $ga_add_js = Setting::query()->where('key', 'google_analytics_add_js')->first();
@@ -74,11 +32,10 @@ class Analytics extends Component
         $this->credentials_json = File::exists(storage_path('app/analytics/service-account-credentials.json'));
     }
 
-    /**
-     * Sav/Update a entry on the storage.
-     */
     public function store()
     {
+        Artisan::call('config:clear');
+
         setEnvironmentValue([
             'analytics_tracking_id' => $this->google_analytics_tracking_id,
             'analytics_view_id' => $this->google_analytics_view_id,
@@ -97,8 +54,6 @@ class Analytics extends Component
             $this->json_file->storeAs('analytics', 'service-account-credentials.json');
         }
 
-        Artisan::call('config:clear');
-
         if (app()->environment('production')) {
             Artisan::call('config:cache');
         }
@@ -111,7 +66,7 @@ class Analytics extends Component
 
     public function downloadJson(): string
     {
-        return Storage::url('app/analytics/service-account-credentials.json');
+        return Storage::url('/app/analytics/service-account-credentials.json');
     }
 
     public function render()

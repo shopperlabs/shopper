@@ -7,7 +7,7 @@
     </x-shopper-heading>
 
     @if($total === 0)
-        <div class="mt-10 relative w-full bg-white dark:bg-gray-800 flex flex-col shadow-sm rounded-md items-center justify-center py-12 lg:py-16">
+        <div class="mt-10 relative w-full bg-white dark:bg-secondary-800 flex flex-col shadow-sm rounded-md items-center justify-center py-12 lg:py-16">
             <div class="flex-shrink-0 w-1/3 h-64">
                 <svg class="w-full h-full" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 320 230">
                     <style>
@@ -361,8 +361,8 @@
                 </svg>
             </div>
             <div class="mt-5 w-full sm:max-w-md space-y-3 text-center">
-                <p class="text-base leading-6 text-gray-900 dark:text-white font-medium">{{ __('Customers reviews') }}</p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('This is where you will see the reviews of your customers and the ratings given to your products.') }}</p>
+                <p class="text-base leading-6 text-secondary-900 dark:text-white font-medium">{{ __('Customers reviews') }}</p>
+                <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('This is where you will see the reviews of your customers and the ratings given to your products.') }}</p>
             </div>
         </div>
     @else

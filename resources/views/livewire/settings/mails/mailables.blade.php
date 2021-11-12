@@ -16,8 +16,8 @@
 
     <div class="min-h-0 flex-1 overflow-y-auto">
         <div class="py-6 sm:px-8 pb-10">
-            <div class="pb-5 border-b border-gray-200 sm:flex sm:items-center sm:justify-between dark:border-gray-700">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+            <div class="pb-5 border-b border-secondary-200 sm:flex sm:items-center sm:justify-between dark:border-secondary-700">
+                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('Mailables') }}
                 </h3>
                 @if($isLocal)
@@ -33,16 +33,16 @@
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div class="shadow overflow-hidden sm:rounded-lg">
-                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gray-50 dark:bg-gray-700">
+                            <table class="min-w-full divide-y divide-secondary-200 dark:divide-secondary-700">
+                                <thead class="bg-secondary-50 dark:bg-secondary-700">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider dark:text-secondary-400">
                                             {{ __('Name') }}
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider dark:text-secondary-400">
                                             {{ __('Namespace') }}
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
+                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-secondary-500 uppercase tracking-wider dark:text-secondary-400">
                                             {{ __('Last Updated') }}
                                         </th>
                                         <th scope="col" class="relative px-6 py-3">
@@ -50,23 +50,23 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                <tbody class="bg-white divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
                                     @forelse($mailables->all() as $mailable)
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary-900 dark:text-white">
                                                 {{ $mailable['name'] }}
                                             </td>
-                                            <td class="px-6 py-4 min-w-0 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                            <td class="px-6 py-4 min-w-0 whitespace-nowrap text-sm text-secondary-500 dark:text-secondary-400">
                                                 {{ $mailable['namespace'] }}
                                             </td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500 dark:text-gray-400">
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-secondary-500 dark:text-secondary-400">
                                                 {{ (\Carbon\Carbon::createFromTimeStamp($mailable['modified']))->diffForHumans() }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                {{--<a href="#" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 active:bg-gray-100 focus:bg-gray-100 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none">
+                                                {{--<a href="#" class="inline-flex items-center p-2 rounded-full hover:bg-secondary-50 active:bg-secondary-100 focus:bg-secondary-100 text-secondary-500 text-sm leading-5 hover:text-secondary-400 focus:outline-none">
                                                     <x-heroicon-o-eye class="w-5 h-5" />
                                                 </a>--}}
-                                                <button wire:click="$emit('openModal', 'shopper-modals.delete-mailable', {{ json_encode(['item' => $mailable['name']]) }})" type="button" class="inline-flex items-center p-2 rounded-full hover:bg-gray-50 text-gray-500 text-sm leading-5 hover:text-gray-400 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-700">
+                                                <button wire:click="$emit('openModal', 'shopper-modals.delete-mailable', {{ json_encode(['item' => $mailable['name']]) }})" type="button" class="inline-flex items-center p-2 rounded-full hover:bg-secondary-50 text-secondary-500 text-sm leading-5 hover:text-secondary-400 focus:outline-none dark:text-secondary-400 dark:hover:bg-secondary-700">
                                                     <x-heroicon-o-trash class="w-5 h-5" />
                                                 </button>
                                             </td>
@@ -100,7 +100,7 @@
                                                             <path d="m320.851562 27.445312h-27.304687c-3.773437 0-6.828125-3.058593-6.828125-6.828124 0-3.769532 3.054688-6.828126 6.828125-6.828126h27.304687c3.773438 0 6.828126 3.058594 6.828126 6.828126 0 3.769531-3.054688 6.828124-6.828126 6.828124zm0 0" />
                                                         </g>
                                                     </svg>
-                                                    <span class="mt-4 text-sm text-gray-500 font-medium dark:text-gray-400">{{ __("We didn't find anything - just empty space.") }}</span>
+                                                    <span class="mt-4 text-sm text-secondary-500 font-medium dark:text-secondary-400">{{ __("We didn't find anything - just empty space.") }}</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -112,13 +112,13 @@
                 </div>
             </div>
 
-            <div class="mt-10 bg-gray-50 p-4 sm:p-5 rounded-md border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                <p class="text-sm text-gray-500 font-medium leading-5 dark:text-gray-400">
+            <div class="mt-10 bg-secondary-50 p-4 sm:p-5 rounded-md border border-secondary-200 dark:bg-secondary-800 dark:border-secondary-700">
+                <p class="text-sm text-secondary-500 font-medium leading-5 dark:text-secondary-400">
                     {{ __("Do you like this feature? It's inspired by Laravel Mail Eclipse. You can sponsor the author") }}
                 </p>
                 <div class="mt-4">
                     <div class="-mx-2 -my-1.5 flex">
-                        <a href="https://github.com/Qoraiche/laravel-mail-editor" target="_blank" class="px-3 py-2 rounded-md text-sm leading-5 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700">
+                        <a href="https://github.com/Qoraiche/laravel-mail-editor" target="_blank" class="px-3 py-2 rounded-md text-sm leading-5 font-medium text-secondary-700 hover:bg-secondary-50 focus:outline-none focus:bg-secondary-50 dark:text-secondary-300 dark:hover:bg-secondary-700">
                             {{ __('View the repo') }}
                         </a>
                         <x-shopper-default-button link="https://www.paypal.com/paypalme/streamaps" target="_blank" class="ml-3">

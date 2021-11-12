@@ -1,14 +1,14 @@
 <div>
     <x:shopper-breadcrumb back="shopper.settings.index">
-        <svg class="flex-shrink-0 h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+        <svg class="flex-shrink-0 h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
-        <a href="{{ route('shopper.settings.index') }}" class="text-gray-500 hover:text-gray-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Settings') }}</a>
+        <a href="{{ route('shopper.settings.index') }}" class="text-secondary-500 hover:text-secondary-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Settings') }}</a>
     </x:shopper-breadcrumb>
 
     <div class="mt-2 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate pb-5 border-b border-gray-200">{{ __('Integrations') }}</h2>
+            <h2 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate pb-5 border-b border-secondary-200">{{ __('Integrations') }}</h2>
         </div>
     </div>
 
@@ -25,15 +25,15 @@
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-base leading-6 font-medium text-gray-800">Github</h3>
+                        <h3 class="text-base leading-6 font-medium text-secondary-800">Github</h3>
                         <p class="text-xs leading-4 text-primary-600">{{ __("Developer service") }}</p>
                     </div>
                 </div>
-                <p class="mt-4 text-sm leading-5 text-gray-500">
+                <p class="mt-4 text-sm leading-5 text-secondary-500">
                     {{ __("Integrate directly with github to create issues in relation to a problem encountered on a service and track your issue.") }}
                 </p>
             </div>
-            <div class="bg-gray-50 grid grid-cols-2">
+            <div class="bg-secondary-50 grid grid-cols-2">
                 @if($github)
                     <div class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-green-600 leading-6 text-base font-medium sm:text-sm sm:leading-5">
                         <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@
                         </svg>
                         {{ __("Added") }}
                     </div>
-                    <a href="{{ route('shopper.settings.integrations.github') }}" class="inline-flex items-center border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                    <a href="{{ route('shopper.settings.integrations.github') }}" class="inline-flex items-center border-l border-secondary-100 text-center py-3 px-4 text-secondary-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-secondary-500 focus:outline-none focus:text-secondary-900 transition duration-150 ease-in-out">
                         {{ __("Getting Started") }}
                         <svg class="h-5 w-5 ml-2 -mr-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -54,7 +54,7 @@
                         </svg>
                         {{ __("Enable") }}
                     </button>
-                    <a href="https://docs.laravelshopper.io/docs/integrations/github" class="border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                    <a href="https://docs.laravelshopper.io/docs/integrations/github" class="border-l border-secondary-100 text-center py-3 px-4 text-secondary-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-secondary-500 focus:outline-none focus:text-secondary-900 transition duration-150 ease-in-out">
                         {{ __("Learn More") }}
                     </a>
                 @endif
@@ -72,22 +72,22 @@
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-base leading-6 font-medium text-gray-800">Slack</h3>
+                        <h3 class="text-base leading-6 font-medium text-secondary-800">Slack</h3>
                         <p class="text-xs leading-4 text-primary-600">{{ __("Developer service") }}</p>
                     </div>
                 </div>
-                <p class="mt-4 text-sm leading-5 text-gray-500">
+                <p class="mt-4 text-sm leading-5 text-secondary-500">
                     {{ __("Add slack notifications on actions that are done on your platform so you don't miss any changes in your store.") }}
                 </p>
             </div>
-            <div class="bg-gray-50 grid grid-cols-2">
+            <div class="bg-secondary-50 grid grid-cols-2">
                 <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
                     {{ __("Enable") }}
                 </button>
-                <button type="button" class="border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                <button type="button" class="border-l border-secondary-100 text-center py-3 px-4 text-secondary-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-secondary-500 focus:outline-none focus:text-secondary-900 transition duration-150 ease-in-out">
                     {{ __("Learn More") }}
                 </button>
             </div>
@@ -112,22 +112,22 @@
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-base leading-6 font-medium text-gray-800">Instagram</h3>
+                        <h3 class="text-base leading-6 font-medium text-secondary-800">Instagram</h3>
                         <p class="text-xs leading-4 text-primary-600">{{ __("Product service") }}</p>
                     </div>
                 </div>
-                <p class="mt-4 text-sm leading-5 text-gray-500">
+                <p class="mt-4 text-sm leading-5 text-secondary-500">
                     {{ __("Linked your instagram account to your store to be able to communicate with your page easily and add products.") }}
                 </p>
             </div>
-            <div class="bg-gray-50 grid grid-cols-2">
+            <div class="bg-secondary-50 grid grid-cols-2">
                 <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
                     {{ __("Enable") }}
                 </button>
-                <button type="button" class="border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                <button type="button" class="border-l border-secondary-100 text-center py-3 px-4 text-secondary-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-secondary-500 focus:outline-none focus:text-secondary-900 transition duration-150 ease-in-out">
                     {{ __("Learn More") }}
                 </button>
             </div>
@@ -142,22 +142,22 @@
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-base leading-6 font-medium text-gray-800">Facebook</h3>
+                        <h3 class="text-base leading-6 font-medium text-secondary-800">Facebook</h3>
                         <p class="text-xs leading-4 text-primary-600">{{ __("Product service") }}</p>
                     </div>
                 </div>
-                <p class="mt-4 text-sm leading-5 text-gray-500">
+                <p class="mt-4 text-sm leading-5 text-secondary-500">
                     {{ __("Associate your website with your facebook store and publish your products directly from your store and track your sales.") }}
                 </p>
             </div>
-            <div class="bg-gray-50 grid grid-cols-2">
+            <div class="bg-secondary-50 grid grid-cols-2">
                 <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
                     {{ __("Enable") }}
                 </button>
-                <button type="button" class="border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                <button type="button" class="border-l border-secondary-100 text-center py-3 px-4 text-secondary-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-secondary-500 focus:outline-none focus:text-secondary-900 transition duration-150 ease-in-out">
                     {{ __("Learn More") }}
                 </button>
             </div>
@@ -172,22 +172,22 @@
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-base leading-6 font-medium text-gray-800">Telegram</h3>
+                        <h3 class="text-base leading-6 font-medium text-secondary-800">Telegram</h3>
                         <p class="text-xs leading-4 text-primary-600">{{ __("Product service") }}</p>
                     </div>
                 </div>
-                <p class="mt-4 text-sm leading-5 text-gray-500">
+                <p class="mt-4 text-sm leading-5 text-secondary-500">
                     {{ __("Create a channel, publish the products of your store and inform your customers about your promotions.") }}
                 </p>
             </div>
-            <div class="bg-gray-50 grid grid-cols-2">
+            <div class="bg-secondary-50 grid grid-cols-2">
                 <button type="button" class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-primary-600 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-primary-500 focus:outline-none focus:text-primary-700 transition duration-150 ease-in-out">
                     <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                     </svg>
                     {{ __("Enable") }}
                 </button>
-                <button type="button" class="border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                <button type="button" class="border-l border-secondary-100 text-center py-3 px-4 text-secondary-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-secondary-500 focus:outline-none focus:text-secondary-900 transition duration-150 ease-in-out">
                     {{ __("Learn More") }}
                 </button>
             </div>
@@ -204,15 +204,15 @@
                         </svg>
                     </div>
                     <div class="ml-3">
-                        <h3 class="text-base leading-6 font-medium text-gray-800">Twitter</h3>
+                        <h3 class="text-base leading-6 font-medium text-secondary-800">Twitter</h3>
                         <p class="text-xs leading-4 text-primary-600">{{ __("Product service") }}</p>
                     </div>
                 </div>
-                <p class="mt-4 text-sm leading-5 text-gray-500">
+                <p class="mt-4 text-sm leading-5 text-secondary-500">
                     {{ __("Link your Twitter account to your store and publish your products directly to your account from your website.") }}
                 </p>
             </div>
-            <div class="bg-gray-50 grid grid-cols-2">
+            <div class="bg-secondary-50 grid grid-cols-2">
                 @if($twitter)
                     <div class="inline-flex items-center bg-transparent justify-center w-full py-3 px-4 text-green-600 leading-6 text-base font-medium sm:text-sm sm:leading-5">
                         <svg class="w-5 h-5 mr-1.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -220,7 +220,7 @@
                         </svg>
                         {{ __("Added") }}
                     </div>
-                    <a href="{{ route('shopper.settings.integrations.twitter') }}" class="inline-flex items-center border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                    <a href="{{ route('shopper.settings.integrations.twitter') }}" class="inline-flex items-center border-l border-secondary-100 text-center py-3 px-4 text-secondary-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-secondary-500 focus:outline-none focus:text-secondary-900 transition duration-150 ease-in-out">
                         {{ __("Getting Started") }}
                         <svg class="h-5 w-5 ml-2 -mr-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -233,7 +233,7 @@
                         </svg>
                         {{ __("Enable") }}
                     </button>
-                    <a href="https://docs.laravelshopper.io/docs/integrations/twitter" class="border-l border-gray-100 text-center py-3 px-4 text-gray-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-gray-500 focus:outline-none focus:text-gray-900 transition duration-150 ease-in-out">
+                    <a href="https://docs.laravelshopper.io/docs/integrations/twitter" class="border-l border-secondary-100 text-center py-3 px-4 text-secondary-700 leading-6 text-base font-medium sm:text-sm sm:leading-5 hover:text-secondary-500 focus:outline-none focus:text-secondary-900 transition duration-150 ease-in-out">
                         {{ __("Learn More") }}
                     </a>
                 @endif
@@ -244,11 +244,11 @@
     <x-shopper-modal wire:model="confirmModalActivation" id="modal-enable" maxWidth="lg">
         <div class="px-4 pt-5 pb-4 sm:p-6">
             <div class="text-left">
-                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                <h3 class="text-lg leading-6 font-medium text-secondary-900" id="modal-headline">
                     {{ __('Activation for :provider', ['provider' => ucfirst($currentProvider)]) }}
                 </h3>
                 <div class="mt-2">
-                    <p class="text-sm text-gray-500">
+                    <p class="text-sm text-secondary-500">
                         {{ $message }}
                     </p>
                 </div>

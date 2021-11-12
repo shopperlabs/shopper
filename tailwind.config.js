@@ -24,13 +24,12 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.blue,
-        secondary: colors.lightBlue,
-
-        gray: colors.gray,
+        secondary: colors.blueGray,
+        gray: colors.blueGray,
         orange: colors.orange,
-
         success: colors.green,
-        danger: colors.red,
+        warning: colors.amber,
+        negative: colors.red,
         info: colors.lightBlue,
       },
       inset: {

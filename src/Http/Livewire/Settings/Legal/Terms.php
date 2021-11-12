@@ -10,14 +10,8 @@ class Terms extends Component
 {
     use WithLegalActions;
 
-    /**
-     * Legal page title.
-     */
     public string $title = 'Terms of use';
 
-    /**
-     * Component mount instance.
-     */
     public function mount()
     {
         $legal = Legal::query()->where('slug', str_slug($this->title))->first();
@@ -25,9 +19,6 @@ class Terms extends Component
         $this->initializeValues($legal);
     }
 
-    /**
-     * Store/Update data from storage.
-     */
     public function store()
     {
         $this->storeValues($this->title, $this->content, $this->isEnabled);

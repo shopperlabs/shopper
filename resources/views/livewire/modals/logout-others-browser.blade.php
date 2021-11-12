@@ -6,10 +6,10 @@
     <x-slot name="content">
         <div class="sm:flex sm:items-start px-4 sm:px-6 pt-4">
             <div class="text-left">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('Logout Other Browser Sessions') }}
                 </h3>
-                <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                <p class="mt-1 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                     {{ __('Please enter your password to confirm you would like to logout of your other browser sessions across all of your devices.') }}
                 </p>
             </div>

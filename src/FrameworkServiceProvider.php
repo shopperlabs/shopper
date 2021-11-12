@@ -108,10 +108,12 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->app->singleton(TwoFactorAuthenticationProviderContract::class, TwoFactorAuthenticationProvider::class);
         $this->app->singleton(FailedTwoFactorLoginResponseContract::class, FailedTwoFactorLoginResponse::class);
 
-        $this->app->bind(
-            \Illuminate\Contracts\Debug\ExceptionHandler::class,
-            ShopperExceptionHandler::class
-        );
+        if ($this->app['request']->segment(1) === Shopper::prefix()) {
+            $this->app->bind(
+                \Illuminate\Contracts\Debug\ExceptionHandler::class,
+                ShopperExceptionHandler::class
+            );
+        }
 
         $this->app->bind(StatefulGuard::class, fn () => Auth::guard(config('shopper.auth.guard', null)));
     }

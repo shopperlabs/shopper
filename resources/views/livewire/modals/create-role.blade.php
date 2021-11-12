@@ -1,11 +1,11 @@
 <x-shopper-modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
     <x-slot name="title">
         <span>{{ __('Add new role') }}</span>
-        <p class="mt-1 sm:mt-0 sm:ml-3 text-sm leading-5 font-normal text-gray-500 dark:text-gray-400">{{ __('Add a new role and assign permissions for administrators.') }}</p>
+        <p class="mt-1 sm:mt-0 sm:ml-3 text-sm leading-5 font-normal text-secondary-500 dark:text-secondary-400">{{ __('Add a new role and assign permissions for administrators.') }}</p>
     </x-slot>
 
     <x-slot name="content">

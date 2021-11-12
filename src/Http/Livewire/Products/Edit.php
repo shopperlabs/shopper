@@ -2,34 +2,20 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryRepository;
 
 class Edit extends Component
 {
-    /**
-     * Product Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    public $product;
-
-    /**
-     * All locations available on the store.
-     */
-    public $inventories;
-
-    /**
-     * Default inventory id.
-     */
+    public Model $product;
+    public Collection $inventories;
     public int $inventory;
 
     protected $listeners = ['productHasUpdated'];
 
-    /**
-     * Component Mount method.
-     */
     public function mount($product)
     {
         $this->product = $product;
@@ -37,9 +23,6 @@ class Edit extends Component
         $this->inventory = $inventories->where('is_default', true)->first()->id;
     }
 
-    /**
-     * Product updated Listener.
-     */
     public function productHasUpdated(int $id)
     {
         $this->product = (new ProductRepository())->getById($id);

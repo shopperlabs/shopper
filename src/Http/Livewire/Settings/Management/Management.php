@@ -25,13 +25,6 @@ class Management extends Component
         ]);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
     public function render()
     {
         return view('shopper::livewire.settings.management.index', [

@@ -2,11 +2,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 
-<div x-data class="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 shadow-md">
-    <div class="pb-5 border-b border-gray-200 dark:border-gray-700 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
+<div x-data class="bg-white dark:bg-secondary-800 rounded-lg p-4 sm:p-6 shadow-md">
+    <div class="pb-5 border-b border-secondary-200 dark:border-secondary-700 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <div class="flex-1 min-w-0 max-w-2xl">
-            <h2 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ __('Product Attributes') }}</h2>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-5">
+            <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Product Attributes') }}</h2>
+            <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400 leading-5">
                 {{ __('All the attributes associated with this product.') }}
             </p>
         </div>
@@ -17,13 +17,13 @@
         </div>
     </div>
 
-    <dl class="divide-y divide-gray-200 dark:divide-gray-700">
+    <dl class="divide-y divide-secondary-200 dark:divide-secondary-700">
         @forelse($productAttributes as $productAttribute)
             <div wire:key="product-attribute-{{ $productAttribute->id }}" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 @if(! $loop->first) sm:pt-5 @endif">
-                <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
+                <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
                     {{ __($productAttribute->attribute->name) }}
                 </dt>
-                <dd class="flex space-x-4 text-sm leading-5 text-gray-900 dark:text-white sm:mt-0 sm:col-span-2 {{ $productAttribute->model === 'multiple' ? 'grid': '' }}">
+                <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 dark:text-white sm:mt-0 sm:col-span-2 {{ $productAttribute->model === 'multiple' ? 'grid': '' }}">
                     @if($productAttribute->model === 'single')
                         <div class="flex-grow">
                             {{ str_limit(strip_tags(nl2br($productAttribute->values->first()->real_value)), 157) }}
@@ -35,7 +35,7 @@
                         </span>
                     @else
                         <div>
-                            <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                            <ul role="list" class="border border-secondary-200 rounded-md divide-y divide-secondary-200">
                                 @foreach($productAttribute->values as $pValue)
                                     <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                                         <div class="w-0 flex-1 flex items-center">
@@ -61,8 +61,8 @@
         @empty
             <div class="py-4 space-y-1 sm:py-6">
                 <div class="flex justify-center items-center space-x-2">
-                    <x-heroicon-o-clipboard-list class="h-8 w-8 text-gray-400" />
-                    <span class="font-medium py-8 text-gray-400 dark:text-gray-300 text-xl">{{ __('No attributes') }}</span>
+                    <x-heroicon-o-clipboard-list class="h-8 w-8 text-secondary-400" />
+                    <span class="font-medium py-8 text-secondary-400 dark:text-secondary-300 text-xl">{{ __('No attributes') }}</span>
                 </div>
             </div>
         @endforelse

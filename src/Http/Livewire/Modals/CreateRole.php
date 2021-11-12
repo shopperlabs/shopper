@@ -8,9 +8,7 @@ use Shopper\Framework\Models\User\Role;
 class CreateRole extends ModalComponent
 {
     public string $name = '';
-
     public string $display_name = '';
-
     public string $description = '';
 
     public function save()

@@ -3,18 +3,18 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Profile Information') }}</h3>
-                    <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Profile Information') }}</h3>
+                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __("Update your account's profile information and email address.") }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white dark:bg-gray-800 shadow rounded-md">
+                <div class="bg-white dark:bg-secondary-800 shadow rounded-md">
                     <div class="px-4 py-5 sm:p-6">
                         <x-shopper-input.group label="Photo" for="picture" :error="$errors->first('picture')" noShadow>
                             <x-shopper-input.avatar-upload wire:model="picture" id="picture">
-                                <span class="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+                                <span class="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-secondary-100 dark:bg-secondary-700">
                                     @if($picture)
                                         <img class="h-full w-full bg-cover" src="{{ $picture->temporaryUrl() }}" alt="">
                                     @else
@@ -35,7 +35,7 @@
                             <x-shopper-input.group label="Email address" for="email" class="col-span-6 sm:col-span-3" :error="$errors->first('email')">
                                 <div class="relative mt-1">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <x-heroicon-s-mail class="h-5 w-5 text-gray-400" />
+                                        <x-heroicon-s-mail class="h-5 w-5 text-secondary-400" />
                                     </div>
                                     <x-shopper-input.text wire:model='email' id='email' type='email' class='form-input block pl-10 w-full sm:text-sm sm:leading-5' autocomplete='email-address' />
                                 </div>
@@ -44,7 +44,7 @@
                             <div wire:ignore x-data="internationalNumber('#phone_number')" class="col-span-6 sm:col-span-3">
                                 <div class="flex items-center justify-between">
                                     <x-shopper-label for="phone_number" :value="__('Phone number')" />
-                                    <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('Optional') }}</span>
+                                    <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative">
                                     <x-shopper-input.text wire:model="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />

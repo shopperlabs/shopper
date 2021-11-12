@@ -5,11 +5,11 @@
                 <x-heroicon-o-exclamation class="h-6 w-6 text-red-600" />
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="modal-headline">
+                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white" id="modal-headline">
                     {{ __('Delete :name', ['name' => $name]) }}
                 </h3>
                 <div class="mt-2">
-                    <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __('Are you sure you want to delete this inventory? All this data will be removed. This action cannot be undone.') }}
                     </p>
                 </div>

@@ -1,5 +1,5 @@
 <x-shopper-modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -15,7 +15,7 @@
                     <div wire:ignore>
                         <x-shopper-label :value="__('Key')" />
                         <x-shopper-input.color-picker name="key" wire:model="key" placeholder="#9800BK" />
-                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format') }}</p>
+                        <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">{{ __('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format') }}</p>
                     </div>
                     @error('key')
                         <p class="mt-1 text-sm text-red-500 dark:text-red-400">{{ $message }}</p>

@@ -1,8 +1,10 @@
 <div class="flex flex-col justify-between bg-primary-800 text-center w-16">
     <div class="pt-3">
-        <a class="flex-shrink-0 flex items-center px-4" href="{{ route('shopper.dashboard') }}">
-            <x-shopper-application-icon class="h-12 w-auto" />
-        </a>
+        <div class="px-2">
+            <a class="flex-shrink-0 flex items-center justify-center p-2 bg-white rounded-full" href="{{ route('shopper.dashboard') }}">
+                <x-shopper-application-icon class="h-8 w-auto" />
+            </a>
+        </div>
         <div class="h-full pt-5 pb-4 overflow-y-auto">
             {!! $primaryMenu->asUl(['class' => 'primary-menu mt-5 px-2 space-y-2 flex flex-col items-center']) !!}
         </div>
@@ -11,14 +13,14 @@
         <button
             type="button"
             aria-pressed="false"
-            class="darkModeToggle bg-gray-200 dark:bg-gray-800 relative inline-flex flex-shrink-0 h-6 w-11 my-3 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-primary-800 focus:ring-gray-500"
+            class="darkModeToggle bg-secondary-200 dark:bg-secondary-800 relative inline-flex flex-shrink-0 h-6 w-11 my-3 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-primary-800 focus:ring-secondary-500"
         >
             <span class="translate-x-0 dark:translate-x-5 relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200">
                 <span class="dark:hidden opacity-100 ease-in duration-200 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity" aria-hidden="true">
-                    <x-heroicon-s-sun class="h-3 w-3 text-gray-400" />
+                    <x-heroicon-s-sun class="h-3 w-3 text-secondary-400" />
                 </span>
-                <span class="hidden dark:flex opacity-0 ease-out duration-100 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full items-center justify-center transition-opacity opacity-100 ease-in duration-200 " aria-hidden="true">
-                    <x-heroicon-s-moon class="h-3 w-3 text-gray-600" />
+                <span class="hidden dark:flex opacity-0 ease-out duration-100 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full items-center justify-center transition-opacity opacity-10 ease-in duration-200 " aria-hidden="true">
+                    <x-heroicon-s-moon class="h-3 w-3 text-secondary-600" />
                 </span>
             </span>
         </button>

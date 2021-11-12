@@ -6,12 +6,10 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Component;
-use Shopper\Framework\Traits\CanRegisterLivewireComponentDirectories;
+use Livewire\Livewire;
 
 class ComponentServiceProvider extends ServiceProvider
 {
-    use CanRegisterLivewireComponentDirectories;
-
     /**
      * Bootstrap any application services.
      */
@@ -80,11 +78,13 @@ class ComponentServiceProvider extends ServiceProvider
      */
     public function registerLivewireComponents()
     {
-        $this->registerLivewireComponentDirectory(
-            __DIR__ . '/../Http/Livewire',
-            '\\Shopper\\Framework\\Http\\Livewire',
-            'shopper'
-        );
+        $prefix = config('shopper.components.prefix', 'shopper');
+
+        foreach (config('shopper.components.livewire', []) as $alias => $component) {
+            $alias = $prefix ? "$prefix-$alias" : $alias;
+
+            Livewire::component($alias, $component);
+        }
     }
 
     /**

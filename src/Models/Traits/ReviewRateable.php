@@ -150,9 +150,9 @@ trait ReviewRateable
     {
         $ratings = $this->ratings();
         $quantity = $ratings->count();
-        $total = $ratings->selectRaw('SUM(rating) as total')->pluck('total');
+        $total = $ratings->selectRaw('Count(rating) as total')->where('rating', $max)->pluck('total')->first();
 
-        return $quantity * $max > 0 ? $total / ($quantity * $max / 100) : 0;
+        return  round($quantity * $max > 0 ? ((int) $total * 100) / $quantity : 0, 1);
     }
 
     /**

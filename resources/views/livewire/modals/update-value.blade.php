@@ -1,5 +1,5 @@
 <x-shopper-modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -13,7 +13,7 @@
             <div class="sm:col-span-2">
                 @if($type === 'colorpicker')
                     <div wire:ignore>
-                        <label for="value" class="block text-sm font-medium leading-5 text-gray-700">{{ __('Value') }}</label>
+                        <label for="value" class="block text-sm font-medium leading-5 text-secondary-700">{{ __('Value') }}</label>
                         <div class="mt-1 relative">
                             <x-color-picker name="value" wire:model.lazy="value" />
                         </div>

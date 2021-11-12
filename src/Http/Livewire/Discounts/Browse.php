@@ -11,48 +11,20 @@ class Browse extends Component
 {
     use WithPagination;
 
-    /**
-     * Search.
-     *
-     * @var string
-     */
-    public $search;
+    public string $search = '';
+    public ?string $isActive = null;
+    public ?string $date = null;
 
-    /**
-     * Discount active state.
-     *
-     * @var string
-     */
-    public $isActive;
-
-    /**
-     * Start/End Date of the discount.
-     *
-     * @var string
-     */
-    public $date;
-
-    /**
-     * Custom Livewire pagination view.
-     *
-     * @return string
-     */
     public function paginationView(): string
     {
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    /**
-     * Reset date filter.
-     */
     public function resetDate()
     {
         $this->date = null;
     }
 
-    /**
-     * Reset status filter.
-     */
     public function resetActiveFilter()
     {
         $this->isActive = null;

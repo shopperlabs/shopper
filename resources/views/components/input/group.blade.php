@@ -11,11 +11,11 @@
 <div {{ $attributes }}>
     @if($label)
         <div class="flex items-center justify-between">
-            <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">
+            <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-secondary-700 dark:text-secondary-300">
                 {{ __($label) }} @if($isRequired) <span class="text-red-500">*</span> @endif
             </label>
             @if($optional)
-                <span class="text-gray-500 text-sm leading-5 dark:text-gray-400">{{ __('Optional') }}</span>
+                <span class="text-secondary-500 text-sm leading-5 dark:text-secondary-400">{{ __('Optional') }}</span>
             @endif
         </div>
     @endif
@@ -28,6 +28,6 @@
     @endif
 
     @if ($helpText)
-        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ __($helpText) }}</p>
+        <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">{{ __($helpText) }}</p>
     @endif
 </div>

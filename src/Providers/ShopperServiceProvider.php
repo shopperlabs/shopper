@@ -19,7 +19,11 @@ class ShopperServiceProvider extends ServiceProvider
      * @var array<string>
      */
     protected array $configFiles = [
-        'system', 'routes', 'auth', 'mails',
+        'auth',
+        'components',
+        'mails',
+        'routes',
+        'system',
     ];
 
     /**

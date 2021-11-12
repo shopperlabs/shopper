@@ -17,7 +17,7 @@
             x-transition:leave="transition ease-in duration-100"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="max-w-sm w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg pointer-events-auto"
+            class="max-w-sm w-full bg-white dark:bg-secondary-800 shadow-lg rounded-lg pointer-events-auto"
         >
             <div class="rounded-lg shadow-xs overflow-hidden">
                 <div class="p-4">
@@ -26,11 +26,11 @@
                             <x-heroicon-o-check-circle class="h-6 w-6 text-green-400" />
                         </div>
                         <div class="ml-3 w-0 flex-1 pt-0.5">
-                            <p x-text="title" class="text-sm leading-5 font-medium text-gray-900 dark:text-white"></p>
-                            <p x-text="message" class="mt-1 text-sm leading-5 font-medium text-gray-500 dark:text-gray-400"></p>
+                            <p x-text="title" class="text-sm leading-5 font-medium text-secondary-900 dark:text-white"></p>
+                            <p x-text="message" class="mt-1 text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400"></p>
                         </div>
                         <div class="ml-4 flex-shrink-0 flex">
-                            <button @click="remove(message)" class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500">
+                            <button @click="remove(message)" class="inline-flex text-secondary-400 focus:outline-none focus:text-secondary-500">
                                 <x-heroicon-s-x class="h-5 w-5" />
                             </button>
                         </div>

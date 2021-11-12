@@ -1,59 +1,59 @@
-<x-shopper-dropdown align="left" width="56" customAlignmentClasses="right-1" containerClasses="relative" contentClasses="bg-white dark:bg-gray-800 text-left">
+<x-shopper-dropdown align="left" width="56" customAlignmentClasses="right-1" containerClasses="relative" contentClasses="bg-white dark:bg-secondary-800 text-left">
     <x-slot name="trigger">
-        <button class="max-w-xs flex items-center text-sm rounded-full overflow-hidden focus:outline-none hover:bg-gray-50 dark:focus:bg-gray-700 dark:hover:bg-gray-800 lg:p-1.5 lg:rounded-md">
+        <button class="max-w-xs flex items-center text-sm rounded-full overflow-hidden focus:outline-none hover:bg-secondary-50 dark:focus:bg-secondary-700 dark:hover:bg-secondary-800 lg:p-1.5 lg:rounded-md">
             <img class="h-8 w-8 rounded-full" src="{{ $picture }}" alt="{{ $email }}" />
-            <span class="hidden ml-3 text-gray-900 dark:text-white text-sm leading-5 font-medium lg:block">{{ $full_name }}</span>
-            <x-heroicon-s-chevron-down class="hidden flex-shrink-0 ml-1 h-5 w-5 text-gray-400 lg:block" />
+            <span class="hidden ml-3 text-secondary-900 dark:text-white text-sm leading-5 font-medium lg:block">{{ $full_name }}</span>
+            <x-heroicon-s-chevron-down class="hidden flex-shrink-0 ml-1 h-5 w-5 text-secondary-400 lg:block" />
         </button>
     </x-slot>
 
     <x-slot name="content">
         <div class="px-4 py-3">
-            <p class="text-sm leading-5 txt-gray-900 dark:text-white">
+            <p class="text-sm leading-5 txt-secondary-900 dark:text-white">
                 {{ __('Signed in with') }}
             </p>
-            <p class="text-sm leading-5 font-medium text-gray-900 dark:text-white truncate">
+            <p class="text-sm leading-5 font-medium text-secondary-900 dark:text-white truncate">
                 {{ $email }}
             </p>
         </div>
         @can('add_products')
-            <div class="border-t border-gray-100 dark:border-gray-700"></div>
+            <div class="border-t border-secondary-100 dark:border-secondary-700"></div>
             <div class="py-1">
                 <x-shopper-dropdown-link :href="route('shopper.products.create')">
-                    <x-heroicon-o-plus-sm  class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500"/>
+                    <x-heroicon-o-plus-sm  class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500"/>
                     {{ __('Add product') }}
                 </x-shopper-dropdown-link>
             </div>
         @endcan
-        <div class="border-t border-gray-100 dark:border-gray-700"></div>
+        <div class="border-t border-secondary-100 dark:border-secondary-700"></div>
         <div class="py-1">
             <x-shopper-dropdown-link :href="route('shopper.profile')">
-                <x-heroicon-o-user-circle class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" />
+                <x-heroicon-o-user-circle class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500" />
                 {{ __('Personal Account') }}
             </x-shopper-dropdown-link>
             @can('view_users')
                 <x-shopper-dropdown-link :href="route('shopper.settings.users')">
-                    <x-heroicon-o-users class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" />
+                    <x-heroicon-o-users class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500" />
                     {{ __('Manage Users') }}
                 </x-shopper-dropdown-link>
             @endcan
         </div>
-        <div class="border-t border-gray-100 dark:border-gray-700"></div>
+        <div class="border-t border-secondary-100 dark:border-secondary-700"></div>
         <div class="py-1">
             @can('access_setting')
                 <x-shopper-dropdown-link :href="route('shopper.settings.index')">
-                    <x-heroicon-o-cog class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" />
+                    <x-heroicon-o-cog class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500" />
                     {{ __('Settings') }}
                 </x-shopper-dropdown-link>
             @endcan
         </div>
-        <div class="border-t border-gray-100 dark:border-gray-700"></div>
+        <div class="border-t border-secondary-100 dark:border-secondary-700"></div>
         <div class="py-1">
             <x-shopper-dropdown-link
                 :href="route('shopper.logout')"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
             >
-                <x-heroicon-o-login class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-500" />
+                <x-heroicon-o-login class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500" />
                 {{ __('Sign out') }}
             </x-shopper-dropdown-link>
             <form id="logout-form" action="{{ route('shopper.logout') }}" method="POST" style="display: none;">

@@ -1,5 +1,5 @@
 <x-shopper-modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -19,8 +19,8 @@
                         <x-shopper-input.checkbox wire:model.lazy="isMarkdown" id="is_markdown" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
-                        <label for="is_markdown" class="font-medium text-gray-700 dark:text-gray-300">{{ __('Markdown Template') }}</label>
-                        <p class="text-gray-500 dark:text-gray-400">{{ __('Use markdown template.') }}</p>
+                        <label for="is_markdown" class="font-medium text-secondary-700 dark:text-secondary-300">{{ __('Markdown Template') }}</label>
+                        <p class="text-secondary-500 dark:text-secondary-400">{{ __('Use markdown template.') }}</p>
                     </div>
                 </div>
             </div>
@@ -37,8 +37,8 @@
                         <x-shopper-input.checkbox wire:model.lazy="isForce" id="is_force" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
-                        <label for="is_force" class="font-medium text-gray-700 dark:text-gray-300">{{ __('Force') }}</label>
-                        <p class="text-gray-500 dark:text-gray-400">{{ __('Force mailable creation even if already exists.') }}</p>
+                        <label for="is_force" class="font-medium text-secondary-700 dark:text-secondary-300">{{ __('Force') }}</label>
+                        <p class="text-secondary-500 dark:text-secondary-400">{{ __('Force mailable creation even if already exists.') }}</p>
                     </div>
                 </div>
             </div>

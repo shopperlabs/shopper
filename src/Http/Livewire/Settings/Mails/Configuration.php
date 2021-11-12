@@ -9,19 +9,12 @@ use Shopper\Framework\Rules\RealEmailValidator;
 class Configuration extends Component
 {
     public ?string $mail_mailer;
-
     public ?string $mail_host;
-
     public ?string $mail_port;
-
     public ?string $mail_username;
-
     public ?string $mail_password;
-
     public ?string $mail_encryption;
-
     public ?string $mail_from_address;
-
     public ?string $mail_from_name;
 
     public function mount(): void
@@ -43,6 +36,8 @@ class Configuration extends Component
             'mail_from_name' => 'required',
         ]);
 
+        Artisan::call('config:clear');
+
         setEnvironmentValue([
             'mail_mailer' => $this->mail_mailer,
             'mail_host' => $this->mail_host,
@@ -53,8 +48,6 @@ class Configuration extends Component
             'mail_from_address' => $this->mail_from_address,
             'mail_from_name' => $this->mail_from_name,
         ]);
-
-        Artisan::call('config:clear');
 
         if (app()->environment('production')) {
             Artisan::call('config:cache');

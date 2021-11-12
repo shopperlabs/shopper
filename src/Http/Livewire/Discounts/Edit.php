@@ -18,14 +18,7 @@ class Edit extends AbstractBaseComponent
 {
     use HasPrice, WithDiscountAttributes, WithDiscountActions;
 
-    /**
-     * Current updated discount.
-     */
     public Discount $discount;
-
-    /**
-     * Discount id for validation.
-     */
     public int $discountId;
 
     /**

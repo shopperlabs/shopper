@@ -21,7 +21,7 @@
         </x-slot>
 
         <x-slot name="content">
-            <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">{{ $content }}</p>
+            <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $content }}</p>
 
             <div class="mt-4" x-data="{}" x-on:confirming-password.window="setTimeout(() => $refs.confirmable_password.focus(), 250)">
                 <x-shopper-input.text

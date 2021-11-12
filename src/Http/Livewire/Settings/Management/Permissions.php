@@ -9,29 +9,15 @@ use Shopper\Framework\Models\User\Role;
 
 class Permissions extends Component
 {
-    /**
-     * Role for the given permissions.
-     */
     public Role $role;
 
-    /**
-     * Component listeners.
-     *
-     * @var array<string>
-     */
     protected $listeners = ['togglePermission', 'permissionAdded'];
 
-    /**
-     * Reload all Role permission in the view.
-     */
     public function permissionAdded(int $id)
     {
         $this->role = Role::find($id);
     }
 
-    /**
-     * Toggle permission on the role.
-     */
     public function togglePermission(int $id)
     {
         $permission = Permission::query()->find($id);

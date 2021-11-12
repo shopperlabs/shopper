@@ -4,8 +4,8 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-semibold leading-6 text-gray-900">{{ __("API Keys") }}</h3>
-                    <p class="mt-4 text-sm leading-5 text-gray-600">
+                    <h3 class="text-lg font-semibold leading-6 text-secondary-900">{{ __("API Keys") }}</h3>
+                    <p class="mt-4 text-sm leading-5 text-secondary-600">
                         {{ __("Enable Github API to publish issue to the shopperlabs/framework package.") }}
                     </p>
                 </div>
@@ -22,10 +22,10 @@
 
                             <div x-data="{ show: false }" class="sm:col-span-3">
                                 <div class="flex items-center justify-between">
-                                    <label for="secret_key" class="block text-sm font-medium leading-5 text-gray-700">
+                                    <label for="secret_key" class="block text-sm font-medium leading-5 text-secondary-700">
                                         {{ __("Secret Key") }}
                                     </label>
-                                    <div class="flex items-center divide-x divide-gray-200">
+                                    <div class="flex items-center divide-x divide-secondary-200">
                                         <button
                                             @click="show = !show"
                                             x-text="show ? '{{ __("Hide") }}' : '{{ __("Show") }}'"
@@ -43,7 +43,7 @@
                                 <x-shopper-input.group label="Webhook URL" for="webhook_url">
                                     <input wire:model="github_webhook_url" id="webhook_url" type="text" class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" autocomplete="off" />
                                 </x-shopper-input.group>
-                                <p class="mt-2 text-gray-500 text-sm leading-5">
+                                <p class="mt-2 text-secondary-500 text-sm leading-5">
                                     {{ __("Learn more about webhooks") }} <a href="https://docs.github.com/webhooks" target="_blank" class="text-primary-600 hover:text-primary-500">https://docs.github.com/webhooks</a>
                                 </p>
                             </div>
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <div class="mt-6 border-t border-gray-200 pt-5">
+    <div class="mt-6 border-t border-secondary-200 pt-5">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
                 <svg wire:loading wire:target="store" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">

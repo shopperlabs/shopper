@@ -11,7 +11,7 @@
             x-transition:leave="transition ease-in duration-100"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="max-w-sm w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg pointer-events-auto"
+            class="max-w-sm w-full bg-white dark:bg-secondary-800 shadow-lg rounded-lg pointer-events-auto"
         >
             <div class="relative rounded-lg shadow-xs overflow-hidden">
                 <div class="p-4">
@@ -23,12 +23,12 @@
                             <p class="text-base leading-5 font-medium capitalize text-green-600">
                                 {{ __("Success") }}
                             </p>
-                            <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                            <p class="mt-1 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                 {{ session()->get('success') }}
                             </p>
                         </div>
                         <div class="ml-4 flex-shrink-0 flex">
-                            <button @click="show = false;" class="inline-flex text-gray-500 dark:text-gray-400">
+                            <button @click="show = false;" class="inline-flex text-secondary-500 dark:text-secondary-400">
                                 <x-heroicon-s-x class="h-5 w-5" />
                             </button>
                         </div>

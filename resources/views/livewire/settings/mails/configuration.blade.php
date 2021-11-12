@@ -1,11 +1,11 @@
 <div class="py-6 sm:px-8 sm:py-10 max-w-2xl mx-auto">
-    <div class="space-y-8 divide-y divide-gray-200 dark:divide-gray-700">
+    <div class="space-y-8 divide-y divide-secondary-200 dark:divide-secondary-700">
         <div>
             <div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('Account Configuration') }}
                 </h3>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
                     {{ __("Setup the account used to send email to customers or admins. Don't share these informations") }}
                 </p>
             </div>
@@ -37,10 +37,10 @@
         </div>
         <div class="pt-8">
             <div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('Server Configuration') }}
                 </h3>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
                     {{ __("Information related to the mail server you are going to use and the associated protocol. For more information") }}
                     <a href="https://laravel.com/docs/mail#introduction" target="_blank" class="text-primary-600 hover:text-primary-500 hover:underline dark:text-primary-500">{{ __('visit the documentation.') }}</a>
                 </p>
@@ -73,7 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="mt-8 pt-5 border-t border-gray-200 dark:border-gray-700">
+    <div class="mt-8 pt-5 border-t border-secondary-200 dark:border-secondary-700">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper-loader wire:loading wire:target="store" />

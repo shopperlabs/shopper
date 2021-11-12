@@ -3,19 +3,19 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Stripe') }}</h3>
-                <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Stripe') }}</h3>
+                <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                     {{ __('Accept payments on your store using third-party providers such as Stripe.') }}
                 </p>
             </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="bg-white shadow rounded-md overflow-hidden dark:bg-gray-800">
-                <div class="p-4 sm:px-6 border-b border-gray-200 dark:border-gray-700">
+            <div class="bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
+                <div class="p-4 sm:px-6 border-b border-secondary-200 dark:border-secondary-700">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-gray-400 dark:bg-gray-600' }}"></div>
-                            <h3 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
+                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-600' }}"></div>
+                            <h3 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
                                 @if ($this->enabled)
                                     {{ __('Stripe is available for your store.') }}
                                 @else
@@ -42,14 +42,14 @@
                         </svg>
                     </div>
                     <div class="mt-4">
-                        <p class="text-gray-500 text-sm leading-5 dark:text-gray-400">
+                        <p class="text-secondary-500 text-sm leading-5 dark:text-secondary-400">
                             {{ __('This provider allows you to integrate Laravel Cashier into your store to allow your customers to make payments, subscriptions using Stripe.') }}
                             <a href="https://laravel.com/docs/billing" target="_blank" class="text-primary-600 hover:text-primary-500 dark:text-primary-500">{{ __('Learn more about Laravel Cashier') }}</a>
                         </p>
                         @if(! $this->enabled)
                             <span class="mt-4 inline-flex rounded-md shadow-sm">
                                 <x-shopper-default-button wire:click="enabledStripe" wire.loading.attr="disabled" type="button">
-                                    <x-shopper-loader wire:loading wire:target="enabledStripe" class="text-gray-600 dark:text-gray-300" />
+                                    <x-shopper-loader wire:loading wire:target="enabledStripe" class="text-secondary-600 dark:text-secondary-300" />
                                     {{ __('Enabled Stripe Payment') }}
                                 </x-shopper-default-button>
                             </span>
@@ -64,7 +64,7 @@
 
         <div class="hidden sm:block">
             <div class="py-5">
-                <div class="border-t border-gray-200 dark:border-gray-700"></div>
+                <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
             </div>
         </div>
 
@@ -72,8 +72,8 @@
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Environnement') }}</h3>
-                        <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                        <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Environnement') }}</h3>
+                        <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                             {{ __('Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.') }}
                             {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-400">https://dashboard.stripe.com/account/apikeys</a>
                             {{ __('To enable Sandbox switch Sandbox mode to True.') }}
@@ -82,7 +82,7 @@
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
                     <div class="shadow rounded-md overflow-hidden">
-                        <div class="px-4 py-5 sm:p-6 space-y-4 bg-white dark:bg-gray-800">
+                        <div class="px-4 py-5 sm:p-6 space-y-4 bg-white dark:bg-secondary-800">
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                                 <x-shopper-input.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
                                     <x-shopper-input.select wire:model.lazy="stripe_mode" id="stripe_mode">
@@ -103,7 +103,7 @@
                                     <x-shopper-input.group label="Webhook key" for="webhook_key">
                                         <x-shopper-input.text wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
                                     </x-shopper-input.group>
-                                    <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                                    <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                         {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-primary-500 dark:text-primary-400">https://dashboard.stripe.com/account/webhooks</a>
                                     </p>
                                 </div>
@@ -116,7 +116,7 @@
 
         <div class="hidden sm:block">
             <div class="py-5">
-                <div class="border-t border-gray-200  dark:border-gray-700"></div>
+                <div class="border-t border-secondary-200  dark:border-secondary-700"></div>
             </div>
         </div>
 
@@ -124,15 +124,15 @@
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Cashier currency') }}</h3>
-                        <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                        <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Cashier currency') }}</h3>
+                        <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                             {{ __('The default currency that will be used when generating charges from your store.') }}
                         </p>
                     </div>
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
                     <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 sm:p-6 bg-white dark:bg-gray-800">
+                        <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                             <div class="grid grid-cols-6 gap-6">
                                 <x-shopper-input.group label="Default Currency" for="currency" class="col-span-6">
                                     <x-shopper-input.select wire:model="currency" id="currency">
@@ -148,7 +148,7 @@
             </div>
         </div>
 
-        <div class="mt-6 pt-5 border-t border-gray-200 dark:border-gray-700">
+        <div class="mt-6 pt-5 border-t border-secondary-200 dark:border-secondary-700">
             <div class="flex justify-end">
                 <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
                     <x-shopper-loader wire:loading wire:target="store" class="text-white" />

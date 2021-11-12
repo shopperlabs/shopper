@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -13,9 +15,9 @@ class Variant extends Component
 {
     use WithFileUploads, WithUploadProcess, WithAttributes;
 
-    public $product;
-    public $variant;
-    public $inventories;
+    public Model $product;
+    public Model $variant;
+    public Collection $inventories;
     public string $currency;
     public $images = [];
 

@@ -8,11 +8,8 @@ use Shopper\Framework\Models\Shop\Product\Attribute;
 class CreateValue extends ModalComponent
 {
     public Attribute $attribute;
-
     public string $type = 'select';
-
     public string $value = '';
-
     public string $key = '';
 
     public function mount(int $attributeId)

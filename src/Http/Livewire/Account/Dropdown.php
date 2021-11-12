@@ -2,57 +2,34 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Dropdown extends Component
 {
-    /**
-     * Logged user full name.
-     *
-     * @var string
-     */
-    public $full_name;
+    public string $full_name = '';
+    public string $email = '';
+    public ?string $picture = null;
 
-    /**
-     * Logged user picture url.
-     *
-     * @var string
-     */
-    public $picture;
-
-    /**
-     * Logged user email address.
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Components custom Listeners.
-     *
-     * @var array<string>
-     */
     protected $listeners = ['updatedProfile'];
 
-    /**
-     * Component mount instance.
-     */
     public function mount()
     {
-        $this->full_name = auth()->user()->full_name;
-        $this->picture = auth()->user()->picture;
-        $this->email = auth()->user()->email;
+        $user = Auth::user();
+
+        $this->full_name = $user->full_name;
+        $this->picture = $user->picture;
+        $this->email = $user->email;
     }
 
-    /**
-     * Update profile listener implementation.
-     */
     public function updatedProfile()
     {
-        $this->picture = auth()->user()->picture;
-        $this->full_name = auth()->user()->full_name;
-        $this->picture = auth()->user()->picture;
-        $this->email = auth()->user()->email;
+        $user = Auth::user();
+
+        $this->picture = $user->picture;
+        $this->full_name = $user->full_name;
+        $this->picture = $user->picture;
+        $this->email = $user->email;
     }
 
     public function render()

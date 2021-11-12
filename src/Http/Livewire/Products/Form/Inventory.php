@@ -2,6 +2,8 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -13,24 +15,15 @@ use Shopper\Framework\Traits\WithStock;
 
 class Inventory extends Component
 {
-    use WithPagination;
-    use WithAttributes;
-    use WithStock;
+    use WithPagination, WithAttributes, WithStock;
 
-    /**
-     * Product Model.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    public $product;
-
-    public $inventories;
+    public Model $product;
+    public Collection $inventories;
 
     public function mount($product, $inventories, $defaultInventory)
     {
         $this->inventories = $inventories;
         $this->inventory = $defaultInventory;
-
         $this->product = $product;
         $this->stock = $product->stock;
         $this->realStock = $product->stock;
@@ -44,9 +37,6 @@ class Inventory extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     */
     public function store()
     {
         $this->validate([
