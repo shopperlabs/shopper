@@ -1,1 +1,1 @@
-<button {{ $attributes->merge(['class' => 'group w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:text-gray-900 focus:bg-gray-100 transition duration-150 ease-in-out']) }}>{{ $slot }}</button>
+<button {{ $attributes->merge(['class' => 'group w-full flex items-center px-4 py-2 text-sm text-secondary-700 hover:bg-secondary-100 hover:text-secondary-900 focus:outline-none focus:text-secondary-900 focus:bg-secondary-100 transition duration-150 ease-in-out']) }}>{{ $slot }}</button>

@@ -3,11 +3,11 @@
         @if($row->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
             <img class="h-8 w-8 rounded object-cover object-center" src="{{ $row->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'))}}" alt="" />
         @else
-            <div class="bg-gray-200 dark:bg-gray-700 flex items-center justify-center h-8 w-8 rounded">
-                <x-heroicon-o-photograph class="w-5 h-5 text-gray-400" />
+            <div class="bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center h-8 w-8 rounded">
+                <x-heroicon-o-photograph class="w-5 h-5 text-secondary-400" />
             </div>
         @endif
-        <a href="{{ route('shopper.collections.edit', $row) }}" class="ml-2 truncate hover:text-gray-700 dark:hover:text-gray-300 font-medium">
+        <a href="{{ route('shopper.collections.edit', $row) }}" class="ml-2 truncate hover:text-secondary-700 dark:hover:text-secondary-300 font-medium">
             <span>{{ $row->name }}</span>
         </a>
     </div>
@@ -23,7 +23,7 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-    <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+    <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
         @if($row->rules->isNotEmpty())
             {{ ucfirst($row->firstRule()) }}
         @endif
@@ -31,5 +31,5 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell>
-    <time datetime="{{ $row->created_at->format('Y-m-d') }}" class="capitalize text-gray-500 font-medium dark:text-gray-400">{{ $row->created_at->formatLocalized('%d %B, %Y') }}</time>
+    <time datetime="{{ $row->created_at->format('Y-m-d') }}" class="capitalize text-secondary-500 font-medium dark:text-secondary-400">{{ $row->created_at->formatLocalized('%d %B, %Y') }}</time>
 </x-livewire-tables::table.cell>

@@ -1,6 +1,6 @@
 <div>
     <x:shopper-breadcrumb back="shopper.customers.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
+        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.customers.index')" title="Customers" />
     </x:shopper-breadcrumb>
 
@@ -14,14 +14,14 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Profile overview') }}</h3>
-                    <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Profile overview') }}</h3>
+                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __('Use a permanent address where customer can receive mail.') }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="px-4 py-5 sm:p-6 shadow bg-white rounded-md dark:bg-gray-800">
+                <div class="px-4 py-5 sm:p-6 shadow bg-white rounded-md dark:bg-secondary-800">
                     <div class="grid gap-4 grid-cols-6 sm:gap-5">
                         <x-shopper-input.group label="First name" for="first_name" class="col-span-6 sm:col-span-3" :error="$errors->first('first_name')">
                             <x-shopper-input.text wire:model.lazy="first_name" id="first_name" type="text" autocomplete="off" />
@@ -38,7 +38,7 @@
                         <div wire:ignore x-data="internationalNumber('#phone')" class="col-span-6">
                             <div class="flex items-center justify-between">
                                 <x-shopper-label for="phone" :value="__('Phone number')" />
-                                <span class="text-gray-500 text-sm leading-5 dark:text-gray-400">{{ __('Optional') }}</span>
+                                <span class="text-secondary-500 text-sm leading-5 dark:text-secondary-400">{{ __('Optional') }}</span>
                             </div>
                             <div class="mt-1 relative">
                                 <x-shopper-input.text wire:model="phone_number" id="phone" type="tel" class="pr-10" autocomplete="off" />
@@ -52,7 +52,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+            <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
         </div>
     </div>
 
@@ -60,20 +60,20 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Security') }}</h3>
-                    <p class="mt-4 text-sm leading-5 text-gray-500 dark:txt-gray-400">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Security') }}</h3>
+                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:txt-secondary-400">
                         {{ __('Enter a random password that this user will use to login to his account.') }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-gray-800">
+                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6 space-y-4">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                             <div x-data="{ show: false }" class="sm:col-span-6">
                                 <div class="flex items-center justify-between">
                                     <x-shopper-label for="password" :value="__('Password')" />
-                                    <div class="flex items-center divide-x divide-gray-200 dark:divide-gray-600">
+                                    <div class="flex items-center divide-x divide-secondary-200 dark:divide-secondary-600">
                                         <button wire:click="generate" type="button" class="pr-2 text-primary-600 text-sm font-medium leading-5 hover:text-primary-500 dark:text-primary-400">
                                             {{ __('Generate') }}
                                         </button>
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-1 relative rounded-md shadow-sm">
-                                    <input wire:model="password" id="password" :type="show ? 'text' : 'password'" autocomplete="off" class="block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm @error('password') pr-10 border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 @enderror" />
+                                    <input wire:model="password" id="password" :type="show ? 'text' : 'password'" autocomplete="off" class="block w-full dark:bg-secondary-700 dark:text-white placeholder-secondary-500 dark:placeholder-secondary-400 rounded-md shadow-sm border-secondary-300 dark:border-secondary-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-secondary-900 focus:ring-opacity-50 sm:text-sm @error('password') pr-10 border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 @enderror" />
                                     @error('password')
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                             <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
@@ -110,7 +110,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+            <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
         </div>
     </div>
 
@@ -118,14 +118,14 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Address') }}</h3>
-                    <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Address') }}</h3>
+                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __('The primary address of this customer. This address will defined as default shipping address.') }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white shadow rounded-md dark:bg-gray-800">
+                <div class="bg-white shadow rounded-md dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6 space-y-4">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                             <x-shopper-input.group class="col-span-6 sm:col-span-3" label="First name" for="address_first_name" :error="$errors->first('address_first_name')">
@@ -182,7 +182,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+            <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
         </div>
     </div>
 
@@ -190,14 +190,14 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Notifications') }}</h3>
-                    <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Notifications') }}</h3>
+                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __('Inform your customers about their account.') }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-gray-800">
+                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6 space-y-4">
                         <div class="space-y-6">
                             <div class="flex items-start">
@@ -206,7 +206,7 @@
                                 </div>
                                 <div class="ml-3 text-sm leading-5">
                                     <x-shopper-label for="opt_in" :value="__('Customer agreed to receive marketing emails.')" />
-                                    <p class="text-sm mt-1 leading-5 text-gray-500 dark:text-gray-400">{{ __('You should ask your customers for permission before you subscribe them to your marketing emails if you got one.') }}</p>
+                                    <p class="text-sm mt-1 leading-5 text-secondary-500 dark:text-secondary-400">{{ __('You should ask your customers for permission before you subscribe them to your marketing emails if you got one.') }}</p>
                                 </div>
                             </div>
 
@@ -216,7 +216,7 @@
                                 </div>
                                 <div class="ml-3 text-sm leading-5">
                                     <x-shopper-label for="send_mail" :value="__('Send customer credentials.')" />
-                                    <p class="text-sm mt-1 leading-5 text-gray-500 dark:text-gray-400">{{ __('An email will be sent to this customer with these connection credentials.') }}</p>
+                                    <p class="text-sm mt-1 leading-5 text-secondary-500 dark:text-secondary-400">{{ __('An email will be sent to this customer with these connection credentials.') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,7 @@
         </div>
     </div>
 
-    <div class="mt-6 pt-5 border-t border-gray-200 dark:border-gray-700">
+    <div class="mt-6 pt-5 border-t border-secondary-200 dark:border-secondary-700">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper-loader wire:loading wire:target="store" class="text-white" />

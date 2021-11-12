@@ -4,6 +4,6 @@
             <span>{{ $brand->name }}</span>
         </a>
     @else
-        <span class="inline-flex text-gray-700 dark:text-gray-500">&mdash;</span>
+        <span class="inline-flex text-secondary-700 dark:text-secondary-500">&mdash;</span>
     @endif
 </div>

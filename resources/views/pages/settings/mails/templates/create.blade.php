@@ -39,12 +39,12 @@
 @section('content')
 
     <x:shopper-breadcrumb back="shopper.settings.mails.select-template">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
+        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.mails.select-template')" title="Templates" />
     </x:shopper-breadcrumb>
 
-    <div class="mt-3 pb-5 border-b border-gray-200 dark:border-gray-700">
-        <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
+    <div class="mt-3 pb-5 border-b border-secondary-200 dark:border-secondary-700">
+        <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
             {{ ucfirst($skeleton['type']) }} / {{ ucfirst($skeleton['name']) }} / {{ ucfirst($skeleton['skeleton']) }}
         </h3>
     </div>
@@ -67,7 +67,7 @@
                     <x-shopper-input.group for="description" label="Template description" :error="$errors->first('template_description')" isRequired>
                         <x-shopper-input.textarea name="template_description" id="description" />
                     </x-shopper-input.group>
-                    <div class="pt-5 border-t border-gray-200 dark:border-gray-700">
+                    <div class="pt-5 border-t border-secondary-200 dark:border-secondary-700">
                         <div class="flex justify-end">
                             <x-shopper-button type="submit">
                                 {{ __('Create') }}

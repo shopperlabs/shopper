@@ -4,7 +4,7 @@
         <span class="relative z-0 inline-flex shadow-sm">
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
-                <span class="relative inline-flex items-center px-2 py-2 rounded-none rounded-l-md inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium text-gray-700 dark:text-white bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900 opacity-50 cursor-not-allowed" aria-disabled="true" aria-label="{{ __('Previous') }}">
+                <span class="relative inline-flex items-center px-2 py-2 rounded-none rounded-l-md inline-flex items-center px-4 py-2 border border-secondary-300 dark:border-secondary-700 shadow-sm text-sm font-medium text-secondary-700 dark:text-white bg-white dark:bg-secondary-700 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-secondary-900 opacity-50 cursor-not-allowed" aria-disabled="true" aria-label="{{ __('Previous') }}">
                     <x-heroicon-s-chevron-left class="h-5 w-5" />
                 </span>
             @else
@@ -19,14 +19,14 @@
             @foreach ($elements as $element)
                 {{-- "Three Dots" Separator--}}
                 @if (is_string($element))
-                        <span class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700">{{ $element }}</span>
+                        <span class="-ml-px relative inline-flex items-center px-4 py-2 border border-secondary-300 bg-white text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300 dark:border-secondary-700 dark:bg-secondary-700">{{ $element }}</span>
                 @endif
 
                 {{-- Array Of Links --}}
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <span class="hidden md:inline-flex -ml-px relative items-center px-4 py-2 border border-gray-300 bg-gray-100 text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none dark:bg-gray-600 dark:text-gray-300 dark:hover:text-white dark:border-gray-600">{{ $page }}</span>
+                            <span class="hidden md:inline-flex -ml-px relative items-center px-4 py-2 border border-secondary-300 bg-secondary-100 text-sm leading-5 font-medium text-secondary-700 hover:text-secondary-500 focus:z-10 focus:outline-none dark:bg-secondary-600 dark:text-secondary-300 dark:hover:text-white dark:border-secondary-600">{{ $page }}</span>
                         @else
                             <x-shopper-default-button type="button" class="-ml-px relative rounded-l-none rounded-r-none focus:z-10" wire:click="gotoPage({{ $page }})">{{ $page }}</x-shopper-default-button>
                         @endif

@@ -10,7 +10,7 @@
 
                 <div>
                     <x-shopper-application-icon class="mx-auto h-20 w-auto" />
-                    <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900 dark:text-white">
+                    <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-secondary-900 dark:text-white">
                         {{ __('Welcome Back !') }}
                     </h2>
                     <p class="mt-2 text-center text-sm max-w">
@@ -26,16 +26,16 @@
                 @csrf
                 <div class="rounded-md shadow-sm">
                     <div>
-                        <input aria-label="{{ __('Email address') }}" name="email" type="email" value="{{ old('email') }}" autocomplete="off" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-300 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-gray-900 focus:z-10 sm:text-sm" placeholder="{{ __('Email address') }}" />
+                        <input aria-label="{{ __('Email address') }}" name="email" type="email" value="{{ old('email') }}" autocomplete="off" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 placeholder-secondary-500 text-secondary-900 dark:text-secondary-300 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-secondary-900 focus:z-10 sm:text-sm" placeholder="{{ __('Email address') }}" />
                     </div>
                     <div class="-mt-px">
-                        <input aria-label="{{ __('Password') }}" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-300 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-gray-900 focus:z-10 sm:text-sm" placeholder="{{ __('Password') }}">
+                        <input aria-label="{{ __('Password') }}" name="password" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 placeholder-secondary-500 text-secondary-900 dark:text-secondary-300 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-secondary-900 focus:z-10 sm:text-sm" placeholder="{{ __('Password') }}">
                     </div>
                 </div>
 
                 <div class="mt-6 flex items-center justify-between">
                     <div class="flex items-center">
-                        <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-primary-600 dark:bg-gray-800 dark:border-gray-700 focus:ring-primary-500 border-gray-300 dark:focus:ring-offset-gray-900 rounded">
+                        <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-primary-600 dark:bg-secondary-800 dark:border-secondary-700 focus:ring-primary-500 border-secondary-300 dark:focus:ring-offset-secondary-900 rounded">
                         <label for="remember_me" class="ml-2 block text-sm leading-5 cursor-pointer">
                             {{ __('Remember me') }}
                         </label>

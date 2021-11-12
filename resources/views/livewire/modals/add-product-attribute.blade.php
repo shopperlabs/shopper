@@ -1,5 +1,5 @@
 <x-shopper-modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -28,9 +28,9 @@
                     @elseif($type === 'datepicker')
                         <div x-data x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});" class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <x-heroicon-o-calendar class="h-5 w-5 text-gray-400" />
+                                <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400" />
                             </div>
-                            <input wire:model="value" x-ref="input" id="value" type="text" class="w-full pl-10 block w-full dark:bg-gray-700 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-md shadow-sm border-gray-300 dark:border-gray-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-gray-900 focus:ring-opacity-50 sm:text-sm" placeholder="{{ __('Choose a date') }}" readonly />
+                            <input wire:model="value" x-ref="input" id="value" type="text" class="w-full pl-10 block w-full dark:bg-secondary-700 dark:text-white placeholder-secondary-500 dark:placeholder-secondary-400 rounded-md shadow-sm border-secondary-300 dark:border-secondary-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-secondary-900 focus:ring-opacity-50 sm:text-sm" placeholder="{{ __('Choose a date') }}" readonly />
                         </div>
                     @elseif($type === 'richtext')
                         <livewire:shopper-forms.trix :value="$value" />
@@ -48,7 +48,7 @@
                                         <x-shopper-input.checkbox wire:model="multipleValues" id="value_{{ $v->id }}" value="{{ $v->id }}" />
                                     </div>
                                     <div class="ml-3 text-sm leading-5">
-                                        <label for="value_{{ $v->id }}" class="font-medium text-gray-700 cursor-pointer dark:text-gray-400">{{ $v->value }}</label>
+                                        <label for="value_{{ $v->id }}" class="font-medium text-secondary-700 cursor-pointer dark:text-secondary-400">{{ $v->value }}</label>
                                     </div>
                                 </div>
                             @endforeach
@@ -59,7 +59,7 @@
                                 <div class="flex items-center">
                                     <x-shopper-input.radio wire:model="value" id="value_{{ $v->id }}" value="{{ $v->id }}" />
                                     <label for="value_{{ $v->id }}" class="ml-3">
-                                        <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-400">{{ $v->value }}</span>
+                                        <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400">{{ $v->value }}</span>
                                     </label>
                                 </div>
                             @endforeach

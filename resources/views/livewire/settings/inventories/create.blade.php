@@ -1,6 +1,6 @@
 <div>
     <x:shopper-breadcrumb back="shopper.settings.inventories.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-gray-400" />
+        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.inventories.index')" title="Locations" />
     </x:shopper-breadcrumb>
 
@@ -23,14 +23,14 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Details') }}</h3>
-                    <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Details') }}</h3>
+                    <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __("Give this location a short name to make it easy to identify. You’ll see this name in areas like products.") }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="p-4 sm:p-5 bg-white shadow rounded-md overflow-hidden dark:bg-gray-800">
+                <div class="p-4 sm:p-5 bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
                     <div class="space-y-4">
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                             <div class="sm:col-span-1">
@@ -46,7 +46,7 @@
                             <div class="sm:col-span-2">
                                 <div class="flex items-center justify-between">
                                     <x-shopper-label :value="__('Description')" for="description" />
-                                    <span class="ml-4 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('Optional') }}</span>
+                                    <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
                                     <x-shopper-input.textarea wire:model.lazy="description" id="description" />
@@ -58,8 +58,8 @@
                                 <x-shopper-input.checkbox wire:model.defer="isDefault" id="isDefault" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
-                                <label for="isDefault" class="font-medium text-gray-700 cursor-pointer dark:text-gray-200">{{ __('Set as default inventory') }}</label>
-                                <p class="text-gray-500 dark:text-gray-400">{{ __('Inventory at this location is available for sale online and will use as default.') }}</p>
+                                <label for="isDefault" class="font-medium text-secondary-700 cursor-pointer dark:text-secondary-200">{{ __('Set as default inventory') }}</label>
+                                <p class="text-secondary-500 dark:text-secondary-400">{{ __('Inventory at this location is available for sale online and will use as default.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
 
     <div class="hidden sm:block">
         <div class="py-5">
-            <div class="border-t border-gray-200 dark:border-gray-700"></div>
+            <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
         </div>
     </div>
 
@@ -78,14 +78,14 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Inventory address') }}</h3>
-                    <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Inventory address') }}</h3>
+                    <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __("Your inventory's complete information. Please put valide informations this can be accessible for your customers.") }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-gray-800">
+                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                             <div class="sm:col-span-6">
@@ -97,7 +97,7 @@
                             <div class="sm:col-span-6">
                                 <div class="flex items-center justify-between">
                                     <x-shopper-label :value="__('Apartment, suite, etc.')" for="street_address_plus" />
-                                    <span class="ml-4 text-sm leading-5 text-gray-500 dark:text-gray-400">{{ __('Optional') }}</span>
+                                    <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
                                     <x-shopper-input.text wire:model.defer="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
@@ -150,7 +150,7 @@
         </div>
     </div>
 
-    <div class="mt-6 pt-5 border-t border-gray-200 dark:border-gray-700">
+    <div class="mt-6 pt-5 border-t border-secondary-200 dark:border-secondary-700">
         <div class="flex justify-end">
             <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper-loader wire:loading wire:target="store" class="text-white" />

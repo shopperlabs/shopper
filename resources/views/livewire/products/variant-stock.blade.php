@@ -1,8 +1,8 @@
 <div class="overflow-hidden">
     @if($inventories->count() > 1)
-        <div class="p-4 sm:px-5 relative flex items-center justify-between border-b border-gray-200">
+        <div class="p-4 sm:px-5 relative flex items-center justify-between border-b border-secondary-200">
             <span class="relative z-0 inline-flex shadow-sm rounded-md">
-                <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-gray-300 bg-white">
+                <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-secondary-300 bg-white">
                     <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                         <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -14,7 +14,7 @@
                     @endforeach
                 </x-shopper-input.select>
             </span>
-            <div class="relative z-0 inline-flex items-center leading-5 text-gray-700">
+            <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700">
                 <span class="block text-sm font-medium mr-4">{{ __('Quantity Available') }}</span>
                 <span class="mr-2 text-sm px-2 inline-flex leading-5 font-medium rounded-full {{ $product->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
                     {{ $product->stock }}
@@ -23,7 +23,7 @@
         </div>
     @endif
     <div class="flex items-center justify-between px-4 sm:px-6 mb-2 py-6">
-        <div class="relative z-0 inline-flex items-center leading-5 text-gray-700">
+        <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700">
             <span class="block text-sm font-medium mr-4">{{ __('Current quantity on this inventory') }}</span>
             <span class="mr-2 text-sm px-2 inline-flex leading-5 font-medium rounded-full {{ $currentStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
                 {{ $currentStock }}
@@ -32,16 +32,16 @@
         <div class="ml-4">
             <div class="flex items-center">
                 <div class="flex items-center pr-4">
-                    <p class="text-sm font-medium text-gray-600 mr-4">{{ $realStock }}</p>
+                    <p class="text-sm font-medium text-secondary-600 mr-4">{{ $realStock }}</p>
                     <div>
                         <div class="flex rounded-md shadow-sm">
                             <div class="relative flex items-stretch flex-grow focus-within:z-10">
                                 <input wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="form-input block w-32 transition duration-150 rounded-none rounded-l-md ease-in-out sm:text-sm sm:leading-5" placeholder="12" />
                             </div>
-                            <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-none text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus-border-2 focus:border-primary-500 focus:border-primary-500">
+                            <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-secondary-300 text-sm font-medium rounded-none text-secondary-700 bg-secondary-50 hover:bg-secondary-100 focus:outline-none focus-border-2 focus:border-primary-500 focus:border-primary-500">
                                 <span>&minus;</span>
                             </button>
-                            <button wire:click="incrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus-border-2 focus:border-primary-500 focus:border-primary-500">
+                            <button wire:click="incrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-secondary-300 text-sm font-medium rounded-r-md text-secondary-700 bg-secondary-50 hover:bg-secondary-100 focus:outline-none focus-border-2 focus:border-primary-500 focus:border-primary-500">
                                 <span>&plus;</span>
                             </button>
                         </div>
@@ -72,11 +72,11 @@
     @if($histories->isEmpty())
         <div class="flex flex-col items-center justify-center p-4 sm:p-6">
             <span class="flex-shrink-0">
-                <svg class="h-12 w-12 text-cool-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="h-12 w-12 text-cool-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
             </span>
-            <h3 class="font-medium py-5 text-cool-gray-400 text-xl">{{ __('No adjustments made to inventory.') }}</h3>
+            <h3 class="font-medium py-5 text-cool-secondary-400 text-xl">{{ __('No adjustments made to inventory.') }}</h3>
         </div>
     @else
         <div class="flex flex-col">
@@ -85,39 +85,39 @@
                     <table class="min-w-full">
                         <thead>
                             <tr>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                <th class="px-6 py-3 border-b border-secondary-200 bg-secondary-50 text-left text-sm leading-4 font-medium text-secondary-700 tracking-wider">
                                     {{ __('Date') }}
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                <th class="px-6 py-3 border-b border-secondary-200 bg-secondary-50 text-left text-sm leading-4 font-medium text-secondary-700 tracking-wider">
                                     {{ __('Event') }}
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                <th class="px-6 py-3 border-b border-secondary-200 bg-secondary-50 text-left text-sm leading-4 font-medium text-secondary-700 tracking-wider">
                                     {{ __('Inventory Place') }}
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                <th class="px-6 py-3 border-b border-secondary-200 bg-secondary-50 text-right text-sm leading-4 font-medium text-secondary-700 tracking-wider">
                                     {{ __('Adjustment') }}
                                 </th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right text-sm leading-4 font-medium text-gray-700 tracking-wider">
+                                <th class="px-6 py-3 border-b border-secondary-200 bg-secondary-50 text-right text-sm leading-4 font-medium text-secondary-700 tracking-wider">
                                     {{ __('Quantity Movement') }}
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-100">
+                        <tbody class="bg-white divide-y divide-secondary-100">
                             @foreach($histories as $inventoryHistory)
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-secondary-500">
                                         {{ $inventoryHistory->created_at->diffForHumans() }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-secondary-500">
                                         {{ __($inventoryHistory->event) }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-secondary-500">
                                         {{ $inventoryHistory->inventory->name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->old_quantity > 0 ? 'text-green-500': 'text-red-500' }}">
                                         {{ $inventoryHistory->adjustment }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-gray-500': 'text-red-500' }}">
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-secondary-500': 'text-red-500' }}">
                                         {{ $inventoryHistory->quantity }}
                                     </td>
                                 </tr>
@@ -126,13 +126,13 @@
                     </table>
                 </div>
             </div>
-            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-secondary-200 sm:px-6">
                 <div class="flex-1 flex justify-between sm:hidden">
                     {{ $histories->links('shopper::livewire.wire-mobile-pagination-links') }}
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
-                        <p class="text-sm leading-5 text-gray-700">
+                        <p class="text-sm leading-5 text-secondary-700">
                             {{ __('Showing') }}
                             <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + 1 }}</span>
                             {{ __('to') }}

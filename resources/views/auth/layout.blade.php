@@ -20,7 +20,7 @@
 
     @include('shopper::includes._additional-styles')
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 transition duration-200 ease-in-out">
+<body class="bg-secondary-50 dark:bg-secondary-900 text-secondary-500 dark:text-secondary-400 transition duration-200 ease-in-out">
 
     @yield('content')
 

@@ -166,9 +166,9 @@
 
         <div class="mt-10 w-full md:mt-0 md:w-1/2 relative lg:py-20 flex items-center justify-center">
             <div class="w-full text-center sm:max-w-md md:text-left">
-                <h3 class="text-lg leading-6 sm:text-2xl lg:text-6xl sm:leading-7 lg:leading-none font-extrabold text-gray-900 dark:text-white">{{ __($exception->getCode()) }}</h3>
-                <p class="mt-4 text-gray-600 text-base sm:text-lg font-medium leading-6 sm:leading-8 dark:text-gray-300">{{ __($exception->getMessage()) }}</p>
-                <p class="mt-1 text-gray-500 text-base leading-6 dark:text-gray-400">
+                <h3 class="text-lg leading-6 sm:text-2xl lg:text-6xl sm:leading-7 lg:leading-none font-extrabold text-secondary-900 dark:text-white">{{ __($exception->getCode()) }}</h3>
+                <p class="mt-4 text-secondary-600 text-base sm:text-lg font-medium leading-6 sm:leading-8 dark:text-secondary-300">{{ __($exception->getMessage()) }}</p>
+                <p class="mt-1 text-secondary-500 text-base leading-6 dark:text-secondary-400">
                     {{ __("You don't have permission/authorization to access requested page.") }}
                 </p>
                 <x-shopper-button :link="url()->previous()" class="mt-5">

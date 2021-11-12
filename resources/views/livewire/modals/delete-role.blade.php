@@ -7,11 +7,11 @@
                 </svg>
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                <h3 class="text-lg leading-6 font-medium text-secondary-900" id="modal-headline">
                     {{ __('Delete role') }}
                 </h3>
                 <div class="mt-2">
-                    <p class="text-sm leading-5 text-gray-500">
+                    <p class="text-sm leading-5 text-secondary-500">
                         {{ __('Are you sure you want to remove this role? All users who had this role will no longer be able to access the actions given by this role.') }}
                     </p>
                 </div>

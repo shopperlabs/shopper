@@ -2,14 +2,14 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Update Password') }}</h3>
-                <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Update Password') }}</h3>
+                <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                     {{ __('Ensure your account is using a long, random password to stay secure.') }}
                 </p>
             </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="bg-white shadow rounded-md overflow-hidden dark:bg-gray-800">
+            <div class="bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
                 <div class="px-4 py-5 sm:p-6 space-y-4">
                     @if (session()->has('error'))
                         <div class="rounded-md bg-red-50 p-4">

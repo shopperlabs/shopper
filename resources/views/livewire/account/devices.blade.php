@@ -2,33 +2,33 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">{{ __('Devices') }}</h3>
-                <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Devices') }}</h3>
+                <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                     {{ __("You're currently logged in on these devices. If you don't recognize a device, log out to keep your account secure.") }}
                 </p>
             </div>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="shadow rounded-md bg-white overflow-hidden dark:bg-gray-800">
+            <div class="shadow rounded-md bg-white overflow-hidden dark:bg-secondary-800">
                 <div class="px-4 py-5 sm:p-6">
                     @if (count($this->sessions) > 0)
-                        <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                        <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                             {{ __('If necessary, you may logout of all of your other browser sessions across all of your devices.') }}
                         </p>
-                        <div class="mt-2 divide-y divide-gray-200 dark:divide-gray-700">
+                        <div class="mt-2 divide-y divide-secondary-200 dark:divide-secondary-700">
                             @foreach($this->sessions as $session)
                                 <div class="py-4 flex items-center justify-between">
                                     <div class="flex items-center space-x-3">
                                         <div class="flex-shrink-0">
                                             @if ($session->agent->isDesktop())
-                                                <x-heroicon-o-desktop-computer class="w-8 h-8 text-gray-500" />
+                                                <x-heroicon-o-desktop-computer class="w-8 h-8 text-secondary-500" />
                                             @else
-                                                <x-heroicon-o-device-mobile class="w-8 h-8 text-gray-500" />
+                                                <x-heroicon-o-device-mobile class="w-8 h-8 text-secondary-500" />
                                             @endif
                                         </div>
                                         <div>
                                             <div class="flex items-center">
-                                                <h4 class="text-sm leading-5 text-gray-500 dark:text-gray-400">
+                                                <h4 class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                                     <span class="text-green-500">{{ $session->agent->browser() }} {{ __("on") }} {{ $session->agent->platform() }}</span> - {{ $session->ip_address }}
                                                 </h4>
                                                 @if ($session->is_current_device)
@@ -36,10 +36,10 @@
                                                         {{ __('This device') }}
                                                     </span>
                                                 @else
-                                                    <span class="ml-2 text-xs text-gray-400 dark:text-gray-500">{{ __('Last active') }} {{ $session->last_active }}</span>
+                                                    <span class="ml-2 text-xs text-secondary-400 dark:text-secondary-500">{{ __('Last active') }} {{ $session->last_active }}</span>
                                                 @endif
                                             </div>
-                                            <p class="mt-0.5 text-sm leading-4 text-gray-500 dark:text-gray-400">
+                                            <p class="mt-0.5 text-sm leading-4 text-secondary-500 dark:text-secondary-400">
                                                 @if($session->location)
                                                     {{ $session->location->cityName }}, {{ $session->location->regionName }}, {{ $session->location->countryName }}
                                                 @else

@@ -11,14 +11,14 @@
         <button
             type="button"
             aria-pressed="false"
-            class="darkModeToggle bg-gray-200 dark:bg-gray-800 relative inline-flex flex-shrink-0 h-6 w-11 my-3 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-primary-800 focus:ring-gray-500"
+            class="darkModeToggle bg-secondary-200 dark:bg-secondary-800 relative inline-flex flex-shrink-0 h-6 w-11 my-3 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-primary-800 focus:ring-secondary-500"
         >
             <span class="translate-x-0 dark:translate-x-5 relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200">
                 <span class="dark:hidden opacity-100 ease-in duration-200 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity" aria-hidden="true">
-                    <x-heroicon-s-sun class="h-3 w-3 text-gray-400" />
+                    <x-heroicon-s-sun class="h-3 w-3 text-secondary-400" />
                 </span>
                 <span class="hidden dark:flex opacity-0 ease-out duration-100 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full items-center justify-center transition-opacity opacity-100 ease-in duration-200 " aria-hidden="true">
-                    <x-heroicon-s-moon class="h-3 w-3 text-gray-600" />
+                    <x-heroicon-s-moon class="h-3 w-3 text-secondary-600" />
                 </span>
             </span>
         </button>

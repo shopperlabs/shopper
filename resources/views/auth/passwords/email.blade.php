@@ -24,7 +24,7 @@
 
             <div class="mt-4">
                 <x-shopper-application-icon class="mx-auto h-20 w-auto" />
-                <h2 class="mt-10 text-3xl font-extrabold text-center leading-9 text-gray-900 dark:text-white">{{ __('Reset your password') }}</h2>
+                <h2 class="mt-10 text-3xl font-extrabold text-center leading-9 text-secondary-900 dark:text-white">{{ __('Reset your password') }}</h2>
                 <p class="mt-5 text-sm leading-5 text-center">
                     {{ __('Enter the email address you used when creating your account and we will send you instructions to reset your password.') }}
                 </p>
@@ -53,7 +53,7 @@
                     </x-shopper-button>
                 </div>
                 <p class="mt-5 text-center text-sm">
-                    <a href="{{ route('shopper.login-view') }}" class="inline-flex items-center hover:text-gray-400 dark:hover:text-gray-300 leading-5 transition duration-150 ease-in-out">
+                    <a href="{{ route('shopper.login-view') }}" class="inline-flex items-center hover:text-secondary-400 dark:hover:text-secondary-300 leading-5 transition duration-150 ease-in-out">
                         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="arrow-narrow-left w-5 h-5 mr-1.5">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
                         </svg>
