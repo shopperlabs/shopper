@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\AttributeValue;
+use WireUi\Traits\Actions;
 
 class Values extends Component
 {
+    use Actions;
+
     public Attribute $attribute;
     public Collection $values;
     public string $type = 'select';
@@ -34,10 +37,7 @@ class Values extends Component
 
         $this->emitSelf('updateValues');
 
-        $this->notify([
-            'title' => __('Deleted'),
-            'message' => __('Your value have been correctly removed.'),
-        ]);
+        $this->notification()->success(__('Deleted'), __('Your value have been correctly removed!'));
     }
 
     public function render()

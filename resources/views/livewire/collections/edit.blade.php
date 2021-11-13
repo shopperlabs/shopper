@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
 <div>
     <x:shopper-breadcrumb back="shopper.collections.index">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
@@ -76,18 +72,16 @@
         </div>
         <div class="sm:col-span-2">
             <aside class="sticky top-6 space-y-5">
-                <div
-                    x-data
-                    x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});"
-                    class="bg-white rounded-md shadow p-4 sm:p-5 dark:bg-secondary-800"
-                >
-                    <x-shopper-label for="date" :value="__('Collection availability')" />
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-                        </div>
-                        <x-shopper-input.text wire:model.debounce.350ms="publishedAt" x-ref="input" id="date" type="text" class="pl-10" placeholder="{{ __('Choose a date') }}" readonly />
-                    </div>
+                <div class="bg-white rounded-md shadow p-4 sm:p-5 dark:bg-secondary-800">
+                    <x-datetime-picker
+                        :label="__('Collection availability')"
+                        :placeholder="__('Pick a date')"
+                        wire:model="publishedAt"
+                        parse-format="YYYY-MM-DD HH:mm"
+                        time-format="24"
+                        without-timezone
+                        class="dark:bg-secondary-700"
+                    />
                     @if($publishedAt)
                         <div class="mt-2 flex items-start">
                             <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
@@ -121,7 +115,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endpush

@@ -7,10 +7,11 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
+use WireUi\Traits\Actions;
 
 class Seo extends Component
 {
-    use WithSeoAttributes;
+    use Actions, WithSeoAttributes;
 
     public Model $product;
     public int $productId;
@@ -47,10 +48,7 @@ class Seo extends Component
 
         $this->emit('productHasUpdated', $this->productId);
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Product SEO successfully updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Product SEO successfully updated!'));
     }
 
     public function render()

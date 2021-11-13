@@ -15,12 +15,12 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
-    use WithAttributes,
-        WithProductAssociations,
-        WithSeoAttributes;
+    use WithAttributes, WithSeoAttributes;
 
-    public $quantity;
     public ?Channel $defaultChannel = null;
+    public array $category_ids = [];
+    public array $collection_ids = [];
+    public $quantity;
     public $files = [];
 
     public array $seoAttributes = [
@@ -101,8 +101,8 @@ class Create extends AbstractBaseComponent
             $product->categories()->attach($this->category_ids);
         }
 
-        if (collect($this->associateCollections)->isNotEmpty()) {
-            $product->collections()->attach($this->associateCollections);
+        if (collect($this->collection_ids)->isNotEmpty()) {
+            $product->collections()->attach($this->collection_ids);
         }
 
         $product->channels()->attach($this->defaultChannel->id);

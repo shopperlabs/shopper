@@ -6,17 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use WireUi\Traits\Actions;
 
 class Shipping extends Component
 {
-    use WithAttributes;
+    use Actions, WithAttributes;
 
     public Model $product;
     public int $productId;
 
-    /**
-     * Component Mount method.
-     */
     public function mount($product)
     {
         $this->product = $product;
@@ -33,9 +31,6 @@ class Shipping extends Component
         $this->volumeUnit = $product->volume_unit;
     }
 
-    /**
-     * Store/Update a entry to the storage.
-     */
     public function store()
     {
         (new ProductRepository())->getById($this->productId)->update([
@@ -53,10 +48,7 @@ class Shipping extends Component
 
         $this->emit('productHasUpdated', $this->productId);
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Product shipping successfully updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Product shipping successfully updated!'));
     }
 
     public function render()

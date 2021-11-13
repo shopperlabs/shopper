@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Services\Mailable;
+use WireUi\Traits\Actions;
 
 class CreateMailable extends ModalComponent
 {
+    use Actions;
+
     public string $name = '';
     public ?string $markdownView = null;
     public bool $isMarkdown = false;
@@ -57,10 +60,7 @@ class CreateMailable extends ModalComponent
         $exitCode = Artisan::call('make:mail', $params->all());
 
         if ($exitCode > -1) {
-            $this->notify([
-                'title' => __('Mailable Created'),
-                'message' => __('You Mailable class has been created under the app/Mail folder on your project.'),
-            ]);
+            $this->notification()->success(__('Mailable Created'), __('You Mailable class has been created under the app/Mail folder on your project!'));
 
             $this->emit('onMailableAction');
 

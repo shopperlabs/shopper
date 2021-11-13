@@ -13,18 +13,21 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithProductAssociations;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
+use WireUi\Traits\Actions;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithAttributes,
+    use Actions,
+        WithAttributes,
         WithFileUploads,
-        WithProductAssociations,
         WithUploadProcess,
         WithSeoAttributes;
 
     public Model $product;
     public int $productId;
     public string $currency;
+    public array $category_ids = [];
+    public array $collection_ids = [];
     public $images = [];
 
     protected $listeners = [
@@ -44,9 +47,9 @@ class Edit extends AbstractBaseComponent
         $this->price_amount = $product->price_amount;
         $this->old_price_amount = $product->old_price_amount;
         $this->cost_amount = $product->cost_amount;
-        $this->publishedAt = $product->published_at->format('Y-m-d');
+        $this->publishedAt = $product->published_at;
         $this->publishedAtFormatted = $product->published_at->toRfc7231String();
-        $this->associateCollections = $this->collection_ids = $product->collections->pluck('id')->toArray();
+        $this->collection_ids = $product->collections->pluck('id')->toArray();
         $this->category_ids = $product->categories->pluck('id')->toArray();
         $this->currency = $currency;
         $this->images = $product->getMedia(config('shopper.system.storage.disks.uploads'));
@@ -98,18 +101,15 @@ class Edit extends AbstractBaseComponent
             $this->product->categories()->sync($this->category_ids);
         }
 
-        if (collect($this->associateCollections)->isNotEmpty()) {
-            $this->product->collections()->sync($this->associateCollections);
+        if (collect($this->collection_ids)->isNotEmpty()) {
+            $this->product->collections()->sync($this->collection_ids);
         }
 
         event(new ProductUpdated($this->product));
 
         $this->emit('productHasUpdated', $this->productId);
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Product successfully updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Product successfully updated!'));
     }
 
     public function render()

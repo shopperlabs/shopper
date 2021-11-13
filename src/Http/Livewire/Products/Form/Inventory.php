@@ -12,10 +12,14 @@ use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryHistoryRepository;
 use Shopper\Framework\Traits\WithStock;
+use WireUi\Traits\Actions;
 
 class Inventory extends Component
 {
-    use WithPagination, WithAttributes, WithStock;
+    use Actions,
+        WithPagination,
+        WithAttributes,
+        WithStock;
 
     public Model $product;
     public Collection $inventories;
@@ -56,10 +60,7 @@ class Inventory extends Component
             'security_stock' => $this->securityStock ?? null,
         ]);
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Product Stock attribute successfully updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Product Stock attribute successfully updated!'));
     }
 
     public function render()

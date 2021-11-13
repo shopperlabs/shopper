@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use WireUi\Traits\Actions;
 
 class BrandsTable extends DataTableComponent
 {
+    use Actions;
+
     public string $defaultSortColumn = 'name';
 
     public $columnSearch = [
@@ -45,10 +48,7 @@ class BrandsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notify([
-                'title' => __('Deleted'),
-                'message' => __('The brands has successfully removed!'),
-            ]);
+            $this->notification()->success(__('Deleted'), __('The brands has successfully removed!'));
         }
 
         $this->selected = [];
@@ -61,10 +61,7 @@ class BrandsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => true]);
 
-            $this->notify([
-                'title' => __('Updated'),
-                'message' => __('The brands has successfully enabled!'),
-            ]);
+            $this->notification()->success(__('Updated'), __('The brands has successfully enabled!'));
         }
 
         $this->selected = [];
@@ -77,10 +74,7 @@ class BrandsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
 
-            $this->notify([
-                'title' => __('Updated'),
-                'message' => __('The brands has successfully disabled!'),
-            ]);
+            $this->notification()->success(__('Updated'), __('The brands has successfully disabled!'));
         }
 
         $this->resetBulk();

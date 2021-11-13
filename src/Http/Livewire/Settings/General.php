@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings;
 
+use WireUi\Traits\Actions;
 use function array_slice;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,7 +12,7 @@ use Shopper\Framework\Models\System\Setting;
 
 class General extends Component
 {
-    use WithFileUploads;
+    use Actions, WithFileUploads;
 
     public string $shop_name;
     public ?string $shop_legal_name = null;
@@ -122,10 +123,7 @@ class General extends Component
             ]);
         }
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Shop informations have been correctly updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Shop informations have been correctly updated!'));
     }
 
     public function rules(): array
@@ -159,10 +157,7 @@ class General extends Component
 
         $this->cover = null;
 
-        $this->notify([
-            'title' => __('Deleted'),
-            'message' => __('Shop cover have been correctly removed!'),
-        ]);
+        $this->notification()->success(__('Deleted'), __('Shop cover have been correctly removed!'));
     }
 
     public function render()

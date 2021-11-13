@@ -43,12 +43,11 @@ class Create extends Component
         $this->fileUrl = $file;
     }
 
-    /**
-     * Live updated Formatted publishedAt attribute.
-     */
-    public function updatedPublishedAt()
+    public function updatedPublishedAt($value)
     {
-        $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $this->publishedAt)->toRfc7231String();
+        if ($value) {
+            $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d H:i', $value)->toRfc7231String();
+        }
     }
 
     /**

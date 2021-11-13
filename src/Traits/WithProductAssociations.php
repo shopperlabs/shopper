@@ -8,7 +8,7 @@ trait WithProductAssociations
     public array $collection_ids = [];
     public array $associateCollections = [];
 
-    public function updatedCollectionIds($choices)
+    /*public function updatedCollectionIds($choices)
     {
         if (! in_array($choices['value'], $this->associateCollections)) {
             array_push($this->associateCollections, $choices['value']);
@@ -16,5 +16,5 @@ trait WithProductAssociations
             $key = array_search($choices['value'], $this->associateCollections);
             unset($this->associateCollections[$key]);
         }
-    }
+    }*/
 }

@@ -71,6 +71,14 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('wip');
             $this->registerComponent('wip-placeholder');
         });
+
+        $prefix = config('shopper.components.prefix', 'shopper');
+
+        $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade) use ($prefix) {
+            foreach (config('shopper.components.blade') as $component) {
+                $blade->component($component['class'], $component['alias'], $prefix);
+            }
+        });
     }
 
     /**
@@ -92,6 +100,8 @@ class ComponentServiceProvider extends ServiceProvider
      */
     protected function registerComponent(string $component)
     {
-        Blade::component('shopper::components.' . $component, 'shopper-' . $component);
+        $prefix = config('shopper.components.prefix', 'shopper');
+
+        Blade::component('shopper::components.' . $component, $prefix . '-' . $component);
     }
 }

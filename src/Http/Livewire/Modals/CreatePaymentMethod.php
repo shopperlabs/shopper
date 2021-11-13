@@ -5,10 +5,11 @@ namespace Shopper\Framework\Http\Livewire\Modals;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\PaymentMethod;
+use WireUi\Traits\Actions;
 
 class CreatePaymentMethod extends ModalComponent
 {
-    use WithFileUploads;
+    use Actions, WithFileUploads;
 
     public string $title = '';
     public ?string $linkUrl = null;
@@ -43,10 +44,7 @@ class CreatePaymentMethod extends ModalComponent
             ]);
         }
 
-        $this->notify([
-            'title' => __('Saved!'),
-            'message' => __('Your payment method have been correctly added.'),
-        ]);
+        $this->notification()->success(__('Saved'), __('Your payment method have been correctly added!'));
 
         $this->emit('onPaymentMethodAdded');
 

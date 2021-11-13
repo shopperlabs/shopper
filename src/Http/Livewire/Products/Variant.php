@@ -10,10 +10,14 @@ use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
+use WireUi\Traits\Actions;
 
 class Variant extends Component
 {
-    use WithFileUploads, WithUploadProcess, WithAttributes;
+    use Actions,
+        WithFileUploads,
+        WithUploadProcess,
+        WithAttributes;
 
     public Model $product;
     public Model $variant;
@@ -83,10 +87,7 @@ class Variant extends Component
 
         $this->emitSelf('onVariantUpdated');
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Variant successfully updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Variant successfully updated!'));
     }
 
     /**

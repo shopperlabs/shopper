@@ -23,6 +23,7 @@ class Shipping extends Component
     {
         $this->storeValues($this->title, $this->content, $this->isEnabled);
 
+        $this->notification()->success(__('Updated'), __('Your shipping privacy has been successfully updated!'));
         $this->notify([
             'title' => __('Updated'),
             'message' => __('Your shipping privacy has been successfully updated!'),

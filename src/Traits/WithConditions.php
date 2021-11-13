@@ -29,7 +29,7 @@ trait WithConditions
     /**
      * @var int
      */
-    public $i = 1;
+    public int $i = 1;
 
     /**
      * Add new condition on the array conditions.
@@ -53,11 +53,6 @@ trait WithConditions
         unset($this->conditions[$i]);
     }
 
-    /**
-     * Computed Collection Rules.
-     *
-     * @return array
-     */
     public function getCollectionRulesProperty(): array
     {
         return [
@@ -88,11 +83,6 @@ trait WithConditions
         ];
     }
 
-    /**
-     * Get all available operators.
-     *
-     * @return array
-     */
     public function getOperatorsProperty(): array
     {
         return [
@@ -131,13 +121,8 @@ trait WithConditions
         ];
     }
 
-    /**
-     * Reset conditions form.
-     */
     private function resetConditionsFields()
     {
-        $this->rule = '';
-        $this->operator = '';
-        $this->value = '';
+        $this->reset('rule', 'operator', 'value');
     }
 }

@@ -16,9 +16,6 @@ class Create extends AbstractBaseComponent
 {
     use WithDiscountAttributes, WithDiscountActions, HasPrice;
 
-    /**
-     * Component Mount instance.
-     */
     public function mount()
     {
         $this->dateStart = now()->format('Y-m-d H:i');

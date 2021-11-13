@@ -7,39 +7,28 @@ use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
 use Shopper\Framework\Models\User\Address;
+use WireUi\Traits\Actions;
 
 class Show extends Component
 {
-    use WithPagination;
+    use Actions, WithPagination;
 
     public Order $order;
     public int $perPage = 3;
     public ?string $notes = null;
 
-    /**
-     * Redirect to the specific order.
-     */
     public function goToOrder(int $id)
     {
         $this->redirectRoute('shopper.orders.show', $id);
     }
 
-    /**
-     * Cancel order.
-     */
     public function cancelOrder()
     {
         $this->order->update(['status' => OrderStatus::CANCELLED]);
 
-        $this->notify([
-            'title' => __('Cancelled'),
-            'message' => __('This order has been cancelled.'),
-        ]);
+        $this->notification()->success(__('Cancelled'), __('This order has been cancelled!'));
     }
 
-    /**
-     * Updated order with customer notes.
-     */
     public function leaveNotes()
     {
         $this->validate(['notes' => 'required']);
@@ -48,10 +37,10 @@ class Show extends Component
 
         // TODO Send notification to the customer about order notes.
 
-        $this->notify([
-            'title' => __('Notes added'),
-            'message' => __('Your note has been added and will be emailed to the user on their order.'),
-        ]);
+        $this->notification()->success(
+            __('Notes added'),
+            __('Your note has been added and will be emailed to the user on their order.')
+        );
     }
 
     public function register()
@@ -60,30 +49,24 @@ class Show extends Component
 
         // TODO Send notification to the customer about order registration.
 
-        $this->notify([
-            'title' => __('Update Status'),
-            'message' => __('This order has been marked as register and notification has been sent to the customer by email.'),
-        ]);
+        $this->notification()->success(
+            __('Updated Status'),
+            __('This order has been marked as register and notification has been sent to the customer by email.')
+        );
     }
 
     public function markPaid()
     {
         $this->order->update(['status' => OrderStatus::PAID]);
 
-        $this->notify([
-            'title' => __('Update Status'),
-            'message' => __('This order is marked as paid.'),
-        ]);
+        $this->notification()->success(__('Updated Status'), __('This order is marked as paid!'));
     }
 
     public function markComplete()
     {
         $this->order->update(['status' => OrderStatus::COMPLETED]);
 
-        $this->notify([
-            'title' => __('Update Status'),
-            'message' => __('This order is marked as complete.'),
-        ]);
+        $this->notification()->success(__('Updated Status'), __('This order is marked as complete.'));
     }
 
     public function render()

@@ -4,9 +4,12 @@ namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\User\Role;
+use WireUi\Traits\Actions;
 
 class CreateRole extends ModalComponent
 {
+    use Actions;
+
     public string $name = '';
     public string $display_name = '';
     public string $description = '';
@@ -25,6 +28,8 @@ class CreateRole extends ModalComponent
         ]);
 
         $this->emit('onRoleAdded');
+
+        $this->notification()->success(__('Saved'), __('A role has been successfully created!'));
 
         $this->closeModal();
     }

@@ -18,8 +18,8 @@ trait WithDiscountAttributes
     public ?int $usage_limit = null;
     public bool $usage_limit_per_user = false;
     public string $date;
-    public string $dateStart;
-    public string $dateEnd = '';
+    public ?string $dateStart = null;
+    public ?string $dateEnd = null;
     public string $searchProduct = '';
     public string $searchCustomer = '';
     public Collection $products;

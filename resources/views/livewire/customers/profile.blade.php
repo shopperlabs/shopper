@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
 <div class="px-4 py-5 bg-white shadow overflow-hidden rounded-md sm:p-6 dark:bg-secondary-800">
     <div class="space-y-6 divide-y divide-secondary-200 dark:divide-secondary-700">
         <div class="space-y-1">
@@ -126,7 +122,7 @@
                         </div>
                     </dd>
                 </div>
-                <div x-data="{ open: @entangle('birthDateUpdate') }" x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
+                <div x-data="{ open: @entangle('birthDateUpdate') }" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
                     <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
                         {{ __('Birth Date') }}
                     </dt>
@@ -138,10 +134,7 @@
                             </p>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs relative rounded-md shadow-sm">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400" />
-                                    </div>
-                                    <x-shopper-input.text wire:model.lazy="birthDate" x-ref="input" aria-label="{{ __('Birth Date') }}" type="text" class="pl-10" placeholder="1970-01-01" autocomplete="off" readonly />
+                                    <x-datetime-picker :placeholder="__('1970-01-01')" wire:model.lazy="birthDate" parse-format="YYYY-MM-DD" :without-time="true" />
                                 </div>
                             </div>
                         </div>
@@ -237,7 +230,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endpush

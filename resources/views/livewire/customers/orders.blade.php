@@ -1,7 +1,7 @@
 <div class="space-y-8">
     @forelse($orders as $order)
         <div class="bg-white border border-secondary-200 rounded-md shadow-sm overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:border-secondary-700 dark:divide-secondary-700">
-            <div class="bg-secondary-100 py-3 px-4 sm:flex sm:items-center sm:justify-between">
+            <div class="bg-secondary-100 dark:bg-secondary-700 py-3 px-4 sm:flex sm:items-center sm:justify-between">
                 <div class="flex-1 flex-grow sm:grid sm:grid-cols-4 sm:gap-5">
                     <div>
                         <dt class="text-xs leading-4 uppercase tracking-wider font-medium text-secondary-500 dark:text-secondary-400">
@@ -84,14 +84,15 @@
                 </div>
             </div>
             <div class="py-3 px-4 flex items-center justify-between">
-                <p class="text-xs text-secondary-900 font-medium leading-4">
+                <p class="text-xs text-secondary-900 font-medium leading-4 dark:text-white">
                     <span class="uppercase tracking-wider mr-3 text-secondary-500 dark:text-secondary-400">
                         {{ __('Estimated Delivery:') }}
                     </span>
                     {{ __('No Assigned.') }}
                 </p>
-                <a class="text-primary-600 hover:text-primary-500 underline text-sm leading-5 dark:text-primary-400" href="{{ route('shopper.orders.show', $order) }}">
+                <a class="inline-flex items-center text-primary-600 hover:text-primary-500 underline text-sm leading-5" href="{{ route('shopper.orders.show', $order) }}">
                     {{ __('View order') }}
+                    <x-heroicon-o-arrow-narrow-right class="h-5 w-5 ml-1.5" />
                 </a>
             </div>
         </div>
@@ -104,5 +105,7 @@
         </div>
     @endforelse
 
-    {{ $orders->links() }}
+    <div class="flex items-center justify-between">
+        {{ $orders->links() }}
+    </div>
 </div>

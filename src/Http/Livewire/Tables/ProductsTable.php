@@ -8,9 +8,12 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use WireUi\Traits\Actions;
 
 class ProductsTable extends DataTableComponent
 {
+    use Actions;
+
     public bool $columnSelect = true;
 
     public $columnSearch = [
@@ -37,10 +40,7 @@ class ProductsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notify([
-                'title' => __('Deleted'),
-                'message' => __('The products has successfully removed!'),
-            ]);
+            $this->notification()->success(__('Archived'), __('The orders has successfully archived!'));
         }
 
         $this->selected = [];
@@ -53,10 +53,7 @@ class ProductsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_visible' => false]);
 
-            $this->notify([
-                'title' => __('Visibility'),
-                'message' => __('The products has successfully updated visibility status!'),
-            ]);
+            $this->notification()->success(__('Visibility'), __('The products has successfully updated visibility status!'));
         }
 
         $this->selected = [];
@@ -69,10 +66,7 @@ class ProductsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_visible' => true]);
 
-            $this->notify([
-                'title' => __('Visibility'),
-                'message' => __('The products has successfully updated visibility status!'),
-            ]);
+            $this->notification()->success(__('Visibility'), __('The products has successfully updated visibility status!'));
         }
 
         $this->selected = [];

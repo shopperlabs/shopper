@@ -6,10 +6,11 @@ use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\PaymentMethod;
+use WireUi\Traits\Actions;
 
 class UpdatePaymentMethod extends ModalComponent
 {
-    use WithFileUploads;
+    use Actions, WithFileUploads;
 
     public PaymentMethod $paymentMethod;
     public string $title = '';
@@ -58,10 +59,7 @@ class UpdatePaymentMethod extends ModalComponent
             ]);
         }
 
-        $this->notify([
-            'title' => __('Update'),
-            'message' => __('Your payment method have been correctly updated.'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Your payment method have been correctly updated.'));
 
         $this->emit('onPaymentMethodAdded');
 

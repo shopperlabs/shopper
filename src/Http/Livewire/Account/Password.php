@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Component;
+use WireUi\Traits\Actions;
 
 class Password extends Component
 {
+    use Actions;
+
     public string $current_password = '';
     public string $password = '';
     public string $password_confirmation = '';
@@ -24,10 +27,7 @@ class Password extends Component
 
             $this->reset('current_password', 'password', 'password_confirmation');
 
-            $this->notify([
-                'title' => __('Password Changed!'),
-                'message' => __('You have been successfully updated your password!'),
-            ]);
+            $this->notification()->success(__('Password Changed!'), __('You have been successfully updated your password!'));
         } else {
             session()->flash('error', __('That is not your current password.'));
         }

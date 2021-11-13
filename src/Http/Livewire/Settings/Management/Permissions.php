@@ -6,9 +6,12 @@ use Exception;
 use Livewire\Component;
 use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role;
+use WireUi\Traits\Actions;
 
 class Permissions extends Component
 {
+    use Actions;
+
     public Role $role;
 
     protected $listeners = ['togglePermission', 'permissionAdded'];
@@ -24,16 +27,18 @@ class Permissions extends Component
 
         if ($this->role->hasPermissionTo($permission->name)) {
             $this->role->revokePermissionTo($permission->name);
-            $this->notify([
-                'title' => __('Revoke Permission'),
-                'message' => __('Permission :permission has been revoked to this role.', ['permission' => $permission->display_name]),
-            ]);
+
+            $this->notification()->success(
+                __('Revoke Permission'),
+                __('Permission :permission has been revoked to this role.', ['permission' => $permission->display_name])
+            );
         } else {
             $this->role->givePermissionTo($permission->name);
-            $this->notify([
-                'title' => __('Allow Permission'),
-                'message' => __('Permission :permission has been given to this role.', ['permission' => $permission->display_name]),
-            ]);
+
+            $this->notification()->success(
+                __('Allow Permission'),
+                __('Permission :permission has been given to this role.', ['permission' => $permission->display_name])
+            );
         }
     }
 
@@ -46,10 +51,7 @@ class Permissions extends Component
     {
         Permission::query()->find($id)->delete();
 
-        $this->notify([
-            'title' => __('Deleted'),
-            'message' => __('The permission has been correctly removed.'),
-        ]);
+        $this->notification()->success(__('Deleted'), __('The permission has been correctly removed.'));
     }
 
     public function render()

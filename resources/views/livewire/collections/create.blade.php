@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
 <div>
     <x:shopper-breadcrumb back="shopper.collections.index">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
@@ -52,12 +48,12 @@
                 >
                     <div class="bg-white rounded-md grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-secondary-800" x-ref="radiogroup">
 
-                        <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 0), 'bg-primary-50 border-primary-200 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-primary-50 border-primary-200 z-10">
+                        <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 0), 'bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10">
                             <div class="flex items-center h-5">
                                 <input wire:model="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-primary-600 transition duration-150 ease-in-out cursor-pointer">
                             </div>
                             <label for="collection-type-0" class="ml-3 flex flex-col cursor-pointer">
-                                <span :class="{ 'text-primary-900': active === 0, 'text-secondary-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-primary-900">
+                                <span :class="{ 'text-primary-900 dark:text-white': active === 0, 'text-secondary-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-primary-900 dark:text-white">
                                     {{ __('Manual') }}
                                 </span>
                                 <span :class="{ 'text-primary-700': active === 0, 'text-secondary-500 dark:text-secondary-400': !(active === 0) }" class="mt-0.5 block text-xs leading-4 text-primary-700">
@@ -66,12 +62,12 @@
                             </label>
                         </div>
 
-                        <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 1), 'bg-primary-50 border-primary-200 z-10': active === 1 }" class="relative border rounded-md border-secondary-200 p-4 flex">
+                        <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 1), 'bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10': active === 1 }" class="relative border rounded-md border-secondary-200 p-4 flex">
                             <div class="flex items-center h-5">
                                 <input wire:model="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-primary-600 transition duration-150 ease-in-out cursor-pointer">
                             </div>
                             <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
-                                <span :class="{ 'text-primary-900': active === 1, 'text-secondary-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-secondary-900">
+                                <span :class="{ 'text-primary-900 dark:text-white': active === 1, 'text-secondary-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-secondary-900">
                                     {{ __("Automated") }}
                                 </span>
                                 <span :class="{ 'text-primary-700': active === 1, 'text-secondary-500 dark:text-secondary-400': !(active === 1) }" class="mt-0.5 block text-xs leading-4 text-secondary-500">
@@ -193,18 +189,16 @@
         </div>
         <div class="sm:col-span-2">
             <aside class="sticky top-6 space-y-5">
-                <div
-                    x-data
-                    x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});"
-                    class="bg-white rounded-md shadow p-4 sm:p-5 dark:bg-secondary-800"
-                >
-                    <x-shopper-label for="date" :value="__('Collection availability')" />
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-                        </div>
-                        <x-shopper-input.text wire:model.defer="publishedAt" x-ref="input" id="date" type="text" class="pl-10" placeholder="{{ __('Choose a date') }}" readonly />
-                    </div>
+                <div class="bg-white rounded-md shadow p-4 sm:p-5 dark:bg-secondary-800">
+                    <x-datetime-picker
+                        :label="__('Collection availability')"
+                        :placeholder="__('Pick a date')"
+                        wire:model="publishedAt"
+                        parse-format="YYYY-MM-DD HH:mm"
+                        time-format="24"
+                        without-timezone
+                        class="dark:bg-secondary-700"
+                    />
                     @if($publishedAt)
                         <div class="mt-2 flex items-start">
                             <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
@@ -238,7 +232,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endpush

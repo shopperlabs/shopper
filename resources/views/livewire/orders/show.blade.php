@@ -53,10 +53,15 @@
 
                             <x-slot name="content">
                                 <div class="py-1">
-                                    @if($order->canBeCancelled())
-                                        <x-shopper-dropdown-button wire:click="cancelOrder" role="menuitem">
-                                            <x-heroicon-s-x class="mr-3 h-5 w-5 text-secondary-400 dark:text-secondary-500 group-hover:text-secondary-500 dark:text-secondary-500" />
-                                            {{ __('Cancel Order') }}
+                                    @if($order->isPending())
+                                        <x-shopper-dropdown-button wire:click="register" role="menuitem">
+                                            {{ __('Register') }}
+                                        </x-shopper-dropdown-button>
+                                    @endif
+
+                                    @if($order->isPending() || $order->isRegister())
+                                        <x-shopper-dropdown-button wire:click="markPaid" role="menuitem">
+                                            {{ __('Mark as paid') }}
                                         </x-shopper-dropdown-button>
                                     @endif
 
@@ -64,6 +69,13 @@
                                         <x-shopper-dropdown-button wire:click="markComplete" role="menuitem">
                                             <x-heroicon-o-check-circle class="mr-3 h-5 w-5 text-secondary-400 dark:text-secondary-500 group-hover:text-secondary-500 dark:text-secondary-500" />
                                             {{ __('Mark complete') }}
+                                        </x-shopper-dropdown-button>
+                                    @endif
+
+                                    @if($order->canBeCancelled())
+                                        <x-shopper-dropdown-button wire:click="cancelOrder" role="menuitem">
+                                            <x-heroicon-s-x class="mr-3 h-5 w-5 text-secondary-400 dark:text-secondary-500 group-hover:text-secondary-500 dark:text-secondary-500" />
+                                            {{ __('Cancel Order') }}
                                         </x-shopper-dropdown-button>
                                     @endif
                                 </div>
@@ -83,14 +95,13 @@
                             </svg>
                         </button>
                     </span>
-
                 </div>
             </div>
         </div>
     </div>
 
     <div class="grid sm:grid-cols-6">
-        <div class="sm:col-span-4 py-2 divide-y divide-secondary-200">
+        <div class="sm:col-span-4 py-2 divide-y divide-secondary-200 dark:divide-secondary-700">
             <div class="py-4 sm:pr-8">
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Products') }}</h3>
@@ -186,7 +197,7 @@
                 <div class="mt-4">
                     @if($order->shipping_method)
                         <dl>
-                            <div class="bg-secondary-50 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4">
+                            <div class="bg-secondary-50 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4 dark:bg-secondary-800">
                                 <dt class="text-sm font-medium text-secondary-500 dark:text-secondary-400">
                                     {{ __('Provider') }}
                                 </dt>
@@ -194,7 +205,7 @@
                                     {{ $order->shipping_method }}
                                 </dd>
                             </div>
-                            <div class="bg-secondary-100 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4">
+                            <div class="bg-secondary-100 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4 dark:bg-secondary-700">
                                 <dt class="text-sm font-medium text-secondary-500 dark:text-secondary-400">
                                     {{ __('Price') }}
                                 </dt>
@@ -202,7 +213,7 @@
                                     {{ shopper_money_format($order->shipping_total) }}
                                 </dd>
                             </div>
-                            <div class="bg-secondary-50 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4">
+                            <div class="bg-secondary-50 py-4 sm:grid sm:grid-cols-3 sm:gap-4 px-4 dark:bg-secondary-800">
                                 <dt class="text-sm font-medium text-secondary-500 dark:text-secondary-400">
                                     {{ __('Tax') }}
                                 </dt>
