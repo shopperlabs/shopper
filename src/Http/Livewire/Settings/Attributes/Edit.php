@@ -3,10 +3,10 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
 use Illuminate\Validation\Rule;
-use WireUi\Traits\Actions;
 use function in_array;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use WireUi\Traits\Actions;
 
 class Edit extends AbstractBaseComponent
 {

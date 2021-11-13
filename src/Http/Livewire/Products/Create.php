@@ -10,7 +10,6 @@ use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Traits\WithProductAssociations;
 use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent

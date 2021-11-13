@@ -10,7 +10,6 @@ use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Traits\WithProductAssociations;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use WireUi\Traits\Actions;
