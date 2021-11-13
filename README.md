@@ -64,7 +64,7 @@ Shopper Framework can provide premium support for a monthly fee. Find out more v
 
 ## ToDo/Roadmap
 - [x] Add `laravel-livewire-datatable` to replace all tables (https://github.com/rappasoft/laravel-livewire-tables)
-- [ ] Replace all Shopper forms input components to `wire-ui` form components (https://livewire-wireui.com)
+- [x] Replace all Shopper forms input components to `wire-ui` form components (https://livewire-wireui.com)
 - [ ] Add PayPal as default payment method
 - [ ] Add Shipping Methods
 - [ ] Add Tax rates
