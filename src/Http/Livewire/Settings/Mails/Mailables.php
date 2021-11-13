@@ -9,7 +9,7 @@ class Mailables extends Component
 {
     public bool $isLocal = false;
 
-    protected $listeners = ['onMailableAction' => 'render'];
+    protected $listeners = ['onMailableAction' => '$refresh'];
 
     public function mount()
     {

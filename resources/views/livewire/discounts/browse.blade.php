@@ -177,32 +177,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="relative flex items-center rounded-md shadow-sm">
-                            <x-shopper-label for="date" class="sr-only" :value="__('Date')" />
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400" />
-                            </div>
-                            <input
-                                wire:model="date"
-                                x-ref="input"
-                                id="date"
-                                class="w-48 pl-10 py-2 block w-full dark:bg-secondary-700 dark:text-white placeholder-secondary-500 dark:placeholder-secondary-400 rounded-md shadow-sm border border-secondary-300 dark:border-secondary-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-secondary-900 focus:ring-opacity-50 sm:text-sm"
-                                autocomplete="off"
-                                placeholder="{{ __('Choose date') }}"
-                                readonly
-                            >
-                            <button wire:click="resetDate" type="button" class="absolute z-30 inset-y-0 right-0 pr-3 flex items-center @if($date === '') hidden @endif">
-                                <svg class="text-secondary-500 h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                            </button>
-                        </div>
+                        <x-datetime-picker :placeholder="__('Choose date')" wire:model="date" parse-format="YYYY-MM-DD" :without-time="true" />
                     </div>
                 </div>
             </div>
             <div class="border-t border-secondary-200 dark:border-secondary-700">
                 <ul class="divide-y divide-secondary-200 dark:divide-secondary-700">
-                    @foreach($discounts as $discount)
+                    @forelse($discounts as $discount)
                         <li>
                             <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-secondary-50 focus:outline-none focus:bg-secondary-50 dark:hover:bg-secondary-700 dark:focus:bg-secondary-700">
                                 <div class="px-4 py-4 flex items-center sm:px-6">
@@ -263,7 +244,14 @@
                                 </div>
                             </a>
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="w-full flex items-center justify-center px-10 py-12">
+                            <div class="text-center">
+                                <x-heroicon-o-gift class="mx-auto h-12 w-12 text-secondary-400 dark:text-secondary-500" />
+                                <h3 class="mt-2 text-xl font-medium text-secondary-900 dark:text-white">{{ __('No discount found...') }}</h3>
+                            </div>
+                        </li>
+                    @endforelse
                 </ul>
             </div>
             <div class="px-4 py-3 border-t border-secondary-200 rounded-b-md  flex items-center justify-between sm:px-6 dark:border-secondary-700">

@@ -7,9 +7,12 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use WireUi\Traits\Actions;
 
 class AttributesTable extends DataTableComponent
 {
+    use Actions;
+
     public string $defaultSortColumn = 'name';
 
     public $columnSearch = [
@@ -33,10 +36,7 @@ class AttributesTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Attribute::whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notify([
-                'title' => __('Deleted'),
-                'message' => __('The attribute has successfully removed!'),
-            ]);
+            $this->notification()->success(__('Deleted'), __('The attribute has successfully removed!'));
         }
 
         $this->selected = [];
@@ -49,10 +49,7 @@ class AttributesTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Attribute::whereIn('id', $this->selectedKeys())->update(['is_enabled' => true]);
 
-            $this->notify([
-                'title' => __('Updated'),
-                'message' => __('The attributes has successfully enabled!'),
-            ]);
+            $this->notification()->success(__('Updated'), __('The attribute has successfully enabled!'));
         }
 
         $this->selected = [];
@@ -65,10 +62,7 @@ class AttributesTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Attribute::whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
 
-            $this->notify([
-                'title' => __('Updated'),
-                'message' => __('The attributes has successfully disabled!'),
-            ]);
+            $this->notification()->success(__('Updated'), __('The attribute has successfully disabled!'));
         }
 
         $this->resetBulk();

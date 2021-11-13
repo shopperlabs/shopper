@@ -5,9 +5,12 @@ namespace Shopper\Framework\Http\Livewire\Modals;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role;
+use WireUi\Traits\Actions;
 
 class CreatePermission extends ModalComponent
 {
+    use Actions;
+
     public int $roleId;
     public string $name = '';
     public string $display_name = '';
@@ -37,10 +40,7 @@ class CreatePermission extends ModalComponent
 
         $this->dispatchBrowserEvent('permission-added');
 
-        $this->notify([
-            'title' => __('Saved'),
-            'message' => __('A new permission has been create and add to this role.'),
-        ]);
+        $this->notification()->success(__('Saved'), __('A new permission has been create and add to this role!'));
 
         $this->emit('permissionAdded', $this->roleId);
 

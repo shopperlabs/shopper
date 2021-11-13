@@ -9,9 +9,12 @@ use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
+use WireUi\Traits\Actions;
 
 class Attributes extends Component
 {
+    use Actions;
+
     public Model $product;
     public int $productId;
     public Collection $attributes;
@@ -37,10 +40,7 @@ class Attributes extends Component
     {
         ProductAttributeValue::find($id)->delete();
 
-        $this->notify([
-            'title' => __('Attribute value removed'),
-            'message' => __('You have successfully removed the value of this attribute.'),
-        ]);
+        $this->notification()->success(__('Attribute value removed'), __('You have successfully removed the value of this attribute!'));
 
         $this->emitSelf('onProductAttributeAdded');
     }
@@ -57,10 +57,7 @@ class Attributes extends Component
         $this->getProductAttributes();
         $this->getAttributes();
 
-        $this->notify([
-            'title' => __('Attribute Removed'),
-            'message' => __('You have successfully removed this attribute to product.'),
-        ]);
+        $this->notification()->success(__('Attribute removed'), __('You have successfully removed this attribute to product!'));
     }
 
     public function render()
@@ -77,9 +74,6 @@ class Attributes extends Component
         }
     }
 
-    /**
-     * Get Product Attributes lists.
-     */
     private function getProductAttributes()
     {
         $this->productAttributes = ProductAttribute::query()
@@ -94,9 +88,6 @@ class Attributes extends Component
             });
     }
 
-    /**
-     * Get Attributes lists not used by the product.
-     */
     private function getAttributes()
     {
         $this->attributes = Attribute::query()

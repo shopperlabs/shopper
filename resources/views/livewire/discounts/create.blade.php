@@ -1,11 +1,4 @@
-<div
-    x-data="{ modal: false, show: false, on: false }"
-    x-init="
-        flatpickr('.date', { minDate: 'today', dateFormat: 'Y-m-d H:i', time_24hr: true, enableTime: true });
-        flatpickr($refs.datepicker, { minDate: 'today', dateFormat: 'Y-m-d H:i', time_24hr: true, enableTime: true });
-    "
->
-
+<div x-data="{ modal: false, show: false, on: false }">
     <x:shopper-breadcrumb back="shopper.discounts.index">
         <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.discounts.index')" title="Discounts" />
@@ -265,25 +258,24 @@
                 <h4 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Active dates') }}</h4>
                 <div class="mt-4 grid gap-4 sm:grid-cols-2 sm:gap-6">
                     <div class="sm:col-span-1">
-                        <x-shopper-label for="dateStart" :value="__('Start date')" />
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400" />
-                            </div>
-                            <x-shopper-input.text wire:model.lazy="dateStart" id="dateStart" type="text" class="pl-10 date" readonly autocomplete="off" placeholder="{{ __('Choose start date period') }}" />
-                        </div>
-                        @error('dateStart')
-                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                        @enderror
+                        <x-datetime-picker
+                            :label="__('Start date')"
+                            :placeholder="__('Choose start date period')"
+                            wire:model.lazy="dateStart"
+                            parse-format="YYYY-MM-DD HH:mm"
+                            time-format="24"
+                            without-timezone
+                        />
                     </div>
                     <div class="sm:col-span-1">
-                        <x-shopper-label for="dateEnd" :value="__('End At')" />
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400" />
-                            </div>
-                            <x-shopper-input.text wire:model.lazy="dateEnd" id="dateEnd" x-ref="datepicker" type="text" class="pl-10" readonly autocomplete="off" placeholder="{{ __('Choose end date') }}" />
-                        </div>
+                        <x-datetime-picker
+                            :label="__('End At')"
+                            :placeholder="__('Choose end date')"
+                            wire:model.lazy="dateEnd"
+                            parse-format="YYYY-MM-DD HH:mm"
+                            time-format="24"
+                            without-timezone
+                        />
                     </div>
                 </div>
             </div>

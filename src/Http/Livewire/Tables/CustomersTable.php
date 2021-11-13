@@ -7,9 +7,12 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 use Shopper\Framework\Repositories\UserRepository;
+use WireUi\Traits\Actions;
 
 class CustomersTable extends DataTableComponent
 {
+    use Actions;
+
     public string $defaultSortColumn = 'first_name';
 
     public array $bulkActions = [
@@ -43,10 +46,7 @@ class CustomersTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new UserRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['email_verified_at' => now()]);
 
-            $this->notify([
-                'title' => __('Verified'),
-                'message' => __('The users has successfully verified!'),
-            ]);
+            $this->notification()->success(__('Verified'), __('The users has successfully verified!'));
         }
 
         $this->selected = [];
@@ -59,10 +59,7 @@ class CustomersTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new UserRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notify([
-                'title' => __('Deleted'),
-                'message' => __('The users has successfully removed!'),
-            ]);
+            $this->notification()->success(__('Deleted'), __('The users has successfully removed!'));
         }
 
         $this->selected = [];

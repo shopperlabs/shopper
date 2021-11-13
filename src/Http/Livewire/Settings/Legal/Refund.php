@@ -5,10 +5,11 @@ namespace Shopper\Framework\Http\Livewire\Settings\Legal;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Legal;
 use Shopper\Framework\Traits\WithLegalActions;
+use WireUi\Traits\Actions;
 
 class Refund extends Component
 {
-    use WithLegalActions;
+    use Actions, WithLegalActions;
 
     public string $title = 'Refund policy';
 
@@ -23,10 +24,7 @@ class Refund extends Component
     {
         $this->storeValues($this->title, $this->content, $this->isEnabled);
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Your refund policy has been successfully updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Your refund policy has been successfully updated!'));
     }
 
     public function render()

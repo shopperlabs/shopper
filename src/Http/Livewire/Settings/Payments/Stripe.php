@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 use Shopper\Framework\Models\System\Currency;
+use WireUi\Traits\Actions;
 
 class Stripe extends Component
 {
+    use Actions;
+
     public string $stripe_key = '';
     public string $stripe_secret = '';
     public string $stripe_webhook_secret = '';
@@ -39,14 +42,13 @@ class Stripe extends Component
 
         $this->enabled = true;
 
-        $this->notify([
-            'title' => __('Success'),
-            'message' => __('You have successfully enabled Stripe payment for your store!'),
-        ]);
+        $this->notification()->success(__('Success'), __('You have successfully enabled Stripe payment for your store!'));
     }
 
     public function store()
     {
+        Artisan::call('config:clear');
+
         setEnvironmentValue([
             'stripe_mode' => $this->stripe_mode,
             'stripe_key' => $this->stripe_key,
@@ -55,12 +57,7 @@ class Stripe extends Component
             'cashier_currency' => $this->currency,
         ]);
 
-        Artisan::call('config:clear');
-
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Your Stripe payments configuration have been correctly updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Your Stripe payments configuration have been correctly updated!'));
     }
 
     public function render()

@@ -7,9 +7,12 @@ use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
+use WireUi\Traits\Actions;
 
 class AddProductAttribute extends ModalComponent
 {
+    use Actions;
+
     public int $productId;
     public string $type = 'text';
     public array $attributes;
@@ -65,10 +68,7 @@ class AddProductAttribute extends ModalComponent
             ]);
         }
 
-        $this->notify([
-            'title' => __('Attribute Added'),
-            'message' => __('You have successfully added an attribute to this product.'),
-        ]);
+        $this->notification()->success(__('Attribute Added'), __('You have successfully added an attribute to this product!'));
 
         $this->emit('onProductAttributeAdded');
 

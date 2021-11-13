@@ -4,9 +4,12 @@ namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use WireUi\Traits\Actions;
 
 class CreateValue extends ModalComponent
 {
+    use Actions;
+
     public Attribute $attribute;
     public string $type = 'select';
     public string $value = '';
@@ -34,10 +37,7 @@ class CreateValue extends ModalComponent
 
         $this->emit('updateValues');
 
-        $this->notify([
-            'title' => __('Added!'),
-            'message' => __('New value added for :name', ['name' => $this->attribute->name]),
-        ]);
+        $this->notification()->success(__('Added'), __('New value added for :name', ['name' => $this->attribute->name]));
 
         $this->closeModal();
     }

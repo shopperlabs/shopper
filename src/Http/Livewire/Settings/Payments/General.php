@@ -6,10 +6,11 @@ use Exception;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\PaymentMethod;
+use WireUi\Traits\Actions;
 
 class General extends Component
 {
-    use WithPagination;
+    use Actions, WithPagination;
 
     public string $search = '';
 
@@ -21,10 +22,7 @@ class General extends Component
 
         $this->dispatchBrowserEvent('toggle-saved-' . $id);
 
-        $this->notify([
-            'title' => __('Update'),
-            'message' => __('Your payment method status have been correctly updated.'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Your payment method status have been correctly updated.'));
     }
 
     /**
@@ -38,10 +36,7 @@ class General extends Component
 
         $this->dispatchBrowserEvent('item-update');
 
-        $this->notify([
-            'title' => __('Deleted'),
-            'message' => __('Your payment method have been correctly removed.'),
-        ]);
+        $this->notification()->success(__('Deleted'), __('Your payment method have been correctly removed.'));
     }
 
     public function render()

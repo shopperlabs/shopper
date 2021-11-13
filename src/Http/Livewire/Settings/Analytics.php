@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\Setting;
+use WireUi\Traits\Actions;
 
 class Analytics extends Component
 {
-    use WithFileUploads;
+    use Actions, WithFileUploads;
 
     public $google_analytics_tracking_id;
     public $google_analytics_view_id;
@@ -50,18 +51,13 @@ class Analytics extends Component
             'display_name' => Setting::lockedAttributesDisplayName('google_analytics_add_js'),
         ]);
 
-        if ($this->json_file) {
-            $this->json_file->storeAs('analytics', 'service-account-credentials.json');
-        }
+        $this->json_file?->storeAs('analytics', 'service-account-credentials.json');
 
         if (app()->environment('production')) {
             Artisan::call('config:cache');
         }
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Your analytics configurations have been correctly updated'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Your analytics configurations have been correctly updated.'));
     }
 
     public function downloadJson(): string

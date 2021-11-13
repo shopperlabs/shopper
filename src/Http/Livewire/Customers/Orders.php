@@ -12,14 +12,14 @@ class Orders extends Component
 
     public Model $customer;
 
-    /**
-     * Component Mount instance.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $customer
-     */
     public function mount($customer)
     {
         $this->customer = $customer;
+    }
+
+    public function paginationSimpleView(): string
+    {
+        return 'shopper::livewire.wire-mobile-pagination-links';
     }
 
     public function render()

@@ -36,6 +36,7 @@ return [
         'account.password' => Livewire\Account\Password::class,
         'account.profile' => Livewire\Account\Profile::class,
         'account.two-factor' => Livewire\Account\TwoFactor::class,
+
         'analytics.dashboard' => Livewire\Analytics\Dashboard::class,
 
         'brands.browse' => Livewire\Brands\Browse::class,
@@ -49,6 +50,7 @@ return [
         'collections.browse' => Livewire\Collections\Browse::class,
         'collections.create' => Livewire\Collections\Create::class,
         'collections.edit' => Livewire\Collections\Edit::class,
+        'collections.products' => Livewire\Collections\Products::class,
 
         'customers.addresses' => Livewire\Customers\Addresses::class,
         'customers.browse' => Livewire\Customers\Browse::class,
@@ -108,6 +110,7 @@ return [
         'reviews.browse' => Livewire\Reviews\Browse::class,
         'reviews.show' => Livewire\Reviews\Show::class,
 
+        'settings.analytics' => Livewire\Settings\Analytics::class,
         'settings.attributes.browse' => Livewire\Settings\Attributes\Browse::class,
         'settings.attributes.create' => Livewire\Settings\Attributes\Create::class,
         'settings.attributes.edit' => Livewire\Settings\Attributes\Edit::class,
@@ -115,6 +118,7 @@ return [
         'settings.inventories.browse' => Livewire\Settings\Inventories\Browse::class,
         'settings.inventories.create' => Livewire\Settings\Inventories\Create::class,
         'settings.inventories.edit' => Livewire\Settings\Inventories\Edit::class,
+        'settings.general' => Livewire\Settings\General::class,
         'settings.legal.privacy' => Livewire\Settings\Legal\Privacy::class,
         'settings.legal.refund' => Livewire\Settings\Legal\Refund::class,
         'settings.legal.shipping' => Livewire\Settings\Legal\Shipping::class,
@@ -130,8 +134,6 @@ return [
         'settings.management.users-role' => Livewire\Settings\Management\UsersRole::class,
         'settings.payments.general' => Livewire\Settings\Payments\General::class,
         'settings.payments.stripe' => Livewire\Settings\Payments\Stripe::class,
-        'settings.analytics' => Livewire\Settings\Analytics::class,
-        'settings.general' => Livewire\Settings\General::class,
 
         'tables.attributes-table' => Livewire\Tables\AttributesTable::class,
         'tables.brands-table' => Livewire\Tables\BrandsTable::class,

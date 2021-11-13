@@ -5,9 +5,12 @@ namespace Shopper\Framework\Http\Livewire\Settings\Management;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Shopper\Framework\Models\User\Role as RoleModel;
+use WireUi\Traits\Actions;
 
 class Role extends Component
 {
+    use Actions;
+
     public RoleModel $role;
     public string $name;
     public string $display_name = '';
@@ -38,10 +41,7 @@ class Role extends Component
             'description' => $this->description,
         ]);
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Role updated successfully!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Role updated successfully!'));
     }
 
     public function render()

@@ -6,9 +6,12 @@ use Illuminate\Validation\Rule;
 use function in_array;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
+use WireUi\Traits\Actions;
 
 class Edit extends AbstractBaseComponent
 {
+    use Actions;
+
     public Attribute $attribute;
     public int $attributeId;
     public string $name;
@@ -58,10 +61,7 @@ class Edit extends AbstractBaseComponent
             'is_filterable' => $this->isFilterable,
         ]);
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Attribute has been successfully updated!'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Attribute has been successfully updated!'));
     }
 
     public function hasValues(): bool

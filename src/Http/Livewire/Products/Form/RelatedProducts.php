@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use WireUi\Traits\Actions;
 
 class RelatedProducts extends Component
 {
+    use Actions;
+
     public Model $product;
     public Collection $relatedProducts;
 
@@ -33,10 +36,7 @@ class RelatedProducts extends Component
         $this->product->relatedProducts()->attach([$id]);
         $this->relatedProducts = $this->product->relatedProducts;
 
-        $this->notify([
-            'title' => __('Added'),
-            'message' => __('Similar product added successfully'),
-        ]);
+        $this->notification()->success(__('Added'), __('Product added successfully!'));
 
         return true;
     }
@@ -46,10 +46,7 @@ class RelatedProducts extends Component
         $this->product->relatedProducts()->detach([$id]);
         $this->relatedProducts = $this->product->relatedProducts;
 
-        $this->notify([
-            'title' => __('Removed'),
-            'message' => __('Similar product removed successfully'),
-        ]);
+        $this->notification()->success(__('Removed'), __('Product removed successfully!'));
 
         return true;
     }

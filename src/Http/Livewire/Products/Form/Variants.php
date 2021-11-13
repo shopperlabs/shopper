@@ -11,10 +11,15 @@ use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
+use WireUi\Traits\Actions;
 
 class Variants extends Component
 {
-    use WithPagination, WithFileUploads, WithAttributes, WithUploadProcess;
+    use Actions,
+        WithPagination,
+        WithFileUploads,
+        WithAttributes,
+        WithUploadProcess;
 
     public string $search = '';
     public Model $product;
@@ -45,10 +50,7 @@ class Variants extends Component
 
         $this->dispatchBrowserEvent('item-removed');
 
-        $this->notify([
-            'title' => __('Deleted'),
-            'message' => __('The variation has successfully removed!'),
-        ]);
+        $this->notification()->success(__('Deleted'), __('The variation has successfully removed!'));
     }
 
     public function render()

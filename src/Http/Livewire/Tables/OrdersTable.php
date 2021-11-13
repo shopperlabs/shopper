@@ -8,9 +8,12 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
+use WireUi\Traits\Actions;
 
 class OrdersTable extends DataTableComponent
 {
+    use Actions;
+
     public bool $columnSelect = true;
 
     public $columnSearch = [
@@ -34,10 +37,7 @@ class OrdersTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Order::whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notify([
-                'title' => __('Deleted'),
-                'message' => __('The orders has successfully archived!'),
-            ]);
+            $this->notification()->success(__('Archived'), __('The orders has successfully archived!'));
         }
 
         $this->selected = [];

@@ -6,10 +6,11 @@ use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryRepository;
+use WireUi\Traits\Actions;
 
 class AddVariant extends ModalComponent
 {
-    use WithAttributes;
+    use Actions, WithAttributes;
 
     public int $productId;
     public string $currency;
@@ -68,10 +69,7 @@ class AddVariant extends ModalComponent
             }
         }
 
-        $this->notify([
-            'title' => __('Added'),
-            'message' => __('Product variation successfully added!'),
-        ]);
+        $this->notification()->success(__('Added'), __('Product variation successfully added!'));
 
         $this->emit('onVariantAdded');
 

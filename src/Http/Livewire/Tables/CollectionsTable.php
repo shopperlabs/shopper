@@ -7,9 +7,12 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use WireUi\Traits\Actions;
 
 class CollectionsTable extends DataTableComponent
 {
+    use Actions;
+
     public string $defaultSortColumn = 'name';
 
     public $columnSearch = [
@@ -29,10 +32,7 @@ class CollectionsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new CollectionRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notify([
-                'title' => __('Deleted'),
-                'message' => __('The collections has successfully removed!'),
-            ]);
+            $this->notification()->success(__('Deleted'), __('The collections has successfully removed!'));
         }
 
         $this->selected = [];

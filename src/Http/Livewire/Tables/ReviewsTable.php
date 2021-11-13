@@ -7,9 +7,12 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
 use Shopper\Framework\Models\Shop\Review;
+use WireUi\Traits\Actions;
 
 class ReviewsTable extends DataTableComponent
 {
+    use Actions;
+
     public array $bulkActions = [
         'deleteSelected' => 'Delete',
         'approved' => 'Approved',
@@ -35,10 +38,7 @@ class ReviewsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Review::whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notify([
-                'title' => __('Deleted'),
-                'message' => __('The review(s) has successfully deleted!'),
-            ]);
+            $this->notification()->success(__('Deleted'), __('The review(s) has successfully deleted!'));
         }
 
         $this->selected = [];
@@ -51,10 +51,7 @@ class ReviewsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Review::whereIn('id', $this->selectedKeys())->update(['approved' => true]);
 
-            $this->notify([
-                'title' => __('Updated'),
-                'message' => __('The reviews has successfully approved!'),
-            ]);
+            $this->notification()->success(__('Updated'), __('The reviews has successfully approved!'));
         }
 
         $this->selected = [];
@@ -67,10 +64,7 @@ class ReviewsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Review::whereIn('id', $this->selectedKeys())->update(['approved' => false]);
 
-            $this->notify([
-                'title' => __('Updated'),
-                'message' => __('The reviews has successfully disapproved!'),
-            ]);
+            $this->notification()->success(__('Updated'), __('The reviews has successfully disapproved!'));
         }
 
         $this->selected = [];

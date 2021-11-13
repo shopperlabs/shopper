@@ -1,7 +1,7 @@
 <div class="flex flex-col justify-between bg-primary-800 text-center w-16">
-    <div class="pt-3">
-        <div class="px-2">
-            <a class="flex-shrink-0 flex items-center justify-center p-2 bg-white rounded-full" href="{{ route('shopper.dashboard') }}">
+    <div>
+        <div class="px-2 bg-white">
+            <a class="flex-shrink-0 flex items-center justify-center p-2" href="{{ route('shopper.dashboard') }}">
                 <x-shopper-application-icon class="h-8 w-auto" />
             </a>
         </div>

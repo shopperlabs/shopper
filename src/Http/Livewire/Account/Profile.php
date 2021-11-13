@@ -7,10 +7,11 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Rules\RealEmailValidator;
+use WireUi\Traits\Actions;
 
 class Profile extends Component
 {
-    use WithFileUploads;
+    use Actions, WithFileUploads;
 
     public string $first_name;
     public string $last_name;
@@ -67,10 +68,7 @@ class Profile extends Component
 
         $this->emit('updatedProfile');
 
-        $this->notify([
-            'title' => __('Profile Updated'),
-            'message' => __('Your profile have been successfully updated!'),
-        ]);
+        $this->notification()->success(__('Profile Updated'), __('Your profile have been successfully updated!'));
     }
 
     public function render()

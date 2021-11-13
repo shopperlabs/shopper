@@ -64,7 +64,7 @@
 
     <div class="py-6">
         <div class="sticky top-0 -mx-6 px-6 bg-secondary-100 dark:bg-secondary-900">
-            <div class="border-b border-secondary-200 dark:border-secondary-700">
+            <div class="sm:border-b sm:border-secondary-200 dark:border-secondary-700">
                 <div class="sm:hidden">
                     <x-shopper-input.select x-model="currentTab" aria-label="Selected tab" class="pr-10">
                         <template x-for="option in options" :key="option">

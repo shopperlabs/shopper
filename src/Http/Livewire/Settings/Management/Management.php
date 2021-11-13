@@ -7,22 +7,21 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\User\Role;
 use Shopper\Framework\Repositories\UserRepository;
+use WireUi\Traits\Actions;
 
 class Management extends Component
 {
-    use WithPagination;
+    use Actions, WithPagination;
 
-    protected $listeners = ['onRoleAdded' => 'render'];
+    protected $listeners = ['onRoleAdded' => '$refresh'];
 
     public function removeUser(int $id)
     {
         (new UserRepository())->getById($id)->delete();
 
         $this->dispatchBrowserEvent('user-removed');
-        $this->notify([
-            'title' => __('Deleted'),
-            'message' => __('Admin deleted successfully!'),
-        ]);
+
+        $this->notification()->success(__('Deleted'), __('Admin deleted successfully!'));
     }
 
     public function render()

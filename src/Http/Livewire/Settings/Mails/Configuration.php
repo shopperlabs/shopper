@@ -5,9 +5,12 @@ namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
 use Shopper\Framework\Rules\RealEmailValidator;
+use WireUi\Traits\Actions;
 
 class Configuration extends Component
 {
+    use Actions;
+
     public ?string $mail_mailer;
     public ?string $mail_host;
     public ?string $mail_port;
@@ -53,10 +56,7 @@ class Configuration extends Component
             Artisan::call('config:cache');
         }
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Your mail configurations have been correctly updated.'),
-        ]);
+        $this->notification()->success(__('Updated'), __('Your mail configurations have been correctly updated!'));
     }
 
     public function render()

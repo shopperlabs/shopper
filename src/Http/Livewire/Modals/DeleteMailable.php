@@ -3,9 +3,12 @@
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
+use WireUi\Traits\Actions;
 
 class DeleteMailable extends ModalComponent
 {
+    use Actions;
+
     public string $item;
 
     public function mount(string $item)
@@ -25,10 +28,7 @@ class DeleteMailable extends ModalComponent
         if (file_exists($mailableFile)) {
             unlink($mailableFile);
 
-            $this->notify([
-                'title' => __('Removed'),
-                'message' => __('You have removed the :class', ['class' => $this->item]),
-            ]);
+            $this->notification()->success(__('Removed'), __('You have removed the :class', ['class' => $this->item]));
         } else {
             session()->flash('error', __("This file don't exist."));
         }

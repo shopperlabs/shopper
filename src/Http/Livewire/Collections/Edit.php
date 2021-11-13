@@ -3,6 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
@@ -13,8 +15,8 @@ class Edit extends AbstractBaseComponent
 {
     use WithConditions, WithSeoAttributes;
 
-    public $collection;
-    public $products;
+    public Model $collection;
+    public Collection $products;
     public int $collectionId;
     public string $name = '';
     public ?string $description = null;
@@ -97,22 +99,14 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    /**
-     * Define is the current action is create or update for the SEO Trait.
-     *
-     * @return false
-     */
     public function isUpdate(): bool
     {
         return true;
     }
 
-    /**
-     * Live updated Formatted publishedAt attribute.
-     */
-    public function updatedPublishedAt()
+    public function updatedPublishedAt($value)
     {
-        $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $this->publishedAt)->toRfc7231String();
+        $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d H:i', $value)->toRfc7231String();
     }
 
     public function render()

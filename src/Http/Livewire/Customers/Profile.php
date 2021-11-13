@@ -5,9 +5,12 @@ namespace Shopper\Framework\Http\Livewire\Customers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use WireUi\Traits\Actions;
 
 class Profile extends Component
 {
+    use Actions;
+
     public Model $customer;
     public int $customer_id;
     public string $firstName;
@@ -154,6 +157,6 @@ class Profile extends Component
     {
         $this->customer->update([$field => $value]);
 
-        $this->notify(['title' => __('Updated'), 'message' => __($message)]);
+        $this->notification()->success(__('Updated'), __($message));
     }
 }

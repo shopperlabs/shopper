@@ -20,11 +20,6 @@ class Browse extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function resetDate()
-    {
-        $this->date = null;
-    }
-
     public function resetActiveFilter()
     {
         $this->isActive = null;
