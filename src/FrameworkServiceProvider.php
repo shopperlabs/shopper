@@ -17,7 +17,6 @@ use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
 use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
 use Shopper\Framework\Exceptions\ShopperExceptionHandler;
 use Shopper\Framework\Http\Composers\GlobalComposer;
-use Shopper\Framework\Http\Composers\MenuCreator;
 use Shopper\Framework\Http\Composers\SidebarCreator;
 use Shopper\Framework\Http\Middleware\Authenticate;
 use Shopper\Framework\Http\Middleware\Dashboard;
