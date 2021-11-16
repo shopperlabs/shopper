@@ -62,6 +62,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('label');
             $this->registerComponent('learn-more');
             $this->registerComponent('loader');
+            $this->registerComponent('menu-item');
             $this->registerComponent('modal');
             $this->registerComponent('notify');
             $this->registerComponent('tables.table-head');

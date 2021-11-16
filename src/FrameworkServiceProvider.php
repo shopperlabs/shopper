@@ -65,7 +65,6 @@ class FrameworkServiceProvider extends ServiceProvider
 
         // Backend Menu
         view()->creator('shopper::partials.default.aside._secondary', SidebarCreator::class);
-        view()->composer('shopper::partials.default.aside._primary', MenuCreator::class);
     }
 
     /**
