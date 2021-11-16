@@ -27,17 +27,17 @@
                         </div>
                         <div class="flex-shrink-0 ml-4">
                             <span x-show="!open">
-                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
                                 </button>
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
-                                <button wire:click="saveFirstName" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button wire:click="saveFirstName" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
                                     <x-shopper-loader wire:loading wire:target="saveFirstName" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
-                                <span class="text-secondary-300" aria-hidden="true">|</span>
-                                <button x-on:click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <button x-on:click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Cancel') }}
                                 </button>
                             </span>
@@ -61,17 +61,17 @@
                         </div>
                         <div class="flex-shrink-0 ml-4">
                             <span x-show="!open">
-                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
                                 </button>
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
-                                <button wire:click="saveLastName" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button wire:click="saveLastName" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
                                     <x-shopper-loader wire:loading wire:target="saveLastName" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
-                                <span class="text-secondary-300" aria-hidden="true">|</span>
-                                <button x-on:click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <button x-on:click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Cancel') }}
                                 </button>
                             </span>
@@ -105,17 +105,17 @@
                         </div>
                         <div class="flex-shrink-0 ml-4">
                             <span x-show="!open">
-                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
                                 </button>
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
-                                <button wire:click="saveEmail" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button wire:click="saveEmail" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
                                     <x-shopper-loader wire:loading wire:target="saveEmail" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
-                                <span class="text-secondary-300" aria-hidden="true">|</span>
-                                <button x-on:click="$wire.cancelEmail()" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <button x-on:click="$wire.cancelEmail()" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Cancel') }}
                                 </button>
                             </span>
@@ -140,17 +140,17 @@
                         </div>
                         <div class="flex-shrink-0 ml-4">
                             <span x-show="!open">
-                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
                                 </button>
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
-                                <button wire:click="saveBirthDate" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button wire:click="saveBirthDate" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
                                     <x-shopper-loader wire:loading wire:target="saveBirthDate" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
-                                <span class="text-secondary-300" aria-hidden="true">|</span>
-                                <button @click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <button @click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Cancel') }}
                                 </button>
                             </span>
@@ -175,17 +175,17 @@
                         </div>
                         <div class="flex-shrink-0 ml-4">
                             <span x-show="!open">
-                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
                                 </button>
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
-                                <button wire:click="saveGender" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <button wire:click="saveGender" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
                                     <x-shopper-loader wire:loading wire:target="saveGender" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
-                                <span class="text-secondary-300" aria-hidden="true">|</span>
-                                <button @click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400">
+                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <button @click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Cancel') }}
                                 </button>
                             </span>

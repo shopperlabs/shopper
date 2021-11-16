@@ -87,7 +87,7 @@ class Order extends Model
             case OrderStatus::REGISTER:
                 return 'border-blue-200 bg-blue-100 text-blue-800';
             case OrderStatus::PAID:
-                return 'border-success-200 bg-success-100 text-success-800';
+                return 'border-green-200 bg-green-100 text-green-800';
             case OrderStatus::CANCELLED:
                 return 'border-pink-200 bg-pink-100 text-pink-800';
             case OrderStatus::COMPLETED:

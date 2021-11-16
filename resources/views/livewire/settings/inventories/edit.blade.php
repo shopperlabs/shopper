@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
+                <div class="bg-white shadow rounded-md dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                             <x-shopper-input.group label="Street address" for="street_address" class="sm:col-span-6" :error="$errors->first('street_address')">
@@ -113,12 +113,15 @@
                             </div>
 
                             <x-shopper-input.group for="country_id" label="Country" class="sm:col-span-6" :error="$errors->first('country_id')">
-                                <x-shopper-input.select wire:model="country_id" id="country_id">
-                                    <option value="0">{{ __("Choose a Country") }}</option>
+                                <x-select
+                                    :placeholder="__('Choose a Country')"
+                                    wire:model.lazy="country_id"
+                                    id="country_id"
+                                >
                                     @foreach($countries as $country)
-                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                        <x-select.option :label="$country->name" :value="$country->id" />
                                     @endforeach
-                                </x-shopper-input.select>
+                                </x-select>
                             </x-shopper-input.group>
 
                             <x-shopper-input.group label="City" for="city" class="sm:col-span-3" :error="$errors->first('city')">

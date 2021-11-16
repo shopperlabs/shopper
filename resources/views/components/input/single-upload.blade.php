@@ -18,7 +18,7 @@
                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <p class="mt-1 text-sm text-secondary-500 group-hover:text-secondary-400 dark:text-secondary-400 dark:group-hover:text-secondary-300">
-                    <span :class="{ 'text-primary-500': focused }" class="font-medium text-primary-600 group-hover:text-primary-500 dark:text-primary-400 dark:group-hover:text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
+                    <span :class="{ 'text-primary-500': focused }" class="font-medium text-primary-600 group-hover:text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
                         {{ __('Upload a file') }}
                     </span>
                     {{ __('or drag and drop') }}

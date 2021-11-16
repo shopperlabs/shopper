@@ -44,7 +44,7 @@
                     <div class="mt-4">
                         <p class="text-secondary-500 text-sm leading-5 dark:text-secondary-400">
                             {{ __('This provider allows you to integrate Laravel Cashier into your store to allow your customers to make payments, subscriptions using Stripe.') }}
-                            <a href="https://laravel.com/docs/billing" target="_blank" class="text-primary-600 hover:text-primary-500 dark:text-primary-500">{{ __('Learn more about Laravel Cashier') }}</a>
+                            <a href="https://laravel.com/docs/billing" target="_blank" class="text-primary-600 hover:text-primary-500">{{ __('Learn more about Laravel Cashier') }}</a>
                         </p>
                         @if(! $this->enabled)
                             <span class="mt-4 inline-flex rounded-md shadow-sm">

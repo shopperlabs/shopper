@@ -35,7 +35,7 @@
                         </span>
                     @else
                         <div>
-                            <ul role="list" class="border border-secondary-200 rounded-md divide-y divide-secondary-200">
+                            <ul role="list" class="border border-secondary-200 rounded-md divide-y divide-secondary-200 dark:border-secondary-700 dark:divide-secondary-700">
                                 @foreach($productAttribute->values as $pValue)
                                     <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                                         <div class="w-0 flex-1 flex items-center">
@@ -44,7 +44,7 @@
                                             </span>
                                         </div>
                                         <div class="ml-4 flex-shrink-0">
-                                            <button wire:click="removeProductAttributeValue({{ $pValue->id }})" type="button" class="font-medium text-red-600 hover:text-red-500">
+                                            <button wire:click="removeProductAttributeValue({{ $pValue->id }})" type="button" class="font-medium text-negative-600 hover:text-negative-500">
                                                 <x-heroicon-o-trash class="h-5 w-5" />
                                             </button>
                                         </div>

@@ -177,7 +177,7 @@
                                 </div>
                             </div>
                         </div>
-                        <x-datetime-picker :placeholder="__('Choose date')" wire:model="date" parse-format="YYYY-MM-DD" :without-time="true" />
+                        <x-datetime-picker :placeholder="__('Choose date')" wire:model="date" class="dark:bg-secondary-700 dark:border-secondary-700" parse-format="YYYY-MM-DD" :without-time="true" />
                     </div>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                                 <div class="px-4 py-4 flex items-center sm:px-6">
                                     <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                         <div>
-                                            <div class="text-sm leading-5 font-semibold text-primary-500 truncate dark:text-primary-400">
+                                            <div class="text-sm leading-5 font-semibold text-primary-500 truncate">
                                                 {{ $discount->code }}
                                             </div>
                                             <div class="mt-2 flex">
@@ -228,7 +228,7 @@
                                             <div class="flex items-center space-x-2">
                                                 @if($discount->end_at)
                                                     <span class="text-sm text-secondary-500 dark:text-secondary-400">{{ $discount->start_at->format('d M') }}</span>
-                                                    <span>-</span>
+                                                    <span class="text-sm text-secondary-500 dark:text-secondary-400">-</span>
                                                     <span class="text-sm text-secondary-500 dark:text-secondary-400">{{ $discount->end_at->format('d M') }}</span>
                                                 @else
                                                     <span class="text-sm text-secondary-500 dark:text-secondary-400">{{ __("From :date", ['date' => $discount->start_at->format('d M')]) }}</span>

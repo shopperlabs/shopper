@@ -93,7 +93,7 @@
             </p>
         </div>
 
-        <div class="mt-5 px-4 py-5 sm:px-6 bg-white rounded-md shadow-md overflow-hidden dark:bg-secondary-800">
+        <div class="mt-5 px-4 py-5 sm:px-6 bg-white rounded-md shadow-md dark:bg-secondary-800">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
                 <x-shopper-label for="first_name" class="sm:mt-px sm:pt-2">
                     {{ __('First name') }} <span class="text-red-500">*</span>

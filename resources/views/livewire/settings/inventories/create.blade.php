@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
+                <div class="bg-white shadow rounded-md dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                             <div class="sm:col-span-6">
@@ -106,12 +106,14 @@
 
                             <div class="sm:col-span-6">
                                 <x-shopper-input.group for="country_id" label="Country" :error="$errors->first('country_id')">
-                                    <x-shopper-input.select wire:model.defer="country_id" id="country_id">
-                                        <option value="0">{{ __('Choose a Country') }}</option>
+                                    <x-select
+                                        :placeholder="__('Choose a Country')"
+                                        wire:model.lazy="shop_country_id"
+                                    >
                                         @foreach($countries as $country)
-                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            <x-select.option :label="$country->name" :value="$country->id" />
                                         @endforeach
-                                    </x-shopper-input.select>
+                                    </x-select>
                                 </x-shopper-input.group>
                             </div>
 

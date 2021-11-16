@@ -183,7 +183,7 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow bg-white dark:bg-secondary-800 rounded-md overflow-hidden">
+                <div class="shadow bg-white dark:bg-secondary-800 rounded-md">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
@@ -206,7 +206,14 @@
 
                             <div class="col-span-6">
                                 <x-shopper-input.group label="Country" for="shop_country_id">
-                                    <x-shopper-input.select :items="$countries" wire:model="shop_country_id" id="shop_country_id" />
+                                    <x-select
+                                        :placeholder="__('Choose a Country')"
+                                        wire:model="shop_country_id"
+                                    >
+                                        @foreach($countries as $country)
+                                            <x-select.option :label="$country->name" :value="$country->id" />
+                                        @endforeach
+                                    </x-select>
                                 </x-shopper-input.group>
                             </div>
 
@@ -245,16 +252,19 @@
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow overflow-hidden bg-white dark:bg-secondary-800 rounded-md">
+                <div class="shadow bg-white dark:bg-secondary-800 rounded-md">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
                                 <x-shopper-input.group label="Store Currency" for="shop_currency_id">
-                                    <x-shopper-input.select wire:model="shop_currency_id" id="shop_currency_id">
+                                    <x-select
+                                        :placeholder="__('Choose currency')"
+                                        wire:model="shop_currency_id"
+                                    >
                                         @foreach($currencies as $currency)
-                                            <option value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})</option>
+                                            <x-select.option :label="$currency->name . ' (' . $currency->code . ')'" :value="$currency->id" />
                                         @endforeach
-                                    </x-shopper-input.select>
+                                    </x-select>
                                 </x-shopper-input.group>
                             </div>
                         </div>

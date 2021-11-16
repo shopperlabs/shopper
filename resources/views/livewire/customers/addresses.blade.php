@@ -32,7 +32,7 @@
                 </div>
             </div>
         @empty
-            <div class="sm:col-span-3 relative rounded-lg bg-white px-6 py-10 sm:py-12 shadow flex flex-col items-center">
+            <div class="sm:col-span-3 relative rounded-lg bg-white px-6 py-10 sm:py-12 shadow flex flex-col items-center dark:bg-secondary-800">
                 <div class="flex-shrink-0 h-24 w-24 mx-auto text-secondary-400">
                     <x-heroicon-o-map class="w-full h-full" />
                 </div>
