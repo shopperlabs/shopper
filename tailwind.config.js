@@ -4,20 +4,14 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   mode: 'jit',
   darkMode: 'class',
-  presets: [
-    require('./vendor/ph7jack/wireui/tailwind.config.js')
-  ],
   purge: {
     content: [
       './resources/js/**/*.js',
       './resources/views/**/*.blade.php',
       './resources/lang/**/*.php',
       './src/**/*.php',
-      './vendor/livewire-ui/modal/resources/views/*.blade.php',
+      './vendor/wire-elements/modal/resources/views/*.blade.php',
       './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
-      './vendor/ph7jack/wireui/resources/**/*.blade.php',
-      './vendor/ph7jack/wireui/ts/**/*.ts',
-      './vendor/ph7jack/wireui/src/View/**/*.php'
     ],
     options: {
       safelist: [
@@ -33,7 +27,7 @@ module.exports = {
         secondary: colors.blueGray,
         gray: colors.blueGray,
         orange: colors.orange,
-        success: colors.green,
+        positive: colors.emerald,
         warning: colors.amber,
         negative: colors.red,
         info: colors.sky,
