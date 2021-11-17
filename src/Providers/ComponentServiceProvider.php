@@ -76,7 +76,7 @@ class ComponentServiceProvider extends ServiceProvider
         $prefix = config('shopper.components.prefix', 'shopper');
 
         $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade) use ($prefix) {
-            foreach (config('shopper.components.blade') as $component) {
+            foreach (config('shopper.components.blade', []) as $component) {
                 $blade->component($component['class'], $component['alias'], $prefix);
             }
         });
