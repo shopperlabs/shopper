@@ -17,7 +17,7 @@ mix.disableSuccessNotifications();
 mix.setPublicPath('public')
   .setResourceRoot('../');
 
-mix.js('./resources/js/shopper.js', 'js')
+mix.js('./resources/js/shopper.js', 'js').react()
   .postCss('resources/css/shopper.css', 'css').options({
     postCss: [
       require('tailwindcss'),
@@ -30,6 +30,10 @@ mix.js('./resources/js/shopper.js', 'js')
       extensions: ['*', '.js', '.jsx'],
       alias: {
         '@': path.resolve('./resources/js'),
+        '@components': path.resolve('./resources/js/components'),
+        '@helpers': path.resolve('./resources/js/helpers'),
+        'react': 'preact/compat',
+        'react-dom': 'preact/compat'
       },
     }
   });

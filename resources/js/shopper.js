@@ -6,34 +6,25 @@
  * building robust, powerful web applications using Laravel & React.
  *
  * @author Arthur Monney<arthur@shopperlabs.io>
- * @version 2.0.0
  * @since May 2021
  */
 
 import Alpine from 'alpinejs';
-import flatpickr from 'flatpickr';
-import Choices from 'choices.js';
 import Sortable from 'sortablejs';
 import * as FilePond from 'filepond';
 
-import internationalNumber from "./plugins/internationalNumber";
+import './elements'
+import '@helpers/window'
+import '@helpers/darkMode'
 
-// Add Alpine to window object.
-window.Alpine = Alpine;
-window.flatpickr = flatpickr;
-window.Sortable = Sortable;
-window.FilePond = FilePond;
+import internationalNumber from './plugins/internationalNumber'
+import mapBox from './plugins/mapBox'
 
-// Create a multiselect element.
-window.choices = (element) => {
-  return new Choices(element, { removeItemButton: true });
-};
-
-// Create smooth scroll animation
-window.scrollToPosition = (selector) => document.querySelector(selector).scrollIntoView({behavior: 'smooth', block: 'end'});
+window.Alpine = Alpine
+window.Sortable = Sortable
+window.FilePond = FilePond
 
 Alpine.data('internationalNumber', internationalNumber)
+Alpine.data('mapBox', mapBox)
 
-Alpine.start();
-
-require('./darkMode');
+Alpine.start()

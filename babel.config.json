@@ -1,0 +1,29 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": "last 2 versions, not dead, not ie 6-11",
+        "modules": false,
+        "useBuiltIns": false,
+        "corejs": null
+      }
+    ]
+  ],
+  "plugins": [
+    ["@babel/plugin-transform-react-jsx", { "pragma": "h", "pragmaFrag": "Fragment" }],
+    [
+      "babel-plugin-jsx-pragmatic",
+      {
+        "module": "preact",
+        "import": "h, Fragment",
+        "export": "h, Fragment"
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "presets": [["@babel/preset-env"]]
+    }
+  }
+}

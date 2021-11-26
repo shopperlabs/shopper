@@ -2,7 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings;
 
-use function array_slice;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\Country;
@@ -25,11 +25,12 @@ class General extends Component
     public ?string $shop_facebook_link = null;
     public ?string $shop_instagram_link = null;
     public ?string $shop_twitter_link = null;
-    public $shop_country_id;
-    public $shop_currency_id;
-    public $shop_logo;
+    public ?string $shop_logo = null;
+    public ?string $shop_cover = null;
+    public ?int $shop_country_id = null;
+    public ?int $shop_currency_id = null;
+
     public $logo;
-    public $shop_cover;
     public $cover;
 
     protected $listeners = [
@@ -38,22 +39,27 @@ class General extends Component
 
     public function mount()
     {
-        $this->shop_name = ($name = Setting::where('key', 'shop_name')->first()) ? $name->value : '';
-        $this->shop_legal_name = ($legalName = Setting::where('key', 'shop_legal_name')->first()) ? $legalName->value : '';
-        $this->shop_name = ($name = Setting::where('key', 'shop_name')->first()) ? $name->value : '';
-        $this->shop_email = ($email = Setting::where('key', 'shop_email')->first()) ? $email->value : '';
-        $this->shop_about = ($about = Setting::where('key', 'shop_about')->first()) ? $about->value : '';
-        $this->shop_phone_number = ($phone = Setting::where('key', 'shop_phone_number')->first()) ? $phone->value : '';
-        $this->logo = ($logo = Setting::where('key', 'shop_logo')->first()) ? $logo->value : '';
-        $this->cover = ($cover = Setting::where('key', 'shop_cover')->first()) ? $cover->value : '';
-        $this->shop_street_address = ($street = Setting::where('key', 'shop_street_address')->first()) ? $street->value : '';
-        $this->shop_zipcode = ($zipcode = Setting::where('key', 'shop_zipcode')->first()) ? $zipcode->value : '';
-        $this->shop_city = ($city = Setting::where('key', 'shop_city')->first()) ? $city->value : '';
-        $this->shop_country_id = ($country = Setting::where('key', 'shop_country_id')->first()) ? $country->value : '';
-        $this->shop_currency_id = ($currency = Setting::where('key', 'shop_currency_id')->first()) ? $currency->value : '';
-        $this->shop_facebook_link = ($facebook = Setting::where('key', 'shop_facebook_link')->first()) ? $facebook->value : '';
-        $this->shop_instagram_link = ($instagram = Setting::where('key', 'shop_instagram_link')->first()) ? $instagram->value : '';
-        $this->shop_twitter_link = ($twitter = Setting::where('key', 'shop_twitter_link')->first()) ? $twitter->value : '';
+        $settings = Setting::whereIn('key', [
+            'shop_name',
+            'shop_legal_name',
+            'shop_email',
+            'shop_about',
+            'shop_phone_number',
+            'shop_logo',
+            'shop_cover',
+            'shop_street_address',
+            'shop_zipcode',
+            'shop_city',
+            'shop_country_id',
+            'shop_currency_id',
+            'shop_facebook_link',
+            'shop_instagram_link',
+            'shop_twitter_link',
+        ])->select('value', 'key')->get()->toArray();
+
+        foreach ($settings as $setting) {
+            $this->{$setting['key']} = $setting['value'] ?? null;
+        }
     }
 
     public function onTrixValueUpdate($value)
@@ -72,11 +78,6 @@ class General extends Component
                 $this->shop_currency_id = $currency->id;
             }
         }
-    }
-
-    public function updated(string $field)
-    {
-        $this->validateOnly($field, $this->rules());
     }
 
     public function store()
@@ -107,17 +108,17 @@ class General extends Component
             ]);
         }
 
-        if ($this->shop_logo) {
+        if ($this->logo) {
             Setting::query()->updateOrCreate(['key' => 'shop_logo'], [
-                'value' => $this->shop_logo->store('/', config('shopper.system.storage.disks.uploads')),
+                'value' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
                 'display_name' => Setting::lockedAttributesDisplayName('shop_logo'),
                 'locked' => true,
             ]);
         }
 
-        if ($this->shop_cover) {
+        if ($this->cover) {
             Setting::query()->updateOrCreate(['key' => 'shop_cover'], [
-                'value' => $this->shop_cover->store('/', config('shopper.system.storage.disks.uploads')),
+                'value' => $this->cover->store('/', config('shopper.system.storage.disks.uploads')),
                 'display_name' => Setting::lockedAttributesDisplayName('shop_cover'),
                 'locked' => true,
             ]);
@@ -129,11 +130,11 @@ class General extends Component
     public function rules(): array
     {
         return [
+            'cover' => 'nullable|image|max:1024',
+            'logo' => 'nullable|image|max:1024',
             'shop_name' => 'required|max:100',
             'shop_legal_name' => 'required|max:100',
             'shop_email' => 'required|email',
-            'shop_logo' => 'nullable|image|max:1024',
-            'shop_cover' => 'nullable|image|max:1024',
             'shop_country_id' => 'required',
             'shop_currency_id' => 'required',
             'shop_street_address' => 'required|string',
@@ -144,7 +145,7 @@ class General extends Component
 
     public function removeCover()
     {
-        $this->shop_cover = null;
+        $this->cover = null;
     }
 
     public function deleteCover()
@@ -155,7 +156,7 @@ class General extends Component
             'locked' => true,
         ]);
 
-        $this->cover = null;
+        $this->shop_cover = null;
 
         $this->notification()->success(__('Deleted'), __('Shop cover have been correctly removed!'));
     }
@@ -163,8 +164,8 @@ class General extends Component
     public function render()
     {
         return view('shopper::livewire.settings.general', [
-            'countries' => Country::query()->orderBy('name')->get(),
-            'currencies' => Currency::all(),
+            'countries' => Cache::rememberForever('countries', fn () => Country::query()->orderBy('name')->get()),
+            'currencies' => Cache::rememberForever('currencies', fn () => Currency::all()),
         ]);
     }
 }
