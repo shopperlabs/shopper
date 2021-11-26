@@ -1,4 +1,8 @@
-// Make dark mode switch.
+/**
+ * Make dark mode switch.
+ *
+ * @type {HTMLCollectionOf<Element>}
+ */
 const darkModeToggles = document.getElementsByClassName('darkModeToggle');
 
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
