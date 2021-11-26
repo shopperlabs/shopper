@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire;
 
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\Country;
@@ -67,7 +68,7 @@ class Initialization extends Component
 
     public function stepTwoState(): bool
     {
-        if (! $this->shop_street_address && ! $this->shop_city && ! $this->shop_zipcode) {
+        if ($this->shop_street_address && $this->shop_city && $this->shop_zipcode) {
             return true;
         }
 
@@ -117,6 +118,8 @@ class Initialization extends Component
             'shop_zipcode',
             'shop_city',
             'shop_phone_number',
+            'shop_lng',
+            'shop_lat',
             'shop_facebook_link',
             'shop_instagram_link',
             'shop_twitter_link',
@@ -156,8 +159,8 @@ class Initialization extends Component
             'city' => $this->shop_city,
             'phone_number' => $this->shop_phone_number,
             'country_id' => $this->shop_country_id,
-            'lng' => $this->shop_lng,
-            'lat' => $this->shop_lat,
+            'longitude' => $this->shop_lng,
+            'latitude' => $this->shop_lat,
             'is_default' => $this->isDefault,
         ]);
 
@@ -172,8 +175,8 @@ class Initialization extends Component
     public function render()
     {
         return view('shopper::livewire.initialization', [
-            'countries' => Country::select('name', 'id')->orderBy('name')->get(),
-            'currencies' => Currency::select('name', 'code', 'id')->orderBy('name')->get(),
+            'countries' => Cache::rememberForever('countries-settings', fn () => Country::select('name', 'id')->orderBy('name')->get()),
+            'currencies' => Cache::rememberForever('currencies-setting', fn () => Currency::select('name', 'code', 'id')->orderBy('name')->get()),
         ]);
     }
 }

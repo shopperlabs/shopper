@@ -46,13 +46,13 @@
                                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                     </svg>
                                 </div>
-                                <x-shopper-input.text wire:model="shop_email" id="shop_email" type="email" class="pl-10" autocomplete="off" />
+                                <x-shopper-input.text wire:model.defer="shop_email" id="shop_email" type="email" class="pl-10" autocomplete="off" />
                             </x-shopper-input.group>
                         </div>
 
                         <div wire:ignore x-data="internationalNumber('#phone_number')" class="col-span-6 sm:col-span-3">
                             <x-shopper-input.group label="Phone number" for="phone_number" :error="$errors->first('shop_phone_number')" helpText="Your customers will use this phone number if they need to call you directly.">
-                                <x-shopper-input.text wire:model="shop_phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
+                                <x-shopper-input.text wire:model.defer="shop_phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
                                 @error('shop_phone_number')
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -87,13 +87,13 @@
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <div class="shadow bg-white dark:bg-secondary-800 rounded-md overflow-hidden">
                     <div class="px-4 py-5 sm:p-6">
-                        <x-shopper-input.group label="Logo" for="logo" :error="$errors->first('shop_logo')" noShadow>
-                            <x-shopper-input.avatar-upload wire:model="shop_logo" id="photo">
+                        <x-shopper-input.group label="Logo" for="logo" :error="$errors->first('logo')" noShadow>
+                            <x-shopper-input.avatar-upload wire:model.debounce.550ms="logo" id="photo">
                                 <span class="h-12 w-12 rounded-full overflow-hidden bg-secondary-100 dark:bg-secondary-700 flex items-center justify-center">
-                                    @if ($shop_logo)
-                                        <img class="h-12 w-12 object-cover" src="{{ $shop_logo->temporaryUrl() }}" alt="Store logo">
-                                    @elseif($logo)
-                                        <img class="h-12 w-12 object-cover" src="{{ shopper_asset($logo) }}" alt="Store logo">
+                                    @if ($logo)
+                                        <img class="h-12 w-12 object-cover" src="{{ $logo->temporaryUrl() }}" alt="Store logo">
+                                    @elseif($shop_logo)
+                                        <img class="h-12 w-12 object-cover" src="{{ shopper_asset($shop_logo) }}" alt="Store logo">
                                     @else
                                         <svg class="h-8 w-8 text-secondary-300 dark:text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -106,10 +106,10 @@
                         <div class="mt-6">
                             <x-shopper-label value="{{ __('Cover photo') }}" />
                             <div class="mt-1">
-                                @if($shop_cover)
+                                @if($cover)
                                     <div>
                                         <div class="shadow flex-shrink-0 rounded-md overflow-hidden">
-                                            <img class="h-40 w-full object-cover" src="{{ $shop_cover->temporaryUrl() }}" alt="">
+                                            <img class="h-40 w-full object-cover" src="{{ $cover->temporaryUrl() }}" alt="">
                                         </div>
                                         <div class="mt-1 flex items-center">
                                             <button wire:click="removeCover" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
@@ -120,10 +120,10 @@
                                             </button>
                                         </div>
                                     </div>
-                                @elseif($cover)
+                                @elseif($shop_cover)
                                     <div>
                                         <div class="shadow flex-shrink-0 rounded-md overflow-hidden">
-                                            <img class="h-40 w-full object-cover" src="{{ shopper_asset($cover) }}" alt="Store Cover image">
+                                            <img class="h-40 w-full object-cover" src="{{ shopper_asset($shop_cover) }}" alt="Store Cover image">
                                         </div>
                                         <div class="mt-1 flex items-center">
                                             <button wire:click="deleteCover" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
@@ -150,13 +150,13 @@
                                                 <p class="mt-1 text-xs text-secondary-500 dark:text-secondary-400">
                                                     PNG, JPG, GIF up to 1MB
                                                 </p>
-                                                <input id="shop_cover" type="file" wire:model="shop_cover" class="sr-only">
+                                                <input id="shop_cover" type="file" wire:model.defer="cover" class="sr-only">
                                             </div>
                                         </label>
                                     </div>
                                 @endif
                             </div>
-                            @error('shop_cover')
+                            @error('cover')
                                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
@@ -188,7 +188,7 @@
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
                                 <x-shopper-input.group label="Legal name of the company" for="shop_legal_name" isRequired :error="$errors->first('shop_legal_name')">
-                                    <x-shopper-input.text wire:model="shop_legal_name" id="shop_legal_name" type="text" autocomplete="off" placeholder="ShopStation LLC" />
+                                    <x-shopper-input.text wire:model.defer="shop_legal_name" id="shop_legal_name" type="text" autocomplete="off" placeholder="ShopStation LLC" />
                                 </x-shopper-input.group>
                             </div>
 
@@ -200,7 +200,7 @@
 
                             <div class="col-span-6">
                                 <x-shopper-input.group label="Address" for="shop_street_address">
-                                    <x-shopper-input.text wire:model="shop_street_address" id="shop_street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
+                                    <x-shopper-input.text wire:model.defer="shop_street_address" id="shop_street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
                                 </x-shopper-input.group>
                             </div>
 
@@ -208,7 +208,7 @@
                                 <x-shopper-input.group label="Country" for="shop_country_id">
                                     <x-select
                                         :placeholder="__('Choose a Country')"
-                                        wire:model="shop_country_id"
+                                        wire:model.debounce.350ms="shop_country_id"
                                     >
                                         @foreach($countries as $country)
                                             <x-select.option :label="$country->name" :value="$country->id" />
@@ -219,13 +219,13 @@
 
                             <div class="col-span-6 sm:col-span-3">
                                 <x-shopper-input.group label="City" for="shop_city">
-                                    <x-shopper-input.text wire:model="shop_city" id="shop_city" type="text" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="shop_city" id="shop_city" type="text" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
 
                             <div class="col-span-6 sm:col-span-3">
                                 <x-shopper-input.group label="Postal / Zip code" for="shop_zipcode">
-                                    <x-shopper-input.text wire:model="shop_zipcode" id="shop_zipcode" type="text" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="shop_zipcode" id="shop_zipcode" type="text" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
                         </div>
@@ -259,7 +259,7 @@
                                 <x-shopper-input.group label="Store Currency" for="shop_currency_id">
                                     <x-select
                                         :placeholder="__('Choose currency')"
-                                        wire:model="shop_currency_id"
+                                        wire:model.defer="shop_currency_id"
                                     >
                                         @foreach($currencies as $currency)
                                             <x-select.option :label="$currency->name . ' (' . $currency->code . ')'" :value="$currency->id" />
@@ -300,7 +300,7 @@
                                         <path fill-rule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <x-shopper-input.text wire:model="shop_facebook_link" id="shop_facebook_link" type="text" class="pl-10" autocomplete="off" placeholder="https://facebook.com/laravelshopper" />
+                                <x-shopper-input.text wire:model.defer="shop_facebook_link" id="shop_facebook_link" type="text" class="pl-10" autocomplete="off" placeholder="https://facebook.com/laravelshopper" />
                             </x-shopper-input.group>
 
                             <x-shopper-input.group class="col-span-6 sm:col-span-3" label="Instagram" for="shop_instagram_link">
@@ -309,7 +309,7 @@
                                         <path d="M17.34 5.46a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2zm4.6 2.42a7.59 7.59 0 0 0-.46-2.43 4.94 4.94 0 0 0-1.16-1.77 4.7 4.7 0 0 0-1.77-1.15 7.3 7.3 0 0 0-2.43-.47C15.06 2 14.72 2 12 2s-3.06 0-4.12.06a7.3 7.3 0 0 0-2.43.47 4.78 4.78 0 0 0-1.77 1.15 4.7 4.7 0 0 0-1.15 1.77 7.3 7.3 0 0 0-.47 2.43C2 8.94 2 9.28 2 12s0 3.06.06 4.12a7.3 7.3 0 0 0 .47 2.43 4.7 4.7 0 0 0 1.15 1.77 4.78 4.78 0 0 0 1.77 1.15 7.3 7.3 0 0 0 2.43.47C8.94 22 9.28 22 12 22s3.06 0 4.12-.06a7.3 7.3 0 0 0 2.43-.47 4.7 4.7 0 0 0 1.77-1.15 4.85 4.85 0 0 0 1.16-1.77 7.59 7.59 0 0 0 .46-2.43c0-1.06.06-1.4.06-4.12s0-3.06-.06-4.12zM20.14 16a5.61 5.61 0 0 1-.34 1.86 3.06 3.06 0 0 1-.75 1.15 3.19 3.19 0 0 1-1.15.75 5.61 5.61 0 0 1-1.86.34c-1 .05-1.37.06-4 .06s-3 0-4-.06a5.73 5.73 0 0 1-1.94-.3 3.27 3.27 0 0 1-1.1-.75 3 3 0 0 1-.74-1.15 5.54 5.54 0 0 1-.4-1.9c0-1-.06-1.37-.06-4s0-3 .06-4a5.54 5.54 0 0 1 .35-1.9A3 3 0 0 1 5 5a3.14 3.14 0 0 1 1.1-.8A5.73 5.73 0 0 1 8 3.86c1 0 1.37-.06 4-.06s3 0 4 .06a5.61 5.61 0 0 1 1.86.34 3.06 3.06 0 0 1 1.19.8 3.06 3.06 0 0 1 .75 1.1 5.61 5.61 0 0 1 .34 1.9c.05 1 .06 1.37.06 4s-.01 3-.06 4zM12 6.87A5.13 5.13 0 1 0 17.14 12 5.12 5.12 0 0 0 12 6.87zm0 8.46A3.33 3.33 0 1 1 15.33 12 3.33 3.33 0 0 1 12 15.33z" />
                                     </svg>
                                 </div>
-                                <x-shopper-input.text wire:model="shop_instagram_link" id="shop_instagram_link" type="text" class="pl-10" autocomplete="off" placeholder="https://instagram.com/laravelshopper" />
+                                <x-shopper-input.text wire:model.defer="shop_instagram_link" id="shop_instagram_link" type="text" class="pl-10" autocomplete="off" placeholder="https://instagram.com/laravelshopper" />
                             </x-shopper-input.group>
 
                             <x-shopper-input.group class="col-span-6 sm:col-span-3" label="Twitter" for="shop_twitter_link">
@@ -318,7 +318,7 @@
                                         <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                                     </svg>
                                 </div>
-                                <x-shopper-input.text wire:model="shop_twitter_link" id="shop_twitter_link" type="text" class="pl-10" autocomplete="off" placeholder="https://twitter.com/laravelshopper" />
+                                <x-shopper-input.text wire:model.defer="shop_twitter_link" id="shop_twitter_link" type="text" class="pl-10" autocomplete="off" placeholder="https://twitter.com/laravelshopper" />
                             </x-shopper-input.group>
                         </div>
                     </div>

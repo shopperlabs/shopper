@@ -5,24 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-DNS-Prefetch-Control" content="on">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ __("Shop Initialization") }} | {{ __('Shopper E-commerce') }}</title>
+    <title>{{ __('Shop Initialization') }} | Shopper Admin E-commerce</title>
     <meta name="description" content="@yield('meta_description', 'Laravel Shopper Admin Panel')">
     <meta name="author" content="@yield('meta_author', 'Arthur Monney')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="base-url" content="{{ config('app.url') }}">
     <meta name="dashboard-url" content="{{ config('app.url').'/'.shopper_prefix() }}">
 
-    @include('shopper::layouts.favicons')
+    @include('shopper::includes._favicons')
 
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <!--begin::Fonts -->
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <!--end::Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css" rel="stylesheet">
+    @stack('styles')
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
-
     <livewire:styles />
+
+    <!-- Scripts -->
+    <wireui:scripts />
+    <livewire:scripts />
     <script src="{{ mix('/js/shopper.js','shopper') }}" defer></script>
+
+    @include('shopper::includes._additional-styles')
 </head>
 <body class="text-secondary-500 font-sans transition ease-in-out duration-700 dark:text-secondary-400">
 
@@ -57,9 +64,7 @@
                                        class="w-full inline-flex items-center px-4 py-2 text-sm leading-5 text-secondary-700 hover:bg-secondary-100 focus:outline-none focus:bg-secondary-100 dark:text-secondary-300 dark:hover:bg-secondary-700 dark:focus:bg-secondary-900"
                                        onclick="document.getElementById('logout-form').submit();"
                                     >
-                                        <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                        </svg>
+                                        <x-heroicon-o-logout class="w-5 h-5 mr-2" />
                                         {{ __('Sign out') }}
                                     </button>
                                     <form id="logout-form" action="{{ route('shopper.logout') }}" method="POST" style="display: none;">
@@ -101,9 +106,7 @@
                            role="menuitem"
                            onclick="document.getElementById('sm-logout-form').submit();"
                         >
-                            <svg class="w-5 h-5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                            </svg>
+                            <x-heroicon-o-logout class="w-5 h-5 mr-2" />
                             {{ __('Sign out') }}
                         </button>
                         <form id="sm-logout-form" action="{{ route('shopper.logout') }}" method="POST" style="display: none;">
@@ -117,7 +120,6 @@
         <livewire:shopper-initialization />
     </div>
 
-    <livewire:scripts />
     @stack('scripts')
 
 </body>
