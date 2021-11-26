@@ -57,7 +57,6 @@ class General extends Component
             'shop_twitter_link',
         ])->select('value', 'key')->get()->toArray();
 
-
         foreach ($settings as $setting) {
             $this->{$setting['key']} = $setting['value'] ?? null;
         }
