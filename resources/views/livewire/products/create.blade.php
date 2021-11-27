@@ -350,9 +350,9 @@
                                     </div>
                                 </div>
 
-                                @if($category->childs->isNotEmpty())
+                                @if($category->children->isNotEmpty())
                                     <div class="ml-4 space-y-3">
-                                        @foreach($category->childs as $child)
+                                        @foreach($category->children as $child)
                                             @include('shopper::components.input.checkbox-category', ['parent' => $category->parent_id, 'category' => $child])
                                         @endforeach
                                     </div>

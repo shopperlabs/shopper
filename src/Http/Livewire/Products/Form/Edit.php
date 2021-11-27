@@ -121,11 +121,11 @@ class Edit extends AbstractBaseComponent
                 ->get(),
             'categories' => (new CategoryRepository())
                 ->makeModel()
-                ->with('childs')
                 ->scopes('enabled')
-                ->whereNull('parent_id')
-                ->select('name', 'id', 'parent_id')
-                ->get(),
+                ->tree()
+                ->orderBy('name')
+                ->get()
+                ->toTree(),
             'collections' => (new CollectionRepository())->get(['name', 'id']),
         ]);
     }

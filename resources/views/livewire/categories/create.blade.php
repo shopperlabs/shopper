@@ -34,11 +34,9 @@
                                     {{ $category->name }}
                                 </option>
 
-                                @if($category->childs->isNotEmpty())
-                                    @foreach($category->childs as $child)
-                                        @include('shopper::components.input.option-category', ['name' => $category->name, 'category' => $child])
-                                    @endforeach
-                                @endif
+                                @foreach($category->children as $child)
+                                    @include('shopper::components.input.option-category', ['name' => $category->name, 'category' => $child])
+                                @endforeach
                             @endforeach
                         </x-shopper-input.select>
                     </x-shopper-input.group>

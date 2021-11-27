@@ -234,7 +234,13 @@
 
             <div class="mt-6 lg:mt-8 sm:px-6 lg:px-8">
                 <div class="bg-white shadow-md sm:rounded-md p-4 dark:bg-secondary-800">
-                    <div x-data="mapBox($refs.mapbox, '{{ env('MAPBOX_PUBLIC_TOKEN') }}')" class="grid gap-4 lg:grid-cols-3 lg:gap-6">
+                    <div
+                        @if(env('MAPBOX_PUBLIC_TOKEN'))
+                            x-data="mapBox($refs.mapbox, '{{ env('MAPBOX_PUBLIC_TOKEN') }}')"
+                        @else
+                            x-data="{ lat: '', lng: '' }"
+                        @endif
+                        class="grid gap-4 lg:grid-cols-3 lg:gap-6">
                         <div wire:ignore class="space-y-4 sm:col-span-2">
                             @if(env('MAPBOX_PUBLIC_TOKEN'))
                                 <div x-ref="mapbox" class="bg-secondary-100 rounded-md h-95 overflow-hidden outline-none dark:bg-secondary-900">
@@ -281,7 +287,7 @@
                                             <path d="M19.167 9.167H17.45a7.51 7.51 0 0 0-6.618-6.618V.833a.834.834 0 0 0-1.666 0V2.55a7.51 7.51 0 0 0-6.618 6.618H.833a.834.834 0 0 0 0 1.666H2.55a7.51 7.51 0 0 0 6.618 6.618v1.716a.834.834 0 0 0 1.666 0V17.45a7.51 7.51 0 0 0 6.618-6.618h1.716a.834.834 0 0 0 0-1.666zM10 15.833A5.84 5.84 0 0 1 4.167 10 5.84 5.84 0 0 1 10 4.167 5.84 5.84 0 0 1 15.833 10 5.84 5.84 0 0 1 10 15.833z" />
                                         </svg>
                                     </div>
-                                    <x-shopper-input.text x-model="lng" x-data x-init="$watch('lng', value => $wire.set('shop_lng', value))" id="longitude" type="text" class="pl-10" autocomplete="off" placeholder="9.795537" />
+                                    <x-shopper-input.text x-model="lng" x-data x-init="$watch('lng', value => $wire.set('shop_lng', value))" id="longitude" type="text" class="pl-10" autocomplete="off" placeholder="9.795537" readonly />
                                 </x-shopper-input.group>
 
                                 <x-shopper-input.group class="sm:col-span-2" for="latitude" label="Latitude" wire:ignore>
@@ -291,7 +297,7 @@
                                             <path d="M19.167 9.167H17.45a7.51 7.51 0 0 0-6.618-6.618V.833a.834.834 0 0 0-1.666 0V2.55a7.51 7.51 0 0 0-6.618 6.618H.833a.834.834 0 0 0 0 1.666H2.55a7.51 7.51 0 0 0 6.618 6.618v1.716a.834.834 0 0 0 1.666 0V17.45a7.51 7.51 0 0 0 6.618-6.618h1.716a.834.834 0 0 0 0-1.666zM10 15.833A5.84 5.84 0 0 1 4.167 10 5.84 5.84 0 0 1 10 4.167 5.84 5.84 0 0 1 15.833 10 5.84 5.84 0 0 1 10 15.833z" />
                                         </svg>
                                     </div>
-                                    <x-shopper-input.text x-model="lat" x-data x-init="$watch('lat', value => $wire.set('shop_lat', value))" id="latitude" type="text" class="pl-10" autocomplete="off" placeholder="4.02537" />
+                                    <x-shopper-input.text x-model="lat" x-data x-init="$watch('lat', value => $wire.set('shop_lat', value))" id="latitude" type="text" class="pl-10" autocomplete="off" placeholder="4.02537" readonly />
                                 </x-shopper-input.group>
                             </div>
                             <div x-data="{ on: @entangle('isDefault') }" class="mt-6">
