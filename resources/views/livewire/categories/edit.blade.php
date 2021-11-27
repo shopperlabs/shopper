@@ -34,11 +34,10 @@
                                     <option value="{{ $cat->id }}" @if($cat->id === $parent_id) selected @endif>
                                         {{ $cat->name }}
                                     </option>
-                                    @if($cat->childs->isNotEmpty())
-                                        @foreach($cat->childs as $child)
-                                            @includeWhen($child->id !== $categoryId ,'shopper::components.input.option-category', ['name' => $cat->name, 'category' => $child])
-                                        @endforeach
-                                    @endif
+
+                                    @foreach($cat->children as $child)
+                                        @includeWhen($child->id !== $categoryId, 'shopper::components.input.option-category', ['name' => $cat->name, 'category' => $child])
+                                    @endforeach
                                 @endif
                             @endforeach
                         </x-shopper-input.select>

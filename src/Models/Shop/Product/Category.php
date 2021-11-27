@@ -11,15 +11,19 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Models\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Category extends Model implements HasMedia
 {
-    use HasFactory, HasSlug, InteractsWithMedia;
+    use HasFactory,
+        HasSlug,
+        HasRecursiveRelationships,
+        InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var string[]
      */
     protected $fillable = [
         'name',
@@ -78,11 +82,6 @@ class Category extends Model implements HasMedia
     public function childs(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id')->with('categories');
-    }
-
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(self::class, 'parent_id');
     }
 
     public function products(): MorphToMany

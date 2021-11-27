@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
@@ -85,12 +86,14 @@ class ProductsTable extends DataTableComponent
                 ]),
             'brands' => Filter::make('Brands')
                 ->multiSelect(
-                    (new BrandRepository())->makeModel()->newQuery()
-                        ->orderBy('name')
-                        ->get()
-                        ->keyBy('id')
-                        ->map(fn ($name) => $name->name)
-                        ->toArray()
+                    Cache::remember('brands-filters', 60 * 30, function () {
+                        return (new BrandRepository())->makeModel()->newQuery()
+                            ->orderBy('name')
+                            ->get()
+                            ->keyBy('id')
+                            ->map(fn ($name) => $name->name)
+                            ->toArray();
+                    })
                 ),
         ];
     }

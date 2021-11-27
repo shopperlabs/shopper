@@ -137,7 +137,7 @@ if (! \function_exists('shopper_currency')) {
         $settingCurrency = shopper_setting('shop_currency_id');
 
         if ($settingCurrency) {
-            $currency = Cache::remember('shopper-currency', 60 * 60 * 24 * 7, fn () => CurrencyModel::query()->find($settingCurrency));
+            $currency = Cache::remember('shopper-currency', now()->addHour(), fn () => CurrencyModel::query()->find($settingCurrency));
 
             return $currency ? $currency->code : 'USD';
         }
