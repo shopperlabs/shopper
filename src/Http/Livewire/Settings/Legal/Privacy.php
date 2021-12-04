@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Legal;
 
 use Livewire\Component;
-use Shopper\Framework\Models\Shop\Legal;
 use Shopper\Framework\Traits\WithLegalActions;
 use WireUi\Traits\Actions;
 
