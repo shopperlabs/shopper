@@ -10,6 +10,13 @@ trait WithLegalActions
     public ?string $content = null;
     public bool $isEnabled = false;
 
+    public function mount()
+    {
+        $legal = Legal::query()->where('slug', str_slug($this->title))->first();
+
+        $this->initializeValues($legal);
+    }
+
     public function initializeValues($legal)
     {
         $this->legalId = $legal?->id;
@@ -21,7 +28,7 @@ trait WithLegalActions
     {
         Legal::query()->updateOrCreate(['slug' => str_slug($title)], [
             'title' => $title,
-            'slug' => str_slug($title),
+            'slug' => $title,
             'content' => $content,
             'is_enabled' => $isEnabled,
         ]);

@@ -13,11 +13,13 @@ class Terms extends Component
 
     public string $title = 'Terms of use';
 
-    public function mount()
-    {
-        $legal = Legal::query()->where('slug', str_slug($this->title))->first();
+    protected $listeners = [
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
 
-        $this->initializeValues($legal);
+    public function onTrixValueUpdate($value)
+    {
+        $this->content = $value;
     }
 
     public function store()
