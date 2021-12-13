@@ -21,7 +21,7 @@
         <div class="sm:col-span-4 space-y-5">
             <div class="bg-white rounded-lg shadow p-4 sm:p-5 dark:bg-secondary-800">
                 <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                    <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
+                    <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
                 </x-shopper-input.group>
                 <div class="mt-5">
                     <x-shopper-input.group label="Description" for="description">

@@ -16,7 +16,7 @@
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
             <x-shopper-input.group label="Group name" for="group" class="sm:col-span-2">
-                <x-shopper-input.select id="group" wire:model.lazy="group">
+                <x-shopper-input.select id="group" wire:model.defer="group">
                     <option>{{ __('No group') }}</option>
                     @foreach($groups as $key => $value)
                         <option value="{{ $key }}">{{ $value }}</option>
@@ -24,13 +24,13 @@
                 </x-shopper-input.select>
             </x-shopper-input.group>
             <x-shopper-input.group label="Permission name (in lowercase)" for="permission_name" class="sm:col-span-2" :error="$errors->first('name')" isRequired>
-                <x-shopper-input.text wire:model.lazy="name" type="text" id="permission_name" placeholder="create_post, manage_articles, etc" autocomplete="off" />
+                <x-shopper-input.text wire:model.defer="name" type="text" id="permission_name" placeholder="create_post, manage_articles, etc" autocomplete="off" />
             </x-shopper-input.group>
             <x-shopper-input.group label="Display name" for="permission_display_name" class="sm:col-span-2" :error="$errors->first('display_name')" isRequired>
-                <x-shopper-input.text wire:model.lazy="display_name" type="text" id="permission_display_name" placeholder="Create Blog posts" autocomplete="off" />
+                <x-shopper-input.text wire:model.defer="display_name" type="text" id="permission_display_name" placeholder="Create Blog posts" autocomplete="off" />
             </x-shopper-input.group>
             <x-shopper-input.group label="Description" for="permission_description" class="sm:col-span-2">
-                <x-shopper-input.textarea wire:model.lazy="description" id="permission_description" />
+                <x-shopper-input.textarea wire:model.defer="description" id="permission_description" />
             </x-shopper-input.group>
         </div>
     </x-slot>

@@ -22,12 +22,12 @@
             <div class="p-4 sm:p-5 bg-white rounded-lg shadow dark:bg-secondary-800">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
+                        <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-4">
                     <x-shopper-input.group label="Parent" for="category" wire:ignore>
-                        <x-shopper-input.select wire:model="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
+                        <x-shopper-input.select wire:model.defer="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
                             <option value="0">{{ __('No parent category') }}</option>
                             @foreach($categories as $cat)
                                 @if($cat->id !== $categoryId)

@@ -17,7 +17,7 @@
                             <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-700">
                                 <x-heroicon-o-location-marker class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
                             </span>
-                            <x-shopper-input.select wire:model="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
+                            <x-shopper-input.select wire:model.defer="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
                                 <option value="0">{{ __('Select Inventory') }}</option>
                                 @foreach($inventories as $inventory)
                                     <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>

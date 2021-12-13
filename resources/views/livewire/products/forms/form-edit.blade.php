@@ -4,7 +4,7 @@
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper-input.text wire:model.lazy="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
+                        <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-5 border-t border-secondary-200 dark:border-secondary-700 pt-4">
@@ -39,7 +39,7 @@
                             <x-inputs.currency
                                 :label="__('Price amount')"
                                 placeholder="0.00"
-                                wire:model="price_amount"
+                                wire:model.defer="price_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
                                 min="0"
                                 thousands=","
@@ -51,7 +51,7 @@
                             <x-inputs.currency
                                 :label="__('Compare at price')"
                                 placeholder="0.00"
-                                wire:model.lazy="old_price_amount"
+                                wire:model.defer="old_price_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
                                 min="0"
                                 thousands=","
@@ -65,7 +65,7 @@
                             <x-inputs.currency
                                 :label="__('Cost per item')"
                                 placeholder="0.00"
-                                wire:model.lazy="cost_amount"
+                                wire:model.defer="cost_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
                                 min="0"
                                 thousands=","
@@ -105,7 +105,7 @@
                         <x-datetime-picker
                             :label="__('Product availability')"
                             :placeholder="__('Pick a date')"
-                            wire:model="publishedAt"
+                            wire:model.lazy="publishedAt"
                             parse-format="YYYY-MM-DD HH:mm"
                             time-format="24"
                             without-timezone
@@ -132,7 +132,7 @@
                     </div>
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         <x-shopper-input.group class="p-4 sm:p-5" label="Brand" for="brand_id">
-                            <x-shopper-input.select wire:model="brand_id" id="brand_id">
+                            <x-shopper-input.select wire:model.defer="brand_id" id="brand_id">
                                 <option value="0">{{ __('No brand') }}</option>
                                 @foreach($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -143,7 +143,7 @@
                             <x-select
                                 :label="__('Collections')"
                                 placeholder="Select collections"
-                                wire:model="collection_ids"
+                                wire:model.defer="collection_ids"
                                 class="dark:bg-secondary-800"
                                 multiselect
                             >
@@ -152,7 +152,6 @@
                                         :img="$collection->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'))"
                                         :label="$collection->name"
                                         :value="$collection->id"
-
                                     />
                                 @endforeach
                             </x-select>
@@ -168,7 +167,7 @@
                             @foreach($categories as $category)
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                        <x-shopper-input.checkbox id="category-{{ $category->id }}" wire:model="category_ids" value="{{ $category->id }}" />
+                                        <x-shopper-input.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="category-{{ $category->id }}" class="font-medium text-secondary-700 dark:text-secondary-300">{{ $category->name }}</label>

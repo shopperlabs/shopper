@@ -13,7 +13,7 @@
                 <div class="px-4 py-5 bg-white dark:bg-secondary-800 sm:px-5 space-y-4">
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <x-shopper-input.checkbox wire:model.lazy="backorder" id="backorder" />
+                            <x-shopper-input.checkbox wire:model.defer="backorder" id="backorder" />
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper-label for="backorder" :value="__('This product can be returned')" />
@@ -22,7 +22,7 @@
                     </div>
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <x-shopper-input.checkbox wire:model.debounce.350ms="requiresShipping" id="required_shipping" />
+                            <x-shopper-input.checkbox wire:model.lazy="requiresShipping" id="required_shipping" />
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper-label for="required_shipping" :value="__('This product will be shipped')" />
@@ -55,36 +55,36 @@
                     <div class="bg-white dark:bg-secondary-800 shadow sm:rounded-md sm:overflow-hidden p-4 sm:p-5">
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 sm:gap-y-4">
                             <x-shopper-input.group class="sm:col-span-1" label="Width">
-                                <x-shopper-input.text wire:model="widthValue" id="WidthValue" type="text" placeholder="0" />
+                                <x-shopper-input.text wire:model.defer="widthValue" id="WidthValue" type="text" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper-input.select wire:model="WidthUnit" aria-label="{{ __('Width Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper-input.select wire:model.defer="WidthUnit" aria-label="{{ __('Width Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="cm">cm</option>
                                         <option value="m">m</option>
                                     </x-shopper-input.select>
                                 </div>
                             </x-shopper-input.group>
                             <x-shopper-input.group class="sm:col-span-1" label="Height">
-                                <x-shopper-input.text wire:model="heightValue" id="heightValue" type="text" class="pl-3 pr-12" placeholder="0" />
+                                <x-shopper-input.text wire:model.defer="heightValue" id="heightValue" type="text" class="pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper-input.select wire:model="heightUnit" aria-label="{{ __('Height Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper-input.select wire:model.defer="heightUnit" aria-label="{{ __('Height Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="cm">cm</option>
                                         <option value="m">m</option>
                                     </x-shopper-input.select>
                                 </div>
                             </x-shopper-input.group>
                             <x-shopper-input.group class="sm:col-span-1" label="Weight">
-                                <x-shopper-input.text wire:model="weightValue" id="weightValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
+                                <x-shopper-input.text wire:model.defer="weightValue" id="weightValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper-input.select wire:model="weightUnit" aria-label="{{ __('Weight Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper-input.select wire:model.defer="weightUnit" aria-label="{{ __('Weight Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="kg">kg</option>
                                         <option value="g">g</option>
                                     </x-shopper-input.select>
                                 </div>
                             </x-shopper-input.group>
                             <x-shopper-input.group class="sm:col-span-1" label="Volume">
-                                <x-shopper-input.text wire:model="volumeValue" id="VolumeValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
+                                <x-shopper-input.text wire:model.defer="volumeValue" id="VolumeValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper-input.select wire:model="VolumeUnit" aria-label="{{ __('Volume Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper-input.select wire:model.defer="VolumeUnit" aria-label="{{ __('Volume Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="l">l</option>
                                         <option value="ml">ml</option>
                                     </x-shopper-input.select>

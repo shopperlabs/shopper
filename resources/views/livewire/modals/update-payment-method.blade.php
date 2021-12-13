@@ -32,22 +32,22 @@
             </div>
             <div class="sm:col-span-2">
                 <x-shopper-input.group label="Custom payment method name" for="title" :error="$errors->first('title')" isRequired>
-                    <x-shopper-input.text wire:model.lazy="title" id="title" type="text" />
+                    <x-shopper-input.text wire:model.defer="title" id="title" type="text" />
                 </x-shopper-input.group>
             </div>
             <div class="sm:col-span-2">
                 <x-shopper-input.group label="Payment Website Documentation" for="link_url">
-                    <x-shopper-input.text wire:model.lazy="linkUrl" type="url" id="link_url" placeholder="https://doc.myprovider.com" />
+                    <x-shopper-input.text wire:model.defer="linkUrl" type="url" id="link_url" placeholder="https://doc.myprovider.com" />
                 </x-shopper-input.group>
             </div>
             <div class="sm:col-span-2">
                 <x-shopper-input.group label="Additional details" for="description" helpText="Displays to customers when they’re choosing a payment method.">
-                    <x-shopper-input.textarea wire:model.lazy="description" id="description" />
+                    <x-shopper-input.textarea wire:model.defer="description" id="description" />
                 </x-shopper-input.group>
             </div>
             <div class="sm:col-span-2">
                 <x-shopper-input.group label="Payment instructions" for="instructions" helpText="Displays to customers after they place an order with this payment method.">
-                    <x-shopper-input.textarea wire:model.lazy="instructions" id="instructions" />
+                    <x-shopper-input.textarea wire:model.defer="instructions" id="instructions" />
                 </x-shopper-input.group>
             </div>
         </div>

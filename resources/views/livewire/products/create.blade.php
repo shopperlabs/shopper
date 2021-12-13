@@ -22,7 +22,7 @@
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
                     <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper-input.text wire:model="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Apple, Nike, Samsung...') }}" />
+                        <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Apple, Nike, Samsung...') }}" />
                     </x-shopper-input.group>
                 </div>
                 <div class="mt-5 border-t border-secondary-200 dark:border-secondary-700 pt-4">
@@ -45,7 +45,7 @@
                             <x-inputs.currency
                                 :label="__('Price amount')"
                                 placeholder="0.00"
-                                wire:model="price_amount"
+                                wire:model.defer="price_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
                                 min="0"
                                 thousands=","
@@ -57,7 +57,7 @@
                             <x-inputs.currency
                                 :label="__('Compare at price')"
                                 placeholder="0.00"
-                                wire:model.lazy="old_price_amount"
+                                wire:model.defer="old_price_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
                                 min="0"
                                 thousands=","
@@ -71,7 +71,7 @@
                             <x-inputs.currency
                                 :label="__('Cost per item')"
                                 placeholder="0.00"
-                                wire:model.lazy="cost_amount"
+                                wire:model.defer="cost_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
                                 min="0"
                                 thousands=","
@@ -89,12 +89,12 @@
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 p-4 sm:p-5">
                         <div class="sm:col-span-1">
                             <x-shopper-input.group label="SKU (Stock Keeping Unit)" for="sku" :error="$errors->first('sku')">
-                                <x-shopper-input.text wire:model="sku" id="sku" type="text" autocomplete="off" />
+                                <x-shopper-input.text wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
                             </x-shopper-input.group>
                         </div>
                         <div class="sm:col-span-1">
                             <x-shopper-input.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
-                                <x-shopper-input.text wire:model="barcode" id="barcode" type="text" autocomplete="off" />
+                                <x-shopper-input.text wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
                             </x-shopper-input.group>
                             @if($barcodeImage)
                                 <div class="mt-2 rounded-sm w-auto flex-shrink-0">
@@ -107,13 +107,13 @@
                         @if($inventories->count() <= 1)
                             <div class="sm:col-span-1">
                                 <x-shopper-input.group label="Quantity" for="quantity">
-                                    <x-shopper-input.text wire:model="quantity.{{ $inventories->first()->id }}" id="quantity" type="number" min="0" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="quantity.{{ $inventories->first()->id }}" id="quantity" type="number" min="0" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
                         @endif
                         <div class="sm:col-span-1">
                             <x-shopper-input.group label="Safety Stock" for="security_stock" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
-                                <x-shopper-input.text wire:model="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
+                                <x-shopper-input.text wire:model.defer="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
                             </x-shopper-input.group>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                                             <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $inventory->name }}</span>
                                         </div>
                                         <div class="col-span-1 pl-4 flex justify-end">
-                                            <x-shopper-input.text wire:model="quantity.{{ $inventory->id }}" wire:key="inventory-{{ $inventory->id }}" type="number" class="block w-24" aria-label="{{ __('Inventory quantity') }}"  min="0" autocomplete="off" />
+                                            <x-shopper-input.text wire:model.defer="quantity.{{ $inventory->id }}" wire:key="inventory-{{ $inventory->id }}" type="number" class="block w-24" aria-label="{{ __('Inventory quantity') }}"  min="0" autocomplete="off" />
                                         </div>
                                     </div>
                                 @endforeach
@@ -153,7 +153,7 @@
                     <div class="mt-5 space-y-4">
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <x-shopper-input.checkbox wire:model.lazy="backorder" id="backorder" />
+                                <x-shopper-input.checkbox wire:model.defer="backorder" id="backorder" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <x-shopper-label for="backorder" :value="__('This product can be returned')" />
@@ -177,36 +177,36 @@
                         <p class="text-sm text-secondary-500 dark:text-secondary-400 leading-5">{{ __('Used to calculate shipping charges during checkout and to label prices during order processing.') }}</p>
                         <div class="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-6 sm:gap-y-4">
                             <x-shopper-input.group class="sm:col-span-1" label="Width">
-                                <x-shopper-input.text wire:model="widthValue" id="WidthValue" type="text" placeholder="0" />
+                                <x-shopper-input.text wire:model.defer="widthValue" id="WidthValue" type="text" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper-input.select wire:model="WidthUnit" aria-label="{{ __('Width Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper-input.select wire:model.defer="WidthUnit" aria-label="{{ __('Width Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="cm">cm</option>
                                         <option value="m">m</option>
                                     </x-shopper-input.select>
                                 </div>
                             </x-shopper-input.group>
                             <x-shopper-input.group class="sm:col-span-1" label="Height">
-                                <x-shopper-input.text wire:model="heightValue" id="heightValue" type="text" class="pl-3 pr-12" placeholder="0" />
+                                <x-shopper-input.text wire:model.defer="heightValue" id="heightValue" type="text" class="pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper-input.select wire:model="heightUnit" aria-label="{{ __('Height Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper-input.select wire:model.defer="heightUnit" aria-label="{{ __('Height Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="cm">cm</option>
                                         <option value="m">m</option>
                                     </x-shopper-input.select>
                                 </div>
                             </x-shopper-input.group>
                             <x-shopper-input.group class="sm:col-span-1" label="Weight">
-                                <x-shopper-input.text wire:model="weightValue" id="weightValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
+                                <x-shopper-input.text wire:model.defer="weightValue" id="weightValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper-input.select wire:model="weightUnit" aria-label="{{ __('Weight Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper-input.select wire:model.defer="weightUnit" aria-label="{{ __('Weight Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="kg">kg</option>
                                         <option value="g">g</option>
                                     </x-shopper-input.select>
                                 </div>
                             </x-shopper-input.group>
                             <x-shopper-input.group class="sm:col-span-1" label="Volume">
-                                <x-shopper-input.text wire:model="volumeValue" id="VolumeValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
+                                <x-shopper-input.text wire:model.defer="volumeValue" id="VolumeValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper-input.select wire:model="VolumeUnit" aria-label="{{ __('Volume Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper-input.select wire:model.defer="VolumeUnit" aria-label="{{ __('Volume Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="l">l</option>
                                         <option value="ml">ml</option>
                                     </x-shopper-input.select>
@@ -239,7 +239,7 @@
                 @if($updateSeo)
                     <div class="px-4 py-5 sm:px-6 space-y-5">
                         <x-shopper-input.group for="seo_title" label="Title">
-                            <x-shopper-input.text wire:model="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                            <x-shopper-input.text wire:model.lazy="seoTitle" id="seo_title" type="text" autocomplete="off" />
                         </x-shopper-input.group>
                         <div>
                             <div class="flex items-center justify-between">
@@ -308,7 +308,7 @@
                     </div>
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         <x-shopper-input.group class="p-4 sm:p-5" label="Brand" for="brand_id">
-                            <x-shopper-input.select wire:model.lazy="brand_id" id="brand_id">
+                            <x-shopper-input.select wire:model.defer="brand_id" id="brand_id">
                                 <option value="0">{{ __('No brand') }}</option>
                                 @foreach($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -319,7 +319,7 @@
                             <x-select
                                 :label="__('Collections')"
                                 placeholder="Select collections"
-                                wire:model="collection_ids"
+                                wire:model.defer="collection_ids"
                                 class="dark:bg-secondary-700"
                                 multiselect
                             >
@@ -343,7 +343,7 @@
                             @foreach($categories as $category)
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                        <x-shopper-input.checkbox id="category-{{ $category->id }}" wire:model="category_ids" value="{{ $category->id }}" />
+                                        <x-shopper-input.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="category-{{ $category->id }}" class="font-medium text-secondary-700 dark:text-secondary-300">{{ $category->name }}</label>

@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
 <div x-data class="bg-white dark:bg-secondary-800 rounded-lg p-4 sm:p-6 shadow-md">
     <div class="pb-5 border-b border-secondary-200 dark:border-secondary-700 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <div class="flex-1 min-w-0 max-w-2xl">
@@ -68,7 +64,3 @@
         @endforelse
     </dl>
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endpush

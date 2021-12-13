@@ -12,11 +12,11 @@
             <div class="p-5 sm:p-5">
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-5">
                     <x-shopper-input.group class="sm:col-span-1" label="SKU (Stock Keeping Unit)" for="sku" :error="$errors->first('sku')">
-                        <x-shopper-input.text wire:model.lazy="sku" id="sku" type="text" autocomplete="off" />
+                        <x-shopper-input.text wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
                     </x-shopper-input.group>
                     <div class="sm:col-span-1">
                         <x-shopper-input.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
-                            <x-shopper-input.text wire:model.lazy="barcode" id="barcode" type="text" autocomplete="off" />
+                            <x-shopper-input.text wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
                         </x-shopper-input.group>
                         @if($barcodeImage)
                             <div class="mt-2 rounded-sm w-auto flex-shrink-0">
@@ -25,7 +25,7 @@
                         @endif
                     </div>
                     <x-shopper-input.group class="sm:col-span-1" label="Safety Stock" for="security_stock">
-                        <x-shopper-input.text wire:model="securityStock" id="security_stock" type="number" min="0" autocomplete="off" />
+                        <x-shopper-input.text wire:model.defer="securityStock" id="security_stock" type="number" min="0" autocomplete="off" />
                     </x-shopper-input.group>
                 </div>
             </div>

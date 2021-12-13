@@ -20,12 +20,12 @@
                     </div>
                 @else
                     <x-shopper-input.group label="Value" for="value" :error="$errors->first('value')">
-                        <x-shopper-input.text wire:model.lazy="value" type="text" id="value" placeholder="My value" />
+                        <x-shopper-input.text wire:model.defer="value" type="text" id="value" placeholder="My value" />
                     </x-shopper-input.group>
                 @endif
             </div>
             <x-shopper-input.group label="Key" for="key" class="sm:col-span-2" :error="$errors->first('key')" helpText="The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format">
-                <x-shopper-input.text wire:model.lazy="key" type="text" id="key" placeholder="my_key" />
+                <x-shopper-input.text wire:model.defer="key" type="text" id="key" placeholder="my_key" />
             </x-shopper-input.group>
         </div>
     </x-slot>

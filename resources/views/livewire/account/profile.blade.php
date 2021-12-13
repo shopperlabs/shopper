@@ -13,7 +13,7 @@
                 <div class="bg-white dark:bg-secondary-800 shadow rounded-md">
                     <div class="px-4 py-5 sm:p-6">
                         <x-shopper-input.group label="Photo" for="picture" :error="$errors->first('picture')" noShadow>
-                            <x-shopper-input.avatar-upload wire:model="picture" id="picture">
+                            <x-shopper-input.avatar-upload wire:model.defer="picture" id="picture">
                                 <span class="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-secondary-100 dark:bg-secondary-700">
                                     @if($picture)
                                         <img class="h-full w-full bg-cover" src="{{ $picture->temporaryUrl() }}" alt="">
@@ -25,11 +25,11 @@
                         </x-shopper-input.group>
                         <div class="grid gap-4 grid-cols-6 sm:gap-5 mt-5">
                             <x-shopper-input.group for="first_name" label="First name" class="col-span-6 sm:col-span-3" :error="$errors->first('first_name')">
-                                <x-shopper-input.text type='text' wire:model.lazy='first_name' autocomplete='off' id='first_name' />
+                                <x-shopper-input.text type='text' wire:model.defer='first_name' autocomplete='off' id='first_name' />
                             </x-shopper-input.group>
 
                             <x-shopper-input.group for="last_name" label="Last name" class="col-span-6 sm:col-span-3" :error="$errors->first('last_name')">
-                                <x-shopper-input.text type='text' wire:model.lazy='last_name' autocomplete='off' id='last_name' />
+                                <x-shopper-input.text type='text' wire:model.defer='last_name' autocomplete='off' id='last_name' />
                             </x-shopper-input.group>
 
                             <x-shopper-input.group label="Email address" for="email" class="col-span-6 sm:col-span-3" :error="$errors->first('email')">
@@ -47,7 +47,7 @@
                                     <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative">
-                                    <x-shopper-input.text wire:model="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
                                 </div>
                             </div>
                         </div>

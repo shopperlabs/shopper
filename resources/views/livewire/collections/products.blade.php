@@ -17,7 +17,7 @@
                             {{ __('Sort by:') }}
                         </span>
                     </div>
-                    <x-shopper-input.select wire:model="sortBy" id="sort" class="pl-18 pr-10 py-2">
+                    <x-shopper-input.select wire:model.lazy="sortBy" id="sort" class="pl-18 pr-10 py-2">
                         <option value="alpha_asc">{{ __('Alpha Asc') }}</option>
                         <option value="alpha_desc">{{ __('Alpha Desc') }}</option>
                         <option value="price_desc">{{ __('Price Desc') }}</option>
