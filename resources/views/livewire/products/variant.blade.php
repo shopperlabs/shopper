@@ -30,7 +30,7 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Variant information') }}</h3>
+                    <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">{{ __('Variant information') }}</h3>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
@@ -75,31 +75,50 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="mt-2 text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Pricing') }}</h3>
+                    <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white">{{ __('Pricing') }}</h3>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <div class="shadow overflow-hidden rounded-md">
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
-                            <x-shopper-input.group label="Price amount" for="price_amount" class="sm:col-span-2">
-                                <x-shopper-input.text wire:model.lazy="price_amount" id="price_amount" type="text" autocomplete="off" min="0" placeholder="0.00" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-secondary-500 sm:text-sm sm:leading-5 dark:text-secondary-400">{{ $currency }}</span>
-                                </div>
-                            </x-shopper-input.group>
-                            <x-shopper-input.group label="Compare at price" for="old_price_amount" class="sm:col-span-2">
-                                <x-shopper-input.text wire:model.lazy="old_price_amount" id="old_price_amount" type="text" min="0" autocomplete="off" placeholder="0.00" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-secondary-500 sm:text-sm sm:leading-5 dark:text-secondary-400">{{ $currency }}</span>
-                                </div>
-                            </x-shopper-input.group>
-                            <x-shopper-input.group label="Cost per item" for="cost_amount" class="sm:col-span-2" helpText="Customers won’t see this.">
-                                <x-shopper-input.text wire:model.lazy="cost_amount" id="cost_amount" type="text" autocomplete="off" min="0" placeholder="0.00" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                    <span class="text-secondary-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
-                                </div>
-                            </x-shopper-input.group>
+                            <div class="sm:col-span-2">
+                                <x-inputs.currency
+                                    :label="__('Price amount')"
+                                    placeholder="0.00"
+                                    wire:model.defer="price_amount"
+                                    class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
+                                    min="0"
+                                    thousands=","
+                                    decimal="."
+                                    :suffix="$currency"
+                                />
+                            </div>
+                            <div class="sm:col-span-2">
+                                <x-inputs.currency
+                                    :label="__('Compare at price')"
+                                    placeholder="0.00"
+                                    wire:model.defer="old_price_amount"
+                                    class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
+                                    min="0"
+                                    thousands=","
+                                    decimal="."
+                                    :suffix="$currency"
+                                />
+                            </div>
+                            <div class="sm:col-span-2">
+                                <x-inputs.currency
+                                    :label="__('Cost per item')"
+                                    placeholder="0.00"
+                                    wire:model.defer="cost_amount"
+                                    class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
+                                    min="0"
+                                    thousands=","
+                                    decimal="."
+                                    :suffix="$currency"
+                                    :hint="__('Customers won’t see this.')"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,7 +136,7 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="mt-2 text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Inventory') }}</h3>
+                    <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white">{{ __('Inventory') }}</h3>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
@@ -126,15 +145,15 @@
                         <div class="px-4 py-5 sm:p-6">
                             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                                 <x-shopper-input.group label="SKU (Stock Keeping Unit)" for="sku" class="sm:col-span-1" :error="$errors->first('sku')">
-                                    <x-shopper-input.text wire:model.lazy="sku" id="sku" type="text" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
                                 </x-shopper-input.group>
                                 <x-shopper-input.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" class="sm:col-span-1" :error="$errors->first('barcode')">
-                                    <x-shopper-input.text wire:model.lazy="barcode" id="barcode" type="text" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
                             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 pt-4 sm:pt-5">
                                 <x-shopper-input.group label="Safety Stock" for="security_stock" class="sm:col-span-1" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
-                                    <x-shopper-input.text wire:model="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
                         </div>
