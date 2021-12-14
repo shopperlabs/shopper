@@ -1,10 +1,9 @@
 <x-shopper-modal
-    contentClasses="relative p-4 sm:px-6 sm:px-5"
+    contentClasses="relative p-4 sm:px-5"
     footerClasses="border-t border-secondary-200 dark:border-secondary-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
-
     <x-slot name="content">
-        <div class="px-4 py-5 sm:p-6 w-full h-auto md:h-125 overflow-y-auto hide-scroll">
+        <div class="px-1 py-5 w-full h-auto md:h-125 overflow-y-auto hide-scroll">
             <div class="space-y-5">
                 <div class="space-y-5">
                     <div>
@@ -20,30 +19,43 @@
                             </x-shopper-input.group>
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-4">
                                 <div class="col-span-6 sm:col-span-3">
-                                    <x-shopper-input.group label="Price amount" for="price_amount_variant">
-                                        <x-shopper-input.text wire:model.defer="price_amount" id="price_amount_variant" type="text" autocomplete="off" min="0" autocomplete="off" placeholder="0.00" />
-                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                            <span class="text-secondary-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
-                                        </div>
-                                    </x-shopper-input.group>
+                                    <x-inputs.currency
+                                        :label="__('Price amount')"
+                                        placeholder="0.00"
+                                        wire:model.defer="price_amount"
+                                        class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
+                                        min="0"
+                                        thousands=","
+                                        decimal="."
+                                        :suffix="$currency"
+                                    />
                                 </div>
                                 <div class="col-span-6 sm:col-span-3">
-                                    <x-shopper-input.group label="Compare at price" for="old_price_amount_variant">
-                                        <x-shopper-input.text wire:model.defer="old_price_amount" id="old_price_amount_variant" type="text" autocomplete="off" min="0" autocomplete="off" placeholder="0.00" />
-                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                            <span class="text-secondary-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
-                                        </div>
-                                    </x-shopper-input.group>
+                                    <x-inputs.currency
+                                        :label="__('Compare at price')"
+                                        placeholder="0.00"
+                                        wire:model.defer="old_price_amount"
+                                        class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
+                                        min="0"
+                                        thousands=","
+                                        decimal="."
+                                        :suffix="$currency"
+                                    />
                                 </div>
                             </div>
                             <div class="grid gap-4 grid-cols-6 sm:gap-6">
                                 <div class="col-span-6 sm:col-span-3">
-                                    <x-shopper-input.group label="Cost per item" for="cost_amount_variant" helpText="Customers won’t see this.">
-                                        <x-shopper-input.text wire:model.defer="cost_amount" id="cost_amount_variant" type="text" autocomplete="off" min="0" autocomplete="off" placeholder="0.00" />
-                                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                            <span class="text-secondary-500 sm:text-sm sm:leading-5">{{ $currency }}</span>
-                                        </div>
-                                    </x-shopper-input.group>
+                                    <x-inputs.currency
+                                        :label="__('Cost per item')"
+                                        placeholder="0.00"
+                                        wire:model.defer="cost_amount"
+                                        class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
+                                        min="0"
+                                        thousands=","
+                                        decimal="."
+                                        :suffix="$currency"
+                                        :hint="__('Customers won’t see this.')"
+                                    />
                                 </div>
                             </div>
                         </div>

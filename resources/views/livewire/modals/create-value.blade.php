@@ -10,6 +10,10 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2">
+            <x-shopper-input.group label="Value" for="value" class="sm:col-span-2" :error="$errors->first('value')">
+                <x-shopper-input.text wire:model.defer="value" type="text" id="value" placeholder="My value" />
+            </x-shopper-input.group>
+
             <div class="sm:col-span-2">
                 @if($type === 'colorpicker')
                     <div wire:ignore>
@@ -26,9 +30,6 @@
                     </x-shopper-input.group>
                 @endif
             </div>
-            <x-shopper-input.group label="Value" for="value" class="sm:col-span-2" :error="$errors->first('value')">
-                <x-shopper-input.text wire:model.defer="value" type="text" id="value" placeholder="My value" />
-            </x-shopper-input.group>
         </div>
     </x-slot>
 

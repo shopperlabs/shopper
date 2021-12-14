@@ -9,10 +9,10 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 class DeleteProduct extends ModalComponent
 {
     public int $productId;
-    public string $type = 'product';
+    public string $type;
     public ?string $route = null;
 
-    public function mount(int $id, string $type = 'product', ?string $route = null)
+    public function mount(int $id, string $type, string $route = null)
     {
         $this->productId = $id;
         $this->type = $type;
@@ -33,7 +33,7 @@ class DeleteProduct extends ModalComponent
 
         session()->flash('success', __('The :item has been correctly removed.', ['item' => $this->type]));
 
-        if ($this->route) {
+        if ($this->type === 'product') {
             $this->redirectRoute('shopper.products.index');
         } else {
             $this->redirect($this->route);
