@@ -47,16 +47,6 @@ if (! \function_exists('generate_number')) {
     }
 }
 
-if (! \function_exists('gravatar')) {
-    /**
-     * Access the gravatar helper.
-     */
-    function gravatar()
-    {
-        return app('gravatar');
-    }
-}
-
 if (! \function_exists('setEnvironmentValue')) {
     /**
      * Function to set or update .env variable.

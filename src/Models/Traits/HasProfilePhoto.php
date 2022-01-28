@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Traits;
+namespace Shopper\Framework\Models\Traits;
+
+use Illuminate\Support\Facades\Storage;
 
 trait HasProfilePhoto
 {
@@ -9,16 +11,10 @@ trait HasProfilePhoto
      *
      * @return string
      */
-    public function getProfilePhotoUrlAttribute(): string
+    public function getPictureAttribute(): string
     {
         if ($this->avatar_type === 'storage') {
-            return $this->getFirstMediaUrl('avatar');
-        }
-
-        $social_avatar = $this->providers()->where('provider', $this->avatar_type)->first();
-
-        if ($social_avatar && strlen($social_avatar->avatar)) {
-            return $social_avatar->avatar;
+            return Storage::disk(config('shopper.system.storage.disks.avatars'))->url($this->avatar_location);
         }
 
         return $this->defaultProfilePhotoUrl();
@@ -31,6 +27,6 @@ trait HasProfilePhoto
      */
     protected function defaultProfilePhotoUrl(): string
     {
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=065F46&background=D1FAE5';
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->full_name) . '&color=1d4ed8&background=dbeafe';
     }
 }
