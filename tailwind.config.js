@@ -14,10 +14,6 @@ module.exports = {
     './vendor/wireui/wireui/ts/**/*.ts',
     './vendor/wireui/wireui/src/View/**/*.php'
   ],
-  safelist: [
-    'sm:max-w-2xl',
-    'sm:max-w-4xl'
-  ],
   theme: {
     extend: {
       colors: {
