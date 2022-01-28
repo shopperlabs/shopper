@@ -29,7 +29,7 @@
             :url="route('shopper.products.create')"
             class="lg:pb-0"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 350 294.7">
                     <style>
                         .st0{fill:#233876}.st2{clip-path:url(#SVGID_2_)}.st3{fill:#1c64f2}.st4{fill:#fafafa}.st5{fill:#263238}.st8{clip-path:url(#SVGID_4_)}.st10,.st11{clip-path:url(#SVGID_6_)}.st11{opacity:.8}.st12{fill:#fff}.st13{opacity:.7}.st18{fill:#6875f5}.st30{fill:#6e3b25}.st32{fill:#fdc25e}.st38{fill:#2647c8}.st42{fill:#0c1540}

@@ -91,7 +91,7 @@
         <div class="px-4 py-4 sm:px-6">
             <label for="filter" class="sr-only">{{ __('Search products') }}</label>
             <div class="flex rounded-md shadow-sm">
-                <div class="relative flex-grow focus-within:z-10">
+                <div class="relative grow focus-within:z-10">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" />
@@ -130,7 +130,7 @@
                                 <tr class="hover:bg-secondary-50">
                                     <td class="px-6 py-4 border-b border-secondary-200">
                                         <a href="{{ route('shopper.products.edit', $product) }}" class="flex items-center">
-                                            <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="shrink-0 h-10 w-10">
                                                 @if($product->preview_image_link !== null)
                                                     <img class="h-10 w-10 rounded-md object-cover" src="{{ $product->preview_image_link }}" alt="{{ $product->id }}" />
                                                 @else

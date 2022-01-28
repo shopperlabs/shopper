@@ -2,7 +2,7 @@
 
 <div x-data="{ focused: false }">
     @if($file)
-        <div class="flex-shrink-0 rounded-md overflow-hidden">
+        <div class="shrink-0 rounded-md overflow-hidden">
             <img class="h-40 w-full object-cover rounded-md" src="{{ $file->temporaryUrl() }}" alt="" />
             <div class="flex items-center mt-2">
                 <button {{ $attributes->wire('click') }} type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">

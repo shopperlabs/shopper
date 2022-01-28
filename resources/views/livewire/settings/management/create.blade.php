@@ -1,6 +1,6 @@
 <div>
     <x:shopper-breadcrumb back="shopper.settings.users">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.users')" title="Users & roles" />
     </x:shopper-breadcrumb>
 
@@ -70,7 +70,7 @@
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <span wire:model="send_mail" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-data="{ on: false }" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors  dark:bg-secondary-700">
+                            <span wire:model="send_mail" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-data="{ on: false }" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors  dark:bg-secondary-700">
                                 <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                 <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform"></span>
                             </span>
@@ -198,7 +198,7 @@
                                 @if($is_admin)
                                     <div class="rounded-md bg-yellow-50 p-4 mt-6">
                                         <div class="flex">
-                                            <div class="flex-shrink-0">
+                                            <div class="shrink-0">
                                                 <x-heroicon-s-exclamation class="h-5 w-5 text-yellow-400" />
                                             </div>
                                             <div class="ml-3">

@@ -28,7 +28,7 @@
             permission="add_discounts"
             :url="route('shopper.discounts.create')"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 528 380">
                     <style>
                         .st0{fill:#e1e1e1}.st1{fill:#ececec}.st2{fill:#407bff}.st4{fill:#f5f5f5}.st5{fill:#263238}.st6,.st7{enable-background:new}.st6{fill:#fff;opacity:.6}.st7{opacity:.2}.st8{fill:#fff}.st9{opacity:.3;enable-background:new}.st10{fill:#ebb376}.st11{stroke-width:.4885}.st11,.st16,.st18{fill:none;stroke:#263238;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}.st18{stroke:#407bff}.st19{fill:#0064f5}.st21{fill:#1a2e35}
@@ -201,13 +201,13 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="mt-4 flex-shrink-0 sm:mt-0 flex space-x-6 items-center">
-                                            <div class="flex-shrink-0 flex">
+                                        <div class="mt-4 shrink-0 sm:mt-0 flex space-x-6 items-center">
+                                            <div class="shrink-0 flex">
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $discount->is_active ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
                                                     {{ $discount->is_active ? __('Visible'): __('Not Visible') }}
                                                 </span>
                                             </div>
-                                            <div class="flex-shrink-0 flex">
+                                            <div class="shrink-0 flex">
                                                 @if($discount->start_at > now())
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-yellow-100 text-yellow-800">
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
@@ -236,7 +236,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="ml-5 flex-shrink-0">
+                                    <div class="ml-5 shrink-0">
                                         <svg class="h-5 w-5 text-secondary-400" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                         </svg>

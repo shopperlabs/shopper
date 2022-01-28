@@ -1,7 +1,7 @@
 <div class="flex flex-col justify-between bg-primary-800 text-center w-16">
     <div>
         <div class="px-2 bg-white">
-            <a class="flex-shrink-0 flex items-center justify-center p-2" href="{{ route('shopper.dashboard') }}">
+            <a class="shrink-0 flex items-center justify-center p-2" href="{{ route('shopper.dashboard') }}">
                 <x-shopper-application-icon class="h-8 w-auto" />
             </a>
         </div>
@@ -27,11 +27,11 @@
             </ul>
         </div>
     </div>
-    <div class="flex-shrink-0 flex flex-col items-center space-y-3 pb-4">
+    <div class="shrink-0 flex flex-col items-center space-y-3 pb-4">
         <button
             type="button"
             aria-pressed="false"
-            class="darkModeToggle bg-secondary-200 dark:bg-secondary-800 relative inline-flex flex-shrink-0 h-6 w-11 my-3 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-primary-800 focus:ring-secondary-500"
+            class="darkModeToggle bg-secondary-200 dark:bg-secondary-800 relative inline-flex shrink-0 h-6 w-11 my-3 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-primary-800 focus:ring-secondary-500"
         >
             <span class="translate-x-0 dark:translate-x-5 relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200">
                 <span class="dark:hidden opacity-100 ease-in duration-200 dark:opacity-0 dark:ease-out dark:duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity" aria-hidden="true">

@@ -52,7 +52,7 @@
 }
 
 .choices[data-type*='select-one']:after {
-  border-color: theme('colors.gray.500') transparent transparent transparent !important;
+  border-color: theme('colors.secondary.500') transparent transparent transparent !important;
 }
 
 .choices[data-type*='select-one'] .choices__input {

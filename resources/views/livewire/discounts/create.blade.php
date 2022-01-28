@@ -1,6 +1,6 @@
 <div x-data="{ modal: false, show: false, on: false }">
     <x:shopper-breadcrumb back="shopper.discounts.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.discounts.index')" title="Discounts" />
     </x:shopper-breadcrumb>
 
@@ -23,7 +23,7 @@
                 <div class="w-full mb-3">
                     <div class="flex items-center justify-between">
                         <x-shopper-label for="code" :value="__('Code')" />
-                        <button wire:click="generate" type="button" class="text-primary-600 text-sm leading-5 hover:text-primary-500 dark:text-primary-500">{{ __('Generate code') }}</button>
+                        <button wire:click="generate" type="button" class="text-primary-600 text-sm leading-5 hover:text-primary-500 dark:text-primary-500/50">{{ __('Generate code') }}</button>
                     </div>
                     <div class="mt-4 relative rounded-md shadow-sm">
                         <x-shopper-input.text wire:model.lazy="code" id="code" type="text" placeholder="{{ __('Eg.: NOELCMR900') }}" autocomplete="off" />
@@ -107,7 +107,7 @@
                                     <div class="flex items-center justify-between py-2">
                                         <div class="flex items-center">
                                             @if($productDetail['image'] !== null)
-                                                <span class="flex-shrink-0 h-10 w-10 rounded-md overflow-hidden">
+                                                <span class="shrink-0 h-10 w-10 rounded-md overflow-hidden">
                                                     <img class="object-cover object-center w-full h-full block" src="{{ $productDetail['image'] }}" alt="" />
                                                 </span>
                                             @else
@@ -325,13 +325,13 @@
                         <p class="text-sm mt-4 font-normal text-secondary-500 leading-5 dark:text-secondary-400">{{ __('Setup discount visibility for the customers.') }}</p>
                         <div class="mt-3 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
-                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 flex-shrink-0">
+                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 shrink-0">
                                     <x-heroicon-o-eye class="h-5 w-5 text-white" />
                                 </span>
                                 <span class="font-semibold ml-3 text-sm">{{ __('Visible') }}</span>
                             </div>
                             <div>
-                                <span wire:model="is_active" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-secondary-200">
+                                <span wire:model="is_active" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-secondary-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                     <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
                                 </span>
@@ -492,7 +492,7 @@
                                 </span>
                                 <div class="flex flex-1 items-center justify-between">
                                     <div class="flex items-center space-x-2">
-                                        <div class="flex-shrink-0">
+                                        <div class="shrink-0">
                                             <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="{{ $customer->email }}">
                                         </div>
                                         <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">{{ $customer->full_name }}</span>

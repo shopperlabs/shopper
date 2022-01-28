@@ -1,8 +1,8 @@
 <div>
     <x:shopper-breadcrumb back="shopper.products.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.products.edit', $product)" :title="$product->name" />
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <span class="text-secondary-500 dark:text-secondary-400">{{ $name }}</span>
     </x:shopper-breadcrumb>
     <div class="mt-3 bg-secondary-100 z-30 relative pb-5 border-b border-secondary-200 dark:bg-secondary-900 dark:border-secondary-700">
@@ -161,8 +161,8 @@
                             <div class="flex items-center justify-between">
                                 <h4 class="block text-sm font-medium leading-5 text-secondary-900 dark:text-white">{{ __('Quantity Inventory') }}</h4>
                                 <div class="ml-4 sm:ml-0 flex items-center space-x-3">
-                                    <button wire:click="$emit('openModal', 'shopper-modals.update-variant-stock', {{ json_encode([$variant->id]) }})" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-500">{{ __('Update stock') }}</button>
-                                    <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-500">{{ __('Manage Inventories') }}</a>
+                                    <button wire:click="$emit('openModal', 'shopper-modals.update-variant-stock', {{ json_encode([$variant->id]) }})" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 dark:text-primary-500/50 dark:hover:text-primary-500">{{ __('Update stock') }}</button>
+                                    <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 dark:text-primary-500/50 dark:hover:text-primary-500">{{ __('Manage Inventories') }}</a>
                                 </div>
                             </div>
                             <div class="mt-4 divide-y divide-secondary-200 dark:divide-secondary-700">

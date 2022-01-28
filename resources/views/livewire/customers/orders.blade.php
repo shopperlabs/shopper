@@ -2,7 +2,7 @@
     @forelse($orders as $order)
         <div class="bg-white border border-secondary-200 rounded-md shadow-sm overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:border-secondary-700 dark:divide-secondary-700">
             <div class="bg-secondary-100 dark:bg-secondary-700 py-3 px-4 sm:flex sm:items-center sm:justify-between">
-                <div class="flex-1 flex-grow sm:grid sm:grid-cols-4 sm:gap-5">
+                <div class="flex-1 grow sm:grid sm:grid-cols-4 sm:gap-5">
                     <div>
                         <dt class="text-xs leading-4 uppercase tracking-wider font-medium text-secondary-500 dark:text-secondary-400">
                             {{ __('Order Placed') }}

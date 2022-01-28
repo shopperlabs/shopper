@@ -15,7 +15,7 @@
     }"
 >
     <x:shopper-breadcrumb back="shopper.products.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.products.index')" title="Products" />
     </x:shopper-breadcrumb>
 

@@ -10,7 +10,7 @@
                             @endif
                             <div class="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-secondary-200 group-focus:bg-secondary-200 lg:w-full lg:h-1 lg:bottom-0 lg:top-auto dark:group-hover:bg-secondary-700 dark:group-focus:bg-secondary-700"></div>
                             <div class="pr-6 py-5 flex items-start text-sm leading-5 font-medium space-x-4">
-                                <div class="flex-shrink-0">
+                                <div class="shrink-0">
                                     @if($this->stepOneState())
                                         <div class="w-10 h-10 flex items-center justify-center bg-primary-600 rounded-full">
                                             <svg class="w-6 h-6 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -19,12 +19,12 @@
                                         </div>
                                     @else
                                         <div class="w-10 h-10 flex items-center justify-center border-2 @if($shop_email || $shop_name) border-primary-600 dark:hover:border-primary-500 @else border-secondary-300 dark:border-secondary-700 @endif rounded-full">
-                                            <p class="@if($shop_email || $shop_name) text-primary-600 dark:text-primary-500 @else text-secondary-500 dark:text-secondary-400 @endif">01</p>
+                                            <p class="@if($shop_email || $shop_name) text-primary-600 dark:text-primary-500/50 @else text-secondary-500 dark:text-secondary-400 @endif">01</p>
                                         </div>
                                     @endif
                                 </div>
                                 <div class="mt-0.5 min-w-0">
-                                    <h3 class="text-xs leading-4 font-semibold uppercase tracking-wide @if(($shop_email && empty($shop_name)) || ($shop_name && empty($shop_email))) text-primary-600 dark:text-primary-500 @elseif($this->stepOneState()) text-secondary-900 dark:text-white @else text-secondary-500 dark:text-secondary-400 @endif">{{ __('Store information') }}</h3>
+                                    <h3 class="text-xs leading-4 font-semibold uppercase tracking-wide @if(($shop_email && empty($shop_name)) || ($shop_name && empty($shop_email))) text-primary-600 dark:text-primary-500/50 @elseif($this->stepOneState()) text-secondary-900 dark:text-white @else text-secondary-500 dark:text-secondary-400 @endif">{{ __('Store information') }}</h3>
                                     <p class="text-sm leading-5 font-medium text-secondary-400 dark:text-secondary-500">{{ __('Provide useful information for your store.') }}</p>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                             @endif
                             <div class="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-secondary-200 group-focus:bg-secondary-200 lg:w-full lg:h-1 lg:bottom-0 lg:top-auto dark:group-hover:bg-secondary-700 dark:group-focus:bg-secondary-700"></div>
                             <div class="px-6 py-5 flex items-start text-sm leading-5 font-medium space-x-4 lg:pl-9">
-                                <div class="flex-shrink-0">
+                                <div class="shrink-0">
                                     @if($this->stepTwoState())
                                         <div class="w-10 h-10 flex items-center justify-center bg-primary-600 rounded-full">
                                             <svg class="w-6 h-6 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -48,13 +48,13 @@
                                             </svg>
                                         </div>
                                     @else
-                                        <div class="w-10 h-10 flex items-center justify-center border-2 @if($shop_street_address || $shop_city) border-primary-600 dark:hover:border-primary-500 @else border-secondary-300 dark:border-secondary-700 @endif rounded-full">
-                                            <p class="@if($shop_street_address || $shop_city) text-primary-600 dark:text-primary-500 @else text-secondary-500 dark:text-secondary-400 @endif">02</p>
+                                        <div class="w-10 h-10 flex items-center justify-center border-2 @if($shop_street_address || $shop_city) border-primary-600 dark:hover:border-primary-500/50 @else border-secondary-300 dark:border-secondary-700 @endif rounded-full">
+                                            <p class="@if($shop_street_address || $shop_city) text-primary-600 dark:text-primary-500/50 @else text-secondary-500 dark:text-secondary-400 @endif">02</p>
                                         </div>
                                     @endif
                                 </div>
                                 <div class="mt-0.5 min-w-0">
-                                    <h3 class="text-xs leading-4 font-semibold uppercase tracking-wide @if(($shop_street_address && empty($shop_city)) || ($shop_city && empty($shop_street_address))) text-primary-600 dark:text-primary-500 @elseif($this->stepTwoState()) text-secondary-900 dark:text-white @else text-secondary-500 dark:text-secondary-400 @endif">{{ __('Address Information') }}</h3>
+                                    <h3 class="text-xs leading-4 font-semibold uppercase tracking-wide @if(($shop_street_address && empty($shop_city)) || ($shop_city && empty($shop_street_address))) text-primary-600 dark:text-primary-500/50 @elseif($this->stepTwoState()) text-secondary-900 dark:text-white @else text-secondary-500 dark:text-secondary-400 @endif">{{ __('Address Information') }}</h3>
                                     <p class="text-sm leading-5 font-medium text-secondary-400 dark:text-secondary-500">{{ __('Provide store address information.') }}</p>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                         <button x-data @click="scrollToPosition('#step-tree')" type="button" class="group text-left">
                             <div class="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-secondary-200 group-focus:bg-secondary-200 lg:w-full lg:h-1 lg:bottom-0 lg:top-auto dark:group-hover:bg-secondary-700 dark:group-focus:bg-secondary-700"></div>
                             <div class="py-5 flex items-start text-sm leading-5 font-medium space-x-4 pl-9">
-                                <div class="flex-shrink-0">
+                                <div class="shrink-0">
                                     @if($this->stepTreeState())
                                         <div class="w-10 h-10 flex items-center justify-center bg-primary-600 rounded-full">
                                             <svg class="w-6 h-6 text-white" viewBox="0 0 20 20" fill="currentColor">
@@ -107,13 +107,13 @@
     <main class="max-w-7xl mx-auto py-5 sm:py-10">
         <form wire:submit.prevent="store">
             <div id="step-one" class="px-4 sm:px-6 lg:px-8">
-                <span class="text-sm text-primary-600 uppercase font-medium lg:hidden dark:text-primary-500">{{ __('Step :step of 3', ['step' => 1]) }}</span>
+                <span class="text-sm text-primary-600 uppercase font-medium lg:hidden dark:text-primary-500/50">{{ __('Step :step of 3', ['step' => 1]) }}</span>
                 <h1 class="text-secondary-900 font-bold text-2xl leading-8 mt-2 lg:text-3xl lg:mt-0 dark:text-white">{{ __('Shop configuration') }}</h1>
 
                 <x-shopper-validation-errors />
 
                 <div class="mt-10">
-                    <span class="text-sm font-medium text-primary-600 dark:text-primary-500">{{ __('Step 1 - Shop information') }}</span>
+                    <span class="text-sm font-medium text-primary-600 dark:text-primary-500/50">{{ __('Step 1 - Shop information') }}</span>
                     <h3 class="text-base mt-1.5 font-semibold text-secondary-900 leading-5 dark:text-white">{{ __('Tell us about your Shop') }}</h3>
                     <p class="mt-3 text-secondary-500 leading-5 text-sm lg:max-w-xl dark:text-secondary-400">
                         {{ __('This information will be useful if you want users of your site to directly contact you by email or by your phone number.') }}
@@ -224,7 +224,7 @@
 
             <div id="step-two" class="px-4 sm:px-6 lg:px-8">
                 <div class="mt-8 lg:mt-10 pt-8 lg:pt-10 border-t border-secondary-200 dark:border-secondary-700">
-                    <span class="text-sm font-medium text-primary-600 dark:text-primary-500">{{ __('Step 2 - Address information') }}</span>
+                    <span class="text-sm font-medium text-primary-600 dark:text-primary-500/50">{{ __('Step 2 - Address information') }}</span>
                     <h3 class="text-base mt-1.5 font-bold text-secondary-900 leading-5 dark:text-white">{{ __('You must specify address and location of your shop') }}</h3>
                     <p class="mt-4 text-secondary-500 text-sm lg:max-w-xl dark:text-secondary-400">
                         {{ __("Don't Worry. You can change these setting at any time. Shopper allows you to start with the smallest level so that you can see the evolution of your shop.") }}
@@ -254,7 +254,7 @@
                             @endif
                             <p class="text-sm text-secondary-500 leading-5 dark:text-secondary-400">
                                 Shopper uses <span class="font-medium text-secondary-700">Mapbox</span> to make it easier to locate your store.
-                                To learn more about mapbox, consult the <a href="https://docs.mapbox.com/mapbox-gl-js/api" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:text-primary-500 dark:text-primary-500">documentation</a>.
+                                To learn more about mapbox, consult the <a href="https://docs.mapbox.com/mapbox-gl-js/api" target="_blank" rel="noopener noreferrer" class="text-primary-600 hover:text-primary-500 dark:text-primary-500/50">documentation</a>.
                             </p>
                         </div>
                         <div class="py-2 pr-2">
@@ -303,7 +303,7 @@
                             <div x-data="{ on: @entangle('isDefault') }" class="mt-6">
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                        <span wire:model.defer="isDefault" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
+                                        <span wire:model.defer="isDefault" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
                                             <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                             <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
                                         </span>
@@ -321,7 +321,7 @@
 
             <div class="px-4 sm:px-6 lg:px-8">
                 <div class="mt-8 lg:mt-10 pt-8 lg:pt-10 border-t border-secondary-200 dark:border-secondary-700">
-                    <span class="text-sm font-medium text-primary-600 dark:text-primary-500">{{ __('Step 3 - Shop Social Links') }}</span>
+                    <span class="text-sm font-medium text-primary-600 dark:text-primary-500/50">{{ __('Step 3 - Shop Social Links') }}</span>
                     <h3 class="text-base mt-1.5 font-bold text-secondary-900 leading-5 dark:text-white">
                         {{ __('Your shop on social networks') }} <span class="text-secondary-500 dark:text-secondary-400">{{ __('(Optional)') }}</span>
                     </h3>

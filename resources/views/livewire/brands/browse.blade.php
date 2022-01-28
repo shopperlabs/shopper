@@ -28,7 +28,7 @@
             permission="add_brands"
             :url="route('shopper.brands.create')"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 356 285">
                     <style>
                         .st9{opacity:.5;fill:#fff}.st10{fill:#ac94fa}.st11,.st13{fill:none;stroke:#101c59;stroke-width:.75;stroke-miterlimit:10}.st13{stroke:#52a1bf;stroke-width:.5}.st14{fill:#3f83f8}.st16{fill:#5521b5}.st17{fill:none;stroke:#1b203f;stroke-width:.75;stroke-miterlimit:10}.st19{fill:#6875f5}.st20,.st22{fill:none;stroke:#fff;stroke-width:.5;stroke-miterlimit:10}.st22{stroke:#09005f}

@@ -45,7 +45,7 @@
                                 <tr>
                                     <td class="px-6 py-3 max-w-xl text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                                         <div class="flex items-center space-x-3 lg:pl-2">
-                                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $variant->is_visible ? 'bg-green-600': 'bg-secondary-400' }}"></div>
+                                            <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $variant->is_visible ? 'bg-green-600': 'bg-secondary-400' }}"></div>
                                             <div class="flex items-center">
                                                 @if($variant->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
                                                     <img class="h-8 w-8 rounded object-cover object-center" src="{{ $variant->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />

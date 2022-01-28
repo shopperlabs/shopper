@@ -1,6 +1,6 @@
 <div>
     <x:shopper-breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
     </x:shopper-breadcrumb>
 
@@ -14,7 +14,7 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <div class="flex-shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
+                    <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15.75 7.5h-7.5a.75.75 0 0 0-.75.75v15c0 .414.336.75.75.75h7.5a.75.75 0 0 0 .75-.75v-15a.75.75 0 0 0-.75-.75z" fill="#FFC107"/>
                             <path d="M8.25 15H.75a.75.75 0 0 0-.75.75v7.5c0 .414.336.75.75.75h7.5a.75.75 0 0 0 .75-.75v-7.5a.75.75 0 0 0-.75-.75z" fill="#FFC107"/>
@@ -87,7 +87,7 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <div class="flex-shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
+                    <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.089 23.09l-4.167-4.172 8.95-9.043 4.245 4.243-9.028 8.972z" fill="#8AB4F8"/>
                             <path d="M14.119 5.122L9.876.878.88 9.875a2.998 2.998 0 0 0-.002 4.24l.002.003 8.997 8.996 4.162-4.181-6.798-6.93 6.879-6.88z" fill="#4285F4"/>
@@ -130,7 +130,7 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <div class="flex-shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
+                    <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 4h3a.5.5 0 0 0 .5-.5v-3A.5.5 0 0 0 18 0h-3a5.506 5.506 0 0 0-5.5 5.5V9H6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3.5v10.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V13H17a.5.5 0 0 0 .474-.342l1-3A.5.5 0 0 0 18 9h-4.5V5.5A1.5 1.5 0 0 1 15 4z" fill="#2196F3"/>
                         </svg>

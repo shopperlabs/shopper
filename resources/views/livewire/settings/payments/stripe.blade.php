@@ -14,7 +14,7 @@
                 <div class="p-4 sm:px-6 border-b border-secondary-200 dark:border-secondary-700">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-600' }}"></div>
+                            <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-600' }}"></div>
                             <h3 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
                                 @if ($this->enabled)
                                     {{ __('Stripe is available for your store.') }}
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="px-4 py-5 sm:p-6">
-                    <div class="flex-shrink-0">
+                    <div class="shrink-0">
                         <svg class="h-12 w-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.779 40.164">
                             <g transform="translate(24.946 -325.034)">
                                 <g transform="translate(-38.97 315.774) scale(.26458)">
@@ -75,7 +75,7 @@
                         <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Environnement') }}</h3>
                         <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                             {{ __('Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.') }}
-                            {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-400">https://dashboard.stripe.com/account/apikeys</a>
+                            {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/apikeys</a>
                             {{ __('To enable Sandbox switch Sandbox mode to True.') }}
                         </p>
                     </div>
@@ -104,7 +104,7 @@
                                         <x-shopper-input.text wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
                                     </x-shopper-input.group>
                                     <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                        {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-primary-500 dark:text-primary-400">https://dashboard.stripe.com/account/webhooks</a>
+                                        {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/webhooks</a>
                                     </p>
                                 </div>
                             </div>

@@ -11,7 +11,7 @@
             {{ __("Sign up to get notified when it’s ready.") }}
         </p>
         <form action="https://laravelshopper.us2.list-manage.com/subscribe/post?u=d9bb29721fb442284ca02e956&amp;id=6800e9bbef" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate method="POST" class="mt-3 flex items-center">
-            <div class="relative flex-grow focus-within:z-10">
+            <div class="relative grow focus-within:z-10">
                 <input type="hidden" name="b_d9bb29721fb442284ca02e956_6800e9bbef" tabindex="-1" value="">
                 <x-shopper-input.text aria-label="{{ __('Email address') }}" type="email" value="" name="EMAIL" id="mce-EMAIL" class="rounded-l-md rounded-r-none" required placeholder="{{ __('Enter your email') }}" />
             </div>

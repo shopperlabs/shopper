@@ -27,7 +27,7 @@
             permission="add_categories"
             :url="route('shopper.categories.create')"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 356 208">
                     <style>
                         .st1{fill:#1C64F2}  .st2{fill:#76A9FA}  .st4{fill:#42389D}  .st5{fill:#5850EC}  .st6{fill:#233876}  .st7{fill:#1A56DB}  .st8{fill:#76A9FA}

@@ -5,7 +5,7 @@
 
     <div class="mt-10 relative w-full md:flex md:items-center py-12 lg:py-16">
         <div class="w-full md:w-1/2 relative flex justify-center md:block">
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-auto " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 528 380">
                     <style>
                         .st0{fill:#e1e1e1}.st1{fill:#ececec}.st2{fill:#f5f5f5}.st3{fill:#0064f5}.st5{fill:#1a2e35}.st6{fill:#fff}.st8{fill:#ffbf9d}.st9{fill:#ff9a6c}.st10{fill:#375a64}.st12{fill:#c78976}.st13{fill:#bf654e}

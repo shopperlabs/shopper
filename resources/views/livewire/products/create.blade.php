@@ -1,6 +1,6 @@
 <div>
     <x-shopper-breadcrumb back="shopper.products.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.products.index')" title="Products" />
     </x-shopper-breadcrumb>
 
@@ -97,7 +97,7 @@
                                 <x-shopper-input.text wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
                             </x-shopper-input.group>
                             @if($barcodeImage)
-                                <div class="mt-2 rounded-sm w-auto flex-shrink-0">
+                                <div class="mt-2 rounded-sm w-auto shrink-0">
                                     {!! $barcodeImage !!}
                                 </div>
                             @endif
@@ -261,13 +261,13 @@
                         <x-shopper-label value="{{ __('Product status') }}" />
                         <div class="mt-4 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
-                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 flex-shrink-0">
+                                <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 shrink-0">
                                     <x-heroicon-o-eye class="h-5 w-5 text-white" />
                                 </span>
                                 <span class="font-semibold ml-3 text-sm">{{ __('Visible') }}</span>
                             </div>
                             <div>
-                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0" @click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" :class="{ 'bg-secondary-200 dark:bg-secondary-600': !on, 'bg-primary-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-secondary-200">
+                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0" @click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" :class="{ 'bg-secondary-200 dark:bg-secondary-600': !on, 'bg-primary-600': on }" class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-secondary-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                     <span aria-hidden="true" :class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
                                 </span>
@@ -289,7 +289,7 @@
                         />
                         @if($publishedAt)
                             <div class="mt-2 flex items-start">
-                                <div class="mt-1 flex-shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
+                                <div class="mt-1 shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                                 <p class="ml-2.5 text-sm text-secondary-500 leading-5">
                                     {{ __('Will be published on:') }} <br>
                                     {{ $publishedAtFormatted }}
