@@ -19,7 +19,7 @@
                             <x-shopper-input.text wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
                         </x-shopper-input.group>
                         @if($barcodeImage)
-                            <div class="mt-2 rounded-sm w-auto flex-shrink-0">
+                            <div class="mt-2 rounded-sm w-auto shrink-0">
                                 {!! $barcodeImage !!}
                             </div>
                         @endif
@@ -89,7 +89,7 @@
                         <p class="text-sm font-medium text-secondary-500 dark:text-secondary-400 mr-4">{{ $realStock }}</p>
                         <div>
                             <div class="flex rounded-md shadow-sm">
-                                <div class="relative flex items-stretch flex-grow focus-within:z-10">
+                                <div class="relative flex items-stretch grow focus-within:z-10">
                                     <x-shopper-input.text wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
                                 </div>
                                 <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-none border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-700 text-sm font-medium text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
@@ -123,7 +123,7 @@
         </div>
         @if($histories->isEmpty())
             <div class="flex flex-col items-center justify-center p-4 sm:p-6">
-                <span class="flex-shrink-0">
+                <span class="shrink-0">
                     <x-heroicon-o-document-text class="h-12 w-12 text-secondary-400" />
                 </span>
                 <h3 class="font-medium py-5 text-secondary-400 text-xl">{{ __('No adjustments made to inventory.') }}</h3>

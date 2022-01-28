@@ -1,6 +1,6 @@
 <x-livewire-tables::table.cell>
     <div class="flex items-center space-x-3 lg:pl-2">
-        <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $row->is_enabled ? 'bg-green-600': 'bg-secondary-400' }}"></div>
+        <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $row->is_enabled ? 'bg-green-600': 'bg-secondary-400' }}"></div>
         <div class="flex items-center">
             @if($row->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
                 <img class="h-8 w-8 rounded object-cover object-center" src="{{ $row->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'))}}" alt="" />

@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Cashier\Billable;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
+use Shopper\Framework\Models\Traits\HasProfilePhoto;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -21,6 +21,7 @@ class User extends Authenticatable
         CanHaveDiscount,
         HasRoles,
         HasFactory,
+        HasProfilePhoto,
         Notifiable,
         SoftDeletes,
         TwoFactorAuthenticatable;
@@ -129,19 +130,6 @@ class User extends Authenticatable
         }
 
         return 'N/A';
-    }
-
-    public function getPictureAttribute(): ?string
-    {
-        switch ($this->avatar_type) {
-            case 'gravatar':
-                return gravatar()->get($this->email);
-
-            case 'storage':
-                return Storage::disk(config('shopper.system.storage.disks.avatars'))->url($this->avatar_location);
-        }
-
-        return null;
     }
 
     public function scopeResearch(Builder $query, $term): Builder

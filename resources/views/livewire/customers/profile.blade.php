@@ -15,7 +15,7 @@
                         {{ __('First name') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
-                        <div class="flex-grow">
+                        <div class="grow">
                             <span x-show="!open">{{ $firstName }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-shrink-0 ml-4">
+                        <div class="shrink-0 ml-4">
                             <span x-show="!open">
                                 <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
@@ -49,7 +49,7 @@
                         {{ __('Last name') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
-                        <div class="flex-grow">
+                        <div class="grow">
                             <span x-show="!open">{{ $lastName }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-shrink-0 ml-4">
+                        <div class="shrink-0 ml-4">
                             <span x-show="!open">
                                 <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
@@ -83,7 +83,7 @@
                         {{ __('Photo') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
-                    <span class="flex-grow">
+                    <span class="grow">
                         <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="">
                     </span>
                     </dd>
@@ -93,7 +93,7 @@
                         {{ __('Email address') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
-                        <div class="flex-grow">
+                        <div class="grow">
                             <span x-show="!open">{{ $email }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-shrink-0 ml-4">
+                        <div class="shrink-0 ml-4">
                             <span x-show="!open">
                                 <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
@@ -127,7 +127,7 @@
                         {{ __('Birth Date') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
-                        <div class="flex-grow">
+                        <div class="grow">
                             <p x-show="!open" class="flex items-center">
                                 <x-heroicon-o-cake class="w-5 h-5 -ml-1 mr-2.5 text-secondary-500 dark:text-secondary-400" />
                                 <span>{{ $birthDateFormatted }}</span>
@@ -138,7 +138,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-shrink-0 ml-4">
+                        <div class="shrink-0 ml-4">
                             <span x-show="!open">
                                 <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
@@ -162,7 +162,7 @@
                         {{ __('Gender') }}
                     </dt>
                     <dd class="flex items-center space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
-                        <div class="flex-grow">
+                        <div class="grow">
                             <span x-show="!open" class="capitalize">{{ $gender }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
@@ -173,7 +173,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-shrink-0 ml-4">
+                        <div class="shrink-0 ml-4">
                             <span x-show="!open">
                                 <button @click="open = true" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('Update') }}
@@ -211,7 +211,7 @@
                         {{ __('Email Marketing') }}
                     </dt>
                     <dd class="flex text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2">
-                        <span role="checkbox" tabindex="0" x-on:click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="true" x-data="{ on: @entangle('optIn') }" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline sm:ml-auto bg-primary-600">
+                        <span role="checkbox" tabindex="0" x-on:click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="true" x-data="{ on: @entangle('optIn') }" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline sm:ml-auto bg-primary-600">
                             <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-5"></span>
                         </span>
                     </dd>

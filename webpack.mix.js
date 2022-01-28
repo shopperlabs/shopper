@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -18,25 +17,11 @@ mix.setPublicPath('public')
   .setResourceRoot('../');
 
 mix.js('./resources/js/shopper.js', 'js').react()
-  .postCss('resources/css/shopper.css', 'css').options({
-    postCss: [
-      require('tailwindcss'),
-      require('autoprefixer'),
-    ],
-  })
-  .webpackConfig({
-    output: { chunkFilename: 'js/[name].js?id=[chunkhash]' },
-    resolve: {
-      extensions: ['*', '.js', '.jsx'],
-      alias: {
-        '@': path.resolve('./resources/js'),
-        '@components': path.resolve('./resources/js/components'),
-        '@helpers': path.resolve('./resources/js/helpers'),
-        'react': 'preact/compat',
-        'react-dom': 'preact/compat'
-      },
-    }
-  });
+  .postCss('resources/css/shopper.css', 'css',[
+    require('tailwindcss'),
+    require('autoprefixer'),
+  ])
+  .webpackConfig(require('./webpack.config'));
 
 if (mix.inProduction()) {
   mix.version();

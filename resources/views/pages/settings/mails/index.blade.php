@@ -4,7 +4,7 @@
 @section('content')
 
     <x:shopper-breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
     </x:shopper-breadcrumb>
 
@@ -26,13 +26,13 @@
             </div>
         </div>
         <div class="min-w-0 flex-1 lg:flex">
-            <aside class="hidden lg:block lg:flex-shrink-0">
+            <aside class="hidden lg:block lg:shrink-0">
                 <div class="h-full relative flex flex-col w-80 border-r border-secondary-200 bg-white dark:bg-secondary-900 dark:border-secondary-800">
                     <nav aria-label="{{ __('Email menu') }}" class="min-h-(screen-content) flex-1 overflow-y-auto">
                         <ul class="border-b border-secondary-200 divide-y divide-secondary-200 dark:divide-secondary-700 dark:border-secondary-700">
                             <li class="relative py-5 px-6 hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'config' }">
                                 <div class="flex items-start justify-between space-x-3">
-                                    <span class="flex-shrink-0 text-secondary-500 dark:text-secondary-400">
+                                    <span class="shrink-0 text-secondary-500 dark:text-secondary-400">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -53,7 +53,7 @@
                             </li>
                             <li class="relative py-5 px-6 hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'templates' }">
                                 <div class="flex items-start justify-between space-x-3">
-                                    <span class="flex-shrink-0 text-secondary-500 dark:text-secondary-400">
+                                    <span class="shrink-0 text-secondary-500 dark:text-secondary-400">
                                         <x-heroicon-o-template class="w-6 h-6" />
                                     </span>
                                     <div class="min-w-0 flex-1">
@@ -79,7 +79,7 @@
                             </li>
                             <li class="relative py-5 px-6 hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'mailables' }">
                                 <div class="flex items-start justify-between space-x-3">
-                                    <span class="flex-shrink-0 text-secondary-500 dark:text-secondary-400">
+                                    <span class="shrink-0 text-secondary-500 dark:text-secondary-400">
                                         <x-heroicon-o-mail class="w-6 h-6" />
                                     </span>
                                     <div class="min-w-0 flex-1">

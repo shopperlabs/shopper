@@ -1,6 +1,6 @@
 <x-livewire-tables::table.cell class="max-w-md whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900 dark:text-white">
     <div class="flex items-center lg:pl-2">
-        <div class="flex-shrink-0 h-10 w-10">
+        <div class="shrink-0 h-10 w-10">
             <img class="h-10 w-10 rounded-lg" src="{{ $row->picture }}" alt="">
         </div>
         <a href="{{ route('shopper.customers.show', $row) }}" class="ml-4">

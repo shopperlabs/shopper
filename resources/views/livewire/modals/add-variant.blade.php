@@ -60,7 +60,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-5 flex-shrink-0">
+                        <div class="mt-5 shrink-0">
                             <p class="text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 mb-2" aria-hidden="true">
                                 {{ __('Variant images') }}
                             </p>

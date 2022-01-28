@@ -7,7 +7,7 @@
         <div class="max-w-md w-full px-6 space-y-4">
             <x-shopper-validation-errors />
 
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <x-shopper-application-icon class="mx-auto h-20 w-auto" />
             </div>
             <div class="p-4 sm:p-6 bg-white rounded-lg shadow-md overflow-hidden dark:bg-secondary-800">

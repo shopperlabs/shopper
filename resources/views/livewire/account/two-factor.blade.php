@@ -14,7 +14,7 @@
             <div class="shadow rounded-md bg-white overflow-hidden dark:bg-secondary-800">
                 <div class="p-4 sm:px-6 border-b border-secondary-200 dark:border-secondary-700">
                     <div class="flex items-center space-x-3">
-                        <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-500' }}"></div>
+                        <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-500' }}"></div>
                         <h3 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
                             @if ($this->enabled)
                                 {{ __('You have enabled two factor authentication.') }}
@@ -28,7 +28,7 @@
                     @if (! $this->enabled)
                         <div class="rounded-md bg-primary-50 p-4">
                             <div class="flex">
-                                <div class="flex-shrink-0">
+                                <div class="shrink-0">
                                     <x-heroicon-s-information-circle class="h-5 w-5 text-primary-400" />
                                 </div>
                                 <div class="ml-3 flex-1 md:flex md:justify-between">
@@ -45,7 +45,7 @@
                         </div>
                     @endif
                     <div class="flex items-start">
-                        <div class="flex-shrink-0">
+                        <div class="shrink-0">
                             <span class="block w-12 w-12">
                                 <x-heroicon-o-shield-check class="w-full h-full text-primary-600" />
                             </span>

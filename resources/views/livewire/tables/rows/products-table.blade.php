@@ -133,7 +133,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex-shrink-0 px-4 py-4 flex justify-end">
+                                <div class="shrink-0 px-4 py-4 flex justify-end">
                                     <x-shopper-default-button @click="show = false;" type="button">
                                         {{ __('Close') }}
                                     </x-shopper-default-button>

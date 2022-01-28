@@ -1,6 +1,6 @@
 <div>
     <x:shopper-breadcrumb back="shopper.settings.inventories.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.inventories.index')" title="Locations" />
     </x:shopper-breadcrumb>
 
@@ -61,7 +61,7 @@
                         @if($inventory->is_default)
                             <div class="rounded-md bg-primary-50 p-4">
                                 <div class="flex">
-                                    <div class="flex-shrink-0">
+                                    <div class="shrink-0">
                                         <x-heroicon-s-information-circle class="h-5 w-5 text-primary-400" />
                                     </div>
                                     <div class="ml-3 flex-1 md:flex md:justify-between">

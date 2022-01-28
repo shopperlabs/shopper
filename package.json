@@ -9,10 +9,10 @@
     "production": "mix --production"
   },
   "dependencies": {
-    "@tailwindcss/forms": "^0.3.4",
-    "@tailwindcss/line-clamp": "^0.2.0",
+    "@tailwindcss/forms": "^0.4.0",
+    "@tailwindcss/line-clamp": "^0.3.1",
     "alpinejs": "^3.2.4",
-    "autoprefixer": "^10.2.5",
+    "autoprefixer": "^10.4.2",
     "axios": "^0.21",
     "choices.js": "^9.0.1",
     "filepond": "^4.30.3",
@@ -22,9 +22,9 @@
     "lodash": "^4.17.13",
     "mapbox-gl": "^2.6.1",
     "popper.js": "^1.16.0",
-    "postcss": "^8.3.5",
+    "postcss": "^8.4.5",
     "sortablejs": "^1.14.0",
-    "tailwindcss": "^2.2.16"
+    "tailwindcss": "^3.0.17"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

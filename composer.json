@@ -41,7 +41,7 @@
     "maatwebsite/laravel-sidebar": "^2.4",
     "milon/barcode": "^8.0.1",
     "moneyphp/money": "^3.3",
-    "wireui/wireui": "^0.14.1",
+    "wireui/wireui": "^0.16.2",
     "pragmarx/google2fa": "^7.0|^8.0",
     "rappasoft/laravel-livewire-tables": "^1.19",
     "reecem/mocker": "1.1.*",

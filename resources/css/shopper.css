@@ -11,10 +11,9 @@
 @import '~intl-tel-input/build/css/intlTelInput.css';
 @import '~filepond/dist/filepond.min.css';
 
-
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import "base.css";
-@import "components.css";
+@import 'base.css';
+@import 'components.css';

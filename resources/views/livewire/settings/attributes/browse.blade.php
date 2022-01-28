@@ -1,6 +1,6 @@
 <div>
     <x:shopper-breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
     </x:shopper-breadcrumb>
     <x-shopper-heading>
@@ -31,7 +31,7 @@
             permission="add_attributes"
             :url="route('shopper.settings.attributes.create')"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 250">
                     <style>
                         .st1{fill:#263238}.st2{fill:#1c64f2}.st5{fill-rule:evenodd;clip-rule:evenodd;fill:#fff}.st6{fill:#252f3f}.st7{fill:#57a4ff}.st8{fill:#004fac}.st9{fill:#fcd462}

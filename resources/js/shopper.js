@@ -9,9 +9,9 @@
  * @since May 2021
  */
 
-import Alpine from 'alpinejs';
-import Sortable from 'sortablejs';
-import * as FilePond from 'filepond';
+import Alpine from 'alpinejs'
+import Sortable from 'sortablejs'
+import * as FilePond from 'filepond'
 
 import './elements'
 import '@helpers/window'

@@ -1,6 +1,6 @@
 <div x-data="{ focused: false }">
     @if($file)
-        <div class="flex-shrink-0 rounded-md overflow-hidden">
+        <div class="shrink-0 rounded-md overflow-hidden">
             <img class="h-40 w-full object-cover rounded-md" src="{{ $file->temporaryUrl() }}" alt="" />
             <div class="flex items-center mt-2">
                 <button wire:click="removeSingleMediaPlaceholder" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
@@ -33,7 +33,7 @@
     @if($media)
         <div class="flex items-center justify-between mt-4 p-2 bg-secondary-50 rounded-md border border-dashed border-secondary-200 dark:bg-secondary-700 dark:border-secondary-600">
             <div class="flex flex-1 items-center space-x-2 truncate">
-                <div class="flex-shrink-0 w-10 h-10 overflow-hidden rounded-md shadow-md">
+                <div class="shrink-0 w-10 h-10 overflow-hidden rounded-md shadow-md">
                     <img class="h-full w-full object-cover" src="{{ $media->getFullUrl() }}" alt="{{ $media->file_name }}">
                 </div>
                 <div class="truncate">

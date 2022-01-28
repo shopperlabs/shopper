@@ -38,7 +38,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex">
-                        <div class="flex-shrink-0 flex items-center">
+                        <div class="shrink-0 flex items-center">
                             <x-shopper-application-logo class="w-auto h-9" />
                         </div>
                     </div>
@@ -91,7 +91,7 @@
             <div x-description="Mobile menu, toggle classes based on menu state." x-state:on="Open" x-state:off="closed" :class="{ 'block': open, 'hidden': !open }" class="sm:hidden hidden">
                 <div class="pt-4 pb-3 border-t border-secondary-200">
                     <div class="flex items-center px-4">
-                        <div class="flex-shrink-0">
+                        <div class="shrink-0">
                             <img class="h-10 w-10 rounded-full" src="{{ $logged_in_user->picture }}" alt="">
                         </div>
                         <div class="ml-3">

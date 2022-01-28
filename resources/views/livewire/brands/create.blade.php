@@ -1,6 +1,6 @@
 <div x-data="{ on: @entangle('is_enabled') }">
     <x:shopper-breadcrumb back="shopper.brands.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.brands.index')" title="Brands" />
     </x:shopper-breadcrumb>
 
@@ -36,7 +36,7 @@
                 <div class="mt-5 border-t border-b border-secondary-200 dark:border-secondary-700 py-4">
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <span wire:model="is_enabled" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
+                            <span wire:model="is_enabled" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
                                 <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                 <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
                             </span>
@@ -58,7 +58,7 @@
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Search engine listing preview') }}</h3>
                         @if(! $updateSeo)
-                            <button wire:click="updateSeo" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 transition duration-150 ease-in-out dark:text-primary-500">{{ __('Edit SEO preview') }}</button>
+                            <button wire:click="updateSeo" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 transition duration-150 ease-in-out dark:text-primary-500/50">{{ __('Edit SEO preview') }}</button>
                         @endif
                     </div>
                     <div class="mt-4">
@@ -66,8 +66,8 @@
                             <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Add a title and description to see how this collection might appear in a search engine listing.') }}</p>
                         @else
                             <div class="flex flex-col">
-                                <h3 class="text-base text-primary-800 font-medium leading-6 dark:text-primary-500">{{ $seoTitle }}</h3>
-                                <span class="mt-1 text-green-600 text-sm leading-5 dark:text-green-500">{{ env('APP_URL') }}/brands/{{ str_slug($name) }}</span>
+                                <h3 class="text-base text-primary-800 font-medium leading-6 dark:text-primary-500/50">{{ $seoTitle }}</h3>
+                                <span class="mt-1 text-green-600 text-sm leading-5 dark:text-green-500/50">{{ env('APP_URL') }}/brands/{{ str_slug($name) }}</span>
                                 <p class="mt-1 text-secondary-500 text-sm leading-5 dark:text-secondary-400">{{ str_limit($seoDescription, 160) }}</p>
                             </div>
                         @endif

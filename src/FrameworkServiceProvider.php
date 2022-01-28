@@ -24,7 +24,6 @@ use Shopper\Framework\Http\Middleware\HasConfiguration;
 use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
 use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
 use Shopper\Framework\Providers\ShopperServiceProvider;
-use Shopper\Framework\Services\Gravatar;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticationProvider;
 use Spatie\Permission\Middlewares\PermissionMiddleware;
 use Spatie\Permission\Middlewares\RoleMiddleware;
@@ -102,7 +101,6 @@ class FrameworkServiceProvider extends ServiceProvider
 
         // Register the service the package provides.
         $this->app->singleton('shopper', fn () => new Shopper());
-        $this->app->singleton('gravatar', fn () => new Gravatar());
         $this->app->singleton(TwoFactorAuthenticationProviderContract::class, TwoFactorAuthenticationProvider::class);
         $this->app->singleton(FailedTwoFactorLoginResponseContract::class, FailedTwoFactorLoginResponse::class);
 

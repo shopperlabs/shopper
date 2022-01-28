@@ -1,6 +1,6 @@
 <div>
     <x:shopper-breadcrumb back="shopper.orders.index">
-        <svg class="flex-shrink-0 h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
+        <svg class="shrink-0 h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
         <a href="{{ route('shopper.orders.index') }}" class="text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Orders') }}</a>
@@ -120,8 +120,8 @@
                             <li class="flex-1 py-2.5">
                                 <div class="flex items-center">
                                     <div class="min-w-0 flex-1 flex items-center">
-                                        <div class="flex-shrink-0">
-                                            <div class="flex-shrink-0 h-10 w-10">
+                                        <div class="shrink-0">
+                                            <div class="shrink-0 h-10 w-10">
                                                 @if($item->product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
                                                     <img class="h-10 w-10 rounded-md object-cover" src="{{ $item->product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="{{ $item->id }}" />
                                                 @else
@@ -225,7 +225,7 @@
                     @else
                         <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
                             <div class="flex">
-                                <div class="flex-shrink-0">
+                                <div class="shrink-0">
                                     <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>
@@ -294,7 +294,7 @@
             <div class="py-4 sm:pr-8">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Private notes') }}</h3>
                 <div class="mt-5 flex space-x-3">
-                    <div class="flex-shrink-0">
+                    <div class="shrink-0">
                         <div class="relative">
                             <img class="h-10 w-10 rounded-full bg-secondary-400 flex items-center justify-center ring-8 ring-white" src="{{ auth()->user()->picture }}" alt="">
                             <span class="absolute -bottom-0.5 bg-secondary-100 right-0 rounded-tl p-0.5">
@@ -328,7 +328,7 @@
             <div class="py-4">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Customer') }}</h3>
                 <div class="mt-4 flex items-center space-x-4">
-                    <div class="flex-shrink-0">
+                    <div class="shrink-0">
                         <img class="h-8 w-8 rounded-full" src="{{ $order->customer->picture }}" alt="Customer profile">
                     </div>
                     <div class="flex-1 min-w-0">
