@@ -35,12 +35,12 @@
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                             <div class="sm:col-span-1">
                                 <x-shopper-input.group label="Location Name" for="name" :error="$errors->first('name')">
-                                    <x-shopper-input.text wire:model.debounce.350ms="name" id="name" type="text" autocomplete="off" placeholder="White House" />
+                                    <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="White House" />
                                 </x-shopper-input.group>
                             </div>
                             <div class="sm:col-span-1">
                                 <x-shopper-input.group label="Email" for="email" :error="$errors->first('email')">
-                                    <x-shopper-input.text wire:model.debounce.350ms="email" id="email" type="email" autocomplete="off" />
+                                    <x-shopper-input.text wire:model.defer="email" id="email" type="email" autocomplete="off" />
                                 </x-shopper-input.group>
                             </div>
                             <div class="sm:col-span-2">
@@ -49,7 +49,7 @@
                                     <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
-                                    <x-shopper-input.textarea wire:model.lazy="description" id="description" />
+                                    <x-shopper-input.textarea wire:model.defer="description" id="description" />
                                 </div>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                                 <x-shopper-input.group for="country_id" label="Country" :error="$errors->first('country_id')">
                                     <x-select
                                         :placeholder="__('Choose a Country')"
-                                        wire:model.lazy="shop_country_id"
+                                        wire:model.defer="country_id"
                                     >
                                         @foreach($countries as $country)
                                             <x-select.option :label="$country->name" :value="$country->id" />
