@@ -36,7 +36,7 @@
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start mt-6 sm:mt-5 sm:pt-5 sm:border-t sm:border-secondary-200 sm:dark:border-secondary-700">
                 <x-shopper-label for="password" class="sm:mt-px sm:pt-2">
-                    {{ __("Password") }} <span class="text-red-500">*</span>
+                    {{ __('Password') }} <span class="text-red-500">*</span>
                 </x-shopper-label>
                 <div x-data="{ show: false }" class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="flex items-center justify-between max-w-lg">
@@ -51,7 +51,7 @@
                         </button>
                     </div>
                     <div class="mt-2 max-w-lg relative rounded-md shadow-sm">
-                        <input wire:model.lazy="password" id="password" :type="show ? 'text' : 'password'" autocomplete="off" class="block w-full dark:bg-secondary-700 dark:text-white placeholder-secondary-500 dark:placeholder-secondary-400 rounded-md shadow-sm border-secondary-300 dark:border-secondary-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-secondary-900 focus:ring-opacity-50 sm:text-sm @error('password') pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 @enderror" />
+                        <x-shopper-input.text wire:model.defer="password" id="password" ::type="show ? 'text' : 'password'" type="password" autocomplete="off" class="@error('password') pr-10 @enderror" />
                         @error('password')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
