@@ -50,7 +50,7 @@
 
                         <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 0), 'bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10">
                             <div class="flex items-center h-5">
-                                <input wire:model.defer="type" id="collection-type-0" name="type" value="manual" type="radio" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)" class="form-radio h-4 w-4 text-primary-600 transition duration-150 ease-in-out cursor-pointer">
+                                <x-shopper-input.radio wire:model.debounce.500ms="type" id="collection-type-0" name="type" value="manual" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)"/>
                             </div>
                             <label for="collection-type-0" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-primary-900 dark:text-white': active === 0, 'text-secondary-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-primary-900 dark:text-white">
@@ -64,7 +64,7 @@
 
                         <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 1), 'bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10': active === 1 }" class="relative border rounded-md border-secondary-200 p-4 flex">
                             <div class="flex items-center h-5">
-                                <input wire:model.defer="type" id="collection-type-1" name="type" value="auto" type="radio" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)" class="form-radio h-4 w-4 text-primary-600 transition duration-150 ease-in-out cursor-pointer">
+                                <x-shopper-input.radio wire:model.debounce.500ms="type" id="collection-type-1" name="type" value="auto" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)"/>
                             </div>
                             <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-primary-900 dark:text-white': active === 1, 'text-secondary-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-secondary-900">
