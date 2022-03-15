@@ -20,13 +20,13 @@
     <div class="mt-6 grid sm:grid-cols-6 gap-4 lg:gap-6">
         <div class="sm:col-span-4 space-y-5">
             <div class="bg-white rounded-lg shadow p-4 sm:p-5 dark:bg-secondary-800">
-                <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                    <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
-                </x-shopper-input.group>
+                <x-shopper-forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                    <x-shopper-forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
+                </x-shopper-forms.group>
                 <div class="mt-5">
-                    <x-shopper-input.group label="Description" for="description">
+                    <x-shopper-forms.group label="Description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
-                    </x-shopper-input.group>
+                    </x-shopper-forms.group>
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow overflow-hidden pt-4 sm:pt-5 dark:bg-secondary-800">
@@ -50,7 +50,7 @@
 
                         <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 0), 'bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10">
                             <div class="flex items-center h-5">
-                                <x-shopper-input.radio wire:model.debounce.500ms="type" id="collection-type-0" name="type" value="manual" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)"/>
+                                <x-shopper-forms.radio wire:model.debounce.500ms="type" id="collection-type-0" name="type" value="manual" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)"/>
                             </div>
                             <label for="collection-type-0" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-primary-900 dark:text-white': active === 0, 'text-secondary-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-primary-900 dark:text-white">
@@ -64,7 +64,7 @@
 
                         <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 1), 'bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10': active === 1 }" class="relative border rounded-md border-secondary-200 p-4 flex">
                             <div class="flex items-center h-5">
-                                <x-shopper-input.radio wire:model.debounce.500ms="type" id="collection-type-1" name="type" value="auto" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)"/>
+                                <x-shopper-forms.radio wire:model.debounce.500ms="type" id="collection-type-1" name="type" value="auto" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)"/>
                             </div>
                             <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
                                 <span :class="{ 'text-primary-900 dark:text-white': active === 1, 'text-secondary-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-secondary-900">
@@ -84,13 +84,13 @@
                         <div class="flex items-center space-x-6">
                             <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Products must match:') }}</p>
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="condition_match" id="all" value="all" />
+                                <x-shopper-forms.radio wire:model.lazy="condition_match" id="all" value="all" />
                                 <label for="all" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('All conditions') }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="condition_match" id="any" value="any" />
+                                <x-shopper-forms.radio wire:model.lazy="condition_match" id="any" value="any" />
                                 <label for="any" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Any condition') }}</span>
                                 </label>
@@ -102,26 +102,26 @@
                                     <div wire:key="condition-{{ $conditionKey }}"  class="flex items-center space-x-4">
                                         <div class="grid grid-cols-3 gap-4">
                                             <div>
-                                                <x-shopper-input.select wire:model.defer="rule.{{ $conditionValue }}" aria-label="{{ __('Rules') }}">
+                                                <x-shopper-forms.select wire:model.defer="rule.{{ $conditionValue }}" aria-label="{{ __('Rules') }}">
                                                     <option>{{ __('Choose a rule') }}</option>
                                                     @foreach($this->collectionRules as $ruleKey => $ruleValue)
                                                         <option value="{{ $ruleKey }}" @if($loop->first) selected @endif>{{ $ruleValue['name'] }}</option>
                                                     @endforeach
-                                                </x-shopper-input.select>
+                                                </x-shopper-forms.select>
                                                 @error('rule.'.$conditionValue) <p class="mt-1 text-sm leading-5 text-red-500">{{ $message }}</p> @enderror
                                             </div>
                                             <div>
-                                                <x-shopper-input.select wire:model.defer="operator.{{ $conditionValue }}" aria-label="{{ __('Conditions') }}">
+                                                <x-shopper-forms.select wire:model.defer="operator.{{ $conditionValue }}" aria-label="{{ __('Conditions') }}">
                                                     <option>{{ __('Select Operator') }}</option>
                                                     @foreach($this->operators as $operatorKey => $operatorValue)
                                                         <option value="{{ $operatorKey }}" @if($loop->first) selected @endif>{{ $operatorValue['name'] }}</option>
                                                     @endforeach
-                                                </x-shopper-input.select>
+                                                </x-shopper-forms.select>
                                                 @error('operator.'.$conditionValue) <p class="mt-1 text-sm leading-5 text-red-500">{{ $message }}</p> @enderror
                                             </div>
                                             <div>
                                                 <div class="relative rounded-md shadow-sm">
-                                                    <x-shopper-input.text wire:model.defer="value.{{ $conditionValue }}" type="text" class="w-full pr-12" aria-label="{{ __('Value') }}" placeholder="{{ __('your value here') }}" />
+                                                    <x-shopper-forms.input wire:model.defer="value.{{ $conditionValue }}" type="text" class="w-full pr-12" aria-label="{{ __('Value') }}" placeholder="{{ __('your value here') }}" />
                                                 </div>
                                                 @error('value.'.$conditionValue) <p class="mt-1 text-sm leading-5 text-red-500">{{ $message }}</p> @enderror
                                             </div>
@@ -171,16 +171,16 @@
                 </div>
                 @if($updateSeo)
                     <div class="px-4 py-5 sm:px-6 space-y-5">
-                        <x-shopper-input.group for="seo_title" label="Title">
-                            <x-shopper-input.text wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
-                        </x-shopper-input.group>
+                        <x-shopper-forms.group for="seo_title" label="Title">
+                            <x-shopper-forms.input wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                        </x-shopper-forms.group>
                         <div>
                             <div class="flex items-center justify-between">
                                 <x-shopper-label for="seo_description" :value="__('Description')" />
                                 <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('160 characters') }}</span>
                             </div>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <x-shopper-input.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
+                                <x-shopper-forms.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
                             </div>
                         </div>
                     </div>

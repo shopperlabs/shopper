@@ -21,13 +21,13 @@
         <div class="sm:col-span-4 space-y-5">
             <div class="p-4 sm:p-5 bg-white rounded-lg shadow dark:bg-secondary-800">
                 <div>
-                    <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
-                    </x-shopper-input.group>
+                    <x-shopper-forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                        <x-shopper-forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
+                    </x-shopper-forms.group>
                 </div>
                 <div class="mt-4">
-                    <x-shopper-input.group label="Parent" for="category" wire:ignore>
-                        <x-shopper-input.select wire:model.defer="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
+                    <x-shopper-forms.group label="Parent" for="category" wire:ignore>
+                        <x-shopper-forms.select wire:model.defer="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
                             <option value="0">{{ __('No parent category') }}</option>
                             @foreach($categories as $cat)
                                 @if($cat->id !== $categoryId)
@@ -40,8 +40,8 @@
                                     @endforeach
                                 @endif
                             @endforeach
-                        </x-shopper-input.select>
-                    </x-shopper-input.group>
+                        </x-shopper-forms.select>
+                    </x-shopper-forms.group>
                 </div>
                 <div class="mt-5 py-4 border-t border-b border-secondary-200 dark:border-secondary-700">
                     <div class="relative flex items-start">
@@ -58,9 +58,9 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <x-shopper-input.group label="Description" for="description">
+                    <x-shopper-forms.group label="Description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
-                    </x-shopper-input.group>
+                    </x-shopper-forms.group>
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow-md divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
@@ -85,16 +85,16 @@
                 </div>
                 @if($updateSeo)
                     <div class="px-4 py-5 sm:px-6 space-y-5">
-                        <x-shopper-input.group for="seo_title" label="Title">
-                            <x-shopper-input.text wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
-                        </x-shopper-input.group>
+                        <x-shopper-forms.group for="seo_title" label="Title">
+                            <x-shopper-forms.input wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                        </x-shopper-forms.group>
                         <div>
                             <div class="flex items-center justify-between">
                                 <x-shopper-label for="seo_description" :value="__('Description')" />
                                 <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('160 characters') }}</span>
                             </div>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <x-shopper-input.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
+                                <x-shopper-forms.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
                             </div>
                         </div>
                     </div>

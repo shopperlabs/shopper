@@ -10,13 +10,13 @@
 
     <x-slot name="content">
         <div class="py-2">
-            <x-shopper-input.search label="Search product" placeholder="Search product by name" />
+            <x-shopper-forms.search label="Search product" placeholder="Search product by name" />
         </div>
         <div class="my-2 -mx-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
             @foreach($this->products as $product)
                 <label for="product_{{ $product->id }}" class="flex items-center px-2 py-3 cursor-pointer hover:bg-secondary-50 focus:bg-secondary-50 dark:hover:bg-secondary-700 dark:focus:bg-secondary-700">
                     <span class="mr-4">
-                        <x-shopper-input.checkbox id="product_{{ $product->id }}" aria-label="{{ __('Product') }}" wire:model.debounce.250ms="selectedProducts" value="{{ $product->id }}" />
+                        <x-shopper-forms.checkbox id="product_{{ $product->id }}" aria-label="{{ __('Product') }}" wire:model.debounce.250ms="selectedProducts" value="{{ $product->id }}" />
                     </span>
                     <span class="flex flex-1 items-center justify-between">
                         <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">{{ $product->name }}</span>

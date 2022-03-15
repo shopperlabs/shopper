@@ -107,11 +107,11 @@
                     <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Products') }}</h3>
                     <div class="flex items-center space-x-3">
                         <span class="whitespace-no-wrap text-sm font-medium text-secondary-500 dark:text-secondary-400">{{ __('Per Page') }}</span>
-                        <x-shopper-input.select wire:model="perPage" class="w-20" aria-label="{{ __('Per Page items') }}">
+                        <x-shopper-forms.select wire:model="perPage" class="w-20" aria-label="{{ __('Per Page items') }}">
                             <option value="3">3</option>
                             <option value="5">5</option>
                             <option value="10">10</option>
-                        </x-shopper-input.select>
+                        </x-shopper-forms.select>
                     </div>
                 </div>
                 <div class="mt-4">
@@ -308,7 +308,7 @@
                         @else
                             <div>
                                 <label for="comment" class="sr-only">{{ __('Comment') }}</label>
-                                <x-shopper-input.textarea wire:model.lazy="notes" id="comment" placeholder="{{ __('Leave notes for this customer') }}" :value="$order->notes" />
+                                <x-shopper-forms.textarea wire:model.lazy="notes" id="comment" placeholder="{{ __('Leave notes for this customer') }}" :value="$order->notes" />
                                 @error('notes')
                                     <p class="mt-1 text-red-500 text-sm">{{ $message }}</p>
                                 @enderror

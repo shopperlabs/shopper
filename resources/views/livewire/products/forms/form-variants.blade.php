@@ -11,7 +11,7 @@
     <section aria-labelledby="products_variations_heading">
         <div class="mt-5 bg-white dark:bg-secondary-800 pt-5 shadow rounded-md">
             <div class="px-4 sm:px-5 flex items-center justify-between space-x-4">
-                <x-shopper-input.search label="Search variant" placeholder="Search product variant" />
+                <x-shopper-forms.search label="Search variant" placeholder="Search product variant" />
                 <div>
                     <span class="shadow-sm rounded-md">
                         <x-shopper-button wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})" type="button">

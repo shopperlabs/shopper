@@ -26,7 +26,7 @@
                         <button wire:click="generate" type="button" class="text-primary-600 text-sm leading-5 hover:text-primary-500 dark:text-primary-500/50">{{ __('Generate code') }}</button>
                     </div>
                     <div class="mt-4 relative rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model.lazy="code" id="code" type="text" placeholder="{{ __('Eg.: NOELCMR900') }}" autocomplete="off" />
+                        <x-shopper-forms.input wire:model.lazy="code" id="code" type="text" placeholder="{{ __('Eg.: NOELCMR900') }}" autocomplete="off" />
                         @error('code')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -47,13 +47,13 @@
                         <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">{{ __('Types') }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="type" id="percentage" value="percentage" name="type" />
+                                <x-shopper-forms.radio wire:model.lazy="type" id="percentage" value="percentage" name="type" />
                                 <label for="percentage" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">{{ __('Percentage') }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="type" id="amount" value="fixed_amount" name="type" />
+                                <x-shopper-forms.radio wire:model.lazy="type" id="amount" value="fixed_amount" name="type" />
                                 <label for="amount" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">{{ __('Fixed amount') }}</span>
                                 </label>
@@ -63,7 +63,7 @@
                     <div class="mt-5">
                         <x-shopper-label for="value" :value="__('Value')" />
                         <div class="mt-1 relative rounded-md shadow-sm w-full sm:w-64">
-                            <x-shopper-input.text wire:model="value" id="value" type="text" autocomplete="off" />
+                            <x-shopper-forms.input wire:model="value" id="value" type="text" autocomplete="off" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <span class="text-secondary-500 sm:text-sm sm:leading-5 dark:text-secondary-400">
                                     {{ $type === 'percentage' ? '%' : shopper_currency() }}
@@ -80,13 +80,13 @@
                         <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">{{ __('Applies To') }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="apply" id="order" value="order" name="apply" />
+                                <x-shopper-forms.radio wire:model.lazy="apply" id="order" value="order" name="apply" />
                                 <label for="order" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Entire order') }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="apply" id="product" value="products" name="apply" />
+                                <x-shopper-forms.radio wire:model.lazy="apply" id="product" value="products" name="apply" />
                                 <label for="product" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Specific products') }}</span>
                                 </label>
@@ -133,21 +133,21 @@
                         <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">{{ __('Minimum requirements') }}</h4>
                         <div class="mt-4 space-y-3">
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="minRequired" id="none" value="none" name="min" />
+                                <x-shopper-forms.radio wire:model.lazy="minRequired" id="none" value="none" name="min" />
                                 <label for="none" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 text-secondary-700 dark:text-secondary-300">{{ __('None') }}</span>
                                 </label>
                             </div>
                             <div>
                                 <div class="flex items-center">
-                                    <x-shopper-input.radio wire:model.lazy="minRequired" id="price" value="price" name="min" />
+                                    <x-shopper-forms.radio wire:model.lazy="minRequired" id="price" value="price" name="min" />
                                     <label for="price" class="ml-3 cursor-pointer">
                                         <span class="block text-sm leading-5 text-secondary-700 dark:text-secondary-300">{{ __('Minimum purchase amount (:currency)', ['currency' => shopper_currency()]) }}</span>
                                     </label>
                                 </div>
                                 @if($minRequired === 'price')
                                     <div class="mt-2 relative rounded-md shadow-sm w-full sm:w-64">
-                                        <x-shopper-input.text wire:model.lazy="minRequiredValue" aria-label="{{ __('Min Required Value') }}" type="text" autocomplete="off" class="sm:w-64" />
+                                        <x-shopper-forms.input wire:model.lazy="minRequiredValue" aria-label="{{ __('Min Required Value') }}" type="text" autocomplete="off" class="sm:w-64" />
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                             <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                                 {{ shopper_currency() }}
@@ -159,14 +159,14 @@
                             </div>
                             <div>
                                 <div class="flex items-center">
-                                    <x-shopper-input.radio wire:model.debounce.350ms="minRequired" id="quantity" value="quantity" name="min" />
+                                    <x-shopper-forms.radio wire:model.debounce.350ms="minRequired" id="quantity" value="quantity" name="min" />
                                     <label for="quantity" class="ml-3 cursor-pointer">
                                         <span class="block text-sm leading-5 text-secondary-700 dark:text-secondary-300">{{ __('Minimum quantity of items') }}</span>
                                     </label>
                                 </div>
                                 @if($minRequired === 'quantity')
                                     <div class="mt-2 relative rounded-md shadow-sm w-full sm:w-64">
-                                        <x-shopper-input.text wire:model.lazy="minRequiredValue" aria-label="{{ __('Min Required Value') }}" type="number" autocomplete="off" class="sm:w-64" />
+                                        <x-shopper-forms.input wire:model.lazy="minRequiredValue" aria-label="{{ __('Min Required Value') }}" type="number" autocomplete="off" class="sm:w-64" />
                                     </div>
                                     <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">{{ __('Applies only to selected products.') }}</p>
                                 @endif
@@ -182,13 +182,13 @@
                         <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">{{ __('Customer eligibility') }}</h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="eligibility" id="everyone" value="everyone" />
+                                <x-shopper-forms.radio wire:model.lazy="eligibility" id="everyone" value="everyone" />
                                 <label for="everyone" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">{{ __('Everyone') }}</span>
                                 </label>
                             </div>
                             <div class="flex items-center">
-                                <x-shopper-input.radio wire:model.lazy="eligibility" id="customer" value="customers" />
+                                <x-shopper-forms.radio wire:model.lazy="eligibility" id="customer" value="customers" />
                                 <label for="customer" class="ml-3 cursor-pointer">
                                     <span class="block text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">{{ __('Specific customers') }}</span>
                                 </label>
@@ -227,7 +227,7 @@
                     <div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <x-shopper-input.checkbox wire:model.lazy="usage_number" id="usage_number" />
+                                <x-shopper-forms.checkbox wire:model.lazy="usage_number" id="usage_number" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <x-shopper-label for="usage_number" class="text-secondary-500 cursor-pointer dark:text-secondary-400" :value="__('Limit number of times this discount can be used in total')" />
@@ -236,7 +236,7 @@
                         @if($usage_number)
                             <div class="mt-2">
                                 <div class="relative rounded-md shadow-sm w-full sm:w-64">
-                                    <x-shopper-input.text wire:model.lazy="usage_limit" aria-label="{{ __('Usage limit value') }}" type="number" min="1" step="1" autocomplete="off" class="sm:w-64" />
+                                    <x-shopper-forms.input wire:model.lazy="usage_limit" aria-label="{{ __('Usage limit value') }}" type="number" min="1" step="1" autocomplete="off" class="sm:w-64" />
                                 </div>
                                 @error('usage_limit')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
@@ -246,7 +246,7 @@
                     </div>
                     <div class="flex items-start">
                         <div class="flex items-center h-5">
-                            <x-shopper-input.checkbox wire:model.lazy="usage_limit_per_user" id="usage_limit_per_user" />
+                            <x-shopper-forms.checkbox wire:model.lazy="usage_limit_per_user" id="usage_limit_per_user" />
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper-label for="usage_limit_per_user" class="text-secondary-500 cursor-pointer dark:text-secondary-400" :value="__('Limit to one use per customer')" />
@@ -395,7 +395,7 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <x-heroicon-o-search class="h-5 w-5 text-secondary-400" />
                             </div>
-                            <x-shopper-input.text id="search" type="search" wire:model.lazy="searchProduct" autocomplete="off" class="pl-10 pr-6" placeholder="{{ __('Search product by name') }}" />
+                            <x-shopper-forms.input id="search" type="search" wire:model.lazy="searchProduct" autocomplete="off" class="pl-10 pr-6" placeholder="{{ __('Search product by name') }}" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <x-shopper-loader wire:loading wire:target="searchProduct" class="text-primary-600" />
                             </div>
@@ -405,7 +405,7 @@
                         @foreach($products as $product)
                             <label for="product_{{ $product->id }}" class="flex items-center py-3 cursor-pointer hover:bg-secondary-50 px-4 sm:px-6 focus:bg-secondary-50 dark:hover:bg-secondary-700 dark:focus:bg-secondary-700">
                                 <span class="mr-4">
-                                    <x-shopper-input.checkbox id="product_{{ $product->id }}" aria-label="{{ __('Product') }}" wire:model.defer="selectedProducts" value="{{ $product->id }}" />
+                                    <x-shopper-forms.checkbox id="product_{{ $product->id }}" aria-label="{{ __('Product') }}" wire:model.defer="selectedProducts" value="{{ $product->id }}" />
                                 </span>
                                 <span class="flex flex-1 items-center justify-between">
                                     <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">{{ $product->name }}</span>
@@ -478,7 +478,7 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <x-heroicon-o-search class="h-5 w-5 text-secondary-400" />
                             </div>
-                            <x-shopper-input.text id="search" type="search" wire:model.lazy="searchCustomer" autocomplete="off" class="pl-10 pr-6" placeholder="{{ __('Search customer by name') }}" />
+                            <x-shopper-forms.input id="search" type="search" wire:model.lazy="searchCustomer" autocomplete="off" class="pl-10 pr-6" placeholder="{{ __('Search customer by name') }}" />
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <x-shopper-loader wire:loading wire:target="searchCustomer" class="text-primary-600" />
                             </div>
@@ -488,7 +488,7 @@
                         @foreach($customers as $customer)
                             <label for="customer_{{ $customer->id }}" class="flex items-center py-3 cursor-pointer hover:bg-secondary-50 px-4 sm:px-6 focus:bg-secondary-50 dark:hover:bg-secondary-700 dark:focus:bg-secondary-700">
                                 <span class="mr-4">
-                                    <x-shopper-input.checkbox id="customer_{{ $customer->id }}" aria-label="{{ __('Customer') }}" wire:model.lazy="selectedCustomers" value="{{ $customer->id }}" />
+                                    <x-shopper-forms.checkbox id="customer_{{ $customer->id }}" aria-label="{{ __('Customer') }}" wire:model.lazy="selectedCustomers" value="{{ $customer->id }}" />
                                 </span>
                                 <div class="flex flex-1 items-center justify-between">
                                     <div class="flex items-center space-x-2">

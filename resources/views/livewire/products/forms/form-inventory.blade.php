@@ -11,22 +11,22 @@
         <div class="mt-5 bg-white dark:bg-secondary-800 rounded-lg overflow-hidden shadow-md">
             <div class="p-5 sm:p-5">
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-5">
-                    <x-shopper-input.group class="sm:col-span-1" label="SKU (Stock Keeping Unit)" for="sku" :error="$errors->first('sku')">
-                        <x-shopper-input.text wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
-                    </x-shopper-input.group>
+                    <x-shopper-forms.group class="sm:col-span-1" label="SKU (Stock Keeping Unit)" for="sku" :error="$errors->first('sku')">
+                        <x-shopper-forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
+                    </x-shopper-forms.group>
                     <div class="sm:col-span-1">
-                        <x-shopper-input.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
-                            <x-shopper-input.text wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
-                        </x-shopper-input.group>
+                        <x-shopper-forms.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
+                            <x-shopper-forms.input wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
+                        </x-shopper-forms.group>
                         @if($barcodeImage)
                             <div class="mt-2 rounded-sm w-auto shrink-0">
                                 {!! $barcodeImage !!}
                             </div>
                         @endif
                     </div>
-                    <x-shopper-input.group class="sm:col-span-1" label="Safety Stock" for="security_stock">
-                        <x-shopper-input.text wire:model.defer="securityStock" id="security_stock" type="number" min="0" autocomplete="off" />
-                    </x-shopper-input.group>
+                    <x-shopper-forms.group class="sm:col-span-1" label="Safety Stock" for="security_stock">
+                        <x-shopper-forms.input wire:model.defer="securityStock" id="security_stock" type="number" min="0" autocomplete="off" />
+                    </x-shopper-forms.group>
                 </div>
             </div>
             <div class="px-4 py-3 bg-secondary-50 dark:bg-transparent text-right sm:px-6">
@@ -62,11 +62,11 @@
                     <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-700">
                         <x-heroicon-o-location-marker class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
                     </span>
-                    <x-shopper-input.select wire:model="inventory" id="inventory" class="-ml-px block w-full pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
+                    <x-shopper-forms.select wire:model="inventory" id="inventory" class="-ml-px block w-full pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
                         @foreach($inventories as $inventory)
                             <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                         @endforeach
-                    </x-shopper-input.select>
+                    </x-shopper-forms.select>
                 </span>
                 <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-400">
                     <span class="block text-sm font-medium mr-4">{{ __('Quantity Available') }}</span>
@@ -90,7 +90,7 @@
                         <div>
                             <div class="flex rounded-md shadow-sm">
                                 <div class="relative flex items-stretch grow focus-within:z-10">
-                                    <x-shopper-input.text wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
+                                    <x-shopper-forms.input wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
                                 </div>
                                 <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-none border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-700 text-sm font-medium text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
                                     <span>&minus;</span>

@@ -33,25 +33,25 @@
                 <div class="p-4 sm:p-5 bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
                     <div class="space-y-4">
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                            <x-shopper-input.group label="Location Name" for="name" class="sm:col-span-1" :error="$errors->first('name')">
-                                <x-shopper-input.text wire:model.debounce.550ms="name" id="name" type="text" autocomplete="off" placeholder="White House" />
-                            </x-shopper-input.group>
-                            <x-shopper-input.group label="Email" for="email" class="sm:col-span-1" :error="$errors->first('email')">
-                                <x-shopper-input.text wire:model.debounce.550ms="email" id="email" type="email" autocomplete="off" />
-                            </x-shopper-input.group>
+                            <x-shopper-forms.group label="Location Name" for="name" class="sm:col-span-1" :error="$errors->first('name')">
+                                <x-shopper-forms.input wire:model.debounce.550ms="name" id="name" type="text" autocomplete="off" placeholder="White House" />
+                            </x-shopper-forms.group>
+                            <x-shopper-forms.group label="Email" for="email" class="sm:col-span-1" :error="$errors->first('email')">
+                                <x-shopper-forms.input wire:model.debounce.550ms="email" id="email" type="email" autocomplete="off" />
+                            </x-shopper-forms.group>
                             <div class="sm:col-span-2">
                                 <div class="flex items-center justify-between">
                                     <x-shopper-label :value="__('Description')" for="description" />
                                     <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
-                                    <x-shopper-input.textarea wire:model.lazy="description" id="description" />
+                                    <x-shopper-forms.textarea wire:model.lazy="description" id="description" />
                                 </div>
                             </div>
                         </div>
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <x-shopper-input.checkbox wire:model.defer="isDefault" id="isDefault" />
+                                <x-shopper-forms.checkbox wire:model.defer="isDefault" id="isDefault" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <label for="isDefault" class="font-medium text-secondary-700 cursor-pointer dark:text-secondary-200">{{ __('Set as default inventory') }}</label>
@@ -98,9 +98,9 @@
                 <div class="bg-white shadow rounded-md dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                            <x-shopper-input.group label="Street address" for="street_address" class="sm:col-span-6" :error="$errors->first('street_address')">
-                                <x-shopper-input.text wire:model="street_address" id="street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
-                            </x-shopper-input.group>
+                            <x-shopper-forms.group label="Street address" for="street_address" class="sm:col-span-6" :error="$errors->first('street_address')">
+                                <x-shopper-forms.input wire:model="street_address" id="street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
+                            </x-shopper-forms.group>
 
                             <div class="sm:col-span-6">
                                 <div class="flex items-center justify-between">
@@ -108,11 +108,11 @@
                                     <span class="ml-4 text-sm text-secondary-500 leading-5">{{ __('Optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
-                                    <x-shopper-input.text wire:model="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
+                                    <x-shopper-forms.input wire:model="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
                                 </div>
                             </div>
 
-                            <x-shopper-input.group for="country_id" label="Country" class="sm:col-span-6" :error="$errors->first('country_id')">
+                            <x-shopper-forms.group for="country_id" label="Country" class="sm:col-span-6" :error="$errors->first('country_id')">
                                 <x-select
                                     :placeholder="__('Choose a Country')"
                                     wire:model.lazy="country_id"
@@ -122,23 +122,23 @@
                                         <x-select.option :label="$country->name" :value="$country->id" />
                                     @endforeach
                                 </x-select>
-                            </x-shopper-input.group>
+                            </x-shopper-forms.group>
 
-                            <x-shopper-input.group label="City" for="city" class="sm:col-span-3" :error="$errors->first('city')">
-                                <x-shopper-input.text wire:model="city" id="city" type="text" autocomplete="off" />
-                            </x-shopper-input.group>
+                            <x-shopper-forms.group label="City" for="city" class="sm:col-span-3" :error="$errors->first('city')">
+                                <x-shopper-forms.input wire:model="city" id="city" type="text" autocomplete="off" />
+                            </x-shopper-forms.group>
 
-                            <x-shopper-input.group label="Postal / Zip code" for="zipcode" class="sm:col-span-3" :error="$errors->first('zipcode')">
-                                <x-shopper-input.text wire:model="zipcode" id="zipcode" type="text" autocomplete="off" />
-                            </x-shopper-input.group>
+                            <x-shopper-forms.group label="Postal / Zip code" for="zipcode" class="sm:col-span-3" :error="$errors->first('zipcode')">
+                                <x-shopper-forms.input wire:model="zipcode" id="zipcode" type="text" autocomplete="off" />
+                            </x-shopper-forms.group>
 
                             <div
                                 wire:ignore
                                 x-data="internationalNumber('#phone_number')"
                                 class="sm:col-span-6"
                             >
-                                <x-shopper-input.group label="Phone number" for="phone_number" :error="$errors->first('phone_number')">
-                                    <x-shopper-input.text wire:model="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
+                                <x-shopper-forms.group label="Phone number" for="phone_number" :error="$errors->first('phone_number')">
+                                    <x-shopper-forms.input wire:model="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
                                     @error('phone_number')
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                             <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
@@ -146,7 +146,7 @@
                                             </svg>
                                         </div>
                                     @enderror
-                                </x-shopper-input.group>
+                                </x-shopper-forms.group>
                             </div>
                         </div>
                     </div>

@@ -17,14 +17,14 @@
                             {{ __('Sort by:') }}
                         </span>
                     </div>
-                    <x-shopper-input.select wire:model.lazy="sortBy" id="sort" class="pl-18 pr-10 py-2">
+                    <x-shopper-forms.select wire:model.lazy="sortBy" id="sort" class="pl-18 pr-10 py-2">
                         <option value="alpha_asc">{{ __('Alpha Asc') }}</option>
                         <option value="alpha_desc">{{ __('Alpha Desc') }}</option>
                         <option value="price_desc">{{ __('Price Desc') }}</option>
                         <option value="price_asc">{{ __('Price ASC') }}</option>
                         <option value="created_desc">{{ __('Created Desc') }}</option>
                         <option value="created_asc">{{ __('Created Asc') }}</option>
-                    </x-shopper-input.select>
+                    </x-shopper-forms.select>
                 </div>
             </div>
         </div>

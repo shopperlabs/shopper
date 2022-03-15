@@ -27,7 +27,7 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg relative rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model.lazy="email" id="email" type="email" autocomplete="off" />
+                        <x-shopper-forms.input wire:model.lazy="email" id="email" type="email" autocomplete="off" />
                     </div>
                     @error('email')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -51,7 +51,7 @@
                         </button>
                     </div>
                     <div class="mt-2 max-w-lg relative rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model.defer="password" id="password" ::type="show ? 'text' : 'password'" type="password" autocomplete="off" class="@error('password') pr-10 @enderror" />
+                        <x-shopper-forms.input wire:model.defer="password" id="password" ::type="show ? 'text' : 'password'" type="password" autocomplete="off" class="@error('password') pr-10 @enderror" />
                         @error('password')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
@@ -100,7 +100,7 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model.lazy="first_name" type="text" id="first_name" autocomplete="off" />
+                        <x-shopper-forms.input wire:model.lazy="first_name" type="text" id="first_name" autocomplete="off" />
                     </div>
                     @error('first_name')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -114,7 +114,7 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model="last_name" type="text" id="last_name" autocomplete="off" />
+                        <x-shopper-forms.input wire:model="last_name" type="text" id="last_name" autocomplete="off" />
                     </div>
                     @error('last_name')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -128,10 +128,10 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <x-shopper-input.select wire:model.lazy="gender" id="gender">
+                        <x-shopper-forms.select wire:model.lazy="gender" id="gender">
                             <option value="male">{{ __('Male') }}</option>
                             <option value="female">{{ __('Female') }}</option>
-                        </x-shopper-input.select>
+                        </x-shopper-forms.select>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model.lazy="phone_number" type="tel" id="phone_number" />
+                        <x-shopper-forms.input wire:model.lazy="phone_number" type="tel" id="phone_number" />
                         @error('phone_number')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
@@ -184,7 +184,7 @@
                                 <div class="mt-4 space-y-4">
                                     @foreach($roles as $role)
                                         <div class="flex items-center">
-                                            <x-shopper-input.radio wire:model.lazy="role_id" id="role_{{ $role->id }}" name="role_id" value="{{ $role->id }}" />
+                                            <x-shopper-forms.radio wire:model.lazy="role_id" id="role_{{ $role->id }}" name="role_id" value="{{ $role->id }}" />
                                             <label for="role_{{ $role->id }}" class="ml-3 cursor-pointer">
                                                 <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400">{{ $role->display_name ?? $role->name }}</span>
                                             </label>

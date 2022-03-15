@@ -102,7 +102,7 @@
             <section aria-labelledby="configuration-heading" class="min-w-0 flex-1 h-full flex flex-col overflow-hidden">
                 <div class="min-h-(screen-content) flex-1 overflow-y-auto">
                     <div class="lg:hidden py-6 border-b border-secondary-200 sm:px-4 max-w-2xl mx-auto">
-                        <x-shopper-input.select x-model="currentTab" aria-label="Selected tab" class="block w-full pl-3 pr-10 py-2">
+                        <x-shopper-forms.select x-model="currentTab" aria-label="Selected tab" class="block w-full pl-3 pr-10 py-2">
                             <template x-for="option in options" :key="option">
                                 <option
                                     x-bind:value="option"
@@ -110,7 +110,7 @@
                                     x-bind:selected="option === currentTab"
                                 ></option>
                             </template>
-                        </x-shopper-input.select>
+                        </x-shopper-forms.select>
                     </div>
 
                     <div x-show="currentTab === 'config'">

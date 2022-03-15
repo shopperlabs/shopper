@@ -26,7 +26,7 @@
         </div>
         <div>
             <div class="sm:hidden">
-                <x-shopper-input.select x-model="currentTab" aria-label="Selected tab">
+                <x-shopper-forms.select x-model="currentTab" aria-label="Selected tab">
                     <template x-for="option in options" :key="option">
                         <option
                             x-bind:value="option"
@@ -34,7 +34,7 @@
                             x-bind:selected="option === currentTab"
                         ></option>
                     </template>
-                </x-shopper-input.select>
+                </x-shopper-forms.select>
             </div>
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
@@ -55,7 +55,7 @@
         <div x-show="currentTab === 'general'">
             <div class="mt-6 bg-white shadow sm:rounded-md dark:bg-secondary-800">
                 <div class="p-4 sm:p-6 sm:pb-4">
-                    <x-shopper-input.search label="Search payments" placeholder="Search payment by provider name" />
+                    <x-shopper-forms.search label="Search payments" placeholder="Search payment by provider name" />
                 </div>
                 <div class="hidden sm:block">
                     <div class="align-middle inline-block min-w-full">
