@@ -3,20 +3,20 @@
         <div class="xl:col-span-4 space-y-5">
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
-                    <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
-                    </x-shopper-input.group>
+                    <x-shopper-forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                        <x-shopper-forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
+                    </x-shopper-forms.group>
                 </div>
                 <div class="mt-5 border-t border-secondary-200 dark:border-secondary-700 pt-4">
-                    <x-shopper-input.group label="Description" for="description">
+                    <x-shopper-forms.group label="Description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
-                    </x-shopper-input.group>
+                    </x-shopper-forms.group>
                 </div>
             </div>
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5 overflow-hidden">
                 <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Product Media') }}</h4>
                 <div class="mt-4">
-                    <x-shopper-input.filepond
+                    <x-shopper-forms.filepond
                         wire:model="files"
                         multiple
                         allowImagePreview
@@ -131,14 +131,14 @@
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Product associations') }}</h4>
                     </div>
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
-                        <x-shopper-input.group class="p-4 sm:p-5" label="Brand" for="brand_id">
-                            <x-shopper-input.select wire:model.defer="brand_id" id="brand_id">
+                        <x-shopper-forms.group class="p-4 sm:p-5" label="Brand" for="brand_id">
+                            <x-shopper-forms.select wire:model.defer="brand_id" id="brand_id">
                                 <option value="0">{{ __('No brand') }}</option>
                                 @foreach($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
-                            </x-shopper-input.select>
-                        </x-shopper-input.group>
+                            </x-shopper-forms.select>
+                        </x-shopper-forms.group>
                         <div class="p-4 sm:p-5">
                             <x-select
                                 :label="__('Collections')"
@@ -167,7 +167,7 @@
                             @foreach($categories as $category)
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                        <x-shopper-input.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
+                                        <x-shopper-forms.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="category-{{ $category->id }}" class="font-medium text-secondary-700 dark:text-secondary-300">{{ $category->name }}</label>
@@ -177,7 +177,7 @@
                                 @if($category->children->isNotEmpty())
                                     <div class="ml-4 space-y-3">
                                         @foreach($category->children as $child)
-                                            @include('shopper::components.input.checkbox-category', ['parent' => $category->parent_id, 'category' => $child])
+                                            @include('shopper::components.forms.checkbox-category', ['parent' => $category->parent_id, 'category' => $child])
                                         @endforeach
                                     </div>
                                 @endif

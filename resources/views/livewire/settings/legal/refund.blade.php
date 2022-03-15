@@ -24,9 +24,9 @@
                             </div>
                         </div>
                         <div class="col-span-6">
-                            <x-shopper-input.group label="Content" for="content">
+                            <x-shopper-forms.group label="Content" for="content">
                                 <livewire:shopper-forms.trix :value="$content" />
-                            </x-shopper-input.group>
+                            </x-shopper-forms.group>
                         </div>
                     </div>
                 </div>

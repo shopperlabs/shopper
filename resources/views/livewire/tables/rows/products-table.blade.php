@@ -1,6 +1,6 @@
 <div class="p-4 sm:p-6 sm:pb-4">
     <div class="relative z-20 flex items-center space-x-4">
-        <x-shopper-input.search label="Search product" placeholder="Search product by name" />
+        <x-shopper-forms.search label="Search product" placeholder="Search product by name" />
         <div x-data="{ show: false }" @keydown.window.escape="show = false" @click.away="show = false" class="relative inline-block text-left">
             <x-shopper-default-button @click="show = !show" type="button" id="options-filters" aria-haspopup="true" aria-expanded="true" x-bind:aria-expanded="show">
                 <x-heroicon-o-filter class="-ml-1 mr-2 h-5 w-5" />
@@ -48,12 +48,12 @@
                                                             </x-shopper-label>
                                                             <div class="mt-1">
                                                                 <div class="mt-1 rounded-md shadow-sm">
-                                                                    <x-shopper-input.select wire:model="brand_id" id="brand_id">
+                                                                    <x-shopper-forms.select wire:model="brand_id" id="brand_id">
                                                                         <option value="0">{{ __('No Brand') }}</option>
                                                                         @foreach($brands as $brand)
                                                                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                                         @endforeach
-                                                                    </x-shopper-input.select>
+                                                                    </x-shopper-forms.select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -63,12 +63,12 @@
                                                             </x-shopper-label>
                                                             <div class="mt-1">
                                                                 <div class="mt-1 rounded-md shadow-sm">
-                                                                    <x-shopper-input.select wire:model="category_id" id="category_id">
+                                                                    <x-shopper-forms.select wire:model="category_id" id="category_id">
                                                                         <option value="0">{{ __('No Category') }}</option>
                                                                         @foreach($categories as $category)
                                                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                                         @endforeach
-                                                                    </x-shopper-input.select>
+                                                                    </x-shopper-forms.select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -78,12 +78,12 @@
                                                             </x-shopper-label>
                                                             <div class="mt-1">
                                                                 <div class="mt-1 rounded-md shadow-sm">
-                                                                    <x-shopper-input.select wire:model="collection_id" id="collection_id">
+                                                                    <x-shopper-forms.select wire:model="collection_id" id="collection_id">
                                                                         <option value="0">{{ __('No Collection') }}</option>
                                                                         @foreach($collections as $collection)
                                                                             <option value="{{ $collection->id }}">{{ $collection->name }}</option>
                                                                         @endforeach
-                                                                    </x-shopper-input.select>
+                                                                    </x-shopper-forms.select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -100,7 +100,7 @@
                                                         <div class="mt-2 space-y-5">
                                                             <div class="relative flex items-start">
                                                                 <div class="absolute flex items-center h-5">
-                                                                    <x-shopper-input.radio wire:model="isVisible" id="status_public" value="1" aria-describedby="product_status_visible" name="status" />
+                                                                    <x-shopper-forms.radio wire:model="isVisible" id="status_public" value="1" aria-describedby="product_status_visible" name="status" />
                                                                 </div>
                                                                 <div class="pl-7 text-sm">
                                                                     <x-shopper-label for="status_public" class="text-secondary-900 dark:text-white">
@@ -114,7 +114,7 @@
                                                             <div>
                                                                 <div class="relative flex items-start">
                                                                     <div class="absolute flex items-center h-5">
-                                                                        <x-shopper-input.radio wire:model.lazy="isVisible" id="status_private" value="0" aria-describedby="product_status_invisible" name="status" />
+                                                                        <x-shopper-forms.radio wire:model.lazy="isVisible" id="status_private" value="0" aria-describedby="product_status_invisible" name="status" />
                                                                     </div>
                                                                     <div class="pl-7 text-sm">
                                                                         <x-shopper-label for="status_private" class="text-secondary-900 dark:text-white">

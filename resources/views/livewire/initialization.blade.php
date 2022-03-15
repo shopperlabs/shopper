@@ -134,7 +134,7 @@
                                         <path fill-rule="evenodd" d="M22 5H2a1 1 0 0 0-1 1v4a3 3 0 0 0 2 2.82V22a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9.18A3 3 0 0 0 23 10V6a1 1 0 0 0-1-1zm-7 2h2v3a1 1 0 1 1-2 0zm-4 0h2v3a1 1 0 1 1-2 0zM7 7h2v3a1 1 0 1 1-2 0zm-3 4a1 1 0 0 1-1-1V7h2v3a1 1 0 0 1-1 1zm10 10h-4v-2a2 2 0 1 1 4 0zm5 0h-3v-2a4 4 0 1 0-8 0v2H5v-8.18a3.17 3.17 0 0 0 1-.6 3 3 0 0 0 4 0 3 3 0 0 0 4 0 3 3 0 0 0 4 0c.293.26.632.464 1 .6zm2-11a1 1 0 1 1-2 0V7h2zM4.3 3H20a1 1 0 1 0 0-2H4.3a1 1 0 1 0 0 2z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <x-shopper-input.text id="name" type="text" wire:model.defer="shop_name" class="pl-10" autocomplete="name" autofocus required />
+                                <x-shopper-forms.input id="name" type="text" wire:model.defer="shop_name" class="pl-10" autocomplete="name" autofocus required />
                             </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                     </svg>
                                 </div>
-                                <x-shopper-input.text wire:model.defer="shop_email" id="email" type="email" class="pl-10" required />
+                                <x-shopper-forms.input wire:model.defer="shop_email" id="email" type="email" class="pl-10" required />
                             </div>
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-secondary-200 sm:pt-5 dark:border-secondary-700">
                         <x-shopper-label for="photo" class="sm:mt-px sm:pt-2" value="Logo" />
                         <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                            <x-shopper-input.avatar-upload wire:model.defer="logo" id="photo">
+                            <x-shopper-forms.avatar-upload wire:model.defer="logo" id="photo">
                                 <span class="h-12 w-12 rounded-full overflow-hidden bg-secondary-100 dark:bg-secondary-700 flex items-center justify-center">
                                     @if($logo)
                                         <img class="h-full w-full object-cover" src="{{ $logo->temporaryUrl() }}" alt="Store logo">
@@ -187,7 +187,7 @@
                                         </svg>
                                     @endif
                                 </span>
-                            </x-shopper-input.avatar-upload>
+                            </x-shopper-forms.avatar-upload>
                             <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">{{ __('The logo of your store that will be visible on your site. This assets will appear on your invoices.') }}</p>
                         </div>
                     </div>
@@ -258,46 +258,46 @@
                         </div>
                         <div class="py-2 pr-2">
                             <div class="grid gap-4 lg:grid-cols-4 lg:gap-5">
-                                <x-shopper-input.group class="sm:col-span-4" label="Street address" for="street_address" isRequired>
-                                    <x-shopper-input.text wire:model.defer="shop_street_address" id="street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
-                                </x-shopper-input.group>
+                                <x-shopper-forms.group class="sm:col-span-4" label="Street address" for="street_address" isRequired>
+                                    <x-shopper-forms.input wire:model.defer="shop_street_address" id="street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
+                                </x-shopper-forms.group>
 
-                                <x-shopper-input.group class="sm:col-span-1" label="Zip code" for="zipcode" isRequired>
-                                    <x-shopper-input.text wire:model.defer="shop_zipcode" id="zipcode" type="text" autocomplete="off" placeholder="00237" required />
-                                </x-shopper-input.group>
+                                <x-shopper-forms.group class="sm:col-span-1" label="Zip code" for="zipcode" isRequired>
+                                    <x-shopper-forms.input wire:model.defer="shop_zipcode" id="zipcode" type="text" autocomplete="off" placeholder="00237" required />
+                                </x-shopper-forms.group>
 
-                                <x-shopper-input.group class="sm:col-span-3" label="City" for="city" isRequired>
-                                    <x-shopper-input.text wire:model.defer="shop_city" id="city" type="text" autocomplete="off" required />
-                                </x-shopper-input.group>
+                                <x-shopper-forms.group class="sm:col-span-3" label="City" for="city" isRequired>
+                                    <x-shopper-forms.input wire:model.defer="shop_city" id="city" type="text" autocomplete="off" required />
+                                </x-shopper-forms.group>
 
                                 <div wire:ignore x-data="internationalNumber('#phone_number')" class="sm:col-span-4">
                                     <x-shopper-label for="phone_number" class="sm:mt-px sm:pt-2" value="Phone number" />
                                     <div class="mt-1 sm:mt-0 sm:col-span-2">
                                         <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
-                                            <x-shopper-input.text wire:model.defer="shop_phone_number" id="phone_number" type="tel" class="w-full" autocomplete="off" />
+                                            <x-shopper-forms.input wire:model.defer="shop_phone_number" id="phone_number" type="tel" class="w-full" autocomplete="off" />
                                         </div>
                                     </div>
                                 </div>
 
-                                <x-shopper-input.group class="sm:col-span-2" for="longitude" label="Longitude" wire:ignore>
+                                <x-shopper-forms.group class="sm:col-span-2" for="longitude" label="Longitude" wire:ignore>
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M10 7.083A2.92 2.92 0 0 0 7.083 10 2.92 2.92 0 0 0 10 12.917 2.92 2.92 0 0 0 12.917 10 2.92 2.92 0 0 0 10 7.083zm0 4.167c-.69 0-1.25-.56-1.25-1.25S9.31 8.75 10 8.75s1.25.56 1.25 1.25-.56 1.25-1.25 1.25z" />
                                             <path d="M19.167 9.167H17.45a7.51 7.51 0 0 0-6.618-6.618V.833a.834.834 0 0 0-1.666 0V2.55a7.51 7.51 0 0 0-6.618 6.618H.833a.834.834 0 0 0 0 1.666H2.55a7.51 7.51 0 0 0 6.618 6.618v1.716a.834.834 0 0 0 1.666 0V17.45a7.51 7.51 0 0 0 6.618-6.618h1.716a.834.834 0 0 0 0-1.666zM10 15.833A5.84 5.84 0 0 1 4.167 10 5.84 5.84 0 0 1 10 4.167 5.84 5.84 0 0 1 15.833 10 5.84 5.84 0 0 1 10 15.833z" />
                                         </svg>
                                     </div>
-                                    <x-shopper-input.text x-model="lng" x-data x-init="$watch('lng', value => $wire.set('shop_lng', value))" id="longitude" type="text" class="pl-10" autocomplete="off" placeholder="9.795537" readonly />
-                                </x-shopper-input.group>
+                                    <x-shopper-forms.input x-model="lng" x-data x-init="$watch('lng', value => $wire.set('shop_lng', value))" id="longitude" type="text" class="pl-10" autocomplete="off" placeholder="9.795537" readonly />
+                                </x-shopper-forms.group>
 
-                                <x-shopper-input.group class="sm:col-span-2" for="latitude" label="Latitude" wire:ignore>
+                                <x-shopper-forms.group class="sm:col-span-2" for="latitude" label="Latitude" wire:ignore>
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <svg class="h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M10 7.083A2.92 2.92 0 0 0 7.083 10 2.92 2.92 0 0 0 10 12.917 2.92 2.92 0 0 0 12.917 10 2.92 2.92 0 0 0 10 7.083zm0 4.167c-.69 0-1.25-.56-1.25-1.25S9.31 8.75 10 8.75s1.25.56 1.25 1.25-.56 1.25-1.25 1.25z" />
                                             <path d="M19.167 9.167H17.45a7.51 7.51 0 0 0-6.618-6.618V.833a.834.834 0 0 0-1.666 0V2.55a7.51 7.51 0 0 0-6.618 6.618H.833a.834.834 0 0 0 0 1.666H2.55a7.51 7.51 0 0 0 6.618 6.618v1.716a.834.834 0 0 0 1.666 0V17.45a7.51 7.51 0 0 0 6.618-6.618h1.716a.834.834 0 0 0 0-1.666zM10 15.833A5.84 5.84 0 0 1 4.167 10 5.84 5.84 0 0 1 10 4.167 5.84 5.84 0 0 1 15.833 10 5.84 5.84 0 0 1 10 15.833z" />
                                         </svg>
                                     </div>
-                                    <x-shopper-input.text x-model="lat" x-data x-init="$watch('lat', value => $wire.set('shop_lat', value))" id="latitude" type="text" class="pl-10" autocomplete="off" placeholder="4.02537" readonly />
-                                </x-shopper-input.group>
+                                    <x-shopper-forms.input x-model="lat" x-data x-init="$watch('lat', value => $wire.set('shop_lat', value))" id="latitude" type="text" class="pl-10" autocomplete="off" placeholder="4.02537" readonly />
+                                </x-shopper-forms.group>
                             </div>
                         </div>
                     </div>
@@ -317,32 +317,32 @@
 
                 <div class="bg-white shadow-md rounded-md p-4 lg:p-6 mt-6 dark:bg-secondary-800">
                     <div class="grid grid-cols-6 gap-6">
-                        <x-shopper-input.group class="col-span-6 lg:col-span-2" label="Facebook" for="facebook">
+                        <x-shopper-forms.group class="col-span-6 lg:col-span-2" label="Facebook" for="facebook">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="w-5 h-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <x-shopper-input.text wire:model.defer="shop_facebook_link" id="facebook" type="text" class="pl-10" autocomplete="off" placeholder="https://facebook.com/laravelshopper" />
-                        </x-shopper-input.group>
+                            <x-shopper-forms.input wire:model.defer="shop_facebook_link" id="facebook" type="text" class="pl-10" autocomplete="off" placeholder="https://facebook.com/laravelshopper" />
+                        </x-shopper-forms.group>
 
-                        <x-shopper-input.group class="col-span-6 lg:col-span-2" label="Instagram" for="instagram">
+                        <x-shopper-forms.group class="col-span-6 lg:col-span-2" label="Instagram" for="instagram">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M17.34 5.46a1.2 1.2 0 1 0 1.2 1.2 1.2 1.2 0 0 0-1.2-1.2zm4.6 2.42a7.59 7.59 0 0 0-.46-2.43 4.94 4.94 0 0 0-1.16-1.77 4.7 4.7 0 0 0-1.77-1.15 7.3 7.3 0 0 0-2.43-.47C15.06 2 14.72 2 12 2s-3.06 0-4.12.06a7.3 7.3 0 0 0-2.43.47 4.78 4.78 0 0 0-1.77 1.15 4.7 4.7 0 0 0-1.15 1.77 7.3 7.3 0 0 0-.47 2.43C2 8.94 2 9.28 2 12s0 3.06.06 4.12a7.3 7.3 0 0 0 .47 2.43 4.7 4.7 0 0 0 1.15 1.77 4.78 4.78 0 0 0 1.77 1.15 7.3 7.3 0 0 0 2.43.47C8.94 22 9.28 22 12 22s3.06 0 4.12-.06a7.3 7.3 0 0 0 2.43-.47 4.7 4.7 0 0 0 1.77-1.15 4.85 4.85 0 0 0 1.16-1.77 7.59 7.59 0 0 0 .46-2.43c0-1.06.06-1.4.06-4.12s0-3.06-.06-4.12zM20.14 16a5.61 5.61 0 0 1-.34 1.86 3.06 3.06 0 0 1-.75 1.15 3.19 3.19 0 0 1-1.15.75 5.61 5.61 0 0 1-1.86.34c-1 .05-1.37.06-4 .06s-3 0-4-.06a5.73 5.73 0 0 1-1.94-.3 3.27 3.27 0 0 1-1.1-.75 3 3 0 0 1-.74-1.15 5.54 5.54 0 0 1-.4-1.9c0-1-.06-1.37-.06-4s0-3 .06-4a5.54 5.54 0 0 1 .35-1.9A3 3 0 0 1 5 5a3.14 3.14 0 0 1 1.1-.8A5.73 5.73 0 0 1 8 3.86c1 0 1.37-.06 4-.06s3 0 4 .06a5.61 5.61 0 0 1 1.86.34 3.06 3.06 0 0 1 1.19.8 3.06 3.06 0 0 1 .75 1.1 5.61 5.61 0 0 1 .34 1.9c.05 1 .06 1.37.06 4s-.01 3-.06 4zM12 6.87A5.13 5.13 0 1 0 17.14 12 5.12 5.12 0 0 0 12 6.87zm0 8.46A3.33 3.33 0 1 1 15.33 12 3.33 3.33 0 0 1 12 15.33z" />
                                 </svg>
                             </div>
-                            <x-shopper-input.text wire:model.defer="shop_instagram_link" id="instagram" type="text" class="pl-10" autocomplete="off" placeholder="https://instagram.com/laravelshopper" />
-                        </x-shopper-input.group>
+                            <x-shopper-forms.input wire:model.defer="shop_instagram_link" id="instagram" type="text" class="pl-10" autocomplete="off" placeholder="https://instagram.com/laravelshopper" />
+                        </x-shopper-forms.group>
 
-                        <x-shopper-input.group class="col-span-6 lg:col-span-2" label="Twitter" for="twitter">
+                        <x-shopper-forms.group class="col-span-6 lg:col-span-2" label="Twitter" for="twitter">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                                 </svg>
                             </div>
-                            <x-shopper-input.text wire:model.defer="shop_twitter_link" id="twitter" type="text" class="pl-10" autocomplete="off" placeholder="https://twitter.com/laravelshopper" />
-                        </x-shopper-input.group>
+                            <x-shopper-forms.input wire:model.defer="shop_twitter_link" id="twitter" type="text" class="pl-10" autocomplete="off" placeholder="https://twitter.com/laravelshopper" />
+                        </x-shopper-forms.group>
                     </div>
                 </div>
             </div>

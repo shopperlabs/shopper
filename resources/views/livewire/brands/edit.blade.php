@@ -23,17 +23,17 @@
         <div class="sm:col-span-4 space-y-5">
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
-                    <x-shopper-input.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper-input.text wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
-                    </x-shopper-input.group>
+                    <x-shopper-forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                        <x-shopper-forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
+                    </x-shopper-forms.group>
                 </div>
                 <div class="mt-4">
-                    <x-shopper-input.group label="Website" for="website">
+                    <x-shopper-forms.group label="Website" for="website">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-secondary-500 dark:text-secondary-400 sm:text-sm sm:leading-5">https://</span>
                         </div>
-                        <x-shopper-input.text wire:model.defer="website" id="website" type="text" class="pl-16" placeholder="www.example.com" />
-                    </x-shopper-input.group>
+                        <x-shopper-forms.input wire:model.defer="website" id="website" type="text" class="pl-16" placeholder="www.example.com" />
+                    </x-shopper-forms.group>
                 </div>
                 <div class="mt-5 border-t border-b border-secondary-200 dark:border-secondary-700 py-4">
                     <div class="relative flex items-start">
@@ -50,9 +50,9 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <x-shopper-input.group label="Description" for="description">
+                    <x-shopper-forms.group label="Description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
-                    </x-shopper-input.group>
+                    </x-shopper-forms.group>
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow-md divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
@@ -77,16 +77,16 @@
                 </div>
                 @if($updateSeo)
                     <div class="px-4 py-5 sm:px-6 space-y-5">
-                        <x-shopper-input.group for="seo_title" label="Title">
-                            <x-shopper-input.text wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
-                        </x-shopper-input.group>
+                        <x-shopper-forms.group for="seo_title" label="Title">
+                            <x-shopper-forms.input wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                        </x-shopper-forms.group>
                         <div>
                             <div class="flex items-center justify-between">
                                 <x-shopper-label for="seo_description" :value="__('Description')" />
                                 <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('160 characters') }}</span>
                             </div>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <x-shopper-input.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
+                                <x-shopper-forms.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
                             </div>
                         </div>
                     </div>

@@ -10,21 +10,21 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2">
-            <x-shopper-input.group label="Attribute" for="attribute_id" class="sm:col-span-2" :error="$errors->first('attribute_id')" isRequired>
-                <x-shopper-input.select wire:model="attribute_id" id="attribute_id">
+            <x-shopper-forms.group label="Attribute" for="attribute_id" class="sm:col-span-2" :error="$errors->first('attribute_id')" isRequired>
+                <x-shopper-forms.select wire:model="attribute_id" id="attribute_id">
                     <option value="0">{{ __('Select the attribute to add') }}</option>
                     @foreach($attributes as $attribute)
                         <option value="{{ $attribute['id'] }}" @if($loop->first) selected @endif>{{ $attribute['name'] }}</option>
                     @endforeach
-                </x-shopper-input.select>
-            </x-shopper-input.group>
+                </x-shopper-forms.select>
+            </x-shopper-forms.group>
             <div class="sm:col-span-2">
                 <x-shopper-label for="value" value="{{ __('Value') }}" />
                 <div class="mt-1">
                     @if($type === 'text')
-                        <x-shopper-input.text wire:model.lazy="value" id="value" type="text" autocomplete="off" required />
+                        <x-shopper-forms.input wire:model.lazy="value" id="value" type="text" autocomplete="off" required />
                     @elseif($type === 'number')
-                        <x-shopper-input.text wire:model.lazy="value" id="value" type="number" min="0" step="1" autocomplete="off" required />
+                        <x-shopper-forms.input wire:model.lazy="value" id="value" type="number" min="0" step="1" autocomplete="off" required />
                     @elseif($type === 'datepicker')
                         <div x-data x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});" class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -35,17 +35,17 @@
                     @elseif($type === 'richtext')
                         <livewire:shopper-forms.trix :value="$value" />
                     @elseif($type === 'select')
-                        <x-shopper-input.select wire:model.lazy="value" id="value" required>
+                        <x-shopper-forms.select wire:model.lazy="value" id="value" required>
                             @foreach($values as $v)
                                 <option value="{{ $v->id }}">{{ $v->value }}</option>
                             @endforeach
-                        </x-shopper-input.select>
+                        </x-shopper-forms.select>
                     @elseif($type === 'checkbox' || $type === 'colorpicker')
                         <div class="grid grid-cols-2 gap-4 mt-2">
                             @foreach($values as $v)
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                        <x-shopper-input.checkbox wire:model="multipleValues" id="value_{{ $v->id }}" value="{{ $v->id }}" />
+                                        <x-shopper-forms.checkbox wire:model="multipleValues" id="value_{{ $v->id }}" value="{{ $v->id }}" />
                                     </div>
                                     <div class="ml-3 text-sm leading-5">
                                         <label for="value_{{ $v->id }}" class="font-medium text-secondary-700 cursor-pointer dark:text-secondary-400">{{ $v->value }}</label>
@@ -57,7 +57,7 @@
                         <div class="grid grid-cols-3 gap-4 mt-2">
                             @foreach($values as $v)
                                 <div class="flex items-center">
-                                    <x-shopper-input.radio wire:model="value" id="value_{{ $v->id }}" value="{{ $v->id }}" />
+                                    <x-shopper-forms.radio wire:model="value" id="value_{{ $v->id }}" value="{{ $v->id }}" />
                                     <label for="value_{{ $v->id }}" class="ml-3">
                                         <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400">{{ $v->value }}</span>
                                     </label>

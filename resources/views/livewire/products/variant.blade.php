@@ -37,13 +37,13 @@
                 <div class="shadow rounded-md overflow-hidden">
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
-                            <x-shopper-input.group label="Name" for="name" class="sm:col-span-3" :error="$errors->first('name')" isRequired>
-                                <x-shopper-input.text wire:model.lazy="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Black 128Go, primary 64Go...') }}" />
-                            </x-shopper-input.group>
+                            <x-shopper-forms.group label="Name" for="name" class="sm:col-span-3" :error="$errors->first('name')" isRequired>
+                                <x-shopper-forms.input wire:model.lazy="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Black 128Go, primary 64Go...') }}" />
+                            </x-shopper-forms.group>
                             <div class="sm:col-span-4">
                                 <h4 class="block text-sm font-medium leading-5 text-secondary-700 dark:text-secondary-300">{{ __('Images') }}</h4>
                                 <div class="mt-1">
-                                    <x-shopper-input.filepond
+                                    <x-shopper-forms.filepond
                                         wire:model="files"
                                         allowImagePreview
                                         multiple
@@ -144,17 +144,17 @@
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         <div class="px-4 py-5 sm:p-6">
                             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                                <x-shopper-input.group label="SKU (Stock Keeping Unit)" for="sku" class="sm:col-span-1" :error="$errors->first('sku')">
-                                    <x-shopper-input.text wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
-                                </x-shopper-input.group>
-                                <x-shopper-input.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" class="sm:col-span-1" :error="$errors->first('barcode')">
-                                    <x-shopper-input.text wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
-                                </x-shopper-input.group>
+                                <x-shopper-forms.group label="SKU (Stock Keeping Unit)" for="sku" class="sm:col-span-1" :error="$errors->first('sku')">
+                                    <x-shopper-forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
+                                </x-shopper-forms.group>
+                                <x-shopper-forms.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" class="sm:col-span-1" :error="$errors->first('barcode')">
+                                    <x-shopper-forms.input wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
+                                </x-shopper-forms.group>
                             </div>
                             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 pt-4 sm:pt-5">
-                                <x-shopper-input.group label="Safety Stock" for="security_stock" class="sm:col-span-1" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
-                                    <x-shopper-input.text wire:model.defer="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
-                                </x-shopper-input.group>
+                                <x-shopper-forms.group label="Safety Stock" for="security_stock" class="sm:col-span-1" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
+                                    <x-shopper-forms.input wire:model.defer="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
+                                </x-shopper-forms.group>
                             </div>
                         </div>
                         <div class="px-4 py-5 sm:p-6">

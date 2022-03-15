@@ -14,7 +14,7 @@
                 <div>
                     <x-shopper-label value="{{ __('Provider Logo') }}" />
                     <div class="mt-2">
-                        <x-shopper-input.avatar-upload id="logo" wire:model.lazy='logo'>
+                        <x-shopper-forms.avatar-upload id="logo" wire:model.lazy='logo'>
                             <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-secondary-100 dark:bg-secondary-700">
                                 @if($logo)
                                     <img class="h-full w-full bg-center" src="{{ $logo->temporaryUrl() }}" alt="">
@@ -24,29 +24,29 @@
                                     </span>
                                 @endif
                             </span>
-                        </x-shopper-input.avatar-upload>
+                        </x-shopper-forms.avatar-upload>
                     </div>
                 </div>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper-input.group label="Custom payment method name" for="title" :error="$errors->first('title')" isRequired>
-                    <x-shopper-input.text wire:model.defer="title" id="title" type="text" />
-                </x-shopper-input.group>
+                <x-shopper-forms.group label="Custom payment method name" for="title" :error="$errors->first('title')" isRequired>
+                    <x-shopper-forms.input wire:model.defer="title" id="title" type="text" />
+                </x-shopper-forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper-input.group label="Payment Website Documentation" for="link_url">
-                    <x-shopper-input.text wire:model.defer="linkUrl" type="url" id="link_url" placeholder="https://doc.myprovider.com" />
-                </x-shopper-input.group>
+                <x-shopper-forms.group label="Payment Website Documentation" for="link_url">
+                    <x-shopper-forms.input wire:model.defer="linkUrl" type="url" id="link_url" placeholder="https://doc.myprovider.com" />
+                </x-shopper-forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper-input.group label="Additional details" for="description" helpText="Displays to customers when they’re choosing a payment method.">
-                    <x-shopper-input.textarea wire:model.defer="description" id="description" />
-                </x-shopper-input.group>
+                <x-shopper-forms.group label="Additional details" for="description" helpText="Displays to customers when they’re choosing a payment method.">
+                    <x-shopper-forms.textarea wire:model.defer="description" id="description" />
+                </x-shopper-forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper-input.group label="Payment instructions" for="instructions" helpText="Displays to customers after they place an order with this payment method.">
-                    <x-shopper-input.textarea wire:model.defer="instructions" id="instructions" />
-                </x-shopper-input.group>
+                <x-shopper-forms.group label="Payment instructions" for="instructions" helpText="Displays to customers after they place an order with this payment method.">
+                    <x-shopper-forms.textarea wire:model.defer="instructions" id="instructions" />
+                </x-shopper-forms.group>
             </div>
         </div>
     </x-slot>

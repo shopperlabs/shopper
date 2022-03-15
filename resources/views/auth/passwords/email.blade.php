@@ -33,7 +33,7 @@
             <form class="mt-5" action="{{ route('shopper.password.email') }}" method="POST">
                 @csrf
                 <div class="rounded-md shadow-sm">
-                    <x-shopper-input.text
+                    <x-shopper-forms.input
                         aria-label="{{ __('Email address') }}"
                         name="email"
                         type="email"

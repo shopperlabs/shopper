@@ -145,7 +145,7 @@
         <div class="mt-6 bg-white dark:bg-secondary-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-start space-x-4">
-                    <x-shopper-input.search label="Search code" placeholder="Search discount code" />
+                    <x-shopper-forms.search label="Search code" placeholder="Search discount code" />
                     <div class="flex items-center space-x-3">
                         <div class="relative z-10 inline-flex shadow-sm rounded-md">
                             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
@@ -157,13 +157,13 @@
                                     <div class="rounded-md bg-white shadow-xs dark:bg-secondary-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">
                                             <div class="flex items-center py-2 px-4">
-                                                <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
+                                                <x-shopper-forms.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
                                                 <label for="isActive_enabled" class="cursor-pointer ml-3">
                                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Active') }}</span>
                                                 </label>
                                             </div>
                                             <div class="flex items-center py-2 px-4">
-                                                <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
+                                                <x-shopper-forms.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
                                                 <label for="isActive_disabled" class="cursor-pointer ml-3">
                                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Not Active') }}</span>
                                                 </label>

@@ -19,9 +19,9 @@
                             <span x-show="!open">{{ $firstName }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper-input.group :error="$errors->first('firstName')">
-                                        <x-shopper-input.text wire:model.lazy="firstName" id="firstName" type="text" autocomplete="off" />
-                                    </x-shopper-input.group>
+                                    <x-shopper-forms.group :error="$errors->first('firstName')">
+                                        <x-shopper-forms.input wire:model.lazy="firstName" id="firstName" type="text" autocomplete="off" />
+                                    </x-shopper-forms.group>
                                 </div>
                             </div>
                         </div>
@@ -53,9 +53,9 @@
                             <span x-show="!open">{{ $lastName }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper-input.group :error="$errors->first('lastName')">
-                                        <x-shopper-input.text wire:model.lazy="lastName" id="lastName" type="text" autocomplete="off" />
-                                    </x-shopper-input.group>
+                                    <x-shopper-forms.group :error="$errors->first('lastName')">
+                                        <x-shopper-forms.input wire:model.lazy="lastName" id="lastName" type="text" autocomplete="off" />
+                                    </x-shopper-forms.group>
                                 </div>
                             </div>
                         </div>
@@ -97,9 +97,9 @@
                             <span x-show="!open">{{ $email }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper-input.group :error="$errors->first('email')">
-                                        <x-shopper-input.text wire:model.debounce.350ms="email" id="email" type="text" autocomplete="off" />
-                                    </x-shopper-input.group>
+                                    <x-shopper-forms.group :error="$errors->first('email')">
+                                        <x-shopper-forms.input wire:model.debounce.350ms="email" id="email" type="text" autocomplete="off" />
+                                    </x-shopper-forms.group>
                                 </div>
                             </div>
                         </div>
@@ -166,10 +166,10 @@
                             <span x-show="!open" class="capitalize">{{ $gender }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper-input.select wire:model.lazy="gender" aria-label="{{ __('Gender') }}">
+                                    <x-shopper-forms.select wire:model.lazy="gender" aria-label="{{ __('Gender') }}">
                                         <option value="male">{{ __('Male') }}</option>
                                         <option value="female">{{ __('Female') }}</option>
-                                    </x-shopper-input.select>
+                                    </x-shopper-forms.select>
                                 </div>
                             </div>
                         </div>

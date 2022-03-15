@@ -13,22 +13,22 @@
     <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
         <div class="sm:col-span-2">
             <div class="space-y-5">
-                <x-shopper-input.group label="Title">
-                    <x-shopper-input.text wire:model.defer="seoTitle" id="seo_title" type="text" autocomplete="off" />
-                </x-shopper-input.group>
+                <x-shopper-forms.group label="Title">
+                    <x-shopper-forms.input wire:model.defer="seoTitle" id="seo_title" type="text" autocomplete="off" />
+                </x-shopper-forms.group>
                 <div>
                     <div class="flex items-center justify-between">
                         <x-shopper-label for="seo_description" :value="__('Description')" />
                         <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('160 characters') }}</span>
                     </div>
                     <div class="mt-1 rounded-md shadow-sm">
-                        <x-shopper-input.textarea wire:model.defer="seoDescription" id="seo_description" />
+                        <x-shopper-forms.textarea wire:model.defer="seoDescription" id="seo_description" />
                     </div>
                 </div>
                 <div>
-                    <x-shopper-input.group label="Friendly URL" for="slug" isRequired :error="$errors->first('slug')">
-                        <x-shopper-input.text wire:model.defer="slug" id="slug" type="text" autocomplete="off" placeholder="my-custom-url" />
-                    </x-shopper-input.group>
+                    <x-shopper-forms.group label="Friendly URL" for="slug" isRequired :error="$errors->first('slug')">
+                        <x-shopper-forms.input wire:model.defer="slug" id="slug" type="text" autocomplete="off" placeholder="my-custom-url" />
+                    </x-shopper-forms.group>
                 </div>
             </div>
             <div class="mt-5 pt-5 border-t border-secondary-200 dark:border-secondary-700">

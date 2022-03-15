@@ -24,7 +24,7 @@
             <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $content }}</p>
 
             <div class="mt-4" x-data="{}" x-on:confirming-password.window="setTimeout(() => $refs.confirmable_password.focus(), 250)">
-                <x-shopper-input.text
+                <x-shopper-forms.input
                     x-ref="confirmable_password"
                     wire:model.defer="confirmablePassword"
                     wire:keydown.enter="confirmPassword"
