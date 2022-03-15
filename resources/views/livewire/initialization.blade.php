@@ -243,12 +243,11 @@
                         class="grid gap-4 lg:grid-cols-3 lg:gap-6">
                         <div wire:ignore class="space-y-4 sm:col-span-2">
                             @if(env('MAPBOX_PUBLIC_TOKEN'))
-                                <div x-ref="mapbox" class="bg-secondary-100 rounded-md h-95 overflow-hidden outline-none dark:bg-secondary-900">
-                                </div>
+                                <div x-ref="mapbox" class="bg-secondary-100 rounded-md h-95 overflow-hidden outline-none dark:bg-secondary-900"></div>
                             @else
                                 <div class="bg-secondary-100 rounded-md h-95 overflow-hidden outline-none dark:bg-secondary-900 flex items-center justify-center">
                                     <p class="text-base leading-6 text-secondary-500 font-medium dark:text-secondary-400">
-                                        Mapbox has not been activated.
+                                        {{ __('Mapbox has not been activated.') }}
                                     </p>
                                 </div>
                             @endif
@@ -300,20 +299,6 @@
                                     <x-shopper-input.text x-model="lat" x-data x-init="$watch('lat', value => $wire.set('shop_lat', value))" id="latitude" type="text" class="pl-10" autocomplete="off" placeholder="4.02537" readonly />
                                 </x-shopper-input.group>
                             </div>
-                            <div x-data="{ on: @entangle('isDefault') }" class="mt-6">
-                                <div class="relative flex items-start">
-                                    <div class="flex items-center h-5">
-                                        <span wire:model.defer="isDefault" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
-                                            <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
-                                            <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
-                                        </span>
-                                    </div>
-                                    <div class="ml-3 text-sm leading-5">
-                                        <x-shopper-label for="online" :value="__('Used as default inventory')" />
-                                        <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('Create an inventory with this information.') }}</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -323,7 +308,7 @@
                 <div class="mt-8 lg:mt-10 pt-8 lg:pt-10 border-t border-secondary-200 dark:border-secondary-700">
                     <span class="text-sm font-medium text-primary-600 dark:text-primary-500/50">{{ __('Step 3 - Shop Social Links') }}</span>
                     <h3 class="text-base mt-1.5 font-bold text-secondary-900 leading-5 dark:text-white">
-                        {{ __('Your shop on social networks') }} <span class="text-secondary-500 dark:text-secondary-400">{{ __('(Optional)') }}</span>
+                        {{ __('Your shop on social networks') }} <span class="text-secondary-500 dark:text-secondary-400 font-normal">{{ __('(Optional)') }}</span>
                     </h3>
                     <p class="mt-4 text-secondary-500 text-sm lg:max-w-xl dark:text-secondary-400">
                         {{ __('Information about your different accounts on social networks. Users will be able to contact you directly on your official pages.') }}

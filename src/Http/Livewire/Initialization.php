@@ -26,7 +26,6 @@ class Initialization extends Component
     public ?string $shop_facebook_link = null;
     public ?string $shop_instagram_link = null;
     public ?string $shop_twitter_link = null;
-    public bool $isDefault = true;
     public ?string $shop_lng = null;
     public ?string $shop_lat = null;
     public int $shop_currency_id;
@@ -161,12 +160,12 @@ class Initialization extends Component
             'country_id' => $this->shop_country_id,
             'longitude' => $this->shop_lng,
             'latitude' => $this->shop_lat,
-            'is_default' => $this->isDefault,
+            'is_default' => true,
         ]);
 
         (new ChannelRepository())->create([
             'name' => $name = __('Web Store'),
-            'slug' => str_slug($name),
+            'slug' => $name,
             'url' => env('APP_URL'),
             'is_default' => true,
         ]);
@@ -175,8 +174,8 @@ class Initialization extends Component
     public function render()
     {
         return view('shopper::livewire.initialization', [
-            'countries' => Cache::rememberForever('countries-settings', fn () => Country::select('name', 'id')->orderBy('name')->get()),
-            'currencies' => Cache::rememberForever('currencies-setting', fn () => Currency::select('name', 'code', 'id')->orderBy('name')->get()),
+            'countries' => Cache::get('countries-settings', fn () => Country::orderBy('name')->get()),
+            'currencies' => Cache::get('currencies-setting', fn () => Currency::orderBy('name')->get()),
         ]);
     }
 }
