@@ -19,12 +19,14 @@ use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Product extends Model implements HasMedia, ReviewRateable
 {
     use CanHaveDiscount,
         HasFactory,
         HasPrice,
+        HasRecursiveRelationships,
         HasStock,
         HasSlug,
         InteractsWithMedia,
@@ -140,11 +142,6 @@ class Product extends Model implements HasMedia, ReviewRateable
     public function variations(): HasMany
     {
         return $this->hasMany(config('shopper.system.models.product'), 'parent_id');
-    }
-
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(self::class);
     }
 
     public function channels(): MorphToMany

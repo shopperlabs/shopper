@@ -78,6 +78,7 @@ class CreateAdminUser extends AbstractBaseComponent
         ]);
 
         $role = Role::findById((int) $this->role_id);
+
         $user->assignRole([$role->name]);
 
         if ($this->send_mail) {
