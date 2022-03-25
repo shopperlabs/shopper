@@ -111,6 +111,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="attributes" link="https://docs.laravelshopper.io/docs/attributes" />
+    <x-shopper-learn-more name="attributes" link="attributes" />
 
 </div>

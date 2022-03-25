@@ -120,7 +120,7 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="orders" link="https://docs.laravelshopper.io/docs/orders" />
+    <x-shopper-learn-more name="orders" link="orders" />
 </div>
 
 @push('scripts')
