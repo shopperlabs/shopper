@@ -36,7 +36,7 @@
                                     </option>
 
                                     @foreach($cat->children as $child)
-                                        @includeWhen($child->id !== $categoryId, 'shopper::components.input.option-category', ['name' => $cat->name, 'category' => $child])
+                                        @includeWhen($child->id !== $categoryId, 'shopper::components.forms.option-category', ['name' => $cat->name, 'category' => $child])
                                     @endforeach
                                 @endif
                             @endforeach

@@ -35,7 +35,7 @@
                                 </option>
 
                                 @foreach($category->children as $child)
-                                    @include('shopper::livewire.categories.resources.views.components.forms.option-category', ['name' => $category->name, 'category' => $child])
+                                    @include('shopper::components.forms.option-category', ['name' => $category->name, 'category' => $child])
                                 @endforeach
                             @endforeach
                         </x-shopper-forms.select>
