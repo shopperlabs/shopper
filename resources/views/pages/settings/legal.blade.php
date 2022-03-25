@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <x-shopper-learn-more name="legal pages" link="https://docs.laravelshopper.io/docs/legal" />
+        <x-shopper-learn-more name="legal pages" link="legal" />
     </div>
 
 @endsection
