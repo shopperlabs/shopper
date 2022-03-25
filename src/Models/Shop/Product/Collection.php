@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Models\Traits\HasSlug;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Collection extends Model implements HasMedia
 {
@@ -53,6 +55,12 @@ class Collection extends Model implements HasMedia
         $this->addMediaCollection(config('shopper.system.storage.disks.uploads'))
             ->singleFile()
             ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png']);
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb200x200')
+            ->fit(Manipulations::FIT_CROP, 200, 200);
     }
 
     /**
