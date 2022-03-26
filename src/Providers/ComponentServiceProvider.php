@@ -59,6 +59,7 @@ class ComponentServiceProvider extends ServiceProvider
             $this->registerComponent('forms.single-upload');
             $this->registerComponent('forms.input');
             $this->registerComponent('forms.textarea');
+            $this->registerComponent('forms.seo');
             $this->registerComponent('label');
             $this->registerComponent('learn-more');
             $this->registerComponent('loader');

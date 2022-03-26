@@ -53,7 +53,7 @@
                     <div class="w-full h-full overflow-auto p-4 sm:p-6">
                         <div class="flex flex-col">
                             <h3 class="text-base text-primary-600 font-medium leading-6">{{ $seoTitle }}</h3>
-                            <span class="mt-1 text-green-600 dark:text-green-400 text-sm leading-5 truncate">{{ env('APP_URL') }}/products/{{ str_slug($slug) }}</span>
+                            <span class="mt-1 text-green-600 dark:text-green-400 text-sm leading-5 truncate">{{ config('app.url') }}/products/{{ $slug }}</span>
                             <p class="mt-1 text-secondary-500 dark:text-secondary-400 text-sm leading-5 text-whitespace-no-wrap">{{ str_limit($seoDescription, 160) }}</p>
                         </div>
                     </div>
