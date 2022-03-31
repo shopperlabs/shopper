@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Bug Report
+    url: https://github.com/shopperlabs/framework/discussions/new
+    about: Submit a bug or an issue
+  - name: Feature request
+    url: https://github.com/shopperlabs/framework/discussions/new
+    about: For ideas or feature requests
+  - name: Support questions & other
+    url: https://github.com/shopperlabs/framework/discussions/new
+    about: If you have a question or need help using the framework
+  - name: Documentation issue
+    url: https://github.com/shopperlabs/laravelshopper.dev
+    about: For documentation issues, open a pull request at the shopperlabs/laravelshopper.dev repository

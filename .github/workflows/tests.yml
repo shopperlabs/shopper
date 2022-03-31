@@ -2,9 +2,10 @@ name: tests
 
 on:
   push:
+    branches:
+      - "**"
   pull_request:
-  schedule:
-    - cron: '0 0 * * *'
+    types: [ready_for_review, synchronize, opened]
 
 jobs:
   tests:
@@ -13,8 +14,17 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [7.3, 8.0, 8.1]
+        php: [7.3, 7.4, 8.0, 8.1]
         laravel: [8.*, 9.*]
+        exclude:
+          - php: 7.3
+            laravel: 9.*
+          - php: 7.4
+            laravel: 9.*
+          - php: 7.2
+            laravel: 8.*
+          - php: 8.1
+            laravel: 7.*
         dependency-version: [prefer-stable]
 
     name: PHP:${{ matrix.php }} / Laravel:${{ matrix.laravel }}(${{ matrix.dependency-version }})
@@ -44,5 +54,5 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "illuminate/contracts=${{ matrix.laravel }}" --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-progress
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update --dev
+          composer update --prefer-stable --no-interaction --no-suggest
