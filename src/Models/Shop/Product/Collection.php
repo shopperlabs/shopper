@@ -74,6 +74,16 @@ class Collection extends Model implements HasMedia
         return $query->where('type', 'auto');
     }
 
+    public function isAutomatic(): bool
+    {
+        return $this->type === 'auto';
+    }
+
+    public function isManual(): bool
+    {
+        return ! $this->isAutomatic();
+    }
+
     /**
      * Return the correct formatted word of the first collection rule.
      */
