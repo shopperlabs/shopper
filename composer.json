@@ -3,6 +3,7 @@
   "description": "An eCommerce administration built with Laravel for create and manage online shop.",
   "keywords": [
     "laravel",
+    "livewire components",
     "admin",
     "shopper",
     "e-commerce"
@@ -23,9 +24,9 @@
     "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-heroicons": "^1.2",
     "doctrine/dbal": "^3.0",
-    "illuminate/support": "^8.0|^9.0",
-    "illuminate/database": "^8.0|^9.0",
-    "illuminate/validation": "^8.0|^9.0",
+    "illuminate/support": "^8.80|^9.0",
+    "illuminate/database": "^8.80|^9.0",
+    "illuminate/validation": "^8.80|^9.0",
     "jenssegers/agent": "^2.6",
     "laravel/cashier": "^12.10",
     "laravel/helpers": "^1.4.1",
@@ -46,7 +47,7 @@
     "wire-elements/modal": "^1.0.0"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3.2",
+    "friendsofphp/php-cs-fixer": "^3.6",
     "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^5.11|^6.1",
     "orchestra/testbench": "^6.0|^7.0",
@@ -78,8 +79,8 @@
     }
   },
   "scripts": {
-    "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "test": "./vendor/bin/phpunit --configuration phpunit.xml",
+    "test-coverage": "./vendor/bin/phpunit --coverage-html coverage",
     "lint": [
       "./vendor/bin/php-cs-fixer fix -vvv --show-progress=dots"
     ]
