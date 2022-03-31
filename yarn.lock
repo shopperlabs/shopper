@@ -1081,6 +1081,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@ryangjchandler/alpine-tooltip@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@ryangjchandler/alpine-tooltip/-/alpine-tooltip-1.2.0.tgz#2a5acaf805f7721c6cf0eed705372029e92ef57e"
+  integrity sha512-PzShzyYPoDTMvfayQRoNAnoxOkcfVYrrYrtiqX/Dg09Jp2qpNDB8IkcShs3BQwK0D4RnaYFtFXCqtXGhGU0dPA==
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.1.tgz#a21117b19ee9be70c379ec1877537ef2e1c63301"
