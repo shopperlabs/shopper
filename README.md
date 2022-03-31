@@ -29,7 +29,7 @@ We want to turn you around to the simpler side and get back to basics.
 
 ## Installation
 
-Instructions on how to install Shopper can be found at the [installation guide](https://docs.laravelshopper.io/docs/installation).
+Instructions on how to install Shopper can be found at the [installation guide](https://laravelshopper.dev/installing).
 
 ### Quick start installation
 
@@ -45,7 +45,7 @@ Run this command to install Shopper in your project
 php artisan shopper:install
 ```
 
-The best place to learn Shopper is by [reading the documentation](https://docs.laravelshopper.io), [watching some screencasts](https://docs.laravelshopper.io/screencasts) or following some tutorials.
+The best place to learn Shopper is by [reading the documentation](https://laravelshopper.dev) or following some tutorials.
 
 ## Foundation library
 
