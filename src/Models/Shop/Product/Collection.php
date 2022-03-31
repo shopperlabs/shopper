@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -61,6 +62,16 @@ class Collection extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb200x200')
             ->fit(Manipulations::FIT_CROP, 200, 200);
+    }
+
+    public function scopeManual(Builder $query): Builder
+    {
+        return $query->where('type', 'manual');
+    }
+
+    public function scopeAutomatic(Builder $query): Builder
+    {
+        return $query->where('type', 'auto');
     }
 
     /**
