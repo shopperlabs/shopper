@@ -105,7 +105,7 @@
                             </div>
 
                             <div class="sm:col-span-6">
-                                <x-shopper-forms.group for="country_id" label="Country" :error="$errors->first('country_id')">
+                                <x-shopper-forms.group for="country_id" label="Country" noShadow>
                                     <x-select
                                         :placeholder="__('Choose a Country')"
                                         wire:model.defer="country_id"

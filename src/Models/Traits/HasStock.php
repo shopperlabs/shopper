@@ -76,14 +76,14 @@ trait HasStock
     }
 
     /**
-     * Reset a Stock for the Shop and inventory.
+     * Reset a Stock for the Store and inventory.
      */
-    public function clearStock(int $inventory_id, ?int $newQuantity = null, array $arguments = []): bool
+    public function clearStock(?int $inventoryId = null, ?int $newQuantity = null, array $arguments = []): bool
     {
         $this->inventoryHistories()->delete();
 
-        if (null !== $newQuantity) {
-            $this->createStockMutation($newQuantity, $inventory_id, $arguments);
+        if ($inventoryId && $newQuantity) {
+            $this->createStockMutation($newQuantity, $inventoryId, $arguments);
         }
 
         return true;

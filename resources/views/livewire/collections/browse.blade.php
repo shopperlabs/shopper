@@ -154,6 +154,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="collections" link="https://docs.laravelshopper.io/docs/collections" />
+    <x-shopper-learn-more name="collections" link="collections" />
 
 </div>

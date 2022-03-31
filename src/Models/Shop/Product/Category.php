@@ -5,11 +5,12 @@ namespace Shopper\Framework\Models\Shop\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Models\Traits\HasSlug;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Category extends Model implements HasMedia
@@ -59,6 +60,12 @@ class Category extends Model implements HasMedia
             ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png']);
     }
 
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb200x200')
+            ->fit(Manipulations::FIT_CROP, 200, 200);
+    }
+
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
@@ -71,16 +78,6 @@ class Category extends Model implements HasMedia
         }
 
         return null;
-    }
-
-    public function categories(): HasMany
-    {
-        return $this->hasMany(self::class, 'parent_id');
-    }
-
-    public function childs(): HasMany
-    {
-        return $this->hasMany(self::class, 'parent_id')->with('categories');
     }
 
     public function products(): MorphToMany

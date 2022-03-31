@@ -2,36 +2,55 @@ name: tests
 
 on:
   push:
+    branches:
+      - "**"
   pull_request:
-  schedule:
-    - cron: '0 0 * * *'
+    types: [ready_for_review, synchronize, opened]
 
 jobs:
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: true
       matrix:
-        php: [8.0]
-        laravel: [^8.0]
-        dependency-version: [prefer-lowest, prefer-stable]
+        php: [7.3, 7.4, 8.0, 8.1]
+        laravel: [8.*, 9.*]
+        exclude:
+          - php: 7.3
+            laravel: 9.*
+          - php: 7.4
+            laravel: 9.*
+          - php: 8.1
+            laravel: 8.*
+        dependency-version: [prefer-stable]
 
-    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
+    name: PHP:${{ matrix.php }} / Laravel:${{ matrix.laravel }}(${{ matrix.dependency-version }})
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup PHP
+      - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip
+          extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
           tools: composer:v2
           coverage: none
 
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-
+
       - name: Install dependencies
         run: |
-          composer require "illuminate/contracts=${{ matrix.laravel }}" --no-update
-          composer update --prefer-dist --no-interaction --no-progress
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update --dev
+          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction

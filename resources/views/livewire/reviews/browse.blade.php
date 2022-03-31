@@ -371,6 +371,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="reviews" link="https://docs.laravelshopper.io/docs/reviews" />
+    <x-shopper-learn-more name="reviews" link="reviews" />
 
 </div>
