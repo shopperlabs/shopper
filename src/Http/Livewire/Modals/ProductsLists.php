@@ -5,9 +5,12 @@ namespace Shopper\Framework\Http\Livewire\Modals;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use WireUi\Traits\Actions;
 
 class ProductsLists extends ModalComponent
 {
+    use Actions;
+
     public $collection;
     public string $search = '';
     public array $exceptProductIds;
@@ -37,6 +40,9 @@ class ProductsLists extends ModalComponent
         $this->collection->products()->sync($this->selectedProducts);
 
         $this->emitUp('onProductsAddInCollection');
+
+        $this->notification()->success(
+            __('Added'), __('Selected product(s) added'));
 
         $this->closeModal();
     }

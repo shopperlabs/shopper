@@ -3,9 +3,12 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Livewire\Component;
+use WireUi\Traits\Actions;
 
 class Products extends Component
 {
+    use Actions;
+
     public $collection;
     public string $sortBy = 'name';
     public string $sortValue = 'name';
@@ -31,10 +34,10 @@ class Products extends Component
 
         $this->emitSelf('onProductsAddInCollection');
 
-        $this->notify([
-            'title' => __('Product removed'),
-            'message' => __('The product have been correctly remove to this collection.'),
-        ]);
+        $this->notification()->success(
+            __('Product removed'),
+            __('The product have been correctly remove to this collection.')
+        );
     }
 
     public function updatedSortBy(string $sortBy): void

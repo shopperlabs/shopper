@@ -3,7 +3,7 @@
         <div class="sm:flex sm:items-center sm:justify-between p-4 sm:py-5 sm:px-6">
             <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white">{{ __('Products') }}</h3>
             <div class="mt-4 sm:mt-0 flex items-center space-x-3">
-                @if($collection->type === 'manual')
+                @if($collection->isManual())
                     <span class="inline-flex rounded-md shadow-sm">
                         <x-shopper-default-button wire:click="$emit('openModal', 'shopper-modals.products-lists', {{ json_encode([$collection->id, $this->productsIds]) }})" type="button">
                             {{ __('Browse') }}
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="border-t border-secondary-200 p-4 sm:px-6 sm:py-5 dark:border-secondary-700">
+        <div class="border-t border-secondary-200 p-4 sm:px-6 sm:py-5 dark:border-secondary-700" wire:poll.visible>
             @if($products->isNotEmpty())
                 <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                     @foreach($products as $product)
@@ -67,7 +67,7 @@
                     <p class="mt-2.5 text-sm text-secondary-500 leading-5 text-center dark:text-secondary-400">
                         {{ __('There are no products in this collection. Add or change conditions to dynamically add products.') }}
                     </p>
-                    @if($collection->type === 'auto')
+                    @if($collection->isAutomatic())
                         <div class="relative mt-3">
                             <span class="inline-flex rounded-md shadow-sm">
                                 <x-shopper-default-button type="button">
