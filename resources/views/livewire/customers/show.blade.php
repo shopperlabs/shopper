@@ -4,7 +4,7 @@
         options: ['profile', 'address', 'orders'],
         words: {
             'profile': '{{ __("Profile") }}',
-            'address': '{{ __("Address") }}',
+            'address': '{{ __("Addresses") }}',
             'orders': '{{ __("Orders") }}'
         },
         currentTab: 'profile'
@@ -84,7 +84,7 @@
                         </button>
 
                         <button @click="currentTab = 'address'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'address' }">
-                            {{ __('Address') }}
+                            {{ __('Addresses') }}
                         </button>
 
                         <button @click="currentTab = 'orders'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'orders' }">

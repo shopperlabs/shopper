@@ -10,7 +10,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper-button :link="route('shopper.categories.create')">
-                                {{ __('Create') }}
+                                {{ __('Add category') }}
                             </x-shopper-button>
                         </span>
                     </div>
@@ -23,7 +23,7 @@
         <x-shopper-empty-state
             :title="__('Organize your products into categories')"
             :content="__('Create and manage all your store categories to help your customers easily find products.')"
-            :button="__('Create category')"
+            :button="__('Add category')"
             permission="add_categories"
             :url="route('shopper.categories.create')"
         >

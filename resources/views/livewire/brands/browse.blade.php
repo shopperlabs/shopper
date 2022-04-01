@@ -11,7 +11,7 @@
                     <div class="flex space-x-3">
                     <span class="shadow-sm rounded-md">
                         <x-shopper-button :link="route('shopper.brands.create')">
-                            {{ __('Create') }}
+                            {{ __('Add brand') }}
                         </x-shopper-button>
                     </span>
                     </div>
@@ -24,7 +24,7 @@
         <x-shopper-empty-state
             :title="__('Organize your products into brands')"
             :content="__('Create brands and organize your products to make it easier for users to find products.')"
-            :button="__('Create brand')"
+            :button="__('Add brand')"
             permission="add_brands"
             :url="route('shopper.brands.create')"
         >

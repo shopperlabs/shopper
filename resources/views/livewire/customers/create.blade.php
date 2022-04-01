@@ -6,7 +6,7 @@
 
     <x-shopper-heading class="mt-3">
         <x-slot name="title">
-            {{ __('Create customer') }}
+            {{ __('Add customer') }}
         </x-slot>
     </x-shopper-heading>
 
