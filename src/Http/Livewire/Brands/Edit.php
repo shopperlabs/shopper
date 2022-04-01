@@ -50,7 +50,7 @@ class Edit extends AbstractBaseComponent
         $this->description = $brand->description;
         $this->is_enabled = $brand->is_enabled;
         $this->updateSeo = true;
-        $this->seoTitle = $brand->seo_title;
+        $this->seoTitle = $brand->seo_title ?? $brand->name;
         $this->seoDescription = $brand->seo_description;
     }
 

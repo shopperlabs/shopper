@@ -48,7 +48,7 @@ class Edit extends AbstractBaseComponent
         $this->publishedAt = $collection->published_at;
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $collection->published_at->toDateString())->toRfc7231String();
         $this->updateSeo = true;
-        $this->seoTitle = $collection->seo_title;
+        $this->seoTitle = $collection->seo_title ?? $collection->name;
         $this->seoDescription = $collection->seo_description;
     }
 
