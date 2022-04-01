@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\System\Country;
@@ -82,7 +83,7 @@ class Create extends AbstractBaseComponent
     public function render()
     {
         return view('shopper::livewire.customers.create', [
-            'countries' => Country::query()->get(),
+            'countries' => Cache::get('countries-settings', fn () => Country::orderBy('name')->get()),
         ]);
     }
 }

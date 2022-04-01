@@ -11,7 +11,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper-button :link="route('shopper.customers.create')">
-                                {{ __('Create') }}
+                                {{ __('Add customer') }}
                             </x-shopper-button>
                         </span>
                     </div>
