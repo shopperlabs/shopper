@@ -1,6 +1,6 @@
 <div>
     <x:shopper-breadcrumb back="shopper.settings.users">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.users')" title="Users & roles" />
     </x:shopper-breadcrumb>
 
@@ -27,7 +27,7 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg relative rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model.lazy="email" id="email" type="email" autocomplete="off" />
+                        <x-shopper-forms.input wire:model.lazy="email" id="email" type="email" autocomplete="off" />
                     </div>
                     @error('email')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -36,7 +36,7 @@
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start mt-6 sm:mt-5 sm:pt-5 sm:border-t sm:border-secondary-200 sm:dark:border-secondary-700">
                 <x-shopper-label for="password" class="sm:mt-px sm:pt-2">
-                    {{ __("Password") }} <span class="text-red-500">*</span>
+                    {{ __('Password') }} <span class="text-red-500">*</span>
                 </x-shopper-label>
                 <div x-data="{ show: false }" class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="flex items-center justify-between max-w-lg">
@@ -51,7 +51,7 @@
                         </button>
                     </div>
                     <div class="mt-2 max-w-lg relative rounded-md shadow-sm">
-                        <input wire:model.lazy="password" id="password" :type="show ? 'text' : 'password'" autocomplete="off" class="block w-full dark:bg-secondary-700 dark:text-white placeholder-secondary-500 dark:placeholder-secondary-400 rounded-md shadow-sm border-secondary-300 dark:border-secondary-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-secondary-900 focus:ring-opacity-50 sm:text-sm @error('password') pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 @enderror" />
+                        <x-shopper-forms.input wire:model.defer="password" id="password" ::type="show ? 'text' : 'password'" type="password" autocomplete="off" class="@error('password') pr-10 @enderror" />
                         @error('password')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
@@ -70,7 +70,7 @@
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">
-                            <span wire:model="send_mail" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-data="{ on: false }" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors  dark:bg-secondary-700">
+                            <span wire:model="send_mail" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-data="{ on: false }" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors  dark:bg-secondary-700">
                                 <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                 <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform"></span>
                             </span>
@@ -100,7 +100,7 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model.lazy="first_name" type="text" id="first_name" autocomplete="off" />
+                        <x-shopper-forms.input wire:model.lazy="first_name" type="text" id="first_name" autocomplete="off" />
                     </div>
                     @error('first_name')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -114,7 +114,7 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model="last_name" type="text" id="last_name" autocomplete="off" />
+                        <x-shopper-forms.input wire:model="last_name" type="text" id="last_name" autocomplete="off" />
                     </div>
                     @error('last_name')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -128,10 +128,10 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <x-shopper-input.select wire:model.lazy="gender" id="gender">
+                        <x-shopper-forms.select wire:model.lazy="gender" id="gender">
                             <option value="male">{{ __('Male') }}</option>
                             <option value="female">{{ __('Female') }}</option>
-                        </x-shopper-input.select>
+                        </x-shopper-forms.select>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
                 </x-shopper-label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
-                        <x-shopper-input.text wire:model.lazy="phone_number" type="tel" id="phone_number" />
+                        <x-shopper-forms.input wire:model.lazy="phone_number" type="tel" id="phone_number" />
                         @error('phone_number')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
@@ -184,7 +184,7 @@
                                 <div class="mt-4 space-y-4">
                                     @foreach($roles as $role)
                                         <div class="flex items-center">
-                                            <x-shopper-input.radio wire:model.lazy="role_id" id="role_{{ $role->id }}" name="role_id" value="{{ $role->id }}" />
+                                            <x-shopper-forms.radio wire:model.lazy="role_id" id="role_{{ $role->id }}" name="role_id" value="{{ $role->id }}" />
                                             <label for="role_{{ $role->id }}" class="ml-3 cursor-pointer">
                                                 <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400">{{ $role->display_name ?? $role->name }}</span>
                                             </label>
@@ -198,7 +198,7 @@
                                 @if($is_admin)
                                     <div class="rounded-md bg-yellow-50 p-4 mt-6">
                                         <div class="flex">
-                                            <div class="flex-shrink-0">
+                                            <div class="shrink-0">
                                                 <x-heroicon-s-exclamation class="h-5 w-5 text-yellow-400" />
                                             </div>
                                             <div class="ml-3">

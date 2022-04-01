@@ -3,6 +3,8 @@
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Filter;
@@ -40,7 +42,7 @@ class ProductsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notification()->success(__('Archived'), __('The orders has successfully archived!'));
+            $this->notification()->success(__('Removed'), __('The :name has successfully removed!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())]));
         }
 
         $this->selected = [];
@@ -53,7 +55,7 @@ class ProductsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_visible' => false]);
 
-            $this->notification()->success(__('Visibility'), __('The products has successfully updated visibility status!'));
+            $this->notification()->success(__('Visibility'), __('The :name has successfully updated visibility status!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())]));
         }
 
         $this->selected = [];
@@ -66,7 +68,7 @@ class ProductsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_visible' => true]);
 
-            $this->notification()->success(__('Visibility'), __('The products has successfully updated visibility status!'));
+            $this->notification()->success(__('Visibility'), __('The :name has successfully updated visibility status!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())]));
         }
 
         $this->selected = [];
@@ -85,12 +87,14 @@ class ProductsTable extends DataTableComponent
                 ]),
             'brands' => Filter::make('Brands')
                 ->multiSelect(
-                    (new BrandRepository())->makeModel()->newQuery()
-                        ->orderBy('name')
-                        ->get()
-                        ->keyBy('id')
-                        ->map(fn ($name) => $name->name)
-                        ->toArray()
+                    Cache::remember('brands-filters', 60 * 30, function () {
+                        return (new BrandRepository())->makeModel()->newQuery()
+                            ->orderBy('name')
+                            ->get()
+                            ->keyBy('id')
+                            ->map(fn ($name) => $name->name)
+                            ->toArray();
+                    })
                 ),
         ];
     }
@@ -109,12 +113,12 @@ class ProductsTable extends DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->format(function ($value) {
-                    return $value ? '<span class="text-gray-500 dark:text-gray-400 font-medium">' . shopper_money_format($value) . '</span>' : null;
+                    return $value ? '<span class="text-secondary-500 dark:text-secondary-400 font-medium">' . shopper_money_format($value) . '</span>' : null;
                 })->asHtml(),
             Column::make('Sku', 'sku')
                 ->sortable()
                 ->format(function ($value) {
-                    return $value ? '<span class="text-gray-500 dark:text-gray-400 font-medium">' . $value . '</span>' : '<span class="inline-flex text-gray-700 dark:text-gray-500">&mdash;</span>';
+                    return $value ? '<span class="text-secondary-500 dark:text-secondary-400 font-medium">' . $value . '</span>' : '<span class="inline-flex text-secondary-700 dark:text-secondary-500">&mdash;</span>';
                 })->asHtml(),
             Column::make('Brand', 'brand')
                 ->format(function ($value) {
@@ -127,7 +131,7 @@ class ProductsTable extends DataTableComponent
             Column::make('Published At', 'published_at')
                 ->sortable()
                 ->format(function ($value) {
-                    return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>" . $value->formatLocalized('%d %B, %Y') . '</time>' : '';
+                    return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-secondary-500 dark:text-secondary-400'>" . $value->formatLocalized('%d %B, %Y') . '</time>' : '';
                 })->asHtml(),
         ];
     }

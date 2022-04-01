@@ -33,13 +33,13 @@
                                 @endif
                                 @if($permission->users->count() > 0)
                                     <div class="flex items-center space-x-2">
-                                        <div class="flex flex-shrink-0 -space-x-1">
+                                        <div class="flex shrink-0 -space-x-1">
                                             @foreach($permission->users->limit(3) as $user)
                                                 <img class="max-w-none h-6 w-6 rounded-full shadow-solid" src="{{ $user->picture }}" alt="">
                                             @endforeach
                                         </div>
                                         @if($permission->users->count() - 3 > 0)
-                                            <span class="flex-shrink-0 text-xs leading-5 font-medium text-secondary-500 dark:text-secondary-400">+{{ $permission->users->count() - 3 }}</span>
+                                            <span class="shrink-0 text-xs leading-5 font-medium text-secondary-500 dark:text-secondary-400">+{{ $permission->users->count() - 3 }}</span>
                                         @endif
                                     </div>
                                 @endif

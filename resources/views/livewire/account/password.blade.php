@@ -14,7 +14,7 @@
                     @if (session()->has('error'))
                         <div class="rounded-md bg-red-50 p-4">
                             <div class="flex">
-                                <div class="flex-shrink-0">
+                                <div class="shrink-0">
                                     <x-heroicon-s-x-circle class="h-5 w-5 text-red-400" />
                                 </div>
                                 <div class="ml-3">
@@ -26,17 +26,17 @@
                         </div>
                     @endif
                     <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                        <x-shopper-input.group label="Current Password" for="current_password" class="sm:col-span-6" :error="$errors->first('current_password')">
-                            <x-shopper-input.text wire:model="current_password" id="current_password" type="password" autocomplete="off" />
-                        </x-shopper-input.group>
+                        <x-shopper-forms.group label="Current Password" for="current_password" class="sm:col-span-6" :error="$errors->first('current_password')">
+                            <x-shopper-forms.input wire:model.defer="current_password" id="current_password" type="password" autocomplete="off" />
+                        </x-shopper-forms.group>
 
-                        <x-shopper-input.group label="New Password" for="password" class="sm:col-span-6" :error="$errors->first('password')" helpText="Your password must be more than 8 characters long and must contain at least 1 uppercase, 1 lowercase and 1 digit.">
-                            <x-shopper-input.text wire:model="password" id="password" type="password" autocomplete="off" />
-                        </x-shopper-input.group>
+                        <x-shopper-forms.group label="New Password" for="password" class="sm:col-span-6" :error="$errors->first('password')" helpText="Your password must be more than 8 characters long and must contain at least 1 uppercase, 1 lowercase and 1 digit.">
+                            <x-shopper-forms.input wire:model.defer="password" id="password" type="password" autocomplete="off" />
+                        </x-shopper-forms.group>
 
-                        <x-shopper-input.group label="Confirm Password" for="password_confirmation" class="sm:col-span-6" :error="$errors->first('password_confirmation')">
-                            <x-shopper-input.text wire:model="password_confirmation" id="password_confirmation" type="password" autocomplete="off" />
-                        </x-shopper-input.group>
+                        <x-shopper-forms.group label="Confirm Password" for="password_confirmation" class="sm:col-span-6" :error="$errors->first('password_confirmation')">
+                            <x-shopper-forms.input wire:model.defer="password_confirmation" id="password_confirmation" type="password" autocomplete="off" />
+                        </x-shopper-forms.group>
                     </div>
                 </div>
                 <div class="px-4 py-3 sm:px-6 text-right">

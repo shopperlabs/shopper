@@ -15,14 +15,18 @@ use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasSlug;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Product extends Model implements HasMedia, ReviewRateable
 {
     use CanHaveDiscount,
         HasFactory,
         HasPrice,
+        HasRecursiveRelationships,
         HasStock,
         HasSlug,
         InteractsWithMedia,
@@ -119,7 +123,14 @@ class Product extends Model implements HasMedia, ReviewRateable
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(config('shopper.system.storage.disks.uploads'))
+            ->useFallbackUrl(url(shopper_prefix() . '/images/product_placeholder.jpg'))
             ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png', 'image/gif']);
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb200x200')
+            ->fit(Manipulations::FIT_CROP, 200, 200);
     }
 
     public function scopePublish(Builder $query): Builder
@@ -131,11 +142,6 @@ class Product extends Model implements HasMedia, ReviewRateable
     public function variations(): HasMany
     {
         return $this->hasMany(config('shopper.system.models.product'), 'parent_id');
-    }
-
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(self::class);
     }
 
     public function channels(): MorphToMany

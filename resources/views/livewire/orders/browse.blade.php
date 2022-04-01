@@ -16,7 +16,7 @@
             permission="add_orders"
             class="lg:pb-0"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290.5 230">
                     <style>
                         .st0{fill:#22264d}.st1{fill:#3b82f6}.st2{fill:#ebe6e6}.st3{fill:#60a5fa}.st4{fill:snow}.st5{fill:#93c5fd}.st6{fill:#bd9a7b}.st7{fill:#ebc9aa}.st8{fill:#d6b392}.st10{fill:#fff}.st14{fill:#a0c4fa}.st16{fill:none;stroke:#fff;stroke-miterlimit:10;stroke-linecap:round}.st18{font-family:&apos;Montserrat-SemiBold&apos;}.st19{font-size:3.7727px}.st20{fill:none;stroke:#d9e6ff;stroke-miterlimit:10}.st21{fill:#d9e6ff}.st22{fill:#80bd82}.st25{fill:#fcc1ab}.st27{fill:#3f83f8}
@@ -120,7 +120,7 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="orders" link="https://docs.laravelshopper.io/docs/orders" />
+    <x-shopper-learn-more name="orders" link="orders" />
 </div>
 
 @push('scripts')

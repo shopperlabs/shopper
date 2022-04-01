@@ -39,7 +39,7 @@
 @section('content')
 
     <x:shopper-breadcrumb back="shopper.settings.mails.select-template">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.mails.select-template')" title="Templates" />
     </x:shopper-breadcrumb>
 
@@ -61,12 +61,12 @@
                     <textarea id="template_editor" name="content" cols="30" rows="10">{{ $skeleton['template'] }}</textarea>
                 </div>
                 <div class="sm:col-span-1 space-y-5">
-                    <x-shopper-input.group for="name" label="Template name" :error="$errors->first('template_name')" isRequired>
-                        <x-shopper-input.text name="template_name" type="text" id="name" placeholder="Shopper Newsletter" />
-                    </x-shopper-input.group>
-                    <x-shopper-input.group for="description" label="Template description" :error="$errors->first('template_description')" isRequired>
-                        <x-shopper-input.textarea name="template_description" id="description" />
-                    </x-shopper-input.group>
+                    <x-shopper-forms.group for="name" label="Template name" :error="$errors->first('template_name')" isRequired>
+                        <x-shopper-forms.input name="template_name" type="text" id="name" placeholder="Shopper Newsletter" />
+                    </x-shopper-forms.group>
+                    <x-shopper-forms.group for="description" label="Template description" :error="$errors->first('template_description')" isRequired>
+                        <x-shopper-forms.textarea name="template_description" id="description" />
+                    </x-shopper-forms.group>
                     <div class="pt-5 border-t border-secondary-200 dark:border-secondary-700">
                         <div class="flex justify-end">
                             <x-shopper-button type="submit">

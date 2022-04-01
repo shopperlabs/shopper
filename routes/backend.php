@@ -14,7 +14,6 @@ use Shopper\Framework\Http\Controllers\TemplatesController;
 */
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::get('/analytics', 'AnalyticsController@index')->name('analytics');
 Route::view('/profile', 'shopper::pages.account.profile')->name('profile');
 
 Route::namespace('Ecommerce')->group(function () {

@@ -11,7 +11,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper-button :link="route('shopper.customers.create')">
-                                {{ __('Create') }}
+                                {{ __('Add customer') }}
                             </x-shopper-button>
                         </span>
                     </div>
@@ -28,7 +28,7 @@
             permission="add_customers"
             :url="route('shopper.customers.create')"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 230">
                     <style>
                         .st0{fill:#e1effe}.st1{fill:#5850ec}.st2{fill:#fff}.st5{fill:#3f83f8}.st6{opacity:.24}.st7{fill:#111}.st8{fill:none;stroke:#a4cafe;stroke-width:1.5339;stroke-linecap:round;stroke-miterlimit:10}.st9{fill:#5521b5}.st11{fill:#f9d2b2}.st12{fill:#27303f}.st13{fill:none;stroke:#e6efff;stroke-width:1.5339;stroke-linecap:round;stroke-miterlimit:10}.st14{fill:#7e3af2}.st15{fill:#362f78}.st17{opacity:8.000000e-02}.st19{opacity:.24;fill:#111}.st20{fill:#eab892}.st23{fill:none;stroke:#9061f9;stroke-width:1.5339;stroke-linecap:round;stroke-miterlimit:10}
@@ -178,6 +178,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="customers" link="https://docs.laravelshopper.io/docs/customers" />
+    <x-shopper-learn-more name="customers" link="customers" />
 
 </div>

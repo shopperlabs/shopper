@@ -16,7 +16,7 @@
             <div class="relative rounded-lg shadow-xs overflow-hidden">
                 <div class="p-4">
                     <div class="flex items-start">
-                        <div class="inline-flex items-center text-white text-2xl rounded-full flex-shrink-0">
+                        <div class="inline-flex items-center text-white text-2xl rounded-full shrink-0">
                             <span>👍</span>
                         </div>
                         <div class="ml-6 w-0 flex-1">
@@ -27,7 +27,7 @@
                                 {{ session()->get('success') }}
                             </p>
                         </div>
-                        <div class="ml-4 flex-shrink-0 flex">
+                        <div class="ml-4 shrink-0 flex">
                             <button @click="show = false;" class="inline-flex text-secondary-500 dark:text-secondary-400">
                                 <x-heroicon-s-x class="h-5 w-5" />
                             </button>

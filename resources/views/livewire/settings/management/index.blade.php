@@ -1,6 +1,6 @@
 <div>
     <x-shopper-breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
     </x-shopper-breadcrumb>
 
@@ -87,7 +87,7 @@
                                     <tr>
                                         <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                                             <div class="flex items-center">
-                                                <div class="flex-shrink-0 h-10 w-10">
+                                                <div class="shrink-0 h-10 w-10">
                                                     <img class="h-10 w-10 rounded-full" src="{{ $user->picture }}" alt="User avatar">
                                                 </div>
                                                 <div class="ml-4">

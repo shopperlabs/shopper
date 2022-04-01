@@ -14,7 +14,7 @@
             @include('shopper::partials.default.aside._primary')
             @include('shopper::partials.default.aside._secondary')
         </div>
-        <div class="flex-shrink-0 w-14">
+        <div class="shrink-0 w-14">
             <!-- Force sidebar to shrink to fit close icon -->
         </div>
     </div>

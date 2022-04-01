@@ -1,7 +1,3 @@
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-@endpush
-
 <div x-data class="bg-white dark:bg-secondary-800 rounded-lg p-4 sm:p-6 shadow-md">
     <div class="pb-5 border-b border-secondary-200 dark:border-secondary-700 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <div class="flex-1 min-w-0 max-w-2xl">
@@ -25,10 +21,10 @@
                 </dt>
                 <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 dark:text-white sm:mt-0 sm:col-span-2 {{ $productAttribute->model === 'multiple' ? 'grid': '' }}">
                     @if($productAttribute->model === 'single')
-                        <div class="flex-grow">
+                        <div class="grow">
                             {{ str_limit(strip_tags(nl2br($productAttribute->values->first()->real_value)), 157) }}
                         </div>
-                        <span class="flex-shrink-0 flex items-start space-x-4">
+                        <span class="shrink-0 flex items-start space-x-4">
                             <button wire:click="removeProductAttribute({{ $productAttribute->id }})" type="button" class="font-medium text-primary-600 hover:text-primary-500 transition duration-150 ease-in-out">
                                 {{ __('Remove') }}
                             </button>
@@ -43,7 +39,7 @@
                                                 {{ $pValue->real_value }}
                                             </span>
                                         </div>
-                                        <div class="ml-4 flex-shrink-0">
+                                        <div class="ml-4 shrink-0">
                                             <button wire:click="removeProductAttributeValue({{ $pValue->id }})" type="button" class="font-medium text-negative-600 hover:text-negative-500">
                                                 <x-heroicon-o-trash class="h-5 w-5" />
                                             </button>
@@ -68,7 +64,3 @@
         @endforelse
     </dl>
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-@endpush

@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Http\Livewire\Settings\Legal;
 
 use Livewire\Component;
-use Shopper\Framework\Models\Shop\Legal;
 use Shopper\Framework\Traits\WithLegalActions;
 use WireUi\Traits\Actions;
 
@@ -13,11 +12,13 @@ class Terms extends Component
 
     public string $title = 'Terms of use';
 
-    public function mount()
-    {
-        $legal = Legal::query()->where('slug', str_slug($this->title))->first();
+    protected $listeners = [
+        'trix:valueUpdated' => 'onTrixValueUpdate',
+    ];
 
-        $this->initializeValues($legal);
+    public function onTrixValueUpdate($value)
+    {
+        $this->content = $value;
     }
 
     public function store()

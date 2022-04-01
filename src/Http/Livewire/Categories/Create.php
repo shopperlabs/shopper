@@ -72,11 +72,10 @@ class Create extends AbstractBaseComponent
             'categories' => (new CategoryRepository())
                 ->makeModel()
                 ->scopes('enabled')
-                ->whereNull('parent_id')
-                ->with('childs')
-                ->select('name', 'id', 'parent_id')
+                ->tree()
                 ->orderBy('name')
-                ->get(),
+                ->get()
+                ->toTree(),
         ]);
     }
 }

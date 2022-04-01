@@ -8,11 +8,11 @@
                         <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
                 </span>
-                <x-shopper-input.select wire:model="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
+                <x-shopper-forms.select wire:model="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
                     @foreach($inventories as $inventory)
                         <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                     @endforeach
-                </x-shopper-input.select>
+                </x-shopper-forms.select>
             </span>
             <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700">
                 <span class="block text-sm font-medium mr-4">{{ __('Quantity Available') }}</span>
@@ -35,7 +35,7 @@
                     <p class="text-sm font-medium text-secondary-600 mr-4">{{ $realStock }}</p>
                     <div>
                         <div class="flex rounded-md shadow-sm">
-                            <div class="relative flex items-stretch flex-grow focus-within:z-10">
+                            <div class="relative flex items-stretch grow focus-within:z-10">
                                 <input wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="form-input block w-32 transition duration-150 rounded-none rounded-l-md ease-in-out sm:text-sm sm:leading-5" placeholder="12" />
                             </div>
                             <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-secondary-300 text-sm font-medium rounded-none text-secondary-700 bg-secondary-50 hover:bg-secondary-100 focus:outline-none focus-border-2 focus:border-primary-500 focus:border-primary-500">
@@ -71,7 +71,7 @@
     </div>
     @if($histories->isEmpty())
         <div class="flex flex-col items-center justify-center p-4 sm:p-6">
-            <span class="flex-shrink-0">
+            <span class="shrink-0">
                 <svg class="h-12 w-12 text-cool-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>

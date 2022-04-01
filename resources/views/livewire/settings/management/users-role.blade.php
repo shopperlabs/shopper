@@ -30,7 +30,7 @@
                         <tr>
                             <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                                 <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10">
+                                    <div class="shrink-0 h-10 w-10">
                                         <img class="h-10 w-10 rounded-full" src="{{ $user->picture }}" alt="User avatar">
                                     </div>
                                     <div class="ml-4">

@@ -14,7 +14,7 @@
                 <div class="p-4 sm:px-6 border-b border-secondary-200 dark:border-secondary-700">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-600' }}"></div>
+                            <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-600' }}"></div>
                             <h3 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
                                 @if ($this->enabled)
                                     {{ __('Stripe is available for your store.') }}
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="px-4 py-5 sm:p-6">
-                    <div class="flex-shrink-0">
+                    <div class="shrink-0">
                         <svg class="h-12 w-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 95.779 40.164">
                             <g transform="translate(24.946 -325.034)">
                                 <g transform="translate(-38.97 315.774) scale(.26458)">
@@ -75,7 +75,7 @@
                         <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Environnement') }}</h3>
                         <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                             {{ __('Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.') }}
-                            {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-400">https://dashboard.stripe.com/account/apikeys</a>
+                            {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/apikeys</a>
                             {{ __('To enable Sandbox switch Sandbox mode to True.') }}
                         </p>
                     </div>
@@ -84,27 +84,27 @@
                     <div class="shadow rounded-md overflow-hidden">
                         <div class="px-4 py-5 sm:p-6 space-y-4 bg-white dark:bg-secondary-800">
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                                <x-shopper-input.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
-                                    <x-shopper-input.select wire:model.lazy="stripe_mode" id="stripe_mode">
+                                <x-shopper-forms.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
+                                    <x-shopper-forms.select wire:model.lazy="stripe_mode" id="stripe_mode">
                                         <option value="sandbox">Sandbox</option>
                                         <option value="live">Live</option>
-                                    </x-shopper-input.select>
-                                </x-shopper-input.group>
+                                    </x-shopper-forms.select>
+                                </x-shopper-forms.group>
 
-                                <x-shopper-input.group label="Public key" for="public_key" class="sm:col-span-3">
-                                    <x-shopper-input.text wire:model.lazy="stripe_key" id="public_key" type="text" autocomplete="off" />
-                                </x-shopper-input.group>
+                                <x-shopper-forms.group label="Public key" for="public_key" class="sm:col-span-3">
+                                    <x-shopper-forms.input wire:model.lazy="stripe_key" id="public_key" type="text" autocomplete="off" />
+                                </x-shopper-forms.group>
 
-                                <x-shopper-input.group label="Secret key" for="secret_key" class="sm:col-span-3">
-                                    <x-shopper-input.text wire:model.lazy="stripe_secret" id="secret_key" type="text" />
-                                </x-shopper-input.group>
+                                <x-shopper-forms.group label="Secret key" for="secret_key" class="sm:col-span-3">
+                                    <x-shopper-forms.input wire:model.lazy="stripe_secret" id="secret_key" type="text" />
+                                </x-shopper-forms.group>
 
                                 <div class="sm:col-span-6">
-                                    <x-shopper-input.group label="Webhook key" for="webhook_key">
-                                        <x-shopper-input.text wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
-                                    </x-shopper-input.group>
+                                    <x-shopper-forms.group label="Webhook key" for="webhook_key">
+                                        <x-shopper-forms.input wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
+                                    </x-shopper-forms.group>
                                     <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                        {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-primary-500 dark:text-primary-400">https://dashboard.stripe.com/account/webhooks</a>
+                                        {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/webhooks</a>
                                     </p>
                                 </div>
                             </div>
@@ -134,13 +134,13 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                             <div class="grid grid-cols-6 gap-6">
-                                <x-shopper-input.group label="Default Currency" for="currency" class="col-span-6">
-                                    <x-shopper-input.select wire:model="currency" id="currency">
+                                <x-shopper-forms.group label="Default Currency" for="currency" class="col-span-6">
+                                    <x-shopper-forms.select wire:model="currency" id="currency">
                                         @foreach($currencies as $currency)
                                             <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
                                         @endforeach
-                                    </x-shopper-input.select>
-                                </x-shopper-input.group>
+                                    </x-shopper-forms.select>
+                                </x-shopper-forms.group>
                             </div>
                         </div>
                     </div>

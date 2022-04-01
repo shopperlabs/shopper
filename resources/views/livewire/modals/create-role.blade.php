@@ -10,15 +10,15 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <x-shopper-input.group label="Name (in lowercase)" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
-                <x-shopper-input.text wire:model.debounce.350ms="name" type="text" id="name" placeholder="manager" autocomplete="off" />
-            </x-shopper-input.group>
-            <x-shopper-input.group label="Display name" for="display_name" class="sm:col-span-1">
-                <x-shopper-input.text wire:model.debounce.350ms="display_name" type="text" id="display_name" placeholder="Manager" autocomplete="off" />
-            </x-shopper-input.group>
-            <x-shopper-input.group label="Description" for="description" class="sm:col-span-2">
-                <x-shopper-input.textarea wire:model.lazy="description" id="description" />
-            </x-shopper-input.group>
+            <x-shopper-forms.group label="Name (in lowercase)" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
+                <x-shopper-forms.input wire:model.defer="name" type="text" id="name" placeholder="manager" autocomplete="off" />
+            </x-shopper-forms.group>
+            <x-shopper-forms.group label="Display name" for="display_name" class="sm:col-span-1">
+                <x-shopper-forms.input wire:model.defer="display_name" type="text" id="display_name" placeholder="Manager" autocomplete="off" />
+            </x-shopper-forms.group>
+            <x-shopper-forms.group label="Description" for="description" class="sm:col-span-2">
+                <x-shopper-forms.textarea wire:model.defer="description" id="description" />
+            </x-shopper-forms.group>
         </div>
     </x-slot>
 

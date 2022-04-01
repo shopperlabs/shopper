@@ -16,7 +16,7 @@
         }"
     >
         <x-shopper-breadcrumb back="shopper.settings.index">
-            <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+            <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
             <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
         </x-shopper-breadcrumb>
 
@@ -29,7 +29,7 @@
             <div>
                 <!-- Dropdown menu on small screens -->
                 <div class="sm:hidden">
-                    <x-shopper-input.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
+                    <x-shopper-forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
                         <template x-for="option in options" :key="option">
                             <option
                                 x-bind:value="option"
@@ -37,7 +37,7 @@
                                 x-bind:selected="option === currentTab"
                             ></option>
                         </template>
-                    </x-shopper-input.select>
+                    </x-shopper-forms.select>
                 </div>
                 <!-- Tabs at small breakpoint and up -->
                 <div class="hidden sm:block">
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <x-shopper-learn-more name="legal pages" link="https://docs.laravelshopper.io/docs/legal" />
+        <x-shopper-learn-more name="legal pages" link="legal" />
     </div>
 
 @endsection

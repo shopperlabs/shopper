@@ -2,30 +2,33 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  mode: 'jit',
   darkMode: 'class',
-  purge: {
-    content: [
-      './resources/js/**/*.js',
-      './resources/views/**/*.blade.php',
-      './resources/lang/**/*.php',
-      './src/**/*.php',
-      './vendor/wire-elements/modal/resources/views/*.blade.php',
-      './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
-    ],
-    options: {
-      safelist: [
-        'sm:max-w-2xl',
-        'sm:max-w-4xl'
-      ]
-    }
-  },
+  content: [
+    './resources/js/**/*.js',
+    './resources/views/**/*.blade.php',
+    './resources/lang/**/*.php',
+    './src/**/*.php',
+    './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
+    './vendor/wire-elements/modal/resources/views/*.blade.php',
+    './vendor/wireui/wireui/resources/**/*.blade.php',
+    './vendor/wireui/wireui/ts/**/*.ts',
+    './vendor/wireui/wireui/src/View/**/*.php'
+  ],
+  safelist: [
+    'md:max-w-xl',
+    'sm:max-w-2xl',
+    'sm:max-w-3xl',
+    'sm:max-w-4xl',
+    'lg:max-w-2xl',
+    'lg:max-w-3xl',
+    'lg:max-w-4xl',
+  ],
   theme: {
     extend: {
       colors: {
         primary: colors.blue,
-        secondary: colors.blueGray,
-        gray: colors.blueGray,
+        secondary: colors.slate,
+        gray: colors.slate,
         orange: colors.orange,
         positive: colors.emerald,
         warning: colors.amber,
@@ -54,16 +57,6 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
       }
     },
-  },
-  variants: {
-    extend: {
-      backgroundColor: ['group-hover', 'focus-within', 'odd'],
-      borderWidth: ['odd'],
-      display: ['dark'],
-      textColor: ['group-hover', 'focus-within', 'odd'],
-      opacity: ['group-hover'],
-      translate: ['group-hover', 'dark'],
-    }
   },
   plugins: [
     require('@tailwindcss/forms'),

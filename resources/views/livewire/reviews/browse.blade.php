@@ -8,7 +8,7 @@
 
     @if($total === 0)
         <div class="mt-10 relative w-full bg-white dark:bg-secondary-800 flex flex-col shadow-sm rounded-md items-center justify-center py-12 lg:py-16">
-            <div class="flex-shrink-0 w-1/3 h-64">
+            <div class="shrink-0 w-1/3 h-64">
                 <svg class="w-full h-full" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 320 230">
                     <style>
                         .st0{fill:#d4821e}.st1{fill:#fcbd60}.st2{fill:#fed698}.st3{fill:#ffc661}.st4{fill:#ffd799}.st7{opacity:.3}.st7,.st8{fill:#fff}.st9{fill:#fe7940}.st10{fill:#ff6e3b}.st11{fill:#fff8f8}.st12{fill:#5145cd}.st13{fill:#fec107}.st16{fill:#06036b}.st17{fill:#f6c9a3}.st19{fill:#ff8786}.st20{clip-path:url(#SVGID_5_)}.st21{fill:#fadbbf}.st55{fill:#5c0f0d}.st56{fill:#d92818}.st80{clip-path:url(#SVGID_9_)}.st81{fill:#7f0c0e}.st85{fill:#14077d}.st87{clip-path:url(#SVGID_11_);fill:#fad1a5}.st114{clip-path:url(#SVGID_13_)}.st115{fill:#1c1c2b}.st117{fill:#fe7163}
@@ -371,6 +371,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="reviews" link="https://docs.laravelshopper.io/docs/reviews" />
+    <x-shopper-learn-more name="reviews" link="reviews" />
 
 </div>

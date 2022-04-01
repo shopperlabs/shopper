@@ -1,4 +1,4 @@
-<div x-data="{ open: false }" x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});">
+<div x-data="{ open: false }">
 
     <x-shopper-heading>
         <x-slot name="title">
@@ -11,7 +11,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper-button :link="route('shopper.discounts.create')">
-                                {{ __('Create') }}
+                                {{ __('Create code') }}
                             </x-shopper-button>
                         </span>
                     </div>
@@ -28,7 +28,7 @@
             permission="add_discounts"
             :url="route('shopper.discounts.create')"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 528 380">
                     <style>
                         .st0{fill:#e1e1e1}.st1{fill:#ececec}.st2{fill:#407bff}.st4{fill:#f5f5f5}.st5{fill:#263238}.st6,.st7{enable-background:new}.st6{fill:#fff;opacity:.6}.st7{opacity:.2}.st8{fill:#fff}.st9{opacity:.3;enable-background:new}.st10{fill:#ebb376}.st11{stroke-width:.4885}.st11,.st16,.st18{fill:none;stroke:#263238;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}.st18{stroke:#407bff}.st19{fill:#0064f5}.st21{fill:#1a2e35}
@@ -145,7 +145,7 @@
         <div class="mt-6 bg-white dark:bg-secondary-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-start space-x-4">
-                    <x-shopper-input.search label="Search code" placeholder="Search discount code" />
+                    <x-shopper-forms.search label="Search code" placeholder="Search discount code" />
                     <div class="flex items-center space-x-3">
                         <div class="relative z-10 inline-flex shadow-sm rounded-md">
                             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
@@ -157,13 +157,13 @@
                                     <div class="rounded-md bg-white shadow-xs dark:bg-secondary-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">
                                             <div class="flex items-center py-2 px-4">
-                                                <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
+                                                <x-shopper-forms.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
                                                 <label for="isActive_enabled" class="cursor-pointer ml-3">
                                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Active') }}</span>
                                                 </label>
                                             </div>
                                             <div class="flex items-center py-2 px-4">
-                                                <x-shopper-input.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
+                                                <x-shopper-forms.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
                                                 <label for="isActive_disabled" class="cursor-pointer ml-3">
                                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Not Active') }}</span>
                                                 </label>
@@ -201,13 +201,13 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="mt-4 flex-shrink-0 sm:mt-0 flex space-x-6 items-center">
-                                            <div class="flex-shrink-0 flex">
+                                        <div class="mt-4 shrink-0 sm:mt-0 flex space-x-6 items-center">
+                                            <div class="shrink-0 flex">
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $discount->is_active ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
                                                     {{ $discount->is_active ? __('Visible'): __('Not Visible') }}
                                                 </span>
                                             </div>
-                                            <div class="flex-shrink-0 flex">
+                                            <div class="shrink-0 flex">
                                                 @if($discount->start_at > now())
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-yellow-100 text-yellow-800">
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
@@ -218,7 +218,7 @@
                                                 @endif
                                                 @if($discount->start_at <= now())
                                                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-purple-100 text-purple-800">
-                                                        <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-teal-400" fill="currentColor" viewBox="0 0 8 8">
+                                                        <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-purple-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
                                                         </svg>
                                                         {{ __('Active For users') }}
@@ -236,7 +236,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="ml-5 flex-shrink-0">
+                                    <div class="ml-5 shrink-0">
                                         <svg class="h-5 w-5 text-secondary-400" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                         </svg>
@@ -276,6 +276,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="discounts" link="https://docs.laravelshopper.io/docs/discounts" />
+    <x-shopper-learn-more name="discounts" link="discounts" />
 
 </div>

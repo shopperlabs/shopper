@@ -4,21 +4,21 @@
         options: ['profile', 'address', 'orders'],
         words: {
             'profile': '{{ __("Profile") }}',
-            'address': '{{ __("Address") }}',
+            'address': '{{ __("Addresses") }}',
             'orders': '{{ __("Orders") }}'
         },
         currentTab: 'profile'
     }"
 >
     <x:shopper-breadcrumb back="shopper.customers.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.customers.index')" title="Customers" />
     </x:shopper-breadcrumb>
 
     <div class="mt-5 md:flex md:items-center md:justify-between relative z-20">
         <div class="flex-1 min-w-0">
             <div class="flex items-start">
-                <div class="flex-shrink-0 h-12 w-12">
+                <div class="shrink-0 h-12 w-12">
                     <img class="h-12 w-12 rounded-lg" src="{{ $picture }}" alt="">
                 </div>
                 <div class="ml-4">
@@ -66,7 +66,7 @@
         <div class="sticky top-0 -mx-6 px-6 bg-secondary-100 dark:bg-secondary-900">
             <div class="sm:border-b sm:border-secondary-200 dark:border-secondary-700">
                 <div class="sm:hidden">
-                    <x-shopper-input.select x-model="currentTab" aria-label="Selected tab" class="pr-10">
+                    <x-shopper-forms.select x-model="currentTab" aria-label="Selected tab" class="pr-10">
                         <template x-for="option in options" :key="option">
                             <option
                                 x-bind:value="option"
@@ -74,7 +74,7 @@
                                 x-bind:selected="option === currentTab"
                             ></option>
                         </template>
-                    </x-shopper-input.select>
+                    </x-shopper-forms.select>
                 </div>
                 <!-- Tabs at small breakpoint and up -->
                 <div class="hidden sm:block">
@@ -84,7 +84,7 @@
                         </button>
 
                         <button @click="currentTab = 'address'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'address' }">
-                            {{ __('Address') }}
+                            {{ __('Addresses') }}
                         </button>
 
                         <button @click="currentTab = 'orders'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'orders' }">

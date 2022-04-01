@@ -1,7 +1,7 @@
 <x-shopper-modal footerClasses="px-4 pb-5 sm:px-6 sm:flex sm:flex-row-reverse">
     <x-slot name="content">
         <div class="sm:flex sm:items-start">
-            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+            <div class="mx-auto shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                 <x-heroicon-o-exclamation class="h-6 w-6 text-red-600" />
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">

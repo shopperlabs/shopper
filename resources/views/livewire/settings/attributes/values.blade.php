@@ -56,14 +56,14 @@
                                     @forelse($values as $v)
                                         <tr>
                                             <td class="pl-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900">
-                                                <x-shopper-input.checkbox aria-label="{{ __('Attribute value id') }}" id="is_filterable_{{ $v->id }}" :value="$v->id" />
+                                                <x-shopper-forms.checkbox aria-label="{{ __('Attribute value id') }}" id="is_filterable_{{ $v->id }}" :value="$v->id" />
                                             </td>
                                             <td class="pl-2 pr-6 py-4 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                                 {{ $v->value }}
                                             </td>
                                             <td class="px-6 py-4 flex items-center space-x-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                                 @if($v->attribute->type === 'colorpicker')
-                                                    <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full" style="background-color: {{ $v->value }}" aria-hidden="true"></div>
+                                                    <div class="shrink-0 w-2.5 h-2.5 rounded-full" style="background-color: {{ $v->value }}" aria-hidden="true"></div>
                                                 @endif
                                                 <span>{{ $v->key }}</span>
                                             </td>

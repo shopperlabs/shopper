@@ -10,13 +10,13 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <x-shopper-input.group label="Name" for="name" class="sm:col-span-2" :error="$errors->first('name')" helpText="Enter mailable name e.g Welcome User, WelcomeUser" isRequired>
-                <x-shopper-input.text wire:model.debounce.350ms="name" type="text" id="name" placeholder="Mailable name" />
-            </x-shopper-input.group>
+            <x-shopper-forms.group label="Name" for="name" class="sm:col-span-2" :error="$errors->first('name')" helpText="Enter mailable name e.g Welcome User, WelcomeUser" isRequired>
+                <x-shopper-forms.input wire:model.defer="name" type="text" id="name" placeholder="Mailable name" />
+            </x-shopper-forms.group>
             <div class="sm:col-span-2">
                 <div class="relative flex items-start">
                     <div class="flex items-center h-5">
-                        <x-shopper-input.checkbox wire:model.lazy="isMarkdown" id="is_markdown" />
+                        <x-shopper-forms.checkbox wire:model.defer="isMarkdown" id="is_markdown" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
                         <label for="is_markdown" class="font-medium text-secondary-700 dark:text-secondary-300">{{ __('Markdown Template') }}</label>
@@ -26,15 +26,15 @@
             </div>
 
             @if($isMarkdown)
-                <x-shopper-input.group label="Markdown" for="markdown" class="sm:col-span-2" :error="$errors->first('markdownView')" isRequired>
-                    <x-shopper-input.text wire:model.lazy="markdownView" type="text" id="markdown" placeholder="Eg. markdown.view" />
-                </x-shopper-input.group>
+                <x-shopper-forms.group label="Markdown" for="markdown" class="sm:col-span-2" :error="$errors->first('markdownView')" isRequired>
+                    <x-shopper-forms.input wire:model.defer="markdownView" type="text" id="markdown" placeholder="Eg. markdown.view" />
+                </x-shopper-forms.group>
             @endif
 
             <div class="sm:col-span-2">
                 <div class="relative flex items-start">
                     <div class="flex items-center h-5">
-                        <x-shopper-input.checkbox wire:model.lazy="isForce" id="is_force" />
+                        <x-shopper-forms.checkbox wire:model.defer="isForce" id="is_force" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
                         <label for="is_force" class="font-medium text-secondary-700 dark:text-secondary-300">{{ __('Force') }}</label>

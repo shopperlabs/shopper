@@ -9,9 +9,10 @@
  * @since May 2021
  */
 
-import Alpine from 'alpinejs';
-import Sortable from 'sortablejs';
-import * as FilePond from 'filepond';
+import Alpine from 'alpinejs'
+import Sortable from 'sortablejs'
+import * as FilePond from 'filepond'
+import Tooltip from '@ryangjchandler/alpine-tooltip'
 
 import './elements'
 import '@helpers/window'
@@ -24,6 +25,7 @@ window.Alpine = Alpine
 window.Sortable = Sortable
 window.FilePond = FilePond
 
+Alpine.plugin(Tooltip)
 Alpine.data('internationalNumber', internationalNumber)
 Alpine.data('mapBox', mapBox)
 

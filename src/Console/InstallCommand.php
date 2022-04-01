@@ -66,7 +66,7 @@ class InstallCommand extends Command
         $this->call('shopper:link');
         $this->progressBar->advance();
 
-        $this->complete();
+        $this->completeSetup();
 
         if (! (bool) $this->option('no-interaction')) {
             (new Thanks($this->output))();
@@ -104,7 +104,7 @@ class InstallCommand extends Command
         $this->info('Add SHOPPER_DASHBOARD_PREFIX to .env file');
     }
 
-    protected function complete(): void
+    protected function completeSetup(): void
     {
         $this->progressBar->finish();
 

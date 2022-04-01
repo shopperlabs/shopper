@@ -10,7 +10,7 @@
     }"
 >
     <x-shopper-breadcrumb back="shopper.settings.users">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.users')" title="Users & roles" />
     </x-shopper-breadcrumb>
 
@@ -39,7 +39,7 @@
         <div>
             <!-- Dropdown menu on small screens -->
             <div class="sm:hidden">
-                <x-shopper-input.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
+                <x-shopper-forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
                     <template x-for="option in options" :key="option">
                         <option
                             x-bind:value="option"
@@ -47,7 +47,7 @@
                             x-bind:selected="option === currentTab"
                         ></option>
                     </template>
-                </x-shopper-input.select>
+                </x-shopper-forms.select>
             </div>
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
@@ -74,7 +74,7 @@
                 <div class="pt-5 px-4 sm:px-6">
                     <div class="rounded-md bg-info-500 bg-opacity-10 p-4">
                         <div class="flex">
-                            <div class="flex-shrink-0">
+                            <div class="shrink-0">
                                 <x-heroicon-s-information-circle  class="h-5 w-5 text-info-400" />
                             </div>
                             <div class="ml-3 flex-1 md:flex md:justify-between">
@@ -93,15 +93,15 @@
             @endif
             <div class="px-4 py-5 sm:p-6">
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                    <x-shopper-input.group label="Name (in lowercase)" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
-                        <x-shopper-input.text wire:model.lazy="name" type="text" id="name" placeholder="manager" />
-                    </x-shopper-input.group>
-                    <x-shopper-input.group label="Display name" for="display_name" class="sm:col-span-1">
-                        <x-shopper-input.text wire:model.lazy="display_name" type="text" id="display_name" placeholder="Manager" />
-                    </x-shopper-input.group>
-                    <x-shopper-input.group label="Description" for="description" class="sm:col-span-2">
-                        <x-shopper-input.textarea wire:model.lazy="description" id="description" />
-                    </x-shopper-input.group>
+                    <x-shopper-forms.group label="Name (in lowercase)" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
+                        <x-shopper-forms.input wire:model.lazy="name" type="text" id="name" placeholder="manager" />
+                    </x-shopper-forms.group>
+                    <x-shopper-forms.group label="Display name" for="display_name" class="sm:col-span-1">
+                        <x-shopper-forms.input wire:model.lazy="display_name" type="text" id="display_name" placeholder="Manager" />
+                    </x-shopper-forms.group>
+                    <x-shopper-forms.group label="Description" for="description" class="sm:col-span-2">
+                        <x-shopper-forms.textarea wire:model.lazy="description" id="description" />
+                    </x-shopper-forms.group>
                 </div>
             </div>
             <div class="px-4 py-3 text-right sm:px-6">

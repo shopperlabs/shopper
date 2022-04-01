@@ -7,7 +7,7 @@
 >
 
     <x:shopper-breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="flex-shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
     </x:shopper-breadcrumb>
 
@@ -26,7 +26,7 @@
         </div>
         <div>
             <div class="sm:hidden">
-                <x-shopper-input.select x-model="currentTab" aria-label="Selected tab">
+                <x-shopper-forms.select x-model="currentTab" aria-label="Selected tab">
                     <template x-for="option in options" :key="option">
                         <option
                             x-bind:value="option"
@@ -34,7 +34,7 @@
                             x-bind:selected="option === currentTab"
                         ></option>
                     </template>
-                </x-shopper-input.select>
+                </x-shopper-forms.select>
             </div>
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
@@ -55,7 +55,7 @@
         <div x-show="currentTab === 'general'">
             <div class="mt-6 bg-white shadow sm:rounded-md dark:bg-secondary-800">
                 <div class="p-4 sm:p-6 sm:pb-4">
-                    <x-shopper-input.search label="Search payments" placeholder="Search payment by provider name" />
+                    <x-shopper-forms.search label="Search payments" placeholder="Search payment by provider name" />
                 </div>
                 <div class="hidden sm:block">
                     <div class="align-middle inline-block min-w-full">
@@ -82,7 +82,7 @@
                                     <tr>
                                         <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                                             <div class="flex items-center space-x-3 lg:pl-2">
-                                                <div class="flex-shrink-0 w-2.5 h-2.5 rounded-full {{ $method->is_enabled ? 'bg-green-600': 'bg-secondary-400' }}"></div>
+                                                <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $method->is_enabled ? 'bg-green-600': 'bg-secondary-400' }}"></div>
                                                 <div class="flex items-center">
                                                     @if($method->logo_url)
                                                         <img class="h-8 w-8 rounded object-cover object-center" src="{{ $method->logo_url }}" alt="">
@@ -99,7 +99,7 @@
                                         </td>
                                         <td class="px-6 py-3 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                             <div class="flex items-center">
-                                                <span x-data="{ on: @if($method->is_enabled) true @else false @endif }" role="checkbox" tabindex="0" wire:click="toggleStatus({{ $method->id }}, {{ $method->is_enabled ? 1 : 0 }})" x-on:toggle-saved-{{ $method->id }}.window="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" @focus="focused = true" @blur="focused = false" class="group relative inline-flex items-center justify-center flex-shrink-0 h-5 w-10 cursor-pointer focus:outline-none">
+                                                <span x-data="{ on: @if($method->is_enabled) true @else false @endif }" role="checkbox" tabindex="0" wire:click="toggleStatus({{ $method->id }}, {{ $method->is_enabled ? 1 : 0 }})" x-on:toggle-saved-{{ $method->id }}.window="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" @focus="focused = true" @blur="focused = false" class="group relative inline-flex items-center justify-center shrink-0 h-5 w-10 cursor-pointer focus:outline-none">
                                                     <span aria-hidden="true" :class="{ 'bg-primary-600': on, 'bg-secondary-200 dark:bg-secondary-700': !on }" class="absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200 bg-secondary-200"></span>
                                                     <span aria-hidden="true" :class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="absolute left-0 inline-block h-5 w-5 border border-secondary-200 rounded-full bg-white shadow transform group-focus:shadow-outline group-focus:border-primary-300 transition-transform ease-in-out duration-200 translate-x-0"></span>
                                                 </span>

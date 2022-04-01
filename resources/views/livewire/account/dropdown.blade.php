@@ -3,7 +3,7 @@
         <button class="max-w-xs flex items-center text-sm rounded-full overflow-hidden focus:outline-none hover:bg-secondary-50 dark:focus:bg-secondary-700 dark:hover:bg-secondary-800 lg:p-1.5 lg:rounded-md">
             <img class="h-8 w-8 rounded-full" src="{{ $picture }}" alt="{{ $email }}" />
             <span class="hidden ml-3 text-secondary-900 dark:text-white text-sm leading-5 font-medium lg:block">{{ $full_name }}</span>
-            <x-heroicon-s-chevron-down class="hidden flex-shrink-0 ml-1 h-5 w-5 text-secondary-400 lg:block" />
+            <x-heroicon-s-chevron-down class="hidden shrink-0 ml-1 h-5 w-5 text-secondary-400 lg:block" />
         </button>
     </x-slot>
 

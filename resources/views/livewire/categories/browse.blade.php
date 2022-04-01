@@ -10,7 +10,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper-button :link="route('shopper.categories.create')">
-                                {{ __('Create') }}
+                                {{ __('Add category') }}
                             </x-shopper-button>
                         </span>
                     </div>
@@ -23,11 +23,11 @@
         <x-shopper-empty-state
             :title="__('Organize your products into categories')"
             :content="__('Create and manage all your store categories to help your customers easily find products.')"
-            :button="__('Create category')"
+            :button="__('Add category')"
             permission="add_categories"
             :url="route('shopper.categories.create')"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 356 208">
                     <style>
                         .st1{fill:#1C64F2}  .st2{fill:#76A9FA}  .st4{fill:#42389D}  .st5{fill:#5850EC}  .st6{fill:#233876}  .st7{fill:#1A56DB}  .st8{fill:#76A9FA}
@@ -118,7 +118,7 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="categories" link="https://docs.laravelshopper.io/docs/categories" />
+    <x-shopper-learn-more name="categories" link="categories" />
 
 </div>
 

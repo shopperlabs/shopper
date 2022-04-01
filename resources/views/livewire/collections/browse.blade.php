@@ -11,7 +11,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper-button :link="route('shopper.collections.create')">
-                                {{ __('Create') }}
+                                {{ __('Add collection') }}
                             </x-shopper-button>
                         </span>
                     </div>
@@ -24,11 +24,11 @@
         <x-shopper-empty-state
             :title="__('Organize your products into collection categories')"
             :content="__('Create and manage all your collections to help your customers easily find products.')"
-            :button="__('Create collection')"
+            :button="__('Add collection')"
             permission="add_collections"
             :url="route('shopper.collections.create')"
         >
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 230">
                     <style>
                         .st4,.st7,.st9{stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}.st4{fill:none;stroke:#263238}.st7,.st9{stroke:#233876}.st7{clip-path:url(#XMLID_3_);fill:#3f83f8}.st9{fill:#fff;stroke-width:.5}.st14{clip-path:url(#XMLID_4_)}.st15,.st16{stroke:#233876;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}.st15{stroke-width:.5;fill:none}.st16{fill:#3f83f8}.st18{fill:#263238}.st23{fill:none;stroke:#ff4743;stroke-width:.8321;stroke-linecap:round;stroke-miterlimit:10}.st27{fill:#ff6359}.st32{fill:#7e3af2}.st34{fill:#5850ec}.st36{opacity:.49;fill:#7e3af2}
@@ -154,6 +154,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="collections" link="https://docs.laravelshopper.io/docs/collections" />
+    <x-shopper-learn-more name="collections" link="collections" />
 
 </div>
