@@ -42,7 +42,9 @@ class ProductsLists extends ModalComponent
         $this->emitUp('onProductsAddInCollection');
 
         $this->notification()->success(
-            __('Added'), __('Selected product(s) added'));
+            __('Added'),
+            __('Selected product(s) added')
+        );
 
         $this->closeModal();
     }
