@@ -41,7 +41,7 @@ class Edit extends AbstractBaseComponent
         $this->description = $category->description;
         $this->is_enabled = $category->is_enabled;
         $this->updateSeo = true;
-        $this->seoTitle = $category->seo_title;
+        $this->seoTitle = $category->seo_title ?? $category->name;
         $this->seoDescription = $category->seo_description;
         $this->selectedCategory = $category->parent_id ? $this->selectedCategory['value'] = $category->parent_id : [];
         $this->parent = $category->parent_id ? $category->parent : null;
