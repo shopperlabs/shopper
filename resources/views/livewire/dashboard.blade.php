@@ -32,7 +32,7 @@
                         {{ __('Get to know Laravel Shopper by understanding its capabilities the right way, whether you are new to the framework or have already worked on it. This documentation is made for you.') }}
                     </div>
 
-                    <a href="https://docs.laravelshopper.io" class="group">
+                    <a href="https://laravelshopper.dev" class="group">
                         <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
                             <span>{{ __('Visit the documentation') }}</span>
 
@@ -55,7 +55,7 @@
                         {{ __('Learn how to Learn to build a professional online store from start to finish with complete Shopper video lessons and sample codes to quickly set up your store.') }}
                     </div>
 
-                    <a href="https://docs.laravelshopper.io/screencasts" class="group">
+                    <a href="https://www.youtube.com/channel/UCgxgoKJi3VA1eXxtjIs2tKw" class="group">
                         <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
                             <span>{{ __('Start watching Shopper') }}</span>
 
