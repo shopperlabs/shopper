@@ -58,21 +58,6 @@ You can communicate with us using the following mediums:
 * [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
 * [Join us on Discord](https://laravelshopper.io/discord) to chat with us.
 
-### Premium Support
-
-Shopper Framework can provide premium support for a monthly fee. Find out more via the [Sponsor Support Program](https://github.com/sponsors/sense).
-
-## ToDo/Roadmap
-- [x] Add `laravel-livewire-datatable` to replace all tables (https://github.com/rappasoft/laravel-livewire-tables)
-- [x] Replace all Shopper forms input components to `wire-ui` form components (https://livewire-wireui.com)
-- [ ] Add PayPal as default payment method
-- [ ] Add Shipping Methods
-- [ ] Add Tax rates
-- [ ] Publish Documentation 
-- [ ] Publish Demo Website (Private repository only for sponsors)
-- [ ] Many channels support (Facebook, Twitter, Instagram & Telegram)
-- [ ] Fix Mailable class with parameters
-
 ## Contributing
 
 Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
@@ -97,6 +82,10 @@ And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 ## License
 
 The Shopper Framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Sponsoring
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
 [link-author]: https://github.com/mckenziearts
 [link-author-2]: https://github.com/sense
