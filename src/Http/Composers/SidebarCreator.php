@@ -7,15 +7,9 @@ use Shopper\Framework\Sidebar\AdminSidebar;
 
 class SidebarCreator
 {
-    /**
-     * @var AdminSidebar
-     */
-    protected $sidebar;
+    protected AdminSidebar $sidebar;
 
-    /**
-     * @var SidebarRenderer
-     */
-    protected $renderer;
+    protected SidebarRenderer $renderer;
 
     public function __construct(AdminSidebar $sidebar, SidebarRenderer $renderer)
     {

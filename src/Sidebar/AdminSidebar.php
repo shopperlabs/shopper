@@ -12,10 +12,7 @@ class AdminSidebar implements ShouldCache, Sidebar
 {
     use CacheableTrait;
 
-    /**
-     * @var Menu
-     */
-    protected $menu;
+    protected Menu $menu;
 
     public function __construct(Menu $menu)
     {

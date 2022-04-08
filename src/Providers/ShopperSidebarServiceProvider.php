@@ -12,14 +12,6 @@ use Shopper\Framework\Sidebar\Presentation\ShopperSidebarRenderer;
 class ShopperSidebarServiceProvider extends ServiceProvider
 {
     /**
-     * Boot the service provider.
-     */
-    public function boot()
-    {
-        $this->registerViews();
-    }
-
-    /**
      * Register the service provider.
      */
     public function register()
@@ -27,7 +19,7 @@ class ShopperSidebarServiceProvider extends ServiceProvider
         // Bind SidebarResolver
         $this->app->bind('Maatwebsite\Sidebar\Infrastructure\SidebarResolver', function (Application $app) {
             $resolver = SidebarResolverFactory::getClassName(
-                $app['config']->get('shopper.config.cache.method')
+                $app['config']->get('shopper.system.cache.method')
             );
 
             return $app->make($resolver);
@@ -36,7 +28,7 @@ class ShopperSidebarServiceProvider extends ServiceProvider
         // Bind SidebarFlusher
         $this->app->bind('Maatwebsite\Sidebar\Infrastructure\SidebarFlusher', function (Application $app) {
             $resolver = SidebarFlusherFactory::getClassName(
-                $app['config']->get('shopper.config.cache.method')
+                $app['config']->get('shopper.system.cache.method')
             );
 
             return $app->make($resolver);
@@ -97,13 +89,5 @@ class ShopperSidebarServiceProvider extends ServiceProvider
             'Maatwebsite\Sidebar\Presentation\SidebarRenderer',
             'Maatwebsite\Sidebar\Infrastructure\SidebarResolver',
         ];
-    }
-
-    /**
-     * Register views.
-     */
-    protected function registerViews()
-    {
-        $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
     }
 }

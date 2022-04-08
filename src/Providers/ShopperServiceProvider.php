@@ -2,16 +2,17 @@
 
 namespace Shopper\Framework\Providers;
 
-use function define;
-use function defined;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\ServiceProvider;
-use Shopper\Framework\Console\InstallCommand;
-use Shopper\Framework\Console\PublishCommand;
-use Shopper\Framework\Console\SymlinkCommand;
-use Shopper\Framework\Console\UserCommand;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\View\Compilers\BladeCompiler;
+use Livewire\Component;
+use Livewire\Livewire;
+use Shopper\Framework\Console;
+use Shopper\Framework\Models\Shop\Channel;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Spatie\LaravelPackageTools\Package;
 
-class ShopperServiceProvider extends ServiceProvider
+class ShopperServiceProvider extends PackageServiceProvider
 {
     /**
      * Shopper config files.
@@ -26,38 +27,103 @@ class ShopperServiceProvider extends ServiceProvider
         'system',
     ];
 
-    /**
-     * Bootstrap any package services.
-     */
-    public function boot()
+    public function configurePackage(Package $package): void
     {
-        $this->registerPublishing();
-        $this->registerDatabase();
-        $this->registerResources();
-
-        $this->app->register(RouteServiceProvider::class);
-
-        Builder::macro('search', fn ($field, $string) => $string ? $this->where($field, 'like', '%' . $string . '%') : $this);
+        $package
+            ->name('shopper')
+            ->hasCommands($this->getCommands())
+            ->hasTranslations()
+            ->hasViews()
+            ->hasViewComponents(config('shopper.components.prefix', 'shopper'));
     }
 
-    /**
-     * Register the package's publishable resources.
-     */
-    public function registerPublishing()
+    public function getCommands(): array
+    {
+        return [
+            Console\InstallCommand::class,
+            Console\PublishCommand::class,
+            Console\SymlinkCommand::class,
+            Console\UserCommand::class,
+        ];
+    }
+
+    public function packageBooted(): void
+    {
+        $this->bootLivewireComponents();
+
+        $this->bootBladeComponents();
+
+        $this->bootModelRelationName();
+
+        Builder::macro('search',
+            fn ($field, $string) => $string
+                ? $this->where($field, 'like', '%' . $string . '%')
+                : $this
+        );
+    }
+
+    public function packageRegistered(): void
+    {
+        foreach ($this->provides() as $provide) {
+            $this->app->register($provide);
+        }
+
+        $this->registerDatabase();
+
+        $this->registerConfigFiles();
+
+        $this->registerViews();
+    }
+
+    public function bootModelRelationName(): void
+    {
+        Relation::morphMap([
+            'brand' => config('shopper.system.models.brand'),
+            'category' => config('shopper.system.models.category'),
+            'collection' => config('shopper.system.models.collection'),
+            'product' => config('shopper.system.models.product'),
+            'channel' => Channel::class,
+        ]);
+    }
+
+    public function bootBladeComponents(): void
+    {
+        $prefix = config('shopper.components.prefix', 'shopper');
+
+        $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade) use ($prefix) {
+            foreach (config('shopper.components.blade', []) as $component) {
+                $blade->component($component['class'], $component['alias'], $prefix);
+            }
+        });
+    }
+
+    public function bootLivewireComponents(): void
+    {
+        $prefix = config('shopper.components.prefix', 'shopper');
+
+        Component::macro('notify', function ($params) {
+            $this->dispatchBrowserEvent('notify', $params);
+        });
+
+        Livewire::listen('component.hydrate', function ($component) {
+            $this->app->singleton(Component::class, fn () => $component);
+        });
+
+        foreach (config('shopper.components.livewire', []) as $alias => $component) {
+            $alias = $prefix ? "$prefix-$alias" : $alias;
+
+            Livewire::component($alias, $component);
+        }
+    }
+
+    public function registerConfigFiles()
     {
         collect($this->configFiles)->each(function ($config) {
             $this->mergeConfigFrom(SHOPPER_PATH . "/config/{$config}.php", "shopper.{$config}");
             $this->publishes([SHOPPER_PATH . "/config/{$config}.php" => config_path("shopper/{$config}.php")], 'shopper-config');
         });
-
-        $this->publishes([
-            SHOPPER_PATH . '/resources/lang' => resource_path('lang/vendor/shopper'),
-        ], 'shopper-lang');
     }
 
-    /**
-     * Register Database and seeders.
-     */
     public function registerDatabase()
     {
         $this->loadMigrationsFrom(SHOPPER_PATH . '/database/migrations');
@@ -66,44 +132,18 @@ class ShopperServiceProvider extends ServiceProvider
         ], 'shopper-seeders');
     }
 
-    /**
-     * Register provider.
-     */
-    public function registerProviders(): void
+    public function registeringPackage()
     {
-        foreach ($this->provides() as $provide) {
-            $this->app->register($provide);
-        }
-    }
-
-    /**
-     * Register any application services.
-     */
-    public function register()
-    {
-        $this->registerProviders();
-
         if (! defined('SHOPPER_PATH')) {
             define('SHOPPER_PATH', realpath(__DIR__ . '/../../'));
         }
-
-        $this->commands([
-            InstallCommand::class,
-            PublishCommand::class,
-            SymlinkCommand::class,
-            UserCommand::class,
-        ]);
     }
 
-    /**
-     * Get the services provided by the provider.
-     */
     public function provides(): array
     {
         return [
-            ComponentServiceProvider::class,
             EventServiceProvider::class,
-            ModelServiceProvider::class,
+            RouteServiceProvider::class,
             SidebarServiceProvider::class,
             ShopperSidebarServiceProvider::class,
         ];
@@ -112,10 +152,8 @@ class ShopperServiceProvider extends ServiceProvider
     /**
      * Register the package resources such as routes, templates, etc.
      */
-    protected function registerResources()
+    protected function registerViews()
     {
         $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
-        $this->loadTranslationsFrom(SHOPPER_PATH . '/resources/lang', 'shopper');
-        $this->loadJsonTranslationsFrom(resource_path('lang/vendor/shopper'));
     }
 }

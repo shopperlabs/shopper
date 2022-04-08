@@ -12,16 +12,10 @@ use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Framework\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use Shopper\Framework\Events\BuildingSidebar;
-use Shopper\Framework\Events\Handlers\RegisterDashboardSidebar;
-use Shopper\Framework\Events\Handlers\RegisterOrderSidebar;
-use Shopper\Framework\Events\Handlers\RegisterShopSidebar;
-use Shopper\Framework\Exceptions\ShopperExceptionHandler;
+use Shopper\Framework\Events\Handlers;
 use Shopper\Framework\Http\Composers\GlobalComposer;
 use Shopper\Framework\Http\Composers\SidebarCreator;
-use Shopper\Framework\Http\Middleware\Authenticate;
-use Shopper\Framework\Http\Middleware\Dashboard;
-use Shopper\Framework\Http\Middleware\HasConfiguration;
-use Shopper\Framework\Http\Middleware\RedirectIfAuthenticated;
+use Shopper\Framework\Http\Middleware;
 use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
 use Shopper\Framework\Providers\ShopperServiceProvider;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticationProvider;
@@ -34,11 +28,11 @@ class FrameworkServiceProvider extends ServiceProvider
      * The middleware base class name.
      */
     protected array $middlewares = [
-        'dashboard' => Dashboard::class,
+        'dashboard' => Middleware\Dashboard::class,
+        'shopper.guest' => Middleware\RedirectIfAuthenticated::class,
+        'shopper.setup' => Middleware\HasConfiguration::class,
         'role' => RoleMiddleware::class,
         'permission' => PermissionMiddleware::class,
-        'shopper.guest' => RedirectIfAuthenticated::class,
-        'shopper.setup' => HasConfiguration::class,
     ];
 
     /**
@@ -62,7 +56,7 @@ class FrameworkServiceProvider extends ServiceProvider
         view()->composer('*', GlobalComposer::class);
 
         // Backend Menu
-        view()->creator('shopper::partials.default.aside._secondary', SidebarCreator::class);
+        view()->creator('shopper::components.layouts.app.sidebar.secondary', SidebarCreator::class);
     }
 
     /**
@@ -80,7 +74,7 @@ class FrameworkServiceProvider extends ServiceProvider
     {
         $router->middlewareGroup('shopper', array_merge([
             'web',
-            Authenticate::class,
+            Middleware\Authenticate::class,
             ResolveSidebars::class,
         ], config('shopper.routes.middleware', [])));
 
@@ -95,21 +89,14 @@ class FrameworkServiceProvider extends ServiceProvider
     public function register()
     {
         // Register Default Dashboard Menu
-        $this->app['events']->listen(BuildingSidebar::class, RegisterDashboardSidebar::class);
-        $this->app['events']->listen(BuildingSidebar::class, RegisterShopSidebar::class);
-        $this->app['events']->listen(BuildingSidebar::class, RegisterOrderSidebar::class);
+        $this->app['events']->listen(BuildingSidebar::class, Handlers\RegisterDashboardSidebar::class);
+        $this->app['events']->listen(BuildingSidebar::class, Handlers\RegisterShopSidebar::class);
+        $this->app['events']->listen(BuildingSidebar::class, Handlers\RegisterOrderSidebar::class);
 
         // Register the service the package provides.
         $this->app->singleton('shopper', fn () => new Shopper());
         $this->app->singleton(TwoFactorAuthenticationProviderContract::class, TwoFactorAuthenticationProvider::class);
         $this->app->singleton(FailedTwoFactorLoginResponseContract::class, FailedTwoFactorLoginResponse::class);
-
-        if ($this->app['request']->segment(1) === Shopper::prefix()) {
-            $this->app->bind(
-                \Illuminate\Contracts\Debug\ExceptionHandler::class,
-                ShopperExceptionHandler::class
-            );
-        }
 
         $this->app->bind(StatefulGuard::class, fn () => Auth::guard(config('shopper.auth.guard', null)));
     }
