@@ -54,15 +54,15 @@
             {{ $slot }}
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <x-shopper::button wire:click="{{ $method }}" wire:loading.attr="disabled" type="button">
+                    <x-shopper::buttons.primary wire:click="{{ $method }}" wire:loading.attr="disabled" type="button">
                         <x-shopper::loader wire:loading wire:target="{{ $method }}" />
                         {{ __('Confirm') }}
-                    </x-shopper::button>
+                    </x-shopper::buttons.primary>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <x-shopper::default-button @click="confirm = false;" type="button">
+                    <x-shopper::buttons.primary @click="confirm = false;" type="button">
                         {{ __('Cancel') }}
-                    </x-shopper::default-button>
+                    </x-shopper::buttons.primary>
                 </span>
             </div>
         </div>

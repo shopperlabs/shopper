@@ -14,9 +14,9 @@
                 @if($inventories->count() < 5)
                     <div class="flex">
                     <span class="shadow-sm rounded-md">
-                        <x-shopper::button :link="route('shopper.settings.inventories.create')">
+                        <x-shopper::buttons.primary :link="route('shopper.settings.inventories.create')">
                             {{ __('Add location') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                     </span>
                     </div>
                 @endif

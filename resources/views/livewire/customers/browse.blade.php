@@ -10,9 +10,9 @@
                 @can('add_customers')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper::button :link="route('shopper.customers.create')">
+                            <x-shopper::buttons.primary :link="route('shopper.customers.create')">
                                 {{ __('Add customer') }}
-                            </x-shopper::button>
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan

@@ -224,15 +224,15 @@
         <div class="mt-8 pt-5 border-t border-secondary-200 dark:border-secondary-700">
             <div class="flex justify-end">
                 <span class="inline-flex rounded-md shadow-sm">
-                    <x-shopper::default-button :link="route('shopper.settings.users')">
+                    <x-shopper::buttons.default :link="route('shopper.settings.users')">
                         {{ __('Cancel') }}
-                    </x-shopper::default-button>
+                    </x-shopper::buttons.default>
                 </span>
                 <span class="ml-3 inline-flex rounded-md shadow-sm">
-                    <x-shopper::button wire:click="store" type="button" wire:loading.attr="disabled">
+                    <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                         <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                         {{ __('Save and Continue') }}
-                    </x-shopper::button>
+                    </x-shopper::buttons.primary>
                 </span>
             </div>
         </div>

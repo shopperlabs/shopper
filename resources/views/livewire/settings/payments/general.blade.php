@@ -18,9 +18,9 @@
             </h3>
             <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
                 <span class="shadow-sm rounded-md">
-                    <x-shopper::button wire:click="$emit('openModal', 'shopper-modals.create-payment-method')" type="button">
+                    <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-payment-method')" type="button">
                         {{ __('Create custom payment method') }}
-                    </x-shopper::button>
+                    </x-shopper::buttons.primary>
                 </span>
             </div>
         </div>

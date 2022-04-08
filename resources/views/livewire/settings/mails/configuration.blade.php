@@ -75,10 +75,10 @@
     </div>
     <div class="mt-8 pt-5 border-t border-secondary-200 dark:border-secondary-700">
         <div class="flex justify-end">
-            <x-shopper::button wire:click="store" type="button" wire:loading.attr="disabled">
+            <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="store" />
                 {{ __('Save') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 </div>

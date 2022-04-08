@@ -28,15 +28,15 @@
 
     <x-slot name="buttons">
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-            <x-shopper::danger-button wire:click="logoutOtherBrowserSessions" wire:loading.attr="disabled" type="button">
+            <x-shopper::buttons.danger wire:click="logoutOtherBrowserSessions" wire:loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="logoutOtherBrowserSessions" class="text-white" />
                 {{ __('Logout Other Browser Sessions') }}
-            </x-shopper::danger-button>
+            </x-shopper::buttons.danger>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-            <x-shopper::default-button wire:click="$emit('closeModal')" wire:loading.attr="disabled" type="button">
+            <x-shopper::buttons.default wire:click="$emit('closeModal')" wire:loading.attr="disabled" type="button">
                 {{ __('Nevermind') }}
-            </x-shopper::default-button>
+            </x-shopper::buttons.default>
         </span>
     </x-slot>
 

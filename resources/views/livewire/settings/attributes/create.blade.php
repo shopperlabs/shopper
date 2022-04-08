@@ -10,10 +10,10 @@
         </x-slot>
 
         <x-slot name="action">
-            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Save') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>
 

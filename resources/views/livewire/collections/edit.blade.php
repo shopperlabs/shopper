@@ -10,10 +10,10 @@
         </x-slot>
 
         <x-slot name="action">
-            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Update') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>
 
@@ -78,10 +78,10 @@
 
     <div class="mt-6 border-t border-secondary-200 pt-5 pb-10 dark:border-secondary-700">
         <div class="flex justify-end">
-            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Update') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 </div>

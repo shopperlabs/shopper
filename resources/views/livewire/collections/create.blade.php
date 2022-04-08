@@ -10,10 +10,10 @@
         </x-slot>
 
         <x-slot name="action">
-            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Save') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>
 
@@ -128,9 +128,9 @@
                                         </div>
                                         <div class="relative">
                                             <span class="inline-flex rounded-md shadow-sm">
-                                                <x-shopper::default-button wire:click.prevent="remove({{ $conditionKey }})" type="button">
+                                                <x-shopper::buttons.primary wire:click.prevent="remove({{ $conditionKey }})" type="button">
                                                     <x-heroicon-o-trash class="w-5 h-5" />
-                                                </x-shopper::default-button>
+                                                </x-shopper::buttons.primary>
                                             </span>
                                         </div>
                                     </div>
@@ -139,9 +139,9 @@
                             @if(count($conditions) < 4)
                                 <div class="relative">
                                     <span class="inline-flex rounded-md shadow-sm">
-                                        <x-shopper::default-button wire:click.prevent="add({{ $i }})" type="button">
+                                        <x-shopper::buttons.primary wire:click.prevent="add({{ $i }})" type="button">
                                             {{ count($conditions) === 0 ? __('Add condition') : __('Add another condition') }}
-                                        </x-shopper::default-button>
+                                        </x-shopper::buttons.primary>
                                     </span>
                                 </div>
                             @endif
@@ -195,10 +195,10 @@
 
     <div class="mt-6 border-t border-secondary-200 pt-5 pb-10 dark:border-secondary-700">
         <div class="flex justify-end">
-            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Save') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 </div>

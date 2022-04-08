@@ -32,10 +32,10 @@
                 </div>
                 <div class="flex space-x-3 pt-1">
                     <span class="hidden sm:block">
-                        <x-shopper::danger-button wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode([$product->id, 'type' => 'product']) }})" type="button">
+                        <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode([$product->id, 'type' => 'product']) }})" type="button">
                             <x-heroicon-s-archive class="w-5 h-5 -ml-1 mr-2" />
                             {{ __('Delete') }}
-                        </x-shopper::danger-button>
+                        </x-shopper::buttons.danger>
                     </span>
                 </div>
             </div>

@@ -6,14 +6,14 @@
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('Create product') }}
+            {{ __('Add product') }}
         </x-slot>
 
         <x-slot name="action">
-            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Save') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>
 
@@ -338,10 +338,10 @@
 
     <div class="mt-6 border-t border-secondary-200 dark:border-secondary-700 pt-5 pb-10">
         <div class="flex justify-end">
-            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" />
                 {{ __('Save') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 </div>

@@ -43,9 +43,9 @@
 
     <x-slot name="buttons">
         <span class="flex w-full rounded-md shadow-sm sm:w-auto">
-            <x-shopper::default-button wire:click="$emit('closeModal')" type="button">
+            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
                 {{ __('Close') }}
-            </x-shopper::default-button>
+            </x-shopper::buttons.default>
         </span>
     </x-slot>
 </x-shopper::modal>

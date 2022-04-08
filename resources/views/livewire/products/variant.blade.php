@@ -16,10 +16,10 @@
                 </div>
                 <div class="flex space-x-3 pt-1">
                     <span class="hidden sm:block">
-                        <x-shopper::danger-button wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode(['id' => $variant->id, 'type' => 'variant', 'route' => route('shopper.products.edit', $product)]) }})" type="button">
+                        <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode(['id' => $variant->id, 'type' => 'variant', 'route' => route('shopper.products.edit', $product)]) }})" type="button">
                             <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
                             {{ __('Delete variant') }}
-                        </x-shopper::danger-button>
+                        </x-shopper::buttons.danger>
                     </span>
                 </div>
             </div>
@@ -194,10 +194,10 @@
 
     <div class="mt-6 pt-5 border-t border-secondary-200 dark:border-secondary-700">
         <div class="flex justify-end">
-            <x-shopper::button wire:click="store" type="button" wire:loading.attr="disabled">
+            <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="store" />
                 {{ __('Update variant') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 

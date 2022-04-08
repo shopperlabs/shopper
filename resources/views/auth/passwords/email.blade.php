@@ -46,9 +46,9 @@
                 @enderror
 
                 <div class="mt-5">
-                    <x-shopper::button type="submit" class="w-full justify-center">
+                    <x-shopper::buttons.primary type="submit" class="w-full justify-center">
                         {{ __('Send password reset mail') }}
-                    </x-shopper::button>
+                    </x-shopper::buttons.primary>
                 </div>
                 <p class="mt-5 text-center text-sm">
                     <a href="{{ route('shopper.login-view') }}" class="inline-flex items-center text-secondary-500 hover:text-secondary-900 dark:text-secondary-500 dark:hover:text-white leading-5">

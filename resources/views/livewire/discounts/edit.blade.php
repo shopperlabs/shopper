@@ -10,10 +10,10 @@
         </x-slot>
 
         <x-slot name="action">
-            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Update') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>
 
@@ -96,9 +96,9 @@
                     @if($apply === 'products')
                         <div class="mt-4">
                             <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper::default-button @click="modal = true" type="button">
+                                <x-shopper::buttons.primary @click="modal = true" type="button">
                                     {{ __('Select products') }}
-                                </x-shopper::default-button>
+                                </x-shopper::buttons.primary>
                             </span>
                         </div>
                         @if(count($productsDetails) > 0)
@@ -198,9 +198,9 @@
                     @if($eligibility === 'customers')
                         <div class="mt-4">
                             <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper::default-button @click="show = true" type="button">
+                                <x-shopper::buttons.primary @click="show = true" type="button">
                                     {{ __('Select customers') }}
-                                </x-shopper::default-button>
+                                </x-shopper::buttons.primary>
                             </span>
                         </div>
                         @if(count($customersDetails) > 0)
@@ -362,10 +362,10 @@
                 />
             @endcan
             <div class="flex justify-end">
-                <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+                <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                     {{ __('Update') }}
-                </x-shopper::button>
+                </x-shopper::buttons.primary>
             </div>
         </div>
     </div>
@@ -438,15 +438,15 @@
                 </div>
                 <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                        <x-shopper::button wire:click="addProducts" wire.loading.attr="disabled" type="button">
+                        <x-shopper::buttons.primary wire:click="addProducts" wire.loading.attr="disabled" type="button">
                             <x-shopper::loader wire:loading wire:target="addProducts" class="text-white" />
                             {{ __('Add Selected Products') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                     </span>
                     <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                        <x-shopper::default-button @click="modal = false;" type="button">
+                        <x-shopper::buttons.primary @click="modal = false;" type="button">
                             {{ __('Cancel') }}
-                        </x-shopper::default-button>
+                        </x-shopper::buttons.primary>
                     </span>
                 </div>
             </div>
@@ -525,15 +525,15 @@
                 </div>
                 <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                        <x-shopper::button wire:click="addCustomers" wire.loading.attr="disabled" type="button">
+                        <x-shopper::buttons.primary wire:click="addCustomers" wire.loading.attr="disabled" type="button">
                             <x-shopper::loader wire:loading wire:target="addCustomers" class="text-white" />
                             {{ __('Add Selected Customers') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                     </span>
                     <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                        <x-shopper::default-button @click="show = false;" type="button">
+                        <x-shopper::buttons.primary @click="show = false;" type="button">
                             {{ __('Cancel') }}
-                        </x-shopper::default-button>
+                        </x-shopper::buttons.primary>
                     </span>
                 </div>
             </div>

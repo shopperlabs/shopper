@@ -27,9 +27,9 @@
 
     <x-slot name="buttons">
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-            <x-shopper::default-button wire:click="$emit('closeModal')" type="button">
+            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
                 {{ __('Cancel') }}
-            </x-shopper::default-button>
+            </x-shopper::buttons.default>
         </span>
     </x-slot>
 

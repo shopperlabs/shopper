@@ -47,12 +47,12 @@
                 </div>
 
                 <div class="mt-6">
-                    <x-shopper::button type="submit" class="group relative w-full justify-center">
+                    <x-shopper::buttons.primary type="submit" class="group relative w-full justify-center">
                         <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                             <x-heroicon-s-lock-closed class="h-5 w-5 text-primary-500 group-hover:text-primary-400"/>
                         </span>
                         {{ __('Log in') }}
-                    </x-shopper::button>
+                    </x-shopper::buttons.primary>
                 </div>
             </form>
 

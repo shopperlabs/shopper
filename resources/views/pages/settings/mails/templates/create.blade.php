@@ -67,9 +67,9 @@
                     </x-shopper::forms.group>
                     <div class="pt-5 border-t border-secondary-200 dark:border-secondary-700">
                         <div class="flex justify-end">
-                            <x-shopper::button type="submit">
+                            <x-shopper::buttons.primary type="submit">
                                 {{ __('Create') }}
-                            </x-shopper::button>
+                            </x-shopper::buttons.primary>
                         </div>
                     </div>
                 </div>

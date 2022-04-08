@@ -29,9 +29,9 @@
                 </div>
 
                 <div class="mt-5">
-                    <x-shopper::button type="submit" class="w-full justify-center">
+                    <x-shopper::buttons.primary type="submit" class="w-full justify-center">
                         {{ __('Update password') }}
-                    </x-shopper::button>
+                    </x-shopper::buttons.primary>
                 </div>
             </form>
         </div>

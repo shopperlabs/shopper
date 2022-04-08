@@ -58,9 +58,9 @@
                                 {{ __('Use an authentication code') }}
                             </button>
                         </p>
-                        <x-shopper::button type="submit">
+                        <x-shopper::buttons.primary type="submit">
                             {{ __('Login') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                     </div>
                 </form>
             </div>

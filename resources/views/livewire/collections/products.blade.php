@@ -5,9 +5,9 @@
             <div class="mt-4 sm:mt-0 flex items-center space-x-3">
                 @if($collection->isManual())
                     <span class="inline-flex rounded-md shadow-sm">
-                        <x-shopper::default-button wire:click="$emit('openModal', 'shopper-modals.products-lists', {{ json_encode([$collection->id, $this->productsIds]) }})" type="button">
+                        <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.products-lists', {{ json_encode([$collection->id, $this->productsIds]) }})" type="button">
                             {{ __('Browse') }}
-                        </x-shopper::default-button>
+                        </x-shopper::buttons.primary>
                     </span>
                 @endif
                 <div class="relative">
@@ -70,12 +70,12 @@
                     @if($collection->isAutomatic())
                         <div class="relative mt-3">
                             <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper::default-button type="button">
+                                <x-shopper::buttons.primary type="button">
                                     {{ __('Update conditions') }}
                                     <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                                       {{ __('Soon') }}
                                     </span>
-                                </x-shopper::default-button>
+                                </x-shopper::buttons.primary>
                             </span>
                         </div>
                     @endif

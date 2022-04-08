@@ -350,10 +350,10 @@
             <div id="step-tree" class="px-4 sm:px-6 lg:px-8 mt-8 pt-5">
                 <div class="flex justify-end">
                     <span class="ml-3 inline-flex rounded-md shadow-sm">
-                        <x-shopper::button wire:click="store" type="button" wire:loading.attr="disabled">
+                        <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                             <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                             {{ __('Setup my store') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                     </span>
                 </div>
             </div>

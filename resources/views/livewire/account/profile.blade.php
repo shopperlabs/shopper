@@ -54,10 +54,10 @@
                     </div>
                     <div class="px-4 py-3 sm:px-6 text-right">
                         <span class="inline-flex rounded-md shadow-sm">
-                            <x-shopper::button type="submit" wire:loading.attr="disabled">
+                            <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
                                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
                                 {{ __('Save') }}
-                            </x-shopper::button>
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 </div>

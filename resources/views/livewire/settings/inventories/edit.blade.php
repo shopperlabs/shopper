@@ -11,10 +11,10 @@
 
         <x-slot name="action">
             <div class="flex">
-                <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+                <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                     {{ __('Update') }}
-                </x-shopper::button>
+                </x-shopper::buttons.primary>
             </div>
         </x-slot>
     </x-shopper::heading>
@@ -159,17 +159,17 @@
         <div class="flex items-center justify-between space-x-4">
             @can('delete_inventories')
                 <span class="w-full sm:w-auto">
-                    <x-shopper::danger-button wire:click="$emit('openModal', 'shopper-modals.delete-inventory', {{ json_encode([$inventoryId, $name]) }})" type="button">
+                    <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-inventory', {{ json_encode([$inventoryId, $name]) }})" type="button">
                         <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
                         {{ __('Delete') }}
-                    </x-shopper::danger-button>
+                    </x-shopper::buttons.danger>
                 </span>
             @endcan
             <span class="ml-auto flex justify-end">
-                <x-shopper::button wire:click="store" type="button" wire:loading.attr="disabled">
+                <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="store" />
                     {{ __('Update') }}
-                </x-shopper::button>
+                </x-shopper::buttons.primary>
             </span>
         </div>
     </div>

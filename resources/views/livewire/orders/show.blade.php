@@ -34,21 +34,21 @@
 
                         @if(! $order->isPaid())
                             <span class="hidden sm:block">
-                                <x-shopper::danger-button wire:click="$emit('openModal', 'shopper-modals.archived-order', {{ json_encode([$order->id]) }})" type="button">
+                                <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.archived-order', {{ json_encode([$order->id]) }})" type="button">
                                     <x-heroicon-s-archive class="w-5 h-5 -ml-1 mr-2" />
                                     {{ __('Archived') }}
-                                </x-shopper::danger-button>
+                                </x-shopper::buttons.danger>
                             </span>
                         @endif
 
                         <x-shopper::dropdown>
                             <x-slot name="trigger">
-                                <x-shopper::default-button>
+                                <x-shopper::buttons.default>
                                     {{ __('More actions') }}
                                     <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                     </svg>
-                                </x-shopper::default-button>
+                                </x-shopper::buttons.default>
                             </x-slot>
 
                             <x-slot name="content">
@@ -255,12 +255,12 @@
                 <div class="flex justify-end mt-2 text-right">
                     <x-shopper::dropdown>
                         <x-slot name="trigger">
-                            <x-shopper::default-button>
+                            <x-shopper::buttons.default>
                                 {{ __('Payment actions') }}
                                 <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                 </svg>
-                            </x-shopper::default-button>
+                            </x-shopper::buttons.default>
                         </x-slot>
 
                         <x-slot name="content">
@@ -314,10 +314,10 @@
                                 @enderror
                             </div>
                             <div class="mt-6 flex items-center justify-end space-x-4">
-                                <x-shopper::button wire:click="leaveNotes" wire:loading.attr="disabled" type="button">
+                                <x-shopper::buttons.primary wire:click="leaveNotes" wire:loading.attr="disabled" type="button">
                                     <x-shopper::loader wire:loading wire:target="leaveNotes" />
                                     {{ __('Send notes') }}
-                                </x-shopper::button>
+                                </x-shopper::buttons.primary>
                             </div>
                         @endif
                     </div>

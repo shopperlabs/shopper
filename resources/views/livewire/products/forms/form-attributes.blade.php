@@ -7,9 +7,9 @@
             </p>
         </div>
         <div>
-            <x-shopper::button wire:click="$emit('openModal', 'shopper-modals.add-product-attribute', {{ json_encode([$product->id, $attributes]) }})" type="button">
+            <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.add-product-attribute', {{ json_encode([$product->id, $attributes]) }})" type="button">
                 {{ __('Add attribute') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 

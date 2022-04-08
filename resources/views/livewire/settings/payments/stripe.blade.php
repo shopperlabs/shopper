@@ -48,10 +48,10 @@
                         </p>
                         @if(! $this->enabled)
                             <span class="mt-4 inline-flex rounded-md shadow-sm">
-                                <x-shopper::default-button wire:click="enabledStripe" wire.loading.attr="disabled" type="button">
+                                <x-shopper::buttons.default wire:click="enabledStripe" wire.loading.attr="disabled" type="button">
                                     <x-shopper::loader wire:loading wire:target="enabledStripe" class="text-secondary-600 dark:text-secondary-300" />
                                     {{ __('Enabled Stripe Payment') }}
-                                </x-shopper::default-button>
+                                </x-shopper::buttons.default>
                             </span>
                         @endif
                     </div>
@@ -150,10 +150,10 @@
 
         <div class="mt-6 pt-5 border-t border-secondary-200 dark:border-secondary-700">
             <div class="flex justify-end">
-                <x-shopper::button wire:click="store" type="button" wire:loading.attr="disabled">
+                <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                     {{ __('Update Configuration') }}
-                </x-shopper::button>
+                </x-shopper::buttons.primary>
             </div>
         </div>
 

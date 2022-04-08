@@ -35,10 +35,10 @@
                     </div>
                 </div>
             </div>
-            <x-shopper::button wire:click="store" type="button">
+            <x-shopper::buttons.primary wire:click="store" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Update') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 

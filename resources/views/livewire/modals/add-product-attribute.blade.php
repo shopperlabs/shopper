@@ -75,15 +75,15 @@
 
     <x-slot name="buttons">
         <span class="flex w-full sm:ml-3 sm:w-auto">
-            <x-shopper::button wire:click="save" type="button" wire.loading.attr="disabled">
+            <x-shopper::buttons.primary wire:click="save" type="button" wire.loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
                 {{ __('Add attribute') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-            <x-shopper::default-button wire:click="closeModal" type="button">
+            <x-shopper::buttons.default wire:click="closeModal" type="button">
                 {{ __('Cancel') }}
-            </x-shopper::default-button>
+            </x-shopper::buttons.default>
         </span>
     </x-slot>
 

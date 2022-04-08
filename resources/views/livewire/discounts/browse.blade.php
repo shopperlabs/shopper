@@ -10,9 +10,9 @@
                 @can('add_discounts')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper::button :link="route('shopper.discounts.create')">
+                            <x-shopper::buttons.primary :link="route('shopper.discounts.create')">
                                 {{ __('Create code') }}
-                            </x-shopper::button>
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan
@@ -149,10 +149,10 @@
                     <div class="flex items-center space-x-3">
                         <div class="relative z-10 inline-flex shadow-sm rounded-md">
                             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
-                                <x-shopper::default-button @click="open = !open" type="button">
+                                <x-shopper::buttons.default @click="open = !open" type="button">
                                     {{ __('Status') }}
                                     <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
-                                </x-shopper::default-button>
+                                </x-shopper::buttons.default>
                                 <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
                                     <div class="rounded-md bg-white shadow-xs dark:bg-secondary-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">

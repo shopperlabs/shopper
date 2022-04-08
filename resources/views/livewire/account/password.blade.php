@@ -41,10 +41,10 @@
                 </div>
                 <div class="px-4 py-3 sm:px-6 text-right">
                     <span class="inline-flex rounded-md shadow-sm">
-                        <x-shopper::button wire:click="save" wire:loading.attr="disabled" type="button">
+                        <x-shopper::buttons.primary wire:click="save" wire:loading.attr="disabled" type="button">
                             <x-shopper::loader wire:loading wire:target="save" class="text-white" />
                             {{ __('Update Password') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                     </span>
                 </div>
             </div>

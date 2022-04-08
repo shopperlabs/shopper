@@ -30,10 +30,10 @@
                 </div>
             </div>
             <div class="px-4 py-3 bg-secondary-50 dark:bg-transparent text-right sm:px-6">
-                <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+                <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                     {{ __('Update') }}
-                </x-shopper::button>
+                </x-shopper::buttons.primary>
             </div>
         </div>
     </div>
@@ -102,16 +102,16 @@
                         </div>
                     </div>
                     <div class="mt-5 lg:mt-0 flex items-center">
-                        <x-shopper::button wire:click="updateCurrentStock" wire.loading.attr="disabled" type="button">
+                        <x-shopper::buttons.primary wire:click="updateCurrentStock" wire.loading.attr="disabled" type="button">
                             <x-shopper::loader wire:loading wire:target="updateCurrentStock" class="text-white" />
                             {{ __('Update') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                         @if($histories->isNotEmpty())
                             <div class="flex items-center pl-4 space-x-4">
-                                <x-shopper::default-button wire:click="export" type="button">
+                                <x-shopper::buttons.default wire:click="export" type="button">
                                     <x-heroicon-o-cloud-download class="w-5 h-5 -ml-1 pr-2" />
                                     {{ __('Export') }}
-                                </x-shopper::default-button>
+                                </x-shopper::buttons.default>
                             </div>
                         @endif
                     </div>

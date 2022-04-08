@@ -32,15 +32,15 @@
 
     <x-slot name="buttons">
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-            <x-shopper::button wire:click="addSelectedProducts" wire.loading.attr="disabled" type="button">
+            <x-shopper::buttons.primary wire:click="addSelectedProducts" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="addSelectedProducts" class="text-white" />
                 {{ __('Add Selected Products') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
             </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-            <x-shopper::default-button wire:click="$emit('closeModal')" type="button">
+            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
                 {{ __('Cancel') }}
-            </x-shopper::default-button>
+            </x-shopper::buttons.default>
         </span>
     </x-slot>
 

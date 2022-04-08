@@ -55,10 +55,10 @@
                     </p>
                 </div>
                 <div>
-                    <x-shopper::button :link="route('shopper.settings.user.new')">
+                    <x-shopper::buttons.primary :link="route('shopper.settings.user.new')">
                         <x-heroicon-o-user-add class="w-5 h-5 mr-1.5" />
                         {{ __('Add administrator') }}
-                    </x-shopper::button>
+                    </x-shopper::buttons.primary>
                 </div>
             </div>
             <div class="mt-6 border border-secondary-200 rounded-md dark:border-secondary-700">

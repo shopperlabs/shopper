@@ -22,17 +22,17 @@
             <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
                 <span class="shadow-sm rounded-md">
                     @if($role->can_be_removed)
-                        <x-shopper::danger-button wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
+                        <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
                             <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
                             {{ __('Delete') }}
-                        </x-shopper::danger-button>
+                        </x-shopper::buttons.danger>
                     @endif
                 </span>
                 <span class="shadow-sm rounded-md">
-                    <x-shopper::button wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
+                    <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
                         <x-heroicon-o-key class="w-5 h-5 -ml-1 mr-2" />
                         {{ __('Create permission') }}
-                    </x-shopper::button>
+                    </x-shopper::buttons.primary>
                 </span>
             </div>
         </div>
@@ -105,10 +105,10 @@
                 </div>
             </div>
             <div class="px-4 py-3 text-right sm:px-6">
-                <x-shopper::button wire:click="save" wire:loading.attr="disabled" type="button">
+                <x-shopper::buttons.primary wire:click="save" wire:loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="save" class="text-white" />
                     {{ __('Update') }}
-                </x-shopper::button>
+                </x-shopper::buttons.primary>
             </div>
         </div>
         <div x-cloak x-show="currentTab === 'users'">

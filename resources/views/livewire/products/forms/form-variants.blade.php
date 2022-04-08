@@ -14,9 +14,9 @@
                 <x-shopper::forms.search label="Search variant" placeholder="Search product variant" />
                 <div>
                     <span class="shadow-sm rounded-md">
-                        <x-shopper::button wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})" type="button">
+                        <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})" type="button">
                             {{ __('Add variant') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                     </span>
                 </div>
             </div>

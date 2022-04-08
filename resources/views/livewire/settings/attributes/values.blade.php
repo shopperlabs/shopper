@@ -27,9 +27,9 @@
             <div class="px-4 sm:px-5 flex items-center justify-between space-x-4">
                 <div>
                     <span class="shadow-sm rounded-md">
-                        <x-shopper::button wire:click="$emit('openModal', 'shopper-modals.create-value', {{ json_encode([$attribute->id]) }})" type="button">
+                        <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-value', {{ json_encode([$attribute->id]) }})" type="button">
                             {{ __('Add new value') }}
-                        </x-shopper::button>
+                        </x-shopper::buttons.primary>
                     </span>
                 </div>
             </div>

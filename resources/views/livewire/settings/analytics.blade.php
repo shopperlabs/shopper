@@ -162,10 +162,10 @@
 
     <div class="mt-6 pt-5 pb-10 border-t border-secondary-200 dark:border-secondary-700">
         <div class="flex justify-end">
-            <x-shopper::button wire:click="store" type="button" wire:loading.attr="disabled">
+            <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Save') }}
-            </x-shopper::button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 

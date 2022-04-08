@@ -13,9 +13,9 @@
                 @can('add_attributes')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper::button :link="route('shopper.settings.attributes.create')">
+                            <x-shopper::buttons.primary :link="route('shopper.settings.attributes.create')">
                                 {{ __('Create') }}
-                            </x-shopper::button>
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan
