@@ -25,6 +25,7 @@ class ShopperServiceProvider extends PackageServiceProvider
         'mails',
         'routes',
         'system',
+        'settings',
     ];
 
     public function configurePackage(Package $package): void
