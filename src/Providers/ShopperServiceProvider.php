@@ -9,8 +9,8 @@ use Livewire\Component;
 use Livewire\Livewire;
 use Shopper\Framework\Console;
 use Shopper\Framework\Models\Shop\Channel;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class ShopperServiceProvider extends PackageServiceProvider
 {
@@ -56,7 +56,8 @@ class ShopperServiceProvider extends PackageServiceProvider
 
         $this->bootModelRelationName();
 
-        Builder::macro('search',
+        Builder::macro(
+            'search',
             fn ($field, $string) => $string
                 ? $this->where($field, 'like', '%' . $string . '%')
                 : $this
