@@ -1,6 +1,6 @@
 <div>
 
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
             {{ __('Products') }}
         </x-slot>
@@ -10,18 +10,18 @@
                 @can('add_products')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper-button :link="route('shopper.products.create')">
+                            <x-shopper::button :link="route('shopper.products.create')">
                                 {{ __('Add product') }}
-                            </x-shopper-button>
+                            </x-shopper::button>
                         </span>
                     </div>
                 @endcan
             @endif
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
+        <x-shopper::empty-state
             :title="__('Manage Catalog')"
             :content="__('Get closer to your first sale by adding and manage products.')"
             :button="__('Add product')"
@@ -252,13 +252,13 @@
                     </g>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6">
             <livewire:shopper-tables.products-table />
         </div>
     @endif
 
-    <x-shopper-learn-more name="products" link="products" />
+    <x-shopper::learn-more name="products" link="products" />
 
 </div>

@@ -1,6 +1,3 @@
-@extends('shopper::layouts.default')
-@section('title', __('Mail ~ Create Template'))
-
 @push('styles')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css">
@@ -36,12 +33,12 @@
     </style>
 @endpush
 
-@section('content')
+<x-shopper::layouts.app :title="__('Mail ~ Create Template')">
 
-    <x:shopper-breadcrumb back="shopper.settings.mails.select-template">
+    <x-shopper::breadcrumb back="shopper.settings.mails.select-template">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.mails.select-template')" title="Templates" />
-    </x:shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.mails.select-template')" title="Templates" />
+    </x-shopper::breadcrumb>
 
     <div class="mt-3 pb-5 border-b border-secondary-200 dark:border-secondary-700">
         <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
@@ -58,20 +55,21 @@
 
             <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
                 <div class="sm:col-span-3">
-                    <textarea id="template_editor" name="content" cols="30" rows="10">{{ $skeleton['template'] }}</textarea>
+                    <label for="content" class="sr-only">{{ __('Content') }}</label>
+                    <textarea id="template_editor" id="content" name="content" cols="30" rows="10">{{ $skeleton['template'] }}</textarea>
                 </div>
                 <div class="sm:col-span-1 space-y-5">
-                    <x-shopper-forms.group for="name" label="Template name" :error="$errors->first('template_name')" isRequired>
-                        <x-shopper-forms.input name="template_name" type="text" id="name" placeholder="Shopper Newsletter" />
-                    </x-shopper-forms.group>
-                    <x-shopper-forms.group for="description" label="Template description" :error="$errors->first('template_description')" isRequired>
-                        <x-shopper-forms.textarea name="template_description" id="description" />
-                    </x-shopper-forms.group>
+                    <x-shopper::forms.group for="name" label="Template name" :error="$errors->first('template_name')" isRequired>
+                        <x-shopper::forms.input name="template_name" type="text" id="name" placeholder="Shopper Newsletter" />
+                    </x-shopper::forms.group>
+                    <x-shopper::forms.group for="description" label="Template description" :error="$errors->first('template_description')" isRequired>
+                        <x-shopper::forms.textarea name="template_description" id="description" />
+                    </x-shopper::forms.group>
                     <div class="pt-5 border-t border-secondary-200 dark:border-secondary-700">
                         <div class="flex justify-end">
-                            <x-shopper-button type="submit">
+                            <x-shopper::button type="submit">
                                 {{ __('Create') }}
-                            </x-shopper-button>
+                            </x-shopper::button>
                         </div>
                     </div>
                 </div>
@@ -79,7 +77,7 @@
         </form>
     </div>
 
-@endsection
+</x-shopper::layouts.app>
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

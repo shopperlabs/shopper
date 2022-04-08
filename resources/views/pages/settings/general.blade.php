@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('General'))
-
-@section('content')
+<x-shopper::layouts.app :title="__('Store General setting')">
 
     <livewire:shopper-settings.general />
 
-@endsection
+</x-shopper::layouts.app>

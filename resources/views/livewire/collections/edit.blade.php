@@ -1,38 +1,38 @@
 <div>
-    <x:shopper-breadcrumb back="shopper.collections.index">
+    <x-shopper::breadcrumb back="shopper.collections.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.collections.index')" title="Collections" />
-    </x:shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.collections.index')" title="Collections" />
+    </x-shopper::breadcrumb>
 
-    <x-shopper-heading class="mt-3">
+    <x-shopper::heading class="mt-3">
         <x-slot name="title">
             {{ $name }}
         </x-slot>
 
         <x-slot name="action">
-            <x-shopper-button wire:click="store" wire.loading.attr="disabled" type="button">
-                <x-shopper-loader wire:loading wire:target="store" class="text-white" />
+            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+                <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Update') }}
-            </x-shopper-button>
+            </x-shopper::button>
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     <div class="mt-6 grid sm:grid-cols-6 gap-4 lg:gap-6">
         <div class="sm:col-span-4 space-y-5">
             <div class="bg-white rounded-lg shadow p-4 sm:p-5 dark:bg-secondary-800">
-                <x-shopper-forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                    <x-shopper-forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
-                </x-shopper-forms.group>
+                <x-shopper::forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                    <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
+                </x-shopper::forms.group>
                 <div class="mt-5">
-                    <x-shopper-forms.group label="Description" for="description">
+                    <x-shopper::forms.group label="Description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
-                    </x-shopper-forms.group>
+                    </x-shopper::forms.group>
                 </div>
             </div>
 
             <livewire:shopper-collections.products :collection="$collection" />
 
-            <x-shopper-forms.seo
+            <x-shopper::forms.seo
                 slug="collections"
                 :title="$seoTitle"
                 :url="$collection->slug"
@@ -78,10 +78,10 @@
 
     <div class="mt-6 border-t border-secondary-200 pt-5 pb-10 dark:border-secondary-700">
         <div class="flex justify-end">
-            <x-shopper-button wire:click="store" wire.loading.attr="disabled" type="button">
-                <x-shopper-loader wire:loading wire:target="store" class="text-white" />
+            <x-shopper::button wire:click="store" wire.loading.attr="disabled" type="button">
+                <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Update') }}
-            </x-shopper-button>
+            </x-shopper::button>
         </div>
     </div>
 </div>

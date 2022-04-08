@@ -8,11 +8,11 @@
                         <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
                 </span>
-                <x-shopper-forms.select wire:model="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
+                <x-shopper::forms.select wire:model="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
                     @foreach($inventories as $inventory)
                         <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                     @endforeach
-                </x-shopper-forms.select>
+                </x-shopper::forms.select>
             </span>
             <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700">
                 <span class="block text-sm font-medium mr-4">{{ __('Quantity Available') }}</span>
@@ -48,18 +48,18 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <x-shopper-button wire:click="updateCurrentStock" wire.loading.attr="disabled" type="button">
-                        <x-shopper-loader wire:loading wire:target="updateCurrentStock" class="text-white" />
+                    <x-shopper::button wire:click="updateCurrentStock" wire.loading.attr="disabled" type="button">
+                        <x-shopper::loader wire:loading wire:target="updateCurrentStock" class="text-white" />
                         {{ __('Update') }}
-                    </x-shopper-button>
+                    </x-shopper::button>
                     @if($histories->isNotEmpty())
                         <div class="flex items-center pl-4 space-x-4">
-                            <x-shopper-default-button wire:click="export" type="button">
+                            <x-shopper::default-button wire:click="export" type="button">
                                 <svg class="w-5 h-5 -ml-1 pr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
                                 </svg>
                                 {{ __('Export') }}
-                            </x-shopper-default-button>
+                            </x-shopper::default-button>
                         </div>
                     @endif
                 </div>

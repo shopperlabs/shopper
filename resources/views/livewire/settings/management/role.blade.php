@@ -9,10 +9,10 @@
         currentTab: 'role'
     }"
 >
-    <x-shopper-breadcrumb back="shopper.settings.users">
+    <x-shopper::breadcrumb back="shopper.settings.users">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.users')" title="Users & roles" />
-    </x-shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" title="Users & roles" />
+    </x-shopper::breadcrumb>
 
     <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
         <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
@@ -22,24 +22,24 @@
             <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
                 <span class="shadow-sm rounded-md">
                     @if($role->can_be_removed)
-                        <x-shopper-danger-button wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
+                        <x-shopper::danger-button wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
                             <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
                             {{ __('Delete') }}
-                        </x-shopper-danger-button>
+                        </x-shopper::danger-button>
                     @endif
                 </span>
                 <span class="shadow-sm rounded-md">
-                    <x-shopper-button wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
+                    <x-shopper::button wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
                         <x-heroicon-o-key class="w-5 h-5 -ml-1 mr-2" />
                         {{ __('Create permission') }}
-                    </x-shopper-button>
+                    </x-shopper::button>
                 </span>
             </div>
         </div>
         <div>
             <!-- Dropdown menu on small screens -->
             <div class="sm:hidden">
-                <x-shopper-forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
+                <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
                     <template x-for="option in options" :key="option">
                         <option
                             x-bind:value="option"
@@ -47,7 +47,7 @@
                             x-bind:selected="option === currentTab"
                         ></option>
                     </template>
-                </x-shopper-forms.select>
+                </x-shopper::forms.select>
             </div>
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
@@ -93,22 +93,22 @@
             @endif
             <div class="px-4 py-5 sm:p-6">
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                    <x-shopper-forms.group label="Name (in lowercase)" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
-                        <x-shopper-forms.input wire:model.lazy="name" type="text" id="name" placeholder="manager" />
-                    </x-shopper-forms.group>
-                    <x-shopper-forms.group label="Display name" for="display_name" class="sm:col-span-1">
-                        <x-shopper-forms.input wire:model.lazy="display_name" type="text" id="display_name" placeholder="Manager" />
-                    </x-shopper-forms.group>
-                    <x-shopper-forms.group label="Description" for="description" class="sm:col-span-2">
-                        <x-shopper-forms.textarea wire:model.lazy="description" id="description" />
-                    </x-shopper-forms.group>
+                    <x-shopper::forms.group label="Name (in lowercase)" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
+                        <x-shopper::forms.input wire:model.lazy="name" type="text" id="name" placeholder="manager" />
+                    </x-shopper::forms.group>
+                    <x-shopper::forms.group label="Display name" for="display_name" class="sm:col-span-1">
+                        <x-shopper::forms.input wire:model.lazy="display_name" type="text" id="display_name" placeholder="Manager" />
+                    </x-shopper::forms.group>
+                    <x-shopper::forms.group label="Description" for="description" class="sm:col-span-2">
+                        <x-shopper::forms.textarea wire:model.lazy="description" id="description" />
+                    </x-shopper::forms.group>
                 </div>
             </div>
             <div class="px-4 py-3 text-right sm:px-6">
-                <x-shopper-button wire:click="save" wire:loading.attr="disabled" type="button">
-                    <x-shopper-loader wire:loading wire:target="save" class="text-white" />
+                <x-shopper::button wire:click="save" wire:loading.attr="disabled" type="button">
+                    <x-shopper::loader wire:loading wire:target="save" class="text-white" />
                     {{ __('Update') }}
-                </x-shopper-button>
+                </x-shopper::button>
             </div>
         </div>
         <div x-cloak x-show="currentTab === 'users'">

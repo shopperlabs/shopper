@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Detail Order ~ :number', ['number' => $order->number]))
-
-@section('content')
+<x-shopper::layouts.app :title="__('Detail Order ~ :number', ['number' => $order->number])">
 
     <livewire:shopper-orders.show :order="$order" />
 
-@endsection
+</x-shopper::layouts.app>

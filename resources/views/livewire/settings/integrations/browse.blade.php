@@ -1,10 +1,10 @@
 <div>
-    <x:shopper-breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb back="shopper.settings.index">
         <svg class="shrink-0 h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
         <a href="{{ route('shopper.settings.index') }}" class="text-secondary-500 hover:text-secondary-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Settings') }}</a>
-    </x:shopper-breadcrumb>
+    </x-shopper::breadcrumb>
 
     <div class="mt-2 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
@@ -241,7 +241,7 @@
         </div>
     </div>
 
-    <x-shopper-modal wire:model="confirmModalActivation" id="modal-enable" maxWidth="lg">
+    <x-shopper::modal wire:model="confirmModalActivation" id="modal-enable" maxWidth="lg">
         <div class="px-4 pt-5 pb-4 sm:p-6">
             <div class="text-left">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900" id="modal-headline">
@@ -254,18 +254,18 @@
                 </div>
             </div>
             <div class="mt-4 sm:flex">
-                <x-shopper-button wire:click="enableProvider" type="button" wire:loading.attr="disabled" class="capitalize w-full sm:w-auto sm:text-sm">
+                <x-shopper::button wire:click="enableProvider" type="button" wire:loading.attr="disabled" class="capitalize w-full sm:w-auto sm:text-sm">
                     <svg wire:loading wire:target="enableProvider" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                     </svg>
                     {{ __('Enable :provider', ['provider' => $currentProvider]) }}
-                </x-shopper-button>
-                <x-shopper-default-button wire:click="closeIntegrationModal" class="mt-3 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                </x-shopper::button>
+                <x-shopper::default-button wire:click="closeIntegrationModal" class="mt-3 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                     {{ __('Cancel') }}
-                </x-shopper-default-button>
+                </x-shopper::default-button>
             </div>
         </div>
-    </x-shopper-modal>
+    </x-shopper::modal>
 
 </div>

@@ -22,16 +22,16 @@
     </div>
     @if($canUpdate)
         <div class="px-4 py-5 sm:px-6 space-y-5">
-            <x-shopper-forms.group for="seo_title" label="Title">
-                <x-shopper-forms.input wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
-            </x-shopper-forms.group>
+            <x-shopper::forms.group for="seo_title" label="Title">
+                <x-shopper::forms.input wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
+            </x-shopper::forms.group>
             <div>
                 <div class="flex items-center justify-between">
-                    <x-shopper-label for="seo_description" :value="__('Description')" />
+                    <x-shopper::label for="seo_description" :value="__('Description')" />
                     <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('160 characters') }}</span>
                 </div>
                 <div class="mt-1 rounded-md shadow-sm">
-                    <x-shopper-forms.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
+                    <x-shopper::forms.textarea wire:model.debounce.500ms="seoDescription" id="seo_description" />
                 </div>
             </div>
         </div>

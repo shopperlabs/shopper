@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Locations'))
-
-@section('content')
+<x-shopper::layouts.app :title="__('Locations')">
 
     <livewire:shopper-settings.inventories.browse />
 
-@endsection
+</x-shopper::layouts.app>

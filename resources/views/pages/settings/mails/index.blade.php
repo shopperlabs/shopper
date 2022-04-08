@@ -1,12 +1,9 @@
-@extends('shopper::layouts.default')
-@section('title', __('Mail Configuration ~ Templates ~ Mailable'))
+<x-shopper::layouts.app :title="__('Mail Configuration ~ Templates ~ Mailable')">
 
-@section('content')
-
-    <x:shopper-breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb back="shopper.settings.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
-    </x:shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+    </x-shopper::breadcrumb>
 
     <div
         x-data="{
@@ -14,7 +11,7 @@
             words: {
                 'config': '{{ __('Configuration') }}',
                 'templates': '{{ __('Templates') }}',
-                'mailables': '{{ __("Mailables") }}'
+                'mailables': '{{ __('Mailables') }}'
             },
             currentTab: 'config'
         }"
@@ -33,10 +30,7 @@
                             <li class="relative py-5 px-6 hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'config' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="shrink-0 text-secondary-500 dark:text-secondary-400">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
+                                        <x-heroicon-o-cog class="w-6 h-6"/>
                                     </span>
                                     <div class="min-w-0 flex-1">
                                         <button @click="currentTab = 'config'" type="button" class="block text-left focus:outline-none">
@@ -102,7 +96,7 @@
             <section aria-labelledby="configuration-heading" class="min-w-0 flex-1 h-full flex flex-col overflow-hidden">
                 <div class="min-h-(screen-content) flex-1 overflow-y-auto">
                     <div class="lg:hidden py-6 border-b border-secondary-200 sm:px-4 max-w-2xl mx-auto">
-                        <x-shopper-forms.select x-model="currentTab" aria-label="Selected tab" class="block w-full pl-3 pr-10 py-2">
+                        <x-shopper::forms.select x-model="currentTab" aria-label="Selected tab" class="block w-full pl-3 pr-10 py-2">
                             <template x-for="option in options" :key="option">
                                 <option
                                     x-bind:value="option"
@@ -110,7 +104,7 @@
                                     x-bind:selected="option === currentTab"
                                 ></option>
                             </template>
-                        </x-shopper-forms.select>
+                        </x-shopper::forms.select>
                     </div>
 
                     <div x-show="currentTab === 'config'">
@@ -127,4 +121,4 @@
         </div>
     </div>
 
-@endsection
+</x-shopper::layouts.app>

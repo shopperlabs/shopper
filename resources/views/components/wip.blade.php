@@ -32,12 +32,12 @@
             aria-labelledby="modal-headline"
         >
             <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
-                <x-shopper-wip-placeholder />
+                <x-shopper::wip-placeholder />
                 <div class="px-4 sm:px-6 py-5">
                     <span class="flex w-full rounded-md shadow-sm">
-                        <x-shopper-default-button @click="modalDemo = false" class="w-full block justify-center" type="button">
+                        <x-shopper::default-button @click="modalDemo = false" class="w-full block justify-center" type="button">
                             {{ __('Close') }}
-                        </x-shopper-default-button>
+                        </x-shopper::default-button>
                     </span>
                 </div>
             </div>

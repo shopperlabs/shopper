@@ -1,10 +1,10 @@
 <div>
-    <x:shopper-breadcrumb back="shopper.orders.index">
+    <x-shopper::breadcrumb back="shopper.orders.index">
         <svg class="shrink-0 h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
         </svg>
         <a href="{{ route('shopper.orders.index') }}" class="text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Orders') }}</a>
-    </x:shopper-breadcrumb>
+    </x-shopper::breadcrumb>
 
     <div class="mt-3 bg-secondary-100 z-30 relative pb-5 border-b border-secondary-200 sticky top-0 -my-2 pt-4 sm:pt-1 sm:-my-0 sm:-mx-8 dark:bg-secondary-900 dark:border-secondary-700">
         <div class="sm:px-8 space-y-4">
@@ -34,53 +34,53 @@
 
                         @if(! $order->isPaid())
                             <span class="hidden sm:block">
-                                <x-shopper-danger-button wire:click="$emit('openModal', 'shopper-modals.archived-order', {{ json_encode([$order->id]) }})" type="button">
+                                <x-shopper::danger-button wire:click="$emit('openModal', 'shopper-modals.archived-order', {{ json_encode([$order->id]) }})" type="button">
                                     <x-heroicon-s-archive class="w-5 h-5 -ml-1 mr-2" />
                                     {{ __('Archived') }}
-                                </x-shopper-danger-button>
+                                </x-shopper::danger-button>
                             </span>
                         @endif
 
-                        <x-shopper-dropdown>
+                        <x-shopper::dropdown>
                             <x-slot name="trigger">
-                                <x-shopper-default-button>
+                                <x-shopper::default-button>
                                     {{ __('More actions') }}
                                     <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                     </svg>
-                                </x-shopper-default-button>
+                                </x-shopper::default-button>
                             </x-slot>
 
                             <x-slot name="content">
                                 <div class="py-1">
                                     @if($order->isPending())
-                                        <x-shopper-dropdown-button wire:click="register" role="menuitem">
+                                        <x-shopper::dropdown-button wire:click="register" role="menuitem">
                                             {{ __('Register') }}
-                                        </x-shopper-dropdown-button>
+                                        </x-shopper::dropdown-button>
                                     @endif
 
                                     @if($order->isPending() || $order->isRegister())
-                                        <x-shopper-dropdown-button wire:click="markPaid" role="menuitem">
+                                        <x-shopper::dropdown-button wire:click="markPaid" role="menuitem">
                                             {{ __('Mark as paid') }}
-                                        </x-shopper-dropdown-button>
+                                        </x-shopper::dropdown-button>
                                     @endif
 
                                     @if($order->isPaid())
-                                        <x-shopper-dropdown-button wire:click="markComplete" role="menuitem">
+                                        <x-shopper::dropdown-button wire:click="markComplete" role="menuitem">
                                             <x-heroicon-o-check-circle class="mr-3 h-5 w-5 text-secondary-400 dark:text-secondary-500 group-hover:text-secondary-500 dark:text-secondary-500" />
                                             {{ __('Mark complete') }}
-                                        </x-shopper-dropdown-button>
+                                        </x-shopper::dropdown-button>
                                     @endif
 
                                     @if($order->canBeCancelled())
-                                        <x-shopper-dropdown-button wire:click="cancelOrder" role="menuitem">
+                                        <x-shopper::dropdown-button wire:click="cancelOrder" role="menuitem">
                                             <x-heroicon-s-x class="mr-3 h-5 w-5 text-secondary-400 dark:text-secondary-500 group-hover:text-secondary-500 dark:text-secondary-500" />
                                             {{ __('Cancel Order') }}
-                                        </x-shopper-dropdown-button>
+                                        </x-shopper::dropdown-button>
                                     @endif
                                 </div>
                             </x-slot>
-                        </x-shopper-dropdown>
+                        </x-shopper::dropdown>
                     @endif
 
                     <span class="relative z-0 inline-flex shadow-sm">
@@ -107,11 +107,11 @@
                     <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Products') }}</h3>
                     <div class="flex items-center space-x-3">
                         <span class="whitespace-no-wrap text-sm font-medium text-secondary-500 dark:text-secondary-400">{{ __('Per Page') }}</span>
-                        <x-shopper-forms.select wire:model="perPage" class="w-20" aria-label="{{ __('Per Page items') }}">
+                        <x-shopper::forms.select wire:model="perPage" class="w-20" aria-label="{{ __('Per Page items') }}">
                             <option value="3">3</option>
                             <option value="5">5</option>
                             <option value="10">10</option>
-                        </x-shopper-forms.select>
+                        </x-shopper::forms.select>
                     </div>
                 </div>
                 <div class="mt-4">
@@ -253,42 +253,42 @@
                     </div>
                 </div>
                 <div class="flex justify-end mt-2 text-right">
-                    <x-shopper-dropdown>
+                    <x-shopper::dropdown>
                         <x-slot name="trigger">
-                            <x-shopper-default-button>
+                            <x-shopper::default-button>
                                 {{ __('Payment actions') }}
                                 <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                 </svg>
-                            </x-shopper-default-button>
+                            </x-shopper::default-button>
                         </x-slot>
 
                         <x-slot name="content">
                             <div class="py-1">
-                                <x-shopper-dropdown-button role="menuitem">
+                                <x-shopper::dropdown-button role="menuitem">
                                     {{ __('Send invoice') }}
                                     <span class="inline-flex items-center ml-3 px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-secondary-100 text-secondary-800 dark:bg-secondary-800 dark:text-secondary-300">
                                       {{ __('Soon') }}
                                     </span>
-                                </x-shopper-dropdown-button>
+                                </x-shopper::dropdown-button>
                                 @if($order->isPending())
-                                    <x-shopper-dropdown-button wire:click="register" role="menuitem">
+                                    <x-shopper::dropdown-button wire:click="register" role="menuitem">
                                         {{ __('Register') }}
-                                    </x-shopper-dropdown-button>
+                                    </x-shopper::dropdown-button>
                                 @endif
                                 @if($order->isPending() || $order->isRegister())
-                                    <x-shopper-dropdown-button wire:click="markPaid" role="menuitem">
+                                    <x-shopper::dropdown-button wire:click="markPaid" role="menuitem">
                                         {{ __('Mark as paid') }}
-                                    </x-shopper-dropdown-button>
+                                    </x-shopper::dropdown-button>
                                 @endif
                                 @if($order->isPaid())
-                                    <x-shopper-dropdown-button wire:click="markComplete" role="menuitem">
+                                    <x-shopper::dropdown-button wire:click="markComplete" role="menuitem">
                                         {{ __('Mark complete') }}
-                                    </x-shopper-dropdown-button>
+                                    </x-shopper::dropdown-button>
                                 @endif
                             </div>
                         </x-slot>
-                    </x-shopper-dropdown>
+                    </x-shopper::dropdown>
                 </div>
             </div>
             <div class="py-4 sm:pr-8">
@@ -308,16 +308,16 @@
                         @else
                             <div>
                                 <label for="comment" class="sr-only">{{ __('Comment') }}</label>
-                                <x-shopper-forms.textarea wire:model.lazy="notes" id="comment" placeholder="{{ __('Leave notes for this customer') }}" :value="$order->notes" />
+                                <x-shopper::forms.textarea wire:model.lazy="notes" id="comment" placeholder="{{ __('Leave notes for this customer') }}" :value="$order->notes" />
                                 @error('notes')
                                     <p class="mt-1 text-red-500 text-sm">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div class="mt-6 flex items-center justify-end space-x-4">
-                                <x-shopper-button wire:click="leaveNotes" wire:loading.attr="disabled" type="button">
-                                    <x-shopper-loader wire:loading wire:target="leaveNotes" />
+                                <x-shopper::button wire:click="leaveNotes" wire:loading.attr="disabled" type="button">
+                                    <x-shopper::loader wire:loading wire:target="leaveNotes" />
                                     {{ __('Send notes') }}
-                                </x-shopper-button>
+                                </x-shopper::button>
                             </div>
                         @endif
                     </div>

@@ -18,9 +18,9 @@
             @if($permission)
                 @can($permission)
                     @if($button && $url)
-                        <x-shopper-button :link="$url" class="mt-5">
+                        <x-shopper::button :link="$url" class="mt-5">
                             {{ $button }}
-                        </x-shopper-button>
+                        </x-shopper::button>
                     @endif
                 @endcan
             @endif

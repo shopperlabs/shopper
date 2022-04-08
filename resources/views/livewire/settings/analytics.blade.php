@@ -1,14 +1,14 @@
 <div>
-    <x:shopper-breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb back="shopper.settings.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
-    </x:shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+    </x-shopper::breadcrumb>
 
-    <x-shopper-heading class="mt-3">
+    <x-shopper::heading class="mt-3">
         <x-slot name="title">
             {{ __('Analytics') }}
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     <div class="mt-6">
         <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -31,15 +31,15 @@
                 <div class="shadow sm:rounded-md sm:overflow-hidden">
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-3 gap-6">
-                            <x-shopper-forms.group for="google_tracking_id" label="Google Analytics Tracking ID" class="col-span-3">
-                                <x-shopper-forms.input wire:model="google_analytics_tracking_id" type="text" id="google_tracking_id" placeholder="UA-XXX" />
-                            </x-shopper-forms.group>
-                            <x-shopper-forms.group for="google_view_id" label="Google Analytics view ID" class="col-span-3">
-                                <x-shopper-forms.input wire:model="google_analytics_view_id" type="text" id="google_view_id" placeholder="123456789" />
-                            </x-shopper-forms.group>
-                            <x-shopper-forms.group for="analytic_script" label="Google Analytics additional script" class="col-span-3">
-                                <x-shopper-forms.textarea wire:model="google_analytics_add_js" id="analytic_script" />
-                            </x-shopper-forms.group>
+                            <x-shopper::forms.group for="google_tracking_id" label="Google Analytics Tracking ID" class="col-span-3">
+                                <x-shopper::forms.input wire:model="google_analytics_tracking_id" type="text" id="google_tracking_id" placeholder="UA-XXX" />
+                            </x-shopper::forms.group>
+                            <x-shopper::forms.group for="google_view_id" label="Google Analytics view ID" class="col-span-3">
+                                <x-shopper::forms.input wire:model="google_analytics_view_id" type="text" id="google_view_id" placeholder="123456789" />
+                            </x-shopper::forms.group>
+                            <x-shopper::forms.group for="analytic_script" label="Google Analytics additional script" class="col-span-3">
+                                <x-shopper::forms.textarea wire:model="google_analytics_add_js" id="analytic_script" />
+                            </x-shopper::forms.group>
                         </div>
 
                         <div class="mt-6">
@@ -106,9 +106,9 @@
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
-                                <x-shopper-forms.group for="google_tag_id" label="Your Google Tag Manager account ID">
-                                    <x-shopper-forms.input wire:model="google_tag_manager_account_id" type="text" id="google_tag_id" placeholder="GTM-XXX" />
-                                </x-shopper-forms.group>
+                                <x-shopper::forms.group for="google_tag_id" label="Your Google Tag Manager account ID">
+                                    <x-shopper::forms.input wire:model="google_tag_manager_account_id" type="text" id="google_tag_id" placeholder="GTM-XXX" />
+                                </x-shopper::forms.group>
                                 <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
                                     {{ __('Read more about') }} <a href="https://marketingplatform.google.com/about/tag-manager" target="_blank" class="text-primary-500 hover:text-primary-400">Google Tag Manager</a>.
                                 </p>
@@ -146,9 +146,9 @@
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
-                                <x-shopper-forms.group for="pixel_facebook_id" label="Your Facebook Pixel account ID">
-                                    <x-shopper-forms.input wire:model="facebook_pixel_account_id" type="text" id="pixel_facebook_id" placeholder="12345678" />
-                                </x-shopper-forms.group>
+                                <x-shopper::forms.group for="pixel_facebook_id" label="Your Facebook Pixel account ID">
+                                    <x-shopper::forms.input wire:model="facebook_pixel_account_id" type="text" id="pixel_facebook_id" placeholder="12345678" />
+                                </x-shopper::forms.group>
                                 <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
                                     {{ __('Read more about') }} <a href="https://www.facebook.com/business/learn/facebook-ads-pixel" target="_blank" class="text-primary-500 hover:text-primary-400">Facebook Pixel</a>.
                                 </p>
@@ -162,10 +162,10 @@
 
     <div class="mt-6 pt-5 pb-10 border-t border-secondary-200 dark:border-secondary-700">
         <div class="flex justify-end">
-            <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
-                <x-shopper-loader wire:loading wire:target="store" class="text-white" />
+            <x-shopper::button wire:click="store" type="button" wire:loading.attr="disabled">
+                <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Save') }}
-            </x-shopper-button>
+            </x-shopper::button>
         </div>
     </div>
 

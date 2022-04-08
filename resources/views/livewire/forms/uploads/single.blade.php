@@ -26,7 +26,7 @@
                 <input @focus="focused = true" @blur="focused = false" class="sr-only" type="file" wire:model="file" id="{{ $inputId }}" />
             </div>
             <div class="w-full h-32 bg-secondary-50 dark:bg-secondary-700 p-6 hidden flex items-center justify-center" wire:loading.class.remove="hidden" wire:target="file">
-                <x-shopper-loader wire:loading wire:target="file" class="text-primary-600" />
+                <x-shopper::loader wire:loading wire:target="file" class="text-primary-600" />
             </div>
         </label>
     @endif
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <button wire:click="removeMedia({{ $media->id }})" wire:loading.attr="disabled" type="button" class="ml-4 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
-                <x-shopper-loader wire:loading wire:target="removeMedia" class="text-white" />
+                <x-shopper::loader wire:loading wire:target="removeMedia" class="text-white" />
                 <x-heroicon-o-trash wire:loading.remove class="h-5 w-5" />
             </button>
         </div>

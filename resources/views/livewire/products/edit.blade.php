@@ -14,10 +14,10 @@
         currentTab: 'detail'
     }"
 >
-    <x:shopper-breadcrumb back="shopper.products.index">
+    <x-shopper::breadcrumb back="shopper.products.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.products.index')" title="Products" />
-    </x:shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.products.index')" title="Products" />
+    </x-shopper::breadcrumb>
 
     <div class="mt-3 bg-secondary-100 dark:bg-secondary-900 z-30 relative pb-5 sm:pb-0 sticky top-4 sm:top-2 sm:-mx-8">
         <div class="sm:px-8 space-y-4">
@@ -32,17 +32,17 @@
                 </div>
                 <div class="flex space-x-3 pt-1">
                     <span class="hidden sm:block">
-                        <x-shopper-danger-button wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode([$product->id, 'type' => 'product']) }})" type="button">
+                        <x-shopper::danger-button wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode([$product->id, 'type' => 'product']) }})" type="button">
                             <x-heroicon-s-archive class="w-5 h-5 -ml-1 mr-2" />
                             {{ __('Delete') }}
-                        </x-shopper-danger-button>
+                        </x-shopper::danger-button>
                     </span>
                 </div>
             </div>
             <div class="pb-5 sm:pb-0 border-b border-secondary-200 dark:border-secondary-700">
                 <!-- Dropdown menu on small screens -->
                 <div class="sm:hidden">
-                    <x-shopper-forms.select x-model="currentTab" aria-label="Selected tab" class="block w-full pl-3 pr-10 py-2">
+                    <x-shopper::forms.select x-model="currentTab" aria-label="Selected tab" class="block w-full pl-3 pr-10 py-2">
                         <template x-for="option in options" :key="option">
                             <option
                                 x-bind:value="option"
@@ -50,7 +50,7 @@
                                 x-bind:selected="option === currentTab"
                             ></option>
                         </template>
-                    </x-shopper-forms.select>
+                    </x-shopper::forms.select>
                 </div>
                 <!-- Tabs at small breakpoint and up -->
                 <div class="hidden sm:block">

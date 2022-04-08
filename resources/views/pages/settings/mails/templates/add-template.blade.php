@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Mail ~ Add Template'))
-
-@section('content')
+<x-shopper::layouts.app :title="__('Mail ~ Add Template')">
 
     <livewire:shopper-settings.mails.add-template />
 
-@endsection
+</x-shopper::layouts.app>

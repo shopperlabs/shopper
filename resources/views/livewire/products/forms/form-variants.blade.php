@@ -11,12 +11,12 @@
     <section aria-labelledby="products_variations_heading">
         <div class="mt-5 bg-white dark:bg-secondary-800 pt-5 shadow rounded-md">
             <div class="px-4 sm:px-5 flex items-center justify-between space-x-4">
-                <x-shopper-forms.search label="Search variant" placeholder="Search product variant" />
+                <x-shopper::forms.search label="Search variant" placeholder="Search product variant" />
                 <div>
                     <span class="shadow-sm rounded-md">
-                        <x-shopper-button wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})" type="button">
+                        <x-shopper::button wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})" type="button">
                             {{ __('Add variant') }}
-                        </x-shopper-button>
+                        </x-shopper::button>
                     </span>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                                         </div>
                                     </td>
                                     <td class="pr-6">
-                                        <x-shopper-dropdown customAlignmentClasses="right-12 -bottom-1">
+                                        <x-shopper::dropdown customAlignmentClasses="right-12 -bottom-1">
                                             <x-slot name="trigger">
                                                 <button id="variant-options-menu" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-secondary-400 rounded-full bg-transparent hover:text-secondary-500 focus:outline-none focus:text-secondary-500 focus:bg-secondary-100 dark:focus:bg-secondary-700 transition ease-in-out duration-150">
                                                     <x-heroicon-s-dots-vertical class="w-5 h-5" />
@@ -97,7 +97,7 @@
                                                     </button>
                                                 </div>
                                             </x-slot>
-                                        </x-shopper-dropdown>
+                                        </x-shopper::dropdown>
                                     </td>
                                 </tr>
                             @empty

@@ -1,7 +1,4 @@
-@extends('shopper::layouts.default')
-@section('title', __('Settings'))
-
-@section('content')
+<x-shopper::layouts.app :title="__('Settings')">
 
     <div class="mt-4 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
@@ -184,4 +181,4 @@
         </div>
     </div>
 
-@endsection
+</x-shopper::layouts.app>

@@ -24,18 +24,18 @@
                             </div>
                         </div>
                         <div class="col-span-6">
-                            <x-shopper-forms.group label="Content" for="content">
+                            <x-shopper::forms.group label="Content" for="content">
                                 <livewire:shopper-forms.trix :value="$content" />
-                            </x-shopper-forms.group>
+                            </x-shopper::forms.group>
                         </div>
                     </div>
                 </div>
                 <div class="px-4 py-3 text-right sm:px-6">
                     <span class="inline-flex rounded-md shadow-sm">
-                        <x-shopper-button type="button" wire:click="store" wire:loading.attr="disabled">
-                            <x-shopper-loader wire:loading wire:target="store" class="text-white" />
+                        <x-shopper::button type="button" wire:click="store" wire:loading.attr="disabled">
+                            <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                             {{ __('Save') }}
-                        </x-shopper-button>
+                        </x-shopper::button>
                     </span>
                 </div>
             </div>

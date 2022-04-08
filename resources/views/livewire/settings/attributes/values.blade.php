@@ -27,9 +27,9 @@
             <div class="px-4 sm:px-5 flex items-center justify-between space-x-4">
                 <div>
                     <span class="shadow-sm rounded-md">
-                        <x-shopper-button wire:click="$emit('openModal', 'shopper-modals.create-value', {{ json_encode([$attribute->id]) }})" type="button">
+                        <x-shopper::button wire:click="$emit('openModal', 'shopper-modals.create-value', {{ json_encode([$attribute->id]) }})" type="button">
                             {{ __('Add new value') }}
-                        </x-shopper-button>
+                        </x-shopper::button>
                     </span>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                                     @forelse($values as $v)
                                         <tr>
                                             <td class="pl-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900">
-                                                <x-shopper-forms.checkbox aria-label="{{ __('Attribute value id') }}" id="is_filterable_{{ $v->id }}" :value="$v->id" />
+                                                <x-shopper::forms.checkbox aria-label="{{ __('Attribute value id') }}" id="is_filterable_{{ $v->id }}" :value="$v->id" />
                                             </td>
                                             <td class="pl-2 pr-6 py-4 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                                 {{ $v->value }}

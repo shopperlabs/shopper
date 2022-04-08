@@ -1,4 +1,4 @@
-<x-shopper-modal
+<x-shopper::modal
     headerClasses="bg-white dark:bg-secondary-800 p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
@@ -43,9 +43,9 @@
 
     <x-slot name="buttons">
         <span class="flex w-full rounded-md shadow-sm sm:w-auto">
-            <x-shopper-default-button wire:click="$emit('closeModal')" type="button">
+            <x-shopper::default-button wire:click="$emit('closeModal')" type="button">
                 {{ __('Close') }}
-            </x-shopper-default-button>
+            </x-shopper::default-button>
         </span>
     </x-slot>
-</x-shopper-modal>
+</x-shopper::modal>
