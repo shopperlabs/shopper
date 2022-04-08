@@ -10,19 +10,19 @@
             <table class="min-w-full">
                 <thead>
                     <tr class="border-b border-secondary-200 bg-secondary-50 dark:border-secondary-700 dark:bg-secondary-700">
-                        <x-shopper-tables.table-head>
+                        <x-shopper::tables.table-head>
                             <span class="lg:pl-2">{{ __('Name') }}</span>
-                        </x-shopper-tables.table-head>
-                        <x-shopper-tables.table-head>
+                        </x-shopper::tables.table-head>
+                        <x-shopper::tables.table-head>
                             {{ __('Email Address') }}
-                        </x-shopper-tables.table-head>
-                        <x-shopper-tables.table-head class="hidden md:table-cell text-right">
+                        </x-shopper::tables.table-head>
+                        <x-shopper::tables.table-head class="hidden md:table-cell text-right">
                             {{ __('Role') }}
-                        </x-shopper-tables.table-head>
-                        <x-shopper-tables.table-head class="hidden md:table-cell text-right">
+                        </x-shopper::tables.table-head>
+                        <x-shopper::tables.table-head class="hidden md:table-cell text-right">
                             {{ __('Access') }}
-                        </x-shopper-tables.table-head>
-                        <x-shopper-tables.table-head class="pr-6" />
+                        </x-shopper::tables.table-head>
+                        <x-shopper::tables.table-head class="pr-6" />
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-secondary-100 dark:divide-secondary-700" x-max="1">
@@ -69,7 +69,7 @@
                                     </span>
                                 @endif
                                 @if(auth()->user()->isAdmin() && !$user->isAdmin())
-                                    <x-shopper-dropdown customAlignmentClasses="right-12 -bottom-1">
+                                    <x-shopper::dropdown customAlignmentClasses="right-12 -bottom-1">
                                         <x-slot name="trigger">
                                             <button id="admin-options-menu" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-secondary-400 rounded-full bg-transparent hover:text-secondary-500 focus:outline-none focus:text-secondary-500 focus:bg-secondary-100 dark:focus:bg-secondary-700 transition ease-in-out duration-150">
                                                 <x-heroicon-s-dots-vertical class="w-5 h-5" />
@@ -84,7 +84,7 @@
                                                 </button>
                                             </div>
                                         </x-slot>
-                                    </x-shopper-dropdown>
+                                    </x-shopper::dropdown>
                                 @endif
                             </td>
                         </tr>

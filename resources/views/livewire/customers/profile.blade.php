@@ -19,9 +19,9 @@
                             <span x-show="!open">{{ $firstName }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper-forms.group :error="$errors->first('firstName')">
-                                        <x-shopper-forms.input wire:model.lazy="firstName" id="firstName" type="text" autocomplete="off" />
-                                    </x-shopper-forms.group>
+                                    <x-shopper::forms.group :error="$errors->first('firstName')">
+                                        <x-shopper::forms.input wire:model.lazy="firstName" id="firstName" type="text" autocomplete="off" />
+                                    </x-shopper::forms.group>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
                                 <button wire:click="saveFirstName" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
-                                    <x-shopper-loader wire:loading wire:target="saveFirstName" class="text-primary-600" />
+                                    <x-shopper::loader wire:loading wire:target="saveFirstName" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
                                 <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
@@ -53,9 +53,9 @@
                             <span x-show="!open">{{ $lastName }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper-forms.group :error="$errors->first('lastName')">
-                                        <x-shopper-forms.input wire:model.lazy="lastName" id="lastName" type="text" autocomplete="off" />
-                                    </x-shopper-forms.group>
+                                    <x-shopper::forms.group :error="$errors->first('lastName')">
+                                        <x-shopper::forms.input wire:model.lazy="lastName" id="lastName" type="text" autocomplete="off" />
+                                    </x-shopper::forms.group>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
                                 <button wire:click="saveLastName" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
-                                    <x-shopper-loader wire:loading wire:target="saveLastName" class="text-primary-600" />
+                                    <x-shopper::loader wire:loading wire:target="saveLastName" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
                                 <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
@@ -97,9 +97,9 @@
                             <span x-show="!open">{{ $email }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper-forms.group :error="$errors->first('email')">
-                                        <x-shopper-forms.input wire:model.debounce.350ms="email" id="email" type="text" autocomplete="off" />
-                                    </x-shopper-forms.group>
+                                    <x-shopper::forms.group :error="$errors->first('email')">
+                                        <x-shopper::forms.input wire:model.debounce.350ms="email" id="email" type="text" autocomplete="off" />
+                                    </x-shopper::forms.group>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
                                 <button wire:click="saveEmail" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
-                                    <x-shopper-loader wire:loading wire:target="saveEmail" class="text-primary-600" />
+                                    <x-shopper::loader wire:loading wire:target="saveEmail" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
                                 <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
@@ -146,7 +146,7 @@
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
                                 <button wire:click="saveBirthDate" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
-                                    <x-shopper-loader wire:loading wire:target="saveBirthDate" class="text-primary-600" />
+                                    <x-shopper::loader wire:loading wire:target="saveBirthDate" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
                                 <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
@@ -166,10 +166,10 @@
                             <span x-show="!open" class="capitalize">{{ $gender }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper-forms.select wire:model.lazy="gender" aria-label="{{ __('Gender') }}">
+                                    <x-shopper::forms.select wire:model.lazy="gender" aria-label="{{ __('Gender') }}">
                                         <option value="male">{{ __('Male') }}</option>
                                         <option value="female">{{ __('Female') }}</option>
-                                    </x-shopper-forms.select>
+                                    </x-shopper::forms.select>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                             </span>
                             <span x-show="open" class="flex items-start space-x-4" style="display: none">
                                 <button wire:click="saveGender" type="button" class="inline-flex items-center font-medium text-primary-600 hover:text-primary-500">
-                                    <x-shopper-loader wire:loading wire:target="saveGender" class="text-primary-600" />
+                                    <x-shopper::loader wire:loading wire:target="saveGender" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('Save') }}</span>
                                 </button>
                                 <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>

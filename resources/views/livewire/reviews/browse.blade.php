@@ -1,10 +1,10 @@
 <div>
 
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
             {{ __('Reviews') }}
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
         <div class="mt-10 relative w-full bg-white dark:bg-secondary-800 flex flex-col shadow-sm rounded-md items-center justify-center py-12 lg:py-16">
@@ -371,6 +371,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="reviews" link="reviews" />
+    <x-shopper::learn-more name="reviews" link="reviews" />
 
 </div>

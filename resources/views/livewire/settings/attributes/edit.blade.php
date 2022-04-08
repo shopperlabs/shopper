@@ -7,10 +7,10 @@
         })
    "
 >
-    <x:shopper-breadcrumb back="shopper.settings.attributes.index">
+    <x-shopper::breadcrumb back="shopper.settings.attributes.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.attributes.index')" title="Attributes" />
-    </x:shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.attributes.index')" title="Attributes" />
+    </x-shopper::breadcrumb>
 
     <div class="mt-3 pb-5 border-b border-secondary-200 space-y-3 md:flex md:items-center md:justify-between md:space-y-0 dark:border-secondary-700">
         <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
@@ -35,10 +35,10 @@
                     </div>
                 </div>
             </div>
-            <x-shopper-button wire:click="store" type="button">
-                <x-shopper-loader wire:loading wire:target="store" class="text-white" />
+            <x-shopper::buttons.primary wire:click="store" type="button">
+                <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                 {{ __('Update') }}
-            </x-shopper-button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 
@@ -46,41 +46,41 @@
         <div class="grid sm:grid-cols-6 gap-4 sm:gap-6">
             <div class="sm:col-span-4">
                 <div class="bg-white rounded-lg shadow p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-secondary-800">
-                    <x-shopper-forms.group label="Name" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
-                        <x-shopper-forms.input wire:model="name" id="name" type="text" autocomplete="off" />
-                    </x-shopper-forms.group>
-                    <x-shopper-forms.group for="type" label="Type" class="sm:col-span-1">
-                        <x-shopper-forms.select wire:model="type" id="type">
+                    <x-shopper::forms.group label="Name" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
+                        <x-shopper::forms.input wire:model="name" id="name" type="text" autocomplete="off" />
+                    </x-shopper::forms.group>
+                    <x-shopper::forms.group for="type" label="Type" class="sm:col-span-1">
+                        <x-shopper::forms.select wire:model="type" id="type">
                             @foreach($fields as $key => $field)
                                 <option value="{{ $key }}">{{ $field }}</option>
                             @endforeach
-                        </x-shopper-forms.select>
-                    </x-shopper-forms.group>
+                        </x-shopper::forms.select>
+                    </x-shopper::forms.group>
                     <div class="sm:col-span-2">
                         <div class="flex items-center justify-between">
-                            <x-shopper-label :value="__('Description')" for="description" />
+                            <x-shopper::label :value="__('Description')" for="description" />
                             <span class="ml-4 text-sm text-secondary-500 leading-5 dark:text-secondary-400">{{ __('Optional') }}</span>
                         </div>
                         <div class="rounded-md shadow-sm">
-                            <x-shopper-forms.textarea wire:model="description" id="description" />
+                            <x-shopper::forms.textarea wire:model="description" id="description" />
                         </div>
                     </div>
                     <div class="sm:col-span-2 flex items-center space-x-4">
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <x-shopper-forms.checkbox wire:model="isSearchable" id="is_searchable" />
+                                <x-shopper::forms.checkbox wire:model="isSearchable" id="is_searchable" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
-                                <x-shopper-label for="is_searchable" :value="__('Is Searchable')" />
+                                <x-shopper::label for="is_searchable" :value="__('Is Searchable')" />
                                 <p class="text-secondary-500 dark:text-secondary-400">{{ __('You can use this attribute to search and filter product.') }}</p>
                             </div>
                         </div>
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
-                                <x-shopper-forms.checkbox wire:model="isFilterable" id="is_filterable" />
+                                <x-shopper::forms.checkbox wire:model="isFilterable" id="is_filterable" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
-                                <x-shopper-label for="is_filterable" :value="__('Is Filterable')" />
+                                <x-shopper::label for="is_filterable" :value="__('Is Filterable')" />
                                 <p class="text-secondary-500 dark:text-secondary-400">{{ __('You can use this attribute as a filter on your front store.') }}</p>
                             </div>
                         </div>
@@ -90,9 +90,9 @@
             <div class="sm:col-span-2">
                 <aside class="sticky top-6 space-y-5">
                     <div class="bg-white rounded-md shadow overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
-                        <x-shopper-forms.group label="Slug (code)" for="slug" class="p-4 sm:p-5" :error="$errors->first('slug')" isRequired>
-                            <x-shopper-forms.input wire:model="slug" id="slug" type="text" autocomplete="off" />
-                        </x-shopper-forms.group>
+                        <x-shopper::forms.group label="Slug (code)" for="slug" class="p-4 sm:p-5" :error="$errors->first('slug')" isRequired>
+                            <x-shopper::forms.input wire:model="slug" id="slug" type="text" autocomplete="off" />
+                        </x-shopper::forms.group>
                         <div class="p-4 sm:p-5">
                             <div class="relative flex items-start">
                                 <div class="flex items-center h-5">
@@ -102,7 +102,7 @@
                                 </span>
                                 </div>
                                 <div class="ml-3 text-sm leading-5">
-                                    <x-shopper-label for="online" :value="__('Enabled')"></x-shopper-label>
+                                    <x-shopper::label for="online" :value="__('Enabled')"></x-shopper::label>
                                     <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('Set attribute visibility for the customers.') }}</p>
                                 </div>
                             </div>

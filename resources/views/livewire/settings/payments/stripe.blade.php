@@ -48,10 +48,10 @@
                         </p>
                         @if(! $this->enabled)
                             <span class="mt-4 inline-flex rounded-md shadow-sm">
-                                <x-shopper-default-button wire:click="enabledStripe" wire.loading.attr="disabled" type="button">
-                                    <x-shopper-loader wire:loading wire:target="enabledStripe" class="text-secondary-600 dark:text-secondary-300" />
+                                <x-shopper::buttons.default wire:click="enabledStripe" wire.loading.attr="disabled" type="button">
+                                    <x-shopper::loader wire:loading wire:target="enabledStripe" class="text-secondary-600 dark:text-secondary-300" />
                                     {{ __('Enabled Stripe Payment') }}
-                                </x-shopper-default-button>
+                                </x-shopper::buttons.default>
                             </span>
                         @endif
                     </div>
@@ -84,25 +84,25 @@
                     <div class="shadow rounded-md overflow-hidden">
                         <div class="px-4 py-5 sm:p-6 space-y-4 bg-white dark:bg-secondary-800">
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                                <x-shopper-forms.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
-                                    <x-shopper-forms.select wire:model.lazy="stripe_mode" id="stripe_mode">
+                                <x-shopper::forms.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
+                                    <x-shopper::forms.select wire:model.lazy="stripe_mode" id="stripe_mode">
                                         <option value="sandbox">Sandbox</option>
                                         <option value="live">Live</option>
-                                    </x-shopper-forms.select>
-                                </x-shopper-forms.group>
+                                    </x-shopper::forms.select>
+                                </x-shopper::forms.group>
 
-                                <x-shopper-forms.group label="Public key" for="public_key" class="sm:col-span-3">
-                                    <x-shopper-forms.input wire:model.lazy="stripe_key" id="public_key" type="text" autocomplete="off" />
-                                </x-shopper-forms.group>
+                                <x-shopper::forms.group label="Public key" for="public_key" class="sm:col-span-3">
+                                    <x-shopper::forms.input wire:model.lazy="stripe_key" id="public_key" type="text" autocomplete="off" />
+                                </x-shopper::forms.group>
 
-                                <x-shopper-forms.group label="Secret key" for="secret_key" class="sm:col-span-3">
-                                    <x-shopper-forms.input wire:model.lazy="stripe_secret" id="secret_key" type="text" />
-                                </x-shopper-forms.group>
+                                <x-shopper::forms.group label="Secret key" for="secret_key" class="sm:col-span-3">
+                                    <x-shopper::forms.input wire:model.lazy="stripe_secret" id="secret_key" type="text" />
+                                </x-shopper::forms.group>
 
                                 <div class="sm:col-span-6">
-                                    <x-shopper-forms.group label="Webhook key" for="webhook_key">
-                                        <x-shopper-forms.input wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
-                                    </x-shopper-forms.group>
+                                    <x-shopper::forms.group label="Webhook key" for="webhook_key">
+                                        <x-shopper::forms.input wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
+                                    </x-shopper::forms.group>
                                     <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                         {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/webhooks</a>
                                     </p>
@@ -134,13 +134,13 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                             <div class="grid grid-cols-6 gap-6">
-                                <x-shopper-forms.group label="Default Currency" for="currency" class="col-span-6">
-                                    <x-shopper-forms.select wire:model="currency" id="currency">
+                                <x-shopper::forms.group label="Default Currency" for="currency" class="col-span-6">
+                                    <x-shopper::forms.select wire:model="currency" id="currency">
                                         @foreach($currencies as $currency)
                                             <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
                                         @endforeach
-                                    </x-shopper-forms.select>
-                                </x-shopper-forms.group>
+                                    </x-shopper::forms.select>
+                                </x-shopper::forms.group>
                             </div>
                         </div>
                     </div>
@@ -150,10 +150,10 @@
 
         <div class="mt-6 pt-5 border-t border-secondary-200 dark:border-secondary-700">
             <div class="flex justify-end">
-                <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
-                    <x-shopper-loader wire:loading wire:target="store" class="text-white" />
+                <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
+                    <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                     {{ __('Update Configuration') }}
-                </x-shopper-button>
+                </x-shopper::buttons.primary>
             </div>
         </div>
 

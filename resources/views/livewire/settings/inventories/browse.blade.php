@@ -1,10 +1,10 @@
 <div>
-    <x:shopper-breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb back="shopper.settings.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
-    </x:shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+    </x-shopper::breadcrumb>
 
-    <x-shopper-heading class="mt-3">
+    <x-shopper::heading class="mt-3">
         <x-slot name="title">
             {{ __('Locations') }}
         </x-slot>
@@ -14,15 +14,15 @@
                 @if($inventories->count() < 5)
                     <div class="flex">
                     <span class="shadow-sm rounded-md">
-                        <x-shopper-button :link="route('shopper.settings.inventories.create')">
+                        <x-shopper::buttons.primary :link="route('shopper.settings.inventories.create')">
                             {{ __('Add location') }}
-                        </x-shopper-button>
+                        </x-shopper::buttons.primary>
                     </span>
                     </div>
                 @endif
             @endcan
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     <div class="mt-6">
         <div class="md:grid md:grid-cols-3 md:gap-6">
@@ -98,5 +98,5 @@
         </div>
     </div>
 
-    <x-shopper-learn-more name="locations" link="locations" />
+    <x-shopper::learn-more name="locations" link="locations" />
 </div>

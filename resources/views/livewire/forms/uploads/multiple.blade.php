@@ -25,7 +25,7 @@
                 {{ __('PNG, JPG, GIF up to 5MB') }}
             </p>
             <div class="mt-1" wire:loading.flex wire.target="files">
-                <x-shopper-loader class="text-primary-600" />
+                <x-shopper::loader class="text-primary-600" />
                 <span class="text-sm leading-5 text-secondary-400 dark:text-secondary-500">{{ __('Processing Files..') }}</span>
             </div>
         </div>

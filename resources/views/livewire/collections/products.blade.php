@@ -5,26 +5,26 @@
             <div class="mt-4 sm:mt-0 flex items-center space-x-3">
                 @if($collection->isManual())
                     <span class="inline-flex rounded-md shadow-sm">
-                        <x-shopper-default-button wire:click="$emit('openModal', 'shopper-modals.products-lists', {{ json_encode([$collection->id, $this->productsIds]) }})" type="button">
+                        <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.products-lists', {{ json_encode([$collection->id, $this->productsIds]) }})" type="button">
                             {{ __('Browse') }}
-                        </x-shopper-default-button>
+                        </x-shopper::buttons.primary>
                     </span>
                 @endif
                 <div class="relative">
-                    <x-shopper-label for="sort" class="sr-only" :value="__('Sort products by')" />
+                    <x-shopper::label for="sort" class="sr-only" :value="__('Sort products by')" />
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span class="text-sm text-secondary-500 leading-5 dark:text-secondary-400">
                             {{ __('Sort by:') }}
                         </span>
                     </div>
-                    <x-shopper-forms.select wire:model.lazy="sortBy" id="sort" class="pl-18 pr-10 py-2">
+                    <x-shopper::forms.select wire:model.lazy="sortBy" id="sort" class="pl-18 pr-10 py-2">
                         <option value="alpha_asc">{{ __('Alpha Asc') }}</option>
                         <option value="alpha_desc">{{ __('Alpha Desc') }}</option>
                         <option value="price_desc">{{ __('Price Desc') }}</option>
                         <option value="price_asc">{{ __('Price ASC') }}</option>
                         <option value="created_desc">{{ __('Created Desc') }}</option>
                         <option value="created_asc">{{ __('Created Asc') }}</option>
-                    </x-shopper-forms.select>
+                    </x-shopper::forms.select>
                 </div>
             </div>
         </div>
@@ -70,12 +70,12 @@
                     @if($collection->isAutomatic())
                         <div class="relative mt-3">
                             <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper-default-button type="button">
+                                <x-shopper::buttons.primary type="button">
                                     {{ __('Update conditions') }}
                                     <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                                       {{ __('Soon') }}
                                     </span>
-                                </x-shopper-default-button>
+                                </x-shopper::buttons.primary>
                             </span>
                         </div>
                     @endif

@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('User Roles & Access Management'))
-
-@section('content')
+<x-shopper::layouts.setting :title="__('User Roles & Access Management')">
 
     <livewire:shopper-settings.management.management />
 
-@endsection
+</x-shopper::layouts.setting>

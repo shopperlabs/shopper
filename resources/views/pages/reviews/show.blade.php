@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Reviews for :product', ['product' => $review->reviewrateable->name]))
-
-@section('content')
+<x-shopper::layouts.app :title="__('Reviews for :product', ['product' => $review->reviewrateable->name])">
 
     <livewire:shopper-reviews.show :review="$review" />
 
-@endsection
+</x-shopper::layouts.app>

@@ -1,6 +1,6 @@
 <div x-data="{ open: false }">
 
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
             {{ __('Discounts') }}
         </x-slot>
@@ -10,18 +10,18 @@
                 @can('add_discounts')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper-button :link="route('shopper.discounts.create')">
+                            <x-shopper::buttons.primary :link="route('shopper.discounts.create')">
                                 {{ __('Create code') }}
-                            </x-shopper-button>
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan
             @endif
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
+        <x-shopper::empty-state
             :title="__('Manage discounts and promotions')"
             :content="__('Create & Manage discount and promotions codes that apply at checkout or customers orders.')"
             :button="__('Create discount code')"
@@ -140,30 +140,30 @@
                     <path class="st21" d="M66.4 345.1v-.6c0-.4 0-.9-.1-1.6 0-1.4-.1-3.4-.2-5.9s-.2-5.4-.4-8.7c-.2-3.3-.4-6.9-.9-10.6-.3-1.9-.5-3.7-1.1-5.4-.5-1.7-1.2-3.3-2-4.7-1.5-2.9-3.4-5.2-5.2-6.9-1.8-1.7-3.6-2.7-4.8-3.3-.6-.3-1.1-.5-1.5-.6-.3-.1-.5-.2-.5-.2s.2 0 .5.2c.4.1.9.3 1.5.6 1.3.6 3.1 1.6 4.9 3.2 1.8 1.7 3.8 4 5.3 6.9.8 1.5 1.5 3 2 4.8.5 1.7.8 3.6 1.1 5.4.5 3.8.7 7.4.9 10.6.2 3.3.2 6.2.3 8.7 0 2.5.1 4.5.1 5.9v1.6c.2.4.2.6.1.6zm2.9 0s0-.1-.1-.2c0-.1-.1-.3-.2-.5-.2-.5-.3-1.2-.5-2.1-.3-1.9-.6-4.6-.5-8s.7-7.4 1.9-11.7c1.3-4.3 3.1-8.8 4.7-13.7 1.7-4.9 2.6-9.7 3-14.1s.4-8.4.3-11.8-.3-6.1-.4-8c-.1-.9-.1-1.6-.1-2.2v-.8.2c0 .1 0 .3.1.6 0 .5.1 1.2.2 2.2.2 1.9.4 4.6.5 8s.2 7.4-.2 11.8-1.3 9.3-3 14.2c-1.6 4.9-3.5 9.4-4.8 13.7-1.3 4.2-1.8 8.2-2 11.6s.1 6.1.4 7.9c.2.9.3 1.6.4 2.1.1.2.1.4.1.5.2.2.2.3.2.3z"/>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6 bg-white dark:bg-secondary-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-start space-x-4">
-                    <x-shopper-forms.search label="Search code" placeholder="Search discount code" />
+                    <x-shopper::forms.search label="Search code" placeholder="Search discount code" />
                     <div class="flex items-center space-x-3">
                         <div class="relative z-10 inline-flex shadow-sm rounded-md">
                             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
-                                <x-shopper-default-button @click="open = !open" type="button">
+                                <x-shopper::buttons.default @click="open = !open" type="button">
                                     {{ __('Status') }}
                                     <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
-                                </x-shopper-default-button>
+                                </x-shopper::buttons.default>
                                 <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg">
                                     <div class="rounded-md bg-white shadow-xs dark:bg-secondary-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <div class="py-1">
                                             <div class="flex items-center py-2 px-4">
-                                                <x-shopper-forms.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
+                                                <x-shopper::forms.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
                                                 <label for="isActive_enabled" class="cursor-pointer ml-3">
                                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Active') }}</span>
                                                 </label>
                                             </div>
                                             <div class="flex items-center py-2 px-4">
-                                                <x-shopper-forms.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
+                                                <x-shopper::forms.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
                                                 <label for="isActive_disabled" class="cursor-pointer ml-3">
                                                     <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Not Active') }}</span>
                                                 </label>
@@ -276,6 +276,6 @@
         </div>
     @endif
 
-    <x-shopper-learn-more name="discounts" link="discounts" />
+    <x-shopper::learn-more name="discounts" link="discounts" />
 
 </div>

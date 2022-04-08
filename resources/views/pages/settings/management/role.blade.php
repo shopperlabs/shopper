@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Roles'). ' ' . $role->display_name)
-
-@section('content')
+<x-shopper::layouts.setting :title="__('Roles') . ' ' . $role->display_name">
 
     <livewire:shopper-settings.management.role :role="$role" />
 
-@endsection
+</x-shopper::layouts.setting>

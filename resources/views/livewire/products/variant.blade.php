@@ -1,10 +1,10 @@
 <div>
-    <x:shopper-breadcrumb back="shopper.products.index">
+    <x-shopper::breadcrumb back="shopper.products.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.products.edit', $product)" :title="$product->name" />
+        <x-shopper::breadcrumb.link :link="route('shopper.products.edit', $product)" :title="$product->name" />
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <span class="text-secondary-500 dark:text-secondary-400">{{ $name }}</span>
-    </x:shopper-breadcrumb>
+    </x-shopper::breadcrumb>
     <div class="mt-3 bg-secondary-100 z-30 relative pb-5 border-b border-secondary-200 dark:bg-secondary-900 dark:border-secondary-700">
         <div class="space-y-4">
             <div class="space-y-3 md:flex md:items-start md:justify-between md:space-y-0">
@@ -16,10 +16,10 @@
                 </div>
                 <div class="flex space-x-3 pt-1">
                     <span class="hidden sm:block">
-                        <x-shopper-danger-button wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode(['id' => $variant->id, 'type' => 'variant', 'route' => route('shopper.products.edit', $product)]) }})" type="button">
+                        <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode(['id' => $variant->id, 'type' => 'variant', 'route' => route('shopper.products.edit', $product)]) }})" type="button">
                             <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
                             {{ __('Delete variant') }}
-                        </x-shopper-danger-button>
+                        </x-shopper::buttons.danger>
                     </span>
                 </div>
             </div>
@@ -37,13 +37,13 @@
                 <div class="shadow rounded-md overflow-hidden">
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
-                            <x-shopper-forms.group label="Name" for="name" class="sm:col-span-3" :error="$errors->first('name')" isRequired>
-                                <x-shopper-forms.input wire:model.lazy="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Black 128Go, primary 64Go...') }}" />
-                            </x-shopper-forms.group>
+                            <x-shopper::forms.group label="Name" for="name" class="sm:col-span-3" :error="$errors->first('name')" isRequired>
+                                <x-shopper::forms.input wire:model.lazy="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Black 128Go, primary 64Go...') }}" />
+                            </x-shopper::forms.group>
                             <div class="sm:col-span-4">
                                 <h4 class="block text-sm font-medium leading-5 text-secondary-700 dark:text-secondary-300">{{ __('Images') }}</h4>
                                 <div class="mt-1">
-                                    <x-shopper-forms.filepond
+                                    <x-shopper::forms.filepond
                                         wire:model="files"
                                         allowImagePreview
                                         multiple
@@ -144,17 +144,17 @@
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         <div class="px-4 py-5 sm:p-6">
                             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                                <x-shopper-forms.group label="SKU (Stock Keeping Unit)" for="sku" class="sm:col-span-1" :error="$errors->first('sku')">
-                                    <x-shopper-forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
-                                </x-shopper-forms.group>
-                                <x-shopper-forms.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" class="sm:col-span-1" :error="$errors->first('barcode')">
-                                    <x-shopper-forms.input wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
-                                </x-shopper-forms.group>
+                                <x-shopper::forms.group label="SKU (Stock Keeping Unit)" for="sku" class="sm:col-span-1" :error="$errors->first('sku')">
+                                    <x-shopper::forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
+                                </x-shopper::forms.group>
+                                <x-shopper::forms.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" class="sm:col-span-1" :error="$errors->first('barcode')">
+                                    <x-shopper::forms.input wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
+                                </x-shopper::forms.group>
                             </div>
                             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 pt-4 sm:pt-5">
-                                <x-shopper-forms.group label="Safety Stock" for="security_stock" class="sm:col-span-1" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
-                                    <x-shopper-forms.input wire:model.defer="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
-                                </x-shopper-forms.group>
+                                <x-shopper::forms.group label="Safety Stock" for="security_stock" class="sm:col-span-1" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
+                                    <x-shopper::forms.input wire:model.defer="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
+                                </x-shopper::forms.group>
                             </div>
                         </div>
                         <div class="px-4 py-5 sm:p-6">
@@ -194,10 +194,10 @@
 
     <div class="mt-6 pt-5 border-t border-secondary-200 dark:border-secondary-700">
         <div class="flex justify-end">
-            <x-shopper-button wire:click="store" type="button" wire:loading.attr="disabled">
-                <x-shopper-loader wire:loading wire:target="store" />
+            <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
+                <x-shopper::loader wire:loading wire:target="store" />
                 {{ __('Update variant') }}
-            </x-shopper-button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 

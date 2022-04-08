@@ -48,7 +48,7 @@
     }"
     class="mt-1 relative flex items-center"
 >
-    <x-shopper-forms.input type="text" id="{{ $id }}-input" class="pr-12" {{ $attributes }} readonly />
+    <x-shopper::forms.input type="text" id="{{ $id }}-input" class="pr-12" {{ $attributes }} readonly />
     <div class="absolute inset-y-0 right-0 flex items-center rounded overflow-hidden pr-1.5 pb-1">
         <span class="color-picker"></span>
     </div>

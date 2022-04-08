@@ -6,7 +6,6 @@ module.exports = {
   content: [
     './resources/js/**/*.js',
     './resources/views/**/*.blade.php',
-    './resources/lang/**/*.php',
     './src/**/*.php',
     './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
     './vendor/wire-elements/modal/resources/views/*.blade.php',

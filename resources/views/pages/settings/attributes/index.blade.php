@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Properties List'))
-
-@section('content')
+<x-shopper::layouts.setting :title="__('Attributes List')">
 
     <livewire:shopper-settings.attributes.browse />
 
-@endsection
+</x-shopper::layouts.setting>

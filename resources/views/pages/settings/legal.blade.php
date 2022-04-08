@@ -1,24 +1,21 @@
-@extends('shopper::layouts.default')
-@section('title', __('Legal'))
-
-@section('content')
+<x-shopper::layouts.setting :title="__('Legal setting')">
 
     <div
         x-data="{
             options: ['role', 'users', 'permissions'],
             words: {
-                'refund': '{{ __("Refund policy") }}',
-                'privacy': '{{ __("Privacy policy") }}',
-                'terms': '{{ __("Terms of use") }}',
-                'shipping': '{{ __("Shipping policy") }}'
+                'refund': '{{ __('Refund policy') }}',
+                'privacy': '{{ __('Privacy policy') }}',
+                'terms': '{{ __('Terms of use') }}',
+                'shipping': '{{ __('Shipping policy') }}'
             },
             currentTab: 'refund'
         }"
     >
-        <x-shopper-breadcrumb back="shopper.settings.index">
+        <x-shopper::breadcrumb back="shopper.settings.index">
             <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-            <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
-        </x-shopper-breadcrumb>
+            <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+        </x-shopper::breadcrumb>
 
         <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
             <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
@@ -29,7 +26,7 @@
             <div>
                 <!-- Dropdown menu on small screens -->
                 <div class="sm:hidden">
-                    <x-shopper-forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
+                    <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
                         <template x-for="option in options" :key="option">
                             <option
                                 x-bind:value="option"
@@ -37,7 +34,7 @@
                                 x-bind:selected="option === currentTab"
                             ></option>
                         </template>
-                    </x-shopper-forms.select>
+                    </x-shopper::forms.select>
                 </div>
                 <!-- Tabs at small breakpoint and up -->
                 <div class="hidden sm:block">
@@ -77,7 +74,7 @@
             </div>
         </div>
 
-        <x-shopper-learn-more name="legal pages" link="legal" />
+        <x-shopper::learn-more name="legal pages" link="legal" />
     </div>
 
-@endsection
+</x-shopper::layouts.setting>

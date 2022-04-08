@@ -43,7 +43,7 @@
                         <span class="text-xs text-secondary-900 dark:text-white">{{ $image->human_readable_size }}</span>
                     </div>
                     <div wire:loading.class.remove="hidden" wire:target="removeMedia({{ $image->id }})" class="hidden absolute h-full w-full flex items-center justify-center text-center opacity-100 focus-within:opacity-100 inset-0 z-50 bg-secondary-800 bg-opacity-75">
-                        <x-shopper-loader wire:loading wire:target="removeMedia({{ $image->id }})" class="text-white" />
+                        <x-shopper::loader wire:loading wire:target="removeMedia({{ $image->id }})" class="text-white" />
                     </div>
                 </div>
             @endforeach

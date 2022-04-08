@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Update collection :name', ['name' => $collection->name]))
-
-@section('content')
+<x-shopper::layouts.app :title="__('Update collection :name', ['name' => $collection->name])">
 
     <livewire:shopper-collections.edit :collection="$collection" />
 
-@endsection
+</x-shopper::layouts.app>

@@ -13,11 +13,11 @@
         <form action="https://laravelshopper.us2.list-manage.com/subscribe/post?u=d9bb29721fb442284ca02e956&amp;id=6800e9bbef" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate method="POST" class="mt-3 flex items-center">
             <div class="relative grow focus-within:z-10">
                 <input type="hidden" name="b_d9bb29721fb442284ca02e956_6800e9bbef" tabindex="-1" value="">
-                <x-shopper-forms.input aria-label="{{ __('Email address') }}" type="email" value="" name="EMAIL" id="mce-EMAIL" class="rounded-l-md rounded-r-none" required placeholder="{{ __('Enter your email') }}" />
+                <x-shopper::forms.input aria-label="{{ __('Email address') }}" type="email" value="" name="EMAIL" id="mce-EMAIL" class="rounded-l-md rounded-r-none" required placeholder="{{ __('Enter your email') }}" />
             </div>
-            <x-shopper-button class="-ml-px relative rounded-l-none rounded-r-md" type="submit">
+            <x-shopper::buttons.primary class="-ml-px relative rounded-l-none rounded-r-md" type="submit">
                 {{ __('Subscribe') }}
-            </x-shopper-button>
+            </x-shopper::buttons.primary>
         </form>
     </div>
 </div>

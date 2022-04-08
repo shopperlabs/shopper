@@ -22,9 +22,9 @@
                 </h3>
                 @if($isLocal)
                     <div class="mt-3 sm:mt-0 sm:ml-4">
-                        <x-shopper-button :link="route('shopper.settings.mails.select-template')">
+                        <x-shopper::buttons.primary :link="route('shopper.settings.mails.select-template')">
                             {{ __('Create new template') }}
-                        </x-shopper-button>
+                        </x-shopper::buttons.primary>
                     </div>
                 @endif
             </div>
@@ -122,10 +122,10 @@
                         <a href="https://github.com/Qoraiche/laravel-mail-editor" target="_blank" class="px-3 py-2 rounded-md text-sm leading-5 font-medium text-secondary-700 hover:bg-secondary-50 focus:outline-none focus:bg-secondary-50 dark:text-secondary-300 dark:hover:bg-secondary-700">
                             {{ __('View the repo') }}
                         </a>
-                        <x-shopper-default-button link="https://www.paypal.com/paypalme/streamaps" target="_blank" class="ml-3">
+                        <x-shopper::buttons.default link="https://www.paypal.com/paypalme/streamaps" target="_blank" class="ml-3">
                             <x-heroicon-o-heart class="w-5 h-5 text-pink-500 mr-1" />
                             {{ __('Sponsor') }}
-                        </x-shopper-default-button>
+                        </x-shopper::buttons.default>
                     </div>
                 </div>
             </div>

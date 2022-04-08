@@ -1,13 +1,10 @@
-@extends('shopper::layouts.default')
-@section('title', __('Profile Account'))
+<x-shopper::layouts.app :title="__('Profile Account')">
 
-@section('content')
-
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
             {{ __('My profile') }}
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     <livewire:shopper-account.profile />
 
@@ -37,4 +34,4 @@
 
     <livewire:shopper-account.devices />
 
-@endsection
+</x-shopper::layouts.app>

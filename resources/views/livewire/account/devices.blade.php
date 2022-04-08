@@ -51,9 +51,9 @@
                                     @if (!$session->is_current_device)
                                         <div class="ml-4">
                                             <span class="inline-flex rounded-md shadow-sm">
-                                                <x-shopper-default-button wire:click="$emit('openModal', 'shopper-modals.logout-others-browser')" wire:loading.attr="disabled" type="button">
+                                                <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.logout-others-browser')" wire:loading.attr="disabled" type="button">
                                                     {{ __('Log out') }}
-                                                </x-shopper-default-button>
+                                                </x-shopper::buttons.primary>
                                             </span>
                                         </div>
                                     @endif

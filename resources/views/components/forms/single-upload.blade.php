@@ -29,7 +29,7 @@
                 <input @focus="focused = true" @blur="focused = false" class="sr-only" type="file" {{ $attributes }} />
             </div>
             <div class="w-full h-32 bg-secondary-50 dark:bg-secondary-700 p-6 hidden flex items-center justify-center" wire:loading.class.remove="hidden" wire:target="file">
-                <x-shopper-loader wire:loading wire:target="file" class="text-primary-600" />
+                <x-shopper::loader wire:loading wire:target="file" class="text-primary-600" />
             </div>
         </label>
     @endif

@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Add attribute'))
-
-@section('content')
+<x-shopper::layouts.setting :title="__('Add attribute')">
 
     <livewire:shopper-settings.attributes.create />
 
-@endsection
+</x-shopper::layouts.setting>

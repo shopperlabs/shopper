@@ -1,4 +1,4 @@
-<x-shopper-modal
+<x-shopper::modal
     headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-200 dark:border-secondary-700"
     contentClasses="relative"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
@@ -17,12 +17,12 @@
                             <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-700">
                                 <x-heroicon-o-location-marker class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
                             </span>
-                            <x-shopper-forms.select wire:model.defer="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
+                            <x-shopper::forms.select wire:model.defer="inventory" id="inventory" class="-ml-px block pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
                                 <option value="0">{{ __('Select Inventory') }}</option>
                                 @foreach($inventories as $inventory)
                                     <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                                 @endforeach
-                            </x-shopper-forms.select>
+                            </x-shopper::forms.select>
                         </span>
                         <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-300">
                             <span class="block text-sm font-medium mr-4">{{ __('Quantity Available') }}</span>
@@ -47,7 +47,7 @@
                                 <div>
                                     <div class="flex rounded-md shadow-sm">
                                         <div class="relative flex items-stretch grow focus-within:z-10">
-                                            <x-shopper-forms.input wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
+                                            <x-shopper::forms.input wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
                                         </div>
                                         <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-none border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-700 text-sm font-medium text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
                                             <span>&minus;</span>
@@ -59,18 +59,18 @@
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <x-shopper-button wire:click="updateCurrentStock" wire.loading.attr="disabled" type="button">
-                                    <x-shopper-loader wire:loading wire:target="updateCurrentStock" class="text-white" />
+                                <x-shopper::buttons.primary wire:click="updateCurrentStock" wire.loading.attr="disabled" type="button">
+                                    <x-shopper::loader wire:loading wire:target="updateCurrentStock" class="text-white" />
                                     {{ __('Update') }}
-                                </x-shopper-button>
+                                </x-shopper::buttons.primary>
                                 @if($histories->isNotEmpty())
                                     <div class="flex items-center pl-4 space-x-4">
-                                        <x-shopper-default-button wire:click="export" type="button">
+                                        <x-shopper::buttons.default wire:click="export" type="button">
                                             <svg class="w-5 h-5 -ml-1 pr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
                                             </svg>
                                             {{ __('Export') }}
-                                        </x-shopper-default-button>
+                                        </x-shopper::buttons.default>
                                     </div>
                                 @endif
                             </div>
@@ -95,11 +95,11 @@
                                 <table class="min-w-full">
                                     <thead>
                                         <tr class="bg-secondary-50 border-b border-secondary-200 dark:bg-secondary-700 dark:border-secondary-700">
-                                            <x-shopper-tables.table-head>{{ __('Date') }}</x-shopper-tables.table-head>
-                                            <x-shopper-tables.table-head>{{ __('Event') }}</x-shopper-tables.table-head>
-                                            <x-shopper-tables.table-head>{{ __('Inventory') }}</x-shopper-tables.table-head>
-                                            <x-shopper-tables.table-head class="text-right">{{ __('Adjustment') }}</x-shopper-tables.table-head>
-                                            <x-shopper-tables.table-head class="text-right">{{ __('Quantity') }}</x-shopper-tables.table-head>
+                                            <x-shopper::tables.table-head>{{ __('Date') }}</x-shopper::tables.table-head>
+                                            <x-shopper::tables.table-head>{{ __('Event') }}</x-shopper::tables.table-head>
+                                            <x-shopper::tables.table-head>{{ __('Inventory') }}</x-shopper::tables.table-head>
+                                            <x-shopper::tables.table-head class="text-right">{{ __('Adjustment') }}</x-shopper::tables.table-head>
+                                            <x-shopper::tables.table-head class="text-right">{{ __('Quantity') }}</x-shopper::tables.table-head>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-secondary-100 dark:bg-secondary-800 dark:divide-secondary-700">
@@ -153,10 +153,10 @@
 
     <x-slot name="buttons">
         <span class="flex w-full rounded-md shadow-sm sm:w-auto">
-            <x-shopper-default-button wire:click="$emit('closeModal')" type="button">
+            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
                 {{ __('Close') }}
-            </x-shopper-default-button>
+            </x-shopper::buttons.default>
         </span>
     </x-slot>
 
-</x-shopper-modal>
+</x-shopper::modal>

@@ -23,7 +23,7 @@
                                    @click="togglePermission({{ $permission->id }})"
                                    @if($role->hasPermissionTo($permission->name)) checked @endif
                                 />
-                                <x-shopper-label for="permission_{{ $permission->id }}" :value="$permission->display_name" />
+                                <x-shopper::label for="permission_{{ $permission->id }}" :value="$permission->display_name" />
                             </div>
                             <div class="flex items-center space-x-3">
                                 @if($permission->can_be_removed)

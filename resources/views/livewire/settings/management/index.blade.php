@@ -1,14 +1,14 @@
 <div>
-    <x-shopper-breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb back="shopper.settings.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
-    </x-shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+    </x-shopper::breadcrumb>
 
-    <x-shopper-heading class="mt-3">
+    <x-shopper::heading class="mt-3">
         <x-slot name="title">
             {{ __('Administrators & roles') }}
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     <div class="mt-8 pb-10">
         <div class="bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg shadow-md overflow-hidden">
@@ -55,10 +55,10 @@
                     </p>
                 </div>
                 <div>
-                    <x-shopper-button :link="route('shopper.settings.user.new')">
+                    <x-shopper::buttons.primary :link="route('shopper.settings.user.new')">
                         <x-heroicon-o-user-add class="w-5 h-5 mr-1.5" />
                         {{ __('Add administrator') }}
-                    </x-shopper-button>
+                    </x-shopper::buttons.primary>
                 </div>
             </div>
             <div class="mt-6 border border-secondary-200 rounded-md dark:border-secondary-700">
@@ -67,19 +67,19 @@
                         <table class="min-w-full">
                             <thead>
                                 <tr class="border-b border-secondary-200 bg-secondary-50 dark:border-secondary-700 dark:bg-secondary-700">
-                                    <x-shopper-tables.table-head>
+                                    <x-shopper::tables.table-head>
                                         <span class="lg:pl-2">{{ __('Name') }}</span>
-                                    </x-shopper-tables.table-head>
-                                    <x-shopper-tables.table-head>
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head>
                                         {{ __('Email Address') }}
-                                    </x-shopper-tables.table-head>
-                                    <x-shopper-tables.table-head class="hidden md:table-cell text-right">
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head class="hidden md:table-cell text-right">
                                         {{ __('Role') }}
-                                    </x-shopper-tables.table-head>
-                                    <x-shopper-tables.table-head class="hidden md:table-cell text-right">
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head class="hidden md:table-cell text-right">
                                         {{ __('Access') }}
-                                    </x-shopper-tables.table-head>
-                                    <x-shopper-tables.table-head class="pr-6" />
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head class="pr-6" />
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-secondary-100 bg-white dark:bg-secondary-800 dark:divide-secondary-700" x-max="1">
@@ -126,7 +126,7 @@
                                                 </span>
                                             @endif
                                             @if(auth()->user()->isAdmin() && ! $user->isAdmin())
-                                                <x-shopper-dropdown customAlignmentClasses="right-12 -bottom-1">
+                                                <x-shopper::dropdown customAlignmentClasses="right-12 -bottom-1">
                                                     <x-slot name="trigger">
                                                         <button id="admin-options-menu" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-secondary-400 rounded-full bg-transparent hover:text-secondary-500 focus:outline-none focus:text-secondary-500 focus:bg-secondary-100 dark:focus:bg-secondary-700 transition ease-in-out duration-150">
                                                             <x-heroicon-s-dots-vertical class="w-5 h-5" />
@@ -141,7 +141,7 @@
                                                             </button>
                                                         </div>
                                                     </x-slot>
-                                                </x-shopper-dropdown>
+                                                </x-shopper::dropdown>
                                             @endif
                                         </td>
                                     </tr>

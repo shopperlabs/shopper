@@ -1,14 +1,14 @@
 <div>
-    <x-shopper-breadcrumb back="shopper.reviews.index">
+    <x-shopper::breadcrumb back="shopper.reviews.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.reviews.index')" title="Products reviews" />
-    </x-shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" title="Products reviews" />
+    </x-shopper::breadcrumb>
 
-    <x-shopper-heading class="mt-3">
+    <x-shopper::heading class="mt-3">
         <x-slot name="title">
             {{ $review->reviewrateable->name }}
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     <div class="mt-6 bg-white shadow rounded-lg overflow-hidden p-4 sm:p-5 dark:bg-secondary-800">
         <div class="flex items-center justify-between">
@@ -21,7 +21,7 @@
                 </p>
             </div>
             <div class="ml-4">
-                <x-shopper-delete-action
+                <x-shopper::delete-action
                     :title="$review->title ?? __('review')"
                     action="review"
                     message="Are you sure you want to delete this review? This review will can't be recover no more."

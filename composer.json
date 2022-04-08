@@ -24,8 +24,8 @@
     "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-heroicons": "^1.2",
     "doctrine/dbal": "^3.0",
-    "illuminate/support": "^8.80|^9.0",
     "illuminate/database": "^8.80|^9.0",
+    "illuminate/support": "^8.80|^9.0",
     "illuminate/validation": "^8.80|^9.0",
     "jenssegers/agent": "^2.6",
     "laravel/cashier": "^12.10",
@@ -36,14 +36,15 @@
     "maatwebsite/laravel-sidebar": "^2.4",
     "milon/barcode": "^9.0.0",
     "moneyphp/money": "^3.3",
-    "wireui/wireui": "^0.17.0|^1.0",
     "pragmarx/google2fa": "^7.0|^8.0",
     "rappasoft/laravel-livewire-tables": "^1.19",
     "spatie/laravel-medialibrary": "^9.0.0",
+    "spatie/laravel-package-tools": "^1.11",
     "spatie/laravel-permission": "^5.5.2",
     "staudenmeir/laravel-adjacency-list": "^1.0",
     "stevebauman/location": "^6.3.1",
-    "wire-elements/modal": "^1.0.0"
+    "wire-elements/modal": "^1.0.0",
+    "wireui/wireui": "^0.17.0|^1.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.6",

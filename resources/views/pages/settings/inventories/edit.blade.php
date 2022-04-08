@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Inventories') . ' ' . $inventory->name)
-
-@section('content')
+<x-shopper::layouts.setting :title=" __('Inventories') . ' ~ ' . $inventory->name">
 
     <livewire:shopper-settings.inventories.edit :inventory="$inventory" />
 
-@endsection
+</x-shopper::layouts.setting>

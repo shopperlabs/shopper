@@ -3,20 +3,20 @@
         <div class="xl:col-span-4 space-y-5">
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
-                    <x-shopper-forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper-forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
-                    </x-shopper-forms.group>
+                    <x-shopper::forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                        <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
+                    </x-shopper::forms.group>
                 </div>
                 <div class="mt-5 border-t border-secondary-200 dark:border-secondary-700 pt-4">
-                    <x-shopper-forms.group label="Description" for="description">
+                    <x-shopper::forms.group label="Description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
-                    </x-shopper-forms.group>
+                    </x-shopper::forms.group>
                 </div>
             </div>
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5 overflow-hidden">
                 <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Product Media') }}</h4>
                 <div class="mt-4">
-                    <x-shopper-forms.filepond
+                    <x-shopper::forms.filepond
                         wire:model="files"
                         multiple
                         allowImagePreview
@@ -82,7 +82,7 @@
             <aside class="space-y-5">
                 <div class="bg-white dark:bg-secondary-800 rounded-lg shadow divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="p-4 sm:p-5">
-                        <x-shopper-label value="{{ __('Product status') }}" />
+                        <x-shopper::label value="{{ __('Product status') }}" />
                         <div class="mt-4 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
                                 <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 shrink-0">
@@ -131,14 +131,14 @@
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Product associations') }}</h4>
                     </div>
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
-                        <x-shopper-forms.group class="p-4 sm:p-5" label="Brand" for="brand_id">
-                            <x-shopper-forms.select wire:model.defer="brand_id" id="brand_id">
+                        <x-shopper::forms.group class="p-4 sm:p-5" label="Brand" for="brand_id">
+                            <x-shopper::forms.select wire:model.defer="brand_id" id="brand_id">
                                 <option value="0">{{ __('No brand') }}</option>
                                 @foreach($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
-                            </x-shopper-forms.select>
-                        </x-shopper-forms.group>
+                            </x-shopper::forms.select>
+                        </x-shopper::forms.group>
                         <div class="p-4 sm:p-5">
                             <x-select
                                 :label="__('Collections')"
@@ -167,7 +167,7 @@
                             @foreach($categories as $category)
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                        <x-shopper-forms.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
+                                        <x-shopper::forms.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="category-{{ $category->id }}" class="font-medium text-secondary-700 dark:text-secondary-300">{{ $category->name }}</label>
@@ -191,10 +191,10 @@
 
     <div class="mt-6 border-t border-secondary-200 dark:border-secondary-700 pt-5">
         <div class="flex justify-end">
-            <x-shopper-button wire:click="store" wire.loading.attr="disabled" type="button">
-                <x-shopper-loader wire:loading wire:target="store" />
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
+                <x-shopper::loader wire:loading wire:target="store" />
                 {{ __('Update') }}
-            </x-shopper-button>
+            </x-shopper::buttons.primary>
         </div>
     </div>
 </div>
