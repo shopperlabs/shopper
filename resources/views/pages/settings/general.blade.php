@@ -1,5 +1,5 @@
-<x-shopper::layouts.app :title="__('Store General setting')">
+<x-shopper::layouts.setting :title="__('Store General setting')">
 
     <livewire:shopper-settings.general />
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>

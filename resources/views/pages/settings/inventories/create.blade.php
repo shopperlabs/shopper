@@ -1,5 +1,5 @@
-<x-shopper::layouts.app :title="__('Add inventory location')">
+<x-shopper::layouts.setting :title="__('Add inventory location')">
 
     <livewire:shopper-settings.inventories.create />
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>

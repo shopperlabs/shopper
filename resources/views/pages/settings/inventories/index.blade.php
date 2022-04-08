@@ -1,5 +1,5 @@
-<x-shopper::layouts.app :title="__('Locations')">
+<x-shopper::layouts.setting :title="__('Locations')">
 
     <livewire:shopper-settings.inventories.browse />
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>

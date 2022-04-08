@@ -1,4 +1,4 @@
-<x-shopper::layouts.app :title="__('Legal setting')">
+<x-shopper::layouts.setting :title="__('Legal setting')">
 
     <div
         x-data="{
@@ -77,4 +77,4 @@
         <x-shopper::learn-more name="legal pages" link="legal" />
     </div>
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>

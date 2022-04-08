@@ -1,5 +1,5 @@
-<x-shopper::layouts.app :title="__('Add attribute')">
+<x-shopper::layouts.setting :title="__('Add attribute')">
 
     <livewire:shopper-settings.attributes.create />
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>

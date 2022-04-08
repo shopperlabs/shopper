@@ -33,7 +33,7 @@
     </style>
 @endpush
 
-<x-shopper::layouts.app :title="__('Mail ~ Create Template')">
+<x-shopper::layouts.setting :title="__('Mail ~ Create Template')">
 
     <x-shopper::breadcrumb back="shopper.settings.mails.select-template">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
@@ -77,7 +77,7 @@
         </form>
     </div>
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

@@ -1,5 +1,5 @@
-<x-shopper::layouts.app :title="__('Payments Methods')">
+<x-shopper::layouts.setting :title="__('Payments Methods')">
 
     <livewire:shopper-settings.payments.general />
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>

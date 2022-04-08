@@ -1,5 +1,5 @@
-<x-shopper::layouts.app :title="__('User Roles & Access Management')">
+<x-shopper::layouts.setting :title="__('User Roles & Access Management')">
 
     <livewire:shopper-settings.management.management />
 
-</x-shopper::layouts.app>>
+</x-shopper::layouts.setting>

@@ -1,5 +1,5 @@
-<x-shopper::layouts.app :title="__('Analytics')">
+<x-shopper::layouts.setting :title="__('Analytics')">
 
     <livewire:shopper-settings.analytics />
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>

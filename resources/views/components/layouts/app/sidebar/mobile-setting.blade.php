@@ -18,7 +18,7 @@
              x-transition:enter-end="translate-x-0"
              x-transition:leave-start="translate-x-0"
              x-transition:leave-end="-translate-x-full"
-             class="flex-1 flex max-w-xs w-full bg-white dark:bg-secondary-900 transform ease-in-out duration-200"
+             class="flex-1 flex max-w-md w-full bg-white dark:bg-secondary-900 transform ease-in-out duration-200"
         >
             <div class="absolute top-0 right-0 -mr-14 p-1">
                 <button x-show="sidebarOpen" @click="sidebarOpen = false" class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-secondary-600">
@@ -30,7 +30,7 @@
 
             <x-shopper::layouts.app.sidebar.primary />
 
-            <x-shopper::layouts.app.sidebar.secondary />
+            <x-shopper::layouts.app.sidebar.navigation-setting />
         </div>
 
         <div class="shrink-0 w-14"></div>

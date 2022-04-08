@@ -1,5 +1,5 @@
-<x-shopper::layouts.app :title=" __('Inventories') . ' ~ ' . $inventory->name">
+<x-shopper::layouts.setting :title=" __('Inventories') . ' ~ ' . $inventory->name">
 
     <livewire:shopper-settings.inventories.edit :inventory="$inventory" />
 
-</x-shopper::layouts.app>
+</x-shopper::layouts.setting>
