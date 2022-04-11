@@ -5,7 +5,7 @@
             <x-shopper::validation-errors />
 
             <div class="shrink-0">
-                <x-shopper::brand />
+                <x-shopper::brand class="mx-auto h-20 w-auto" />
             </div>
             <div class="p-4 sm:p-6 bg-white rounded-lg shadow-md overflow-hidden dark:bg-secondary-800">
                 <div class="text-center">
