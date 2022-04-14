@@ -13,6 +13,7 @@ use Shopper\Framework\Shopper;
 class ResetPasswordController extends Controller
 {
     use ValidatesRequests;
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -26,26 +27,14 @@ class ResetPasswordController extends Controller
 
     use ResetsPasswords;
 
-    /**
-     * Create a new controller instance.
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Display the password reset view for the given token.
-     *
-     * If no token is present, display the link request form.
-     *
-     * @param null|string $token
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showResetForm(Request $request, $token = null)
+    public function showResetForm(Request $request, ?string $token = null)
     {
-        return view('shopper::auth.passwords.reset')->with(
+        return view('shopper::auth.passwords.reset-password')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }

@@ -1,4 +1,4 @@
-<x-shopper::layouts.base :title="__('Reset Password')">
+<x-shopper::layouts.base :title="__('shopper::pages/auth.email.title')">
 
     <div class="min-h-screen flex items-center justify-center">
         <div class="max-w-md w-full px-6">
@@ -22,9 +22,9 @@
             <div class="mt-4">
                 <x-shopper::brand class="mx-auto h-20 w-auto" />
 
-                <h2 class="mt-10 text-3xl font-extrabold text-center leading-9 text-secondary-900 dark:text-white">{{ __('Reset your password') }}</h2>
+                <h2 class="mt-10 text-3xl font-extrabold text-center leading-9 text-secondary-900 dark:text-white">{{ __('shopper::pages/auth.email.title') }}</h2>
                 <p class="mt-5 text-sm leading-5 text-center">
-                    {{ __('Enter the email address you used when creating your account and we will send you instructions to reset your password.') }}
+                    {{ __('shopper::pages/auth.email.message') }}
                 </p>
             </div>
 
@@ -32,12 +32,12 @@
                 @csrf
                 <div class="rounded-md shadow-sm">
                     <x-shopper::forms.input
-                        aria-label="{{ __('Email address') }}"
+                        aria-label="{{ __('shopper::layout.forms.label.email') }}"
                         name="email"
                         type="email"
                         required
                         autofocus
-                        placeholder="{{ __('Email address') }}"
+                        placeholder="{{ __('shopper::layout.forms.label.email') }}"
                         value="{{ old('email') }}"
                     />
                 </div>
@@ -47,15 +47,13 @@
 
                 <div class="mt-5">
                     <x-shopper::buttons.primary type="submit" class="w-full justify-center">
-                        {{ __('Send password reset mail') }}
+                        {{ __('shopper::pages/auth.email.action') }}
                     </x-shopper::buttons.primary>
                 </div>
                 <p class="mt-5 text-center text-sm">
                     <a href="{{ route('shopper.login-view') }}" class="inline-flex items-center text-secondary-500 hover:text-secondary-900 dark:text-secondary-500 dark:hover:text-white leading-5">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="arrow-narrow-left w-5 h-5 mr-1.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
-                        </svg>
-                        {{ __('Return to login page') }}
+                        <x-heroicon-o-arrow-narrow-left class="w-5 h-5 mr-1.5"/>
+                        {{ __('shopper::pages/auth.email.return_to_login') }}
                     </a>
                 </p>
             </form>

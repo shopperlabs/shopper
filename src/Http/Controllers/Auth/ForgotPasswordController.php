@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 class ForgotPasswordController extends Controller
 {
     use ValidatesRequests;
+
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -25,9 +26,6 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
-    /**
-     * Create a new controller instance.
-     */
     public function __construct()
     {
         $this->middleware('guest');
@@ -35,20 +33,15 @@ class ForgotPasswordController extends Controller
         ResetPassword::toMailUsing(function ($notifiable, $token) {
             return (new MailMessage())
                 ->view('shopper::mails.email')
-                ->line(__('You are receiving this email because we received a password reset request for your account.'))
-                ->action(__('Reset Password'), url(config('app.url') . route('shopper.password.reset', $token, false)))
-                ->line(__('If you did not request a password reset, no further action is required.'));
+                ->line(__('shopper::pages/auth.email.mail.content'))
+                ->action(__('shopper::pages/auth.email.mail.action'), url(config('app.url') . route('shopper.password.reset', $token, false)))
+                ->line(__('shopper::pages/auth.email.mail.message'));
         });
     }
 
-    /**
-     * Display the form to request a password reset link.
-     *
-     * @return \Illuminate\View\View
-     */
     public function showLinkRequestForm()
     {
-        return view('shopper::auth.passwords.email');
+        return view('shopper::auth.passwords.forgot-password');
     }
 
     /**
