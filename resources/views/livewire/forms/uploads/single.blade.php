@@ -5,7 +5,7 @@
             <div class="flex items-center mt-2">
                 <button wire:click="removeSingleMediaPlaceholder" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-red-700 bg-red-100 hover:bg-red-50 focus:outline-none focus:border-red-300 focus:shadow-outline-red active:bg-red-200 transition ease-in-out duration-150">
                     <x-heroicon-o-trash class="h-5 w-5 mr-1.5" />
-                    {{ __('Remove') }}
+                    {{ __('shopper::layout.forms.actions.remove') }}
                 </button>
             </div>
         </div>
@@ -17,11 +17,11 @@
                 </svg>
                 <p class="mt-1 text-sm text-secondary-500 group-hover:text-secondary-400 dark:text-secondary-400 dark:group-hover:text-secondary-300">
                     <span :class="{ 'text-primary-500': focused }" class="font-medium text-primary-600 group-hover:text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                        {{ __('Click to upload a file') }}
+                        {{ __('shopper::components.files.file') }}
                     </span>
                 </p>
                 <p :class="{ 'text-secondary-400': focused }" class="mt-1 text-xs text-secondary-500 group-hover:text-secondary-400 dark:text-secondary-400 dark:group-hover:text-secondary-300">
-                    {{ __('PNG, JPG, GIF up to 5MB') }}
+                    {{ __('shopper::components.files.type_size', ['size' => 5]) }}
                 </p>
                 <input @focus="focused = true" @blur="focused = false" class="sr-only" type="file" wire:model="file" id="{{ $inputId }}" />
             </div>

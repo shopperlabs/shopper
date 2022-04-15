@@ -14,7 +14,7 @@
 
     @include('shopper::includes._favicons')
 
-    <title>{{ $title ?? config('app.name') }} // {{ __('Shopper Administration') }}</title>
+    <title>{{ $title ?? config('app.name') }} // {{ __('shopper::layout.meta_title') }}</title>
 
     <link rel="dns-prefetch" href="{{ config('app.url') }}">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
@@ -31,7 +31,7 @@
 
     @include('shopper::includes._additional-styles')
 </head>
-<body class="bg-secondary-100 font-sans antialiased overflow-hidden transition duration-200 ease-in-out dark:bg-secondary-900">
+<body class="bg-secondary-100 font-sans antialiased overflow-hidden dark:bg-secondary-900">
 
     {{ $slot }}
 

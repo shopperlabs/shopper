@@ -21,7 +21,7 @@
                         </div>
                         <div class="ml-6 w-0 flex-1">
                             <p class="text-base leading-5 font-medium capitalize text-green-600">
-                                {{ __("Success") }}
+                                {{ __('shopper::layout.status.success') }}
                             </p>
                             <p class="mt-1 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                 {{ session()->get('success') }}

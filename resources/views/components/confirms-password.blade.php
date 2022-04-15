@@ -1,4 +1,8 @@
-@props(['title' => __('Confirm Password'), 'content' => __('For your security, please confirm your password to continue.'), 'button' => __('Confirm')])
+@props([
+    'title' => __('shopper::layout.forms.label.confirm_password'),
+    'content' => __('shopper::components.modal.content'),
+    'button' => __('shopper::layout.forms.label.confirm')
+])
 
 @php
     $confirmableId = md5($attributes->wire('then'));
@@ -30,8 +34,8 @@
                     wire:keydown.enter="confirmPassword"
                     id="confirmable_password"
                     type="password"
-                    placeholder="{{ __('Enter your password') }}"
-                    aria-label="{{ __('Password') }}"
+                    placeholder="{{ __('shopper::layout.forms.placeholder.password') }}"
+                    aria-label="{{ __('shopper::layout.forms.label.password') }}"
                 />
 
                 @error('confirmable_password')
@@ -49,9 +53,9 @@
             </span>
 
             <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <x-shopper::buttons.primary wire:click="stopConfirmingPassword" wire:loading.attr="disabled" type="button">
-                    {{ __('Nevermind') }}
-                </x-shopper::buttons.primary>
+                <x-shopper::buttons.default wire:click="stopConfirmingPassword" wire:loading.attr="disabled" type="button">
+                    {{ __('shopper::layout.forms.actions.nevermind') }}
+                </x-shopper::buttons.default>
             </span>
         </x-slot>
     </x-shopper::dialog-modal>

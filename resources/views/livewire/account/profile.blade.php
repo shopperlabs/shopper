@@ -3,9 +3,9 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Profile Information') }}</h3>
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('shopper::pages/auth.account.profile_title') }}</h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __("Update your account's profile information and email address.") }}
+                        {{ __('shopper::pages/auth.account.profile_description') }}
                     </p>
                 </div>
             </div>
@@ -24,15 +24,15 @@
                             </x-shopper::forms.avatar-upload>
                         </x-shopper::forms.group>
                         <div class="grid gap-4 grid-cols-6 sm:gap-5 mt-5">
-                            <x-shopper::forms.group for="first_name" label="First name" class="col-span-6 sm:col-span-3" :error="$errors->first('first_name')">
+                            <x-shopper::forms.group for="first_name" label="shopper::layout.forms.label.first_name" class="col-span-6 sm:col-span-3" :error="$errors->first('first_name')">
                                 <x-shopper::forms.input type='text' wire:model.defer='first_name' autocomplete='off' id='first_name' />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group for="last_name" label="Last name" class="col-span-6 sm:col-span-3" :error="$errors->first('last_name')">
+                            <x-shopper::forms.group for="last_name" label="shopper::layout.forms.label.last_name" class="col-span-6 sm:col-span-3" :error="$errors->first('last_name')">
                                 <x-shopper::forms.input type='text' wire:model.defer='last_name' autocomplete='off' id='last_name' />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group label="Email address" for="email" class="col-span-6 sm:col-span-3" :error="$errors->first('email')">
+                            <x-shopper::forms.group label="shopper::layout.forms.label.email" for="email" class="col-span-6 sm:col-span-3" :error="$errors->first('email')">
                                 <div class="relative mt-1">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <x-heroicon-s-mail class="h-5 w-5 text-secondary-400" />
@@ -43,8 +43,8 @@
 
                             <div wire:ignore x-data="internationalNumber('#phone_number')" class="col-span-6 sm:col-span-3">
                                 <div class="flex items-center justify-between">
-                                    <x-shopper::label for="phone_number" :value="__('Phone number')" />
-                                    <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
+                                    <x-shopper::label for="phone_number" :value="__('shopper::layout.forms.label.phone_number')" />
+                                    <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('shopper::layout.forms.label.optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative">
                                     <x-shopper::forms.input wire:model.defer="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
@@ -56,7 +56,7 @@
                         <span class="inline-flex rounded-md shadow-sm">
                             <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
                                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                                {{ __('Save') }}
+                                {{ __('shopper::layout.forms.actions.save') }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>

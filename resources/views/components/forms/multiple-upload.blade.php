@@ -55,12 +55,12 @@
                 </svg>
                 <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
                     <span class="font-medium text-primary-600 group-hover:text-primary-500 dark:group-hover:text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                        {{ __('Upload a file') }}
+                        {{ __('shopper::messages.components.files.upload_file') }}
                     </span>
-                    {{ __('or drag and drop') }}
+                    {{ __('shopper::components.files.drag_n_drop') }}
                 </p>
                 <p class="mt-1 text-xs text-secondary-500 dark:text-secondary-400">
-                    {{ __('PNG, JPG, GIF up to 1MB') }}
+                    {{ __('shopper::components.files.file_type_size', ['size' => 1]) }}
                 </p>
             </div>
             <input
@@ -101,7 +101,7 @@
 
     <div class="hidden mt-2 flex items-center" wire:loading.class.remove="hidden" wire:target="files">
         <x-shopper::loader wire:loading wire:target="files" class="text-primary-600" />
-        <span class="ml-1.5 text-sm text-secondary-500 dark:text-secondary-400">{{ __('Uploading...') }}</span>
+        <span class="ml-1.5 text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::components.files.uploading') }}</span>
     </div>
 </div>
 

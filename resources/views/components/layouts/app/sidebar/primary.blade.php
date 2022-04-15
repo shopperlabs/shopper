@@ -10,7 +10,7 @@
                 <x-shopper::menu.item
                     :href="route('shopper.dashboard')"
                     :active="request()->routeIs('shopper.dashboard')"
-                    x-tooltip.raw="{{ __('Dashboard') }}"
+                    x-tooltip.raw="{{ __('shopper::layout.sidebar.dashboard') }}"
                 >
                     <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -39,7 +39,7 @@
             <a
                 href="{{ route('shopper.settings.index') }}"
                 class="block p-2 text-base leading-6 font-medium rounded-md text-white hover:bg-primary-700 @if(request()->routeIs('shopper.settings*')) bg-primary-700 @endif focus:outline-none focus:bg-primary-900 transition ease-in-out duration-150"
-                x-tooltip.raw="{{ __('Settings') }}"
+                x-tooltip.raw="{{ __('shopper::layout.account_dropdown.settings') }}"
             >
                 <x-heroicon-o-cog class="w-6 h-6"/>
             </a>
@@ -49,7 +49,7 @@
             href="https://laravelshopper.dev"
             target="_blank"
             class="block p-2 text-base leading-6 font-medium rounded-md text-white hover:bg-primary-700 focus:outline-none focus:bg-primary-900 transition ease-in-out duration-150"
-            x-tooltip.raw="{{ __('Documentation') }}"
+            x-tooltip.raw="{{ __('shopper::messages.dashboard.cards.doc_title') }}"
         >
             <x-heroicon-o-code class="w-6 h-6"/>
         </a>

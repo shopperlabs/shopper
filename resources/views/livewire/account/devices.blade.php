@@ -2,9 +2,9 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Devices') }}</h3>
+                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('shopper::pages/auth.account.device_title') }}</h3>
                 <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                    {{ __("You're currently logged in on these devices. If you don't recognize a device, log out to keep your account secure.") }}
+                    {{ __('shopper::pages/auth.account.device_description') }}
                 </p>
             </div>
         </div>
@@ -13,7 +13,7 @@
                 <div class="px-4 py-5 sm:p-6">
                     @if (count($this->sessions) > 0)
                         <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                            {{ __('If necessary, you may logout of all of your other browser sessions across all of your devices.') }}
+                            {{ __('shopper::pages/auth.account.empty_device') }}
                         </p>
                         <div class="mt-2 divide-y divide-secondary-200 dark:divide-secondary-700">
                             @foreach($this->sessions as $session)
@@ -33,17 +33,17 @@
                                                 </h4>
                                                 @if ($session->is_current_device)
                                                     <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-green-100 text-green-800">
-                                                        {{ __('This device') }}
+                                                        {{ __('shopper::pages/auth.account.current_device') }}
                                                     </span>
                                                 @else
-                                                    <span class="ml-2 text-xs text-secondary-400 dark:text-secondary-500">{{ __('Last active') }} {{ $session->last_active }}</span>
+                                                    <span class="ml-2 text-xs text-secondary-400 dark:text-secondary-500">{{ __('shopper::pages/auth.account.device_last_activity') }} {{ $session->last_active }}</span>
                                                 @endif
                                             </div>
                                             <p class="mt-0.5 text-sm leading-4 text-secondary-500 dark:text-secondary-400">
                                                 @if($session->location)
                                                     {{ $session->location->cityName }}, {{ $session->location->regionName }}, {{ $session->location->countryName }}
                                                 @else
-                                                    {{ __('Unable to recover this location.') }}
+                                                    {{ __('shopper::pages/auth.account.device_location') }}
                                                 @endif
                                             </p>
                                         </div>
@@ -52,7 +52,7 @@
                                         <div class="ml-4">
                                             <span class="inline-flex rounded-md shadow-sm">
                                                 <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.logout-others-browser')" wire:loading.attr="disabled" type="button">
-                                                    {{ __('Log out') }}
+                                                    {{ __('shopper::messages.log_out') }}
                                                 </x-shopper::buttons.primary>
                                             </span>
                                         </div>
@@ -70,9 +70,9 @@
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm leading-5 text-yellow-700">
-                                        {{ __("Database session driver are needed to enable this feature.") }}
+                                        {{ __('shopper::pages/auth.account.device_enabled_feature') }}
                                         <a href="https://laravel.com/docs/session" target="_blank" class="font-medium underline text-yellow-700 hover:text-yellow-600 transition ease-in-out duration-150">
-                                            {{ __("Learn more") }} &rarr;
+                                            {{ __('shopper::components.learn_more') }} &rarr;
                                         </a>
                                     </p>
                                 </div>

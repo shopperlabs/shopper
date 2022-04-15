@@ -1,8 +1,8 @@
-<x-shopper::layouts.app :title="__('Profile Account')">
+<x-shopper::layouts.app :title="__('shopper::pages/auth.account.meta_title')">
 
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('My profile') }}
+            {{ __('shopper::pages/auth.account.title') }}
         </x-slot>
     </x-shopper::heading>
 

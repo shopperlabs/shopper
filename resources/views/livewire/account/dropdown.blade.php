@@ -10,7 +10,7 @@
     <x-slot name="content">
         <div class="px-4 py-3">
             <p class="text-sm leading-5 txt-secondary-900 dark:text-white">
-                {{ __('Signed in with') }}
+                {{ __('shopper::layout.account_dropdown.sign_in') }}
             </p>
             <p class="text-sm leading-5 font-medium text-secondary-900 dark:text-white truncate">
                 {{ $email }}
@@ -21,7 +21,7 @@
             <div class="py-1">
                 <x-shopper::dropdown-link :href="route('shopper.products.create')">
                     <x-heroicon-o-plus-sm  class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500"/>
-                    {{ __('Add product') }}
+                    {{ __('shopper::layout.account_dropdown.add_product') }}
                 </x-shopper::dropdown-link>
             </div>
         @endcan
@@ -29,12 +29,12 @@
         <div class="py-1">
             <x-shopper::dropdown-link :href="route('shopper.profile')">
                 <x-heroicon-o-user-circle class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500" />
-                {{ __('Personal Account') }}
+                {{ __('shopper::layout.account_dropdown.personal_account') }}
             </x-shopper::dropdown-link>
             @can('view_users')
                 <x-shopper::dropdown-link :href="route('shopper.settings.users')">
                     <x-heroicon-o-users class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500" />
-                    {{ __('Manage Users') }}
+                    {{ __('shopper::layout.account_dropdown.manage_users') }}
                 </x-shopper::dropdown-link>
             @endcan
         </div>
@@ -43,7 +43,7 @@
             @can('access_setting')
                 <x-shopper::dropdown-link :href="route('shopper.settings.index')">
                     <x-heroicon-o-cog class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500" />
-                    {{ __('Settings') }}
+                    {{ __('shopper::layout.account_dropdown.settings') }}
                 </x-shopper::dropdown-link>
             @endcan
         </div>
@@ -54,7 +54,7 @@
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
             >
                 <x-heroicon-o-login class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500 group-focus:text-secondary-500" />
-                {{ __('Sign out') }}
+                {{ __('shopper::layout.account_dropdown.sign_out') }}
             </x-shopper::dropdown-link>
             <form id="logout-form" action="{{ route('shopper.logout') }}" method="POST" style="display: none;">
                 @csrf

@@ -14,7 +14,7 @@
 
             @if(! $menu['route'])
                 <span class="ml-2.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-primary-100 text-primary-800">
-                    {{ __('Soon') }}
+                    {{ __('shopper::layout.soon') }}
                 </span>
             @endif
         </p>
