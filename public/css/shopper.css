@@ -4573,32 +4573,18 @@ select{
 .bg-opacity-60{
   --tw-bg-opacity: 0.6;
 }
-.bg-gradient-to-r{
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
-}
 .bg-gradient-to-br{
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
-}
-.from-primary-400{
-  --tw-gradient-from: #60a5fa;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(96 165 250 / 0));
 }
 .from-secondary-50{
   --tw-gradient-from: #f8fafc;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(248 250 252 / 0));
-}
-.to-primary-800{
-  --tw-gradient-to: #1e40af;
 }
 .to-secondary-100{
   --tw-gradient-to: #f1f5f9;
 }
 .bg-cover{
   background-size: cover;
-}
-.bg-clip-text{
-  -webkit-background-clip: text;
-          background-clip: text;
 }
 .bg-center{
   background-position: center;
@@ -5021,13 +5007,6 @@ select{
   --tw-text-opacity: 1;
   color: rgb(185 28 28 / var(--tw-text-opacity));
 }
-.text-transparent{
-  color: transparent;
-}
-.text-secondary-600{
-  --tw-text-opacity: 1;
-  color: rgb(71 85 105 / var(--tw-text-opacity));
-}
 .text-secondary-300{
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity));
@@ -5091,6 +5070,10 @@ select{
 .text-purple-400{
   --tw-text-opacity: 1;
   color: rgb(192 132 252 / var(--tw-text-opacity));
+}
+.text-secondary-600{
+  --tw-text-opacity: 1;
+  color: rgb(71 85 105 / var(--tw-text-opacity));
 }
 .text-yellow-300{
   --tw-text-opacity: 1;
@@ -6439,13 +6422,13 @@ select{
   --tw-border-opacity: 1;
   border-color: rgb(252 165 165 / var(--tw-border-opacity));
 }
-.focus\:border-primary-300:focus{
-  --tw-border-opacity: 1;
-  border-color: rgb(147 197 253 / var(--tw-border-opacity));
-}
 .focus\:border-primary-700:focus{
   --tw-border-opacity: 1;
   border-color: rgb(29 78 216 / var(--tw-border-opacity));
+}
+.focus\:border-primary-300:focus{
+  --tw-border-opacity: 1;
+  border-color: rgb(147 197 253 / var(--tw-border-opacity));
 }
 .focus\:border-secondary-300:focus{
   --tw-border-opacity: 1;
@@ -8424,10 +8407,6 @@ select{
     margin-top: 0px;
   }
 
-  .md\:ml-6{
-    margin-left: 1.5rem;
-  }
-
   .md\:ml-4{
     margin-left: 1rem;
   }
@@ -8438,6 +8417,10 @@ select{
 
   .md\:ml-0{
     margin-left: 0px;
+  }
+
+  .md\:ml-6{
+    margin-left: 1.5rem;
   }
 
   .md\:mb-0{

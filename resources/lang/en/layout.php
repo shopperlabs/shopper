@@ -17,6 +17,7 @@ return [
             'confirm' => 'Confirm',
             'first_name' => 'First name',
             'last_name' => 'Last Name',
+            'full_name' => 'Full Name',
             'phone_number' => 'Phone number',
             'name' => 'Name',
             'slug' => 'Slug',
@@ -27,11 +28,19 @@ return [
             'published_at' => 'Published At',
             'visibility' => 'Visibility',
             'image_preview' => 'Image preview',
+            'any' => 'Any',
+            'type' => 'Type',
+            'value' => 'Value',
+            'browse' => 'Browse',
+            'sort_by' => 'Sort by',
+            'subscribed' => 'Subscribed',
+            'not_subscribed' => 'Not Subscribed',
         ],
 
         'placeholder' => [
             'password' => 'Enter your password',
             'email' => 'Enter your email',
+            'value' => 'your value here',
         ],
 
         'actions' => [
@@ -64,6 +73,7 @@ return [
         'reviews' => 'Reviews',
         'discounts' => 'Discounts',
         'shop' => 'Shop',
+        'products' => 'Products',
     ],
 
     'account_dropdown' => [
@@ -81,6 +91,7 @@ return [
     'soon' => 'Soon',
 
     'status' => [
+        'delete' => 'Delete',
         'success' => 'Success',
         'updated' => 'Updated',
     ]

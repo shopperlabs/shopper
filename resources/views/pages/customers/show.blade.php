@@ -1,4 +1,4 @@
-<x-shopper::layouts.app :title="__('Customer :name', ['name' => $customer->name])">
+<x-shopper::layouts.app :title="__('shopper::messages.actions_label.show', ['name' => $customer->name])">
 
     <livewire:shopper-customers.show :customer="$customer" />
 

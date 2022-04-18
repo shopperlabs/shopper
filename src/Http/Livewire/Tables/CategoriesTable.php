@@ -32,9 +32,15 @@ class CategoriesTable extends DataTableComponent
     public function deleteSelected()
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new CategoryRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
+            (new CategoryRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->delete();
 
-            $this->notification()->success(__('Deleted'), __('The categories has successfully removed!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.delete'),
+                __('shopper::components.tables.messages.delete', ['name' => 'categories'])
+            );
         }
 
         $this->selected = [];
@@ -45,9 +51,15 @@ class CategoriesTable extends DataTableComponent
     public function enabled(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new CategoryRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => true]);
+            (new CategoryRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->update(['is_enabled' => true]);
 
-            $this->notification()->success(__('Updated'), __('The categories has successfully enabled!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.updated'),
+                __('shopper::components.tables.messages.enabled', ['name' => 'categories'])
+            );
         }
 
         $this->selected = [];
@@ -58,9 +70,15 @@ class CategoriesTable extends DataTableComponent
     public function disabled(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new CategoryRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
+            (new CategoryRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->update(['is_enabled' => false]);
 
-            $this->notification()->success(__('Updated'), __('The categories has successfully disabled!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.updated'),
+                __('shopper::components.tables.messages.disabled', ['name' => 'categories'])
+            );
         }
 
         $this->resetBulk();
@@ -69,11 +87,11 @@ class CategoriesTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Name')
+            Column::make(__('shopper::layout.forms.label.name'))
                 ->sortable()
                 ->searchable(),
-            Column::make('Url', 'slug')->sortable(),
-            Column::make('Updated At', 'updated_at')
+            Column::make(__('shopper::layout.forms.label.url'), 'slug')->sortable(),
+            Column::make(__('shopper::layout.forms.label.updated_at'), 'updated_at')
                 ->sortable(),
         ];
     }

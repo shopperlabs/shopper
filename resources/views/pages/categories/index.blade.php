@@ -1,4 +1,4 @@
-<x-shopper::layouts.app :title="__('Categories')">
+<x-shopper::layouts.app :title="__('shopper::layout.sidebar.categories')">
 
     <livewire:shopper-categories.browse />
 

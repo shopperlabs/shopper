@@ -32,7 +32,10 @@ class CollectionsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             (new CollectionRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notification()->success(__('Deleted'), __('The collections has successfully removed!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.delete'),
+                __('shopper::components.tables.messages.delete', ['name' => 'collections'])
+            );
         }
 
         $this->selected = [];
@@ -43,11 +46,11 @@ class CollectionsTable extends DataTableComponent
     public function filters(): array
     {
         return [
-            'type' => Filter::make(__('Collection Type'))
+            'type' => Filter::make(__('shopper::pages/collections.filter_type'))
                 ->select([
-                    '' => __('Any'),
-                    'auto' => __('Automatic'),
-                    'manual' => __('Manual'),
+                    '' => __('shopper::layout.forms.label.any'),
+                    'auto' => __('shopper::pages/collections.automatic'),
+                    'manual' => __('shopper::pages/collections.manual'),
                 ]),
         ];
     }
@@ -55,12 +58,12 @@ class CollectionsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('Name'), 'name')
+            Column::make(__('shopper::layout.forms.label.name'), 'name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Type', 'slug')->sortable(),
-            Column::make(__('Product Conditions')),
-            Column::make(__('Updated At'), 'updated_at')
+            Column::make(__('shopper::layout.forms.label.type'), 'type')->sortable(),
+            Column::make(__('shopper::pages/collections.product_conditions')),
+            Column::make(__('shopper::layout.forms.label.updated_at'), 'updated_at')
                 ->sortable(),
         ];
     }

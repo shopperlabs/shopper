@@ -27,6 +27,19 @@ return [
         'sign_up' => 'Sign up to get notified when it’s ready.',
     ],
 
+    'tables' => [
+        'status' => [
+            'delete' => 'Delete',
+            'updated' => 'Updated',
+        ],
+
+        'messages' => [
+            'delete' => 'The :name has successfully removed!',
+            'enabled' => 'The :name has successfully enabled!',
+            'disabled' => 'The :name has successfully disabled!',
+        ],
+    ],
+
     'learn_more' => 'Learn more about',
 
 ];

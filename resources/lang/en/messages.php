@@ -43,6 +43,7 @@ return [
         'update' => 'Update :name',
         'add_new' => 'Add new :name',
         'edit' => 'Edit :name',
+        'show' => 'View :name',
         'set_visibility' => 'Set :name visibility for the customers.',
     ],
 

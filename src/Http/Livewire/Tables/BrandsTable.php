@@ -45,9 +45,15 @@ class BrandsTable extends DataTableComponent
     public function deleteSelected()
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
+            (new BrandRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->delete();
 
-            $this->notification()->success(__('shopper::layout.forms.actions.delete'), __('shopper::pages/brands.status.delete'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.delete'),
+                __('shopper::components.tables.messages.delete', ['name' => 'brands'])
+            );
         }
 
         $this->selected = [];
@@ -58,9 +64,15 @@ class BrandsTable extends DataTableComponent
     public function enabled(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => true]);
+            (new BrandRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->update(['is_enabled' => true]);
 
-            $this->notification()->success(__('shopper::layout.status.updated'), __('shopper::pages/brands.status.enabled'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.updated'),
+                __('shopper::components.tables.messages.enabled', ['name' => 'brands'])
+            );
         }
 
         $this->selected = [];
@@ -71,9 +83,15 @@ class BrandsTable extends DataTableComponent
     public function disabled(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new BrandRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
+            (new BrandRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->update(['is_enabled' => false]);
 
-            $this->notification()->success(__('shopper::layout.status.updated'), __('shopper::pages/brands.status.disabled'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.updated'),
+                __('shopper::components.tables.messages.disabled', ['name' => 'brands'])
+            );
         }
 
         $this->resetBulk();
