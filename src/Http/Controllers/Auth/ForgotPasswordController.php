@@ -12,7 +12,6 @@ use Illuminate\Routing\Controller;
 class ForgotPasswordController extends Controller
 {
     use ValidatesRequests;
-
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller

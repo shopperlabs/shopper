@@ -13,7 +13,6 @@ use Shopper\Framework\Shopper;
 class ResetPasswordController extends Controller
 {
     use ValidatesRequests;
-
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
