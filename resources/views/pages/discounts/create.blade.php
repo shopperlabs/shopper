@@ -1,4 +1,4 @@
-<x-shopper::layouts.app :title="__('Create discount code')">
+<x-shopper::layouts.app :title="__('shopper::pages/discounts.actions.create')">
 
     <livewire:shopper-discounts.create />
 

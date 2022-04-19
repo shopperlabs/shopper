@@ -3,16 +3,16 @@
         open: false,
         options: ['profile', 'address', 'orders'],
         words: {
-            'profile': '{{ __("Profile") }}',
-            'address': '{{ __("Addresses") }}',
-            'orders': '{{ __("Orders") }}'
+            'profile': '{{ __('shopper::pages/customers.profile.title') }}',
+            'address': '{{ __('shopper::pages/customers.addresses.title') }}',
+            'orders': '{{ __('shopper::layout.sidebar.orders') }}'
         },
         currentTab: 'profile'
     }"
 >
     <x-shopper::breadcrumb back="shopper.customers.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" title="Customers" />
+        <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" title="shopper::layout.sidebar.customers" />
     </x-shopper::breadcrumb>
 
     <div class="mt-5 md:flex md:items-center md:justify-between relative z-20">
@@ -35,7 +35,7 @@
                             <span class="ml-1.5 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $customer->email }}</span>
                         </div>
                         <p class="pl-2 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
-                            {{ __('Customer for :period', ['period' => $customer->created_at->diffForHumans()]) }}
+                            {{ __('shopper::pages/customers.period', ['period' => $customer->created_at->diffForHumans()]) }}
                         </p>
                     </div>
                 </div>
@@ -49,11 +49,20 @@
                     </button>
                 </div>
 
-                <div x-cloak x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg" style="display: none;">
+                <div x-cloak
+                     x-show="open"
+                     x-transition:enter="transition ease-out duration-100"
+                     x-transition:enter-start="transform opacity-0 scale-95"
+                     x-transition:enter-end="transform opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-75"
+                     x-transition:leave-start="transform opacity-100 scale-100"
+                     x-transition:leave-end="transform opacity-0 scale-95"
+                     class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg"
+                >
                     <div class="rounded-md bg-white shadow-xs dark:bg-secondary-800">
                         <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                             <button wire:click="$emit('openModal', 'shopper-modals.delete-customer', {{ json_encode([$customer->id]) }})" type="button" class="block w-full px-4 py-2 text-sm leading-5 text-left text-secondary-700 hover:bg-secondary-100 hover:text-secondary-900 focus:outline-none dark:text-secondary-300 dark:hover:text-white dark:hover:bg-secondary-700" role="menuitem">
-                                {{ __('Delete customer') }}
+                                {{ __('shopper::layout.forms.actions.delete') }}
                             </button>
                         </div>
                     </div>
@@ -80,15 +89,15 @@
                 <div class="hidden sm:block">
                     <nav class="-mb-px flex space-x-8">
                         <button @click="currentTab = 'profile'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'profile' }">
-                            {{ __('Profile') }}
+                            {{ __('shopper::pages/customers.profile.title') }}
                         </button>
 
                         <button @click="currentTab = 'address'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'address' }">
-                            {{ __('Addresses') }}
+                            {{ __('shopper::pages/customers.addresses.title') }}
                         </button>
 
                         <button @click="currentTab = 'orders'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'orders' }">
-                            {{ __('Orders') }}
+                            {{ __('shopper::layout.sidebar.orders') }}
                         </button>
                     </nav>
                 </div>

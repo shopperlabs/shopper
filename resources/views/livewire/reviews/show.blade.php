@@ -1,7 +1,7 @@
 <div>
     <x-shopper::breadcrumb back="shopper.reviews.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" title="Products reviews" />
+        <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" title="shopper::layout.sidebar.reviews" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -14,17 +14,17 @@
         <div class="flex items-center justify-between">
             <div class="space-y-">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                    {{ __('Product Review') }}
+                    {{ __('shopper::pages/products.reviews.review') }}
                 </h3>
                 <p class="max-w-2xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                    {{ __('Review for this product.') }}
+                    {{ __('shopper::pages/products.reviews.subtitle') }}
                 </p>
             </div>
             <div class="ml-4">
                 <x-shopper::delete-action
-                    :title="$review->title ?? __('review')"
-                    action="review"
-                    message="Are you sure you want to delete this review? This review will can't be recover no more."
+                    :title="$review->title ?? __('shopper::pages/products.reviews.review')"
+                    :action="__('shopper::pages/products.reviews.review')"
+                    message="shopper::pages/products.reviews.remove"
                     wire:click="remove"
                     wire:target="remove"
                 />
@@ -34,7 +34,7 @@
             <dl class="divide-y divide-secondary-200 dark:divide-secondary-700">
                 <div class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
                     <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
-                        {{ __('Product') }}
+                        {{ __('shopper::messages.product') }}
                     </dt>
                     <dd class="text-sm flex flex-col leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">{{ $review->reviewrateable->name }}</span>
@@ -43,14 +43,14 @@
                                 <span>{{ $review->reviewrateable->sku }}</span> -
                             @endif
                             <span class="text-primary-500 border-b border-dashed border-primary-500 pb-0 5">
-                                {{ $review->reviewrateable->formatted_price ?? __('Price N/A') }}
+                                {{ $review->reviewrateable->formatted_price ?? __('N/A') }}
                             </span>
                         </p>
                     </dd>
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
                     <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
-                        {{ __('Rating') }}
+                        {{ __('shopper::pages/products.reviews.rating') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
                     <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
-                        {{ __('Content') }}
+                        {{ __('shopper::pages/products.reviews.review_content') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
                     <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
-                        {{ __('Reviewer') }}
+                        {{ __('shopper::pages/products.reviews.reviewer') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
                     <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
-                        {{ __('Created At') }}
+                        {{ __('shopper::layout.forms.label.created_at') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">
@@ -115,16 +115,25 @@
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
                     <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
-                        {{ __('Approved status') }}
+                        {{ __('shopper::pages/products.reviews.approved_status') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">
                             <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 {{ $review->approved ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
-                                {{ $review->approved ? __('Published') : __('Pending') }}
+                                {{ $review->approved ? __('shopper::pages/products.reviews.published') : __('shopper::pages/products.reviews.pending') }}
                             </span>
                         </span>
                         <span class="shrink-0">
-                            <span role="checkbox" tabindex="0" x-on:click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="true" x-data="{ on: @entangle('approved') }" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline sm:ml-auto bg-primary-600">
+                            <span role="checkbox"
+                                  x-data="{ on: @entangle('approved') }"
+                                  x-on:click="on = !on"
+                                  x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }"
+                                  :aria-checked="on.toString()"
+                                  @keydown.space.prevent="on = !on"
+                                  aria-checked="true"
+                                  tabindex="0"
+                                  class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline sm:ml-auto bg-primary-600"
+                            >
                                 <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-5"></span>
                             </span>
                         </span>

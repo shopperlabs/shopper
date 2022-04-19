@@ -1,18 +1,4 @@
 {
-  "Save": "Save",
-  "Update": "Update",
-  "Delete": "Delete",
-  "Create": "Create",
-  "Edit": "Edit",
-  "View": "View",
-
-  "Search": "Search",
-
-  "Collections": "Collections",
-  "Create collection": "Create collection",
-  "Collection type": "Collection type",
-  "Manual": "Manual",
-  "Automated": "Automated",
   "Add the products to this collection one by one.": "Add the products to this collection one by one.",
   "Products that match the conditions you set will automatically be added to collection.": "Products that match the conditions you set will automatically be added to collection.",
 
@@ -44,8 +30,6 @@
   "Legal": "Legal",
   "Manage your store's legal pages such as privacy, terms.": "Manage your store's legal pages such as privacy, terms.",
 
-  "Learn more about": "Learn more about",
-  "Orders": "Orders",
   "Manage customers orders": "Manage customers orders",
   "When customers place orders, this is where all the processing will be done, the management of refunds and the tracking of their order.": "When customers place orders, this is where all the processing will be done, the management of refunds and the tracking of their order.",
   "Search by order #, firstname or email...": "Search by order #, firstname or email...",
@@ -66,11 +50,6 @@
   "View order": "View order",
   "Archived": "Archived",
   "No orders found": "No orders found",
-
-  "Showing": "Showing",
-  "to": "to",
-  "of": "of",
-  "results": "results",
 
   "More actions": "More actions",
   "Cancel Order": "Cancel Order",
@@ -102,15 +81,9 @@
   "Same as shipping address": "Same as shipping address",
   "Archived order :number": "Archived order :number",
   "Are you sure you want to archived this order? This action will change the income you have earned so far in your store.": "Are you sure you want to archived this order? This action will change the income you have earned so far in your store.",
-  "Confirm": "Confirm",
-  "Cancel": "Cancel",
 
-  "Manage Catalog": "Manage Catalog",
-  "Get closer to your first sale by adding and manage products.": "Get closer to your first sale by adding and manage products.",
   "Search product by name": "Search product by name",
-  "Visible": "Visible",
-  "Not visible": "Not visible",
-  "Clear": "Clear",
+
   "More Filters": "More Filters",
   "Products Filters": "Products Filters",
   "Apply deeper filters to your products to display those that interest you.": "Apply deeper filters to your products to display those that interest you.",

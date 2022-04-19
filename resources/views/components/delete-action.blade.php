@@ -49,9 +49,9 @@
                     </x-shopper::buttons.danger>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <x-shopper::buttons.primary @click="open = false;" type="button">
+                    <x-shopper::buttons.default @click="open = false;" type="button">
                         {{ __('shopper::layout.forms.actions.cancel') }}
-                    </x-shopper::buttons.primary>
+                    </x-shopper::buttons.default>
                 </span>
             </div>
         </div>

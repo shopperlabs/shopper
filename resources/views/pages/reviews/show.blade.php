@@ -1,4 +1,4 @@
-<x-shopper::layouts.app :title="__('Reviews for :product', ['product' => $review->reviewrateable->name])">
+<x-shopper::layouts.app :title="__('shopper::pages/products.reviews.view', ['product' => $review->reviewrateable->name])">
 
     <livewire:shopper-reviews.show :review="$review" />
 

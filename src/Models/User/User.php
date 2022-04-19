@@ -118,7 +118,7 @@ class User extends Authenticatable
             return $this->birth_date->formatLocalized('%d, %B %Y');
         }
 
-        return __('Not defined');
+        return __('shopper::messages.not_defined');
     }
 
     public function getRolesLabelAttribute(): string

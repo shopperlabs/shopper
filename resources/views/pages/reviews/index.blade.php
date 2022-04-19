@@ -1,4 +1,4 @@
-<x-shopper::layouts.app :title="__('Products Reviews')">
+<x-shopper::layouts.app :title="__('shopper::layout.sidebar.reviews')">
 
     <livewire:shopper-reviews.browse />
 

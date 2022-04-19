@@ -1,8 +1,7 @@
 <div>
-
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Reviews') }}
+            {{ __('shopper::layout.sidebar.reviews') }}
         </x-slot>
     </x-shopper::heading>
 
@@ -361,8 +360,8 @@
                 </svg>
             </div>
             <div class="mt-5 w-full sm:max-w-md space-y-3 text-center">
-                <p class="text-base leading-6 text-secondary-900 dark:text-white font-medium">{{ __('Customers reviews') }}</p>
-                <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('This is where you will see the reviews of your customers and the ratings given to your products.') }}</p>
+                <p class="text-base leading-6 text-secondary-900 dark:text-white font-medium">{{ __('shopper::pages/products.reviews.title') }}</p>
+                <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::pages/products.reviews.description') }}</p>
             </div>
         </div>
     @else
@@ -371,6 +370,6 @@
         </div>
     @endif
 
-    <x-shopper::learn-more name="reviews" link="reviews" />
+    <x-shopper::learn-more name="shopper::layout.sidebar.reviews" link="reviews" />
 
 </div>

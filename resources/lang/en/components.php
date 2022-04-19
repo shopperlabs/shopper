@@ -31,12 +31,16 @@ return [
         'status' => [
             'delete' => 'Delete',
             'updated' => 'Updated',
+            'verified' => 'Verified',
         ],
 
         'messages' => [
             'delete' => 'The :name has successfully removed!',
             'enabled' => 'The :name has successfully enabled!',
             'disabled' => 'The :name has successfully disabled!',
+            'verified' => 'The :name has successfully verified!',
+            'approved' => 'The :name has successfully approved!',
+            'disapproved' => 'The :name has successfully disapproved!',
         ],
     ],
 

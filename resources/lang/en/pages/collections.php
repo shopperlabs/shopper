@@ -59,4 +59,13 @@ return [
     ],
 
     'empty_collections' => 'There are no products in this collection. Add or change conditions to dynamically add products.',
+
+    'modal' => [
+        'title' => 'Add Products to collection',
+        'search' => 'Search product',
+        'search_placeholder' => 'Search product by name',
+        'action' => 'Add Selected Products',
+        'stock' => ':stock available',
+        'success_message' => 'Selected product(s) added',
+    ],
 ];

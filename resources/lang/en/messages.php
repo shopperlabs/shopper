@@ -48,5 +48,23 @@ return [
     ],
 
     'log_out' => 'Log out',
+    'hide' => 'Hide',
+    'show' => 'show',
+    'generate' => 'Generate',
+    'product' => 'Product',
+    'male' => 'Male',
+    'female' => 'Female',
+    'not_defined' => 'Not defined',
+    'unlimited' => 'unlimited',
+    'used' => 'used',
+    'once_per_user' => 'Once per user',
+    'scheduled' => 'Scheduled',
+    'active_for_users' => 'Active For users',
+    'from_date' => 'From :date',
+    'showing' => 'Showing',
+    'to' => 'to',
+    'of' => 'of',
+    'results' => 'results',
+    'Summary' => 'Summary',
 
 ];
