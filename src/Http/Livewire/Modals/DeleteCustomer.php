@@ -18,14 +18,14 @@ class DeleteCustomer extends ModalComponent
     {
         (new UserRepository())->getById($this->customerId)->delete();
 
-        session()->flash('success', __("You have successfully archived this customer, it's no longer available in your customer list."));
+        session()->flash('success', __('shopper::pages/customers.modal.success_message'));
 
         $this->redirectRoute('shopper.customers.index');
     }
 
     public static function modalMaxWidth(): string
     {
-        return 'lg';
+        return 'xl';
     }
 
     public function render()

@@ -38,7 +38,10 @@ class ReviewsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Review::whereIn('id', $this->selectedKeys())->delete();
 
-            $this->notification()->success(__('Deleted'), __('The review(s) has successfully deleted!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.delete'),
+                __('::components.tables.messages.delete', ['name' => 'review(s)'])
+            );
         }
 
         $this->selected = [];
@@ -51,7 +54,10 @@ class ReviewsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Review::whereIn('id', $this->selectedKeys())->update(['approved' => true]);
 
-            $this->notification()->success(__('Updated'), __('The reviews has successfully approved!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.updated'),
+                __('shopper::components.tables.messages.approved', ['name' => 'reviews'])
+            );
         }
 
         $this->selected = [];
@@ -64,7 +70,10 @@ class ReviewsTable extends DataTableComponent
         if ($this->selectedRowsQuery->count() > 0) {
             Review::whereIn('id', $this->selectedKeys())->update(['approved' => false]);
 
-            $this->notification()->success(__('Updated'), __('The reviews has successfully disapproved!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.updated'),
+                __('::components.tables.messages.disapproved', ['name' => 'reviews'])
+            );
         }
 
         $this->selected = [];
@@ -75,11 +84,11 @@ class ReviewsTable extends DataTableComponent
     public function filters(): array
     {
         return [
-            'approved' => Filter::make('Approved Review')
+            'approved' => Filter::make(__('shopper::pages/products.reviews.approved'))
                 ->select([
-                    '' => __('Any'),
-                    'yes' => __('Yes'),
-                    'no' => __('No'),
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
                 ]),
         ];
     }
@@ -87,15 +96,15 @@ class ReviewsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Product', 'name')
+            Column::make(__('shopper::messages.product'), 'name')
                 ->sortable()
                 ->asHtml()
                 ->secondaryHeader(function () {
                     return view('shopper::livewire.tables.cells.input-search', ['field' => 'name', 'columnSearch' => $this->columnSearch]);
                 }),
-            Column::make('Reviewer')->sortable(),
-            Column::make('Review')->sortable(),
-            Column::make('Status')->sortable(),
+            Column::make(__('shopper::pages/products.reviews.reviewer'))->sortable(),
+            Column::make(__('shopper::pages/products.reviews.review'))->sortable(),
+            Column::make(__('shopper::pages/products.reviews.status'))->sortable(),
         ];
     }
 

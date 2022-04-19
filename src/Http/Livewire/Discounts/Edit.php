@@ -51,8 +51,8 @@ class Edit extends AbstractBaseComponent
                 $customerArray['name'] = $customerCondition->discountable->full_name;
                 $customerArray['email'] = $customerCondition->discountable->email;
 
-                array_push($this->customersDetails, $customerArray);
-                array_push($this->customersIds, $customerCondition->discountable->id);
+                $this->customersDetails[] = $customerArray;
+                $this->customersIds[] = $customerCondition->discountable->id;
             }
         }
 
@@ -63,8 +63,8 @@ class Edit extends AbstractBaseComponent
                 $productArray['name'] = $productCondition->discountable->name;
                 $productArray['image'] = $productCondition->discountable->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'));
 
-                array_push($this->productsDetails, $productArray);
-                array_push($this->productsIds, $productCondition->discountable->id);
+                $this->productsDetails[] = $productArray;
+                $this->productsIds[] = $productCondition->discountable->id;
             }
         }
     }

@@ -1,18 +1,18 @@
 <div x-data="{ on: @entangle('is_enabled') }">
     <x-shopper::breadcrumb back="shopper.brands.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.brands.index')" title="Brands" />
+        <x-shopper::breadcrumb.link :link="route('shopper.brands.index')" title="shopper::layout.sidebar.brands" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('Add brand') }}
+            {{ __('shopper::messages.actions_label.add_new', ['name' => 'brand']) }}
         </x-slot>
 
         <x-slot name="action">
             <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('Save') }}
+                {{ __('shopper::layout.forms.actions.save') }}
             </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>
@@ -21,12 +21,12 @@
         <div class="sm:col-span-4 space-y-5">
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
-                    <x-shopper::forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                    <x-shopper::forms.group label="shopper::layout.forms.label.name" for="name" isRequired :error="$errors->first('name')">
                         <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-4">
-                    <x-shopper::forms.group label="Website" for="website">
+                    <x-shopper::forms.group label="shopper::layout.forms.label.website" for="website">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-secondary-500 dark:text-secondary-400 sm:text-sm sm:leading-5">https://</span>
                         </div>
@@ -42,13 +42,13 @@
                             </span>
                         </div>
                         <div class="ml-3 text-sm leading-5">
-                            <x-shopper::label for="online" :value="__('Visibility')" />
-                            <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('Set brand visibility for the customers.') }}</p>
+                            <x-shopper::label for="online" :value="__('shopper::layout.forms.label.visibility')" />
+                            <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::messages.actions_label.set_visibility', ['name' => 'brand']) }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="mt-5">
-                    <x-shopper::forms.group label="Description" for="description">
+                    <x-shopper::forms.group label="shopper::layout.forms.label.description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper::forms.group>
                 </div>
@@ -66,7 +66,7 @@
             <aside class="sticky top-6 space-y-5">
                 <div class="bg-white dark:bg-secondary-800 rounded-md shadow overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="p-4 sm:p-5">
-                        <x-shopper::label :value="__('Image preview')" />
+                        <x-shopper::label :value="__('shopper::layout.forms.label.image_preview')" />
                         <div class="mt-1">
                             <livewire:shopper-forms.uploads.single />
                         </div>

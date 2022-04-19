@@ -1,8 +1,7 @@
 <div>
-
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Customers') }}
+            {{ __('shopper::layout.sidebar.customers') }}
         </x-slot>
 
         <x-slot name="action">
@@ -11,7 +10,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper::buttons.primary :link="route('shopper.customers.create')">
-                                {{ __('Add customer') }}
+                                {{ __('shopper::messages.actions_label.add_new', ['name' => 'customer']) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -22,9 +21,9 @@
 
     @if($total === 0)
         <x-shopper::empty-state
-            :title="__('Manage customer orders & details')"
-            :content="__('This is where you can manage your customer information and view their purchase history.')"
-            :button="__('Add customer')"
+            :title="__('shopper::pages/customers.title')"
+            :content="__('shopper::pages/customers.content')"
+            :button="__('shopper::messages.actions_label.add_new', ['name' => 'customer'])"
             permission="add_customers"
             :url="route('shopper.customers.create')"
         >
@@ -178,6 +177,6 @@
         </div>
     @endif
 
-    <x-shopper::learn-more name="customers" link="customers" />
+    <x-shopper::learn-more name="shopper::layout.sidebar.customers" link="customers" />
 
 </div>

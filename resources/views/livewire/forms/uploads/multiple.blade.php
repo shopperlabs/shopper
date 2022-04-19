@@ -17,16 +17,16 @@
             </svg>
             <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
                 <span class="inline-flex items-center px-2.5 py-1.5 border border-secondary-300 shadow-sm text-xs font-medium rounded text-secondary-700 bg-white hover:bg-secondary-50 dark:bg-secondary-800 dark:border-secondary-700 dark:text-white focus:outline-none transition duration-150 ease-in-out">
-                    {{ __('Browse files') }}
+                    {{ __('shopper::components.files.browse') }}
                 </span>
-                {{ __('or drag and drop') }}
+                {{ __('shopper::components.files.drag_n_drop') }}
             </p>
             <p class="mt-1 text-xs text-secondary-500 dark:text-secondary-400">
-                {{ __('PNG, JPG, GIF up to 5MB') }}
+                {{ __('shopper::components.files.type_size', ['size' => 5]) }}
             </p>
             <div class="mt-1" wire:loading.flex wire.target="files">
                 <x-shopper::loader class="text-primary-600" />
-                <span class="text-sm leading-5 text-secondary-400 dark:text-secondary-500">{{ __('Processing Files..') }}</span>
+                <span class="text-sm leading-5 text-secondary-400 dark:text-secondary-500">{{ __('shopper::components.files.uploading') }}</span>
             </div>
         </div>
         <input

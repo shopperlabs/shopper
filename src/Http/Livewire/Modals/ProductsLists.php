@@ -42,8 +42,8 @@ class ProductsLists extends ModalComponent
         $this->emitUp('onProductsAddInCollection');
 
         $this->notification()->success(
-            __('Added'),
-            __('Selected product(s) added')
+            __('shopper::layout.status.added'),
+            __('shopper::pages/collections.modal.success_message')
         );
 
         $this->closeModal();

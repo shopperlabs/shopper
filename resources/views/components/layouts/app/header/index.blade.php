@@ -9,7 +9,7 @@
             {{-- Search Component --}}
         </div>
         <div class="ml-4 flex items-center md:ml-6 space-x-4">
-            <a x-tooltip.raw="{{ __('View Site') }}" href="{{ url('/') }}" target="_blank" class="text-secondary-500 hover:text-secondary-900 dark:text-secondary-400 dark:hover:text-white">
+            <a x-tooltip.raw="{{ __('shopper::layout.view_site') }}" href="{{ url('/') }}" target="_blank" class="text-secondary-500 hover:text-secondary-900 dark:text-secondary-400 dark:hover:text-white">
                 <svg class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>

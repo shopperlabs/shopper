@@ -11,7 +11,7 @@
             @endif
             <a href="{{ route('shopper.categories.edit', $row) }}" class="ml-2 truncate hover:text-secondary-600 font-medium">
                 <span>
-                    {{ $row->name }} @if($row->parent_id)<span class="text-secondary-500 font-normal dark:text-secondary-400">{{ __('in :parent', ['parent' => $row->parent_name]) }}</span>@endif
+                    {{ $row->name }} @if($row->parent_id)<span class="text-secondary-500 font-normal dark:text-secondary-400">{{ __('shopper::pages/categories.parent', ['parent' => $row->parent_name]) }}</span>@endif
                 </span>
             </a>
         </div>

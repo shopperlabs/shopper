@@ -36,7 +36,7 @@
                 <div class="px-4 sm:px-6 py-5">
                     <span class="flex w-full rounded-md shadow-sm">
                         <x-shopper::buttons.default @click="modalDemo = false" class="w-full block justify-center" type="button">
-                            {{ __('Close') }}
+                            {{ __('shopper::layout.forms.actions.close') }}
                         </x-shopper::buttons.default>
                     </span>
                 </div>

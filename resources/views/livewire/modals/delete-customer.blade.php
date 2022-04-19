@@ -6,11 +6,11 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white" id="modal-headline">
-                    {{ __('Archived this customer') }}
+                    {{ __('shopper::pages/customers.modal.title') }}
                 </h3>
                 <div class="mt-2">
                     <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __('Are you sure you want to deactivate this customer? All of his data (orders & addresses) will be permanently removed from your store forever. This action cannot be undone.') }}
+                        {{ __('shopper::pages/customers.modal.description') }}
                     </p>
                 </div>
             </div>
@@ -21,12 +21,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper::buttons.danger wire:click="delete" type="button">
                 <x-shopper::loader wire:loading wire:target="delete" class="text-white" />
-                {{ __('Confirm') }}
+                {{ __('shopper::layout.forms.actions.confirm') }}
             </x-shopper::buttons.danger>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
-                {{ __('Cancel') }}
+                {{ __('shopper::layout.forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

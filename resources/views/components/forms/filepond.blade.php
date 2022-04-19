@@ -14,7 +14,7 @@
                 allowFileTypeValidation: {{ $attributes->has('allowFileTypeValidation') ? 'true' : 'false' }},
                 acceptedFileTypes: {!! $attributes->get('acceptedFileTypes') ?? 'null' !!},
                 allowFileSizeValidation: {{ $attributes->has('allowFileSizeValidation') ? 'true' : 'false' }},
-                maxFileSize: {!! $attributes->has('maxFileSize') ? "'".$attributes->get('maxFileSize')."'" : 'null' !!},
+                maxFileSize: {!! $attributes->has('maxFileSize') ? "'" . $attributes->get('maxFileSize') . "'" : 'null' !!},
                 server: {
                     process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
                         @this.upload('{{ $attributes->whereStartsWith('wire:model')->first() }}', file, load, error, progress)

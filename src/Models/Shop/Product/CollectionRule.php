@@ -33,26 +33,26 @@ class CollectionRule extends Model
     public function getFormattedRule(): string
     {
         return [
-            'product_title' => __('Product title'),
-            'product_brand' => __('Product brand'),
-            'product_category' => __('Product category'),
-            'product_price' => __('Product price'),
-            'compare_at_price' => __('Compare at price'),
-            'inventory_stock' => __('Inventory stock'),
+            'product_title' => __('shopper::pages/collections.rules.product_title'),
+            'product_brand' => __('shopper::pages/collections.rules.product_brand'),
+            'product_category' => __('shopper::pages/collections.rules.product_category'),
+            'product_price' => __('shopper::pages/collections.rules.product_price'),
+            'compare_at_price' => __('shopper::pages/collections.rules.compare_at_price'),
+            'inventory_stock' => __('shopper::pages/collections.rules.inventory_stock'),
         ][$this->rule];
     }
 
     public function getFormattedOperator(): string
     {
         return [
-            'equals_to' => __('Equals to'),
-            'not_equals_to' => __('Not equals to'),
-            'less_than' => __('Less than'),
-            'greater_than' => __('Greater than'),
-            'starts_with' => __('Starts with'),
-            'ends_with' => __('End with'),
-            'contains' => __('Contains'),
-            'not_contains' => __('Not contains'),
+            'equals_to' => __('shopper::pages/collections.operator.equals_to'),
+            'not_equals_to' => __('shopper::pages/collections.operator.not_equals_to'),
+            'less_than' => __('shopper::pages/collections.operator.less_than'),
+            'greater_than' => __('shopper::pages/collections.operator.greater_than'),
+            'starts_with' => __('shopper::pages/collections.operator.starts_with'),
+            'ends_with' => __('shopper::pages/collections.operator.ends_with'),
+            'contains' => __('shopper::pages/collections.operator.contains'),
+            'not_contains' => __('shopper::pages/collections.operator.not_contains'),
         ][$this->operator];
     }
 

@@ -1,4 +1,4 @@
-<x-shopper::layouts.base :title="__('Login with Two-Factor')">
+<x-shopper::layouts.base :title="__('shopper::pages/auth.two_factor.title')">
 
     <div x-data="{ recovery: false }" class="min-h-screen flex items-center justify-center">
         <div class="max-w-md w-full px-6 space-y-4">
@@ -11,13 +11,13 @@
                 <div class="text-center">
                     <h2 class="inline-flex items-center text-xl font-medium font-heading text-center leading-9 text-secondary-900 dark:text-white">
                         <x-heroicon-o-shield-check class="w-10 h-10 text-primary-600 -ml-1 mr-2" />
-                        {{ __('Authenticate Your Account') }}
+                        {{ __('shopper::pages/auth.two_factor.subtitle') }}
                     </h2>
                     <p class="mt-1 text-sm leading-5 text-center text-secondary-500 dark:text-secondary-400" x-show="! recovery">
-                        {{ __('Please confirm access to your account by entering the authentication code provided by your authenticator application.') }}
+                        {{ __('shopper::pages/auth.two_factor.authentication_code') }}
                     </p>
                     <p class="mt-1 text-sm leading-5 text-center text-secondary-500 dark:text-secondary-400" x-show="recovery" style="display: none">
-                        {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
+                        {{ __('shopper::pages/auth.two_factor.recovery_code') }}
                     </p>
                 </div>
                 <form class="mt-5" action="{{ route('shopper.two-factor.post-login') }}" method="POST">
@@ -32,7 +32,7 @@
 
                     <div class="mt-5 flex items-center space-x-4">
                         <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                            {{ __("Can't remember this code?") }}
+                            {{ __("shopper::pages/auth.two_factor.remember") }}
                             <button
                                 class="ml-1 text-sm text-secondary-500 hover:text-secondary-900 underline cursor-pointer dark:text-secondary-400 dark:hover:text-white"
                                 type="button"
@@ -42,7 +42,7 @@
                                     $nextTick(() => { $refs.recovery_code.focus() })
                                 "
                             >
-                                {{ __('Use a recovery code') }}
+                                {{ __('shopper::pages/auth.two_factor.use_recovery_code') }}
                             </button>
 
                             <button
@@ -55,11 +55,11 @@
                                     $nextTick(() => { $refs.code.focus() })
                                 "
                             >
-                                {{ __('Use an authentication code') }}
+                                {{ __('shopper::pages/auth.two_factor.use_authentication_code') }}
                             </button>
                         </p>
                         <x-shopper::buttons.primary type="submit">
-                            {{ __('Login') }}
+                            {{ __('shopper::pages/auth.two_factor.action') }}
                         </x-shopper::buttons.primary>
                     </div>
                 </form>

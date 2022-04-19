@@ -29,11 +29,6 @@ class Profile extends Component
     public bool $optIn;
     public bool $hasEnabledTwoFactor;
 
-    /**
-     * Component Mount instance.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $customer
-     */
     public function mount($customer)
     {
         $this->customer = $customer;
@@ -157,6 +152,6 @@ class Profile extends Component
     {
         $this->customer->update([$field => $value]);
 
-        $this->notification()->success(__('Updated'), __($message));
+        $this->notification()->success(__('shopper::layout.status.updated'), __($message));
     }
 }

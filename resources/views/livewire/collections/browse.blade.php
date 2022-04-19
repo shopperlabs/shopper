@@ -2,7 +2,7 @@
 
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Collections') }}
+            {{ __('shopper::layout.sidebar.collections') }}
         </x-slot>
 
         <x-slot name="action">
@@ -11,7 +11,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper::buttons.primary :link="route('shopper.collections.create')">
-                                {{ __('Add collection') }}
+                                {{ __('shopper::messages.actions_label.add_new', ['name' => 'collection']) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -22,9 +22,9 @@
 
     @if($total === 0)
         <x-shopper::empty-state
-            :title="__('Organize your products into collection categories')"
-            :content="__('Create and manage all your collections to help your customers easily find products.')"
-            :button="__('Add collection')"
+            :title="__('shopper::pages/collections.title')"
+            :content="__('shopper::pages/collections.content')"
+            :button="__('shopper::messages.actions_label.add_new', ['name' => 'collection'])"
             permission="add_collections"
             :url="route('shopper.collections.create')"
         >
@@ -154,6 +154,6 @@
         </div>
     @endif
 
-    <x-shopper::learn-more name="collections" link="collections" />
+    <x-shopper::learn-more name="shopper::layout.sidebar.collections" link="collections" />
 
 </div>

@@ -1,7 +1,7 @@
 <div>
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Categories') }}
+            {{ __('shopper::layout.sidebar.categories') }}
         </x-slot>
 
         <x-slot name="action">
@@ -10,7 +10,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper::buttons.primary :link="route('shopper.categories.create')">
-                                {{ __('Add category') }}
+                                {{ __('shopper::messages.actions_label.add_new', ['name' => 'category']) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -21,9 +21,9 @@
 
     @if($total === 0)
         <x-shopper::empty-state
-            :title="__('Organize your products into categories')"
-            :content="__('Create and manage all your store categories to help your customers easily find products.')"
-            :button="__('Add category')"
+            :title="__('shopper::pages/categories.title')"
+            :content="__('shopper::pages/categories.content')"
+            :button="__('shopper::messages.actions_label.add_new', ['name' => 'category'])"
             permission="add_categories"
             :url="route('shopper.categories.create')"
         >
@@ -118,10 +118,6 @@
         </div>
     @endif
 
-    <x-shopper::learn-more name="categories" link="categories" />
+    <x-shopper::learn-more name="shopper::layout.sidebar.categories" link="categories" />
 
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
-@endpush

@@ -20,8 +20,8 @@
 </x-livewire-tables::table.cell>
 
 <x-livewire-tables::table.cell class="text-secondary-500 font-medium">
-    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $row->opt_in ? 'bg-green-100 text-green-800': 'bg-secondary-100 text-secondary-800 dark:bg-secondary-700 dark:text-secondary-300' }}">
-        {{ $row->opt_in ? __('Subscribed') : __('Not subscribed') }}
+    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $row->opt_in ? 'bg-green-100 text-green-800': 'bg-secondary-100 text-secondary-800 dark:bg-secondary-600 dark:text-secondary-300' }}">
+        {{ $row->opt_in ? __('shopper::layout.forms.label.subscribed') : __('shopper::layout.forms.label.not_subscribed') }}
     </span>
 </x-livewire-tables::table.cell>
 

@@ -1,7 +1,7 @@
 <div x-data="{ modal: false, show: false, on: @if($is_active) true @else false @endif }">
     <x-shopper::breadcrumb back="shopper.discounts.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.discounts.index')" title="Discounts" />
+        <x-shopper::breadcrumb.link :link="route('shopper.discounts.index')" title="shopper::layout.sidebar.discounts" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -12,7 +12,7 @@
         <x-slot name="action">
             <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('Update') }}
+                {{ __('shopper::layout.forms.actions.update') }}
             </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>

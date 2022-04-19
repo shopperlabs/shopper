@@ -33,7 +33,6 @@ class ShopperServiceProvider extends PackageServiceProvider
         $package
             ->name('shopper')
             ->hasCommands($this->getCommands())
-            ->hasTranslations()
             ->hasViews()
             ->hasViewComponents(config('shopper.components.prefix', 'shopper'));
     }
@@ -129,9 +128,7 @@ class ShopperServiceProvider extends PackageServiceProvider
     public function registerDatabase()
     {
         $this->loadMigrationsFrom(SHOPPER_PATH . '/database/migrations');
-        $this->publishes([
-            SHOPPER_PATH . '/database/seeders' => database_path('seeders'),
-        ], 'shopper-seeders');
+        $this->publishes([SHOPPER_PATH . '/database/seeders' => database_path('seeders')], 'shopper-seeders');
     }
 
     public function registeringPackage()
@@ -157,5 +154,16 @@ class ShopperServiceProvider extends PackageServiceProvider
     protected function registerViews()
     {
         $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
+
+        $langPath = 'vendor/shopper';
+
+        $langPath = (function_exists('lang_path'))
+            ? lang_path($langPath)
+            : resource_path('lang/' . $langPath);
+
+        $this->loadTranslationsFrom(SHOPPER_PATH . '/resources/lang', 'shopper');
+        $this->loadJsonTranslationsFrom($langPath);
+
+        $this->publishes([SHOPPER_PATH . '/resources/lang' => $langPath], 'shopper-lang');
     }
 }

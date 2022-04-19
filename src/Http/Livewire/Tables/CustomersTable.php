@@ -31,11 +31,11 @@ class CustomersTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Full Name', 'first_name')
+            Column::make(__('shopper::layout.forms.label.full_name'), 'first_name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Email Subscription', 'opt_in')->sortable(),
-            Column::make('Registered At', 'created_at')
+            Column::make(__('shopper::layout.forms.label.email_subscription'), 'opt_in')->sortable(),
+            Column::make(__('shopper::layout.forms.label.registered_at'), 'created_at')
                 ->addClass('text-right')
                 ->sortable(),
         ];
@@ -44,9 +44,15 @@ class CustomersTable extends DataTableComponent
     public function verified()
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new UserRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['email_verified_at' => now()]);
+            (new UserRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->update(['email_verified_at' => now()]);
 
-            $this->notification()->success(__('Verified'), __('The users has successfully verified!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.verified'),
+                __('shopper::components.tables.messages.verified', ['name' => 'customers'])
+            );
         }
 
         $this->selected = [];
@@ -57,9 +63,15 @@ class CustomersTable extends DataTableComponent
     public function deleteSelected()
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new UserRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
+            (new UserRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->delete();
 
-            $this->notification()->success(__('Deleted'), __('The users has successfully removed!'));
+            $this->notification()->success(
+                __('shopper::components.tables.status.delete'),
+                __('shopper::components.tables.messages.delete', ['name' => 'customers'])
+            );
         }
 
         $this->selected = [];
@@ -70,17 +82,17 @@ class CustomersTable extends DataTableComponent
     public function filters(): array
     {
         return [
-            'mailing' => Filter::make('E-mail Subscription')
+            'mailing' => Filter::make(__('shopper::layout.forms.label.email_subscription'))
                 ->select([
-                    '' => __('Any'),
-                    'yes' => __('Yes'),
-                    'no' => __('No'),
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
                 ]),
-            'verified' => Filter::make('E-mail Verified')
+            'verified' => Filter::make(__('shopper::layout.forms.label.email_verified'))
                 ->select([
-                    '' => __('Any'),
-                    'yes' => __('Yes'),
-                    'no' => __('No'),
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
                 ]),
         ];
     }

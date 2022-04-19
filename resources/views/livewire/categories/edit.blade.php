@@ -1,7 +1,7 @@
 <div x-data="{ on: @entangle('is_enabled') }">
     <x-shopper::breadcrumb back="shopper.categories.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.categories.index')" title="Categories" />
+        <x-shopper::breadcrumb.link :link="route('shopper.categories.index')" title="shopper::layout.sidebar.categories" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -12,7 +12,7 @@
         <x-slot name="action">
             <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('Update') }}
+                {{ __('shopper::layout.forms.actions.update') }}
             </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>
@@ -21,14 +21,14 @@
         <div class="sm:col-span-4 space-y-5">
             <div class="p-4 sm:p-5 bg-white rounded-lg shadow dark:bg-secondary-800">
                 <div>
-                    <x-shopper::forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                    <x-shopper::forms.group label="shopper::layout.forms.label.name" for="name" isRequired :error="$errors->first('name')">
                         <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-4">
                     <x-shopper::forms.group label="Parent" for="category" wire:ignore>
                         <x-shopper::forms.select wire:model.defer="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
-                            <option value="0">{{ __('No parent category') }}</option>
+                            <option value="0">{{ __('shopper::pages/categories.empty_parent') }}</option>
                             @foreach($categories as $cat)
                                 @if($cat->id !== $categoryId)
                                     <option value="{{ $cat->id }}" @if($cat->id === $parent_id) selected @endif>
@@ -52,13 +52,13 @@
                             </span>
                         </div>
                         <div class="ml-3 text-sm leading-5">
-                            <x-shopper::label for="online" :value="__('Visibility')" />
-                            <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('Set category visibility for the customers.') }}</p>
+                            <x-shopper::label for="online" :value="__('shopper::layout.forms.label.visibility')" />
+                            <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::messages.actions_label.set_visibility', ['name' => 'category']) }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="mt-5">
-                    <x-shopper::forms.group label="Description" for="description">
+                    <x-shopper::forms.group label="shopper::layout.forms.label.description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper::forms.group>
                 </div>
@@ -76,7 +76,7 @@
             <aside class="sticky top-6 space-y-5">
                 <div class="bg-white rounded-md shadow overflow-hidden dark:bg-secondary-800">
                     <div class="p-4 sm:p-5">
-                        <x-shopper::label :value="__('Image preview')" />
+                        <x-shopper::label :value="__('shopper::layout.forms.label.image_preview')" />
                         <div class="mt-1">
                             <livewire:shopper-forms.uploads.single :media="$category->getFirstMedia(config('shopper.system.storage.disks.uploads'))" />
                         </div>

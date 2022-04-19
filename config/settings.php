@@ -15,7 +15,7 @@ return [
     'items' => [
         [
             'name' => 'General',
-            'description' => 'View and update your store informations.',
+            'description' => 'View and update your store information.',
             'icon' => 'heroicon-o-cog',
             'route' => 'shopper.settings.shop',
             'permission' => null,
