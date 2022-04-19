@@ -128,9 +128,9 @@
                                         </div>
                                         <div class="relative">
                                             <span class="inline-flex rounded-md shadow-sm">
-                                                <x-shopper::buttons.primary wire:click.prevent="remove({{ $conditionKey }})" type="button">
+                                                <x-shopper::buttons.default wire:click.prevent="remove({{ $conditionKey }})" type="button">
                                                     <x-heroicon-o-trash class="w-5 h-5" />
-                                                </x-shopper::buttons.primary>
+                                                </x-shopper::buttons.default>
                                             </span>
                                         </div>
                                     </div>
@@ -139,9 +139,9 @@
                             @if(count($conditions) < 4)
                                 <div class="relative">
                                     <span class="inline-flex rounded-md shadow-sm">
-                                        <x-shopper::buttons.primary wire:click.prevent="add({{ $i }})" type="button">
+                                        <x-shopper::buttons.default wire:click.prevent="add({{ $i }})" type="button">
                                             {{ count($conditions) === 0 ? __('shopper::pages/collections.conditions.add') : __('shopper::pages/collections.conditions.add_another') }}
-                                        </x-shopper::buttons.primary>
+                                        </x-shopper::buttons.default>
                                     </span>
                                 </div>
                             @endif

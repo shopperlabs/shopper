@@ -51,7 +51,6 @@ return [
         'add_customers' => 'Add Customers',
         'search_customer' => 'Search customer by name',
         'add_selected_customers' => 'Add Selected Customers',
-        '' => '',
     ],
 
 ];

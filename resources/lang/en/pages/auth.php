@@ -67,6 +67,5 @@ return [
 
         'profile_title' => 'Profile Information',
         'profile_description' => 'Update your account\'s profile information and email address.',
-        '' => '',
     ],
 ];

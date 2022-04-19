@@ -3075,9 +3075,6 @@ select{
 .right-4{
   right: 1rem;
 }
-.right-7{
-  right: 1.75rem;
-}
 .right-3{
   right: 0.75rem;
 }
@@ -3178,10 +3175,6 @@ select{
 .-my-1{
   margin-top: -0.25rem;
   margin-bottom: -0.25rem;
-}
-.mx-3{
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
 }
 .my-3{
   margin-top: 0.75rem;
@@ -7734,10 +7727,6 @@ select{
 .dark .group:focus .dark\:group-focus\:bg-secondary-700{
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
-}
-.dark .group:focus .dark\:group-focus\:text-secondary-400{
-  --tw-text-opacity: 1;
-  color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 .dark .group:focus .dark\:group-focus\:ring-secondary-600{
   --tw-ring-opacity: 1;
