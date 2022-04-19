@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Bug Report
-    url: https://github.com/shopperlabs/framework/discussions/new
+    url: https://github.com/shopperlabs/framework/issues/new
     about: Submit a bug or an issue
   - name: Feature request
     url: https://github.com/shopperlabs/framework/discussions/new
