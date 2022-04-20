@@ -20,4 +20,25 @@ return [
         'remove' => 'Are you sure you want to delete this review? This review will can\'t be recover no more.',
     ],
 
+    'attributes' => [
+        'title' => 'Product Attributes',
+        'description' => 'All the attributes associated with this product.',
+        'add' => 'Add attribute',
+        'empty_values' => 'No attributes',
+
+        'session' => [
+            'delete' => 'Attribute removed',
+            'delete_message' => 'You have successfully removed this attribute to product!',
+            'delete_value' => 'Attribute value removed',
+            'delete_value_message' => 'You have successfully removed the value of this attribute!',
+            'added' => 'Attribute Added',
+            'added_message' => 'You have successfully added an attribute to this product!',
+        ],
+
+        'modals' => [
+            'title' => 'Add new attribute with value',
+            'input_placeholder' => 'Select the attribute to add',
+        ],
+    ],
+
 ];

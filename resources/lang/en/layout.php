@@ -77,6 +77,7 @@ return [
             'save' => 'Save',
             'subscribe' => 'Subscribe',
             'remove' => 'Remove',
+            'remove_all' => 'Remove All',
             'enabled_two_factor' => 'Enable Two Factor',
             'regenerate' => 'Regenerate Recovery Codes',
             'show_recovery_code' => 'Show Recovery Codes',

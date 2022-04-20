@@ -3,23 +3,22 @@
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
-
     <x-slot name="title">
-        {{ __('Add new attribute with value') }}
+        {{ __('shopper::pages/products.attributes.modals.title') }}
     </x-slot>
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2">
             <x-shopper::forms.group label="Attribute" for="attribute_id" class="sm:col-span-2" :error="$errors->first('attribute_id')" isRequired>
                 <x-shopper::forms.select wire:model="attribute_id" id="attribute_id">
-                    <option value="0">{{ __('Select the attribute to add') }}</option>
+                    <option value="0">{{ __('shopper::pages/products.attributes.modals.input_placeholder') }}</option>
                     @foreach($attributes as $attribute)
                         <option value="{{ $attribute['id'] }}" @if($loop->first) selected @endif>{{ $attribute['name'] }}</option>
                     @endforeach
                 </x-shopper::forms.select>
             </x-shopper::forms.group>
             <div class="sm:col-span-2">
-                <x-shopper::label for="value" value="{{ __('Value') }}" />
+                <x-shopper::label for="value" value="{{ __('shopper::layout.forms.label.value') }}" />
                 <div class="mt-1">
                     @if($type === 'text')
                         <x-shopper::forms.input wire:model.lazy="value" id="value" type="text" autocomplete="off" required />
@@ -77,12 +76,12 @@
         <span class="flex w-full sm:ml-3 sm:w-auto">
             <x-shopper::buttons.primary wire:click="save" type="button" wire.loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                {{ __('Add attribute') }}
+                {{ __('shopper::pages/products.attributes.add') }}
             </x-shopper::buttons.primary>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="closeModal" type="button">
-                {{ __('Cancel') }}
+                {{ __('shopper::layout.forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>
