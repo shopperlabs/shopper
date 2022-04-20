@@ -1,14 +1,14 @@
 <div x-data class="bg-white dark:bg-secondary-800 rounded-lg p-4 sm:p-6 shadow-md">
     <div class="pb-5 border-b border-secondary-200 dark:border-secondary-700 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0">
         <div class="flex-1 min-w-0 max-w-2xl">
-            <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Product Attributes') }}</h2>
+            <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('shopper::pages/products.attributes.title') }}</h2>
             <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400 leading-5">
-                {{ __('All the attributes associated with this product.') }}
+                {{ __('shopper::pages/products.attributes.description') }}
             </p>
         </div>
         <div>
-            <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.add-product-attribute', {{ json_encode([$product->id, $attributes]) }})" type="button">
-                {{ __('Add attribute') }}
+            <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.add-product-attribute', {{ json_encode([$product->id]) }})" type="button">
+                {{ __('shopper::pages/products.attributes.add') }}
             </x-shopper::buttons.primary>
         </div>
     </div>
@@ -26,7 +26,7 @@
                         </div>
                         <span class="shrink-0 flex items-start space-x-4">
                             <button wire:click="removeProductAttribute({{ $productAttribute->id }})" type="button" class="font-medium text-primary-600 hover:text-primary-500 transition duration-150 ease-in-out">
-                                {{ __('Remove') }}
+                                {{ __('shopper::layout.forms.actions.remove') }}
                             </button>
                         </span>
                     @else
@@ -48,7 +48,7 @@
                                 @endforeach
                             </ul>
                             <button wire:click="removeProductAttribute({{ $productAttribute->id }})" type="button" class="mt-3 w-full text-right font-medium text-primary-600 hover:text-primary-500 transition duration-150 ease-in-out">
-                                {{ __('Remove All') }}
+                                {{ __('shopper::layout.forms.actions.remove_all') }}
                             </button>
                         </div>
                     @endif
@@ -58,7 +58,9 @@
             <div class="py-4 space-y-1 sm:py-6">
                 <div class="flex justify-center items-center space-x-2">
                     <x-heroicon-o-clipboard-list class="h-8 w-8 text-secondary-400" />
-                    <span class="font-medium py-8 text-secondary-400 dark:text-secondary-300 text-xl">{{ __('No attributes') }}</span>
+                    <span class="font-medium py-8 text-secondary-400 dark:text-secondary-300 text-xl">
+                        {{ __('shopper::pages/products.attributes.empty_values') }}
+                    </span>
                 </div>
             </div>
         @endforelse

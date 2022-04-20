@@ -7,18 +7,21 @@ use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Traits\WithAttributes;
 use WireUi\Traits\Actions;
 
 class AddProductAttribute extends ModalComponent
 {
-    use Actions;
+    use Actions, WithAttributes;
 
-    public int $productId;
+    public $product;
     public string $type = 'text';
-    public array $attributes;
     public ?int $attribute_id = null;
     public array $multipleValues = [];
+    public Collection $attributes;
     public Collection $values;
+    public Collection $productAttributes;
     public ?string $value = null;
 
     protected $listeners = [
@@ -30,10 +33,11 @@ class AddProductAttribute extends ModalComponent
         $this->value = $value;
     }
 
-    public function mount(int $productId, array $attributes)
+    public function mount(int $productId)
     {
-        $this->productId = $productId;
-        $this->attributes = $attributes;
+        $this->product = (new ProductRepository())->getById($productId);
+        $this->productAttributes = $this->getProductAttributes();
+        $this->attributes = $this->getAttributes();
     }
 
     public function save()
@@ -45,7 +49,7 @@ class AddProductAttribute extends ModalComponent
         }
 
         $productAttribute = ProductAttribute::query()->create([
-            'product_id' => $this->productId,
+            'product_id' => $this->product->id,
             'attribute_id' => $this->attribute_id,
         ]);
 
@@ -68,7 +72,10 @@ class AddProductAttribute extends ModalComponent
             ]);
         }
 
-        $this->notification()->success(__('Attribute Added'), __('You have successfully added an attribute to this product!'));
+        $this->notification()->success(
+            __('shopper::pages/products.attributes.session.added'),
+            __('shopper::pages/products.attributes.session.added_message')
+        );
 
         $this->emit('onProductAttributeAdded');
 

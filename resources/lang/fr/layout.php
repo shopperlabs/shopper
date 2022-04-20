@@ -9,7 +9,7 @@ return [
             'new_password' => 'Nouveau mot de passe',
             'confirm_password' => 'Confirmer Mot de passe',
             'current_password' => 'Mot de passe actuel',
-            'remember' => 'Se souvenir de ,po',
+            'remember' => 'Se souvenir de moi',
             'change' => 'Changer',
             'optional' => 'Optionnel',
             'description' => 'Description',
