@@ -310,26 +310,33 @@
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Product categories') }}</h4>
                     </div>
                     <div class="px-4 py-3">
-                        <div class="space-y-3 p-2 max-h-96 border border-secondary-200 rounded-md shadow-sm overflow-scroll hide-scroll dark:border-secondary-700">
-                            @foreach($categories as $category)
-                                <div class="relative flex items-start">
-                                    <div class="flex items-center h-5">
-                                        <x-shopper::forms.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
-                                    </div>
-                                    <div class="ml-3 text-sm">
-                                        <label for="category-{{ $category->id }}" class="font-medium text-secondary-700 dark:text-secondary-300">{{ $category->name }}</label>
-                                    </div>
-                                </div>
 
-                                @if($category->children->isNotEmpty())
-                                    <div class="ml-4 space-y-3">
-                                        @foreach($category->children as $child)
-                                            @include('shopper::components.forms.checkbox-category', ['parent' => $category->parent_id, 'category' => $child])
-                                        @endforeach
+                        @if(count($categories) > 0)
+                            <div class="space-y-3 p-2 max-h-96 border border-secondary-200 rounded-md shadow-sm overflow-scroll hide-scroll dark:border-secondary-700">
+                                @foreach($categories as $category)
+                                    <div class="relative flex items-start">
+                                        <div class="flex items-center h-5">
+                                            <x-shopper::forms.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
+                                        </div>
+                                        <div class="ml-3 text-sm">
+                                            <label for="category-{{ $category->id }}" class="font-medium text-secondary-700 dark:text-secondary-300">{{ $category->name }}</label>
+                                        </div>
                                     </div>
-                                @endif
-                            @endforeach
-                        </div>
+
+                                    @if($category->children->isNotEmpty())
+                                        <div class="ml-4 space-y-3">
+                                            @foreach($category->children as $child)
+                                                @include('shopper::components.forms.checkbox-category', ['parent' => $category->parent_id, 'category' => $child])
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @else 
+                            <p class="mt-2 text-sm leading-5 text-secondary-500">
+                                {{ __('You haven\'t created any categories yet.') }}
+                            </p>
+                        @endif
                     </div>
                 </div>
             </aside>
