@@ -52,7 +52,7 @@ return [
             'status' => 'Status',
             'active' => 'Active',
             'inactive' => 'Inactive',
-            'code' => 'code',
+            'code' => 'Code',
             'visible' => 'Visible',
             'search' => 'Search',
         ],

@@ -21,13 +21,10 @@
                 </p>
             </div>
             <div class="ml-4">
-                <x-shopper::delete-action
-                    :title="$review->title ?? __('shopper::pages/products.reviews.review')"
-                    :action="__('shopper::pages/products.reviews.review')"
-                    message="shopper::pages/products.reviews.remove"
-                    wire:click="remove"
-                    wire:target="remove"
-                />
+                <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-review', {{ json_encode([$review->id]) }})" type="button">
+                    <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2"/>
+                    {{ __('shopper::layout.forms.actions.delete') }}
+                </x-shopper::buttons.danger>
             </div>
         </div>
         <div class="mt-6 border-t border-secondary-200 dark:border-secondary-700">

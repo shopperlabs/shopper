@@ -3,18 +3,17 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Discount;
 use Shopper\Framework\Models\Shop\DiscountDetail;
 use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\UserRepository;
 
 class Create extends AbstractBaseComponent
 {
     use WithDiscountAttributes, WithDiscountActions, HasPrice;
+
+    protected $listeners = ['addSelectedProducts', 'addSelectedCustomers'];
 
     public function mount()
     {
@@ -61,7 +60,7 @@ class Create extends AbstractBaseComponent
 
         if ($this->apply === 'products') {
             // Associate the discount to all the selected products.
-            foreach ($this->productsIds as $productId) {
+            foreach ($this->selectedProducts as $productId) {
                 DiscountDetail::query()->create([
                     'discount_id' => $discount->id,
                     'condition' => 'apply_to',
@@ -73,7 +72,7 @@ class Create extends AbstractBaseComponent
 
         if ($this->eligibility === 'customers') {
             // Associate the discount to all the selected users.
-            foreach ($this->customersIds as $customerId) {
+            foreach ($this->selectedCustomers as $customerId) {
                 DiscountDetail::query()->create([
                     'discount_id' => $discount->id,
                     'condition' => 'eligibility',
@@ -83,32 +82,13 @@ class Create extends AbstractBaseComponent
             }
         }
 
-        session()->flash('success', __('Discount code :code created successfully', ['code' => $discount->code]));
+        session()->flash('success', __('shopper::pages/discounts.add_message', ['code' => $discount->code]));
 
         $this->redirectRoute('shopper.discounts.index');
     }
 
     public function render()
     {
-        $this->products = (new ProductRepository())
-            ->where('name', '%' . $this->searchProduct . '%', 'like')
-            ->orderBy('name')
-            ->get(['name', 'price_amount', 'id'])
-            ->except($this->productsIds);
-
-        $this->customers = (new UserRepository())
-            ->makeModel()
-            ->whereHas('roles', function (Builder $query) {
-                $query->where('name', config('shopper.system.users.default_role'));
-            })
-            ->where(function (Builder $query) {
-                $query->where('first_name', 'like', '%' . $this->searchCustomer . '%')
-                    ->orWhere('last_name', 'like', '%' . $this->searchCustomer . '%');
-            })
-            ->orderBy('created_at', 'asc')
-            ->get()
-            ->except($this->customersIds);
-
         return view('shopper::livewire.discounts.create');
     }
 }

@@ -51,7 +51,23 @@ return [
         'add_customers' => 'Add Customers',
         'search_customer' => 'Search customer by name',
         'add_selected_customers' => 'Add Selected Customers',
+
+        'remove' => [
+            'title' => 'Delete this code',
+            'description' => 'Are you sure you want to delete this code? All this data will be removed. This action cannot be undone.',
+            'success_message' => 'Remove discount code successfully!',
+        ],
     ],
+
+    'active_today' => 'Active today',
+    'active_from_today' => 'Active from today',
+    'active_from' => 'Active from :date',
+    'active_date' => 'Active :date',
+    'active_from_to' => 'Active from :start to :end',
+    'one_per_customer' => 'one per customer',
+
+    'add_message' => 'Discount code :code created successfully!',
+    'update_message' => 'Discount code :code updated successfully!',
 
 ];
 

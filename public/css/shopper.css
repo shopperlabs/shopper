@@ -3090,6 +3090,9 @@ select{
 .left-0\.5{
   left: 0.125rem;
 }
+.top-10{
+  top: 2.5rem;
+}
 .z-50{
   z-index: 50;
 }
@@ -3119,9 +3122,6 @@ select{
 }
 .col-span-2{
   grid-column: span 2 / span 2;
-}
-.col-span-5{
-  grid-column: span 5 / span 5;
 }
 .row-span-2{
   grid-row: span 2 / span 2;
@@ -3719,9 +3719,6 @@ select{
 }
 .grid-cols-3{
   grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-.grid-cols-12{
-  grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 .grid-rows-2{
   grid-template-rows: repeat(2, minmax(0, 1fr));

@@ -51,7 +51,23 @@ return [
         'add_customers' => 'Ajouter des clients',
         'search_customer' => 'Rechercher un client par nom',
         'add_selected_customers' => 'Ajouter des clients sélectionnés',
+
+        'remove' => [
+            'title' => 'Supprimer ce code',
+            'description' => 'Vous êtes sûr de vouloir supprimer ce code ? Toutes ces données seront supprimées. Cette action ne peut pas être annulée.',
+            'success_message' => 'Suppression du code de réduction avec succès !',
+        ],
     ],
+
+    'active_today' => 'Actif aujourd\'hui',
+    'active_from_today' => 'Actif à partir d\'aujourd\'hui',
+    'active_from' => 'Actif à partir de :date',
+    'active_date' => 'Actif :date',
+    'active_from_to' => 'Actif de :start à :end',
+    'one_per_customer' => 'un par client',
+
+    'add_message' => 'Code de réduction :code créé avec succès!',
+    'update_message' => 'Code de réduction :code mis à jour avec succès!',
 
 ];
 

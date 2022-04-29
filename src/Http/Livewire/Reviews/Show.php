@@ -2,7 +2,6 @@
 
 namespace Shopper\Framework\Http\Livewire\Reviews;
 
-use Exception;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Review;
 use WireUi\Traits\Actions;
@@ -25,21 +24,10 @@ class Show extends Component
         $this->approved = ! $this->review->approved;
         $this->review->update(['approved' => ! $this->review->approved]);
 
-        $this->notification()->success(__('Updated'), __('Review approved status updated!'));
-    }
-
-    /**
-     * Remove a review from the storage.
-     *
-     * @throws Exception
-     */
-    public function remove()
-    {
-        $this->review->delete();
-
-        session()->flash('success', __('Review removed successfully.'));
-
-        $this->redirectRoute('shopper.reviews.index');
+        $this->notification()->success(
+            __('shopper::layout.status.updated'),
+            __('shopper::pages/products.reviews.approved_message')
+        );
     }
 
     public function render()

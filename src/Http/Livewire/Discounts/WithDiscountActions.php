@@ -2,18 +2,12 @@
 
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
-use function array_slice;
 use Carbon\Carbon;
-use function count;
-use Exception;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\UserRepository;
 
 trait WithDiscountActions
 {
-    /**
-     * Determine if the discount information are empty or not.
-     */
     public function isEmpty(): bool
     {
         if (
@@ -28,49 +22,38 @@ trait WithDiscountActions
         return false;
     }
 
-    /**
-     * Return Apply offer product.
-     */
     public function getProductSize(): string
     {
-        if (count($this->productsDetails) === 0) {
-            return __('products');
+        if (count($this->selectedProducts) === 0) {
+            return strtolower(__('shopper::layout.sidebar.products'));
         }
 
-        if (count($this->productsDetails) === 1) {
-            return array_slice($this->productsDetails, 0, 1)[0]['name'];
+        if (count($this->selectedProducts) === 1) {
+            return $this->products->first()->name;
         }
 
-        if (count($this->productsDetails) > 1) {
-            return __(':count products', ['count' => count($this->productsDetails)]);
+        if (count($this->selectedProducts) > 1) {
+            return __('shopper::messages.count.products', ['count' => count($this->selectedProducts)]);
         }
     }
 
-    /**
-     * Return Apply offer product.
-     */
     public function getCustomSize(): ?string
     {
-        if (count($this->customersDetails) === 0 || $this->eligibility === 'everyone') {
-            return __('For everyone');
+        if (count($this->selectedCustomers) === 0 || $this->eligibility === 'everyone') {
+            return __('shopper::messages.everyone');
         }
 
-        if (count($this->customersDetails) === 1) {
-            return __('For :name', ['name' => array_slice($this->customersDetails, 0, 1)[0]['name']]);
+        if (count($this->selectedCustomers) === 1) {
+            return __('shopper::messages.for_name', ['name' => $this->customers->first()->first_name]);
         }
 
-        if (count($this->customersDetails) > 1) {
-            return __('For :count customers', ['count' => count($this->customersDetails)]);
+        if (count($this->selectedCustomers) > 1) {
+            return __('shopper::messages.count.customers', ['count' => count($this->selectedCustomers)]);
         }
 
         return null;
     }
 
-    /**
-     * Return discount active date.
-     *
-     * @throws Exception
-     */
     public function getDateWord(): ?string
     {
         $today = Carbon::today();
@@ -78,123 +61,102 @@ trait WithDiscountActions
         $endDate = new Carbon($this->dateEnd);
 
         if ($today->equalTo($startDate) && $today->equalTo($endDate) && $this->dateEnd !== null) {
-            return __('Active today');
+            return __('shopper::pages/discounts.active_today');
         }
 
         if ($today->equalTo($startDate) && $this->dateEnd === null) {
-            return __('Active from today');
+            return __('shopper::pages/discounts.active_from_today');
         }
 
         if ($today->notEqualTo($startDate) && $this->dateEnd === null) {
-            return __('Active from :date', ['date' => $startDate->format('d M')]);
+            return __('shopper::pages/discounts.active_from', ['date' => $startDate->format('d M')]);
         }
 
         if ($today->notEqualTo($startDate) && $startDate->equalTo($endDate)) {
-            return __('Active :date', ['date' => $startDate->format('d M')]);
+            return __('shopper::pages/discounts.active_date', ['date' => $startDate->format('d M')]);
         }
 
         if ($startDate->notEqualTo($endDate) && $startDate->lessThan($endDate) && $this->dateEnd !== null) {
-            return __('Active from :startDate to :endDate', [
-                'startDate' => $startDate->format('d M'),
-                'endDate' => $endDate->format('d M'),
+            return __('shopper::pages/discounts.active_from_to', [
+                'start' => $startDate->format('d M'),
+                'end' => $endDate->format('d M'),
             ]);
         }
 
         if ($startDate->greaterThan($endDate) && $this->dateEnd !== null) {
             $this->dateEnd = Carbon::createFromFormat('Y-m-d H:i', $this->dateStart)->toDateString();
 
-            return __('Active :date', ['date' => $startDate->format('d M')]);
+            return __('shopper::pages/discounts.active_date', ['date' => $startDate->format('d M')]);
         }
 
         return null;
     }
 
-    /**
-     * Return Usage limit message.
-     */
     public function getUsageLimitMessage(): ?string
     {
         if ($this->usage_number && $this->usage_limit !== null && (int) $this->usage_limit > 0) {
             $message = trans_choice('shopper::messages.discount_use', $this->usage_limit, ['count' => $this->usage_limit]);
-            $message .= $this->usage_limit_per_user ? ', ' . __('one per customer') : '';
+            $message .= $this->usage_limit_per_user ? ', ' . __('shopper::pages/discounts.one_per_customer') : '';
 
             return $message;
         }
 
         if ($this->usage_limit_per_user && ! $this->usage_number) {
-            return __('One per customer');
+            return ucfirst(__('shopper::pages/discounts.one_per_customer'));
         }
 
         return null;
     }
 
-    /**
-     * Remove product to the products list and the productIds restriction.
-     */
-    public function removeProduct(int $key, int $id): void
+    public function removeProduct(int $id): void
     {
-        unset($this->productsDetails[$key]);
-
-        foreach (array_keys($this->productsIds, $id) as $key) {
-            unset($this->productsIds[$key]);
+        foreach (array_keys($this->selectedProducts, $id) as $key) {
+            unset($this->selectedProducts[$key]);
         }
+
+        $this->products = (new ProductRepository())
+            ->makeModel()
+            ->whereIn('id', $this->selectedProducts)
+            ->get();
     }
 
-    /**
-     * Remove customer to the customer list and the customersIds restriction.
-     */
-    public function removeCustomer(int $key, int $id): void
+    public function removeCustomer(int $id): void
     {
-        unset($this->customersDetails[$key]);
-
-        foreach (array_keys($this->customersIds, $id) as $key) {
-            unset($this->customersIds[$key]);
+        foreach (array_keys($this->selectedCustomers, $id) as $key) {
+            unset($this->selectedCustomers[$key]);
         }
+
+        $this->customers = (new  UserRepository())
+            ->makeModel()
+            ->whereIn('id', $this->selectedCustomers)
+            ->get();
     }
 
-    /**
-     * Add product to list of products that can be apply on the discount.
-     */
-    public function addProducts(): void
+    public function addSelectedProducts(array $selectedProducts): void
     {
-        $productArray = [];
-
         if (count($this->selectedProducts) > 0) {
-            foreach ($this->selectedProducts as $selectedProduct) {
-                $product = (new ProductRepository())->getById($selectedProduct);
-                $productArray['id'] = $product->id;
-                $productArray['name'] = $product->name;
-                $productArray['image'] = $product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'));
-
-                array_push($this->productsDetails, $productArray);
-                array_push($this->productsIds, $product->id);
-            }
-
-            $this->selectedProducts = [];
-            $this->dispatchBrowserEvent('products-added');
+            $this->selectedProducts = array_merge($this->selectedProducts, $selectedProducts);
+        } else {
+            $this->selectedProducts = $selectedProducts;
         }
+
+        $this->products = (new ProductRepository())
+            ->makeModel()
+            ->whereIn('id', $this->selectedProducts)
+            ->get();
     }
 
-    /**
-     * Add customer to the list of customers that already can use this discount.
-     */
-    public function addCustomers(): void
+    public function addSelectedCustomers(array $selectedCustomers): void
     {
-        $customerArray = [];
-
-        if (count($this->selectedCustomers) > 0) {
-            foreach ($this->selectedCustomers as $selectedCustomer) {
-                $customer = (new UserRepository())->getById($selectedCustomer);
-                $customerArray['id'] = $customer->id;
-                $customerArray['name'] = $customer->full_name;
-                $customerArray['email'] = $customer->email;
-
-                array_push($this->customersDetails, $customerArray);
-                array_push($this->customersIds, $customer->id);
-            }
-
-            $this->selectedCustomers = [];
-            $this->dispatchBrowserEvent('customers-added');
+        if (count($selectedCustomers) > 0) {
+            $this->selectedCustomers = array_merge($this->selectedCustomers, $selectedCustomers);
+        } else {
+            $this->selectedCustomers = $selectedCustomers;
         }
+
+        $this->customers = (new UserRepository())
+            ->makeModel()
+            ->whereIn('id', $this->selectedCustomers)
+            ->get();
     }
 }

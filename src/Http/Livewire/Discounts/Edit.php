@@ -3,8 +3,6 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Discount;
@@ -21,12 +19,11 @@ class Edit extends AbstractBaseComponent
     public Discount $discount;
     public int $discountId;
 
-    /**
-     * Component Mount instance.
-     */
+    protected $listeners = ['addSelectedProducts', 'addSelectedCustomers'];
+
     public function mount(Discount $discount)
     {
-        $this->discount = $discount;
+        $this->discount = $discount->load('items');
         $this->discountId = $discount->id;
 
         $this->code = $discount->code;
@@ -44,28 +41,38 @@ class Edit extends AbstractBaseComponent
             $this->dateEnd = $discount->end_at->format('Y-m-d H:m');
         }
 
-        if ($discount->items()->where('condition', 'eligibility')->count() > 0) {
-            $customerConditions = $discount->items()->where('condition', 'eligibility')->get();
+        if ($discount->items()->where('condition', 'eligibility')->exists()) {
+            $customerConditions = $discount->items()
+                ->with('discountable')
+                ->where('condition', 'eligibility')
+                ->get();
+            $customers = collect();
             foreach ($customerConditions as $customerCondition) {
-                $customerArray['id'] = $customerCondition->discountable->id;
-                $customerArray['name'] = $customerCondition->discountable->full_name;
-                $customerArray['email'] = $customerCondition->discountable->email;
-
-                $this->customersDetails[] = $customerArray;
-                $this->customersIds[] = $customerCondition->discountable->id;
+                $customers->push($customerCondition->discountable);
             }
+            $this->selectedCustomers = $customers->pluck('id')->all();
+
+            $this->customers = (new  UserRepository())
+                ->makeModel()
+                ->whereIn('id', $this->selectedCustomers)
+                ->get();
         }
 
-        if ($discount->items()->where('condition', 'apply_to')->count() > 0) {
-            $productConditions = $discount->items()->where('condition', 'apply_to')->get();
+        if ($discount->items()->where('condition', 'apply_to')->exists()) {
+            $productConditions = $discount->items()
+                ->with('discountable')
+                ->where('condition', 'apply_to')
+                ->get();
+            $products = collect();
             foreach ($productConditions as $productCondition) {
-                $productArray['id'] = $productCondition->discountable->id;
-                $productArray['name'] = $productCondition->discountable->name;
-                $productArray['image'] = $productCondition->discountable->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'));
-
-                $this->productsDetails[] = $productArray;
-                $this->productsIds[] = $productCondition->discountable->id;
+                $products->push($productCondition->discountable);
             }
+            $this->selectedProducts = $products->pluck('id')->all();
+
+            $this->products = (new ProductRepository())
+                ->makeModel()
+                ->whereIn('id', $this->selectedProducts)
+                ->get();
         }
     }
 
@@ -114,10 +121,10 @@ class Edit extends AbstractBaseComponent
         if ($this->apply === 'products') {
             $this->discount->items()
                 ->where('condition', 'apply_to')
-                ->whereNotIn('discountable_id', $this->productsIds)
+                ->whereNotIn('discountable_id', $this->selectedProducts)
                 ->delete();
 
-            foreach ($this->productsIds as $productId) {
+            foreach ($this->selectedProducts as $productId) {
                 DiscountDetail::query()->updateOrCreate([
                     'discount_id' => $this->discountId,
                     'discountable_id' => $productId,
@@ -127,16 +134,16 @@ class Edit extends AbstractBaseComponent
                 ]);
             }
         } else {
-            $this->discount->items()->where('condition', 'apply')->delete();
+            $this->discount->items()->where('condition', 'apply_to')->delete();
         }
 
         if ($this->eligibility === 'customers') {
             $this->discount->items()
                 ->where('condition', 'eligibility')
-                ->whereNotIn('discountable_id', $this->customersIds)
+                ->whereNotIn('discountable_id', $this->selectedCustomers)
                 ->delete();
 
-            foreach ($this->customersIds as $customerId) {
+            foreach ($this->selectedCustomers as $customerId) {
                 DiscountDetail::query()->updateOrCreate([
                     'discount_id' => $this->discountId,
                     'discountable_id' => $customerId,
@@ -149,51 +156,13 @@ class Edit extends AbstractBaseComponent
             $this->discount->items()->where('condition', 'eligibility')->delete();
         }
 
-        session()->flash('success', __("Discount code {$this->code} updated successfully!"));
+        session()->flash('success', __('shopper::pages/discounts.update_message', ['code' => $this->code]));
 
         $this->redirectRoute('shopper.discounts.index');
     }
 
-    /**
-     * Remove a entry to the storage.
-     *
-     * @throws Exception
-     */
-    public function remove()
-    {
-        Discount::query()->find($this->discountId)->delete();
-
-        session()->flash('success', __('Remove discount successfully'));
-
-        $this->redirectRoute('shopper.discounts.index');
-    }
-
-    /**
-     * Render the component.
-     *
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
     public function render()
     {
-        $this->products = (new ProductRepository())
-            ->orderBy('name', 'asc')
-            ->where('name', '%' . $this->searchProduct . '%', 'like')
-            ->get(['name', 'price_amount', 'id'])
-            ->except($this->productsIds);
-
-        $this->customers = (new UserRepository())
-            ->makeModel()
-            ->whereHas('roles', function (Builder $query) {
-                $query->where('name', config('shopper.system.users.default_role'));
-            })
-            ->where(function (Builder $query) {
-                $query->where('first_name', 'like', '%' . $this->searchCustomer . '%')
-                    ->orWhere('last_name', 'like', '%' . $this->searchCustomer . '%');
-            })
-            ->orderBy('created_at', 'asc')
-            ->get()
-            ->except($this->customersIds);
-
         return view('shopper::livewire.discounts.edit');
     }
 }
