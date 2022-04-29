@@ -59,5 +59,15 @@ return [
         ],
     ],
 
+    'active_today' => 'Active today',
+    'active_from_today' => 'Active from today',
+    'active_from' => 'Active from :date',
+    'active_date' => 'Active :date',
+    'active_from_to' => 'Active from :start to :end',
+    'one_per_customer' => 'one per customer',
+
+    'add_message' => 'Discount code :code created successfully!',
+    'update_message' => 'Discount code :code updated successfully!',
+
 ];
 

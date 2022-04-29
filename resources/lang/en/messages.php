@@ -66,5 +66,12 @@ return [
     'of' => 'of',
     'results' => 'results',
     'summary' => 'Summary',
+    'everyone' => 'For everyone',
+    'for_name' => 'For :name',
+
+    'count' => [
+        'products' => ':count products',
+        'customers' => 'For :count customers',
+    ],
 
 ];

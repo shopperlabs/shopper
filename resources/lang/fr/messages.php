@@ -67,5 +67,12 @@ return [
     'of' => 'de',
     'results' => 'résultats',
     'summary' => 'Résumé',
+    'everyone' => 'Pour tout le monde',
+    'for_name' => 'Pour :name',
+
+    'count' => [
+        'products' => ':count produits',
+        'customers' => 'Pour :count clients',
+    ],
 
 ];
