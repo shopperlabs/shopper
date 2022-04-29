@@ -110,19 +110,19 @@
                     @if($apply === 'products')
                         <div class="mt-4">
                             <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper::buttons.default @click="modal = true" type="button">
+                                <x-shopper::buttons.default wire:click="$emit('openModal', 'shopper-modals.discount-products', {{ json_encode(['excludeIds' => $selectedProducts]) }})" type="button">
                                     {{ __('shopper::pages/discounts.select_products') }}
                                 </x-shopper::buttons.default>
                             </span>
                         </div>
-                        @if(count($productsDetails) > 0)
+                        @if(count($selectedProducts) > 0)
                             <div class="mt-2 divide-y divide-secondary-100 dark:divide-secondary-700">
-                                @foreach($productsDetails as $key => $productDetail)
+                                @foreach($products as $product)
                                     <div class="flex items-center justify-between py-2">
                                         <div class="flex items-center">
-                                            @if($productDetail['image'] !== null)
+                                            @if($product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
                                                 <span class="shrink-0 h-10 w-10 rounded-md overflow-hidden">
-                                                    <img class="object-cover object-center w-full h-full block" src="{{ $productDetail['image'] }}" alt="" />
+                                                    <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />
                                                 </span>
                                             @else
                                                 <span class="flex items-center justify-center h-10 w-10 bg-secondary-100 text-secondary-300 rounded-md dark:bg-secondary-700 dark:text-secondary-500">
@@ -130,10 +130,10 @@
                                                 </span>
                                             @endif
                                             <p class="ml-4 text-sm font-medium text-secondary-500 dark:text-secondary-400">
-                                                {{ $productDetail['name'] }}
+                                                {{ $product->name }}
                                             </p>
                                         </div>
-                                        <button wire:key="product_{{ $loop->index }}" wire:click="removeProduct({{ $key }}, {{ $productDetail['id'] }})" type="button" class="text-secondary-500 text-sm font-medium inline-flex items-center dark:text-secondary-400">
+                                        <button wire:key="product_{{ $product->id }}" wire:click="removeProduct({{ $product->id }})" type="button" class="text-secondary-500 text-sm font-medium inline-flex items-center dark:text-secondary-400">
                                             <x-heroicon-s-x class="h-5 w-5" />
                                         </button>
                                     </div>
@@ -242,20 +242,25 @@
                     @if($eligibility === 'customers')
                         <div class="mt-4">
                             <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper::buttons.default @click="show = true" type="button">
+                                <x-shopper::buttons.default wire:click="$emit('openModal', 'shopper-modals.discount-customers', {{ json_encode(['excludeIds' => $selectedCustomers]) }})" type="button">
                                     {{ __('shopper::pages/discounts.select_customers') }}
                                 </x-shopper::buttons.default>
                             </span>
                         </div>
-                        @if(count($customersDetails) > 0)
+                        @if(count($selectedCustomers) > 0)
                             <div class="mt-2 divide-y divide-secondary-100 dark:divide-secondary-700">
-                                @foreach($customersDetails as $key => $customerDetail)
+                                @foreach($customers as $customer)
                                     <div class="flex items-center justify-between py-2">
                                         <div class="flex items-center space-x-3">
-                                            <span class="text-sm font-medium text-secondary-900 dark:text-white">{{ $customerDetail['name'] }}</span>
-                                            <span class="text-sm font-normal text-secondary-500 dark:text-secondary-400">{{ $customerDetail['email'] }}</span>
+                                            <span class="text-sm font-medium text-secondary-900 dark:text-white">{{ $customer->full_name }}</span>
+                                            <span class="text-sm font-normal text-secondary-500 dark:text-secondary-400">{{ $customer->email }}</span>
                                         </div>
-                                        <button wire:key="customer_{{ $loop->index }}" wire:click="removeCustomer({{ $key }}, {{ $customerDetail['id'] }})" type="button" class="text-secondary-500 text-sm font-medium inline-flex items-center dark:text-secondary-400">
+                                        <button
+                                            wire:key="customer_{{ $customer->id }}"
+                                            wire:click="removeCustomer({{ $customer->id }})"
+                                            type="button"
+                                            class="text-secondary-500 text-sm font-medium inline-flex items-center dark:text-secondary-400"
+                                        >
                                             <x-heroicon-s-x class="h-5 w-5" />
                                         </button>
                                     </div>
@@ -347,7 +352,7 @@
             </div>
         </div>
         <div class="lg:col-span-2">
-            <aside class="sticky top-6">
+            <aside class="sticky top-10">
                 <div class="space-y-5">
                     <div class="px-4 py-5 bg-white shadow-md rounded-md sm:px-6 dark:bg-secondary-800">
                         <div class="flex items-center space-x-2">
@@ -445,175 +450,5 @@
             </div>
         </div>
     </div>
-
-    @if($apply === 'products')
-        <div
-            x-cloak
-            x-show="modal"
-            class="fixed bottom-0 z-100 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
-            x-on:products-added.window="modal = false"
-        >
-            <div
-                x-cloak
-                x-show="modal"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                class="fixed inset-0 transition-opacity"
-            >
-                <div class="absolute inset-0 bg-secondary-700 opacity-75"></div>
-            </div>
-            <div
-                x-cloak
-                x-show="modal"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                class="bg-white rounded-md overflow-hidden shadow-xl transform transition-all sm:max-w-2xl sm:w-full dark:bg-secondary-800"
-            >
-                <div>
-                    <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
-                        <div class="text-center sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Add Products') }}</h3>
-                        </div>
-                    </div>
-                    <div class="py-2 px-4 sm:px-6 border-t border-secondary-100 dark:border-secondary-700">
-                        <label for="search" class="sr-only">{{ __('Search') }}</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <x-heroicon-o-search class="h-5 w-5 text-secondary-400" />
-                            </div>
-                            <x-shopper::forms.input id="search" type="search" wire:model.lazy="searchProduct" autocomplete="off" class="pl-10 pr-6" placeholder="{{ __('Search product by name') }}" />
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <x-shopper::loader wire:loading wire:target="searchProduct" class="text-primary-600" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="my-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
-                        @foreach($products as $product)
-                            <label for="product_{{ $product->id }}" class="flex items-center py-3 cursor-pointer hover:bg-secondary-50 px-4 sm:px-6 focus:bg-secondary-50 dark:hover:bg-secondary-700 dark:focus:bg-secondary-700">
-                                <span class="mr-4">
-                                    <x-shopper::forms.checkbox id="product_{{ $product->id }}" aria-label="{{ __('Product') }}" wire:model.defer="selectedProducts" value="{{ $product->id }}" />
-                                </span>
-                                <span class="flex flex-1 items-center justify-between">
-                                    <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">{{ $product->name }}</span>
-                                    <span class="flex items-center space-x-2">
-                                        <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __(':stock available', ['stock' => $product->stock]) }}</span>
-                                        <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $product->formattedPrice }}</span>
-                                    </span>
-                                </span>
-                            </label>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                        <x-shopper::buttons.primary wire:click="addProducts" wire.loading.attr="disabled" type="button">
-                            <x-shopper::loader wire:loading wire:target="addProducts" class="text-white" />
-                            {{ __('Add Selected Products') }}
-                        </x-shopper::buttons.primary>
-                    </span>
-                    <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                        <x-shopper::buttons.primary @click="modal = false;" type="button">
-                            {{ __('Cancel') }}
-                        </x-shopper::buttons.primary>
-                    </span>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @if($eligibility === 'customers')
-        <div
-            x-cloak
-            x-show="show"
-            class="fixed bottom-0 z-100 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
-            x-on:customers-added.window="show = false"
-        >
-            <div
-                x-cloak
-                x-show="show"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0"
-                x-transition:enter-end="opacity-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                class="fixed inset-0 transition-opacity"
-            >
-                <div class="absolute inset-0 bg-secondary-700 opacity-75"></div>
-            </div>
-            <div
-                x-cloak
-                x-show="show"
-                x-transition:enter="ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave="ease-in duration-200"
-                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                class="bg-white rounded-md overflow-hidden shadow-xl transform transition-all sm:max-w-2xl sm:w-full dark:bg-secondary-800"
-            >
-                <div>
-                    <div class="sm:flex sm:items-start px-4 sm:px-6 py-4">
-                        <div class="text-center sm:text-left">
-                            <h3 class="text-lg leading-6 font-medium text-secondary-700 dark:text-secondary-300">{{ __('Add Customers') }}</h3>
-                        </div>
-                    </div>
-                    <div class="py-2 px-4 sm:px-6 border-t border-secondary-100 dark:border-secondary-700">
-                        <label for="search" class="sr-only">{{ __('Search') }}</label>
-                        <div class="mt-1 relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <x-heroicon-o-search class="h-5 w-5 text-secondary-400" />
-                            </div>
-                            <x-shopper::forms.input id="search" type="search" wire:model.lazy="searchCustomer" autocomplete="off" class="pl-10 pr-6" placeholder="{{ __('Search customer by name') }}" />
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <x-shopper::loader wire:loading wire:target="searchCustomer" class="text-primary-600" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="my-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
-                        @foreach($customers as $customer)
-                            <label for="customer_{{ $customer->id }}" class="flex items-center py-3 cursor-pointer hover:bg-secondary-50 px-4 sm:px-6 focus:bg-secondary-50 dark:hover:bg-secondary-700 dark:focus:bg-secondary-700">
-                                <span class="mr-4">
-                                    <x-shopper::forms.checkbox id="customer_{{ $customer->id }}" aria-label="{{ __('Customer') }}" wire:model.lazy="selectedCustomers" value="{{ $customer->id }}" />
-                                </span>
-                                <div class="flex flex-1 items-center justify-between">
-                                    <div class="flex items-center space-x-2">
-                                        <div class="shrink-0">
-                                            <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="{{ $customer->email }}">
-                                        </div>
-                                        <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">{{ $customer->full_name }}</span>
-                                    </div>
-                                    <span class="flex items-center space-x-2">
-                                        <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $customer->email }}</span>
-                                    </span>
-                                </div>
-                            </label>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                        <x-shopper::buttons.primary wire:click="addCustomers" wire.loading.attr="disabled" type="button">
-                            <x-shopper::loader wire:loading wire:target="addCustomers" class="text-white" />
-                            {{ __('Add Selected Customers') }}
-                        </x-shopper::buttons.primary>
-                    </span>
-                    <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                        <x-shopper::buttons.primary @click="show = false;" type="button">
-                            {{ __('Cancel') }}
-                        </x-shopper::buttons.primary>
-                    </span>
-                </div>
-            </div>
-        </div>
-    @endif
 
 </div>
