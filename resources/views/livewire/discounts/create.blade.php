@@ -31,14 +31,14 @@
                         <x-shopper::forms.input wire:model.lazy="code" id="code" type="text" placeholder="{{ __('Eg.: NOELCMR900') }}" autocomplete="off" />
                         @error('code')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="h-5 w-5 text-negative-500" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                                 </svg>
                             </div>
                         @enderror
                     </div>
                     @error('code')
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-negative-600 dark:text-negative-500">{{ $message }}</p>
                     @enderror
                 </div>
                 <p class="mt-2 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         @error('value')
-                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-negative-600 dark:text-negative-500">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -211,7 +211,7 @@
                             </div>
                         </div>
                         @error('minRequiredValue')
-                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-negative-600 dark:text-negative-500">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -297,7 +297,7 @@
                                     />
                                 </div>
                                 @error('usage_limit')
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
+                                    <p class="mt-2 text-sm text-negative-600 dark:text-negative-500">{{ $message }}</p>
                                 @enderror
                             </div>
                         @endif
@@ -348,7 +348,7 @@
             <aside class="sticky top-6">
                 <div class="space-y-5">
                     <div class="p-4 bg-white shadow-md rounded-md sm:p-5 dark:bg-secondary-800">
-                        <h4 class="font-medium text-base text-secondary-900 dark:text-white">{{ __('shopper::messages.Summary') }}</h4>
+                        <h4 class="font-medium text-base text-secondary-900 dark:text-white">{{ __('shopper::messages.summary') }}</h4>
                         @if($this->isEmpty())
                             <p class="text-secondary-500 text-sm mt-4 dark:text-secondary-400">{{ __('shopper::pages/discounts.empty_code') }}</p>
                         @else
