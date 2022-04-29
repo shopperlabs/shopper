@@ -8,8 +8,6 @@ use Shopper\Framework\Models\Shop\Discount;
 use Shopper\Framework\Models\Shop\DiscountDetail;
 use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\UserRepository;
 
 class Create extends AbstractBaseComponent
 {

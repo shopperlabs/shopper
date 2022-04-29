@@ -36,7 +36,7 @@ class DiscountProducts extends ModalComponent
             'products' => (new ProductRepository())
                 ->where('name', '%' . $this->search . '%', 'like')
                 ->get(['name', 'price_amount', 'id'])
-                ->except($this->excludesIds)
+                ->except($this->excludesIds),
         ]);
     }
 }
