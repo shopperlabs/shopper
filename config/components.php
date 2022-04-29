@@ -86,6 +86,8 @@ return [
         'modals.delete-review' => Livewire\Modals\DeleteReview::class,
         'modals.delete-role' => Livewire\Modals\DeleteRole::class,
         'modals.delete-template' => Livewire\Modals\DeleteTemplate::class,
+        'modals.discount-products' => Livewire\Modals\DiscountProducts::class,
+        'modals.discount-customers' => Livewire\Modals\DiscountCustomers::class,
         'modals.logout-others-browser' => Livewire\Modals\LogoutOthersBrowser::class,
         'modals.products-lists' => Livewire\Modals\ProductsLists::class,
         'modals.re-order-categories' => Livewire\Modals\ReOrderCategories::class,
