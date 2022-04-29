@@ -66,6 +66,6 @@ return [
     'to' => 'à',
     'of' => 'de',
     'results' => 'résultats',
-    'Summary' => 'Résumé',
+    'summary' => 'Résumé',
 
 ];

@@ -10,6 +10,7 @@ return [
         'pending' => 'Pending',
         'approved' => 'Approved Review',
         'approved_status' => 'Approved status',
+        'approved_message' => 'Review approved status updated!',
 
         'subtitle' => 'Review for this product.',
         'reviewer' => 'Reviewer',
@@ -17,7 +18,12 @@ return [
         'review_content' => 'Content',
         'status' => 'Status',
         'rating' => 'Rating',
-        'remove' => 'Are you sure you want to delete this review? This review will can\'t be recover no more.',
+
+        'modal' => [
+            'title' => 'Delete Review',
+            'description' => 'Are you sure you want to delete this review? This review will can\'t be recover no more.',
+            'success_message' => 'Review removed successfully!',
+        ],
     ],
 
     'attributes' => [

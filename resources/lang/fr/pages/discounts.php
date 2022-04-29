@@ -51,6 +51,12 @@ return [
         'add_customers' => 'Ajouter des clients',
         'search_customer' => 'Rechercher un client par nom',
         'add_selected_customers' => 'Ajouter des clients sélectionnés',
+
+        'remove' => [
+            'title' => 'Supprimer ce code',
+            'description' => 'Vous êtes sûr de vouloir supprimer ce code ? Toutes ces données seront supprimées. Cette action ne peut pas être annulée.',
+            'success_message' => 'Suppression du code de réduction avec succès !',
+        ],
     ],
 
 ];

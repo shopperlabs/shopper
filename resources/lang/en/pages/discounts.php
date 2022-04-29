@@ -51,6 +51,12 @@ return [
         'add_customers' => 'Add Customers',
         'search_customer' => 'Search customer by name',
         'add_selected_customers' => 'Add Selected Customers',
+
+        'remove' => [
+            'title' => 'Delete this code',
+            'description' => 'Are you sure you want to delete this code? All this data will be removed. This action cannot be undone.',
+            'success_message' => 'Remove discount code successfully!',
+        ],
     ],
 
 ];

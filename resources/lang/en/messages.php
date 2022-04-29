@@ -65,6 +65,6 @@ return [
     'to' => 'to',
     'of' => 'of',
     'results' => 'results',
-    'Summary' => 'Summary',
+    'summary' => 'Summary',
 
 ];
