@@ -3,7 +3,6 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -21,9 +20,6 @@ class Edit extends AbstractBaseComponent
     public Discount $discount;
     public int $discountId;
 
-    /**
-     * Component Mount instance.
-     */
     public function mount(Discount $discount)
     {
         $this->discount = $discount;
@@ -154,25 +150,6 @@ class Edit extends AbstractBaseComponent
         $this->redirectRoute('shopper.discounts.index');
     }
 
-    /**
-     * Remove a entry to the storage.
-     *
-     * @throws Exception
-     */
-    public function remove()
-    {
-        Discount::query()->find($this->discountId)->delete();
-
-        session()->flash('success', __('Remove discount successfully'));
-
-        $this->redirectRoute('shopper.discounts.index');
-    }
-
-    /**
-     * Render the component.
-     *
-     * @throws \Shopper\Framework\Exceptions\GeneralException
-     */
     public function render()
     {
         $this->products = (new ProductRepository())
