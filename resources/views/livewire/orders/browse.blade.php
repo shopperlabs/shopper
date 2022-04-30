@@ -120,7 +120,7 @@
         </div>
     @endif
 
-    <x-shopper::learn-more name="orders" link="orders" />
+    <x-shopper::learn-more name="shopper::layout.sidebar.orders" link="orders" />
 </div>
 
 @push('scripts')

@@ -50,7 +50,7 @@
                 <div class="mt-6 flex items-center justify-between">
                     <div class="flex items-center">
                         <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-primary-600 dark:bg-secondary-800 dark:border-secondary-700 focus:ring-primary-500 border-secondary-300 dark:focus:ring-offset-secondary-900 rounded">
-                        <label for="remember_me" class="ml-2 block text-sm leading-5 cursor-pointer hover:text-secondary-900 dark:hover:text-secondary-300">
+                        <label for="remember_me" class="ml-2 block text-sm leading-5 cursor-pointer text-secondary-500 hover:text-secondary-900 dark:text-white dark:hover:text-secondary-300">
                             {{ __('shopper::layout.forms.label.remember') }}
                         </label>
                     </div>
