@@ -311,7 +311,7 @@
                     </div>
                     <div class="px-4 py-3">
                         <div class="space-y-3 p-2 max-h-96 border border-secondary-200 rounded-md shadow-sm overflow-scroll hide-scroll dark:border-secondary-700">
-                            @foreach($categories as $category)
+                            @forelse($categories as $category)
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
                                         <x-shopper::forms.checkbox id="category-{{ $category->id }}" wire:model.defer="category_ids" value="{{ $category->id }}" />
@@ -328,7 +328,20 @@
                                         @endforeach
                                     </div>
                                 @endif
-                            @endforeach
+                            @empty
+                                <div class="text-center py-4">
+                                    <x-heroicon-o-tag class="mx-auto h-12 w-12 text-secondary-400 dark:text-secondary-500" />
+                                    <h3 class="mt-2 text-sm font-medium text-secondary-900 dark:text-white">{{ __('No Categories') }}</h3>
+                                    <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">{{ __('Get started by creating a new category.') }}</p>
+                                    <div class="mt-6">
+                                        <x-shopper::buttons.primary :link="route('shopper.categories.create')">
+                                            <x-heroicon-s-plus class="-ml-1 mr-2 h-5 w-5"/>
+                                            {{ __('New category') }}
+                                        </x-shopper::buttons.primary>
+                                    </div>
+                                </div>
+
+                            @endforelse
                         </div>
                     </div>
                 </div>
