@@ -139,7 +139,7 @@ class Create extends AbstractBaseComponent
                 ->orderBy('name')
                 ->get()
                 ->toTree(),
-            'collections' => (new CollectionRepository())->get(['name', 'id']),
+            'collections' => (new CollectionRepository())->with('media')->get(['name', 'id']),
             'inventories' => Inventory::query()->get(['name', 'id']),
             'currency' => shopper_currency(),
             'barcodeImage' => $this->barcode

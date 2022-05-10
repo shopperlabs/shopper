@@ -55,6 +55,14 @@ return [
             'code' => 'Code',
             'visible' => 'Visible',
             'search' => 'Search',
+            'price' => 'Price',
+            'price_amount' => 'Price amount',
+            'compare_price' => 'Compare at price',
+            'cost_per_item' => 'Cost per item',
+            'sku' => 'SKU (Stock Keeping Unit)',
+            'barcode' => 'Barcode (ISBN, UPC, GTIN, etc.)',
+            'safety_stock' => 'Safety Stock',
+            '' => '',
         ],
 
         'placeholder' => [

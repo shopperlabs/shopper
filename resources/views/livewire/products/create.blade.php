@@ -1,18 +1,18 @@
 <div>
     <x-shopper::breadcrumb back="shopper.products.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.products.index')" title="Products" />
+        <x-shopper::breadcrumb.link :link="route('shopper.products.index')" title="shopper::layout.sidebar.products" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('Add product') }}
+            {{ __('shopper::messages.actions_label.add_new', ['new' => 'product']) }}
         </x-slot>
 
         <x-slot name="action">
             <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('Save') }}
+                {{ __('shopper::layout.forms.actions.save') }}
             </x-shopper::buttons.primary>
         </x-slot>
     </x-shopper::heading>
@@ -21,29 +21,29 @@
         <div class="sm:col-span-4 space-y-5">
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
-                    <x-shopper::forms.group label="Name" for="name" isRequired :error="$errors->first('name')">
+                    <x-shopper::forms.group label="shopper::layout.forms.label.name" for="name" isRequired :error="$errors->first('name')">
                         <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Apple, Nike, Samsung...') }}" />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-5 border-t border-secondary-200 dark:border-secondary-700 pt-4">
-                    <x-shopper::forms.group label="Description" for="description">
+                    <x-shopper::forms.group label="shopper::layout.forms.label.description" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper::forms.group>
                 </div>
             </div>
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5 overflow-hidden">
-                <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Product Media') }}</h4>
+                <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('shopper::messages.media') }}</h4>
                 <div class="mt-4">
                     <livewire:shopper-forms.uploads.multiple />
                 </div>
             </div>
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">
-                <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white px-4 sm:px-5">{{ __('Pricing') }}</h4>
+                <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white px-4 sm:px-5">{{ __('shopper::messages.pricing') }}</h4>
                 <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="grid gap-4 sm:grid-cols-6 sm:gap-6 p-4 sm:p-5">
                         <div class="col-span-6 sm:col-span-3">
                             <x-inputs.currency
-                                :label="__('Price amount')"
+                                :label="__('shopper::layout.forms.label.price_amount')"
                                 placeholder="0.00"
                                 wire:model.defer="price_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
@@ -55,7 +55,7 @@
                         </div>
                         <div class="col-span-6 sm:col-span-3">
                             <x-inputs.currency
-                                :label="__('Compare at price')"
+                                :label="__('shopper::layout.forms.label.compare_price')"
                                 placeholder="0.00"
                                 wire:model.defer="old_price_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
@@ -69,7 +69,7 @@
                     <div class="grid grid-cols-6 gap-6 p-4 sm:p-5">
                         <div class="col-span-6 sm:col-span-3">
                             <x-inputs.currency
-                                :label="__('Cost per item')"
+                                :label="__('shopper::layout.forms.label.cost_per_item')"
                                 placeholder="0.00"
                                 wire:model.defer="cost_amount"
                                 class="dark:bg-secondary-700 dark:border-transparent dark:focus:border-primary-500 dark:text-white"
@@ -77,23 +77,23 @@
                                 thousands=","
                                 decimal="."
                                 :suffix="$currency"
-                                :hint="__('Customers won’t see this.')"
+                                :hint="__('shopper::pages/products.cost_per_items_help_text')"
                             />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">
-                <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white px-4 sm:px-5">{{ __('Inventory') }}</h4>
+                <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white px-4 sm:px-5">{{ __('shopper::messages.inventory') }}</h4>
                 <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 p-4 sm:p-5">
                         <div class="sm:col-span-1">
-                            <x-shopper::forms.group label="SKU (Stock Keeping Unit)" for="sku" :error="$errors->first('sku')">
+                            <x-shopper::forms.group label="shopper::layout.forms.label.sku" for="sku" :error="$errors->first('sku')">
                                 <x-shopper::forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
                         </div>
                         <div class="sm:col-span-1">
-                            <x-shopper::forms.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
+                            <x-shopper::forms.group label="shopper::layout.forms.label.barcode" for="barcode" :error="$errors->first('barcode')">
                                 <x-shopper::forms.input wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
                             @if($barcodeImage)
@@ -112,7 +112,7 @@
                             </div>
                         @endif
                         <div class="sm:col-span-1">
-                            <x-shopper::forms.group label="Safety Stock" for="security_stock" helpText="The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.">
+                            <x-shopper::forms.group label="shopper::layout.forms.label.safety_stock" for="security_stock" helpText="shopper::pages/products.safety_security_help_text">
                                 <x-shopper::forms.input wire:model.defer="securityStock" id="security_stock" type="number" min="1" step="1" autocomplete="off" />
                             </x-shopper::forms.group>
                         </div>
@@ -120,16 +120,18 @@
                     @if($inventories->count() > 1)
                         <div class="p-4 sm:p-5">
                             <div class="flex items-center justify-between">
-                                <h4 class="block text-sm font-medium leading-5 text-secondary-900 dark:text-white">{{ __('Quantity Inventory') }}</h4>
-                                <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800 transition duration-150 ease-in-out">{{ __("Manage Inventories") }}</a>
+                                <h4 class="block text-sm font-medium leading-5 text-secondary-900 dark:text-white">{{ __('shopper::pages/products.quantity_inventory') }}</h4>
+                                <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800">
+                                    {{ __('shopper::pages/products.manage_inventories') }}
+                                </a>
                             </div>
                             <div class="mt-4 divide-y divide-secondary-200 dark:divide-secondary-700">
                                 <div class="grid grid-cols-3 py-4">
                                     <div class="col-span-2">
-                                        <span class="text-sm leading-5 font-semibold text-secondary-900 dark:text-white uppercase">{{ __('Inventory name') }}</span>
+                                        <span class="text-sm leading-5 font-semibold text-secondary-900 dark:text-white uppercase">{{ __('shopper::pages/products.inventory_name') }}</span>
                                     </div>
                                     <div class="col-span-1 pl-4 flex justify-end">
-                                        <span class="text-sm leading-5 font-semibold text-secondary-900 dark:text-white uppercase">{{ __('Available') }}</span>
+                                        <span class="text-sm leading-5 font-semibold text-secondary-900 dark:text-white uppercase">{{ __('shopper::messages.available') }}</span>
                                     </div>
                                 </div>
                                 @foreach($inventories as $inventory)
@@ -138,7 +140,15 @@
                                             <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $inventory->name }}</span>
                                         </div>
                                         <div class="col-span-1 pl-4 flex justify-end">
-                                            <x-shopper::forms.input wire:model.defer="quantity.{{ $inventory->id }}" wire:key="inventory-{{ $inventory->id }}" type="number" class="block w-24" aria-label="{{ __('Inventory quantity') }}"  min="0" autocomplete="off" />
+                                            <x-shopper::forms.input
+                                                wire:model.defer="quantity.{{ $inventory->id }}"
+                                                wire:key="inventory-{{ $inventory->id }}"
+                                                type="number"
+                                                class="block w-24"
+                                                aria-label="{{ __('shopper::pages/products.quantity_inventory') }}"
+                                                min="0"
+                                                autocomplete="off"
+                                            />
                                         </div>
                                     </div>
                                 @endforeach
@@ -149,15 +159,15 @@
             </div>
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
                 <div class="p-4 sm:p-5">
-                    <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Shipping') }}</h4>
+                    <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('shopper::messages.shipping') }}</h4>
                     <div class="mt-5 space-y-4">
                         <div class="relative flex items-start">
                             <div class="flex items-center h-5">
                                 <x-shopper::forms.checkbox wire:model.defer="backorder" id="backorder" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
-                                <x-shopper::label for="backorder" :value="__('This product can be returned')" />
-                                <p class="text-secondary-500 dark:text-secondary-400">{{ __('Users have the option of returning this product if there is a problem or dissatisfaction.') }}</p>
+                                <x-shopper::label for="backorder" :value="__('shopper::pages/products.product_can_returned')" />
+                                <p class="text-secondary-500 dark:text-secondary-400">{{ __('shopper::pages/products.product_can_returned_help_text') }}</p>
                             </div>
                         </div>
                         <div class="relative flex items-start">
@@ -165,8 +175,8 @@
                                 <x-shopper::forms.checkbox wire:model.lazy="requiresShipping" id="required_shipping" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
-                                <x-shopper::label for="required_shipping" :value="__('This product will be shipped')" />
-                                <p class="text-secondary-500 dark:text-secondary-400">{{ __('Reassure to fill in the information concerning the shipment of the product.') }}</p>
+                                <x-shopper::label for="required_shipping" :value="__('shopper::pages/products.product_shipped')" />
+                                <p class="text-secondary-500 dark:text-secondary-400">{{ __('shopper::pages/products.product_shipped_help_text') }}</p>
                             </div>
                         </div>
                     </div>

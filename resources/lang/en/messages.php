@@ -74,4 +74,10 @@ return [
         'customers' => 'For :count customers',
     ],
 
+    'media' => 'Media',
+    'pricing' => 'Pricing',
+    'inventory' => 'Inventory',
+    'available' => 'Available',
+    'shipping' => 'Shipping',
+    'weight_dimension' => 'Weight and Dimension',
 ];

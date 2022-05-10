@@ -2,6 +2,24 @@
 
 return [
 
+    'title' => 'Manage Catalog',
+    'content' => 'Get closer to your first sale by adding and manage products.',
+
+    'cost_per_items_help_text' => 'Customers won’t see this.',
+    'safety_security_help_text' => 'The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.',
+    'quantity_inventory' => 'Quantity Inventory',
+    'manage_inventories' => 'Manage Inventories',
+    'inventory_name' => 'Inventory name',
+    'product_can_returned' => 'This product can be returned',
+    'product_can_returned_help_text' => 'Users have the option of returning this product if there is a problem or dissatisfaction.',
+    'product_shipped' => 'This product will be shipped',
+    'product_shipped_help_text' => 'Reassure to fill in the information concerning the shipment of the product.',
+    '' => '',
+
+    'variants' => [
+
+    ],
+
     'reviews' => [
         'title' => 'Customers reviews',
         'description' => 'This is where you will see the reviews of your customers and the ratings given to your products.',
