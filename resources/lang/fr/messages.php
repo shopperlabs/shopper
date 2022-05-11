@@ -75,4 +75,5 @@ return [
         'customers' => 'Pour :count clients',
     ],
 
+    'published_on' => 'Sera publié le:',
 ];

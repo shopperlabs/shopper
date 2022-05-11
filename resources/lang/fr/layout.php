@@ -55,6 +55,7 @@ return [
             'code' => 'Code',
             'visible' => 'Visible',
             'search' => 'Recherche',
+            'availability' => 'Disponibilité',
         ],
 
         'placeholder' => [
@@ -62,6 +63,7 @@ return [
             'email' => 'Entrer votre e-mail',
             'value' => 'votre valeur ici',
             'date' => 'Choisir une date',
+            'pick_a_date' => 'Sélectionner une date',
         ],
 
         'actions' => [
