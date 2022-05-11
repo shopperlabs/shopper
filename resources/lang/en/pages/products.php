@@ -30,6 +30,11 @@ return [
     'modals' => [
         'title' => 'Delete this :item',
         'message' => 'Are you sure you want to delete this product? All information associated with this product will be deleted.',
+
+        'variants' => [
+            'title' => 'Stock management for this variant',
+            'select' => 'Select inventory',
+        ],
     ],
 
     'variants' => [
@@ -94,7 +99,7 @@ return [
     ],
 
     'inventory' => [
-        'title' => 'Inventory attribute',
+        'title' => 'Inventory attributes',
         'description' => 'Fields related to stock management in your store.',
         'stock_title' => 'Stock management',
         'stock_description' => 'Stock management in your different inventories.',
@@ -129,4 +134,5 @@ return [
         'variation_delete' => 'The variation has successfully removed!',
         'variation_update' => 'Variant successfully updated!',
     ],
+
 ];
