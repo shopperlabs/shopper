@@ -92,6 +92,7 @@ return [
     'adjustment' => 'Adjustment',
     'in_stock' => 'in stock',
     'out_stock' => 'out stock',
+    'images' => 'Images',
 
     'validation' => [
         'integer' => 'This value must be an integer.',

@@ -39,6 +39,13 @@ return [
         'empty' => 'No variant found',
         'search_label' => 'Search variant',
         'search_placeholder' => 'Search product variant',
+        'variant_information' => 'Variant information',
+
+        'actions' => [
+            'update' => 'Update variant',
+            'update_stock' => 'Update stock',
+            'manage_inventory' => 'Manage Inventories',
+        ],
     ],
 
     'reviews' => [
