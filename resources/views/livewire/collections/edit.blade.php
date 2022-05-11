@@ -44,8 +44,8 @@
             <aside class="sticky top-6 space-y-5">
                 <div class="bg-white rounded-md shadow p-4 sm:p-5 dark:bg-secondary-800">
                     <x-datetime-picker
-                        :label="__('shopper::pages/collections.availability')"
-                        :placeholder="__('shopper::pages/collections.pick_a_date')"
+                        :label="__('shopper::layout.forms.label.availability')"
+                        :placeholder="__('shopper::layout.forms.placeholder.pick_a_date')"
                         wire:model="publishedAt"
                         parse-format="YYYY-MM-DD HH:mm"
                         time-format="24"
@@ -56,7 +56,7 @@
                         <div class="mt-2 flex items-start">
                             <div class="mt-1 shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                             <p class="ml-2.5 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
-                                {{ __('shopper::pages/collections.published_on') }} <br>
+                                {{ __('shopper::messages.published_on') }} <br>
                                 {{ $publishedAtFormatted }}
                             </p>
                         </div>
