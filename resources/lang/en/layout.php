@@ -54,6 +54,7 @@ return [
             'inactive' => 'Inactive',
             'code' => 'Code',
             'visible' => 'Visible',
+            'invisible' => 'Invisible',
             'search' => 'Search',
             'price' => 'Price',
             'price_amount' => 'Price amount',
@@ -62,7 +63,19 @@ return [
             'sku' => 'SKU (Stock Keeping Unit)',
             'barcode' => 'Barcode (ISBN, UPC, GTIN, etc.)',
             'safety_stock' => 'Safety Stock',
-            '' => '',
+            'width_unit' => 'Width Unit',
+            'height_unit' => 'Height Unit',
+            'weight_unit' => 'Weight Unit',
+            'volume_unit' => 'Volume Unit',
+            'height' => 'Height',
+            'width' => 'Width',
+            'volume' => 'Volume',
+            'weight' => 'Weight',
+            'availability' => 'Availability',
+            'brand' => 'Brand',
+            'friendly_url' => 'Friendly URL',
+            'quantity' => 'Quantity',
+            'stock_number_value' => 'Stock number value',
         ],
 
         'placeholder' => [
@@ -70,6 +83,9 @@ return [
             'email' => 'Enter your email',
             'value' => 'your value here',
             'date' => 'Choose date',
+            'pick_a_date' => 'Pick a date',
+            'select' => 'Select',
+            'select_inventory' => 'Select inventory',
         ],
 
         'actions' => [
@@ -79,7 +95,9 @@ return [
             'close' => 'Close',
             'delete' => 'Delete',
             'disabled' => 'Disabled',
+            'edit' => 'Edit',
             'enabled' => 'Enabled',
+            'export' => 'Export',
             'nevermind' => 'Nevermind',
             'update' => 'Update',
             'save' => 'Save',
@@ -127,5 +145,11 @@ return [
         'success' => 'Success',
         'updated' => 'Updated',
         'added' => 'Added',
-    ]
+    ],
+
+    'tables' => [
+        'sku' => 'Sku',
+        'price' => 'Price',
+        'current_stock' => 'Current stock',
+    ],
 ];

@@ -1,21 +1,21 @@
 <div>
     <div>
         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-            {{ __('Products variations') }}
+            {{ __('shopper::pages/products.variants.title') }}
         </h3>
         <p class="mt-1 max-w-2xl text-sm text-secondary-500">
-            {{ __('All variations of your product. The variations can each have their stock and price.') }}
+            {{ __('shopper::pages/products.variants.description') }}
         </p>
     </div>
 
     <section aria-labelledby="products_variations_heading">
         <div class="mt-5 bg-white dark:bg-secondary-800 pt-5 shadow rounded-md">
             <div class="px-4 sm:px-5 flex items-center justify-between space-x-4">
-                <x-shopper::forms.search label="Search variant" placeholder="Search product variant" />
+                <x-shopper::forms.search label="shopper::pages/products.variants.search_label" placeholder="shopper::pages/products.variants.search_placeholder" />
                 <div>
                     <span class="shadow-sm rounded-md">
                         <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})" type="button">
-                            {{ __('Add variant') }}
+                            {{ __('shopper::pages/products.variants.add') }}
                         </x-shopper::buttons.primary>
                     </span>
                 </div>
@@ -26,21 +26,21 @@
                         <thead>
                             <tr class="border-t border-secondary-200 dark:border-secondary-700">
                                 <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
-                                    <span class="lg:pl-2">{{ __('Variant') }}</span>
+                                    <span class="lg:pl-2">{{ __('shopper::messages.variant') }}</span>
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
-                                    {{ __('SKU') }}
+                                    {{ __('shopper::layout.tables.sku') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
-                                    {{ __('Price') }}
+                                    {{ __('shopper::layout.tables.price') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
-                                    {{ __('Current stock') }}
+                                    {{ __('shopper::layout.tables.current_stock') }}
                                 </th>
                                 <th class="pr-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-right text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider"></th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-secondary-200 dark:divide-secondary-700" x-max="1">
+                        <tbody class="divide-y divide-secondary-200 dark:divide-secondary-700">
                             @forelse($variants as $variant)
                                 <tr>
                                     <td class="px-6 py-3 max-w-xl text-sm leading-5 font-medium text-secondary-900 dark:text-white">
@@ -71,7 +71,7 @@
                                             <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-medium rounded-full {{ $variant->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
                                                 {{ $variant->stock }}
                                             </span>
-                                            {{ __('in stock') }}
+                                            {{ __('shopper::messages.in_stock') }}
                                         </div>
                                     </td>
                                     <td class="pr-6">
@@ -86,14 +86,14 @@
                                                 <div class="py-1">
                                                     <a href="{{ route('shopper.products.variant', ['product' => $product->id, 'id' => $variant->id]) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
                                                         <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
-                                                        {{ __('Edit') }}
+                                                        {{ __('shopper::layout.forms.actions.edit') }}
                                                     </a>
                                                 </div>
                                                 <div class="border-t border-secondary-100 dark:border-secondary-600"></div>
                                                 <div class="py-1">
                                                     <button wire:click="remove({{ $variant->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 dark:hover:bg-secondary-700 hover:bg-secondary-100 dark:hover:text-white hover:text-secondary-900 focus:outline-none focus:bg-secondary-100 dark:focus:bg-secondary-700 dark:focus:text-white focus:text-secondary-900" role="menuitem">
                                                         <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
-                                                        {{ __('Delete') }}
+                                                        {{ __('shopper::layout.forms.actions.delete') }}
                                                     </button>
                                                 </div>
                                             </x-slot>
@@ -105,7 +105,7 @@
                                     <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900">
                                         <div class="flex justify-center items-center space-x-2">
                                             <x-heroicon-o-book-open class="h-8 w-8 text-secondary-400" />
-                                            <span class="font-medium py-8 text-secondary-400 text-xl">{{ __('No variant found') }}...</span>
+                                            <span class="font-medium py-8 text-secondary-400 text-xl">{{ __('shopper::pages/products.variants.empty') }}...</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -121,13 +121,13 @@
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
                         <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-300">
-                            {{ __('Showing') }}
+                            {{ __('shopper::messages.showing') }}
                             <span class="font-medium">{{ ($variants->currentPage() - 1) * $variants->perPage() + 1 }}</span>
-                            {{ __('to') }}
+                            {{ __('shopper::messages.to') }}
                             <span class="font-medium">{{ ($variants->currentPage() - 1) * $variants->perPage() + count($variants->items()) }}</span>
-                            {{ __('of') }}
+                            {{ __('shopper::messages.of') }}
                             <span class="font-medium"> {!! $variants->total() !!}</span>
-                            {{ __('results') }}
+                            {{ __('shopper::messages.results') }}
                         </p>
                     </div>
                     {{ $variants->links() }}

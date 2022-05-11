@@ -80,4 +80,21 @@ return [
     'available' => 'Available',
     'shipping' => 'Shipping',
     'weight_dimension' => 'Weight and Dimension',
+    'published_on' => 'Will be published on:',
+    'variants' => 'Variants',
+    'variant' => 'Variant',
+    'overview' => 'Overview',
+    'attributes' => 'Attributes',
+    'seo' => 'SEO',
+    'date' => 'Date',
+    'event' => 'Event',
+    'location' => 'Location',
+    'adjustment' => 'Adjustment',
+    'in_stock' => 'in stock',
+    'out_stock' => 'out stock',
+
+    'validation' => [
+        'integer' => 'This value must be an integer.',
+    ],
+
 ];

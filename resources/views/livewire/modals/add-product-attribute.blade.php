@@ -44,7 +44,7 @@
                             @foreach($values as $v)
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                        <x-shopper::forms.checkbox wire:model="multipleValues" id="value_{{ $v->id }}" value="{{ $v->id }}" />
+                                        <x-shopper::forms.checkbox wire:model.debounce.550ms="multipleValues" id="value_{{ $v->id }}" value="{{ $v->id }}" />
                                     </div>
                                     <div class="ml-3 text-sm leading-5">
                                         <label for="value_{{ $v->id }}" class="font-medium text-secondary-700 cursor-pointer dark:text-secondary-400">{{ $v->value }}</label>

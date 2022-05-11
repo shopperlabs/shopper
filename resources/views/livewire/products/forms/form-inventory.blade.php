@@ -2,20 +2,20 @@
     <div>
         <div>
             <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                {{ __('Inventory attribute') }}
+                {{ __('shopper::pages/products.inventory.title') }}
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-secondary-500 dark:text-secondary-400">
-                {{ __('Fields related to stock management in your store.') }}
+                {{ __('shopper::pages/products.inventory.description') }}
             </p>
         </div>
         <div class="mt-5 bg-white dark:bg-secondary-800 rounded-lg overflow-hidden shadow-md">
             <div class="p-5 sm:p-5">
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-5">
-                    <x-shopper::forms.group class="sm:col-span-1" label="SKU (Stock Keeping Unit)" for="sku" :error="$errors->first('sku')">
+                    <x-shopper::forms.group class="sm:col-span-1" label="shopper::layout.forms.label.sku" for="sku" :error="$errors->first('sku')">
                         <x-shopper::forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
                     </x-shopper::forms.group>
                     <div class="sm:col-span-1">
-                        <x-shopper::forms.group label="Barcode (ISBN, UPC, GTIN, etc.)" for="barcode" :error="$errors->first('barcode')">
+                        <x-shopper::forms.group label="shopper::layout.forms.label.barcode" for="barcode" :error="$errors->first('barcode')">
                             <x-shopper::forms.input wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
                         </x-shopper::forms.group>
                         @if($barcodeImage)
@@ -24,7 +24,7 @@
                             </div>
                         @endif
                     </div>
-                    <x-shopper::forms.group class="sm:col-span-1" label="Safety Stock" for="security_stock">
+                    <x-shopper::forms.group class="sm:col-span-1" label="shopper::layout.forms.label.safety_stock" for="security_stock">
                         <x-shopper::forms.input wire:model.defer="securityStock" id="security_stock" type="number" min="0" autocomplete="off" />
                     </x-shopper::forms.group>
                 </div>
@@ -32,7 +32,7 @@
             <div class="px-4 py-3 bg-secondary-50 dark:bg-transparent text-right sm:px-6">
                 <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                    {{ __('Update') }}
+                    {{ __('shopper::layout.forms.actions.update') }}
                 </x-shopper::buttons.primary>
             </div>
         </div>
@@ -47,10 +47,10 @@
     <div class="mt-10 sm:mt-0">
         <div>
             <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                {{ __('Stock management') }}
+                {{ __('shopper::pages/products.inventory.stock_title') }}
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-secondary-500 dark:text-secondary-400">
-                {{ __('Stock management in your different inventories.') }}
+                {{ __('shopper::pages/products.inventory.stock_description') }}
             </p>
         </div>
     </div>
@@ -62,14 +62,14 @@
                     <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-700">
                         <x-heroicon-o-location-marker class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
                     </span>
-                    <x-shopper::forms.select wire:model="inventory" id="inventory" class="-ml-px block w-full pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('Select inventory') }}">
+                    <x-shopper::forms.select wire:model.lazy="inventory" id="inventory" class="-ml-px block w-full pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('shopper::layout.forms.placeholder.select_inventory') }}">
                         @foreach($inventories as $inventory)
                             <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
                         @endforeach
                     </x-shopper::forms.select>
                 </span>
                 <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-400">
-                    <span class="block text-sm font-medium mr-4">{{ __('Quantity Available') }}</span>
+                    <span class="block text-sm font-medium mr-4">{{ __('shopper::pages/products.quantity_available') }}</span>
                     <span class="mr-2 text-sm px-2 inline-flex leading-5 font-medium rounded-full {{ $product->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
                         {{ $product->stock }}
                     </span>
@@ -78,7 +78,7 @@
         @endif
         <div class="sm:flex sm:items-start sm:justify-between px-4 sm:px-6 mb-2 py-6">
             <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-400">
-                <span class="block text-sm font-medium mr-4">{{ __('Current quantity on this inventory') }}</span>
+                <span class="block text-sm font-medium mr-4">{{ __('shopper::pages/products.current_qty_inventory') }}</span>
                     <span class="mr-2 text-sm px-2 inline-flex leading-5 font-medium rounded-full {{ $currentStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
                     {{ $currentStock }}
                 </span>
@@ -90,7 +90,16 @@
                         <div>
                             <div class="flex rounded-md shadow-sm">
                                 <div class="relative flex items-stretch grow focus-within:z-10">
-                                    <x-shopper::forms.input wire:model="value" type="number" aria-label="{{ __('Stock number value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
+                                    <x-shopper::forms.input
+                                        wire:model.debounche.550ms="value"
+                                        type="number"
+                                        aria-label="{{ __('shopper::layout.forms.label.stock_number_value') }}"
+                                        id="stockValue"
+                                        step="1"
+                                        min="0"
+                                        class="block w-32 rounded-r-none rounded-l-md"
+                                        placeholder="12"
+                                    />
                                 </div>
                                 <button wire:click="decrementStock" type="button" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-none border border-secondary-300 dark:border-secondary-600 bg-white dark:bg-secondary-700 text-sm font-medium text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
                                     <span>&minus;</span>
@@ -104,20 +113,20 @@
                     <div class="mt-5 lg:mt-0 flex items-center">
                         <x-shopper::buttons.primary wire:click="updateCurrentStock" wire.loading.attr="disabled" type="button">
                             <x-shopper::loader wire:loading wire:target="updateCurrentStock" class="text-white" />
-                            {{ __('Update') }}
+                            {{ __('shopper::layout.forms.actions.update') }}
                         </x-shopper::buttons.primary>
                         @if($histories->isNotEmpty())
                             <div class="flex items-center pl-4 space-x-4">
                                 <x-shopper::buttons.default wire:click="export" type="button">
                                     <x-heroicon-o-cloud-download class="w-5 h-5 -ml-1 pr-2" />
-                                    {{ __('Export') }}
+                                    {{ __('shopper::layout.forms.actions.export') }}
                                 </x-shopper::buttons.default>
                             </div>
                         @endif
                     </div>
                 </div>
                 @error('value')
-                    <p class="mt-2 text-sm text-red-600">{{ __('This number must be an integer.') }}</p>
+                    <p class="mt-2 text-sm text-red-600">{{ __('shopper::messages.validation.integer') }}</p>
                 @enderror
             </div>
         </div>
@@ -126,7 +135,7 @@
                 <span class="shrink-0">
                     <x-heroicon-o-document-text class="h-12 w-12 text-secondary-400" />
                 </span>
-                <h3 class="font-medium py-5 text-secondary-400 text-xl">{{ __('No adjustments made to inventory.') }}</h3>
+                <h3 class="font-medium py-5 text-secondary-400 text-xl">{{ __('shopper::pages/products.inventory.empty') }}</h3>
             </div>
         @else
             <div class="flex flex-col">
@@ -136,19 +145,19 @@
                             <thead>
                                 <tr>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('Date') }}
+                                        {{ __('shopper::messages.date') }}
                                     </th>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('Event') }}
+                                        {{ __('shopper::messages.event') }}
                                     </th>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('Inventory Place') }}
+                                        {{ __('shopper::messages.location') }}
                                     </th>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-right text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('Adjustment') }}
+                                        {{ __('shopper::messages.adjustment') }}
                                     </th>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-right text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('Quantity Movement') }}
+                                        {{ __('shopper::pages/products.inventory.movement') }}
                                     </th>
                                 </tr>
                             </thead>
@@ -183,13 +192,13 @@
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
                             <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-400">
-                                {{ __('Showing') }}
+                                {{ __('shopper::messages.showing') }}
                                 <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + 1 }}</span>
-                                {{ __('to') }}
+                                {{ __('shopper::messages.to') }}
                                 <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + count($histories->items()) }}</span>
-                                {{ __('of') }}
+                                {{ __('shopper::messages.of') }}
                                 <span class="font-medium"> {!! $histories->total() !!}</span>
-                                {{ __('results') }}
+                                {{ __('shopper::messages.results') }}
                             </p>
                         </div>
                         {{ $histories->links() }}

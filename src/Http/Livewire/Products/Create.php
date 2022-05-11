@@ -112,14 +112,14 @@ class Create extends AbstractBaseComponent
                     $inventory,
                     $value,
                     [
-                        'event' => __('Initial inventory'),
+                        'event' => __('shopper::pages/products.inventory.initial'),
                         'old_quantity' => $value,
                     ]
                 );
             }
         }
 
-        session()->flash('success', __('Product successfully added!'));
+        session()->flash('success', __('shopper::pages/products.notifications.create'));
 
         $this->redirectRoute('shopper.products.index');
     }

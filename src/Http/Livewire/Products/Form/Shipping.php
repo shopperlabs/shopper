@@ -48,7 +48,10 @@ class Shipping extends Component
 
         $this->emit('productHasUpdated', $this->productId);
 
-        $this->notification()->success(__('Updated'), __('Product shipping successfully updated!'));
+        $this->notification()->success(
+            __('shopper::layout.status.updated'),
+            __('shopper::pages/products.notifications.shipping_update')
+        );
     }
 
     public function render()

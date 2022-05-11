@@ -24,10 +24,7 @@ return [
         'update' => 'Update conditions',
     ],
 
-    'availability' => 'Collection availability',
     'availability_description' => 'Specify a publication date so that your collections are scheduled on your store.',
-    'pick_a_date' => 'Pick a date',
-    'published_on' => 'Will be published on:',
 
     'order' => [
         'alpha_asc' => 'Alpha Asc',

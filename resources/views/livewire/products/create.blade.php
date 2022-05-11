@@ -6,7 +6,7 @@
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('shopper::messages.actions_label.add_new', ['new' => 'product']) }}
+            {{ __('shopper::messages.actions_label.add_new', ['name' => 'product']) }}
         </x-slot>
 
         <x-slot name="action">
@@ -106,7 +106,7 @@
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 p-4 sm:p-5">
                         @if($inventories->count() <= 1)
                             <div class="sm:col-span-1">
-                                <x-shopper::forms.group label="Quantity" for="quantity">
+                                <x-shopper::forms.group label="shopper::layout.forms.label.quantity" for="quantity">
                                     <x-shopper::forms.input wire:model.defer="quantity.{{ $inventories->first()->id }}" id="quantity" type="number" min="0" autocomplete="off" />
                                 </x-shopper::forms.group>
                             </div>
@@ -183,40 +183,40 @@
                 </div>
                 @if($requiresShipping)
                     <div class="p-4 sm:p-5">
-                        <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Weight and Dimension') }}</h4>
-                        <p class="text-sm text-secondary-500 dark:text-secondary-400 leading-5">{{ __('Used to calculate shipping charges during checkout and to label prices during order processing.') }}</p>
+                        <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('shopper::messages.weight_dimension') }}</h4>
+                        <p class="text-sm text-secondary-500 dark:text-secondary-400 leading-5">{{ __('shopper::pages/products.weight_dimension_help_text') }}</p>
                         <div class="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-6 sm:gap-y-4">
-                            <x-shopper::forms.group class="sm:col-span-1" label="Width">
+                            <x-shopper::forms.group class="sm:col-span-1" label="shopper::layout.forms.label.width">
                                 <x-shopper::forms.input wire:model.defer="widthValue" id="WidthValue" type="text" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="WidthUnit" aria-label="{{ __('Width Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper::forms.select wire:model.defer="WidthUnit" aria-label="{{ __('shopper::layout.forms.label.width_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="cm">cm</option>
                                         <option value="m">m</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
-                            <x-shopper::forms.group class="sm:col-span-1" label="Height">
+                            <x-shopper::forms.group class="sm:col-span-1" label="shopper::layout.forms.label.height">
                                 <x-shopper::forms.input wire:model.defer="heightValue" id="heightValue" type="text" class="pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="heightUnit" aria-label="{{ __('Height Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper::forms.select wire:model.defer="heightUnit" aria-label="{{ __('shopper::layout.forms.label.height_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="cm">cm</option>
                                         <option value="m">m</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
-                            <x-shopper::forms.group class="sm:col-span-1" label="Weight">
+                            <x-shopper::forms.group class="sm:col-span-1" label="shopper::layout.forms.label.weight">
                                 <x-shopper::forms.input wire:model.defer="weightValue" id="weightValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="weightUnit" aria-label="{{ __('Weight Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper::forms.select wire:model.defer="weightUnit" aria-label="{{ __('shopper::layout.forms.label.weight_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="kg">kg</option>
                                         <option value="g">g</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
-                            <x-shopper::forms.group class="sm:col-span-1" label="Volume">
+                            <x-shopper::forms.group class="sm:col-span-1" label="shopper::layout.forms.label.volume">
                                 <x-shopper::forms.input wire:model.defer="volumeValue" id="VolumeValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="VolumeUnit" aria-label="{{ __('Volume Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper::forms.select wire:model.defer="VolumeUnit" aria-label="{{ __('shopper::layout.forms.label.volume_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="l">l</option>
                                         <option value="ml">ml</option>
                                     </x-shopper::forms.select>
@@ -239,29 +239,41 @@
             <aside class="space-y-5">
                 <div class="bg-white dark:bg-secondary-800 rounded-lg shadow divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="p-4 sm:p-5">
-                        <x-shopper::label value="{{ __('Product status') }}" />
+                        <x-shopper::label value="{{ __('shopper::pages/products.status') }}" />
                         <div class="mt-4 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
                                 <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 shrink-0">
                                     <x-heroicon-o-eye class="h-5 w-5 text-white" />
                                 </span>
-                                <span class="font-semibold ml-3 text-sm">{{ __('Visible') }}</span>
+                                <span class="font-semibold ml-3 text-sm">{{ __('shopper::layout.forms.label.visible') }}</span>
                             </div>
                             <div>
-                                <span wire:model="isVisible" x-data="{ on: @entangle('isVisible') }" role="checkbox" tabindex="0" @click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" :class="{ 'bg-secondary-200 dark:bg-secondary-600': !on, 'bg-primary-600': on }" class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-secondary-200">
+                                <span wire:model="isVisible"
+                                      x-data="{ on: @entangle('isVisible') }"
+                                      role="checkbox"
+                                      tabindex="0"
+                                      @click="$dispatch('input', !on); on = !on"
+                                      @keydown.space.prevent="on = !on"
+                                      :aria-checked="on.toString()"
+                                      aria-checked="false"
+                                      :class="{ 'bg-secondary-200 dark:bg-secondary-600': !on, 'bg-primary-600': on }"
+                                      class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer focus:outline-none focus:shadow-outline-primary bg-secondary-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
-                                    <span aria-hidden="true" :class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200 translate-x-0"></span>
+                                    <span aria-hidden="true"
+                                          :class="{ 'translate-x-5': on, 'translate-x-0': !on }"
+                                          class="inline-block h-5 w-5 rounded-full bg-white shadow transform translate-x-0"
+                                    ></span>
                                 </span>
                             </div>
                         </div>
                         <p class="mt-2 text-secondary-500 dark:text-secondary-400 leading-5 text-sm">
-                            {{ __('This product will be hidden from all sales channels.') }}
+                            {{ __('shopper::pages/products.visible_help_text') }}
                         </p>
                     </div>
                     <div class="p-4 sm:p-5">
                         <x-datetime-picker
-                            :label="__('Product availability')"
-                            :placeholder="__('Pick a date')"
+                            :label="__('shopper::layout.forms.label.availability')"
+                            :placeholder="__('shopper::layout.forms.placeholder.pick_a_date')"
                             wire:model="publishedAt"
                             parse-format="YYYY-MM-DD HH:mm"
                             time-format="24"
@@ -272,25 +284,25 @@
                             <div class="mt-2 flex items-start">
                                 <div class="mt-1 shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                                 <p class="ml-2.5 text-sm text-secondary-500 leading-5">
-                                    {{ __('Will be published on:') }} <br>
+                                    {{ __('shopper::messages.published_on') }} <br>
                                     {{ $publishedAtFormatted }}
                                 </p>
                             </div>
                         @else
                             <p class="mt-2 text-sm leading-5 text-secondary-500">
-                                {{ __('Specify a publication date so that your product are scheduled on your store.') }}
+                                {{ __('shopper::pages/products.availability_description') }}
                             </p>
                         @endif
                     </div>
                 </div>
                 <div class="bg-white dark:bg-secondary-800 rounded-lg shadow">
                     <div class="px-4 pt-4 sm:px-5 sm:pt-5">
-                        <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Product associations') }}</h4>
+                        <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('shopper::pages/products.product_associations') }}</h4>
                     </div>
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
-                        <x-shopper::forms.group class="p-4 sm:p-5" label="Brand" for="brand_id">
+                        <x-shopper::forms.group class="p-4 sm:p-5" label="shopper::layout.forms.label.brand" for="brand_id">
                             <x-shopper::forms.select wire:model.defer="brand_id" id="brand_id">
-                                <option value="0">{{ __('No brand') }}</option>
+                                <option value="0">{{ __('shopper::pages/brands.empty_brand') }}</option>
                                 @foreach($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
@@ -298,8 +310,8 @@
                         </x-shopper::forms.group>
                         <div class="p-4 sm:p-5">
                             <x-select
-                                :label="__('Collections')"
-                                placeholder="Select collections"
+                                :label="__('shopper::layout.sidebar.collections')"
+                                :placeholder="__('shopper::layout.forms.placeholder.select')"
                                 wire:model.defer="collection_ids"
                                 class="dark:bg-secondary-700"
                                 multiselect
@@ -317,7 +329,7 @@
                 </div>
                 <div class="bg-white dark:bg-secondary-800 rounded-lg shadow">
                     <div class="px-4 pt-4 sm:px-5 sm:pt-5">
-                        <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('Product categories') }}</h4>
+                        <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('shopper::pages/products.product_categories') }}</h4>
                     </div>
                     <div class="px-4 py-3">
                         <div class="space-y-3 p-2 max-h-96 border border-secondary-200 rounded-md shadow-sm overflow-scroll hide-scroll dark:border-secondary-700">
@@ -341,16 +353,15 @@
                             @empty
                                 <div class="text-center py-4">
                                     <x-heroicon-o-tag class="mx-auto h-12 w-12 text-secondary-400 dark:text-secondary-500" />
-                                    <h3 class="mt-2 text-sm font-medium text-secondary-900 dark:text-white">{{ __('No Categories') }}</h3>
-                                    <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">{{ __('Get started by creating a new category.') }}</p>
+                                    <h3 class="mt-2 text-sm font-medium text-secondary-900 dark:text-white">{{ __('shopper::pages/products.no_category') }}</h3>
+                                    <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::pages/products.no_category_text') }}</p>
                                     <div class="mt-6">
                                         <x-shopper::buttons.primary :link="route('shopper.categories.create')">
                                             <x-heroicon-s-plus class="-ml-1 mr-2 h-5 w-5"/>
-                                            {{ __('New category') }}
+                                            {{ __('shopper::pages/products.new_category') }}
                                         </x-shopper::buttons.primary>
                                     </div>
                                 </div>
-
                             @endforelse
                         </div>
                     </div>
@@ -363,7 +374,7 @@
         <div class="flex justify-end">
             <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" />
-                {{ __('Save') }}
+                {{ __('shopper::layout.forms.actions.save') }}
             </x-shopper::buttons.primary>
         </div>
     </div>

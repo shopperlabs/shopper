@@ -11,14 +11,14 @@
                 <div class="flex-1 flex items-center min-w-0 space-x-3">
                     <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">{{ $variant->name }}</h3>
                     <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $product->is_visible ? 'bg-green-100 text-green-800': 'bg-yellow-100 text-yellow-800' }}">
-                        {{ $product->is_visible ? __('Visible'): __('Not visible') }}
+                        {{ $product->is_visible ? __('shopper::layout.forms.label.visible'): __('shopper::layout.forms.label.invisible') }}
                     </span>
                 </div>
                 <div class="flex space-x-3 pt-1">
                     <span class="hidden sm:block">
                         <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode(['id' => $variant->id, 'type' => 'variant', 'route' => route('shopper.products.edit', $product)]) }})" type="button">
                             <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
-                            {{ __('Delete variant') }}
+                            {{ __('shopper::layout.forms.actions.delete') }}
                         </x-shopper::buttons.danger>
                     </span>
                 </div>

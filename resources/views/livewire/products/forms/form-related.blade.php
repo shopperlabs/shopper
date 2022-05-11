@@ -1,10 +1,10 @@
 <div>
     <div>
         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-            {{ __('Similar Products') }}
+            {{ __('shopper::pages/products.related.title') }}
         </h3>
         <p class="mt-1 max-w-2xl text-sm text-secondary-500 dark:text-secondary-400">
-            {{ __('All products that can be identified as similar or complementary to your product.') }}
+            {{ __('shopper::pages/products.related.description') }}
         </p>
     </div>
 
