@@ -54,8 +54,28 @@ return [
             'inactive' => 'Inactif',
             'code' => 'Code',
             'visible' => 'Visible',
+            'invisible' => 'Invisible',
             'search' => 'Recherche',
+            'price' => 'Prix',
+            'price_amount' => 'Montant du prix',
+            'compare_price' => 'Comparer au prix',
+            'cost_per_item' => 'Coût par pièce',
+            'sku' => 'SKU (Stock Keeping Unit)',
+            'barcode' => 'Barcode (ISBN, UPC, GTIN, etc.)',
+            'safety_stock' => 'Stock de sécurité',
+            'width_unit' => 'Unité de largeur',
+            'height_unit' => 'Unité de hauteur',
+            'weight_unit' => 'Unité de poids',
+            'volume_unit' => 'Unité de volume',
+            'height' => 'Hauteur',
+            'width' => 'Largeur',
+            'volume' => 'Volume',
+            'weight' => 'Poids',
             'availability' => 'Disponibilité',
+            'brand' => 'Marque',
+            'friendly_url' => 'Lien personnalisable',
+            'quantity' => 'Quantité',
+            'stock_number_value' => 'Valeur du numéro de stock',
         ],
 
         'placeholder' => [
@@ -64,6 +84,8 @@ return [
             'value' => 'votre valeur ici',
             'date' => 'Choisir une date',
             'pick_a_date' => 'Sélectionner une date',
+            'select' => 'Sélectionner',
+            'select_inventory' => 'Sélectionner un inventaire',
         ],
 
         'actions' => [
@@ -73,12 +95,15 @@ return [
             'close' => 'Fermer',
             'delete' => 'Supprimer',
             'disabled' => 'Désactivé',
+            'edit' => 'Éditer',
             'enabled' => 'Activé',
+            'export' => 'Exportez',
             'nevermind' => 'Annuler',
             'update' => 'Modifier',
             'save' => 'Enregistrer',
             'subscribe' => 'Souscrire',
             'remove' => 'Retirer',
+            'remove_all' => 'Tout supprimer',
             'enabled_two_factor' => 'Activer deux facteurs',
             'regenerate' => 'Régénérer les codes de récupération',
             'show_recovery_code' => 'Afficher les codes de récupération',
@@ -120,5 +145,12 @@ return [
         'success' => 'Succès',
         'updated' => 'Mis à jour',
         'added' => 'Ajout',
-    ]
+    ],
+
+    'tables' => [
+        'sku' => 'Sku',
+        'price' => 'Prix',
+        'current_stock' => 'Stock actuel',
+    ],
+
 ];

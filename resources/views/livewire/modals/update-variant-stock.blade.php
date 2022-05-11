@@ -86,7 +86,7 @@
                         <span class="shrink-0">
                             <x-heroicon-o-document-text class="w-12 h-12 text-secondary-400" />
                         </span>
-                        <h3 class="py-5 text-xl font-medium text-secondary-400">{{ __('No adjustments made to inventory.') }}</h3>
+                        <h3 class="py-5 text-xl font-medium text-secondary-400">{{ __('shopper::pages/products.inventory.empty') }}</h3>
                     </div>
                 @else
                     <div class="flex flex-col">

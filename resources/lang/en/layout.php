@@ -152,4 +152,5 @@ return [
         'price' => 'Price',
         'current_stock' => 'Current stock',
     ],
+
 ];

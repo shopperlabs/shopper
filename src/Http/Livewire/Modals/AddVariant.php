@@ -62,14 +62,17 @@ class AddVariant extends ModalComponent
                     $inventory,
                     $value,
                     [
-                        'event' => __('Initial inventory'),
+                        'event' => __('shopper::pages/products.inventory.initial'),
                         'old_quantity' => $value,
                     ]
                 );
             }
         }
 
-        $this->notification()->success(__('Added'), __('Product variation successfully added!'));
+        $this->notification()->success(
+            __('shopper::layout.status.added'),
+            __('shopper::pages/products.notifications.variation_create')
+        );
 
         $this->emit('onVariantAdded');
 

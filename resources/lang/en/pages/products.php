@@ -51,6 +51,11 @@ return [
             'update_stock' => 'Update stock',
             'manage_inventory' => 'Manage Inventories',
         ],
+
+        'modal' => [
+            'title' => 'About the variation',
+            'description' => 'Variant name and price. If the price is empty, the price of the product will be applied.',
+        ],
     ],
 
     'reviews' => [
@@ -131,6 +136,7 @@ return [
         'stock_update' => 'Product Stock successfully updated!',
         'seo_update' => 'Product SEO successfully updated!',
         'shipping_update' => 'Product shipping successfully updated!',
+        'variation_create' => 'Product variation successfully added!',
         'variation_delete' => 'The variation has successfully removed!',
         'variation_update' => 'Variant successfully updated!',
     ],

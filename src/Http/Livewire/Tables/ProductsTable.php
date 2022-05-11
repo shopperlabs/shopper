@@ -40,9 +40,15 @@ class ProductsTable extends DataTableComponent
     public function delete()
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
+            (new ProductRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->delete();
 
-            $this->notification()->success(__('Removed'), __('The :name has successfully removed!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())]));
+            $this->notification()->success(
+                __('Removed'),
+                __('The :name has successfully removed!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
+            );
         }
 
         $this->selected = [];
@@ -53,9 +59,15 @@ class ProductsTable extends DataTableComponent
     public function deactivate()
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_visible' => false]);
+            (new ProductRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->update(['is_visible' => false]);
 
-            $this->notification()->success(__('Visibility'), __('The :name has successfully updated visibility status!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())]));
+            $this->notification()->success(
+                __('Visibility'),
+                __('The :name has successfully updated visibility status!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
+            );
         }
 
         $this->selected = [];
@@ -66,9 +78,15 @@ class ProductsTable extends DataTableComponent
     public function activate()
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            (new ProductRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['is_visible' => true]);
+            (new ProductRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->selectedKeys())
+                ->update(['is_visible' => true]);
 
-            $this->notification()->success(__('Visibility'), __('The :name has successfully updated visibility status!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())]));
+            $this->notification()->success(
+                __('Visibility'),
+                __('The :name has successfully updated visibility status!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
+            );
         }
 
         $this->selected = [];
