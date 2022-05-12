@@ -32,6 +32,7 @@ return [
             'delete' => 'Suppression',
             'updated' => 'Mis à jour',
             'verified' => 'Vérification',
+            'visibility' => 'Visibilité',
         ],
 
         'messages' => [
@@ -41,6 +42,7 @@ return [
             'verified' => ':name a été vérifié avec succès!',
             'approved' => ':name a été approuvé avec succès!',
             'disapproved' => ':name a été approuvé désapprouvé avec succès!',
+            'visibility' => 'La visibilité du produit :name a été modifié avec succès!',
         ],
     ],
 

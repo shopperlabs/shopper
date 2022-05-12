@@ -31,9 +31,9 @@ class ProductsTable extends DataTableComponent
     public function bulkActions(): array
     {
         return [
-            'delete'   => __('Delete'),
-            'activate' => __('Activate'),
-            'deactivate' => __('Deactivate'),
+            'delete'   => __('shopper::layout.forms.actions.delete'),
+            'activate' => __('shopper::layout.forms.actions.activate'),
+            'deactivate' => __('shopper::layout.forms.actions.disabled'),
         ];
     }
 
@@ -46,8 +46,8 @@ class ProductsTable extends DataTableComponent
                 ->delete();
 
             $this->notification()->success(
-                __('Removed'),
-                __('The :name has successfully removed!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
+                __('shopper::components.tables.status.delete'),
+                __('shopper::components.tables.messages.delete', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
             );
         }
 
@@ -65,8 +65,8 @@ class ProductsTable extends DataTableComponent
                 ->update(['is_visible' => false]);
 
             $this->notification()->success(
-                __('Visibility'),
-                __('The :name has successfully updated visibility status!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
+                __('shopper::components.tables.status.visibility'),
+                __('shopper::components.tables.messages.visibility', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
             );
         }
 
@@ -84,8 +84,8 @@ class ProductsTable extends DataTableComponent
                 ->update(['is_visible' => true]);
 
             $this->notification()->success(
-                __('Visibility'),
-                __('The :name has successfully updated visibility status!', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
+                __('shopper::components.tables.status.visibility'),
+                __('shopper::components.tables.messages.visibility', ['name' => Str::plural('product', $this->selectedRowsQuery->count())])
             );
         }
 
@@ -97,13 +97,13 @@ class ProductsTable extends DataTableComponent
     public function filters(): array
     {
         return [
-            'is_visible' => Filter::make('Visible')
+            'is_visible' => Filter::make(__('shopper::layout.forms.label.visible'))
                 ->select([
-                    '' => __('Any'),
-                    'yes' => __('Yes'),
-                    'no' => __('No'),
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
                 ]),
-            'brands' => Filter::make('Brands')
+            'brands' => Filter::make(__('shopper::layout.sidebar.brands'))
                 ->multiSelect(
                     Cache::remember('brands-filters', 60 * 30, function () {
                         return (new BrandRepository())->makeModel()->newQuery()
@@ -120,33 +120,33 @@ class ProductsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Name')
+            Column::make(__('shopper::layout.forms.label.name'))
                 ->excludeFromSelectable()
                 ->searchable()
                 ->sortable()
                 ->format(function ($value, $column, $row) {
                     return view('shopper::livewire.tables.cells.products.name')->with('product', $row);
                 }),
-            Column::make('Price', 'price_amount')
+            Column::make(__('shopper::layout.forms.label.price'), 'price_amount')
                 ->sortable()
                 ->searchable()
                 ->format(function ($value) {
-                    return $value ? '<span class="text-secondary-500 dark:text-secondary-400 font-medium">' . shopper_money_format($value) . '</span>' : null;
+                    return $value ? '<span class="font-medium text-secondary-500 dark:text-secondary-400">' . shopper_money_format($value) . '</span>' : null;
                 })->asHtml(),
-            Column::make('Sku', 'sku')
+            Column::make(__('shopper::layout.tables.sku'), 'sku')
                 ->sortable()
                 ->format(function ($value) {
-                    return $value ? '<span class="text-secondary-500 dark:text-secondary-400 font-medium">' . $value . '</span>' : '<span class="inline-flex text-secondary-700 dark:text-secondary-500">&mdash;</span>';
+                    return $value ? '<span class="font-medium text-secondary-500 dark:text-secondary-400">' . $value . '</span>' : '<span class="inline-flex text-secondary-700 dark:text-secondary-500">&mdash;</span>';
                 })->asHtml(),
-            Column::make('Brand', 'brand')
+            Column::make(__('shopper::layout.forms.label.brand'), 'brand')
                 ->format(function ($value) {
                     return view('shopper::livewire.tables.cells.products.brand')->with('brand', $value);
                 }),
-            Column::make('Stock')
+            Column::make(__('shopper::layout.tables.stock'))
                 ->format(function ($value, $column, $row) {
                     return view('shopper::livewire.tables.cells.products.stock')->with('product', $row);
                 }),
-            Column::make('Published At', 'published_at')
+            Column::make(__('shopper::layout.forms.label.published_at'), 'published_at')
                 ->sortable()
                 ->format(function ($value) {
                     return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-secondary-500 dark:text-secondary-400'>" . $value->formatLocalized('%d %B, %Y') . '</time>' : '';

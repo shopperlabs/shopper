@@ -89,6 +89,7 @@ return [
         ],
 
         'actions' => [
+            'activate' => 'Activé',
             'confirm' => 'Confirmer',
             'cancel' => 'Annuler',
             'clear' => 'Réinitialiser',
@@ -151,6 +152,7 @@ return [
         'sku' => 'Sku',
         'price' => 'Prix',
         'current_stock' => 'Stock actuel',
+        'stock' => 'Stock',
     ],
 
 ];
