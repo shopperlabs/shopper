@@ -206,7 +206,7 @@
                             <x-shopper::forms.group class="sm:col-span-1" label="Volume">
                                 <x-shopper::forms.input wire:model.defer="volumeValue" id="VolumeValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="VolumeUnit" aria-label="{{ __('Volume Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper::forms.select wire:model.defer="volumeUnit" aria-label="{{ __('Volume Unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
                                         <option value="l">l</option>
                                         <option value="ml">ml</option>
                                     </x-shopper::forms.select>
