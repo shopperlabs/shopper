@@ -108,7 +108,10 @@ class Edit extends AbstractBaseComponent
 
         $this->emit('productHasUpdated', $this->productId);
 
-        $this->notification()->success(__('Updated'), __('Product successfully updated!'));
+        $this->notification()->success(
+            __('shopper::layout.status.updated'),
+            __('shopper::pages/products.notifications.update')
+        );
     }
 
     public function render()

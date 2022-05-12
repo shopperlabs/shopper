@@ -75,4 +75,28 @@ return [
         'customers' => 'Pour :count clients',
     ],
 
+    'media' => 'Media',
+    'pricing' => 'Prix',
+    'inventory' => 'Inventaire',
+    'available' => 'Disponible',
+    'shipping' => 'Livraison',
+    'weight_dimension' => 'Poids et dimensions',
+    'published_on' => 'Sera publié le:',
+    'variants' => 'Variantes',
+    'variant' => 'Variant',
+    'overview' => 'Aperçu',
+    'attributes' => 'Attributs',
+    'seo' => 'SEO',
+    'date' => 'Date',
+    'event' => 'Action',
+    'location' => 'Localisation',
+    'adjustment' => 'Ajustement',
+    'in_stock' => 'en stock',
+    'out_stock' => 'stock épuisé',
+    'images' => 'Images',
+
+    'validation' => [
+        'integer' => 'Cette valeur doit être un nombre entier.',
+    ],
+
 ];

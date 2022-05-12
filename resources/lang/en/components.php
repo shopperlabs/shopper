@@ -32,6 +32,7 @@ return [
             'delete' => 'Delete',
             'updated' => 'Updated',
             'verified' => 'Verified',
+            'visibility' => 'Visibility',
         ],
 
         'messages' => [
@@ -41,6 +42,7 @@ return [
             'verified' => 'The :name has successfully verified!',
             'approved' => 'The :name has successfully approved!',
             'disapproved' => 'The :name has successfully disapproved!',
+            'visibility' => 'The :name has successfully updated visibility status!',
         ],
     ],
 

@@ -24,10 +24,7 @@ return [
         'update' => 'Modifier les conditions',
     ],
 
-    'availability' => 'Disponibilité de la collection',
     'availability_description' => 'Précisez une date de publication pour que la collection soit programmée sur votre boutique.',
-    'pick_a_date' => 'Choisis une date',
-    'published_on' => 'Sera publié le:',
 
     'order' => [
         'alpha_asc' => 'Alpha Asc',

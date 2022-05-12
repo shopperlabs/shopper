@@ -50,7 +50,10 @@ class Variants extends Component
 
         $this->dispatchBrowserEvent('item-removed');
 
-        $this->notification()->success(__('Deleted'), __('The variation has successfully removed!'));
+        $this->notification()->success(
+            __('shopper::layout.status.delete'),
+            __('shopper::pages/products.notifications.variation_delete')
+        );
     }
 
     public function render()

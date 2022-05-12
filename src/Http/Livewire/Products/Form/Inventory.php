@@ -60,7 +60,10 @@ class Inventory extends Component
             'security_stock' => $this->securityStock ?? null,
         ]);
 
-        $this->notification()->success(__('Updated'), __('Product Stock attribute successfully updated!'));
+        $this->notification()->success(
+            __('shopper::layout.status.updated'),
+            __('shopper::pages/products.notifications.stock_update')
+        );
     }
 
     public function render()

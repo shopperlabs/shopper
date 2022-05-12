@@ -48,7 +48,10 @@ class Seo extends Component
 
         $this->emit('productHasUpdated', $this->productId);
 
-        $this->notification()->success(__('Updated'), __('Product SEO successfully updated!'));
+        $this->notification()->success(
+            __('shopper::layout.status.updated'),
+            __('shopper::pages/products.notifications.seo_update')
+        );
     }
 
     public function render()

@@ -112,14 +112,14 @@ class Create extends AbstractBaseComponent
                     $inventory,
                     $value,
                     [
-                        'event' => __('Initial inventory'),
+                        'event' => __('shopper::pages/products.inventory.initial'),
                         'old_quantity' => $value,
                     ]
                 );
             }
         }
 
-        session()->flash('success', __('Product successfully added!'));
+        session()->flash('success', __('shopper::pages/products.notifications.create'));
 
         $this->redirectRoute('shopper.products.index');
     }
@@ -139,7 +139,7 @@ class Create extends AbstractBaseComponent
                 ->orderBy('name')
                 ->get()
                 ->toTree(),
-            'collections' => (new CollectionRepository())->get(['name', 'id']),
+            'collections' => (new CollectionRepository())->with('media')->get(['name', 'id']),
             'inventories' => Inventory::query()->get(['name', 'id']),
             'currency' => shopper_currency(),
             'barcodeImage' => $this->barcode
