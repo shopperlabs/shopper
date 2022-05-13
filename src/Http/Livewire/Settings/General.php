@@ -28,6 +28,7 @@ class General extends Component
     public ?string $shop_logo = null;
     public ?string $shop_cover = null;
     public ?int $shop_country_id = null;
+    public $selectedCountryId = [];
     public ?int $shop_currency_id = null;
 
     public $logo;
@@ -58,7 +59,11 @@ class General extends Component
         ])->select('value', 'key')->get()->toArray();
 
         foreach ($settings as $setting) {
-            $this->{$setting['key']} = $setting['value'] ?? null;
+            if ($setting['key'] === 'shop_country_id') {
+                $this->selectedCountryId['value'] = $this->shop_country_id = $setting['value'];
+            } else {
+                $this->{$setting['key']} = $setting['value'] ?? null;
+            }
         }
     }
 
@@ -67,15 +72,17 @@ class General extends Component
         $this->shop_about = $value;
     }
 
-    public function updatedShopCountryId($value)
+    public function updatedSelectedCountryId($choice)
     {
-        $country = Country::query()->find($value);
-        $countryCurrency = array_slice($country->currencies, 0, 1);
+        if (count($choice) > 0 && $choice['value'] !== '0') {
+            $this->shop_country_id = (int) $choice['value'];
+            $country = Country::find($this->shop_country_id);
+            $countryCurrency = array_slice($country->currencies, 0, 1);
 
-        foreach ($countryCurrency as $code => $name) {
-            $currency = Currency::where('code', $code)->first();
-            if ($currency->exists()) {
-                $this->shop_currency_id = $currency->id;
+            foreach ($countryCurrency as $code => $name) {
+                if ($currency = Currency::where('code', $code)->first()) {
+                    $this->shop_currency_id = $currency->id;
+                }
             }
         }
     }

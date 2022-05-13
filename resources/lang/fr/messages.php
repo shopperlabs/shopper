@@ -99,4 +99,7 @@ return [
         'integer' => 'Cette valeur doit être un nombre entier.',
     ],
 
+    'step' => 'Étape :number',
+    'settings' => 'Paramètres',
+
 ];

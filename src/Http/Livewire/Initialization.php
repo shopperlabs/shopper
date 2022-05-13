@@ -23,6 +23,7 @@ class Initialization extends Component
     public ?string $shop_phone_number = null;
     public string $shop_about = '';
     public ?int $shop_country_id = null;
+    public $selectedCountryId = [];
     public ?string $shop_facebook_link = null;
     public ?string $shop_instagram_link = null;
     public ?string $shop_twitter_link = null;
@@ -83,14 +84,17 @@ class Initialization extends Component
         return false;
     }
 
-    public function updatedShopCountryId($value)
+    public function updatedSelectedCountryId($choice)
     {
-        $country = Country::find($value);
-        $countryCurrency = array_slice($country->currencies, 0, 1);
+        if (count($choice) > 0 && $choice['value'] !== '0') {
+            $this->shop_country_id = (int) $choice['value'];
+            $country = Country::find($this->shop_country_id);
+            $countryCurrency = array_slice($country->currencies, 0, 1);
 
-        foreach ($countryCurrency as $code => $name) {
-            if ($currency = Currency::where('code', $code)->first()) {
-                $this->shop_currency_id = $currency->id;
+            foreach ($countryCurrency as $code => $name) {
+                if ($currency = Currency::where('code', $code)->first()) {
+                    $this->shop_currency_id = $currency->id;
+                }
             }
         }
     }
@@ -98,8 +102,8 @@ class Initialization extends Component
     public function messages(): array
     {
         return [
-            'shop_country_id.required' => __('The country is required'),
-            'shop_name.required' => __('The store name is required'),
+            'shop_country_id.required' => __('shopper::pages/settings.validations.country'),
+            'shop_name.required' => __('shopper::pages/settings.validations.shop_name'),
         ];
     }
 
