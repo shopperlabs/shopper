@@ -76,6 +76,12 @@ return [
             'friendly_url' => 'Lien personnalisable',
             'quantity' => 'Quantité',
             'stock_number_value' => 'Valeur du numéro de stock',
+            'store_name' => 'Store name',
+            'logo' => 'Logo',
+            'about' => 'A propos',
+            'currency'  => 'Devise',
+            'longitude' => 'Longitude',
+            'latitude' => 'Latitude',
         ],
 
         'placeholder' => [
@@ -86,6 +92,7 @@ return [
             'pick_a_date' => 'Sélectionner une date',
             'select' => 'Sélectionner',
             'select_inventory' => 'Sélectionner un inventaire',
+            'choose_currency' => 'Choisir la monnaie',
         ],
 
         'actions' => [

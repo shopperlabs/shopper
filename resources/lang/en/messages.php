@@ -98,4 +98,7 @@ return [
         'integer' => 'This value must be an integer.',
     ],
 
+    'step' => 'Step :number',
+    'settings' => 'Settings',
+
 ];
