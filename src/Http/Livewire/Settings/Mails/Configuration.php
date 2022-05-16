@@ -11,14 +11,14 @@ class Configuration extends Component
 {
     use Actions;
 
-    public ?string $mail_mailer;
-    public ?string $mail_host;
-    public ?string $mail_port;
-    public ?string $mail_username;
-    public ?string $mail_password;
-    public ?string $mail_encryption;
-    public ?string $mail_from_address;
-    public ?string $mail_from_name;
+    public ?string $mail_mailer = null;
+    public ?string $mail_host = null;
+    public ?string $mail_port = null;
+    public ?string $mail_username = null;
+    public ?string $mail_password = null;
+    public ?string $mail_encryption = null;
+    public ?string $mail_from_address = null;
+    public ?string $mail_from_name = null;
 
     public function mount(): void
     {
@@ -56,7 +56,10 @@ class Configuration extends Component
             Artisan::call('config:cache');
         }
 
-        $this->notification()->success(__('Updated'), __('Your mail configurations have been correctly updated!'));
+        $this->notification()->success(
+            __('shopper::status.updated'),
+            __('shopper::pages/settings.settings.notifications.email_config'),
+        );
     }
 
     public function render()
