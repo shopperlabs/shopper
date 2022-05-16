@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3de38d014eead0071b394d50ca79987e",
+    "content-hash": "a3784d0451b57d1f98c19987b3368eec",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2192,16 +2192,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "32a49eb2b38fe5e5c417ab748a45d0beaab97955"
+                "reference": "cb36fee279f7fca01d5d9399ddd1b37e48e2eca1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/32a49eb2b38fe5e5c417ab748a45d0beaab97955",
-                "reference": "32a49eb2b38fe5e5c417ab748a45d0beaab97955",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/cb36fee279f7fca01d5d9399ddd1b37e48e2eca1",
+                "reference": "cb36fee279f7fca01d5d9399ddd1b37e48e2eca1",
                 "shasum": ""
             },
             "require": {
@@ -2294,7 +2294,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-07T22:37:05+00:00"
+            "time": "2022-05-14T15:37:39+00:00"
         },
         {
             "name": "league/config",
@@ -8030,16 +8030,16 @@
         },
         {
             "name": "wireui/wireui",
-            "version": "v1.1.3",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wireui/wireui.git",
-                "reference": "bedf981fcb3ffdc94cdac1c5d8b211f3faa7ceca"
+                "reference": "55230d6752270a36476c870cd610423543aaebab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wireui/wireui/zipball/bedf981fcb3ffdc94cdac1c5d8b211f3faa7ceca",
-                "reference": "bedf981fcb3ffdc94cdac1c5d8b211f3faa7ceca",
+                "url": "https://api.github.com/repos/wireui/wireui/zipball/55230d6752270a36476c870cd610423543aaebab",
+                "reference": "55230d6752270a36476c870cd610423543aaebab",
                 "shasum": ""
             },
             "require": {
@@ -8089,9 +8089,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wireui/wireui/issues",
-                "source": "https://github.com/wireui/wireui/tree/v1.1.3"
+                "source": "https://github.com/wireui/wireui/tree/v1.2.1"
             },
-            "time": "2022-05-11T14:41:27+00:00"
+            "time": "2022-05-15T18:34:48+00:00"
         }
     ],
     "packages-dev": [
