@@ -41,4 +41,8 @@ return [
     'country' => 'Country is required',
   ],
 
+    'notifications' => [
+        'email_config' => 'Your mail configurations have been correctly updated!',
+    ],
+
 ];
