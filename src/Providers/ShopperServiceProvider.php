@@ -33,7 +33,6 @@ class ShopperServiceProvider extends PackageServiceProvider
         $package
             ->name('shopper')
             ->hasCommands($this->getCommands())
-            ->hasViews()
             ->hasViewComponents(config('shopper.components.prefix', 'shopper'));
     }
 
@@ -50,9 +49,7 @@ class ShopperServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         $this->bootLivewireComponents();
-
         $this->bootBladeComponents();
-
         $this->bootModelRelationName();
 
         Builder::macro(
@@ -70,9 +67,7 @@ class ShopperServiceProvider extends PackageServiceProvider
         }
 
         $this->registerDatabase();
-
         $this->registerConfigFiles();
-
         $this->registerViews();
     }
 
@@ -148,9 +143,6 @@ class ShopperServiceProvider extends PackageServiceProvider
         ];
     }
 
-    /**
-     * Register the package resources such as routes, templates, etc.
-     */
     protected function registerViews()
     {
         $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
