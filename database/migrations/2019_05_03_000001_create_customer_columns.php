@@ -32,11 +32,6 @@ class CreateCustomerColumns extends Migration
                 $table->boolean('opt_in')->default(false);
                 $table->timestamp('last_login_at')->nullable();
                 $table->string('last_login_ip')->nullable();
-
-                $table->string('stripe_id')->nullable()->index();
-                $table->string('card_brand')->nullable();
-                $table->string('card_last_four', 4)->nullable();
-                $table->timestamp('trial_ends_at')->nullable();
             });
 
             $table->softDeletes();

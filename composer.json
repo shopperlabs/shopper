@@ -28,7 +28,6 @@
     "illuminate/support": "^8.80|^9.0",
     "illuminate/validation": "^8.80|^9.0",
     "jenssegers/agent": "^2.6",
-    "laravel/cashier": "^12.10",
     "laravel/helpers": "^1.4.1",
     "laravel/ui": "^3.2",
     "livewire/livewire": "^2.10",
