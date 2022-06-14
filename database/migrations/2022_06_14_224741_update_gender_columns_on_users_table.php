@@ -9,25 +9,10 @@ return new class extends Migration
 {
     use Database\Migration;
 
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table($this->getTableName('users'), function (Blueprint $table) {
             $table->string('gender')->nullable()->default('male')->change();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        //
     }
 };
