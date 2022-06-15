@@ -15,34 +15,34 @@ class Stripe extends Component
 
     public string $stripe_key = '';
     public string $stripe_secret = '';
-    public string $stripe_webhook_secret = '';
-    public string $stripe_mode = 'sandbox';
-    public string $currency;
     public bool $enabled = false;
     public string $message = '...';
 
     public function mount()
     {
-        $this->enabled = ($stripe = PaymentMethod::query()->where('slug', 'stripe')->first()) ? $stripe->is_enabled : false;
-        $this->stripe_mode = env('STRIPE_MODE', 'sandbox');
+        $this->enabled = ($stripe = PaymentMethod::where('slug', 'stripe')->first())
+            ? $stripe->is_enabled
+            : false;
         $this->stripe_key = env('STRIPE_KEY', '');
         $this->stripe_secret = env('STRIPE_SECRET', '');
-        $this->stripe_webhook_secret = env('STRIPE_WEBHOOK_SECRET', '');
-        $this->currency = env('CASHIER_CURRENCY', shopper_currency());
     }
 
     public function enabledStripe()
     {
-        PaymentMethod::query()->create([
+        PaymentMethod::create([
             'title' => 'Stripe',
-            'link_url' => 'https://laravel.com/docs/billing',
+            'slug' => 'stripe',
+            'link_url' => 'https://github.com/stripe/stripe-php',
             'is_enabled' => true,
-            'description' => "Laravel Cashier provides an expressive, fluent interface to Stripe's subscription billing services. It handles almost all of the boilerplate subscription billing code you are dreading writing. In addition to basic subscription management, Cashier can handle coupons, swapping subscription, subscription 'quantities', cancellation grace periods, and even generate invoice PDFs.",
+            'description' => 'The Stripe PHP library provides convenient access to the Stripe API from applications written in the PHP language.',
         ]);
 
         $this->enabled = true;
 
-        $this->notification()->success(__('Success'), __('You have successfully enabled Stripe payment for your store!'));
+        $this->notification()->success(
+            __('shopper::layout.status.success'),
+            __('shopper::pages/settings.notifications.stripe_enable')
+        );
     }
 
     public function store()
@@ -50,14 +50,14 @@ class Stripe extends Component
         Artisan::call('config:clear');
 
         setEnvironmentValue([
-            'stripe_mode' => $this->stripe_mode,
             'stripe_key' => $this->stripe_key,
             'stripe_secret' => $this->stripe_secret,
-            'stripe_webhook_secret' => $this->stripe_webhook_secret,
-            'cashier_currency' => $this->currency,
         ]);
 
-        $this->notification()->success(__('Updated'), __('Your Stripe payments configuration have been correctly updated!'));
+        $this->notification()->success(
+            __('shopper::layout.status.updated'),
+            __('shopper::pages/settings.notifications.stripe')
+        );
     }
 
     public function render()

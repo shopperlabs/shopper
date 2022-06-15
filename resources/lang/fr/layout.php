@@ -82,6 +82,8 @@ return [
             'currency'  => 'Devise',
             'longitude' => 'Longitude',
             'latitude' => 'Latitude',
+            'public_key' => 'Clé Publique',
+            'secret_key' => 'Clé Secrète',
         ],
 
         'placeholder' => [

@@ -28,7 +28,6 @@
     "illuminate/support": "^8.80|^9.0",
     "illuminate/validation": "^8.80|^9.0",
     "jenssegers/agent": "^2.6",
-    "laravel/cashier": "^12.10",
     "laravel/helpers": "^1.4.1",
     "laravel/ui": "^3.2",
     "livewire/livewire": "^2.10",
@@ -43,6 +42,7 @@
     "spatie/laravel-permission": "^5.5.2",
     "staudenmeir/laravel-adjacency-list": "^1.0",
     "stevebauman/location": "^6.3.1",
+    "stripe/stripe-php": "^8.6",
     "wire-elements/modal": "^1.0.0",
     "wireui/wireui": "^0.17.1|^1.2.1"
   },

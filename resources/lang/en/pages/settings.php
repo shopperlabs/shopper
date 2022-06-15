@@ -2,13 +2,13 @@
 
 return [
 
-  'empty_country_selector' => 'Please select a country',
-  'logo_description' => 'The logo of your store that will be visible on your site. This assets will appear on your invoices.',
-  'about_description' => 'You can view this information on the About page on your website.',
-  'currency_description' => 'This is the currency your products are sold in. After your first sale, currency is locked in and can’t be changed.',
-  'mapbox_disabled' => 'Mapbox has not been activated.',
+    'empty_country_selector' => 'Please select a country',
+    'logo_description' => 'The logo of your store that will be visible on your site. This assets will appear on your invoices.',
+    'about_description' => 'You can view this information on the About page on your website.',
+    'currency_description' => 'This is the currency your products are sold in. After your first sale, currency is locked in and can’t be changed.',
+    'mapbox_disabled' => 'Mapbox has not been activated.',
 
-  'initialization' => [
+    'initialization' => [
     'step_one_title' => 'Store information',
     'step_one_description' => 'Provide useful information for your store.',
     'step_two_title' => 'Address Information',
@@ -32,9 +32,20 @@ return [
     'action' => 'Setup my store',
   ],
 
-  'settings' => [
+    'settings' => [
     'title' => 'Store Setting',
   ],
+
+    'payment' => [
+        'stripe_description' => 'Accept payments on your store using third-party providers such as Stripe.',
+        'stripe_enabled' => 'Stripe is available for your store.',
+        'stripe_disabled' => 'Stripe is not enabled.',
+        'stripe_provider' => 'This provider allows you to integrate Stripe PHP into your store to allow your customers to make payments.',
+        'stripe_about' => 'Learn more about Stripe Payment',
+        'stripe_actions' => 'Enabled Stripe Payment',
+        'stripe_environment' => 'Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.',
+        'stripe_dashboard' => 'API Keys can be grabbed from',
+    ],
 
   'validations' => [
     'shop_name' => 'Store name is required',
@@ -43,6 +54,8 @@ return [
 
     'notifications' => [
         'email_config' => 'Your mail configurations have been correctly updated!',
+        'stripe' => 'Your Stripe payments configuration have been correctly updated!',
+        'stripe_enable' => 'You have successfully enabled Stripe payment for your store!',
     ],
 
 ];
