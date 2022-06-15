@@ -34,7 +34,7 @@ class Stripe extends Component
             'slug' => 'stripe',
             'link_url' => 'https://github.com/stripe/stripe-php',
             'is_enabled' => true,
-            'description' => "The Stripe PHP library provides convenient access to the Stripe API from applications written in the PHP language.",
+            'description' => 'The Stripe PHP library provides convenient access to the Stripe API from applications written in the PHP language.',
         ]);
 
         $this->enabled = true;
