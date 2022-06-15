@@ -42,6 +42,7 @@
     "spatie/laravel-permission": "^5.5.2",
     "staudenmeir/laravel-adjacency-list": "^1.0",
     "stevebauman/location": "^6.3.1",
+    "stripe/stripe-php": "^8.6",
     "wire-elements/modal": "^1.0.0",
     "wireui/wireui": "^0.17.1|^1.2.1"
   },
