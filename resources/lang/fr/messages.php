@@ -101,5 +101,6 @@ return [
 
     'step' => 'Étape :number',
     'settings' => 'Paramètres',
+    'environment' => 'Environnement',
 
 ];
