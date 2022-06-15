@@ -5,7 +5,7 @@
             <div class="px-4 sm:px-0">
                 <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Stripe') }}</h3>
                 <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                    {{ __('Accept payments on your store using third-party providers such as Stripe.') }}
+                    {{ __('shopper::pages/settings.payment.stripe_description') }}
                 </p>
             </div>
         </div>
@@ -17,9 +17,9 @@
                             <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-600' }}"></div>
                             <h3 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
                                 @if ($this->enabled)
-                                    {{ __('Stripe is available for your store.') }}
+                                    {{ __('shopper::pages/settings.payment.stripe_enabled') }}
                                 @else
-                                    {{ __('Stripe is not enabled.') }}
+                                    {{ __('shopper::pages/settings.payment.stripe_disabled') }}
                                 @endif
                             </h3>
                         </div>
@@ -43,14 +43,14 @@
                     </div>
                     <div class="mt-4">
                         <p class="text-secondary-500 text-sm leading-5 dark:text-secondary-400">
-                            {{ __('This provider allows you to integrate Laravel Cashier into your store to allow your customers to make payments, subscriptions using Stripe.') }}
-                            <a href="https://laravel.com/docs/billing" target="_blank" class="text-primary-600 hover:text-primary-500">{{ __('Learn more about Laravel Cashier') }}</a>
+                            {{ __('shopper::pages/settings.payment.stripe_provider') }}
+                            <a href="https://github.com/stripe/stripe-php" target="_blank" class="text-primary-600 hover:text-primary-500">{{ __('shopper::pages/settings.payment.stripe_about') }}</a>
                         </p>
                         @if(! $this->enabled)
                             <span class="mt-4 inline-flex rounded-md shadow-sm">
                                 <x-shopper::buttons.default wire:click="enabledStripe" wire.loading.attr="disabled" type="button">
                                     <x-shopper::loader wire:loading wire:target="enabledStripe" class="text-secondary-600 dark:text-secondary-300" />
-                                    {{ __('Enabled Stripe Payment') }}
+                                    {{ __('shopper::pages/settings.payment.stripe_actions') }}
                                 </x-shopper::buttons.default>
                             </span>
                         @endif
@@ -72,11 +72,10 @@
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Environnement') }}</h3>
+                        <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('shopper::messages.environnement') }}</h3>
                         <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                            {{ __('Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.') }}
-                            {{ __('API Keys can be grabbed from') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/apikeys</a>
-                            {{ __('To enable Sandbox switch Sandbox mode to True.') }}
+                            {{ __('shopper::pages/settings.payment.stripe_environment') }}
+                            {{ __('shopper::pages/settings.payment.stripe_dashboard') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/apikeys</a>
                         </p>
                     </div>
                 </div>
@@ -84,62 +83,12 @@
                     <div class="shadow rounded-md overflow-hidden">
                         <div class="px-4 py-5 sm:p-6 space-y-4 bg-white dark:bg-secondary-800">
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                                <x-shopper::forms.group label="Stripe Mode" for="stripe_mode" class="col-span-6">
-                                    <x-shopper::forms.select wire:model.lazy="stripe_mode" id="stripe_mode">
-                                        <option value="sandbox">Sandbox</option>
-                                        <option value="live">Live</option>
-                                    </x-shopper::forms.select>
-                                </x-shopper::forms.group>
-
-                                <x-shopper::forms.group label="Public key" for="public_key" class="sm:col-span-3">
+                                <x-shopper::forms.group label="shopper::layout.forms.label.public_key" for="public_key" class="sm:col-span-3">
                                     <x-shopper::forms.input wire:model.lazy="stripe_key" id="public_key" type="text" autocomplete="off" />
                                 </x-shopper::forms.group>
 
-                                <x-shopper::forms.group label="Secret key" for="secret_key" class="sm:col-span-3">
+                                <x-shopper::forms.group label="shopper::layout.forms.label.secret_key" for="secret_key" class="sm:col-span-3">
                                     <x-shopper::forms.input wire:model.lazy="stripe_secret" id="secret_key" type="text" />
-                                </x-shopper::forms.group>
-
-                                <div class="sm:col-span-6">
-                                    <x-shopper::forms.group label="Webhook key" for="webhook_key">
-                                        <x-shopper::forms.input wire:model.lazy="stripe_webhook_secret" id="webhook_key" type="text" autocomplete="off" />
-                                    </x-shopper::forms.group>
-                                    <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                        {{ __('Webhooks Key can be grabbed from') }} <a href="https://dashboard.stripe.com/account/webhooks" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/webhooks</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="hidden sm:block">
-            <div class="py-5">
-                <div class="border-t border-secondary-200  dark:border-secondary-700"></div>
-            </div>
-        </div>
-
-        <div class="mt-10 sm:mt-0">
-            <div class="md:grid md:grid-cols-3 md:gap-6">
-                <div class="md:col-span-1">
-                    <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Cashier currency') }}</h3>
-                        <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                            {{ __('The default currency that will be used when generating charges from your store.') }}
-                        </p>
-                    </div>
-                </div>
-                <div class="mt-5 md:mt-0 md:col-span-2">
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
-                            <div class="grid grid-cols-6 gap-6">
-                                <x-shopper::forms.group label="Default Currency" for="currency" class="col-span-6">
-                                    <x-shopper::forms.select wire:model="currency" id="currency">
-                                        @foreach($currencies as $currency)
-                                            <option value="{{ $currency->code }}">{{ $currency->name }} ({{ $currency->code }})</option>
-                                        @endforeach
-                                    </x-shopper::forms.select>
                                 </x-shopper::forms.group>
                             </div>
                         </div>
@@ -152,7 +101,7 @@
             <div class="flex justify-end">
                 <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                    {{ __('Update Configuration') }}
+                    {{ __('shopper::layout.forms.actions.update') }}
                 </x-shopper::buttons.primary>
             </div>
         </div>
