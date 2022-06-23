@@ -14,10 +14,7 @@ interface RepositoryContract
 
     public function delete();
 
-    /**
-     * @param $id
-     */
-    public function deleteById($id);
+    public function deleteById(int $id);
 
     public function deleteMultipleById(array $ids);
 
@@ -25,61 +22,23 @@ interface RepositoryContract
 
     public function get(array $columns = ['*']);
 
-    /**
-     * @param $id
-     */
-    public function getById($id, array $columns = ['*']);
+    public function getById(int $id, array $columns = ['*']);
 
-    /**
-     * @param $item
-     * @param $column
-     */
     public function getByColumn($item, $column, array $columns = ['*']);
 
-    /**
-     * @param int    $limit
-     * @param string $pageName
-     * @param null   $page
-     */
-    public function paginate($limit = 25, array $columns = ['*'], $pageName = 'page', $page = null);
+    public function paginate(int $limit = 25, array $columns = ['*'], string $pageName = 'page', $page = null);
 
-    /**
-     * @param $id
-     */
-    public function updateById($id, array $data, array $options = []);
+    public function updateById(int $id, array $data, array $options = []);
 
-    /**
-     * @param $limit
-     */
-    public function limit($limit);
+    public function limit(int $limit);
 
-    /**
-     * @param $column
-     * @param $value
-     */
     public function orderBy($column, $value);
 
-    /**
-     * @param $column
-     * @param $value
-     * @param string $operator
-     */
-    public function where($column, $value, $operator = '=');
+    public function where($column, $value, string $operator = '=');
 
-    /**
-     * @param $column
-     * @param $value
-     */
     public function whereIn($column, $value);
 
-    /**
-     * @param $relations
-     */
     public function with($relations);
 
-    /**
-     * @param      $column
-     * @param null $key
-     */
     public function pluck($column, $key = null);
 }
