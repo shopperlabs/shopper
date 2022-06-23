@@ -44,7 +44,7 @@
     "stevebauman/location": "^6.3.1",
     "stripe/stripe-php": "^8.6",
     "wire-elements/modal": "^1.0.0",
-    "wireui/wireui": "^0.17.1|^1.2.1"
+    "wireui/wireui": "^0.17.1|^1.6.1"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.6",
