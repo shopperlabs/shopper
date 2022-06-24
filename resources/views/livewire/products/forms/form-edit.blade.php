@@ -142,32 +142,41 @@
                     <div class="px-4 pt-4 sm:px-5 sm:pt-5">
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('shopper::pages/products.product_associations') }}</h4>
                     </div>
-                    <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
+                    <div class="divide-y divide-secondary-200 dark:divide-secondary-700" wire:ignore>
                         <x-shopper::forms.group class="p-4 sm:p-5" label="shopper::layout.forms.label.brand" for="brand_id">
-                            <x-shopper::forms.select wire:model.defer="brand_id" id="brand_id">
+                            <x-shopper::forms.select wire:model.defer="selectedBrand" id="brand_id" x-data="{}" x-init="function () { choices($el) }">
                                 <option value="0">{{ __('shopper::pages/brands.empty_brand') }}</option>
                                 @foreach($brands as $brand)
-                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    <option value="{{ $brand->id }}" @selected($brand->id === $brand_id)>{{ $brand->name }}</option>
                                 @endforeach
                             </x-shopper::forms.select>
                         </x-shopper::forms.group>
-                        <div class="p-4 sm:p-5">
-                            <x-select
-                                :label="__('shopper::layout.sidebar.collections')"
-                                :placeholder="__('shopper::layout.forms.placeholder.select')"
+                        <x-shopper::forms.group class="p-4 sm:p-5" label="shopper::layout.sidebar.collections" for="collection_ids">
+                            <select
                                 wire:model.defer="collection_ids"
-                                class="dark:bg-secondary-800"
-                                multiselect
+                                id="collection_ids"
+                                multiple
+                                x-data="{}"
+                                x-init="
+                                  function() {
+                                    tomSelect($el, {
+                                        plugins: ['remove_button'],
+			                            persist: false,
+                                        maxItems: 3,
+                                        allowEmptyOption: true,
+                                        render: {
+                                            option: function(data, escape) {
+                                                return `<div class='text-sm leading-5 text-secondary-500 dark:text-secondary-400'>${escape(data.text)}</div>`;
+                                            },
+                                        }
+                                    })
+                                 }"
                             >
                                 @foreach($collections as $collection)
-                                    <x-select.user-option
-                                        :img="$collection->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'))"
-                                        :label="$collection->name"
-                                        :value="$collection->id"
-                                    />
+                                    <option value="{{ $collection->id }}">{{ $collection->name }}</option>
                                 @endforeach
-                            </x-select>
-                        </div>
+                            </select>
+                        </x-shopper::forms.group>
                     </div>
                 </div>
                 <div class="bg-white dark:bg-secondary-800 rounded-lg shadow">

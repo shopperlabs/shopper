@@ -10,6 +10,7 @@ use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Framework\Traits\WithChoicesBrands;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
 use WireUi\Traits\Actions;
@@ -18,6 +19,7 @@ class Edit extends AbstractBaseComponent
 {
     use Actions,
         WithAttributes,
+        WithChoicesBrands,
         WithFileUploads,
         WithUploadProcess,
         WithSeoAttributes;
@@ -50,6 +52,7 @@ class Edit extends AbstractBaseComponent
         $this->publishedAtFormatted = $product->published_at->toRfc7231String();
         $this->collection_ids = $product->collections->pluck('id')->toArray();
         $this->category_ids = $product->categories->pluck('id')->toArray();
+        $this->selectedBrand = $product->brand_id ? $this->selectedBrand['value'] = $product->brand_id : [];
         $this->currency = $currency;
         $this->images = $product->getMedia(config('shopper.system.storage.disks.uploads'));
     }
