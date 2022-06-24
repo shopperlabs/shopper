@@ -1081,6 +1081,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@orchidjs/sifter@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@orchidjs/sifter/-/sifter-0.9.1.tgz#20580cb75bcc1de3c9b9c021e0e546eb59ff2813"
+  integrity sha512-bdW8vKTlWXfoAvUud0a4OeVPrtdvHH8gTshKqndzxAI6bXGPBejgry2wvIz0OZOqOuWuFAJWgNCjq/6S85U77A==
+
 "@ryangjchandler/alpine-tooltip@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ryangjchandler/alpine-tooltip/-/alpine-tooltip-1.2.0.tgz#2a5acaf805f7721c6cf0eed705372029e92ef57e"
@@ -7637,6 +7642,13 @@ toidentifier@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
+
+tom-select@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/tom-select/-/tom-select-2.0.3.tgz#3fe57cf5da82be94b4083fb44c9edda5f198cc6e"
+  integrity sha512-IHcVHVb4/+I+4pAuXjEFVoH97mOvjp8CQ45PemnapcoRY46LqmH07hBwvRIIEznsXqBlFgZH7Uw7Cjh45mNlTA==
+  dependencies:
+    "@orchidjs/sifter" "^0.9.1"
 
 trim-trailing-lines@^1.0.0, trim-trailing-lines@^1.1.0:
   version "1.1.4"
