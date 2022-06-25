@@ -2,8 +2,6 @@
 
 namespace Shopper\Framework\Traits;
 
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-
 trait WithChoicesBrands
 {
     public $selectedBrand = [];

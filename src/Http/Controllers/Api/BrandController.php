@@ -28,6 +28,5 @@ class BrandController extends ShopperBaseController
                 fn (Builder $query) => $query->limit(10)
             )
             ->get();
-
     }
 }
