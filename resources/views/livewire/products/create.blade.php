@@ -327,7 +327,7 @@
                         <x-shopper::forms.group class="p-4 sm:p-5 z-30" label="shopper::layout.forms.label.brand" for="brand_id">
                             <x-shopper::forms.select wire:model.defer="selectedBrand" id="brand_id" x-data="{}" x-init="function () { choices($el) }">
                                 <option value="0">{{ __('shopper::pages/brands.empty_brand') }}</option>
-                                @foreach($brands as $brand)
+                                @foreach($brands as $brand)edit
                                     <option value="{{ $brand->id }}" @selected($brand->id === $brand_id)>{{ $brand->name }}</option>
                                 @endforeach
                             </x-shopper::forms.select>
