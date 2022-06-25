@@ -37,7 +37,10 @@ class CreateValue extends ModalComponent
 
         $this->emit('updateValues');
 
-        $this->notification()->success(__('Added'), __('New value added for :name', ['name' => $this->attribute->name]));
+        $this->notification()->success(
+            __('shopper::layout.status.added'),
+            __('New value added for :name', ['name' => $this->attribute->name])
+        );
 
         $this->closeModal();
     }

@@ -15,20 +15,19 @@ class General extends Component
     use Actions, WithFileUploads;
 
     public string $shop_name;
-    public ?string $shop_legal_name = null;
     public string $shop_email;
-    public ?string $shop_phone_number = null;
-    public ?string $shop_about = null;
     public string $shop_street_address;
     public string $shop_zipcode;
     public string $shop_city;
+    public ?string $shop_legal_name = null;
+    public ?string $shop_phone_number = null;
+    public ?string $shop_about = null;
     public ?string $shop_facebook_link = null;
     public ?string $shop_instagram_link = null;
     public ?string $shop_twitter_link = null;
     public ?string $shop_logo = null;
     public ?string $shop_cover = null;
     public ?int $shop_country_id = null;
-    public $selectedCountryId = [];
     public ?int $shop_currency_id = null;
 
     public $logo;
@@ -56,35 +55,18 @@ class General extends Component
             'shop_facebook_link',
             'shop_instagram_link',
             'shop_twitter_link',
-        ])->select('value', 'key')->get()->toArray();
+        ])->select('value', 'key')
+            ->get()
+            ->toArray();
 
         foreach ($settings as $setting) {
-            if ($setting['key'] === 'shop_country_id') {
-                $this->selectedCountryId['value'] = $this->shop_country_id = $setting['value'];
-            } else {
-                $this->{$setting['key']} = $setting['value'] ?? null;
-            }
+            $this->{$setting['key']} = $setting['value'] ?? null;
         }
     }
 
     public function onTrixValueUpdate($value)
     {
         $this->shop_about = $value;
-    }
-
-    public function updatedSelectedCountryId($choice)
-    {
-        if (count($choice) > 0 && $choice['value'] !== '0') {
-            $this->shop_country_id = (int) $choice['value'];
-            $country = Country::find($this->shop_country_id);
-            $countryCurrency = array_slice($country->currencies, 0, 1);
-
-            foreach ($countryCurrency as $code => $name) {
-                if ($currency = Currency::where('code', $code)->first()) {
-                    $this->shop_currency_id = $currency->id;
-                }
-            }
-        }
     }
 
     public function store()
@@ -131,7 +113,7 @@ class General extends Component
             ]);
         }
 
-        $this->notification()->success(__('Updated'), __('Shop informations have been correctly updated!'));
+        $this->notification()->success(__('shopper::layout.status.updated'), __('Shop informations have been correctly updated!'));
     }
 
     public function rules(): array
@@ -165,7 +147,7 @@ class General extends Component
 
         $this->shop_cover = null;
 
-        $this->notification()->success(__('Deleted'), __('Shop cover have been correctly removed!'));
+        $this->notification()->success(__('shopper::layout.status.delete'), __('Shop cover have been correctly removed!'));
     }
 
     public function render()

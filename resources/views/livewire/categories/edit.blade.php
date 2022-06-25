@@ -31,7 +31,7 @@
                             <option value="0">{{ __('shopper::pages/categories.empty_parent') }}</option>
                             @foreach($categories as $cat)
                                 @if($cat->id !== $categoryId)
-                                    <option value="{{ $cat->id }}" @if($cat->id === $parent_id) selected @endif>
+                                    <option value="{{ $cat->id }}" @selected($cat->id === $parent_id)>
                                         {{ $cat->name }}
                                     </option>
 

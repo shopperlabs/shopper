@@ -37,7 +37,10 @@ class Values extends Component
 
         $this->emitSelf('updateValues');
 
-        $this->notification()->success(__('Deleted'), __('Your value have been correctly removed!'));
+        $this->notification()->success(
+            __('shopper::layout.status.delete'),
+            __('Your value have been correctly removed!')
+        );
     }
 
     public function render()

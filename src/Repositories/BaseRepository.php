@@ -3,11 +3,9 @@
 namespace Shopper\Framework\Repositories;
 
 use Exception;
-use function func_get_args;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use function is_array;
-use function is_string;
 use Shopper\Framework\Exceptions\GeneralException;
 
 abstract class BaseRepository implements RepositoryContract
@@ -24,7 +22,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @var \Illuminate\Database\Eloquent\Builder
      */
-    protected $query;
+    protected Builder $query;
 
     /**
      * Alias for the query limit.
@@ -38,35 +36,35 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @var array
      */
-    protected $with = [];
+    protected array $with = [];
 
     /**
      * Array of one or more where clause parameters.
      *
      * @var array
      */
-    protected $wheres = [];
+    protected array $wheres = [];
 
     /**
      * Array of one or more where in clause parameters.
      *
      * @var array
      */
-    protected $whereIns = [];
+    protected array $whereIns = [];
 
     /**
      * Array of one or more ORDER BY column/value pairs.
      *
      * @var array
      */
-    protected $orderBys = [];
+    protected array $orderBys = [];
 
     /**
      * Array of scope methods to call on the model.
      *
      * @var array
      */
-    protected $scopes = [];
+    protected array $scopes = [];
 
     /**
      * BaseRepository constructor.
@@ -185,7 +183,7 @@ abstract class BaseRepository implements RepositoryContract
      *
      * @throws Exception
      *
-     * @return null|bool
+     * @return bool
      */
     public function deleteById($id): bool
     {
@@ -205,7 +203,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Get the first specified model record from the database.
      *
-     * @return Model|static
+     * @return Model
      */
     public function first(array $columns = ['*'])
     {

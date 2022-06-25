@@ -4,6 +4,8 @@ return [
 
     'title' => 'Manage Catalog',
     'content' => 'Get closer to your first sale by adding and manage products.',
+    'about_pricing' => 'About pricing display',
+    'about_pricing_content' => 'All prices are in cents by default. To save 10€ (or 10$) you must enter 1000 cents for the currency formatting to be correct. Or you can write a getter and setter that changes this price and displays it correctly',
 
     'cost_per_items_help_text' => 'Customers won’t see this.',
     'safety_security_help_text' => 'The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.',

@@ -95,6 +95,7 @@ return [
             'select' => 'Select',
             'select_inventory' => 'Select inventory',
             'choose_currency' => 'Choose currency',
+            'select_country' => 'Choose a Country',
         ],
 
         'actions' => [

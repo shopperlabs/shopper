@@ -2,7 +2,10 @@
 
 namespace Shopper\Framework\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Shopper\Framework\Shopper;
 
@@ -22,6 +25,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        $this->configureRateLimiting();
+
+        $this->mapApiRoutes();
+
         $this->mapAuthRoutes();
 
         $this->mapBackendRoutes();
@@ -29,10 +36,33 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapCustomBackendRoute();
     }
 
-    /**
-     * Define the "custom backend" routes for the application.
-     * These routes all receive session state, CSRF protection, etc.
-     */
+    public function mapApiRoutes()
+    {
+        Route::namespace($this->namespace . '\Api')
+            ->middleware('api')
+            ->as('shopper.api.')
+            ->prefix(Shopper::prefix() . '/api')
+            ->group(realpath(SHOPPER_PATH . '/routes/api.php'));
+    }
+
+    protected function mapAuthRoutes()
+    {
+        Route::namespace($this->namespace . '\Auth')
+            ->middleware('web')
+            ->as('shopper.')
+            ->prefix(Shopper::prefix())
+            ->group(realpath(SHOPPER_PATH . '/routes/auth.php'));
+    }
+
+    protected function mapBackendRoutes()
+    {
+        Route::middleware(['shopper', 'dashboard'])
+            ->prefix(Shopper::prefix())
+            ->as('shopper.')
+            ->namespace($this->namespace)
+            ->group(realpath(SHOPPER_PATH . '/routes/backend.php'));
+    }
+
     public function mapCustomBackendRoute()
     {
         if (config('shopper.routes.custom_file')) {
@@ -43,29 +73,10 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Define the "auth" routes for the application.
-     * These routes all receive session state, CSRF protection, etc.
-     */
-    protected function mapAuthRoutes()
+    protected function configureRateLimiting()
     {
-        Route::namespace($this->namespace . '\Auth')
-            ->middleware('web')
-            ->as('shopper.')
-            ->prefix(Shopper::prefix())
-            ->group(realpath(SHOPPER_PATH . '/routes/auth.php'));
-    }
-
-    /**
-     * Define the "backend" routes for the application.
-     * These routes all receive session state, CSRF protection, etc.
-     */
-    protected function mapBackendRoutes()
-    {
-        Route::middleware(['shopper', 'dashboard'])
-            ->prefix(Shopper::prefix())
-            ->as('shopper.')
-            ->namespace($this->namespace)
-            ->group(realpath(SHOPPER_PATH . '/routes/backend.php'));
+        RateLimiter::for('shopper.api', function (Request $request) {
+            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+        });
     }
 }

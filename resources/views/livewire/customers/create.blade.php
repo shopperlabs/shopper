@@ -148,13 +148,19 @@
                                 <x-shopper::forms.input wire:model.defer="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group class="col-span-6 sm:col-span-4" for="country_id" label="shopper::layout.forms.label.country" :error="$errors->first('country_id')">
-                                <x-shopper::forms.select wire:model.lazy="country_id" id="country_id">
-                                    <option>{{ __('shopper::layout.forms.label.country') }}</option>
+                            <x-shopper::forms.group class="col-span-6 sm:col-span-4" for="country_id" label="shopper::layout.forms.label.country" :error="$errors->first('country_id')" wire:ignore>
+                                <select
+                                    wire:model.defer="country_id"
+                                    id="country_id"
+                                    x-data="{}"
+                                    x-init="function() { tomSelect($el, {}) }"
+                                    data-placeholder="{{ __('shopper::layout.forms.label.country') }}"
+                                    autocomplete="off"
+                                >
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->name }}</option>
                                     @endforeach
-                                </x-shopper::forms.select>
+                                </select>
                             </x-shopper::forms.group>
 
                             <x-shopper::forms.group class="col-span-6 sm:col-span-3" label="shopper::layout.forms.label.city" for="city" :error="$errors->first('city')">

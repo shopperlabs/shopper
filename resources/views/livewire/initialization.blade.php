@@ -178,14 +178,17 @@
                         </x-shopper::label>
                         <div class="relative mt-1 sm:mt-0 sm:col-span-2">
                             <div class="rounded-md shadow-sm sm:max-w-xs lg:max-w-lg" wire:ignore>
-                                <x-shopper::forms.select wire:model.lazy="selectedCountryId" id="countries" x-data="{}" x-init="function () { choices($el) }">
-                                    <option value="0">{{ __('shopper::pages/settings.empty_country_selector') }}</option>
-                                    @foreach($countries as $country)
-                                        <option value="{{ $country->id }}">
-                                            {{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </x-shopper::forms.select>
+                                <select
+                                    wire:model.defer="shop_country_id"
+                                        id="shop_country_id"
+                                        x-data="{}"
+                                        x-init="function() { tomSelect($el, {}) }"
+                                        autocomplete="off"
+                                    >
+                                        @foreach($countries as $country)
+                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                        @endforeach
+                                    </select>
                             </div>
                         </div>
                     </div>
@@ -223,16 +226,18 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-secondary-200 sm:pt-5 dark:border-secondary-700">
                         <x-shopper::label for="currency" class="sm:mt-px sm:pt-2" :value="__('shopper::layout.forms.label.currency')" />
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            <div class="rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
-                                <x-shopper::forms.select
-                                    id="currency"
-                                    :placeholder="__('shopper::layout.forms.placeholder.currency')"
+                            <div class="rounded-md shadow-sm sm:max-w-xs lg:max-w-lg" wire:ignore>
+                                <select
                                     wire:model.defer="shop_currency_id"
+                                    id="currency"
+                                    x-data="{}"
+                                    x-init="function() { tomSelect($el, {}) }"
+                                    autocomplete="off"
                                 >
                                     @foreach($currencies as $currency)
                                         <option value="{{ $currency->id }}">{{ $currency->name . ' (' . $currency->code . ')' }}</option>
                                     @endforeach
-                                </x-shopper::forms.select>
+                                </select>
                             </div>
                             <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::pages/settings.currency_description') }}</p>
                         </div>
@@ -326,7 +331,7 @@
                 <div class="pt-8 mt-8 border-t lg:mt-10 lg:pt-10 border-secondary-200 dark:border-secondary-700">
                     <span class="text-sm font-medium text-primary-600 dark:text-primary-500">{{ __('shopper::pages/settings.initialization.step_3') }}</span>
                     <h3 class="text-base mt-1.5 font-bold text-secondary-900 leading-5 dark:text-white">
-                        {{ __('shopper::pages/settings.initialization.social_description') }} 
+                        {{ __('shopper::pages/settings.initialization.social_description') }}
                         <span class="font-normal text-secondary-500 dark:text-secondary-400">
                             ({{ __('shopper::layout.forms.label.optional') }})
                         </span>

@@ -30,7 +30,7 @@
                         <x-shopper::forms.select wire:model.defer="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
                             <option value="0">{{ __('shopper::pages/categories.empty_selector') }}</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" @if($category->id === $parent_id) selected @endif>
+                                <option value="{{ $category->id }}" @selected($category->id === $parent_id)>
                                     {{ $category->name }}
                                 </option>
 

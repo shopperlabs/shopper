@@ -10,11 +10,12 @@ use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Traits\WithChoicesBrands;
 use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
-    use WithAttributes, WithSeoAttributes;
+    use WithAttributes, WithSeoAttributes, WithChoicesBrands;
 
     public ?Channel $defaultChannel = null;
     public array $category_ids = [];

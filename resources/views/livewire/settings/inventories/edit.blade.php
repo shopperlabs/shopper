@@ -13,7 +13,7 @@
             <div class="flex">
                 <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                    {{ __('Update') }}
+                    {{ __('shopper::layout.forms.actions.update') }}
                 </x-shopper::buttons.primary>
             </div>
         </x-slot>
@@ -42,7 +42,7 @@
                             <div class="sm:col-span-2">
                                 <div class="flex items-center justify-between">
                                     <x-shopper::label :value="__('Description')" for="description" />
-                                    <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
+                                    <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('shopper::layout.forms.label.optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
                                     <x-shopper::forms.textarea wire:model.lazy="description" id="description" />
@@ -105,23 +105,28 @@
                             <div class="sm:col-span-6">
                                 <div class="flex items-center justify-between">
                                     <x-shopper::label :value="__('Apartment, suite, etc.')" for="street_address_plus" />
-                                    <span class="ml-4 text-sm text-secondary-500 leading-5">{{ __('Optional') }}</span>
+                                    <span class="ml-4 text-sm text-secondary-500 leading-5">{{ __('shopper::layout.forms.label.optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
                                     <x-shopper::forms.input wire:model="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
                                 </div>
                             </div>
 
-                            <x-shopper::forms.group for="country_id" label="Country" class="sm:col-span-6" noShadow>
-                                <x-select
-                                    :placeholder="__('Choose a Country')"
-                                    wire:model.lazy="country_id"
+                            <x-shopper::forms.group for="country_id" label="shopper::layout.forms.label.country" class="sm:col-span-6" noShadow>
+                                <select
+                                    wire:model.defer="country_id"
                                     id="country_id"
+                                    x-data="{}"
+                                    x-init="function() { tomSelect($el, {}) }"
+                                    placeholder="{{ __('shopper::layout.forms.placeholder.select_country') }}"
+                                    autocomplete="off"
                                 >
                                     @foreach($countries as $country)
-                                        <x-select.option :label="$country->name" :value="$country->id" />
+                                        <option value="{{ $country->id }}" @selected($country->id === $country_id)>
+                                            {{ $country->name }}
+                                        </option>
                                     @endforeach
-                                </x-select>
+                                </select>
                             </x-shopper::forms.group>
 
                             <x-shopper::forms.group label="City" for="city" class="sm:col-span-3" :error="$errors->first('city')">
@@ -161,14 +166,14 @@
                 <span class="w-full sm:w-auto">
                     <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-inventory', {{ json_encode([$inventoryId, $name]) }})" type="button">
                         <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
-                        {{ __('Delete') }}
+                        {{ __('shopper::layout.status.delete') }}
                     </x-shopper::buttons.danger>
                 </span>
             @endcan
             <span class="ml-auto flex justify-end">
                 <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="store" />
-                    {{ __('Update') }}
+                    {{ __('shopper::layout.forms.actions.update') }}
                 </x-shopper::buttons.primary>
             </span>
         </div>

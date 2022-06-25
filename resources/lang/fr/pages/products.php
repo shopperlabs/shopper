@@ -4,6 +4,8 @@ return [
 
     'title' => 'Gérer le catalogue',
     'content' => 'Rapprochez-vous de votre première vente en ajoutant et en gérant des produits.',
+    'about_pricing' => 'A propos des prix',
+    'about_pricing_content' => 'Tous les prix sont en cents par défaut. Pour enregistrer 10€ (ou 10$), vous devez entrer 1000 cents pour que le formatage de la devise soit correct. Vous pouvez aussi écrire un getter et un setter qui modifie ce prix et l\'affiche correctement',
 
     'cost_per_items_help_text' => 'Les clients ne le verront pas.',
     'safety_security_help_text' => 'Le stock de sécurité est le stock limite de vos produits qui vous alerte si le stock du produit est bientôt épuisé.',
