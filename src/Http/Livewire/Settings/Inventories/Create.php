@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
+use Illuminate\Support\Facades\Cache;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
 use Shopper\Framework\Models\System\Country;
@@ -59,7 +60,7 @@ class Create extends AbstractBaseComponent
     public function render()
     {
         return view('shopper::livewire.settings.inventories.create', [
-            'countries' => Country::select('name', 'id')->orderBy('name')->get(),
+            'countries' => Cache::get('countries', fn () => Country::select('name', 'id')->orderBy('name')->get()),
         ]);
     }
 }

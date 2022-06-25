@@ -210,13 +210,19 @@
 
                             <div class="col-span-6">
                                 <x-shopper::forms.group label="shopper::layout.forms.label.country" for="shop_country_id" wire:ignore>
-                                    <x-shopper::forms.select wire:model.lazy="selectedCountryId" id="countries" x-data="{}" x-init="function () { choices($el) }">
+                                    <select
+                                        wire:model.defer="shop_country_id"
+                                        id="shop_country_id"
+                                        x-data="{}"
+                                        x-init="function() { tomSelect($el, {}) }"
+                                        autocomplete="off"
+                                    >
                                         @foreach($countries as $country)
-                                            <option value="{{ $country->id }}" @selected($shop_country_id == $country->id)>
+                                            <option value="{{ $country->id }}" @selected($shop_country_id === $country->id)>
                                                 {{ $country->name }}
                                             </option>
                                         @endforeach
-                                    </x-shopper::forms.select>
+                                    </select>
                                 </x-shopper::forms.group>
                             </div>
 
@@ -258,17 +264,19 @@
                 <div class="bg-white rounded-md shadow dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6">
+                            <div class="col-span-6" wire:ignore>
                                 <x-shopper::forms.group label="shopper::layout.forms.label.currency" for="shop_currency_id">
-                                    <x-shopper::forms.select
-                                        id="currency"
-                                        :placeholder="__('shopper::layout.forms.placeholder.currency')"
+                                    <select
                                         wire:model.defer="shop_currency_id"
+                                        id="shop_currency_id"
+                                        x-data="{}"
+                                        x-init="function() { tomSelect($el, {}) }"
+                                        autocomplete="off"
                                     >
                                         @foreach($currencies as $currency)
-                                            <option value="{{ $currency->id }}">{{ $currency->name . ' (' . $currency->code . ')' }}</option>
+                                            <option value="{{ $currency->id }}" @selected($currency->id === $shop_currency_id)>{{ $currency->name . ' (' . $currency->code . ')' }}</option>
                                         @endforeach
-                                    </x-shopper::forms.select>
+                                    </select>
                                 </x-shopper::forms.group>
                             </div>
                         </div>

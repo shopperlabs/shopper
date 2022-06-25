@@ -13,7 +13,7 @@
             <div class="flex">
                 <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                    {{ __('Save') }}
+                    {{ __('shopper::layout.forms.actions.save') }}
                 </x-shopper::buttons.primary>
             </div>
         </x-slot>
@@ -45,8 +45,8 @@
                             </div>
                             <div class="sm:col-span-2">
                                 <div class="flex items-center justify-between">
-                                    <x-shopper::label :value="__('Description')" for="description" />
-                                    <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
+                                    <x-shopper::label :value="__('shopper::layout.forms.label.description')" for="description" />
+                                    <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('shopper::layout.forms.label.optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
                                     <x-shopper::forms.textarea wire:model.defer="description" id="description" />
@@ -97,7 +97,7 @@
                             <div class="sm:col-span-6">
                                 <div class="flex items-center justify-between">
                                     <x-shopper::label :value="__('Apartment, suite, etc.')" for="street_address_plus" />
-                                    <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Optional') }}</span>
+                                    <span class="ml-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('shopper::layout.forms.label.optional') }}</span>
                                 </div>
                                 <div class="mt-1 relative shadow-sm rounded-md">
                                     <x-shopper::forms.input wire:model.defer="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
@@ -105,15 +105,21 @@
                             </div>
 
                             <div class="sm:col-span-6">
-                                <x-shopper::forms.group for="country_id" label="Country" noShadow>
-                                    <x-select
-                                        :placeholder="__('Choose a Country')"
+                                <x-shopper::forms.group for="country_id" label="shopper::layout.forms.label.country" noShadow wire:ignore>
+                                    <select
                                         wire:model.defer="country_id"
+                                        id="country_id"
+                                        x-data="{}"
+                                        x-init="function() { tomSelect($el, {}) }"
+                                        placeholder="{{ __('shopper::layout.forms.placeholder.select_country') }}"
+                                        autocomplete="off"
                                     >
                                         @foreach($countries as $country)
-                                            <x-select.option :label="$country->name" :value="$country->id" />
+                                            <option value="{{ $country->id }}">
+                                                {{ $country->name }}
+                                            </option>
                                         @endforeach
-                                    </x-select>
+                                    </select>
                                 </x-shopper::forms.group>
                             </div>
 
