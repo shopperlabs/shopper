@@ -15,6 +15,7 @@ use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasSlug;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
+use Shopper\Helpers\Price;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -104,6 +105,15 @@ class Product extends Model implements HasMedia, ReviewRateable
                 : null;
     }
 
+    public function getPriceAttribute(): ?Price
+    {
+        if (! $this->price_amount) {
+            return null;
+        }
+
+        return Price::from($this->price_amount);
+    }
+
     /**
      * Get the stock of all variations.
      */
@@ -123,8 +133,7 @@ class Product extends Model implements HasMedia, ReviewRateable
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection(config('shopper.system.storage.disks.uploads'))
-            ->useFallbackUrl(url(shopper_prefix() . '/images/product_placeholder.jpg'))
-            ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png', 'image/gif']);
+            ->useFallbackUrl(url(shopper_prefix() . '/images/product_placeholder.jpg'));
     }
 
     public function registerMediaConversions(?Media $media = null): void
