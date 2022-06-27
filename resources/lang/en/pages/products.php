@@ -130,6 +130,17 @@ return [
     'related' => [
         'title' => 'Similar Products',
         'description' => 'All products that can be identified as similar or complementary to your product.',
+        'empty' => 'No similar products found',
+        'add_content' => 'Start by adding a related product to your product.',
+
+        'modal' => [
+            'title' => 'Add Similar Products to this product',
+            'search' => 'Search product',
+            'search_placeholder' => 'Search product by name',
+            'action' => 'Add Selected Products',
+            'success_message' => 'Selected product(s) added',
+            'no_results' => 'No products found',
+        ],
     ],
 
     'notifications' => [
@@ -141,6 +152,8 @@ return [
         'variation_create' => 'Product variation successfully added!',
         'variation_delete' => 'The variation has successfully removed!',
         'variation_update' => 'Variant successfully updated!',
+        'related_added' => 'The product has successfully added to the related products!',
+        'remove_related' => 'The product has successfully removed from the related products!',
     ],
 
 ];

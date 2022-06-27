@@ -130,6 +130,17 @@ return [
     'related' => [
         'title' => 'Produits similaires',
         'description' => 'Tous les produits qui peuvent être identifiés comme similaires ou complémentaires à votre produit.',
+        'empty' => 'Aucun produit similaire trouvé',
+        'add_content' => 'Commencer par rajouter un produit connexe à votre produit.',
+
+        'modals' => [
+            'title' => 'Ajouter des produits connexes',
+            'search' => 'Rechercher un produit',
+            'search_placeholder' => 'Rechercher un produit par nom',
+            'action' => 'Ajout produits sélectionnés',
+            'success_message' => 'Produit(s) sélectionné(s) ajouté(s)',
+            'no_results' => 'Aucun produit trouvé',
+        ],
     ],
 
     'notifications' => [
@@ -141,6 +152,8 @@ return [
         'variation_create' => 'La variation du produit a été ajoutée avec succès !',
         'variation_delete' => 'La variation a été supprimée avec succès !',
         'variation_update' => 'La variante a été mise à jour avec succès !',
+        'related_added' => 'Le produit a été ajouté avec succès aux produits connexes !',
+        'remove_related' => 'Le produit a été supprimé avec succès des produits connexes !',
     ],
 
 ];
