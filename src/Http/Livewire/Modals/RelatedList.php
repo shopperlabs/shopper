@@ -3,22 +3,21 @@
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use WireUi\Traits\Actions;
 
-class ProductsLists extends ModalComponent
+class RelatedList extends ModalComponent
 {
     use Actions;
 
-    public $collection;
+    public $product;
     public string $search = '';
     public array $exceptProductIds;
     public array $selectedProducts = [];
 
     public function mount(int $id, array $exceptProductIds = [])
     {
-        $this->collection = (new CollectionRepository())->getById($id);
+        $this->product = (new ProductRepository())->getById($id);
         $this->exceptProductIds = $exceptProductIds;
     }
 
@@ -31,20 +30,21 @@ class ProductsLists extends ModalComponent
     {
         return (new ProductRepository())
             ->where('name', '%' . $this->search . '%', 'like')
+            ->whereNull('parent_id')
             ->get(['name', 'price_amount', 'id'])
             ->except($this->exceptProductIds);
     }
 
     public function addSelectedProducts()
     {
-        $currentProducts = $this->collection->products->pluck('id')->toArray();
-        $this->collection->products()->sync(array_merge($this->selectedProducts, $currentProducts));
+        $currentProducts = $this->product->relatedProducts->pluck('id')->toArray();
+        $this->product->relatedProducts()->sync(array_merge($this->selectedProducts, $currentProducts));
 
-        $this->emitUp('onProductsAddInCollection');
+        $this->emitUp('onProductsAddInRelated');
 
         $this->notification()->success(
             __('shopper::layout.status.added'),
-            __('shopper::pages/collections.modal.success_message')
+            __('shopper::pages/products.notifications.related_added')
         );
 
         $this->closeModal();
@@ -52,6 +52,6 @@ class ProductsLists extends ModalComponent
 
     public function render()
     {
-        return view('shopper::livewire.modals.products-lists');
+        return view('shopper::livewire.modals.related-lists');
     }
 }

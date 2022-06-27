@@ -103,9 +103,7 @@ class Edit extends AbstractBaseComponent
             $this->product->categories()->sync($this->category_ids);
         }
 
-        if (collect($this->collection_ids)->isNotEmpty()) {
-            $this->product->collections()->sync($this->collection_ids);
-        }
+        $this->product->collections()->sync($this->collection_ids);
 
         event(new ProductUpdated($this->product));
 
