@@ -37,7 +37,8 @@ class ProductsLists extends ModalComponent
 
     public function addSelectedProducts()
     {
-        $this->collection->products()->sync($this->selectedProducts);
+        $currentProducts = $this->collection->products->pluck('id')->toArray();
+        $this->collection->products()->sync(array_merge($this->selectedProducts, $currentProducts));
 
         $this->emitUp('onProductsAddInCollection');
 
