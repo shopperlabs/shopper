@@ -31,8 +31,32 @@
                     @enderror
                 </div>
             </div>
-            <div class="pt-4 overflow-hidden bg-white rounded-lg shadow dark:bg-secondary-800 sm:pt-5">
-                <h4 class="block px-4 text-base font-medium leading-6 text-secondary-900 dark:text-white sm:px-5">{{ __('shopper::messages.pricing') }}</h4>
+            <div class="relative pt-4 overflow-hidden bg-white rounded-lg shadow dark:bg-secondary-800 sm:pt-5">
+                <div class="flex items-center justify-between px-4 sm:px-5">
+                    <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">{{ __('shopper::messages.pricing') }}</h4>
+                    <div x-data="{ display: false }">
+                        <button @click="display = true" x-tooltip.raw="{{ __('shopper::pages/products.about_pricing') }}" type="button" class="inline-flex text-sm text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300">
+                            <x-heroicon-o-question-mark-circle class="h-5 w-5" />
+                        </button>
+                        <div x-show="display" @click.outside="display = false" class="absolute z-30 top-4 inset-x-0 p-4 mx-4 rounded-md bg-secondary-50 border border-secondary-100 dark:bg-secondary-700 dark:border-gray-600">
+                            <div class="flex">
+                                <div>
+                                    <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
+                                        {{ __('shopper::pages/products.about_pricing_content') }}
+                                    </p>
+                                </div>
+                                <div class="ml-auto pl-3">
+                                    <div class="-mx-1.5 -my-1.5">
+                                        <button @click="display = false" type="button" class="inline-flex bg-secondary-50 dark:bg-secondary-700 rounded-md p-1 text-secondary-500 dark:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-50 focus:ring-primary-600">
+                                            <span class="sr-only">Dismiss</span>
+                                            <x-heroicon-o-x class="h-5 w-5" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="grid gap-4 p-4 sm:grid-cols-6 sm:gap-6 sm:p-5">
                         <div class="col-span-6 sm:col-span-3">
