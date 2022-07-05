@@ -176,30 +176,15 @@
                             </x-shopper::forms.select>
                         </x-shopper::forms.group>
                         <x-shopper::forms.group class="p-4 sm:p-5" label="shopper::layout.sidebar.collections" for="collection_ids">
-                            <select
-                                wire:model.defer="collection_ids"
-                                id="collection_ids"
-                                multiple
-                                x-data="{}"
-                                x-init="
-                                  function() {
-                                    tomSelect($el, {
-                                        plugins: ['remove_button'],
-			                            persist: false,
-                                        maxItems: 3,
-                                        allowEmptyOption: true,
-                                        render: {
-                                            option: function(data, escape) {
-                                                return `<div class='text-sm leading-5 text-secondary-500 dark:text-secondary-400'>${escape(data.text)}</div>`;
-                                            },
-                                        }
-                                    })
-                                 }"
-                            >
+                            <x-select wire:model.defer="collection_ids" id="collection_ids" multiselect>
                                 @foreach($collections as $collection)
-                                    <option value="{{ $collection->id }}">{{ $collection->name }}</option>
+                                    <x-select.user-option
+                                        :src="$collection->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'))"
+                                        :label="$collection->name"
+                                        :value="$collection->id"
+                                    />
                                 @endforeach
-                            </select>
+                            </x-select>
                         </x-shopper::forms.group>
                     </div>
                 </div>
