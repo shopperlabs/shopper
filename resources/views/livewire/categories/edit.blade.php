@@ -17,7 +17,7 @@
         </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-6 grid sm:grid-cols-6 gap-4 lg:gap-6">
+    <div class="mt-6 sm:grid sm:grid-cols-6 gap-4 lg:gap-6">
         <div class="sm:col-span-4 space-y-5">
             <div class="p-4 sm:p-5 bg-white rounded-lg shadow dark:bg-secondary-800">
                 <div>
