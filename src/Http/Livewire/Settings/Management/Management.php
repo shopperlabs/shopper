@@ -29,7 +29,7 @@ class Management extends Component
         return view('shopper::livewire.settings.management.index', [
             'roles' => Role::query()
                 ->with('users')
-                ->where('name', '<>', config('shopper.system.users.default_role'))
+                ->whereIn('name', [config('shopper.system.users.admin_role'), 'manager'])
                 ->limit(3)
                 ->orderBy('created_at')
                 ->get(),
