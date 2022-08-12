@@ -9,33 +9,24 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     strategy:
       fail-fast: true
       matrix:
         php: [8.0, 8.1]
-        laravel: [9.*]
+        laravel: [8.*]
         dependency-version: [prefer-stable]
 
     name: PHP:${{ matrix.php }} / Laravel:${{ matrix.laravel }}(${{ matrix.dependency-version }})
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Node and run tests
-        uses: actions/setup-node@v1
-        with:
-          node-version: "16.x"
-      - run: yarn install --frozen-lockfile
-      - run: yarn run production
-
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+          ini-values: error_reporting=E_ALL
           tools: composer:v2
           coverage: none
 
@@ -50,7 +41,30 @@ jobs:
           key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
           restore-keys: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-
 
-      - name: Install dependencies
+      - name: Setup Laravel
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update --dev
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
+          composer create-project laravel/laravel:8.6.11 .
+          composer require shopper/framework
+          rm -rf vendor/shopper/framework
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: 'vendor/shopper/framework'
+
+      - name: Install Shopper
+        run: |
+          composer dump
+          php artisan shopper:install ${{ matrix.stack }}
+
+      - name: Install NPM dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Compile assets
+        run: yarn run production
+
+      - name: Execute tests
+        run: vendor/bin/pest
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
