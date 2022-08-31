@@ -2,12 +2,14 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
 
 class DeleteInventory extends ModalComponent
 {
     public int $inventoryId;
+
     public string $name;
 
     public function mount(int $inventoryId, string $name)
@@ -25,7 +27,7 @@ class DeleteInventory extends ModalComponent
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.delete-inventory');
     }

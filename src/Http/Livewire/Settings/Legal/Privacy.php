@@ -8,7 +8,8 @@ use WireUi\Traits\Actions;
 
 class Privacy extends Component
 {
-    use Actions, WithLegalActions;
+    use Actions;
+    use WithLegalActions;
 
     public string $title = 'Privacy policy';
 

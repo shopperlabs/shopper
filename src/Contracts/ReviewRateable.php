@@ -3,44 +3,22 @@
 namespace Shopper\Framework\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 interface ReviewRateable
 {
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function ratings();
+    public function ratings(): MorphMany;
 
-    /**
-     * @param $round
-     *
-     * @return float
-     */
     public function averageRating($round = null);
 
-    /**
-     * @param $round
-     */
     public function averageCustomerServiceRating($round = null);
 
-    /**
-     * @param $round
-     */
     public function averageQualityRating($round = null);
 
-    /**
-     * @param $round
-     */
     public function averageFriendlyRating($round = null);
 
-    /**
-     * @param $round
-     */
     public function averagePricingRating($round = null);
 
-    /**
-     * @return int
-     */
     public function countRating();
 
     public function countCustomerServiceRating();
@@ -51,64 +29,23 @@ interface ReviewRateable
 
     public function countPriceRating();
 
-    /**
-     * @return float
-     */
     public function sumRating();
 
-    /**
-     * @param int $max
-     *
-     * @return float
-     */
-    public function ratingPercent($max = 5);
+    public function ratingPercent(int $max = 5): float;
 
-    /**
-     * @param array $data
-     */
-    public function rating($data, Model $author, ?Model $parent = null);
+    public function rating(array $data, Model $author, ?Model $parent = null);
 
-    /**
-     * @param int   $id
-     * @param array $data
-     */
-    public function updateRating($id, $data, ?Model $parent = null);
+    public function updateRating(int $id, array $data, ?Model $parent = null);
 
-    /**
-     * @param int    $id
-     * @param string $sort
-     */
-    public function getAllRatings($id, $sort = 'desc');
+    public function getAllRatings(int $id, string $sort = 'desc');
 
-    /**
-     * @param int    $id
-     * @param string $sort
-     */
-    public function getApprovedRatings($id, $sort = 'desc');
+    public function getApprovedRatings(int $id, string $sort = 'desc');
 
-    /**
-     * @param int    $id
-     * @param string $sort
-     */
-    public function getNotApprovedRatings($id, $sort = 'desc');
+    public function getNotApprovedRatings(int $id, string $sort = 'desc');
 
-    /**
-     * @param int    $id
-     * @param int    $limit
-     * @param string $sort
-     */
-    public function getRecentRatings($id, $limit = 5, $sort = 'desc');
+    public function getRecentRatings(int $id, int $limit = 5, string $sort = 'desc');
 
-    /**
-     * @param int    $id
-     * @param int    $limit
-     * @param bool   $approved
-     * @param string $sort
-     */
-    public function getRecentUserRatings($id, $limit = 5, $approved = true, $sort = 'desc');
+    public function getRecentUserRatings(int $id, int $limit = 5, bool $approved = true, string $sort = 'desc');
 
-    /**
-     * @param int $id
-     */
-    public function deleteRating($id);
+    public function deleteRating(int $id);
 }

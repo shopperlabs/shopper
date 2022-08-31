@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Discount;
@@ -14,9 +15,12 @@ use Shopper\Framework\Repositories\UserRepository;
 
 class Edit extends AbstractBaseComponent
 {
-    use HasPrice, WithDiscountAttributes, WithDiscountActions;
+    use HasPrice;
+    use WithDiscountAttributes;
+    use WithDiscountActions;
 
     public Discount $discount;
+
     public int $discountId;
 
     protected $listeners = ['addSelectedProducts', 'addSelectedCustomers'];
@@ -161,7 +165,7 @@ class Edit extends AbstractBaseComponent
         $this->redirectRoute('shopper.discounts.index');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.discounts.edit');
     }

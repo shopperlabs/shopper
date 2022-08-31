@@ -37,7 +37,7 @@ return [
             'product_title' => 'Ajout produit',
             'product_description' => 'Ajoutez des produits et des prix pour commencer à vendre. Adaptez-le aux besoins de votre magasin avec un nombre illimité de produits (selon la taille de votre magasin), de marques, de collections et de variations.',
             'product_link' => 'Ajouter un produit',
-        ]
+        ],
     ],
 
     'actions_label' => [

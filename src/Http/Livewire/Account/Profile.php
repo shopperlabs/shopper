@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -11,12 +12,17 @@ use WireUi\Traits\Actions;
 
 class Profile extends Component
 {
-    use Actions, WithFileUploads;
+    use Actions;
+    use WithFileUploads;
 
     public string $first_name;
+
     public string $last_name;
+
     public string $email;
+
     public ?string $phone_number = null;
+
     public $picture;
 
     public function mount()
@@ -71,7 +77,7 @@ class Profile extends Component
         $this->notification()->success(__('Profile Updated'), __('Your profile have been successfully updated!'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.account.profile');
     }

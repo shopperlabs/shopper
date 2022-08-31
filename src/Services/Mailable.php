@@ -32,9 +32,8 @@ class Mailable
     /**
      * @param $simpleview
      * @param $view
-     * @param false $template
-     * @param null  $instance
-     *
+     * @param  false  $template
+     * @param  null  $instance
      * @return string|void
      *
      * @throws Throwable
@@ -89,9 +88,8 @@ class Mailable
     /**
      * Gets any missing params that may not be collectable in the reflection.
      *
-     * @param string $arg    the argument string|
-     * @param array  $params the reflection param list
-     *
+     * @param  string  $arg    the argument string|
+     * @param  array  $params the reflection param list
      * @return array|\ReeceM\Mocker\Mocked|string
      */
     private static function getMissingParams($arg, $params)

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Forms\Uploads;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -11,7 +12,9 @@ class Single extends Component
     use WithFileUploads;
 
     public $file;
+
     public $media;
+
     public string $inputId;
 
     protected $rules = [
@@ -46,7 +49,7 @@ class Single extends Component
         ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.forms.uploads.single');
     }

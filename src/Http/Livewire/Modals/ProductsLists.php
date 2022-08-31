@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
@@ -12,8 +13,11 @@ class ProductsLists extends ModalComponent
     use Actions;
 
     public $collection;
+
     public string $search = '';
+
     public array $exceptProductIds;
+
     public array $selectedProducts = [];
 
     public function mount(int $id, array $exceptProductIds = [])
@@ -50,7 +54,7 @@ class ProductsLists extends ModalComponent
         $this->closeModal();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.products-lists');
     }

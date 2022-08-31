@@ -12,12 +12,19 @@ class Configuration extends Component
     use Actions;
 
     public ?string $mail_mailer = null;
+
     public ?string $mail_host = null;
+
     public ?string $mail_port = null;
+
     public ?string $mail_username = null;
+
     public ?string $mail_password = null;
+
     public ?string $mail_encryption = null;
+
     public ?string $mail_from_address = null;
+
     public ?string $mail_from_name = null;
 
     public function mount(): void

@@ -70,10 +70,10 @@ trait Migration
     /**
      * Link table to $tableName using $columnName.
      *
-     * @param Blueprint $table      Laravel Blueprint
-     * @param string    $columnName MySQL table column name
-     * @param string    $tableName  MySQL table name
-     * @param bool      $nullable   Foreign key nullable status
+     * @param  Blueprint  $table      Laravel Blueprint
+     * @param  string  $columnName MySQL table column name
+     * @param  string  $tableName  MySQL table name
+     * @param  bool  $nullable   Foreign key nullable status
      */
     public function addForeignKey(Blueprint $table, string $columnName, string $tableName, bool $nullable = true): void
     {
@@ -89,8 +89,8 @@ trait Migration
     /**
      * Remove foreign key using $columnName.
      *
-     * @param Blueprint $table      Laravel Blueprint
-     * @param string    $columnName Column on the table
+     * @param  Blueprint  $table      Laravel Blueprint
+     * @param  string  $columnName Column on the table
      */
     public function removeLink(Blueprint $table, string $columnName): void
     {

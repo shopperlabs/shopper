@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
@@ -10,14 +11,21 @@ use WireUi\Traits\Actions;
 
 class UpdatePaymentMethod extends ModalComponent
 {
-    use Actions, WithFileUploads;
+    use Actions;
+    use WithFileUploads;
 
     public PaymentMethod $paymentMethod;
+
     public string $title = '';
+
     public ?string $linkUrl = null;
+
     public ?string $description = null;
+
     public ?string $instructions = null;
+
     public ?string $logoUrl;
+
     public $logo;
 
     public function mount(int $id)
@@ -66,7 +74,7 @@ class UpdatePaymentMethod extends ModalComponent
         $this->closeModal();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.update-payment-method');
     }

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Brands;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Traits\WithSeoAttributes;
@@ -11,11 +12,17 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $brand;
+
     public int $brand_id;
+
     public string $name;
+
     public ?string $website = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = false;
+
     public ?string $fileUrl = null;
 
     public $seoAttributes = [
@@ -38,9 +45,6 @@ class Edit extends AbstractBaseComponent
         $this->fileUrl = $file;
     }
 
-    /**
-     * Component mount instance.
-     */
     public function mount($brand)
     {
         $this->brand = $brand;
@@ -54,11 +58,6 @@ class Edit extends AbstractBaseComponent
         $this->seoDescription = $brand->seo_description;
     }
 
-    /**
-     * Define is the current action is create or update for the SEO Trait.
-     *
-     * @return false
-     */
     public function isUpdate(): bool
     {
         return true;
@@ -98,7 +97,7 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.brands.edit');
     }

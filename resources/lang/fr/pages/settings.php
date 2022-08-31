@@ -23,7 +23,7 @@ return [
         'step_1_description' => 'Ces informations seront utiles si vous souhaitez que les utilisateurs de votre site vous contactent directement par e-mail ou par votre numéro de téléphone.',
 
         'step_2' => 'Étape 2 - Informations sur l\'adresse',
-        'address_description'  => 'Vous devez préciser l\'adresse et la localisation de votre magasin',
+        'address_description' => 'Vous devez préciser l\'adresse et la localisation de votre magasin',
         'step_2_description' => 'Ne vous inquiétez pas. Vous pouvez modifier ces paramètres à tout moment. Shopper vous permet de commencer par le plus petit niveau afin que vous puissiez voir l\'évolution de votre boutique.',
 
         'step_3' => 'Étape 3 - Liens sociaux',

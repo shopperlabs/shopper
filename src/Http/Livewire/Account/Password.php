@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -13,7 +14,9 @@ class Password extends Component
     use Actions;
 
     public string $current_password = '';
+
     public string $password = '';
+
     public string $password_confirmation = '';
 
     public function save(): void
@@ -45,7 +48,7 @@ class Password extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.account.password');
     }

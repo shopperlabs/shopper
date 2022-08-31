@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use WireUi\Traits\Actions;
 
@@ -38,7 +39,7 @@ class DeleteMailable extends ModalComponent
         $this->closeModal();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.delete-mailable');
     }

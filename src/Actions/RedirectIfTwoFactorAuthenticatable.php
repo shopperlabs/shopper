@@ -2,11 +2,13 @@
 
 namespace Shopper\Framework\Actions;
 
+use Closure;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use function in_array;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Shopper\Framework\Shopper;
@@ -39,11 +41,11 @@ class RedirectIfTwoFactorAuthenticatable
     /**
      * Handle the incoming request.
      *
-     * @param callable $next
-     *
-     * @throws ValidationException
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Closure  $next
+     * @return JsonResponse|RedirectResponse|mixed
      */
-    public function handle(Request $request, $next)
+    public function handle(Request $request, Closure $next)
     {
         $user = $this->validateCredentials($request);
 
@@ -86,7 +88,7 @@ class RedirectIfTwoFactorAuthenticatable
     /**
      * Get the two factor authentication enabled response.
      */
-    protected function twoFactorChallengeResponse(Request $request, $user)
+    protected function twoFactorChallengeResponse(Request $request, $user): JsonResponse|RedirectResponse
     {
         $request->session()->put([
             'login.id' => $user->getKey(),

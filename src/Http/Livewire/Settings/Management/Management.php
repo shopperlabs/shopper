@@ -11,7 +11,8 @@ use WireUi\Traits\Actions;
 
 class Management extends Component
 {
-    use Actions, WithPagination;
+    use Actions;
+    use WithPagination;
 
     protected $listeners = ['onRoleAdded' => '$refresh'];
 

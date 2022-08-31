@@ -12,25 +12,41 @@ use WireUi\Traits\Actions;
 
 class General extends Component
 {
-    use Actions, WithFileUploads;
+    use Actions;
+    use WithFileUploads;
 
     public string $shop_name;
+
     public string $shop_email;
+
     public string $shop_street_address;
+
     public string $shop_zipcode;
+
     public string $shop_city;
+
     public ?string $shop_legal_name = null;
+
     public ?string $shop_phone_number = null;
+
     public ?string $shop_about = null;
+
     public ?string $shop_facebook_link = null;
+
     public ?string $shop_instagram_link = null;
+
     public ?string $shop_twitter_link = null;
+
     public ?string $shop_logo = null;
+
     public ?string $shop_cover = null;
+
     public ?int $shop_country_id = null;
+
     public ?int $shop_currency_id = null;
 
     public $logo;
+
     public $cover;
 
     protected $listeners = [

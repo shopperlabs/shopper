@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
@@ -13,15 +14,23 @@ use WireUi\Traits\Actions;
 
 class AddProductAttribute extends ModalComponent
 {
-    use Actions, WithAttributes;
+    use Actions;
+    use WithAttributes;
 
     public $product;
+
     public string $type = 'text';
+
     public ?int $attribute_id = null;
+
     public array $multipleValues = [];
+
     public Collection $attributes;
+
     public Collection $values;
+
     public Collection $productAttributes;
+
     public ?string $value = null;
 
     protected $listeners = [
@@ -102,7 +111,7 @@ class AddProductAttribute extends ModalComponent
         return 'xl';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.add-product-attribute');
     }

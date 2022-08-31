@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -16,11 +17,6 @@ class LogoutOthersBrowser extends ModalComponent
         'password' => 'required',
     ];
 
-    /**
-     * Logout from other browser sessions.
-     *
-     * @throws ValidationException
-     */
     public function logoutOtherBrowserSessions(StatefulGuard $guard)
     {
         $this->resetErrorBag();
@@ -43,14 +39,11 @@ class LogoutOthersBrowser extends ModalComponent
         return 'lg';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.logout-others-browser');
     }
 
-    /**
-     * Delete the other browser session records from storage.
-     */
     protected function deleteOtherSessionRecords()
     {
         if (config('session.driver') !== 'database') {

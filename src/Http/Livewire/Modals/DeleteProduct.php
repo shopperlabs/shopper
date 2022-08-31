@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
@@ -9,7 +10,9 @@ use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 class DeleteProduct extends ModalComponent
 {
     public int $productId;
+
     public string $type;
+
     public ?string $route = null;
 
     public function mount(int $id, string $type, string $route = null)
@@ -45,7 +48,7 @@ class DeleteProduct extends ModalComponent
         return 'lg';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.delete-product');
     }

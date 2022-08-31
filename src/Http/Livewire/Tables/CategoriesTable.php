@@ -20,7 +20,7 @@ class CategoriesTable extends DataTableComponent
 
     public array $bulkActions = [
         'deleteSelected' => 'Delete',
-        'enabled'   => 'Enable',
+        'enabled' => 'Enable',
         'disabled' => 'Disable',
     ];
 

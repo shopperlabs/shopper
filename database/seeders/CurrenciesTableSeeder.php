@@ -10,27 +10,14 @@ class CurrenciesTableSeeder extends Seeder
 {
     use DisableForeignKeys;
 
-    /**
-     * All installable currencies.
-     *
-     * @var array
-     */
-    protected $currencies;
+    protected array $currencies;
 
-    /**
-     * Create a new command instance.
-     */
     public function __construct()
     {
         $this->currencies = include __DIR__ . '/currencies.php';
     }
 
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         $this->disableForeignKeys();
 

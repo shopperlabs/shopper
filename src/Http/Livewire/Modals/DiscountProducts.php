@@ -2,13 +2,16 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class DiscountProducts extends ModalComponent
 {
     public string $search = '';
+
     public array $selectedProducts = [];
+
     public array $excludesIds;
 
     public function mount(array $excludeIds)
@@ -30,7 +33,7 @@ class DiscountProducts extends ModalComponent
         return '2xl';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.discount-products', [
             'products' => (new ProductRepository())
