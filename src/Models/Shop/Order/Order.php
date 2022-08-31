@@ -49,12 +49,8 @@ class Order extends Model
         'formatted_status',
     ];
 
-    /**
-     * Create a new Eloquent model instance.
-     */
     public function __construct(array $attributes = [])
     {
-        // Set default status in case there was none given
         if (! isset($attributes['status'])) {
             $this->setDefaultOrderStatus();
         }
@@ -62,46 +58,27 @@ class Order extends Model
         parent::__construct($attributes);
     }
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('orders');
     }
 
-    /**
-     * Return Total order price without shipping amount.
-     */
     public function getTotalAttribute(): string
     {
         return $this->formattedPrice($this->total());
     }
 
-    /**
-     * Return status style classes.
-     */
     public function getStatusClassesAttribute(): string
     {
-        switch ($this->status) {
-            case OrderStatus::PENDING:
-                return 'border-yellow-200 bg-yellow-100 text-yellow-800';
-            case OrderStatus::REGISTER:
-                return 'border-blue-200 bg-blue-100 text-blue-800';
-            case OrderStatus::PAID:
-                return 'border-green-200 bg-green-100 text-green-800';
-            case OrderStatus::CANCELLED:
-                return 'border-pink-200 bg-pink-100 text-pink-800';
-            case OrderStatus::COMPLETED:
-                return 'border-purple-200 bg-purple-100 text-purple-800';
-        }
+        return match ($this->status) {
+            OrderStatus::PENDING => 'border-yellow-200 bg-yellow-100 text-yellow-800',
+            OrderStatus::REGISTER => 'border-blue-200 bg-blue-100 text-blue-800',
+            OrderStatus::PAID => 'border-green-200 bg-green-100 text-green-800',
+            OrderStatus::CANCELLED => 'border-pink-200 bg-pink-100 text-pink-800',
+            OrderStatus::COMPLETED => 'border-purple-200 bg-purple-100 text-purple-800',
+        };
     }
 
-    /**
-     * Return the correct order status formatted.
-     *
-     * @return mixed
-     */
     public function getFormattedStatusAttribute(): string
     {
         return OrderStatus::values()[$this->status];
@@ -150,9 +127,6 @@ class Order extends Model
         return $this->status === OrderStatus::COMPLETED;
     }
 
-    /**
-     * Return total order with shipping.
-     */
     public function fullPriceWithShipping(): int
     {
         return $this->total() + $this->shipping_total;
