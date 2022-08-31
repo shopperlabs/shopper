@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Services\Mailable;
 
@@ -21,7 +22,7 @@ class Templates extends Component
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.mails.templates.browse', [
             'templates' => Mailable::getTemplates(),
