@@ -12,8 +12,11 @@ class Role extends Component
     use Actions;
 
     public RoleModel $role;
+
     public string $name;
+
     public string $display_name = '';
+
     public ?string $description = null;
 
     public function mount(RoleModel $role)

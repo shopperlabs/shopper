@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
@@ -15,14 +16,16 @@ use WireUi\Traits\Actions;
 
 class Variants extends Component
 {
-    use Actions,
-        WithPagination,
-        WithFileUploads,
-        WithAttributes,
-        WithUploadProcess;
+    use Actions;
+    use WithPagination;
+    use WithFileUploads;
+    use WithAttributes;
+    use WithUploadProcess;
 
     public string $search = '';
+
     public Model $product;
+
     public $quantity;
 
     public string $currency;
@@ -56,7 +59,7 @@ class Variants extends Component
         );
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-variants', [
             'variants' => (new ProductRepository())

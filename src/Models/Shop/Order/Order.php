@@ -15,7 +15,9 @@ use Shopper\Framework\Models\User\User;
 
 class Order extends Model
 {
-    use HasFactory, HasPrice, SoftDeletes;
+    use HasFactory;
+    use HasPrice;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

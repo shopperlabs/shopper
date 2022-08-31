@@ -16,9 +16,9 @@ jobs:
           run: composer install
 
       -   name: Run PHP CS Fixer
-          run: composer lint
+          run: composer pint
 
       -   name: Commit changes
           uses: stefanzweifel/git-auto-commit-action@v4
           with:
-            commit_message: Apply php-cs-fixer changes
+            commit_message: Apply laravel pint formatting

@@ -28,7 +28,7 @@ class OrdersTable extends DataTableComponent
     public function bulkActions(): array
     {
         return [
-            'archived'   => __('Archived'),
+            'archived' => __('Archived'),
         ];
     }
 

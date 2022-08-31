@@ -77,9 +77,8 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Add the given query scope.
      *
-     * @param string $scope
-     * @param array  $args
-     *
+     * @param  string  $scope
+     * @param  array  $args
      * @return $this
      */
     public function __call($scope, $args)
@@ -180,10 +179,9 @@ abstract class BaseRepository implements RepositoryContract
      * Delete the specified model record from the database.
      *
      * @param $id
+     * @return bool
      *
      * @throws Exception
-     *
-     * @return bool
      */
     public function deleteById($id): bool
     {
@@ -236,7 +234,6 @@ abstract class BaseRepository implements RepositoryContract
      * Get the specified model record from the database.
      *
      * @param $id
-     *
      * @return Collection|Model
      */
     public function getById($id, array $columns = ['*'])
@@ -249,9 +246,8 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * @param string $item
-     * @param string $column
-     *
+     * @param  string  $item
+     * @param  string  $column
      * @return null|Model|static
      */
     public function getByColumn($item, $column, array $columns = ['*'])
@@ -264,10 +260,9 @@ abstract class BaseRepository implements RepositoryContract
     }
 
     /**
-     * @param int    $limit
-     * @param string $pageName
-     * @param null   $page
-     *
+     * @param  int  $limit
+     * @param  string  $pageName
+     * @param  null  $page
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function paginate($limit = 25, array $columns = ['*'], $pageName = 'page', $page = null)
@@ -285,7 +280,6 @@ abstract class BaseRepository implements RepositoryContract
      * Update the specified model record in the database.
      *
      * @param $id
-     *
      * @return Collection|Model
      */
     public function updateById($id, array $data, array $options = [])
@@ -302,8 +296,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set the query limit.
      *
-     * @param int $limit
-     *
+     * @param  int  $limit
      * @return $this
      */
     public function limit($limit)
@@ -316,9 +309,8 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set an ORDER BY clause.
      *
-     * @param string $column
-     * @param string $direction
-     *
+     * @param  string  $column
+     * @param  string  $direction
      * @return $this
      */
     public function orderBy($column, $direction = 'asc')
@@ -331,10 +323,9 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Add a simple where clause to the query.
      *
-     * @param string $column
-     * @param string $value
-     * @param string $operator
-     *
+     * @param  string  $column
+     * @param  string  $value
+     * @param  string  $operator
      * @return $this
      */
     public function where($column, $value, $operator = '=')
@@ -347,8 +338,7 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Add a simple where in clause to the query.
      *
-     * @param string $column
-     *
+     * @param  string  $column
      * @return $this
      */
     public function whereIn($column, $values)
@@ -364,7 +354,6 @@ abstract class BaseRepository implements RepositoryContract
      * Set Eloquent relationships to eager load.
      *
      * @param $relations
-     *
      * @return $this
      */
     public function with($relations)
@@ -382,8 +371,7 @@ abstract class BaseRepository implements RepositoryContract
      * Get an array with the values of a given column.
      *
      * @param $column
-     * @param null $key
-     *
+     * @param  null  $key
      * @return \Illuminate\Support\Collection|mixed
      */
     public function pluck($column, $key = null)

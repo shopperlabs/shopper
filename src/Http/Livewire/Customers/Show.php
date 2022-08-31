@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -10,20 +11,20 @@ use Shopper\Framework\Repositories\UserRepository;
 class Show extends AbstractBaseComponent
 {
     public Model $customer;
+
     public int $user_id;
+
     public string $last_name;
+
     public string $first_name;
+
     public string $email;
+
     public string $picture;
 
     protected $listeners = ['profileUpdate'];
 
-    /**
-     * Component mounted action.
-     *
-     * @param $customer
-     */
-    public function mount($customer)
+    public function mount(Model $customer)
     {
         $this->customer = $customer->load('addresses');
         $this->user_id = $customer->id;
@@ -33,9 +34,6 @@ class Show extends AbstractBaseComponent
         $this->picture = $customer->picture;
     }
 
-    /**
-     * Update Customer profile after listen to custom event.
-     */
     public function profileUpdate()
     {
         $this->email = $this->customer->email;
@@ -44,9 +42,6 @@ class Show extends AbstractBaseComponent
         $this->picture = $this->customer->picture;
     }
 
-    /**
-     * Update customer record in the database.
-     */
     public function store()
     {
         $this->validate($this->rules());
@@ -75,7 +70,7 @@ class Show extends AbstractBaseComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.customers.show');
     }

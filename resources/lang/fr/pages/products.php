@@ -133,7 +133,7 @@ return [
         'empty' => 'Aucun produit similaire trouvé',
         'add_content' => 'Commencer par rajouter un produit connexe à votre produit.',
 
-        'modals' => [
+        'modal' => [
             'title' => 'Ajouter des produits connexes',
             'search' => 'Rechercher un produit',
             'search_placeholder' => 'Rechercher un produit par nom',

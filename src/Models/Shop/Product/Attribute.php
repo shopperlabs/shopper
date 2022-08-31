@@ -9,7 +9,8 @@ use Shopper\Framework\Models\Traits\HasSlug;
 
 class Attribute extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.

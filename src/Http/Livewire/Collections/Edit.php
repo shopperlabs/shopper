@@ -3,6 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
@@ -13,17 +14,27 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithConditions, WithSeoAttributes;
+    use WithConditions;
+    use WithSeoAttributes;
 
     public Model $collection;
+
     public Collection $products;
+
     public int $collectionId;
+
     public string $name = '';
+
     public ?string $description = null;
+
     public string $type = 'auto';
+
     public ?string $publishedAt = null;
+
     public ?string $publishedAtFormatted = null;
+
     public string $condition_match = 'all';
+
     public ?string $fileUrl = null;
 
     public $seoAttributes = [
@@ -109,7 +120,7 @@ class Edit extends AbstractBaseComponent
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d H:i', $value)->toRfc7231String();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.collections.edit');
     }

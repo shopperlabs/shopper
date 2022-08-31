@@ -7,7 +7,9 @@ use Shopper\Framework\Models\Shop\Legal;
 trait WithLegalActions
 {
     public ?int $legalId = null;
+
     public ?string $content = null;
+
     public bool $isEnabled = false;
 
     public function mount()

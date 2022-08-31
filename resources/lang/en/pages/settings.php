@@ -9,32 +9,32 @@ return [
     'mapbox_disabled' => 'Mapbox has not been activated.',
 
     'initialization' => [
-    'step_one_title' => 'Store information',
-    'step_one_description' => 'Provide useful information for your store.',
-    'step_two_title' => 'Address Information',
-    'step_two_description' => 'Provide store address information.',
-    'step_tree_title' => 'Social Links (Optional)',
-    'step_tree_description' => 'Links to your social media accounts.',
+        'step_one_title' => 'Store information',
+        'step_one_description' => 'Provide useful information for your store.',
+        'step_two_title' => 'Address Information',
+        'step_two_description' => 'Provide store address information.',
+        'step_tree_title' => 'Social Links (Optional)',
+        'step_tree_description' => 'Links to your social media accounts.',
 
-    'step' => 'Step :step of 3',
-    'shop_configuration' => 'Shop configuration',
-    'step_1' => 'Step 1 - Shop information',
-    'tell_about' => 'Tell us about your Shop',
-    'step_1_description' => 'This information will be useful if you want users of your site to directly contact you by email or by your phone number.',
+        'step' => 'Step :step of 3',
+        'shop_configuration' => 'Shop configuration',
+        'step_1' => 'Step 1 - Shop information',
+        'tell_about' => 'Tell us about your Shop',
+        'step_1_description' => 'This information will be useful if you want users of your site to directly contact you by email or by your phone number.',
 
-    'step_2' => 'Step 2 - Address information',
-    'address_description'  => 'You must specify address and location of your shop',
-    'step_2_description' => 'Don\'t Worry. You can change these setting at any time. Shopper allows you to start with the smallest level so that you can see the evolution of your shop.',
+        'step_2' => 'Step 2 - Address information',
+        'address_description' => 'You must specify address and location of your shop',
+        'step_2_description' => 'Don\'t Worry. You can change these setting at any time. Shopper allows you to start with the smallest level so that you can see the evolution of your shop.',
 
-    'step_3' => 'Step 3 - Social links',
-    'social_description' => 'Your shop on social networks.',
-    'step_3_description' => 'You can add links to your social media accounts so that your shop can be found easily on your social media pages.',
-    'action' => 'Setup my store',
-  ],
+        'step_3' => 'Step 3 - Social links',
+        'social_description' => 'Your shop on social networks.',
+        'step_3_description' => 'You can add links to your social media accounts so that your shop can be found easily on your social media pages.',
+        'action' => 'Setup my store',
+    ],
 
     'settings' => [
-    'title' => 'Store Setting',
-  ],
+        'title' => 'Store Setting',
+    ],
 
     'payment' => [
         'stripe_description' => 'Accept payments on your store using third-party providers such as Stripe.',
@@ -47,10 +47,10 @@ return [
         'stripe_dashboard' => 'API Keys can be grabbed from',
     ],
 
-  'validations' => [
-    'shop_name' => 'Store name is required',
-    'country' => 'Country is required',
-  ],
+    'validations' => [
+        'shop_name' => 'Store name is required',
+        'country' => 'Country is required',
+    ],
 
     'notifications' => [
         'email_config' => 'Your mail configurations have been correctly updated!',

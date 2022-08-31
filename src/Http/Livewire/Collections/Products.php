@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Collections;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use WireUi\Traits\Actions;
 
@@ -10,8 +11,11 @@ class Products extends Component
     use Actions;
 
     public $collection;
+
     public string $sortBy = 'name';
+
     public string $sortValue = 'name';
+
     public string $direction = 'asc';
 
     protected $listeners = [
@@ -78,7 +82,7 @@ class Products extends Component
         $this->sortBy = $sortBy;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.collections.products', [
             'products' => $this->collection

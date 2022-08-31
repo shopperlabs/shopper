@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -12,6 +13,7 @@ class RelatedProducts extends Component
     use Actions;
 
     public Model $product;
+
     public Collection $relatedProducts;
 
     protected $listeners = [
@@ -42,7 +44,7 @@ class RelatedProducts extends Component
         return array_merge($this->product->relatedProducts->modelKeys(), [$this->product->id]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-related');
     }

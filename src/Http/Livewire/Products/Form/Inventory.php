@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
@@ -16,12 +17,13 @@ use WireUi\Traits\Actions;
 
 class Inventory extends Component
 {
-    use Actions,
-        WithPagination,
-        WithAttributes,
-        WithStock;
+    use Actions;
+    use WithPagination;
+    use WithAttributes;
+    use WithStock;
 
     public Model $product;
+
     public Collection $inventories;
 
     public function mount($product, $inventories, $defaultInventory)
@@ -66,7 +68,7 @@ class Inventory extends Component
         );
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-inventory', [
             'currentStock' => (new InventoryHistoryRepository())

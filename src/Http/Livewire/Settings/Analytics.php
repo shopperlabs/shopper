@@ -12,14 +12,21 @@ use WireUi\Traits\Actions;
 
 class Analytics extends Component
 {
-    use Actions, WithFileUploads;
+    use Actions;
+    use WithFileUploads;
 
     public $google_analytics_tracking_id;
+
     public $google_analytics_view_id;
+
     public $google_analytics_add_js;
+
     public $google_tag_manager_account_id;
+
     public $facebook_pixel_account_id;
+
     public $json_file;
+
     public bool $credentials_json = false;
 
     public function mount()

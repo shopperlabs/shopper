@@ -14,7 +14,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Brand extends Model implements HasMedia
 {
-    use HasFactory, HasSlug, InteractsWithMedia;
+    use HasFactory;
+    use HasSlug;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.

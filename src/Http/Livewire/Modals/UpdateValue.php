@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\AttributeValue;
@@ -12,8 +13,11 @@ class UpdateValue extends ModalComponent
     use Actions;
 
     public string $name;
+
     public string $type = 'select';
+
     public int $valueId;
+
     public string $value;
 
     public string $key;
@@ -60,7 +64,7 @@ class UpdateValue extends ModalComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.update-value');
     }

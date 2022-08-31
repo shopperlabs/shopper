@@ -9,26 +9,24 @@ interface TwoFactorAuthenticationProvider
      *
      * @return string
      */
-    public function generateSecretKey();
+    public function generateSecretKey(): string;
 
     /**
      * Get the two factor authentication QR code URL.
      *
-     * @param string $companyName
-     * @param string $companyEmail
-     * @param string $secret
-     *
+     * @param  string  $companyName
+     * @param  string  $companyEmail
+     * @param  string  $secret
      * @return string
      */
-    public function qrCodeUrl($companyName, $companyEmail, $secret);
+    public function qrCodeUrl(string $companyName, string $companyEmail, string $secret): string;
 
     /**
      * Verify the given token.
      *
-     * @param string $secret
-     * @param string $code
-     *
+     * @param  string  $secret
+     * @param  string  $code
      * @return bool
      */
-    public function verify($secret, $code);
+    public function verify(string $secret, string $code): bool;
 }

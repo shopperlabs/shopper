@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
@@ -14,15 +15,19 @@ use WireUi\Traits\Actions;
 
 class Variant extends Component
 {
-    use Actions,
-        WithFileUploads,
-        WithUploadProcess,
-        WithAttributes;
+    use Actions;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
 
     public Model $product;
+
     public Model $variant;
+
     public Collection $inventories;
+
     public string $currency;
+
     public $images = [];
 
     protected $listeners = [
@@ -93,16 +98,12 @@ class Variant extends Component
         );
     }
 
-    /**
-     * Listen when a file is removed from the storage
-     * and update the user screen and remove image preview.
-     */
     public function mediaDeleted()
     {
         $this->images = $this->variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.variant', [
             'media' => $this->variant->getFirstMedia(config('shopper.system.storage.disks.uploads')),

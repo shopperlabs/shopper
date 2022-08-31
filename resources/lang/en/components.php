@@ -18,7 +18,7 @@ return [
     ],
 
     'modal' => [
-        'content' => 'For your security, please confirm your password to continue.'
+        'content' => 'For your security, please confirm your password to continue.',
     ],
 
     'wip' => [

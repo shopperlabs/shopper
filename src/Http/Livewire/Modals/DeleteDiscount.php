@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Discount;
 
@@ -28,7 +29,7 @@ class DeleteDiscount extends ModalComponent
         return 'xl';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.delete-discount');
     }

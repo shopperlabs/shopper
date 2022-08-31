@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\User\Role;
 use WireUi\Traits\Actions;
@@ -11,7 +12,9 @@ class CreateRole extends ModalComponent
     use Actions;
 
     public string $name = '';
+
     public string $display_name = '';
+
     public string $description = '';
 
     public function save()
@@ -34,7 +37,7 @@ class CreateRole extends ModalComponent
         $this->closeModal();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.create-role');
     }

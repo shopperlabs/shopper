@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use WireUi\Traits\Actions;
@@ -11,8 +12,11 @@ class CreateValue extends ModalComponent
     use Actions;
 
     public Attribute $attribute;
+
     public string $type = 'select';
+
     public string $value = '';
+
     public string $key = '';
 
     public function mount(int $attributeId)
@@ -53,7 +57,7 @@ class CreateValue extends ModalComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.create-value');
     }

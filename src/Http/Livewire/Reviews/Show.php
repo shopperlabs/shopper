@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Reviews;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Review;
 use WireUi\Traits\Actions;
@@ -11,6 +12,7 @@ class Show extends Component
     use Actions;
 
     public Review $review;
+
     public bool $approved;
 
     public function mount(Review $review)
@@ -30,7 +32,7 @@ class Show extends Component
         );
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.reviews.show');
     }

@@ -24,14 +24,14 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Product extends Model implements HasMedia, ReviewRateable
 {
-    use CanHaveDiscount,
-        HasFactory,
-        HasPrice,
-        HasRecursiveRelationships,
-        HasStock,
-        HasSlug,
-        InteractsWithMedia,
-        ReviewRateableTrait;
+    use CanHaveDiscount;
+    use HasFactory;
+    use HasPrice;
+    use HasRecursiveRelationships;
+    use HasStock;
+    use HasSlug;
+    use InteractsWithMedia;
+    use ReviewRateableTrait;
 
     /**
      * The attributes that are mass assignable.

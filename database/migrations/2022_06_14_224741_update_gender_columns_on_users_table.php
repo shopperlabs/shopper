@@ -5,7 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database;
 
-return new class extends Migration {
+return new class extends Migration
+{
     use Database\Migration;
 
     public function up()

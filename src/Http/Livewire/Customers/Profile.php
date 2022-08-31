@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -12,21 +13,33 @@ class Profile extends Component
     use Actions;
 
     public Model $customer;
+
     public int $customer_id;
+
     public string $firstName;
+
     public string $lastName;
+
     public string $email;
+
     public ?string $birthDate = null;
 
     public string $birthDateFormatted = '';
+
     public string $gender;
 
     public bool $firstNameUpdate = false;
+
     public bool $lastNameUpdate = false;
+
     public bool $emailUpdate = false;
+
     public bool $genderUpdate = false;
+
     public bool $birthDateUpdate = false;
+
     public bool $optIn;
+
     public bool $hasEnabledTwoFactor;
 
     public function mount($customer)
@@ -110,9 +123,6 @@ class Profile extends Component
         $this->birthDateFormatted = $this->customer->birth_date_formatted;
     }
 
-    /**
-     * Update customer gender.
-     */
     public function saveGender()
     {
         $this->updateValue(
@@ -124,9 +134,6 @@ class Profile extends Component
         $this->genderUpdate = false;
     }
 
-    /**
-     * Updated Customer default Email Marketing Subscription.
-     */
     public function updatedOptIn()
     {
         $this->updateValue(
@@ -136,7 +143,7 @@ class Profile extends Component
         );
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.customers.profile');
     }
@@ -144,9 +151,9 @@ class Profile extends Component
     /**
      * Update value from the storage.
      *
-     * @param string $field
-     * @param mixed $value
-     * @param string $message
+     * @param  string  $field
+     * @param  mixed  $value
+     * @param  string  $message
      */
     private function updateValue(string $field, mixed $value, string $message)
     {

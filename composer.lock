@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90c3a5a908b3275c19a2e91b49bb11c8",
+    "content-hash": "1f30c64b61b3222e0f820bb7c45d4eb3",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -8421,6 +8421,72 @@
             "time": "2020-07-09T08:09:16+00:00"
         },
         {
+            "name": "laravel/pint",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pint.git",
+                "reference": "16cccd66169f926308fefb21ddbc03a261ca7e79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/16cccd66169f926308fefb21ddbc03a261ca7e79",
+                "reference": "16cccd66169f926308fefb21ddbc03a261ca7e79",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-tokenizer": "*",
+                "ext-xml": "*",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.8.0",
+                "illuminate/view": "^9.17.0",
+                "laravel-zero/framework": "^9.1.1",
+                "mockery/mockery": "^1.5.0",
+                "nunomaduro/larastan": "^2.1.11",
+                "nunomaduro/termwind": "^1.10.1",
+                "pestphp/pest": "^1.21.3"
+            },
+            "bin": [
+                "builds/pint"
+            ],
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "App\\": "app/",
+                    "Database\\Seeders\\": "database/seeders/",
+                    "Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "An opinionated code formatter for PHP.",
+            "homepage": "https://laravel.com",
+            "keywords": [
+                "format",
+                "formatter",
+                "lint",
+                "linter",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/pint/issues",
+                "source": "https://github.com/laravel/pint"
+            },
+            "time": "2022-07-26T15:32:23+00:00"
+        },
+        {
             "name": "mockery/mockery",
             "version": "1.5.0",
             "source": {
@@ -11633,5 +11699,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.1.0"
 }

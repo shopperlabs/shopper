@@ -9,8 +9,11 @@ class Price
     use HasPrice;
 
     public int $cent;
+
     public int $amount;
+
     public string $formatted;
+
     public string $currency;
 
     public function __construct(int $cent)

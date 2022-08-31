@@ -16,13 +16,13 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use CanHaveDiscount,
-        HasRoles,
-        HasFactory,
-        HasProfilePhoto,
-        Notifiable,
-        SoftDeletes,
-        TwoFactorAuthenticatable;
+    use CanHaveDiscount;
+    use HasRoles;
+    use HasFactory;
+    use HasProfilePhoto;
+    use Notifiable;
+    use SoftDeletes;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that aren't mass assignable.

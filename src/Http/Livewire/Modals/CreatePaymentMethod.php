@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\PaymentMethod;
@@ -9,12 +10,17 @@ use WireUi\Traits\Actions;
 
 class CreatePaymentMethod extends ModalComponent
 {
-    use Actions, WithFileUploads;
+    use Actions;
+    use WithFileUploads;
 
     public string $title = '';
+
     public ?string $linkUrl = null;
+
     public ?string $description = null;
+
     public ?string $instructions = null;
+
     public $logo;
 
     public static function modalMaxWidth(): string
@@ -51,7 +57,7 @@ class CreatePaymentMethod extends ModalComponent
         $this->closeModal();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.create-payment-method');
     }

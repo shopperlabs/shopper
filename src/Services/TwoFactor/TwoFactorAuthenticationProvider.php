@@ -35,10 +35,9 @@ class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProvider
     /**
      * Get the two factor authentication QR code URL.
      *
-     * @param string $companyName
-     * @param string $companyEmail
-     * @param string $secret
-     *
+     * @param  string  $companyName
+     * @param  string  $companyEmail
+     * @param  string  $secret
      * @return string
      */
     public function qrCodeUrl($companyName, $companyEmail, $secret)
@@ -49,9 +48,8 @@ class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProvider
     /**
      * Verify the given code.
      *
-     * @param string $secret
-     * @param string $code
-     *
+     * @param  string  $secret
+     * @param  string  $code
      * @return bool
      */
     public function verify($secret, $code)

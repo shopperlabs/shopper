@@ -70,4 +70,3 @@ return [
     'update_message' => 'Code de réduction :code mis à jour avec succès!',
 
 ];
-
