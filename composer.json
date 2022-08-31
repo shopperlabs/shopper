@@ -50,6 +50,7 @@
     "laravel/pint": "^1.1",
     "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^5.11|^6.1",
+    "nunomaduro/larastan": "^2.0",
     "orchestra/testbench": "^6.0|^7.0",
     "phpunit/phpunit": "^8.4|^9.0",
     "reecem/mocker": "^1.2"
@@ -79,12 +80,16 @@
     }
   },
   "scripts": {
-    "test": "./vendor/bin/phpunit --configuration phpunit.xml",
-    "test-coverage": "./vendor/bin/phpunit --coverage-html coverage",
-    "pint": "pint"
+    "analyse": "vendor/bin/phpstan analyse",
+    "baseline": "vendor/bin/phpstan analyse --generate-baseline",
+
+    "pint": "vendor/bin/pint"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true
