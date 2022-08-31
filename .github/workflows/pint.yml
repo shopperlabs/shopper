@@ -3,7 +3,7 @@ name: Check, fix styling & Format (PHP)
 on: [push, pull_request, pull_request_target]
 
 jobs:
-  php-cs-fixer:
+  pint:
     runs-on: ubuntu-latest
 
     steps:
