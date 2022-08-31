@@ -12,17 +12,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: main
+          fetch-depth: 0
+          ref: ${{ github.event.release.target_commitish }}
 
+      - name: Extract release date from git tag
+        id: release_date
+        run: |
+          echo "::set-output name=date::$(git log -1 --date=short --format=%ad '${{ github.event.release.tag_name }}')"
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
         with:
+          release-date: ${{ steps.release_date.outputs.date }}
           latest-version: ${{ github.event.release.name }}
           release-notes: ${{ github.event.release.body }}
+          compare-url-target-revision: ${{ github.event.release.target_commitish }}
 
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          branch: main
+          # Push updated CHANGELOG to release target branch.
+          branch: ${{ github.event.release.target_commitish }}
           commit_message: Update CHANGELOG
           file_pattern: CHANGELOG.md

@@ -15,7 +15,7 @@ jobs:
       -   name: Install Composer
           run: composer install
 
-      -   name: Run PHP CS Fixer
+      -   name: Run Laravel Pint
           run: composer pint
 
       -   name: Commit changes
