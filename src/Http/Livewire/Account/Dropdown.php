@@ -29,7 +29,6 @@ class Dropdown extends Component
     {
         $user = Auth::user();
 
-        $this->picture = $user->picture;
         $this->full_name = $user->full_name;
         $this->picture = $user->picture;
         $this->email = $user->email;
