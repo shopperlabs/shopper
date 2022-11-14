@@ -36,7 +36,7 @@ class ShopperTestCase extends TestCase
         $app['config']->set('auth.providers.users.model', User::class);
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [LivewireServiceProvider::class, FrameworkServiceProvider::class];
     }
