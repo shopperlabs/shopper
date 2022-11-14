@@ -61,50 +61,50 @@
 
 .choices__item.choices__item--choice.is-selected.choices__item--selectable.is-highlighted,
 .choices__item.choices__item--choice.is-selected.choices__item--selectable {
-    @apply bg-primary-600 border-primary-600 text-white !important;
+  @apply bg-primary-600 border-primary-600 text-white !important;
 }
 
 /** TomSelect **/
 .ts-control {
-    @apply flex border border-secondary-300 dark:border-secondary-700 dark:text-secondary-300 bg-white dark:bg-secondary-700 rounded-md shadow-sm;
-    padding: 9px 12px !important;
-    z-index: 0;
+  @apply flex border border-secondary-300 dark:border-secondary-700 dark:text-secondary-300 bg-white dark:bg-secondary-700 rounded-md shadow-sm;
+  padding: 9px 12px !important;
+  z-index: 0;
 }
 
 .ts-control > input {
-    @apply text-secondary-500 dark:text-secondary-400 text-sm leading-4;
+  @apply text-secondary-500 dark:text-secondary-400 text-sm leading-4;
 }
 
 .ts-dropdown {
-    @apply my-1 text-secondary-500 dark:text-secondary-400 text-sm leading-5 bg-white dark:bg-secondary-700 border-secondary-300 dark:border-secondary-700 rounded-md shadow-sm;
+  @apply my-1 text-secondary-500 dark:text-secondary-400 text-sm leading-5 bg-white dark:bg-secondary-700 border-secondary-300 dark:border-secondary-700 rounded-md shadow-sm;
 }
 
 .ts-dropdown.single {
-    @apply border-secondary-300 dark:border-secondary-700 !important;
+  @apply border-secondary-300 dark:border-secondary-700 !important;
 }
 
 .ts-dropdown .active {
-    @apply bg-white dark:bg-secondary-700 rounded-none text-sm leading-5 text-secondary-700 dark:text-secondary-300 p-2 mb-0 !important;
+  @apply bg-white dark:bg-secondary-700 rounded-none text-sm leading-5 text-secondary-700 dark:text-secondary-300 p-2 mb-0 !important;
 }
 
 .ts-dropdown .option:hover {
-    @apply bg-primary-600 text-white;
+  @apply bg-primary-600 text-white;
 }
 
 .ts-wrapper.multi .ts-control [data-value] {
-    @apply bg-primary-600 shadow-none text-sm leading-5 rounded-md;
-    box-shadow: none;
+  @apply bg-primary-600 shadow-none text-sm leading-5 rounded-md;
+  box-shadow: none;
 }
 .ts-wrapper.multi .ts-control [data-value].active {
-    background-color: theme('colors.primary.600');
-    background-repeat: repeat-x;
+  background-color: theme('colors.primary.600');
+  background-repeat: repeat-x;
 }
 
 .ts-wrapper.single .ts-control {
-    @apply border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-600 shadow-none;
-    background-image: none;
+  @apply border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-600 shadow-none;
+  background-image: none;
 }
 
 .dropdown-active .ts-control {
-    @apply rounded-md;
+  @apply rounded-md;
 }

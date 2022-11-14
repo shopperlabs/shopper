@@ -22,9 +22,3 @@ window.tomSelect = (element, options = {}) => {
  */
 window.scrollToPosition = (selector) => document.querySelector(selector).scrollIntoView({behavior: 'smooth', block: 'end'})
 
-/**
- * Turns the first character of a string into a capital letter
- *
- * @param string
- */
-window.capitalize = (string) => string.replace(/^\w/, (c) => c.toUpperCase())

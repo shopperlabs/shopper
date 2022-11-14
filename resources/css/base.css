@@ -22,22 +22,22 @@ input[type="number"] {
 .primary-menu .active:hover, .primary-menu .active:focus { background-color: theme('colors.primary.900'); }
 
 .welcome span {
-    @apply font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-800;
+  @apply font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-800;
 }
 
 .welcome-description span {
-    @apply text-secondary-600 dark:text-white font-medium;
+  @apply text-secondary-600 dark:text-white font-medium;
 }
 
 /* Dark Mode */
 .dark trix-toolbar .trix-button-group {
-    @apply border-secondary-700
+  @apply border-secondary-700
 }
 
 .dark trix-toolbar .trix-button:not(:first-child) {
-    @apply border-secondary-700
+  @apply border-secondary-700
 }
 
 .dark trix-toolbar .trix-button {
-    @apply text-secondary-400 border-secondary-700
+  @apply text-secondary-400 border-secondary-700
 }

@@ -5,9 +5,9 @@ mix.options({
   terser: {
     extractComments: false,
   },
-})
+});
 mix.setPublicPath('public')
-  .setResourceRoot('../')
+  .setResourceRoot('../');
 
 mix.js('./resources/js/shopper.js', 'js').react()
   .postCss('resources/css/shopper.css', 'css',[
@@ -17,5 +17,5 @@ mix.js('./resources/js/shopper.js', 'js').react()
   .webpackConfig(require('./webpack.config'));
 
 if (mix.inProduction()) {
-  mix.version()
+  mix.version();
 }
