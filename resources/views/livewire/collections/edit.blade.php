@@ -17,8 +17,8 @@
         </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-6 grid sm:grid-cols-6 gap-4 lg:gap-6">
-        <div class="sm:col-span-4 space-y-5">
+    <div class="mt-6 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-6 lg:gap-6">
+        <div class="lg:col-span-4 space-y-5">
             <div class="bg-white rounded-lg shadow p-4 sm:p-5 dark:bg-secondary-800">
                 <x-shopper::forms.group label="shopper::layout.forms.label.name" for="name" isRequired :error="$errors->first('name')">
                     <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
@@ -40,7 +40,7 @@
                 :canUpdate="$updateSeo"
             />
         </div>
-        <div class="sm:col-span-2">
+        <div class="lg:col-span-2">
             <aside class="sticky top-6 space-y-5">
                 <div class="bg-white rounded-md shadow p-4 sm:p-5 dark:bg-secondary-800">
                     <x-datetime-picker

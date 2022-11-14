@@ -1,6 +1,6 @@
-name: Check, fix styling & Format (PHP)
+name: fix-code-style
 
-on: [push, pull_request, pull_request_target]
+on: push
 
 jobs:
   pint:

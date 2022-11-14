@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   output: { chunkFilename: 'js[name].js?id=[chunkhash]' },
@@ -13,4 +13,4 @@ module.exports = {
       'react-dom': 'preact/compat'
     },
   },
-}
+};
