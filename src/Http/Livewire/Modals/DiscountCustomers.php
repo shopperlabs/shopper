@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\UserRepository;
@@ -9,7 +10,9 @@ use Shopper\Framework\Repositories\UserRepository;
 class DiscountCustomers extends ModalComponent
 {
     public string $search = '';
+
     public array $selectedCustomers = [];
+
     public array $excludesIds;
 
     public function mount(array $excludeIds)
@@ -31,7 +34,7 @@ class DiscountCustomers extends ModalComponent
         return '2xl';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.discount-customers', [
             'customers' => (new UserRepository())

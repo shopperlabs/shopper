@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Categories;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
@@ -10,16 +11,25 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithChoicesCategories, WithSeoAttributes;
+    use WithChoicesCategories;
+    use WithSeoAttributes;
 
     public Model $category;
+
     public int $categoryId;
+
     public string $name = '';
+
     public ?int $parent_id = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = false;
+
     public ?string $fileUrl = null;
+
     public $selectedCategory = [];
+
     public $parent;
 
     public $seoAttributes = [
@@ -57,11 +67,6 @@ class Edit extends AbstractBaseComponent
         $this->fileUrl = $file;
     }
 
-    /**
-     * Define is the current action is create or update for the SEO Trait.
-     *
-     * @return false
-     */
     public function isUpdate(): bool
     {
         return true;
@@ -95,7 +100,7 @@ class Edit extends AbstractBaseComponent
         return ['name' => 'sometimes|required|max:150'];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.categories.edit', [
             'categories' => (new CategoryRepository())

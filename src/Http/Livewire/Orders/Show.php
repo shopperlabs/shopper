@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Orders;
 
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\Order\Order;
@@ -11,10 +12,13 @@ use WireUi\Traits\Actions;
 
 class Show extends Component
 {
-    use Actions, WithPagination;
+    use Actions;
+    use WithPagination;
 
     public Order $order;
+
     public int $perPage = 3;
+
     public ?string $notes = null;
 
     public function goToOrder(int $id)
@@ -69,7 +73,7 @@ class Show extends Component
         $this->notification()->success(__('Updated Status'), __('This order is marked as complete.'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.orders.show', [
             'items' => $this->order->items()->with('product')->simplePaginate($this->perPage),

@@ -15,13 +15,21 @@ use Shopper\Framework\Rules\RealEmailValidator;
 class CreateAdminUser extends AbstractBaseComponent
 {
     public bool $send_mail = false;
+
     public ?string $email = null;
+
     public ?string $password = null;
+
     public ?string $first_name = null;
+
     public ?string $last_name = null;
+
     public string $gender = 'male';
+
     public ?string $phone_number = null;
+
     public bool $is_admin = false;
+
     public $role_id;
 
     public function generate()

@@ -91,6 +91,7 @@ return [
         'modals.logout-others-browser' => Livewire\Modals\LogoutOthersBrowser::class,
         'modals.products-lists' => Livewire\Modals\ProductsLists::class,
         'modals.re-order-categories' => Livewire\Modals\ReOrderCategories::class,
+        'modals.related-list' => Livewire\Modals\RelatedList::class,
         'modals.update-payment-method' => Livewire\Modals\UpdatePaymentMethod::class,
         'modals.update-value' => Livewire\Modals\UpdateValue::class,
         'modals.update-variant-stock' => Livewire\Modals\UpdateVariantStock::class,

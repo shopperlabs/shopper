@@ -24,7 +24,7 @@ return [
         'mail' => [
             'content' => 'You are receiving this email because we received a password reset request for your account.',
             'action' => 'Reset password',
-            'message' => 'If you did not request a password reset, no further action is required.'
+            'message' => 'If you did not request a password reset, no further action is required.',
         ],
     ],
 

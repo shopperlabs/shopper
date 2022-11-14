@@ -10,7 +10,8 @@ use WireUi\Traits\Actions;
 
 class General extends Component
 {
-    use Actions, WithPagination;
+    use Actions;
+    use WithPagination;
 
     public string $search = '';
 

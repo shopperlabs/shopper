@@ -3,7 +3,7 @@
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
-use function count;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\CollectionRule;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
@@ -12,13 +12,19 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends Component
 {
-    use WithConditions, WithSeoAttributes;
+    use WithConditions;
+    use WithSeoAttributes;
 
     public string $name = '';
+
     public ?string $description = null;
+
     public string $type = 'auto';
+
     public ?string $publishedAt = null;
+
     public ?string $publishedAtFormatted = null;
+
     public ?string $fileUrl = null;
 
     public string $condition_match = 'all';
@@ -50,9 +56,6 @@ class Create extends Component
         }
     }
 
-    /**
-     * Save new entry to the database.
-     */
     public function store()
     {
         $this->validate($this->rules());
@@ -99,7 +102,7 @@ class Create extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.collections.create');
     }

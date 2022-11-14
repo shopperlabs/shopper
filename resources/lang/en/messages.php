@@ -36,7 +36,7 @@ return [
             'product_title' => 'Add product',
             'product_description' => 'Add products and prices to start selling. Tailor it to your store\'s needs with an unlimited number of products (depending on the size of your store), brands, collections, and variations.',
             'product_link' => 'Add product to your store',
-        ]
+        ],
     ],
 
     'actions_label' => [

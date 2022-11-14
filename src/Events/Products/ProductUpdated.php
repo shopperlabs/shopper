@@ -18,7 +18,7 @@ class ProductUpdated
     /**
      * Create a new event instance.
      *
-     * @param \Illuminate\Database\Eloquent\Model $product
+     * @param  \Illuminate\Database\Eloquent\Model  $product
      */
     public function __construct($product)
     {

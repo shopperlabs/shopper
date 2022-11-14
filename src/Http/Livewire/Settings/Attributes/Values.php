@@ -13,8 +13,11 @@ class Values extends Component
     use Actions;
 
     public Attribute $attribute;
+
     public Collection $values;
+
     public string $type = 'select';
+
     protected $listeners = ['updateValues'];
 
     public function mount(Attribute $attribute)

@@ -2,13 +2,16 @@
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Dropdown extends Component
 {
     public string $full_name = '';
+
     public string $email = '';
+
     public ?string $picture = null;
 
     protected $listeners = ['updatedProfile'];
@@ -32,7 +35,7 @@ class Dropdown extends Component
         $this->email = $user->email;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.account.dropdown');
     }

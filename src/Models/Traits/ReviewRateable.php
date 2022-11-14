@@ -146,7 +146,7 @@ trait ReviewRateable
             ->pluck('sumReviewRateable');
     }
 
-    public function ratingPercent($max = 5)
+    public function ratingPercent(int $max = 5): float
     {
         $ratings = $this->ratings();
         $quantity = $ratings->count();
@@ -155,10 +155,7 @@ trait ReviewRateable
         return  round($quantity * $max > 0 ? ((int) $total * 100) / $quantity : 0, 1);
     }
 
-    /**
-     * @param array $data
-     */
-    public function rating($data, Model $author, ?Model $parent = null): Review
+    public function rating(array $data, Model $author, ?Model $parent = null): Review
     {
         return (new Review())->createRating($this, $data, $author);
     }
@@ -168,27 +165,27 @@ trait ReviewRateable
         return (new Review())->updateRating($id, $data);
     }
 
-    public function getAllRatings($id, $sort = 'desc'): Collection
+    public function getAllRatings(int $id, string $sort = 'desc'): Collection
     {
         return (new Review())->getAllRatings($id, $sort);
     }
 
-    public function getApprovedRatings($id, $sort = 'desc'): Collection
+    public function getApprovedRatings(int $id, string $sort = 'desc'): Collection
     {
         return (new Review())->getApprovedRatings($id, $sort);
     }
 
-    public function getNotApprovedRatings($id, $sort = 'desc'): Collection
+    public function getNotApprovedRatings(int $id, string $sort = 'desc'): Collection
     {
         return (new Review())->getNotApprovedRatings($id, $sort);
     }
 
-    public function getRecentRatings($id, $limit = 5, $sort = 'desc'): Collection
+    public function getRecentRatings(int $id, int $limit = 5, string $sort = 'desc'): Collection
     {
         return (new Review())->getRecentRatings($id, $limit, $sort);
     }
 
-    public function getRecentUserRatings($id, $limit = 5, $approved = true, $sort = 'desc'): Collection
+    public function getRecentUserRatings(int $id, int $limit = 5, bool $approved = true, string $sort = 'desc'): Collection
     {
         return (new Review())->getRecentUserRatings($id, $limit, $approved, $sort);
     }

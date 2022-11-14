@@ -14,8 +14,11 @@ class Stripe extends Component
     use Actions;
 
     public string $stripe_key = '';
+
     public string $stripe_secret = '';
+
     public bool $enabled = false;
+
     public string $message = '...';
 
     public function mount()

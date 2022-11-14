@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -11,10 +12,13 @@ use WireUi\Traits\Actions;
 
 class Seo extends Component
 {
-    use Actions, WithSeoAttributes;
+    use Actions;
+    use WithSeoAttributes;
 
     public Model $product;
+
     public int $productId;
+
     public string $slug;
 
     public $seoAttributes = [
@@ -54,7 +58,7 @@ class Seo extends Component
         );
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-seo');
     }

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
@@ -10,11 +11,15 @@ use WireUi\Traits\Actions;
 
 class AddVariant extends ModalComponent
 {
-    use Actions, WithAttributes;
+    use Actions;
+    use WithAttributes;
 
     public int $productId;
+
     public string $currency;
+
     public $quantity;
+
     public $files = [];
 
     protected $listeners = [
@@ -93,7 +98,7 @@ class AddVariant extends ModalComponent
         return '3xl';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.add-variant', [
             'inventories' => (new InventoryRepository())->get(),

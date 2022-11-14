@@ -31,7 +31,7 @@ class ProductsTable extends DataTableComponent
     public function bulkActions(): array
     {
         return [
-            'delete'   => __('shopper::layout.forms.actions.delete'),
+            'delete' => __('shopper::layout.forms.actions.delete'),
             'activate' => __('shopper::layout.forms.actions.activate'),
             'deactivate' => __('shopper::layout.forms.actions.disabled'),
         ];

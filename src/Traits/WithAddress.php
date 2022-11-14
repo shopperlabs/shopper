@@ -7,13 +7,21 @@ use Shopper\Framework\Rules\Phone;
 trait WithAddress
 {
     public ?string $address_first_name = null;
+
     public ?string $address_last_name = null;
+
     public ?string $company_name = null;
+
     public ?int $country_id = null;
+
     public string $zipcode = '';
+
     public string $city = '';
+
     public string $street_address = '';
+
     public ?string $street_address_plus = null;
+
     public ?string $address_phone_number = null;
 
     public function addressRules(): array

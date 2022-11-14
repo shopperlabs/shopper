@@ -15,10 +15,10 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Category extends Model implements HasMedia
 {
-    use HasFactory,
-        HasSlug,
-        HasRecursiveRelationships,
-        InteractsWithMedia;
+    use HasFactory;
+    use HasSlug;
+    use HasRecursiveRelationships;
+    use InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.

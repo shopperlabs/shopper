@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Services\Mailable;
 use WireUi\Traits\Actions;
@@ -11,6 +12,7 @@ class DeleteTemplate extends ModalComponent
     use Actions;
 
     public string $name;
+
     public string $slug;
 
     public function mount(string $name, string $slug)
@@ -35,7 +37,7 @@ class DeleteTemplate extends ModalComponent
         $this->closeModal();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.delete-template');
     }

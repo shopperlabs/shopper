@@ -13,10 +13,7 @@ class ShopperSidebarRenderer implements SidebarRenderer
      */
     protected $factory;
 
-    /**
-     * @var string
-     */
-    protected $view = 'shopper::sidebar.menu';
+    protected string $view = 'shopper::sidebar.menu';
 
     public function __construct(Factory $factory)
     {

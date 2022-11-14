@@ -70,4 +70,3 @@ return [
     'update_message' => 'Discount code :code updated successfully!',
 
 ];
-

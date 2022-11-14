@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\Contracts\View\View;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Channel;
@@ -15,12 +16,18 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
-    use WithAttributes, WithSeoAttributes, WithChoicesBrands;
+    use WithAttributes;
+    use WithSeoAttributes;
+    use WithChoicesBrands;
 
     public ?Channel $defaultChannel = null;
+
     public array $category_ids = [];
+
     public array $collection_ids = [];
+
     public $quantity;
+
     public $files = [];
 
     public array $seoAttributes = [
@@ -125,7 +132,7 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.products.index');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.create', [
             'brands' => (new BrandRepository())

@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use LivewireUI\Modal\ModalComponent;
@@ -13,8 +14,11 @@ class CreateMailable extends ModalComponent
     use Actions;
 
     public string $name = '';
+
     public ?string $markdownView = null;
+
     public bool $isMarkdown = false;
+
     public bool $isForce = false;
 
     public static function modalMaxWidth(): string
@@ -68,7 +72,7 @@ class CreateMailable extends ModalComponent
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.create-mailable');
     }

@@ -11,16 +11,27 @@ use Shopper\Framework\Rules\Phone;
 class Edit extends AbstractBaseComponent
 {
     public Inventory $inventory;
+
     public int $inventoryId;
+
     public string $name;
+
     public ?string $description = null;
+
     public string $email;
+
     public string $city;
+
     public string $street_address;
+
     public ?string $street_address_plus = null;
+
     public string $zipcode;
+
     public ?string $phone_number = null;
+
     public int $country_id;
+
     public bool $isDefault = false;
 
     public function mount(Inventory $inventory)

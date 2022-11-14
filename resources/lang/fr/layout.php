@@ -79,7 +79,7 @@ return [
             'store_name' => 'Store name',
             'logo' => 'Logo',
             'about' => 'A propos',
-            'currency'  => 'Devise',
+            'currency' => 'Devise',
             'longitude' => 'Longitude',
             'latitude' => 'Latitude',
             'public_key' => 'Clé Publique',

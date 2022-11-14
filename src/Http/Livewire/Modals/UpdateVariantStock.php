@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\WithPagination;
 use LivewireUI\Modal\ModalComponent;
@@ -34,7 +35,7 @@ class UpdateVariantStock extends ModalComponent
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.update-variant-stock', [
             'currentStock' => (new InventoryHistoryRepository())

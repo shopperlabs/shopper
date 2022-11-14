@@ -189,7 +189,6 @@ trait Mailables
 
     /**
      * @param $mailable
-     *
      * @return mixed|void
      *
      * @throws ReflectionException

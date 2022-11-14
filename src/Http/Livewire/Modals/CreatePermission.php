@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role;
@@ -12,9 +13,13 @@ class CreatePermission extends ModalComponent
     use Actions;
 
     public int $roleId;
+
     public string $name = '';
+
     public string $display_name = '';
+
     public string $description = '';
+
     public ?string $group = null;
 
     public function mount(int $id)
@@ -52,7 +57,7 @@ class CreatePermission extends ModalComponent
         return 'lg';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.create-permission', [
             'groups' => Permission::groups(),

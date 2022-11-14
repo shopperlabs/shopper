@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
@@ -17,18 +18,23 @@ use WireUi\Traits\Actions;
 
 class Edit extends AbstractBaseComponent
 {
-    use Actions,
-        WithAttributes,
-        WithChoicesBrands,
-        WithFileUploads,
-        WithUploadProcess,
-        WithSeoAttributes;
+    use Actions;
+    use WithAttributes;
+    use WithChoicesBrands;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithSeoAttributes;
 
     public Model $product;
+
     public int $productId;
+
     public string $currency;
+
     public array $category_ids = [];
+
     public array $collection_ids = [];
+
     public $images = [];
 
     protected $listeners = [
@@ -115,7 +121,7 @@ class Edit extends AbstractBaseComponent
         );
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-edit', [
             'brands' => (new BrandRepository())

@@ -13,10 +13,7 @@ class ShopperItemRenderer
      */
     protected $factory;
 
-    /**
-     * @var string
-     */
-    protected $view = 'shopper::sidebar.item';
+    protected string $view = 'shopper::sidebar.item';
 
     public function __construct(Factory $factory)
     {

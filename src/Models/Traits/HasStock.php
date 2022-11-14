@@ -97,18 +97,16 @@ trait HasStock
         return $this->stock > 0 && $this->stock >= $quantity;
     }
 
-    /**
-     * Set a new stock for the item. We will specify in which inventory
-     * will be allocated this stock for the item.
-     */
-    public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): InventoryHistory
+    public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): ?InventoryHistory
     {
         $currentStock = $this->stock;
         $deltaStock = $newQuantity - $currentStock;
 
-        if ($deltaStock) {
-            return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
+        if (! $deltaStock) {
+            return null;
         }
+
+        return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
     }
 
     public function inventoryHistories(): morphMany
@@ -116,10 +114,6 @@ trait HasStock
         return $this->morphMany(InventoryHistory::class, 'stockable')->orderBy('created_at', 'desc');
     }
 
-    /**
-     * Internal function to handle mutations (increase, decrease).
-     * We create a stock mutation for a shop and for a specific inventory.
-     */
     protected function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
         $reference = Arr::get($arguments, 'reference');

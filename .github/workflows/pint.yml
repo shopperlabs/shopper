@@ -3,7 +3,7 @@ name: Check, fix styling & Format (PHP)
 on: [push, pull_request, pull_request_target]
 
 jobs:
-  php-cs-fixer:
+  pint:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,10 +15,10 @@ jobs:
       -   name: Install Composer
           run: composer install
 
-      -   name: Run PHP CS Fixer
-          run: composer lint
+      -   name: Run Laravel Pint
+          run: composer pint
 
       -   name: Commit changes
           uses: stefanzweifel/git-auto-commit-action@v4
           with:
-            commit_message: Apply php-cs-fixer changes
+            commit_message: Apply laravel pint formatting

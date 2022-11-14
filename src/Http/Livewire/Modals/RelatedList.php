@@ -2,6 +2,7 @@
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use WireUi\Traits\Actions;
@@ -11,8 +12,11 @@ class RelatedList extends ModalComponent
     use Actions;
 
     public $product;
+
     public string $search = '';
+
     public array $exceptProductIds;
+
     public array $selectedProducts = [];
 
     public function mount(int $id, array $exceptProductIds = [])
@@ -50,7 +54,7 @@ class RelatedList extends ModalComponent
         $this->closeModal();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.related-lists');
     }

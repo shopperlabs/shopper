@@ -49,7 +49,7 @@ trait Templates
         return false;
     }
 
-    public static function saveTemplates(Collection $templates)
+    public static function saveTemplates(Collection $templates): void
     {
         file_put_contents(self::getTemplatesFile(), $templates->toJson());
     }
@@ -59,54 +59,60 @@ trait Templates
         $template = self::getTemplates()
             ->where('template_slug', $request->templateslug)->first();
 
-        if (null !== $template) {
-            if (! preg_match('/^[a-zA-Z0-9-_\\s]+$/', $request->title)) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => 'Template name not valid',
-                ]);
-            }
+        if (! $template) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => __('Template not found'),
+            ]);
+        }
 
-            $templatename = Str::camel(preg_replace('/\s+/', '_', $request->title));
+        if (! preg_match('/^[a-zA-Z0-9-_\\s]+$/', $request->title)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Template name not valid',
+            ]);
+        }
 
-            if (self::getTemplates()->contains('template_slug', '=', $templatename)) {
-                return response()->json([
-                    'status' => 'failed',
-                    'message' => __('Template name already exists'),
-                ]);
-            }
+        $templatename = Str::camel(preg_replace('/\s+/', '_', $request->title));
 
-            $oldForm = self::getTemplates()->reject(fn ($value) => $value->template_slug === $template->template_slug);
-            $newForm = array_merge($oldForm->toArray(), [array_merge((array) $template, [
+        if (self::getTemplates()->contains('template_slug', '=', $templatename)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => __('Template name already exists'),
+            ]);
+        }
+
+        $oldForm = self::getTemplates()->reject(fn ($value) => $value->template_slug === $template->template_slug);
+        $newForm = array_merge($oldForm->toArray(), [
+            array_merge((array) $template, [
                 'template_slug' => $templatename,
                 'template_name' => $request->title,
                 'template_description' => $request->description,
             ]),
-            ]);
+        ]);
 
-            self::saveTemplates(collect($newForm));
+        self::saveTemplates(collect($newForm));
 
-            $template_view = 'shopper::mails.templates.' . $request->templateslug;
-            $template_plaintext_view = $template_view . '_plain_text';
+        $template_view = 'shopper::mails.templates.' . $request->templateslug;
+        $template_plaintext_view = $template_view . '_plain_text';
 
-            if (View::exists($template_view)) {
-                $viewPath = View($template_view)->getPath();
+        if (View::exists($template_view)) {
+            $viewPath = View($template_view)->getPath();
 
-                rename($viewPath, dirname($viewPath) . "/{$templatename}.blade.php");
+            rename($viewPath, dirname($viewPath) . "/{$templatename}.blade.php");
 
-                if (View::exists($template_plaintext_view)) {
-                    $textViewPath = View($template_plaintext_view)->getPath();
+            if (View::exists($template_plaintext_view)) {
+                $textViewPath = View($template_plaintext_view)->getPath();
 
-                    rename($textViewPath, dirname($viewPath) . "/{$templatename}_plain_text.blade.php");
-                }
+                rename($textViewPath, dirname($viewPath) . "/{$templatename}_plain_text.blade.php");
             }
-
-            return response()->json([
-                'status' => 'ok',
-                'message' => __('Updated Successfully'),
-                'template_url' => route('viewTemplate', ['templatename' => $templatename]),
-            ]);
         }
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => __('Updated Successfully'),
+            'template_url' => route('viewTemplate', ['templatename' => $templatename]),
+        ]);
     }
 
     public static function getTemplate(string $templateSlug): Collection
