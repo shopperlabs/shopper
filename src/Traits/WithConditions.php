@@ -26,15 +26,10 @@ trait WithConditions
      */
     public $conditions = [];
 
-    /**
-     * @var int
-     */
     public int $i = 1;
 
     /**
      * Add new condition on the array conditions.
-     *
-     * @param $i
      */
     public function add($i)
     {
@@ -45,8 +40,6 @@ trait WithConditions
 
     /**
      * Remove a condition to the array conditions.
-     *
-     * @param $i
      */
     public function remove($i)
     {

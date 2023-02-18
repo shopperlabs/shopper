@@ -19,8 +19,6 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * The query builder.
-     *
-     * @var \Illuminate\Database\Eloquent\Builder
      */
     protected Builder $query;
 
@@ -33,36 +31,26 @@ abstract class BaseRepository implements RepositoryContract
 
     /**
      * Array of related models to eager load.
-     *
-     * @var array
      */
     protected array $with = [];
 
     /**
      * Array of one or more where clause parameters.
-     *
-     * @var array
      */
     protected array $wheres = [];
 
     /**
      * Array of one or more where in clause parameters.
-     *
-     * @var array
      */
     protected array $whereIns = [];
 
     /**
      * Array of one or more ORDER BY column/value pairs.
-     *
-     * @var array
      */
     protected array $orderBys = [];
 
     /**
      * Array of scope methods to call on the model.
-     *
-     * @var array
      */
     protected array $scopes = [];
 
@@ -178,8 +166,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Delete the specified model record from the database.
      *
-     * @param $id
-     * @return bool
      *
      * @throws Exception
      */
@@ -233,7 +219,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Get the specified model record from the database.
      *
-     * @param $id
      * @return Collection|Model
      */
     public function getById($id, array $columns = ['*'])
@@ -279,7 +264,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Update the specified model record in the database.
      *
-     * @param $id
      * @return Collection|Model
      */
     public function updateById($id, array $data, array $options = [])
@@ -353,7 +337,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Set Eloquent relationships to eager load.
      *
-     * @param $relations
      * @return $this
      */
     public function with($relations)
@@ -370,7 +353,6 @@ abstract class BaseRepository implements RepositoryContract
     /**
      * Get an array with the values of a given column.
      *
-     * @param $column
      * @param  null  $key
      * @return \Illuminate\Support\Collection|mixed
      */

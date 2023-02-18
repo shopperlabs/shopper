@@ -66,7 +66,7 @@ class UserCommand extends Command
             $user = tap((new $model())->forceFill($userData))->save();
 
             $user->assignRole(config('shopper.system.users.admin_role'));
-        } catch (Exception | QueryException $e) {
+        } catch (Exception|QueryException $e) {
             $this->error($e->getMessage());
         }
     }

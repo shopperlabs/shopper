@@ -76,8 +76,6 @@ trait ConfirmsPasswords
 
     /**
      * Ensure that the user's password has been recently confirmed.
-     *
-     * @param  null|int  $maximumSecondsSinceConfirmation
      */
     protected function ensurePasswordIsConfirmed(int $maximumSecondsSinceConfirmation = null)
     {
@@ -88,8 +86,6 @@ trait ConfirmsPasswords
 
     /**
      * Determine if the user's password has been recently confirmed.
-     *
-     * @param  null|int  $maximumSecondsSinceConfirmation
      */
     protected function passwordIsConfirmed(int $maximumSecondsSinceConfirmation = null): bool
     {

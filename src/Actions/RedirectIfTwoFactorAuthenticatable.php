@@ -41,8 +41,6 @@ class RedirectIfTwoFactorAuthenticatable
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Closure  $next
      * @return JsonResponse|RedirectResponse|mixed
      */
     public function handle(Request $request, Closure $next)

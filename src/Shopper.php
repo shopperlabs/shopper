@@ -32,8 +32,6 @@ class Shopper
 
     /**
      * Register the Shop routes.
-     *
-     * @return Shopper
      */
     public function initializeRoute(): self
     {

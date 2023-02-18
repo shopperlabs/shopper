@@ -150,10 +150,6 @@ class Profile extends Component
 
     /**
      * Update value from the storage.
-     *
-     * @param  string  $field
-     * @param  mixed  $value
-     * @param  string  $message
      */
     private function updateValue(string $field, mixed $value, string $message)
     {

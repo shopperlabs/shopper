@@ -30,8 +30,6 @@ class Mailable
     ];
 
     /**
-     * @param $simpleview
-     * @param $view
      * @param  false  $template
      * @param  null  $instance
      * @return string|void

@@ -8,8 +8,6 @@ class RecoveryCode
 {
     /**
      * Generate a new recovery code.
-     *
-     * @return string
      */
     public static function generate(): string
     {
