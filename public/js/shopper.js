@@ -3310,12 +3310,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tom_select__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(tom_select__WEBPACK_IMPORTED_MODULE_1__);
 
 
-/**
- * Create a multiselect element.
- *
- * @param {HTMLElement} element
- * @returns {Choices}
- */
 
 window.choices = element => {
   return new (choices_js__WEBPACK_IMPORTED_MODULE_0___default())(element, {
@@ -3327,12 +3321,6 @@ window.tomSelect = function (element) {
   let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   return new (tom_select__WEBPACK_IMPORTED_MODULE_1___default())(element, options);
 };
-/**
- * Create smooth scroll animation
- *
- * @param {string} selector
- */
-
 
 window.scrollToPosition = selector => document.querySelector(selector).scrollIntoView({
   behavior: 'smooth',
@@ -3358,7 +3346,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (element => ({
   input: element,
 
-  // '#myID' selector css
   init() {
     const phoneNumber = document.querySelector(this.input);
     let iti = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(phoneNumber, {
@@ -3462,22 +3449,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! filepond */ "./node_modules/filepond/dist/filepond.js");
 /* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(filepond__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _ryangjchandler_alpine_tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ryangjchandler/alpine-tooltip */ "./node_modules/@ryangjchandler/alpine-tooltip/dist/module.esm.js");
-/* harmony import */ var _elements__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./elements */ "./resources/js/elements/index.js");
-/* harmony import */ var _helpers_window__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @helpers/window */ "./resources/js/helpers/window.js");
-/* harmony import */ var _helpers_darkMode__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @helpers/darkMode */ "./resources/js/helpers/darkMode.js");
-/* harmony import */ var _helpers_darkMode__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_helpers_darkMode__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _plugins_internationalNumber__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./plugins/internationalNumber */ "./resources/js/plugins/internationalNumber.js");
-/* harmony import */ var _plugins_mapBox__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./plugins/mapBox */ "./resources/js/plugins/mapBox.js");
-/**
- * Shopper.js
- *
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using Laravel & React.
- *
- * @author Arthur Monney<arthur@shopperlabs.io>
- * @since May 2021
- */
+/* harmony import */ var _plugins_internationalNumber__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/internationalNumber */ "./resources/js/plugins/internationalNumber.js");
+/* harmony import */ var _plugins_mapBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./plugins/mapBox */ "./resources/js/plugins/mapBox.js");
+/* harmony import */ var _elements__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./elements */ "./resources/js/elements/index.js");
+/* harmony import */ var _helpers_window__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @helpers/window */ "./resources/js/helpers/window.js");
+/* harmony import */ var _helpers_darkMode__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @helpers/darkMode */ "./resources/js/helpers/darkMode.js");
+/* harmony import */ var _helpers_darkMode__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_helpers_darkMode__WEBPACK_IMPORTED_MODULE_8__);
 
 
 
@@ -3487,12 +3464,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_ryangjchandler_alpine_tooltip__WEBPACK_IMPORTED_MODULE_3__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data('internationalNumber', _plugins_internationalNumber__WEBPACK_IMPORTED_MODULE_4__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data('mapBox', _plugins_mapBox__WEBPACK_IMPORTED_MODULE_5__["default"]);
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 window.Sortable = sortablejs__WEBPACK_IMPORTED_MODULE_1__["default"];
 window.FilePond = filepond__WEBPACK_IMPORTED_MODULE_2__;
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_ryangjchandler_alpine_tooltip__WEBPACK_IMPORTED_MODULE_3__["default"]);
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data('internationalNumber', _plugins_internationalNumber__WEBPACK_IMPORTED_MODULE_7__["default"]);
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data('mapBox', _plugins_mapBox__WEBPACK_IMPORTED_MODULE_8__["default"]);
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 
 /***/ }),

@@ -8966,10 +8966,6 @@ select{
     grid-column: span 2 / span 2;
   }
 
-  .md\:col-span-4{
-    grid-column: span 4 / span 4;
-  }
-
   .md\:mt-0{
     margin-top: 0px;
   }
@@ -9082,10 +9078,6 @@ select{
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .md\:grid-cols-6{
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
   .md\:flex-col{
     flex-direction: column;
   }
@@ -9112,10 +9104,6 @@ select{
 
   .md\:gap-8{
     gap: 2rem;
-  }
-
-  .md\:gap-5{
-    gap: 1.25rem;
   }
 
   .md\:space-y-0 > :not([hidden]) ~ :not([hidden]){

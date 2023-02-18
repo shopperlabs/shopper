@@ -45,7 +45,7 @@
     "stevebauman/location": "^6.3.1",
     "stripe/stripe-php": "^8.6",
     "wire-elements/modal": "^1.0.0",
-    "wireui/wireui": "^1.11.1"
+    "wireui/wireui": "^1.17"
   },
   "require-dev": {
     "laravel/pint": "^1.1",
