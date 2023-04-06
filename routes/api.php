@@ -11,4 +11,4 @@ use Shopper\Framework\Http\Controllers\Api\BrandController;
 |
 */
 
-Route::get('/brands', BrandController::class)->name('brands');
+Route::get('/brands', [BrandController::class])->name('brands');
