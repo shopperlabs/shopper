@@ -10,7 +10,7 @@ use NumberFormatter;
 
 trait HasPrice
 {
-    public function formattedPrice(int|string $price): string
+    public function formattedPrice(string $price): string
     {
         $money = new Money($price, new Currency(shopper_currency()));
         $currencies = new ISOCurrencies();
