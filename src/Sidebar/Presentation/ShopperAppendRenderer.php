@@ -16,14 +16,15 @@ class ShopperAppendRenderer
     {
     }
 
-    public function render(Append $append): ?View
+    /**
+     * @return \Illuminate\Contracts\View\View|void
+     */
+    public function render(Append $append)
     {
-        if (! $append->isAuthorized()) {
-            return null;
+        if ($append->isAuthorized()) {
+            return $this->factory->make($this->view, [
+                'append' => $append,
+            ])->render();
         }
-
-        return $this->factory->make($this->view, [
-            'append' => $append,
-        ])->render();
     }
 }
