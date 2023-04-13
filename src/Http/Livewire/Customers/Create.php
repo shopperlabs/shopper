@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Customers;
 
 use Illuminate\Contracts\View\View;
@@ -32,7 +34,7 @@ class Create extends AbstractBaseComponent
 
     public string $password_confirmation = '';
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -70,7 +72,7 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.customers.show', $customer);
     }
 
-    public function generate()
+    public function generate(): void
     {
         $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
     }

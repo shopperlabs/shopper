@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Contracts\View\View;
@@ -26,7 +28,7 @@ class Inventory extends Component
 
     public Collection $inventories;
 
-    public function mount($product, $inventories, $defaultInventory)
+    public function mount($product, $inventories, $defaultInventory): void
     {
         $this->inventories = $inventories;
         $this->inventory = $defaultInventory;
@@ -43,7 +45,7 @@ class Inventory extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate([
             'sku' => [

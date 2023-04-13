@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -20,7 +22,7 @@ class OrdersTable extends DataTableComponent
         'number' => null,
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
@@ -32,10 +34,10 @@ class OrdersTable extends DataTableComponent
         ];
     }
 
-    public function archived()
+    public function archived(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            Order::whereIn('id', $this->selectedKeys())->delete();
+            Order::query()->whereIn('id', $this->selectedKeys())->delete();
 
             $this->notification()->success(__('Archived'), __('The orders has successfully archived!'));
         }

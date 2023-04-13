@@ -1,20 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Events\Products;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Queue\SerializesModels;
 
-class ProductCreated
+final class ProductCreated
 {
     use SerializesModels;
 
-    public $product;
-
-    public array $quantity;
-
-    public function __construct($product, array $quantity)
+    public function __construct(public Model $product, public array $quantity)
     {
-        $this->product = $product;
-        $this->quantity = $quantity;
     }
 }

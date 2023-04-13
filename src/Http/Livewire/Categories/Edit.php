@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Illuminate\Contracts\View\View;
@@ -28,8 +30,6 @@ class Edit extends AbstractBaseComponent
 
     public ?string $fileUrl = null;
 
-    public $selectedCategory = [];
-
     public $parent;
 
     public $seoAttributes = [
@@ -42,7 +42,7 @@ class Edit extends AbstractBaseComponent
         'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
-    public function mount($category)
+    public function mount($category): void
     {
         $this->category = $category;
         $this->categoryId = $category->id;
@@ -57,12 +57,12 @@ class Edit extends AbstractBaseComponent
         $this->parent = $category->parent_id ? $category->parent : null;
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
@@ -72,7 +72,7 @@ class Edit extends AbstractBaseComponent
         return true;
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 

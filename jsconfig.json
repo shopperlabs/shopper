@@ -5,7 +5,6 @@
     "allowSyntheticDefaultImports": false,
     "paths": {
       "@/*": ["./resources/js/*"],
-      "@components/*": ["./resources/js/components/*"],
       "@helpers/*": ["resources/js/helpers/*"]
     }
   },

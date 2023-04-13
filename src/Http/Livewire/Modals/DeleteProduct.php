@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -15,14 +17,14 @@ class DeleteProduct extends ModalComponent
 
     public ?string $route = null;
 
-    public function mount(int $id, string $type, string $route = null)
+    public function mount(int $id, string $type, string $route = null): void
     {
         $this->productId = $id;
         $this->type = $type;
         $this->route = $route;
     }
 
-    public function delete()
+    public function delete(): void
     {
         $product = (new ProductRepository())->getById($this->productId);
 

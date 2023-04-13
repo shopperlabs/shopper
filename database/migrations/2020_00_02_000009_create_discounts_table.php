@@ -1,20 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database;
 
-class CreateDiscountsTable extends Migration
+final class CreateDiscountsTable extends Migration
 {
     use Database\Migration;
 
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create($this->getTableName('discounts'), function (Blueprint $table) {
             $this->addCommonFields($table);
@@ -44,12 +41,7 @@ class CreateDiscountsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists($this->getTableName('discountables'));
         Schema::dropIfExists($this->getTableName('discounts'));

@@ -1,31 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Sidebar\Presentation;
 
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Sidebar\Badge;
 
 class ShopperBadgeRenderer
 {
-    /**
-     * @var Factory
-     */
-    protected $factory;
+    protected string $view = 'shopper::sidebar.badge';
 
-    /**
-     * @var string
-     */
-    protected $view = 'shopper::sidebar.badge';
-
-    public function __construct(Factory $factory)
+    public function __construct(protected Factory $factory)
     {
-        $this->factory = $factory;
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function render(Badge $badge)
+    public function render(Badge $badge): View
     {
         if ($badge->isAuthorized()) {
             return $this->factory->make($this->view, [

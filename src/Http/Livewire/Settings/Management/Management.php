@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,7 +19,7 @@ class Management extends Component
 
     protected $listeners = ['onRoleAdded' => '$refresh'];
 
-    public function removeUser(int $id)
+    public function removeUser(int $id): void
     {
         (new UserRepository())->getById($id)->delete();
 
@@ -25,7 +28,7 @@ class Management extends Component
         $this->notification()->success(__('Deleted'), __('Admin deleted successfully!'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.management.index', [
             'roles' => Role::query()

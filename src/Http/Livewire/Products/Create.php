@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Illuminate\Contracts\View\View;
@@ -41,17 +43,17 @@ class Create extends AbstractBaseComponent
         'shopper:filesUpdated' => 'onFilesUpdated',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->defaultChannel = Channel::query()->where('slug', 'web-store')->first();
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFilesUpdated($files)
+    public function onFilesUpdated(array $files): void
     {
         $this->files = $files;
     }
@@ -66,7 +68,7 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 

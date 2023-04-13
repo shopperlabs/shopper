@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -28,12 +30,12 @@ class ReviewsTable extends DataTableComponent
         'approved' => 'Approved',
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
 
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             Review::whereIn('id', $this->selectedKeys())->delete();
@@ -49,10 +51,10 @@ class ReviewsTable extends DataTableComponent
         $this->resetAll();
     }
 
-    public function approved()
+    public function approved(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            Review::whereIn('id', $this->selectedKeys())->update(['approved' => true]);
+            Review::query()->whereIn('id', $this->selectedKeys())->update(['approved' => true]);
 
             $this->notification()->success(
                 __('shopper::components.tables.status.updated'),
@@ -65,10 +67,10 @@ class ReviewsTable extends DataTableComponent
         $this->resetBulk();
     }
 
-    public function disapproved()
+    public function disapproved(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            Review::whereIn('id', $this->selectedKeys())->update(['approved' => false]);
+            Review::query()->whereIn('id', $this->selectedKeys())->update(['approved' => false]);
 
             $this->notification()->success(
                 __('shopper::components.tables.status.updated'),

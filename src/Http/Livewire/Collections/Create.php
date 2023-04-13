@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
@@ -39,24 +41,24 @@ class Create extends Component
         'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
 
-    public function updatedPublishedAt($value)
+    public function updatedPublishedAt($value): void
     {
         if ($value) {
             $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d H:i', $value)->toRfc7231String();
         }
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 

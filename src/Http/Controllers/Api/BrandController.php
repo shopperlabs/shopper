@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers\Api;
 
 use Illuminate\Database\Eloquent\Builder;

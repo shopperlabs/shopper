@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Account;
 
 use Illuminate\Contracts\View\View;
@@ -25,7 +27,7 @@ class Profile extends Component
 
     public $picture;
 
-    public function mount()
+    public function mount(): void
     {
         $user = Auth::user();
 
@@ -35,12 +37,12 @@ class Profile extends Component
         $this->phone_number = $user->phone_number;
     }
 
-    public function updatedPicture()
+    public function updatedPicture(): void
     {
         $this->validate(['picture' => 'nullable|image|max:1024']);
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate([
             'email' => [

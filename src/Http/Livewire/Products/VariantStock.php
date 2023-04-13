@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Illuminate\Contracts\View\View;
@@ -17,7 +19,7 @@ class VariantStock extends Component
 
     public Model $product;
 
-    public function mount($variant)
+    public function mount($variant): void
     {
         $this->product = $variant;
         $this->stock = $variant->stock;

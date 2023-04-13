@@ -1,29 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Sidebar\Presentation;
 
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Presentation\ActiveStateChecker;
 
 class ShopperItemRenderer
 {
-    /**
-     * @var Factory
-     */
-    protected $factory;
-
     protected string $view = 'shopper::sidebar.item';
 
-    public function __construct(Factory $factory)
+    public function __construct(protected Factory $factory)
     {
-        $this->factory = $factory;
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function render(Item $item)
+    public function render(Item $item): View
     {
         if ($item->isAuthorized()) {
             $items = [];

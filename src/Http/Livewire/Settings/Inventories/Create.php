@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
@@ -43,7 +46,7 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -66,7 +69,7 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.inventories.create', [
             'countries' => Cache::get('countries', fn () => Country::select('name', 'id')->orderBy('name')->get()),

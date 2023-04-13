@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -13,7 +15,7 @@ class ChooseSkeleton extends ModalComponent
 
     public array $skeletons;
 
-    public function mount(string $name, string $type, array $skeletons)
+    public function mount(string $name, string $type, array $skeletons): void
     {
         $this->name = $name;
         $this->type = $type;

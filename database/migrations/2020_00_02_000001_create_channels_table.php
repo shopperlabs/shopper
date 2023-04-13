@@ -1,20 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database;
 
-class CreateChannelsTable extends Migration
+final class CreateChannelsTable extends Migration
 {
     use Database\Migration;
 
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create($this->getTableName('channels'), function (Blueprint $table) {
             $this->addCommonFields($table);
@@ -28,12 +25,7 @@ class CreateChannelsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists($this->getTableName('channels'));
     }

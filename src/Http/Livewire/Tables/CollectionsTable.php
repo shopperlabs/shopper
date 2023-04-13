@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -27,7 +29,7 @@ class CollectionsTable extends DataTableComponent
         'type' => 'Type',
     ];
 
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             (new CollectionRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Illuminate\Contracts\View\View;
@@ -22,12 +24,12 @@ class Products extends Component
         'onProductsAddInCollection' => 'render',
     ];
 
-    public function mount($collection)
+    public function mount($collection): void
     {
         $this->collection = $collection;
     }
 
-    public function getProductsIdsProperty()
+    public function getProductsIdsProperty(): array
     {
         return $this->collection->products->modelKeys();
     }

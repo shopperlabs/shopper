@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Sidebar;
 
 use Maatwebsite\Sidebar\Menu;
@@ -12,19 +14,13 @@ class AdminSidebar implements ShouldCache, Sidebar
 {
     use CacheableTrait;
 
-    protected Menu $menu;
-
-    public function __construct(Menu $menu)
+    public function __construct(protected Menu $menu)
     {
-        $this->menu = $menu;
     }
 
-    /**
-     * Build your sidebar implementation here.
-     */
-    public function build()
+    public function build(): void
     {
-        event($event = new BuildingSidebar($this->menu));
+        event(new BuildingSidebar($this->menu));
     }
 
     public function getMenu(): Menu

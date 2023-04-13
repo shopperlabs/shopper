@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Tests;
 
 use Livewire\LivewireServiceProvider;
@@ -20,7 +22,7 @@ class ShopperTestCase extends TestCase
         Mockery::close();
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['migrator']->path(__DIR__ . '/../database/migrations');
 

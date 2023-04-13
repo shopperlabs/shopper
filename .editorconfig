@@ -14,5 +14,5 @@ trim_trailing_whitespace = false
 [.babelrc]
 indent_size = 2
 
-[*{.yml,.yaml,.css,.js,.json,.jsx}]
+[*{.yml,.yaml,.css,.js,.json}]
 indent_size = 2

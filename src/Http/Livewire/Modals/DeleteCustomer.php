@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -10,12 +12,12 @@ class DeleteCustomer extends ModalComponent
 {
     public int $customerId;
 
-    public function mount(int $customerId)
+    public function mount(int $customerId): void
     {
         $this->customerId = $customerId;
     }
 
-    public function delete()
+    public function delete(): void
     {
         (new UserRepository())->getById($this->customerId)->delete();
 

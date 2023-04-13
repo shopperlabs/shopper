@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -22,12 +24,12 @@ class CreatePermission extends ModalComponent
 
     public ?string $group = null;
 
-    public function mount(int $id)
+    public function mount(int $id): void
     {
         $this->roleId = $id;
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate([
             'name' => 'required|max:50|unique:permissions,name',

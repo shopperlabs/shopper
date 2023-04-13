@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -10,12 +12,12 @@ class DeleteDiscount extends ModalComponent
 {
     public int $discountID;
 
-    public function mount(int $discountID)
+    public function mount(int $discountID): void
     {
         $this->discountID = $discountID;
     }
 
-    public function delete()
+    public function delete(): void
     {
         Discount::query()->find($this->discountID)->delete();
 

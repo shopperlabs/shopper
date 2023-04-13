@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 trait WithUploadProcess
 {
-    public $files = [];
+    public array $files = [];
 
-    public function removeMedia(int $id)
+    public function removeMedia(int $id): void
     {
         Media::find($id)->delete();
 

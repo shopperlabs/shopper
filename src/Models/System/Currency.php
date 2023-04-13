@@ -1,9 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\System;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $id
+ * @property string $name
+ * @property string $code
+ * @property string $symbol
+ * @property string $format
+ */
 class Currency extends Model
 {
     /**
@@ -26,9 +35,6 @@ class Currency extends Model
         'exchange_rate',
     ];
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('system_currencies');

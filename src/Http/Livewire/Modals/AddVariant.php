@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -26,18 +28,18 @@ class AddVariant extends ModalComponent
         'shopper:filesUpdated' => 'onFilesUpdated',
     ];
 
-    public function mount(int $productId, string $currency)
+    public function mount(int $productId, string $currency): void
     {
         $this->productId = $productId;
         $this->currency = $currency;
     }
 
-    public function onFilesUpdated($files)
+    public function onFilesUpdated(array $files): void
     {
         $this->files = $files;
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate($this->rules());
 

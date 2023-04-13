@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Services\TwoFactor;
 
 use Illuminate\Cache\RateLimiter;
@@ -9,63 +11,31 @@ use Shopper\Framework\Shopper;
 
 class LoginRateLimiter
 {
-    /**
-     * The login rate limiter instance.
-     *
-     * @var \Illuminate\Cache\RateLimiter
-     */
-    protected $limiter;
-
-    /**
-     * Create a new login rate limiter instance.
-     */
-    public function __construct(RateLimiter $limiter)
+    public function __construct(protected RateLimiter $limiter)
     {
-        $this->limiter = $limiter;
     }
 
-    /**
-     * Determine if the user has too many failed login attempts.
-     *
-     * @return bool
-     */
-    public function tooManyAttempts(Request $request)
+    public function tooManyAttempts(Request $request): bool
     {
         return $this->limiter->tooManyAttempts($this->throttleKey($request), 5);
     }
 
-    /**
-     * Increment the login attempts for the user.
-     */
-    public function increment(Request $request)
+    public function increment(Request $request): void
     {
         $this->limiter->hit($this->throttleKey($request), 60);
     }
 
-    /**
-     * Determine the number of seconds until logging in is available again.
-     *
-     * @return int
-     */
-    public function availableIn(Request $request)
+    public function availableIn(Request $request): int
     {
         return $this->limiter->availableIn($this->throttleKey($request));
     }
 
-    /**
-     * Clear the login locks for the given user credentials.
-     */
-    public function clear(Request $request)
+    public function clear(Request $request): void
     {
         $this->limiter->clear($this->throttleKey($request));
     }
 
-    /**
-     * Get the throttle key for the given request.
-     *
-     * @return string
-     */
-    protected function throttleKey(Request $request)
+    protected function throttleKey(Request $request): string
     {
         return Str::lower($request->input(Shopper::username())) . '|' . $request->ip();
     }

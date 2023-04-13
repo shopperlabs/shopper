@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -26,12 +28,12 @@ class AttributesTable extends DataTableComponent
         'disabled' => 'Disable',
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
 
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             Attribute::whereIn('id', $this->selectedKeys())->delete();
@@ -60,7 +62,7 @@ class AttributesTable extends DataTableComponent
     public function disabled(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
-            Attribute::whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
+            Attribute::query()->whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
 
             $this->notification()->success(__('Updated'), __('The attribute has successfully disabled!'));
         }

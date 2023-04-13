@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -37,19 +39,19 @@ class AddProductAttribute extends ModalComponent
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->value = $value;
     }
 
-    public function mount(int $productId)
+    public function mount(int $productId): void
     {
         $this->product = (new ProductRepository())->getById($productId);
         $this->productAttributes = $this->getProductAttributes();
         $this->attributes = $this->getAttributes();
     }
 
-    public function save()
+    public function save(): void
     {
         if ($this->type === 'checkbox' || $this->type === 'colorpicker') {
             $this->validate(['multipleValues' => 'required|array']);
@@ -91,7 +93,7 @@ class AddProductAttribute extends ModalComponent
         $this->closeModal();
     }
 
-    public function updatedAttributeId(string $value)
+    public function updatedAttributeId(string $value): void
     {
         if ($value === '0') {
             return;

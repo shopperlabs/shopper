@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Forms\Uploads;
 
 use Illuminate\Contracts\View\View;
@@ -25,13 +27,13 @@ class Multiple extends Component
         'files.*' => 'nullable|max:5120',
     ];
 
-    public function mount($images = [])
+    public function mount($images = []): void
     {
         $this->images = $images;
         $this->inputId = 'files-upload-' . uniqid();
     }
 
-    public function updatedFiles($files)
+    public function updatedFiles(array $files): void
     {
         $filesUrl = collect();
 
@@ -42,7 +44,7 @@ class Multiple extends Component
         $this->emitUp('shopper:filesUpdated', $filesUrl);
     }
 
-    public function removeMedia(int $id)
+    public function removeMedia(int $id): void
     {
         Media::find($id)->delete();
 

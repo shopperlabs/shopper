@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Illuminate\Contracts\View\View;
@@ -35,7 +37,7 @@ class Variant extends Component
         'onVariantUpdated' => 'render',
     ];
 
-    public function mount($product, $variant, string $currency)
+    public function mount($product, $variant, string $currency): void
     {
         $this->inventories = (new InventoryRepository())->get(['name', 'id']);
         $this->product = $product;
@@ -51,7 +53,7 @@ class Variant extends Component
         $this->images = $variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate([
             'name' => [
@@ -98,7 +100,7 @@ class Variant extends Component
         );
     }
 
-    public function mediaDeleted()
+    public function mediaDeleted(): void
     {
         $this->images = $this->variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }

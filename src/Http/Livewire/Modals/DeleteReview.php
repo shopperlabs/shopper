@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -10,12 +12,12 @@ class DeleteReview extends ModalComponent
 {
     public int $reviewID;
 
-    public function mount(int $reviewID)
+    public function mount(int $reviewID): void
     {
         $this->reviewID = $reviewID;
     }
 
-    public function delete()
+    public function delete(): void
     {
         Review::query()->find($this->reviewID)->delete();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -24,12 +26,12 @@ class CategoriesTable extends DataTableComponent
         'disabled' => 'Disable',
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
 
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             (new CategoryRepository())->makeModel()

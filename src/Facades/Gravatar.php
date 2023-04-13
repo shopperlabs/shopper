@@ -1,17 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 class Gravatar extends Facade
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @return string
-     */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'gravatar';
     }

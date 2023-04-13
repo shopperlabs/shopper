@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Exception;
@@ -27,7 +29,7 @@ class Attributes extends Component
 
     protected $listeners = ['onProductAttributeAdded'];
 
-    public function mount($product)
+    public function mount($product): void
     {
         $this->product = $product;
         $this->productId = $product->id;
@@ -35,7 +37,7 @@ class Attributes extends Component
         $this->onProductAttributeAdded();
     }
 
-    public function onProductAttributeAdded()
+    public function onProductAttributeAdded(): void
     {
         $this->productAttributes = $this->getProductAttributes();
         $this->attributes = $this->getAttributes();
@@ -58,7 +60,7 @@ class Attributes extends Component
      *
      * @throws Exception
      */
-    public function removeProductAttribute(int $id)
+    public function removeProductAttribute(int $id): void
     {
         ProductAttribute::query()->find($id)->delete();
 

@@ -18,7 +18,7 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "ext-intl": "*",
     "ext-json": "*",
     "bacon/bacon-qr-code": "^2.0",
@@ -82,9 +82,10 @@
     }
   },
   "scripts": {
-    "analyse": "vendor/bin/phpstan analyse",
-    "baseline": "vendor/bin/phpstan analyse --generate-baseline",
-    "pint": "vendor/bin/pint"
+    "stan": "./vendor/bin/phpstan analyse",
+    "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
+    "pint": "./vendor/bin/pint",
+    "test": "./vendor/bin/pest"
   },
   "config": {
     "sort-packages": true,

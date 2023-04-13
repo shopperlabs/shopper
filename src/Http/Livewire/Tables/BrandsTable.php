@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -24,7 +26,7 @@ class BrandsTable extends DataTableComponent
         'disabled' => 'Disable',
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
@@ -42,7 +44,7 @@ class BrandsTable extends DataTableComponent
         ];
     }
 
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             (new BrandRepository())->makeModel()

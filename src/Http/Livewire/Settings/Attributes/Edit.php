@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use function in_array;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
@@ -30,7 +33,7 @@ class Edit extends AbstractBaseComponent
 
     public bool $isFilterable = false;
 
-    public function mount(Attribute $attribute)
+    public function mount(Attribute $attribute): void
     {
         $this->attribute = $attribute;
         $this->attributeId = $attribute->id;
@@ -55,7 +58,7 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -77,7 +80,7 @@ class Edit extends AbstractBaseComponent
         return in_array($this->type, Attribute::fieldsWithValues());
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.attributes.edit', [
             'fields' => Attribute::typesFields(),

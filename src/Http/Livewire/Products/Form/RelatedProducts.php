@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Contracts\View\View;
@@ -20,13 +22,13 @@ class RelatedProducts extends Component
         'onProductsAddInRelated' => 'render',
     ];
 
-    public function mount($product)
+    public function mount($product): void
     {
         $this->product = $product;
         $this->relatedProducts = $product->relatedProducts;
     }
 
-    public function remove(int $id)
+    public function remove(int $id): void
     {
         $this->product->relatedProducts()->detach($id);
         $this->relatedProducts = $this->product->relatedProducts;

@@ -1,31 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Console;
 
 use Illuminate\Console\Command;
 
-class SymlinkCommand extends Command
+final class SymlinkCommand extends Command
 {
-    /**
-     * The console command signature.
-     *
-     * @var string
-     */
     protected $signature = 'shopper:link';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Create a symbolic link from "vendor/shopper" to "public/shopper" and add Storage symbolic link';
 
-    /**
-     * Execute the console command.
-     *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
-    public function handle()
+    public function handle(): void
     {
         $link = public_path('shopper');
         $target = realpath(__DIR__ . '/../../public/');

@@ -1,31 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Sidebar\Presentation;
 
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Sidebar\Group;
 
 class ShopperGroupRenderer
 {
-    /**
-     * @var Factory
-     */
-    protected $factory;
+    protected string $view = 'shopper::sidebar.group';
 
-    /**
-     * @var string
-     */
-    protected $view = 'shopper::sidebar.group';
-
-    public function __construct(Factory $factory)
+    public function __construct(protected Factory $factory)
     {
-        $this->factory = $factory;
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\View
-     */
-    public function render(Group $group)
+    public function render(Group $group): View
     {
         if ($group->isAuthorized()) {
             $items = [];

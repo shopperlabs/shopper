@@ -1,20 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Traits\Database;
 
-class CreatePaymentMethodsTable extends Migration
+final class CreatePaymentMethodsTable extends Migration
 {
     use Database\Migration;
 
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create($this->getTableName('payment_methods'), function (Blueprint $table) {
             $this->addCommonFields($table);
@@ -29,12 +26,7 @@ class CreatePaymentMethodsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists($this->getTableName('payment_methods'));
     }

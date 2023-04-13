@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Illuminate\Contracts\View\View;
@@ -19,14 +21,14 @@ class Edit extends Component
 
     protected $listeners = ['productHasUpdated'];
 
-    public function mount($product)
+    public function mount($product): void
     {
         $this->product = $product;
         $this->inventories = $inventories = (new InventoryRepository())->get();
-        $this->inventory = $inventories->where('is_default', true)->first()->id;
+        $this->inventory = $inventories->firstWhere('is_default', true)->id;
     }
 
-    public function productHasUpdated(int $id)
+    public function productHasUpdated(int $id): void
     {
         $this->product = (new ProductRepository())->getById($id);
     }

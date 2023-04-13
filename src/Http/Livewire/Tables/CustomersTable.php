@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -41,7 +43,7 @@ class CustomersTable extends DataTableComponent
         ];
     }
 
-    public function verified()
+    public function verified(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             (new UserRepository())->makeModel()
@@ -60,7 +62,7 @@ class CustomersTable extends DataTableComponent
         $this->resetAll();
     }
 
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             (new UserRepository())->makeModel()

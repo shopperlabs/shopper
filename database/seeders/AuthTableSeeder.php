@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Database\Seeders\Auth\PermissionRoleTableSeeder;
@@ -14,10 +16,7 @@ class AuthTableSeeder extends Seeder
     use DisableForeignKeys;
     use TruncateTable;
 
-    /**
-     * Run the database seeds.
-     */
-    public function run()
+    public function run(): void
     {
         $this->disableForeignKeys();
 

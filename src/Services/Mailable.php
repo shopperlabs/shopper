@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Services;
 
 use ErrorException;
@@ -36,7 +38,7 @@ class Mailable
      *
      * @throws Throwable
      */
-    public static function renderPreview($simpleview, $view, $template = false, $instance = null)
+    public static function renderPreview($simpleview, string $view, $template = false, $instance = null)
     {
         if (! View::exists($view)) {
             return;

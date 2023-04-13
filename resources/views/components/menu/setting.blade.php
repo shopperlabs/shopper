@@ -10,7 +10,7 @@
     </div>
     <div class="space-y-1">
         <p class="inline-flex items-center text-base leading-6 font-medium text-secondary-900 dark:text-white">
-            {{ __($menu['name']) }}
+            {{ $menu['name'] }}
 
             @if(! $menu['route'])
                 <span class="ml-2.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-primary-100 text-primary-800">
@@ -19,7 +19,7 @@
             @endif
         </p>
         <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-            {{ __($menu['description']) }}
+            {{ $menu['description'] }}
         </p>
     </div>
 </a>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use Shopper\Framework\Http\Controllers\Auth\ForgotPasswordController;
 use Shopper\Framework\Http\Controllers\Auth\LoginController;

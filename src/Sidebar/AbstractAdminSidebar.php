@@ -1,19 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Sidebar;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Maatwebsite\Sidebar\Menu;
 use Maatwebsite\Sidebar\SidebarExtender;
 use Shopper\Framework\Events\BuildingSidebar;
 
 abstract class AbstractAdminSidebar implements SidebarExtender
 {
-    /**
-     * Logged User.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    protected $user;
+    protected ?Authenticatable $user;
 
     /**
      * @internal param Guard $guard
@@ -23,15 +21,13 @@ abstract class AbstractAdminSidebar implements SidebarExtender
         $this->user = auth(config('shopper.auth.guard'))->user();
     }
 
-    public function handle(BuildingSidebar $sidebar)
+    public function handle(BuildingSidebar $sidebar): void
     {
         $sidebar->add($this->extendWith($sidebar->getMenu()));
     }
 
     /**
      * Method used to define your sidebar menu groups and items.
-     *
-     * @return Menu
      */
-    abstract public function extendWith(Menu $menu);
+    abstract public function extendWith(Menu $menu): Menu;
 }

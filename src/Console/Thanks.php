@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Console;
 
 use const PHP_OS_FAMILY;
@@ -8,7 +10,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-class Thanks
+final class Thanks
 {
     private const FUNDING_MESSAGES = [
         '',
@@ -20,19 +22,10 @@ class Thanks
         '    <options=bold>https://github.com/sponsors/Sense</>',
     ];
 
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    public function __construct(OutputInterface $output)
+    public function __construct(private readonly OutputInterface $output)
     {
-        $this->output = $output;
     }
 
-    /**
-     * Asks the user to support Pest.
-     */
     public function __invoke(): void
     {
         $wantsToSupport = (new SymfonyQuestionHelper())->ask(

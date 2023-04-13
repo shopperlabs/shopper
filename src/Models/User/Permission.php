@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\User;
 
 use Spatie\Permission\Models\Permission as SpatiePermission;

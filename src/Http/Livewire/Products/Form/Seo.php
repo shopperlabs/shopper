@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Contracts\View\View;
@@ -26,7 +28,7 @@ class Seo extends Component
         'description' => 'description',
     ];
 
-    public function mount($product)
+    public function mount($product): void
     {
         $this->product = $product;
         $this->productId = $product->id;
@@ -35,7 +37,7 @@ class Seo extends Component
         $this->seoDescription = $product->seo_description;
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate([
             'slug' => [

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Illuminate\Contracts\View\View;
@@ -23,7 +25,7 @@ class Browse extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function resetActiveFilter()
+    public function resetActiveFilter(): void
     {
         $this->isActive = null;
     }

@@ -2980,87 +2980,6 @@ var module_default = src_default;
 
 /***/ }),
 
-/***/ "./resources/js/elements/TimeCountdown.js":
-/*!************************************************!*\
-  !*** ./resources/js/elements/TimeCountdown.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TimeCountdown": () => (/* binding */ TimeCountdown)
-/* harmony export */ });
-const DAY = 1000 * 60 * 60 * 24;
-const HOUR = 1000 * 60 * 60;
-const MINUTE = 1000 * 60;
-class TimeCountdown extends HTMLElement {
-  connectedCallback() {
-    const timestamp = parseInt(this.getAttribute('time'), 10) * 1000;
-    const date = new Date(timestamp);
-    this.updateText(date);
-  }
-
-  disconnectedCallback() {
-    window.clearTimeout(this.timer);
-  }
-
-  updateText(date) {
-    const now = new Date().getTime();
-    const distance = date - now;
-    const days = Math.floor(distance / DAY);
-    const hours = Math.floor(distance % DAY / HOUR);
-    const minutes = Math.floor(distance % HOUR / MINUTE);
-    const seconds = Math.floor(distance % MINUTE / 1000);
-
-    if (distance < 0) {
-      this.innerText = '';
-      return '';
-    }
-
-    let timeInterval = 1000;
-
-    if (days > 0) {
-      this.innerText = `${days}j ${hours}h`;
-      timeInterval = HOUR;
-    } else if (hours > 0) {
-      this.innerText = `${hours}h ${minutes}m`;
-      timeInterval = MINUTE;
-    } else {
-      this.innerText = `${minutes}m ${seconds}s`;
-    }
-
-    if (distance > 0) {
-      this.timer = window.setTimeout(() => {
-        if (window.requestAnimationFrame) {
-          window.requestAnimationFrame(() => this.updateText(date));
-        } else {
-          this.updateText(date);
-        }
-      }, timeInterval);
-    }
-  }
-
-}
-
-/***/ }),
-
-/***/ "./resources/js/elements/index.js":
-/*!****************************************!*\
-  !*** ./resources/js/elements/index.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_preact_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @helpers/preact.js */ "./resources/js/helpers/preact.js");
-/* harmony import */ var _TimeCountdown_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TimeCountdown.js */ "./resources/js/elements/TimeCountdown.js");
-
-
-customElements.define('time-countdown', _TimeCountdown_js__WEBPACK_IMPORTED_MODULE_1__.TimeCountdown);
-
-/***/ }),
-
 /***/ "./resources/js/helpers/darkMode.js":
 /*!******************************************!*\
   !*** ./resources/js/helpers/darkMode.js ***!
@@ -3072,7 +2991,7 @@ customElements.define('time-countdown', _TimeCountdown_js__WEBPACK_IMPORTED_MODU
  *
  * @type {HTMLCollectionOf<Element>}
  */
-const darkModeToggles = document.getElementsByClassName('darkModeToggle');
+var darkModeToggles = document.getElementsByClassName('darkModeToggle');
 
 if (localStorage.theme === 'dark' || !('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
   document.documentElement.classList.add('dark');
@@ -3080,8 +2999,8 @@ if (localStorage.theme === 'dark' || !('theme' in localStorage) && window.matchM
   document.documentElement.classList.remove('dark');
 }
 
-for (let i = 0; i < darkModeToggles.length; i++) {
-  darkModeToggles[i].onclick = () => {
+for (var i = 0; i < darkModeToggles.length; i++) {
+  darkModeToggles[i].onclick = function () {
     if (localStorage.theme === 'light') {
       localStorage.theme = 'dark';
       document.querySelector('html').classList.add('dark');
@@ -3092,206 +3011,6 @@ for (let i = 0; i < darkModeToggles.length; i++) {
       document.querySelector('html').classList.add('light');
     }
   };
-}
-
-/***/ }),
-
-/***/ "./resources/js/helpers/preact.js":
-/*!****************************************!*\
-  !*** ./resources/js/helpers/preact.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ preactCustomElement)
-/* harmony export */ });
-/* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
-const _excluded = ["context", "children"];
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-
-function preactCustomElement(tagName, Component, propNames, options) {
-  function PreactElement() {
-    const inst = Reflect.construct(HTMLElement, [], PreactElement);
-    inst._vdomComponent = Component;
-    inst._root = options && options.shadow ? inst.attachShadow({
-      mode: 'open'
-    }) : inst;
-    return inst;
-  }
-
-  PreactElement.prototype = Object.create(HTMLElement.prototype);
-  PreactElement.prototype.constructor = PreactElement;
-  PreactElement.prototype.connectedCallback = connectedCallback;
-  PreactElement.prototype.attributeChangedCallback = attributeChangedCallback;
-  PreactElement.prototype.disconnectedCallback = disconnectedCallback;
-  propNames = propNames || Component.observedAttributes || Object.keys(Component.propTypes || {});
-  PreactElement.observedAttributes = propNames; // Keep DOM properties and Preact props in sync
-
-  propNames.forEach(name => {
-    Object.defineProperty(PreactElement.prototype, name, {
-      get() {
-        return this._vdom.props[name];
-      },
-
-      set(v) {
-        if (this._vdom) {
-          this.attributeChangedCallback(name, null, v);
-        } else {
-          if (!this._props) this._props = {};
-          this._props[name] = v;
-          this.connectedCallback();
-        } // Reflect property changes to attributes if the value is a primitive
-
-
-        const type = typeof v;
-
-        if (v == null || type === 'string' || type === 'boolean' || type === 'number') {
-          this.setAttribute(name, v);
-        }
-      }
-
-    });
-  });
-  return customElements.define(tagName || Component.tagName || Component.displayName || Component.name, PreactElement);
-}
-
-function ContextProvider(props) {
-  this.getChildContext = () => props.context; // eslint-disable-next-line no-unused-vars
-
-
-  const {
-    context,
-    children
-  } = props,
-        rest = _objectWithoutProperties(props, _excluded);
-
-  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(children, rest);
-}
-
-function connectedCallback() {
-  // Obtain a reference to the previous context by pinging the nearest
-  // higher up node that was rendered with Preact. If one Preact component
-  // higher up receives our ping, it will set the `detail` property of
-  // our custom event. This works because events are dispatched
-  // synchronously.
-  const event = new CustomEvent('_preact', {
-    detail: {},
-    bubbles: true,
-    cancelable: true
-  });
-  this.dispatchEvent(event);
-  const context = event.detail.context;
-  this._vdom = (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(ContextProvider, _objectSpread(_objectSpread({}, this._props), {}, {
-    context
-  }), toVdom(this, this._vdomComponent));
-  (this.hasAttribute('hydrate') ? preact__WEBPACK_IMPORTED_MODULE_0__.hydrate : preact__WEBPACK_IMPORTED_MODULE_0__.render)(this._vdom, this._root);
-}
-
-function toCamelCase(str) {
-  return str.replace(/-(\w)/g, (_, c) => c ? c.toUpperCase() : '');
-}
-
-function attributeChangedCallback(name, oldValue, newValue) {
-  if (!this._vdom) return; // Attributes use `null` as an empty value whereas `undefined` is more
-  // common in pure JS components, especially with default parameters.
-  // When calling `node.removeAttribute()` we'll receive `null` as the new
-  // value. See issue #50.
-
-  newValue = newValue == null ? undefined : newValue;
-  const props = {};
-  props[name] = newValue;
-  props[toCamelCase(name)] = newValue;
-  this._vdom = (0,preact__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(this._vdom, props);
-  (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(this._vdom, this._root);
-}
-
-function disconnectedCallback() {
-  (0,preact__WEBPACK_IMPORTED_MODULE_0__.render)(this._vdom = null, this._root);
-}
-/**
- * Pass an event listener to each `<slot>` that "forwards" the current
- * context value to the rendered child. The child will trigger a custom
- * event, where will add the context value to. Because events work
- * synchronously, the child can immediately pull of the value right
- * after having fired the event.
- */
-
-
-function Slot(props, context) {
-  const ref = r => {
-    if (!r) {
-      this.ref.removeEventListener('_preact', this._listener);
-    } else {
-      this.ref = r;
-
-      if (!this._listener) {
-        this._listener = event => {
-          event.stopPropagation();
-          event.detail.context = context;
-        };
-
-        r.addEventListener('_preact', this._listener);
-      }
-    }
-  };
-
-  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)('slot', _objectSpread(_objectSpread({}, props), {}, {
-    ref
-  }));
-}
-
-function toVdom(element, nodeName) {
-  if (element.nodeType === Node.TEXT_NODE) {
-    const data = element.data;
-    element.data = '';
-    return data;
-  }
-
-  if (element.nodeType !== Node.ELEMENT_NODE) return null;
-  const children = [];
-  const props = {};
-  let i = 0;
-  const a = element.attributes;
-  const cn = element.childNodes;
-
-  for (i = a.length; i--;) {
-    if (a[i].name !== 'slot') {
-      props[a[i].name] = a[i].value;
-      props[toCamelCase(a[i].name)] = a[i].value;
-    }
-  }
-
-  props.parent = element;
-
-  for (i = cn.length; i--;) {
-    const vnode = toVdom(cn[i], null); // Move slots correctly
-
-    const name = cn[i].slot;
-
-    if (name) {
-      props[name] = (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(Slot, {
-        name
-      }, vnode);
-    } else {
-      children[i] = vnode;
-    }
-  } // Only wrap the topmost node with a slot
-
-
-  const wrappedChildren = nodeName ? (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(Slot, null, children) : children;
-  return (0,preact__WEBPACK_IMPORTED_MODULE_0__.h)(nodeName || element.nodeName.toLowerCase(), props, wrappedChildren);
 }
 
 /***/ }),
@@ -3311,21 +3030,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-window.choices = element => {
+window.choices = function (element) {
   return new (choices_js__WEBPACK_IMPORTED_MODULE_0___default())(element, {
     removeItemButton: true
   });
 };
 
 window.tomSelect = function (element) {
-  let options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   return new (tom_select__WEBPACK_IMPORTED_MODULE_1___default())(element, options);
 };
 
-window.scrollToPosition = selector => document.querySelector(selector).scrollIntoView({
-  behavior: 'smooth',
-  block: 'end'
-});
+window.scrollToPosition = function (selector) {
+  return document.querySelector(selector).scrollIntoView({
+    behavior: 'smooth',
+    block: 'end'
+  });
+};
 
 /***/ }),
 
@@ -3343,33 +3064,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-tel-input */ "./node_modules/intl-tel-input/index.js");
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (element => ({
-  input: element,
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (element) {
+  return {
+    input: element,
+    init: function init() {
+      var phoneNumber = document.querySelector(this.input);
+      var iti = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(phoneNumber, {
+        nationalMode: true,
+        geoIpLookup: function geoIpLookup(success, failure) {
+          fetch('https://ipinfo.io').then(function (response) {
+            var countryCode = response && response.country ? response.country : 'CM';
+            success(countryCode);
+          });
+        },
+        utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
+      });
 
-  init() {
-    const phoneNumber = document.querySelector(this.input);
-    let iti = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(phoneNumber, {
-      nationalMode: true,
-      geoIpLookup: function (success, failure) {
-        fetch('https://ipinfo.io').then(response => {
-          let countryCode = response && response.country ? response.country : 'CM';
-          success(countryCode);
-        });
-      },
-      utilsScript: 'https://unpkg.com/intl-tel-input@17.0.3/build/js/utils.js'
-    });
+      var handleChange = function handleChange() {
+        if (iti.isValidNumber()) {
+          phoneNumber.value = iti.getNumber();
+        }
+      };
 
-    let handleChange = () => {
-      if (iti.isValidNumber()) {
-        phoneNumber.value = iti.getNumber();
-      }
-    };
-
-    phoneNumber.addEventListener('change', handleChange);
-    phoneNumber.addEventListener('keyup', handleChange);
-  }
-
-}));
+      phoneNumber.addEventListener('change', handleChange);
+      phoneNumber.addEventListener('keyup', handleChange);
+    }
+  };
+});
 
 /***/ }),
 
@@ -3395,44 +3116,47 @@ __webpack_require__.r(__webpack_exports__);
  * @returns {{container, init(): void, lng: number, zoom: number, lat: number, token}}
  */
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((element, token) => ({
-  container: element,
-  token,
-  lng: 9.9237,
-  lat: 4.26397,
-  zoom: 5,
-  marker: null,
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (element, token) {
+  return {
+    container: element,
+    token: token,
+    lng: 9.9237,
+    lat: 4.26397,
+    zoom: 5,
+    marker: null,
+    init: function init() {
+      var _this = this;
 
-  init() {
-    (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().accessToken) = token;
-    const map = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Map)({
-      container: this.container,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [this.lng, this.lat],
-      zoom: this.zoom
-    }); // Add navigation control (the +/- zoom buttons)
+      (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().accessToken) = token;
+      var map = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Map)({
+        container: this.container,
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [this.lng, this.lat],
+        zoom: this.zoom
+      }); // Add navigation control (the +/- zoom buttons)
 
-    map.addControl(new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().NavigationControl)(), 'top-right'); // Add geolocate control to the map.
+      map.addControl(new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().NavigationControl)(), 'top-right'); // Add geolocate control to the map.
 
-    map.addControl(new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().GeolocateControl)({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true,
-      showUserHeading: true
-    })); // Create a new marker.
+      map.addControl(new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().GeolocateControl)({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true,
+        showUserHeading: true
+      })); // Create a new marker.
 
-    this.marker = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Marker)({
-      draggable: true
-    }).setLngLat([this.lng, this.lat]).addTo(map);
-    this.marker.on('drag', () => {
-      let lngLat = this.marker.getLngLat();
-      this.lng = lngLat.lng.toFixed(4);
-      this.lat = lngLat.lat.toFixed(4);
-    });
-  }
+      this.marker = new (mapbox_gl__WEBPACK_IMPORTED_MODULE_0___default().Marker)({
+        draggable: true
+      }).setLngLat([this.lng, this.lat]).addTo(map);
+      this.marker.on('drag', function () {
+        var lngLat = _this.marker.getLngLat();
 
-}));
+        _this.lng = lngLat.lng.toFixed(4);
+        _this.lat = lngLat.lat.toFixed(4);
+      });
+    }
+  };
+});
 
 /***/ }),
 
@@ -3449,13 +3173,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! filepond */ "./node_modules/filepond/dist/filepond.js");
 /* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(filepond__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _ryangjchandler_alpine_tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ryangjchandler/alpine-tooltip */ "./node_modules/@ryangjchandler/alpine-tooltip/dist/module.esm.js");
-/* harmony import */ var _plugins_internationalNumber__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugins/internationalNumber */ "./resources/js/plugins/internationalNumber.js");
-/* harmony import */ var _plugins_mapBox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./plugins/mapBox */ "./resources/js/plugins/mapBox.js");
-/* harmony import */ var _elements__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./elements */ "./resources/js/elements/index.js");
-/* harmony import */ var _helpers_window__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @helpers/window */ "./resources/js/helpers/window.js");
-/* harmony import */ var _helpers_darkMode__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @helpers/darkMode */ "./resources/js/helpers/darkMode.js");
-/* harmony import */ var _helpers_darkMode__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_helpers_darkMode__WEBPACK_IMPORTED_MODULE_8__);
-
+/* harmony import */ var _helpers_window__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @helpers/window */ "./resources/js/helpers/window.js");
+/* harmony import */ var _helpers_darkMode__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @helpers/darkMode */ "./resources/js/helpers/darkMode.js");
+/* harmony import */ var _helpers_darkMode__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_helpers_darkMode__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _plugins_internationalNumber__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./plugins/internationalNumber */ "./resources/js/plugins/internationalNumber.js");
+/* harmony import */ var _plugins_mapBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./plugins/mapBox */ "./resources/js/plugins/mapBox.js");
 
 
 
@@ -3465,8 +3187,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].plugin(_ryangjchandler_alpine_tooltip__WEBPACK_IMPORTED_MODULE_3__["default"]);
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data('internationalNumber', _plugins_internationalNumber__WEBPACK_IMPORTED_MODULE_4__["default"]);
-alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data('mapBox', _plugins_mapBox__WEBPACK_IMPORTED_MODULE_5__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data('internationalNumber', _plugins_internationalNumber__WEBPACK_IMPORTED_MODULE_6__["default"]);
+alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].data('mapBox', _plugins_mapBox__WEBPACK_IMPORTED_MODULE_7__["default"]);
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 window.Sortable = sortablejs__WEBPACK_IMPORTED_MODULE_1__["default"];
 window.FilePond = filepond__WEBPACK_IMPORTED_MODULE_2__;
@@ -23246,34 +22968,6 @@ return mapboxgl$1;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
-/***/ "./node_modules/preact/dist/preact.module.js":
-/*!***************************************************!*\
-  !*** ./node_modules/preact/dist/preact.module.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ S),
-/* harmony export */   "hydrate": () => (/* binding */ q),
-/* harmony export */   "createElement": () => (/* binding */ v),
-/* harmony export */   "h": () => (/* binding */ v),
-/* harmony export */   "Fragment": () => (/* binding */ d),
-/* harmony export */   "createRef": () => (/* binding */ p),
-/* harmony export */   "isValidElement": () => (/* binding */ i),
-/* harmony export */   "Component": () => (/* binding */ _),
-/* harmony export */   "cloneElement": () => (/* binding */ B),
-/* harmony export */   "createContext": () => (/* binding */ D),
-/* harmony export */   "toChildArray": () => (/* binding */ A),
-/* harmony export */   "options": () => (/* binding */ l)
-/* harmony export */ });
-var n,l,u,i,t,r,o,f,e={},c=[],s=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function a(n,l){for(var u in l)n[u]=l[u];return n}function h(n){var l=n.parentNode;l&&l.removeChild(n)}function v(l,u,i){var t,r,o,f={};for(o in u)"key"==o?t=u[o]:"ref"==o?r=u[o]:f[o]=u[o];if(arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),"function"==typeof l&&null!=l.defaultProps)for(o in l.defaultProps)void 0===f[o]&&(f[o]=l.defaultProps[o]);return y(l,f,t,r,null)}function y(n,i,t,r,o){var f={type:n,props:i,key:t,ref:r,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==o?++u:o};return null==o&&null!=l.vnode&&l.vnode(f),f}function p(){return{current:null}}function d(n){return n.children}function _(n,l){this.props=n,this.context=l}function k(n,l){if(null==l)return n.__?k(n.__,n.__.__k.indexOf(n)+1):null;for(var u;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e)return u.__e;return"function"==typeof n.type?k(n):null}function b(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break}return b(n)}}function m(n){(!n.__d&&(n.__d=!0)&&t.push(n)&&!g.__r++||o!==l.debounceRendering)&&((o=l.debounceRendering)||r)(g)}function g(){for(var n;g.__r=t.length;)n=t.sort(function(n,l){return n.__v.__b-l.__v.__b}),t=[],n.some(function(n){var l,u,i,t,r,o;n.__d&&(r=(t=(l=n).__v).__e,(o=l.__P)&&(u=[],(i=a({},t)).__v=t.__v+1,j(o,t,i,l.__n,void 0!==o.ownerSVGElement,null!=t.__h?[r]:null,u,null==r?k(t):r,t.__h),z(u,t),t.__e!=r&&b(t)))})}function w(n,l,u,i,t,r,o,f,s,a){var h,v,p,_,b,m,g,w=i&&i.__k||c,A=w.length;for(u.__k=[],h=0;h<l.length;h++)if(null!=(_=u.__k[h]=null==(_=l[h])||"boolean"==typeof _?null:"string"==typeof _||"number"==typeof _||"bigint"==typeof _?y(null,_,null,null,_):Array.isArray(_)?y(d,{children:_},null,null,null):_.__b>0?y(_.type,_.props,_.key,null,_.__v):_)){if(_.__=u,_.__b=u.__b+1,null===(p=w[h])||p&&_.key==p.key&&_.type===p.type)w[h]=void 0;else for(v=0;v<A;v++){if((p=w[v])&&_.key==p.key&&_.type===p.type){w[v]=void 0;break}p=null}j(n,_,p=p||e,t,r,o,f,s,a),b=_.__e,(v=_.ref)&&p.ref!=v&&(g||(g=[]),p.ref&&g.push(p.ref,null,_),g.push(v,_.__c||b,_)),null!=b?(null==m&&(m=b),"function"==typeof _.type&&_.__k===p.__k?_.__d=s=x(_,s,n):s=P(n,_,p,w,b,s),"function"==typeof u.type&&(u.__d=s)):s&&p.__e==s&&s.parentNode!=n&&(s=k(p))}for(u.__e=m,h=A;h--;)null!=w[h]&&("function"==typeof u.type&&null!=w[h].__e&&w[h].__e==u.__d&&(u.__d=k(i,h+1)),N(w[h],w[h]));if(g)for(h=0;h<g.length;h++)M(g[h],g[++h],g[++h])}function x(n,l,u){for(var i,t=n.__k,r=0;t&&r<t.length;r++)(i=t[r])&&(i.__=n,l="function"==typeof i.type?x(i,l,u):P(u,i,i,t,i.__e,l));return l}function A(n,l){return l=l||[],null==n||"boolean"==typeof n||(Array.isArray(n)?n.some(function(n){A(n,l)}):l.push(n)),l}function P(n,l,u,i,t,r){var o,f,e;if(void 0!==l.__d)o=l.__d,l.__d=void 0;else if(null==u||t!=r||null==t.parentNode)n:if(null==r||r.parentNode!==n)n.appendChild(t),o=null;else{for(f=r,e=0;(f=f.nextSibling)&&e<i.length;e+=2)if(f==t)break n;n.insertBefore(t,r),o=r}return void 0!==o?o:t.nextSibling}function C(n,l,u,i,t){var r;for(r in u)"children"===r||"key"===r||r in l||H(n,r,null,u[r],i);for(r in l)t&&"function"!=typeof l[r]||"children"===r||"key"===r||"value"===r||"checked"===r||u[r]===l[r]||H(n,r,l[r],u[r],i)}function $(n,l,u){"-"===l[0]?n.setProperty(l,u):n[l]=null==u?"":"number"!=typeof u||s.test(l)?u:u+"px"}function H(n,l,u,i,t){var r;n:if("style"===l)if("string"==typeof u)n.style.cssText=u;else{if("string"==typeof i&&(n.style.cssText=i=""),i)for(l in i)u&&l in u||$(n.style,l,"");if(u)for(l in u)i&&u[l]===i[l]||$(n.style,l,u[l])}else if("o"===l[0]&&"n"===l[1])r=l!==(l=l.replace(/Capture$/,"")),l=l.toLowerCase()in n?l.toLowerCase().slice(2):l.slice(2),n.l||(n.l={}),n.l[l+r]=u,u?i||n.addEventListener(l,r?T:I,r):n.removeEventListener(l,r?T:I,r);else if("dangerouslySetInnerHTML"!==l){if(t)l=l.replace(/xlink[H:h]/,"h").replace(/sName$/,"s");else if("href"!==l&&"list"!==l&&"form"!==l&&"tabIndex"!==l&&"download"!==l&&l in n)try{n[l]=null==u?"":u;break n}catch(n){}"function"==typeof u||(null!=u&&(!1!==u||"a"===l[0]&&"r"===l[1])?n.setAttribute(l,u):n.removeAttribute(l))}}function I(n){this.l[n.type+!1](l.event?l.event(n):n)}function T(n){this.l[n.type+!0](l.event?l.event(n):n)}function j(n,u,i,t,r,o,f,e,c){var s,h,v,y,p,k,b,m,g,x,A,P=u.type;if(void 0!==u.constructor)return null;null!=i.__h&&(c=i.__h,e=u.__e=i.__e,u.__h=null,o=[e]),(s=l.__b)&&s(u);try{n:if("function"==typeof P){if(m=u.props,g=(s=P.contextType)&&t[s.__c],x=s?g?g.props.value:s.__:t,i.__c?b=(h=u.__c=i.__c).__=h.__E:("prototype"in P&&P.prototype.render?u.__c=h=new P(m,x):(u.__c=h=new _(m,x),h.constructor=P,h.render=O),g&&g.sub(h),h.props=m,h.state||(h.state={}),h.context=x,h.__n=t,v=h.__d=!0,h.__h=[]),null==h.__s&&(h.__s=h.state),null!=P.getDerivedStateFromProps&&(h.__s==h.state&&(h.__s=a({},h.__s)),a(h.__s,P.getDerivedStateFromProps(m,h.__s))),y=h.props,p=h.state,v)null==P.getDerivedStateFromProps&&null!=h.componentWillMount&&h.componentWillMount(),null!=h.componentDidMount&&h.__h.push(h.componentDidMount);else{if(null==P.getDerivedStateFromProps&&m!==y&&null!=h.componentWillReceiveProps&&h.componentWillReceiveProps(m,x),!h.__e&&null!=h.shouldComponentUpdate&&!1===h.shouldComponentUpdate(m,h.__s,x)||u.__v===i.__v){h.props=m,h.state=h.__s,u.__v!==i.__v&&(h.__d=!1),h.__v=u,u.__e=i.__e,u.__k=i.__k,u.__k.forEach(function(n){n&&(n.__=u)}),h.__h.length&&f.push(h);break n}null!=h.componentWillUpdate&&h.componentWillUpdate(m,h.__s,x),null!=h.componentDidUpdate&&h.__h.push(function(){h.componentDidUpdate(y,p,k)})}h.context=x,h.props=m,h.state=h.__s,(s=l.__r)&&s(u),h.__d=!1,h.__v=u,h.__P=n,s=h.render(h.props,h.state,h.context),h.state=h.__s,null!=h.getChildContext&&(t=a(a({},t),h.getChildContext())),v||null==h.getSnapshotBeforeUpdate||(k=h.getSnapshotBeforeUpdate(y,p)),A=null!=s&&s.type===d&&null==s.key?s.props.children:s,w(n,Array.isArray(A)?A:[A],u,i,t,r,o,f,e,c),h.base=u.__e,u.__h=null,h.__h.length&&f.push(h),b&&(h.__E=h.__=null),h.__e=!1}else null==o&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=L(i.__e,u,i,t,r,o,f,c);(s=l.diffed)&&s(u)}catch(n){u.__v=null,(c||null!=o)&&(u.__e=e,u.__h=!!c,o[o.indexOf(e)]=null),l.__e(n,u,i)}}function z(n,u){l.__c&&l.__c(u,n),n.some(function(u){try{n=u.__h,u.__h=[],n.some(function(n){n.call(u)})}catch(n){l.__e(n,u.__v)}})}function L(l,u,i,t,r,o,f,c){var s,a,v,y=i.props,p=u.props,d=u.type,_=0;if("svg"===d&&(r=!0),null!=o)for(;_<o.length;_++)if((s=o[_])&&"setAttribute"in s==!!d&&(d?s.localName===d:3===s.nodeType)){l=s,o[_]=null;break}if(null==l){if(null===d)return document.createTextNode(p);l=r?document.createElementNS("http://www.w3.org/2000/svg",d):document.createElement(d,p.is&&p),o=null,c=!1}if(null===d)y===p||c&&l.data===p||(l.data=p);else{if(o=o&&n.call(l.childNodes),a=(y=i.props||e).dangerouslySetInnerHTML,v=p.dangerouslySetInnerHTML,!c){if(null!=o)for(y={},_=0;_<l.attributes.length;_++)y[l.attributes[_].name]=l.attributes[_].value;(v||a)&&(v&&(a&&v.__html==a.__html||v.__html===l.innerHTML)||(l.innerHTML=v&&v.__html||""))}if(C(l,p,y,r,c),v)u.__k=[];else if(_=u.props.children,w(l,Array.isArray(_)?_:[_],u,i,t,r&&"foreignObject"!==d,o,f,o?o[0]:i.__k&&k(i,0),c),null!=o)for(_=o.length;_--;)null!=o[_]&&h(o[_]);c||("value"in p&&void 0!==(_=p.value)&&(_!==y.value||_!==l.value||"progress"===d&&!_)&&H(l,"value",_,y.value,!1),"checked"in p&&void 0!==(_=p.checked)&&_!==l.checked&&H(l,"checked",_,y.checked,!1))}return l}function M(n,u,i){try{"function"==typeof n?n(u):n.current=u}catch(n){l.__e(n,i)}}function N(n,u,i){var t,r;if(l.unmount&&l.unmount(n),(t=n.ref)&&(t.current&&t.current!==n.__e||M(t,null,u)),null!=(t=n.__c)){if(t.componentWillUnmount)try{t.componentWillUnmount()}catch(n){l.__e(n,u)}t.base=t.__P=null}if(t=n.__k)for(r=0;r<t.length;r++)t[r]&&N(t[r],u,"function"!=typeof n.type);i||null==n.__e||h(n.__e),n.__e=n.__d=void 0}function O(n,l,u){return this.constructor(n,u)}function S(u,i,t){var r,o,f;l.__&&l.__(u,i),o=(r="function"==typeof t)?null:t&&t.__k||i.__k,f=[],j(i,u=(!r&&t||i).__k=v(d,null,[u]),o||e,e,void 0!==i.ownerSVGElement,!r&&t?[t]:o?null:i.firstChild?n.call(i.childNodes):null,f,!r&&t?t:o?o.__e:i.firstChild,r),z(f,u)}function q(n,l){S(n,l,q)}function B(l,u,i){var t,r,o,f=a({},l.props);for(o in u)"key"==o?t=u[o]:"ref"==o?r=u[o]:f[o]=u[o];return arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),y(l.type,f,t||l.key,r||l.ref,null)}function D(n,l){var u={__c:l="__cC"+f++,__:n,Consumer:function(n,l){return n.children(l)},Provider:function(n){var u,i;return this.getChildContext||(u=[],(i={})[l]=this,this.getChildContext=function(){return i},this.shouldComponentUpdate=function(n){this.props.value!==n.value&&u.some(m)},this.sub=function(n){u.push(n);var l=n.componentWillUnmount;n.componentWillUnmount=function(){u.splice(u.indexOf(n),1),l&&l.call(n)}}),n.children}};return u.Provider.__=u.Consumer.contextType=u}n=c.slice,l={__e:function(n,l){for(var u,i,t;l=l.__;)if((u=l.__c)&&!u.__)try{if((i=u.constructor)&&null!=i.getDerivedStateFromError&&(u.setState(i.getDerivedStateFromError(n)),t=u.__d),null!=u.componentDidCatch&&(u.componentDidCatch(n),t=u.__d),t)return u.__E=u}catch(l){n=l}throw n}},u=0,i=function(n){return null!=n&&void 0===n.constructor},_.prototype.setState=function(n,l){var u;u=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=a({},this.state),"function"==typeof n&&(n=n(a({},u),this.props)),n&&a(u,n),null!=n&&this.__v&&(l&&this.__h.push(l),m(this))},_.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),m(this))},_.prototype.render=d,t=[],r="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,g.__r=0,f=0;
-//# sourceMappingURL=preact.module.js.map
 
 
 /***/ }),

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -23,7 +25,7 @@ class ProductsTable extends DataTableComponent
         'price_amount' => null,
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
@@ -37,7 +39,7 @@ class ProductsTable extends DataTableComponent
         ];
     }
 
-    public function delete()
+    public function delete(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()
@@ -56,7 +58,7 @@ class ProductsTable extends DataTableComponent
         $this->resetAll();
     }
 
-    public function deactivate()
+    public function deactivate(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()
@@ -75,7 +77,7 @@ class ProductsTable extends DataTableComponent
         $this->resetAll();
     }
 
-    public function activate()
+    public function activate(): void
     {
         if ($this->selectedRowsQuery->count() > 0) {
             (new ProductRepository())->makeModel()

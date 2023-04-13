@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Providers;
 
 use Illuminate\Contracts\Foundation\Application;
@@ -11,10 +13,7 @@ use Shopper\Framework\Sidebar\Presentation\ShopperSidebarRenderer;
 
 class ShopperSidebarServiceProvider extends ServiceProvider
 {
-    /**
-     * Register the service provider.
-     */
-    public function register()
+    public function register(): void
     {
         // Bind SidebarResolver
         $this->app->bind('Maatwebsite\Sidebar\Infrastructure\SidebarResolver', function (Application $app) {

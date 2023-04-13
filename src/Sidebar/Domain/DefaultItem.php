@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Sidebar\Domain;
 
 use Maatwebsite\Sidebar\Domain\DefaultItem as BaseDefaultItem;

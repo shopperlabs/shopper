@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Account;
 
 use Illuminate\Contracts\View\View;
@@ -16,7 +18,7 @@ class Dropdown extends Component
 
     protected $listeners = ['updatedProfile'];
 
-    public function mount()
+    public function mount(): void
     {
         $user = Auth::user();
 
@@ -25,11 +27,10 @@ class Dropdown extends Component
         $this->email = $user->email;
     }
 
-    public function updatedProfile()
+    public function updatedProfile(): void
     {
         $user = Auth::user();
 
-        $this->picture = $user->picture;
         $this->full_name = $user->full_name;
         $this->picture = $user->picture;
         $this->email = $user->email;

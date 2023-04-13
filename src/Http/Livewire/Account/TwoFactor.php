@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Actions\DisableTwoFactorAuthentication;
 use Shopper\Framework\Actions\EnableTwoFactorAuthentication;
@@ -25,7 +29,7 @@ class TwoFactor extends Component
     /**
      * Enable two factor authentication for the user.
      */
-    public function enableTwoFactorAuthentication(EnableTwoFactorAuthentication $enable)
+    public function enableTwoFactorAuthentication(EnableTwoFactorAuthentication $enable): void
     {
         if (config('shopper.auth.2fa_enabled')) {
             $this->ensurePasswordIsConfirmed();
@@ -40,7 +44,7 @@ class TwoFactor extends Component
     /**
      * Display the user's recovery codes.
      */
-    public function showRecoveryCodes()
+    public function showRecoveryCodes(): void
     {
         if (config('shopper.auth.2fa_enabled')) {
             $this->ensurePasswordIsConfirmed();
@@ -52,7 +56,7 @@ class TwoFactor extends Component
     /**
      * Generate new recovery codes for the user.
      */
-    public function regenerateRecoveryCodes(GenerateNewRecoveryCodes $generate)
+    public function regenerateRecoveryCodes(GenerateNewRecoveryCodes $generate): void
     {
         if (config('shopper.auth.2fa_enabled')) {
             $this->ensurePasswordIsConfirmed();
@@ -66,7 +70,7 @@ class TwoFactor extends Component
     /**
      * Disable two factor authentication for the user.
      */
-    public function disableTwoFactorAuthentication(DisableTwoFactorAuthentication $disable)
+    public function disableTwoFactorAuthentication(DisableTwoFactorAuthentication $disable): void
     {
         if (config('shopper.auth.2fa_enabled')) {
             $this->ensurePasswordIsConfirmed();
@@ -78,7 +82,7 @@ class TwoFactor extends Component
     /**
      * Get the current user of the application.
      */
-    public function getUserProperty()
+    public function getUserProperty(): Authenticatable
     {
         return auth()->user();
     }
@@ -91,7 +95,7 @@ class TwoFactor extends Component
         return ! empty($this->user->two_factor_secret);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.account.two-factor');
     }

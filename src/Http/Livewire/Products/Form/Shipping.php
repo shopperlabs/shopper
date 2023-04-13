@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Contracts\View\View;
@@ -18,7 +20,7 @@ class Shipping extends Component
 
     public int $productId;
 
-    public function mount($product)
+    public function mount($product): void
     {
         $this->product = $product;
         $this->productId = $product->id;
@@ -34,7 +36,7 @@ class Shipping extends Component
         $this->volumeUnit = $product->volume_unit;
     }
 
-    public function store()
+    public function store(): void
     {
         (new ProductRepository())->getById($this->productId)->update([
             'requires_shipping' => $this->requiresShipping,

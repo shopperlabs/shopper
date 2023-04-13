@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
@@ -11,19 +13,9 @@ use Shopper\Framework\Shopper;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    /**
-     * This namespace is applied to the controller routes in your routes file.
-     *
-     * In addition, it is set as the URL generator's root namespace.
-     *
-     * @var string
-     */
     protected $namespace = 'Shopper\Framework\Http\Controllers';
 
-    /**
-     * Define the routes for the application.
-     */
-    public function map()
+    public function map(): void
     {
         $this->configureRateLimiting();
 
@@ -36,7 +28,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapCustomBackendRoute();
     }
 
-    public function mapApiRoutes()
+    public function mapApiRoutes(): void
     {
         Route::namespace($this->namespace . '\Api')
             ->middleware('api')
@@ -45,7 +37,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(realpath(SHOPPER_PATH . '/routes/api.php'));
     }
 
-    protected function mapAuthRoutes()
+    protected function mapAuthRoutes(): void
     {
         Route::namespace($this->namespace . '\Auth')
             ->middleware('web')
@@ -54,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(realpath(SHOPPER_PATH . '/routes/auth.php'));
     }
 
-    protected function mapBackendRoutes()
+    protected function mapBackendRoutes(): void
     {
         Route::middleware(['shopper', 'dashboard'])
             ->prefix(Shopper::prefix())
@@ -63,7 +55,7 @@ class RouteServiceProvider extends ServiceProvider
             ->group(realpath(SHOPPER_PATH . '/routes/backend.php'));
     }
 
-    public function mapCustomBackendRoute()
+    public function mapCustomBackendRoute(): void
     {
         if (config('shopper.routes.custom_file')) {
             Route::middleware(['shopper', 'dashboard'])
@@ -73,7 +65,7 @@ class RouteServiceProvider extends ServiceProvider
         }
     }
 
-    protected function configureRateLimiting()
+    protected function configureRateLimiting(): void
     {
         RateLimiter::for('shopper.api', function (Request $request) {
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());

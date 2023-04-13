@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Forms\Uploads;
 
 use Illuminate\Contracts\View\View;
@@ -21,23 +23,23 @@ class Single extends Component
         'file' => 'nullable|image|max:5120',
     ];
 
-    public function mount($media = null)
+    public function mount($media = null): void
     {
         $this->media = $media;
         $this->inputId = 'single-upload-' . uniqid();
     }
 
-    public function updatedFile($file)
+    public function updatedFile($file): void
     {
         $this->emitUp('shopper:fileUpdated', $file->getRealPath());
     }
 
-    public function removeSingleMediaPlaceholder()
+    public function removeSingleMediaPlaceholder(): void
     {
         $this->file = null;
     }
 
-    public function removeMedia(int $id)
+    public function removeMedia(int $id): void
     {
         Media::find($id)->delete();
 

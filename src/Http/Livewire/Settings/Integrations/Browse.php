@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Integrations;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use function in_array;
 use Livewire\Component;
@@ -37,7 +40,7 @@ class Browse extends Component
     /**
      * Component mount instance.
      */
-    public function mount()
+    public function mount(): void
     {
         $this->github = env('SHOPPER_INTEGRATION_GITHUB', false);
         $this->twitter = env('SHOPPER_INTEGRATION_TWITTER', false);
@@ -46,7 +49,7 @@ class Browse extends Component
     /**
      * Confirmation modal.
      */
-    public function confirmationEnable(string $provider, ?string $message = null)
+    public function confirmationEnable(string $provider, ?string $message = null): void
     {
         $this->currentProvider = $provider;
         $this->confirmModalActivation = true;
@@ -58,7 +61,7 @@ class Browse extends Component
     /**
      * Enable provider and update environnement variables.
      */
-    public function enableProvider()
+    public function enableProvider(): void
     {
         setEnvironmentValue(['shopper_integration_' . mb_strtolower($this->currentProvider) => true]);
 
@@ -83,7 +86,7 @@ class Browse extends Component
     /**
      * Create a newly channel on the storage.
      */
-    public function createChannel(string $channel)
+    public function createChannel(string $channel): void
     {
         Channel::query()->create([
             'name' => ucfirst($channel),
@@ -94,13 +97,13 @@ class Browse extends Component
     /**
      * Close confirmation modal.
      */
-    public function closeIntegrationModal()
+    public function closeIntegrationModal(): void
     {
         $this->confirmModalActivation = false;
         $this->currentProvider = '';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.integrations.browse');
     }

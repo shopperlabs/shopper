@@ -1,48 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
+use Illuminate\Contracts\View\View;
 use Shopper\Framework\Http\Controllers\ShopperBaseController;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 
 class CollectionController extends ShopperBaseController
 {
-    /**
-     * Return collections list view.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function index()
+    public function index(): View
     {
         $this->authorize('browse_collections');
 
         return view('shopper::pages.collections.index');
     }
 
-    /**
-     * Display Create view.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function create()
+    public function create(): View
     {
         $this->authorize('add_collections');
 
         return view('shopper::pages.collections.create');
     }
 
-    /**
-     * Display Edit form.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function edit(int $id)
+    public function edit(int $id): View
     {
         $this->authorize('edit_collections');
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Contracts\View\View;
@@ -42,7 +44,7 @@ class Edit extends AbstractBaseComponent
         'mediaDeleted',
     ];
 
-    public function mount($product, string $currency)
+    public function mount($product, string $currency): void
     {
         $this->product = $product;
         $this->productId = $product->id;
@@ -63,12 +65,12 @@ class Edit extends AbstractBaseComponent
         $this->images = $product->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function mediaDeleted()
+    public function mediaDeleted(): void
     {
         $this->images = $this->product->getMedia(config('shopper.system.storage.disks.uploads'));
     }

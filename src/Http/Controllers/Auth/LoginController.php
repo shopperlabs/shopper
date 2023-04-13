@@ -1,10 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers\Auth;
 
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Support\Facades\Auth;
@@ -14,34 +21,20 @@ use Shopper\Framework\Shopper;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
     use ValidatesRequests;
 
-    /**
-     * Create a new controller instance.
-     */
     public function __construct()
     {
         $this->middleware('shopper.guest')->except('logout');
     }
 
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
         return view('shopper::auth.login');
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         $this->guard()->logout();
 
@@ -57,14 +50,7 @@ class LoginController extends Controller
         return route('shopper.dashboard');
     }
 
-    /**
-     * Handle a login request to the application.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function login(Request $request)
+    public function login(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $this->validateLogin($request);
 
@@ -82,20 +68,12 @@ class LoginController extends Controller
         return $this->loginPipeline($request)->then(fn ($request) => $this->sendLoginResponse($request));
     }
 
-    /**
-     * Get the login username to be used by the controller.
-     */
     public function username(): string
     {
         return Shopper::username();
     }
 
-    /**
-     * Get the authentication pipeline instance.
-     *
-     * @return \Illuminate\Pipeline\Pipeline
-     */
-    protected function loginPipeline(Request $request)
+    protected function loginPipeline(Request $request): \Illuminate\Pipeline\Pipeline
     {
         return (new Pipeline(app()))->send($request)->through(array_filter([
             RedirectIfTwoFactorAuthenticatable::class,
@@ -103,12 +81,7 @@ class LoginController extends Controller
         ]));
     }
 
-    /**
-     * Send the response after the user was authenticated.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    protected function sendLoginResponse(Request $request)
+    protected function sendLoginResponse(Request $request): JsonResponse | RedirectResponse
     {
         $request->session()->regenerate();
 
@@ -123,7 +96,7 @@ class LoginController extends Controller
             : redirect()->intended($this->redirectPath());
     }
 
-    protected function guard()
+    protected function guard(): StatefulGuard
     {
         return Auth::guard(config('shopper.auth.guard'));
     }

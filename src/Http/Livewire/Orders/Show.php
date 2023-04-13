@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Orders;
 
 use Illuminate\Contracts\View\View;
@@ -21,19 +23,19 @@ class Show extends Component
 
     public ?string $notes = null;
 
-    public function goToOrder(int $id)
+    public function goToOrder(int $id): void
     {
         $this->redirectRoute('shopper.orders.show', $id);
     }
 
-    public function cancelOrder()
+    public function cancelOrder(): void
     {
         $this->order->update(['status' => OrderStatus::CANCELLED]);
 
         $this->notification()->success(__('Cancelled'), __('This order has been cancelled!'));
     }
 
-    public function leaveNotes()
+    public function leaveNotes(): void
     {
         $this->validate(['notes' => 'required']);
 
@@ -47,7 +49,7 @@ class Show extends Component
         );
     }
 
-    public function register()
+    public function register(): void
     {
         $this->order->update(['status' => OrderStatus::REGISTER]);
 
@@ -59,14 +61,14 @@ class Show extends Component
         );
     }
 
-    public function markPaid()
+    public function markPaid(): void
     {
         $this->order->update(['status' => OrderStatus::PAID]);
 
         $this->notification()->success(__('Updated Status'), __('This order is marked as paid!'));
     }
 
-    public function markComplete()
+    public function markComplete(): void
     {
         $this->order->update(['status' => OrderStatus::COMPLETED]);
 

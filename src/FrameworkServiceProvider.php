@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework;
 
 use Carbon\Carbon;
@@ -32,7 +34,7 @@ class FrameworkServiceProvider extends ServiceProvider
         'permission' => PermissionMiddleware::class,
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->bootDateFormatted();
         $this->registerMiddleware($this->app['router']);
@@ -42,7 +44,7 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->app->register(ShopperServiceProvider::class);
     }
 
-    public function register()
+    public function register(): void
     {
         $this->app['events']->listen(BuildingSidebar::class, Handlers\RegisterDashboardSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, Handlers\RegisterShopSidebar::class);
@@ -55,7 +57,7 @@ class FrameworkServiceProvider extends ServiceProvider
         $this->app->bind(StatefulGuard::class, fn () => Auth::guard(config('shopper.auth.guard', null)));
     }
 
-    public function bootDateFormatted()
+    public function bootDateFormatted(): void
     {
         // setLocale for php. Enables ->formatLocalized() with localized values for dates.
         setlocale(LC_TIME, config('shopper.system.locale'));
@@ -64,18 +66,18 @@ class FrameworkServiceProvider extends ServiceProvider
         Carbon::setLocale(config('app.locale'));
     }
 
-    public function registerViewsComposer()
+    public function registerViewsComposer(): void
     {
         view()->composer('*', GlobalComposer::class);
         view()->creator('shopper::components.layouts.app.sidebar.secondary', SidebarCreator::class);
     }
 
-    public function registerShopSettingRoute()
+    public function registerShopSettingRoute(): void
     {
         (new Shopper())->initializeRoute();
     }
 
-    public function registerMiddleware(Router $router)
+    public function registerMiddleware(Router $router): void
     {
         $router->middlewareGroup('shopper', array_merge([
             'web',

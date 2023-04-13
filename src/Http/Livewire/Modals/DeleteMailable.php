@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -12,7 +14,7 @@ class DeleteMailable extends ModalComponent
 
     public string $item;
 
-    public function mount(string $item)
+    public function mount(string $item): void
     {
         $this->item = $item;
     }
@@ -22,7 +24,7 @@ class DeleteMailable extends ModalComponent
         return 'lg';
     }
 
-    public function delete()
+    public function delete(): void
     {
         $mailableFile = config('shopper.mails.mailables_dir') . $this->item . '.php';
 

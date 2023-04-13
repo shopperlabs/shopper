@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -15,7 +17,7 @@ use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasSlug;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
-use Shopper\Helpers\Price;
+use Shopper\Framework\Helpers\Price;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;

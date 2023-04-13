@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Illuminate\Contracts\View\View;
@@ -32,7 +34,7 @@ class Variants extends Component
 
     protected $listeners = ['onVariantAdded' => 'render'];
 
-    public function mount($product, string $currency)
+    public function mount($product, string $currency): void
     {
         $this->product = $product;
         $this->currency = $currency;
@@ -43,7 +45,7 @@ class Variants extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function remove(int $id)
+    public function remove(int $id): void
     {
         $product = (new ProductRepository())->getById($id);
 

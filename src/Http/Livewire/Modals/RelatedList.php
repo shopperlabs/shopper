@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -19,7 +21,7 @@ class RelatedList extends ModalComponent
 
     public array $selectedProducts = [];
 
-    public function mount(int $id, array $exceptProductIds = [])
+    public function mount(int $id, array $exceptProductIds = []): void
     {
         $this->product = (new ProductRepository())->getById($id);
         $this->exceptProductIds = $exceptProductIds;
@@ -39,7 +41,7 @@ class RelatedList extends ModalComponent
             ->except($this->exceptProductIds);
     }
 
-    public function addSelectedProducts()
+    public function addSelectedProducts(): void
     {
         $currentProducts = $this->product->relatedProducts->pluck('id')->toArray();
         $this->product->relatedProducts()->sync(array_merge($this->selectedProducts, $currentProducts));
