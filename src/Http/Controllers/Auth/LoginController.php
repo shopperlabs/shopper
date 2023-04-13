@@ -11,7 +11,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Support\Facades\Auth;
@@ -81,7 +80,7 @@ class LoginController extends Controller
         ]));
     }
 
-    protected function sendLoginResponse(Request $request): JsonResponse | RedirectResponse
+    protected function sendLoginResponse(Request $request): JsonResponse|RedirectResponse
     {
         $request->session()->regenerate();
 

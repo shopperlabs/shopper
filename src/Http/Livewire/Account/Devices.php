@@ -24,7 +24,7 @@ class Devices extends Component
             ->where('user_id', auth()->user()->getKey())
             ->orderBy('last_activity', 'desc')
             ->limit(3)
-            ->get()->map(fn($session) => (object) [
+            ->get()->map(fn ($session) => (object) [
                 'agent' => $this->createAgent($session),
                 'ip_address' => $session->ip_address,
                 'is_current_device' => $session->id === request()->session()->getId(),

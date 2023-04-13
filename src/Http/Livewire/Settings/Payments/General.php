@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
-use Exception;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;

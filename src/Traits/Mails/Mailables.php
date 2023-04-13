@@ -247,7 +247,7 @@ trait Mailables
     /**
      * @throws ReflectionException
      */
-    private static function getMailableViewData($mailable, $mailable_data): \Illuminate\Support\Collection|array
+    private static function getMailableViewData($mailable, $mailable_data): Collection|array
     {
         $traitProperties = [];
 
@@ -283,7 +283,7 @@ trait Mailables
 
         $mailableData = collect($classProps)->merge($withFuncData);
 
-        $data = $mailableData->map(fn($parameter) => [
+        $data = $mailableData->map(fn ($parameter) => [
             'key' => $parameter,
             'value' => property_exists($mailable_data, $parameter) ? $mailable_data->{$parameter} : null,
             'data' => property_exists($mailable_data, $parameter) ? self::viewDataInspect($mailable_data->{$parameter}) : null,

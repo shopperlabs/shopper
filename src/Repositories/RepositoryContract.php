@@ -38,7 +38,7 @@ interface RepositoryContract
 
     public function where(string $column, mixed $value, string $operator = '=');
 
-    public function whereIn(string $column, string | array $values);
+    public function whereIn(string $column, string|array $values);
 
     public function with($relations);
 

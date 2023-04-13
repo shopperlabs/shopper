@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Repositories;
 
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -200,7 +199,7 @@ abstract class BaseRepository implements RepositoryContract
         return $this;
     }
 
-    public function whereIn(string $column, string | array $values): self
+    public function whereIn(string $column, string|array $values): self
     {
         $values = is_array($values) ? $values : [$values];
 

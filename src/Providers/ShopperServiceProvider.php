@@ -6,7 +6,6 @@ namespace Shopper\Framework\Providers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Component;
 use Livewire\Livewire;
 use Shopper\Framework\Console;

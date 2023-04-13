@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 class AuthenticationException extends BaseAuthenticationException
 {
-    public function render(Request $request): JsonResponse | RedirectResponse
+    public function render(Request $request): JsonResponse|RedirectResponse
     {
         return $request->expectsJson()
             ? response()->json(['message' => $this->getMessage()], 401)

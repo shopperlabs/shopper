@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
-use Exception;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Models\User\Permission;

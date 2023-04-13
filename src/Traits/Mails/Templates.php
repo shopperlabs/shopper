@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Traits\Mails;
 
-use Illuminate\Http\RedirectResponse;
 use function dirname;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
@@ -154,7 +154,6 @@ trait Templates
 
     /**
      * Create template from the request.
-     *
      */
     public static function createTemplate(Request $request): ?RedirectResponse
     {
@@ -235,7 +234,7 @@ trait Templates
             return $replaced;
         }
 
-        return !(file_put_contents($viewPath, $replaced) === false);
+        return ! (file_put_contents($viewPath, $replaced) === false);
     }
 
     public static function previewMarkdownViewContent($simpleview, $content, $viewName, $template = false, $namespace = null)
