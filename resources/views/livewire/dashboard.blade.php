@@ -70,22 +70,15 @@
                 <div class="flex items-center">
                     <x-heroicon-o-color-swatch class="w-6 h-6 text-primary-600" />
                     <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">{{ __('shopper::messages.dashboard.cards.theme_title') }}</h4>
+                    <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                      {{ __('shopper::layout.soon') }}
+                    </span>
                 </div>
 
                 <div class="ml-10">
                     <div class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
                         {{ __('shopper::messages.dashboard.cards.theme_description') }}
                     </div>
-
-                    <a href="#" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
-                            <span>{{ __('shopper::messages.dashboard.cards.theme_link') }}</span>
-
-                            <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
-                                <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
-                            </span>
-                        </div>
-                    </a>
                 </div>
             </div>
 

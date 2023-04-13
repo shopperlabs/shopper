@@ -30,20 +30,18 @@
     <script src="{{ mix('/js/shopper.js','shopper') }}" defer></script>
 
     @include('shopper::includes._additional-styles')
+    @stack('scripts')
 </head>
 <body class="bg-secondary-100 font-sans antialiased overflow-hidden dark:bg-secondary-900">
 
     {{ $slot }}
 
-    <x-notifications z-index="z-50" />
-
     <x-shopper::alert />
 
     @livewire('livewire-ui-modal')
+    @livewire('notifications')
 
     @include('shopper::includes._additional-scripts')
-
-    @stack('scripts')
 
 </body>
 </html>

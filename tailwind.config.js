@@ -11,7 +11,8 @@ module.exports = {
     './vendor/wire-elements/modal/resources/views/*.blade.php',
     './vendor/wireui/wireui/resources/**/*.blade.php',
     './vendor/wireui/wireui/ts/**/*.ts',
-    './vendor/wireui/wireui/src/View/**/*.php'
+    './vendor/wireui/wireui/src/View/**/*.php',
+    './vendor/filament/**/*.blade.php',
   ],
   safelist: [
     'md:max-w-xl',
@@ -30,8 +31,10 @@ module.exports = {
         gray: colors.slate,
         orange: colors.orange,
         positive: colors.emerald,
+        success: colors.emerald,
         warning: colors.amber,
         negative: colors.red,
+        danger: colors.red,
         info: colors.sky,
       },
       inset: {
@@ -59,5 +62,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
   ]
 }

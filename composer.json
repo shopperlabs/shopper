@@ -24,6 +24,7 @@
     "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-heroicons": "^1.2",
     "doctrine/dbal": "^3.0",
+    "filament/tables": "^2.0",
     "illuminate/database": "^8.0|^9.0|^10.0",
     "illuminate/support": "^8.0|^9.0|^10.0",
     "illuminate/validation": "^8.0|^9.0|^10.0",

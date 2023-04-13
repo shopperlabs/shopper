@@ -9,6 +9,7 @@
     "production": "mix --production"
   },
   "dependencies": {
+    "@alpinejs/focus": "^3.12.0",
     "alpinejs": "^3.10.5",
     "choices.js": "^9.0.1",
     "filepond": "^4.30.3",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@ryangjchandler/alpine-tooltip": "^1.2.0",
     "@tailwindcss/forms": "^0.5.2",
+    "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "^10.4.2",
     "laravel-mix": "^6.0.19",
     "lodash": "^4.17.13",

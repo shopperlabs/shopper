@@ -1,3 +1,5 @@
+@import '../../vendor/filament/forms/dist/module.esm.css';
+
 @import '~choices.js/public/assets/styles/choices.css';
 @import '~tom-select/dist/css/tom-select.default.min.css';
 @import '~flatpickr/dist/themes/light.css';

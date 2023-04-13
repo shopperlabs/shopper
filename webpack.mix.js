@@ -12,7 +12,6 @@ mix.setPublicPath('public')
 mix.js('./resources/js/shopper.js', 'js')
   .postCss('resources/css/shopper.css', 'css',[
     require('tailwindcss'),
-    require('autoprefixer'),
   ])
   .webpackConfig(require('./webpack.config'))
 
