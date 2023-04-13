@@ -16,12 +16,14 @@ class ShopperBadgeRenderer
     {
     }
 
-    public function render(Badge $badge): View
+    public function render(Badge $badge): ?View
     {
-        if ($badge->isAuthorized()) {
-            return $this->factory->make($this->view, [
-                'badge' => $badge,
-            ])->render();
+        if (! $badge->isAuthorized()) {
+            return null;
         }
+
+        return $this->factory->make($this->view, [
+            'badge' => $badge,
+        ])->render();
     }
 }

@@ -1,11 +1,11 @@
-name: tests
+name: phpstan
 
 on:
   push:
   pull_request:
 
 jobs:
-  run-tests:
+  phpstan:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -39,5 +39,5 @@ jobs:
         run: |
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
-      - name: Execute tests
-        run: ./vendor/bin/pest --verbose
+      - name: Run PHPStan
+        run: ./vendor/bin/phpstan analyse

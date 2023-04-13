@@ -17,19 +17,21 @@ class ShopperSidebarRenderer implements SidebarRenderer
     {
     }
 
-    public function render(Sidebar $sidebar): View
+    public function render(Sidebar $sidebar): ?View
     {
         $menu = $sidebar->getMenu();
 
-        if ($menu->isAuthorized()) {
-            $groups = [];
-            foreach ($menu->getGroups() as $group) {
-                $groups[] = (new ShopperGroupRenderer($this->factory))->render($group);
-            }
-
-            return $this->factory->make($this->view, [
-                'groups' => $groups,
-            ]);
+        if (! $menu->isAuthorized()) {
+            return null;
         }
+
+        $groups = [];
+        foreach ($menu->getGroups() as $group) {
+            $groups[] = (new ShopperGroupRenderer($this->factory))->render($group);
+        }
+
+        return $this->factory->make($this->view, [
+            'groups' => $groups,
+        ]);
     }
 }

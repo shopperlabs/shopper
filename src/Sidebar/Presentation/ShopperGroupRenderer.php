@@ -16,18 +16,20 @@ class ShopperGroupRenderer
     {
     }
 
-    public function render(Group $group): View
+    public function render(Group $group): ?View
     {
-        if ($group->isAuthorized()) {
-            $items = [];
-            foreach ($group->getItems() as $item) {
-                $items[] = (new ShopperItemRenderer($this->factory))->render($item);
-            }
-
-            return $this->factory->make($this->view, [
-                'group' => $group,
-                'items' => $items,
-            ])->render();
+        if (! $group->isAuthorized()) {
+            return null;
         }
+
+        $items = [];
+        foreach ($group->getItems() as $item) {
+            $items[] = (new ShopperItemRenderer($this->factory))->render($item);
+        }
+
+        return $this->factory->make($this->view, [
+            'group' => $group,
+            'items' => $items,
+        ])->render();
     }
 }

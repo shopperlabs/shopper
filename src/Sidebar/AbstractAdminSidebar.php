@@ -11,7 +11,10 @@ use Shopper\Framework\Events\BuildingSidebar;
 
 abstract class AbstractAdminSidebar implements SidebarExtender
 {
-    protected ?Authenticatable $user;
+    /**
+     * @var Authenticatable|null
+     */
+    protected $user;
 
     /**
      * @internal param Guard $guard

@@ -41,7 +41,7 @@ trait HasStock
      */
     public function stockInventory(int $inventoryId, ?string $date = null): int
     {
-        $date = $date ? $date : Carbon::now();
+        $date = $date ?: Carbon::now();
 
         if (! $date instanceof DateTimeInterface) {
             $date = Carbon::create($date);
