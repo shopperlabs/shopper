@@ -63,7 +63,7 @@
                                             </td>
                                             <td class="px-6 py-4 flex items-center space-x-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                                 @if($v->attribute->type === 'colorpicker')
-                                                    <div class="shrink-0 w-2.5 h-2.5 rounded-full" style="background-color: {{ $v->value }}" aria-hidden="true"></div>
+                                                    <div class="shrink-0 w-2.5 h-2.5 rounded-full" style="background-color: {{ $v->key }}" aria-hidden="true"></div>
                                                 @endif
                                                 <span>{{ $v->key }}</span>
                                             </td>
@@ -85,7 +85,7 @@
                                                     <svg class="h-8 w-8 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                                     </svg>
-                                                    <span class="text-xl font-medium py-8 text-secondary-500 dark:text-secondary-400">{{ __('No values') }}...</span>
+                                                    <span class="text-xl font-medium py-8 text-secondary-500 dark:text-secondary-400">{{ __('No values...') }}</span>
                                                 </div>
                                             </td>
                                         </tr>

@@ -9,7 +9,7 @@
 >
     <x-shopper::breadcrumb back="shopper.settings.attributes.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.attributes.index')" title="Attributes" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.attributes.index')" :title="__('Attributes')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-3 pb-5 border-b border-secondary-200 space-y-3 md:flex md:items-center md:justify-between md:space-y-0 dark:border-secondary-700">
