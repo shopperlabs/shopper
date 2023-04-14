@@ -1,21 +1,8 @@
-<div class="min-w-0 flex-1 h-full flex flex-col overflow-hidden">
-    <div class="shrink-0 bg-white border-b border-info-200">
-        <div class="bg-info-500 bg-opacity-10 p-4">
-            <div class="flex">
-                <div class="shrink-0">
-                    <x-heroicon-s-information-circle class="h-5 w-5 text-info-400" />
-                </div>
-                <div class="ml-3 flex-1 md:flex md:justify-between">
-                    <p class="text-sm text-info-700">
-                        {{ __("If your project uses git don't forget to add the created files and commit them.") }}
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="min-w-0 sm:px-6 flex-1 h-full flex flex-col">
+    <x-shopper::git-alert />
 
-    <div class="min-h-0 flex-1 overflow-y-auto">
-        <div class="py-6 sm:px-8 pb-10">
+    <div class="flex-1">
+        <div class="py-6 sm:pb-10">
             <div class="pb-5 border-b border-secondary-200 sm:flex sm:items-center sm:justify-between dark:border-secondary-700">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('Mailables') }}

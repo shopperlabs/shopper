@@ -1,7 +1,7 @@
 <div>
     <x-shopper::breadcrumb back="shopper.settings.inventories.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.inventories.index')" title="Locations" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.inventories.index')" :title="__('Locations')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -89,7 +89,7 @@
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                             <div class="sm:col-span-6">
-                                <x-shopper::forms.group label="Street address" for="street_address" :error="$errors->first('street_address')">
+                                <x-shopper::forms.group :label="__('Street address')" for="street_address" :error="$errors->first('street_address')">
                                     <x-shopper::forms.input wire:model.defer="street_address" id="street_address" type="text" autocomplete="off" placeholder="Akwa Avenue 34..." />
                                 </x-shopper::forms.group>
                             </div>
@@ -105,7 +105,7 @@
                             </div>
 
                             <div class="sm:col-span-6">
-                                <x-shopper::forms.group for="country_id" label="shopper::layout.forms.label.country" noShadow wire:ignore>
+                                <x-shopper::forms.group for="country_id" :label="__('shopper::layout.forms.label.country')" noShadow wire:ignore>
                                     <select
                                         wire:model.defer="country_id"
                                         id="country_id"
@@ -124,13 +124,13 @@
                             </div>
 
                             <div class="sm:col-span-3">
-                                <x-shopper::forms.group label="City" for="city" :error="$errors->first('city')">
+                                <x-shopper::forms.group :label="__('shopper::layout.forms.label.city')" for="city" :error="$errors->first('city')">
                                     <x-shopper::forms.input wire:model.defer="city" id="city" type="text" autocomplete="off" />
                                 </x-shopper::forms.group>
                             </div>
 
                             <div class="sm:col-span-3">
-                                <x-shopper::forms.group label="Postal / Zip code" for="zipcode" :error="$errors->first('zipcode')">
+                                <x-shopper::forms.group :label="__('shopper::layout.forms.label.postal_code')" for="zipcode" :error="$errors->first('zipcode')">
                                     <x-shopper::forms.input wire:model.defer="zipcode" id="zipcode" type="text" autocomplete="off" />
                                 </x-shopper::forms.group>
                             </div>
@@ -140,7 +140,7 @@
                                 x-data="internationalNumber('#phone_number')"
                                 class="sm:col-span-6"
                             >
-                                <x-shopper::forms.group label="Phone number" for="phone_number" :error="$errors->first('phone_number')">
+                                <x-shopper::forms.group :label="__('shopper::layout.forms.label.phone_number')" for="phone_number" :error="$errors->first('phone_number')">
                                     <x-shopper::forms.input wire:model.defer="phone_number" id="phone_number" type="tel" class="pr-10" autocomplete="off" />
                                     @error('phone_number')
                                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -162,7 +162,7 @@
         <div class="flex justify-end">
             <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('Save') }}
+                {{ __('shopper::layout.forms.actions.save') }}
             </x-shopper::buttons.primary>
         </div>
     </div>
