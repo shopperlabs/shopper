@@ -6,6 +6,7 @@ namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Exceptions\GeneralException;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithChoicesCategories;
@@ -53,7 +54,7 @@ class Edit extends AbstractBaseComponent
         $this->updateSeo = true;
         $this->seoTitle = $category->seo_title ?? $category->name;
         $this->seoDescription = $category->seo_description;
-        $this->selectedCategory = $category->parent_id ? $this->selectedCategory['value'] = $category->parent_id : [];
+        $this->selectedCategory = $category->parent_id ? [$category->parent_id] : [];
         $this->parent = $category->parent_id ? $category->parent : null;
     }
 
@@ -87,7 +88,9 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $this->category
+                ->addMedia($this->fileUrl)
+                ->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Category successfully updated!'));
@@ -100,6 +103,9 @@ class Edit extends AbstractBaseComponent
         return ['name' => 'sometimes|required|max:150'];
     }
 
+    /**
+     * @throws GeneralException
+     */
     public function render(): View
     {
         return view('shopper::livewire.categories.edit', [
