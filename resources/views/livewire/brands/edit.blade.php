@@ -1,7 +1,7 @@
 <div x-data="{ on: @entangle('is_enabled') }">
     <x-shopper::breadcrumb back="shopper.brands.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.brands.index')" title="shopper::layout.sidebar.brands" />
+        <x-shopper::breadcrumb.link :link="route('shopper.brands.index')" :title="__('shopper::layout.sidebar.brands')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading>
@@ -23,12 +23,12 @@
         <div class="lg:col-span-4 space-y-5">
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
-                    <x-shopper::forms.group label="shopper::layout.forms.label.name" for="name" isRequired :error="$errors->first('name')">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
                         <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-4">
-                    <x-shopper::forms.group label="shopper::layout.forms.label.website" for="website">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.website')" for="website">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-secondary-500 dark:text-secondary-400 sm:text-sm sm:leading-5">https://</span>
                         </div>
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <x-shopper::forms.group label="shopper::layout.forms.label.description" for="description">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.description')" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper::forms.group>
                 </div>

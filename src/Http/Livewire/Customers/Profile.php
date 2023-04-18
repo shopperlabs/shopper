@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
@@ -12,8 +13,6 @@ use WireUi\Traits\Actions;
 
 class Profile extends Component
 {
-    use Actions;
-
     public Model $customer;
 
     public int $customer_id;
@@ -54,7 +53,7 @@ class Profile extends Component
         $this->gender = $customer->gender;
         $this->birthDate = $customer->birth_date;
         $this->birthDateFormatted = $customer->birth_date_formatted;
-        $this->optIn = $customer->opt_in;
+        $this->optIn = (bool) $customer->opt_in;
         $this->hasEnabledTwoFactor = (bool) $customer->two_factor_secret;
     }
 
@@ -150,13 +149,14 @@ class Profile extends Component
         return view('shopper::livewire.customers.profile');
     }
 
-    /**
-     * Update value from the storage.
-     */
     private function updateValue(string $field, mixed $value, string $message): void
     {
         $this->customer->update([$field => $value]);
 
-        $this->notification()->success(__('shopper::layout.status.updated'), $message);
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body($message)
+            ->success()
+            ->send();
     }
 }

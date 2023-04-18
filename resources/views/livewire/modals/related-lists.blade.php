@@ -9,7 +9,10 @@
 
     <x-slot name="content">
         <div class="py-2">
-            <x-shopper::forms.search label="shopper::pages/products.related.modal.search" placeholder="shopper::pages/products.related.modal.search_placeholder" />
+            <x-shopper::forms.search
+                :label="__('shopper::pages/products.related.modal.search')"
+                :placeholder="__('shopper::pages/products.related.modal.search_placeholder')"
+            />
         </div>
         <div class="my-2 -mx-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
             @forelse($this->products as $product)
@@ -18,7 +21,9 @@
                 <div class="p-4 h-full flex items-center justify-center">
                     <div class="text-center">
                         <x-heroicon-o-book-open class="mx-auto h-10 w-10 text-secondary-400" />
-                        <p class="mt-2 text-base font-medium text-secondary-900 dark:text-white">{{ __('shopper::pages/products.related.modal.no_results') }}</p>
+                        <p class="mt-2 text-base font-medium text-secondary-900 dark:text-white">
+                            {{ __('shopper::pages/products.related.modal.no_results') }}
+                        </p>
                     </div>
                 </div>
             @endforelse

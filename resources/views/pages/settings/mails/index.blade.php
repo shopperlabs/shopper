@@ -26,7 +26,7 @@
             <aside class="hidden lg:block lg:shrink-0">
                 <div class="h-full relative flex flex-col w-80">
                     <nav aria-label="{{ __('Email menu') }}" class="min-h-(screen-content) flex-1 overflow-y-auto">
-                        <ul class="">
+                        <ul class="space-y-1">
                             <li class="relative py-5 px-6 rounded-md hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'config' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="shrink-0 text-secondary-500 dark:text-secondary-400">

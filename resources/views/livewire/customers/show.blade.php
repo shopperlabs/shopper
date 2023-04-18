@@ -12,7 +12,7 @@
 >
     <x-shopper::breadcrumb back="shopper.customers.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" title="shopper::layout.sidebar.customers" />
+        <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" :title="__('shopper::layout.sidebar.customers')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-5 md:flex md:items-center md:justify-between relative z-20">

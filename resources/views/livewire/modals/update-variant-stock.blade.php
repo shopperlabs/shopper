@@ -17,7 +17,7 @@
                             <span class="relative inline-flex items-center px-2 py-2 bg-white border border-r-0 rounded-l-md border-secondary-300 dark:border-secondary-700 dark:bg-secondary-700">
                                 <x-heroicon-o-location-marker class="w-5 h-5 text-secondary-500 dark:text-secondary-400" />
                             </span>
-                            <x-shopper::forms.select wire:model.defer="inventory" id="inventory" class="block py-2 pl-3 -ml-px rounded-l-none pr-9 rounded-r-md" aria-label="{{ __('shopper::pages/products.modals.variants.select') }}">
+                            <x-shopper::forms.select wire:model.lazy="inventory" id="inventory" class="block py-2 pl-3 -ml-px rounded-l-none pr-9 rounded-r-md" aria-label="{{ __('shopper::pages/products.modals.variants.select') }}">
                                 <option value="0">{{ __('shopper::pages/products.modals.variants.select') }}</option>
                                 @foreach($inventories as $inventory)
                                     <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
@@ -36,14 +36,14 @@
                 <div class="flex items-center justify-between px-4 py-6 mb-2 sm:px-6">
                     <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-300">
                         <span class="block mr-4 text-sm font-medium">{{ __('shopper::pages/products.current_qty_inventory') }}</span>
-                        <span class="mr-2 text-sm px-2 inline-flex leading-5 font-medium rounded-full {{ $currentStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                            {{ $currentStock }}
-                        </span>
+                        <x-shopper::stock-badge :stock="$currentStock" />
                     </div>
                     <div class="ml-4">
                         <div class="flex items-center">
                             <div class="flex items-center pr-4">
-                                <p class="mr-4 text-sm font-medium text-secondary-700 dark:text-secondary-300">{{ $realStock }}</p>
+                                <p class="mr-4 text-sm font-medium text-secondary-700 dark:text-secondary-300">
+                                    {{ $realStock }}
+                                </p>
                                 <div>
                                     <div class="flex rounded-md shadow-sm">
                                         <div class="relative flex items-stretch grow focus-within:z-10">
@@ -76,7 +76,9 @@
                             </div>
                         </div>
                         @error('value')
-                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">{{ __('shopper::messages.validation.integer') }}</p>
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-500">
+                                {{ __('shopper::messages.validation.integer') }}
+                            </p>
                         @enderror
                     </div>
                 </div>
@@ -86,7 +88,9 @@
                         <span class="shrink-0">
                             <x-heroicon-o-document-text class="w-12 h-12 text-secondary-400" />
                         </span>
-                        <h3 class="py-5 text-xl font-medium text-secondary-400">{{ __('shopper::pages/products.inventory.empty') }}</h3>
+                        <h3 class="py-5 text-xl font-medium text-secondary-400">
+                            {{ __('shopper::pages/products.inventory.empty') }}
+                        </h3>
                     </div>
                 @else
                     <div class="flex flex-col">

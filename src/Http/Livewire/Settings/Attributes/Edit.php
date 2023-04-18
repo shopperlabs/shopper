@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
-use function in_array;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
-use WireUi\Traits\Actions;
 
 class Edit extends AbstractBaseComponent
 {
-    use Actions;
-
     public Attribute $attribute;
 
     public int $attributeId;
@@ -72,7 +69,11 @@ class Edit extends AbstractBaseComponent
             'is_filterable' => $this->isFilterable,
         ]);
 
-        $this->notification()->success(__('Updated'), __('Attribute has been successfully updated!'));
+        Notification::make()
+            ->title(__('shopper::components.tables.status.updated'))
+            ->body(__('Attribute has been successfully updated!'))
+            ->success()
+            ->send();
     }
 
     public function hasValues(): bool

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Forms\Uploads;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -46,14 +47,15 @@ class Multiple extends Component
 
     public function removeMedia(int $id): void
     {
-        Media::find($id)->delete();
+        Media::query()->find($id)->delete();
 
         $this->emitSelf('fileDeleted');
 
-        $this->notify([
-            'title' => __('Removed'),
-            'message' => __('Media removed from the storage.'),
-        ]);
+        Notification::make()
+            ->title(__('Removed'))
+            ->body(__('Media removed from the storage.'))
+            ->success()
+            ->send();
     }
 
     public function render(): View
