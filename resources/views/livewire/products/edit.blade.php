@@ -16,16 +16,22 @@
 >
     <x-shopper::breadcrumb back="shopper.products.index">
         <x-heroicon-s-chevron-left class="w-5 h-5 shrink-0 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.products.index')" title="shopper::layout.sidebar.products" />
+        <x-shopper::breadcrumb.link :link="route('shopper.products.index')" :title="__('shopper::layout.sidebar.products')" />
     </x-shopper::breadcrumb>
 
     <div class="sticky z-30 pb-5 mt-3 bg-secondary-100 dark:bg-secondary-900 sm:pb-0 top-4 sm:top-2 sm:-mx-8">
         <div class="space-y-4 sm:px-8">
             <div class="space-y-3 md:flex md:items-start md:justify-between md:space-y-0">
                 <div class="flex-1 min-w-0">
-                    <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">{{ $product->name }}</h3>
+                    <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
+                        {{ $product->name }}
+                    </h3>
                     <div class="mt-1">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $product->is_visible ? 'bg-green-100 text-green-800': 'bg-yellow-100 text-yellow-800' }}">
+                        <span @class([
+                            'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                            'bg-green-100 text-green-800' => $product->is_visible,
+                            'bg-yellow-100 text-yellow-800' => !$product->is_visible,
+                        ])>
                             {{ $product->is_visible ? __('shopper::layout.forms.label.visible'): __('shopper::layout.forms.label.invisible') }}
                         </span>
                     </div>
@@ -41,7 +47,7 @@
             </div>
             <div class="pb-5 border-b sm:pb-0 border-secondary-200 dark:border-secondary-700">
                 <div class="sm:hidden">
-                    <x-shopper::forms.select x-model="currentTab" aria-label="Selected tab" class="block w-full py-2 pl-3 pr-10">
+                    <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}" class="block w-full py-2 pl-3 pr-10">
                         <template x-for="option in options" :key="option">
                             <option
                                 x-bind:value="option"

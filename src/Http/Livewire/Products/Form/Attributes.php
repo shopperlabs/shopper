@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Exception;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +13,9 @@ use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
 use Shopper\Framework\Traits\WithAttributes;
-use WireUi\Traits\Actions;
 
 class Attributes extends Component
 {
-    use Actions;
     use WithAttributes;
 
     public Model $product;
@@ -45,12 +44,13 @@ class Attributes extends Component
 
     public function removeProductAttributeValue(int $id): void
     {
-        ProductAttributeValue::find($id)->delete();
+        ProductAttributeValue::query()->find($id)->delete();
 
-        $this->notification()->success(
-            __('shopper::pages/products.attributes.session.delete_value'),
-            __('shopper::pages/products.attributes.session.delete_value_message')
-        );
+        Notification::make()
+            ->title(__('shopper::pages/products.attributes.session.delete_value'))
+            ->body(__('shopper::pages/products.attributes.session.delete_value_message'))
+            ->success()
+            ->send();
 
         $this->emitSelf('onProductAttributeAdded');
     }
@@ -67,10 +67,11 @@ class Attributes extends Component
         $this->productAttributes = $this->getProductAttributes();
         $this->attributes = $this->getAttributes();
 
-        $this->notification()->success(
-            __('shopper::pages/products.attributes.session.delete'),
-            __('shopper::pages/products.attributes.session.delete_message')
-        );
+        Notification::make()
+            ->title(__('shopper::pages/products.attributes.session.delete'))
+            ->body(__('shopper::pages/products.attributes.session.delete_message'))
+            ->success()
+            ->send();
     }
 
     public function render(): View

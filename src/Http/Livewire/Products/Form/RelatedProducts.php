@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use WireUi\Traits\Actions;
 
 class RelatedProducts extends Component
 {
-    use Actions;
-
     public Model $product;
 
     public Collection $relatedProducts;
@@ -35,10 +33,11 @@ class RelatedProducts extends Component
 
         $this->emitSelf('onProductsAddInRelated');
 
-        $this->notification()->success(
-            __('shopper::layout.status.delete'),
-            __('shopper::pages/products.notifications.remove_related')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.delete'))
+            ->body(__('shopper::pages/products.notifications.remove_related'))
+            ->success()
+            ->send();
     }
 
     public function getProductsIdsProperty(): array

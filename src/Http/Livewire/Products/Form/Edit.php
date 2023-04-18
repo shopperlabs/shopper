@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
+use Shopper\Framework\Exceptions\GeneralException;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
@@ -16,11 +19,9 @@ use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Traits\WithChoicesBrands;
 use Shopper\Framework\Traits\WithSeoAttributes;
 use Shopper\Framework\Traits\WithUploadProcess;
-use WireUi\Traits\Actions;
 
 class Edit extends AbstractBaseComponent
 {
-    use Actions;
     use WithAttributes;
     use WithChoicesBrands;
     use WithFileUploads;
@@ -56,11 +57,11 @@ class Edit extends AbstractBaseComponent
         $this->price_amount = $product->price_amount;
         $this->old_price_amount = $product->old_price_amount;
         $this->cost_amount = $product->cost_amount;
-        $this->publishedAt = $product->published_at;
-        $this->publishedAtFormatted = $product->published_at->toRfc7231String();
+        $this->publishedAt = $product->published_at?->format('Y-m-d H:m');
+        $this->publishedAtFormatted = $product->published_at?->toRfc7231String();
         $this->collection_ids = $product->collections->pluck('id')->toArray();
         $this->category_ids = $product->categories->pluck('id')->toArray();
-        $this->selectedBrand = $product->brand_id ? $this->selectedBrand['value'] = $product->brand_id : [];
+        $this->selectedBrand = $product->brand_id ? [$product->brand_id] : [];
         $this->currency = $currency;
         $this->images = $product->getMedia(config('shopper.system.storage.disks.uploads'));
     }
@@ -117,12 +118,16 @@ class Edit extends AbstractBaseComponent
 
         $this->emit('productHasUpdated', $this->productId);
 
-        $this->notification()->success(
-            __('shopper::layout.status.updated'),
-            __('shopper::pages/products.notifications.update')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('shopper::pages/products.notifications.update'))
+            ->success()
+            ->send();
     }
 
+    /**
+     * @throws GeneralException
+     */
     public function render(): View
     {
         return view('shopper::livewire.products.forms.form-edit', [

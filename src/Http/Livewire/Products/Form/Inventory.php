@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -15,11 +16,9 @@ use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryHistoryRepository;
 use Shopper\Framework\Traits\WithStock;
-use WireUi\Traits\Actions;
 
 class Inventory extends Component
 {
-    use Actions;
     use WithPagination;
     use WithAttributes;
     use WithStock;
@@ -64,10 +63,11 @@ class Inventory extends Component
             'security_stock' => $this->securityStock ?? null,
         ]);
 
-        $this->notification()->success(
-            __('shopper::layout.status.updated'),
-            __('shopper::pages/products.notifications.stock_update')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('shopper::pages/products.notifications.stock_update'))
+            ->success()
+            ->send();
     }
 
     public function render(): View

@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithSeoAttributes;
-use WireUi\Traits\Actions;
 
 class Seo extends Component
 {
-    use Actions;
     use WithSeoAttributes;
 
     public Model $product;
@@ -54,10 +53,11 @@ class Seo extends Component
 
         $this->emit('productHasUpdated', $this->productId);
 
-        $this->notification()->success(
-            __('shopper::layout.status.updated'),
-            __('shopper::pages/products.notifications.seo_update')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('shopper::pages/products.notifications.seo_update'))
+            ->success()
+            ->send();
     }
 
     public function render(): View

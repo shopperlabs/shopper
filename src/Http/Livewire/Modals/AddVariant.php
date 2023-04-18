@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Repositories\InventoryRepository;
-use WireUi\Traits\Actions;
 
 class AddVariant extends ModalComponent
 {
-    use Actions;
     use WithAttributes;
 
     public int $productId;
@@ -37,6 +36,15 @@ class AddVariant extends ModalComponent
     public function onFilesUpdated(array $files): void
     {
         $this->files = $files;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|unique:' . shopper_table('products'),
+            'sku' => 'nullable|unique:' . shopper_table('products'),
+            'barcode' => 'nullable|unique:' . shopper_table('products'),
+        ];
     }
 
     public function save(): void
@@ -67,7 +75,7 @@ class AddVariant extends ModalComponent
             foreach ($this->quantity as $inventory => $value) {
                 $product->mutateStock(
                     $inventory,
-                    $value,
+                    (int) $value,
                     [
                         'event' => __('shopper::pages/products.inventory.initial'),
                         'old_quantity' => $value,
@@ -76,23 +84,15 @@ class AddVariant extends ModalComponent
             }
         }
 
-        $this->notification()->success(
-            __('shopper::layout.status.added'),
-            __('shopper::pages/products.notifications.variation_create')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.added'))
+            ->body(__('shopper::pages/products.notifications.variation_create'))
+            ->success()
+            ->send();
 
         $this->emit('onVariantAdded');
 
         $this->closeModal();
-    }
-
-    public function rules(): array
-    {
-        return [
-            'name' => 'required|unique:' . shopper_table('products'),
-            'sku' => 'nullable|unique:' . shopper_table('products'),
-            'barcode' => 'nullable|unique:' . shopper_table('products'),
-        ];
     }
 
     public static function modalMaxWidth(): string

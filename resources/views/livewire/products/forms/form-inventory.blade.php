@@ -11,11 +11,11 @@
         <div class="mt-5 bg-white dark:bg-secondary-800 rounded-lg overflow-hidden shadow-md">
             <div class="p-5 sm:p-5">
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-5">
-                    <x-shopper::forms.group class="sm:col-span-1" label="shopper::layout.forms.label.sku" for="sku" :error="$errors->first('sku')">
+                    <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.sku')" for="sku" :error="$errors->first('sku')">
                         <x-shopper::forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
                     </x-shopper::forms.group>
                     <div class="sm:col-span-1">
-                        <x-shopper::forms.group label="shopper::layout.forms.label.barcode" for="barcode" :error="$errors->first('barcode')">
+                        <x-shopper::forms.group :label="__('shopper::layout.forms.label.barcode')" for="barcode" :error="$errors->first('barcode')">
                             <x-shopper::forms.input wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
                         </x-shopper::forms.group>
                         @if($barcodeImage)
@@ -24,7 +24,7 @@
                             </div>
                         @endif
                     </div>
-                    <x-shopper::forms.group class="sm:col-span-1" label="shopper::layout.forms.label.safety_stock" for="security_stock">
+                    <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.safety_stock')" for="security_stock">
                         <x-shopper::forms.input wire:model.defer="securityStock" id="security_stock" type="number" min="0" autocomplete="off" />
                     </x-shopper::forms.group>
                 </div>
@@ -38,11 +38,7 @@
         </div>
     </div>
 
-    <div class="hidden sm:block" aria-hidden="true">
-        <div class="py-5">
-            <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
-        </div>
-    </div>
+    <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
         <div>
@@ -70,23 +66,21 @@
                 </span>
                 <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-400">
                     <span class="block text-sm font-medium mr-4">{{ __('shopper::pages/products.quantity_available') }}</span>
-                    <span class="mr-2 text-sm px-2 inline-flex leading-5 font-medium rounded-full {{ $product->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                        {{ $product->stock }}
-                    </span>
+                    <x-shopper::stock-badge :stock="$product->stock" />
                 </div>
             </div>
         @endif
         <div class="sm:flex sm:items-start sm:justify-between px-4 sm:px-6 mb-2 py-6">
             <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-400">
                 <span class="block text-sm font-medium mr-4">{{ __('shopper::pages/products.current_qty_inventory') }}</span>
-                    <span class="mr-2 text-sm px-2 inline-flex leading-5 font-medium rounded-full {{ $currentStock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                    {{ $currentStock }}
-                </span>
+                <x-shopper::stock-badge :stock="$currentStock" />
             </div>
             <div class="mt-5 sm:mt-0 sm:ml-4">
                 <div class="lg:flex lg:items-center">
                     <div class="flex items-center lg:pr-4">
-                        <p class="text-sm font-medium text-secondary-500 dark:text-secondary-400 mr-4">{{ $realStock }}</p>
+                        <p class="text-sm font-medium text-secondary-500 dark:text-secondary-400 mr-4">
+                            {{ $realStock }}
+                        </p>
                         <div>
                             <div class="flex rounded-md shadow-sm">
                                 <div class="relative flex items-stretch grow focus-within:z-10">
@@ -126,7 +120,9 @@
                     </div>
                 </div>
                 @error('value')
-                    <p class="mt-2 text-sm text-red-600">{{ __('shopper::messages.validation.integer') }}</p>
+                    <p class="mt-2 text-sm text-danger-600">
+                        {{ __('shopper::messages.validation.integer') }}
+                    </p>
                 @enderror
             </div>
         </div>
@@ -135,7 +131,9 @@
                 <span class="shrink-0">
                     <x-heroicon-o-document-text class="h-12 w-12 text-secondary-400" />
                 </span>
-                <h3 class="font-medium py-5 text-secondary-400 text-xl">{{ __('shopper::pages/products.inventory.empty') }}</h3>
+                <h3 class="font-medium py-5 text-secondary-400 text-xl">
+                    {{ __('shopper::pages/products.inventory.empty') }}
+                </h3>
             </div>
         @else
             <div class="flex flex-col">
