@@ -31,7 +31,7 @@ class Edit extends AbstractBaseComponent
 
     public string $type = 'auto';
 
-    public ?string $publishedAt = null;
+    public ?Carbon $publishedAt = null;
 
     public ?string $publishedAtFormatted = null;
 
@@ -91,7 +91,9 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $this->collection
+                ->addMedia($this->fileUrl)
+                ->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Collection successfully updated!'));

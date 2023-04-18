@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Collections;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use WireUi\Traits\Actions;
 
 class Products extends Component
 {
-    use Actions;
-
     public $collection;
 
     public string $sortBy = 'name';
@@ -40,10 +38,11 @@ class Products extends Component
 
         $this->emitSelf('onProductsAddInCollection');
 
-        $this->notification()->success(
-            __('Product removed'),
-            __('The product have been correctly remove to this collection.')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.forms.actions.remove'))
+            ->body(__('The product have been correctly remove to this collection.'))
+            ->success()
+            ->send();
     }
 
     public function updatedSortBy(string $sortBy): void

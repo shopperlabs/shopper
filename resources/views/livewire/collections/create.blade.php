@@ -1,12 +1,12 @@
 <div>
     <x-shopper::breadcrumb back="shopper.collections.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.collections.index')" title="shopper::layout.sidebar.collections" />
+        <x-shopper::breadcrumb.link :link="route('shopper.collections.index')" :title="__('shopper::layout.sidebar.collections')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('shopper::messages.actions_label.add_new', ['name' => 'collection']) }}
+            {{ __('shopper::messages.actions_label.add_new', ['name' => __('collection')]) }}
         </x-slot>
 
         <x-slot name="action">
@@ -20,11 +20,11 @@
     <div class="mt-6 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-6 lg:gap-6">
         <div class="lg:col-span-4 space-y-5">
             <div class="bg-white rounded-lg shadow p-4 sm:p-5 dark:bg-secondary-800">
-                <x-shopper::forms.group label="shopper::layout.forms.label.name" for="name" isRequired :error="$errors->first('name')">
+                <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
                     <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
                 </x-shopper::forms.group>
                 <div class="mt-5">
-                    <x-shopper::forms.group label="shopper::layout.forms.label.description" for="description">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.description')" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper::forms.group>
                 </div>
