@@ -47,9 +47,6 @@ class Collection extends Model implements HasMedia
         'published_at' => 'datetime',
     ];
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('collections');

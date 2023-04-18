@@ -80,6 +80,7 @@ class Product extends Model implements HasMedia, ReviewRateable
         'featured' => 'boolean',
         'is_visible' => 'boolean',
         'requires_shipping' => 'boolean',
+        'backorder' => 'boolean',
         'published_at' => 'datetime',
     ];
 
