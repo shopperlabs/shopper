@@ -7,7 +7,7 @@ module.exports = {
     './resources/js/**/*.js',
     './resources/views/**/*.blade.php',
     './src/**/*.php',
-    './vendor/rappasoft/laravel-livewire-tables/resources/views/tailwind/**/*.blade.php',
+    './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
     './vendor/wire-elements/modal/resources/views/*.blade.php',
     './vendor/wireui/wireui/resources/**/*.blade.php',
     './vendor/wireui/wireui/ts/**/*.ts',
@@ -21,14 +21,14 @@ module.exports = {
     'sm:max-w-4xl',
     'lg:max-w-2xl',
     'lg:max-w-3xl',
-    'lg:max-w-4xl',
+    'xl:max-w-4xl',
   ],
   theme: {
     extend: {
       colors: {
         primary: colors.blue,
+        indigo: colors.blue,
         secondary: colors.slate,
-        gray: colors.slate,
         orange: colors.orange,
         positive: colors.emerald,
         success: colors.emerald,
@@ -57,7 +57,10 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
-      }
+      },
+      maxWidth: {
+        '8xl': '88rem',
+      },
     },
   },
   plugins: [
