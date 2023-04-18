@@ -58,7 +58,7 @@ class Edit extends AbstractBaseComponent
             }
             $this->selectedCustomers = $customers->pluck('id')->all();
 
-            $this->customers = (new  UserRepository())
+            $this->customers = (new UserRepository())
                 ->makeModel()
                 ->whereIn('id', $this->selectedCustomers)
                 ->get();

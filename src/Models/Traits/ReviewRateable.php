@@ -154,7 +154,7 @@ trait ReviewRateable
         $quantity = $ratings->count();
         $total = $ratings->selectRaw('Count(rating) as total')->where('rating', $max)->pluck('total')->first();
 
-        return  round($quantity * $max > 0 ? ((int) $total * 100) / $quantity : 0, 1);
+        return round($quantity * $max > 0 ? ((int) $total * 100) / $quantity : 0, 1);
     }
 
     public function rating(array $data, Model $author, ?Model $parent = null): Review

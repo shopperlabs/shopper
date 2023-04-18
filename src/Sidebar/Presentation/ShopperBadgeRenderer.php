@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Framework\Sidebar\Presentation;
 
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Maatwebsite\Sidebar\Badge;
 
 class ShopperBadgeRenderer

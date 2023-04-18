@@ -6,7 +6,6 @@ namespace Shopper\Framework\Http\Livewire\Tables;
 
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views;
@@ -33,9 +32,10 @@ class ProductsTable extends DataTableComponent
             ->setTdAttributes(function (Views\Column $column) {
                 if ($column->isField('name')) {
                     return [
-                        'class' => 'w-full max-w-md whitespace-nowrap'
+                        'class' => 'w-full max-w-md whitespace-nowrap',
                     ];
                 }
+
                 return [];
             })
             ->setBulkActions([
@@ -129,8 +129,8 @@ class ProductsTable extends DataTableComponent
                         ->toArray()
                 )
                 ->filter(
-                    fn (Builder $query, array $brands) =>
-                    $query->whereHas('brand',
+                    fn (Builder $query, array $brands) => $query->whereHas(
+                        'brand',
                         fn (Builder $query) => $query->whereIn('brand_id', $brands)
                     )
                 ),

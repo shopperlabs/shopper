@@ -128,7 +128,7 @@ trait WithDiscountActions
             unset($this->selectedCustomers[$key]);
         }
 
-        $this->customers = (new  UserRepository())
+        $this->customers = (new UserRepository())
             ->makeModel()
             ->whereIn('id', $this->selectedCustomers)
             ->get();

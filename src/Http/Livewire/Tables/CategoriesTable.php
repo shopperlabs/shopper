@@ -121,8 +121,8 @@ class CategoriesTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $builder, string $value) =>
-                    match ($value) {
+                ->filter(
+                    fn (Builder $builder, string $value) => match ($value) {
                         'yes' => $builder->where('is_enabled', true),
                         'no' => $builder->where('is_enabled', false),
                     }
@@ -136,8 +136,8 @@ class CategoriesTable extends DataTableComponent
             Views\Column::make(__('shopper::layout.forms.label.name'), 'name')
                 ->sortable()
                 ->searchable()
-                ->format(fn ($value, $row, Views\Column $column) =>
-                    view('shopper::livewire.tables.cells.categories.name')
+                ->format(
+                    fn ($value, $row, Views\Column $column) => view('shopper::livewire.tables.cells.categories.name')
                         ->with('category', $row->load('media'))
                 ),
             Views\Column::make(__('shopper::layout.forms.label.slug'), 'slug'),

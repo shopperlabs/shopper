@@ -104,7 +104,7 @@ class AttributesTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(function(Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value) {
                     match ($value) {
                         'yes' => $builder->where('is_searchable', true),
                         'no' => $builder->where('is_searchable', false),
@@ -116,8 +116,8 @@ class AttributesTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $builder, string $value) =>
-                    match ($value) {
+                ->filter(
+                    fn (Builder $builder, string $value) => match ($value) {
                         'yes' => $builder->where('is_filterable', true),
                         'no' => $builder->where('is_filterable', false),
                     }
@@ -128,8 +128,8 @@ class AttributesTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $builder, string $value) =>
-                    match ($value) {
+                ->filter(
+                    fn (Builder $builder, string $value) => match ($value) {
                         'yes' => $builder->where('is_enabled', true),
                         'no' => $builder->where('is_enabled', false),
                     }
