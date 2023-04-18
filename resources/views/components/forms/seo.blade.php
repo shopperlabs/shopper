@@ -14,7 +14,10 @@
             @else
                 <div class="flex flex-col">
                     <h3 class="text-base text-primary-800 font-medium leading-6 dark:text-primary-500/50">{{ $title }}</h3>
-                    <span class="mt-1 text-green-600 text-sm leading-5 dark:text-green-500/50">{{ config('app.url') }}/{{ $slug }}/{{ $url }}</span>
+                    <div class="mt-1 flex items-center space-x-2">
+                        <span class="inline-flex items-center py-1 px-2 bg-secondary-100 dark:bg-secondary-700 text-sm rounded-full leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Recommended link') }}</span>
+                        <span class="text-green-600 text-sm leading-5 dark:text-green-500/50">{{ config('app.url') }}/{{ $slug }}/{{ $url }}</span>
+                    </div>
                     <p class="mt-1 text-secondary-500 text-sm leading-5 dark:text-secondary-400">{{ str_limit($description, 160) }}</p>
                 </div>
             @endif
@@ -22,7 +25,7 @@
     </div>
     @if($canUpdate)
         <div class="px-4 py-5 sm:px-6 space-y-5">
-            <x-shopper::forms.group for="seo_title" label="shopper::layout.forms.label.title">
+            <x-shopper::forms.group for="seo_title" :label="__('shopper::layout.forms.label.title')">
                 <x-shopper::forms.input wire:model.debounce.500ms="seoTitle" id="seo_title" type="text" autocomplete="off" />
             </x-shopper::forms.group>
             <div>
