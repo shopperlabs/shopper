@@ -83,8 +83,8 @@ class OrdersTable extends DataTableComponent
                     'placeholder' => __('Search by First or last name'),
                     'maxlength' => '25',
                 ])
-                ->filter(fn (Builder $query, string $value) =>
-                    $query->whereHas('customer', function (Builder $query) use ($value) {
+                ->filter(
+                    fn (Builder $query, string $value) => $query->whereHas('customer', function (Builder $query) use ($value) {
                         $query->where('first_name', 'like', '%' . $value . '%')
                             ->orWhere('last_name', 'like', '%' . $value . '%');
                     })
@@ -94,8 +94,8 @@ class OrdersTable extends DataTableComponent
                     'placeholder' => __('Search by Name'),
                     'maxlength' => '25',
                 ])
-                ->filter(fn (Builder $query, string $value) =>
-                    $query->whereHas('items', function (Builder $query) use ($value) {
+                ->filter(
+                    fn (Builder $query, string $value) => $query->whereHas('items', function (Builder $query) use ($value) {
                         $query->where('name', 'like', '%' . $value . '%');
                     })
                 ),
@@ -110,7 +110,7 @@ class OrdersTable extends DataTableComponent
                 ->view('shopper::livewire.tables.cells.orders.number'),
             Views\Column::make(__('shopper::messages.date'), 'created_at')
                 ->sortable()
-                ->format(fn ($value) => "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-secondary-500 dark:text-secondary-400'>" . $value->diffForHumans() . "</time>")
+                ->format(fn ($value) => "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-secondary-500 dark:text-secondary-400'>" . $value->diffForHumans() . '</time>')
                 ->html(),
             Views\Column::make(__('shopper::layout.forms.label.status'), 'status')
                 ->view('shopper::livewire.tables.cells.orders.status'),
@@ -125,7 +125,7 @@ class OrdersTable extends DataTableComponent
             Views\Column::make(__('Purchased'), 'id')
                 ->view('shopper::livewire.tables.cells.orders.purchased'),
             Views\Column::make(__('shopper::pages/customers.orders.total'), 'price_amount')
-                ->format(fn ($value, $row) => "<span class='text-secondary-500 dark:text-secondary-400'>" . $row->total . "</span>")
+                ->format(fn ($value, $row) => "<span class='text-secondary-500 dark:text-secondary-400'>" . $row->total . '</span>')
                 ->html(),
         ];
     }

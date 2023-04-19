@@ -10408,6 +10408,10 @@ select{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+.group:hover .group-hover\:text-secondary-700{
+  --tw-text-opacity: 1;
+  color: rgb(51 65 85 / var(--tw-text-opacity));
+}
 .group:hover .group-hover\:opacity-0{
   opacity: 0;
 }
@@ -11263,6 +11267,10 @@ select{
 :is(.dark .dark\:ring-zinc-700){
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(63 63 70 / var(--tw-ring-opacity));
+}
+:is(.dark .dark\:ring-secondary-800){
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(30 41 59 / var(--tw-ring-opacity));
 }
 :is(.dark .dark\:ring-offset-gray-800){
   --tw-ring-offset-color: #1f2937;

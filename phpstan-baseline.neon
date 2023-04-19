@@ -36,17 +36,12 @@ parameters:
 			path: src/Events/Handlers/RegisterShopSidebar.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection&iterable\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\)\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$code\\.$#"
-			count: 1
-			path: src/Helpers/helpers.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Filesystem\\\\Filesystem\\:\\:url\\(\\)\\.$#"
 			count: 1
 			path: src/Helpers/helpers.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function str_pad expects string, \\(float\\|int\\) given\\.$#"
+			message: "#^Cannot access property \\$code on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 1
 			path: src/Helpers/helpers.php
 
@@ -61,7 +56,7 @@ parameters:
 			path: src/Http/Controllers/Api/BrandController.php
 
 		-
-			message: "#^Method Shopper\\\\Framework\\\\Http\\\\Controllers\\\\Api\\\\BrandController\\:\\:__invoke\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Collection but returns Illuminate\\\\Support\\\\Collection\\.$#"
+			message: "#^Method Shopper\\\\Framework\\\\Http\\\\Controllers\\\\Api\\\\BrandController\\:\\:__invoke\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Collection but returns array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Query\\\\Builder\\>\\|Illuminate\\\\Support\\\\Collection\\.$#"
 			count: 1
 			path: src/Http/Controllers/Api/BrandController.php
 
@@ -291,6 +286,16 @@ parameters:
 			path: src/Http/Livewire/Discounts/Create.php
 
 		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$first_name\\.$#"
+			count: 1
+			path: src/Http/Livewire/Discounts/Create.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			count: 1
+			path: src/Http/Livewire/Discounts/Create.php
+
+		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:whereIn\\(\\)\\.$#"
 			count: 4
 			path: src/Http/Livewire/Discounts/Create.php
@@ -304,6 +309,16 @@ parameters:
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 1
 			path: src/Http/Livewire/Discounts/Create.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$first_name\\.$#"
+			count: 1
+			path: src/Http/Livewire/Discounts/Edit.php
+
+		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			count: 1
+			path: src/Http/Livewire/Discounts/Edit.php
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:whereIn\\(\\)\\.$#"
@@ -336,16 +351,6 @@ parameters:
 			path: src/Http/Livewire/Discounts/Edit.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Forms\\\\Uploads\\\\Multiple\\:\\:notify\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Forms/Uploads/Multiple.php
-
-		-
-			message: "#^Call to an undefined static method Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\:\\:find\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Forms/Uploads/Multiple.php
-
-		-
 			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Forms\\\\Uploads\\\\Single\\:\\:notify\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Livewire/Forms/Uploads/Single.php
@@ -356,19 +361,9 @@ parameters:
 			path: src/Http/Livewire/Forms/Uploads/Single.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection&iterable\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\)\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$currencies\\.$#"
+			message: "#^Cannot access property \\$currencies on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 1
 			path: src/Http/Livewire/Initialization.php
-
-		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection&iterable\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\)\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$type\\.$#"
-			count: 1
-			path: src/Http/Livewire/Modals/AddProductAttribute.php
-
-		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection&iterable\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\)\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$values\\.$#"
-			count: 2
-			path: src/Http/Livewire/Modals/AddProductAttribute.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
@@ -377,6 +372,16 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attribute\\.$#"
+			count: 2
+			path: src/Http/Livewire/Modals/AddProductAttribute.php
+
+		-
+			message: "#^Cannot access property \\$type on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 1
+			path: src/Http/Livewire/Modals/AddProductAttribute.php
+
+		-
+			message: "#^Cannot access property \\$values on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 2
 			path: src/Http/Livewire/Modals/AddProductAttribute.php
 
@@ -466,12 +471,12 @@ parameters:
 			path: src/Http/Livewire/Modals/UpdatePaymentMethod.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection&iterable\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\)\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$key\\.$#"
+			message: "#^Cannot access property \\$key on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 1
 			path: src/Http/Livewire/Modals/UpdateValue.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection&iterable\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\)\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$value\\.$#"
+			message: "#^Cannot access property \\$value on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 1
 			path: src/Http/Livewire/Modals/UpdateValue.php
 
@@ -497,11 +502,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:increaseStock\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Modals/UpdateVariantStock.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Modals\\\\UpdateVariantStock\\:\\:notify\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Livewire/Modals/UpdateVariantStock.php
 
@@ -566,17 +566,17 @@ parameters:
 			path: src/Http/Livewire/Products/Create.php
 
 		-
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+			count: 1
+			path: src/Http/Livewire/Products/Edit.php
+
+		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attribute\\.$#"
 			count: 2
 			path: src/Http/Livewire/Products/Form/Attributes.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/Form/Attributes.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Framework\\\\Models\\\\Shop\\\\Product\\\\ProductAttributeValue\\:\\:find\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Livewire/Products/Form/Attributes.php
 
@@ -621,16 +621,6 @@ parameters:
 			path: src/Http/Livewire/Products/Form/Edit.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Products\\\\Form\\\\Edit\\:\\:notify\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/Form/Edit.php
-
-		-
-			message: "#^Call to an undefined static method Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\:\\:find\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/Form/Edit.php
-
-		-
 			message: "#^Ternary operator condition is always false\\.$#"
 			count: 2
 			path: src/Http/Livewire/Products/Form/Edit.php
@@ -652,11 +642,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:increaseStock\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/Form/Inventory.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Products\\\\Form\\\\Inventory\\:\\:notify\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Livewire/Products/Form/Inventory.php
 
@@ -696,16 +681,6 @@ parameters:
 			path: src/Http/Livewire/Products/Form/Variants.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Products\\\\Form\\\\Variants\\:\\:notify\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/Form/Variants.php
-
-		-
-			message: "#^Call to an undefined static method Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\:\\:find\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/Form/Variants.php
-
-		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
 			count: 3
 			path: src/Http/Livewire/Products/Variant.php
@@ -726,16 +701,6 @@ parameters:
 			path: src/Http/Livewire/Products/Variant.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Products\\\\Variant\\:\\:notify\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/Variant.php
-
-		-
-			message: "#^Call to an undefined static method Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\:\\:find\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/Variant.php
-
-		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
 			count: 3
 			path: src/Http/Livewire/Products/VariantStock.php
@@ -752,11 +717,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:increaseStock\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Products/VariantStock.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Products\\\\VariantStock\\:\\:notify\\(\\)\\.$#"
 			count: 1
 			path: src/Http/Livewire/Products/VariantStock.php
 
@@ -921,18 +881,18 @@ parameters:
 			path: src/Http/Livewire/Settings/Management/Management.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection&iterable\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\)\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$display_name\\.$#"
+			message: "#^Call to an undefined static method Shopper\\\\Framework\\\\Models\\\\User\\\\Role\\:\\:find\\(\\)\\.$#"
+			count: 1
+			path: src/Http/Livewire/Settings/Management/Permissions.php
+
+		-
+			message: "#^Cannot access property \\$display_name on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 2
 			path: src/Http/Livewire/Settings/Management/Permissions.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|\\(Illuminate\\\\Database\\\\Eloquent\\\\Collection&iterable\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\)\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
+			message: "#^Cannot access property \\$name on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 3
-			path: src/Http/Livewire/Settings/Management/Permissions.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Framework\\\\Models\\\\User\\\\Role\\:\\:find\\(\\)\\.$#"
-			count: 1
 			path: src/Http/Livewire/Settings/Management/Permissions.php
 
 		-
@@ -956,34 +916,14 @@ parameters:
 			path: src/Http/Livewire/Settings/Payments/Stripe.php
 
 		-
-			message: "#^Access to an undefined property Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\AttributesTable\\:\\:\\$selectedRowsQuery\\.$#"
+			message: "#^Match expression does not handle remaining value\\: string$#"
 			count: 3
 			path: src/Http/Livewire/Tables/AttributesTable.php
 
 		-
-			message: "#^Call to an undefined static method Shopper\\\\Framework\\\\Models\\\\Shop\\\\Product\\\\Attribute\\:\\:whereIn\\(\\)\\.$#"
-			count: 2
-			path: src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\BrandsTable\\:\\:\\$selectedRowsQuery\\.$#"
-			count: 3
-			path: src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\CategoriesTable\\:\\:\\$selectedRowsQuery\\.$#"
-			count: 3
-			path: src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\CollectionsTable\\:\\:\\$selectedRowsQuery\\.$#"
+			message: "#^Match expression does not handle remaining value\\: string$#"
 			count: 1
-			path: src/Http/Livewire/Tables/CollectionsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\CustomersTable\\:\\:\\$selectedRowsQuery\\.$#"
-			count: 2
-			path: src/Http/Livewire/Tables/CustomersTable.php
+			path: src/Http/Livewire/Tables/CategoriesTable.php
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:research\\(\\)\\.$#"
@@ -991,24 +931,9 @@ parameters:
 			path: src/Http/Livewire/Tables/CustomersTable.php
 
 		-
-			message: "#^Access to an undefined property Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\OrdersTable\\:\\:\\$selectedRowsQuery\\.$#"
+			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\CustomersTable\\:\\:resetAll\\(\\)\\.$#"
 			count: 1
-			path: src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\ProductsTable\\:\\:\\$selectedRowsQuery\\.$#"
-			count: 6
-			path: src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\ReviewsTable\\:\\:\\$selectedRowsQuery\\.$#"
-			count: 3
-			path: src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Framework\\\\Models\\\\Shop\\\\Review\\:\\:whereIn\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Tables/ReviewsTable.php
+			path: src/Http/Livewire/Tables/CustomersTable.php
 
 		-
 			message: "#^Parameter \\#3 \\.\\.\\.\\$guards of method Illuminate\\\\Auth\\\\Middleware\\\\Authenticate\\:\\:handle\\(\\) expects string, array\\<string\\> given\\.$#"
@@ -1776,26 +1701,26 @@ parameters:
 			path: src/Services/Mailable.php
 
 		-
-			message: "#^Method Shopper\\\\Framework\\\\Sidebar\\\\Presentation\\\\ShopperAppendRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|null but returns string\\.$#"
+			message: "#^Static method Shopper\\\\Framework\\\\Services\\\\Mailable\\:\\:getMissingParams\\(\\) is unused\\.$#"
+			count: 1
+			path: src/Services/Mailable.php
+
+		-
+			message: "#^Method Shopper\\\\Framework\\\\Sidebar\\\\Presentation\\\\ShopperAppendRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|void but returns string\\.$#"
 			count: 1
 			path: src/Sidebar/Presentation/ShopperAppendRenderer.php
 
 		-
-			message: "#^Method Shopper\\\\Framework\\\\Sidebar\\\\Presentation\\\\ShopperBadgeRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|null but returns string\\.$#"
+			message: "#^Method Shopper\\\\Framework\\\\Sidebar\\\\Presentation\\\\ShopperBadgeRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|void but returns string\\.$#"
 			count: 1
 			path: src/Sidebar/Presentation/ShopperBadgeRenderer.php
 
 		-
-			message: "#^Method Shopper\\\\Framework\\\\Sidebar\\\\Presentation\\\\ShopperGroupRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|null but returns string\\.$#"
+			message: "#^Method Shopper\\\\Framework\\\\Sidebar\\\\Presentation\\\\ShopperGroupRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|void but returns string\\.$#"
 			count: 1
 			path: src/Sidebar/Presentation/ShopperGroupRenderer.php
 
 		-
-			message: "#^Iterating over an object of an unknown class Maatwebsite\\\\Sidebar\\\\Collection\\.$#"
-			count: 1
-			path: src/Sidebar/Presentation/ShopperItemRenderer.php
-
-		-
-			message: "#^Method Shopper\\\\Framework\\\\Sidebar\\\\Presentation\\\\ShopperItemRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|null but returns string\\.$#"
+			message: "#^Method Shopper\\\\Framework\\\\Sidebar\\\\Presentation\\\\ShopperItemRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|void but returns string\\.$#"
 			count: 1
 			path: src/Sidebar/Presentation/ShopperItemRenderer.php

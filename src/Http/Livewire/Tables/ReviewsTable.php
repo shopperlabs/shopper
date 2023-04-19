@@ -27,7 +27,7 @@ class ReviewsTable extends DataTableComponent
                 'content',
                 'is_recommended',
                 'reviewrateable_type',
-                'author_type'
+                'author_type',
             ])
             ->setTdAttributes(function (Views\Column $column) {
                 if ($column->isField('reviewrateable_id')) {
@@ -159,7 +159,8 @@ class ReviewsTable extends DataTableComponent
             ->whereHasMorph('reviewrateable', config('shopper.system.models.product'), function (Builder $query) {
                 $query->when(
                     $this->columnSearch['name'] ?? null,
-                    fn (Builder $query, $name) => $query->where('name', 'like', '%' . $name . '%'));
+                    fn (Builder $query, $name) => $query->where('name', 'like', '%' . $name . '%')
+                );
             });
     }
 }
