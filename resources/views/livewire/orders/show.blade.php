@@ -1,16 +1,16 @@
 <div>
-    <x-shopper::breadcrumb back="shopper.orders.index">
-        <svg class="shrink-0 h-5 w-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
-        </svg>
-        <a href="{{ route('shopper.orders.index') }}" class="text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 focus:outline-none focus:underline transition duration-150 ease-in-out">{{ __('Orders') }}</a>
+    <x-shopper::breadcrumb :back="route('shopper.orders.index')">
+        <x-heroicon-s-chevron-left class="w-5 h-5 shrink-0 text-secondary-400" />
+        <x-shopper::breadcrumb.link :link="route('shopper.orders.index')" :title="__('shopper::layout.sidebar.orders')" />
     </x-shopper::breadcrumb>
 
-    <div class="mt-3 bg-secondary-100 z-30 relative pb-5 border-b border-secondary-200 sticky top-0 -my-2 pt-4 sm:pt-1 sm:-my-0 sm:-mx-8 dark:bg-secondary-900 dark:border-secondary-700">
+    <div class="mt-3 bg-secondary-100 z-30 pb-5 border-b border-secondary-200 sticky top-0 -my-2 pt-4 sm:pt-1 sm:-my-0 sm:-mx-8 dark:bg-secondary-900 dark:border-secondary-700">
         <div class="sm:px-8 space-y-4">
             <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
                 <div class="flex-1 flex items-center space-x-4 min-w-0">
-                    <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">{{ $order->number }}</h3>
+                    <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
+                        {{ $order->number }}
+                    </h3>
                     <div class="p-1 flex items-center divide-x-2 divide-secondary-200 dark:divide-secondary-700">
                         <div class="flex items-center space-x-2 pr-4">
                             <span class="inline-flex items-center px-2.5 py-0.5 border-2 rounded-full text-xs font-medium {{ $order->status_classes }}">
@@ -31,7 +31,6 @@
                 </div>
                 <div class="flex space-x-3">
                     @if(! $order->isCompleted())
-
                         @if(! $order->isPaid())
                             <span class="hidden sm:block">
                                 <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.archived-order', {{ json_encode([$order->id]) }})" type="button">
@@ -104,9 +103,13 @@
         <div class="sm:col-span-4 py-2 divide-y divide-secondary-200 dark:divide-secondary-700">
             <div class="py-4 sm:pr-8">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Products') }}</h3>
+                    <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                        {{ __('shopper::layout.sidebar.products') }}
+                    </h3>
                     <div class="flex items-center space-x-3">
-                        <span class="whitespace-no-wrap text-sm font-medium text-secondary-500 dark:text-secondary-400">{{ __('Per Page') }}</span>
+                        <span class="text-sm font-medium text-secondary-500 dark:text-secondary-400">
+                            {{ __('Per Page') }}
+                        </span>
                         <x-shopper::forms.select wire:model="perPage" class="w-20" aria-label="{{ __('Per Page items') }}">
                             <option value="3">3</option>
                             <option value="5">5</option>
@@ -165,15 +168,21 @@
                 <div class="mt-3 flex justify-end">
                     <div class="w-full sm:max-w-sm space-y-1 text-right">
                         <div class="bg-secondary-200 rounded-md p-4 text-secondary-700 dark:text-secondary-300 dark:bg-secondary-800">
-                            <span class="text-base leading-6 font-semibold text-secondary-900 dark:text-white">{{ __('Items total:') }} </span>
+                            <span class="text-base leading-6 font-semibold text-secondary-900 dark:text-white">
+                                {{ __('Items total:') }}
+                            </span>
                             {{ $order->total }}
                         </div>
-                        <p class="text-sm text-secondary-500 dark:text-secondary-400 leading-5">{{ __('This price does not include applicable taxes on the product or on the customer.') }}</p>
+                        <p class="text-sm text-secondary-500 dark:text-secondary-400 leading-5">
+                            {{ __('This price does not include applicable taxes on the product or on the customer.') }}
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="py-4 sm:pr-8">
-                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Payment Method') }}</h3>
+                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                    {{ __('Payment Method') }}
+                </h3>
                 <div class="mt-4">
                     <div class="py-4 flex">
                         @if($order->paymentMethod->logo)
@@ -186,14 +195,20 @@
                             </span>
                         @endif
                         <div class="ml-4">
-                            <p class="text-sm font-medium text-secondary-900 dark:text-white">{{ $order->paymentMethod->title }}</p>
-                            <a href="{{ route('shopper.settings.payments') }}" class="text-sm text-secondary-500 dark:text-secondary-400 hover:text-secondary-400 underline">{{ __('View available methods') }}</a>
+                            <p class="text-sm font-medium text-secondary-900 dark:text-white">
+                                {{ $order->paymentMethod->title }}
+                            </p>
+                            <a href="{{ route('shopper.settings.payments') }}" class="text-sm text-secondary-500 dark:text-secondary-400 hover:text-secondary-400 underline">
+                                {{ __('View available methods') }}
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="py-4 sm:pr-8">
-                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Shipping') }}</h3>
+                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                    {{ __('Shipping') }}
+                </h3>
                 <div class="mt-4">
                     @if($order->shipping_method)
                         <dl>
@@ -218,7 +233,7 @@
                                     {{ __('Tax') }}
                                 </dt>
                                 <dd class="mt-1 text-sm font-medium text-secondary-900 dark:text-white sm:mt-0 sm:col-span-2">
-                                    0.00
+                                    {{ __('Not available') }}
                                 </dd>
                             </div>
                         </dl>
@@ -247,7 +262,9 @@
                 <div class="flex justify-end">
                     <div class="w-full sm:max-w-sm space-y-1 text-right text-secondary-700 dark:text-secondary-300">
                         <div class="bg-secondary-200 rounded-md p-4 dark:bg-secondary-800">
-                            <span class="text-base leading-6 font-semibold text-secondary-900 dark:text-white">{{ __('Order total:') }} </span>
+                            <span class="text-base leading-6 font-semibold text-secondary-900 dark:text-white">
+                                {{ __('Order total:') }}
+                            </span>
                             {{ shopper_money_format($order->fullPriceWithShipping()) }}
                         </div>
                     </div>
@@ -268,7 +285,7 @@
                                 <x-shopper::dropdown-button role="menuitem">
                                     {{ __('Send invoice') }}
                                     <span class="inline-flex items-center ml-3 px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-secondary-100 text-secondary-800 dark:bg-secondary-800 dark:text-secondary-300">
-                                      {{ __('Soon') }}
+                                      {{ __('shopper::layout.soon') }}
                                     </span>
                                 </x-shopper::dropdown-button>
                                 @if($order->isPending())
@@ -292,19 +309,18 @@
                 </div>
             </div>
             <div class="py-4 sm:pr-8">
-                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Private notes') }}</h3>
+                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                    {{ __('Private notes') }}
+                </h3>
                 <div class="mt-5 flex space-x-3">
                     <div class="shrink-0">
-                        <div class="relative">
-                            <img class="h-10 w-10 rounded-full bg-secondary-400 flex items-center justify-center ring-8 ring-white" src="{{ auth()->user()->picture }}" alt="">
-                            <span class="absolute -bottom-0.5 bg-secondary-100 right-0 rounded-tl p-0.5">
-                                <x-heroicon-s-chat-alt class="h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-                            </span>
-                        </div>
+                        <img class="h-10 w-10 rounded-full bg-secondary-400 flex items-center justify-center ring-4 ring-white dark:ring-secondary-800" src="{{ auth()->user()->picture }}" alt="">
                     </div>
                     <div class="min-w-0 flex-1">
                         @if($order->notes)
-                            <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $order->notes }}</p>
+                            <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                {{ $order->notes }}
+                            </p>
                         @else
                             <div>
                                 <label for="comment" class="sr-only">{{ __('Comment') }}</label>

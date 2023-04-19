@@ -44,7 +44,7 @@ if (! \function_exists('generate_number')) {
         return sprintf(
             '%s%s',
             $generator['prefix'],
-            str_pad($next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
+            str_pad((string) $next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
         );
     }
 }
