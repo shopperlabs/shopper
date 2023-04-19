@@ -1725,10 +1725,10 @@ trix-toolbar .filament-forms-rich-editor-component-toolbar-button.trix-active{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   background-repeat: no-repeat;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   vertical-align: top;
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
