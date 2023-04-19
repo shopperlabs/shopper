@@ -31,9 +31,6 @@ class Review extends Model
         'approved' => 'boolean',
     ];
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('reviews');

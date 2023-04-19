@@ -12,10 +12,44 @@ use Shopper\Framework\Models\Shop\Review;
 
 class ReviewsTable extends DataTableComponent
 {
+    public $columnSearch = [
+        'name' => null,
+        'author' => null,
+    ];
+
     public function configure(): void
     {
-        $this->setPrimaryKey('key')
-            ->setAdditionalSelects(['id', 'rating', 'content'])
+        $this->setPrimaryKey('id')
+            ->setAdditionalSelects([
+                'id',
+                'title',
+                'rating',
+                'content',
+                'is_recommended',
+                'reviewrateable_type',
+                'author_type'
+            ])
+            ->setTdAttributes(function (Views\Column $column) {
+                if ($column->isField('reviewrateable_id')) {
+                    return [
+                        'class' => 'w-full max-w-xl whitespace-nowrap',
+                    ];
+                }
+
+                if ($column->isField('content')) {
+                    return [
+                        'class' => 'hidden md:table-cell whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400',
+                    ];
+                }
+
+                if ($column->isField('author_id')) {
+                    return [
+                        'class' => 'table-cell whitespace-no-wrap text-sm leading-5',
+                    ];
+                }
+
+                return [];
+            })
             ->setBulkActions([
                 'deleteSelected' => __('Delete'),
                 'approved' => __('Approved'),
@@ -101,23 +135,31 @@ class ReviewsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Views\Column::make(__('shopper::messages.product'), 'name')
+            Views\Column::make(__('shopper::messages.product'), 'reviewrateable_id')
                 ->sortable()
                 ->secondaryHeader(function () {
-                    return view('shopper::livewire.tables.cells.input-search', ['field' => 'name', 'columnSearch' => $this->columnSearch]);
-                }),
-            Views\Column::make(__('shopper::pages/products.reviews.reviewer'))->sortable(),
-            Views\Column::make(__('shopper::pages/products.reviews.review'))->sortable(),
-            Views\Column::make(__('shopper::pages/products.reviews.status'))->sortable(),
+                    return view('shopper::livewire.tables.cells.input-search', [
+                        'field' => 'name',
+                        'columnSearch' => $this->search,
+                    ]);
+                })
+                ->view('shopper::livewire.tables.cells.reviews.product'),
+            Views\Column::make(__('shopper::pages/products.reviews.reviewer'), 'author_id')
+                ->view('shopper::livewire.tables.cells.reviews.author'),
+            Views\Column::make(__('shopper::pages/products.reviews.review'), 'content')
+                ->view('shopper::livewire.tables.cells.reviews.content'),
+            Views\Columns\BooleanColumn::make(__('shopper::pages/products.reviews.status'), 'approved'),
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
         return Review::query()
-            ->with(['reviewrateable', 'author'])
+            ->with(['reviewrateable', 'reviewrateable.media', 'author'])
             ->whereHasMorph('reviewrateable', config('shopper.system.models.product'), function (Builder $query) {
-                $query->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('name', 'like', '%' . $name . '%'));
+                $query->when(
+                    $this->columnSearch['name'] ?? null,
+                    fn (Builder $query, $name) => $query->where('name', 'like', '%' . $name . '%'));
             });
     }
 }

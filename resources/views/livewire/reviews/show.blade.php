@@ -1,7 +1,7 @@
 <div>
-    <x-shopper::breadcrumb back="shopper.reviews.index">
+    <x-shopper::breadcrumb :back="route('shopper.reviews.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" title="shopper::layout.sidebar.reviews" />
+        <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" :title="__('shopper::layout.sidebar.reviews')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -77,8 +77,12 @@
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
-                            <p class="text-sm text-secondary-900 font-medium leading-5 dark:text-white">{{ $review->title }}</p>
-                            <p class="mt-1 text-sm text-secondary-500 leading-5 dark:text-secondary-400">{{ $review->content }}</p>
+                            <p class="text-sm text-secondary-900 font-medium leading-5 dark:text-white">
+                                {{ $review->title }}
+                            </p>
+                            <p class="mt-1 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
+                                {{ $review->content }}
+                            </p>
                         </div>
                     </dd>
                 </div>
@@ -93,8 +97,12 @@
                                     <img class="h-8 w-8 rounded-full" src="{{ $review->author->picture }}" alt="">
                                 </div>
                                 <div class="ml-4 truncate">
-                                    <div class="text-sm leading-5 font-medium text-secondary-900 dark:text-white">{{ $review->author->full_name }}</div>
-                                    <div class="text-xs leading-4 text-secondary-500 truncate dark:text-secondary-400">{{ $review->author->email }}</div>
+                                    <div class="text-sm leading-5 font-medium text-secondary-900 dark:text-white">
+                                        {{ $review->author->full_name }}
+                                    </div>
+                                    <div class="text-xs leading-4 text-secondary-500 truncate dark:text-secondary-400">
+                                        {{ $review->author->email }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +124,11 @@
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">
-                            <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5 {{ $review->approved ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
+                            <span @class([
+                                'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5',
+                                'bg-green-100 text-green-800' => $review->approved,
+                                'bg-orange-100 text-orange-800' => !$review->approved,
+                            ])>
                                 {{ $review->approved ? __('shopper::pages/products.reviews.published') : __('shopper::pages/products.reviews.pending') }}
                             </span>
                         </span>
