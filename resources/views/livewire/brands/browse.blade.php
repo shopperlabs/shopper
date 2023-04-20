@@ -1,5 +1,4 @@
 <div>
-
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::layout.sidebar.brands') }}
@@ -8,12 +7,12 @@
         <x-slot name="action">
             @if($total > 0)
                 @can('add_brands')
-                    <div class="flex space-x-3">
-                    <span class="shadow-sm rounded-md">
-                        <x-shopper::buttons.primary :link="route('shopper.brands.create')">
-                            {{ __('shopper::messages.actions_label.add_new', ['name' => 'brand']) }}
-                        </x-shopper::buttons.primary>
-                    </span>
+                    <div class="flex">
+                        <span class="shadow-sm rounded-md">
+                            <x-shopper::buttons.primary :link="route('shopper.brands.create')">
+                                {{ __('shopper::messages.actions_label.add_new', ['name' => __('brand')]) }}
+                            </x-shopper::buttons.primary>
+                        </span>
                     </div>
                 @endcan
             @endif
@@ -24,7 +23,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/brands.title')"
             :content="__('shopper::pages/brands.content')"
-            :button="__('shopper::messages.actions_label.add_new', ['name' => 'brand'])"
+            :button="__('shopper::messages.actions_label.add_new', ['name' => __('brand')])"
             permission="add_brands"
             :url="route('shopper.brands.create')"
         >
@@ -136,6 +135,6 @@
         </div>
     @endif
 
-    <x-shopper::learn-more name="shopper::layout.sidebar.brands" link="brands" />
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.brands')" link="brands" />
 
 </div>

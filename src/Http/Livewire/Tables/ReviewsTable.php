@@ -1,125 +1,166 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Filter;
+use Rappasoft\LaravelLivewireTables\Views;
 use Shopper\Framework\Models\Shop\Review;
-use WireUi\Traits\Actions;
 
 class ReviewsTable extends DataTableComponent
 {
-    use Actions;
-
-    public array $bulkActions = [
-        'deleteSelected' => 'Delete',
-        'approved' => 'Approved',
-        'disapproved' => 'Disapproved',
-    ];
-
     public $columnSearch = [
         'name' => null,
-        'email' => null,
+        'author' => null,
     ];
 
-    public array $filterNames = [
-        'approved' => 'Approved',
-    ];
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id')
+            ->setAdditionalSelects([
+                'id',
+                'title',
+                'rating',
+                'content',
+                'is_recommended',
+                'reviewrateable_type',
+                'author_type',
+            ])
+            ->setTdAttributes(function (Views\Column $column) {
+                if ($column->isField('reviewrateable_id')) {
+                    return [
+                        'class' => 'w-full max-w-xl whitespace-nowrap',
+                    ];
+                }
 
-    public function boot()
+                if ($column->isField('content')) {
+                    return [
+                        'class' => 'hidden md:table-cell whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400',
+                    ];
+                }
+
+                if ($column->isField('author_id')) {
+                    return [
+                        'class' => 'table-cell whitespace-no-wrap text-sm leading-5',
+                    ];
+                }
+
+                return [];
+            })
+            ->setBulkActions([
+                'deleteSelected' => __('Delete'),
+                'approved' => __('Approved'),
+                'disapproved' => __('Disapproved'),
+            ]);
+    }
+
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
 
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            Review::whereIn('id', $this->selectedKeys())->delete();
+        if (count($this->getSelected()) > 0) {
+            Review::query()
+                ->whereIn('id', $this->getSelected())
+                ->delete();
 
-            $this->notification()->success(
-                __('shopper::components.tables.status.delete'),
-                __('::components.tables.messages.delete', ['name' => 'review(s)'])
-            );
+            Notification::make()
+                ->title(__('shopper::components.tables.status.delete'))
+                ->body(__('shopper::components.tables.messages.delete', ['name' => __('review(s)')]))
+                ->success()
+                ->send();
         }
 
         $this->selected = [];
 
-        $this->resetAll();
+        $this->clearSelected();
     }
 
-    public function approved()
+    public function approved(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            Review::whereIn('id', $this->selectedKeys())->update(['approved' => true]);
+        if (count($this->getSelected()) > 0) {
+            Review::query()
+                ->whereIn('id', $this->getSelected())
+                ->update(['approved' => true]);
 
-            $this->notification()->success(
-                __('shopper::components.tables.status.updated'),
-                __('shopper::components.tables.messages.approved', ['name' => 'reviews'])
-            );
+            Notification::make()
+                ->title(__('shopper::components.tables.status.updated'))
+                ->body(__('shopper::components.tables.messages.approved', ['name' => __('review(s)')]))
+                ->success()
+                ->send();
         }
 
         $this->selected = [];
 
-        $this->resetBulk();
+        $this->clearSelected();
     }
 
-    public function disapproved()
+    public function disapproved(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            Review::whereIn('id', $this->selectedKeys())->update(['approved' => false]);
+        if (count($this->getSelected()) > 0) {
+            Review::query()
+                ->whereIn('id', $this->getSelected())
+                ->update(['approved' => false]);
 
-            $this->notification()->success(
-                __('shopper::components.tables.status.updated'),
-                __('::components.tables.messages.disapproved', ['name' => 'reviews'])
-            );
+            Notification::make()
+                ->title(__('shopper::components.tables.status.updated'))
+                ->body(__('shopper::components.tables.messages.disapproved', ['name' => __('review(s)')]))
+                ->success()
+                ->send();
         }
 
         $this->selected = [];
 
-        $this->resetBulk();
+        $this->clearSelected();
     }
 
     public function filters(): array
     {
         return [
-            'approved' => Filter::make(__('shopper::pages/products.reviews.approved'))
-                ->select([
+            'approved' => Views\Filters\SelectFilter::make(__('shopper::pages/products.reviews.approved'))
+                ->options([
                     '' => __('shopper::layout.forms.label.any'),
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
-                ]),
+                ])
+                ->filter(fn (Builder $query, $value) => $query->where('approved', $value === 'yes')),
         ];
     }
 
     public function columns(): array
     {
         return [
-            Column::make(__('shopper::messages.product'), 'name')
+            Views\Column::make(__('shopper::messages.product'), 'reviewrateable_id')
                 ->sortable()
-                ->asHtml()
                 ->secondaryHeader(function () {
-                    return view('shopper::livewire.tables.cells.input-search', ['field' => 'name', 'columnSearch' => $this->columnSearch]);
-                }),
-            Column::make(__('shopper::pages/products.reviews.reviewer'))->sortable(),
-            Column::make(__('shopper::pages/products.reviews.review'))->sortable(),
-            Column::make(__('shopper::pages/products.reviews.status'))->sortable(),
+                    return view('shopper::livewire.tables.cells.input-search', [
+                        'field' => 'name',
+                        'columnSearch' => $this->search,
+                    ]);
+                })
+                ->view('shopper::livewire.tables.cells.reviews.product'),
+            Views\Column::make(__('shopper::pages/products.reviews.reviewer'), 'author_id')
+                ->view('shopper::livewire.tables.cells.reviews.author'),
+            Views\Column::make(__('shopper::pages/products.reviews.review'), 'content')
+                ->view('shopper::livewire.tables.cells.reviews.content'),
+            Views\Columns\BooleanColumn::make(__('shopper::pages/products.reviews.status'), 'approved'),
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
         return Review::query()
-            ->with(['reviewrateable', 'author'])
+            ->with(['reviewrateable', 'reviewrateable.media', 'author'])
             ->whereHasMorph('reviewrateable', config('shopper.system.models.product'), function (Builder $query) {
-                $query->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('name', 'like', '%' . $name . '%'));
-            })
-            ->when($this->getFilter('approved'), fn ($query, $active) => $query->where('approved', $active === 'yes'));
-    }
-
-    public function rowView(): string
-    {
-        return 'shopper::livewire.tables.rows.reviews-table';
+                $query->when(
+                    $this->columnSearch['name'] ?? null,
+                    fn (Builder $query, $name) => $query->where('name', 'like', '%' . $name . '%')
+                );
+            });
     }
 }

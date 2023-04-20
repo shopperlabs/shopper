@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Brands;
 
 use Illuminate\Contracts\View\View;
@@ -31,12 +33,12 @@ class Create extends AbstractBaseComponent
         'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }

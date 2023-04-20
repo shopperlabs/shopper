@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -61,13 +64,13 @@ class Initialization extends Component
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function mount()
+    public function mount(): void
     {
-        $defaultCurrency = Currency::where('code', shopper_currency())->first();
+        $defaultCurrency = Currency::query()->where('code', shopper_currency())->first();
         $this->shop_currency_id = (int) $defaultCurrency->id;
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->shop_about = $value;
     }
@@ -99,15 +102,15 @@ class Initialization extends Component
         return false;
     }
 
-    public function updatedSelectedCountryId($choice)
+    public function updatedSelectedCountryId(array $choice): void
     {
         if (count($choice) > 0 && $choice['value'] !== '0') {
             $this->shop_country_id = (int) $choice['value'];
-            $country = Country::find($this->shop_country_id);
+            $country = Country::query()->find($this->shop_country_id);
             $countryCurrency = array_slice($country->currencies, 0, 1);
 
             foreach ($countryCurrency as $code => $name) {
-                if ($currency = Currency::where('code', $code)->first()) {
+                if ($currency = Currency::query()->where('code', $code)->first()) {
                     $this->shop_currency_id = $currency->id;
                 }
             }
@@ -122,7 +125,7 @@ class Initialization extends Component
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate();
 
@@ -166,7 +169,7 @@ class Initialization extends Component
         $this->redirectRoute('shopper.dashboard');
     }
 
-    public function storeHasSetup()
+    public function storeHasSetup(): void
     {
         (new InventoryRepository())->create([
             'name' => $this->shop_name,
@@ -185,16 +188,16 @@ class Initialization extends Component
         (new ChannelRepository())->create([
             'name' => $name = __('Web Store'),
             'slug' => $name,
-            'url' => env('APP_URL'),
+            'url' => config('app.url'),
             'is_default' => true,
         ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.initialization', [
-            'countries' => Cache::get('countries-settings', fn () => Country::orderBy('name')->get()),
-            'currencies' => Cache::get('currencies-setting', fn () => Currency::orderBy('name')->get()),
+            'countries' => Cache::get('countries-settings', fn () => Country::query()->orderBy('name')->get()),
+            'currencies' => Cache::get('currencies-setting', fn () => Currency::query()->orderBy('name')->get()),
         ]);
     }
 }

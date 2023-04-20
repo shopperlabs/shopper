@@ -1,31 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-class ShopperExceptionHandler extends ExceptionHandler
+final class ShopperExceptionHandler extends ExceptionHandler
 {
     /**
      * Report or log an exception.
      *
      * @throws Throwable
      */
-    public function report(Throwable $e)
+    public function report(Throwable $e): void
     {
         parent::report($e);
     }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws Throwable
-     */
-    public function render($request, Throwable $e)
+    public function render($request, Throwable $e): Response
     {
         if ($request->user() && $request->user()->hasRole(config('shopper.system.users.admin_role'))) {
             return response()->view(

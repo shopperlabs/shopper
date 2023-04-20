@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -11,7 +13,7 @@ class SidebarServiceProvider extends ServiceProvider
     /**
      * Sidebar Manager.
      */
-    public function boot(SidebarManager $manager)
+    public function boot(SidebarManager $manager): void
     {
         $manager->register(AdminSidebar::class);
     }

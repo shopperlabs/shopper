@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Services\TwoFactor;
 
 use BaconQrCode\Renderer\Color\Rgb;
@@ -24,7 +26,7 @@ trait TwoFactorAuthenticatable
     /**
      * Replace the given recovery code with a new one in the user's stored codes.
      */
-    public function replaceRecoveryCode(string $code)
+    public function replaceRecoveryCode(string $code): void
     {
         $this->forceFill([
             'two_factor_recovery_codes' => encrypt(str_replace(

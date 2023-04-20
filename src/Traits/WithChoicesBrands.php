@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits;
 
 trait WithChoicesBrands
 {
-    public $selectedBrand = [];
+    public array $selectedBrand = [];
 
-    public function updatedSelectedBrand($choice)
+    public function updatedSelectedBrand(array $choice): void
     {
         if (count($choice) > 0 && $choice['value'] !== '0') {
             $this->brand_id = (int) $choice['value'];

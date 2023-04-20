@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders\Auth;
 
 use Illuminate\Database\Seeder;
@@ -10,14 +12,10 @@ class RolesTableSeeder extends Seeder
 {
     use DisableForeignKeys;
 
-    /**
-     * Run the database seed.
-     */
-    public function run()
+    public function run(): void
     {
         $this->disableForeignKeys();
 
-        // Create Roles
         Role::create([
             'name' => config('shopper.system.users.admin_role'),
             'display_name' => 'Administrator',

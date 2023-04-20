@@ -11,7 +11,7 @@
     <section aria-labelledby="products_variations_heading">
         <div class="mt-5 bg-white dark:bg-secondary-800 pt-5 shadow rounded-md">
             <div class="px-4 sm:px-5 flex items-center justify-between space-x-4">
-                <x-shopper::forms.search label="shopper::pages/products.variants.search_label" placeholder="shopper::pages/products.variants.search_placeholder" />
+                <x-shopper::forms.search :label="__('shopper::pages/products.variants.search_label')" :placeholder="__('shopper::pages/products.variants.search_placeholder')" />
                 <div>
                     <span class="shadow-sm rounded-md">
                         <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.add-variant', {{ json_encode([$product->id, $currency]) }})" type="button">
@@ -43,10 +43,10 @@
                         <tbody class="divide-y divide-secondary-200 dark:divide-secondary-700">
                             @forelse($variants as $variant)
                                 <tr>
-                                    <td class="px-6 py-3 max-w-xl text-sm leading-5 font-medium text-secondary-900 dark:text-white">
-                                        <div class="flex items-center space-x-3 lg:pl-2">
+                                    <td class="px-6 py-3 text-sm leading-5 font-medium text-secondary-900 dark:text-white">
+                                        <div class="w-full max-w-2xl whitespace-nowrap flex items-center space-x-3 lg:pl-2">
                                             <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $variant->is_visible ? 'bg-green-600': 'bg-secondary-400' }}"></div>
-                                            <div class="flex items-center">
+                                            <div class="truncate flex items-center">
                                                 @if($variant->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
                                                     <img class="h-8 w-8 rounded object-cover object-center" src="{{ $variant->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />
                                                 @else
@@ -68,9 +68,7 @@
                                     </td>
                                     <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                         <div class="flex items-center">
-                                            <span class="mr-2 text-xs px-1.5 inline-flex leading-5 font-medium rounded-full {{ $variant->stock < 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
-                                                {{ $variant->stock }}
-                                            </span>
+                                            <x-shopper::stock-badge :stock="$variant->stock" />
                                             {{ __('shopper::messages.in_stock') }}
                                         </div>
                                     </td>
@@ -85,14 +83,14 @@
                                             <x-slot name="content">
                                                 <div class="py-1">
                                                     <a href="{{ route('shopper.products.variant', ['product' => $product->id, 'id' => $variant->id]) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
-                                                        <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
+                                                        <x-heroicon-o-pencil class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
                                                         {{ __('shopper::layout.forms.actions.edit') }}
                                                     </a>
                                                 </div>
                                                 <div class="border-t border-secondary-100 dark:border-secondary-600"></div>
                                                 <div class="py-1">
                                                     <button wire:click="remove({{ $variant->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 dark:hover:bg-secondary-700 hover:bg-secondary-100 dark:hover:text-white hover:text-secondary-900 focus:outline-none focus:bg-secondary-100 dark:focus:bg-secondary-700 dark:focus:text-white focus:text-secondary-900" role="menuitem">
-                                                        <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
+                                                        <x-heroicon-o-trash class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
                                                         {{ __('shopper::layout.forms.actions.delete') }}
                                                     </button>
                                                 </div>

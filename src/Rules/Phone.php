@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Rules;
 
 use Illuminate\Contracts\Validation\Rule;

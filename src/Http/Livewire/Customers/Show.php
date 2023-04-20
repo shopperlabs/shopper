@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Customers;
 
 use Illuminate\Contracts\View\View;
@@ -24,7 +26,7 @@ class Show extends AbstractBaseComponent
 
     protected $listeners = ['profileUpdate'];
 
-    public function mount(Model $customer)
+    public function mount(Model $customer): void
     {
         $this->customer = $customer->load('addresses');
         $this->user_id = $customer->id;
@@ -34,7 +36,7 @@ class Show extends AbstractBaseComponent
         $this->picture = $customer->picture;
     }
 
-    public function profileUpdate()
+    public function profileUpdate(): void
     {
         $this->email = $this->customer->email;
         $this->last_name = $this->customer->last_name;
@@ -42,7 +44,7 @@ class Show extends AbstractBaseComponent
         $this->picture = $this->customer->picture;
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 

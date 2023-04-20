@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Shopper\Framework\Models\User\Role as RoleModel;
@@ -19,14 +22,14 @@ class Role extends Component
 
     public ?string $description = null;
 
-    public function mount(RoleModel $role)
+    public function mount(RoleModel $role): void
     {
         $this->name = $role->name;
         $this->display_name = $role->display_name;
         $this->description = $role->description;
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate([
             'name' => [
@@ -47,7 +50,7 @@ class Role extends Component
         $this->notification()->success(__('Updated'), __('Role updated successfully!'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.management.role');
     }

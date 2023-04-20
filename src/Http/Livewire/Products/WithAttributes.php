@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Carbon\Carbon;
@@ -16,11 +18,11 @@ trait WithAttributes
 
     public ?string $description = null;
 
-    public ?string $price_amount = null;
+    public ?int $price_amount = null;
 
-    public ?string $old_price_amount = null;
+    public ?int $old_price_amount = null;
 
-    public ?string $cost_amount = null;
+    public ?int $cost_amount = null;
 
     public bool $backorder = false;
 
@@ -28,13 +30,13 @@ trait WithAttributes
 
     public bool $isVisible = true;
 
-    public int|string $securityStock = 0;
+    public int $securityStock = 0;
 
     public ?string $publishedAt = null;
 
     public ?string $publishedAtFormatted = null;
 
-    public ?string $type = 'deliverable';
+    public string $type = 'deliverable';
 
     public ?float $weightValue = null;
 

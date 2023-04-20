@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
@@ -7,42 +9,21 @@ use Illuminate\Notifications\Notification;
 
 class AdminSendCredentials extends Notification
 {
-    /**
-     * Password Attribute.
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(string $password)
+    public function __construct(public string $password)
     {
-        $this->password = $password;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array
-     */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage())
             ->subject(__('Welcome to Shopper'))
             ->greeting("Hello {$notifiable->full_name}")
-            ->line(__('An account has been created for you as Administrator on the website ') . env('APP_URL'))
+            ->line(__('An account has been created for you as Administrator on the website ') . config('app.url'))
             ->line("Email: {$notifiable->email} - Password: {$this->password}")
             ->line(__('You can use the following link to login:'))
             ->action('Login', route('shopper.login'))

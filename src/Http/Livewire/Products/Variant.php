@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -11,11 +14,9 @@ use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
-use WireUi\Traits\Actions;
 
 class Variant extends Component
 {
-    use Actions;
     use WithFileUploads;
     use WithUploadProcess;
     use WithAttributes;
@@ -35,7 +36,7 @@ class Variant extends Component
         'onVariantUpdated' => 'render',
     ];
 
-    public function mount($product, $variant, string $currency)
+    public function mount($product, $variant, string $currency): void
     {
         $this->inventories = (new InventoryRepository())->get(['name', 'id']);
         $this->product = $product;
@@ -51,7 +52,7 @@ class Variant extends Component
         $this->images = $variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate([
             'name' => [
@@ -92,13 +93,14 @@ class Variant extends Component
 
         $this->emitSelf('onVariantUpdated');
 
-        $this->notification()->success(
-            __('shopper::layout.status.updated'),
-            __('shopper::pages/products.notifications.variation_update')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('shopper::pages/products.notifications.variation_update'))
+            ->success()
+            ->send();
     }
 
-    public function mediaDeleted()
+    public function mediaDeleted(): void
     {
         $this->images = $this->variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }

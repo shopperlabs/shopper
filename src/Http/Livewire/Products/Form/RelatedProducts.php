@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use WireUi\Traits\Actions;
 
 class RelatedProducts extends Component
 {
-    use Actions;
-
     public Model $product;
 
     public Collection $relatedProducts;
@@ -20,23 +20,24 @@ class RelatedProducts extends Component
         'onProductsAddInRelated' => 'render',
     ];
 
-    public function mount($product)
+    public function mount($product): void
     {
         $this->product = $product;
         $this->relatedProducts = $product->relatedProducts;
     }
 
-    public function remove(int $id)
+    public function remove(int $id): void
     {
         $this->product->relatedProducts()->detach($id);
         $this->relatedProducts = $this->product->relatedProducts;
 
         $this->emitSelf('onProductsAddInRelated');
 
-        $this->notification()->success(
-            __('shopper::layout.status.delete'),
-            __('shopper::pages/products.notifications.remove_related')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.delete'))
+            ->body(__('shopper::pages/products.notifications.remove_related'))
+            ->success()
+            ->send();
     }
 
     public function getProductsIdsProperty(): array

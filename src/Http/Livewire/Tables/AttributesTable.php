@@ -1,130 +1,159 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Filter;
+use Rappasoft\LaravelLivewireTables\Views;
 use Shopper\Framework\Models\Shop\Product\Attribute;
-use WireUi\Traits\Actions;
 
 class AttributesTable extends DataTableComponent
 {
-    use Actions;
-
-    public string $defaultSortColumn = 'name';
+    protected $model = Attribute::class;
 
     public $columnSearch = [
         'name' => null,
         'type' => null,
     ];
 
-    public array $bulkActions = [
-        'deleteSelected' => 'Delete',
-        'enabled' => 'Enable',
-        'disabled' => 'Disable',
-    ];
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id')
+            ->setAdditionalSelects(['id', 'is_enabled'])
+            ->setDefaultSort('name')
+            ->setTableRowUrl(fn ($row) => route('shopper.settings.attributes.edit', $row))
+            ->setTdAttributes(function (Views\Column $column) {
+                if ($column->isField('type')) {
+                    return [
+                        'class' => 'text-secondary-500',
+                    ];
+                }
 
-    public function boot()
+                return [];
+            })
+            ->setBulkActions([
+                'deleteSelected' => __('Delete'),
+                'enabled' => __('Enable'),
+                'disabled' => __('Disable'),
+            ]);
+    }
+
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
 
-    public function deleteSelected()
+    public function deleteSelected(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            Attribute::whereIn('id', $this->selectedKeys())->delete();
+        if (count($this->getSelected()) > 0) {
+            Attribute::query()->whereIn('id', $this->getSelected())->delete();
 
-            $this->notification()->success(__('Deleted'), __('The attribute has successfully removed!'));
+            Notification::make()
+                ->title(__('shopper::components.tables.status.delete'))
+                ->body(__('The attribute has successfully removed!'))
+                ->success()
+                ->send();
         }
 
         $this->selected = [];
 
-        $this->resetAll();
+        $this->clearSelected();
     }
 
     public function enabled(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            Attribute::whereIn('id', $this->selectedKeys())->update(['is_enabled' => true]);
+        if (count($this->getSelected()) > 0) {
+            Attribute::query()->whereIn('id', $this->getSelected())->update(['is_enabled' => true]);
 
-            $this->notification()->success(__('Updated'), __('The attribute has successfully enabled!'));
+            Notification::make()
+                ->title(__('shopper::components.tables.status.updated'))
+                ->body(__('The attribute has successfully enabled!'))
+                ->success()
+                ->send();
         }
 
         $this->selected = [];
 
-        $this->resetBulk();
+        $this->clearSelected();
     }
 
     public function disabled(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            Attribute::whereIn('id', $this->selectedKeys())->update(['is_enabled' => false]);
+        if (count($this->getSelected()) > 0) {
+            Attribute::query()->whereIn('id', $this->getSelected())->update(['is_enabled' => false]);
 
-            $this->notification()->success(__('Updated'), __('The attribute has successfully disabled!'));
+            Notification::make()
+                ->title(__('shopper::components.tables.status.updated'))
+                ->body(__('The attribute has successfully disabled!'))
+                ->success()
+                ->send();
         }
 
-        $this->resetBulk();
+        $this->clearSelected();
     }
 
     public function filters(): array
     {
         return [
-            'is_searchable' => Filter::make('Is Searchable')
-                ->select([
-                    '' => __('Any'),
-                    'yes' => __('Yes'),
-                    'no' => __('No'),
-                ]),
-            'is_filterable' => Filter::make('Is Filterable')
-                ->select([
-                    '' => __('Any'),
-                    'yes' => __('Yes'),
-                    'no' => __('No'),
-                ]),
+            'is_searchable' => Views\Filters\SelectFilter::make(__('Is Searchable'))
+                ->options([
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
+                ])
+                ->filter(function (Builder $builder, string $value) {
+                    match ($value) {
+                        'yes' => $builder->where('is_searchable', true),
+                        'no' => $builder->where('is_searchable', false),
+                    };
+                }),
+            'is_filterable' => Views\Filters\SelectFilter::make(__('Is Filterable'))
+                ->options([
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
+                ])
+                ->filter(
+                    fn (Builder $builder, string $value) => match ($value) {
+                        'yes' => $builder->where('is_filterable', true),
+                        'no' => $builder->where('is_filterable', false),
+                    }
+                ),
+            'is_enabled' => Views\Filters\SelectFilter::make(__('Is Enabled'))
+                ->options([
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
+                ])
+                ->filter(
+                    fn (Builder $builder, string $value) => match ($value) {
+                        'yes' => $builder->where('is_enabled', true),
+                        'no' => $builder->where('is_enabled', false),
+                    }
+                ),
         ];
     }
 
     public function columns(): array
     {
         return [
-            Column::make('Name')
+            Views\Column::make(__('shopper::layout.forms.label.name'), 'name')
                 ->sortable()
                 ->searchable()
-                ->format(function ($value, $column, $row) {
-                    return view('shopper::livewire.tables.cells.attributes.name')->with('attribute', $row);
-                }),
-            Column::make('Type')
+                ->view('shopper::livewire.tables.cells.attributes.name'),
+            Views\Column::make(__('shopper::layout.forms.label.type'), 'type')
                 ->sortable()
                 ->searchable()
-                ->format(function ($value, $column, $row) {
-                    return $row->type_formatted;
-                }),
-            Column::make('Is Searchable', 'is_searchable')
-                ->sortable()
-                ->addClass('text-gray-500 dark:text-gray-400')
-                ->format(function ($value) {
-                    return $value ? __('Yes') : __('No');
-                }),
-            Column::make('Is Filterable', 'is_filterable')
-                ->sortable()
-                ->format(function ($value) {
-                    return $value ? __('Yes') : __('No');
-                }),
-            Column::make('Updated At', 'updated_at')
-                ->sortable()
-                ->addClass('hidden md:table-cell')
-                ->format(function ($value) {
-                    return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>" . $value->formatLocalized('%d %B, %Y') . '</time>' : '';
-                })->asHtml(),
+                ->format(fn ($value, $row, Views\Column $column) => $row->type_formatted),
+            Views\Columns\BooleanColumn::make(__('Is Searchable'), 'is_searchable')
+                ->sortable(),
+            Views\Columns\BooleanColumn::make(__('Is Filterable'), 'is_filterable')
+                ->sortable(),
+            Views\Column::make(__('shopper::layout.forms.label.updated_at'), 'updated_at')
+                ->view('shopper::livewire.tables.cells.date'),
         ];
-    }
-
-    public function query(): Builder
-    {
-        return Attribute::query()
-            ->when($this->getFilter('is_searchable'), fn ($query, $active) => $query->where('is_searchable', $active === 'yes'))
-            ->when($this->getFilter('is_searchable'), fn ($query, $active) => $query->where('is_searchable', $active === 'yes'));
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework;
 
 use Illuminate\Support\Facades\Route;
@@ -11,7 +13,7 @@ class Shopper
      */
     public static function version(): string
     {
-        return '1.0.0';
+        return '1.0.7';
     }
 
     /**
@@ -32,8 +34,6 @@ class Shopper
 
     /**
      * Register the Shop routes.
-     *
-     * @return Shopper
      */
     public function initializeRoute(): self
     {

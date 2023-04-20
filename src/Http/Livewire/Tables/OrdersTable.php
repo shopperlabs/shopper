@@ -1,105 +1,139 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Filter;
+use Rappasoft\LaravelLivewireTables\Views;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
-use WireUi\Traits\Actions;
 
 class OrdersTable extends DataTableComponent
 {
-    use Actions;
-
-    public bool $columnSelect = true;
-
     public $columnSearch = [
         'number' => null,
     ];
 
-    public function boot()
+    public function boot(): void
     {
         $this->queryString['columnSearch'] = ['except' => null];
     }
 
-    public function bulkActions(): array
+    public function configure(): void
     {
-        return [
-            'archived' => __('Archived'),
-        ];
+        $this->setPrimaryKey('id')
+            ->setAdditionalSelects(['id', 'currency', 'shipping_total', 'shipping_method'])
+            ->setFilterLayoutSlideDown()
+            ->setTdAttributes(function (Views\Column $column) {
+                if ($column->isField('id')) {
+                    return [
+                        'class' => 'w-full max-w-lg whitespace-nowrap truncate',
+                    ];
+                }
+                if ($column->isField('price_amount')) {
+                    return [
+                        'class' => 'text-right',
+                    ];
+                }
+
+                return [];
+            })
+            ->setBulkActions([
+                'archived' => __('Archived'),
+            ]);
     }
 
-    public function archived()
+    public function archived(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            Order::whereIn('id', $this->selectedKeys())->delete();
+        if (count($this->getSelected()) > 0) {
+            Order::query()->whereIn('id', $this->getSelected())->delete();
 
-            $this->notification()->success(__('Archived'), __('The orders has successfully archived!'));
+            Notification::make()
+                ->title(__('Archived'))
+                ->body(__('The orders has successfully archived!'))
+                ->success()
+                ->send();
         }
 
         $this->selected = [];
 
-        $this->resetAll();
+        $this->clearSelected();
     }
 
     public function filters(): array
     {
         return [
-            'status' => Filter::make('Status')
-                ->select(array_merge(
-                    ['' => __('Any')],
+            'status' => Views\Filters\SelectFilter::make(__('shopper::layout.forms.label.status'))
+                ->options(array_merge(
+                    ['' => __('shopper::layout.forms.label.any')],
                     OrderStatus::values()
-                )),
+                ))
+                ->filter(fn (Builder $query, $status) => $query->where('status', $status)),
+            'created_at' => Views\Filters\DateFilter::make(__('shopper::messages.date'))
+                ->config([
+                    'max' => now(),
+                ]),
+            'total' => Views\Filters\NumberFilter::make(__('shopper::pages/customers.orders.total'))
+                ->filter(fn (Builder $query, $value) => $query->where('price_amount', '>=', $value)),
+            'customer' => Views\Filters\TextFilter::make(__('Customer'))
+                ->config([
+                    'placeholder' => __('Search by First or last name'),
+                    'maxlength' => '25',
+                ])
+                ->filter(
+                    fn (Builder $query, string $value) => $query->whereHas('customer', function (Builder $query) use ($value) {
+                        $query->where('first_name', 'like', '%' . $value . '%')
+                            ->orWhere('last_name', 'like', '%' . $value . '%');
+                    })
+                ),
+            'product' => Views\Filters\TextFilter::make(__('Product'))
+                ->config([
+                    'placeholder' => __('Search by Name'),
+                    'maxlength' => '25',
+                ])
+                ->filter(
+                    fn (Builder $query, string $value) => $query->whereHas('items', function (Builder $query) use ($value) {
+                        $query->where('name', 'like', '%' . $value . '%');
+                    })
+                ),
         ];
     }
 
     public function columns(): array
     {
         return [
-            Column::make('#', 'number')
+            Views\Column::make('#', 'number')
                 ->sortable()
-                ->format(function ($value, $column, $row) {
-                    return view('shopper::livewire.tables.cells.orders.number')->with('order', $row);
-                }),
-            Column::make('Date', 'created_at')
+                ->view('shopper::livewire.tables.cells.orders.number'),
+            Views\Column::make(__('shopper::messages.date'), 'created_at')
                 ->sortable()
-                ->format(function ($value) {
-                    return $value ? "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-gray-500 dark:text-gray-400'>" . $value->diffForHumans() . '</time>' : '';
-                })->asHtml(),
-            Column::make('Status', 'status')
-                ->sortable()
-                ->format(function ($value, $column, $row) {
-                    return view('shopper::livewire.tables.cells.orders.status')->with('order', $row);
-                }),
-            Column::make('Customer', 'user_id')
+                ->format(fn ($value) => "<time datetime='" . $value->format('Y-m-d') . "' class='capitalize text-secondary-500 dark:text-secondary-400'>" . $value->diffForHumans() . '</time>')
+                ->html(),
+            Views\Column::make(__('shopper::layout.forms.label.status'), 'status')
+                ->view('shopper::livewire.tables.cells.orders.status'),
+            Views\Column::make(__('Customer'), 'user_id')
                 ->searchable(function (Builder $query, $searchTerm) {
                     $query->whereHas('customer', function (Builder $query) use ($searchTerm) {
                         $query->where('first_name', 'like', '%' . $searchTerm . '%')
                             ->orWhere('last_name', 'like', '%' . $searchTerm . '%');
                     });
                 })
-                ->sortable()
-                ->format(function ($value, $column, $row) {
-                    return view('shopper::livewire.tables.cells.orders.customer')->with('customer', $row->customer);
-                }),
-            Column::make('Purchased')
-                ->format(function ($value, $column, $row) {
-                    return view('shopper::livewire.tables.cells.orders.purchased')->with('order', $row);
-                }),
-            Column::make('Total')
-                ->addClass('text-right')
-                ->format(function ($value, $column, $row) {
-                    return "<span class='text-gray-500 dark:text-gray-400'>" . $row->total . '</span>';
-                })->asHtml(),
+                ->view('shopper::livewire.tables.cells.orders.customer'),
+            Views\Column::make(__('Purchased'), 'id')
+                ->view('shopper::livewire.tables.cells.orders.purchased'),
+            Views\Column::make(__('shopper::pages/customers.orders.total'), 'price_amount')
+                ->format(fn ($value, $row) => "<span class='text-secondary-500 dark:text-secondary-400'>" . $row->total . '</span>')
+                ->html(),
         ];
     }
 
-    public function query(): Builder
+    public function builder(): Builder
     {
-        return Order::query()->with(['customer', 'items'])->withCount('items')
-            ->when($this->getFilter('status'), fn ($query, $status) => $query->where('status', $status));
+        return Order::query()
+            ->with(['customer', 'items'])
+            ->withCount('items');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
@@ -25,7 +27,7 @@ class Edit extends AbstractBaseComponent
 
     protected $listeners = ['addSelectedProducts', 'addSelectedCustomers'];
 
-    public function mount(Discount $discount)
+    public function mount(Discount $discount): void
     {
         $this->discount = $discount->load('items');
         $this->discountId = $discount->id;
@@ -56,7 +58,7 @@ class Edit extends AbstractBaseComponent
             }
             $this->selectedCustomers = $customers->pluck('id')->all();
 
-            $this->customers = (new  UserRepository())
+            $this->customers = (new UserRepository())
                 ->makeModel()
                 ->whereIn('id', $this->selectedCustomers)
                 ->get();
@@ -95,7 +97,7 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         if ($this->minRequired !== 'none') {
             $this->validate(['minRequiredValue' => 'required']);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     'title' => 'Gérer les commandes et les détails des clients',

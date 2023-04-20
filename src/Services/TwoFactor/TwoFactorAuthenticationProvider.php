@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Services\TwoFactor;
 
 use PragmaRX\Google2FA\Google2FA;
@@ -7,16 +9,8 @@ use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuth
 
 class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProviderContract
 {
-    /**
-     * The underlying library providing two factor authentication helper services.
-     *
-     * @var \PragmaRX\Google2FA\Google2FA
-     */
-    protected $engine;
-
-    public function __construct(Google2FA $engine)
+    public function __construct(protected Google2FA $engine)
     {
-        $this->engine = $engine;
     }
 
     public function generateSecretKey(): string

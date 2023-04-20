@@ -1,47 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Shopper\Framework\Repositories\DiscountRepository;
 
 class DiscountController extends ShopperBaseController
 {
-    /**
-     * Display Discount Index.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function index()
+    public function index(): View
     {
         $this->authorize('browse_discounts');
 
         return view('shopper::pages.discounts.index');
     }
 
-    /**
-     * Display Create Discount View.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function create()
+    public function create(): View
     {
         $this->authorize('add_discounts');
 
         return view('shopper::pages.discounts.create');
     }
 
-    /**
-     * Display edit view.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function edit(int $id)
+    public function edit(int $id): View
     {
         $this->authorize('edit_discounts');
 

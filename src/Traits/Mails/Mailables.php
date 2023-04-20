@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits\Mails;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use function is_array;
@@ -24,7 +27,7 @@ trait Mailables
         return self::mailablesList();
     }
 
-    public static function getMailable($key, $name)
+    public static function getMailable(string $key, string $name): Collection
     {
         return collect(self::getMailables())->where($key, $name);
     }
@@ -78,12 +81,12 @@ trait Mailables
                 return $param->name;
             });
 
-            $filteredparams = [];
+            $filteredParams = [];
 
             $reflector = new ReflectionClass($mailable);
 
             if (! $args->isEmpty()) {
-                return $reflector->newInstanceArgs($filteredparams);
+                return $reflector->newInstanceArgs($filteredParams);
             }
 
             DB::rollBack();
@@ -188,7 +191,6 @@ trait Mailables
     }
 
     /**
-     * @param $mailable
      * @return mixed|void
      *
      * @throws ReflectionException
@@ -210,10 +212,8 @@ trait Mailables
 
     /**
      * Determine if the mailable class exist.
-     *
-     * @return bool
      */
-    protected static function mailable_exists($mailable)
+    protected static function mailable_exists($mailable): bool
     {
         if (! class_exists($mailable)) {
             return false;
@@ -245,11 +245,9 @@ trait Mailables
     }
 
     /**
-     * @return array|\Illuminate\Support\Collection
-     *
      * @throws ReflectionException
      */
-    private static function getMailableViewData($mailable, $mailable_data)
+    private static function getMailableViewData($mailable, $mailable_data): Collection|array
     {
         $traitProperties = [];
 
@@ -285,13 +283,11 @@ trait Mailables
 
         $mailableData = collect($classProps)->merge($withFuncData);
 
-        $data = $mailableData->map(function ($parameter) use ($mailable_data) {
-            return [
-                'key' => $parameter,
-                'value' => property_exists($mailable_data, $parameter) ? $mailable_data->{$parameter} : null,
-                'data' => property_exists($mailable_data, $parameter) ? self::viewDataInspect($mailable_data->{$parameter}) : null,
-            ];
-        });
+        $data = $mailableData->map(fn ($parameter) => [
+            'key' => $parameter,
+            'value' => property_exists($mailable_data, $parameter) ? $mailable_data->{$parameter} : null,
+            'data' => property_exists($mailable_data, $parameter) ? self::viewDataInspect($mailable_data->{$parameter}) : null,
+        ]);
 
         return $data->all();
     }

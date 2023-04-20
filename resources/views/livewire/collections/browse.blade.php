@@ -11,7 +11,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper::buttons.primary :link="route('shopper.collections.create')">
-                                {{ __('shopper::messages.actions_label.add_new', ['name' => 'collection']) }}
+                                {{ __('shopper::messages.actions_label.add_new', ['name' => __('collection')]) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -24,7 +24,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/collections.title')"
             :content="__('shopper::pages/collections.content')"
-            :button="__('shopper::messages.actions_label.add_new', ['name' => 'collection'])"
+            :button="__('shopper::messages.actions_label.add_new', ['name' => __('collection')])"
             permission="add_collections"
             :url="route('shopper.collections.create')"
         >
@@ -154,6 +154,6 @@
         </div>
     @endif
 
-    <x-shopper::learn-more name="shopper::layout.sidebar.collections" link="collections" />
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.collections')" link="collections" />
 
 </div>

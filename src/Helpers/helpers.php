@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Money\Currencies\ISOCurrencies;
@@ -42,7 +44,7 @@ if (! \function_exists('generate_number')) {
         return sprintf(
             '%s%s',
             $generator['prefix'],
-            str_pad($next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
+            str_pad((string) $next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
         );
     }
 }
@@ -176,7 +178,7 @@ if (! \function_exists('shopper_setting')) {
     /**
      * Return shopper setting from the setting table.
      */
-    function shopper_setting(string $key): ?string
+    function shopper_setting(string $key): mixed
     {
         $setting = Cache::remember("shopper-setting-{$key}", 60 * 60 * 24, fn () => Setting::query()->where('key', $key)->first());
 

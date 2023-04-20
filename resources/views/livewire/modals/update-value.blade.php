@@ -18,7 +18,7 @@
                 @if($type === 'colorpicker')
                     <div wire:ignore>
                         <x-shopper::label :value="__('Key')" />
-                        <x-shopper::forms.color-picker name="key" wire:model.defer="key" placeholder="#9800BK" />
+                        <x-color-picker wire:model.defer="key" placeholder="#9800BK" />
                         <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">{{ __('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format') }}</p>
                     </div>
                     @error('key')
@@ -37,12 +37,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper::buttons.primary wire:click="save" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                {{ __('Update') }}
+                {{ __('shopper::layout.forms.actions.update') }}
             </x-shopper::buttons.primary>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
-                {{ __('Cancel') }}
+                {{ __('shopper::layout.forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

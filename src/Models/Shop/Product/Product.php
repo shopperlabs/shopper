@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -9,13 +11,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Framework\Contracts\ReviewRateable;
+use Shopper\Framework\Helpers\Price;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Traits\HasPrice;
 use Shopper\Framework\Models\Traits\HasSlug;
 use Shopper\Framework\Models\Traits\HasStock;
 use Shopper\Framework\Models\Traits\ReviewRateable as ReviewRateableTrait;
-use Shopper\Helpers\Price;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -78,6 +80,7 @@ class Product extends Model implements HasMedia, ReviewRateable
         'featured' => 'boolean',
         'is_visible' => 'boolean',
         'requires_shipping' => 'boolean',
+        'backorder' => 'boolean',
         'published_at' => 'datetime',
     ];
 

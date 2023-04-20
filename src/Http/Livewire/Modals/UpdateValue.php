@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -22,7 +24,7 @@ class UpdateValue extends ModalComponent
 
     public string $key;
 
-    public function mount(string $name, string $type, int $id)
+    public function mount(string $name, string $type, int $id): void
     {
         $value = AttributeValue::query()->find($id);
 
@@ -38,7 +40,7 @@ class UpdateValue extends ModalComponent
         return 'lg';
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate($this->rules());
 

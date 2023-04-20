@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     'forms' => [
@@ -18,7 +20,7 @@ return [
             'first_name' => 'Prénom',
             'last_name' => 'Nom',
             'full_name' => 'Nom complet',
-            'phone_number' => 'Numéro',
+            'phone_number' => 'Numéro de téléphone',
             'name' => 'Nom',
             'slug' => 'Slug',
             'website' => 'Site web',

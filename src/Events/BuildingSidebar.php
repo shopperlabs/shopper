@@ -1,40 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Events;
 
 use Maatwebsite\Sidebar\Menu;
 
 class BuildingSidebar
 {
-    /**
-     * Menu.
-     *
-     * @var Menu
-     */
-    protected $menu;
-
-    /**
-     * BuildingSidebar constructor.
-     */
-    public function __construct(Menu $menu)
+    public function __construct(protected Menu $menu)
     {
-        $this->menu = $menu;
     }
 
-    /**
-     * Add a menu group to the menu.
-     */
-    public function add(Menu $menu)
+    public function add(Menu $menu): void
     {
         $this->menu->add($menu);
     }
 
-    /**
-     * Get the current Laravel-Sidebar menu.
-     *
-     * @return Menu
-     */
-    public function getMenu()
+    public function getMenu(): Menu
     {
         return $this->menu;
     }

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Shopper\Framework\Models\User\Role;
@@ -14,7 +17,7 @@ class UsersRole extends Component
 
     public Role $role;
 
-    public function removeUser(int $id)
+    public function removeUser(int $id): void
     {
         (new UserRepository())->getById($id)->delete();
 
@@ -23,7 +26,7 @@ class UsersRole extends Component
         $this->notification()->success(__('Deleted'), __('Admin deleted successfully!'));
     }
 
-    public function render()
+    public function render(): View
     {
         $users = (new UserRepository())
             ->makeModel()

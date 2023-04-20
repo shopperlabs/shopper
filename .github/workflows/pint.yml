@@ -1,4 +1,4 @@
-name: fix-code-style
+name: pint
 
 on: push
 
@@ -21,4 +21,4 @@ jobs:
       -   name: Commit changes
           uses: stefanzweifel/git-auto-commit-action@v4
           with:
-            commit_message: Apply laravel pint formatting
+            commit_message: fix code formatting

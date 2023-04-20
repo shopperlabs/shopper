@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits;
 
 trait WithConditions
@@ -7,48 +9,39 @@ trait WithConditions
     /**
      * Condition rule.
      */
-    public $rule;
+    public string $rule;
 
     /**
      * Condition operator.
      */
-    public $operator;
+    public string $operator;
 
     /**
      * Condition value.
      */
-    public $value;
+    public string $value;
 
     /**
      * Get the lists of all collection conditions rules.
-     *
-     * @var array
      */
-    public $conditions = [];
+    public array $conditions = [];
 
-    /**
-     * @var int
-     */
     public int $i = 1;
 
     /**
      * Add new condition on the array conditions.
-     *
-     * @param $i
      */
-    public function add($i)
+    public function add(int $i): void
     {
         $i++;
         $this->i = $i;
-        array_push($this->conditions, $i);
+        $this->conditions[] = $i;
     }
 
     /**
      * Remove a condition to the array conditions.
-     *
-     * @param $i
      */
-    public function remove($i)
+    public function remove(int $i): void
     {
         unset($this->conditions[$i]);
     }
@@ -121,7 +114,7 @@ trait WithConditions
         ];
     }
 
-    private function resetConditionsFields()
+    private function resetConditionsFields(): void
     {
         $this->reset('rule', 'operator', 'value');
     }

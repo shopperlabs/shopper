@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use WireUi\Traits\Actions;
 
 class Profile extends Component
 {
-    use Actions;
-
     public Model $customer;
 
     public int $customer_id;
@@ -42,7 +42,7 @@ class Profile extends Component
 
     public bool $hasEnabledTwoFactor;
 
-    public function mount($customer)
+    public function mount($customer): void
     {
         $this->customer = $customer;
         $this->customer_id = $customer->id;
@@ -52,39 +52,39 @@ class Profile extends Component
         $this->gender = $customer->gender;
         $this->birthDate = $customer->birth_date;
         $this->birthDateFormatted = $customer->birth_date_formatted;
-        $this->optIn = $customer->opt_in;
+        $this->optIn = (bool) $customer->opt_in;
         $this->hasEnabledTwoFactor = (bool) $customer->two_factor_secret;
     }
 
-    public function saveFirstName()
+    public function saveFirstName(): void
     {
         $this->validate(['firstName' => 'sometimes|required']);
 
         $this->updateValue(
             'first_name',
             $this->firstName,
-            'Customer First name updated successfully.'
+            __('Customer First name updated successfully.')
         );
 
         $this->firstNameUpdate = false;
         $this->emit('profileUpdate');
     }
 
-    public function saveLastName()
+    public function saveLastName(): void
     {
         $this->validate(['lastName' => 'sometimes|required']);
 
         $this->updateValue(
             'last_name',
             $this->lastName,
-            'Customer Last name updated successfully.'
+            __('Customer Last name updated successfully.')
         );
 
         $this->lastNameUpdate = false;
         $this->emit('profileUpdate');
     }
 
-    public function saveEmail()
+    public function saveEmail(): void
     {
         $this->validate([
             'email' => [
@@ -98,48 +98,48 @@ class Profile extends Component
         $this->updateValue(
             'email',
             $this->email,
-            'Customer Email address updated successfully.'
+            __('Customer Email address updated successfully.')
         );
 
         $this->emailUpdate = false;
         $this->emit('profileUpdate');
     }
 
-    public function cancelEmail()
+    public function cancelEmail(): void
     {
         $this->emailUpdate = false;
         $this->email = $this->customer->email;
     }
 
-    public function saveBirthDate()
+    public function saveBirthDate(): void
     {
         $this->updateValue(
             'birth_date',
             $this->birthDate,
-            'Customer birth date updated successfully.'
+            __('Customer birth date updated successfully.')
         );
 
         $this->birthDateUpdate = false;
         $this->birthDateFormatted = $this->customer->birth_date_formatted;
     }
 
-    public function saveGender()
+    public function saveGender(): void
     {
         $this->updateValue(
             'gender',
             $this->gender,
-            'Customer gender updated successfully.'
+            __('Customer gender updated successfully.')
         );
 
         $this->genderUpdate = false;
     }
 
-    public function updatedOptIn()
+    public function updatedOptIn(): void
     {
         $this->updateValue(
             'opt_in',
             $this->optIn,
-            "You have updated the customer's marketing email subscription."
+            __("You have updated the customer's marketing email subscription.")
         );
     }
 
@@ -148,17 +148,14 @@ class Profile extends Component
         return view('shopper::livewire.customers.profile');
     }
 
-    /**
-     * Update value from the storage.
-     *
-     * @param  string  $field
-     * @param  mixed  $value
-     * @param  string  $message
-     */
-    private function updateValue(string $field, mixed $value, string $message)
+    private function updateValue(string $field, mixed $value, string $message): void
     {
         $this->customer->update([$field => $value]);
 
-        $this->notification()->success(__('shopper::layout.status.updated'), __($message));
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body($message)
+            ->success()
+            ->send();
     }
 }

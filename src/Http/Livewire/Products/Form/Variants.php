@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -12,11 +15,9 @@ use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
-use WireUi\Traits\Actions;
 
 class Variants extends Component
 {
-    use Actions;
     use WithPagination;
     use WithFileUploads;
     use WithAttributes;
@@ -32,7 +33,7 @@ class Variants extends Component
 
     protected $listeners = ['onVariantAdded' => 'render'];
 
-    public function mount($product, string $currency)
+    public function mount($product, string $currency): void
     {
         $this->product = $product;
         $this->currency = $currency;
@@ -43,7 +44,7 @@ class Variants extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function remove(int $id)
+    public function remove(int $id): void
     {
         $product = (new ProductRepository())->getById($id);
 
@@ -53,10 +54,11 @@ class Variants extends Component
 
         $this->dispatchBrowserEvent('item-removed');
 
-        $this->notification()->success(
-            __('shopper::layout.status.delete'),
-            __('shopper::pages/products.notifications.variation_delete')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.delete'))
+            ->body(__('shopper::pages/products.notifications.variation_delete'))
+            ->success()
+            ->send();
     }
 
     public function render(): View

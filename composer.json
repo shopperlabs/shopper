@@ -18,13 +18,17 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^8.1|^8.2",
     "ext-intl": "*",
     "ext-json": "*",
     "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-heroicons": "^1.2",
     "doctrine/dbal": "^3.0",
+    "filament/forms": "^2.17",
+    "filament/notifications": "^2.17",
     "illuminate/database": "^8.0|^9.0",
+    "illuminate/contracts": "^8.6|^9.0",
+    "illuminate/routing": "^8.6|^9.0",
     "illuminate/support": "^8.0|^9.0",
     "illuminate/validation": "^8.0|^9.0",
     "jenssegers/agent": "^2.6",
@@ -32,12 +36,12 @@
     "laravel/ui": "^3.2",
     "livewire/livewire": "^2.10",
     "maatwebsite/excel": "^3.1",
-    "maatwebsite/laravel-sidebar": "^2.4",
+    "maatwebsite/laravel-sidebar": "^2.5",
     "milon/barcode": "^9.0.0",
     "moneyphp/money": "^3.3",
     "pragmarx/google2fa": "^8.0",
     "psr/simple-cache": "~2.0",
-    "rappasoft/laravel-livewire-tables": "^1.19",
+    "rappasoft/laravel-livewire-tables": "^2.12",
     "spatie/laravel-medialibrary": "^10.4.1",
     "spatie/laravel-package-tools": "^1.11",
     "spatie/laravel-permission": "^5.5.2",
@@ -45,7 +49,7 @@
     "stevebauman/location": "^6.3.1",
     "stripe/stripe-php": "^8.6",
     "wire-elements/modal": "^1.0.0",
-    "wireui/wireui": "^1.11.1"
+    "wireui/wireui": "^1.17.9"
   },
   "require-dev": {
     "laravel/pint": "^1.1",
@@ -82,9 +86,10 @@
     }
   },
   "scripts": {
-    "analyse": "vendor/bin/phpstan analyse",
-    "baseline": "vendor/bin/phpstan analyse --generate-baseline",
-    "pint": "vendor/bin/pint"
+    "stan": "./vendor/bin/phpstan analyse",
+    "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
+    "pint": "./vendor/bin/pint",
+    "pest": "./vendor/bin/pest"
   },
   "config": {
     "sort-packages": true,

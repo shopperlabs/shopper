@@ -1,11 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property int $id
+ * @property string $code
+ * @property string $type
+ * @property string $value
+ * @property string $apply_to
+ * @property string $eligibility
+ * @property int $min_required
+ * @property string $min_required_value
+ * @property int|null $usage_limit
+ * @property bool $usage_limit_per_user
+ * @property bool $is_active
+ * @property \Carbon\Carbon $start_at
+ * @property \Carbon\Carbon $end_at
+ */
 class Discount extends Model
 {
     use HasFactory;
@@ -43,17 +60,11 @@ class Discount extends Model
         'end_at' => 'datetime',
     ];
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('discounts');
     }
 
-    /**
-     * Determine if the discount code has reached his limit usage.
-     */
     public function hasReachedLimit(): bool
     {
         if (null !== $this->usage_limit) {

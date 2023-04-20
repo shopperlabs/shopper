@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Repositories;
 
 interface RepositoryContract
@@ -24,7 +26,7 @@ interface RepositoryContract
 
     public function getById(int $id, array $columns = ['*']);
 
-    public function getByColumn($item, $column, array $columns = ['*']);
+    public function getByColumn(string $item, string $column, array $columns = ['*']);
 
     public function paginate(int $limit = 25, array $columns = ['*'], string $pageName = 'page', $page = null);
 
@@ -32,13 +34,13 @@ interface RepositoryContract
 
     public function limit(int $limit);
 
-    public function orderBy($column, $value);
+    public function orderBy(string $column, string $direction);
 
-    public function where($column, $value, string $operator = '=');
+    public function where(string $column, mixed $value, string $operator = '=');
 
-    public function whereIn($column, $value);
+    public function whereIn(string $column, string|array $values);
 
     public function with($relations);
 
-    public function pluck($column, $key = null);
+    public function pluck(string $column, $key = null);
 }

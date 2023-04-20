@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     'empty_country_selector' => 'Veuillez sélectionner un pays',

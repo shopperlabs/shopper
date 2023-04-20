@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -28,7 +30,7 @@ class UpdatePaymentMethod extends ModalComponent
 
     public $logo;
 
-    public function mount(int $id)
+    public function mount(int $id): void
     {
         $this->paymentMethod = $paymentMethod = PaymentMethod::find($id);
         $this->title = $paymentMethod->title;
@@ -43,7 +45,7 @@ class UpdatePaymentMethod extends ModalComponent
         return 'lg';
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate([
             'title' => [

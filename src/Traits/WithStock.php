@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits;
 
+use Filament\Notifications\Notification;
 use Illuminate\Http\Response;
 use Maatwebsite\Excel\Excel;
 use Shopper\Framework\Exports\ProductInventoryExport;
@@ -15,7 +18,7 @@ trait WithStock
 
     public int $realStock = 0;
 
-    public mixed $inventory;
+    public ?int $inventory = null;
 
     public function updatedValue(int $value): void
     {
@@ -74,10 +77,11 @@ trait WithStock
         $this->value = 0;
         $this->realStock = $this->stock = $this->product->stock;
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Stock successfully Updated'),
-        ]);
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('Stock successfully Updated'))
+            ->success()
+            ->send();
     }
 
     public function export(): BinaryFileResponse|Response

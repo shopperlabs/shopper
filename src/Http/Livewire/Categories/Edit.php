@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Categories;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Exceptions\GeneralException;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithChoicesCategories;
@@ -28,8 +31,6 @@ class Edit extends AbstractBaseComponent
 
     public ?string $fileUrl = null;
 
-    public $selectedCategory = [];
-
     public $parent;
 
     public $seoAttributes = [
@@ -42,7 +43,7 @@ class Edit extends AbstractBaseComponent
         'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
-    public function mount($category)
+    public function mount($category): void
     {
         $this->category = $category;
         $this->categoryId = $category->id;
@@ -53,16 +54,16 @@ class Edit extends AbstractBaseComponent
         $this->updateSeo = true;
         $this->seoTitle = $category->seo_title ?? $category->name;
         $this->seoDescription = $category->seo_description;
-        $this->selectedCategory = $category->parent_id ? $this->selectedCategory['value'] = $category->parent_id : [];
+        $this->selectedCategory = $category->parent_id ? [$category->parent_id] : [];
         $this->parent = $category->parent_id ? $category->parent : null;
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
@@ -72,7 +73,7 @@ class Edit extends AbstractBaseComponent
         return true;
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -87,7 +88,9 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $this->category
+                ->addMedia($this->fileUrl)
+                ->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Category successfully updated!'));
@@ -100,6 +103,9 @@ class Edit extends AbstractBaseComponent
         return ['name' => 'sometimes|required|max:150'];
     }
 
+    /**
+     * @throws GeneralException
+     */
     public function render(): View
     {
         return view('shopper::livewire.categories.edit', [

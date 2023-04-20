@@ -2,7 +2,7 @@
 
     <x-shopper::breadcrumb back="shopper.settings.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('Settings')" />
     </x-shopper::breadcrumb>
 
     <div
@@ -22,12 +22,12 @@
                 <h2 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">{{ __('Email') }}</h2>
             </div>
         </div>
-        <div class="min-w-0 flex-1 lg:flex">
+        <div class="min-w-0 py-5 flex-1 lg:flex">
             <aside class="hidden lg:block lg:shrink-0">
-                <div class="h-full relative flex flex-col w-80 border-r border-secondary-200 bg-white dark:bg-secondary-900 dark:border-secondary-800">
+                <div class="h-full relative flex flex-col w-80">
                     <nav aria-label="{{ __('Email menu') }}" class="min-h-(screen-content) flex-1 overflow-y-auto">
-                        <ul class="border-b border-secondary-200 divide-y divide-secondary-200 dark:divide-secondary-700 dark:border-secondary-700">
-                            <li class="relative py-5 px-6 hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'config' }">
+                        <ul class="space-y-1">
+                            <li class="relative py-5 px-6 rounded-md hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'config' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="shrink-0 text-secondary-500 dark:text-secondary-400">
                                         <x-heroicon-o-cog class="w-6 h-6"/>
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="relative py-5 px-6 hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'templates' }">
+                            <li class="relative py-5 px-6 rounded-md hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'templates' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="shrink-0 text-secondary-500 dark:text-secondary-400">
                                         <x-heroicon-o-template class="w-6 h-6" />
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="relative py-5 px-6 hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'mailables' }">
+                            <li class="relative py-5 px-6 rounded-md hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'mailables' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="shrink-0 text-secondary-500 dark:text-secondary-400">
                                         <x-heroicon-o-mail class="w-6 h-6" />

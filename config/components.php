@@ -1,24 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Shopper\Framework\Http\Livewire;
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Blade Components
-    |--------------------------------------------------------------------------
-    |
-    | List with Shopper components.
-    | Change the alias to call the component with a different name.
-    | Extend the component and replace your changes in this file.
-    | Remove the component from this file if you don't want to use.
-    |
-    */
-
-    'blade' => [
-        //
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -149,23 +135,4 @@ return [
         'tables.products-table' => Livewire\Tables\ProductsTable::class,
         'tables.reviews-table' => Livewire\Tables\ReviewsTable::class,
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Components Prefix
-    |--------------------------------------------------------------------------
-    |
-    | This value will set a prefix for all Shopper Admin components.
-    | By default it's shopper. This is useful if you want to avoid
-    | collision with components from other libraries.
-    |
-    | For example, it's reference components like:
-    |
-    | <x-shopper-input.textarea />
-    | <livewire:shopper-products.create />
-    |
-    */
-
-    'prefix' => 'shopper',
-
 ];

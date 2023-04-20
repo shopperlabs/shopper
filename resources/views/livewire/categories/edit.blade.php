@@ -1,7 +1,7 @@
 <div x-data="{ on: @entangle('is_enabled') }">
     <x-shopper::breadcrumb back="shopper.categories.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.categories.index')" title="shopper::layout.sidebar.categories" />
+        <x-shopper::breadcrumb.link :link="route('shopper.categories.index')" :title="__('shopper::layout.sidebar.categories')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -21,12 +21,12 @@
         <div class="lg:col-span-4 space-y-5">
             <div class="p-4 sm:p-5 bg-white rounded-lg shadow dark:bg-secondary-800">
                 <div>
-                    <x-shopper::forms.group label="shopper::layout.forms.label.name" for="name" isRequired :error="$errors->first('name')">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
                         <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-4">
-                    <x-shopper::forms.group label="Parent" for="category" wire:ignore>
+                    <x-shopper::forms.group :label="__('Parent')" for="category" wire:ignore>
                         <x-shopper::forms.select wire:model.defer="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
                             <option value="0">{{ __('shopper::pages/categories.empty_parent') }}</option>
                             @foreach($categories as $cat)
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="mt-5">
-                    <x-shopper::forms.group label="shopper::layout.forms.label.description" for="description">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.description')" for="description">
                         <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper::forms.group>
                 </div>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -15,7 +17,7 @@ class DeleteTemplate extends ModalComponent
 
     public string $slug;
 
-    public function mount(string $name, string $slug)
+    public function mount(string $name, string $slug): void
     {
         $this->name = $name;
         $this->slug = $slug;
@@ -26,7 +28,7 @@ class DeleteTemplate extends ModalComponent
         return 'lg';
     }
 
-    public function delete()
+    public function delete(): void
     {
         Mailable::deleteTemplate($this->slug);
 

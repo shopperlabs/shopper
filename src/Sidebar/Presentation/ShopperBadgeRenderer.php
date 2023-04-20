@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Sidebar\Presentation;
 
 use Illuminate\Contracts\View\Factory;
@@ -7,23 +9,14 @@ use Maatwebsite\Sidebar\Badge;
 
 class ShopperBadgeRenderer
 {
-    /**
-     * @var Factory
-     */
-    protected $factory;
+    protected string $view = 'shopper::sidebar.badge';
 
-    /**
-     * @var string
-     */
-    protected $view = 'shopper::sidebar.badge';
-
-    public function __construct(Factory $factory)
+    public function __construct(protected Factory $factory)
     {
-        $this->factory = $factory;
     }
 
     /**
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View|void
      */
     public function render(Badge $badge)
     {
@@ -32,5 +25,6 @@ class ShopperBadgeRenderer
                 'badge' => $badge,
             ])->render();
         }
+
     }
 }

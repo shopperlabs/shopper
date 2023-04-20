@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Brands;
 
 use Illuminate\Contracts\View\View;
@@ -35,17 +37,17 @@ class Edit extends AbstractBaseComponent
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
 
-    public function mount($brand)
+    public function mount($brand): void
     {
         $this->brand = $brand;
         $this->brand_id = $brand->id;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -13,7 +15,7 @@ class LegalsPageTableSeeder extends Seeder
     /**
      * Run the database seed.
      */
-    public function run()
+    public function run(): void
     {
         $this->disableForeignKeys();
 

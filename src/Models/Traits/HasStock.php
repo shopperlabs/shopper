@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Traits;
 
 use DateTimeInterface;
@@ -39,7 +41,7 @@ trait HasStock
      */
     public function stockInventory(int $inventoryId, ?string $date = null): int
     {
-        $date = $date ? $date : Carbon::now();
+        $date = $date ?: Carbon::now();
 
         if (! $date instanceof DateTimeInterface) {
             $date = Carbon::create($date);

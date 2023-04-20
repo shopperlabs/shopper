@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -12,13 +14,13 @@ class DeleteInventory extends ModalComponent
 
     public string $name;
 
-    public function mount(int $inventoryId, string $name)
+    public function mount(int $inventoryId, string $name): void
     {
         $this->inventoryId = $inventoryId;
         $this->name = $name;
     }
 
-    public function delete()
+    public function delete(): void
     {
         Inventory::query()->find($this->inventoryId)->delete();
 

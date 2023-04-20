@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Actions;
 
 use Closure;
@@ -13,39 +15,13 @@ use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Shopper\Framework\Shopper;
 
-class RedirectIfTwoFactorAuthenticatable
+final class RedirectIfTwoFactorAuthenticatable
 {
-    /**
-     * The guard implementation.
-     *
-     * @var \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected $guard;
-
-    /**
-     * The login rate limiter instance.
-     *
-     * @var \Shopper\Framework\Services\TwoFactor\LoginRateLimiter
-     */
-    protected $limiter;
-
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct(StatefulGuard $guard, LoginRateLimiter $limiter)
+    public function __construct(protected StatefulGuard $guard, protected LoginRateLimiter $limiter)
     {
-        $this->guard = $guard;
-        $this->limiter = $limiter;
     }
 
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Closure  $next
-     * @return JsonResponse|RedirectResponse|mixed
-     */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): JsonResponse|RedirectResponse
     {
         $user = $this->validateCredentials($request);
 
@@ -57,11 +33,6 @@ class RedirectIfTwoFactorAuthenticatable
         return $next($request);
     }
 
-    /**
-     * Attempt to validate the incoming credentials.
-     *
-     * @throws ValidationException
-     */
     protected function validateCredentials(Request $request)
     {
         $model = $this->guard->getProvider()->getModel();
@@ -73,21 +44,13 @@ class RedirectIfTwoFactorAuthenticatable
         });
     }
 
-    /**
-     * Throw a failed authentication validation exception.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    protected function throwFailedAuthenticationException(Request $request)
+    protected function throwFailedAuthenticationException(Request $request): void
     {
         $this->limiter->increment($request);
 
         throw ValidationException::withMessages([Shopper::username() => [trans('auth.failed')]]);
     }
 
-    /**
-     * Get the two factor authentication enabled response.
-     */
     protected function twoFactorChallengeResponse(Request $request, $user): JsonResponse|RedirectResponse
     {
         $request->session()->put([

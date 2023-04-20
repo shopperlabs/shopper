@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers\Auth;
 
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Routing\Controller;
@@ -12,17 +16,6 @@ use Illuminate\Routing\Controller;
 class ForgotPasswordController extends Controller
 {
     use ValidatesRequests;
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset emails and
-    | includes a trait which assists in sending these notifications from
-    | your application to your users. Feel free to explore this trait.
-    |
-    */
-
     use SendsPasswordResetEmails;
 
     public function __construct()
@@ -38,31 +31,19 @@ class ForgotPasswordController extends Controller
         });
     }
 
-    public function showLinkRequestForm()
+    public function showLinkRequestForm(): View
     {
         return view('shopper::auth.passwords.forgot-password');
     }
 
-    /**
-     * Get the response for a successful password reset link.
-     *
-     * @param  string  $response
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    protected function sendResetLinkResponse(Request $request, $response)
+    protected function sendResetLinkResponse(Request $request, string $response): RedirectResponse
     {
         session()->flash('success', trans($response));
 
         return back();
     }
 
-    /**
-     * Get the response for a failed password reset link.
-     *
-     * @param  string  $response
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    protected function sendResetLinkFailedResponse(Request $request, $response)
+    protected function sendResetLinkFailedResponse(Request $request, string $response): RedirectResponse
     {
         session()->flash('error', trans($response));
 

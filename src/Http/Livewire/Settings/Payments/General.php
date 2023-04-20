@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
-use Exception;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\PaymentMethod;
@@ -17,7 +19,7 @@ class General extends Component
 
     protected $listeners = ['onPaymentMethodAdded' => 'render'];
 
-    public function toggleStatus(int $id, int $status)
+    public function toggleStatus(int $id, int $status): void
     {
         PaymentMethod::query()->find($id)->update(['is_enabled' => ! ($status === 1)]);
 
@@ -26,12 +28,7 @@ class General extends Component
         $this->notification()->success(__('Updated'), __('Your payment method status have been correctly updated.'));
     }
 
-    /**
-     * Removed item from the storage.
-     *
-     * @throws Exception
-     */
-    public function removePayment(int $id)
+    public function removePayment(int $id): void
     {
         PaymentMethod::query()->find($id)->delete();
 
@@ -40,7 +37,7 @@ class General extends Component
         $this->notification()->success(__('Deleted'), __('Your payment method have been correctly removed.'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.payments.general', [
             'methods' => PaymentMethod::query()

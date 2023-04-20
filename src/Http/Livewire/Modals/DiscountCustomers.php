@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -15,12 +17,12 @@ class DiscountCustomers extends ModalComponent
 
     public array $excludesIds;
 
-    public function mount(array $excludeIds)
+    public function mount(array $excludeIds): void
     {
         $this->excludesIds = $excludeIds;
     }
 
-    public function addSelectedCustomers()
+    public function addSelectedCustomers(): void
     {
         $this->excludesIds = $this->selectedCustomers;
 

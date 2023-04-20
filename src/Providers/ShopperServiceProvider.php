@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Providers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\View\Compilers\BladeCompiler;
 use Livewire\Component;
 use Livewire\Livewire;
 use Shopper\Framework\Console;
@@ -49,7 +50,6 @@ class ShopperServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         $this->bootLivewireComponents();
-        $this->bootBladeComponents();
         $this->bootModelRelationName();
 
         Builder::macro(
@@ -82,17 +82,6 @@ class ShopperServiceProvider extends PackageServiceProvider
         ]);
     }
 
-    public function bootBladeComponents(): void
-    {
-        $prefix = config('shopper.components.prefix', 'shopper');
-
-        $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade) use ($prefix) {
-            foreach (config('shopper.components.blade', []) as $component) {
-                $blade->component($component['class'], $component['alias'], $prefix);
-            }
-        });
-    }
-
     public function bootLivewireComponents(): void
     {
         $prefix = config('shopper.components.prefix', 'shopper');
@@ -112,7 +101,7 @@ class ShopperServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function registerConfigFiles()
+    public function registerConfigFiles(): void
     {
         collect($this->configFiles)->each(function ($config) {
             $this->mergeConfigFrom(SHOPPER_PATH . "/config/{$config}.php", "shopper.{$config}");
@@ -120,13 +109,13 @@ class ShopperServiceProvider extends PackageServiceProvider
         });
     }
 
-    public function registerDatabase()
+    public function registerDatabase(): void
     {
         $this->loadMigrationsFrom(SHOPPER_PATH . '/database/migrations');
         $this->publishes([SHOPPER_PATH . '/database/seeders' => database_path('seeders')], 'shopper-seeders');
     }
 
-    public function registeringPackage()
+    public function registeringPackage(): void
     {
         if (! defined('SHOPPER_PATH')) {
             define('SHOPPER_PATH', realpath(__DIR__ . '/../../'));
@@ -143,7 +132,7 @@ class ShopperServiceProvider extends PackageServiceProvider
         ];
     }
 
-    protected function registerViews()
+    protected function registerViews(): void
     {
         $this->loadViewsFrom(SHOPPER_PATH . '/resources/views', 'shopper');
 

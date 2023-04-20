@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -8,7 +10,7 @@ use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class ReOrderCategories extends ModalComponent
 {
-    public function updateGroupOrder(array $items)
+    public function updateGroupOrder(array $items): void
     {
         foreach ($items as $item) {
             (new CategoryRepository())
@@ -20,7 +22,7 @@ class ReOrderCategories extends ModalComponent
         $this->emit('onCategoriesReordered');
     }
 
-    public function updateCategoryOrder(array $groups)
+    public function updateCategoryOrder(array $groups): void
     {
         foreach ($groups as $group) {
             foreach ($group['items'] as $item) {

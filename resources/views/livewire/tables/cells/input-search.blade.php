@@ -1,9 +1,13 @@
 <div class="flex rounded-md shadow-sm">
     <input
-        wire:model.debounce="columnSearch.{{ $field }}"
-        placeholder="Search {{ ucfirst($field) }}"
+        wire:model="columnSearch.{{ $field }}"
+        placeholder="{{ __('Search by :field', ['field' => $field]) }}"
         type="text"
-        class="block w-full border-secondary-300 rounded-md shadow-sm transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-secondary-700 dark:text-white dark:border-secondary-600 @if (isset($columnSearch[$field]) && strlen($columnSearch[$field])) rounded-none rounded-l-md focus:ring-0 focus:border-secondary-300 @else focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md @endif"
+        @class([
+            'block w-full border-secondary-300 shadow-sm transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-secondary-700 dark:text-white dark:border-secondary-600',
+            'rounded-none rounded-l-md focus:ring-0 focus:border-secondary-300' => isset($columnSearch[$field]) && strlen($columnSearch[$field]),
+            'focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 rounded-md' => !(isset($columnSearch[$field]) && strlen($columnSearch[$field])),
+        ])
     />
 
     @if (isset($columnSearch[$field]) && strlen($columnSearch[$field]))

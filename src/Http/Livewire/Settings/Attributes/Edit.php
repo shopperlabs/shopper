@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
-use function in_array;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
-use WireUi\Traits\Actions;
 
 class Edit extends AbstractBaseComponent
 {
-    use Actions;
-
     public Attribute $attribute;
 
     public int $attributeId;
@@ -30,7 +30,7 @@ class Edit extends AbstractBaseComponent
 
     public bool $isFilterable = false;
 
-    public function mount(Attribute $attribute)
+    public function mount(Attribute $attribute): void
     {
         $this->attribute = $attribute;
         $this->attributeId = $attribute->id;
@@ -55,7 +55,7 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -69,7 +69,11 @@ class Edit extends AbstractBaseComponent
             'is_filterable' => $this->isFilterable,
         ]);
 
-        $this->notification()->success(__('Updated'), __('Attribute has been successfully updated!'));
+        Notification::make()
+            ->title(__('shopper::components.tables.status.updated'))
+            ->body(__('Attribute has been successfully updated!'))
+            ->success()
+            ->send();
     }
 
     public function hasValues(): bool
@@ -77,7 +81,7 @@ class Edit extends AbstractBaseComponent
         return in_array($this->type, Attribute::fieldsWithValues());
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.attributes.edit', [
             'fields' => Attribute::typesFields(),

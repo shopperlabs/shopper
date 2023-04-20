@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
@@ -27,14 +29,16 @@ trait ConfirmsPasswords
     /**
      * Start confirming the user's password.
      */
-    public function startConfirmingPassword(string $confirmableId)
+    public function startConfirmingPassword(string $confirmableId): void
     {
         $this->resetErrorBag();
 
         if ($this->passwordIsConfirmed()) {
-            return $this->dispatchBrowserEvent('password-confirmed', [
+            $this->dispatchBrowserEvent('password-confirmed', [
                 'id' => $confirmableId,
             ]);
+
+            return;
         }
 
         $this->confirmingPassword = true;
@@ -47,7 +51,7 @@ trait ConfirmsPasswords
     /**
      * Stop confirming the user's password.
      */
-    public function stopConfirmingPassword()
+    public function stopConfirmingPassword(): void
     {
         $this->confirmingPassword = false;
         $this->confirmableId = null;
@@ -59,7 +63,7 @@ trait ConfirmsPasswords
      *
      * @throws ValidationException
      */
-    public function confirmPassword()
+    public function confirmPassword(): void
     {
         if (! app(ConfirmPassword::class)(app(StatefulGuard::class), Auth::user(), $this->confirmablePassword)) {
             throw ValidationException::withMessages(['confirmable_password' => [__('This password does not match our records.')]]);
@@ -76,8 +80,6 @@ trait ConfirmsPasswords
 
     /**
      * Ensure that the user's password has been recently confirmed.
-     *
-     * @param  null|int  $maximumSecondsSinceConfirmation
      */
     protected function ensurePasswordIsConfirmed(int $maximumSecondsSinceConfirmation = null)
     {
@@ -88,8 +90,6 @@ trait ConfirmsPasswords
 
     /**
      * Determine if the user's password has been recently confirmed.
-     *
-     * @param  null|int  $maximumSecondsSinceConfirmation
      */
     protected function passwordIsConfirmed(int $maximumSecondsSinceConfirmation = null): bool
     {

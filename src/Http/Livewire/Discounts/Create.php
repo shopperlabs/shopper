@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
@@ -18,7 +20,7 @@ class Create extends AbstractBaseComponent
 
     protected $listeners = ['addSelectedProducts', 'addSelectedCustomers'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->dateStart = now()->format('Y-m-d H:i');
     }
@@ -34,7 +36,7 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         if ($this->minRequired !== 'none') {
             $this->validate(['minRequiredValue' => 'required']);

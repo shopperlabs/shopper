@@ -1,19 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
+use Shopper\Framework\Http\Controllers\DashboardController;
 use Shopper\Framework\Http\Controllers\Ecommerce\ProductController;
 use Shopper\Framework\Http\Controllers\SettingController;
 use Shopper\Framework\Http\Controllers\TemplatesController;
 
-/*
-|--------------------------------------------------------------------------
-| Backend Web Routes
-|--------------------------------------------------------------------------
-|
-|
-*/
-
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/dashboard', DashboardController::class)->name('dashboard');
 Route::view('/profile', 'shopper::pages.account.profile')->name('profile');
 
 Route::namespace('Ecommerce')->group(function () {

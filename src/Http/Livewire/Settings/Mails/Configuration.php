@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Mails;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
 use Shopper\Framework\Rules\RealEmailValidator;
@@ -69,7 +72,7 @@ class Configuration extends Component
         );
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.mails.configuration');
     }

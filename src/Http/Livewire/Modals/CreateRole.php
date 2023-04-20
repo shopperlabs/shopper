@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -17,7 +19,7 @@ class CreateRole extends ModalComponent
 
     public string $description = '';
 
-    public function save()
+    public function save(): void
     {
         $this->validate(['name' => 'required|unique:roles'], [
             'name.required' => __('The role name is required.'),

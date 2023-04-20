@@ -1,47 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
 
 class InventoryController extends ShopperBaseController
 {
-    /**
-     * Display Inventory Index.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function index()
+    public function index(): View
     {
         $this->authorize('browse_inventories');
 
         return view('shopper::pages.settings.inventories.index');
     }
 
-    /**
-     * Display Inventory Create form view.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function create()
+    public function create(): View
     {
         $this->authorize('add_inventories');
 
         return view('shopper::pages.settings.inventories.create');
     }
 
-    /**
-     * Display Inventory update form.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function edit(Inventory $inventory)
+    public function edit(Inventory $inventory): View
     {
         $this->authorize('edit_inventories');
 

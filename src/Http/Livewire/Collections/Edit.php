@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
@@ -29,7 +31,7 @@ class Edit extends AbstractBaseComponent
 
     public string $type = 'auto';
 
-    public ?string $publishedAt = null;
+    public ?Carbon $publishedAt = null;
 
     public ?string $publishedAtFormatted = null;
 
@@ -47,7 +49,7 @@ class Edit extends AbstractBaseComponent
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function mount($collection)
+    public function mount($collection): void
     {
         $this->collection = $collection;
         $this->products = $collection->products;
@@ -63,17 +65,17 @@ class Edit extends AbstractBaseComponent
         $this->seoDescription = $collection->seo_description;
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -89,7 +91,9 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $this->collection
+                ->addMedia($this->fileUrl)
+                ->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Collection successfully updated!'));
@@ -115,7 +119,7 @@ class Edit extends AbstractBaseComponent
         return true;
     }
 
-    public function updatedPublishedAt($value)
+    public function updatedPublishedAt($value): void
     {
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d H:i', $value)->toRfc7231String();
     }

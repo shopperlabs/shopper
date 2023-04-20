@@ -1,7 +1,7 @@
 <div>
     <x-shopper::breadcrumb back="shopper.customers.index">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" title="shopper::layout.sidebar.customers" />
+        <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" :title="__('shopper::layout.sidebar.customers')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -23,15 +23,15 @@
             <div class="mt-5 md:mt-0 md:col-span-2">
                 <div class="px-4 py-5 sm:p-6 shadow bg-white rounded-md dark:bg-secondary-800">
                     <div class="grid gap-4 grid-cols-6 sm:gap-5">
-                        <x-shopper::forms.group label="shopper::layout.forms.label.first_name" for="first_name" class="col-span-6 sm:col-span-3" :error="$errors->first('first_name')">
+                        <x-shopper::forms.group :label="__('shopper::layout.forms.label.first_name')" for="first_name" class="col-span-6 sm:col-span-3" :error="$errors->first('first_name')">
                             <x-shopper::forms.input wire:model.defer="first_name" id="first_name" type="text" autocomplete="off" />
                         </x-shopper::forms.group>
 
-                        <x-shopper::forms.group label="shopper::layout.forms.label.last_name" for="last_name" class="col-span-6 sm:col-span-3" :error="$errors->first('last_name')">
+                        <x-shopper::forms.group :label="__('shopper::layout.forms.label.last_name')" for="last_name" class="col-span-6 sm:col-span-3" :error="$errors->first('last_name')">
                             <x-shopper::forms.input wire:model.defer="last_name" id="last_name" type="text" autocomplete="off" />
                         </x-shopper::forms.group>
 
-                        <x-shopper::forms.group label="shopper::layout.forms.label.email" for="email" class="col-span-6" :error="$errors->first('email')">
+                        <x-shopper::forms.group :label="__('shopper::layout.forms.label.email')" for="email" class="col-span-6" :error="$errors->first('email')">
                             <x-shopper::forms.input wire:model.defer="email" id="email" type="email" autocomplete="off" />
                         </x-shopper::forms.group>
 
@@ -98,7 +98,7 @@
                                 @enderror
                             </div>
 
-                            <x-shopper::forms.group class="sm:col-span-6" label="shopper::layout.forms.label.confirm_password" for="password_confirmation" :error="$errors->first('password_confirmation')">
+                            <x-shopper::forms.group class="sm:col-span-6" :label="__('shopper::layout.forms.label.confirm_password')" for="password_confirmation" :error="$errors->first('password_confirmation')">
                                 <x-shopper::forms.input wire:model.defer="password_confirmation" id="password_confirmation" type="password" autocomplete="off" />
                             </x-shopper::forms.group>
                         </div>
@@ -128,27 +128,27 @@
                 <div class="bg-white shadow rounded-md dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6 space-y-4">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                            <x-shopper::forms.group class="col-span-6 sm:col-span-3" label="shopper::layout.forms.label.first_name" for="address_first_name" :error="$errors->first('address_first_name')">
+                            <x-shopper::forms.group class="col-span-6 sm:col-span-3" :label="__('shopper::layout.forms.label.first_name')" for="address_first_name" :error="$errors->first('address_first_name')">
                                 <x-shopper::forms.input wire:model.defer="address_first_name" id="address_first_name" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group class="col-span-6 sm:col-span-3" label="shopper::layout.forms.label.last_name" for="address_last_name" :error="$errors->first('address_last_name')">
+                            <x-shopper::forms.group class="col-span-6 sm:col-span-3" :label="__('shopper::layout.forms.label.last_name')" for="address_last_name" :error="$errors->first('address_last_name')">
                                 <x-shopper::forms.input wire:model="address_last_name" id="address_last_name" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group class="col-span-6" label="shopper::layout.forms.label.company_name" for="company_name" optional>
+                            <x-shopper::forms.group class="col-span-6" :label="__('shopper::layout.forms.label.company_name')" for="company_name" optional>
                                 <x-shopper::forms.input wire:model.defer="company_name" id="company_name" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group class="col-span-6" label="shopper::layout.forms.label.street_address" for="street_address" :error="$errors->first('street_address')">
+                            <x-shopper::forms.group class="col-span-6" :label="__('shopper::layout.forms.label.street_address')" for="street_address" :error="$errors->first('street_address')">
                                 <x-shopper::forms.input wire:model.defer="street_address" id="street_address" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group class="col-span-6" label="shopper::layout.forms.label.street_address_plus" for="street_address_plus" optional>
+                            <x-shopper::forms.group class="col-span-6" :label="__('shopper::layout.forms.label.street_address_plus')" for="street_address_plus" optional>
                                 <x-shopper::forms.input wire:model.defer="street_address_plus" id="street_address_plus" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group class="col-span-6 sm:col-span-4" for="country_id" label="shopper::layout.forms.label.country" :error="$errors->first('country_id')" wire:ignore>
+                            <x-shopper::forms.group class="col-span-6 sm:col-span-4" for="country_id" :label="__('shopper::layout.forms.label.country')" :error="$errors->first('country_id')" wire:ignore>
                                 <select
                                     wire:model.defer="country_id"
                                     id="country_id"
@@ -163,11 +163,11 @@
                                 </select>
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group class="col-span-6 sm:col-span-3" label="shopper::layout.forms.label.city" for="city" :error="$errors->first('city')">
+                            <x-shopper::forms.group class="col-span-6 sm:col-span-3" :label="__('shopper::layout.forms.label.city')" for="city" :error="$errors->first('city')">
                                 <x-shopper::forms.input wire:model.defer="city" id="city" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
 
-                            <x-shopper::forms.group label="shopper::layout.forms.label.postal_code" for="zipcode" class="col-span-6 sm:col-span-3" :error="$errors->first('zipcode')">
+                            <x-shopper::forms.group :label="__('shopper::layout.forms.label.postal_code')" for="zipcode" class="col-span-6 sm:col-span-3" :error="$errors->first('zipcode')">
                                 <x-shopper::forms.input wire:model.defer="zipcode" id="zipcode" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
 

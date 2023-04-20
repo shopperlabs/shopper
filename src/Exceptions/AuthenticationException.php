@@ -1,31 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Exceptions;
 
 use Illuminate\Auth\AuthenticationException as BaseAuthenticationException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 class AuthenticationException extends BaseAuthenticationException
 {
-    /**
-     * Render the exception.
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     */
-    public function render(Request $request)
+    public function render(Request $request): JsonResponse|RedirectResponse
     {
         return $request->expectsJson()
             ? response()->json(['message' => $this->getMessage()], 401)
             : redirect()->guest($this->location());
     }
 
-    /**
-     * Determine the location the user should be redirected to.
-     *
-     * @return string
-     */
-    protected function location()
+    protected function location(): string
     {
         if (Route::getRoutes()->hasNamedRoute('shopper.login')) {
             return route('shopper.login');

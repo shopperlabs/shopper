@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -26,7 +28,7 @@ class CreateMailable extends ModalComponent
         return 'lg';
     }
 
-    public function generateMailable()
+    public function generateMailable(): void
     {
         $this->validate(['name' => 'required']);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
@@ -126,7 +128,7 @@ trait WithDiscountActions
             unset($this->selectedCustomers[$key]);
         }
 
-        $this->customers = (new  UserRepository())
+        $this->customers = (new UserRepository())
             ->makeModel()
             ->whereIn('id', $this->selectedCustomers)
             ->get();

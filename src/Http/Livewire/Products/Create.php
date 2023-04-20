@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
 use Illuminate\Contracts\View\View;
 use Milon\Barcode\Facades\DNS1DFacade;
+use Shopper\Framework\Exceptions\GeneralException;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
@@ -41,17 +44,19 @@ class Create extends AbstractBaseComponent
         'shopper:filesUpdated' => 'onFilesUpdated',
     ];
 
-    public function mount()
+    public function mount(): void
     {
-        $this->defaultChannel = Channel::query()->where('slug', 'web-store')->first();
+        $this->defaultChannel = Channel::query()
+            ->where('slug', 'web-store')
+            ->first();
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFilesUpdated($files)
+    public function onFilesUpdated(array $files): void
     {
         $this->files = $files;
     }
@@ -66,7 +71,7 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -118,7 +123,7 @@ class Create extends AbstractBaseComponent
             foreach ($this->quantity as $inventory => $value) {
                 $product->mutateStock(
                     $inventory,
-                    $value,
+                    (int) $value,
                     [
                         'event' => __('shopper::pages/products.inventory.initial'),
                         'old_quantity' => $value,
@@ -132,6 +137,9 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.products.index');
     }
 
+    /**
+     * @throws GeneralException
+     */
     public function render(): View
     {
         return view('shopper::livewire.products.create', [

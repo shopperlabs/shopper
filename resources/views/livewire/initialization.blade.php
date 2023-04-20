@@ -18,8 +18,15 @@
                                             </svg>
                                         </div>
                                     @else
-                                        <div class="w-10 h-10 flex items-center justify-center border-2 @if($shop_email || $shop_name) border-primary-600 dark:hover:border-primary-500 @else border-secondary-300 dark:border-secondary-700 @endif rounded-full">
-                                            <p class="@if($shop_email || $shop_name) text-primary-600 dark:text-primary-500 @else text-secondary-500 dark:text-secondary-400 @endif">01</p>
+                                        <div @class([
+                                            'w-10 h-10 flex items-center justify-center border-2 rounded-full',
+                                            'border-primary-600 dark:hover:border-primary-500' => ($shop_email || $shop_name),
+                                            'border-secondary-300 dark:border-secondary-700' => !($shop_email || $shop_name),
+                                        ])>
+                                            <p @class([
+                                                'text-primary-600 dark:text-primary-500' => ($shop_email || $shop_name),
+                                                'text-secondary-500 dark:text-secondary-400' => !($shop_email || $shop_name),
+                                            ])>01</p>
                                         </div>
                                     @endif
                                 </div>

@@ -1,9 +1,9 @@
-@if($order->items_count === 1)
+@if($row->items_count === 1)
     <span class="font-medium text-secondary-700 dark:text-secondary-300">
-        {{ $order->items->first()->name }}
+        {{ $row->items->first()->name }}
     </span>
 @endif
-@if($order->items_count > 1)
-    <span class="font-medium text-secondary-700 dark:text-secondary-300">{{ $order->items->first()->name }}</span>
-    + {{ __(':number more', ['number' => $order->items_count - 1]) }}
+@if($row->items_count > 1)
+    <span class="font-medium text-secondary-700 dark:text-secondary-300">{{ $row->items->first()->name }}</span>
+    + {{ __(':number more', ['number' => $row->items_count - 1]) }}
 @endif

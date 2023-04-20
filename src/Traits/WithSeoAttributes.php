@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits;
 
 trait WithSeoAttributes
@@ -27,7 +29,7 @@ trait WithSeoAttributes
             ? $this->seoTitle
             : $this->{$this->seoAttributes['name']};
         $this->seoDescription = $this->isUpdate()
-            ? str_limit(strip_tags(nl2br($this->seoDescription)), 157)
-            : str_limit(strip_tags(nl2br($this->{$this->seoAttributes['description']})), 157);
+            ? str_limit(strip_tags(nl2br($this->seoDescription ?? '')), 157)
+            : str_limit(strip_tags(nl2br($this->{$this->seoAttributes['description']} ?? '')), 157);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Sidebar\Presentation;
 
 use Illuminate\Contracts\View\Factory;
@@ -8,20 +10,14 @@ use Maatwebsite\Sidebar\Presentation\ActiveStateChecker;
 
 class ShopperItemRenderer
 {
-    /**
-     * @var Factory
-     */
-    protected $factory;
-
     protected string $view = 'shopper::sidebar.item';
 
-    public function __construct(Factory $factory)
+    public function __construct(protected Factory $factory)
     {
-        $this->factory = $factory;
     }
 
     /**
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\View|void
      */
     public function render(Item $item)
     {

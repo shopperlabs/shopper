@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\System;
 
 use Illuminate\Database\Eloquent\Model;

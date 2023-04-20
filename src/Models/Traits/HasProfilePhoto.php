@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Traits;
 
 use Illuminate\Support\Facades\Storage;
@@ -8,8 +10,6 @@ trait HasProfilePhoto
 {
     /**
      * Get the URL to the user's profile photo.
-     *
-     * @return string
      */
     public function getPictureAttribute(): string
     {
@@ -22,8 +22,6 @@ trait HasProfilePhoto
 
     /**
      * Get the default profile photo URL if no profile photo has been uploaded.
-     *
-     * @return string
      */
     protected function defaultProfilePhotoUrl(): string
     {

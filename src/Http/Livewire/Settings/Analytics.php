@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +32,7 @@ class Analytics extends Component
 
     public bool $credentials_json = false;
 
-    public function mount()
+    public function mount(): void
     {
         $ga_add_js = Setting::query()->where('key', 'google_analytics_add_js')->first();
         $this->google_analytics_tracking_id = env('ANALYTICS_TRACKING_ID');
@@ -40,7 +43,7 @@ class Analytics extends Component
         $this->credentials_json = File::exists(storage_path('app/analytics/service-account-credentials.json'));
     }
 
-    public function store()
+    public function store(): void
     {
         Artisan::call('config:clear');
 
@@ -72,7 +75,7 @@ class Analytics extends Component
         return Storage::url('/app/analytics/service-account-credentials.json');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.analytics');
     }

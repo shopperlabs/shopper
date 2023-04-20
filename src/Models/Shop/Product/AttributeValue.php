@@ -1,11 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property string $key
+ * @property string $value
+ * @property string|int $position
+ */
 class AttributeValue extends Model
 {
     use HasFactory;
@@ -29,9 +36,6 @@ class AttributeValue extends Model
         'attribute_id',
     ];
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('attribute_values');

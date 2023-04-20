@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
@@ -10,12 +12,12 @@ class ArchiveOrder extends ModalComponent
 {
     public Order $order;
 
-    public function mount(int $id)
+    public function mount(int $id): void
     {
         $this->order = Order::find($id);
     }
 
-    public function archived()
+    public function archived(): void
     {
         $this->order->delete();
 

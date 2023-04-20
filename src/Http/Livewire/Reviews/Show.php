@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Reviews;
 
 use Illuminate\Contracts\View\View;
@@ -15,13 +17,13 @@ class Show extends Component
 
     public bool $approved;
 
-    public function mount(Review $review)
+    public function mount(Review $review): void
     {
         $this->review = $review->load(['reviewrateable', 'author']);
         $this->approved = $review->approved;
     }
 
-    public function updatedApproved()
+    public function updatedApproved(): void
     {
         $this->approved = ! $this->review->approved;
         $this->review->update(['approved' => ! $this->review->approved]);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Shop\Product;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -45,9 +47,6 @@ class Collection extends Model implements HasMedia
         'published_at' => 'datetime',
     ];
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('collections');

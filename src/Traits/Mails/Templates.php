@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits\Mails;
 
 use function dirname;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
@@ -73,9 +76,9 @@ trait Templates
             ]);
         }
 
-        $templatename = Str::camel(preg_replace('/\s+/', '_', $request->title));
+        $templateName = Str::camel(preg_replace('/\s+/', '_', $request->title));
 
-        if (self::getTemplates()->contains('template_slug', '=', $templatename)) {
+        if (self::getTemplates()->contains('template_slug', '=', $templateName)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => __('Template name already exists'),
@@ -85,7 +88,7 @@ trait Templates
         $oldForm = self::getTemplates()->reject(fn ($value) => $value->template_slug === $template->template_slug);
         $newForm = array_merge($oldForm->toArray(), [
             array_merge((array) $template, [
-                'template_slug' => $templatename,
+                'template_slug' => $templateName,
                 'template_name' => $request->title,
                 'template_description' => $request->description,
             ]),
@@ -99,19 +102,19 @@ trait Templates
         if (View::exists($template_view)) {
             $viewPath = View($template_view)->getPath();
 
-            rename($viewPath, dirname($viewPath) . "/{$templatename}.blade.php");
+            rename($viewPath, dirname($viewPath) . "/{$templateName}.blade.php");
 
             if (View::exists($template_plaintext_view)) {
                 $textViewPath = View($template_plaintext_view)->getPath();
 
-                rename($textViewPath, dirname($viewPath) . "/{$templatename}_plain_text.blade.php");
+                rename($textViewPath, dirname($viewPath) . "/{$templateName}_plain_text.blade.php");
             }
         }
 
         return response()->json([
             'status' => 'ok',
             'message' => __('Updated Successfully'),
-            'template_url' => route('viewTemplate', ['templatename' => $templatename]),
+            'template_url' => route('viewTemplate', ['templatename' => $templateName]),
         ]);
     }
 
@@ -151,26 +154,24 @@ trait Templates
 
     /**
      * Create template from the request.
-     *
-     * @return \Illuminate\Http\RedirectResponse|void
      */
-    public static function createTemplate(Request $request)
+    public static function createTemplate(Request $request): ?RedirectResponse
     {
         if (! preg_match('/^[a-zA-Z0-9-_\\s]+$/', $request->template_name)) {
             session()->flash('error', __('Template name not valid'));
 
-            return;
+            return null;
         }
 
         $view = 'shopper::templates.' . $request->template_name;
 
-        $templatename = Str::camel(preg_replace('/\s+/', '_', $request->template_name));
+        $templateName = Str::camel(preg_replace('/\s+/', '_', $request->template_name));
 
-        if (! view()->exists($view) && ! self::getTemplates()->contains('template_slug', '=', $templatename)) {
+        if (! view()->exists($view) && ! self::getTemplates()->contains('template_slug', '=', $templateName)) {
             self::saveTemplates(self::getTemplates()
                 ->push([
                     'template_name' => $request->template_name,
-                    'template_slug' => $templatename,
+                    'template_slug' => $templateName,
                     'template_description' => $request->template_description,
                     'template_type' => $request->template_type,
                     'template_view_name' => $request->template_view_name,
@@ -183,7 +184,7 @@ trait Templates
                 File::makeDirectory($dir, 0755, true);
             }
 
-            file_put_contents($dir . "/{$templatename}.blade.php", self::templateComponentReplace($request->content));
+            file_put_contents($dir . "/{$templateName}.blade.php", self::templateComponentReplace($request->content));
 
             // file_put_contents($dir."/{$templatename}_plain_text.blade.php", $request->plain_text);
 
@@ -193,6 +194,8 @@ trait Templates
         }
 
         session()->flash('error', __('Template not created'));
+
+        return null;
     }
 
     public static function getTemplateSkeletons(): Collection
@@ -219,7 +222,7 @@ trait Templates
         }
     }
 
-    public static function markdownedTemplateToView($save = true, $content = '', $viewPath = '', $template = false)
+    public static function markdownedTemplateToView($save = true, $content = '', $viewPath = '', $template = false): array|bool|string|null
     {
         if ($template && View::exists('shopper::mails.templates.' . $viewPath)) {
             $viewPath = View('shopper::mails.templates.' . $viewPath)->getPath();
@@ -231,7 +234,7 @@ trait Templates
             return $replaced;
         }
 
-        return file_put_contents($viewPath, $replaced) === false ? false : true;
+        return ! (file_put_contents($viewPath, $replaced) === false);
     }
 
     public static function previewMarkdownViewContent($simpleview, $content, $viewName, $template = false, $namespace = null)
@@ -259,7 +262,10 @@ trait Templates
         return false;
     }
 
-    public static function previewMarkdownHtml($instance, $view)
+    /**
+     * @throws \Throwable
+     */
+    public static function previewMarkdownHtml($instance, $view): string
     {
         return self::renderPreview($instance, $view);
     }
@@ -302,7 +308,7 @@ trait Templates
         return $templateData;
     }
 
-    protected static function templateComponentReplace($content, $reverse = false)
+    protected static function templateComponentReplace($content, $reverse = false): array|string|null
     {
         if ($reverse) {
             $patterns = [
@@ -357,7 +363,7 @@ trait Templates
         return preg_replace($patterns, $replacements, $content);
     }
 
-    protected static function markdownedTemplate($viewPath)
+    protected static function markdownedTemplate($viewPath): array|string|null
     {
         $viewContent = file_get_contents($viewPath);
 
