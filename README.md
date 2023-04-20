@@ -7,7 +7,7 @@
         <img src="https://github.com/shopperlabs/framework/workflows/tests/badge.svg" alt="Build Status">
     </a>
     <a href="https://laravel.com">
-        <img alt="Laravel v8.x" src="https://img.shields.io/badge/Laravel-v8.x-FF2D20">
+        <img alt="Laravel v9.x" src="https://img.shields.io/badge/Laravel-v9.x-FF2D20">
     </a>
     <a href="https://packagist.org/packages/shopper/framework">
         <img src="https://img.shields.io/packagist/dt/shopper/framework" alt="Total Downloads">
@@ -22,7 +22,7 @@
 
 ## Introduction
 
-[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 8.0+ which includes all the necessary for your online market application.
+[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 9.0+ which includes all the necessary for your online market application.
 Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 
@@ -72,7 +72,6 @@ We send an email about 3-4 emails per year. Sometimes less.
 
 - [Arthur Monney][link-author]
 - [Jean-Vincent QUILICHINI][link-author-2]
-- [Laravel Fortify](https://github.com/laravel/fortify)
 - [MailEclipse](https://github.com/Qoraiche/laravel-mail-editor)
 - [All Contributors][link-contributors]
 
