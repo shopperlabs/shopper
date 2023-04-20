@@ -18,7 +18,7 @@
     }
   ],
   "require": {
-    "php": "^8.0|^8.1|^8.2",
+    "php": "^8.1|^8.2",
     "ext-intl": "*",
     "ext-json": "*",
     "bacon/bacon-qr-code": "^2.0",
@@ -26,17 +26,17 @@
     "doctrine/dbal": "^3.0",
     "filament/forms": "^2.17",
     "filament/notifications": "^2.17",
-    "illuminate/database": "^8.0|^9.0|^10.0",
-    "illuminate/contracts": "^8.6|^9.0|^10.0",
-    "illuminate/routing": "^8.6|^9.0|^10.0",
-    "illuminate/support": "^8.0|^9.0|^10.0",
-    "illuminate/validation": "^8.0|^9.0|^10.0",
+    "illuminate/database": "^8.0|^9.0",
+    "illuminate/contracts": "^8.6|^9.0",
+    "illuminate/routing": "^8.6|^9.0",
+    "illuminate/support": "^8.0|^9.0",
+    "illuminate/validation": "^8.0|^9.0",
     "jenssegers/agent": "^2.6",
     "laravel/helpers": "^1.4.1",
     "laravel/ui": "^3.2",
     "livewire/livewire": "^2.10",
     "maatwebsite/excel": "^3.1",
-    "maatwebsite/laravel-sidebar": "^2.4",
+    "maatwebsite/laravel-sidebar": "^2.5",
     "milon/barcode": "^9.0.0",
     "moneyphp/money": "^3.3",
     "pragmarx/google2fa": "^8.0",
@@ -49,7 +49,7 @@
     "stevebauman/location": "^6.3.1",
     "stripe/stripe-php": "^8.6",
     "wire-elements/modal": "^1.0.0",
-    "wireui/wireui": "^1.17"
+    "wireui/wireui": "^1.17.9"
   },
   "require-dev": {
     "laravel/pint": "^1.1",

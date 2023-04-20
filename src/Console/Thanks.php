@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
-final class Thanks
+class Thanks
 {
     private const FUNDING_MESSAGES = [
         '',
@@ -22,7 +22,7 @@ final class Thanks
         '    <options=bold>https://github.com/sponsors/Sense</>',
     ];
 
-    public function __construct(private readonly OutputInterface $output)
+    public function __construct(private OutputInterface $output)
     {
     }
 

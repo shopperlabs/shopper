@@ -9,7 +9,7 @@ use Shopper\Framework\Providers\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-final class InstallCommand extends Command
+class InstallCommand extends Command
 {
     protected ProgressBar $progressBar;
 
@@ -49,7 +49,7 @@ final class InstallCommand extends Command
 
         $this->completeSetup();
 
-        if (! (bool) $this->option('no-interaction')) {
+        if (! $this->option('no-interaction')) {
             (new Thanks($this->output))();
         }
     }
