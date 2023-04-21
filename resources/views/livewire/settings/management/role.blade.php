@@ -9,9 +9,9 @@
         currentTab: 'role'
     }"
 >
-    <x-shopper::breadcrumb back="shopper.settings.users">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" title="Users & roles" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.users')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('Users & roles')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
@@ -24,7 +24,7 @@
                     @if($role->can_be_removed)
                         <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
                             <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
-                            {{ __('Delete') }}
+                            {{ __('shopper::layout.forms.actions.delete') }}
                         </x-shopper::buttons.danger>
                     @endif
                 </span>
@@ -93,13 +93,13 @@
             @endif
             <div class="px-4 py-5 sm:p-6">
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                    <x-shopper::forms.group label="Name (in lowercase)" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
+                    <x-shopper::forms.group :label="__('Name (in lowercase)')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
                         <x-shopper::forms.input wire:model.lazy="name" type="text" id="name" placeholder="manager" />
                     </x-shopper::forms.group>
-                    <x-shopper::forms.group label="Display name" for="display_name" class="sm:col-span-1">
+                    <x-shopper::forms.group :label="__('Display name')" for="display_name" class="sm:col-span-1">
                         <x-shopper::forms.input wire:model.lazy="display_name" type="text" id="display_name" placeholder="Manager" />
                     </x-shopper::forms.group>
-                    <x-shopper::forms.group label="Description" for="description" class="sm:col-span-2">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.description')" for="description" class="sm:col-span-2">
                         <x-shopper::forms.textarea wire:model.lazy="description" id="description" />
                     </x-shopper::forms.group>
                 </div>
@@ -107,7 +107,7 @@
             <div class="px-4 py-3 text-right sm:px-6">
                 <x-shopper::buttons.primary wire:click="save" wire:loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                    {{ __('Update') }}
+                    {{ __('shopper::layout.forms.actions.update') }}
                 </x-shopper::buttons.primary>
             </div>
         </div>

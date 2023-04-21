@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $id
  * @property string $code
  * @property string $type
- * @property string $value
+ * @property int|null $value
  * @property string $apply_to
  * @property string $eligibility
  * @property int $min_required

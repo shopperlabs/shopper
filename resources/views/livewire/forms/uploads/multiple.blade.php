@@ -61,6 +61,6 @@
     @endif
 
     @error('files.*')
-        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+        <p class="mt-1 text-sm text-danger-500">{{ $message }}</p>
     @enderror
 </div>

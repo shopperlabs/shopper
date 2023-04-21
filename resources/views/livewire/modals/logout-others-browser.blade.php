@@ -17,10 +17,10 @@
         <div class="p-4 sm:px-6">
             <div>
                 <div class="relative">
-                    <x-shopper::forms.input wire:model.lazy="password" aria-label="{{ __('Password') }}" type="password" placeholder="{{ __('Enter your password') }}" />
+                    <x-shopper::forms.input wire:model.lazy="password" aria-label="{{ __('shopper::layout.forms.label.password') }}" type="password" placeholder="{{ __('Enter your password') }}" />
                 </div>
                 @error('password')
-                    <p class="mt-2 text-sm text-red-500 dark:text-red-400">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-danger-500 dark:text-danger-400">{{ $message }}</p>
                 @enderror
             </div>
         </div>

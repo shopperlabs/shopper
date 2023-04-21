@@ -22,17 +22,17 @@
                 </div>
                 <form class="mt-5" action="{{ route('shopper.two-factor.post-login') }}" method="POST">
                     @csrf
-                    <x-shopper::forms.group x-show="! recovery" label="Code" for="code">
+                    <x-shopper::forms.group x-show="! recovery" :label="__('shopper::layout.forms.label.code')" for="code">
                         <x-shopper::forms.input  id="code" type="text" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
                     </x-shopper::forms.group>
 
-                    <x-shopper::forms.group x-show="recovery" label="Recovery Code" for="recovery_code" style="display: none">
+                    <x-shopper::forms.group x-show="recovery" :label="__('Recovery Code')" for="recovery_code" style="display: none">
                         <x-shopper::forms.input  id="recovery_code" name="recovery_code" type="text" x-ref="recovery_code" autocomplete="one-time-code" />
                     </x-shopper::forms.group>
 
                     <div class="mt-5 flex items-center space-x-4">
                         <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                            {{ __("shopper::pages/auth.two_factor.remember") }}
+                            {{ __('shopper::pages/auth.two_factor.remember') }}
                             <button
                                 class="ml-1 text-sm text-secondary-500 hover:text-secondary-900 underline cursor-pointer dark:text-secondary-400 dark:hover:text-white"
                                 type="button"

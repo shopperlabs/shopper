@@ -23,13 +23,29 @@
                     @endforeach
                 </x-shopper::forms.select>
             </x-shopper::forms.group>
-            <x-shopper::forms.group label="Permission name (in lowercase)" for="permission_name" class="sm:col-span-2" :error="$errors->first('name')" isRequired>
-                <x-shopper::forms.input wire:model.defer="name" type="text" id="permission_name" placeholder="create_post, manage_articles, etc" autocomplete="off" />
+            <x-shopper::forms.group
+                for="permission_name"
+                class="sm:col-span-2"
+                :label="__('Permission name (in lowercase)')"
+                :error="$errors->first('name')"
+                isRequired
+            >
+                <x-shopper::forms.input wire:model.defer="name" type="text" id="permission_name" :placeholder="__('create_post, manage_articles, etc')" autocomplete="off" />
             </x-shopper::forms.group>
-            <x-shopper::forms.group label="Display name" for="permission_display_name" class="sm:col-span-2" :error="$errors->first('display_name')" isRequired>
-                <x-shopper::forms.input wire:model.defer="display_name" type="text" id="permission_display_name" placeholder="Create Blog posts" autocomplete="off" />
+            <x-shopper::forms.group
+                :label="__('Display name')"
+                for="permission_display_name"
+                class="sm:col-span-2"
+                :error="$errors->first('display_name')"
+                isRequired
+            >
+                <x-shopper::forms.input wire:model.defer="display_name" type="text" id="permission_display_name" :placeholder="__('Create Blog posts')" autocomplete="off" />
             </x-shopper::forms.group>
-            <x-shopper::forms.group label="Description" for="permission_description" class="sm:col-span-2">
+            <x-shopper::forms.group
+                for="permission_description"
+                class="sm:col-span-2"
+                :label="__('shopper::layout.forms.label.description')"
+            >
                 <x-shopper::forms.textarea wire:model.defer="description" id="permission_description" />
             </x-shopper::forms.group>
         </div>
@@ -39,12 +55,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper::buttons.primary wire:click="save" type="button">
                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                {{ __('Save') }}
+                {{ __('shopper::layout.forms.actions.save') }}
             </x-shopper::buttons.primary>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
-                {{ __('Cancel') }}
+                {{ __('shopper::layout.forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

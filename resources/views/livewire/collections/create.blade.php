@@ -1,5 +1,5 @@
 <div>
-    <x-shopper::breadcrumb back="shopper.collections.index">
+    <x-shopper::breadcrumb :back="route('shopper.collections.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper::breadcrumb.link :link="route('shopper.collections.index')" :title="__('shopper::layout.sidebar.collections')" />
     </x-shopper::breadcrumb>
@@ -30,7 +30,9 @@
                 </div>
             </div>
             <div class="bg-white rounded-lg shadow overflow-hidden pt-4 sm:pt-5 dark:bg-secondary-800">
-                <h3 class="text-base text-secondary-900 leading-6 px-4 sm:px-5 font-medium dark:text-white">{{ __('shopper::pages/collections.filter_type') }}</h3>
+                <h3 class="text-base text-secondary-900 leading-6 px-4 sm:px-5 font-medium dark:text-white">
+                    {{ __('shopper::pages/collections.filter_type') }}
+                </h3>
                 <div
                     x-data="{
                         active: {{ $type === 'auto' ? 1 : 0 }},
@@ -80,19 +82,27 @@
                 </div>
                 @if($type === 'auto')
                     <div class="border-t border-secondary-200 p-4 sm:p-5 space-y-5 dark:border-secondary-700">
-                        <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white">{{ __('shopper::pages/collections.conditions.title') }}</h3>
+                        <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white">
+                            {{ __('shopper::pages/collections.conditions.title') }}
+                        </h3>
                         <div class="flex items-center space-x-6">
-                            <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('shopper::pages/collections.conditions.products_match') }}</p>
+                            <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                {{ __('shopper::pages/collections.conditions.products_match') }}
+                            </p>
                             <div class="flex items-center">
                                 <x-shopper::forms.radio wire:model.lazy="condition_match" id="all" value="all" />
                                 <label for="all" class="ml-3 cursor-pointer">
-                                    <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('shopper::pages/collections.conditions.all') }}</span>
+                                    <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">
+                                        {{ __('shopper::pages/collections.conditions.all') }}
+                                    </span>
                                 </label>
                             </div>
                             <div class="flex items-center">
                                 <x-shopper::forms.radio wire:model.lazy="condition_match" id="any" value="any" />
                                 <label for="any" class="ml-3 cursor-pointer">
-                                    <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">{{ __('shopper::pages/collections.conditions.any') }}</span>
+                                    <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">
+                                        {{ __('shopper::pages/collections.conditions.any') }}
+                                    </span>
                                 </label>
                             </div>
                         </div>

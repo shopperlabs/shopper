@@ -1,7 +1,7 @@
 <div>
-    <x-shopper::breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::messages.settings')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -13,7 +13,9 @@
     <div class="mt-8 pb-10">
         <div class="bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg shadow-md overflow-hidden">
             <div class="flex items-center">
-                <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Administrator role available') }}</h2>
+                <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                    {{ __('Administrator role available') }}
+                </h2>
                 <button wire:click="$emit('openModal', 'shopper-modals.create-role')" type="button" class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-primary-700 bg-primary-100 hover:bg-primary-50 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary active:bg-primary-200 transition ease-in-out duration-150">
                     <x-heroicon-s-plus-sm class="w-4 h-4 mr-1" />
                     {{ __('Add new role') }}
@@ -34,7 +36,9 @@
                             </div>
                         </div>
                         <div>
-                            <h3 class="mt-4 text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ $role->display_name }}</h3>
+                            <h3 class="mt-4 text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                                {{ $role->display_name }}
+                            </h3>
                             <p class="mt-1 flex items-center text-sm text-primary-600 group-hover:text-primary-500">
                                 {{ __('View details') }}
                                 <span class="ml-2">
@@ -49,7 +53,9 @@
         <div class="mt-10 bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg shadow-md">
             <div class="pb-6 border-b border-secondary-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0  dark:border-secondary-700">
                 <div class="flex-1 min-w-0 max-w-2xl">
-                    <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">{{ __('Administrators accounts') }}</h2>
+                    <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                        {{ __('Administrators accounts') }}
+                    </h2>
                     <p class="mt-3 text-base leading-6 text-secondary-500 dark:text-secondary-400">
                         {{ __('These are the members who are already in your store with their associated roles. You can assign new roles to existing member here.') }}
                     </p>
@@ -68,10 +74,10 @@
                             <thead>
                                 <tr class="border-b border-secondary-200 bg-secondary-50 dark:border-secondary-700 dark:bg-secondary-700">
                                     <x-shopper::tables.table-head>
-                                        <span class="lg:pl-2">{{ __('Name') }}</span>
+                                        <span class="lg:pl-2">{{ __('shopper::layout.forms.label.name') }}</span>
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head>
-                                        {{ __('Email Address') }}
+                                        {{ __('shopper::layout.forms.label.email') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="hidden md:table-cell text-right">
                                         {{ __('Role') }}
@@ -137,7 +143,7 @@
                                                         <div class="py-1">
                                                             <button wire:click="removeUser({{ $user->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
                                                                 <x-heroicon-s-trash class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
-                                                                {{ __('Delete') }}
+                                                                {{ __('shopper::layout.forms.actions.delete') }}
                                                             </button>
                                                         </div>
                                                     </x-slot>
@@ -156,13 +162,13 @@
                         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
                                 <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-400">
-                                    {{ __('Showing') }}
+                                    {{ __('shopper::messages.showing') }}
                                     <span class="font-medium">{{ ($users->currentPage() - 1) * $users->perPage() + 1 }}</span>
-                                    {{ __('to') }}
+                                    {{ __('shopper::messages.to') }}
                                     <span class="font-medium">{{ ($users->currentPage() - 1) * $users->perPage() + count($users->items()) }}</span>
-                                    {{ __('of') }}
+                                    {{ __('shopper::messages.of') }}
                                     <span class="font-medium"> {!! $users->total() !!}</span>
-                                    {{ __('results') }}
+                                    {{ __('shopper::messages.results') }}
                                 </p>
                             </div>
                             {{ $users->links() }}
@@ -172,5 +178,4 @@
             </div>
         </div>
     </div>
-
 </div>

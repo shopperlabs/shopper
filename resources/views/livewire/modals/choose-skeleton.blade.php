@@ -5,7 +5,9 @@
 >
 
     <x-slot name="title">
-        <span class="text-lg leading-6 font-medium text-secondary-900 capitalize dark:text-white">{{ $name }}</span>
+        <span class="text-lg leading-6 font-medium text-secondary-900 capitalize dark:text-white">
+            {{ $name }}
+        </span>
     </x-slot>
 
     <x-slot name="content">
@@ -28,7 +30,7 @@
     <x-slot name="buttons">
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
-                {{ __('Cancel') }}
+                {{ __('shopper::layout.forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

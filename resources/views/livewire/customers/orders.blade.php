@@ -40,7 +40,9 @@
             <div class="p-4 sm:px-5 sm:py-6 sm:grid sm:grid-cols-4 sm:gap-4">
                 <div class="sm:col-span-2">
                     <div class="flex items-center space-x-3">
-                        <h4 class="text-lg font-bold text-secondary-900 leading-6 dark:text-white">{{ __('shopper::pages/customers.orders.items') }}</h4>
+                        <h4 class="text-lg font-bold text-secondary-900 leading-6 dark:text-white">
+                            {{ __('shopper::pages/customers.orders.items') }}
+                        </h4>
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $order->status_classes }}">
                             {{ $order->formatted_status }}
                         </span>
@@ -55,7 +57,9 @@
                     </ul>
                 </div>
                 <div class="mt-4 sm:mt-0">
-                    <h5 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">{{ __('shopper::pages/customers.orders.payment_method') }}</h5>
+                    <h5 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
+                        {{ __('shopper::pages/customers.orders.payment_method') }}
+                    </h5>
                     <div class="mt-2 flex items-center">
                         @if($order->paymentMethod->logo)
                             <img class="h-6 w-6 rounded-md object-cover" src="{{ $order->paymentMethod->logo_url }}" alt="payment icon" />
@@ -67,7 +71,9 @@
                             </span>
                         @endif
                         <div class="ml-2">
-                            <p class="text-sm font-medium text-secondary-500 dark:text-secondary-400">{{ $order->paymentMethod->title }}</p>
+                            <p class="text-sm font-medium text-secondary-500 dark:text-secondary-400">
+                                {{ $order->paymentMethod->title }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -77,8 +83,12 @@
                     </h5>
                     <div class="mt-2 flex items-center">
                         @if($order->shipping_method)
-                            <p class="text-sm font-medium text-secondary-500 dark:text-secondary-400">{{ $order->shipping_method }}</p>
-                            <span class="ml-1 text-sm text-secondary-400 dark:text-secondary-500">{{ shopper_money_format($order->shipping_total) }}</span>
+                            <p class="text-sm font-medium text-secondary-500 dark:text-secondary-400">
+                                {{ $order->shipping_method }}
+                            </p>
+                            <span class="ml-1 text-sm text-secondary-400 dark:text-secondary-500">
+                                {{ shopper_money_format($order->shipping_total) }}
+                            </span>
                         @else
                             <p class="text-sm font-medium text-secondary-500 dark:text-secondary-400">
                                 {{ __('shopper::pages/customers.orders.no_shipping') }}
@@ -104,7 +114,9 @@
         <div class="bg-white rounded-lg shadow-md overflow-hidden py-10 sm:py-12 flex items-center justify-center dark:bg-secondary-800">
             <div class="flex justify-center items-center space-x-2">
                 <x-heroicon-o-shopping-bag class="h-8 w-8 text-secondary-400" />
-                <span class="font-medium py-8 text-secondary-400 text-xl">{{ __('shopper::pages/customers.orders.empty_text') }}</span>
+                <span class="font-medium py-8 text-secondary-400 text-xl">
+                    {{ __('shopper::pages/customers.orders.empty_text') }}
+                </span>
             </div>
         </div>
     @endforelse

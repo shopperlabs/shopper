@@ -10,12 +10,16 @@
         />
     </span>
     <span class="flex flex-1 items-center justify-between">
-        <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">{{ $product->name }}</span>
+        <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">
+            {{ $product->name }}
+        </span>
         <span class="flex items-center space-x-2">
             <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                 {{ __('shopper::pages/collections.modal.stock', ['stock' => $product->stock]) }}
             </span>
-            <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $product->formattedPrice }}</span>
+            <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                {{ $product->formattedPrice }}
+            </span>
         </span>
     </span>
 </label>

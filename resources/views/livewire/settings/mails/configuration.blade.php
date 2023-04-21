@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="col-span-6 sm:col-span-3">
-                    <x-shopper::forms.group for="mail_password" :label="__('Password')">
+                    <x-shopper::forms.group for="mail_password" :label="__('shopper::layout.forms.label.password')">
                         <x-shopper::forms.input type='text' wire:model='mail_password' autocomplete='off' id='mail_password' />
                     </x-shopper::forms.group>
                 </div>

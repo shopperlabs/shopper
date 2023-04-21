@@ -15,6 +15,8 @@ return [
 
     'brand' => null,
 
+    'mapbox_token' => env('MAPBOX_PUBLIC_TOKEN', null),
+
     /*
     |--------------------------------------------------------------------------
     | Shopper Locale Configuration

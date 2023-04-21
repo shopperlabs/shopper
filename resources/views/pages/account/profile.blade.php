@@ -8,29 +8,17 @@
 
     <livewire:shopper-account.profile />
 
-    <div class="hidden sm:block">
-        <div class="py-5">
-            <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
-        </div>
-    </div>
+    <x-shopper::separator />
 
     <livewire:shopper-account.password />
 
     @if (config('shopper.auth.2fa_enabled'))
-        <div class="hidden sm:block">
-            <div class="py-5">
-                <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
-            </div>
-        </div>
+        <x-shopper::separator />
 
         <livewire:shopper-account.two-factor />
     @endif
 
-    <div class="hidden sm:block">
-        <div class="py-5">
-            <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
-        </div>
-    </div>
+    <x-shopper::separator />
 
     <livewire:shopper-account.devices />
 

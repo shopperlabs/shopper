@@ -14,7 +14,7 @@
         currentTab: 'detail'
     }"
 >
-    <x-shopper::breadcrumb back="shopper.products.index">
+    <x-shopper::breadcrumb :back="route('shopper.products.index')">
         <x-heroicon-s-chevron-left class="w-5 h-5 shrink-0 text-secondary-400" />
         <x-shopper::breadcrumb.link :link="route('shopper.products.index')" :title="__('shopper::layout.sidebar.products')" />
     </x-shopper::breadcrumb>

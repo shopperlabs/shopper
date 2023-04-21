@@ -1,8 +1,8 @@
 <x-shopper::layouts.setting :title="__('Mail Configuration ~ Templates ~ Mailable')">
 
-    <x-shopper::breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('Settings')" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::messages.settings')" />
     </x-shopper::breadcrumb>
 
     <div
@@ -19,7 +19,9 @@
     >
         <div class="mt-3 bg-secondary-100 z-30 relative pb-5 border-b border-secondary-200 md:flex md:items-center md:justify-between dark:bg-secondary-900 dark:border-secondary-700">
             <div class="flex-1 min-w-0 sm:px-8">
-                <h2 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">{{ __('Email') }}</h2>
+                <h2 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
+                    {{ __('Email') }}
+                </h2>
             </div>
         </div>
         <div class="min-w-0 py-5 flex-1 lg:flex">
@@ -35,7 +37,9 @@
                                     <div class="min-w-0 flex-1">
                                         <button @click="currentTab = 'config'" type="button" class="block text-left focus:outline-none">
                                             <span class="absolute inset-0" aria-hidden="true"></span>
-                                            <p class="text-sm font-medium text-secondary-900 truncate dark:text-white">{{ __('Configuration') }}</p>
+                                            <p class="text-sm font-medium text-secondary-900 truncate dark:text-white">
+                                                {{ __('Configuration') }}
+                                            </p>
                                             <div class="mt-1">
                                                 <p class="line-clamp-2 text-sm text-secondary-500 dark:text-secondary-400">
                                                     {{ __('Manage email global configuration, driver, host, port etc.') }}
@@ -79,7 +83,9 @@
                                     <div class="min-w-0 flex-1">
                                         <button @click="currentTab = 'mailables'" type="button" class="block text-left focus:outline-none">
                                             <span class="absolute inset-0" aria-hidden="true"></span>
-                                            <p class="text-sm font-medium text-secondary-900 truncate dark:text-white">{{ __('Mailables') }}</p>
+                                            <p class="text-sm font-medium text-secondary-900 truncate dark:text-white">
+                                                {{ __('Mailables') }}
+                                            </p>
                                             <div class="mt-1">
                                                 <p class="line-clamp-2 text-sm text-secondary-500 dark:text-secondary-400">
                                                     {{ __('Create Laravel mailable class to use on your project to send email notifications.') }}

@@ -35,9 +35,9 @@
 
 <x-shopper::layouts.setting :title="__('Mail ~ Create Template')">
 
-    <x-shopper::breadcrumb back="shopper.settings.mails.select-template">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.mails.select-template')" title="Templates" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.mails.select-template')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.mails.select-template')" :title="__('Templates')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-3 pb-5 border-b border-secondary-200 dark:border-secondary-700">
@@ -59,10 +59,10 @@
                     <textarea id="template_editor" id="content" name="content" cols="30" rows="10">{{ $skeleton['template'] }}</textarea>
                 </div>
                 <div class="sm:col-span-1 space-y-5">
-                    <x-shopper::forms.group for="name" label="Template name" :error="$errors->first('template_name')" isRequired>
+                    <x-shopper::forms.group for="name" :label="__('shopper::layout.forms.label.name')" :error="$errors->first('template_name')" isRequired>
                         <x-shopper::forms.input name="template_name" type="text" id="name" placeholder="Shopper Newsletter" />
                     </x-shopper::forms.group>
-                    <x-shopper::forms.group for="description" label="Template description" :error="$errors->first('template_description')" isRequired>
+                    <x-shopper::forms.group for="description" :label="__('shopper::layout.forms.label.description')" :error="$errors->first('template_description')" isRequired>
                         <x-shopper::forms.textarea name="template_description" id="description" />
                     </x-shopper::forms.group>
                     <div class="pt-5 border-t border-secondary-200 dark:border-secondary-700">

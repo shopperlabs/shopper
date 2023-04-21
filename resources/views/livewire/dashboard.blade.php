@@ -29,7 +29,9 @@
                 </div>
 
                 <div class="ml-10">
-                    <div class="mt-4 text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::messages.dashboard.cards.doc_description') }}</div>
+                    <div class="mt-4 text-sm text-secondary-500 dark:text-secondary-400">
+                        {{ __('shopper::messages.dashboard.cards.doc_description') }}
+                    </div>
 
                     <a href="https://laravelshopper.dev" class="group">
                         <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
@@ -46,7 +48,9 @@
             <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600 sm:border-t-0">
                 <div class="flex items-center">
                     <x-heroicon-o-film class="w-6 h-6 text-primary-600" />
-                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">{{ __('shopper::messages.dashboard.cards.screencast_title') }}</h4>
+                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
+                        {{ __('shopper::messages.dashboard.cards.screencast_title') }}
+                    </h4>
                 </div>
 
                 <div class="ml-10">
@@ -69,7 +73,9 @@
             <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600">
                 <div class="flex items-center">
                     <x-heroicon-o-color-swatch class="w-6 h-6 text-primary-600" />
-                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">{{ __('shopper::messages.dashboard.cards.theme_title') }}</h4>
+                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
+                        {{ __('shopper::messages.dashboard.cards.theme_title') }}
+                    </h4>
                     <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
                       {{ __('shopper::layout.soon') }}
                     </span>
@@ -85,7 +91,9 @@
             <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600">
                 <div class="flex items-center">
                     <x-heroicon-o-book-open class="w-6 h-6 text-primary-600" />
-                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">{{ __('shopper::messages.dashboard.cards.product_title') }}</h4>
+                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
+                        {{ __('shopper::messages.dashboard.cards.product_title') }}
+                    </h4>
                 </div>
 
                 <div class="ml-10">

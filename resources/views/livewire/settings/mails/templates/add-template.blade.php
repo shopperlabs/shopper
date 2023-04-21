@@ -1,7 +1,7 @@
 <div x-data="{ currentTab: 'html'}">
-    <x-shopper::breadcrumb back="shopper.settings.users">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.mails')" title="Email configuration" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.mails')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.mails')" :title="__('Email configuration')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-3 border-b border-secondary-200 dark:border-secondary-700">

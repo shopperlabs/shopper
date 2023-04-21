@@ -1,5 +1,4 @@
 <div>
-
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::layout.sidebar.products') }}

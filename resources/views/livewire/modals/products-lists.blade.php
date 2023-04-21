@@ -9,7 +9,10 @@
 
     <x-slot name="content">
         <div class="py-2">
-            <x-shopper::forms.search label="shopper::pages/collections.modal.search" placeholder="shopper::pages/collections.modal.search_placeholder" />
+            <x-shopper::forms.search
+                :label="__('shopper::pages/collections.modal.search')"
+                :placeholder="__('shopper::pages/collections.modal.search_placeholder')"
+            />
         </div>
         <div class="my-2 -mx-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
             @foreach($this->products as $product)

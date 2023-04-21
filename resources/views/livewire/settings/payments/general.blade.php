@@ -6,9 +6,9 @@
     }"
 >
 
-    <x-shopper::breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::messages.settings')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-3 relative pb-5 border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
@@ -66,10 +66,10 @@
                                         <span class="lg:pl-2">{{ __('Title') }}</span>
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head>
-                                        {{ __('Status') }}
+                                        {{ __('shopper::layout.forms.label.status') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head>
-                                        {{ __('Website') }}
+                                        {{ __('shopper::layout.forms.label.website') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="hidden md:table-cell text-right">
                                         {{ __('Updated at') }}
@@ -132,14 +132,14 @@
                                                     <div class="py-1">
                                                         <button wire:click="$emit('openModal', 'shopper-modals.update-payment-method', {{ json_encode([$method->id]) }})" wire:key="{{ $method->id }}" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
                                                             <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
-                                                            {{ __('Edit') }}
+                                                            {{ __('shopper::layout.forms.actions.edit') }}
                                                         </button>
                                                     </div>
                                                     <div class="border-t border-secondary-100 dark:border-secondary-600"></div>
                                                     <div class="py-1">
                                                         <button wire:click="removePayment({{ $method->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
                                                             <x-heroicon-s-trash class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
-                                                            {{ __('Delete') }}
+                                                            {{ __('shopper::layout.forms.actions.delete') }}
                                                         </button>
                                                     </div>
                                                 </x-slot>
@@ -151,7 +151,9 @@
                                         <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                                             <div class="flex justify-center items-center space-x-2">
                                                 <x-heroicon-o-credit-card class="h-8 w-8 text-secondary-400" />
-                                                <span class="font-medium py-8 text-secondary-400 text-xl">{{ __('No payments methods found') }}...</span>
+                                                <span class="font-medium py-8 text-secondary-400 text-xl">
+                                                    {{ __('No payments methods found') }}
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>
@@ -167,13 +169,13 @@
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
                             <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-300">
-                                {{ __('Showing') }}
+                                {{ __('shopper::messages.showing') }}
                                 <span class="font-medium">{{ ($methods->currentPage() - 1) * $methods->perPage() + 1 }}</span>
-                                {{ __('to') }}
+                                {{ __('shopper::messages.to') }}
                                 <span class="font-medium">{{ ($methods->currentPage() - 1) * $methods->perPage() + count($methods->items()) }}</span>
-                                {{ __('of') }}
+                                {{ __('shopper::messages.of') }}
                                 <span class="font-medium"> {!! $methods->total() !!}</span>
-                                {{ __('results') }}
+                                {{ __('shopper::messages.results') }}
                             </p>
                         </div>
                         {{ $methods->links() }}

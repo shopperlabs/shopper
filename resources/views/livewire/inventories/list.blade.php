@@ -1,7 +1,9 @@
 <div>
     <div class="my-6 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0 flex flex-row items-center justify-between md:flex-col md:items-start">
-            <h2 class="text-2xl font-bold leading-7 text-secondary-600 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Inventory') }}</h2>
+            <h2 class="text-2xl font-bold leading-7 text-secondary-600 sm:text-3xl sm:leading-9 sm:truncate">
+                {{ __('Inventory') }}
+            </h2>
             <div class="md:mt-2 ml-4 md:ml-0">
                 <button type="button" class="text-secondary-400 text-sm inline-flex items-center hover:text-secondary-500 focus:text-secondary-600 leading-5 transition duration-150 ease-in-out">
                     <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mr-2">
@@ -19,7 +21,7 @@
     <div
         x-data="{
             options: ['all'],
-            words: {'all': '{{ __("All") }}'},
+            words: {'all': '{{ __('All') }}'},
             currentTab: 'all'
         }"
         class="bg-white shadow overflow-hidden sm:rounded-md"
@@ -115,13 +117,13 @@
                         <thead>
                             <tr>
                                 <th class="px-6 py-3 border-b border-secondary-200 text-left text-sm font-medium leading-4 text-secondary-700 tracking-wider">
-                                    {{ __('Name') }}
+                                    {{ __('shopper::layout.forms.label.name') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 text-left text-sm font-medium leading-4 text-secondary-700 tracking-wider">
-                                    {{ __("SKU") }}
+                                    {{ __('shopper::layout.forms.label.sku') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 text-center text-sm font-medium leading-4 text-secondary-700 tracking-wider">
-                                    {{ __("Available") }}
+                                    {{ __('Available') }}
                                 </th>
                             </tr>
                         </thead>
@@ -148,18 +150,18 @@
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 border-b border-secondary-200 text-sm leading-5 text-secondary-500">
-                                        {{ $product->sku ?? __("No Sku") }}
+                                        {{ $product->sku ?? __('No Sku') }}
                                     </td>
                                     <td class="px-6 py-4 border-b border-secondary-200 text-center">
-                                        <span class="text-sm inline-flex leading-5 font-semibold {{ $product->stock < 10 ? 'text-red-600' : 'text-green-600' }}">
-                                            {{ $product->stock }}
-                                        </span>
+                                        <x-shopper::stock-badge :stock="$product->stock" />
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
                                     <td colspan="4" class="px-6 py-10 whitespace-no-wrap">
-                                        <h3 class="text-lg text-center font-medium leading-6 text-secondary-700">{{ __("No inventory available.") }}</h3>
+                                        <h3 class="text-lg text-center font-medium leading-6 text-secondary-700">
+                                            {{ __('No inventory available.') }}
+                                        </h3>
                                     </td>
                                 </tr>
                             @endforelse

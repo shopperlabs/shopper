@@ -1,7 +1,7 @@
 <div>
-    <x-shopper::breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('Settings')" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::messages.settings')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading>
@@ -112,6 +112,6 @@
         </div>
     @endif
 
-    <x-shopper::learn-more :name="__('attributes')" link="attributes" />
+    <x-shopper::learn-more :name="__('shopper::messages.attributes')" link="attributes" />
 
 </div>

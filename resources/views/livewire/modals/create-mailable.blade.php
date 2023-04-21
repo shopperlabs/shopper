@@ -10,8 +10,15 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <x-shopper::forms.group label="Name" for="name" class="sm:col-span-2" :error="$errors->first('name')" helpText="Enter mailable name e.g Welcome User, WelcomeUser" isRequired>
-                <x-shopper::forms.input wire:model.defer="name" type="text" id="name" placeholder="Mailable name" />
+            <x-shopper::forms.group
+                :label="__('shopper::layout.forms.label.name')"
+                for="name"
+                class="sm:col-span-2"
+                :error="$errors->first('name')"
+                :helpText="__('Enter mailable name e.g Welcome User, WelcomeUser')"
+                isRequired
+            >
+                <x-shopper::forms.input wire:model.defer="name" type="text" id="name" :placeholder="__('Mailable name')" />
             </x-shopper::forms.group>
             <div class="sm:col-span-2">
                 <div class="relative flex items-start">
@@ -19,15 +26,25 @@
                         <x-shopper::forms.checkbox wire:model.defer="isMarkdown" id="is_markdown" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
-                        <label for="is_markdown" class="font-medium text-secondary-700 dark:text-secondary-300">{{ __('Markdown Template') }}</label>
-                        <p class="text-secondary-500 dark:text-secondary-400">{{ __('Use markdown template.') }}</p>
+                        <label for="is_markdown" class="font-medium text-secondary-700 dark:text-secondary-300">
+                            {{ __('Markdown Template') }}
+                        </label>
+                        <p class="text-secondary-500 dark:text-secondary-400">
+                            {{ __('Use markdown template.') }}
+                        </p>
                     </div>
                 </div>
             </div>
 
             @if($isMarkdown)
-                <x-shopper::forms.group label="Markdown" for="markdown" class="sm:col-span-2" :error="$errors->first('markdownView')" isRequired>
-                    <x-shopper::forms.input wire:model.defer="markdownView" type="text" id="markdown" placeholder="Eg. markdown.view" />
+                <x-shopper::forms.group
+                    for="markdown"
+                    class="sm:col-span-2"
+                    :label="__('Markdown')"
+                    :error="$errors->first('markdownView')"
+                    isRequired
+                >
+                    <x-shopper::forms.input wire:model.defer="markdownView" type="text" id="markdown" :placeholder="__('Eg. markdown.view')" />
                 </x-shopper::forms.group>
             @endif
 
@@ -37,8 +54,12 @@
                         <x-shopper::forms.checkbox wire:model.defer="isForce" id="is_force" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
-                        <label for="is_force" class="font-medium text-secondary-700 dark:text-secondary-300">{{ __('Force') }}</label>
-                        <p class="text-secondary-500 dark:text-secondary-400">{{ __('Force mailable creation even if already exists.') }}</p>
+                        <label for="is_force" class="font-medium text-secondary-700 dark:text-secondary-300">
+                            {{ __('Force') }}
+                        </label>
+                        <p class="text-secondary-500 dark:text-secondary-400">
+                            {{ __('Force mailable creation even if already exists.') }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -49,12 +70,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper::buttons.primary wire:click="generateMailable" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="generateMailable" class="text-white" />
-                {{ __('Save') }}
+                {{ __('shopper::layout.forms.actions.save') }}
             </x-shopper::buttons.primary>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
-                {{ __('Cancel') }}
+                {{ __('shopper::layout.forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

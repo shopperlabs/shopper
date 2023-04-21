@@ -10,8 +10,8 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2">
-            <x-shopper::forms.group label="Value" for="value" class="sm:col-span-2" :error="$errors->first('value')">
-                <x-shopper::forms.input wire:model.defer="value" type="text" id="value" placeholder="My value" />
+            <x-shopper::forms.group :label="__('shopper::layout.forms.label.value')" for="value" class="sm:col-span-2" :error="$errors->first('value')">
+                <x-shopper::forms.input wire:model.defer="value" type="text" id="value" :placeholder="__('My value')" />
             </x-shopper::forms.group>
 
             <div class="sm:col-span-2">
@@ -19,14 +19,22 @@
                     <div wire:ignore>
                         <x-shopper::label :value="__('Key')" />
                         <x-color-picker wire:model.defer="key" placeholder="#9800BK" />
-                        <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">{{ __('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format') }}</p>
+                        <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
+                            {{ __('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format') }}
+                        </p>
                     </div>
                     @error('key')
-                        <p class="mt-1 text-sm text-red-500 dark:text-red-400">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-danger-500 dark:text-danger-400">{{ $message }}</p>
                     @enderror
                 @else
-                    <x-shopper::forms.group label="Key" for="key" class="sm:col-span-2" :error="$errors->first('key')" helpText="The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format">
-                        <x-shopper::forms.input wire:model.defer="key" type="text" id="key" placeholder="my_key" />
+                    <x-shopper::forms.group
+                        :label="__('Key')"
+                        for="key"
+                        class="sm:col-span-2"
+                        :error="$errors->first('key')"
+                        :helpText="__('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format')"
+                    >
+                        <x-shopper::forms.input wire:model.defer="key" type="text" id="key" :placeholder="__('my_key')" />
                     </x-shopper::forms.group>
                 @endif
             </div>

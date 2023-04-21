@@ -12,9 +12,9 @@
             currentTab: 'refund'
         }"
     >
-        <x-shopper::breadcrumb back="shopper.settings.index">
-            <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-            <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+        <x-shopper::breadcrumb :back="route('shopper.settings.index')">
+            <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+            <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::messages.settings')" />
         </x-shopper::breadcrumb>
 
         <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        <x-shopper::learn-more name="legal pages" link="legal" />
+        <x-shopper::learn-more :name="__('Legal')" link="legal" />
     </div>
 
 </x-shopper::layouts.setting>
