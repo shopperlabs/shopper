@@ -1,7 +1,7 @@
 <div x-data="{ modal: false, show: false, on: @entangle('is_active') }">
-    <x-shopper::breadcrumb back="shopper.discounts.index">
+    <x-shopper::breadcrumb :back="route('shopper.discounts.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.discounts.index')" title="shopper::layout.sidebar.discounts" />
+        <x-shopper::breadcrumb.link :link="route('shopper.discounts.index')" :title="__('shopper::layout.sidebar.discounts')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -31,14 +31,14 @@
                         <x-shopper::forms.input wire:model.lazy="code" id="code" type="text" placeholder="{{ __('Eg.: NOELCMR900') }}" autocomplete="off" />
                         @error('code')
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <svg class="h-5 w-5 text-negative-500" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="h-5 w-5 text-danger-500" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                             </svg>
                         </div>
                         @enderror
                     </div>
                     @error('code')
-                    <p class="mt-2 text-sm text-negative-600 dark:text-negative-500">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
                     @enderror
                 </div>
                 <p class="mt-2 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
@@ -48,7 +48,9 @@
             <div class="bg-white divide-y divide-secondary-200 shadow rounded-md dark:bg-secondary-800 dark:divide-secondary-700">
                 <div class="p-4 sm:p-5">
                     <div class="flex items-center justify-between">
-                        <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">{{ __('shopper::layout.forms.label.type') }}</h4>
+                        <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">
+                            {{ __('shopper::layout.forms.label.type') }}
+                        </h4>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center">
                                 <x-shopper::forms.radio wire:model.lazy="type" id="percentage" value="percentage" name="type" />
@@ -79,7 +81,7 @@
                             </div>
                         </div>
                         @error('value')
-                        <p class="mt-2 text-sm text-negative-600 dark:text-negative-500">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -211,7 +213,7 @@
                             </div>
                         </div>
                         @error('minRequiredValue')
-                            <p class="mt-2 text-sm text-negative-600 dark:text-negative-500">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -302,7 +304,7 @@
                                     />
                                 </div>
                                 @error('usage_limit')
-                                    <p class="mt-2 text-sm text-negative-600 dark:text-negative-500">{{ $message }}</p>
+                                    <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
                                 @enderror
                             </div>
                         @endif
@@ -356,15 +358,24 @@
                 <div class="space-y-5">
                     <div class="px-4 py-5 bg-white shadow-md rounded-md sm:px-6 dark:bg-secondary-800">
                         <div class="flex items-center space-x-2">
-                            <h4 class="font-medium text-base text-secondary-900 dark:text-white">{{ __('shopper::messages.summary') }}</h4>
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $discount->is_active ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
-                                {{ $discount->is_active ? __('shopper::layout.forms.label.active') : __('shopper::layout.forms.label.inactive') }}
-                            </span>
+                            <h4 class="font-medium text-base text-secondary-900 dark:text-white">
+                                {{ __('shopper::messages.summary') }}
+                            </h4>
+                            <x-shopper::badge
+                                :style="$discount->is_active ? 'success' : 'orange'"
+                                :value="$discount->is_active ? __('shopper::layout.forms.label.active') : __('shopper::layout.forms.label.inactive')"
+                            />
                         </div>
                         @if($this->isEmpty())
-                            <p class="text-secondary-500 text-sm mt-4 dark:text-secondary-400">{{ __('shopper::pages/discounts.empty_code') }}</p>
+                            <p class="text-secondary-500 text-sm mt-4 dark:text-secondary-400">
+                                {{ __('shopper::pages/discounts.empty_code') }}
+                            </p>
                         @else
-                            @if($code !== '') <p class="text-base mt-4 font-bold text-secondary-700 leading-6 dark:text-secondary-300">{{ $code }}</p> @endif
+                            @if($code !== '')
+                                <p class="text-base mt-4 font-bold text-secondary-700 leading-6 dark:text-secondary-300">
+                                    {{ $code }}
+                                </p>
+                            @endif
                             <ul class="list-disc list-inside mt-4 space-y-1 text-sm text-secondary-500 dark:text-secondary-400">
                                 @if($value !== '' && (int) $value > 0)
                                     <li>

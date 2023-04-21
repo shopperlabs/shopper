@@ -1,7 +1,7 @@
 <div>
-    <x-shopper::breadcrumb back="shopper.settings.users">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" title="Users & roles" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.users')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('Users & roles')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -23,20 +23,20 @@
         <div class="mt-5 px-4 py-5 sm:px-6 bg-white rounded-md shadow-md overflow-hidden dark:bg-secondary-800">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
                 <x-shopper::label for="email" class="sm:mt-px sm:pt-2">
-                    {{ __('Email address') }} <span class="text-red-500">*</span>
+                    {{ __('shopper::layout.forms.label.email') }} <span class="text-danger-500">*</span>
                 </x-shopper::label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg relative rounded-md shadow-sm">
                         <x-shopper::forms.input wire:model.lazy="email" id="email" type="email" autocomplete="off" />
                     </div>
                     @error('email')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start mt-6 sm:mt-5 sm:pt-5 sm:border-t sm:border-secondary-200 sm:dark:border-secondary-700">
                 <x-shopper::label for="password" class="sm:mt-px sm:pt-2">
-                    {{ __('Password') }} <span class="text-red-500">*</span>
+                    {{ __('shopper::layout.forms.label.password') }} <span class="text-danger-500">*</span>
                 </x-shopper::label>
                 <div x-data="{ show: false }" class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="flex items-center justify-between max-w-lg">
@@ -54,12 +54,12 @@
                         <x-shopper::forms.input wire:model.defer="password" id="password" ::type="show ? 'text' : 'password'" type="password" autocomplete="off" class="@error('password') pr-10 @enderror" />
                         @error('password')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
+                                <x-heroicon-s-exclamation-circle class="h-5 w-5 text-danger-500" />
                             </div>
                         @enderror
                     </div>
                     @error('password')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -96,41 +96,41 @@
         <div class="mt-5 px-4 py-5 sm:px-6 bg-white rounded-md shadow-md dark:bg-secondary-800">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
                 <x-shopper::label for="first_name" class="sm:mt-px sm:pt-2">
-                    {{ __('First name') }} <span class="text-red-500">*</span>
+                    {{ __('shopper::layout.forms.label.first_name') }} <span class="text-danger-500">*</span>
                 </x-shopper::label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
                         <x-shopper::forms.input wire:model.lazy="first_name" type="text" id="first_name" autocomplete="off" />
                     </div>
                     @error('first_name')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
             <div class="mt-6 sm:mt-5 sm:pt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-secondary-200 sm:dark:border-secondary-700">
                 <x-shopper::label for="last_name" class="sm:mt-px sm:pt-2">
-                    {{ __('Last name') }} <span class="text-red-500">*</span>
+                    {{ __('shopper::layout.forms.label.last_name') }} <span class="text-danger-500">*</span>
                 </x-shopper::label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
                         <x-shopper::forms.input wire:model="last_name" type="text" id="last_name" autocomplete="off" />
                     </div>
                     @error('last_name')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
             <div class="mt-6 sm:mt-5 sm:pt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-secondary-200 sm:dark:border-secondary-700">
                 <x-shopper::label for="gender" class="sm:mt-px sm:pt-2">
-                    {{ __('Gender') }}
+                    {{ __('shopper::layout.forms.label.gender') }}
                 </x-shopper::label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
                         <x-shopper::forms.select wire:model.lazy="gender" id="gender">
-                            <option value="male">{{ __('Male') }}</option>
-                            <option value="female">{{ __('Female') }}</option>
+                            <option value="male">{{ __('shopper::messages.male') }}</option>
+                            <option value="female">{{ __('shopper::messages.female') }}</option>
                         </x-shopper::forms.select>
                     </div>
                 </div>
@@ -142,19 +142,19 @@
                 class="mt-6 sm:mt-5 sm:pt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-secondary-200 sm:dark:border-secondary-700"
             >
                 <x-shopper::label for="phone_number" class="sm:mt-px sm:pt-2">
-                    {{ __('Phone number') }}
+                    {{ __('shopper::layout.forms.label.phone_number') }}
                 </x-shopper::label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
                         <x-shopper::forms.input wire:model.lazy="phone_number" type="tel" id="phone_number" />
                         @error('phone_number')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <x-heroicon-s-exclamation-circle class="h-5 w-5 text-red-500" />
+                                <x-heroicon-s-exclamation-circle class="h-5 w-5 text-danger-500" />
                             </div>
                         @enderror
                     </div>
                     @error('phone_number')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -180,7 +180,9 @@
                         </div>
                         <div class="sm:col-span-2">
                             <div class="max-w-lg">
-                                <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('Choose a role for this admin') }}</p>
+                                <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                    {{ __('Choose a role for this admin') }}
+                                </p>
                                 <div class="mt-4 space-y-4">
                                     @foreach($roles as $role)
                                         <div class="flex items-center">
@@ -192,7 +194,7 @@
                                     @endforeach
                                 </div>
                                 @error('role_id')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                    <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
                                 @enderror
 
                                 @if($is_admin)
@@ -225,13 +227,13 @@
             <div class="flex justify-end">
                 <span class="inline-flex rounded-md shadow-sm">
                     <x-shopper::buttons.default :link="route('shopper.settings.users')">
-                        {{ __('Cancel') }}
+                        {{ __('shopper::layout.forms.actions.cancel') }}
                     </x-shopper::buttons.default>
                 </span>
                 <span class="ml-3 inline-flex rounded-md shadow-sm">
                     <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                         <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                        {{ __('Save and Continue') }}
+                        {{ __('shopper::layout.forms.actions.save') }}
                     </x-shopper::buttons.primary>
                 </span>
             </div>

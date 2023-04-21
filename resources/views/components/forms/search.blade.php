@@ -1,7 +1,7 @@
 @props([
-    'label' => 'Search',
-    'for' => 'filter',
-    'placeholder' => 'Search',
+    'label' => __('shopper::layout.forms.label.search'),
+    'for' => 'search-filter',
+    'placeholder' => __('shopper::layout.forms.label.search'),
 ])
 
 <div class="flex flex-1">
@@ -11,7 +11,7 @@
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <x-heroicon-o-search class="h-5 w-5 text-secondary-400" />
             </div>
-            <x-shopper::forms.input type="search" id="filter" wire:model.debounce.300ms="search" class="pl-10" :placeholder="$placeholder" />
+            <x-shopper::forms.input type="search" id="search-filter" wire:model.debounce.300ms="search" class="pl-10" :placeholder="$placeholder" />
             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                 <x-shopper::loader wire:loading wire:target="search" class="text-primary-600" />
             </div>

@@ -14,7 +14,11 @@
             <div class="shadow rounded-md bg-white overflow-hidden dark:bg-secondary-800">
                 <div class="p-4 sm:px-6 border-b border-secondary-200 dark:border-secondary-700">
                     <div class="flex items-center space-x-3">
-                        <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $this->enabled ? 'bg-green-400' : 'bg-secondary-400 dark:bg-secondary-500' }}"></div>
+                        <div @class([
+                            'shrink-0 w-2.5 h-2.5 rounded-full',
+                            'bg-green-400' => $this->enabled,
+                            'bg-secondary-400 dark:bg-secondary-500' => ! $this->enabled,
+                        ])></div>
                         <h3 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
                             @if ($this->enabled)
                                 {{ __('shopper::pages/auth.account.two_factor_enabled') }}

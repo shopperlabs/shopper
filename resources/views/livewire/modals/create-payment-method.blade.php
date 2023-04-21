@@ -29,22 +29,35 @@
                 </div>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper::forms.group label="Custom payment method name" for="title" :error="$errors->first('title')" isRequired>
+                <x-shopper::forms.group
+                    for="title"
+                    :label="__('Custom payment method name')"
+                    :error="$errors->first('title')"
+                    isRequired
+                >
                     <x-shopper::forms.input wire:model.defer="title" id="title" type="text" />
                 </x-shopper::forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper::forms.group label="Payment Website Documentation" for="link_url">
+                <x-shopper::forms.group :label="__('Payment Website Documentation')" for="link_url">
                     <x-shopper::forms.input wire:model.defer="linkUrl" type="url" id="link_url" placeholder="https://doc.myprovider.com" />
                 </x-shopper::forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper::forms.group label="Additional details" for="description" helpText="Displays to customers when they’re choosing a payment method.">
+                <x-shopper::forms.group
+                    for="description"
+                    :label="__('Additional details')"
+                    :helpText="__('Displays to customers when they’re choosing a payment method.')"
+                >
                     <x-shopper::forms.textarea wire:model.defer="description" id="description" />
                 </x-shopper::forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper::forms.group label="Payment instructions" for="instructions" helpText="Displays to customers after they place an order with this payment method.">
+                <x-shopper::forms.group
+                    for="instructions"
+                    :label="__('Payment instructions')"
+                    :helpText="__('Displays to customers after they place an order with this payment method.')"
+                >
                     <x-shopper::forms.textarea wire:model.defer="instructions" id="instructions" />
                 </x-shopper::forms.group>
             </div>
@@ -55,12 +68,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper::buttons.primary wire:click="save" type="button">
                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                {{ __('Save') }}
+                {{ __('shopper::layout.forms.actions.save') }}
             </x-shopper::buttons.primary>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
-                {{ __('Cancel') }}
+                {{ __('shopper::layout.forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

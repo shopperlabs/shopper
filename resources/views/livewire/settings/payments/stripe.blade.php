@@ -62,20 +62,21 @@
 
     @if($this->enabled)
 
-        <div class="hidden sm:block">
-            <div class="py-5">
-                <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
-            </div>
-        </div>
+    <x-shopper::separator />
 
         <div class="mt-10 sm:mt-0">
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('shopper::messages.environment') }}</h3>
+                        <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">
+                            {{ __('shopper::messages.environment') }}
+                        </h3>
                         <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                             {{ __('shopper::pages/settings.payment.stripe_environment') }}
-                            {{ __('shopper::pages/settings.payment.stripe_dashboard') }} <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-500/50">https://dashboard.stripe.com/account/apikeys</a>
+                            {{ __('shopper::pages/settings.payment.stripe_dashboard') }}
+                            <a href="https://dashboard.stripe.com/account/apikeys" target="_blank" class="text-primary-600 dark:text-primary-500/50">
+                                https://dashboard.stripe.com/account/apikeys
+                            </a>
                         </p>
                     </div>
                 </div>
@@ -83,11 +84,11 @@
                     <div class="shadow rounded-md overflow-hidden">
                         <div class="px-4 py-5 sm:p-6 space-y-4 bg-white dark:bg-secondary-800">
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
-                                <x-shopper::forms.group label="shopper::layout.forms.label.public_key" for="public_key" class="sm:col-span-3">
+                                <x-shopper::forms.group :label="__('shopper::layout.forms.label.public_key')" for="public_key" class="sm:col-span-3">
                                     <x-shopper::forms.input wire:model.lazy="stripe_key" id="public_key" type="text" autocomplete="off" />
                                 </x-shopper::forms.group>
 
-                                <x-shopper::forms.group label="shopper::layout.forms.label.secret_key" for="secret_key" class="sm:col-span-3">
+                                <x-shopper::forms.group :label="__('shopper::layout.forms.label.secret_key')" for="secret_key" class="sm:col-span-3">
                                     <x-shopper::forms.input wire:model.lazy="stripe_secret" id="secret_key" type="text" />
                                 </x-shopper::forms.group>
                             </div>
@@ -105,7 +106,6 @@
                 </x-shopper::buttons.primary>
             </div>
         </div>
-
     @endif
 
 </div>

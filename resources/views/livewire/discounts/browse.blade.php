@@ -144,7 +144,10 @@
         <div class="mt-6 bg-white dark:bg-secondary-800 shadow rounded-md">
             <div class="p-4 sm:p-6 sm:pb-4">
                 <div class="flex items-start space-x-4">
-                    <x-shopper::forms.search label="shopper::pages/discounts.search" placeholder="shopper::pages/discounts.search" />
+                    <x-shopper::forms.search
+                        :label="__('shopper::pages/discounts.search')"
+                        :placeholder="__('shopper::pages/discounts.search')"
+                    />
                     <div class="flex items-center space-x-3">
                         <div class="relative z-10 inline-flex shadow-sm rounded-md">
                             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
@@ -272,7 +275,9 @@
                         <li class="w-full flex items-center justify-center px-10 py-12">
                             <div class="text-center">
                                 <x-heroicon-o-gift class="mx-auto h-12 w-12 text-secondary-400 dark:text-secondary-500" />
-                                <h3 class="mt-2 text-xl font-medium text-secondary-900 dark:text-white">{{ __('shopper::pages/discounts.empty_message') }}</h3>
+                                <h3 class="mt-2 text-xl font-medium text-secondary-900 dark:text-white">
+                                    {{ __('shopper::pages/discounts.empty_message') }}
+                                </h3>
                             </div>
                         </li>
                     @endforelse
@@ -300,6 +305,6 @@
         </div>
     @endif
 
-    <x-shopper::learn-more name="shopper::layout.sidebar.discounts" link="discounts" />
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.discounts')" link="discounts" />
 
 </div>

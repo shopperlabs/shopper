@@ -1,12 +1,12 @@
 <div x-data="{ on: @entangle('is_enabled') }">
-    <x-shopper::breadcrumb back="shopper.brands.index">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
+    <x-shopper::breadcrumb :back="route('shopper.brands.index')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
         <x-shopper::breadcrumb.link :link="route('shopper.brands.index')" :title="__('shopper::layout.sidebar.brands')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('shopper::messages.actions_label.add_new', ['name' => 'brand']) }}
+            {{ __('shopper::messages.actions_label.add_new', ['name' => __('brand')]) }}
         </x-slot>
 
         <x-slot name="action">
@@ -21,7 +21,12 @@
         <div class="lg:col-span-4 space-y-5">
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
-                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
+                    <x-shopper::forms.group
+                        for="name"
+                        isRequired
+                        :label="__('shopper::layout.forms.label.name')"
+                        :error="$errors->first('name')"
+                    >
                         <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
                     </x-shopper::forms.group>
                 </div>

@@ -1,7 +1,7 @@
 <div>
-    <x-shopper::breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" title="Settings" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::messages.settings')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
@@ -28,7 +28,9 @@
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">{{ __('Locations') }}</h3>
+                    <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
+                        {{ __('Locations') }}
+                    </h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __('Manage the places you stock inventory, fulfill orders, and sell products.') }}
                     </p>
@@ -98,5 +100,5 @@
         </div>
     </div>
 
-    <x-shopper::learn-more name="locations" link="locations" />
+    <x-shopper::learn-more :name="__('shopper::messages.inventory')" link="locations" />
 </div>

@@ -21,8 +21,9 @@
 
             <div class="mt-4">
                 <x-shopper::brand class="mx-auto h-20 w-auto" />
-
-                <h2 class="mt-10 text-3xl font-extrabold text-center leading-9 text-secondary-900 dark:text-white">{{ __('shopper::pages/auth.email.title') }}</h2>
+                <h2 class="mt-10 text-3xl font-extrabold text-center leading-9 text-secondary-900 dark:text-white">
+                    {{ __('shopper::pages/auth.email.title') }}
+                </h2>
                 <p class="mt-5 text-sm leading-5 text-center">
                     {{ __('shopper::pages/auth.email.message') }}
                 </p>

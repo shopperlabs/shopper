@@ -3,7 +3,9 @@
         <h3 class="text-xl leading-6 font-medium text-secondary-900 dark:text-white">
             🛠 <span class="ml-4">{{ __('shopper::components.wip.title') }}</span>
         </h3>
-        <p class="mt-1 max-w-4xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ __('shopper::components.wip.description') }}</p>
+        <p class="mt-1 max-w-4xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+            {{ __('shopper::components.wip.description') }}
+        </p>
     </div>
     <div class="mt-5">
         <p class="flex items-center text-base font-medium text-secondary-900 dark:text-white">

@@ -15,7 +15,9 @@
                 {{ $label }} @if($isRequired) <span class="text-negative-500">*</span> @endif
             </label>
             @if($optional)
-                <span class="text-secondary-500 text-sm leading-5 dark:text-secondary-400">{{ __('shopper::layout.forms.label.optional') }}</span>
+                <span class="text-secondary-500 text-sm leading-5 dark:text-secondary-400">
+                    {{ __('shopper::layout.forms.label.optional') }}
+                </span>
             @endif
         </div>
     @endif
@@ -24,7 +26,7 @@
         {{ $slot }}
     </div>
     @if ($error)
-        <p class="mt-1 text-sm text-negative-500 dark:text-negative-400">{{ $error }}</p>
+        <p class="mt-1 text-sm text-danger-500 dark:text-danger-400">{{ $error }}</p>
     @endif
 
     @if ($helpText)

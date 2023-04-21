@@ -1,5 +1,4 @@
 <div>
-    <!-- This example requires Tailwind CSS v2.0+ -->
     <div class="pb-5 border-b border-secondary-200 sm:flex sm:items-center sm:justify-between">
         <h3 class="text-lg leading-6 font-medium text-secondary-900">
             {{ __('Latest issues') }}

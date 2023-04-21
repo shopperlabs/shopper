@@ -3,7 +3,9 @@
         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
             {{ __('Users') }}
         </h3>
-        <p class="ml-2 mt-1 text-sm leading-5 text-secondary-500 truncate dark:text-secondary-400">{{ __('with :name role', ['name' => $role->display_name]) }}</p>
+        <p class="ml-2 mt-1 text-sm leading-5 text-secondary-500 truncate dark:text-secondary-400">
+            {{ __('with :name role', ['name' => $role->display_name]) }}
+        </p>
     </div>
     <div class="mt-4 border-t border-secondary-200 overflow-x-auto dark:border-secondary-800">
         <div class="align-middle inline-block min-w-full">
@@ -11,10 +13,10 @@
                 <thead>
                     <tr class="border-b border-secondary-200 bg-secondary-50 dark:border-secondary-700 dark:bg-secondary-700">
                         <x-shopper::tables.table-head>
-                            <span class="lg:pl-2">{{ __('Name') }}</span>
+                            <span class="lg:pl-2">{{ __('shopper::layout.forms.label.name') }}</span>
                         </x-shopper::tables.table-head>
                         <x-shopper::tables.table-head>
-                            {{ __('Email Address') }}
+                            {{ __('shopper::layout.forms.label.email') }}
                         </x-shopper::tables.table-head>
                         <x-shopper::tables.table-head class="hidden md:table-cell text-right">
                             {{ __('Role') }}
@@ -80,7 +82,7 @@
                                             <div class="py-1">
                                                 <button wire:click="removeUser({{ $user->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
                                                     <x-heroicon-s-trash class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
-                                                    {{ __('Delete') }}
+                                                    {{ __('shopper::layout.forms.actions.delete') }}
                                                 </button>
                                             </div>
                                         </x-slot>
@@ -93,7 +95,9 @@
                             <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium">
                                 <div class="flex justify-center items-center space-x-2">
                                     <x-heroicon-o-users class="h-8 w-8 text-secondary-400" />
-                                    <span class="font-medium py-8 text-secondary-400 text-xl">{{ __('No users') }}...</span>
+                                    <span class="font-medium py-8 text-secondary-400 text-xl">
+                                        {{ __('No users...') }}
+                                    </span>
                                 </div>
                             </td>
                         </tr>
@@ -105,9 +109,9 @@
             <div class="flex-1 flex items-center">
                 <div>
                     <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-400">
-                        {{ __('Showing') }}
+                        {{ __('shopper::messages.showing') }}
                         <span class="font-medium"> {!! $users->count() !!}</span>
-                        {{ __('results') }}
+                        {{ __('shopper::messages.results') }}
                     </p>
                 </div>
             </div>

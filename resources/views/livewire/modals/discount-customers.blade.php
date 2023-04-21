@@ -9,7 +9,10 @@
 
     <x-slot name="content">
         <div class="py-2">
-            <x-shopper::forms.search label="shopper::layout.forms.label.search'" placeholder="shopper::pages/discounts.modals.search_customer" />
+            <x-shopper::forms.search
+                :label="__('shopper::layout.forms.label.search')"
+                :placeholder="__('shopper::pages/discounts.modals.search_customer')"
+            />
         </div>
         <div class="my-2 -mx-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
             @foreach($customers as $customer)
@@ -26,10 +29,14 @@
                             <div class="shrink-0">
                                 <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="{{ $customer->email }}">
                             </div>
-                            <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">{{ $customer->full_name }}</span>
+                            <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">
+                                {{ $customer->full_name }}
+                            </span>
                         </div>
                         <span class="flex items-center space-x-2">
-                            <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">{{ $customer->email }}</span>
+                            <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                {{ $customer->email }}
+                            </span>
                         </span>
                     </div>
                 </label>

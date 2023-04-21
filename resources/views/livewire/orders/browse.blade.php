@@ -5,7 +5,7 @@
 <div>
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Orders') }}
+            {{ __('shopper::layout.sidebar.orders') }}
         </x-slot>
     </x-shopper::heading>
 

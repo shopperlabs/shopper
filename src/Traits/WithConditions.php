@@ -6,31 +6,16 @@ namespace Shopper\Framework\Traits;
 
 trait WithConditions
 {
-    /**
-     * Condition rule.
-     */
-    public string $rule;
+    public array $rule = [];
 
-    /**
-     * Condition operator.
-     */
-    public string $operator;
+    public array $operator = [];
 
-    /**
-     * Condition value.
-     */
-    public string $value;
+    public array $value = [];
 
-    /**
-     * Get the lists of all collection conditions rules.
-     */
     public array $conditions = [];
 
     public int $i = 1;
 
-    /**
-     * Add new condition on the array conditions.
-     */
     public function add(int $i): void
     {
         $i++;
@@ -38,9 +23,6 @@ trait WithConditions
         $this->conditions[] = $i;
     }
 
-    /**
-     * Remove a condition to the array conditions.
-     */
     public function remove(int $i): void
     {
         unset($this->conditions[$i]);

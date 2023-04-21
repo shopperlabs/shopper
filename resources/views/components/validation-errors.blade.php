@@ -1,5 +1,5 @@
 @if($errors->count() > 0)
-    <div class="rounded-md bg-red-50 p-4 my-2">
+    <div class="rounded-md bg-danger-50 p-4 my-2">
         <div class="flex">
             <div class="shrink-0">
                 <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
@@ -7,10 +7,10 @@
                 </svg>
             </div>
             <div class="ml-3">
-                <h3 class="text-sm leading-5 font-medium text-red-800">
+                <h3 class="text-sm leading-5 font-medium text-danger-800">
                     {{ __('shopper::layout.forms.error') }}
                 </h3>
-                <div class="mt-2 text-sm leading-5 text-red-700">
+                <div class="mt-2 text-sm leading-5 text-danger-700">
                     <ul class="list-disc pl-5 space-y-1">
                         @foreach ($errors->all() as $message)
                             <li>{{ $message }}</li>

@@ -1,5 +1,5 @@
 <div>
-    <x-shopper::breadcrumb back="shopper.collections.index">
+    <x-shopper::breadcrumb :back="route('shopper.collections.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
         <x-shopper::breadcrumb.link :link="route('shopper.collections.index')" :title="__('shopper::layout.sidebar.collections')" />
     </x-shopper::breadcrumb>
@@ -67,7 +67,9 @@
                     @endif
                 </div>
                 <div class="bg-white rounded-md shadow overflow-hidden p-4 sm:p-5 dark:bg-secondary-800">
-                    <h4 class="block text-sm font-medium leading-5 text-secondary-700 dark:text-secondary-300">{{ __('shopper::layout.forms.label.image_preview') }}</h4>
+                    <h4 class="block text-sm font-medium leading-5 text-secondary-700 dark:text-secondary-300">
+                        {{ __('shopper::layout.forms.label.image_preview') }}
+                    </h4>
                     <div class="mt-1">
                         <livewire:shopper-forms.uploads.single :media="$collection->getFirstMedia(config('shopper.system.storage.disks.uploads'))" />
                     </div>

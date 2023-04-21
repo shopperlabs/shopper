@@ -10,7 +10,7 @@ trait WithDiscountAttributes
 {
     public ?string $code = '';
 
-    public ?string $value = '';
+    public ?int $value = null;
 
     public ?string $minRequiredValue = '';
 

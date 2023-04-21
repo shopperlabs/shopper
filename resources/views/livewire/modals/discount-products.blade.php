@@ -9,7 +9,10 @@
 
     <x-slot name="content">
         <div class="py-2">
-            <x-shopper::forms.search label="shopper::layout.forms.label.search'" placeholder="shopper::pages/discounts.modals.search_product" />
+            <x-shopper::forms.search
+                :label="__('shopper::layout.forms.label.search')"
+                :placeholder="__('shopper::pages/discounts.modals.search_product')"
+            />
         </div>
         <div class="my-2 -mx-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
             @foreach($products as $product)
@@ -23,7 +26,9 @@
                         />
                     </span>
                     <span class="flex flex-1 items-center justify-between">
-                        <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">{{ $product->name }}</span>
+                        <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">
+                            {{ $product->name }}
+                        </span>
                         <span class="flex items-center space-x-2">
                             <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                 {{ __('shopper::pages/discounts.modals.stock_available', ['stock' => $product->stock]) }}

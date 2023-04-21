@@ -52,9 +52,9 @@
                     <div class="px-4 py-5 bg-white sm:p-6 dark:bg-secondary-800">
                         <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
                             <x-shopper::forms.group
-                                :label="__('shopper::layout.forms.label.name')"
                                 for="name"
                                 class="sm:col-span-4"
+                                :label="__('shopper::layout.forms.label.name')"
                                 :error="$errors->first('name')"
                                 isRequired
                             >
@@ -260,5 +260,4 @@
             </x-shopper::buttons.primary>
         </div>
     </div>
-
 </div>

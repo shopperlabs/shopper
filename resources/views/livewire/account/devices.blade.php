@@ -2,7 +2,9 @@
     <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('shopper::pages/auth.account.device_title') }}</h3>
+                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">
+                    {{ __('shopper::pages/auth.account.device_title') }}
+                </h3>
                 <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                     {{ __('shopper::pages/auth.account.device_description') }}
                 </p>
@@ -29,14 +31,17 @@
                                         <div>
                                             <div class="flex items-center">
                                                 <h4 class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                                    <span class="text-green-500">{{ $session->agent->browser() }} {{ __("on") }} {{ $session->agent->platform() }}</span> - {{ $session->ip_address }}
+                                                    <span class="text-green-500">{{ __(':browser on :platform', ['browser' => $session->agent->browser(), 'platform' => $session->agent->platform()]) }}</span>
+                                                    - {{ $session->ip_address }}
                                                 </h4>
                                                 @if ($session->is_current_device)
                                                     <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-green-100 text-green-800">
                                                         {{ __('shopper::pages/auth.account.current_device') }}
                                                     </span>
                                                 @else
-                                                    <span class="ml-2 text-xs text-secondary-400 dark:text-secondary-500">{{ __('shopper::pages/auth.account.device_last_activity') }} {{ $session->last_active }}</span>
+                                                    <span class="ml-2 text-xs text-secondary-400 dark:text-secondary-500">
+                                                        {{ __('shopper::pages/auth.account.device_last_activity') }} {{ $session->last_active }}
+                                                    </span>
                                                 @endif
                                             </div>
                                             <p class="mt-0.5 text-sm leading-4 text-secondary-500 dark:text-secondary-400">

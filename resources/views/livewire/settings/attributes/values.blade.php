@@ -5,11 +5,7 @@
 @endpush
 
 <div class="pb-10">
-    <div class="hidden sm:block">
-        <div class="py-5">
-            <div class="border-t border-secondary-200 dark:border-secondary-700"></div>
-        </div>
-    </div>
+    <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
         <div>
@@ -69,7 +65,12 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                                 <div class="flex-1 flex justify-end items-center space-x-4">
-                                                    <button wire:click="$emit('openModal', 'shopper-modals.update-value', {{ json_encode([$attribute->name, $type, $v->id]) }})" wire:key="{{ $v->id }}" type="button" class="text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-500">
+                                                    <button
+                                                        wire:key="{{ $v->id }}"
+                                                        wire:click="$emit('openModal', 'shopper-modals.update-value', {{ json_encode([$attribute->name, $type, $v->id]) }})"
+                                                        type="button"
+                                                        class="text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-500"
+                                                    >
                                                         <x-heroicon-o-pencil class="h-5 w-5" />
                                                     </button>
                                                     <button wire:click="removeValue({{ $v->id }})" type="button" class="text-red-600 hover:text-red-700 dark:text-red-500">
@@ -85,7 +86,9 @@
                                                     <svg class="h-8 w-8 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                                     </svg>
-                                                    <span class="text-xl font-medium py-8 text-secondary-500 dark:text-secondary-400">{{ __('No values...') }}</span>
+                                                    <span class="text-xl font-medium py-8 text-secondary-500 dark:text-secondary-400">
+                                                        {{ __('No values...') }}
+                                                    </span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -98,7 +101,6 @@
             </div>
         </div>
     </section>
-
 </div>
 
 @push('scripts')

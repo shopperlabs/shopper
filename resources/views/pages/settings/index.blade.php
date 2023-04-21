@@ -1,9 +1,9 @@
-<x-shopper::layouts.app :title="__('Settings')">
+<x-shopper::layouts.app :title="__('shopper::messages.settings')">
 
     <div class="mt-4 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
             <h2 class="text-2xl font-bold leading-7 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
-                {{ __('Settings') }}
+                {{ __('shopper::messages.settings') }}
             </h2>
         </div>
     </div>

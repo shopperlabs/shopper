@@ -1,7 +1,9 @@
 <div>
     <div class="bg-white rounded-lg shadow overflow-hidden dark:bg-secondary-800">
         <div class="sm:flex sm:items-center sm:justify-between p-4 sm:py-5 sm:px-6">
-            <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white">{{ __('shopper::layout.sidebar.products') }}</h3>
+            <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white">
+                {{ __('shopper::layout.sidebar.products') }}
+            </h3>
             <div class="mt-4 sm:mt-0 flex items-center space-x-3">
                 @if($collection->isManual())
                     <span class="inline-flex rounded-md shadow-sm">
