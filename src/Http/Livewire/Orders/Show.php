@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Orders;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Shop\Order\OrderStatus;
 use Shopper\Framework\Models\User\Address;
-use WireUi\Traits\Actions;
 
 class Show extends Component
 {
-    use Actions;
     use WithPagination;
 
     public Order $order;
@@ -32,7 +31,11 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::CANCELLED]);
 
-        $this->notification()->success(__('Cancelled'), __('This order has been cancelled!'));
+        Notification::make()
+            ->title(__('Cancelled'))
+            ->body(__('This order has been cancelled'))
+            ->success()
+            ->send();
     }
 
     public function leaveNotes(): void
@@ -43,10 +46,11 @@ class Show extends Component
 
         // TODO Send notification to the customer about order notes.
 
-        $this->notification()->success(
-            __('Notes added'),
-            __('Your note has been added and will be emailed to the user on their order.')
-        );
+        Notification::make()
+            ->title(__('Notes added'))
+            ->body(__('Your note has been added and will be emailed to the user on their order.'))
+            ->success()
+            ->send();
     }
 
     public function register(): void
@@ -55,32 +59,50 @@ class Show extends Component
 
         // TODO Send notification to the customer about order registration.
 
-        $this->notification()->success(
-            __('Updated Status'),
-            __('This order has been marked as register and notification has been sent to the customer by email.')
-        );
+        Notification::make()
+            ->title(__('Updated Status'))
+            ->body(__('This order has been marked as register and notification has been sent to the customer by email'))
+            ->success()
+            ->send();
     }
 
     public function markPaid(): void
     {
         $this->order->update(['status' => OrderStatus::PAID]);
 
-        $this->notification()->success(__('Updated Status'), __('This order is marked as paid!'));
+        Notification::make()
+            ->title(__('Updated Status'))
+            ->body(__('This order is marked as paid'))
+            ->success()
+            ->send();
     }
 
     public function markComplete(): void
     {
         $this->order->update(['status' => OrderStatus::COMPLETED]);
 
-        $this->notification()->success(__('Updated Status'), __('This order is marked as complete.'));
+        Notification::make()
+            ->title(__('Updated Status'))
+            ->body(__('This order is marked as complete'))
+            ->success()
+            ->send();
     }
 
     public function render(): View
     {
         return view('shopper::livewire.orders.show', [
-            'items' => $this->order->items()->with('product')->simplePaginate($this->perPage),
-            'nextOrder' => Order::query()->where('id', '>', $this->order->id)->oldest('id')->first() ?? null,
-            'prevOrder' => Order::query()->where('id', '<', $this->order->id)->latest('id')->first() ?? null,
+            'items' => $this->order
+                ->items()
+                ->with('product')
+                ->simplePaginate($this->perPage),
+            'nextOrder' => Order::query()
+                ->where('id', '>', $this->order->id)
+                ->oldest('id')
+                ->first() ?? null,
+            'prevOrder' => Order::query()
+                ->where('id', '<', $this->order->id)
+                ->latest('id')
+                ->first() ?? null,
             'billingAddress' => Address::query()
                 ->where('user_id', $this->order->customer->id)
                 ->where('type', Address::TYPE_BILLING)

@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use WireUi\Traits\Actions;
 
 class ProductsLists extends ModalComponent
 {
-    use Actions;
-
     public $collection;
 
     public string $search = '';
@@ -48,10 +46,11 @@ class ProductsLists extends ModalComponent
 
         $this->emitUp('onProductsAddInCollection');
 
-        $this->notification()->success(
-            __('shopper::layout.status.added'),
-            __('shopper::pages/collections.modal.success_message')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.added'))
+            ->body(__('shopper::pages/collections.modal.success_message'))
+            ->success()
+            ->send();
 
         $this->closeModal();
     }

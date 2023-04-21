@@ -8,12 +8,9 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use WireUi\Traits\Actions;
 
 class RelatedList extends ModalComponent
 {
-    use Actions;
-
     public $product;
 
     public string $search = '';

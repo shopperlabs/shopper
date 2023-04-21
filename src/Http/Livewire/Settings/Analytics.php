@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Settings;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -11,11 +12,9 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\Setting;
-use WireUi\Traits\Actions;
 
 class Analytics extends Component
 {
-    use Actions;
     use WithFileUploads;
 
     public $google_analytics_tracking_id;
@@ -67,7 +66,11 @@ class Analytics extends Component
             Artisan::call('config:cache');
         }
 
-        $this->notification()->success(__('Updated'), __('Your analytics configurations have been correctly updated.'));
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('Your analytics configurations have been correctly updated'))
+            ->success()
+            ->send();
     }
 
     public function downloadJson(): string

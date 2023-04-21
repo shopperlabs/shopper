@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Services\Mailable;
-use WireUi\Traits\Actions;
 
 class DeleteTemplate extends ModalComponent
 {
-    use Actions;
-
     public string $name;
 
     public string $slug;
@@ -32,7 +30,11 @@ class DeleteTemplate extends ModalComponent
     {
         Mailable::deleteTemplate($this->slug);
 
-        $this->notification()->success(__('Removed'), __('You have removed the :template template', ['template' => $this->name]));
+        Notification::make()
+            ->title(__('Removed'))
+            ->body(__('You have removed the :template template', ['template' => $this->name]))
+            ->success()
+            ->send();
 
         $this->emit('onTemplateRemoved');
 
