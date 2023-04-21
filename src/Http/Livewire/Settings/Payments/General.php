@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Framework\Models\Shop\PaymentMethod;
-use WireUi\Traits\Actions;
 
 class General extends Component
 {
-    use Actions;
     use WithPagination;
 
     public string $search = '';
@@ -25,7 +24,11 @@ class General extends Component
 
         $this->dispatchBrowserEvent('toggle-saved-' . $id);
 
-        $this->notification()->success(__('Updated'), __('Your payment method status have been correctly updated.'));
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('Your payment method status have been correctly updated'))
+            ->success()
+            ->send();
     }
 
     public function removePayment(int $id): void
@@ -34,7 +37,11 @@ class General extends Component
 
         $this->dispatchBrowserEvent('item-update');
 
-        $this->notification()->success(__('Deleted'), __('Your payment method have been correctly removed.'));
+        Notification::make()
+            ->title(__('Deleted'))
+            ->body(__('Your payment method have been correctly removed'))
+            ->success()
+            ->send();
     }
 
     public function render(): View

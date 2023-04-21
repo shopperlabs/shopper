@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\AttributeValue;
-use WireUi\Traits\Actions;
 
 class UpdateValue extends ModalComponent
 {
-    use Actions;
-
     public string $name;
 
     public string $type = 'select';
@@ -50,7 +48,11 @@ class UpdateValue extends ModalComponent
 
         $this->emit('updateValues');
 
-        $this->notification()->success(__('Updated'), __('Your value have been correctly updated.'));
+        Notification::make()
+            ->title(__('shopper::components.tables.status.updated'))
+            ->body(__('Your value have been correctly updated'))
+            ->success()
+            ->send();
 
         $this->closeModal();
     }

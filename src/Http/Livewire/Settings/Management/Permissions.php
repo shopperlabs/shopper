@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role;
-use WireUi\Traits\Actions;
 
 class Permissions extends Component
 {
-    use Actions;
-
     public Role $role;
 
     protected $listeners = ['togglePermission', 'permissionAdded'];
@@ -30,17 +28,19 @@ class Permissions extends Component
         if ($this->role->hasPermissionTo($permission->name)) {
             $this->role->revokePermissionTo($permission->name);
 
-            $this->notification()->success(
-                __('Revoke Permission'),
-                __('Permission :permission has been revoked to this role.', ['permission' => $permission->display_name])
-            );
+            Notification::make()
+                ->title(__('Revoke Permission'))
+                ->body(__('Permission :permission has been revoked to this role.', ['permission' => $permission->display_name]))
+                ->success()
+                ->send();
         } else {
             $this->role->givePermissionTo($permission->name);
 
-            $this->notification()->success(
-                __('Allow Permission'),
-                __('Permission :permission has been given to this role.', ['permission' => $permission->display_name])
-            );
+            Notification::make()
+                ->title(__('Allow Permission'))
+                ->body(__('Permission :permission has been given to this role.', ['permission' => $permission->display_name]))
+                ->success()
+                ->send();
         }
     }
 
@@ -48,7 +48,11 @@ class Permissions extends Component
     {
         Permission::query()->find($id)->delete();
 
-        $this->notification()->success(__('Deleted'), __('The permission has been correctly removed.'));
+        Notification::make()
+            ->title(__('Deleted'))
+            ->body(__('The permission has been correctly removed'))
+            ->success()
+            ->send();
     }
 
     public function render(): View

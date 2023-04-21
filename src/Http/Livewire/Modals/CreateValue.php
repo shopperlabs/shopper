@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
-use WireUi\Traits\Actions;
 
 class CreateValue extends ModalComponent
 {
-    use Actions;
-
     public Attribute $attribute;
 
     public string $type = 'select';
@@ -43,10 +41,11 @@ class CreateValue extends ModalComponent
 
         $this->emit('updateValues');
 
-        $this->notification()->success(
-            __('shopper::layout.status.added'),
-            __('New value added for :name', ['name' => $this->attribute->name])
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.added'))
+            ->body(__('New value added for :name', ['name' => $this->attribute->name]))
+            ->success()
+            ->send();
 
         $this->closeModal();
     }

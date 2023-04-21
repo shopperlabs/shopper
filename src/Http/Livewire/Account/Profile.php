@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Account;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Rules\RealEmailValidator;
-use WireUi\Traits\Actions;
 
 class Profile extends Component
 {
-    use Actions;
     use WithFileUploads;
 
     public string $first_name;
@@ -76,7 +75,11 @@ class Profile extends Component
 
         $this->emit('updatedProfile');
 
-        $this->notification()->success(__('Profile Updated'), __('Your profile have been successfully updated!'));
+        Notification::make()
+            ->title(__('Profile Updated'))
+            ->body(__('Your profile have been successfully updated!'))
+            ->success()
+            ->send();
     }
 
     public function render(): View

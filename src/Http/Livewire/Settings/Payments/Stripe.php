@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Settings\Payments;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\PaymentMethod;
 use Shopper\Framework\Models\System\Currency;
-use WireUi\Traits\Actions;
 
 class Stripe extends Component
 {
-    use Actions;
-
     public string $stripe_key = '';
 
     public string $stripe_secret = '';
@@ -45,10 +43,11 @@ class Stripe extends Component
 
         $this->enabled = true;
 
-        $this->notification()->success(
-            __('shopper::layout.status.success'),
-            __('shopper::pages/settings.notifications.stripe_enable')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.success'))
+            ->body(__('shopper::pages/settings.notifications.stripe_enable'))
+            ->success()
+            ->send();
     }
 
     public function store(): void
@@ -60,10 +59,11 @@ class Stripe extends Component
             'stripe_secret' => $this->stripe_secret,
         ]);
 
-        $this->notification()->success(
-            __('shopper::layout.status.updated'),
-            __('shopper::pages/settings.notifications.stripe')
-        );
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('shopper::pages/settings.notifications.stripe'))
+            ->success()
+            ->send();
     }
 
     public function render(): View

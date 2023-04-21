@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Http\Livewire\Settings\Legal;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Traits\WithLegalActions;
-use WireUi\Traits\Actions;
 
 class Privacy extends Component
 {
-    use Actions;
     use WithLegalActions;
 
     public string $title = 'Privacy policy';
@@ -29,7 +28,11 @@ class Privacy extends Component
     {
         $this->storeValues($this->title, $this->content, $this->isEnabled);
 
-        $this->notification()->success(__('Updated'), __('Your privacy policy has been successfully updated!'));
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('Your privacy policy has been successfully updated'))
+            ->success()
+            ->send();
     }
 
     public function render(): View
