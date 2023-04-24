@@ -114,4 +114,10 @@ return [
     'reorder' => 'Reorder',
     'all' => 'Tous',
     'actions' => 'Actions',
+
+    'socials' => [
+        'facebook' => 'Facebook',
+        'instagram' => 'Instagram',
+        'twitter' => 'Twitter',
+    ],
 ];

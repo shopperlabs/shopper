@@ -36,6 +36,19 @@ return [
 
     'settings' => [
         'title' => 'Store Setting',
+        'store_details' => 'Store details',
+        'store_detail_summary' => 'Your customers will use this information to contact you.',
+        'email_helper' => 'Your customers will use this address if they need to contact you.',
+        'phone_number_helper' => 'Your customers will use this phone number if they need to call you directly.',
+        'assets' => 'Assets',
+        'assets_summary' => 'The logo and cover image of your store that will be visible on your site. This assets will appear on your invoices.',
+        'store_address' => 'Store address',
+        'store_address_summary' => 'This address will appear on your invoices. You can edit the address used.',
+        'store_currency' => 'Store currency',
+        'store_currency_summary' => 'This is the currency your products are sold in. After your first sale, currency is locked in and can’t be changed.',
+        'social_links' => 'Social links',
+        'social_links_summary' => 'Information about your different accounts on social networks. Users will be able to contact you directly on your official pages.',
+        'update_information' => 'Update information',
     ],
 
     'payment' => [
