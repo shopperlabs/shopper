@@ -8,11 +8,11 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900" id="modal-headline">
-                    {{ __('Delete :class Mailable', ['class' => $item]) }}
+                    {{ __('shopper::modals.mailable.delete_title', ['class' => $item]) }}
                 </h3>
                 <div class="mt-2">
                     <p class="text-sm leading-5 text-secondary-500">
-                        {{ __('Are you sure you want to delete this Mailable class? If this class is used in your project this action will create a bug in your site.') }}
+                        {{ __('shopper::modals.mailable.confirm_delete_msg') }}
                     </p>
                 </div>
             </div>

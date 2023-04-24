@@ -49,7 +49,7 @@
                         <div class="mt-6">
                             <x-shopper::buttons.primary type="button" wire:click="$emit('openModal', 'shopper-modals.related-list', {{ json_encode([$product->id, $this->productsIds]) }})">
                                 <x-heroicon-s-plus class="-ml-1 mr-2 h-5 w-5" />
-                                {{ __('shopper::messages.actions_label.add_new', ['name' => __('product')]) }}
+                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.product'))]) }}
                             </x-shopper::buttons.primary>
                         </div>
                     </div>

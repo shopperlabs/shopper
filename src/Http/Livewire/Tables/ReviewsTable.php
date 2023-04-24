@@ -51,9 +51,9 @@ class ReviewsTable extends DataTableComponent
                 return [];
             })
             ->setBulkActions([
-                'deleteSelected' => __('Delete'),
-                'approved' => __('Approved'),
-                'disapproved' => __('Disapproved'),
+                'deleteSelected' => __('shopper::layout.forms.actions.delete'),
+                'approved' => __('shopper::layout.forms.actions.approve'),
+                'disapproved' => __('shopper::layout.forms.actions.disapprove'),
             ]);
     }
 
@@ -71,7 +71,7 @@ class ReviewsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.delete'))
-                ->body(__('shopper::components.tables.messages.delete', ['name' => __('review(s)')]))
+                ->body(__('shopper::components.tables.messages.delete', ['name' => __('shopper::words.review')]))
                 ->success()
                 ->send();
         }
@@ -90,7 +90,7 @@ class ReviewsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('shopper::components.tables.messages.approved', ['name' => __('review(s)')]))
+                ->body(__('shopper::components.tables.messages.approved', ['name' => __('shopper::words.review')]))
                 ->success()
                 ->send();
         }
@@ -109,7 +109,7 @@ class ReviewsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('shopper::components.tables.messages.disapproved', ['name' => __('review(s)')]))
+                ->body(__('shopper::components.tables.messages.disapproved', ['name' => __('shopper::words.review')]))
                 ->success()
                 ->send();
         }
@@ -135,7 +135,7 @@ class ReviewsTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Views\Column::make(__('shopper::messages.product'), 'reviewrateable_id')
+            Views\Column::make(__('shopper::words.product'), 'reviewrateable_id')
                 ->sortable()
                 ->secondaryHeader(function () {
                     return view('shopper::livewire.tables.cells.input-search', [

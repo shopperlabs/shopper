@@ -6,11 +6,11 @@
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white" id="modal-headline">
-                    {{ __('Archived order :number', ['number' => $order->number]) }}
+                    {{ __('shopper::pages/orders.modals.archived_number', ['number' => $order->number]) }}
                 </h3>
                 <div class="mt-2">
                     <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __('Are you sure you want to archived this order? This action will change the income you have earned so far in your store.') }}
+                        {{ __('shopper::pages/orders.modals.archived_notice') }}
                     </p>
                 </div>
             </div>

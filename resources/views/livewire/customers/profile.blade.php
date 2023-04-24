@@ -167,8 +167,8 @@
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
                                     <x-shopper::forms.select wire:model.lazy="gender" aria-label="{{ __('shopper::layout.forms.label.gender') }}">
-                                        <option value="male">{{ __('shopper::messages.male') }}</option>
-                                        <option value="female">{{ __('shopper::messages.female') }}</option>
+                                        <option value="male">{{ __('shopper::words.male') }}</option>
+                                        <option value="female">{{ __('shopper::words.female') }}</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </div>

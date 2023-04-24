@@ -23,7 +23,7 @@ class CollectionsTable extends DataTableComponent
             ->setAdditionalSelects(['id', 'slug', 'sort'])
             ->setDefaultSort('name')
             ->setBulkActions([
-                'deleteSelected' => __('Delete'),
+                'deleteSelected' => __('shopper::layout.forms.actions.delete'),
             ]);
     }
 

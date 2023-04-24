@@ -35,22 +35,22 @@ trait WithDiscountActions
         }
 
         if (count($this->selectedProducts) > 1) {
-            return __('shopper::messages.count.products', ['count' => count($this->selectedProducts)]);
+            return __('shopper::words.count.products', ['count' => count($this->selectedProducts)]);
         }
     }
 
     public function getCustomSize(): ?string
     {
         if (count($this->selectedCustomers) === 0 || $this->eligibility === 'everyone') {
-            return __('shopper::messages.everyone');
+            return __('shopper::words.everyone');
         }
 
         if (count($this->selectedCustomers) === 1) {
-            return __('shopper::messages.for_name', ['name' => $this->customers->first()->first_name]);
+            return __('shopper::words.for_name', ['name' => $this->customers->first()->first_name]);
         }
 
         if (count($this->selectedCustomers) > 1) {
-            return __('shopper::messages.count.customers', ['count' => count($this->selectedCustomers)]);
+            return __('shopper::words.count.customers', ['count' => count($this->selectedCustomers)]);
         }
 
         return null;
@@ -97,7 +97,7 @@ trait WithDiscountActions
     public function getUsageLimitMessage(): ?string
     {
         if ($this->usage_number && $this->usage_limit !== null && (int) $this->usage_limit > 0) {
-            $message = trans_choice('shopper::messages.discount_use', $this->usage_limit, ['count' => $this->usage_limit]);
+            $message = trans_choice('shopper::words.discount_use', $this->usage_limit, ['count' => $this->usage_limit]);
             $message .= $this->usage_limit_per_user ? ', ' . __('shopper::pages/discounts.one_per_customer') : '';
 
             return $message;

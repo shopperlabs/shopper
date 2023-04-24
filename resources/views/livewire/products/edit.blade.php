@@ -3,12 +3,12 @@
         open: false,
         options: ['detail', 'variants', 'attributes', 'inventory', 'seo', 'shipping', 'related'],
         words: {
-            'detail': '{{ __('shopper::messages.overview') }}',
-            'variants': '{{ __('shopper::messages.variants') }}',
-            'attributes': '{{ __('shopper::messages.attributes') }}',
-            'inventory': '{{ __('shopper::messages.inventory') }}',
-            'seo': '{{ __('shopper::messages.seo') }}',
-            'shipping': '{{ __('shopper::messages.shipping') }}',
+            'detail': '{{ __('shopper::words.overview') }}',
+            'variants': '{{ __('shopper::words.variants') }}',
+            'attributes': '{{ __('shopper::words.attributes') }}',
+            'inventory': '{{ __('shopper::words.inventory') }}',
+            'seo': '{{ __('shopper::words.seo') }}',
+            'shipping': '{{ __('shopper::words.shipping') }}',
             'related': '{{ __('shopper::pages/products.related_products') }}'
         },
         currentTab: 'detail'
@@ -47,7 +47,7 @@
             </div>
             <div class="pb-5 border-b sm:pb-0 border-secondary-200 dark:border-secondary-700">
                 <div class="sm:hidden">
-                    <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}" class="block w-full py-2 pl-3 pr-10">
+                    <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}" class="block w-full py-2 pl-3 pr-10">
                         <template x-for="option in options" :key="option">
                             <option
                                 x-bind:value="option"
@@ -61,27 +61,27 @@
                 <div class="hidden sm:block">
                     <nav class="flex -mb-px space-x-8">
                         <button @click="currentTab = 'detail'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'detail' }">
-                            {{ __('shopper::messages.overview') }}
+                            {{ __('shopper::words.overview') }}
                         </button>
 
                         <button @click="currentTab = 'variants'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'variants' }">
-                            {{ __('shopper::messages.variants') }}
+                            {{ __('shopper::words.variants') }}
                         </button>
 
                         <button @click="currentTab = 'attributes'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'attributes' }">
-                            {{ __('shopper::messages.attributes') }}
+                            {{ __('shopper::words.attributes') }}
                         </button>
 
                         <button @click="currentTab = 'inventory'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'inventory' }">
-                            {{ __('shopper::messages.inventory') }}
+                            {{ __('shopper::words.location') }}
                         </button>
 
                         <button @click="currentTab = 'seo'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'seo' }">
-                            {{ __('shopper::messages.seo') }}
+                            {{ __('shopper::words.seo') }}
                         </button>
 
                         <button @click="currentTab = 'shipping'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'shipping' }">
-                            {{ __('shopper::messages.shipping') }}
+                            {{ __('shopper::words.shipping') }}
                         </button>
 
                         <button @click="currentTab = 'related'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'related' }">

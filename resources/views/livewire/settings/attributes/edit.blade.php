@@ -9,7 +9,7 @@
 >
     <x-shopper::breadcrumb :back="route('shopper.settings.attributes.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.attributes.index')" :title="__('shopper::messages.attributes')" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.attributes.index')" :title="__('shopper::words.attributes')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-3 pb-5 border-b border-secondary-200 space-y-3 md:flex md:items-center md:justify-between md:space-y-0 dark:border-secondary-700">
@@ -49,7 +49,7 @@
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
                         <x-shopper::forms.input wire:model="name" id="name" type="text" autocomplete="off" />
                     </x-shopper::forms.group>
-                    <x-shopper::forms.group for="type" :label="__('Type')" class="sm:col-span-1">
+                    <x-shopper::forms.group for="type" :label="__('shopper::layout.forms.label.type')" class="sm:col-span-1">
                         <x-shopper::forms.select wire:model="type" id="type">
                             @foreach($fields as $key => $field)
                                 <option value="{{ $key }}">{{ $field }}</option>
@@ -73,9 +73,9 @@
                                 <x-shopper::forms.checkbox wire:model="isSearchable" id="is_searchable" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
-                                <x-shopper::label for="is_searchable" :value="__('Is Searchable')" />
+                                <x-shopper::label for="is_searchable" :value="__('shopper::layout.forms.label.is_searchable')" />
                                 <p class="text-secondary-500 dark:text-secondary-400">
-                                    {{ __('You can use this attribute to search and filter product.') }}
+                                    {{ __('shopper::pages/attributes.searchable_description') }}
                                 </p>
                             </div>
                         </div>
@@ -84,9 +84,9 @@
                                 <x-shopper::forms.checkbox wire:model="isFilterable" id="is_filterable" />
                             </div>
                             <div class="ml-3 text-sm leading-5">
-                                <x-shopper::label for="is_filterable" :value="__('Is Filterable')" />
+                                <x-shopper::label for="is_filterable" :value="__('shopper::layout.forms.label.is_filterable')" />
                                 <p class="text-secondary-500 dark:text-secondary-400">
-                                    {{ __('You can use this attribute as a filter on your front store.') }}
+                                    {{ __('shopper::pages/attributes.filtrable_description') }}
                                 </p>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
             <div class="sm:col-span-2">
                 <aside class="sticky top-6 space-y-5">
                     <div class="bg-white rounded-md shadow overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
-                        <x-shopper::forms.group :label="__('Slug (code)')" for="slug" class="p-4 sm:p-5" :error="$errors->first('slug')" isRequired>
+                        <x-shopper::forms.group :label="__('shopper::layout.forms.label.slug')" for="slug" class="p-4 sm:p-5" :error="$errors->first('slug')" isRequired>
                             <x-shopper::forms.input wire:model="slug" id="slug" type="text" autocomplete="off" />
                         </x-shopper::forms.group>
                         <div class="p-4 sm:p-5">
@@ -108,9 +108,9 @@
                                     </span>
                                 </div>
                                 <div class="ml-3 text-sm leading-5">
-                                    <x-shopper::label for="online" :value="__('Enabled')"></x-shopper::label>
+                                    <x-shopper::label for="online" :value="__('shopper::layout.forms.actions.enabled')"></x-shopper::label>
                                     <p class="text-sm text-secondary-500 dark:text-secondary-400">
-                                        {{ __('Set attribute visibility for the customers.') }}
+                                        {{ __('shopper::pages/attributes.attribute_visibility') }}
                                     </p>
                                 </div>
                             </div>

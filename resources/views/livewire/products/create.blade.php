@@ -6,7 +6,7 @@
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('shopper::messages.actions_label.add_new', ['name' => __('product')]) }}
+            {{ __('shopper::words.actions_label.add_new', ['name' => __('shopper::words.product')]) }}
         </x-slot>
 
         <x-slot name="action">
@@ -21,8 +21,19 @@
         <div class="lg:col-span-4 space-y-5">
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
                 <div>
-                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Apple, Nike, Samsung...') }}" />
+                    <x-shopper::forms.group
+                        for="name"
+                        isRequired
+                        :label="__('shopper::layout.forms.label.name')"
+                        :error="$errors->first('name')"
+                    >
+                        <x-shopper::forms.input
+                            wire:model.defer="name"
+                            id="name"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Apple, Nike, Samsung..."
+                        />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-5 border-t border-secondary-200 dark:border-secondary-700 pt-4">
@@ -33,7 +44,7 @@
             </div>
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5 overflow-hidden">
                 <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
-                    {{ __('shopper::messages.media') }}
+                    {{ __('shopper::words.media') }}
                 </h4>
                 <div class="mt-4">
                     <livewire:shopper-forms.uploads.multiple />
@@ -42,7 +53,7 @@
             <div class="relative bg-white dark:bg-secondary-800 rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">
                 <div class="flex items-center justify-between px-4 sm:px-5">
                     <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
-                        {{ __('shopper::messages.pricing') }}
+                        {{ __('shopper::words.pricing') }}
                     </h4>
                     <div x-data="{ display: false }">
                         <button @click="display = true" x-tooltip.raw="{{ __('shopper::pages/products.about_pricing') }}" type="button" class="inline-flex text-sm text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300">
@@ -58,7 +69,7 @@
                                 <div class="ml-auto pl-3">
                                     <div class="-mx-1.5 -my-1.5">
                                         <button @click="display = false" type="button" class="inline-flex bg-secondary-50 dark:bg-secondary-700 rounded-md p-1 text-secondary-500 dark:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-50 focus:ring-primary-600">
-                                            <span class="sr-only">{{ __('Dismiss') }}</span>
+                                            <span class="sr-only">{{ __('shopper::words.dismiss') }}</span>
                                             <x-heroicon-o-x class="h-5 w-5" />
                                         </button>
                                     </div>
@@ -113,7 +124,7 @@
             </div>
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">
                 <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white px-4 sm:px-5">
-                    {{ __('shopper::messages.inventory') }}
+                    {{ __('shopper::words.inventory') }}
                 </h4>
                 <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 p-4 sm:p-5">
@@ -183,7 +194,7 @@
                                     </div>
                                     <div class="col-span-1 pl-4 flex justify-end">
                                         <span class="text-sm leading-5 font-semibold text-secondary-900 dark:text-white uppercase">
-                                            {{ __('shopper::messages.available') }}
+                                            {{ __('shopper::words.available') }}
                                         </span>
                                     </div>
                                 </div>
@@ -215,7 +226,7 @@
             <div class="bg-white dark:bg-secondary-800 rounded-lg shadow overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
                 <div class="p-4 sm:p-5">
                     <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
-                        {{ __('shopper::messages.shipping') }}
+                        {{ __('shopper::words.shipping') }}
                     </h4>
                     <div class="mt-5 space-y-4">
                         <div class="relative flex items-start">
@@ -245,7 +256,7 @@
                 @if($requiresShipping)
                     <div class="p-4 sm:p-5">
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
-                            {{ __('shopper::messages.weight_dimension') }}
+                            {{ __('shopper::words.weight_dimension') }}
                         </h4>
                         <p class="text-sm text-secondary-500 dark:text-secondary-400 leading-5">
                             {{ __('shopper::pages/products.weight_dimension_help_text') }}
@@ -255,8 +266,8 @@
                                 <x-shopper::forms.input wire:model.defer="widthValue" id="WidthValue" type="text" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
                                     <x-shopper::forms.select wire:model.defer="WidthUnit" aria-label="{{ __('shopper::layout.forms.label.width_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
-                                        <option value="cm">{{ __('cm') }}</option>
-                                        <option value="m">{{ __('m') }}</option>
+                                        <option value="cm">{{ __('shopper::words.unity.cm') }}</option>
+                                        <option value="m">{{ __('shopper::words.unity.m') }}</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
@@ -264,8 +275,8 @@
                                 <x-shopper::forms.input wire:model.defer="heightValue" id="heightValue" type="text" class="pl-3 pr-12" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
                                     <x-shopper::forms.select wire:model.defer="heightUnit" aria-label="{{ __('shopper::layout.forms.label.height_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
-                                        <option value="cm">{{ __('cm') }}</option>
-                                        <option value="m">{{ __('m') }}</option>
+                                        <option value="cm">{{ __('shopper::words.unity.cm') }}</option>
+                                        <option value="m">{{ __('shopper::words.unity.m') }}</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
@@ -277,8 +288,8 @@
                                         aria-label="{{ __('shopper::layout.forms.label.weight_unit') }}"
                                         class="py-0 pl-2 pr-7 border-transparent bg-transparent"
                                     >
-                                        <option value="kg">{{ __('kg') }}</option>
-                                        <option value="g">{{ __('g') }}</option>
+                                        <option value="kg">{{ __('shopper::words.unity.kg') }}</option>
+                                        <option value="g">{{ __('shopper::words.unity.g') }}</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
@@ -296,8 +307,8 @@
                                         aria-label="{{ __('shopper::layout.forms.label.volume_unit') }}"
                                         class="py-0 pl-2 pr-7 border-transparent bg-transparent"
                                     >
-                                        <option value="l">{{ __('l') }}</option>
-                                        <option value="ml">{{ __('ml') }}</option>
+                                        <option value="l">{{ __('shopper::words.unity.l') }}</option>
+                                        <option value="ml">{{ __('shopper::words.unity.ml') }}</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
@@ -363,7 +374,7 @@
                             <div class="mt-2 flex items-start">
                                 <div class="mt-1 shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                                 <p class="ml-2.5 text-sm text-secondary-500 leading-5">
-                                    {{ __('shopper::messages.published_on') }} <br>
+                                    {{ __('shopper::words.published_on') }} <br>
                                     {{ $publishedAtFormatted }}
                                 </p>
                             </div>

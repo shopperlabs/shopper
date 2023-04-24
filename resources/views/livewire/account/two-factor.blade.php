@@ -50,7 +50,7 @@
                     @endif
                     <div class="flex items-start">
                         <div class="shrink-0">
-                            <span class="block w-12 w-12">
+                            <span class="block w-12 h-12">
                                 <x-heroicon-o-shield-check class="w-full h-full text-primary-600" />
                             </span>
                         </div>

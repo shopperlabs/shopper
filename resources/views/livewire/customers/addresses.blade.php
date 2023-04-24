@@ -37,8 +37,12 @@
                     <x-heroicon-o-map class="w-full h-full" />
                 </div>
                 <div class="mt-5 w-full sm:max-w-md space-y-2 text-center">
-                    <p class="text-base leading-6 text-secondary-900 font-medium dark:text-white">{{ __('shopper::pages/customers.addresses.customer') }}</p>
-                    <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::pages/customers.addresses.empty_text') }}</p>
+                    <p class="text-base leading-6 text-secondary-900 font-medium dark:text-white">
+                        {{ __('shopper::pages/customers.addresses.customer') }}
+                    </p>
+                    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                        {{ __('shopper::pages/customers.addresses.empty_text') }}
+                    </p>
                 </div>
             </div>
         @endforelse

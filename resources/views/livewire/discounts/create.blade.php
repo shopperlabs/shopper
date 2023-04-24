@@ -24,11 +24,11 @@
                     <div class="flex items-center justify-between">
                         <x-shopper::label for="code" :value="__('shopper::layout.forms.label.code')" />
                         <button wire:click="generate" type="button" class="text-primary-600 text-sm leading-5 hover:text-primary-500 dark:text-primary-500/50">
-                            {{ __('shopper::messages.generate') }}
+                            {{ __('shopper::words.generate') }}
                         </button>
                     </div>
                     <div class="mt-4 relative rounded-md shadow-sm">
-                        <x-shopper::forms.input wire:model.lazy="code" id="code" type="text" placeholder="{{ __('Eg.: NOELCMR900') }}" autocomplete="off" />
+                        <x-shopper::forms.input wire:model.lazy="code" id="code" type="text" placeholder="Eg.: NOELCMR900" autocomplete="off" />
                         @error('code')
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <svg class="h-5 w-5 text-danger-500" fill="currentColor" viewBox="0 0 20 20">
@@ -38,7 +38,7 @@
                         @enderror
                     </div>
                     @error('code')
-                        <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                     @enderror
                 </div>
                 <p class="mt-2 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         @error('value')
-                            <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -213,7 +213,7 @@
                             </div>
                         </div>
                         @error('minRequiredValue')
-                            <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
@@ -304,7 +304,7 @@
                                     />
                                 </div>
                                 @error('usage_limit')
-                                    <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
+                                    <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                                 @enderror
                             </div>
                         @endif
@@ -356,7 +356,7 @@
                 <div class="space-y-5">
                     <div class="p-4 bg-white shadow-md rounded-md sm:p-5 dark:bg-secondary-800">
                         <h4 class="font-medium text-base text-secondary-900 dark:text-white">
-                            {{ __('shopper::messages.summary') }}
+                            {{ __('shopper::words.summary') }}
                         </h4>
                         @if($this->isEmpty())
                             <p class="text-secondary-500 text-sm mt-4 dark:text-secondary-400">
@@ -368,7 +368,7 @@
                                 @if($value !== '' && (int) $value > 0)
                                     <li>
                                         {{ $type === 'percentage' ? $value . ' %' : $this->formattedPrice($value) }}
-                                        <span>{{ __('shopper::messages.of') }} {{ $apply === 'order' ? __('shopper::pages/discounts.entire_order') : $this->getProductSize() }}</span>
+                                        <span>{{ __('shopper::words.of') }} {{ $apply === 'order' ? __('shopper::pages/discounts.entire_order') : $this->getProductSize() }}</span>
                                     </li>
                                 @endif
                                 @if($minRequiredValue !== '' && (int) $minRequiredValue > 0 && $minRequired !== 'none')
@@ -400,7 +400,7 @@
                             {{ __('shopper::layout.forms.label.visibility') }}
                         </h4>
                         <p class="text-sm mt-4 font-normal text-secondary-500 leading-5 dark:text-secondary-400">
-                            {{ __('shopper::messages.actions_label.set_visibility', ['name' => __('discount')]) }}
+                            {{ __('shopper::words.set_visibility', ['name' => __('discount')]) }}
                         </p>
                         <div class="mt-3 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">

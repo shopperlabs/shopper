@@ -22,7 +22,7 @@
                                     id="name_variant"
                                     type="text"
                                     autocomplete="off"
-                                    placeholder="{{ __('Black 128Go, primary 64Go...') }}"
+                                    placeholder="'Black 128Go, primary 64Go..."
                                 />
                             </x-shopper::forms.group>
                             <div class="grid gap-4 sm:grid-cols-6 sm:gap-4">
@@ -70,7 +70,7 @@
 
                         <div class="mt-5 shrink-0">
                             <p class="text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 mb-2" aria-hidden="true">
-                                {{ __('shopper::messages.media') }}
+                                {{ __('shopper::words.media') }}
                             </p>
 
                             <div class="block">
@@ -81,7 +81,7 @@
                 </div>
                 <div>
                     <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
-                        {{ __('shopper::messages.inventory') }}
+                        {{ __('shopper::words.location') }}
                     </h4>
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 py-4 sm:py-5">
@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="col-span-1 pl-4 flex justify-end">
                                             <span class="text-sm leading-5 font-semibold text-secondary-900 dark:text-white uppercase">
-                                                {{ __('shopper::messages.available') }}
+                                                {{ __('shopper::words.available') }}
                                             </span>
                                         </div>
                                     </div>

@@ -109,9 +109,9 @@
             <div class="flex-1 flex items-center">
                 <div>
                     <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-400">
-                        {{ __('shopper::messages.showing') }}
+                        {{ __('shopper::words.showing') }}
                         <span class="font-medium"> {!! $users->count() !!}</span>
-                        {{ __('shopper::messages.results') }}
+                        {{ __('shopper::words.results') }}
                     </p>
                 </div>
             </div>

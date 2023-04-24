@@ -77,7 +77,7 @@
         <div class="sticky top-0 -mx-6 px-6 bg-secondary-100 dark:bg-secondary-900">
             <div class="sm:border-b sm:border-secondary-200 dark:border-secondary-700">
                 <div class="sm:hidden">
-                    <x-shopper::forms.select x-model="currentTab" aria-label="Selected tab" class="pr-10">
+                    <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}" class="pr-10">
                         <template x-for="option in options" :key="option">
                             <option
                                 x-bind:value="option"

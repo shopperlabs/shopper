@@ -31,7 +31,12 @@
                                         <div>
                                             <div class="flex items-center">
                                                 <h4 class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                                    <span class="text-green-500">{{ __(':browser on :platform', ['browser' => $session->agent->browser(), 'platform' => $session->agent->platform()]) }}</span>
+                                                    <span class="text-green-500">
+                                                        {{ __('shopper::words.browser_platform', [
+                                                            'browser' => $session->agent->browser(),
+                                                            'platform' => $session->agent->platform()
+                                                       ]) }}
+                                                    </span>
                                                     - {{ $session->ip_address }}
                                                 </h4>
                                                 @if ($session->is_current_device)
@@ -57,7 +62,7 @@
                                         <div class="ml-4">
                                             <span class="inline-flex rounded-md shadow-sm">
                                                 <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.logout-others-browser')" wire:loading.attr="disabled" type="button">
-                                                    {{ __('shopper::messages.log_out') }}
+                                                    {{ __('shopper::words.log_out') }}
                                                 </x-shopper::buttons.primary>
                                             </span>
                                         </div>
@@ -88,5 +93,4 @@
             </div>
         </div>
     </div>
-
 </div>

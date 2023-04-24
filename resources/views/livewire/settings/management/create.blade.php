@@ -129,8 +129,8 @@
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="max-w-lg rounded-md shadow-sm">
                         <x-shopper::forms.select wire:model.lazy="gender" id="gender">
-                            <option value="male">{{ __('shopper::messages.male') }}</option>
-                            <option value="female">{{ __('shopper::messages.female') }}</option>
+                            <option value="male">{{ __('shopper::words.male') }}</option>
+                            <option value="female">{{ __('shopper::words.female') }}</option>
                         </x-shopper::forms.select>
                     </div>
                 </div>

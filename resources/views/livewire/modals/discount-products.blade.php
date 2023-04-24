@@ -20,7 +20,7 @@
                     <span class="mr-4">
                         <x-shopper::forms.checkbox
                             id="product_{{ $product->id }}"
-                            aria-label="{{ __('shopper::messages.product') }}"
+                            aria-label="{{ __('shopper::words.product') }}"
                             wire:model.debounce.500ms="selectedProducts"
                             value="{{ $product->id }}"
                         />

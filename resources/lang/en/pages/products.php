@@ -67,7 +67,6 @@ return [
         'description' => 'This is where you will see the reviews of your customers and the ratings given to your products.',
         'view' => 'Reviews for :product',
         'published' => 'Published',
-        'pending' => 'Pending',
         'approved' => 'Approved Review',
         'approved_status' => 'Approved status',
         'approved_message' => 'Review approved status updated!',
@@ -90,7 +89,7 @@ return [
         'title' => 'Product Attributes',
         'description' => 'All the attributes associated with this product.',
         'add' => 'Add attribute',
-        'empty_values' => 'No attributes',
+        'empty_values' => 'No attribute',
 
         'session' => [
             'delete' => 'Attribute removed',

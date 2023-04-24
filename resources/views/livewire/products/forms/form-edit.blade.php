@@ -4,7 +4,7 @@
             <div class="p-4 bg-white rounded-lg shadow dark:bg-secondary-800 sm:p-5">
                 <div>
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" :placeholder="__('Apple, Nike, Samsung...')" />
+                        <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
                     </x-shopper::forms.group>
                 </div>
                 <div class="pt-4 mt-5 border-t border-secondary-200 dark:border-secondary-700">
@@ -15,7 +15,7 @@
             </div>
             <div class="p-4 overflow-hidden bg-white rounded-lg shadow dark:bg-secondary-800 sm:p-5">
                 <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
-                    {{ __('shopper::messages.media') }}
+                    {{ __('shopper::words.media') }}
                 </h4>
                 <div class="mt-4">
                     <x-shopper::forms.filepond
@@ -29,7 +29,7 @@
                         :images="$images"
                     />
                     @error('files.*')
-                        <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
+                        <p class="mt-2 text-sm text-danger-500">
                             {{ $message }}
                         </p>
                     @enderror
@@ -38,7 +38,7 @@
             <div class="relative pt-4 overflow-hidden bg-white rounded-lg shadow dark:bg-secondary-800 sm:pt-5">
                 <div class="flex items-center justify-between px-4 sm:px-5">
                     <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
-                        {{ __('shopper::messages.pricing') }}
+                        {{ __('shopper::words.pricing') }}
                     </h4>
                     <div x-data="{ display: false }">
                         <button @click="display = true" x-tooltip.raw="{{ __('shopper::pages/products.about_pricing') }}" type="button" class="inline-flex text-sm text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300">
@@ -54,7 +54,7 @@
                                 <div class="ml-auto pl-3">
                                     <div class="-mx-1.5 -my-1.5">
                                         <button @click="display = false" type="button" class="inline-flex bg-secondary-50 dark:bg-secondary-700 rounded-md p-1 text-secondary-500 dark:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-50 focus:ring-primary-600">
-                                            <span class="sr-only">{{ __('Dismiss') }}</span>
+                                            <span class="sr-only">{{ __('words::words.dismiss') }}</span>
                                             <x-heroicon-o-x class="h-5 w-5" />
                                         </button>
                                     </div>
@@ -159,7 +159,7 @@
                             <div class="flex items-start mt-2">
                                 <div class="mt-1 shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                                 <p class="ml-2.5 text-sm text-secondary-500 dark:text-secondary-400 leading-5">
-                                    {{ __('shopper::messages.published_on') }} <br>
+                                    {{ __('shopper::words.published_on') }} <br>
                                     {{ $publishedAtFormatted }}
                                 </p>
                             </div>

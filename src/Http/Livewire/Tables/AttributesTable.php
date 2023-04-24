@@ -35,9 +35,9 @@ class AttributesTable extends DataTableComponent
                 return [];
             })
             ->setBulkActions([
-                'deleteSelected' => __('Delete'),
-                'enabled' => __('Enable'),
-                'disabled' => __('Disable'),
+                'deleteSelected' => __('shopper::layout.forms.actions.delete'),
+                'enabled' => __('shopper::layout.forms.actions.enable'),
+                'disabled' => __('shopper::layout.forms.actions.disable'),
             ]);
     }
 
@@ -98,7 +98,7 @@ class AttributesTable extends DataTableComponent
     public function filters(): array
     {
         return [
-            'is_searchable' => Views\Filters\SelectFilter::make(__('Is Searchable'))
+            'is_searchable' => Views\Filters\SelectFilter::make(__('shopper::layout.forms.label.is_searchable'))
                 ->options([
                     '' => __('shopper::layout.forms.label.any'),
                     'yes' => __('shopper::layout.forms.label.yes'),
@@ -110,7 +110,7 @@ class AttributesTable extends DataTableComponent
                         'no' => $builder->where('is_searchable', false),
                     };
                 }),
-            'is_filterable' => Views\Filters\SelectFilter::make(__('Is Filterable'))
+            'is_filterable' => Views\Filters\SelectFilter::make(__('shopper::layout.forms.label.is_filterable'))
                 ->options([
                     '' => __('shopper::layout.forms.label.any'),
                     'yes' => __('shopper::layout.forms.label.yes'),
@@ -122,7 +122,7 @@ class AttributesTable extends DataTableComponent
                         'no' => $builder->where('is_filterable', false),
                     }
                 ),
-            'is_enabled' => Views\Filters\SelectFilter::make(__('Is Enabled'))
+            'is_enabled' => Views\Filters\SelectFilter::make(__('shopper::layout.forms.actions.enabled'))
                 ->options([
                     '' => __('shopper::layout.forms.label.any'),
                     'yes' => __('shopper::layout.forms.label.yes'),
@@ -148,9 +148,9 @@ class AttributesTable extends DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->format(fn ($value, $row, Views\Column $column) => $row->type_formatted),
-            Views\Columns\BooleanColumn::make(__('Is Searchable'), 'is_searchable')
+            Views\Columns\BooleanColumn::make(__('shopper::layout.forms.label.is_searchable'), 'is_searchable')
                 ->sortable(),
-            Views\Columns\BooleanColumn::make(__('Is Filterable'), 'is_filterable')
+            Views\Columns\BooleanColumn::make(__('shopper::layout.forms.label.is_filterable'), 'is_filterable')
                 ->sortable(),
             Views\Column::make(__('shopper::layout.forms.label.updated_at'), 'updated_at')
                 ->view('shopper::livewire.tables.cells.date'),
