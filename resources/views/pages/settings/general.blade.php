@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('Store General setting')">
+<x-shopper::layouts.setting :title="__('shopper::pages/settings.settings.title')">
 
     <livewire:shopper-settings.general />
 

@@ -36,6 +36,19 @@ return [
 
     'settings' => [
         'title' => 'Réglage du magasin',
+        'store_details' => 'Informations du magasin',
+        'store_detail_summary' => 'Vos clients utiliseront ces informations pour vous contacter.',
+        'email_helper' => 'Vos clients utiliseront cette adresse s\'ils ont besoin de vous contacter.',
+        'phone_number_helper' => 'Vos clients utiliseront ce numéro de téléphone s\'ils ont besoin de vous appeler directement.',
+        'assets' => 'Fichiers',
+        'assets_summary' => "Le logo et l'image de couverture de votre magasin qui seront visibles sur votre site. Cet actif apparaîtra sur vos factures.",
+        'store_address' => 'Adresse du magasin',
+        'store_address_summary' => "Cette adresse apparaîtra sur vos factures. Vous pouvez modifier l'adresse utilisée.",
+        'store_currency' => 'Monnaie du magasin',
+        'store_currency_summary' => "Il s'agit de la devise dans laquelle vos produits sont vendus. Après votre première vente, la devise est bloquée et ne peut plus être modifiée.",
+        'social_links' => 'Liens sociaux',
+        'social_links_summary' => 'Informations sur vos différents comptes sur les réseaux sociaux. Les utilisateurs pourront vous contacter directement sur vos pages officielles.',
+        'update_information' => 'Mettre à jour les informations',
     ],
 
     'payment' => [
