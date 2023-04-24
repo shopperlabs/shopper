@@ -2,7 +2,7 @@
 
     <x-shopper::breadcrumb :back="route('shopper.settings.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::messages.settings')" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
     <div

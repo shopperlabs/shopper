@@ -6,7 +6,7 @@
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('shopper::messages.actions_label.add_new', ['name' => __('customer')]) }}
+            {{ __('shopper::words.actions_label.add_new', ['name' => __('customer')]) }}
         </x-slot>
     </x-shopper::heading>
 
@@ -92,11 +92,11 @@
                                     <x-shopper::label for="password" :value="__('shopper::layout.forms.label.password')" />
                                     <div class="flex items-center divide-x divide-secondary-200 dark:divide-secondary-600">
                                         <button wire:click="generate" type="button" class="pr-2 text-primary-600 text-sm font-medium leading-5 hover:text-primary-500 dark:text-primary-500/50">
-                                            {{ __('shopper::messages.generate') }}
+                                            {{ __('shopper::words.generate') }}
                                         </button>
                                         <button
                                             @click="show = !show"
-                                            x-text="show ? '{{ __('shopper::messages.hide') }}' : '{{ __('shopper::messages.show') }}'"
+                                            x-text="show ? '{{ __('shopper::words.hide') }}' : '{{ __('shopper::words.show') }}'"
                                             type="button"
                                             class="pl-2 text-sm text-leading-5 text-primary-600 hover:text-primary-700 focus:outline-none focus:text-primary-700 hover:underline dark:text-primary-500/50">
                                         </button>

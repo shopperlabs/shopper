@@ -9,7 +9,7 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2">
-            <x-shopper::forms.group :label="__('Attribute')" for="attribute_id" class="sm:col-span-2" :error="$errors->first('attribute_id')" isRequired>
+            <x-shopper::forms.group :label="__('shopper::words.attribute')" for="attribute_id" class="sm:col-span-2" :error="$errors->first('attribute_id')" isRequired>
                 <x-shopper::forms.select wire:model="attribute_id" id="attribute_id">
                     <option value="0">{{ __('shopper::pages/products.attributes.modals.input_placeholder') }}</option>
                     @foreach($attributes as $attribute)
@@ -66,7 +66,7 @@
                     @endif
                 </div>
                 @error('value')
-                    <p class="mt-2 text-red-500 text-sm leading-5">{{ $message }}</p>
+                    <p class="mt-2 text-danger-500 text-sm leading-5">{{ $message }}</p>
                 @enderror
             </div>
         </div>

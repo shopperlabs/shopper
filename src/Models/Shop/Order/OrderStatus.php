@@ -19,11 +19,11 @@ class OrderStatus
     public static function values(): array
     {
         return [
-            self::PENDING => __('Pending'),
-            self::REGISTER => __('Registered'),
-            self::COMPLETED => __('Completed'),
-            self::CANCELLED => __('Cancelled'),
-            self::PAID => __('Paid'),
+            self::PENDING => __('shopper::status.pending'),
+            self::REGISTER => __('shopper::status.registered'),
+            self::COMPLETED => __('shopper::status.completed'),
+            self::CANCELLED => __('shopper::status.cancelled'),
+            self::PAID => __('shopper::status.paid'),
         ];
     }
 }

@@ -68,7 +68,7 @@
                             </x-shopper::forms.group>
                             <div class="sm:col-span-4">
                                 <h4 class="block text-sm font-medium leading-5 text-secondary-700 dark:text-secondary-300">
-                                    {{ __('shopper::messages.images') }}
+                                    {{ __('shopper::words.images') }}
                                 </h4>
                                 <div class="mt-1">
                                     <x-shopper::forms.filepond
@@ -100,7 +100,7 @@
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
-                        {{ __('shopper::messages.pricing') }}
+                        {{ __('shopper::words.pricing') }}
                     </h3>
                 </div>
             </div>
@@ -159,7 +159,7 @@
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
-                        {{ __('shopper::messages.inventory') }}
+                        {{ __('shopper::words.inventory') }}
                     </h3>
                 </div>
             </div>
@@ -226,7 +226,7 @@
                                     </div>
                                     <div class="flex justify-end col-span-1 pl-4 text-right">
                                         <span class="text-xs font-semibold leading-5 tracking-wider uppercase text-secondary-500 dark:text-secondary-400">
-                                            {{ __('shopper::messages.available') }}
+                                            {{ __('shopper::words.available') }}
                                         </span>
                                     </div>
                                 </div>

@@ -6,7 +6,7 @@
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('shopper::messages.actions_label.add_new', ['name' => __('brand')]) }}
+            {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.brand'))]) }}
         </x-slot>
 
         <x-slot name="action">
@@ -27,7 +27,13 @@
                         :label="__('shopper::layout.forms.label.name')"
                         :error="$errors->first('name')"
                     >
-                        <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
+                        <x-shopper::forms.input
+                            wire:model.defer="name"
+                            id="name"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Apple, Nike, Samsung..."
+                        />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-4">
@@ -35,7 +41,13 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-secondary-500 dark:text-secondary-400 sm:text-sm sm:leading-5">https://</span>
                         </div>
-                        <x-shopper::forms.input wire:model.defer="website" id="website" type="text" class="pl-16" placeholder="www.example.com" />
+                        <x-shopper::forms.input
+                            wire:model.defer="website"
+                            id="website"
+                            type="text"
+                            class="pl-16"
+                            placeholder="www.example.com"
+                        />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-5 border-t border-b border-secondary-200 dark:border-secondary-700 py-4">
@@ -48,7 +60,9 @@
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper::label for="online" :value="__('shopper::layout.forms.label.visibility')" />
-                            <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::messages.actions_label.set_visibility', ['name' => 'brand']) }}</p>
+                            <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                                {{ __('shopper::words.set_visibility', ['name' => strtolower(__('shopper::words.brand'))]) }}
+                            </p>
                         </div>
                     </div>
                 </div>

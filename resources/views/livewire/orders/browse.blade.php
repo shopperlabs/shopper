@@ -11,8 +11,8 @@
 
     @if($total === 0)
         <x-shopper::empty-state
-            :title="__('Manage customers orders')"
-            :content="__('When customers place orders, this is where all the processing will be done, the management of refunds and the tracking of their order.')"
+            :title="__('shopper::pages/orders.title')"
+            :content="__('shopper::pages/orders.content')"
             permission="add_orders"
             class="lg:pb-0"
         >

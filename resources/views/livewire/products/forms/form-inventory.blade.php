@@ -72,7 +72,9 @@
         @endif
         <div class="sm:flex sm:items-start sm:justify-between px-4 sm:px-6 mb-2 py-6">
             <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-400">
-                <span class="block text-sm font-medium mr-4">{{ __('shopper::pages/products.current_qty_inventory') }}</span>
+                <span class="block text-sm font-medium mr-4">
+                    {{ __('shopper::pages/products.current_qty_inventory') }}
+                </span>
                 <x-shopper::stock-badge :stock="$currentStock" />
             </div>
             <div class="mt-5 sm:mt-0 sm:ml-4">
@@ -120,8 +122,8 @@
                     </div>
                 </div>
                 @error('value')
-                    <p class="mt-2 text-sm text-danger-600">
-                        {{ __('shopper::messages.validation.integer') }}
+                    <p class="mt-2 text-sm text-danger-500">
+                        {{ __('shopper::layout.forms.validation.integer') }}
                     </p>
                 @enderror
             </div>
@@ -143,16 +145,16 @@
                             <thead>
                                 <tr>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('shopper::messages.date') }}
+                                        {{ __('shopper::words.date') }}
                                     </th>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('shopper::messages.event') }}
+                                        {{ __('shopper::words.event') }}
                                     </th>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('shopper::messages.location') }}
+                                        {{ __('shopper::words.location') }}
                                     </th>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-right text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
-                                        {{ __('shopper::messages.adjustment') }}
+                                        {{ __('shopper::words.adjustment') }}
                                     </th>
                                     <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-right text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
                                         {{ __('shopper::pages/products.inventory.movement') }}
@@ -171,10 +173,18 @@
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                             {{ $inventoryHistory->inventory->name }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->old_quantity > 0 ? 'text-green-500': 'text-red-500' }}">
+                                        <td @class([
+                                            'px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right',
+                                            'text-green-500' => $inventoryHistory->old_quantity > 0,
+                                            'text-red-500' => $inventoryHistory->old_quantity <= 0,
+                                        ])>
                                             {{ $inventoryHistory->adjustment }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-secondary-500 dark:text-secondary-400': 'text-red-500' }}">
+                                        <td @class([
+                                            'px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right',
+                                            'text-secondary-500 dark:text-secondary-400' => $inventoryHistory->quantity > 0,
+                                            'text-red-500' => $inventoryHistory->quantity <= 0,
+                                        ])>
                                             {{ $inventoryHistory->quantity }}
                                         </td>
                                     </tr>
@@ -190,13 +200,13 @@
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
                             <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-400">
-                                {{ __('shopper::messages.showing') }}
+                                {{ __('shopper::words.showing') }}
                                 <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + 1 }}</span>
-                                {{ __('shopper::messages.to') }}
+                                {{ __('shopper::words.to') }}
                                 <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + count($histories->items()) }}</span>
-                                {{ __('shopper::messages.of') }}
+                                {{ __('shopper::words.of') }}
                                 <span class="font-medium"> {!! $histories->total() !!}</span>
-                                {{ __('shopper::messages.results') }}
+                                {{ __('shopper::words.results') }}
                             </p>
                         </div>
                         {{ $histories->links() }}

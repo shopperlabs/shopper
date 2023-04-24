@@ -10,7 +10,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper::buttons.primary :link="route('shopper.customers.create')">
-                                {{ __('shopper::messages.actions_label.add_new', ['name' => __('customer')]) }}
+                                {{ __('shopper::words.actions_label.add_new', ['name' => __('customer')]) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -23,7 +23,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/customers.title')"
             :content="__('shopper::pages/customers.content')"
-            :button="__('shopper::messages.actions_label.add_new', ['name' => __('customer')])"
+            :button="__('shopper::words.actions_label.add_new', ['name' => __('customer')])"
             permission="add_customers"
             :url="route('shopper.customers.create')"
         >

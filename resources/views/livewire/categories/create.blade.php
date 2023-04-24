@@ -6,7 +6,7 @@
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('shopper::messages.actions_label.add_new', ['name' => __('category')]) }}
+            {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.category'))]) }}
         </x-slot>
 
         <x-slot name="action">
@@ -21,12 +21,23 @@
         <div class="lg:col-span-4 space-y-5">
             <div class="p-4 sm:p-5 bg-white rounded-lg shadow dark:bg-secondary-800">
                 <div>
-                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Women Shoes, Baby Clothes clothes') }}" />
+                    <x-shopper::forms.group
+                        for="name"
+                        isRequired
+                        :label="__('shopper::layout.forms.label.name')"
+                        :error="$errors->first('name')"
+                    >
+                        <x-shopper::forms.input
+                            wire:model.defer="name"
+                            id="name"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Women Shoes, Baby Clothes clothes"
+                        />
                     </x-shopper::forms.group>
                 </div>
                 <div class="mt-4">
-                    <x-shopper::forms.group :label="__('Parent')" for="category" wire:ignore>
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.parent')" for="category" wire:ignore>
                         <x-shopper::forms.select wire:model.defer="selectedCategory" id="category" x-data="{}" x-init="function () { choices($el) }">
                             <option value="0">{{ __('shopper::pages/categories.empty_selector') }}</option>
                             @foreach($categories as $category)
@@ -35,7 +46,10 @@
                                 </option>
 
                                 @foreach($category->children as $child)
-                                    @include('shopper::components.forms.option-category', ['name' => $category->name, 'category' => $child])
+                                    @include('shopper::components.forms.option-category', [
+                                        'name' => $category->name,
+                                        'category' => $child
+                                    ])
                                 @endforeach
                             @endforeach
                         </x-shopper::forms.select>
@@ -51,7 +65,9 @@
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper::label for="online" :value="__('shopper::layout.forms.label.visibility')" />
-                            <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::messages.actions_label.set_visibility', ['name' => 'category']) }}</p>
+                            <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                                {{ __('shopper::words.set_visibility', ['name' => strtolower(__('shopper::words.category'))]) }}
+                            </p>
                         </div>
                     </div>
                 </div>

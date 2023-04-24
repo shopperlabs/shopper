@@ -60,7 +60,7 @@
                 </svg>
                 <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
                     <span class="font-medium text-primary-600 group-hover:text-primary-500 dark:group-hover:text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                        {{ __('shopper::messages.components.files.upload_file') }}
+                        {{ __('shopper::words.components.files.upload_file') }}
                     </span>
                     {{ __('shopper::components.files.drag_n_drop') }}
                 </p>

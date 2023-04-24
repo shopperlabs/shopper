@@ -218,10 +218,10 @@
                                             <div class="mt-2 flex">
                                                 <ul class="divide-x divide-secondary-200 flex items-center text-sm leading-5 text-secondary-500 dark:text-secondary-400 dark:divide-secondary-600">
                                                     <li class="pr-2">
-                                                        <span>{{ $discount->total_use }}/{{ $discount->usage_limit ?? __('shopper::messages.unlimited') }} {{ __('shopper::messages.used') }}</span>
+                                                        <span>{{ $discount->total_use }}/{{ $discount->usage_limit ?? __('shopper::words.unlimited') }} {{ __('shopper::words.used') }}</span>
                                                     </li>
                                                     @if($discount->usage_limit_per_user)
-                                                        <li class="px-2"><span>{{ __('shopper::messages.once_per_user') }}</span></li>
+                                                        <li class="px-2"><span>{{ __('shopper::words.once_per_user') }}</span></li>
                                                     @endif
                                                 </ul>
                                             </div>
@@ -238,7 +238,7 @@
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
                                                         </svg>
-                                                        {{ __('shopper::messages.scheduled') }}
+                                                        {{ __('shopper::words.scheduled') }}
                                                     </span>
                                                 @endif
                                                 @if($discount->start_at <= now())
@@ -246,7 +246,7 @@
                                                         <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-purple-400" fill="currentColor" viewBox="0 0 8 8">
                                                             <circle cx="4" cy="4" r="3" />
                                                         </svg>
-                                                        {{ __('shopper::messages.active_for_users') }}
+                                                        {{ __('shopper::words.active_for_users') }}
                                                     </span>
                                                 @endif
                                             </div>
@@ -257,7 +257,7 @@
                                                     <span class="text-sm text-secondary-500 dark:text-secondary-400">{{ $discount->end_at->format('d M') }}</span>
                                                 @else
                                                     <span class="text-sm text-secondary-500 dark:text-secondary-400">
-                                                        {{ __('shopper::messages.from_date', ['date' => $discount->start_at->format('d M')]) }}
+                                                        {{ __('shopper::words.from_date', ['date' => $discount->start_at->format('d M')]) }}
                                                     </span>
                                                 @endif
                                             </div>
@@ -290,13 +290,13 @@
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
                         <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-300">
-                            {{ __('shopper::messages.showing') }}
+                            {{ __('shopper::words.showing') }}
                             <span class="font-medium">{{ ($discounts->currentPage() - 1) * $discounts->perPage() + 1 }}</span>
-                            {{ __('shopper::messages.to') }}
+                            {{ __('shopper::words.to') }}
                             <span class="font-medium">{{ ($discounts->currentPage() - 1) * $discounts->perPage() + count($discounts->items()) }}</span>
-                            {{ __('shopper::messages.of') }}
+                            {{ __('shopper::words.of') }}
                             <span class="font-medium"> {!! $discounts->total() !!}</span>
-                            {{ __('shopper::messages.results') }}
+                            {{ __('shopper::words.results') }}
                         </p>
                     </div>
                     {{ $discounts->links() }}

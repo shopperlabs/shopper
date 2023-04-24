@@ -26,13 +26,13 @@
                         <thead>
                             <tr class="border-t border-secondary-200 dark:border-secondary-700">
                                 <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
-                                    <span class="lg:pl-2">{{ __('shopper::messages.variant') }}</span>
+                                    <span class="lg:pl-2">{{ __('shopper::words.variant') }}</span>
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
                                     {{ __('shopper::layout.tables.sku') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
-                                    {{ __('shopper::layout.tables.price') }}
+                                    {{ __('shopper::words.price') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-xs leading-4 font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">
                                     {{ __('shopper::layout.tables.current_stock') }}
@@ -69,7 +69,7 @@
                                     <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                         <div class="flex items-center">
                                             <x-shopper::stock-badge :stock="$variant->stock" />
-                                            {{ __('shopper::messages.in_stock') }}
+                                            {{ __('shopper::words.in_stock') }}
                                         </div>
                                     </td>
                                     <td class="pr-6">
@@ -103,7 +103,9 @@
                                     <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900">
                                         <div class="flex justify-center items-center space-x-2">
                                             <x-heroicon-o-book-open class="h-8 w-8 text-secondary-400" />
-                                            <span class="font-medium py-8 text-secondary-400 text-xl">{{ __('shopper::pages/products.variants.empty') }}...</span>
+                                            <span class="font-medium py-8 text-secondary-400 text-xl">
+                                                {{ __('shopper::pages/products.variants.empty') }}
+                                            </span>
                                         </div>
                                     </td>
                                 </tr>
@@ -119,13 +121,13 @@
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
                         <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-300">
-                            {{ __('shopper::messages.showing') }}
+                            {{ __('shopper::words.showing') }}
                             <span class="font-medium">{{ ($variants->currentPage() - 1) * $variants->perPage() + 1 }}</span>
-                            {{ __('shopper::messages.to') }}
+                            {{ __('shopper::words.to') }}
                             <span class="font-medium">{{ ($variants->currentPage() - 1) * $variants->perPage() + count($variants->items()) }}</span>
-                            {{ __('shopper::messages.of') }}
+                            {{ __('shopper::words.of') }}
                             <span class="font-medium"> {!! $variants->total() !!}</span>
-                            {{ __('shopper::messages.results') }}
+                            {{ __('shopper::words.results') }}
                         </p>
                     </div>
                     {{ $variants->links() }}

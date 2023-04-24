@@ -75,7 +75,7 @@
                         </div>
                         @error('value')
                             <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-                                {{ __('shopper::messages.validation.integer') }}
+                                {{ __('shopper::words.validation.integer') }}
                             </p>
                         @enderror
                     </div>
@@ -97,10 +97,10 @@
                                 <table class="min-w-full">
                                     <thead>
                                         <tr class="border-b bg-secondary-50 border-secondary-200 dark:bg-secondary-700 dark:border-secondary-700">
-                                            <x-shopper::tables.table-head>{{ __('shopper::messages.date') }}</x-shopper::tables.table-head>
-                                            <x-shopper::tables.table-head>{{ __('shopper::messages.event') }}</x-shopper::tables.table-head>
-                                            <x-shopper::tables.table-head>{{ __('shopper::messages.location') }}</x-shopper::tables.table-head>
-                                            <x-shopper::tables.table-head class="text-right">{{ __('shopper::messages.adjustment') }}</x-shopper::tables.table-head>
+                                            <x-shopper::tables.table-head>{{ __('shopper::words.date') }}</x-shopper::tables.table-head>
+                                            <x-shopper::tables.table-head>{{ __('shopper::words.event') }}</x-shopper::tables.table-head>
+                                            <x-shopper::tables.table-head>{{ __('shopper::words.location') }}</x-shopper::tables.table-head>
+                                            <x-shopper::tables.table-head class="text-right">{{ __('shopper::words.adjustment') }}</x-shopper::tables.table-head>
                                             <x-shopper::tables.table-head class="text-right">{{ __('shopper::pages/products.inventory.movement') }}</x-shopper::tables.table-head>
                                         </tr>
                                     </thead>
@@ -135,13 +135,13 @@
                             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                                 <div>
                                     <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-300">
-                                        {{ __('shopper::messages.showing') }}
+                                        {{ __('shopper::words.showing') }}
                                         <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + 1 }}</span>
-                                        {{ __('shopper::messages.to') }}
+                                        {{ __('shopper::words.to') }}
                                         <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + count($histories->items()) }}</span>
-                                        {{ __('shopper::messages.of') }}
+                                        {{ __('shopper::words.of') }}
                                         <span class="font-medium"> {!! $histories->total() !!}</span>
-                                        {{ __('shopper::messages.results') }}
+                                        {{ __('shopper::words.results') }}
                                     </p>
                                 </div>
                                 {{ $histories->links() }}

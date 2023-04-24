@@ -56,7 +56,7 @@
                         <div class="mt-2 flex items-start">
                             <div class="mt-1 shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
                             <p class="ml-2.5 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
-                                {{ __('shopper::messages.published_on') }} <br>
+                                {{ __('shopper::words.published_on') }} <br>
                                 {{ $publishedAtFormatted }}
                             </p>
                         </div>

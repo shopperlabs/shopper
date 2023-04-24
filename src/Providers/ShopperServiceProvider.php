@@ -86,10 +86,6 @@ class ShopperServiceProvider extends PackageServiceProvider
     {
         $prefix = config('shopper.components.prefix', 'shopper');
 
-        Component::macro('notify', function ($params) {
-            $this->dispatchBrowserEvent('notify', $params);
-        });
-
         Livewire::listen('component.hydrate', function ($component) {
             $this->app->singleton(Component::class, fn () => $component);
         });

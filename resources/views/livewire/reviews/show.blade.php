@@ -31,7 +31,7 @@
             <dl class="divide-y divide-secondary-200 dark:divide-secondary-700">
                 <div class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
                     <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
-                        {{ __('shopper::messages.product') }}
+                        {{ __('shopper::words.product') }}
                     </dt>
                     <dd class="text-sm flex flex-col leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">{{ $review->reviewrateable->name }}</span>

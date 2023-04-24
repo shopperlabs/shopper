@@ -7,10 +7,10 @@
         <div class="sm:flex sm:items-start px-4 sm:px-6 pt-4">
             <div class="text-left">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                    {{ __('Logout Other Browser Sessions') }}
+                    {{ __('shopper::words.logout_session') }}
                 </h3>
                 <p class="mt-1 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                    {{ __('Please enter your password to confirm you would like to logout of your other browser sessions across all of your devices.') }}
+                    {{ __('shopper::words.logout_session_confirm') }}
                 </p>
             </div>
         </div>
@@ -20,7 +20,7 @@
                     <x-shopper::forms.input wire:model.lazy="password" aria-label="{{ __('shopper::layout.forms.label.password') }}" type="password" placeholder="{{ __('Enter your password') }}" />
                 </div>
                 @error('password')
-                    <p class="mt-2 text-sm text-danger-500 dark:text-danger-400">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                 @enderror
             </div>
         </div>
@@ -30,12 +30,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper::buttons.danger wire:click="logoutOtherBrowserSessions" wire:loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="logoutOtherBrowserSessions" class="text-white" />
-                {{ __('Logout Other Browser Sessions') }}
+                {{ __('shopper::layout.forms.actions.logout_session') }}
             </x-shopper::buttons.danger>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" wire:loading.attr="disabled" type="button">
-                {{ __('Nevermind') }}
+                {{ __('shopper::layout.forms.actions.nevermind') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

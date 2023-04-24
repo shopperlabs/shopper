@@ -23,9 +23,9 @@ class BrandsTable extends DataTableComponent
             ->setAdditionalSelects(['id', 'is_enabled', 'description'])
             ->setDefaultSort('name')
             ->setBulkActions([
-                'deleteSelected' => __('Delete'),
-                'enabled' => __('Enable'),
-                'disabled' => __('Disable'),
+                'deleteSelected' => __('shopper::layout.forms.actions.delete'),
+                'enabled' => __('shopper::layout.forms.actions.enable'),
+                'disabled' => __('shopper::layout.forms.actions.disable'),
             ])
             ->setTdAttributes(function (Views\Column $column) {
                 if ($column->isField('slug')) {
@@ -56,7 +56,7 @@ class BrandsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.delete'))
-                ->body(__('shopper::components.tables.messages.delete', ['name' => __('brands')]))
+                ->body(__('shopper::components.tables.messages.delete', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]))
                 ->success()
                 ->send();
         }
@@ -79,7 +79,7 @@ class BrandsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('shopper::components.tables.messages.enabled', ['name' => __('brands')]))
+                ->body(__('shopper::components.tables.messages.enabled', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]))
                 ->success()
                 ->send();
         }
@@ -102,7 +102,7 @@ class BrandsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('shopper::components.tables.messages.disabled', ['name' => __('brands')]))
+                ->body(__('shopper::components.tables.messages.disabled', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]))
                 ->success()
                 ->send();
         }

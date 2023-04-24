@@ -45,7 +45,9 @@
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper::label for="online" :value="__('shopper::layout.forms.label.visibility')" />
-                            <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::messages.actions_label.set_visibility', ['name' => 'brand']) }}</p>
+                            <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                                {{ __('shopper::words.set_visibility', ['name' => strtolower(__('shopper::words.brand'))]) }}
+                            </p>
                         </div>
                     </div>
                 </div>

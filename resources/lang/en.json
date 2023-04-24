@@ -22,5 +22,14 @@
   "Files": "Files",
   "Manage store assets (images, videos and documents).": "Manage store assets (images, videos and documents).",
   "Legal": "Legal",
-  "Manage your store's legal pages such as privacy, terms.": "Manage your store's legal pages such as privacy, terms."
+  "Manage your store's legal pages such as privacy, terms.": "Manage your store's legal pages such as privacy, terms.",
+  "Manually added": "Manually added",
+  "Initial inventory": "Initial inventory",
+  "Text field :type": "Text field :type",
+  "Richtext": "Richtext",
+  "Select": "Select",
+  "Checkbox": "Checkbox",
+  "Radio": "Radio",
+  "Color picker": "Color picker",
+  "Date picker": "Date picker"
 }

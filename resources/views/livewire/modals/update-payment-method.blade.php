@@ -5,14 +5,14 @@
 >
 
     <x-slot name="title">
-        {{ __('Update payment method') }}
+        {{ __('shopper::modals.payment_method.update_title') }}
     </x-slot>
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 h-96 overflow-y-scroll hide-scroll">
             <div class="sm:col-span-2">
                 <div>
-                    <x-shopper::label value="{{ __('Provider Logo') }}" />
+                    <x-shopper::label value="{{ __('shopper::layout.forms.label.provider_logo') }}" />
                     <div class="mt-2">
                         <x-shopper::forms.avatar-upload id="logo" wire:model.lazy='logo'>
                             <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-secondary-100 dark:bg-secondary-700">
@@ -31,22 +31,29 @@
                 </div>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper::forms.group :label="__('Custom payment method name')" for="title" :error="$errors->first('title')" isRequired>
+                <x-shopper::forms.group :label="__('shopper::layout.forms.label.payment_method')" for="title" :error="$errors->first('title')" isRequired>
                     <x-shopper::forms.input wire:model.defer="title" id="title" type="text" />
                 </x-shopper::forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper::forms.group :label="__('Payment Website Documentation')" for="link_url">
+                <x-shopper::forms.group :label="__('shopper::layout.forms.label.payment_doc')" for="link_url">
                     <x-shopper::forms.input wire:model.defer="linkUrl" type="url" id="link_url" placeholder="https://doc.myprovider.com" />
                 </x-shopper::forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper::forms.group :label="__('Additional details')" for="description" :helpText="__('Displays to customers when they’re choosing a payment method.')">
+                <x-shopper::forms.group
+                    for="description"
+                    :label="__('shopper::layout.forms.label.additional_details')"
+                    :helpText="__('shopper::words.payment_method_help_text')"
+                >
                     <x-shopper::forms.textarea wire:model.defer="description" id="description" />
                 </x-shopper::forms.group>
             </div>
             <div class="sm:col-span-2">
-                <x-shopper::forms.group :label="__('Payment instructions')" for="instructions" :helpText="__('Displays to customers after they place an order with this payment method.')">
+                <x-shopper::forms.group
+                    for="instructions"
+                    :label="__('shopper::layout.forms.label.payment_instruction')"
+                    :helpText="__('shopper::words.payment_method_instruction')">
                     <x-shopper::forms.textarea wire:model.defer="instructions" id="instructions" />
                 </x-shopper::forms.group>
             </div>

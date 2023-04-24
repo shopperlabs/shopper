@@ -5,7 +5,7 @@
 >
 
     <x-slot name="title">
-        {{ __('Add new value for :attribute', ['attribute' => $attribute->name]) }}
+        {{ __('shopper::modals.attributes.new_value', ['attribute' => $attribute->name]) }}
     </x-slot>
 
     <x-slot name="content">
@@ -17,24 +17,24 @@
             <div class="sm:col-span-2">
                 @if($type === 'colorpicker')
                     <div wire:ignore>
-                        <x-shopper::label :value="__('Key')" />
+                        <x-shopper::label :value="__('shopper::layout.forms.label.key')" />
                         <x-color-picker wire:model.defer="key" placeholder="#9800BK" />
                         <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
-                            {{ __('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format') }}
+                            {{ __('shopper::modals.attributes.key_description') }}
                         </p>
                     </div>
                     @error('key')
-                        <p class="mt-1 text-sm text-danger-500 dark:text-danger-400">{{ $message }}</p>
+                        <p class="mt-1 text-sm text-danger-500">{{ $message }}</p>
                     @enderror
                 @else
                     <x-shopper::forms.group
-                        :label="__('Key')"
+                        :label="__('shopper::layout.forms.label.key')"
                         for="key"
                         class="sm:col-span-2"
                         :error="$errors->first('key')"
-                        :helpText="__('The key will be used for the values in storage for the forms (option, radio, etc.). Must be in slug format')"
+                        :helpText="__('shopper::modals.attributes.key_description')"
                     >
-                        <x-shopper::forms.input wire:model.defer="key" type="text" id="key" :placeholder="__('my_key')" />
+                        <x-shopper::forms.input wire:model.defer="key" type="text" id="key" placeholder="my_key" />
                     </x-shopper::forms.group>
                 @endif
             </div>

@@ -4,19 +4,19 @@
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
     <x-slot name="title">
-        <span>{{ __('Add new role') }}</span>
+        <span>{{ __('shopper::modals.roles.new') }}</span>
         <p class="mt-1 sm:mt-0 sm:ml-3 text-sm leading-5 font-normal text-secondary-500 dark:text-secondary-400">
-            {{ __('Add a new role and assign permissions for administrators.') }}
+            {{ __('shopper::modals.roles.new_description') }}
         </p>
     </x-slot>
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <x-shopper::forms.group :label="__('Name (in lowercase)')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
-                <x-shopper::forms.input wire:model.defer="name" type="text" id="name" :placeholder="__('manager')" autocomplete="off" />
+            <x-shopper::forms.group :label="__('shopper::modals.roles.labels.name')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
+                <x-shopper::forms.input wire:model.defer="name" type="text" id="name" placeholder="manager" autocomplete="off" />
             </x-shopper::forms.group>
-            <x-shopper::forms.group :label="__('Display name')" for="display_name" class="sm:col-span-1">
-                <x-shopper::forms.input wire:model.defer="display_name" type="text" id="display_name" :placeholder="__('Manager')" autocomplete="off" />
+            <x-shopper::forms.group :label="__('shopper::layout.forms.label.display_name')" for="display_name" class="sm:col-span-1">
+                <x-shopper::forms.input wire:model.defer="display_name" type="text" id="display_name" placeholder="Manager" autocomplete="off" />
             </x-shopper::forms.group>
             <x-shopper::forms.group :label="__('shopper::layout.forms.label.description')" for="description" class="sm:col-span-2">
                 <x-shopper::forms.textarea wire:model.defer="description" id="description" />

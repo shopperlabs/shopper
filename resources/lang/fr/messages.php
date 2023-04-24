@@ -4,19 +4,6 @@ declare(strict_types=1);
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Messages Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used by the shopper package.
-    | You are free to change them to anything you want to customize your
-    | views to better match your application.
-    |
-    */
-
-    'discount_use' => '{1} Limité à une utilisation|[2,*] Limité à :count utilisations',
-
     'dashboard' => [
         'welcome_message' => 'Bienvenue sur le tableau de bord de <span>Shopper</span>',
         'header' => 'Commencez par les éléments de base de votre boutique en ligne',
@@ -41,68 +28,5 @@ return [
             'product_link' => 'Ajouter un produit',
         ],
     ],
-
-    'actions_label' => [
-        'update' => 'Modifier :name',
-        'add_new' => 'Ajout :name',
-        'edit' => 'Éditer :name',
-        'show' => 'Afficher :name',
-        'set_visibility' => 'Rendre visible :name pour les clients.',
-    ],
-
-    'log_out' => 'Se déconnecter',
-    'hide' => 'Masquer',
-    'show' => 'Afficher',
-    'generate' => 'Générer',
-    'product' => 'Produit',
-    'male' => 'Mâle',
-    'female' => 'Femelle',
-    'not_defined' => 'Non défini',
-    'unlimited' => 'illimitée',
-    'used' => 'utilisé',
-    'once_per_user' => 'Une fois par utilisateur',
-    'scheduled' => 'Programmé',
-    'active_for_users' => 'Actif Pour les utilisateurs',
-    'from_date' => 'From :date',
-    'showing' => 'Affichage',
-    'to' => 'à',
-    'of' => 'de',
-    'results' => 'résultats',
-    'summary' => 'Résumé',
-    'everyone' => 'Pour tout le monde',
-    'for_name' => 'Pour :name',
-
-    'count' => [
-        'products' => ':count produits',
-        'customers' => 'Pour :count clients',
-    ],
-
-    'media' => 'Media',
-    'pricing' => 'Prix',
-    'inventory' => 'Inventaire',
-    'available' => 'Disponible',
-    'shipping' => 'Livraison',
-    'weight_dimension' => 'Poids et dimensions',
-    'published_on' => 'Sera publié le:',
-    'variants' => 'Variantes',
-    'variant' => 'Variant',
-    'overview' => 'Aperçu',
-    'attributes' => 'Attributs',
-    'seo' => 'SEO',
-    'date' => 'Date',
-    'event' => 'Action',
-    'location' => 'Localisation',
-    'adjustment' => 'Ajustement',
-    'in_stock' => 'en stock',
-    'out_stock' => 'stock épuisé',
-    'images' => 'Images',
-
-    'validation' => [
-        'integer' => 'Cette valeur doit être un nombre entier.',
-    ],
-
-    'step' => 'Étape :number',
-    'settings' => 'Paramètres',
-    'environment' => 'Environnement',
 
 ];

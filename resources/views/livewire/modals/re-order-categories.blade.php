@@ -5,7 +5,7 @@
 >
     <x-slot name="title">
         <x-heroicon-o-sort-ascending class="w-5 h-5 -ml-1 mr-3 text-secondary-400" />
-        {{ __('Reorder categories') }}
+        {{ __('shopper::words.reorder') }}
     </x-slot>
 
     <x-slot name="content">
