@@ -1581,11 +1581,6 @@ parameters:
 			path: src/Providers/RouteServiceProvider.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Providers\\\\ShopperServiceProvider\\:\\:dispatchBrowserEvent\\(\\)\\.$#"
-			count: 1
-			path: src/Providers/ShopperServiceProvider.php
-
-		-
 			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Providers\\\\ShopperServiceProvider\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: src/Providers/ShopperServiceProvider.php
