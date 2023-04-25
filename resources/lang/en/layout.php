@@ -101,6 +101,8 @@ return [
             'key' => 'Key',
             'is_searchable' => 'Is Searchable',
             'is_filterable' => 'Is Filterable',
+            'role' => 'Role',
+            'access' => 'Access',
         ],
 
         'placeholder' => [

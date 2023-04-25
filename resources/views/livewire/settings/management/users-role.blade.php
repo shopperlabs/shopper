@@ -1,10 +1,10 @@
 <div class="bg-white shadow overflow-hidden rounded-md dark:bg-secondary-800">
     <div class="px-4 pt-5 sm:px-6 flex flex-wrap items-baseline">
         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-            {{ __('Users') }}
+            {{ __('shopper::words.users') }}
         </h3>
         <p class="ml-2 mt-1 text-sm leading-5 text-secondary-500 truncate dark:text-secondary-400">
-            {{ __('with :name role', ['name' => $role->display_name]) }}
+            {{ __('shopper::pages/settings.roles_permissions.with_role_name', ['name' => $role->display_name]) }}
         </p>
     </div>
     <div class="mt-4 border-t border-secondary-200 overflow-x-auto dark:border-secondary-800">
@@ -19,10 +19,10 @@
                             {{ __('shopper::layout.forms.label.email') }}
                         </x-shopper::tables.table-head>
                         <x-shopper::tables.table-head class="hidden md:table-cell text-right">
-                            {{ __('Role') }}
+                            {{ __('shopper::layout.forms.label.role') }}
                         </x-shopper::tables.table-head>
                         <x-shopper::tables.table-head class="hidden md:table-cell text-right">
-                            {{ __('Access') }}
+                            {{ __('shopper::layout.forms.label.access') }}
                         </x-shopper::tables.table-head>
                         <x-shopper::tables.table-head class="pr-6" />
                     </tr>
@@ -40,7 +40,7 @@
                                             {{ $user->full_name }}
                                         </div>
                                         <div class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                            {{ __('Registered on') }} <time datetime="{{ $user->created_at->format('Y-m-d') }}" class="capitalize">{{ $user->created_at->formatLocalized('%d %B %Y') }}</time>
+                                            {{ __('shopper::words.registered_on') }} <time datetime="{{ $user->created_at->format('Y-m-d') }}" class="capitalize">{{ $user->created_at->formatLocalized('%d %B %Y') }}</time>
                                         </div>
                                     </div>
                                 </div>
@@ -61,13 +61,13 @@
                                 </span>
                             </td>
                             <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400 text-right">
-                                {{ $user->hasRole(config('shopper.system.users.admin_role')) ? __('Full') : __('Limited') }}
+                                {{ $user->hasRole(config('shopper.system.users.admin_role')) ? __('shopper::words.full') : __('shopper::words.limited') }}
                             </td>
                             <td class="pr-6 text-right">
                                 @if($user->id === auth()->id())
                                     <span class="flex items-center text-sm leading-5 text-secondary-500 text-right dark:text-secondary-400">
                                         <x-heroicon-o-user-circle class="w-5 h-5 mr-1" />
-                                        {{ __('Me') }}
+                                        {{ __('shopper::words.me') }}
                                     </span>
                                 @endif
                                 @if(auth()->user()->isAdmin() && !$user->isAdmin())
@@ -96,7 +96,7 @@
                                 <div class="flex justify-center items-center space-x-2">
                                     <x-heroicon-o-users class="h-8 w-8 text-secondary-400" />
                                     <span class="font-medium py-8 text-secondary-400 text-xl">
-                                        {{ __('No users...') }}
+                                        {{ __('shopper::words.no_users') }}
                                     </span>
                                 </div>
                             </td>

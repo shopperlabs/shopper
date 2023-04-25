@@ -101,6 +101,8 @@ return [
             'key' => 'Clé',
             'is_searchable' => 'Est Consultable',
             'is_filterable' => 'Est Filtrable',
+            'role' => 'Rôle',
+            'access' => 'Accès',
         ],
 
         'placeholder' => [
