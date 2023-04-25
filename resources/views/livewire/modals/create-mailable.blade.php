@@ -5,7 +5,7 @@
 >
 
     <x-slot name="title">
-        {{ __('New Mailable') }}
+        {{ __('shopper::pages/settings.mailable.new_mailable') }}
     </x-slot>
 
     <x-slot name="content">
@@ -15,10 +15,10 @@
                 for="name"
                 class="sm:col-span-2"
                 :error="$errors->first('name')"
-                :helpText="__('Enter mailable name e.g Welcome User, WelcomeUser')"
+                :helpText="__('shopper::pages/settings.mailable.mailable_placeholder')"
                 isRequired
             >
-                <x-shopper::forms.input wire:model.defer="name" type="text" id="name" :placeholder="__('Mailable name')" />
+                <x-shopper::forms.input wire:model.defer="name" type="text" id="name" />
             </x-shopper::forms.group>
             <div class="sm:col-span-2">
                 <div class="relative flex items-start">
@@ -27,10 +27,10 @@
                     </div>
                     <div class="ml-3 text-sm leading-5">
                         <label for="is_markdown" class="font-medium text-secondary-700 dark:text-secondary-300">
-                            {{ __('Markdown Template') }}
+                            {{ __('shopper::pages/settings.mailable.markdown_template') }}
                         </label>
                         <p class="text-secondary-500 dark:text-secondary-400">
-                            {{ __('Use markdown template.') }}
+                            {{ __('shopper::pages/settings.mailable.markdown_template_helper') }}
                         </p>
                     </div>
                 </div>
@@ -40,11 +40,11 @@
                 <x-shopper::forms.group
                     for="markdown"
                     class="sm:col-span-2"
-                    :label="__('Markdown')"
+                    :label="__('shopper::layout.forms.label.markdown')"
                     :error="$errors->first('markdownView')"
                     isRequired
                 >
-                    <x-shopper::forms.input wire:model.defer="markdownView" type="text" id="markdown" :placeholder="__('Eg. markdown.view')" />
+                    <x-shopper::forms.input wire:model.defer="markdownView" type="text" id="markdown" placeholder="Eg. markdown.view" />
                 </x-shopper::forms.group>
             @endif
 
@@ -55,10 +55,10 @@
                     </div>
                     <div class="ml-3 text-sm leading-5">
                         <label for="is_force" class="font-medium text-secondary-700 dark:text-secondary-300">
-                            {{ __('Force') }}
+                            {{ __('shopper::layout.forms.label.force') }}
                         </label>
                         <p class="text-secondary-500 dark:text-secondary-400">
-                            {{ __('Force mailable creation even if already exists.') }}
+                            {{ __('shopper::pages/settings.mailable.force_mailable') }}
                         </p>
                     </div>
                 </div>
@@ -79,5 +79,4 @@
             </x-shopper::buttons.default>
         </span>
     </x-slot>
-
 </x-shopper::modal>

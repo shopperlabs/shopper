@@ -45,6 +45,7 @@ return [
         'title' => 'Products variations',
         'description' => 'All variations of your product. The variations can each have their stock and price.',
         'add' => 'Add variant',
+        'variant_title' => 'Variants ~ :name',
         'empty' => 'No variant found',
         'search_label' => 'Search variant',
         'search_placeholder' => 'Search product variant',

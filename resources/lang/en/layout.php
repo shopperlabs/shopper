@@ -103,6 +103,17 @@ return [
             'is_filterable' => 'Is Filterable',
             'role' => 'Role',
             'access' => 'Access',
+            'content' => 'Content',
+            'sender_name' => 'Sender name',
+            'sender_email' => 'Sender email',
+            'username' => 'Username',
+            'mail_method' => 'Mail method',
+            'mail_host' => 'Mail host',
+            'mail_port' => 'Mail port',
+            'encryption_protocol' => 'Encryption protocol',
+            'markdown' => 'Markdown',
+            'force' => 'Force',
+            'template' => 'Template',
         ],
 
         'placeholder' => [

@@ -1,4 +1,4 @@
-<x-shopper::layouts.app :title=" __('Variants ~ :name', ['name' => $variant->name])">
+<x-shopper::layouts.app :title=" __('shopper::pages/products.variants.variant_title', ['name' => $variant->name])">
 
     <livewire:shopper-products.variant :product="$product" :variant="$variant" :currency="shopper_currency()" />
 

@@ -103,6 +103,17 @@ return [
             'is_filterable' => 'Est Filtrable',
             'role' => 'Rôle',
             'access' => 'Accès',
+            'content' => 'Contenu',
+            'sender_name' => 'Nom de l\'expéditeur',
+            'sender_email' => 'Email de l\'expéditeur',
+            'username' => 'Nom d\'utilisateur',
+            'mail_method' => 'Méthode d\'envoi',
+            'mail_host' => 'Hébergeur de courrier',
+            'mail_port' => 'Port de messagerie',
+            'encryption_protocol' => 'Protocole de cryptage',
+            'markdown' => 'Markdown',
+            'force' => 'Force',
+            'template' => 'Modèle',
         ],
 
         'placeholder' => [

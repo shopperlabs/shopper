@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('Mail ~ Add Template')">
+<x-shopper::layouts.setting :title="__('shopper::pages/settings.mailable.title_template')">
 
     <livewire:shopper-settings.mails.add-template />
 

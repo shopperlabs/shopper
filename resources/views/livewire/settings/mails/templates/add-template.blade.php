@@ -1,22 +1,22 @@
 <div x-data="{ currentTab: 'html'}">
     <x-shopper::breadcrumb :back="route('shopper.settings.mails')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.mails')" :title="__('Email configuration')" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.mails')" :title="__('shopper::pages/settings.mailable.email_config')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-3 border-b border-secondary-200 dark:border-secondary-700">
         <div class="sm:flex sm:items-baseline">
             <h3 class="text-xl leading-6 font-bold text-secondary-900 sm:text-2xl dark:text-white">
-                {{ __('Add template') }}
+                {{ __('shopper::pages/settings.mailable.add_template') }}
             </h3>
             <div class="mt-4 sm:mt-0 sm:ml-10">
                 <nav class="-mb-px flex space-x-8">
                     <button @click="currentTab = 'html'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'html' }">
-                        HTML
+                        {{ __('shopper::words.html') }}
                     </button>
 
                     <button @click="currentTab = 'markdown'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'markdown' }">
-                        Markdown
+                        {{ __('shopper::layout.forms.label.markdown') }}
                     </button>
                 </nav>
             </div>
@@ -41,7 +41,7 @@
                         </div>
                         <figcaption class="mt-3">
                             <p class="flex items-baseline text-sm font-medium text-secondary-900 capitalize dark:text-white">
-                                <span> {{ $name }}</span>
+                                <span>{{ $name }}</span>
                             </p>
                         </figcaption>
                     </figure>
@@ -65,7 +65,7 @@
                         </div>
                         <figcaption class="mt-3">
                             <p class="flex items-baseline text-sm font-medium text-secondary-900 capitalize dark:text-white">
-                                <span> {{ $name }}</span>
+                                <span>{{ $name }}</span>
                             </p>
                         </figcaption>
                     </figure>
