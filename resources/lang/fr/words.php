@@ -12,6 +12,9 @@ return [
     'attributes' => 'Attributs',
     'discount' => 'Coupon',
     'review' => 'Avis',
+    'account' => 'Compte',
+    'users' => 'Utilisateurs',
+    'system' => 'Système',
     'purchased' => 'Acheté',
     'total' => 'Total',
     'subtotal' => 'Sous total',
@@ -109,6 +112,7 @@ return [
     'payment_method_instruction' => "S'affiche pour les clients après qu'ils ont passé une commande avec ce mode de paiement.",
     'no_group' => 'Aucun groupe',
     'no_values' => 'Aucune valeur',
+    'no_users' => 'Aucun utilisateur',
     'logout_session' => 'Déconnexion des autres sessions du navigateur',
     'logout_session_confirm' => 'Please enter your password to confirm you would like to logout of your other browser sessions across all of your devices.',
     'reorder' => 'Reorder',
@@ -120,4 +124,14 @@ return [
         'instagram' => 'Instagram',
         'twitter' => 'Twitter',
     ],
+
+    'view_details' => 'Voir les détails',
+    'registered_on' => 'Enregistré le',
+    'full' => 'Complet',
+    'limited' => 'Limité',
+    'me' => 'Moi',
+    'invitation' => 'Invitation',
+    'attention_needed' => 'Attention requise',
+    'attention_description' => 'Ce rôle donne à cet administrateur les mêmes droits et autorisations que vous.',
+
 ];

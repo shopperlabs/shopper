@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('User Roles & Access Management')">
+<x-shopper::layouts.setting :title="__('shopper::pages/settings.roles_permissions.title')">
 
     <livewire:shopper-settings.management.management />
 

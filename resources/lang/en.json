@@ -31,5 +31,14 @@
   "Checkbox": "Checkbox",
   "Radio": "Radio",
   "Color picker": "Color picker",
-  "Date picker": "Date picker"
+  "Date picker": "Date picker",
+  "Categories": "Categories",
+  "System": "System",
+  "Discounts": "Discounts",
+  "Customers": "Customers",
+  "Orders": "Orders",
+  "Products": "Products",
+  "Brands": "Brands",
+  "Collections": "Collections",
+  "Reviews": "Reviews"
 }

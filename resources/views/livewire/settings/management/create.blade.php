@@ -1,22 +1,22 @@
 <div>
     <x-shopper::breadcrumb :back="route('shopper.settings.users')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('Users & roles')" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('shopper::pages/settings.roles_permissions.users_role')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('Add Administrator') }}
+            {{ __('shopper::pages/settings.roles_permissions.add_admin') }}
         </x-slot>
     </x-shopper::heading>
 
     <div class="mt-6 pb-10">
         <div>
             <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                {{ __('Login information') }}
+                {{ __('shopper::pages/settings.roles_permissions.login_information') }}
             </h3>
             <p class="mt-1 max-w-2xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                {{ __('This information will be useful for the administrator to connect to the administration of Shopper.') }}
+                {{ __('shopper::pages/settings.roles_permissions.login_information_summary') }}
             </p>
         </div>
 
@@ -30,7 +30,7 @@
                         <x-shopper::forms.input wire:model.lazy="email" id="email" type="email" autocomplete="off" />
                     </div>
                     @error('email')
-                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -41,11 +41,11 @@
                 <div x-data="{ show: false }" class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="flex items-center justify-between max-w-lg">
                         <button wire:click="generate" type="button" class="text-sm font-medium leading-5 text-primary-500 hover:text-primary-400">
-                            {{ __('Generate') }}
+                            {{ __('shopper::words.generate') }}
                         </button>
                         <button
                           @click="show = !show"
-                          x-text="show ? '{{ __('Hide') }}' : '{{ __('Show') }}'"
+                          x-text="show ? '{{ __('shopper::words.hide') }}' : '{{ __('shopper::words.show') }}'"
                           type="button"
                           class="text-sm text-leading-5 text-primary-600 hover:text-primary-500 focus:outline-none focus:text-primary-700 hover:underline">
                         </button>
@@ -59,13 +59,13 @@
                         @enderror
                     </div>
                     @error('password')
-                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
             <div class="mt-6 sm:mt-5 sm:pt-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-secondary-200 sm:dark:border-secondary-700">
                 <label for="about" class="block text-sm font-medium leading-5 text-secondary-700 sm:mt-px sm:pt-2 dark:text-secondary-300">
-                    {{ __('Invitation') }}
+                    {{ __('shopper::words.invitation') }}
                 </label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     <div class="relative flex items-start">
@@ -76,8 +76,10 @@
                             </span>
                         </div>
                         <div class="ml-3 text-sm leading-5">
-                            <x-shopper::label for="send_mail" :value="__('Send Invite')" />
-                            <p class="max-w-lg text-sm text-secondary-500 dark:text-secondary-400">{{ __('Send an invitation to this administrator by email with his login information.') }}</p>
+                            <x-shopper::label for="send_mail" :value="__('shopper::pages/settings.roles_permissions.send_invite')" />
+                            <p class="max-w-lg text-sm text-secondary-500 dark:text-secondary-400">
+                                {{ __('shopper::pages/settings.roles_permissions.send_invite_summary') }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -86,10 +88,10 @@
 
         <div class="mt-8">
             <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                {{ __('Personal Information') }}
+                {{ __('shopper::pages/settings.roles_permissions.personal_information') }}
             </h3>
             <p class="max-w-2xl mt-1 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                {{ __('Information related to the admin profile.') }}
+                {{ __('shopper::pages/settings.roles_permissions.personal_information_summary') }}
             </p>
         </div>
 
@@ -103,7 +105,7 @@
                         <x-shopper::forms.input wire:model.lazy="first_name" type="text" id="first_name" autocomplete="off" />
                     </div>
                     @error('first_name')
-                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -117,7 +119,7 @@
                         <x-shopper::forms.input wire:model="last_name" type="text" id="last_name" autocomplete="off" />
                     </div>
                     @error('last_name')
-                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -154,7 +156,7 @@
                         @enderror
                     </div>
                     @error('phone_number')
-                        <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -162,10 +164,10 @@
 
         <div class="mt-8">
             <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                {{ __('Role Information') }}
+                {{ __('shopper::pages/settings.roles_permissions.role_information') }}
             </h3>
             <p class="max-w-2xl mt-1 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                {{ __('Assign roles to this administrator who will limit the actions he can do.') }}
+                {{ __('shopper::pages/settings.roles_permissions.personal_information_summary') }}
             </p>
         </div>
 
@@ -175,26 +177,28 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-baseline">
                         <div>
                             <div class="text-base leading-6 font-medium text-secondary-900 sm:text-sm sm:leading-5 dark:text-white" id="roles-lists">
-                                {{ __('Roles') }}
+                                {{ __('shopper::pages/settings.roles_permissions.roles') }}
                             </div>
                         </div>
                         <div class="sm:col-span-2">
                             <div class="max-w-lg">
                                 <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                    {{ __('Choose a role for this admin') }}
+                                    {{ __('shopper::pages/settings.roles_permissions.choose_role') }}
                                 </p>
                                 <div class="mt-4 space-y-4">
                                     @foreach($roles as $role)
                                         <div class="flex items-center">
                                             <x-shopper::forms.radio wire:model.lazy="role_id" id="role_{{ $role->id }}" name="role_id" value="{{ $role->id }}" />
                                             <label for="role_{{ $role->id }}" class="ml-3 cursor-pointer">
-                                                <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400">{{ $role->display_name ?? $role->name }}</span>
+                                                <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400">
+                                                    {{ $role->display_name ?? $role->name }}
+                                                </span>
                                             </label>
                                         </div>
                                     @endforeach
                                 </div>
                                 @error('role_id')
-                                    <p class="mt-2 text-sm text-danger-600">{{ $message }}</p>
+                                    <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
                                 @enderror
 
                                 @if($is_admin)
@@ -205,11 +209,11 @@
                                             </div>
                                             <div class="ml-3">
                                                 <h3 class="text-sm leading-5 font-medium text-yellow-800">
-                                                    {{ __('Attention needed') }}
+                                                    {{ __('shopper::words.attention_needed') }}
                                                 </h3>
                                                 <div class="mt-2 text-sm leading-5 text-yellow-700">
                                                     <p>
-                                                        {{ __('This role gives this administrator the same rights and permissions as you.') }}
+                                                        {{ __('shopper::words.attention_description') }}
                                                     </p>
                                                 </div>
                                             </div>

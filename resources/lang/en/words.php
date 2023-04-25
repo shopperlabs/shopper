@@ -12,6 +12,9 @@ return [
     'attributes' => 'Attributes',
     'discount' => 'Discount',
     'review' => 'Review',
+    'account' => 'Account',
+    'users' => 'Users',
+    'system' => 'System',
     'purchased' => 'Purchased',
     'total' => 'Total',
     'subtotal' => 'Subtotal',
@@ -109,6 +112,7 @@ return [
     'payment_method_instruction' => 'Displays to customers after they place an order with this payment method',
     'no_group' => 'No group',
     'no_values' => 'No values',
+    'no_users' => 'No users',
     'logout_session' => 'Logout Other Browser Sessions',
     'logout_session_confirm' => 'Please enter your password to confirm you would like to logout of your other browser sessions across all of your devices.',
     'reorder' => 'Réorganiser',
@@ -120,4 +124,14 @@ return [
         'instagram' => 'Instagram',
         'twitter' => 'Twitter',
     ],
+
+    'view_details' => 'View details',
+    'registered_on' => 'Registered on',
+    'full' => 'Full',
+    'limited' => 'Limited',
+    'me' => 'Me',
+    'invitation' => 'Invitation',
+    'attention_needed' => 'Attention needed',
+    'attention_description' => 'This role gives this administrator the same rights and permissions as you.',
+
 ];

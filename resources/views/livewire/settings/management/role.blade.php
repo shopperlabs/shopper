@@ -2,16 +2,16 @@
     x-data="{
         options: ['role', 'users', 'permissions'],
         words: {
-            'role': '{{ __("Role") }}',
-            'users': '{{ __("Users") }}',
-            'permissions': '{{ __("Permissions") }}'
+            'role': '{{ __('shopper::layout.forms.label.role') }}',
+            'users': '{{ __('shopper::words.users') }}',
+            'permissions': '{{ __('shopper::pages/settings.roles_permissions.permissions') }}'
         },
         currentTab: 'role'
     }"
 >
     <x-shopper::breadcrumb :back="route('shopper.settings.users')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('Users & roles')" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('shopper::pages/settings.roles_permissions.users_role')" />
     </x-shopper::breadcrumb>
 
     <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
@@ -20,18 +20,18 @@
                 {{ $display_name }}
             </h3>
             <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
-                <span class="shadow-sm rounded-md">
-                    @if($role->can_be_removed)
+                @if($role->can_be_removed)
+                    <span class="shadow-sm rounded-md">
                         <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
                             <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
                             {{ __('shopper::layout.forms.actions.delete') }}
                         </x-shopper::buttons.danger>
-                    @endif
-                </span>
+                    </span>
+                @endif
                 <span class="shadow-sm rounded-md">
                     <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
                         <x-heroicon-o-key class="w-5 h-5 -ml-1 mr-2" />
-                        {{ __('Create permission') }}
+                        {{ __('shopper::pages/settings.roles_permissions.create_permission') }}
                     </x-shopper::buttons.primary>
                 </span>
             </div>
@@ -39,7 +39,7 @@
         <div>
             <!-- Dropdown menu on small screens -->
             <div class="sm:hidden">
-                <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
+                <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}">
                     <template x-for="option in options" :key="option">
                         <option
                             x-bind:value="option"
@@ -53,15 +53,15 @@
             <div class="hidden sm:block">
                 <nav class="-mb-px flex space-x-8">
                     <button @click="currentTab = 'role'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'role' }">
-                        {{ __('Role') }}
+                        {{ __('shopper::layout.forms.label.role') }}
                     </button>
 
                     <button @click="currentTab = 'users'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'users' }">
-                        {{ __('Users') }}
+                        {{ __('shopper::words.users') }}
                     </button>
 
                     <button @click="currentTab = 'permissions'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'permissions' }">
-                        {{ __('Permissions') }}
+                        {{ __('shopper::pages/settings.roles_permissions.permissions') }}
                     </button>
                 </nav>
             </div>
@@ -79,11 +79,11 @@
                             </div>
                             <div class="ml-3 flex-1 md:flex md:justify-between">
                                 <p class="text-sm leading-5 text-info-700">
-                                    {{ __('You are about to update the admin role, this could block your access to the dashboard.') }}
+                                    {{ __('shopper::pages/settings.roles_permissions.role_alert_msg') }}
                                 </p>
                                 <p class="mt-3 text-sm leading-5 md:mt-0 md:ml-6">
                                     <a href="#" class="whitespace-no-wrap font-medium text-info-700 hover:text-info-600 transition ease-in-out duration-150">
-                                        {{ __('Learn more') }} &rarr;
+                                        {{ __('shopper::components.learn_more') }} &rarr;
                                     </a>
                                 </p>
                             </div>
@@ -93,10 +93,10 @@
             @endif
             <div class="px-4 py-5 sm:p-6">
                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                    <x-shopper::forms.group :label="__('Name (in lowercase)')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
+                    <x-shopper::forms.group :label="__('shopper::modals.roles.labels.name')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
                         <x-shopper::forms.input wire:model.lazy="name" type="text" id="name" placeholder="manager" />
                     </x-shopper::forms.group>
-                    <x-shopper::forms.group :label="__('Display name')" for="display_name" class="sm:col-span-1">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.display_name')" for="display_name" class="sm:col-span-1">
                         <x-shopper::forms.input wire:model.lazy="display_name" type="text" id="display_name" placeholder="Manager" />
                     </x-shopper::forms.group>
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.description')" for="description" class="sm:col-span-2">

@@ -1,10 +1,10 @@
 <div class="bg-white shadow overflow-hidden rounded-md dark:bg-secondary-800">
     <div class="px-4 pt-5 sm:px-6 flex flex-wrap items-baseline">
         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-            {{ __('Permissions') }}
+            {{ __('shopper::pages/settings.roles_permissions.permissions') }}
         </h3>
         <p class="ml-2 mt-1 text-sm leading-5 text-secondary-500 truncate">
-            {{ __('in :name role', ['name' => $role->display_name]) }}
+            {{ __('shopper::pages/settings.roles_permissions.permissions_in_role', ['name' => $role->display_name]) }}
         </p>
     </div>
     <div class="mt-4 border-t border-secondary-200 overflow-x-auto divide-y divide-secondary-200 dark:border-secondary-700 dark:divide-secondary-700">
@@ -12,7 +12,7 @@
             <div>
                 <div class="w-full py-1.5 px-4 bg-secondary-100 dark:bg-secondary-700">
                     <span class="text-sm font-bold leading-5 capitalize tracking-wide text-secondary-900 sm:text-base sm:leading-6 dark:text-white">
-                        {{ ! empty($group) ? $group : __('Custom permissions') }}
+                        {{ ! empty($group) ? $group : __('shopper::pages/settings.roles_permissions.custom_permission') }}
                     </span>
                 </div>
                 <div class="px-4 py-1 divide-y divide-secondary-200 dark:divide-secondary-700">
@@ -26,10 +26,11 @@
                                    class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-secondary-300 rounded dark:bg-secondary-700 dark:border-secondary-600 dark:focus:offset-secondary-800"
                                    wire:key="{{ $permission->id }}"
                                    value="{{ $permission->id }}"
+                                   aria-label="permission_{{ $permission->id }}"
                                    @click="togglePermission({{ $permission->id }})"
-                                   @if($role->hasPermissionTo($permission->name)) checked @endif
+                                    @checked($role->hasPermissionTo($permission->name))
                                 />
-                                <x-shopper::label for="permission_{{ $permission->id }}" :value="$permission->display_name" />
+                                <x-shopper::label for="permission_{{ $permission->id }}" :value="__($permission->display_name)" />
                             </div>
                             <div class="flex items-center space-x-3">
                                 @if($permission->can_be_removed)

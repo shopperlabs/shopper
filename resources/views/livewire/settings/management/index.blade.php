@@ -6,7 +6,7 @@
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('Administrators & roles') }}
+            {{ __('shopper::pages/settings.roles_permissions.header_title') }}
         </x-slot>
     </x-shopper::heading>
 
@@ -14,21 +14,23 @@
         <div class="bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg shadow-md overflow-hidden">
             <div class="flex items-center">
                 <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                    {{ __('Administrator role available') }}
+                    {{ __('shopper::pages/settings.roles_permissions.role_available') }}
                 </h2>
                 <button wire:click="$emit('openModal', 'shopper-modals.create-role')" type="button" class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-primary-700 bg-primary-100 hover:bg-primary-50 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary active:bg-primary-200 transition ease-in-out duration-150">
                     <x-heroicon-s-plus-sm class="w-4 h-4 mr-1" />
-                    {{ __('Add new role') }}
+                    {{ __('shopper::pages/settings.roles_permissions.new_role') }}
                 </button>
             </div>
             <p class="mt-3 text-base leading-6 text-secondary-500 dark:text-secondary-400">
-                {{ __('A role provides access to predefined menus and features so that depending on the assigned role and permissions an administrator can have access to what he needs.') }}
+                {{ __('shopper::pages/settings.roles_permissions.role_available_summary') }}
             </p>
             <div class="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8">
                 @foreach($roles as $role)
                     <a href="{{ route('shopper.settings.user.role', $role) }}" class="group flex flex-col justify-between border border-secondary-200 dark:border-secondary-700 p-4 rounded-md overflow-hidden hover:shadow-md">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs leading-4 text-secondary-400 dark:text-secondary-500 font-semibold uppercase tracking-wider">{{ $role->users->count() }} {{ str_plural(__('Account'), $role->users->count()) }}</span>
+                            <span class="text-xs leading-4 text-secondary-400 dark:text-secondary-500 font-semibold uppercase tracking-wider">
+                                {{ $role->users->count() }} {{ str_plural(__('shopper::words.account'), $role->users->count()) }}
+                            </span>
                             <div class="flex overflow-hidden ml-4">
                                 @foreach($role->users as $admin)
                                     <img class="{{ $loop->first ? '' : '-ml-1' }} inline-block h-6 w-6 rounded-full shadow-solid" src="{{ $admin->picture }}" alt="">
@@ -40,7 +42,7 @@
                                 {{ $role->display_name }}
                             </h3>
                             <p class="mt-1 flex items-center text-sm text-primary-600 group-hover:text-primary-500">
-                                {{ __('View details') }}
+                                {{ __('shopper::words.view_details') }}
                                 <span class="ml-2">
                                     <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
                                 </span>
@@ -54,16 +56,16 @@
             <div class="pb-6 border-b border-secondary-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0  dark:border-secondary-700">
                 <div class="flex-1 min-w-0 max-w-2xl">
                     <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                        {{ __('Administrators accounts') }}
+                        {{ __('shopper::pages/settings.roles_permissions.admin_accounts') }}
                     </h2>
                     <p class="mt-3 text-base leading-6 text-secondary-500 dark:text-secondary-400">
-                        {{ __('These are the members who are already in your store with their associated roles. You can assign new roles to existing member here.') }}
+                        {{ __('shopper::pages/settings.roles_permissions.admin_accounts_summary') }}
                     </p>
                 </div>
                 <div>
                     <x-shopper::buttons.primary :link="route('shopper.settings.user.new')">
                         <x-heroicon-o-user-add class="w-5 h-5 mr-1.5" />
-                        {{ __('Add administrator') }}
+                        {{ __('shopper::pages/settings.roles_permissions.add_admin') }}
                     </x-shopper::buttons.primary>
                 </div>
             </div>
@@ -80,10 +82,10 @@
                                         {{ __('shopper::layout.forms.label.email') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="hidden md:table-cell text-right">
-                                        {{ __('Role') }}
+                                        {{ __('shopper::layout.forms.label.role') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="hidden md:table-cell text-right">
-                                        {{ __('Access') }}
+                                        {{ __('shopper::layout.forms.label.access') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="pr-6" />
                                 </tr>
@@ -101,7 +103,10 @@
                                                         {{ $user->full_name }}
                                                     </div>
                                                     <div class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                                        {{ __('Registered on') }} <time datetime="{{ $user->created_at->format('Y-m-d') }}" class="capitalize">{{ $user->created_at->formatLocalized('%d %B %Y') }}</time>
+                                                        {{ __('shopper::words.registered_on') }}
+                                                        <time datetime="{{ $user->created_at->format('Y-m-d') }}" class="capitalize">
+                                                            {{ $user->created_at->formatLocalized('%d %B %Y') }}
+                                                        </time>
                                                     </div>
                                                 </div>
                                             </div>
@@ -122,13 +127,13 @@
                                             </span>
                                         </td>
                                         <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400 text-right">
-                                            {{ $user->hasRole(config('shopper.system.users.admin_role')) ? __('Full') : __('Limited') }}
+                                            {{ $user->hasRole(config('shopper.system.users.admin_role')) ? __('shopper::words.full') : __('shopper::words.limited') }}
                                         </td>
                                         <td class="pr-6 text-right">
                                             @if($user->id === auth()->id())
                                                 <span class="flex items-center text-sm leading-5 text-secondary-500 text-right dark:text-secondary-400">
                                                     <x-heroicon-o-user-circle class="w-5 h-5 mr-1" />
-                                                    {{ __('Me') }}
+                                                    {{ __('shopper::words.me') }}
                                                 </span>
                                             @endif
                                             @if(auth()->user()->isAdmin() && ! $user->isAdmin())

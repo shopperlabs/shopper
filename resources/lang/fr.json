@@ -31,5 +31,14 @@
   "Checkbox": "Choix multiple",
   "Radio": "Choix unique",
   "Color picker": "Choix des couleurs",
-  "Date picker": "Sélecteur de date"
+  "Date picker": "Sélecteur de date",
+  "Categories": "Catégories",
+  "System": "Système",
+  "Discounts": "Coupons",
+  "Customers": "Clients",
+  "Orders": "Commandes",
+  "Products": "Produits",
+  "Brands": "Marques",
+  "Collections": "Collections",
+  "Reviews": "Avis"
 }
