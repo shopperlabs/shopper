@@ -5,12 +5,12 @@
         <div class="py-6 sm:pb-10">
             <div class="pb-5 border-b border-secondary-200 sm:flex sm:items-center sm:justify-between dark:border-secondary-700">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-                    {{ __('Mailables') }}
+                    Mailables
                 </h3>
                 @if($isLocal)
                     <div class="mt-3 sm:mt-0 sm:ml-4">
                         <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-mailable')" type="button">
-                            {{ __('Create new mailable') }}
+                            {{ __('shopper::pages/settings.mailable.new_mailable') }}
                         </x-shopper::buttons.primary>
                     </div>
                 @endif
@@ -24,16 +24,16 @@
                                 <thead class="bg-secondary-50 dark:bg-secondary-700">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider dark:text-secondary-400">
-                                            {{ __('Name') }}
+                                            {{ __('shopper::layout.forms.label.name') }}
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider dark:text-secondary-400">
-                                            {{ __('Namespace') }}
+                                            {{ __('shopper::words.namespace') }}
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-secondary-500 uppercase tracking-wider dark:text-secondary-400">
-                                            {{ __('Last Updated') }}
+                                            {{ __('shopper::layout.forms.label.updated_at') }}
                                         </th>
                                         <th scope="col" class="relative px-6 py-3">
-                                            <span class="sr-only">{{ __('Actions') }}</span>
+                                            <span class="sr-only">{{ __('shopper::words.actions') }}</span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -50,9 +50,6 @@
                                                 {{ (\Carbon\Carbon::createFromTimeStamp($mailable['modified']))->diffForHumans() }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                {{--<a href="#" class="inline-flex items-center p-2 rounded-full hover:bg-secondary-50 active:bg-secondary-100 focus:bg-secondary-100 text-secondary-500 text-sm leading-5 hover:text-secondary-400 focus:outline-none">
-                                                    <x-heroicon-o-eye class="w-5 h-5" />
-                                                </a>--}}
                                                 <button wire:click="$emit('openModal', 'shopper-modals.delete-mailable', {{ json_encode(['item' => $mailable['name']]) }})" type="button" class="inline-flex items-center p-2 rounded-full hover:bg-secondary-50 text-secondary-500 text-sm leading-5 hover:text-secondary-400 focus:outline-none dark:text-secondary-400 dark:hover:bg-secondary-700">
                                                     <x-heroicon-o-trash class="w-5 h-5" />
                                                 </button>
@@ -87,7 +84,9 @@
                                                             <path d="m320.851562 27.445312h-27.304687c-3.773437 0-6.828125-3.058593-6.828125-6.828124 0-3.769532 3.054688-6.828126 6.828125-6.828126h27.304687c3.773438 0 6.828126 3.058594 6.828126 6.828126 0 3.769531-3.054688 6.828124-6.828126 6.828124zm0 0" />
                                                         </g>
                                                     </svg>
-                                                    <span class="mt-4 text-sm text-secondary-500 font-medium dark:text-secondary-400">{{ __("We didn't find anything - just empty space.") }}</span>
+                                                    <span class="mt-4 text-sm text-secondary-500 font-medium dark:text-secondary-400">
+                                                        {{ __('shopper::words.empty_space') }}
+                                                    </span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -99,22 +98,8 @@
                 </div>
             </div>
 
-            <div class="mt-10 bg-secondary-50 p-4 sm:p-5 rounded-md border border-secondary-200 dark:bg-secondary-800 dark:border-secondary-700">
-                <p class="text-sm text-secondary-500 font-medium leading-5 dark:text-secondary-400">
-                    {{ __("Do you like this feature? It's inspired by Laravel Mail Eclipse. You can sponsor the author") }}
-                </p>
-                <div class="mt-4">
-                    <div class="-mx-2 -my-1.5 flex">
-                        <a href="https://github.com/Qoraiche/laravel-mail-editor" target="_blank" class="px-3 py-2 rounded-md text-sm leading-5 font-medium text-secondary-700 hover:bg-secondary-50 focus:outline-none focus:bg-secondary-50 dark:text-secondary-300 dark:hover:bg-secondary-700">
-                            {{ __('View the repo') }}
-                        </a>
-                        <x-shopper::buttons.default link="https://www.paypal.com/paypalme/streamaps" target="_blank" class="ml-3">
-                            <x-heroicon-o-heart class="w-5 h-5 text-pink-500 mr-1" />
-                            {{ __('Sponsor') }}
-                        </x-shopper::buttons.default>
-                    </div>
-                </div>
-            </div>
+            <x-shopper::sponsor />
+
         </div>
     </div>
 </div>

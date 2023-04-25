@@ -5,7 +5,7 @@
         </div>
         <div class="ml-3 flex-1 md:flex md:justify-between">
             <p class="text-sm text-info-700">
-                {{ __("If your project uses git don't forget to add the created files and commit them.") }}
+                {{ __('shopper::words.git') }}
             </p>
         </div>
     </div>

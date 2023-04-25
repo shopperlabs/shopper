@@ -45,6 +45,7 @@ return [
         'title' => 'Variations de produits',
         'description' => 'Toutes les variantes de votre produit. Les variations peuvent avoir chacune leur stock et leur prix.',
         'add' => 'Ajouter une variante',
+        'variant_title' => 'Variantes ~ :name',
         'empty' => 'Aucune variante trouvée',
         'search_label' => 'Recherche de variantes',
         'search_placeholder' => 'Rechercher une variante du produit',

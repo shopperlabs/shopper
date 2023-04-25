@@ -133,5 +133,15 @@ return [
     'invitation' => 'Invitation',
     'attention_needed' => 'Attention requise',
     'attention_description' => 'Ce rôle donne à cet administrateur les mêmes droits et autorisations que vous.',
-
+    'wip' => 'en cours',
+    'visit_documentation' => 'visiter la documentation.',
+    'namespace' => 'Namespace',
+    'sponsor' => [
+        'description' => 'Vous aimez cette fonctionnalité ? Elle est inspirée de Laravel Mail Eclipse. Vous pouvez sponsoriser l\'auteur',
+        'repo' => 'Voir le dépôt',
+        'action' => 'Sponsoriser',
+    ],
+    'empty_space' => "Nous n'avons rien trouvé, juste un espace vide.",
+    'git' => "Si votre projet utilise git, n'oubliez pas d'ajouter les fichiers créés et de les livrer.",
+    'html' => 'HTML',
 ];

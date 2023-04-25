@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('Mail Configuration ~ Templates ~ Mailable')">
+<x-shopper::layouts.setting :title="__('shopper::pages/settings.mailable.title')">
 
     <x-shopper::breadcrumb :back="route('shopper.settings.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
@@ -9,9 +9,9 @@
         x-data="{
             options: ['config', 'templates', 'mailables'],
             words: {
-                'config': '{{ __('Configuration') }}',
-                'templates': '{{ __('Templates') }}',
-                'mailables': '{{ __('Mailables') }}'
+                'config': '{{ __('shopper::pages/settings.mailable.configuration') }}',
+                'templates': '{{ __('shopper::pages/settings.mailable.templates') }}',
+                'mailables': 'Mailables'
             },
             currentTab: 'config'
         }"
@@ -20,15 +20,15 @@
         <div class="mt-3 bg-secondary-100 z-30 relative pb-5 border-b border-secondary-200 md:flex md:items-center md:justify-between dark:bg-secondary-900 dark:border-secondary-700">
             <div class="flex-1 min-w-0 sm:px-8">
                 <h2 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
-                    {{ __('Email') }}
+                    {{ __('shopper::pages/settings.mailable.email_config') }}
                 </h2>
             </div>
         </div>
         <div class="min-w-0 py-5 flex-1 lg:flex">
             <aside class="hidden lg:block lg:shrink-0">
                 <div class="h-full relative flex flex-col w-80">
-                    <nav aria-label="{{ __('Email menu') }}" class="min-h-(screen-content) flex-1 overflow-y-auto">
-                        <ul class="space-y-1">
+                    <nav aria-label="Email menu" class="min-h-(screen-content) flex-1 overflow-y-auto">
+                        <ul class="space-y-2">
                             <li class="relative py-5 px-6 rounded-md hover:bg-secondary-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-primary-600 dark:hover:bg-secondary-800" :class="{ 'bg-secondary-50 dark:bg-secondary-800': currentTab === 'config' }">
                                 <div class="flex items-start justify-between space-x-3">
                                     <span class="shrink-0 text-secondary-500 dark:text-secondary-400">
@@ -38,11 +38,11 @@
                                         <button @click="currentTab = 'config'" type="button" class="block text-left focus:outline-none">
                                             <span class="absolute inset-0" aria-hidden="true"></span>
                                             <p class="text-sm font-medium text-secondary-900 truncate dark:text-white">
-                                                {{ __('Configuration') }}
+                                                {{ __('shopper::pages/settings.mailable.configuration') }}
                                             </p>
                                             <div class="mt-1">
-                                                <p class="line-clamp-2 text-sm text-secondary-500 dark:text-secondary-400">
-                                                    {{ __('Manage email global configuration, driver, host, port etc.') }}
+                                                <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                                                    {{ __('shopper::pages/settings.mailable.configuration_summary') }}
                                                 </p>
                                             </div>
                                         </button>
@@ -58,17 +58,17 @@
                                         <button @click="currentTab = 'templates'" type="button" class="block text-left focus:outline-none">
                                             <span class="absolute inset-0" aria-hidden="true"></span>
                                             <p class="inline-flex items-center text-sm font-medium text-secondary-900 truncate dark:text-white">
-                                                {{ __('Templates') }}
+                                                {{ __('shopper::pages/settings.mailable.templates') }}
                                                 <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-secondary-800 dark:bg-secondary-700 dark:text-secondary-300">
                                                     <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-secondary-400 dark:text-secondary-500" fill="currentColor" viewBox="0 0 8 8">
                                                         <circle cx="4" cy="4" r="3" />
                                                     </svg>
-                                                    {{ __('work in progress') }}
+                                                    {{ __('shopper::words.wip') }}
                                                 </span>
                                             </p>
                                             <div class="mt-1">
-                                                <p class="line-clamp-2 text-sm text-secondary-500 dark:text-secondary-400">
-                                                    {{ __('Modify the mail templates that are sent to customers and administrators, manage email layouts.') }}
+                                                <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                                                    {{ __('shopper::pages/settings.mailable.templates_summary') }}
                                                 </p>
                                             </div>
                                         </button>
@@ -84,11 +84,11 @@
                                         <button @click="currentTab = 'mailables'" type="button" class="block text-left focus:outline-none">
                                             <span class="absolute inset-0" aria-hidden="true"></span>
                                             <p class="text-sm font-medium text-secondary-900 truncate dark:text-white">
-                                                {{ __('Mailables') }}
+                                                Mailables
                                             </p>
                                             <div class="mt-1">
-                                                <p class="line-clamp-2 text-sm text-secondary-500 dark:text-secondary-400">
-                                                    {{ __('Create Laravel mailable class to use on your project to send email notifications.') }}
+                                                <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                                                    {{ __('shopper::pages/settings.mailable.mailable_summary') }}
                                                 </p>
                                             </div>
                                         </button>

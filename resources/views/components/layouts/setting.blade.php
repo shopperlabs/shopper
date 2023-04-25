@@ -9,7 +9,7 @@
             <x-shopper::layouts.app.header />
 
             <main class="flex-1 relative z-0 py-3 lg:py-6">
-                <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 min-h-(screen-content)">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 min-h-(screen-content) 2xl:px-8 2xl:max-w-8xl">
                     {{ $slot }}
                 </div>
             </main>
