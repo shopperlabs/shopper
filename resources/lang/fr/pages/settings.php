@@ -135,4 +135,14 @@ return [
         'set_default_summary' => "L'inventaire de ce site est disponible à la vente en ligne et sera utilisé par défaut.",
         'is_default' => "Il s'agit de votre inventaire par défaut. Pour déterminer si vous remplissez les commandes en ligne à partir de ce stock, sélectionnez d'abord un autre stock par défaut.",
     ],
+
+    'analytics' => [
+        'google' => 'Google Analytics',
+        'google_description' => 'Google Analytics vous permet de suivre les visiteurs de votre site et de générer des rapports qui vous aideront dans votre marketing.',
+        'gtag' => 'Google Tag Manager',
+        'gtag_description' => 'Google Tag Manager permet aux responsables marketing d\'ajouter facilement des balises (Analytics, remarketing, etc.).',
+        'pixel' => 'Facebook Pixel',
+        'pixel_description' => 'Facebook Pixel vous aide à créer des campagnes publicitaires pour trouver de nouveaux clients qui ressemblent le plus à vos acheteurs.',
+        'no_json' => 'Aucun fichier json n\'a été ajouté',
+    ],
 ];

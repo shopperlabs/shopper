@@ -14,6 +14,7 @@ return [
     'review' => 'Review',
     'account' => 'Account',
     'users' => 'Users',
+    'analytics' => 'Analytics',
     'system' => 'System',
     'purchased' => 'Purchased',
     'total' => 'Total',

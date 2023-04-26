@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('Analytics')">
+<x-shopper::layouts.setting :title="__('shopper::words.analytics')">
 
     <livewire:shopper-settings.analytics />
 

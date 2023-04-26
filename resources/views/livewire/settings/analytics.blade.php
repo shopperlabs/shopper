@@ -6,7 +6,7 @@
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('Analytics') }}
+            {{ __('shopper::words.analytics') }}
         </x-slot>
     </x-shopper::heading>
 
@@ -22,10 +22,10 @@
                         </svg>
                     </div>
                     <h3 class="mt-2 text-lg font-bold leading-6 text-secondary-900 dark:text-white">
-                        {{ __('Google Analytics') }}
+                        {{ __('shopper::pages/settings.analytics.google') }}
                     </h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __('Google Analytics allows you to track visitors to your site and generates reports that will help you with your marketing.') }}
+                        {{ __('shopper::pages/settings.analytics.google_description') }}
                     </p>
                 </div>
             </div>
@@ -33,20 +33,20 @@
                 <div class="shadow sm:rounded-md sm:overflow-hidden">
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-3 gap-6">
-                            <x-shopper::forms.group for="google_tracking_id" :label="__('Google Analytics Tracking ID')" class="col-span-3">
+                            <x-shopper::forms.group for="google_tracking_id" :label="__('shopper::layout.forms.label.ga_tracking_id')" class="col-span-3">
                                 <x-shopper::forms.input wire:model="google_analytics_tracking_id" type="text" id="google_tracking_id" placeholder="UA-XXX" />
                             </x-shopper::forms.group>
-                            <x-shopper::forms.group for="google_view_id" :label="__('Google Analytics view ID')" class="col-span-3">
+                            <x-shopper::forms.group for="google_view_id" :label="__('shopper::layout.forms.label.ga_view_id')" class="col-span-3">
                                 <x-shopper::forms.input wire:model="google_analytics_view_id" type="text" id="google_view_id" placeholder="123456789" />
                             </x-shopper::forms.group>
-                            <x-shopper::forms.group for="analytic_script" :label="__('Google Analytics additional script')" class="col-span-3">
+                            <x-shopper::forms.group for="analytic_script" :label="__('shopper::layout.forms.label.ga_additional_script')" class="col-span-3">
                                 <x-shopper::forms.textarea wire:model="google_analytics_add_js" id="analytic_script" />
                             </x-shopper::forms.group>
                         </div>
 
                         <div class="mt-6">
                             <label class="inline-flex items-center text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">
-                                {{ __('Json Account Credentials') }}
+                                {{ __('shopper::layout.forms.label.ga_json') }}
                                 <a href="https://github.com/spatie/laravel-analytics#how-to-obtain-the-credentials-to-communicate-with-google-analytics" target="_blank" class="ml-3 text-secondary-400 hover:text-secondary-500 outline-none focus:outline-none leading-4 transition duration-200 ease-in-out">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
@@ -57,9 +57,9 @@
                                 <div x-data="{ focused: false }">
                                     <span>
                                         <input @focus="focused = true" @blur="focused = false" class="sr-only" type="file" id="json_file" wire:model="json_file">
-                                        <label for="json_file" :class="{ 'outline-none border-primary-300 shadow-outline-primary': focused }" class="cursor-pointer inline-flex items-center py-2 px-3 border border-secondary-300 rounded-md text-sm leading-4 font-medium text-secondary-700 hover:text-secondary-500 rounded-md shadow-sm dark:border-secondary-700 dark:text-secondary-400 dark:hover:text-white">
+                                        <label for="json_file" :class="{ 'outline-none border-primary-300 shadow-outline-primary': focused }" class="cursor-pointer inline-flex items-center py-2 px-3 border border-secondary-300 rounded-md text-sm leading-4 font-medium text-secondary-700 hover:text-secondary-500 shadow-sm dark:border-secondary-700 dark:text-secondary-400 dark:hover:text-white">
                                             <x-heroicon-o-download class="h-5 w-5 mr-1.5" />
-                                            {{ __('Upload') }}
+                                            {{ __('shopper::layout.forms.actions.upload') }}
                                         </label>
                                     </span>
                                 </div>
@@ -68,7 +68,7 @@
                                 @endif
                                 @if(! $json_file && ! $credentials_json)
                                     <span class="ml-4 text-sm leading-5 text-secondary-400 dark:text-secondary-500">
-                                        {{ __('No json file added.') }}
+                                        {{ __('shopper::pages/settings.analytics.no_json') }}
                                     </span>
                                 @endif
                             </div>
@@ -94,10 +94,10 @@
                         </svg>
                     </div>
                     <h3 class="mt-2 text-lg font-bold leading-6 text-secondary-900 dark:text-white">
-                        {{ __('Google Tag Manager') }}
+                        {{ __('shopper::pages/settings.analytics.gtag') }}
                     </h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __('Google Tag Manager allows marketing managers to easily add tags (Analytics, remarketing, etc.)') }}
+                        {{ __('shopper::pages/settings.analytics.gtag_description') }}
                     </p>
                 </div>
             </div>
@@ -106,11 +106,14 @@
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
-                                <x-shopper::forms.group for="google_tag_id" :label="__('Your Google Tag Manager account ID')">
+                                <x-shopper::forms.group for="google_tag_id" :label="__('shopper::layout.forms.label.gtag')">
                                     <x-shopper::forms.input wire:model="google_tag_manager_account_id" type="text" id="google_tag_id" placeholder="GTM-XXX" />
                                 </x-shopper::forms.group>
                                 <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
-                                    {{ __('Read more about') }} <a href="https://marketingplatform.google.com/about/tag-manager" target="_blank" class="text-primary-500 hover:text-primary-400">Google Tag Manager</a>.
+                                    {{ __('shopper::components.learn_more') }}
+                                    <a href="https://marketingplatform.google.com/about/tag-manager" target="_blank" class="text-primary-500 hover:text-primary-400">
+                                        {{ __('shopper::pages/settings.analytics.gtag') }}
+                                    </a>
                                 </p>
                             </div>
                         </div>
@@ -131,9 +134,11 @@
                             <path d="M15 4h3a.5.5 0 0 0 .5-.5v-3A.5.5 0 0 0 18 0h-3a5.506 5.506 0 0 0-5.5 5.5V9H6a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3.5v10.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V13H17a.5.5 0 0 0 .474-.342l1-3A.5.5 0 0 0 18 9h-4.5V5.5A1.5 1.5 0 0 1 15 4z" fill="#2196F3"/>
                         </svg>
                     </div>
-                    <h3 class="mt-2 text-lg font-bold leading-6 text-secondary-900 dark:text-white">{{ __('Facebook Pixel') }}</h3>
+                    <h3 class="mt-2 text-lg font-bold leading-6 text-secondary-900 dark:text-white">
+                        {{ __('shopper::pages/settings.analytics.pixel') }}
+                    </h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __('Facebook Pixel helps you create ad campaigns to find new customers who are most like your buyers.') }}
+                        {{ __('shopper::pages/settings.analytics.pixel_description') }}
                     </p>
                 </div>
             </div>
@@ -142,13 +147,13 @@
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
-                                <x-shopper::forms.group for="pixel_facebook_id" :label="__('Your Facebook Pixel account ID')">
+                                <x-shopper::forms.group for="pixel_facebook_id" :label="__('shopper::layout.forms.label.pixel_id')">
                                     <x-shopper::forms.input wire:model="facebook_pixel_account_id" type="text" id="pixel_facebook_id" placeholder="12345678" />
                                 </x-shopper::forms.group>
                                 <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
-                                    {{ __('Read more about') }}
+                                    {{ __('shopper::components.learn_more') }}
                                     <a href="https://www.facebook.com/business/learn/facebook-ads-pixel" target="_blank" class="text-primary-500 hover:text-primary-400">
-                                        {{ __('Facebook Pixel') }}
+                                        {{ __('shopper::pages/settings.analytics.pixel') }}
                                     </a>.
                                 </p>
                             </div>
@@ -167,5 +172,4 @@
             </x-shopper::buttons.primary>
         </div>
     </div>
-
 </div>

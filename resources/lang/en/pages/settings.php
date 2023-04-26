@@ -135,4 +135,14 @@ return [
         'set_default_summary' => 'Inventory at this location is available for sale online and will use as default',
         'is_default' => 'This is your default inventory. To change whether you fulfill online orders from this inventory, select another default inventory first.',
     ],
+
+    'analytics' => [
+        'google' => 'Google Analytics',
+        'google_description' => 'Google Analytics allows you to track visitors to your site and generates reports that will help you with your marketing.',
+        'gtag' => 'Google Tag Manager',
+        'gtag_description' => 'Google Tag Manager allows marketing managers to easily add tags (Analytics, remarketing, etc.)',
+        'pixel' => 'Facebook Pixel',
+        'pixel_description' => 'Facebook Pixel helps you create ad campaigns to find new customers who are most like your buyers.',
+        'no_json' => 'No json file added',
+    ],
 ];
