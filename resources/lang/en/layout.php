@@ -114,6 +114,12 @@ return [
             'markdown' => 'Markdown',
             'force' => 'Force',
             'template' => 'Template',
+            'ga_tracking_id' => 'Google Analytics Tracking ID',
+            'ga_view_id' => 'Google Analytics view ID',
+            'ga_additional_script' => 'Google Analytics additional script',
+            'ga_json' => 'Json Account Credentials',
+            'gtag' => 'Your Google Tag Manager account ID',
+            'pixel_id' => 'Your Facebook Pixel account ID',
         ],
 
         'placeholder' => [
@@ -167,6 +173,7 @@ return [
             'disapprove' => 'Disapprove',
             'disapproved' => 'Disapproved',
             'create' => 'Create',
+            'upload' => 'Upload',
         ],
 
         'error' => 'Your submission contains errors. Please try again',

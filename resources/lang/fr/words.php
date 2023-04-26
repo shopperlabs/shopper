@@ -14,6 +14,7 @@ return [
     'review' => 'Avis',
     'account' => 'Compte',
     'users' => 'Utilisateurs',
+    'analytics' => 'Analytics',
     'system' => 'Système',
     'purchased' => 'Acheté',
     'total' => 'Total',

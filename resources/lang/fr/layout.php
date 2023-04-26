@@ -114,6 +114,12 @@ return [
             'markdown' => 'Markdown',
             'force' => 'Force',
             'template' => 'Modèle',
+            'ga_tracking_id' => 'Google Analytics Tracking ID',
+            'ga_view_id' => 'Google Analytics view ID',
+            'ga_additional_script' => 'Google Analytics script additionnel',
+            'ga_json' => 'Références du compte en Json',
+            'gtag' => 'ID de compte Google Tag Manager',
+            'pixel_id' => 'ID du compte Facebook Pixel',
         ],
 
         'placeholder' => [
@@ -167,6 +173,7 @@ return [
             'disapprove' => 'Désapprouver',
             'disapproved' => 'Désapprouvé',
             'create' => 'Créer',
+            'upload' => 'Télécharger',
         ],
 
         'error' => 'Votre soumission contient des erreurs. Veuillez réessayer',
