@@ -130,7 +130,7 @@ return [
         'detail' => 'Détails',
         'detail_summary' => "Donnez à cet emplacement un nom court pour qu'il soit facile à identifier. Vous verrez ce nom dans des domaines tels que les produits.",
         'address' => 'Adresse de l\'inventaire',
-        'address_summary' => "Les informations complètes de votre inventaire. Veuillez mettre des informations valables qui peuvent être accessibles à vos clients.",
+        'address_summary' => 'Les informations complètes de votre inventaire. Veuillez mettre des informations valables qui peuvent être accessibles à vos clients.',
         'set_default' => 'Définir comme inventaire par défaut',
         'set_default_summary' => "L'inventaire de ce site est disponible à la vente en ligne et sera utilisé par défaut.",
         'is_default' => "Il s'agit de votre inventaire par défaut. Pour déterminer si vous remplissez les commandes en ligne à partir de ce stock, sélectionnez d'abord un autre stock par défaut.",
