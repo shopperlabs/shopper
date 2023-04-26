@@ -134,6 +134,7 @@ return [
             'select_country' => 'Choisir un pays',
             'search_by' => 'Rechercher par :label',
             'leave_comment' => 'Laisser des notes pour ce client',
+            'search_payment' => 'Recherche de paiement par nom de fournisseur',
         ],
 
         'actions' => [

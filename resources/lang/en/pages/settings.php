@@ -52,6 +52,7 @@ return [
     ],
 
     'payment' => [
+        'title' => 'Payments Methods',
         'stripe_description' => 'Accept payments on your store using third-party providers such as Stripe.',
         'stripe_enabled' => 'Stripe is available for your store.',
         'stripe_disabled' => 'Stripe is not enabled.',
@@ -60,6 +61,8 @@ return [
         'stripe_actions' => 'Enabled Stripe Payment',
         'stripe_environment' => 'Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.',
         'stripe_dashboard' => 'API Keys can be grabbed from',
+        'create_payment' => 'Create payment method',
+        'no_method' => 'No payment methods found',
     ],
 
     'validations' => [

@@ -1,7 +1,7 @@
 <div
     x-data="{
         options: ['general', 'stripe'],
-        words: {'general': '{{ __("General") }}', 'stripe': '{{ __("Stripe") }}'},
+        words: {'general': '{{ __('General') }}', 'stripe': '{{ __('Stripe') }}'},
         currentTab: 'general'
     }"
 >
@@ -14,12 +14,12 @@
     <div class="mt-3 relative pb-5 border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
         <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
             <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
-                {{ __('Payment Methods') }}
+                {{ __('shopper::pages/settings.payment.title') }}
             </h3>
             <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
                 <span class="shadow-sm rounded-md">
                     <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-payment-method')" type="button">
-                        {{ __('Create custom payment method') }}
+                        {{ __('shopper::pages/settings.payment.create_payment') }}
                     </x-shopper::buttons.primary>
                 </span>
             </div>
@@ -55,7 +55,7 @@
         <div x-show="currentTab === 'general'">
             <div class="mt-6 bg-white shadow sm:rounded-md dark:bg-secondary-800">
                 <div class="p-4 sm:p-6 sm:pb-4">
-                    <x-shopper::forms.search label="Search payments" placeholder="Search payment by provider name" />
+                    <x-shopper::forms.search label="Search payments" :placeholder="__('shopper::layout.forms.placeholder.search_payment')" />
                 </div>
                 <div class="hidden sm:block">
                     <div class="align-middle inline-block min-w-full">
@@ -63,7 +63,7 @@
                             <thead>
                                 <tr class="border-t border-secondary-200 bg-secondary-50 dark:border-secondary-700 dark:bg-secondary-700">
                                     <x-shopper::tables.table-head>
-                                        <span class="lg:pl-2">{{ __('Title') }}</span>
+                                        <span class="lg:pl-2">{{ __('shopper::layout.forms.label.title') }}</span>
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head>
                                         {{ __('shopper::layout.forms.label.status') }}
@@ -72,7 +72,7 @@
                                         {{ __('shopper::layout.forms.label.website') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="hidden md:table-cell text-right">
-                                        {{ __('Updated at') }}
+                                        {{ __('shopper::layout.forms.label.updated_at') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="pr-6 text-right" />
                                 </tr>
@@ -152,7 +152,7 @@
                                             <div class="flex justify-center items-center space-x-2">
                                                 <x-heroicon-o-credit-card class="h-8 w-8 text-secondary-400" />
                                                 <span class="font-medium py-8 text-secondary-400 text-xl">
-                                                    {{ __('No payments methods found') }}
+                                                    {{ __('shopper::pages/settings.payment.no_method') }}
                                                 </span>
                                             </div>
                                         </td>
