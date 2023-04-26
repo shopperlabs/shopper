@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title=" __('Locations') . ' ~ ' . $inventory->name">
+<x-shopper::layouts.setting :title=" __('shopper::words.locations') . ' ~ ' . $inventory->name">
 
     <livewire:shopper-settings.inventories.edit :inventory="$inventory" />
 

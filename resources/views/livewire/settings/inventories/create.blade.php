@@ -1,12 +1,12 @@
 <div>
     <x-shopper::breadcrumb :back="route('shopper.settings.inventories.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.inventories.index')" :title="__('Locations')" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.inventories.index')" :title="__('shopper::words.locations')" />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('Add location') }}
+            {{ __('shopper::pages/settings.location.add') }}
         </x-slot>
 
         <x-slot name="action">
@@ -24,10 +24,10 @@
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">
-                        {{ __('Details') }}
+                        {{ __('shopper::pages/settings.location.detail') }}
                     </h3>
                     <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __("Give this location a short name to make it easy to identify. You’ll see this name in areas like products.") }}
+                        {{ __('shopper::pages/settings.location.detail_summary') }}
                     </p>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     <div class="space-y-4">
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                             <div class="sm:col-span-1">
-                                <x-shopper::forms.group :label="__('Location Name')" for="name" :error="$errors->first('name')">
+                                <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" :error="$errors->first('name')">
                                     <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="White House" />
                                 </x-shopper::forms.group>
                             </div>
@@ -63,10 +63,10 @@
                             </div>
                             <div class="ml-3 text-sm leading-5">
                                 <label for="isDefault" class="font-medium text-secondary-700 cursor-pointer dark:text-secondary-200">
-                                    {{ __('Set as default inventory') }}
+                                    {{ __('shopper::pages/settings.location.set_default') }}
                                 </label>
                                 <p class="text-secondary-500 dark:text-secondary-400">
-                                    {{ __('Inventory at this location is available for sale online and will use as default.') }}
+                                    {{ __('shopper::pages/settings.location.set_default_summary') }}
                                 </p>
                             </div>
                         </div>
@@ -83,10 +83,10 @@
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">
-                        {{ __('Inventory address') }}
+                        {{ __('shopper::pages/settings.location.address') }}
                     </h3>
                     <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __("Your inventory's complete information. Please put valide informations this can be accessible for your customers.") }}
+                        {{ __('shopper::pages/settings.location.address_summary') }}
                     </p>
                 </div>
             </div>
