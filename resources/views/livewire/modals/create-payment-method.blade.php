@@ -5,7 +5,7 @@
 >
 
     <x-slot name="title">
-        {{ __('Add new payment method') }}
+        {{ __('shopper::pages/settings.payment.create_payment') }}
     </x-slot>
 
     <x-slot name="content">

@@ -1,13 +1,13 @@
-<x-shopper::layouts.setting :title="__('Legal setting')">
+<x-shopper::layouts.setting :title="__('shopper::pages/settings.legal.title')">
 
     <div
         x-data="{
-            options: ['role', 'users', 'permissions'],
+            options: ['refund', 'privacy', 'terms', 'shipping'],
             words: {
-                'refund': '{{ __('Refund policy') }}',
-                'privacy': '{{ __('Privacy policy') }}',
-                'terms': '{{ __('Terms of use') }}',
-                'shipping': '{{ __('Shipping policy') }}'
+                'refund': '{{ __('shopper::pages/settings.legal.refund') }}',
+                'privacy': '{{ __('shopper::pages/settings.legal.privacy') }}',
+                'terms': '{{ __('shopper::pages/settings.legal.terms_of_use') }}',
+                'shipping': '{{ __('shopper::pages/settings.legal.shipping') }}'
             },
             currentTab: 'refund'
         }"
@@ -20,13 +20,13 @@
         <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
             <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
                 <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
-                    {{ __('Legal') }}
+                    {{ __('shopper::pages/settings.legal.title') }}
                 </h3>
             </div>
             <div>
                 <!-- Dropdown menu on small screens -->
                 <div class="sm:hidden">
-                    <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('Selected tab') }}">
+                    <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}">
                         <template x-for="option in options" :key="option">
                             <option
                                 x-bind:value="option"
@@ -40,19 +40,19 @@
                 <div class="hidden sm:block">
                     <nav class="-mb-px flex space-x-8">
                         <button @click="currentTab = 'refund'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'refund' }">
-                            {{ __('Refund policy') }}
+                            {{ __('shopper::pages/settings.legal.refund') }}
                         </button>
 
                         <button @click="currentTab = 'privacy'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'privacy' }">
-                            {{ __('Privacy policy') }}
+                            {{ __('shopper::pages/settings.legal.privacy') }}
                         </button>
 
                         <button @click="currentTab = 'terms'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'terms' }">
-                            {{ __('Terms of use') }}
+                            {{ __('shopper::pages/settings.legal.terms_of_use') }}
                         </button>
 
                         <button @click="currentTab = 'shipping'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'shipping' }">
-                            {{ __('Shipping policy') }}
+                            {{ __('shopper::pages/settings.legal.shipping') }}
                         </button>
                     </nav>
                 </div>
@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        <x-shopper::learn-more :name="__('Legal')" link="legal" />
+        <x-shopper::learn-more :name="__('shopper::pages/settings.legal.title')" link="legal" />
     </div>
 
 </x-shopper::layouts.setting>

@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('Add attribute')">
+<x-shopper::layouts.setting :title="__('shopper::pages/attributes.add')">
 
     <livewire:shopper-settings.attributes.create />
 

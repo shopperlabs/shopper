@@ -3,10 +3,10 @@
         <div class="md:col-span-1">
             <div class="px-4 sm:px-0">
                 <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">
-                    {{ __('Terms of use') }}
+                    {{ __('shopper::pages/settings.legal.terms_of_use') }}
                 </h3>
                 <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                    {{ __('Define the terms of use to which all users and consumers of the products in your store will be subject.') }}
+                    {{ __('shopper::pages/settings.legal.summary', ['policy' => __('shopper::pages/settings.legal.terms_of_use')]) }}
                 </p>
             </div>
         </div>
@@ -16,21 +16,21 @@
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6">
                             <div class="flex items-center justify-between">
-                                <span class="grow flex flex-col" id="toggleLabel">
+                                <p class="grow flex flex-col" id="toggleLabel">
                                     <span class="text-sm leading-5 font-medium text-secondary-900 dark:text-white">
-                                        {{ __('Enabled') }}
+                                        {{ __('shopper::layout.forms.actions.enabled') }}
                                     </span>
                                     <span class="text-sm leading-normal text-secondary-500 dark:text-secondary-400">
-                                        {{ __('Setup page visibility for the customers.') }}
+                                        {{ __('shopper::words.set_global_visibility') }}
                                     </span>
-                                </span>
+                                </p>
                                 <span role="checkbox" tabindex="0" @click="on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" aria-labelledby="toggleLabel" x-data="{ on: @entangle('isEnabled') }" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary">
                                     <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="col-span-6">
-                            <x-shopper::forms.group :label="__('Content')" for="terms-of-use-content">
+                            <x-shopper::forms.group :label="__('shopper::layout.forms.label.content')" for="terms-of-use-content">
                                 <livewire:shopper-forms.trix :value="$content" />
                             </x-shopper::forms.group>
                         </div>

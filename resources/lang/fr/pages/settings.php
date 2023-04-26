@@ -148,4 +148,13 @@ return [
         'pixel_description' => 'Facebook Pixel vous aide à créer des campagnes publicitaires pour trouver de nouveaux clients qui ressemblent le plus à vos acheteurs.',
         'no_json' => 'Aucun fichier json n\'a été ajouté',
     ],
+
+    'legal' => [
+        'title' => 'Politique juridique',
+        'refund' => 'Politique de remboursement',
+        'privacy' => 'Politique de confidentialité',
+        'shipping' => 'Politique de livraison',
+        'terms_of_use' => 'Conditions générales utilisation',
+        'summary' => 'Définissez :policy à laquelle seront soumis tous les utilisateurs et consommateurs des produits de votre magasin.',
+    ],
 ];

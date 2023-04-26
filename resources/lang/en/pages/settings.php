@@ -148,4 +148,13 @@ return [
         'pixel_description' => 'Facebook Pixel helps you create ad campaigns to find new customers who are most like your buyers.',
         'no_json' => 'No json file added',
     ],
+
+    'legal' => [
+        'title' => 'Legal policy',
+        'refund' => 'Refund policy',
+        'privacy' => 'Privacy policy',
+        'shipping' => 'Shipping policy',
+        'terms_of_use' => 'Terms of use',
+        'summary' => 'Define the :policy to which all users and consumers of the products in your store will be subject.',
+    ],
 ];
