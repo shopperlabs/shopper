@@ -173,7 +173,7 @@ return [
             'disapprove' => 'Disapprove',
             'disapproved' => 'Disapproved',
             'create' => 'Create',
-            'upload' => 'Upload'
+            'upload' => 'Upload',
         ],
 
         'error' => 'Your submission contains errors. Please try again',

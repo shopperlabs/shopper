@@ -173,7 +173,7 @@ return [
             'disapprove' => 'Désapprouver',
             'disapproved' => 'Désapprouvé',
             'create' => 'Créer',
-            'upload' => 'Télécharger'
+            'upload' => 'Télécharger',
         ],
 
         'error' => 'Votre soumission contient des erreurs. Veuillez réessayer',
