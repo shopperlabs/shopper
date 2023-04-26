@@ -144,4 +144,7 @@ return [
     'empty_space' => "Nous n'avons rien trouvé, juste un espace vide.",
     'git' => "Si votre projet utilise git, n'oubliez pas d'ajouter les fichiers créés et de les livrer.",
     'html' => 'HTML',
+    'default' => 'Par défaut',
+    'number_not_set' => 'Numéro non défini',
+    'added_on' => 'Ajouté le',
 ];

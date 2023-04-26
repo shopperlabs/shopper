@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('Add inventory location')">
+<x-shopper::layouts.setting :title="__('shopper::pages/settings.location.add')">
 
     <livewire:shopper-settings.inventories.create />
 

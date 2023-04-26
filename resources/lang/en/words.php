@@ -144,4 +144,7 @@ return [
     'empty_space' => "We didn't find anything - just empty space.",
     'git' => "If your project uses git don't forget to add the created files and commit them.",
     'html' => 'HTML',
+    'default' => 'Default',
+    'number_not_set' => 'Number not set',
+    'added_on' => 'Added on',
 ];
