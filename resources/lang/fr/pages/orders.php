@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
     'title' => 'Gérer les commandes des clients',
+    'show_title' => 'Détail de la commande ~ :number',
     'content' => "Lorsque les clients passent des commandes, c'est là que s'effectuent tous les traitements, la gestion des remboursements et le suivi de leurs commandes.",
     'total_price_description' => 'Ce prix ne comprend pas les taxes applicables au produit ou au client.',
 

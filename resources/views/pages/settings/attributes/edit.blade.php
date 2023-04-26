@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('Update attribute :attribute', ['attribute' => $attribute->name])">
+<x-shopper::layouts.setting :title="__('pages/attributes.update', ['attribute' => $attribute->name])">
 
     <livewire:shopper-settings.attributes.edit :attribute="$attribute" />
 

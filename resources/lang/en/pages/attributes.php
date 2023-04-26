@@ -6,6 +6,7 @@ return [
     'title' => 'Manage Attributes',
     'content' => 'Add custom attributes to your product to display for informations',
     'add' => 'Add attribute',
+    'update' => 'Update attribute :attribute',
     'searchable_description' => 'You can use this attribute to search and filter product.',
     'filtrable_description' => 'You can use this attribute as a filter on your front store.',
     'attribute_visibility' => 'Set attribute visibility for the customers.',

@@ -1,4 +1,4 @@
-<x-shopper::layouts.setting :title="__('Attributes List')">
+<x-shopper::layouts.setting :title="__('shopper::words.attributes')">
 
     <livewire:shopper-settings.attributes.browse />
 
