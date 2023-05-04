@@ -71,6 +71,7 @@ if (! \function_exists('setEnvironmentValue')) {
 
                 $envKey = mb_strtoupper($envKey);
                 $keyPosition = mb_strpos($str, "{$envKey}=");
+                $keyPosition = !$keyPosition ? 0 : $keyPosition;
                 $endOfLinePosition = mb_strpos($str, "\n", $keyPosition);
                 $oldLine = mb_substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
                 $space = mb_strpos($value, ' ');
