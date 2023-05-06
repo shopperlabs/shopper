@@ -67,6 +67,7 @@ class Product extends Model implements HasMedia, ReviewRateable
         'depth_value',
         'depth_unit',
         'volume_value',
+        'volume_unit',
         'seo_title',
         'seo_description',
     ];
@@ -84,17 +85,11 @@ class Product extends Model implements HasMedia, ReviewRateable
         'published_at' => 'datetime',
     ];
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('products');
     }
 
-    /**
-     * Get the formatted price value.
-     */
     public function getFormattedPriceAttribute(): ?string
     {
         if ($this->parent_id) {
@@ -117,9 +112,6 @@ class Product extends Model implements HasMedia, ReviewRateable
         return Price::from($this->price_amount);
     }
 
-    /**
-     * Get the stock of all variations.
-     */
     public function getVariationsStockAttribute(): int
     {
         $stock = 0;
