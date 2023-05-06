@@ -70,8 +70,8 @@ if (! \function_exists('setEnvironmentValue')) {
                 }
 
                 $envKey = mb_strtoupper($envKey);
-                $keyPosition = mb_strpos($str, "{$envKey}=");
-                $endOfLinePosition = mb_strpos($str, "\n", $keyPosition);
+                $keyPosition = (int) mb_strpos($str, "{$envKey}=");
+                $endOfLinePosition = (int) mb_strpos($str, "\n", $keyPosition);
                 $oldLine = mb_substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
                 $space = mb_strpos($value, ' ');
                 $envValue = $space === false ? $value : '"' . $value . '"';
