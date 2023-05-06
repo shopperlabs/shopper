@@ -8,15 +8,6 @@ use Shopper\Framework\Http\Controllers\Auth\LoginController;
 use Shopper\Framework\Http\Controllers\Auth\ResetPasswordController;
 use Shopper\Framework\Http\Controllers\Auth\TwoFactorAuthenticatedController;
 
-/*
-|--------------------------------------------------------------------------
-| Auth Web Routes
-|--------------------------------------------------------------------------
-|
-| Base authentication route
-|
-*/
-
 Route::redirect('/', shopper_prefix() . '/login', 301);
 
 // Authentication...
