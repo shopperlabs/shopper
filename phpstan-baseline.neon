@@ -46,26 +46,6 @@ parameters:
 			path: src/Helpers/helpers.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Http\\\\Request\\:\\:\\$search\\.$#"
-			count: 2
-			path: src/Http/Controllers/Api/BrandController.php
-
-		-
-			message: "#^Access to an undefined property Illuminate\\\\Http\\\\Request\\:\\:\\$selected\\.$#"
-			count: 1
-			path: src/Http/Controllers/Api/BrandController.php
-
-		-
-			message: "#^Method Shopper\\\\Framework\\\\Http\\\\Controllers\\\\Api\\\\BrandController\\:\\:__invoke\\(\\) should return Illuminate\\\\Database\\\\Eloquent\\\\Collection but returns array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Query\\\\Builder\\>\\|Illuminate\\\\Support\\\\Collection\\.$#"
-			count: 1
-			path: src/Http/Controllers/Api/BrandController.php
-
-		-
-			message: "#^Parameter \\#2 \\$callback of method Illuminate\\\\Database\\\\Query\\\\Builder\\:\\:when\\(\\) expects \\(callable\\(Illuminate\\\\Database\\\\Query\\\\Builder, mixed\\)\\: Illuminate\\\\Database\\\\Eloquent\\\\Builder\\)\\|null, Closure\\(Illuminate\\\\Database\\\\Eloquent\\\\Builder\\)\\: Illuminate\\\\Database\\\\Eloquent\\\\Builder given\\.$#"
-			count: 1
-			path: src/Http/Controllers/Api/BrandController.php
-
-		-
 			message: "#^Method Shopper\\\\Framework\\\\Http\\\\Controllers\\\\Auth\\\\LoginController\\:\\:guard\\(\\) should return Illuminate\\\\Contracts\\\\Auth\\\\StatefulGuard but returns Illuminate\\\\Contracts\\\\Auth\\\\Guard\\.$#"
 			count: 1
 			path: src/Http/Controllers/Auth/LoginController.php
@@ -1572,7 +1552,7 @@ parameters:
 
 		-
 			message: "#^Constant SHOPPER_PATH not found\\.$#"
-			count: 3
+			count: 2
 			path: src/Providers/RouteServiceProvider.php
 
 		-
