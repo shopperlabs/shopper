@@ -5,24 +5,18 @@ declare(strict_types=1);
 namespace Shopper\Framework\Models\Traits;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Relations\morphMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Shopper\Framework\Models\Shop\Inventory\InventoryHistory;
 
 trait HasStock
 {
-    /**
-     * Stock accessor.
-     */
     public function getStockAttribute(): int
     {
         return $this->stock();
     }
 
-    /**
-     * Return the current stock.
-     */
     public function stock(?DateTimeInterface $date = null): int
     {
         $date = $date ? $date : Carbon::now();
@@ -36,9 +30,6 @@ trait HasStock
             ->sum('quantity');
     }
 
-    /**
-     * Return the current stock of the inventory.
-     */
     public function stockInventory(int $inventoryId, ?string $date = null): int
     {
         $date = $date ?: Carbon::now();
@@ -53,33 +44,21 @@ trait HasStock
             ->sum('quantity');
     }
 
-    /**
-     * Increase Stock for an item.
-     */
     public function increaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
         return $this->createStockMutation($quantity, $inventoryId, $arguments);
     }
 
-    /**
-     * Decrease Stock for an item.
-     */
     public function decreaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
         return $this->createStockMutation(-1 * abs($quantity), $inventoryId, $arguments);
     }
 
-    /**
-     * Mutate Stock for an item.
-     */
     public function mutateStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
         return $this->createStockMutation($quantity, $inventoryId, $arguments);
     }
 
-    /**
-     * Reset a Stock for the Store and inventory.
-     */
     public function clearStock(?int $inventoryId = null, ?int $newQuantity = null, array $arguments = []): bool
     {
         $this->inventoryHistories()->delete();
@@ -91,9 +70,6 @@ trait HasStock
         return true;
     }
 
-    /**
-     * Return stock statement if the item is still in stock.
-     */
     public function inStock(int $quantity = 1): bool
     {
         return $this->stock > 0 && $this->stock >= $quantity;
@@ -111,7 +87,7 @@ trait HasStock
         return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
     }
 
-    public function inventoryHistories(): morphMany
+    public function inventoryHistories(): MorphMany
     {
         return $this->morphMany(InventoryHistory::class, 'stockable')->orderBy('created_at', 'desc');
     }
