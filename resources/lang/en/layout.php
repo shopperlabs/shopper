@@ -175,6 +175,7 @@ return [
             'disapproved' => 'Disapproved',
             'create' => 'Create',
             'upload' => 'Upload',
+            'verified' => 'Verified',
         ],
 
         'error' => 'Your submission contains errors. Please try again',

@@ -16,11 +16,19 @@ class CustomersTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id')
-            ->setAdditionalSelects(['id', 'first_name', 'last_name', 'email', 'email_verified_at'])
+            ->setAdditionalSelects([
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'email_verified_at',
+                'avatar_type',
+                'avatar_location',
+            ])
             ->setDefaultSort('first_name')
             ->setBulkActions([
-                'deleteSelected' => __('Delete'),
-                'verified' => __('Verified'),
+                'delete' => __('shopper::layout.forms.actions.delete'),
+                'verified' => __('shopper::layout.forms.actions.verified'),
             ]);
     }
 
@@ -51,20 +59,20 @@ class CustomersTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.verified'))
-                ->body(__('shopper::components.tables.messages.verified', ['name' => __('customers')]))
+                ->body(__('shopper::components.tables.messages.verified', ['name' => __('shopper::words.customer')]))
                 ->success()
                 ->send();
         }
 
         $this->selected = [];
 
-        $this->resetAll();
+        $this->clearSelected();
     }
 
     /**
      * @throws GeneralException
      */
-    public function deleteSelected(): void
+    public function delete(): void
     {
         if (count($this->getSelected()) > 0) {
             (new UserRepository())->makeModel()
@@ -74,7 +82,7 @@ class CustomersTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.delete'))
-                ->body(__('shopper::components.tables.messages.delete', ['name' => __('customers')]))
+                ->body(__('shopper::components.tables.messages.delete', ['name' => __('shopper::words.customer')]))
                 ->success()
                 ->send();
         }
