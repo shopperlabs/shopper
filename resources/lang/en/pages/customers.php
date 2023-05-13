@@ -55,6 +55,8 @@ return [
         'items' => 'Order items',
         'view' => 'View order',
         'empty_text' => 'No orders found...',
+        'no_shipping' => 'No shipping method',
+        'estimated' => 'Shipping date',
     ],
 
 ];

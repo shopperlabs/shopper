@@ -175,6 +175,7 @@ return [
             'disapproved' => 'Désapprouvé',
             'create' => 'Créer',
             'upload' => 'Télécharger',
+            'verified' => 'Vérifié',
         ],
 
         'error' => 'Votre soumission contient des erreurs. Veuillez réessayer',
