@@ -906,11 +906,6 @@ parameters:
 			path: src/Http/Livewire/Tables/CustomersTable.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Framework\\\\Http\\\\Livewire\\\\Tables\\\\CustomersTable\\:\\:resetAll\\(\\)\\.$#"
-			count: 1
-			path: src/Http/Livewire/Tables/CustomersTable.php
-
-		-
 			message: "#^Parameter \\#3 \\.\\.\\.\\$guards of method Illuminate\\\\Auth\\\\Middleware\\\\Authenticate\\:\\:handle\\(\\) expects string, array\\<string\\> given\\.$#"
 			count: 1
 			path: src/Http/Middleware/Authenticate.php
