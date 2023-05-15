@@ -24,7 +24,7 @@
             <p class="mt-3 text-base leading-6 text-secondary-500 dark:text-secondary-400">
                 {{ __('shopper::pages/settings.roles_permissions.role_available_summary') }}
             </p>
-            <div class="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8">
+            <div class="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                 @foreach($roles as $role)
                     <a href="{{ route('shopper.settings.user.role', $role) }}" class="group flex flex-col justify-between border border-secondary-200 dark:border-secondary-700 p-4 rounded-md overflow-hidden hover:shadow-md">
                         <div class="flex items-center justify-between">
