@@ -25,8 +25,8 @@ class Management extends Component
         $this->dispatchBrowserEvent('user-removed');
 
         Notification::make()
-            ->title(__('Deleted'))
-            ->body(__('Admin deleted successfully'))
+            ->title(__('shopper::layout.forms.actions.deleted'))
+            ->body(__('shopper::notifications.users_roles.admin_deleted'))
             ->success()
             ->send();
     }
@@ -36,14 +36,13 @@ class Management extends Component
         return view('shopper::livewire.settings.management.index', [
             'roles' => Role::query()
                 ->with('users')
-                ->whereIn('name', [config('shopper.system.users.admin_role'), 'manager'])
-                ->limit(3)
+                ->where('name', '<>', config('shopper.system.users.default_role'))
                 ->orderBy('created_at')
                 ->get(),
             'users' => (new UserRepository())
                 ->makeModel()
                 ->whereHas('roles', function (Builder $query) {
-                    $query->where('name', '<>', config('shopper.system.users.default_role'));
+                    $query->whereIn('name', [config('shopper.system.users.default_role'), 'manager']);
                 })
                 ->orderBy('created_at', 'desc')
                 ->paginate(3),
