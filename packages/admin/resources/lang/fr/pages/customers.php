@@ -55,6 +55,8 @@ return [
         'items' => 'Éléments de la commande',
         'view' => 'Voir commande',
         'empty_text' => 'Aucune commande trouvée...',
+        'no_shipping' => 'Aucun moyen de livraison',
+        'estimated' => 'Date de livraison',
     ],
 
 ];

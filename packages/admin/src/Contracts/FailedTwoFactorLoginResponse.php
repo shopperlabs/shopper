@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Contracts;
+namespace Shopper\Contracts;
 
 use Illuminate\Contracts\Support\Responsable;
 

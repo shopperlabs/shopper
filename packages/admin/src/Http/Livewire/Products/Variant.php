@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Events\Products\ProductUpdated;
+use Shopper\Framework\Events\Products\Updated;
 use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
 
@@ -89,7 +89,7 @@ class Variant extends Component
             );
         }
 
-        event(new ProductUpdated($this->variant));
+        event(new Updated($this->variant));
 
         $this->emitSelf('onVariantUpdated');
 

@@ -6,26 +6,31 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Admin & User Role
+    |--------------------------------------------------------------------------
+    |
+    | User configuration to manage user access using spatie/laravel-permission.
+    | We recommend that you do not update this configuration in production,
+    | this could cause a bug on your system.
+    |
+    */
+
+    'users' => [
+        'admin_role' => 'administrator',
+        'default_role' => 'user',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | MapBox Api Token
     |--------------------------------------------------------------------------
     |
-    | This will be displayed on the login page and in the sidebar's header.
+    | By default to load Map component Shopper use Mapbox.
+    | This key will be use to display the map
     |
     */
 
     'mapbox_token' => env('MAPBOX_PUBLIC_TOKEN', null),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Shopper Locale Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Shopper PHP locale determines the default locale that will be used
-    | by the model date format function ->formatLocalized().
-    |
-    */
-
-    'locale' => 'en_EN',
 
     /*
     |--------------------------------------------------------------------------
@@ -44,33 +49,63 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Storage
+    | Storage Disk
     |--------------------------------------------------------------------------
     |
-    | Specifies the configuration for resource storage, such as users avatars
-    | and upload files.
+    | Specifies the configuration for resources storage, this will be to store
+    | all media of your products, brands, categories, etc.
     |
     */
 
     'storage' => [
+        'collection_name' => 'uploads',
+        'disk_name' => 'uploads',
+    ],
 
-        'disks' => [
+    /*
+    |--------------------------------------------------------------------------
+    | Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Shopper PHP locale determines the default locale that will be used
+    | by the model date format function ->formatLocalized().
+    |
+    */
 
-            /*
-             * Avatars folder uploads picture.
-             *
-             * Create this disk under the `filesystems.php` config file if not exist.
-             */
-            'avatars' => 'avatars',
+    'locale' => 'en_EN',
 
-            /*
-             * Uploads folders uploads files.
-             *
-             * Create this disk under the filesystems.php config file if not exist.
-             */
-            'uploads' => 'uploads',
-        ],
+    /*
+    |--------------------------------------------------------------------------
+    | Shopper Controllers config
+    |--------------------------------------------------------------------------
+    |
+    | If you want extends your shopper admin panel with great features,
+    | Here you can specify custom Controller Namespace and Shopper
+    | RouteServiceProvider will load all your controllers.
+    |
+    */
 
+    'controllers' => [
+
+        'namespace' => 'App\\Http\\Controllers\\Shopper',
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Caching
+    |--------------------------------------------------------------------------
+    |
+    | Define the way the Sidebar should be cached.
+    | The cache store defined by the Laravel.
+    |
+    | Available: "null" , "static", "user-based"
+    |
+    */
+
+    'cache' => [
+        'method' => null,
+        'duration' => 1440,
     ],
 
     /*

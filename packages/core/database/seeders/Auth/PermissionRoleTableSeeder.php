@@ -2,27 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Database\Seeders\Auth;
+namespace Shopper\Core\Database\Seeders\Auth;
 
 use Illuminate\Database\Seeder;
-use Shopper\Framework\Models\User\Permission;
-use Shopper\Framework\Traits\Database\DisableForeignKeys;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Models\Permission;
+use Shopper\Core\Models\Role;
 
 class PermissionRoleTableSeeder extends Seeder
 {
-    use DisableForeignKeys;
-
     public function run(): void
     {
-        $this->disableForeignKeys();
+        Schema::disableForeignKeyConstraints();
 
-        $administrator = Role::query()->where('name', config('shopper.system.users.admin_role'))->firstOrFail();
+        $administrator = Role::query()
+            ->where('name', config('shopper.admin.users.admin_role'))
+            ->firstOrFail();
 
         $permissions = Permission::all();
 
-        $administrator->permissions()->sync($permissions->pluck('id')->all());
+        $administrator->permissions()
+            ->sync($permissions->pluck('id')->all());
 
-        $this->enableForeignKeys();
+        Schema::enableForeignKeyConstraints();
     }
 }

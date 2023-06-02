@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Shopper\Framework\Models\System\Currency;
-use Shopper\Framework\Traits\Database\DisableForeignKeys;
+use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Models\Currency;
 
 class CurrenciesTableSeeder extends Seeder
 {
-    use DisableForeignKeys;
-
     protected array $currencies;
 
     public function __construct()
@@ -21,13 +19,13 @@ class CurrenciesTableSeeder extends Seeder
 
     public function run(): void
     {
-        $this->disableForeignKeys();
+        Schema::disableForeignKeyConstraints();
 
         foreach ($this->currencies as $code => $currency) {
             $data = array_merge($currency, ['code' => $code]);
             Currency::query()->create($data);
         }
 
-        $this->enableForeignKeys();
+        Schema::enableForeignKeyConstraints();
     }
 }

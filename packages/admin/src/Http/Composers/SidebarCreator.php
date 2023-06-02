@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Composers;
+namespace Shopper\Http\Composers;
 
 use Maatwebsite\Sidebar\Presentation\SidebarRenderer;
-use Shopper\Framework\Sidebar\AdminSidebar;
+use Shopper\Core\Sidebar\AdminSidebar;
 
 class SidebarCreator
 {

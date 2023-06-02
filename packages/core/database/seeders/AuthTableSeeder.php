@@ -2,25 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use seeders\Auth\PermissionRoleTableSeeder;
-use seeders\Auth\PermissionsTableSeeder;
-use seeders\Auth\RolesTableSeeder;
-use Shopper\Framework\Traits\Database\DisableForeignKeys;
-use Shopper\Framework\Traits\Database\TruncateTable;
+use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Database\Seeders\Auth\PermissionRoleTableSeeder;
+use Shopper\Core\Database\Seeders\Auth\PermissionsTableSeeder;
+use Shopper\Core\Database\Seeders\Auth\RolesTableSeeder;
+use Shopper\Core\Traits\Database\TruncateTable;
 
 class AuthTableSeeder extends Seeder
 {
-    use DisableForeignKeys;
     use TruncateTable;
 
     public function run(): void
     {
-        $this->disableForeignKeys();
+        Schema::disableForeignKeyConstraints();
 
-        // Reset cached roles and permissions
         app()['cache']->forget('spatie.permission.cache');
 
         $this->truncateMultiple([
@@ -36,6 +34,6 @@ class AuthTableSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
         $this->call(PermissionRoleTableSeeder::class);
 
-        $this->enableForeignKeys();
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -4,15 +4,13 @@ const colors = require('tailwindcss/colors')
 module.exports = {
   darkMode: 'class',
   content: [
-    './packages/admin/resources/js/**/*.js',
-    './resources/views/**/*.blade.php',
-    './src/**/*.php',
+    './packages/admin/resources/views/**/*.blade.php',
+    './packages/admin/src/**/*.php',
     './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
     './vendor/wire-elements/modal/resources/views/*.blade.php',
     './vendor/wireui/wireui/resources/**/*.blade.php',
     './vendor/wireui/wireui/ts/**/*.ts',
     './vendor/wireui/wireui/src/View/**/*.php',
-    './vendor/filament/**/*.blade.php',
   ],
   safelist: [
     'md:max-w-xl',
@@ -66,5 +64,5 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
-  ]
+  ],
 }

@@ -2,16 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Traits\Database\DisableForeignKeys;
+use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Models\Country;
 
 class CountriesTableSeeder extends Seeder
 {
-    use DisableForeignKeys;
-
     protected array $countries;
 
     public function __construct()
@@ -21,7 +19,7 @@ class CountriesTableSeeder extends Seeder
 
     public function run(): void
     {
-        $this->disableForeignKeys();
+        Schema::disableForeignKeyConstraints();
 
         foreach ($this->countries as $key => $country) {
             Country::query()->create([
@@ -36,6 +34,6 @@ class CountriesTableSeeder extends Seeder
             ]);
         }
 
-        $this->enableForeignKeys();
+        Schema::enableForeignKeyConstraints();
     }
 }

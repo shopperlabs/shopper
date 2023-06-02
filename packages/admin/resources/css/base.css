@@ -14,12 +14,20 @@ input[type="number"] {
 }
 
 /* All custom class */
-.hide-scroll::-webkit-scrollbar { display: none; }
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
 
-[x-cloak] {display: none !important; }
+[x-cloak] {
+  display: none !important;
+}
 
-.primary-menu .active { background-color: theme('colors.primary.900'); }
-.primary-menu .active:hover, .primary-menu .active:focus { background-color: theme('colors.primary.900'); }
+.primary-menu .active {
+  background-color: theme('colors.primary.900');
+}
+.primary-menu .active:hover, .primary-menu .active:focus {
+  background-color: theme('colors.primary.900');
+}
 
 .welcome span {
   @apply font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-800;

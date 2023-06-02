@@ -33,17 +33,6 @@ class LoginController extends Controller
         return view('shopper::auth.login');
     }
 
-    public function logout(Request $request): RedirectResponse
-    {
-        $this->guard()->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect($this->redirectPath());
-    }
-
     public function redirectPath(): string
     {
         return route('shopper.dashboard');

@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Database\Seeders\Auth;
+namespace Shopper\Core\Database\Seeders\Auth;
 
 use Illuminate\Database\Seeder;
-use Shopper\Framework\Models\User\Permission;
-use Shopper\Framework\Traits\Database\DisableForeignKeys;
+use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Models\Permission;
 
 class PermissionsTableSeeder extends Seeder
 {
-    use DisableForeignKeys;
-
     public function run(): void
     {
-        $this->disableForeignKeys();
+        Schema::disableForeignKeyConstraints();
 
         Permission::query()->create([
             'name' => 'access_dashboard',
@@ -72,19 +70,16 @@ class PermissionsTableSeeder extends Seeder
             'can_be_removed' => false,
         ]);
 
-        /*
-         * Shop management default permissions.
-         */
         Permission::generate('brands');
         Permission::generate('categories');
         Permission::generate('collections');
-        Permission::generate('products');
         Permission::generate('customers');
-        Permission::generate('orders');
         Permission::generate('discounts');
+        Permission::generate('orders');
         Permission::generate('inventories', 'products');
         Permission::generate('attributes', 'products');
+        Permission::generate('products');
 
-        $this->enableForeignKeys();
+        Schema::enableForeignKeyConstraints();
     }
 }

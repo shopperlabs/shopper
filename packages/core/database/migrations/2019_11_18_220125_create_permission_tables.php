@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Helpers\Migration;
 
-final class CreatePermissionTables extends Migration
+return new class extends Migration
 {
     public function up(): void
     {
@@ -14,7 +14,7 @@ final class CreatePermissionTables extends Migration
         $columnNames = config('permission.column_names');
 
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('guard_name');
             $table->string('group_name')->nullable();
@@ -25,7 +25,7 @@ final class CreatePermissionTables extends Migration
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('guard_name');
             $table->string('display_name')->nullable();
@@ -102,4 +102,4 @@ final class CreatePermissionTables extends Migration
         Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
     }
-}
+};

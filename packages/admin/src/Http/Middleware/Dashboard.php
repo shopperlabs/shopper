@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Middleware;
+namespace Shopper\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -14,12 +14,8 @@ class Dashboard
     public function handle(Request $request, Closure $next)
     {
         $user = auth(config('shopper.auth.guard'))->user();
-        // Check if the user is super admin or have to ability to access to the backend
-        if (! $user->isAdmin() && ! $user->hasPermissionTo('access_dashboard')) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
-            }
 
+        if (! $user->isAdmin() && ! $user->hasPermissionTo('access_dashboard')) {
             abort(403, __('Unauthorized'));
         }
 

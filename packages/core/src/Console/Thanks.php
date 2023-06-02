@@ -19,10 +19,10 @@ class Thanks
         '  - Tweet something about Shopper on Twitter:',
         '    <options=bold>https://twitter.com/laravelshopper</>',
         '  - Sponsor the creator:',
-        '    <options=bold>https://github.com/sponsors/Sense</>',
+        '    <options=bold>https://opencollective.com/shopperlabs</>',
     ];
 
-    public function __construct(private OutputInterface $output)
+    public function __construct(private readonly OutputInterface $output)
     {
     }
 
@@ -32,7 +32,7 @@ class Thanks
             new ArrayInput([]),
             $this->output,
             new ConfirmationQuestion(
-                'Can you quickly <options=bold>star our GitHub repository</>? 🙏🏻',
+                'Can you show us love by give a <options=bold>star ⭐️ on GitHub</>? 🙏🏻',
                 true,
             )
         );

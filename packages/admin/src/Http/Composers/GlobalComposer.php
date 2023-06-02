@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Composers;
+namespace Shopper\Http\Composers;
 
 use Illuminate\View\View;
 

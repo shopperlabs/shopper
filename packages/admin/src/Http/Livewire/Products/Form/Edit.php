@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Events\Products\ProductUpdated;
+use Shopper\Framework\Events\Products\Updated;
 use Shopper\Framework\Exceptions\GeneralException;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
@@ -113,7 +113,7 @@ class Edit extends AbstractBaseComponent
 
         $this->product->collections()->sync($this->collection_ids);
 
-        event(new ProductUpdated($this->product));
+        event(new Updated($this->product));
 
         $this->emit('productHasUpdated', $this->productId);
 

@@ -1,36 +1,32 @@
 {
-  "private": true,
+  "name": "shopper",
   "scripts": {
     "dev": "npm run development",
     "development": "mix",
     "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000",
-    "hot": "mix watch --hot",
     "production": "mix --production"
   },
-  "dependencies": {
+  "devDependencies": {
     "@alpinejs/focus": "^3.12.0",
+    "@tailwindcss/forms": "^0.5.2",
+    "@tailwindcss/typography": "^0.5.9",
+    "@ryangjchandler/alpine-tooltip": "^1.2.0",
     "alpinejs": "^3.10.5",
+    "autoprefixer": "^10.4.2",
     "choices.js": "^9.0.1",
     "filepond": "^4.30.3",
     "flatpickr": "^4.6.13",
     "intl-tel-input": "^17.0.19",
-    "mapbox-gl": "^2.6.1",
-    "sortablejs": "^1.15.0",
-    "tailwindcss": "^3.3.1",
-    "tom-select": "^2.2.2"
-  },
-  "devDependencies": {
-    "@ryangjchandler/alpine-tooltip": "^1.2.0",
-    "@tailwindcss/forms": "^0.5.2",
-    "@tailwindcss/typography": "^0.5.9",
-    "autoprefixer": "^10.4.2",
     "laravel-mix": "^6.0.19",
     "lodash": "^4.17.13",
+    "mapbox-gl": "^2.6.1",
     "popper.js": "^1.16.0",
     "postcss": "^8.4.5",
     "prettier": "^2.3.1",
-    "prettier-standard": "^16.4.1",
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "sortablejs": "^1.15.0",
+    "tailwindcss": "^3.3.1",
+    "tom-select": "^2.2.2",
     "resolve-url-loader": "^2.3.1"
   }
 }

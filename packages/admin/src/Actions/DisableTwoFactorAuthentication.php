@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Actions;
+namespace Shopper\Actions;
 
 final class DisableTwoFactorAuthentication
 {

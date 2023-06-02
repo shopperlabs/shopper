@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Middleware;
+namespace Shopper\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;

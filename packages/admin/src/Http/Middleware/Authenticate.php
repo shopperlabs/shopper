@@ -1,30 +1,22 @@
 <?php
 
-declare(strict_types=1);
+namespace Shopper\Http\Middleware;
 
-namespace Shopper\Framework\Http\Middleware;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-use Closure;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Auth\Middleware\Authenticate as BaseAuthenticationMiddleware;
-use Shopper\Framework\Exceptions\AuthenticationException as ShopperAuthenticationException;
-
-class Authenticate extends BaseAuthenticationMiddleware
+class Authenticate extends Middleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  array<string>  ...$guards
-     *
-     * @throws \Illuminate\Auth\AuthenticationException
-     */
-    public function handle($request, Closure $next, ...$guards)
+    protected function authenticate($request, array $guards): void
     {
-        try {
-            return parent::handle($request, $next, ...$guards);
-        } catch (AuthenticationException $e) {
-            throw new ShopperAuthenticationException('Unauthenticated.', $e->guards());
-        }
+        $guardName = config('shopper.auth.guard');
+
+        $this->auth->guard($guardName)->check()
+            ? $this->auth->shouldUse($guardName)
+            : $this->unauthenticated($request, $guards);
+    }
+
+    protected function redirectTo($request): string
+    {
+        return route('shopper.login');
     }
 }

@@ -33,8 +33,7 @@ class CreateRole extends ModalComponent
         $this->emit('onRoleAdded');
 
         Notification::make()
-            ->title(__('Saved'))
-            ->body(__('A role has been successfully created'))
+            ->body(__('shopper::notifications.users_roles.role_added'))
             ->success()
             ->send();
 

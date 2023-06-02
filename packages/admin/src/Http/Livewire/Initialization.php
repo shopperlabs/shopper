@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire;
+namespace Shopper\Http\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Models\System\Currency;
-use Shopper\Framework\Models\System\Setting;
-use Shopper\Framework\Repositories\ChannelRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
+use Shopper\Core\Models\Country;
+use Shopper\Core\Models\Currency;
+use Shopper\Core\Models\Setting;
+use Shopper\Core\Repositories\ChannelRepository;
+use Shopper\Core\Repositories\InventoryRepository;
 
 class Initialization extends Component
 {

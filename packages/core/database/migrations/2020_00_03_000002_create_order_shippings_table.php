@@ -2,18 +2,15 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Shopper\Framework\Traits\Database;
+use Shopper\Core\Helpers\Migration;
 
-final class CreateOrderShippingsTable extends Migration
+return new class extends Migration
 {
-    use Database\Migration;
-
     public function up(): void
     {
-        Schema::create($this->getTableName('order_shippings'), function (Blueprint $table) {
+        Schema::create($this->getTableName('order_shipping'), function (Blueprint $table) {
             $this->addCommonFields($table);
 
             $table->date('shipped_at');
@@ -30,6 +27,6 @@ final class CreateOrderShippingsTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists($this->getTableName('order_shippings'));
+        Schema::dropIfExists($this->getTableName('order_shipping'));
     }
-}
+};

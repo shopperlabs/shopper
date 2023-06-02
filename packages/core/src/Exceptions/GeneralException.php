@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Exceptions;
+namespace Shopper\Core\Exceptions;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;

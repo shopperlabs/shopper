@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;

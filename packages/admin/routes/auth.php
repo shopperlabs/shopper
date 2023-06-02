@@ -12,13 +12,11 @@ Route::redirect('/', shopper_prefix() . '/login', 301);
 
 // Authentication...
 Route::get('/login', [LoginController::class, 'showLoginForm'])
-    ->name('login-view');
-
-Route::post('/login', [LoginController::class, 'login'])
+    ->name('login-view')
     ->name('login');
 
-Route::post('/logout', [LoginController::class, 'logout'])
-    ->name('logout');
+Route::post('/login', [LoginController::class, 'login'])
+    ->name('post.login');
 
 // Password Reset...
 Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])

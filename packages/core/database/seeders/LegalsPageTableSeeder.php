@@ -2,63 +2,46 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use Shopper\Framework\Models\Shop\Legal;
-use Shopper\Framework\Traits\Database\DisableForeignKeys;
 
 class LegalsPageTableSeeder extends Seeder
 {
-    use DisableForeignKeys;
-
-    /**
-     * Run the database seed.
-     */
     public function run(): void
     {
-        $this->disableForeignKeys();
+        Schema::enableForeignKeyConstraints();
 
-        /*
-         * Refund Policy.
-         */
         Legal::query()->create([
-            'title' => $title = __('Refund policy'),
+            'title' => $title = __('shopper::pages/settings.legal.refund'),
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null,
         ]);
 
-        /*
-         * Privacy Policy.
-         */
         Legal::query()->create([
-            'title' => $title = __('Privacy policy'),
+            'title' => $title = __('shopper::pages/settings.legal.privacy'),
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null,
         ]);
 
-        /*
-         * Terms of uses.
-         */
         Legal::query()->create([
-            'title' => $title = __('Terms of use'),
+            'title' => $title = __('shopper::pages/settings.legal.terms_of_use'),
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null,
         ]);
 
-        /*
-         * Terms of uses.
-         */
         Legal::query()->create([
-            'title' => $title = __('Shipping policy'),
+            'title' => $title = __('shopper::pages/settings.legal.shipping'),
             'slug' => str_slug($title),
             'is_enabled' => true,
             'content' => null,
         ]);
 
-        $this->enableForeignKeys();
+        Schema::enableForeignKeyConstraints();
     }
 }

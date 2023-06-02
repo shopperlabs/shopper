@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Actions;
+namespace Shopper\Actions;
 
 use Closure;
 use Illuminate\Contracts\Auth\StatefulGuard;
