@@ -12,7 +12,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasProfilePhoto;
-use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -23,7 +22,6 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use SoftDeletes;
-    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that aren't mass assignable.
@@ -87,7 +85,7 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->hasRole(config('shopper.system.users.admin_role'));
+        return $this->hasRole(config('shopper.core.users.admin_role'));
     }
 
     public function isVerified(): bool

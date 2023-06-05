@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper;
 
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Notifications\Messages\MailMessage;
 use Livewire\Component;
 use Livewire\Livewire;
 use Shopper\Console;
@@ -16,6 +18,8 @@ use Shopper\Events\OrderSidebar;
 use Shopper\Events\ShopSidebar;
 use Shopper\Http\Composers\GlobalComposer;
 use Shopper\Http\Composers\SidebarCreator;
+use Shopper\Http\Livewire\Pages\Auth;
+use Shopper\Http\Middleware\Authenticate;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -52,8 +56,19 @@ class ShopperServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        parent::packageBooted();
+
         $this->bootLivewireComponents();
+
         $this->bootModelRelationName();
+
+        ResetPassword::toMailUsing(fn ($notifiable, string $token) =>
+            (new MailMessage())
+                ->view('shopper::mails.email')
+                ->line(__('shopper::pages/auth.email.mail.content'))
+                ->action(__('shopper::pages/auth.email.mail.action'), url(config('app.url') . route('shopper.password.reset', $token, false)))
+                ->line(__('shopper::pages/auth.email.mail.message'))
+        );
 
         Builder::macro(
             'search',
@@ -93,7 +108,13 @@ class ShopperServiceProvider extends PackageServiceProvider
             $this->app->singleton(Component::class, fn () => $component);
         });
 
-        foreach (config('shopper.components.livewire', []) as $alias => $component) {
+        Livewire::addPersistentMiddleware([Authenticate::class]);
+
+        foreach (array_merge(config('shopper.components.livewire', []), [
+            'shopper.admin.auth.login' => Auth\Login::class,
+            'shopper.admin.auth.password' => Auth\ForgotPassword::class,
+            'shopper.admin.auth.password-reset' => Auth\ResetPassword::class,
+        ]) as $alias => $component) {
             $alias = $prefix ? "$prefix-$alias" : $alias;
 
             Livewire::component($alias, $component);

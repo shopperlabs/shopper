@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Core;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 
@@ -30,6 +28,5 @@ class CoreServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton('shopper', fn () => new Shopper());
-        $this->app->bind(StatefulGuard::class, fn () => Auth::guard(config('shopper.auth.guard', null)));
     }
 }

@@ -80,9 +80,6 @@ class SidebarServiceProvider extends ServiceProvider
         );
     }
 
-    /**
-     * Get the services provided by the provider.
-     */
     public function provides(): array
     {
         return [

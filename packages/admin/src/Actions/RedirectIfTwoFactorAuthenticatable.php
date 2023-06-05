@@ -11,8 +11,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
-use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
+use Shopper\Services\TwoFactor\LoginRateLimiter;
+use Shopper\Services\TwoFactor\TwoFactorAuthenticatable;
 use Shopper\Core\Shopper;
 
 final class RedirectIfTwoFactorAuthenticatable

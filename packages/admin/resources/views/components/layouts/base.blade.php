@@ -12,13 +12,12 @@
     <meta name="dashboard-url" content="{{ config('app.url') . '/' . shopper_prefix() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @include('shopper::includes._favicons')
+    <x-shopper::favicons />
 
     <title>{{ $title ?? config('app.name') }} // {{ __('shopper::layout.meta_title') }}</title>
 
     <link rel="dns-prefetch" href="{{ config('app.url') }}"/>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css"/>
 
     @stack('styles')
 

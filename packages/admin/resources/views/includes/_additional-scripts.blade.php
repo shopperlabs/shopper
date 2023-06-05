@@ -1,4 +1,4 @@
-@if(! empty(config('shopper.system.resources.scripts')))
+@if(! empty(config('shopper.admin.resources.scripts')))
     <!-- Additional Javascript -->
     @foreach(config('shopper.system.resources.scripts') as $js)
         @if (starts_with($js, ['http://', 'https://']))

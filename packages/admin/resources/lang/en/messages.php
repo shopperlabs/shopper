@@ -28,4 +28,8 @@ return [
         ],
     ],
 
+    'login' => [
+        'failed' => 'These credentials do not match our records.',
+        'throttled' => 'Too many login attempts. Please try again in :seconds seconds.',
+    ]
 ];

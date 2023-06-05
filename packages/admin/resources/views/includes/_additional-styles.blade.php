@@ -1,4 +1,4 @@
-@if(! empty(config('shopper.system.resources.stylesheets')))
+@if(! empty(config('shopper.admin.resources.stylesheets')))
     <!-- Additional CSS -->
     @foreach(config('shopper.system.resources.stylesheets') as $css)
         @if (starts_with($css, ['http://', 'https://']))

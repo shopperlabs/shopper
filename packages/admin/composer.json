@@ -9,6 +9,7 @@
   },
   "require": {
     "php": "^8.1",
+    "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-heroicons": "^1.2",
     "filament/notifications": "^2.17",

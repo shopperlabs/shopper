@@ -21,7 +21,7 @@ return [
     'email' => [
         'title' => 'Réinitialisation du mot de passe',
         'message' => 'Entrez l\'adresse e-mail que vous avez utilisée lors de la création de votre compte et nous vous enverrons des instructions pour réinitialiser votre mot de passe.',
-        'action' => 'Envoyer un e-mail de réinitialisation du mot de passe',
+        'action' => 'Envoyer un lien de réinitialisation',
         'return_to_login' => 'Retour à la page de connexion',
         'mail' => [
             'content' => 'Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation du mot de passe pour votre compte.',
