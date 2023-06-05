@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Forms\Uploads;
+namespace Shopper\Http\Livewire\Forms\Uploads;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;

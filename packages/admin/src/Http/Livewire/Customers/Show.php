@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Customers;
+namespace Shopper\Http\Livewire\Customers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Repositories\UserRepository;
 
 class Show extends AbstractBaseComponent
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\View\View;

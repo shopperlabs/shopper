@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Mails;
+namespace Shopper\Http\Livewire\Settings\Mails;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
-use Shopper\Framework\Rules\RealEmailValidator;
+use Shopper\Core\Rules\RealEmailValidator;
 
 class Configuration extends Component
 {

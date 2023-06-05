@@ -34,4 +34,15 @@ enum OrderStatus
             self::COMPLETED => 'border-purple-200 bg-purple-100 text-purple-800',
         };
     }
+
+    public static function values(): array
+    {
+        return [
+            OrderStatus::PENDING->value() => __('shopper::status.pending'),
+            OrderStatus::REGISTER->value() => __('shopper::status.registered'),
+            OrderStatus::COMPLETED->value() => __('shopper::status.completed'),
+            OrderStatus::CANCELLED->value() => __('shopper::status.cancelled'),
+            OrderStatus::PAID->value() => __('shopper::status.paid'),
+        ];
+    }
 }

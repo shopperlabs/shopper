@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Traits;
+namespace Shopper\Traits;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use Shopper\Framework\Actions\ConfirmPassword;
+use Shopper\Actions\ConfirmPassword;
 
 trait ConfirmsPasswords
 {

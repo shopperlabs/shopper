@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products;
+namespace Shopper\Http\Livewire\Products;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
-use Shopper\Framework\Traits\WithStock;
+use Shopper\Core\Repositories\InventoryHistoryRepository;
+use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Core\Traits\Attributes\WithStock;
 
 class VariantStock extends Component
 {

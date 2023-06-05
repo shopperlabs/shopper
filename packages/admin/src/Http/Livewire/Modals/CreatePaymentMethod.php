@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Models\Shop\PaymentMethod;
+use Shopper\Core\Models\PaymentMethod;
 
 class CreatePaymentMethod extends ModalComponent
 {
@@ -47,7 +47,7 @@ class CreatePaymentMethod extends ModalComponent
 
         if ($this->logo) {
             $paymentMethod->update([
-                'logo' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
+                'logo' => $this->logo->store('/', config('shopper.core.storage.collection_name')),
             ]);
         }
 

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Controllers;
+namespace Shopper\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Shopper\Framework\Services\Mailable;
+use Shopper\Services\Mailable;
 
 class TemplatesController extends ShopperBaseController
 {

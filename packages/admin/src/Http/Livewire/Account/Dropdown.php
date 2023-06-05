@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Account;
+namespace Shopper\Http\Livewire\Account;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;

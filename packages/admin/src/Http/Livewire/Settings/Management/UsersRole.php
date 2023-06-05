@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Management;
+namespace Shopper\Http\Livewire\Settings\Management;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
-use Shopper\Framework\Models\User\Role;
-use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Core\Models\Role;
+use Shopper\Core\Repositories\UserRepository;
 
 class UsersRole extends Component
 {

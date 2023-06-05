@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Controllers\Auth;
+namespace Shopper\Http\Controllers\Auth;
 
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Contracts\View\View;

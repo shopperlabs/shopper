@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Mails;
+namespace Shopper\Http\Livewire\Settings\Mails;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Framework\Services\Mailable;
+use Shopper\Services\Mailable;
 
 class Templates extends Component
 {
@@ -16,9 +16,7 @@ class Templates extends Component
 
     public function mount(): void
     {
-        if (in_array(app()->environment(), config('shopper.mails.allowed_environments'))) {
-            $this->isLocal = true;
-        }
+        $this->isLocal = true;
     }
 
     public function render(): View

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products\Form;
+namespace Shopper\Http\Livewire\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -12,10 +12,10 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
-use Shopper\Framework\Traits\WithStock;
+use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\InventoryHistoryRepository;
+use Shopper\Core\Traits\Attributes\WithStock;
 
 class Inventory extends Component
 {
@@ -84,7 +84,7 @@ class Inventory extends Component
                 ->orderBy('created_at', 'desc')
                 ->paginate(5),
             'barcodeImage' => $this->barcode
-                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.system.barcode_type'))
+                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.core.barcode_type'))
                 : null,
         ]);
     }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Responses;
+namespace Shopper\Http\Responses;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
-use Shopper\Framework\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
+use Shopper\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
 
 class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContract
 {

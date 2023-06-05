@@ -156,7 +156,7 @@ class Initialization extends Component
 
         if ($this->logo) {
             Setting::query()->updateOrCreate(['key' => 'shop_logo'], [
-                'value' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
+                'value' => $this->logo->store('/', config('shopper.core.storage.collection_name')),
                 'display_name' => Setting::lockedAttributesDisplayName('shop_logo'),
                 'locked' => true,
             ]);

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Tables;
+namespace Shopper\Http\Livewire\Tables;
 
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views;
-use Shopper\Framework\Models\Shop\Product\Attribute;
+use Shopper\Core\Models\Attribute;
 
 class AttributesTable extends DataTableComponent
 {
@@ -66,7 +66,9 @@ class AttributesTable extends DataTableComponent
     public function enabled(): void
     {
         if (count($this->getSelected()) > 0) {
-            Attribute::query()->whereIn('id', $this->getSelected())->update(['is_enabled' => true]);
+            Attribute::query()
+                ->whereIn('id', $this->getSelected())
+                ->update(['is_enabled' => true]);
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))

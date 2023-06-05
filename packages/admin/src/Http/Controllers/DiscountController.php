@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Controllers;
+namespace Shopper\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Framework\Repositories\DiscountRepository;
+use Shopper\Core\Repositories\DiscountRepository;
 
 class DiscountController extends ShopperBaseController
 {

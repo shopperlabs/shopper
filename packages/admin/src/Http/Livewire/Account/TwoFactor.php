@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Account;
+namespace Shopper\Http\Livewire\Account;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Framework\Actions\DisableTwoFactorAuthentication;
-use Shopper\Framework\Actions\EnableTwoFactorAuthentication;
-use Shopper\Framework\Actions\GenerateNewRecoveryCodes;
+use Shopper\Actions\DisableTwoFactorAuthentication;
+use Shopper\Actions\EnableTwoFactorAuthentication;
+use Shopper\Actions\GenerateNewRecoveryCodes;
 use Shopper\Framework\Traits\ConfirmsPasswords;
 
 class TwoFactor extends Component

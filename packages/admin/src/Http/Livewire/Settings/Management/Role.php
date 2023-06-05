@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Management;
+namespace Shopper\Http\Livewire\Settings\Management;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Shopper\Framework\Models\User\Role as RoleModel;
+use Shopper\Core\Models\Role as RoleModel;
 
 class Role extends Component
 {

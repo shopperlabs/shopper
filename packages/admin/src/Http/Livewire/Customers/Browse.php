@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Customers;
+namespace Shopper\Http\Livewire\Customers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
-use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Core\Repositories\UserRepository;
 
 class Browse extends Component
 {
@@ -17,7 +17,7 @@ class Browse extends Component
             'total' => (new UserRepository())
                 ->makeModel()
                 ->whereHas('roles', function (Builder $query) {
-                    $query->where('name', config('shopper.system.users.default_role'));
+                    $query->where('name', config('shopper.core.users.default_role'));
                 })
                 ->count(),
         ]);

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Discounts;
+namespace Shopper\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Discount;
-use Shopper\Framework\Models\Shop\DiscountDetail;
-use Shopper\Framework\Models\Traits\HasPrice;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\DiscountDetail;
+use Shopper\Core\Traits\HasPrice;
 use Shopper\Framework\Models\User\User;
 
 class Create extends AbstractBaseComponent
@@ -69,7 +69,7 @@ class Create extends AbstractBaseComponent
                 DiscountDetail::query()->create([
                     'discount_id' => $discount->id,
                     'condition' => 'apply_to',
-                    'discountable_type' => config('shopper.system.models.product'),
+                    'discountable_type' => config('shopper.models.product'),
                     'discountable_id' => $productId,
                 ]);
             }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products\Form;
+namespace Shopper\Http\Livewire\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -11,10 +11,10 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use Shopper\Framework\Events\Products\ProductRemoved;
-use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Core\Events\Products\Deleted as ProductDeleted;
+use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Traits\Attributes\WithUploadProcess;
 
 class Variants extends Component
 {
@@ -48,7 +48,7 @@ class Variants extends Component
     {
         $product = (new ProductRepository())->getById($id);
 
-        event(new ProductRemoved($product));
+        event(new ProductDeleted($product));
 
         $product->forceDelete();
 

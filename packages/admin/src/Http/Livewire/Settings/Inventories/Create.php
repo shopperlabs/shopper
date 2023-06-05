@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
+namespace Shopper\Http\Livewire\Settings\Inventories;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Rules\Phone;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Country;
+use Shopper\Core\Rules\Phone;
 
 class Create extends AbstractBaseComponent
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products;
+namespace Shopper\Http\Livewire\Products;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Events\Products\Updated;
-use Shopper\Framework\Repositories\InventoryRepository;
-use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Core\Events\Products\Updated as ProductUpdated;
+use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Core\Traits\Attributes\WithUploadProcess;
 
 class Variant extends Component
 {
@@ -49,7 +49,7 @@ class Variant extends Component
         $this->old_price_amount = $variant->old_price_amount;
         $this->cost_amount = $variant->cost_amount;
         $this->currency = $currency;
-        $this->images = $variant->getMedia(config('shopper.system.storage.disks.uploads'));
+        $this->images = $variant->getMedia(config('shopper.core.storage.collection_name'));
     }
 
     public function store(): void
@@ -85,11 +85,11 @@ class Variant extends Component
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
                 fn ($file) => $this->variant->addMedia($file->getRealPath())
-                    ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+                    ->toMediaCollection(config('shopper.core.storage.collection_name'))
             );
         }
 
-        event(new Updated($this->variant));
+        event(new ProductUpdated($this->variant));
 
         $this->emitSelf('onVariantUpdated');
 
@@ -102,13 +102,13 @@ class Variant extends Component
 
     public function mediaDeleted(): void
     {
-        $this->images = $this->variant->getMedia(config('shopper.system.storage.disks.uploads'));
+        $this->images = $this->variant->getMedia(config('shopper.core.storage.collection_name'));
     }
 
     public function render(): View
     {
         return view('shopper::livewire.products.variant', [
-            'media' => $this->variant->getFirstMedia(config('shopper.system.storage.disks.uploads')),
+            'media' => $this->variant->getFirstMedia(config('shopper.core.storage.collection_name')),
         ]);
     }
 }

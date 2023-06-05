@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Controllers;
+namespace Shopper\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
+use Shopper\Core\Models\Inventory;
 
 class InventoryController extends ShopperBaseController
 {

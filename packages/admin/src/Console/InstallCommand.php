@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Console;
 
 use Illuminate\Console\Command;
-use Shopper\Framework\Providers\ShopperServiceProvider;
+use Shopper\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
 

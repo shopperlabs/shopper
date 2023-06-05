@@ -7,7 +7,7 @@ namespace Shopper\Events;
 use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
-use Shopper\Framework\Sidebar\AbstractAdminSidebar;
+use Shopper\Core\Sidebar\AbstractAdminSidebar;
 
 class ShopSidebar extends AbstractAdminSidebar
 {

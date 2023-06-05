@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Categories;
+namespace Shopper\Http\Livewire\Categories;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 
 class Browse extends Component
 {

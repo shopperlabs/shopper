@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Customers;
+namespace Shopper\Http\Livewire\Customers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;

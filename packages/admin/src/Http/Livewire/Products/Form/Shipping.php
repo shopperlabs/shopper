@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products\Form;
+namespace Shopper\Http\Livewire\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 
 class Shipping extends Component
 {

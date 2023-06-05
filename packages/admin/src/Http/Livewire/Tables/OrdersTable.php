@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Tables;
+namespace Shopper\Http\Livewire\Tables;
 
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views;
-use Shopper\Framework\Models\Shop\Order\Order;
-use Shopper\Framework\Models\Shop\Order\OrderStatus;
+use Shopper\Core\Models\Order;
+use Shopper\Core\Enum\OrderStatus;
 
 class OrdersTable extends DataTableComponent
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Account;
+namespace Shopper\Http\Livewire\Account;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Rules\RealEmailValidator;
+use Shopper\Core\Rules\RealEmailValidator;
 
 class Profile extends Component
 {

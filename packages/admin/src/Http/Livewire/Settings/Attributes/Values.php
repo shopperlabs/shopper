@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
+namespace Shopper\Http\Livewire\Settings\Attributes;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
-use Shopper\Framework\Models\Shop\Product\Attribute;
-use Shopper\Framework\Models\Shop\Product\AttributeValue;
+use Shopper\Core\Models\Attribute;
+use Shopper\Core\Models\AttributeValue;
 
 class Values extends Component
 {

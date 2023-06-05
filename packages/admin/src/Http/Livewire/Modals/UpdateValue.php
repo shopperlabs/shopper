@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Models\Shop\Product\AttributeValue;
+use Shopper\Core\Models\AttributeValue;
 
 class UpdateValue extends ModalComponent
 {

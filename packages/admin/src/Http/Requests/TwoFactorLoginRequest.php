@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Requests;
+namespace Shopper\Http\Requests;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
-use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
-use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
+use Shopper\Contracts\TwoFactorAuthenticationProvider;
+use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 
 class TwoFactorLoginRequest extends FormRequest
 {

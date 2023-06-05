@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
 use Shopper\Framework\Services\TwoFactor\TwoFactorAuthenticatable;
-use Shopper\Framework\Shopper;
+use Shopper\Core\Shopper;
 
 final class RedirectIfTwoFactorAuthenticatable
 {

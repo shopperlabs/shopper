@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products;
+namespace Shopper\Http\Livewire\Products;
 
 use Illuminate\Contracts\View\View;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Framework\Exceptions\GeneralException;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Channel;
-use Shopper\Framework\Models\Shop\Inventory\Inventory;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Traits\WithChoicesBrands;
-use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Core\Exceptions\GeneralException;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Models\Channel;
+use Shopper\Core\Models\Inventory;
+use Shopper\Core\Repositories\Ecommerce\BrandRepository;
+use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Traits\Attributes\WithChoicesBrands;
+use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
@@ -105,7 +105,7 @@ class Create extends AbstractBaseComponent
 
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
-                fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+                fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.core.storage.collection_name'))
             );
         }
 
@@ -155,11 +155,13 @@ class Create extends AbstractBaseComponent
                 ->orderBy('name')
                 ->get()
                 ->toTree(),
-            'collections' => (new CollectionRepository())->with('media')->get(['name', 'id']),
+            'collections' => (new CollectionRepository())
+                ->with('media')
+                ->get(['name', 'id']),
             'inventories' => Inventory::query()->get(['name', 'id']),
             'currency' => shopper_currency(),
             'barcodeImage' => $this->barcode
-                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.system.barcode_type'))
+                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.core.barcode_type'))
                 : null,
         ]);
     }

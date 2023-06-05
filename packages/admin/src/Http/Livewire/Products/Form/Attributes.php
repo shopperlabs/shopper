@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products\Form;
+namespace Shopper\Http\Livewire\Products\Form;
 
 use Exception;
 use Filament\Notifications\Notification;
@@ -10,9 +10,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Shopper\Framework\Models\Shop\Product\ProductAttribute;
-use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
-use Shopper\Framework\Traits\WithAttributes;
+use Shopper\Core\Models\ProductAttribute;
+use Shopper\Core\Models\ProductAttributeValue;
+use Shopper\Core\Traits\Attributes\WithAttributes;
 
 class Attributes extends Component
 {

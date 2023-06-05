@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Orders;
+namespace Shopper\Http\Livewire\Orders;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Models\Shop\Order\Order;
-use Shopper\Framework\Models\Shop\Order\OrderStatus;
-use Shopper\Framework\Models\User\Address;
+use Shopper\Core\Models\Order;
+use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Models\Address;
 
 class Show extends Component
 {
@@ -31,6 +31,8 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::CANCELLED]);
 
+        // TODO dispatch new event
+
         Notification::make()
             ->title(__('Cancelled'))
             ->body(__('This order has been cancelled'))
@@ -44,7 +46,7 @@ class Show extends Component
 
         $this->order->update(['notes' => $this->notes]);
 
-        // TODO Send notification to the customer about order notes.
+        // TODO dispatch new event
 
         Notification::make()
             ->title(__('Notes added'))
@@ -57,7 +59,7 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::REGISTER]);
 
-        // TODO Send notification to the customer about order registration.
+        // TODO dispatch new event
 
         Notification::make()
             ->title(__('Updated Status'))
@@ -70,6 +72,8 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::PAID]);
 
+        // TODO dispatch new event
+
         Notification::make()
             ->title(__('Updated Status'))
             ->body(__('This order is marked as paid'))
@@ -80,6 +84,8 @@ class Show extends Component
     public function markComplete(): void
     {
         $this->order->update(['status' => OrderStatus::COMPLETED]);
+
+        // TODO dispatch new event
 
         Notification::make()
             ->title(__('Updated Status'))

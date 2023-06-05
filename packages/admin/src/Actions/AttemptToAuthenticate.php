@@ -9,7 +9,7 @@ use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Shopper\Framework\Services\TwoFactor\LoginRateLimiter;
-use Shopper\Framework\Shopper;
+use Shopper\Core\Shopper;
 
 final class AttemptToAuthenticate
 {

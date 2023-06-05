@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Tables;
+namespace Shopper\Http\Livewire\Tables;
 
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views;
-use Shopper\Framework\Exceptions\GeneralException;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Core\Exceptions\GeneralException;
+use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 
 class CategoriesTable extends DataTableComponent
 {

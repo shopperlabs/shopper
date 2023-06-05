@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Brands;
+namespace Shopper\Http\Livewire\Brands;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {
@@ -80,7 +80,7 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $this->brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         session()->flash('success', __('Brand successfully updated!'));

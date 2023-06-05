@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings;
+namespace Shopper\Http\Livewire\Settings;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Models\System\Setting;
+use Shopper\Core\Models\Setting;
 
 class Analytics extends Component
 {

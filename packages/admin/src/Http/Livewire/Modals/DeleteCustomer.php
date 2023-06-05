@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Core\Repositories\UserRepository;
 
 class DeleteCustomer extends ModalComponent
 {

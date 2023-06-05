@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products\Form;
+namespace Shopper\Http\Livewire\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Events\Products\Updated;
-use Shopper\Framework\Exceptions\GeneralException;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Traits\WithChoicesBrands;
-use Shopper\Framework\Traits\WithSeoAttributes;
-use Shopper\Framework\Traits\WithUploadProcess;
+use Shopper\Core\Events\Products\Updated;
+use Shopper\Core\Exceptions\GeneralException;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Core\Repositories\Ecommerce\BrandRepository;
+use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Core\Traits\Attributes\WithChoicesBrands;
+use Shopper\Core\Traits\Attributes\WithSeoAttributes;
+use Shopper\Core\Traits\Attributes\WithUploadProcess;
 
 class Edit extends AbstractBaseComponent
 {
@@ -62,7 +62,7 @@ class Edit extends AbstractBaseComponent
         $this->category_ids = $product->categories->pluck('id')->toArray();
         $this->selectedBrand = $product->brand_id ? [$product->brand_id] : [];
         $this->currency = $currency;
-        $this->images = $product->getMedia(config('shopper.system.storage.disks.uploads'));
+        $this->images = $product->getMedia(config('shopper.core.storage.collection_name'));
     }
 
     public function onTrixValueUpdate(string $value): void
@@ -72,7 +72,7 @@ class Edit extends AbstractBaseComponent
 
     public function mediaDeleted(): void
     {
-        $this->images = $this->product->getMedia(config('shopper.system.storage.disks.uploads'));
+        $this->images = $this->product->getMedia(config('shopper.core.storage.collection_name'));
     }
 
     public function rules(): array
@@ -103,7 +103,7 @@ class Edit extends AbstractBaseComponent
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
                 fn ($file) => $this->product->addMedia($file->getRealPath())
-                    ->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+                    ->toMediaCollection(config('shopper.core.storage.collection_name'))
             );
         }
 

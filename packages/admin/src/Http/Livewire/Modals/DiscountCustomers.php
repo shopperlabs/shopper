@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Core\Repositories\UserRepository;
 
 class DiscountCustomers extends ModalComponent
 {
@@ -42,7 +42,7 @@ class DiscountCustomers extends ModalComponent
             'customers' => (new UserRepository())
                 ->makeModel()
                 ->whereHas('roles', function (Builder $query) {
-                    $query->where('name', config('shopper.system.users.default_role'));
+                    $query->where('name', config('shopper.core.users.default_role'));
                 })
                 ->where(function (Builder $query) {
                     $query->where('first_name', 'like', '%' . $this->search . '%')

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Brands;
+namespace Shopper\Http\Livewire\Brands;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Repositories\Ecommerce\BrandRepository;
+use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
@@ -58,7 +58,7 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         session()->flash('success', __('Brand successfully added!'));

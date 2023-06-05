@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Customers;
+namespace Shopper\Http\Livewire\Customers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Notifications\CustomerSendCredentials;
-use Shopper\Framework\Repositories\UserRepository;
-use Shopper\Framework\Rules\Phone;
-use Shopper\Framework\Traits\WithAddress;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Models\Country;
+use Shopper\Notifications\CustomerSendCredentials;
+use Shopper\Core\Repositories\UserRepository;
+use Shopper\Core\Rules\Phone;
+use Shopper\Core\Traits\Attributes\WithAddress;
 
 class Create extends AbstractBaseComponent
 {
@@ -48,7 +48,7 @@ class Create extends AbstractBaseComponent
             'opt_in' => $this->opt_in,
         ]);
 
-        $customer->assignRole(config('shopper.system.users.default_role'));
+        $customer->assignRole(config('shopper.core.users.default_role'));
 
         $customer->addresses()->create([
             'first_name' => $this->address_first_name,

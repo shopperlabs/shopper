@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Categories;
+namespace Shopper\Http\Livewire\Categories;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Framework\Traits\WithChoicesCategories;
-use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Core\Traits\Attributes\WithChoicesCategories;
+use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
@@ -62,7 +62,8 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $category->addMedia($this->fileUrl)
+                ->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         session()->flash('success', __('Category successfully added!'));

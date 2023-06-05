@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Controllers\Ecommerce;
+namespace Shopper\Http\Controllers\Ecommerce;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Framework\Http\Controllers\ShopperBaseController;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
+use Shopper\Http\Controllers\ShopperBaseController;
+use Shopper\Core\Repositories\Ecommerce\BrandRepository;
 
 class BrandController extends ShopperBaseController
 {

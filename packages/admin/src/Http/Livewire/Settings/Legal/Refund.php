@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Legal;
+namespace Shopper\Http\Livewire\Settings\Legal;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Framework\Traits\WithLegalActions;
+use Shopper\Core\Traits\Attributes\WithLegalActions;
 
 class Refund extends Component
 {
@@ -26,7 +26,7 @@ class Refund extends Component
 
     public function store(): void
     {
-        $this->storeValues($this->title, $this->content, $this->isEnabled);
+        $this->storeValues(__($this->title), $this->content, $this->isEnabled);
 
         Notification::make()
             ->title(__('shopper::layout.status.updated'))

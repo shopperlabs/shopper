@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Models\User\Permission;
-use Shopper\Framework\Models\User\Role;
+use Shopper\Core\Models\Permission;
+use Shopper\Core\Models\Role;
 
 class CreatePermission extends ModalComponent
 {

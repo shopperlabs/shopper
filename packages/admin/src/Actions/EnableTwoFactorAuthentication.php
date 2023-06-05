@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Actions;
 
 use Illuminate\Support\Collection;
-use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
+use Shopper\Contracts\TwoFactorAuthenticationProvider;
 
 final class EnableTwoFactorAuthentication
 {

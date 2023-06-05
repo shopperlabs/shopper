@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products\Form;
+namespace Shopper\Http\Livewire\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 
 class Seo extends Component
 {

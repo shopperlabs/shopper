@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire;
+namespace Shopper\Http\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;

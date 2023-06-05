@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products;
+namespace Shopper\Http\Livewire\Products;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 
 class Browse extends Component
 {

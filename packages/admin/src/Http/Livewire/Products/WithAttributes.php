@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Products;
+namespace Shopper\Http\Livewire\Products;
 
 use Carbon\Carbon;
 

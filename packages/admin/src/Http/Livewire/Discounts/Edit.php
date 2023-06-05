@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Discounts;
+namespace Shopper\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\Shop\Discount;
-use Shopper\Framework\Models\Shop\DiscountDetail;
-use Shopper\Framework\Models\Traits\HasPrice;
-use Shopper\Framework\Models\User\User;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\DiscountDetail;
+use Shopper\Core\Models\User;
+use Shopper\Core\Traits\HasPrice;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\UserRepository;
 
 class Edit extends AbstractBaseComponent
 {
@@ -136,7 +136,7 @@ class Edit extends AbstractBaseComponent
                     'discountable_id' => $productId,
                 ], [
                     'condition' => 'apply_to',
-                    'discountable_type' => config('shopper.system.models.product'),
+                    'discountable_type' => config('shopper.models.product'),
                 ]);
             }
         } else {

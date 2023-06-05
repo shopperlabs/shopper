@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Http\Livewire\Products\WithAttributes;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
+use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\InventoryRepository;
 
 class AddVariant extends ModalComponent
 {
@@ -67,7 +67,7 @@ class AddVariant extends ModalComponent
 
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
-                fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.system.storage.disks.uploads'))
+                fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.core.storage.collection_name'))
             );
         }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Controllers\Auth;
+namespace Shopper\Http\Controllers\Auth;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -10,8 +10,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rules\Password;
-use Shopper\Framework\Rules\RealEmailValidator;
-use Shopper\Framework\Shopper;
+use Shopper\Core\Rules\RealEmailValidator;
+use Shopper\Core\Shopper;
 
 class ResetPasswordController extends Controller
 {

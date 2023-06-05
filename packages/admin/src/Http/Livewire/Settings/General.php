@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings;
+namespace Shopper\Http\Livewire\Settings;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Shopper\Framework\Models\System\Country;
-use Shopper\Framework\Models\System\Currency;
-use Shopper\Framework\Models\System\Setting;
+use Shopper\Core\Models\Country;
+use Shopper\Core\Models\Currency;
+use Shopper\Core\Models\Setting;
 
 class General extends Component
 {
@@ -57,7 +57,7 @@ class General extends Component
 
     public function mount(): void
     {
-        $settings = Setting::whereIn('key', [
+        $settings = Setting::query()->whereIn('key', [
             'shop_name',
             'shop_legal_name',
             'shop_email',
@@ -114,14 +114,14 @@ class General extends Component
         if ($this->logo) {
             $this->createUpdateSetting(
                 key: 'shop_logo',
-                value: $this->logo->store('/', config('shopper.system.storage.disks.uploads'))
+                value: $this->logo->store('/', config('shopper.core.storage.collection_name'))
             );
         }
 
         if ($this->cover) {
             $this->createUpdateSetting(
                 key: 'shop_cover',
-                value: $this->cover->store('/', config('shopper.system.storage.disks.uploads'))
+                value: $this->cover->store('/', config('shopper.core.storage.collection_name'))
             );
         }
 

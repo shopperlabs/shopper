@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Controllers\Auth;
+namespace Shopper\Http\Controllers\Auth;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\View\View;
@@ -14,19 +14,14 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Support\Facades\Auth;
-use Shopper\Framework\Actions\AttemptToAuthenticate;
-use Shopper\Framework\Actions\RedirectIfTwoFactorAuthenticatable;
-use Shopper\Framework\Shopper;
+use Shopper\Actions\AttemptToAuthenticate;
+use Shopper\Actions\RedirectIfTwoFactorAuthenticatable;
+use Shopper\Core\Shopper;
 
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
     use ValidatesRequests;
-
-    public function __construct()
-    {
-        $this->middleware('shopper.guest')->except('logout');
-    }
 
     public function showLoginForm(): View
     {

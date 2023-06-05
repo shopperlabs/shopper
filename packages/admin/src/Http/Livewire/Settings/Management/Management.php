@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Management;
+namespace Shopper\Http\Livewire\Settings\Management;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Models\User\Role;
-use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Core\Models\Role;
+use Shopper\Core\Repositories\UserRepository;
 
 class Management extends Component
 {
@@ -36,13 +36,13 @@ class Management extends Component
         return view('shopper::livewire.settings.management.index', [
             'roles' => Role::query()
                 ->with('users')
-                ->where('name', '<>', config('shopper.system.users.default_role'))
+                ->where('name', '<>', config('shopper.core.users.default_role'))
                 ->orderBy('created_at')
                 ->get(),
             'users' => (new UserRepository())
                 ->makeModel()
                 ->whereHas('roles', function (Builder $query) {
-                    $query->whereIn('name', [config('shopper.system.users.admin_role'), 'manager']);
+                    $query->whereIn('name', [config('shopper.core.users.admin_role'), 'manager']);
                 })
                 ->orderBy('created_at', 'desc')
                 ->paginate(3),

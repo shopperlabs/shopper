@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Tables;
+namespace Shopper\Http\Livewire\Tables;
 
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views;
-use Shopper\Framework\Exceptions\GeneralException;
-use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Exceptions\GeneralException;
+use Shopper\Core\Repositories\Ecommerce\BrandRepository;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 
 class ProductsTable extends DataTableComponent
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Events\Products\ProductRemoved;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Events\Products\Deleted as ProductDeleted;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 
 class DeleteProduct extends ModalComponent
 {
@@ -28,7 +28,7 @@ class DeleteProduct extends ModalComponent
     {
         $product = (new ProductRepository())->getById($this->productId);
 
-        event(new ProductRemoved($product));
+        event(new ProductDeleted($product));
 
         if ($this->type === 'product') {
             $product->delete();

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Management;
+namespace Shopper\Http\Livewire\Settings\Management;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Models\User\Role;
-use Shopper\Framework\Notifications\AdminSendCredentials;
-use Shopper\Framework\Repositories\UserRepository;
-use Shopper\Framework\Rules\Phone;
-use Shopper\Framework\Rules\RealEmailValidator;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Models\Role;
+use Shopper\Notifications\AdminSendCredentials;
+use Shopper\Core\Repositories\UserRepository;
+use Shopper\Core\Rules\Phone;
+use Shopper\Core\Rules\RealEmailValidator;
 
 class CreateAdminUser extends AbstractBaseComponent
 {
@@ -51,7 +51,7 @@ class CreateAdminUser extends AbstractBaseComponent
     {
         $chooseRole = Role::findById($id);
 
-        $this->is_admin = $chooseRole->name === config('shopper.system.users.admin_role');
+        $this->is_admin = $chooseRole->name === config('shopper.core.users.admin_role');
     }
 
     public function rules(): array
@@ -120,7 +120,7 @@ class CreateAdminUser extends AbstractBaseComponent
         return view('shopper::livewire.settings.management.create', [
             'roles' => Role::query()
                 ->select(['id', 'display_name', 'name'])
-                ->where('name', '<>', config('shopper.system.users.default_role'))
+                ->where('name', '<>', config('shopper.core.users.default_role'))
                 ->get(),
         ]);
     }

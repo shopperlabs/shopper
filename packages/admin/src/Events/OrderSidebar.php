@@ -7,9 +7,9 @@ namespace Shopper\Events;
 use Maatwebsite\Sidebar\Group;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
-use Shopper\Framework\Models\Shop\Order\Order;
-use Shopper\Framework\Models\Shop\Order\OrderStatus;
-use Shopper\Framework\Sidebar\AbstractAdminSidebar;
+use Shopper\Core\Models\Order;
+use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Sidebar\AbstractAdminSidebar;
 
 class OrderSidebar extends AbstractAdminSidebar
 {

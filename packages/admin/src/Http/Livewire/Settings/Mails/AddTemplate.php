@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Settings\Mails;
+namespace Shopper\Http\Livewire\Settings\Mails;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Framework\Services\Mailable;
+use Shopper\Services\Mailable;
 
 class AddTemplate extends Component
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Discounts;
+namespace Shopper\Http\Livewire\Discounts;
 
 use Carbon\Carbon;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\UserRepository;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\UserRepository;
 
 trait WithDiscountActions
 {

@@ -3,17 +3,16 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-use Shopper\Framework\Http\Controllers\Auth\ForgotPasswordController;
-use Shopper\Framework\Http\Controllers\Auth\LoginController;
-use Shopper\Framework\Http\Controllers\Auth\ResetPasswordController;
-use Shopper\Framework\Http\Controllers\Auth\TwoFactorAuthenticatedController;
+use Shopper\Http\Controllers\Auth\ForgotPasswordController;
+use Shopper\Http\Controllers\Auth\LoginController;
+use Shopper\Http\Controllers\Auth\ResetPasswordController;
+use Shopper\Http\Controllers\Auth\TwoFactorAuthenticatedController;
+use Shopper\Http\Livewire\Pages\Auth\Login;
 
 Route::redirect('/', shopper_prefix() . '/login', 301);
 
 // Authentication...
-Route::get('/login', [LoginController::class, 'showLoginForm'])
-    ->name('login-view')
-    ->name('login');
+Route::get('/login', Login::class)->name('login');
 
 Route::post('/login', [LoginController::class, 'login'])
     ->name('post.login');

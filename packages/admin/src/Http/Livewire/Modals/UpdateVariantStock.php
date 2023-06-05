@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Modals;
+namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\WithPagination;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
-use Shopper\Framework\Repositories\InventoryHistoryRepository;
-use Shopper\Framework\Repositories\InventoryRepository;
-use Shopper\Framework\Traits\WithStock;
+use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\InventoryHistoryRepository;
+use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Core\Traits\Attributes\WithStock;
 
 class UpdateVariantStock extends ModalComponent
 {

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Collections;
+namespace Shopper\Http\Livewire\Collections;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
-use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Traits\WithConditions;
-use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Core\Traits\Attributes\WithConditions;
+use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {
@@ -93,7 +93,7 @@ class Edit extends AbstractBaseComponent
         if ($this->fileUrl) {
             $this->collection
                 ->addMedia($this->fileUrl)
-                ->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+                ->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         session()->flash('success', __('Collection successfully updated!'));

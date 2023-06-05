@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Framework\Http\Livewire\Collections;
+namespace Shopper\Http\Livewire\Collections;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Framework\Models\Shop\Product\CollectionRule;
-use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Framework\Traits\WithConditions;
-use Shopper\Framework\Traits\WithSeoAttributes;
+use Shopper\Core\Models\CollectionRule;
+use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Core\Traits\Attributes\WithConditions;
+use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 
 class Create extends Component
 {
@@ -74,7 +74,7 @@ class Create extends Component
         ]);
 
         if ($this->fileUrl) {
-            $collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         if ($this->type === 'auto' && count($this->conditions) > 0 && $this->rule) {
