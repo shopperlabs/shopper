@@ -70,7 +70,7 @@
 
     <div class="mt-6 pb-10">
         <div x-show="currentTab === 'role'" class="bg-white shadow overflow-hidden sm:rounded-md dark:bg-secondary-800">
-            @if(config('shopper.system.users.admin_role') === $role->name)
+            @if(config('shopper.core.users.admin_role') === $role->name)
                 <div class="pt-5 px-4 sm:px-6">
                     <div class="rounded-md bg-info-500 bg-opacity-10 p-4">
                         <div class="flex">

@@ -22,7 +22,7 @@ final class ShopperExceptionHandler extends ExceptionHandler
 
     public function render($request, Throwable $e): Response
     {
-        if ($request->user() && $request->user()->hasRole(config('shopper.system.users.admin_role'))) {
+        if ($request->user() && $request->user()->hasRole(config('shopper.core.users.admin_role'))) {
             return response()->view(
                 'shopper::errors.template',
                 ['exception' => $e]

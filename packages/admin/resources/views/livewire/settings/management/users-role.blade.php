@@ -61,7 +61,7 @@
                                 </span>
                             </td>
                             <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400 text-right">
-                                {{ $user->hasRole(config('shopper.system.users.admin_role')) ? __('shopper::words.full') : __('shopper::words.limited') }}
+                                {{ $user->hasRole(config('shopper.core.users.admin_role')) ? __('shopper::words.full') : __('shopper::words.limited') }}
                             </td>
                             <td class="pr-6 text-right">
                                 @if($user->id === auth()->id())
