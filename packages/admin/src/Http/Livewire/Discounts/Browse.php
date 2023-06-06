@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Framework\Models\Shop\Discount;
+use Shopper\Core\Models\Discount;
 
 class Browse extends Component
 {

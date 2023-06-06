@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Shopper\Framework\Http\Livewire;
+use Shopper\Http\Livewire;
 
 return [
 
     /*
     |--------------------------------------------------------------------------
-    | Livewire Components
+    | Livewire Pages Components
     |--------------------------------------------------------------------------
     |
     | Below you reference all the Livewire components that should be loaded
@@ -16,8 +16,8 @@ return [
     |
     */
 
-    'dashboard' => Livewire\Dashboard::class,
-    'initialization' => Livewire\Initialization::class,
+    'dashboard' => Livewire\Pages\Dashboard::class,
+    'initialization' => Livewire\Pages\Initialization::class,
 
     /*
     |--------------------------------------------------------------------------

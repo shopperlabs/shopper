@@ -10,7 +10,7 @@ use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Traits\HasPrice;
-use Shopper\Framework\Models\User\User;
+use Shopper\Core\Models\User;
 
 class Create extends AbstractBaseComponent
 {

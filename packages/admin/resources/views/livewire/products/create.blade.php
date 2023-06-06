@@ -404,7 +404,7 @@
                             <x-select wire:model.defer="collection_ids" id="collection_ids" multiselect>
                                 @foreach($collections as $collection)
                                     <x-select.user-option
-                                        :src="$collection->getFirstMediaUrl(config('shopper.system.storage.disks.uploads'))"
+                                        :src="$collection->getFirstMediaUrl(config('shopper.core.storage.collection_name'))"
                                         :label="$collection->name"
                                         :value="$collection->id"
                                     />

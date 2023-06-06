@@ -29,7 +29,7 @@ class Show extends Component
 
     public function cancelOrder(): void
     {
-        $this->order->update(['status' => OrderStatus::CANCELLED]);
+        $this->order->update(['status' => OrderStatus::CANCELLED->value]);
 
         // TODO dispatch new event
 
@@ -57,7 +57,7 @@ class Show extends Component
 
     public function register(): void
     {
-        $this->order->update(['status' => OrderStatus::REGISTER]);
+        $this->order->update(['status' => OrderStatus::REGISTER->value]);
 
         // TODO dispatch new event
 
@@ -70,7 +70,7 @@ class Show extends Component
 
     public function markPaid(): void
     {
-        $this->order->update(['status' => OrderStatus::PAID]);
+        $this->order->update(['status' => OrderStatus::PAID->value]);
 
         // TODO dispatch new event
 
@@ -83,7 +83,7 @@ class Show extends Component
 
     public function markComplete(): void
     {
-        $this->order->update(['status' => OrderStatus::COMPLETED]);
+        $this->order->update(['status' => OrderStatus::COMPLETED->value]);
 
         // TODO dispatch new event
 

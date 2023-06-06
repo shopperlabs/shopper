@@ -15,7 +15,7 @@ class OrderSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
-        $count = Order::query()->where('status', OrderStatus::PENDING)->count();
+        $count = Order::query()->where('status', OrderStatus::PENDING->value)->count();
 
         $menu->group(__('shopper::layout.sidebar.shop'), function (Group $group) use ($count) {
             $group->weight(20);

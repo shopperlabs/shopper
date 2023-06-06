@@ -7,7 +7,7 @@ namespace Shopper\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Shopper\Framework\Models\System\Setting;
+use Shopper\Core\Models\Setting;
 
 class Dashboard
 {

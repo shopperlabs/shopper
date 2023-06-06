@@ -3,13 +3,12 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-use Shopper\Http\Controllers\DashboardController;
 use Shopper\Http\Controllers\DiscountController;
 use Shopper\Http\Controllers\Ecommerce;
 use Shopper\Http\Controllers\InventoryHistoryController;
 use Shopper\Http\Controllers\ReviewController;
 
-Route::get('/dashboard', DashboardController::class)->name('dashboard');
+Route::get('/dashboard', config('shopper.components.dashboard'))->name('dashboard');
 Route::view('/profile', 'shopper::pages.account.profile')->name('profile');
 
 Route::resource('brands', Ecommerce\BrandController::class);

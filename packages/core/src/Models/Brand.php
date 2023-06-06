@@ -44,6 +44,6 @@ class Brand extends Model implements SpatieHasMedia
 
     public function products(): HasMany
     {
-        return $this->hasMany(config('shopper.system.models.product'));
+        return $this->hasMany(config('shopper.models.product'));
     }
 }

@@ -61,6 +61,6 @@ class CollectionRule extends Model
 
     public function collection(): BelongsTo
     {
-        return $this->belongsTo(config('shopper.system.models.collection'), 'collection_id');
+        return $this->belongsTo(config('shopper.models.collection'), 'collection_id');
     }
 }

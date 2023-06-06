@@ -48,8 +48,6 @@ class Login extends Component
             ]);
         }
 
-        session()->regenerate();
-
         $this->redirectRoute('shopper.dashboard');
     }
 

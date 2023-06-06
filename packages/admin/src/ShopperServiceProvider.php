@@ -19,7 +19,6 @@ use Shopper\Events\ShopSidebar;
 use Shopper\Http\Composers\GlobalComposer;
 use Shopper\Http\Composers\SidebarCreator;
 use Shopper\Http\Livewire\Pages\Auth;
-use Shopper\Http\Middleware\Authenticate;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -104,16 +103,14 @@ class ShopperServiceProvider extends PackageServiceProvider
     {
         $prefix = config('shopper.components.prefix', 'shopper');
 
-        Livewire::listen('component.hydrate', function ($component) {
-            $this->app->singleton(Component::class, fn () => $component);
-        });
+        Livewire::listen('component.hydrate', fn ($component) =>
+            $this->app->singleton(Component::class, fn () => $component)
+        );
 
-        Livewire::addPersistentMiddleware([Authenticate::class]);
-
-        foreach (array_merge(config('shopper.components.livewire', []), [
-            'shopper.admin.auth.login' => Auth\Login::class,
-            'shopper.admin.auth.password' => Auth\ForgotPassword::class,
-            'shopper.admin.auth.password-reset' => Auth\ResetPassword::class,
+        foreach (array_merge(config('shopper.components', []), [
+            'auth.login' => Auth\Login::class,
+            'auth.password' => Auth\ForgotPassword::class,
+            'auth.password-reset' => Auth\ResetPassword::class,
         ]) as $alias => $component) {
             $alias = $prefix ? "$prefix-$alias" : $alias;
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
-use Shopper\Http\Livewire\Initialization;
+use Shopper\Http\Livewire\Pages\Initialization;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\Dashboard;
 use Shopper\Http\Middleware\HasConfiguration;

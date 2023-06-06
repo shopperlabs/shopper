@@ -45,7 +45,7 @@ class OrderRefund extends Model
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
     }
 
     public function order(): BelongsTo
@@ -58,7 +58,7 @@ class OrderRefund extends Model
         $this->setRawAttributes(
             array_merge(
                 $this->attributes,
-                ['status' => OrderRefundStatus::PENDING]
+                ['status' => OrderRefundStatus::PENDING->value()]
             ),
             true
         );

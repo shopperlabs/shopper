@@ -22,7 +22,7 @@
             <div role="list" class="text-sm font-medium text-secondary-500 divide-y divide-secondary-200 dark:text-secondary-400 dark:divide-secondary-700 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-5 lg:divide-none" wire:poll.visible>
                 @forelse($relatedProducts as $relatedProduct)
                     <div class="flex py-6 space-x-6 lg:py-0">
-                        <img src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="{{ $relatedProduct->name }}" class="flex-none w-20 h-20 bg-secondary-100 dark:bg-secondary-900 rounded-md object-center object-cover">
+                        <img src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $relatedProduct->name }}" class="flex-none w-20 h-20 bg-secondary-100 dark:bg-secondary-900 rounded-md object-center object-cover">
                         <div class="flex-auto space-y-2">
                             <h3 class="text-secondary-900 dark:text-white">
                                 <a href="{{ route('shopper.products.edit', $relatedProduct) }}">

@@ -47,8 +47,8 @@
                                         <div class="w-full max-w-2xl whitespace-nowrap flex items-center space-x-3 lg:pl-2">
                                             <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $variant->is_visible ? 'bg-green-600': 'bg-secondary-400' }}"></div>
                                             <div class="truncate flex items-center">
-                                                @if($variant->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
-                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $variant->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />
+                                                @if($variant->getFirstMediaUrl(config('shopper.core.storage.collection_name')))
+                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $variant->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="" />
                                                 @else
                                                     <div class="bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center h-8 w-8 rounded">
                                                         <x-heroicon-o-photograph class="w-5 h-5 text-secondary-400" />

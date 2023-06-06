@@ -72,7 +72,7 @@
                     <div class="p-4 sm:p-5">
                         <x-shopper::label :value="__('shopper::layout.forms.label.image_preview')" />
                         <div class="mt-1">
-                            <livewire:shopper-forms.uploads.single :media="$brand->getFirstMedia(config('shopper.system.storage.disks.uploads'))" />
+                            <livewire:shopper-forms.uploads.single :media="$brand->getFirstMedia(config('shopper.core.storage.collection_name'))" />
                         </div>
                     </div>
                 </div>

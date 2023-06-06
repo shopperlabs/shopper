@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Shopper\Framework\Models\Shop\Inventory\InventoryHistory;
+use Shopper\Core\Models\InventoryHistory;
 
 class ProductInventoryExport implements FromQuery, WithHeadings, WithMapping
 {

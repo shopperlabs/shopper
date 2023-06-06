@@ -69,7 +69,7 @@ class OrdersTable extends DataTableComponent
             'status' => Views\Filters\SelectFilter::make(__('shopper::layout.forms.label.status'))
                 ->options(array_merge(
                     ['' => __('shopper::layout.forms.label.any')],
-                    OrderStatus::values()
+                    Order::statusValues()
                 ))
                 ->filter(fn (Builder $query, $status) => $query->where('status', $status)),
             'created_at' => Views\Filters\DateFilter::make(__('shopper::words.date'))

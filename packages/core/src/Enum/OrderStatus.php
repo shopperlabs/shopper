@@ -4,25 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
-enum OrderStatus
+enum OrderStatus: string
 {
-    case PENDING;
-    case REGISTER;
-    case PAID;
-    case COMPLETED;
-    case CANCELLED;
-
-    public function value(): string
-    {
-        return match ($this)
-        {
-            self::PENDING => __('shopper::status.pending'),
-            self::REGISTER => __('shopper::status.registered'),
-            self::COMPLETED => __('shopper::status.completed'),
-            self::CANCELLED => __('shopper::status.cancelled'),
-            self::PAID => __('shopper::status.paid'),
-        };
-    }
+    case PENDING = 'pending';
+    case REGISTER = 'registered';
+    case PAID = 'completed';
+    case COMPLETED = 'cancelled';
+    case CANCELLED = 'paid';
 
     public function badge(): string
     {
@@ -35,14 +23,14 @@ enum OrderStatus
         };
     }
 
-    public static function values(): array
+    public function translateValue(): string
     {
-        return [
-            OrderStatus::PENDING->value() => __('shopper::status.pending'),
-            OrderStatus::REGISTER->value() => __('shopper::status.registered'),
-            OrderStatus::COMPLETED->value() => __('shopper::status.completed'),
-            OrderStatus::CANCELLED->value() => __('shopper::status.cancelled'),
-            OrderStatus::PAID->value() => __('shopper::status.paid'),
-        ];
+        return match ($this) {
+            self::PENDING => __('shopper::status.pending'),
+            self::REGISTER => __('shopper::status.registered'),
+            self::COMPLETED => __('shopper::status.completed'),
+            self::CANCELLED => __('shopper::status.cancelled'),
+            self::PAID => __('shopper::status.paid'),
+        };
     }
 }

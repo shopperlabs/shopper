@@ -36,9 +36,9 @@
                     @foreach($products as $product)
                         <div class="flex items-center justify-between py-2">
                             <div class="flex items-center">
-                                @if($product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
+                                @if($product->getFirstMediaUrl(config('shopper.core.storage.collection_name')))
                                     <span class="shrink-0 h-10 w-10 rounded-md overflow-hidden">
-                                        <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="{{ $product->name }}" />
+                                        <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $product->name }}" />
                                     </span>
                                 @else
                                     <span class="flex items-center justify-center h-10 w-10 bg-secondary-100 text-secondary-300 rounded-md dark:bg-secondary-700 dark:text-secondary-400">

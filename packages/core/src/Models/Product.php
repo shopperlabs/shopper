@@ -100,7 +100,7 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
 
     public function variations(): HasMany
     {
-        return $this->hasMany(config('shopper.system.models.product'), 'parent_id');
+        return $this->hasMany(config('shopper.models.product'), 'parent_id');
     }
 
     public function channels(): MorphToMany
@@ -110,7 +110,7 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
 
     public function relatedProducts(): MorphToMany
     {
-        return $this->morphedByMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
+        return $this->morphedByMany(config('shopper.models.product'), 'productable', 'product_has_relations');
     }
 
     public function categories(): MorphToMany

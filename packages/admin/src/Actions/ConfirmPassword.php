@@ -12,7 +12,7 @@ final class ConfirmPassword
     public function __invoke(StatefulGuard $guard, $user, string $password): bool
     {
         return $guard->validate([
-            Shopper::username() => $user->{Shopper::username()},
+            'email' => $user->email,
             'password' => $password,
         ]);
     }

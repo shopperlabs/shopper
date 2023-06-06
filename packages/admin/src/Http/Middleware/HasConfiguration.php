@@ -6,7 +6,7 @@ namespace Shopper\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Shopper\Framework\Models\System\Setting;
+use Shopper\Core\Models\Setting;
 
 class HasConfiguration
 {

@@ -1,8 +1,8 @@
 <div class="flex items-center space-x-3 lg:pl-2 truncate">
     <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $row->approved ? 'bg-green-600': 'bg-secondary-200' }}"></div>
     <a href="{{ route('shopper.reviews.show', $row) }}" class="flex items-center group">
-        @if($row->reviewrateable->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
-            <img class="h-8 w-8 rounded object-cover object-center" src="{{ $row->reviewrateable->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="">
+        @if($row->reviewrateable->getFirstMediaUrl(config('shopper.core.storage.collection_name')))
+            <img class="h-8 w-8 rounded object-cover object-center" src="{{ $row->reviewrateable->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="">
         @else
             <div class="bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center h-8 w-8 rounded">
                 <x-heroicon-o-photograph class="w-5 h-5 text-secondary-400" />

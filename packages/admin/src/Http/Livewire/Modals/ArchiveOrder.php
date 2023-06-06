@@ -6,7 +6,7 @@ namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Framework\Models\Shop\Order\Order;
+use Shopper\Core\Models\Order;
 
 class ArchiveOrder extends ModalComponent
 {

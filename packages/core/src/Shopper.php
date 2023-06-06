@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core;
 
-use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Auth;
 
 final class Shopper
@@ -14,7 +14,7 @@ final class Shopper
         return '2.0';
     }
 
-    public static function auth(): Guard
+    public static function auth(): StatefulGuard
     {
         return Auth::guard(config('shopper.auth.guard'));
     }

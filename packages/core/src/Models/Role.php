@@ -10,6 +10,6 @@ class Role extends SpatieRole
 {
     public function isAdmin(): bool
     {
-        return $this->name === config('shopper.system.users.admin_role');
+        return $this->name === config('shopper.core.users.admin_role');
     }
 }

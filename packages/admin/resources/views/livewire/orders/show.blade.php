@@ -13,8 +13,8 @@
                     </h3>
                     <div class="p-1 flex items-center divide-x-2 divide-secondary-200 dark:divide-secondary-700">
                         <div class="flex items-center space-x-2 pr-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 border-2 rounded-full text-xs font-medium {{ $order->status_classes }}">
-                                {{ $order->formatted_status }}
+                            <span class="inline-flex items-center px-2.5 py-0.5 border-2 rounded-full text-xs font-medium {{ $order->status->badge() }}">
+                                {{ $order->status->translateValue() }}
                             </span>
                         </div>
                         <div class="flex items-center px-4">
@@ -125,8 +125,8 @@
                                     <div class="min-w-0 flex-1 flex items-center">
                                         <div class="shrink-0">
                                             <div class="shrink-0 h-10 w-10">
-                                                @if($item->product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
-                                                    <img class="h-10 w-10 rounded-md object-cover" src="{{ $item->product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="{{ $item->id }}" />
+                                                @if($item->product->getFirstMediaUrl(config('shopper.core.storage.collection_name')))
+                                                    <img class="h-10 w-10 rounded-md object-cover" src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $item->id }}" />
                                                 @else
                                                     <span class="flex items-center justify-center h-10 w-10 bg-secondary-100 text-secondary-400 rounded-md dark:bg-secondary-800 dark:text-secondary-500">
                                                         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Http\Livewire;
+namespace Shopper\Http\Livewire\Pages;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Core\Models\Country;
@@ -173,7 +174,7 @@ class Initialization extends Component
     {
         (new InventoryRepository())->create([
             'name' => $this->shop_name,
-            'code' => str_slug($this->shop_name),
+            'code' => Str::slug($this->shop_name),
             'email' => $this->shop_email,
             'street_address' => $this->shop_street_address,
             'zipcode' => $this->shop_zipcode,

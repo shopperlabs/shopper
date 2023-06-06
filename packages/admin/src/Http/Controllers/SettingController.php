@@ -6,7 +6,7 @@ namespace Shopper\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controller;
-use Shopper\Framework\Models\User\Role;
+use Shopper\Core\Models\Role;
 
 class SettingController extends Controller
 {

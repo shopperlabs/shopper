@@ -68,9 +68,20 @@ class Order extends Model
         return $this->items->sum('total');
     }
 
+    public static function statusValues(): array
+    {
+        return [
+            OrderStatus::PENDING->value => __('shopper::status.pending'),
+            OrderStatus::REGISTER->value => __('shopper::status.registered'),
+            OrderStatus::COMPLETED->value => __('shopper::status.completed'),
+            OrderStatus::CANCELLED->value => __('shopper::status.cancelled'),
+            OrderStatus::PAID->value => __('shopper::status.paid'),
+        ];
+    }
+
     public function canBeCancelled(): bool
     {
-        if ($this->status === OrderStatus::COMPLETED || $this->status === OrderStatus::PAID) {
+        if ($this->status === OrderStatus::COMPLETED->value || $this->status === OrderStatus::PAID->value) {
             return false;
         }
 
@@ -79,7 +90,7 @@ class Order extends Model
 
     public function isNotCancelled(): bool
     {
-        if ($this->status === OrderStatus::CANCELLED) {
+        if ($this->status === OrderStatus::CANCELLED->value) {
             return false;
         }
 
@@ -88,22 +99,22 @@ class Order extends Model
 
     public function isPending(): bool
     {
-        return $this->status === OrderStatus::PENDING;
+        return $this->status === OrderStatus::PENDING->value;
     }
 
     public function isRegister(): bool
     {
-        return $this->status === OrderStatus::REGISTER;
+        return $this->status === OrderStatus::REGISTER->value;
     }
 
     public function isPaid(): bool
     {
-        return $this->status === OrderStatus::PAID;
+        return $this->status === OrderStatus::PAID->value;
     }
 
     public function isCompleted(): bool
     {
-        return $this->status === OrderStatus::COMPLETED;
+        return $this->status === OrderStatus::COMPLETED->value;
     }
 
     public function fullPriceWithShipping(): int
@@ -141,9 +152,7 @@ class Order extends Model
         $this->setRawAttributes(
             array_merge(
                 $this->attributes,
-                [
-                    'status' => OrderStatus::PENDING,
-                ]
+                ['status' => OrderStatus::PENDING->value]
             ),
             true
         );

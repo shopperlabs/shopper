@@ -156,7 +156,7 @@ class ReviewsTable extends DataTableComponent
     {
         return Review::query()
             ->with(['reviewrateable', 'reviewrateable.media', 'author'])
-            ->whereHasMorph('reviewrateable', config('shopper.system.models.product'), function (Builder $query) {
+            ->whereHasMorph('reviewrateable', config('shopper.models.product'), function (Builder $query) {
                 $query->when(
                     $this->columnSearch['name'] ?? null,
                     fn (Builder $query, $name) => $query->where('name', 'like', '%' . $name . '%')

@@ -37,6 +37,6 @@ class Channel extends Model
 
     public function products(): MorphToMany
     {
-        return $this->morphToMany(config('shopper.system.models.product'), 'productable', 'product_has_relations');
+        return $this->morphToMany(config('shopper.models.product'), 'productable', 'product_has_relations');
     }
 }
