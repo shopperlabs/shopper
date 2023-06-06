@@ -49,7 +49,6 @@ class General extends Component
         return view('shopper::livewire.settings.payments.general', [
             'methods' => PaymentMethod::query()
                 ->where('title', 'like', '%' . $this->search . '%')
-                ->where('slug', '<>', 'stripe')
                 ->orderByDesc('title')
                 ->paginate(6),
         ]);
