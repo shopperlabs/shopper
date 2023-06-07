@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core;
 
-use Illuminate\Contracts\Auth\StatefulGuard;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Auth\Guard;
 
 final class Shopper
 {
@@ -14,9 +13,9 @@ final class Shopper
         return '2.0';
     }
 
-    public static function auth(): StatefulGuard
+    public static function auth(): Guard
     {
-        return Auth::guard(config('shopper.auth.guard'));
+        return auth()->guard(config('shopper.auth.guard'));
     }
 
     public static function prefix(): string

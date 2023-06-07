@@ -27,8 +27,6 @@ return new class extends Migration
                 $table->timestamp('last_login_at')->nullable();
                 $table->string('last_login_ip')->nullable();
             });
-
-            $table->softDeletes();
         });
     }
 
@@ -55,7 +53,6 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('password')->change();
-            $table->dropSoftDeletes();
         });
     }
 };

@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use Shopper\Core\Models\User;
 
 final class UserCommand extends Command
 {
@@ -45,7 +46,7 @@ final class UserCommand extends Command
             'email_verified_at' => now()->toDateTimeString(),
             'last_login_ip' => request()->getClientIp(),
         ];
-        $model = config('auth.providers.users.model');
+        $model = User::class;
 
         try {
             $user = tap((new $model())->forceFill($userData))->save();

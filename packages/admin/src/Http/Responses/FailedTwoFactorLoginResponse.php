@@ -23,6 +23,8 @@ class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContra
             throw ValidationException::withMessages(['code' => [$message]]);
         }
 
-        return redirect()->route('shopper.login')->withErrors(['email' => $message]);
+        return redirect()
+            ->route('shopper.login')
+            ->withErrors(['email' => $message]);
     }
 }

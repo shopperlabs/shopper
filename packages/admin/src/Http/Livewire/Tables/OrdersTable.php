@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views;
 use Shopper\Core\Models\Order;
-use Shopper\Core\Enum\OrderStatus;
 
 class OrdersTable extends DataTableComponent
 {

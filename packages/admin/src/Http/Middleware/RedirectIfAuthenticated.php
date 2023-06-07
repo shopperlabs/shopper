@@ -6,13 +6,13 @@ namespace Shopper\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Shopper\Core\Shopper;
 
 class RedirectIfAuthenticated
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard(config('shopper.auth.guard'))->check()) {
+        if (Shopper::auth()->check()) {
             return redirect()->route('shopper.dashboard');
         }
 

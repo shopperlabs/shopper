@@ -8,12 +8,15 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Shopper\Core\Models\Setting;
+use Shopper\Core\Models\User;
+use Shopper\Core\Shopper;
 
 class Dashboard
 {
     public function handle(Request $request, Closure $next)
     {
-        $user = auth(config('shopper.auth.guard'))->user();
+        /** @var User $user */
+        $user = Shopper::auth()->user();
 
         if (! $user->isAdmin() && ! $user->hasPermissionTo('access_dashboard')) {
             abort(403, __('Unauthorized'));

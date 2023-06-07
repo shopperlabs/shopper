@@ -5,6 +5,7 @@ namespace Shopper\Http\Livewire\Pages\Auth;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Shopper\Core\Rules\RealEmailValidator;
@@ -12,6 +13,7 @@ use Shopper\Core\Shopper;
 
 class Login extends Component
 {
+    use AuthorizesRequests;
     use WithRateLimiting;
 
     public string $email = '';
@@ -30,7 +32,7 @@ class Login extends Component
 
         [$throwable, ] = useTryCatch(fn () =>$this->rateLimit(5));
 
-        if ($throwable && $throwable instanceof TooManyRequestsException) {
+        if ($throwable instanceof TooManyRequestsException) {
             throw ValidationException::withMessages([
                 'email' => __('shopper::messages.login.throttled', [
                     'seconds' => $throwable->secondsUntilAvailable,
@@ -47,6 +49,8 @@ class Login extends Component
                 'email' => __('shopper::messages.login.failed'),
             ]);
         }
+
+        session()->regenerate();
 
         $this->redirectRoute('shopper.dashboard');
     }

@@ -128,7 +128,7 @@ class ReviewsTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $query, $value) => $query->where('approved', $value === 'yes')),
+                ->filter(fn (Builder $query, string $value) => $query->where('approved', $value === 'yes')),
         ];
     }
 
@@ -137,12 +137,6 @@ class ReviewsTable extends DataTableComponent
         return [
             Views\Column::make(__('shopper::words.product'), 'reviewrateable_id')
                 ->sortable()
-                ->secondaryHeader(function () {
-                    return view('shopper::livewire.tables.cells.input-search', [
-                        'field' => 'name',
-                        'columnSearch' => $this->search,
-                    ]);
-                })
                 ->view('shopper::livewire.tables.cells.reviews.product'),
             Views\Column::make(__('shopper::pages/products.reviews.reviewer'), 'author_id')
                 ->view('shopper::livewire.tables.cells.reviews.author'),
@@ -159,7 +153,7 @@ class ReviewsTable extends DataTableComponent
             ->whereHasMorph('reviewrateable', config('shopper.models.product'), function (Builder $query) {
                 $query->when(
                     $this->columnSearch['name'] ?? null,
-                    fn (Builder $query, $name) => $query->where('name', 'like', '%' . $name . '%')
+                    fn (Builder $query, string $name) => $query->where('name', 'like', '%' . $name . '%')
                 );
             });
     }

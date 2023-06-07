@@ -11,8 +11,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
-use Shopper\Framework\Http\Requests\TwoFactorLoginRequest;
-use Shopper\Framework\Http\Responses\FailedTwoFactorLoginResponse;
+use Shopper\Http\Requests\TwoFactorLoginRequest;
+use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 
 class TwoFactorAuthenticatedController extends Controller
 {

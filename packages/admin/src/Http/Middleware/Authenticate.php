@@ -9,10 +9,15 @@ class Authenticate extends Middleware
     protected function authenticate($request, array $guards): void
     {
         $guardName = config('shopper.auth.guard');
+        $guard = $this->auth->guard($guardName);
 
-        $this->auth->guard($guardName)->check()
-            ? $this->auth->shouldUse($guardName)
-            : $this->unauthenticated($request, $guards);
+        if (! $guard->check()) {
+            $this->unauthenticated($request, $guards);
+
+            return;
+        }
+
+        $this->auth->shouldUse($guardName);
     }
 
     protected function redirectTo($request): string

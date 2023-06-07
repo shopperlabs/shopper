@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Shopper\Http\Livewire;
+use Shopper\Http\Livewire\Pages;
+use Shopper\Http\Livewire\Components;
 
 return [
 
@@ -16,8 +18,7 @@ return [
     |
     */
 
-    'dashboard' => Livewire\Pages\Dashboard::class,
-    'initialization' => Livewire\Pages\Initialization::class,
+    'dashboard' => Pages\Dashboard::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -25,11 +26,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'account.devices' => Livewire\Account\Devices::class,
-    'account.dropdown' => Livewire\Account\Dropdown::class,
-    'account.password' => Livewire\Account\Password::class,
-    'account.profile' => Livewire\Account\Profile::class,
-    'account.two-factor' => Livewire\Account\TwoFactor::class,
+    'account.devices' => Components\Account\Devices::class,
+    'account.dropdown' => Components\Account\Dropdown::class,
+    'account.password' => Components\Account\Password::class,
+    'account.profile' => Components\Account\Profile::class,
+    'account.two-factor' => Components\Account\TwoFactor::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -37,48 +38,48 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'brands.browse' => Livewire\Brands\Browse::class,
-    'brands.create' => Livewire\Brands\Create::class,
-    'brands.edit' => Livewire\Brands\Edit::class,
+    'brands.browse' => Components\Brands\Browse::class,
+    'brands.create' => Components\Brands\Create::class,
+    'brands.edit' => Components\Brands\Edit::class,
 
-    'categories.browse' => Livewire\Categories\Browse::class,
-    'categories.create' => Livewire\Categories\Create::class,
-    'categories.edit' => Livewire\Categories\Edit::class,
+    'categories.browse' => Components\Categories\Browse::class,
+    'categories.create' => Components\Categories\Create::class,
+    'categories.edit' => Components\Categories\Edit::class,
 
-    'collections.browse' => Livewire\Collections\Browse::class,
-    'collections.create' => Livewire\Collections\Create::class,
-    'collections.edit' => Livewire\Collections\Edit::class,
-    'collections.products' => Livewire\Collections\Products::class,
+    'collections.browse' => Components\Collections\Browse::class,
+    'collections.create' => Components\Collections\Create::class,
+    'collections.edit' => Components\Collections\Edit::class,
+    'collections.products' => Components\Collections\Products::class,
 
-    'customers.addresses' => Livewire\Customers\Addresses::class,
-    'customers.browse' => Livewire\Customers\Browse::class,
-    'customers.create' => Livewire\Customers\Create::class,
-    'customers.orders' => Livewire\Customers\Orders::class,
-    'customers.profile' => Livewire\Customers\Profile::class,
-    'customers.show' => Livewire\Customers\Show::class,
+    'customers.addresses' => Components\Customers\Addresses::class,
+    'customers.browse' => Components\Customers\Browse::class,
+    'customers.create' => Components\Customers\Create::class,
+    'customers.orders' => Components\Customers\Orders::class,
+    'customers.profile' => Components\Customers\Profile::class,
+    'customers.show' => Components\Customers\Show::class,
 
-    'discounts.browse' => Livewire\Discounts\Browse::class,
-    'discounts.create' => Livewire\Discounts\Create::class,
-    'discounts.edit' => Livewire\Discounts\Edit::class,
+    'discounts.browse' => Components\Discounts\Browse::class,
+    'discounts.create' => Components\Discounts\Create::class,
+    'discounts.edit' => Components\Discounts\Edit::class,
 
-    'orders.browse' => Livewire\Orders\Browse::class,
-    'orders.show' => Livewire\Orders\Show::class,
+    'orders.browse' => Components\Orders\Browse::class,
+    'orders.show' => Components\Orders\Show::class,
 
-    'products.browse' => Livewire\Products\Browse::class,
-    'products.create' => Livewire\Products\Create::class,
-    'products.edit' => Livewire\Products\Edit::class,
-    'products.form.attributes' => Livewire\Products\Form\Attributes::class,
-    'products.form.edit' => Livewire\Products\Form\Edit::class,
-    'products.form.inventory' => Livewire\Products\Form\Inventory::class,
-    'products.form.related-products' => Livewire\Products\Form\RelatedProducts::class,
-    'products.form.seo' => Livewire\Products\Form\Seo::class,
-    'products.form.shipping' => Livewire\Products\Form\Shipping::class,
-    'products.form.variants' => Livewire\Products\Form\Variants::class,
-    'products.variant' => Livewire\Products\Variant::class,
-    'products.variant-stock' => Livewire\Products\VariantStock::class,
+    'products.browse' => Components\Products\Browse::class,
+    'products.create' => Components\Products\Create::class,
+    'products.edit' => Components\Products\Edit::class,
+    'products.form.attributes' => Components\Products\Form\Attributes::class,
+    'products.form.edit' => Components\Products\Form\Edit::class,
+    'products.form.inventory' => Components\Products\Form\Inventory::class,
+    'products.form.related-products' => Components\Products\Form\RelatedProducts::class,
+    'products.form.seo' => Components\Products\Form\Seo::class,
+    'products.form.shipping' => Components\Products\Form\Shipping::class,
+    'products.form.variants' => Components\Products\Form\Variants::class,
+    'products.variant' => Components\Products\Variant::class,
+    'products.variant-stock' => Components\Products\VariantStock::class,
 
-    'reviews.browse' => Livewire\Reviews\Browse::class,
-    'reviews.show' => Livewire\Reviews\Show::class,
+    'reviews.browse' => Components\Reviews\Browse::class,
+    'reviews.show' => Components\Reviews\Show::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -86,9 +87,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'forms.trix' => Livewire\Forms\Trix::class,
-    'forms.uploads.multiple' => Livewire\Forms\Uploads\Multiple::class,
-    'forms.uploads.single' => Livewire\Forms\Uploads\Single::class,
+    'forms.trix' => Components\Forms\Trix::class,
+    'forms.uploads.multiple' => Components\Forms\Uploads\Multiple::class,
+    'forms.uploads.single' => Components\Forms\Uploads\Single::class,
 
 
     /*
@@ -130,30 +131,29 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'settings.analytics' => Livewire\Settings\Analytics::class,
-    'settings.attributes.browse' => Livewire\Settings\Attributes\Browse::class,
-    'settings.attributes.create' => Livewire\Settings\Attributes\Create::class,
-    'settings.attributes.edit' => Livewire\Settings\Attributes\Edit::class,
-    'settings.attributes.values' => Livewire\Settings\Attributes\Values::class,
-    'settings.inventories.browse' => Livewire\Settings\Inventories\Browse::class,
-    'settings.inventories.create' => Livewire\Settings\Inventories\Create::class,
-    'settings.inventories.edit' => Livewire\Settings\Inventories\Edit::class,
-    'settings.general' => Livewire\Settings\General::class,
-    'settings.legal.privacy' => Livewire\Settings\Legal\Privacy::class,
-    'settings.legal.refund' => Livewire\Settings\Legal\Refund::class,
-    'settings.legal.shipping' => Livewire\Settings\Legal\Shipping::class,
-    'settings.legal.terms' => Livewire\Settings\Legal\Terms::class,
-    'settings.mails.add-template' => Livewire\Settings\Mails\AddTemplate::class,
-    'settings.mails.configuration' => Livewire\Settings\Mails\Configuration::class,
-    'settings.mails.mailables' => Livewire\Settings\Mails\Mailables::class,
-    'settings.mails.templates' => Livewire\Settings\Mails\Templates::class,
-    'settings.management.create-admin-user' => Livewire\Settings\Management\CreateAdminUser::class,
-    'settings.management.management' => Livewire\Settings\Management\Management::class,
-    'settings.management.permissions' => Livewire\Settings\Management\Permissions::class,
-    'settings.management.role' => Livewire\Settings\Management\Role::class,
-    'settings.management.users-role' => Livewire\Settings\Management\UsersRole::class,
-    'settings.payments.general' => Livewire\Settings\Payments\General::class,
-    'settings.payments.stripe' => Livewire\Settings\Payments\Stripe::class,
+    'settings.analytics' => Components\Settings\Analytics::class,
+    'settings.attributes.browse' => Components\Settings\Attributes\Browse::class,
+    'settings.attributes.create' => Components\Settings\Attributes\Create::class,
+    'settings.attributes.edit' => Components\Settings\Attributes\Edit::class,
+    'settings.attributes.values' => Components\Settings\Attributes\Values::class,
+    'settings.inventories.browse' => Components\Settings\Inventories\Browse::class,
+    'settings.inventories.create' => Components\Settings\Inventories\Create::class,
+    'settings.inventories.edit' => Components\Settings\Inventories\Edit::class,
+    'settings.general' => Components\Settings\General::class,
+    'settings.legal.privacy' => Components\Settings\Legal\Privacy::class,
+    'settings.legal.refund' => Components\Settings\Legal\Refund::class,
+    'settings.legal.shipping' => Components\Settings\Legal\Shipping::class,
+    'settings.legal.terms' => Components\Settings\Legal\Terms::class,
+    'settings.mails.add-template' => Components\Settings\Mails\AddTemplate::class,
+    'settings.mails.configuration' => Components\Settings\Mails\Configuration::class,
+    'settings.mails.mailables' => Components\Settings\Mails\Mailables::class,
+    'settings.mails.templates' => Components\Settings\Mails\Templates::class,
+    'settings.management.create-admin-user' => Components\Settings\Management\CreateAdminUser::class,
+    'settings.management.management' => Components\Settings\Management\Management::class,
+    'settings.management.permissions' => Components\Settings\Management\Permissions::class,
+    'settings.management.role' => Components\Settings\Management\Role::class,
+    'settings.management.users-role' => Components\Settings\Management\UsersRole::class,
+    'settings.payments.general' => Components\Settings\Payments\General::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -169,4 +169,5 @@ return [
     'tables.orders-table' => Livewire\Tables\OrdersTable::class,
     'tables.products-table' => Livewire\Tables\ProductsTable::class,
     'tables.reviews-table' => Livewire\Tables\ReviewsTable::class,
+
 ];

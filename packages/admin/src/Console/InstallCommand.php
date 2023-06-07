@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Console;
 
 use Illuminate\Console\Command;
+use Shopper\Core\Console\Thanks;
 use Shopper\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -71,7 +72,7 @@ class InstallCommand extends Command
     protected function addEnvVariable(): void
     {
         $env = [
-            'SHOPPER_DASHBOARD_PREFIX' => config('shopper.routes.prefix'),
+            'SHOPPER_DASHBOARD_PREFIX' => config('shopper.admin.prefix'),
         ];
 
         $this->progressBar->advance();
@@ -97,7 +98,7 @@ class InstallCommand extends Command
        ======================== Installation Complete 🚀 ======================
         ");
 
-        $this->comment("Before create an admin user you have to change the extend class of your User Model to The Shopper User Model 'Shopper\\Framework\\Models\\User\\User'");
+        $this->comment("Before create an admin user you have to change the extend class of your User Model to The Shopper User Model 'Shopper\\Core\\Models\\User'");
         $this->comment("To create a user, run 'php artisan shopper:admin'");
     }
 
