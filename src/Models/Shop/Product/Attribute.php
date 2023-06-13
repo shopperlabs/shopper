@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Framework\Models\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Builder;
 
 class Attribute extends Model
 {
@@ -106,6 +107,21 @@ class Attribute extends Model
             'richtext',
             'datepicker',
         ];
+    }
+
+    public function scopeEnabled(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_enabled', $bool);
+    }
+
+    public function scopeSearchable(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_searchable', $bool);
+    }
+
+    public function scopeFilterable(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_filterable', $bool);
     }
 
     public function values(): HasMany
