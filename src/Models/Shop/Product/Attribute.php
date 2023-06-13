@@ -108,6 +108,21 @@ class Attribute extends Model
         ];
     }
 
+    public function scopeEnabled(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_enabled', $bool);
+    }
+
+    public function scopeSearchable(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_searchable', $bool);
+    }
+
+    public function scopeFilterable(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_filterable', $bool);
+    }
+
     public function values(): HasMany
     {
         return $this->hasMany(AttributeValue::class);
