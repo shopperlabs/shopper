@@ -7,6 +7,7 @@ namespace Shopper\Framework\Models\Shop\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductAttribute extends Model
@@ -61,5 +62,10 @@ class ProductAttribute extends Model
     public function values(): HasMany
     {
         return $this->hasMany(ProductAttributeValue::class);
+    }
+
+    public function productAttributeValues(): BelongsToMany
+    {
+        return $this->belongsToMany(AttributeValue::class, 'attribute_value_product_attribute');
     }
 }
