@@ -119,7 +119,7 @@ class Attribute extends Model
         return $query->where('is_searchable', $bool);
     }
 
-    public function scopeFiltrable(Builder $query, bool $bool = true): Builder
+    public function scopeFilterable(Builder $query, bool $bool = true): Builder
     {
         return $query->where('is_filterable', $bool);
     }
