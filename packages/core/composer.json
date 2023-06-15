@@ -13,8 +13,8 @@
     ],
     "psr-4": {
       "Shopper\\Core\\": "src/",
-      "Shopper\\Core\\Database\\Factories\\": "database/factories",
-      "Shopper\\Core\\Database\\Seeders\\": "database/seeders"
+      "Database\\Factories\\": "database/factories",
+      "Database\\Seeders\\": "database/seeders"
     }
   },
   "extra": {

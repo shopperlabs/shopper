@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Database\Seeders\Auth;
+namespace Database\Seeders\Auth;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;

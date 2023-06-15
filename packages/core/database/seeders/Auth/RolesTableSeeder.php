@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Database\Seeders\Auth;
+namespace Database\Seeders\Auth;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Permission\Models\Role;
+use Shopper\Core\Models\Role;
 
 class RolesTableSeeder extends Seeder
 {

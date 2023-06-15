@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper\Console;
 
+use Database\Seeders\ShopperSeeder;
 use Illuminate\Console\Command;
 use Shopper\Core\Console\Thanks;
+use Shopper\Core\CoreServiceProvider;
 use Shopper\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -39,6 +41,7 @@ class InstallCommand extends Command
             $this->progressBar->start();
         }
 
+        $this->call('vendor:publish', ['--provider' => CoreServiceProvider::class]);
         $this->call('vendor:publish', ['--provider' => ShopperServiceProvider::class]);
         $this->call('vendor:publish', ['--provider' => MediaLibraryServiceProvider::class, '--tag' => 'migrations']);
         $this->progressBar->advance();
@@ -62,7 +65,7 @@ class InstallCommand extends Command
         $this->progressBar->advance();
 
         $this->info('Flush data into the database');
-        $this->call('db:seed', ['--class' => 'ShopperSeeder']);
+        $this->call('db:seed', ['--class' => ShopperSeeder::class]);
         $this->progressBar->advance();
 
         // Visually slow down the installation process so that the user can read what's happening

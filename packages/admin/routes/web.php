@@ -48,7 +48,7 @@ Route::domain(config('shopper.admin.domain'))
                 require __DIR__ . '/cpanel.php';
 
                 if (config('shopper.routes.custom_file')) {
-                    Route::namespace(config('shopper.core.controllers.namespace'))
+                    Route::namespace(config('shopper.admin.controllers.namespace'))
                         ->group(config('shopper.routes.custom_file'));
                 }
             });

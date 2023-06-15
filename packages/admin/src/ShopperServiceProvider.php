@@ -41,7 +41,6 @@ class ShopperServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('shopper')
-            ->hasViews()
             ->hasTranslations()
             ->hasViewComponents('shopper')
             ->hasRoute('web')
@@ -55,8 +54,6 @@ class ShopperServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        parent::packageBooted();
-
         $this->bootLivewireComponents();
 
         $this->bootModelRelationName();
@@ -81,7 +78,7 @@ class ShopperServiceProvider extends PackageServiceProvider
     {
         $this->registerConfigFiles();
         $this->registerDatabase();
-        $this->registerViewsComposer();
+        $this->registerViews();
 
         $this->app['events']->listen(BuildingSidebar::class, DashboardSidebar::class);
         $this->app['events']->listen(BuildingSidebar::class, ShopSidebar::class);
@@ -95,7 +92,7 @@ class ShopperServiceProvider extends PackageServiceProvider
             'category' => config('shopper.models.category'),
             'collection' => config('shopper.models.collection'),
             'product' => config('shopper.models.product'),
-            'channel' => config('shopper.models.products'),
+            'channel' => config('shopper.models.channel'),
         ]);
     }
 
@@ -122,8 +119,10 @@ class ShopperServiceProvider extends PackageServiceProvider
         ];
     }
 
-    public function registerViewsComposer(): void
+    public function registerViews(): void
     {
+        $this->loadViewsFrom($this->root.'/resources/views', 'shopper');
+
         view()->composer('*', GlobalComposer::class);
         view()->creator('shopper::components.layouts.app.sidebar.secondary', SidebarCreator::class);
     }

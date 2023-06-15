@@ -76,23 +76,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Shopper Controllers config
-    |--------------------------------------------------------------------------
-    |
-    | If you want extends your shopper admin panel with great features,
-    | Here you can specify custom Controller Namespace and Shopper
-    | RouteServiceProvider will load all your controllers.
-    |
-    */
-
-    'controllers' => [
-
-        'namespace' => 'App\\Http\\Controllers\\Shopper',
-
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Caching
     |--------------------------------------------------------------------------
     |

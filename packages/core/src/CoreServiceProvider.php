@@ -17,16 +17,20 @@ class CoreServiceProvider extends ServiceProvider
         'media',
     ];
 
+    protected string $root = __DIR__.'/..';
+
     public function boot(): void
     {
         setlocale(LC_TIME, config('shopper.core.locale'));
         Carbon::setLocale(config('shopper.core.locale'));
-
-        $this->app->register(SidebarServiceProvider::class);
     }
 
     public function register(): void
     {
+        $this->registerConfigFiles();
+        $this->registerDatabase();
+
+        $this->app->register(SidebarServiceProvider::class);
         $this->app->singleton('shopper', fn () => new Shopper());
     }
 }

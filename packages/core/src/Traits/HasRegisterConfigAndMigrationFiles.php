@@ -14,6 +14,10 @@ trait HasRegisterConfigAndMigrationFiles
 
     public function registerDatabase(): void
     {
+        if (! file_exists($this->root . '/database')) {
+            return;
+        }
+
         $this->loadMigrationsFrom($this->root . '/database/migrations');
         $this->publishes([$this->root . '/database/seeders' => database_path('seeders')], 'shopper-seeders');
     }

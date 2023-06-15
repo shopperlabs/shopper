@@ -46,12 +46,13 @@ final class UserCommand extends Command
             'email_verified_at' => now()->toDateTimeString(),
             'last_login_ip' => request()->getClientIp(),
         ];
-        $model = User::class;
+
+        $model = config('auth.providers.users.model', User::class);
 
         try {
             $user = tap((new $model())->forceFill($userData))->save();
 
-            $user->assignRole(config('shopper.admin.users.admin_role'));
+            $user->assignRole(config('shopper.core.users.admin_role'));
         } catch (Exception|QueryException $e) {
             $this->error($e->getMessage());
         }
