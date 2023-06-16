@@ -6,11 +6,11 @@ namespace Shopper\Http\Livewire\Components\Discounts;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
-use Shopper\Core\Traits\HasPrice;
 use Shopper\Core\Models\User;
+use Shopper\Core\Traits\HasPrice;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {

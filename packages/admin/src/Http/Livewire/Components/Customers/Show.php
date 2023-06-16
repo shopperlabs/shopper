@@ -7,8 +7,8 @@ namespace Shopper\Http\Livewire\Components\Customers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Repositories\UserRepository;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Show extends AbstractBaseComponent
 {

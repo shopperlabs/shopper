@@ -148,7 +148,8 @@ if (! function_exists('shopper_setting')) {
     function shopper_setting(string $key): mixed
     {
         $setting = Cache::remember(
-            "shopper-setting-{$key}", 3600 * 24,
+            "shopper-setting-{$key}",
+            3600 * 24,
             fn () => Setting::query()->where('key', $key)->first()
         );
 

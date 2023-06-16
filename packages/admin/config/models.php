@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Shopper\Core\Models\Brand;
 use Shopper\Core\Models\Category;
 use Shopper\Core\Models\Channel;

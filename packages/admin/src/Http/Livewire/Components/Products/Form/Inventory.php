@@ -12,10 +12,10 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Http\Livewire\Products\WithAttributes;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Repositories\InventoryHistoryRepository;
 use Shopper\Core\Traits\Attributes\WithStock;
+use Shopper\Http\Livewire\Products\WithAttributes;
 
 class Inventory extends Component
 {

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "paths": {
+      "@/*": ["./resources/js/*"],
+      "@helpers/*": ["./resources/js/helpers/*"]
+    }
+  },
+  "exclude": ["node_modules",  "public"]
+}

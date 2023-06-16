@@ -32,7 +32,7 @@
     @include('shopper::includes._additional-styles')
     @stack('scripts')
 </head>
-<body class="bg-secondary-100 font-sans antialiased overflow-hidden dark:bg-secondary-900">
+<body {{ $attributes->merge(['class' => 'bg-secondary-100 font-sans antialiased dark:bg-secondary-900']) }}>
 
     {{ $slot }}
 

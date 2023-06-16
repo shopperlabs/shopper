@@ -11,7 +11,7 @@ use Symplify\MonorepoBuilder\Release\ReleaseWorker\TagVersionReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\UpdateBranchAliasReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\UpdateReplaceReleaseWorker;
 
-return static function ( MBConfig $mbConfig): void {
+return static function (MBConfig $mbConfig): void {
     $services = $mbConfig->services();
 
     // Release workers - in order to execute

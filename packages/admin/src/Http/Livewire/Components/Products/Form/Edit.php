@@ -10,14 +10,14 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\WithFileUploads;
 use Shopper\Core\Events\Products\Updated;
 use Shopper\Core\Exceptions\GeneralException;
-use Shopper\Http\Livewire\AbstractBaseComponent;
-use Shopper\Http\Livewire\Products\WithAttributes;
 use Shopper\Core\Repositories\Ecommerce\BrandRepository;
 use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesBrands;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Core\Traits\Attributes\WithUploadProcess;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Http\Livewire\Products\WithAttributes;
 
 class Edit extends AbstractBaseComponent
 {

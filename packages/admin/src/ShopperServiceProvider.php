@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Notifications\Messages\MailMessage;
 use Livewire\Livewire;
-use Shopper\Console;
 use Shopper\Core\Events\BuildingSidebar;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Events\DashboardSidebar;
@@ -35,7 +34,7 @@ class ShopperServiceProvider extends PackageServiceProvider
         'settings',
     ];
 
-    protected string $root = __DIR__.'/..';
+    protected string $root = __DIR__ . '/..';
 
     public function configurePackage(Package $package): void
     {
@@ -58,8 +57,8 @@ class ShopperServiceProvider extends PackageServiceProvider
 
         $this->bootModelRelationName();
 
-        ResetPassword::toMailUsing(fn ($notifiable, string $token) =>
-            (new MailMessage())
+        ResetPassword::toMailUsing(
+            fn ($notifiable, string $token) => (new MailMessage())
                 ->view('shopper::mails.email')
                 ->line(__('shopper::pages/auth.email.mail.content'))
                 ->action(__('shopper::pages/auth.email.mail.action'), url(config('app.url') . route('shopper.password.reset', $token, false)))
@@ -121,7 +120,7 @@ class ShopperServiceProvider extends PackageServiceProvider
 
     public function registerViews(): void
     {
-        $this->loadViewsFrom($this->root.'/resources/views', 'shopper');
+        $this->loadViewsFrom($this->root . '/resources/views', 'shopper');
 
         view()->composer('*', GlobalComposer::class);
         view()->creator('shopper::components.layouts.app.sidebar.secondary', SidebarCreator::class);

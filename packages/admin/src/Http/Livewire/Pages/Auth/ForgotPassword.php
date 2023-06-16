@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Http\Livewire\Pages\Auth;
 
 use Illuminate\Auth\Passwords\PasswordBroker;

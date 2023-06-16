@@ -11,6 +11,7 @@ return [
     'mapbox_disabled' => 'Mapbox has not been activated.',
 
     'initialization' => [
+        'title' => 'Shop Initialization',
         'step_one_title' => 'Store information',
         'step_one_description' => 'Provide useful information for your store.',
         'step_two_title' => 'Address Information',

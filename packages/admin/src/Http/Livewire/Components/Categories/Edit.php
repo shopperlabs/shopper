@@ -7,10 +7,10 @@ namespace Shopper\Http\Livewire\Components\Categories;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Exceptions\GeneralException;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesCategories;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {

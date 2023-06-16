@@ -12,7 +12,7 @@ final class Updated
     use SerializesModels;
 
     /**
-     * @param Product $product
+     * @param  Product  $product
      */
     public function __construct($product)
     {

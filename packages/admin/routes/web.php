@@ -2,8 +2,14 @@
 
 declare(strict_types=1);
 
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Sidebar\Middleware\ResolveSidebars;
 use Shopper\Core\Shopper;
@@ -15,8 +21,13 @@ use Shopper\Http\Middleware\RedirectIfAuthenticated;
 
 Route::domain(config('shopper.admin.domain'))
     ->middleware([
-        'web',
+        EncryptCookies::class,
+        AddQueuedCookiesToResponse::class,
+        StartSession::class,
         AuthenticateSession::class,
+        ShareErrorsFromSession::class,
+        VerifyCsrfToken::class,
+        SubstituteBindings::class,
     ])
     ->name('shopper.')
     ->group(function () {

@@ -4,7 +4,8 @@
     "dev": "npm run development",
     "development": "mix",
     "watch": "mix watch",
-    "production": "mix --production"
+    "production": "mix --production",
+    "prettier": "npx prettier --write ."
   },
   "devDependencies": {
     "@alpinejs/focus": "^3.12.0",

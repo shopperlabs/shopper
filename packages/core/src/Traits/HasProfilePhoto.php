@@ -19,6 +19,6 @@ trait HasProfilePhoto
 
     protected function defaultProfilePhotoUrl(): string
     {
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->full_name) . '&color='. config('shopper.admin.avatar.color') .'&background='. config('shopper.admin.avatar.bg_color');
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->full_name) . '&color=' . config('shopper.admin.avatar.color') . '&background=' . config('shopper.admin.avatar.bg_color');
     }
 }

@@ -4,8 +4,5 @@ includes:
 parameters:
     level: 5
     paths:
-        - src
-        - config
-        - database
-    tmpDir: build/phpstan
+        - packages
     checkMissingIterableValueType: true

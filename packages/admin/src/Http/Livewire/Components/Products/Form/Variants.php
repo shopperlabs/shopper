@@ -12,9 +12,9 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Shopper\Core\Events\Products\Deleted as ProductDeleted;
-use Shopper\Http\Livewire\Products\WithAttributes;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Traits\Attributes\WithUploadProcess;
+use Shopper\Http\Livewire\Products\WithAttributes;
 
 class Variants extends Component
 {

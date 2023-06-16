@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;

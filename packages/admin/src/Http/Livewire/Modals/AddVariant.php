@@ -7,9 +7,9 @@ namespace Shopper\Http\Livewire\Modals;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Http\Livewire\Products\WithAttributes;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Http\Livewire\Products\WithAttributes;
 
 class AddVariant extends ModalComponent
 {

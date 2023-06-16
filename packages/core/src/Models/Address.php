@@ -7,7 +7,6 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Shopper\Core\Models\Country;
 
 class Address extends Model
 {

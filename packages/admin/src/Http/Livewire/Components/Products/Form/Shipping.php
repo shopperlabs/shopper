@@ -8,8 +8,8 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Shopper\Http\Livewire\Products\WithAttributes;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Http\Livewire\Products\WithAttributes;
 
 class Shipping extends Component
 {

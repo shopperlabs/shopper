@@ -11,6 +11,7 @@ return [
     'mapbox_disabled' => 'Mapbox n\'a pas été activée.',
 
     'initialization' => [
+        'title' => 'Initialisation de la boutique',
         'step_one_title' => 'Information de la boutique',
         'step_one_description' => 'Fournissez des informations utiles pour votre magasin.',
         'step_two_title' => 'Informations sur l\'adresse',

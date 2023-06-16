@@ -7,13 +7,13 @@ namespace Shopper\Http\Livewire\Components\Discounts;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\User;
-use Shopper\Core\Traits\HasPrice;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Repositories\UserRepository;
+use Shopper\Core\Traits\HasPrice;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {

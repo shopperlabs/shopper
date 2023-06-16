@@ -6,10 +6,10 @@ namespace Shopper\Http\Livewire\Components\Settings\Inventories;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
-use Shopper\Http\Livewire\AbstractBaseComponent;
-use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Country;
+use Shopper\Core\Models\Inventory;
 use Shopper\Core\Rules\Phone;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Http\Controllers\Ecommerce;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Http\Controllers\ShopperBaseController;
 use Shopper\Core\Repositories\Ecommerce\BrandRepository;
+use Shopper\Http\Controllers\ShopperBaseController;
 
 class BrandController extends ShopperBaseController
 {

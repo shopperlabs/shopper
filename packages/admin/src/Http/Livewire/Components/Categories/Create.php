@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Categories;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesCategories;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {

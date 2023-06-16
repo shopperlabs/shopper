@@ -6,8 +6,8 @@ namespace Shopper\Http\Livewire\Components\Brands;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent
 {

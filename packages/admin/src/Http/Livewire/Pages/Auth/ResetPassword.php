@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Http\Livewire\Pages\Auth;
 
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Passwords\PasswordBroker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Livewire\Component;
 use Shopper\Core\Rules\RealEmailValidator;
@@ -38,7 +38,8 @@ class ResetPassword extends Component
             ],
         ]);
 
-        $response = $this->broker()->reset([
+        $response = $this->broker()->reset(
+            [
                 'token' => $this->token,
                 'email' => $this->email,
                 'password' => $this->password,

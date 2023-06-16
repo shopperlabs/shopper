@@ -13,12 +13,13 @@
   "require": {
     "php": "^8.1",
     "ext-intl": "*",
-    "composer-runtime-api": "^2.1"
+    "composer-runtime-api": "^2.1",
+    "filament/notifications": "^2.17"
   },
   "require-dev": {
     "blade-ui-kit/blade-heroicons": "^1.2",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
-    "doctrine/dbal": "^3.2",
+    "doctrine/dbal": "^3.6",
     "laravel/pint": "^1.1",
     "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^5.11|^6.1",
@@ -44,7 +45,7 @@
         "packages/core/src"
       ],
       "Shopper\\Core\\": "packages/core/src",
-      "Shopper\\Core\\Database\\Seeders\\": "packages/core/database/seeders",
+      "Database\\Seeders\\": "packages/core/database/seeders",
       "Shopper\\Tests\\": "tests/src"
     }
   },
@@ -61,10 +62,6 @@
       "pestphp/pest-plugin": true,
       "phpstan/extension-installer": true
     }
-  },
-  "replace": {
-    "shopper/admin": "self.version",
-    "shopper/core": "self.version"
   },
   "minimum-stability": "dev",
   "prefer-stable": true

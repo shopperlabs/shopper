@@ -1,4 +1,4 @@
-<x-shopper::layouts.base :title="$title ?? null">
+<x-shopper::layouts.base :title="$title ?? null" class="overflow-hidden">
 
     <div class="h-screen flex overflow-hidden" x-data="{ sidebarOpen: false, modalDemo: false }" @keydown.window.escape="sidebarOpen = false">
         <x-shopper::layouts.app.sidebar />

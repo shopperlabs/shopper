@@ -196,9 +196,11 @@ class Initialization extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.initialization', [
-            'countries' => Cache::get('countries-settings', fn () => Country::query()->orderBy('name')->get()),
-            'currencies' => Cache::get('currencies-setting', fn () => Currency::query()->orderBy('name')->get()),
-        ]);
+        return view('shopper::livewire.pages.initialization', [
+                'countries' => Cache::get('countries-settings', fn () => Country::query()->orderBy('name')->get()),
+                'currencies' => Cache::get('currencies-setting', fn () => Currency::query()->orderBy('name')->get()),
+            ])->layout('shopper::components.layouts.base', [
+                'title' => __('shopper::pages/settings.initialization.title'),
+            ]);
     }
 }

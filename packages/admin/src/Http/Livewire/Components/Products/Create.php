@@ -7,7 +7,6 @@ namespace Shopper\Http\Livewire\Components\Products;
 use Illuminate\Contracts\View\View;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Core\Exceptions\GeneralException;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Repositories\Ecommerce\BrandRepository;
@@ -16,6 +15,7 @@ use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesBrands;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {

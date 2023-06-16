@@ -17,7 +17,7 @@ class CoreServiceProvider extends ServiceProvider
         'media',
     ];
 
-    protected string $root = __DIR__.'/..';
+    protected string $root = __DIR__ . '/..';
 
     public function boot(): void
     {

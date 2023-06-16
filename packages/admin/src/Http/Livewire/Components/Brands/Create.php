@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Brands;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Repositories\Ecommerce\BrandRepository;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
+use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {

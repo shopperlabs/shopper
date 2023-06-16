@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Core\Helpers;
 
 use Illuminate\Database\Migrations\Migration as BaseMigration;

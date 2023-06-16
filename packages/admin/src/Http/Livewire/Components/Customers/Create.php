@@ -7,12 +7,12 @@ namespace Shopper\Http\Livewire\Components\Customers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Models\Country;
-use Shopper\Notifications\CustomerSendCredentials;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Core\Rules\Phone;
 use Shopper\Core\Traits\Attributes\WithAddress;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Notifications\CustomerSendCredentials;
 
 class Create extends AbstractBaseComponent
 {

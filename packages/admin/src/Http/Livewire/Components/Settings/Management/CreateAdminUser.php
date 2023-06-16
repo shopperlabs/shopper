@@ -8,12 +8,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
-use Shopper\Http\Livewire\AbstractBaseComponent;
 use Shopper\Core\Models\Role;
-use Shopper\Notifications\AdminSendCredentials;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Core\Rules\Phone;
 use Shopper\Core\Rules\RealEmailValidator;
+use Shopper\Http\Livewire\AbstractBaseComponent;
+use Shopper\Notifications\AdminSendCredentials;
 
 class CreateAdminUser extends AbstractBaseComponent
 {
