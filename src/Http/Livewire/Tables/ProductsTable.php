@@ -27,7 +27,7 @@ class ProductsTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('key')
+        $this->setPrimaryKey('id')
             ->setAdditionalSelects(['is_visible'])
             ->setTdAttributes(function (Views\Column $column) {
                 if ($column->isField('name')) {
