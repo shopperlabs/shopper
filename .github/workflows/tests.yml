@@ -18,7 +18,7 @@ jobs:
             testbench: 7.*
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
@@ -28,7 +28,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: mbstring, pdo, pdo_sqlite
+          extensions: intl, mbstring, pdo, pdo_sqlite
           coverage: none
       - name: Install dependencies
         run: |

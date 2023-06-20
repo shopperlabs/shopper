@@ -6,13 +6,13 @@ namespace Shopper\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
-use Filament\Forms\FormsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Shopper\Framework\FrameworkServiceProvider;
-use Shopper\Framework\Models\User\User;
+use Shopper\Core\CoreServiceProvider;
+use Shopper\Core\Models\User;
+use Shopper\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
 class TestCase extends BaseTestCase
@@ -24,8 +24,8 @@ class TestCase extends BaseTestCase
         return [
             BladeHeroiconsServiceProvider::class,
             BladeIconsServiceProvider::class,
-            FormsServiceProvider::class,
-            FrameworkServiceProvider::class,
+            CoreServiceProvider::class,
+            ShopperServiceProvider::class,
             LivewireServiceProvider::class,
             NotificationsServiceProvider::class,
             MediaLibraryServiceProvider::class,
@@ -50,6 +50,6 @@ class TestCase extends BaseTestCase
 
     protected function defineDatabaseMigrations(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../packages/core/database/migrations');
     }
 }

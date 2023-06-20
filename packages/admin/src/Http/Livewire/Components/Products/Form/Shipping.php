@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
-use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class Shipping extends Component
 {

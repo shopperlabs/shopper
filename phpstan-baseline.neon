@@ -11,11 +11,6 @@ parameters:
 			path: packages/admin/routes/web.php
 
 		-
-			message: "#^Class Maatwebsite\\\\Sidebar\\\\Middleware\\\\ResolveSidebars not found\\.$#"
-			count: 2
-			path: packages/admin/routes/web.php
-
-		-
 			message: "#^Access to an undefined property Illuminate\\\\Http\\\\Request\\:\\:\\$password\\.$#"
 			count: 1
 			path: packages/admin/src/Actions/RedirectIfTwoFactorAuthenticatable.php
@@ -51,132 +46,12 @@ parameters:
 			path: packages/admin/src/Actions/RedirectIfTwoFactorAuthenticatable.php
 
 		-
-			message: "#^Class Spatie\\\\MediaLibrary\\\\MediaLibraryServiceProvider not found\\.$#"
-			count: 1
-			path: packages/admin/src/Console/InstallCommand.php
-
-		-
-			message: "#^Call to method authorize\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Call to method group\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Call to method icon\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Call to method item\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Call to method route\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Call to method weight\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Call to method weight\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Method Shopper\\\\Events\\\\DashboardSidebar\\:\\:extendWith\\(\\) has invalid return type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Parameter \\$group of anonymous function has invalid type Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Parameter \\$item of anonymous function has invalid type Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
-			message: "#^Parameter \\$menu of method Shopper\\\\Events\\\\DashboardSidebar\\:\\:extendWith\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/admin/src/Events/DashboardSidebar.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:hasPermissionTo\\(\\)\\.$#"
 			count: 2
 			path: packages/admin/src/Events/OrderSidebar.php
 
 		-
-			message: "#^Call to method authorize\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Call to method authorize\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 2
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Call to method badge\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Call to method group\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Call to method icon\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 2
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Call to method item\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 2
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Call to method route\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 2
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Call to method weight\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Call to method weight\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 2
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Method Shopper\\\\Events\\\\OrderSidebar\\:\\:extendWith\\(\\) has invalid return type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Parameter \\$group of anonymous function has invalid type Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Parameter \\$item of anonymous function has invalid type Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 2
-			path: packages/admin/src/Events/OrderSidebar.php
-
-		-
-			message: "#^Parameter \\$menu of method Shopper\\\\Events\\\\OrderSidebar\\:\\:extendWith\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
+			message: "#^Parameter \\#1 \\$callbackOrValue of method Maatwebsite\\\\Sidebar\\\\Item\\:\\:badge\\(\\) expects \\(callable\\(\\)\\: mixed\\)\\|string\\|null, int\\<1, max\\> given\\.$#"
 			count: 1
 			path: packages/admin/src/Events/OrderSidebar.php
 
@@ -184,99 +59,9 @@ parameters:
 			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:hasPermissionTo\\(\\)\\.$#"
 			count: 6
 			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method authorize\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method authorize\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 6
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method group\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method icon\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 6
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method item\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 6
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method route\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 6
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method weight\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method weight\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 6
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Method Shopper\\\\Events\\\\ShopSidebar\\:\\:extendWith\\(\\) has invalid return type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Parameter \\$group of anonymous function has invalid type Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Parameter \\$item of anonymous function has invalid type Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 6
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Parameter \\$menu of method Shopper\\\\Events\\\\ShopSidebar\\:\\:extendWith\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/admin/src/Events/ShopSidebar.php
-
-		-
-			message: "#^Call to method render\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Presentation\\\\SidebarRenderer\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Composers/SidebarCreator.php
-
-		-
-			message: "#^Parameter \\$renderer of method Shopper\\\\Http\\\\Composers\\\\SidebarCreator\\:\\:__construct\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Presentation\\\\SidebarRenderer\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Composers/SidebarCreator.php
-
-		-
-			message: "#^Property Shopper\\\\Http\\\\Composers\\\\SidebarCreator\\:\\:\\$renderer has unknown class Maatwebsite\\\\Sidebar\\\\Presentation\\\\SidebarRenderer as its type\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Composers/SidebarCreator.php
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:getKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Account/Devices.php
-
-		-
-			message: "#^Call to static method get\\(\\) on an unknown class Stevebauman\\\\Location\\\\Facades\\\\Location\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Account/Devices.php
-
-		-
-			message: "#^Instantiated class Jenssegers\\\\Agent\\\\Agent not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Account/Devices.php
-
-		-
-			message: "#^Method Shopper\\\\Http\\\\Livewire\\\\Components\\\\Account\\\\Devices\\:\\:createAgent\\(\\) has invalid return type Jenssegers\\\\Agent\\\\Agent\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Account/Devices.php
 
@@ -306,11 +91,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Account/Password.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Account/Password.php
-
-		-
 			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$email\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Account/Profile.php
@@ -336,29 +116,14 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Account/Profile.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Account/Profile.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:addMedia\\(\\)\\.$#"
 			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Brands/Create.php
-
-		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 2
 			path: packages/admin/src/Http/Livewire/Components/Brands/Create.php
 
 		-
 			message: "#^Ternary operator condition is always false\\.$#"
 			count: 2
 			path: packages/admin/src/Http/Livewire/Components/Brands/Create.php
-
-		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Components/Brands/Edit.php
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:addMedia\\(\\)\\.$#"
@@ -368,11 +133,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:scopes\\(\\)\\.$#"
 			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Categories/Create.php
-
-		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 2
 			path: packages/admin/src/Http/Livewire/Components/Categories/Create.php
 
 		-
@@ -388,11 +148,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:scopes\\(\\)\\.$#"
 			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Categories/Edit.php
-
-		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 3
 			path: packages/admin/src/Http/Livewire/Components/Categories/Edit.php
 
 		-
@@ -403,11 +158,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:addMedia\\(\\)\\.$#"
 			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Collections/Create.php
-
-		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 2
 			path: packages/admin/src/Http/Livewire/Components/Collections/Create.php
 
 		-
@@ -431,19 +181,9 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Collections/Edit.php
 
 		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Collections/Edit.php
-
-		-
 			message: "#^Used function Shopper\\\\Http\\\\Livewire\\\\Collections\\\\str_limit not found\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Collections/Edit.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Collections/Products.php
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:whereHas\\(\\)\\.$#"
@@ -471,11 +211,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Customers/Create.php
 
 		-
-			message: "#^Function str_random not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Customers/Create.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:orders\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Customers/Orders.php
@@ -487,11 +222,6 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$email\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Customers/Profile.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Customers/Profile.php
 
@@ -546,38 +276,8 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Discounts/Create.php
 
 		-
-			message: "#^Call to method format\\(\\) on an unknown class Money\\\\Formatter\\\\IntlMoneyFormatter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Create.php
-
-		-
 			message: "#^Comparison operation \"\\>\" between int\\<2, max\\> and 1 is always true\\.$#"
 			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Create.php
-
-		-
-			message: "#^Function str_random not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Create.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currencies\\\\ISOCurrencies not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Create.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currency not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Create.php
-
-		-
-			message: "#^Instantiated class Money\\\\Formatter\\\\IntlMoneyFormatter not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Create.php
-
-		-
-			message: "#^Instantiated class Money\\\\Money not found\\.$#"
-			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Discounts/Create.php
 
 		-
@@ -666,38 +366,8 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
 
 		-
-			message: "#^Call to method format\\(\\) on an unknown class Money\\\\Formatter\\\\IntlMoneyFormatter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
-
-		-
 			message: "#^Comparison operation \"\\>\" between int\\<2, max\\> and 1 is always true\\.$#"
 			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
-
-		-
-			message: "#^Function str_random not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currencies\\\\ISOCurrencies not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currency not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
-
-		-
-			message: "#^Instantiated class Money\\\\Formatter\\\\IntlMoneyFormatter not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
-
-		-
-			message: "#^Instantiated class Money\\\\Money not found\\.$#"
-			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
 
 		-
@@ -706,22 +376,12 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Discounts/Edit.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Forms/Uploads/Multiple.php
-
-		-
-			message: "#^Call to static method query\\(\\) on an unknown class Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Forms/Uploads/Multiple.php
-
-		-
 			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Components\\\\Forms\\\\Uploads\\\\Single\\:\\:notify\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Forms/Uploads/Single.php
 
 		-
-			message: "#^Call to static method find\\(\\) on an unknown class Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
+			message: "#^Call to an undefined static method Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\:\\:find\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Forms/Uploads/Single.php
 
@@ -738,11 +398,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\:\\:with\\(\\)\\.$#"
 			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Orders/Show.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 5
 			path: packages/admin/src/Http/Livewire/Components/Orders/Show.php
 
 		-
@@ -781,13 +436,8 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Create.php
 
 		-
-			message: "#^Call to static method getBarcodeHTML\\(\\) on an unknown class Milon\\\\Barcode\\\\Facades\\\\DNS1DFacade\\.$#"
+			message: "#^Call to an undefined static method Milon\\\\Barcode\\\\Facades\\\\DNS1DFacade\\:\\:getBarcodeHTML\\(\\)\\.$#"
 			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Create.php
-
-		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 3
 			path: packages/admin/src/Http/Livewire/Components/Products/Create.php
 
 		-
@@ -811,11 +461,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Attributes.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Attributes.php
-
-		-
 			message: "#^Method Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Attributes\\:\\:getAttributes\\(\\) should return array\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection but returns Illuminate\\\\Support\\\\Collection\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Attributes.php
@@ -826,58 +471,8 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Attributes.php
 
 		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$brand_id\\.$#"
-			count: 4
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$cost_amount\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$description\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$isVisible\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$name\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$old_price_amount\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$price_amount\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$publishedAt\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$publishedAtFormatted\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
 			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$seoAttributes\\.$#"
 			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Edit\\:\\:\\$sku\\.$#"
-			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
 
 		-
@@ -906,21 +501,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Call to static method query\\(\\) on an unknown class Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
 			message: "#^Parameter \\#1 \\$product of class Shopper\\\\Core\\\\Events\\\\Products\\\\Updated constructor expects Shopper\\\\Core\\\\Models\\\\Product, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
@@ -941,26 +521,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
 
 		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Inventory\\:\\:\\$barcode\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Inventory\\:\\:\\$securityStock\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Inventory\\:\\:\\$sku\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
-
-		-
-			message: "#^Access to constant XLSX on an unknown class Maatwebsite\\\\Excel\\\\Excel\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:decreaseStock\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
@@ -971,18 +531,8 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Exports\\\\ProductInventoryExport\\:\\:download\\(\\)\\.$#"
+			message: "#^Call to an undefined static method Milon\\\\Barcode\\\\Facades\\\\DNS1DFacade\\:\\:getBarcodeHTML\\(\\)\\.$#"
 			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
-
-		-
-			message: "#^Call to static method getBarcodeHTML\\(\\) on an unknown class Milon\\\\Barcode\\\\Facades\\\\DNS1DFacade\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Inventory.php
 
 		-
@@ -1001,84 +551,9 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/RelatedProducts.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/RelatedProducts.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Seo.php
-
-		-
-			message: "#^Function str_limit not found\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Seo.php
-
-		-
-			message: "#^Function str_slug not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Seo.php
-
-		-
 			message: "#^Ternary operator condition is always false\\.$#"
 			count: 2
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Seo.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$backorder\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$heightUnit\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$heightValue\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$requiresShipping\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$volumeUnit\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$volumeValue\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$weightUnit\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$weightValue\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$widthUnit\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Components\\\\Products\\\\Form\\\\Shipping\\:\\:\\$widthValue\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Shipping.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
@@ -1087,16 +562,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:where\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Variants.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Variants.php
-
-		-
-			message: "#^Call to static method query\\(\\) on an unknown class Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Variants.php
 
@@ -1126,16 +591,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
-
-		-
-			message: "#^Call to static method query\\(\\) on an unknown class Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
-
-		-
 			message: "#^Parameter \\#1 \\$product of class Shopper\\\\Core\\\\Events\\\\Products\\\\Updated constructor expects Shopper\\\\Core\\\\Models\\\\Product, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
@@ -1151,11 +606,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/VariantStock.php
 
 		-
-			message: "#^Access to constant XLSX on an unknown class Maatwebsite\\\\Excel\\\\Excel\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/VariantStock.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:decreaseStock\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/VariantStock.php
@@ -1166,34 +616,9 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/VariantStock.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Exports\\\\ProductInventoryExport\\:\\:download\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/VariantStock.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/VariantStock.php
-
-		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Review\\:\\:\\$approved\\.$#"
 			count: 3
 			path: packages/admin/src/Http/Livewire/Components/Reviews/Show.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Reviews/Show.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Analytics.php
-
-		-
-			message: "#^Function str_slug not found\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Settings/Attributes/Create.php
 
 		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Attribute\\:\\:\\$description\\.$#"
@@ -1236,11 +661,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Settings/Attributes/Edit.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Attributes/Edit.php
-
-		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Attribute\\:\\:\\$id\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Settings/Attributes/Values.php
@@ -1256,22 +676,7 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Settings/Attributes/Values.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Attributes/Values.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Settings/General.php
-
-		-
 			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Country\\:\\:select\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Inventories/Create.php
-
-		-
-			message: "#^Function str_slug not found\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Settings/Inventories/Create.php
 
@@ -1346,16 +751,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Privacy.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Privacy.php
-
-		-
-			message: "#^Function str_slug not found\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Privacy.php
-
-		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Legal\\:\\:\\$content\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Refund.php
@@ -1368,16 +763,6 @@ parameters:
 		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Legal\\:\\:\\$is_enabled\\.$#"
 			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Refund.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Refund.php
-
-		-
-			message: "#^Function str_slug not found\\.$#"
-			count: 2
 			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Refund.php
 
 		-
@@ -1396,16 +781,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Shipping.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Shipping.php
-
-		-
-			message: "#^Function str_slug not found\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Shipping.php
-
-		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Legal\\:\\:\\$content\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Terms.php
@@ -1419,25 +794,15 @@ parameters:
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Legal\\:\\:\\$is_enabled\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Terms.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Terms.php
-
-		-
-			message: "#^Function str_slug not found\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Settings/Legal/Terms.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Mails/Configuration.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$full_name\\.$#"
 			count: 1
+			path: packages/admin/src/Http/Livewire/Components/Settings/Management/CreateAdminUser.php
+
+		-
+			message: "#^Access to an undefined property Spatie\\\\Permission\\\\Contracts\\\\Role\\:\\:\\$name\\.$#"
+			count: 2
 			path: packages/admin/src/Http/Livewire/Components/Settings/Management/CreateAdminUser.php
 
 		-
@@ -1451,54 +816,9 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Settings/Management/CreateAdminUser.php
 
 		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:findById\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/CreateAdminUser.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:query\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/CreateAdminUser.php
-
-		-
-			message: "#^Function str_random not found\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/CreateAdminUser.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:whereHas\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Management.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:query\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Management.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Management.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Role\\:\\:givePermissionTo\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Permissions.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Role\\:\\:hasPermissionTo\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Permissions.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Role\\:\\:revokePermissionTo\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Permissions.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Permission\\:\\:query\\(\\)\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Permissions.php
 
 		-
 			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:find\\(\\)\\.$#"
@@ -1506,7 +826,12 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Permissions.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
+			message: "#^Cannot access property \\$display_name on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			count: 2
+			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Permissions.php
+
+		-
+			message: "#^Cannot access property \\$name on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 3
 			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Permissions.php
 
@@ -1521,44 +846,9 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Role.php
 
 		-
-			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Role\\:\\:\\$id\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Role.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Role\\:\\:\\$name\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Role.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:query\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Role.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/Role.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Role\\:\\:\\$name\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/UsersRole.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:whereHas\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Settings/Management/UsersRole.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Settings/Management/UsersRole.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Settings/Payments/General.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
@@ -1568,26 +858,6 @@ parameters:
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$attribute\\.$#"
 			count: 2
-			path: packages/admin/src/Http/Livewire/Modals/AddProductAttribute.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddProductAttribute\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddProductAttribute.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddProductAttribute\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddProductAttribute.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddProductAttribute\\:\\:validate\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Modals/AddProductAttribute.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/AddProductAttribute.php
 
 		-
@@ -1611,46 +881,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/AddProductAttribute.php
 
 		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:\\$barcode\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:\\$cost_amount\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:\\$name\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:\\$old_price_amount\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:\\$price_amount\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:\\$securityStock\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:\\$sku\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:\\$type\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:addMedia\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
@@ -1661,59 +891,9 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\AddVariant\\:\\:validate\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/AddVariant.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\ArchiveOrder\\:\\:redirectRoute\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/ArchiveOrder.php
-
-		-
 			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Order\\:\\:find\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/ArchiveOrder.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateMailable\\:\\:addError\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Modals/CreateMailable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateMailable\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateMailable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateMailable\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateMailable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateMailable\\:\\:validate\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Modals/CreateMailable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateMailable.php
 
 		-
 			message: "#^Parameter \\#2 \\$value of method Illuminate\\\\Support\\\\Collection\\<string,string\\>\\:\\:put\\(\\) expects string, true given\\.$#"
@@ -1721,102 +901,17 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/CreateMailable.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreatePaymentMethod\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePaymentMethod.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreatePaymentMethod\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePaymentMethod.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreatePaymentMethod\\:\\:validate\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePaymentMethod.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePaymentMethod.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreatePermission\\:\\:closeModal\\(\\)\\.$#"
+			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$name\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/CreatePermission.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreatePermission\\:\\:dispatchBrowserEvent\\(\\)\\.$#"
+			message: "#^Call to an undefined method Spatie\\\\Permission\\\\Contracts\\\\Role\\:\\:givePermissionTo\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/CreatePermission.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreatePermission\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePermission.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreatePermission\\:\\:validate\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePermission.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Permission\\:\\:query\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePermission.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:findById\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePermission.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreatePermission.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateRole\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateRole.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateRole\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateRole.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateRole\\:\\:validate\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateRole.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:create\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateRole.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateRole.php
 
 		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Attribute\\:\\:\\$name\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateValue.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateValue\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateValue.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateValue\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateValue.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\CreateValue\\:\\:validate\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/CreateValue.php
 
@@ -1826,109 +921,14 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/CreateValue.php
 
 		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/CreateValue.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteCustomer\\:\\:redirectRoute\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteCustomer.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteDiscount\\:\\:redirectRoute\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteDiscount.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteInventory\\:\\:redirectRoute\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteInventory.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteMailable\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteMailable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteMailable\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteMailable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteMailable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteProduct\\:\\:redirect\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteProduct.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteProduct\\:\\:redirectRoute\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteProduct.php
-
-		-
 			message: "#^Parameter \\#1 \\$product of class Shopper\\\\Core\\\\Events\\\\Products\\\\Deleted constructor expects Shopper\\\\Core\\\\Models\\\\Product, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/DeleteProduct.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteReview\\:\\:redirectRoute\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteReview.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteRole\\:\\:redirectRoute\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteRole.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:query\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteRole.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteTemplate\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteTemplate.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DeleteTemplate\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteTemplate.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteTemplate.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:whereHas\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/DiscountCustomers.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DiscountCustomers\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DiscountCustomers.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DiscountCustomers\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DiscountCustomers.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DiscountProducts\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DiscountProducts.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\DiscountProducts\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DiscountProducts.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Contracts\\\\Auth\\\\Authenticatable\\:\\:\\$password\\.$#"
@@ -1946,62 +946,7 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/LogoutOthersBrowser.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\LogoutOthersBrowser\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/LogoutOthersBrowser.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\LogoutOthersBrowser\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/LogoutOthersBrowser.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\LogoutOthersBrowser\\:\\:resetErrorBag\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/LogoutOthersBrowser.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\ProductsLists\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/ProductsLists.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\ProductsLists\\:\\:emitUp\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/ProductsLists.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/ProductsLists.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\ReOrderCategories\\:\\:emit\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Modals/ReOrderCategories.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\ReOrderCategories\\:\\:emitSelf\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Modals/ReOrderCategories.php
-
-		-
 			message: "#^Call to an undefined method Shopper\\\\Core\\\\Repositories\\\\BaseRepository\\:\\:whereNull\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/RelatedList.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\RelatedList\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/RelatedList.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\RelatedList\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/RelatedList.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/RelatedList.php
 
@@ -2011,49 +956,9 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/UpdatePaymentMethod.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\UpdatePaymentMethod\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdatePaymentMethod.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\UpdatePaymentMethod\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdatePaymentMethod.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\UpdatePaymentMethod\\:\\:validate\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdatePaymentMethod.php
-
-		-
 			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\PaymentMethod\\:\\:find\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/UpdatePaymentMethod.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdatePaymentMethod.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\UpdateValue\\:\\:closeModal\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdateValue.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\UpdateValue\\:\\:emit\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdateValue.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\UpdateValue\\:\\:validate\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdateValue.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdateValue.php
 
 		-
 			message: "#^Cannot access property \\$key on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
@@ -2081,32 +986,12 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
 
 		-
-			message: "#^Access to constant XLSX on an unknown class Maatwebsite\\\\Excel\\\\Excel\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:decreaseStock\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:increaseStock\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Exports\\\\ProductInventoryExport\\:\\:download\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Modals\\\\UpdateVariantStock\\:\\:validate\\(\\)\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
 
@@ -2151,429 +1036,24 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Pages/Dashboard.php
 
 		-
-			message: "#^Cannot access property \\$currencies on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\View\\\\Factory\\|Illuminate\\\\Contracts\\\\View\\\\View\\:\\:layout\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Pages/Initialization.php
 
 		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\AttributesTable\\:\\:\\$queryString\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\AttributesTable\\:\\:\\$selected\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\AttributesTable\\:\\:clearSelected\\(\\)\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\AttributesTable\\:\\:getSelected\\(\\)\\.$#"
-			count: 6
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\AttributesTable\\:\\:setPrimaryKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Call to method isField\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Columns\\\\BooleanColumn\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\SelectFilter\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
 			message: "#^Match expression does not handle remaining value\\: string$#"
 			count: 3
 			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
 
 		-
-			message: "#^Parameter \\$column of anonymous function has invalid type Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/AttributesTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\BrandsTable\\:\\:\\$queryString\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\BrandsTable\\:\\:\\$selected\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\BrandsTable\\:\\:clearSelected\\(\\)\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\BrandsTable\\:\\:getSelected\\(\\)\\.$#"
-			count: 6
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\BrandsTable\\:\\:setPrimaryKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Call to method isField\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 4
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Parameter \\$column of anonymous function has invalid type Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/BrandsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CategoriesTable\\:\\:\\$queryString\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CategoriesTable\\:\\:\\$selected\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CategoriesTable\\:\\:clearSelected\\(\\)\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CategoriesTable\\:\\:getSelected\\(\\)\\.$#"
-			count: 6
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CategoriesTable\\:\\:setPrimaryKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Call to method isField\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\SelectFilter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
 			message: "#^Match expression does not handle remaining value\\: string$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Parameter \\$column of anonymous function has invalid type Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/CategoriesTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CollectionsTable\\:\\:\\$selected\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CollectionsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CollectionsTable\\:\\:clearSelected\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CollectionsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CollectionsTable\\:\\:getSelected\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/CollectionsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CollectionsTable\\:\\:setPrimaryKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CollectionsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CollectionsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 4
-			path: packages/admin/src/Http/Livewire/Tables/CollectionsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\SelectFilter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CollectionsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CustomersTable\\:\\:\\$selected\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
 
 		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:research\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CustomersTable\\:\\:clearSelected\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CustomersTable\\:\\:getAppliedFilterWithValue\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CustomersTable\\:\\:getSelected\\(\\)\\.$#"
-			count: 4
-			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\CustomersTable\\:\\:setPrimaryKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\SelectFilter\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/CustomersTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\OrdersTable\\:\\:\\$queryString\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\OrdersTable\\:\\:\\$selected\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\OrdersTable\\:\\:clearSelected\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\OrdersTable\\:\\:getSelected\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\OrdersTable\\:\\:setPrimaryKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to method isField\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 6
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\DateFilter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\NumberFilter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\SelectFilter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\TextFilter\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Parameter \\$column of anonymous function has invalid type Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/OrdersTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ProductsTable\\:\\:\\$queryString\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ProductsTable\\:\\:\\$selected\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ProductsTable\\:\\:clearSelected\\(\\)\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ProductsTable\\:\\:getSelected\\(\\)\\.$#"
-			count: 6
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ProductsTable\\:\\:setPrimaryKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Call to method isField\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 6
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\MultiSelectFilter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\SelectFilter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Parameter \\$column of anonymous function has invalid type Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ProductsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ReviewsTable\\:\\:\\$queryString\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Access to an undefined property Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ReviewsTable\\:\\:\\$selected\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ReviewsTable\\:\\:clearSelected\\(\\)\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ReviewsTable\\:\\:getSelected\\(\\)\\.$#"
-			count: 6
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Http\\\\Livewire\\\\Tables\\\\ReviewsTable\\:\\:setPrimaryKey\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to method isField\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Filament\\\\Notifications\\\\Notification\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Columns\\\\BooleanColumn\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to static method make\\(\\) on an unknown class Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Filters\\\\SelectFilter\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Parameter \\$column of anonymous function has invalid type Rappasoft\\\\LaravelLivewireTables\\\\Views\\\\Column\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Tables/ReviewsTable.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\User\\:\\:hasPermissionTo\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Middleware/Dashboard.php
 
 		-
 			message: "#^Access to an undefined property Shopper\\\\Http\\\\Requests\\\\TwoFactorLoginRequest\\:\\:\\$code\\.$#"
@@ -2676,31 +1156,6 @@ parameters:
 			path: packages/admin/src/Services/Mailable.php
 
 		-
-			message: "#^Call to method generateSecretKey\\(\\) on an unknown class PragmaRX\\\\Google2FA\\\\Google2FA\\.$#"
-			count: 1
-			path: packages/admin/src/Services/TwoFactor/TwoFactorAuthenticationProvider.php
-
-		-
-			message: "#^Call to method getQRCodeUrl\\(\\) on an unknown class PragmaRX\\\\Google2FA\\\\Google2FA\\.$#"
-			count: 1
-			path: packages/admin/src/Services/TwoFactor/TwoFactorAuthenticationProvider.php
-
-		-
-			message: "#^Call to method verifyKey\\(\\) on an unknown class PragmaRX\\\\Google2FA\\\\Google2FA\\.$#"
-			count: 1
-			path: packages/admin/src/Services/TwoFactor/TwoFactorAuthenticationProvider.php
-
-		-
-			message: "#^Parameter \\$engine of method Shopper\\\\Services\\\\TwoFactor\\\\TwoFactorAuthenticationProvider\\:\\:__construct\\(\\) has invalid type PragmaRX\\\\Google2FA\\\\Google2FA\\.$#"
-			count: 1
-			path: packages/admin/src/Services/TwoFactor/TwoFactorAuthenticationProvider.php
-
-		-
-			message: "#^Property Shopper\\\\Services\\\\TwoFactor\\\\TwoFactorAuthenticationProvider\\:\\:\\$engine has unknown class PragmaRX\\\\Google2FA\\\\Google2FA as its type\\.$#"
-			count: 1
-			path: packages/admin/src/Services/TwoFactor/TwoFactorAuthenticationProvider.php
-
-		-
 			message: "#^Call to an undefined method Shopper\\\\ShopperServiceProvider\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/ShopperServiceProvider.php
@@ -2711,59 +1166,14 @@ parameters:
 			path: packages/admin/src/ShopperServiceProvider.php
 
 		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Permission\\:\\:all\\(\\)\\.$#"
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:permissions\\(\\)\\.$#"
 			count: 1
 			path: packages/core/database/seeders/Auth/PermissionRoleTableSeeder.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:query\\(\\)\\.$#"
-			count: 1
-			path: packages/core/database/seeders/Auth/PermissionRoleTableSeeder.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Permission\\:\\:query\\(\\)\\.$#"
-			count: 7
-			path: packages/core/database/seeders/Auth/PermissionsTableSeeder.php
-
-		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Role\\:\\:create\\(\\)\\.$#"
-			count: 3
-			path: packages/core/database/seeders/Auth/RolesTableSeeder.php
 
 		-
 			message: "#^Match expression does not handle remaining value\\: string$#"
 			count: 1
 			path: packages/core/database/seeders/AuthTableSeeder.php
-
-		-
-			message: "#^Function str_slug not found\\.$#"
-			count: 4
-			path: packages/core/database/seeders/LegalsPageTableSeeder.php
-
-		-
-			message: "#^Call to method add\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/core/src/Events/BuildingSidebar.php
-
-		-
-			message: "#^Method Shopper\\\\Core\\\\Events\\\\BuildingSidebar\\:\\:getMenu\\(\\) has invalid return type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/core/src/Events/BuildingSidebar.php
-
-		-
-			message: "#^Parameter \\$menu of method Shopper\\\\Core\\\\Events\\\\BuildingSidebar\\:\\:__construct\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/core/src/Events/BuildingSidebar.php
-
-		-
-			message: "#^Parameter \\$menu of method Shopper\\\\Core\\\\Events\\\\BuildingSidebar\\:\\:add\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/core/src/Events/BuildingSidebar.php
-
-		-
-			message: "#^Property Shopper\\\\Core\\\\Events\\\\BuildingSidebar\\:\\:\\$menu has unknown class Maatwebsite\\\\Sidebar\\\\Menu as its type\\.$#"
-			count: 1
-			path: packages/core/src/Events/BuildingSidebar.php
 
 		-
 			message: "#^Constructor of class Shopper\\\\Core\\\\Events\\\\Products\\\\Created has an unused parameter \\$product\\.$#"
@@ -2779,31 +1189,6 @@ parameters:
 			message: "#^Constructor of class Shopper\\\\Core\\\\Events\\\\Products\\\\Updated has an unused parameter \\$product\\.$#"
 			count: 1
 			path: packages/core/src/Events/Products/Updated.php
-
-		-
-			message: "#^Call to method format\\(\\) on an unknown class Money\\\\Formatter\\\\IntlMoneyFormatter\\.$#"
-			count: 1
-			path: packages/core/src/Helpers/Price.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currencies\\\\ISOCurrencies not found\\.$#"
-			count: 1
-			path: packages/core/src/Helpers/Price.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currency not found\\.$#"
-			count: 1
-			path: packages/core/src/Helpers/Price.php
-
-		-
-			message: "#^Instantiated class Money\\\\Formatter\\\\IntlMoneyFormatter not found\\.$#"
-			count: 1
-			path: packages/core/src/Helpers/Price.php
-
-		-
-			message: "#^Instantiated class Money\\\\Money not found\\.$#"
-			count: 1
-			path: packages/core/src/Helpers/Price.php
 
 		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Address\\:\\:\\$first_name\\.$#"
@@ -2861,28 +1246,8 @@ parameters:
 			path: packages/core/src/Models/AttributeValue.php
 
 		-
-			message: "#^Access to constant FIT_CROP on an unknown class Spatie\\\\Image\\\\Manipulations\\.$#"
-			count: 1
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: "#^Access to constant FIT_FILL on an unknown class Spatie\\\\Image\\\\Manipulations\\.$#"
-			count: 1
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Brand\\:\\:addMediaCollection\\(\\)\\.$#"
-			count: 1
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Brand\\:\\:addMediaConversion\\(\\)\\.$#"
+			message: "#^Call to an undefined method Spatie\\\\Image\\\\Manipulations\\:\\:keepOriginalImageFormat\\(\\)\\.$#"
 			count: 2
-			path: packages/core/src/Models/Brand.php
-
-		-
-			message: "#^Parameter \\$media of method Shopper\\\\Core\\\\Models\\\\Brand\\:\\:registerMediaConversions\\(\\) has invalid type Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
-			count: 1
 			path: packages/core/src/Models/Brand.php
 
 		-
@@ -2931,37 +1296,17 @@ parameters:
 			path: packages/core/src/Models/Category.php
 
 		-
-			message: "#^Access to constant FIT_CROP on an unknown class Spatie\\\\Image\\\\Manipulations\\.$#"
-			count: 1
-			path: packages/core/src/Models/Category.php
-
-		-
-			message: "#^Access to constant FIT_FILL on an unknown class Spatie\\\\Image\\\\Manipulations\\.$#"
-			count: 1
-			path: packages/core/src/Models/Category.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Category\\:\\:addMediaCollection\\(\\)\\.$#"
-			count: 1
-			path: packages/core/src/Models/Category.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Category\\:\\:addMediaConversion\\(\\)\\.$#"
-			count: 2
-			path: packages/core/src/Models/Category.php
-
-		-
 			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Category\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: packages/core/src/Models/Category.php
 
 		-
-			message: "#^Call to an undefined static method static\\(Shopper\\\\Core\\\\Models\\\\Category\\)\\:\\:where\\(\\)\\.$#"
-			count: 1
+			message: "#^Call to an undefined method Spatie\\\\Image\\\\Manipulations\\:\\:keepOriginalImageFormat\\(\\)\\.$#"
+			count: 2
 			path: packages/core/src/Models/Category.php
 
 		-
-			message: "#^Parameter \\$media of method Shopper\\\\Core\\\\Models\\\\Category\\:\\:registerMediaConversions\\(\\) has invalid type Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
+			message: "#^Call to an undefined static method static\\(Shopper\\\\Core\\\\Models\\\\Category\\)\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: packages/core/src/Models/Category.php
 
@@ -3001,28 +1346,8 @@ parameters:
 			path: packages/core/src/Models/Collection.php
 
 		-
-			message: "#^Access to constant FIT_CROP on an unknown class Spatie\\\\Image\\\\Manipulations\\.$#"
-			count: 1
-			path: packages/core/src/Models/Collection.php
-
-		-
-			message: "#^Access to constant FIT_FILL on an unknown class Spatie\\\\Image\\\\Manipulations\\.$#"
-			count: 1
-			path: packages/core/src/Models/Collection.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\HasMany\\:\\:first\\(\\)\\.$#"
 			count: 1
-			path: packages/core/src/Models/Collection.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Collection\\:\\:addMediaCollection\\(\\)\\.$#"
-			count: 1
-			path: packages/core/src/Models/Collection.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Collection\\:\\:addMediaConversion\\(\\)\\.$#"
-			count: 2
 			path: packages/core/src/Models/Collection.php
 
 		-
@@ -3031,12 +1356,12 @@ parameters:
 			path: packages/core/src/Models/Collection.php
 
 		-
-			message: "#^Call to an undefined static method static\\(Shopper\\\\Core\\\\Models\\\\Collection\\)\\:\\:where\\(\\)\\.$#"
-			count: 1
+			message: "#^Call to an undefined method Spatie\\\\Image\\\\Manipulations\\:\\:keepOriginalImageFormat\\(\\)\\.$#"
+			count: 2
 			path: packages/core/src/Models/Collection.php
 
 		-
-			message: "#^Parameter \\$media of method Shopper\\\\Core\\\\Models\\\\Collection\\:\\:registerMediaConversions\\(\\) has invalid type Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
+			message: "#^Call to an undefined static method static\\(Shopper\\\\Core\\\\Models\\\\Collection\\)\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: packages/core/src/Models/Collection.php
 
@@ -3131,31 +1456,6 @@ parameters:
 			path: packages/core/src/Models/Order.php
 
 		-
-			message: "#^Call to method format\\(\\) on an unknown class Money\\\\Formatter\\\\IntlMoneyFormatter\\.$#"
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currencies\\\\ISOCurrencies not found\\.$#"
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currency not found\\.$#"
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: "#^Instantiated class Money\\\\Formatter\\\\IntlMoneyFormatter not found\\.$#"
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
-			message: "#^Instantiated class Money\\\\Money not found\\.$#"
-			count: 1
-			path: packages/core/src/Models/Order.php
-
-		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\OrderItem\\:\\:\\$quantity\\.$#"
 			count: 1
 			path: packages/core/src/Models/OrderItem.php
@@ -3211,11 +1511,6 @@ parameters:
 			path: packages/core/src/Models/PaymentMethod.php
 
 		-
-			message: "#^Call to an undefined static method Shopper\\\\Core\\\\Models\\\\Permission\\:\\:query\\(\\)\\.$#"
-			count: 5
-			path: packages/core/src/Models/Permission.php
-
-		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Product\\:\\:\\$id\\.$#"
 			count: 1
 			path: packages/core/src/Models/Product.php
@@ -3251,16 +1546,6 @@ parameters:
 			path: packages/core/src/Models/Product.php
 
 		-
-			message: "#^Access to constant FIT_CROP on an unknown class Spatie\\\\Image\\\\Manipulations\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
-			message: "#^Access to constant FIT_FILL on an unknown class Spatie\\\\Image\\\\Manipulations\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphMany\\:\\:count\\(\\)\\.$#"
 			count: 1
 			path: packages/core/src/Models/Product.php
@@ -3291,47 +1576,17 @@ parameters:
 			path: packages/core/src/Models/Product.php
 
 		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Product\\:\\:addMediaCollection\\(\\)\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Product\\:\\:addMediaConversion\\(\\)\\.$#"
-			count: 2
-			path: packages/core/src/Models/Product.php
-
-		-
 			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\Product\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: packages/core/src/Models/Product.php
 
 		-
+			message: "#^Call to an undefined method Spatie\\\\Image\\\\Manipulations\\:\\:keepOriginalImageFormat\\(\\)\\.$#"
+			count: 2
+			path: packages/core/src/Models/Product.php
+
+		-
 			message: "#^Call to an undefined static method static\\(Shopper\\\\Core\\\\Models\\\\Product\\)\\:\\:where\\(\\)\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
-			message: "#^Call to method format\\(\\) on an unknown class Money\\\\Formatter\\\\IntlMoneyFormatter\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currencies\\\\ISOCurrencies not found\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currency not found\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
-			message: "#^Instantiated class Money\\\\Formatter\\\\IntlMoneyFormatter not found\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
-			message: "#^Instantiated class Money\\\\Money not found\\.$#"
 			count: 1
 			path: packages/core/src/Models/Product.php
 
@@ -3347,11 +1602,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$year of static method Carbon\\\\Carbon\\:\\:create\\(\\) expects DateTimeInterface\\|int\\|null, string given\\.$#"
-			count: 1
-			path: packages/core/src/Models/Product.php
-
-		-
-			message: "#^Parameter \\$media of method Shopper\\\\Core\\\\Models\\\\Product\\:\\:registerMediaConversions\\(\\) has invalid type Spatie\\\\MediaLibrary\\\\MediaCollections\\\\Models\\\\Media\\.$#"
 			count: 1
 			path: packages/core/src/Models/Product.php
 
@@ -3426,11 +1676,6 @@ parameters:
 			path: packages/core/src/Models/Review.php
 
 		-
-			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Role\\:\\:\\$name\\.$#"
-			count: 1
-			path: packages/core/src/Models/Role.php
-
-		-
 			message: "#^PHPDoc type array of property Shopper\\\\Core\\\\Models\\\\Setting\\:\\:\\$hidden is not covariant with PHPDoc type array\\<string\\> of overridden property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$hidden\\.$#"
 			count: 1
 			path: packages/core/src/Models/Setting.php
@@ -3476,17 +1721,12 @@ parameters:
 			path: packages/core/src/Models/User.php
 
 		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\BelongsToMany\\:\\:pluck\\(\\)\\.$#"
+			count: 1
+			path: packages/core/src/Models/User.php
+
+		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Relations\\\\MorphToMany\\:\\:orderBy\\(\\)\\.$#"
-			count: 1
-			path: packages/core/src/Models/User.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\User\\:\\:hasRole\\(\\)\\.$#"
-			count: 1
-			path: packages/core/src/Models/User.php
-
-		-
-			message: "#^Call to an undefined method Shopper\\\\Core\\\\Models\\\\User\\:\\:roles\\(\\)\\.$#"
 			count: 1
 			path: packages/core/src/Models/User.php
 
@@ -3506,49 +1746,9 @@ parameters:
 			path: packages/core/src/Repositories/BaseRepository.php
 
 		-
-			message: "#^Method Shopper\\\\Core\\\\Sidebar\\\\AbstractAdminSidebar\\:\\:extendWith\\(\\) has invalid return type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/AbstractAdminSidebar.php
-
-		-
-			message: "#^Parameter \\$menu of method Shopper\\\\Core\\\\Sidebar\\\\AbstractAdminSidebar\\:\\:extendWith\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/AbstractAdminSidebar.php
-
-		-
-			message: "#^Method Shopper\\\\Core\\\\Sidebar\\\\AdminSidebar\\:\\:getMenu\\(\\) has invalid return type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/AdminSidebar.php
-
-		-
-			message: "#^Parameter \\$menu of method Shopper\\\\Core\\\\Sidebar\\\\AdminSidebar\\:\\:__construct\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Menu\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/AdminSidebar.php
-
-		-
-			message: "#^Property Shopper\\\\Core\\\\Sidebar\\\\AdminSidebar\\:\\:\\$menu has unknown class Maatwebsite\\\\Sidebar\\\\Menu as its type\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/AdminSidebar.php
-
-		-
-			message: "#^Call to method isAuthorized\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Append\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperAppendRenderer.php
-
-		-
 			message: "#^Method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperAppendRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|void but returns string\\.$#"
 			count: 1
 			path: packages/core/src/Sidebar/Presentation/ShopperAppendRenderer.php
-
-		-
-			message: "#^Parameter \\$append of method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperAppendRenderer\\:\\:render\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Append\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperAppendRenderer.php
-
-		-
-			message: "#^Call to method isAuthorized\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Badge\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperBadgeRenderer.php
 
 		-
 			message: "#^Method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperBadgeRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|void but returns string\\.$#"
@@ -3556,59 +1756,9 @@ parameters:
 			path: packages/core/src/Sidebar/Presentation/ShopperBadgeRenderer.php
 
 		-
-			message: "#^Parameter \\$badge of method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperBadgeRenderer\\:\\:render\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Badge\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperBadgeRenderer.php
-
-		-
-			message: "#^Call to method getItems\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperGroupRenderer.php
-
-		-
-			message: "#^Call to method isAuthorized\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperGroupRenderer.php
-
-		-
 			message: "#^Method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperGroupRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|void but returns string\\.$#"
 			count: 1
 			path: packages/core/src/Sidebar/Presentation/ShopperGroupRenderer.php
-
-		-
-			message: "#^Parameter \\$group of method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperGroupRenderer\\:\\:render\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Group\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperGroupRenderer.php
-
-		-
-			message: "#^Call to method getAppends\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperItemRenderer.php
-
-		-
-			message: "#^Call to method getBadges\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperItemRenderer.php
-
-		-
-			message: "#^Call to method getItems\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperItemRenderer.php
-
-		-
-			message: "#^Call to method isActive\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Presentation\\\\ActiveStateChecker\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperItemRenderer.php
-
-		-
-			message: "#^Call to method isAuthorized\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperItemRenderer.php
-
-		-
-			message: "#^Instantiated class Maatwebsite\\\\Sidebar\\\\Presentation\\\\ActiveStateChecker not found\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperItemRenderer.php
 
 		-
 			message: "#^Method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperItemRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|void but returns string\\.$#"
@@ -3616,71 +1766,11 @@ parameters:
 			path: packages/core/src/Sidebar/Presentation/ShopperItemRenderer.php
 
 		-
-			message: "#^Parameter \\$item of method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperItemRenderer\\:\\:render\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Item\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperItemRenderer.php
-
-		-
-			message: "#^Call to method getMenu\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Sidebar\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperSidebarRenderer.php
-
-		-
-			message: "#^Parameter \\$sidebar of method Shopper\\\\Core\\\\Sidebar\\\\Presentation\\\\ShopperSidebarRenderer\\:\\:render\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\Sidebar\\.$#"
-			count: 1
-			path: packages/core/src/Sidebar/Presentation/ShopperSidebarRenderer.php
-
-		-
-			message: "#^Call to method register\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\SidebarManager\\.$#"
-			count: 1
-			path: packages/core/src/SidebarServiceProvider.php
-
-		-
-			message: "#^Call to static method getClassName\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Infrastructure\\\\SidebarFlusherFactory\\.$#"
-			count: 1
-			path: packages/core/src/SidebarServiceProvider.php
-
-		-
-			message: "#^Call to static method getClassName\\(\\) on an unknown class Maatwebsite\\\\Sidebar\\\\Infrastructure\\\\SidebarResolverFactory\\.$#"
-			count: 1
-			path: packages/core/src/SidebarServiceProvider.php
-
-		-
-			message: "#^Parameter \\$manager of method Shopper\\\\Core\\\\SidebarServiceProvider\\:\\:boot\\(\\) has invalid type Maatwebsite\\\\Sidebar\\\\SidebarManager\\.$#"
-			count: 1
-			path: packages/core/src/SidebarServiceProvider.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Filesystem\\\\Filesystem\\:\\:url\\(\\)\\.$#"
 			count: 1
 			path: packages/core/src/helpers.php
 
 		-
-			message: "#^Call to method format\\(\\) on an unknown class Money\\\\Formatter\\\\IntlMoneyFormatter\\.$#"
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
 			message: "#^Cannot access property \\$code on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currencies\\\\ISOCurrencies not found\\.$#"
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
-			message: "#^Instantiated class Money\\\\Currency not found\\.$#"
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
-			message: "#^Instantiated class Money\\\\Formatter\\\\IntlMoneyFormatter not found\\.$#"
-			count: 1
-			path: packages/core/src/helpers.php
-
-		-
-			message: "#^Instantiated class Money\\\\Money not found\\.$#"
 			count: 1
 			path: packages/core/src/helpers.php
