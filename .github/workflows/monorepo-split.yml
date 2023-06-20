@@ -29,5 +29,5 @@ jobs:
           repository_name: '${{ matrix.package }}'
           branch: 2.x
           tag: ${{ steps.previous-tag.outputs.tag }}
-          user_name: 'Arthur Monney'
-          user_email: 'contact@arthurmonney.me'
+          user_name: 'Github Actions'
+          user_email: 'action@github.com'
