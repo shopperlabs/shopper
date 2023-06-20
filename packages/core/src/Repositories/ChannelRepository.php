@@ -8,6 +8,6 @@ class ChannelRepository extends BaseRepository
 {
     public function model(): string
     {
-        return config('shopper.models.channels');
+        return config('shopper.models.channel');
     }
 }

@@ -37,15 +37,10 @@ input[type="number"] {
   @apply text-secondary-600 dark:text-white font-medium;
 }
 
-/* Dark Mode */
-.dark trix-toolbar .trix-button-group {
-  @apply border-secondary-700
+.iti {
+  display: block;
 }
 
-.dark trix-toolbar .trix-button:not(:first-child) {
-  @apply border-secondary-700
-}
-
-.dark trix-toolbar .trix-button {
-  @apply text-secondary-400 border-secondary-700
+.iti__selected-flag {
+  padding: 0 10px;
 }

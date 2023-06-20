@@ -6,7 +6,7 @@ return [
 
     'empty_country_selector' => 'Veuillez sélectionner un pays',
     'logo_description' => 'Le logo de votre boutique qui sera visible sur votre site. Cet actif apparaîtra sur vos factures.',
-    'about_description' => 'Vous pouvez consulter ces informations sur la page "À propos" de votre site web.',
+    'about_description' => 'Vous pouvez rajouter ces informations sur une page "À propos" de votre site web.',
     'currency_description' => 'Il s\'agit de la devise dans laquelle vos produits sont vendus. Après votre première vente, la devise est verrouillée et ne peut être modifiée.',
     'mapbox_disabled' => 'Mapbox n\'a pas été activée.',
 

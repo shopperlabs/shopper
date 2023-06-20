@@ -6,7 +6,7 @@ return [
 
     'empty_country_selector' => 'Please select a country',
     'logo_description' => 'The logo of your store that will be visible on your site. This assets will appear on your invoices.',
-    'about_description' => 'You can view this information on the About page on your website.',
+    'about_description' => 'You can add this information to an "About" page on your website.',
     'currency_description' => 'This is the currency your products are sold in. After your first sale, currency is locked in and can’t be changed.',
     'mapbox_disabled' => 'Mapbox has not been activated.',
 

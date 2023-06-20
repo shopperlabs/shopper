@@ -17,8 +17,6 @@ use Shopper\Core\Repositories\InventoryRepository;
 
 class Initialization extends Component
 {
-    use WithFileUploads;
-
     public string $shop_name = '';
 
     public string $shop_email = '';
@@ -49,12 +47,9 @@ class Initialization extends Component
 
     public int $shop_currency_id;
 
-    public $logo;
-
     protected $rules = [
         'shop_name' => 'required|max:100',
         'shop_email' => 'required|email',
-        'logo' => 'nullable|image|max:1024',
         'shop_country_id' => 'required',
         'shop_street_address' => 'required|string',
         'shop_zipcode' => 'required',
@@ -103,21 +98,6 @@ class Initialization extends Component
         return false;
     }
 
-    public function updatedSelectedCountryId(array $choice): void
-    {
-        if (count($choice) > 0 && $choice['value'] !== '0') {
-            $this->shop_country_id = (int) $choice['value'];
-            $country = Country::query()->find($this->shop_country_id);
-            $countryCurrency = array_slice($country->currencies, 0, 1);
-
-            foreach ($countryCurrency as $code => $name) {
-                if ($currency = Currency::query()->where('code', $code)->first()) {
-                    $this->shop_currency_id = $currency->id;
-                }
-            }
-        }
-    }
-
     public function messages(): array
     {
         return [
@@ -151,14 +131,6 @@ class Initialization extends Component
             Setting::query()->updateOrCreate(['key' => $key], [
                 'value' => $this->{$key},
                 'display_name' => Setting::lockedAttributesDisplayName($key),
-                'locked' => true,
-            ]);
-        }
-
-        if ($this->logo) {
-            Setting::query()->updateOrCreate(['key' => 'shop_logo'], [
-                'value' => $this->logo->store('/', config('shopper.core.storage.collection_name')),
-                'display_name' => Setting::lockedAttributesDisplayName('shop_logo'),
                 'locked' => true,
             ]);
         }

@@ -7,6 +7,7 @@ import NotificationsAlpinePlugin from '../../../../vendor/filament/notifications
 
 import './helpers/window'
 import './helpers/darkMode'
+import './helpers/trix'
 import internationalNumber from './plugins/internationalNumber'
 import mapBox from './plugins/mapBox'
 

@@ -103,18 +103,23 @@
                                     @else
                                         <div @class([
                                             'w-10 h-10 flex items-center justify-center border-2 rounded-full',
-                                            'border-primary-600 dark:hover:border-primary-500' => ($shop_email || $shop_name),
+                                            'border-primary-600' => $shop_email || $shop_name,
                                             'border-secondary-300 dark:border-secondary-700' => !($shop_email || $shop_name),
                                         ])>
                                             <p @class([
-                                                'text-primary-600 dark:text-primary-500' => ($shop_email || $shop_name),
+                                                'text-primary-600 dark:text-primary-500' => $shop_email || $shop_name,
                                                 'text-secondary-500 dark:text-secondary-400' => !($shop_email || $shop_name),
                                             ])>01</p>
                                         </div>
                                     @endif
                                 </div>
                                 <div class="mt-0.5 min-w-0">
-                                    <h3 class="text-xs leading-4 font-semibold uppercase tracking-wide @if(($shop_email && empty($shop_name)) || ($shop_name && empty($shop_email))) text-primary-600 dark:text-primary-500 @elseif($this->stepOneState()) text-secondary-900 dark:text-white @else text-secondary-500 dark:text-secondary-400 @endif">
+                                    <h3 @class([
+                                        'text-xs leading-4 font-semibold uppercase tracking-wide',
+                                        'text-primary-600' => ($shop_email && empty($shop_name)) || ($shop_name && empty($shop_email)),
+                                        'text-secondary-900 dark:text-white' => $this->stepOneState(),
+                                        'text-secondary-500 dark:text-secondary-400' => ! $this->stepOneState(),
+                                    ])>
                                         {{ __('shopper::pages/settings.initialization.step_one_title') }}
                                     </h3>
                                     <p class="text-sm font-medium leading-5 text-secondary-400 dark:text-secondary-500">
@@ -142,13 +147,25 @@
                                             </svg>
                                         </div>
                                     @else
-                                        <div class="w-10 h-10 flex items-center justify-center border-2 @if($shop_street_address || $shop_city) border-primary-600 dark:hover:border-primary-500 @else border-secondary-300 dark:border-secondary-700 @endif rounded-full">
-                                            <p class="@if($shop_street_address || $shop_city) text-primary-600 dark:text-primary-500 @else text-secondary-500 dark:text-secondary-400 @endif">02</p>
+                                        <div @class([
+                                            'w-10 h-10 flex items-center justify-center border-2 rounded-full',
+                                            'border-primary-600' => $shop_street_address || $shop_city,
+                                            'border-secondary-300 dark:border-secondary-700' => !($shop_street_address || $shop_city),
+                                        ])>
+                                            <p @class([
+                                                'text-primary-600' => $shop_street_address || $shop_city,
+                                                'text-secondary-500 dark:text-secondary-400' => !($shop_street_address || $shop_city),
+                                            ])>02</p>
                                         </div>
                                     @endif
                                 </div>
                                 <div class="mt-0.5 min-w-0">
-                                    <h3 class="text-xs leading-4 font-semibold uppercase tracking-wide @if(($shop_street_address && empty($shop_city)) || ($shop_city && empty($shop_street_address))) text-primary-600 dark:text-primary-500 @elseif($this->stepTwoState()) text-secondary-900 dark:text-white @else text-secondary-500 dark:text-secondary-400 @endif">
+                                    <h3 @class([
+                                        'text-xs leading-4 font-semibold uppercase tracking-wide',
+                                        'text-primary-600 dark:text-primary-500' => ($shop_street_address && empty($shop_city)) || ($shop_city && empty($shop_street_address)),
+                                        'text-secondary-900 dark:text-white' => $this->stepTwoState(),
+                                        'text-secondary-500 dark:text-secondary-400' => ! $this->stepTwoState(),
+                                    ])>
                                         {{ __('shopper::pages/settings.initialization.step_two_title') }}
                                     </h3>
                                     <p class="text-sm font-medium leading-5 text-secondary-400 dark:text-secondary-500">
@@ -234,8 +251,8 @@
             <div class="mt-6 lg:mt-8 sm:px-6 lg:px-8">
                 <div class="p-4 space-y-6 bg-white shadow-md sm:rounded-md lg:p-6 dark:bg-secondary-800">
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start">
-                        <x-shopper::label for="name" class="sm:mt-px sm:pt-2">
-                            {{ __('shopper::layout.forms.label.store_name') }} <span class="text-danger-500">*</span>
+                        <x-shopper::label for="name" class="sm:mt-px sm:pt-2" is-required>
+                            {{ __('shopper::layout.forms.label.store_name') }}
                         </x-shopper::label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
@@ -250,8 +267,8 @@
                     </div>
 
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-secondary-200 sm:pt-5 dark:border-secondary-700">
-                        <x-shopper::label for="email" class="sm:mt-px sm:pt-2">
-                            {{ __('shopper::layout.forms.label.email') }} <span class="text-danger-500">*</span>
+                        <x-shopper::label for="email" class="sm:mt-px sm:pt-2" is-required>
+                            {{ __('shopper::layout.forms.label.email') }}
                         </x-shopper::label>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             <div class="relative rounded-md shadow-sm sm:max-w-xs lg:max-w-lg">
@@ -267,8 +284,8 @@
                     </div>
 
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-secondary-200 sm:pt-5 dark:border-secondary-700">
-                        <x-shopper::label for="country" class="sm:mt-px sm:pt-2">
-                            {{ __('shopper::layout.forms.label.country') }} <span class="text-danger-500">*</span>
+                        <x-shopper::label for="country" class="sm:mt-px sm:pt-2" is-required>
+                            {{ __('shopper::layout.forms.label.country') }}
                         </x-shopper::label>
                         <div class="relative mt-1 sm:mt-0 sm:col-span-2">
                             <div class="rounded-md shadow-sm sm:max-w-xs lg:max-w-lg" wire:ignore>
@@ -284,26 +301,6 @@
                                         @endforeach
                                     </select>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:border-t sm:border-secondary-200 sm:pt-5 dark:border-secondary-700">
-                        <x-shopper::label for="photo" class="sm:mt-px sm:pt-2" :value="__('shopper::layout.forms.label.logo')" />
-                        <div class="relative mt-1 sm:mt-0 sm:col-span-2">
-                            <x-shopper::forms.avatar-upload wire:model.defer="logo" id="photo">
-                                <span class="flex items-center justify-center w-12 h-12 overflow-hidden rounded-full bg-secondary-100 dark:bg-secondary-700">
-                                    @if($logo)
-                                        <img class="object-cover w-full h-full" src="{{ $logo->temporaryUrl() }}" alt="Store logo">
-                                    @else
-                                        <svg class="w-6 h-6 text-secondary-300 dark:text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                    @endif
-                                </span>
-                            </x-shopper::forms.avatar-upload>
-                            <p class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
-                                {{ __('shopper::pages/settings.logo_description') }}
-                            </p>
                         </div>
                     </div>
 
@@ -326,7 +323,7 @@
                                 <select
                                     wire:model.defer="shop_currency_id"
                                     id="currency"
-                                    x-data="{}"
+                                    x-data
                                     x-init="function() { tomSelect($el, {}) }"
                                     autocomplete="off"
                                 >
@@ -360,14 +357,14 @@
             <div class="mt-6 lg:mt-8 sm:px-6 lg:px-8">
                 <div class="p-4 bg-white shadow-md sm:rounded-md dark:bg-secondary-800">
                     <div
-                        @if(config('shopper.system.mapbox'))
-                            x-data="mapBox($refs.mapbox, '{{ config('shopper.system.mapbox') }}')"
+                        @if(config('shopper.core.mapbox_token'))
+                            x-data="mapBox($refs.mapbox, '{{ config('shopper.core.mapbox_token') }}')"
                         @else
                             x-data="{ lat: '', lng: '' }"
                         @endif
                         class="grid gap-4 lg:grid-cols-3 lg:gap-6">
                         <div wire:ignore class="space-y-4 sm:col-span-2">
-                            @if(config('shopper.system.mapbox'))
+                            @if(config('shopper.core.mapbox_token'))
                                 <div x-ref="mapbox" class="overflow-hidden rounded-md outline-none bg-secondary-100 h-95 dark:bg-secondary-900"></div>
                             @else
                                 <div class="flex items-center justify-center overflow-hidden rounded-md outline-none bg-secondary-100 h-95 dark:bg-secondary-900">
@@ -411,7 +408,18 @@
                                             <path d="M19.167 9.167H17.45a7.51 7.51 0 0 0-6.618-6.618V.833a.834.834 0 0 0-1.666 0V2.55a7.51 7.51 0 0 0-6.618 6.618H.833a.834.834 0 0 0 0 1.666H2.55a7.51 7.51 0 0 0 6.618 6.618v1.716a.834.834 0 0 0 1.666 0V17.45a7.51 7.51 0 0 0 6.618-6.618h1.716a.834.834 0 0 0 0-1.666zM10 15.833A5.84 5.84 0 0 1 4.167 10 5.84 5.84 0 0 1 10 4.167 5.84 5.84 0 0 1 15.833 10 5.84 5.84 0 0 1 10 15.833z" />
                                         </svg>
                                     </div>
-                                    <x-shopper::forms.input x-model="lng" x-data x-init="$watch('lng', value => $wire.set('shop_lng', value))" id="longitude" type="text" class="pl-10" autocomplete="off" placeholder="9.795537" readonly />
+                                    <div x-data>
+                                        <x-shopper::forms.input
+                                            x-model="lng"
+                                            x-init="$watch('lng', value => $wire.set('shop_lng', value))"
+                                            id="longitude"
+                                            type="text"
+                                            class="pl-10"
+                                            autocomplete="off"
+                                            placeholder="9.795537"
+                                            readonly
+                                        />
+                                    </div>
                                 </x-shopper::forms.group>
 
                                 <x-shopper::forms.group class="sm:col-span-2" for="latitude" :label="__('shopper::layout.forms.label.latitude')" wire:ignore>
@@ -421,7 +429,18 @@
                                             <path d="M19.167 9.167H17.45a7.51 7.51 0 0 0-6.618-6.618V.833a.834.834 0 0 0-1.666 0V2.55a7.51 7.51 0 0 0-6.618 6.618H.833a.834.834 0 0 0 0 1.666H2.55a7.51 7.51 0 0 0 6.618 6.618v1.716a.834.834 0 0 0 1.666 0V17.45a7.51 7.51 0 0 0 6.618-6.618h1.716a.834.834 0 0 0 0-1.666zM10 15.833A5.84 5.84 0 0 1 4.167 10 5.84 5.84 0 0 1 10 4.167 5.84 5.84 0 0 1 15.833 10 5.84 5.84 0 0 1 10 15.833z" />
                                         </svg>
                                     </div>
-                                    <x-shopper::forms.input x-model="lat" x-data x-init="$watch('lat', value => $wire.set('shop_lat', value))" id="latitude" type="text" class="pl-10" autocomplete="off" placeholder="4.02537" readonly />
+                                    <div x-data>
+                                        <x-shopper::forms.input
+                                            x-model="lat"
+                                            x-init="$watch('lat', value => $wire.set('shop_lat', value))"
+                                            id="latitude"
+                                            type="text"
+                                            class="pl-10"
+                                            autocomplete="off"
+                                            placeholder="4.02537"
+                                            readonly
+                                        />
+                                    </div>
                                 </x-shopper::forms.group>
                             </div>
                         </div>
