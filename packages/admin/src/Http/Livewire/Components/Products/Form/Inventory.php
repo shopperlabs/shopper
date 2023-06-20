@@ -15,7 +15,7 @@ use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Repositories\InventoryHistoryRepository;
 use Shopper\Core\Traits\Attributes\WithStock;
-use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class Inventory extends Component
 {

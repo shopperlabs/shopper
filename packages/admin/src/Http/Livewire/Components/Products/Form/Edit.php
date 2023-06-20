@@ -17,7 +17,7 @@ use Shopper\Core\Traits\Attributes\WithChoicesBrands;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Core\Traits\Attributes\WithUploadProcess;
 use Shopper\Http\Livewire\AbstractBaseComponent;
-use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class Edit extends AbstractBaseComponent
 {

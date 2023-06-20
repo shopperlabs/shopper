@@ -14,7 +14,7 @@ use Livewire\WithPagination;
 use Shopper\Core\Events\Products\Deleted as ProductDeleted;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Traits\Attributes\WithUploadProcess;
-use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class Variants extends Component
 {

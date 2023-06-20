@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Repositories\InventoryRepository;
-use Shopper\Http\Livewire\Products\WithAttributes;
+use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class AddVariant extends ModalComponent
 {
