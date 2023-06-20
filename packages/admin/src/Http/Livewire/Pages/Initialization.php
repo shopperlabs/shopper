@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
@@ -169,10 +168,10 @@ class Initialization extends Component
     public function render(): View
     {
         return view('shopper::livewire.pages.initialization', [
-                'countries' => Cache::get('countries-settings', fn () => Country::query()->orderBy('name')->get()),
-                'currencies' => Cache::get('currencies-setting', fn () => Currency::query()->orderBy('name')->get()),
-            ])->layout('shopper::components.layouts.base', [
-                'title' => __('shopper::pages/settings.initialization.title'),
-            ]);
+            'countries' => Cache::get('countries-settings', fn () => Country::query()->orderBy('name')->get()),
+            'currencies' => Cache::get('currencies-setting', fn () => Currency::query()->orderBy('name')->get()),
+        ])->layout('shopper::components.layouts.base', [
+            'title' => __('shopper::pages/settings.initialization.title'),
+        ]);
     }
 }
