@@ -32,4 +32,4 @@ jobs:
         with:
           branch: main
           commit_message: >
-            chore: build assets
+            chore: Compile assets
