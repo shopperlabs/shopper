@@ -17,7 +17,9 @@ final class Login extends Component
     use WithRateLimiting;
 
     public string $email = '';
+
     public string $password = '';
+
     public bool $remember = false;
 
     public function authenticate(): void

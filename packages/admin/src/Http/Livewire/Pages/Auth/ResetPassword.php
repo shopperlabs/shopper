@@ -16,7 +16,9 @@ use Shopper\Core\Shopper;
 final class ResetPassword extends Component
 {
     public ?string $token = null;
+
     public string $email = '';
+
     public string $password = '';
 
     public function mount(?string $token = null): void
