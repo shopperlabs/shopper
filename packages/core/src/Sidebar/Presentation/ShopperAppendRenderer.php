@@ -7,7 +7,7 @@ namespace Shopper\Core\Sidebar\Presentation;
 use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Append;
 
-class ShopperAppendRenderer
+final class ShopperAppendRenderer
 {
     protected string $view = 'shopper::sidebar.append';
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Core\Models\Currency;
 
-class CurrenciesTableSeeder extends Seeder
+final class CurrenciesTableSeeder extends Seeder
 {
     protected array $currencies;
 

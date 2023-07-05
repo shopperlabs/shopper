@@ -7,7 +7,7 @@ namespace Shopper\Core\Sidebar\Presentation;
 use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Group;
 
-class ShopperGroupRenderer
+final class ShopperGroupRenderer
 {
     protected string $view = 'shopper::sidebar.group';
 

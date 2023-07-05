@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Core\Models\Permission;
 
-class PermissionsTableSeeder extends Seeder
+final class PermissionsTableSeeder extends Seeder
 {
     public function run(): void
     {

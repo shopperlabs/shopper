@@ -6,7 +6,7 @@ namespace Shopper\Core\Sidebar\Domain;
 
 use Maatwebsite\Sidebar\Domain\DefaultItem as BaseDefaultItem;
 
-class DefaultItem extends BaseDefaultItem
+final class DefaultItem extends BaseDefaultItem
 {
     /**
      * @var string

@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Core\Models\Legal;
 
-class LegalsPageTableSeeder extends Seeder
+final class LegalsPageTableSeeder extends Seeder
 {
     public function run(): void
     {

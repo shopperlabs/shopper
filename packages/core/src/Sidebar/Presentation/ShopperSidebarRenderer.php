@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Presentation\SidebarRenderer;
 use Maatwebsite\Sidebar\Sidebar;
 
-class ShopperSidebarRenderer implements SidebarRenderer
+final class ShopperSidebarRenderer implements SidebarRenderer
 {
     protected string $view = 'shopper::sidebar.menu';
 

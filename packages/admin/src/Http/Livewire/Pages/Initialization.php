@@ -14,7 +14,7 @@ use Shopper\Core\Models\Setting;
 use Shopper\Core\Repositories\ChannelRepository;
 use Shopper\Core\Repositories\InventoryRepository;
 
-class Initialization extends Component
+final class Initialization extends Component
 {
     public string $shop_name = '';
 

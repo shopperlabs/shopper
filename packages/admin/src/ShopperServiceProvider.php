@@ -21,7 +21,7 @@ use Shopper\Http\Middleware\Authenticate;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class ShopperServiceProvider extends PackageServiceProvider
+final class ShopperServiceProvider extends PackageServiceProvider
 {
     use HasRegisterConfigAndMigrationFiles;
 

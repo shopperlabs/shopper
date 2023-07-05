@@ -13,12 +13,10 @@ use Livewire\Component;
 use Shopper\Core\Rules\RealEmailValidator;
 use Shopper\Core\Shopper;
 
-class ResetPassword extends Component
+final class ResetPassword extends Component
 {
     public ?string $token = null;
-
     public string $email = '';
-
     public string $password = '';
 
     public function mount(?string $token = null): void

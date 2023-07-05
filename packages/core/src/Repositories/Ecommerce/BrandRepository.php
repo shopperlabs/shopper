@@ -6,7 +6,7 @@ namespace Shopper\Core\Repositories\Ecommerce;
 
 use Shopper\Core\Repositories\BaseRepository;
 
-class BrandRepository extends BaseRepository
+final class BrandRepository extends BaseRepository
 {
     public function model(): string
     {

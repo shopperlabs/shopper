@@ -6,7 +6,7 @@ namespace Shopper\Core\Repositories;
 
 use Shopper\Core\Models\User;
 
-class UserRepository extends BaseRepository
+final class UserRepository extends BaseRepository
 {
     public function model(): string
     {

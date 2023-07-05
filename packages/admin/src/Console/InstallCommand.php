@@ -12,7 +12,7 @@ use Shopper\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-class InstallCommand extends Command
+final class InstallCommand extends Command
 {
     protected ProgressBar $progressBar;
 

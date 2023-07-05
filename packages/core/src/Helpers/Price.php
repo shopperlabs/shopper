@@ -6,7 +6,7 @@ namespace Shopper\Core\Helpers;
 
 use Shopper\Core\Traits\HasPrice;
 
-class Price
+final class Price
 {
     use HasPrice;
 

@@ -6,7 +6,7 @@ namespace Shopper\Core\Repositories;
 
 use Shopper\Core\Models\InventoryHistory;
 
-class InventoryHistoryRepository extends BaseRepository
+final class InventoryHistoryRepository extends BaseRepository
 {
     public function model(): string
     {

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 
-class CoreServiceProvider extends ServiceProvider
+final class CoreServiceProvider extends ServiceProvider
 {
     use HasRegisterConfigAndMigrationFiles;
 

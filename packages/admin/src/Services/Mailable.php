@@ -14,7 +14,7 @@ use Shopper\Core\Traits\Mails\Mailables;
 use Shopper\Core\Traits\Mails\Templates;
 use Throwable;
 
-class Mailable
+final class Mailable
 {
     use Templates;
     use Mailables;

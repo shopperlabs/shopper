@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Presentation\ActiveStateChecker;
 
-class ShopperItemRenderer
+final class ShopperItemRenderer
 {
     protected string $view = 'shopper::sidebar.item';
 

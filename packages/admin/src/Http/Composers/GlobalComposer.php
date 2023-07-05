@@ -6,7 +6,7 @@ namespace Shopper\Http\Composers;
 
 use Illuminate\View\View;
 
-class GlobalComposer
+final class GlobalComposer
 {
     public function compose(View $view): void
     {

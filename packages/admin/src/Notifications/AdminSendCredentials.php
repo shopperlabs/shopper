@@ -7,7 +7,7 @@ namespace Shopper\Notifications;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AdminSendCredentials extends Notification
+final class AdminSendCredentials extends Notification
 {
     public function __construct(public string $password)
     {

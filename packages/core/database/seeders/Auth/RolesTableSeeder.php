@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Core\Models\Role;
 
-class RolesTableSeeder extends Seeder
+final class RolesTableSeeder extends Seeder
 {
     public function run(): void
     {

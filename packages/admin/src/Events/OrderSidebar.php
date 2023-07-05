@@ -11,7 +11,7 @@ use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Sidebar\AbstractAdminSidebar;
 
-class OrderSidebar extends AbstractAdminSidebar
+final class OrderSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {

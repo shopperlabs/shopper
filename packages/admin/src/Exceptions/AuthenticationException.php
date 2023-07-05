@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-class AuthenticationException extends BaseAuthenticationException
+final class AuthenticationException extends BaseAuthenticationException
 {
     public function render(Request $request): JsonResponse|RedirectResponse
     {

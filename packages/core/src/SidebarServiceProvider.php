@@ -13,7 +13,7 @@ use Shopper\Core\Sidebar\AdminSidebar;
 use Shopper\Core\Sidebar\Domain\DefaultItem;
 use Shopper\Core\Sidebar\Presentation\ShopperSidebarRenderer;
 
-class SidebarServiceProvider extends ServiceProvider
+final class SidebarServiceProvider extends ServiceProvider
 {
     public function boot(SidebarManager $manager): void
     {

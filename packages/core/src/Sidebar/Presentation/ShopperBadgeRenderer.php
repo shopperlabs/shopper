@@ -7,7 +7,7 @@ namespace Shopper\Core\Sidebar\Presentation;
 use Illuminate\Contracts\View\Factory;
 use Maatwebsite\Sidebar\Badge;
 
-class ShopperBadgeRenderer
+final class ShopperBadgeRenderer
 {
     protected string $view = 'shopper::sidebar.badge';
 

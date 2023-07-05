@@ -6,7 +6,7 @@ namespace Shopper\Core\Repositories;
 
 use Shopper\Core\Models\Discount;
 
-class DiscountRepository extends BaseRepository
+final class DiscountRepository extends BaseRepository
 {
     public function model(): string
     {

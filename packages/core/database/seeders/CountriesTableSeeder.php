@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Core\Models\Country;
 
-class CountriesTableSeeder extends Seeder
+final class CountriesTableSeeder extends Seeder
 {
     protected array $countries;
 

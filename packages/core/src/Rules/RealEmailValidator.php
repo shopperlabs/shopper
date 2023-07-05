@@ -6,7 +6,7 @@ namespace Shopper\Core\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class RealEmailValidator implements Rule
+final class RealEmailValidator implements Rule
 {
     /**
      * Determine if the validation rule passes.

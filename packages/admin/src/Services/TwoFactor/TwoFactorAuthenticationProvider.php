@@ -7,7 +7,7 @@ namespace Shopper\Services\TwoFactor;
 use PragmaRX\Google2FA\Google2FA;
 use Shopper\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 
-class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProviderContract
+final class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProviderContract
 {
     public function __construct(protected Google2FA $engine)
     {

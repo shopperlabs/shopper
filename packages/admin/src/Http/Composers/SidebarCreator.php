@@ -7,7 +7,7 @@ namespace Shopper\Http\Composers;
 use Maatwebsite\Sidebar\Presentation\SidebarRenderer;
 use Shopper\Core\Sidebar\AdminSidebar;
 
-class SidebarCreator
+final class SidebarCreator
 {
     public function __construct(protected AdminSidebar $sidebar, protected SidebarRenderer $renderer)
     {

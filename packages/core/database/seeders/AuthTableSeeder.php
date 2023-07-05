@@ -11,7 +11,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 use Shopper\Core\Traits\Database\TruncateTable;
 
-class AuthTableSeeder extends Seeder
+final class AuthTableSeeder extends Seeder
 {
     use TruncateTable;
 

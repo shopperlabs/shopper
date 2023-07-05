@@ -7,7 +7,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
-class ShopperSeeder extends Seeder
+final class ShopperSeeder extends Seeder
 {
     public function run(): void
     {

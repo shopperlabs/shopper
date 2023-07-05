@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Shopper\Core\Models\Permission;
 use Shopper\Core\Models\Role;
 
-class PermissionRoleTableSeeder extends Seeder
+final class PermissionRoleTableSeeder extends Seeder
 {
     public function run(): void
     {

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopper\Http\Livewire\Pages\Auth;
 
-use Illuminate\Auth\Passwords\PasswordBroker;
+use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Password;
 use Livewire\Component;
 use Shopper\Core\Rules\RealEmailValidator;
 
-class ForgotPassword extends Component
+final class ForgotPassword extends Component
 {
     public string $email = '';
 

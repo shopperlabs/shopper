@@ -9,7 +9,7 @@ use Maatwebsite\Sidebar\Item;
 use Maatwebsite\Sidebar\Menu;
 use Shopper\Core\Sidebar\AbstractAdminSidebar;
 
-class DashboardSidebar extends AbstractAdminSidebar
+final class DashboardSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
