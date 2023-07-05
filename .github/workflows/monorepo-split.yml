@@ -3,7 +3,8 @@ name: monorepo-split
 on:
   push:
     branches:
-      - "2.*"
+      - main
+      - '2.*'
     tags: '*'
 
 jobs:
@@ -27,7 +28,7 @@ jobs:
           package_directory: 'packages/${{ matrix.package }}'
           repository_organization: 'shopperlabs'
           repository_name: '${{ matrix.package }}'
-          branch: 2.x
+          branch: main
           tag: ${{ steps.previous-tag.outputs.tag }}
           user_name: 'Arthur Monney'
           user_email: 'monneylobe@gmail.com'
