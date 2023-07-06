@@ -12,9 +12,9 @@ interface Item extends Itemable, Authorizable, Routeable
 {
     public function getName(): string;
 
-    public function name($name): self;
+    public function setName(string $name): self;
 
-    public function weight($weight): self;
+    public function weight(int $weight): self;
 
     public function getWeight(): int;
 
@@ -34,13 +34,13 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function route(array|string $route, array $params = []): self;
 
-    public function badge(Closure|string $callbackOrValue = null, string $className = null): Badge;
+    public function badge(mixed $callbackOrValue = null, string $className = null): Badge;
 
     public function addBadge(Badge $badge): Badge;
 
     public function getBadges(): Collection;
 
-    public function append($callbackOrUrl = null, string $icon = null, string $name = null): Append;
+    public function append(mixed $callbackOrUrl = null, string $icon = null, string $name = null): Append;
 
     public function addAppend(Append $append): Append;
 
@@ -48,7 +48,7 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function isActiveWhen(string $path): self;
 
-    public function getActiveWhen(): string;
+    public function getActiveWhen(): bool;
 
     public function isNewTab(bool $newTab): self;
 

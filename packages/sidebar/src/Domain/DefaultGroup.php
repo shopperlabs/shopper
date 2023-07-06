@@ -13,7 +13,7 @@ use Shopper\Sidebar\Traits\CacheableTrait;
 use Shopper\Sidebar\Traits\CallableTrait;
 use Shopper\Sidebar\Traits\ItemableTrait;
 
-final class DefaultGroup implements Group, Serializable
+class DefaultGroup implements Group, Serializable
 {
     use CallableTrait;
     use CacheableTrait;
@@ -49,7 +49,7 @@ final class DefaultGroup implements Group, Serializable
         return $this->name;
     }
 
-    public function name(string $name): Group
+    public function setName(string $name): Group
     {
         $this->name = $name;
 
@@ -70,7 +70,7 @@ final class DefaultGroup implements Group, Serializable
 
     public function hideHeading(bool $hide = true): Group
     {
-        $this->heading = !$hide;
+        $this->heading = ! $hide;
 
         return $this;
     }

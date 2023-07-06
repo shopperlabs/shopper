@@ -10,7 +10,7 @@ interface Group extends Itemable, Authorizable
 {
     public function getName(): string;
 
-    public function name(string $name): self;
+    public function setName(string $name): self;
 
     public function weight(int $weight): self;
 

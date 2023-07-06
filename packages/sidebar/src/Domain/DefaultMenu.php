@@ -14,7 +14,7 @@ use Shopper\Sidebar\Traits\AuthorizableTrait;
 use Shopper\Sidebar\Traits\CacheableTrait;
 use Shopper\Sidebar\Traits\CallableTrait;
 
-final class DefaultMenu implements Menu, Serializable
+class DefaultMenu implements Menu, Serializable
 {
     use CallableTrait;
     use CacheableTrait;
@@ -26,7 +26,7 @@ final class DefaultMenu implements Menu, Serializable
         'groups',
     ];
 
-    public function __construct(protected  Container $container)
+    public function __construct(protected Container $container)
     {
         $this->groups = new Collection();
     }
@@ -37,10 +37,12 @@ final class DefaultMenu implements Menu, Serializable
             $group = $this->groups->get($name);
         } else {
             $group = $this->container->make(Group::class);
-            $group->name($name);
+            $group->setName($name);
         }
 
-        $this->call($callback, $group);
+        if ($callback) {
+            $this->call($callback, $group);
+        }
 
         $this->addGroup($group);
 

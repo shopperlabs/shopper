@@ -19,7 +19,8 @@ trait CallableTrait
     {
         if ($callback instanceof Closure) {
             $parameters = $this->resolveMethodDependencies(
-                [$caller], new ReflectionFunction($callback)
+                [$caller],
+                new ReflectionFunction($callback)
             );
             call_user_func_array($callback, $parameters);
         }

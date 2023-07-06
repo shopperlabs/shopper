@@ -22,7 +22,9 @@ trait RouteableTrait
 
     public function route(array|string $route, array $params = []): self
     {
-        $this->url = route($route, $params);
+        $this->setUrl(
+            url: $this->container->make('url')->route($route, $params)
+        );
 
         return $this;
     }

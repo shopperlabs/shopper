@@ -9,12 +9,10 @@ use Serializable;
 use Shopper\Sidebar\Contracts\Builder\Append;
 use Shopper\Sidebar\Traits\AuthorizableTrait;
 use Shopper\Sidebar\Traits\CacheableTrait;
-use Shopper\Sidebar\Traits\CallableTrait;
 use Shopper\Sidebar\Traits\RouteableTrait;
 
-final class DefaultAppend implements Append, Serializable
+class DefaultAppend implements Append, Serializable
 {
-    use CallableTrait;
     use CacheableTrait;
     use RouteableTrait;
     use AuthorizableTrait;
@@ -23,10 +21,13 @@ final class DefaultAppend implements Append, Serializable
 
     protected string $icon = 'heroicon-s-plus-small';
 
+    protected string $type = 'blade';
+
     protected array $cacheables = [
         'name',
         'url',
         'icon',
+        'type',
     ];
 
     public function __construct(protected Container $container)
@@ -38,7 +39,7 @@ final class DefaultAppend implements Append, Serializable
         return $this->name;
     }
 
-    public function name(string $name): Append
+    public function setName(string $name): Append
     {
         $this->name = $name;
 

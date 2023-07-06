@@ -10,7 +10,7 @@ interface Append extends Authorizable, Routeable
 {
     public function getName(): string;
 
-    public function name(string $name): self;
+    public function setName(string $name): self;
 
     public function getIcon(): string;
 

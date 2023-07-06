@@ -13,6 +13,7 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Models\User;
 use Shopper\ShopperServiceProvider;
+use Shopper\Sidebar\SidebarServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
 class TestCase extends BaseTestCase
@@ -26,6 +27,7 @@ class TestCase extends BaseTestCase
             BladeIconsServiceProvider::class,
             CoreServiceProvider::class,
             ShopperServiceProvider::class,
+            SidebarServiceProvider::class,
             LivewireServiceProvider::class,
             NotificationsServiceProvider::class,
             MediaLibraryServiceProvider::class,
@@ -42,10 +44,6 @@ class TestCase extends BaseTestCase
         ]);
 
         $app['config']->set('auth.providers.users.model', User::class);
-        $app['config']->set('view.paths', array_merge(
-            $app['config']->get('view.paths'),
-            [__DIR__ . '/../resources/views'],
-        ));
     }
 
     protected function defineDatabaseMigrations(): void

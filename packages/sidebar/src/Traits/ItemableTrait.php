@@ -12,13 +12,13 @@ trait ItemableTrait
 {
     protected Collection $items;
 
-    public function item($name, Closure $callback = null): self
+    public function item(string $name, Closure $callback = null): self
     {
         if ($this->items->has($name)) {
             $item = $this->items->get($name);
         } else {
             $item = $this->container->make(Item::class);
-            $item->name($name);
+            $item->setName($name);
         }
 
         $this->call($callback, $item);

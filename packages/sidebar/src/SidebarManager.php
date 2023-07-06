@@ -16,9 +16,7 @@ final class SidebarManager
     public function __construct(
         protected Container $container,
         protected SidebarResolver $resolver
-    )
-    {
-        $this->sidebars = config('shopper.sidebar');
+    ) {
     }
 
     public function register(string $name): self

@@ -16,7 +16,7 @@ final class BadgeRenderer extends AbstractRenderer
     {
         if ($badge->isAuthorized()) {
             return $this->factory->make($this->view, [
-                'badge' => $badge
+                'badge' => $badge,
             ])->render();
         }
 

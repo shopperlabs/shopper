@@ -6,9 +6,9 @@ namespace Shopper\Sidebar\Contracts\Builder;
 
 interface Badge
 {
-    public function getValue(): string;
+    public function getValue(): mixed;
 
-    public function setValue(string $value): self;
+    public function setValue(mixed $value): self;
 
     public function getClass(): string;
 

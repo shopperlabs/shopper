@@ -9,15 +9,13 @@ use Serializable;
 use Shopper\Sidebar\Contracts\Builder\Badge;
 use Shopper\Sidebar\Traits\AuthorizableTrait;
 use Shopper\Sidebar\Traits\CacheableTrait;
-use Shopper\Sidebar\Traits\CallableTrait;
 
-final class DefaultBadge implements Badge, Serializable
+class DefaultBadge implements Badge, Serializable
 {
-    use CallableTrait;
     use CacheableTrait;
     use AuthorizableTrait;
 
-    protected ?string $value = null;
+    protected mixed $value = null;
 
     protected string $class = 'badge-sidebar';
 
@@ -30,12 +28,12 @@ final class DefaultBadge implements Badge, Serializable
     {
     }
 
-    public function getValue(): string
+    public function getValue(): mixed
     {
         return $this->value;
     }
 
-    public function setValue(string $value): self
+    public function setValue(mixed $value): self
     {
         $this->value = $value;
 

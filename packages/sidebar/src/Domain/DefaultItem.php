@@ -17,7 +17,7 @@ use Shopper\Sidebar\Traits\CallableTrait;
 use Shopper\Sidebar\Traits\ItemableTrait;
 use Shopper\Sidebar\Traits\RouteableTrait;
 
-final class DefaultItem implements Item, Serializable
+class DefaultItem implements Item, Serializable
 {
     use CallableTrait;
     use CacheableTrait;
@@ -25,9 +25,9 @@ final class DefaultItem implements Item, Serializable
     use RouteableTrait;
     use AuthorizableTrait;
 
-    protected Collection|array $badges = [];
+    protected Collection $badges;
 
-    protected Collection|array $appends = [];
+    protected Collection $appends;
 
     protected ?string $name = null;
 
@@ -45,6 +45,19 @@ final class DefaultItem implements Item, Serializable
 
     protected string $itemClass = '';
 
+    protected array $cacheables = [
+        'name',
+        'weight',
+        'url',
+        'icon',
+        'type',
+        'toggleIcon',
+        'items',
+        'badges',
+        'appends',
+        'authorized',
+    ];
+
     public function __construct(protected Container $container)
     {
         $this->items = new Collection();
@@ -57,14 +70,14 @@ final class DefaultItem implements Item, Serializable
         return $this->name;
     }
 
-    public function name($name): Item
+    public function setName(string $name): Item
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function weight($weight): Item
+    public function weight(int $weight): Item
     {
         $this->weight = $weight;
 
@@ -106,11 +119,11 @@ final class DefaultItem implements Item, Serializable
         return $this->type === 'blade';
     }
 
-    public function badge(string|Closure $callbackOrValue = null, string $className = null): Badge
+    public function badge(mixed $callbackOrValue = null, string $className = null): Badge
     {
         $badge = $this->container->make(Badge::class);
 
-        if (is_callable($callbackOrValue)) {
+        if ($callbackOrValue instanceof Closure) {
             $this->call($callbackOrValue, $badge);
         } elseif ($callbackOrValue) {
             $badge->setValue($callbackOrValue);
@@ -132,23 +145,23 @@ final class DefaultItem implements Item, Serializable
         return $badge;
     }
 
-    public function getBadges(): Collection | array
+    public function getBadges(): Collection
     {
         return $this->badges;
     }
 
-    public function append($callbackOrUrl = null, string $icon = null, string $name = null): Append
+    public function append(mixed $callbackOrUrl = null, string $icon = null, string $name = null): Append
     {
         $append = $this->container->make(Append::class);
 
-        if (is_callable($callbackOrUrl)) {
+        if ($callbackOrUrl instanceof Closure) {
             $this->call($callbackOrUrl, $append);
         } elseif ($callbackOrUrl) {
             $append->route($callbackOrUrl);
         }
 
         if ($name) {
-            $append->name($name);
+            $append->setName($name);
         }
 
         if ($icon) {
@@ -167,7 +180,7 @@ final class DefaultItem implements Item, Serializable
         return $append;
     }
 
-    public function getAppends(): Collection | array
+    public function getAppends(): Collection
     {
         return $this->appends;
     }
@@ -178,12 +191,12 @@ final class DefaultItem implements Item, Serializable
         $path = rtrim($path, '/');
         $path = rtrim($path, '?');
 
-        $this->activeWhen = $path;
+        $this->activeWhen = (bool) $path;
 
         return $this;
     }
 
-    public function getActiveWhen(): string
+    public function getActiveWhen(): bool
     {
         return $this->activeWhen;
     }

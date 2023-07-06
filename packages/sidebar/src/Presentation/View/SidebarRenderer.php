@@ -24,7 +24,7 @@ final class SidebarRenderer extends AbstractRenderer implements BaseSidebarRende
             }
 
             return $this->factory->make($this->view, [
-                'groups' => $groups
+                'groups' => $groups,
             ]);
         }
 
