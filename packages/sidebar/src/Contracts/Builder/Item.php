@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Sidebar\Contracts\Builder;
 
-use Closure;
 use Illuminate\Support\Collection;
 use Shopper\Sidebar\Contracts\Routeable;
 

@@ -22,7 +22,7 @@ it('can add an item instance', function (): void {
         ->and($this->itemable->getItems()->first()->getName())->toEqual('demo');
 })->group('Traits');
 
-it('can check if has items', function(): void {
+it('can check if has items', function (): void {
     expect($this->itemable->hasItems())->toBeFalse();
 
     $item = new DefaultItem($this->container);
