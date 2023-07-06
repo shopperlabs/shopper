@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Http\Livewire\Pages\Auth;
 
-use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Auth\Passwords\PasswordBroker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Password;
 use Livewire\Component;

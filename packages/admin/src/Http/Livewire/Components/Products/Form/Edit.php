@@ -6,7 +6,6 @@ namespace Shopper\Http\Livewire\Components\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\WithFileUploads;
 use Shopper\Core\Events\Products\Updated;
 use Shopper\Core\Exceptions\GeneralException;
@@ -27,7 +26,7 @@ class Edit extends AbstractBaseComponent
     use WithUploadProcess;
     use WithSeoAttributes;
 
-    public Model $product;
+    public $product;
 
     public int $productId;
 

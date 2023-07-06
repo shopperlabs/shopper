@@ -82,7 +82,7 @@
         "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
         "pint": "./vendor/bin/pint",
         "pest": "./vendor/bin/pest",
-        "phpstan": "./vendor/bin/phpstan analyse"
+        "stan": "./vendor/bin/phpstan analyse"
     },
     "config": {
         "sort-packages": true,

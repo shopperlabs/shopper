@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Sidebar\Contracts\Builder;
 
-interface Badge
+interface Badge extends Authorizable
 {
     public function getValue(): mixed;
 

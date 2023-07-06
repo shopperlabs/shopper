@@ -138,7 +138,7 @@ abstract class BaseRepository implements RepositoryContract
         return $models;
     }
 
-    public function getById($id, array $columns = ['*']): Collection|Model
+    public function getById($id, array $columns = ['*']): Model
     {
         $this->unsetClauses();
 
