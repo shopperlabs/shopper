@@ -16,6 +16,7 @@ jobs:
         package:
           - admin
           - core
+          - sidebar
     steps:
       - uses: actions/checkout@v3
       - id: previous-tag
