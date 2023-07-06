@@ -476,33 +476,8 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
 
 		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:addMedia\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:categories\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:collections\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getMedia\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:scopes\\(\\)\\.$#"
 			count: 2
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
-
-		-
-			message: "#^Parameter \\#1 \\$product of class Shopper\\\\Core\\\\Events\\\\Products\\\\Updated constructor expects Shopper\\\\Core\\\\Models\\\\Product, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
-			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Edit.php
 
 		-
@@ -556,44 +531,9 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Seo.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Variants.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:where\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Components/Products/Form/Variants.php
-
-		-
-			message: "#^Parameter \\#1 \\$product of class Shopper\\\\Core\\\\Events\\\\Products\\\\Deleted constructor expects Shopper\\\\Core\\\\Models\\\\Product, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Form/Variants.php
-
-		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
-			count: 3
-			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:addMedia\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getFirstMedia\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
-
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:getMedia\\(\\)\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
-
-		-
-			message: "#^Parameter \\#1 \\$product of class Shopper\\\\Core\\\\Events\\\\Products\\\\Updated constructor expects Shopper\\\\Core\\\\Models\\\\Product, Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Components/Products/Variant.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
@@ -921,11 +861,6 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/CreateValue.php
 
 		-
-			message: "#^Parameter \\#1 \\$product of class Shopper\\\\Core\\\\Events\\\\Products\\\\Deleted constructor expects Shopper\\\\Core\\\\Models\\\\Product, Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model given\\.$#"
-			count: 1
-			path: packages/admin/src/Http/Livewire/Modals/DeleteProduct.php
-
-		-
 			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:whereHas\\(\\)\\.$#"
 			count: 1
 			path: packages/admin/src/Http/Livewire/Modals/DiscountCustomers.php
@@ -971,18 +906,13 @@ parameters:
 			path: packages/admin/src/Http/Livewire/Modals/UpdateValue.php
 
 		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$stock\\.$#"
-			count: 2
-			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
-
-		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
 			count: 3
 			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
 
 		-
 			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$stock\\.$#"
-			count: 1
+			count: 3
 			path: packages/admin/src/Http/Livewire/Modals/UpdateVariantStock.php
 
 		-
@@ -1174,21 +1104,6 @@ parameters:
 			message: "#^Match expression does not handle remaining value\\: string$#"
 			count: 1
 			path: packages/core/database/seeders/AuthTableSeeder.php
-
-		-
-			message: "#^Constructor of class Shopper\\\\Core\\\\Events\\\\Products\\\\Created has an unused parameter \\$product\\.$#"
-			count: 1
-			path: packages/core/src/Events/Products/Created.php
-
-		-
-			message: "#^Constructor of class Shopper\\\\Core\\\\Events\\\\Products\\\\Deleted has an unused parameter \\$product\\.$#"
-			count: 1
-			path: packages/core/src/Events/Products/Deleted.php
-
-		-
-			message: "#^Constructor of class Shopper\\\\Core\\\\Events\\\\Products\\\\Updated has an unused parameter \\$product\\.$#"
-			count: 1
-			path: packages/core/src/Events/Products/Updated.php
 
 		-
 			message: "#^Access to an undefined property Shopper\\\\Core\\\\Models\\\\Address\\:\\:\\$first_name\\.$#"
@@ -1774,3 +1689,23 @@ parameters:
 			message: "#^Cannot access property \\$code on array\\<Illuminate\\\\Database\\\\Eloquent\\\\Builder\\>\\|Illuminate\\\\Database\\\\Eloquent\\\\Builder\\|Illuminate\\\\Database\\\\Eloquent\\\\Collection\\|Illuminate\\\\Database\\\\Eloquent\\\\Model\\.$#"
 			count: 1
 			path: packages/core/src/helpers.php
+
+		-
+			message: "#^Method Shopper\\\\Sidebar\\\\Presentation\\\\View\\\\AppendRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|null but returns string\\.$#"
+			count: 1
+			path: packages/sidebar/src/Presentation/View/AppendRenderer.php
+
+		-
+			message: "#^Method Shopper\\\\Sidebar\\\\Presentation\\\\View\\\\BadgeRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|null but returns string\\.$#"
+			count: 1
+			path: packages/sidebar/src/Presentation/View/BadgeRenderer.php
+
+		-
+			message: "#^Method Shopper\\\\Sidebar\\\\Presentation\\\\View\\\\GroupRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|null but returns string\\.$#"
+			count: 1
+			path: packages/sidebar/src/Presentation/View/GroupRenderer.php
+
+		-
+			message: "#^Method Shopper\\\\Sidebar\\\\Presentation\\\\View\\\\ItemRenderer\\:\\:render\\(\\) should return Illuminate\\\\Contracts\\\\View\\\\View\\|null but returns string\\.$#"
+			count: 1
+			path: packages/sidebar/src/Presentation/View/ItemRenderer.php

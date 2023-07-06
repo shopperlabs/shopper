@@ -33,6 +33,7 @@
     "psr/simple-cache": "~2.0",
     "rappasoft/laravel-livewire-tables": "^2.12",
     "shopper/core": "self.version",
+    "shopper/sidebar": "self.version",
     "spatie/laravel-package-tools": "^1.11",
     "staudenmeir/laravel-adjacency-list": "^1.0",
     "stevebauman/location": "^6.3.1",

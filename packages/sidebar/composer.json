@@ -1,0 +1,40 @@
+{
+  "name": "shopper/sidebar",
+  "description": "A sidebar builder for Laravel",
+  "keywords": ["laravel", "sidebar", "builder"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arthur Monney",
+      "email": "monneylobe@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "blade-ui-kit/blade-heroicons": "^1.2",
+    "illuminate/cache": "^9.0|^10.0",
+    "illuminate/container": "^9.0|^10.0",
+    "illuminate/contracts": "^9.0|^10.0",
+    "illuminate/support": "^9.0|^10.0",
+    "illuminate/routing": "^9.0|^10.0",
+    "illuminate/view": "^9.0|^10.0",
+    "spatie/laravel-package-tools": "^1.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Shopper\\Sidebar\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\Sidebar\\SidebarServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

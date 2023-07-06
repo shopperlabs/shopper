@@ -7,7 +7,6 @@ namespace Shopper\Http\Livewire\Components\Products;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -21,9 +20,9 @@ class Variant extends Component
     use WithUploadProcess;
     use WithAttributes;
 
-    public Model $product;
+    public $product;
 
-    public Model $variant;
+    public $variant;
 
     public Collection $inventories;
 

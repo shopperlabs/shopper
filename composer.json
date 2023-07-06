@@ -27,13 +27,13 @@
         "moneyphp/money": "^3.3",
         "pragmarx/google2fa": "^8.0",
         "psr/simple-cache": "~2.0",
-        "rappasoft/laravel-livewire-tables": "^2.12",
-        "spatie/laravel-medialibrary": "^10.4.1",
-        "spatie/laravel-package-tools": "^1.11",
-        "spatie/laravel-permission": "^5.5.2",
-        "staudenmeir/laravel-adjacency-list": "^1.0",
-        "stevebauman/location": "^6.3.1",
-        "wire-elements/modal": "^1.0.0",
+        "rappasoft/laravel-livewire-tables": "^2.14",
+        "spatie/laravel-medialibrary": "^10.9.4",
+        "spatie/laravel-package-tools": "^1.15",
+        "spatie/laravel-permission": "^5.10.1",
+        "staudenmeir/laravel-adjacency-list": "^1.12.4",
+        "stevebauman/location": "^6.6.2",
+        "wire-elements/modal": "^1.0.8",
         "wireui/wireui": "^1.17.9"
     },
     "require-dev": {
@@ -61,9 +61,11 @@
             "Database\\Seeders\\": "packages/core/database/seeders",
             "Shopper\\": [
                 "packages/admin/src",
-                "packages/core/src"
+                "packages/core/src",
+                "packages/sidebar/src"
             ],
             "Shopper\\Core\\": "packages/core/src",
+            "Shopper\\Sidebar\\": "packages/sidebar/src",
             "Shopper\\Tests\\": "tests/src"
         }
     },
@@ -71,7 +73,8 @@
         "laravel": {
             "providers": [
                 "Shopper\\ShopperServiceProvider",
-                "Shopper\\Core\\CoreServiceProvider"
+                "Shopper\\Core\\CoreServiceProvider",
+                "Shopper\\Sidebar\\SidebarServiceProvider"
             ]
         }
     },
@@ -79,7 +82,7 @@
         "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
         "pint": "./vendor/bin/pint",
         "pest": "./vendor/bin/pest",
-        "phpstan": "./vendor/bin/phpstan analyse"
+        "stan": "./vendor/bin/phpstan analyse"
     },
     "config": {
         "sort-packages": true,
@@ -91,7 +94,8 @@
     },
     "replace": {
         "shopper/core": "self.version",
-        "shopper/framework": "self.version"
+        "shopper/framework": "self.version",
+        "shopper/sidebar": "self.version"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
