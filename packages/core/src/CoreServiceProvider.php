@@ -29,8 +29,5 @@ final class CoreServiceProvider extends ServiceProvider
     {
         $this->registerConfigFiles();
         $this->registerDatabase();
-
-        $this->app->register(SidebarServiceProvider::class);
-        $this->app->singleton('shopper', fn () => new Shopper());
     }
 }
