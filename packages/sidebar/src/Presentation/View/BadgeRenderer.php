@@ -7,7 +7,7 @@ namespace Shopper\Sidebar\Presentation\View;
 use Shopper\Sidebar\Contracts\Builder\Badge;
 use Shopper\Sidebar\Presentation\AbstractRenderer;
 
-final class BadgeRenderer extends AbstractRenderer
+class BadgeRenderer extends AbstractRenderer
 {
     protected string $view = 'sidebar::badge';
 

@@ -7,7 +7,7 @@ namespace Shopper\Sidebar\Presentation\View;
 use Shopper\Sidebar\Contracts\Builder\Group;
 use Shopper\Sidebar\Presentation\AbstractRenderer;
 
-final class GroupRenderer extends AbstractRenderer
+class GroupRenderer extends AbstractRenderer
 {
     protected string $view = 'sidebar::group';
 

@@ -1,4 +1,8 @@
-<li @class([$item->getParentItemClass()])>
+<li @class([
+        $item->getParentItemClass(),
+        'current-group' => $active,
+    ])
+>
     <a
         href="{{ $item->getUrl() }}"
         @class([

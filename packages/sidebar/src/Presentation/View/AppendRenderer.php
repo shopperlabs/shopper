@@ -7,7 +7,7 @@ namespace Shopper\Sidebar\Presentation\View;
 use Shopper\Sidebar\Contracts\Builder\Append;
 use Shopper\Sidebar\Presentation\AbstractRenderer;
 
-final class AppendRenderer extends AbstractRenderer
+class AppendRenderer extends AbstractRenderer
 {
     protected string $view = 'sidebar::append';
 
