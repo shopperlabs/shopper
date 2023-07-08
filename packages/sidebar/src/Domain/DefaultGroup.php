@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Sidebar\Domain;
 
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Collection;
 use Serializable;
 use Shopper\Sidebar\Contracts\Builder\Group;
@@ -30,13 +30,13 @@ class DefaultGroup implements Group, Serializable
 
     protected ?string $itemClass = null;
 
+    protected ?string $headingClass = null;
+
     protected array $cacheables = [
         'name',
         'items',
         'weight',
         'heading',
-        'class',
-        'itemClass',
     ];
 
     public function __construct(protected Container $container)
@@ -80,7 +80,7 @@ class DefaultGroup implements Group, Serializable
         return $this->heading;
     }
 
-    public function getClass(): string
+    public function getClass(): ?string
     {
         return $this->class;
     }
@@ -92,7 +92,7 @@ class DefaultGroup implements Group, Serializable
         return $this;
     }
 
-    public function getGroupItemsClass(): string
+    public function getGroupItemsClass(): ?string
     {
         return $this->itemClass;
     }
@@ -100,6 +100,18 @@ class DefaultGroup implements Group, Serializable
     public function setGroupItemsClass(string $class): Group
     {
         $this->itemClass = $class;
+
+        return $this;
+    }
+
+    public function getHeadingClass(): ?string
+    {
+        return $this->headingClass;
+    }
+
+    public function setHeadingClass(string $class): Group
+    {
+        $this->headingClass = $class;
 
         return $this;
     }

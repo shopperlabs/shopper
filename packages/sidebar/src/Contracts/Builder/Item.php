@@ -25,7 +25,7 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function toggleIcon(string $icon): self;
 
-    public function isBladeType(): bool;
+    public function iconSvg(): bool;
 
     public function getUrl(): string;
 
@@ -56,4 +56,8 @@ interface Item extends Itemable, Authorizable, Routeable
     public function getItemClass(): string;
 
     public function setItemClass(string $class): self;
+
+    public function getParentItemClass(): string;
+
+    public function setParentItemClass(string $class): self;
 }

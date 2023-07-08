@@ -1,20 +1,38 @@
-<li @class([$item->getItemClass()])>
+<li @class([$item->getParentItemClass()])>
     <a
         href="{{ $item->getUrl() }}"
         @class([
-            $item->getClass(),
+            $item->getItemClass(),
             'current' => $active,
         ])
         @if($item->getNewTab())target="_blank"@endif
     >
-        @foreach($appends as $append)
-            {!! $append !!}
-        @endforeach
+        @if($item->iconSvg())
+            {!! $item->getIcon() !!}
+        @else
+            {{ svg($item->getIcon()) }}
+        @endif
 
         <span class="truncate">{{ $item->getName() }}</span>
 
         @foreach($badges as $badge)
             {!! $badge !!}
         @endforeach
+
+        @if($item->hasItems())
+            {{ svg($item->getToggleIcon()) }}
+        @endif
     </a>
+
+    @foreach($appends as $append)
+        {!! $append !!}
+    @endforeach
+
+    @if(count($items) > 0)
+        <ul role="list" class="submenu">
+            @foreach($items as $item)
+                {!! $item !!}
+            @endforeach
+        </ul>
+    @endif
 </li>

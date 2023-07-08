@@ -12,9 +12,15 @@ interface Append extends Authorizable, Routeable
 
     public function setName(string $name): self;
 
+    public function getClass(): ?string;
+
+    public function setClass(string $className): self;
+
     public function getIcon(): string;
 
-    public function setIcon(string $icon): self;
+    public function setIcon(string $icon, string $type = 'blade'): self;
+
+    public function iconSvg(): bool;
 
     public function getUrl(): string;
 
