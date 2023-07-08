@@ -1,6 +1,6 @@
 {
     "semi": false,
     "singleQuote": true,
-    "tailwindConfig": "./tailwind.config.js",
+    "tailwindConfig": "./tailwind.admin.config.js",
     "trailingComma": "all"
 }
