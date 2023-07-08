@@ -25,7 +25,7 @@
                                     @if($picture)
                                         <img class="h-full w-full bg-cover" src="{{ $picture->temporaryUrl() }}" alt="">
                                     @else
-                                        <img class="h-full w-full bg-cover" src="{{ $logged_in_user->picture }}" alt="{{ $logged_in_user->email }}">
+                                        <img class="h-full w-full bg-cover" src="{{ $this->getUser()->picture }}" alt="{{ $this->getUser()->email }}">
                                     @endif
                                 </span>
                             </x-shopper::forms.avatar-upload>

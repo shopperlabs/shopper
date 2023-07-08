@@ -12,7 +12,7 @@
                     <div @click.away="open = false" class="ml-3 relative">
                         <div>
                             <button @click="open = !open" class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-secondary-300 dark:focus:border-secondary-700" id="user-menu" aria-label="User menu" aria-haspopup="true" x-bind:aria-expanded="open">
-                                <img class="h-8 w-8 rounded-full" src="{{ $logged_in_user->picture }}" alt="Avatar">
+                                <img class="h-8 w-8 rounded-full" src="{{ $this->getUser()->picture }}" alt="Avatar">
                             </button>
                         </div>
                         <div x-show="open"
@@ -57,11 +57,11 @@
             <div class="pt-4 pb-3 border-t border-secondary-200">
                 <div class="flex items-center px-4">
                     <div class="shrink-0">
-                        <img class="h-10 w-10 rounded-full" src="{{ $logged_in_user->picture }}" alt="">
+                        <img class="h-10 w-10 rounded-full" src="{{ $this->getUser()->picture }}" alt="">
                     </div>
                     <div class="ml-3">
-                        <div class="text-base font-medium leading-6 text-secondary-800">{{ $logged_in_user->full_name }}</div>
-                        <div class="text-sm font-medium leading-5 text-secondary-500">{{ $logged_in_user->email }}</div>
+                        <div class="text-base font-medium leading-6 text-secondary-800">{{ $this->getUser()->full_name }}</div>
+                        <div class="text-sm font-medium leading-5 text-secondary-500">{{ $this->getUser()->email }}</div>
                     </div>
                 </div>
                 <div class="mt-3" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">

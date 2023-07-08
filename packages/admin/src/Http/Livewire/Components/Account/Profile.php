@@ -6,14 +6,15 @@ namespace Shopper\Http\Livewire\Components\Account;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Core\Rules\RealEmailValidator;
+use Shopper\Traits\HasAuthenticated;
 
 class Profile extends Component
 {
+    use HasAuthenticated;
     use WithFileUploads;
 
     public string $first_name;
@@ -28,7 +29,7 @@ class Profile extends Component
 
     public function mount(): void
     {
-        $user = Auth::user();
+        $user = $this->getUser();
 
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
@@ -55,7 +56,7 @@ class Profile extends Component
             'picture' => 'nullable|image|max:1024',
         ]);
 
-        $user = Auth::user();
+        $user = $this->getUser();
 
         $user->update([
             'last_name' => $this->last_name,

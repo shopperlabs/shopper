@@ -13,9 +13,12 @@ use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
 use Shopper\Core\Repositories\ChannelRepository;
 use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Traits\HasAuthenticated;
 
 final class Initialization extends Component
 {
+    use HasAuthenticated;
+
     public string $shop_name = '';
 
     public string $shop_email = '';
