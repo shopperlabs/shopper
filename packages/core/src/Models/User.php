@@ -21,18 +21,8 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var bool|string[]
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -42,22 +32,12 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'birth_date' => 'datetime',
     ];
 
-    /**
-     * The dynamic attributes from mutators that should be returned with the user object.
-     *
-     * @var array
-     */
     protected $appends = [
         'full_name',
         'picture',

@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Http\Composers;
+namespace Shopper\Sidebar;
 
-use Shopper\Sidebar\AdminSidebar;
 use Shopper\Sidebar\Presentation\SidebarRenderer;
 
 final class SidebarCreator

@@ -1,102 +1,101 @@
 {
-    "name": "shopper/framework",
-    "description": "An e-commerce administration built with Laravel for create and manage online shop.",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Arthur Monney",
-            "email": "monneylobe@gmail.com",
-            "homepage": "https://twitter.com/MonneyArthur",
-            "role": "Developer"
-        }
+  "name": "shopper/framework",
+  "description": "An e-commerce administration built with Laravel for create and manage online shop.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Arthur Monney",
+      "email": "monneylobe@gmail.com",
+      "homepage": "https://twitter.com/MonneyArthur",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "ext-intl": "*",
+    "composer-runtime-api": "^2.1",
+    "bacon/bacon-qr-code": "^2.0",
+    "blade-ui-kit/blade-heroicons": "^1.2",
+    "danharrin/livewire-rate-limiting": "^0.3|^1.0",
+    "filament/notifications": "^2.17",
+    "jenssegers/agent": "^2.6",
+    "laravel/helpers": "^1.4.1",
+    "livewire/livewire": "^2.10",
+    "maatwebsite/excel": "^3.1",
+    "milon/barcode": "^9.0.0",
+    "moneyphp/money": "^3.3",
+    "pragmarx/google2fa": "^8.0",
+    "psr/simple-cache": "~2.0",
+    "rappasoft/laravel-livewire-tables": "^2.14",
+    "spatie/laravel-medialibrary": "^10.9.4",
+    "spatie/laravel-package-tools": "^1.15",
+    "spatie/laravel-permission": "^5.10.1",
+    "staudenmeir/laravel-adjacency-list": "^1.12.4",
+    "stevebauman/location": "^6.6.2",
+    "wire-elements/modal": "^1.0.8",
+    "wireui/wireui": "^1.17.9"
+  },
+  "require-dev": {
+    "doctrine/dbal": "^3.6",
+    "laravel/pint": "^1.1",
+    "mockery/mockery": "^1.4",
+    "nunomaduro/collision": "^5.11|^6.1",
+    "nunomaduro/larastan": "^2.0",
+    "orchestra/testbench": "^6.0|^7.0",
+    "pestphp/pest": "^1.21",
+    "pestphp/pest-plugin-laravel": "^1.0",
+    "pestphp/pest-plugin-livewire": "^1.0",
+    "pestphp/pest-plugin-parallel": "^0.3",
+    "phpunit/phpunit": "^8.4|^9.0",
+    "reecem/mocker": "^1.2",
+    "symplify/monorepo-builder": "^11.2"
+  },
+  "autoload": {
+    "files": [
+      "packages/admin/src/helpers.php",
+      "packages/core/src/helpers.php"
     ],
-    "require": {
-        "php": "^8.1",
-        "ext-intl": "*",
-        "composer-runtime-api": "^2.1",
-        "bacon/bacon-qr-code": "^2.0",
-        "blade-ui-kit/blade-heroicons": "^1.2",
-        "danharrin/livewire-rate-limiting": "^0.3|^1.0",
-        "filament/notifications": "^2.17",
-        "jenssegers/agent": "^2.6",
-        "laravel/helpers": "^1.4.1",
-        "livewire/livewire": "^2.10",
-        "maatwebsite/excel": "^3.1",
-        "maatwebsite/laravel-sidebar": "^2.5",
-        "milon/barcode": "^9.0.0",
-        "moneyphp/money": "^3.3",
-        "pragmarx/google2fa": "^8.0",
-        "psr/simple-cache": "~2.0",
-        "rappasoft/laravel-livewire-tables": "^2.14",
-        "spatie/laravel-medialibrary": "^10.9.4",
-        "spatie/laravel-package-tools": "^1.15",
-        "spatie/laravel-permission": "^5.10.1",
-        "staudenmeir/laravel-adjacency-list": "^1.12.4",
-        "stevebauman/location": "^6.6.2",
-        "wire-elements/modal": "^1.0.8",
-        "wireui/wireui": "^1.17.9"
-    },
-    "require-dev": {
-        "doctrine/dbal": "^3.6",
-        "laravel/pint": "^1.1",
-        "mockery/mockery": "^1.4",
-        "nunomaduro/collision": "^5.11|^6.1",
-        "nunomaduro/larastan": "^2.0",
-        "orchestra/testbench": "^6.0|^7.0",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.0",
-        "pestphp/pest-plugin-livewire": "^1.0",
-        "pestphp/pest-plugin-parallel": "^0.3",
-        "phpunit/phpunit": "^8.4|^9.0",
-        "reecem/mocker": "^1.2",
-        "symplify/monorepo-builder": "^11.2"
-    },
-    "autoload": {
-        "files": [
-            "packages/admin/src/helpers.php",
-            "packages/core/src/helpers.php"
-        ],
-        "psr-4": {
-            "Database\\Factories\\": "packages/core/database/factories",
-            "Database\\Seeders\\": "packages/core/database/seeders",
-            "Shopper\\": [
-                "packages/admin/src",
-                "packages/core/src",
-                "packages/sidebar/src"
-            ],
-            "Shopper\\Core\\": "packages/core/src",
-            "Shopper\\Sidebar\\": "packages/sidebar/src",
-            "Shopper\\Tests\\": "tests/src"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Shopper\\ShopperServiceProvider",
-                "Shopper\\Core\\CoreServiceProvider",
-                "Shopper\\Sidebar\\SidebarServiceProvider"
-            ]
-        }
-    },
-    "scripts": {
-        "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
-        "pint": "./vendor/bin/pint",
-        "pest": "./vendor/bin/pest",
-        "stan": "./vendor/bin/phpstan analyse"
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "pestphp/pest-plugin": true,
-            "phpstan/extension-installer": true
-        }
-    },
-    "replace": {
-        "shopper/core": "self.version",
-        "shopper/framework": "self.version",
-        "shopper/sidebar": "self.version"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "psr-4": {
+      "Database\\Factories\\": "packages/core/database/factories",
+      "Database\\Seeders\\": "packages/core/database/seeders",
+      "Shopper\\": [
+        "packages/admin/src",
+        "packages/core/src",
+        "packages/sidebar/src"
+      ],
+      "Shopper\\Core\\": "packages/core/src",
+      "Shopper\\Sidebar\\": "packages/sidebar/src",
+      "Shopper\\Tests\\": "tests/src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shopper\\ShopperServiceProvider",
+        "Shopper\\Core\\CoreServiceProvider",
+        "Shopper\\Sidebar\\SidebarServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
+    "pint": "./vendor/bin/pint",
+    "pest": "./vendor/bin/pest",
+    "stan": "./vendor/bin/phpstan analyse"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "pestphp/pest-plugin": true,
+      "phpstan/extension-installer": true
+    }
+  },
+  "replace": {
+    "shopper/core": "self.version",
+    "shopper/framework": "self.version",
+    "shopper/sidebar": "self.version"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
