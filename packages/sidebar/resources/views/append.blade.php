@@ -2,6 +2,6 @@
     @if($append->iconSvg())
         {!! $append->getIcon() !!}
     @else
-        {{ svg($append->getIcon()) }}
+        @svg($append->getIcon(), $append->getIconClass())
     @endif
 </a>

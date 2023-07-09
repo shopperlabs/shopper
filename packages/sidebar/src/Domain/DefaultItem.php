@@ -35,6 +35,8 @@ class DefaultItem implements Item, Serializable
 
     protected string $icon = 'heroicon-o-chevron-right';
 
+    protected string $iconClass = '';
+
     protected string $type = 'blade';
 
     protected string $toggleIcon = 'heroicon-o-chevron-down';
@@ -96,12 +98,18 @@ class DefaultItem implements Item, Serializable
         return $this->icon;
     }
 
-    public function setIcon(string $icon, string $type = 'blade'): Item
+    public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): Item
     {
         $this->icon = $icon;
         $this->type = $type;
+        $this->iconClass = $iconClass;
 
         return $this;
+    }
+
+    public function getIconClass(): string
+    {
+        return $this->iconClass;
     }
 
     public function getToggleIcon(): string

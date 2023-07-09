@@ -19,7 +19,9 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function getIcon(): string;
 
-    public function setIcon(string $icon, string $type = 'blade'): self;
+    public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): self;
+
+    public function getIconClass(): string;
 
     public function getToggleIcon(): string;
 

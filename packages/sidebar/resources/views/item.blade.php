@@ -14,7 +14,7 @@
         @if($item->iconSvg())
             {!! $item->getIcon() !!}
         @else
-            {{ svg($item->getIcon()) }}
+            @svg($item->getIcon(), $item->getIconClass())
         @endif
 
         <span class="truncate">{{ $item->getName() }}</span>
