@@ -18,7 +18,7 @@ final class ContainerResolver implements SidebarResolver
     {
         $sidebar = $this->container->make($name);
 
-        if (!$sidebar instanceof Sidebar) {
+        if (! $sidebar instanceof Sidebar) {
             throw new LogicException('Your sidebar should implement the Sidebar interface');
         }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Sidebar;
 
 use Shopper\Sidebar\Contracts\Builder\Menu;

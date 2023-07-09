@@ -16,8 +16,7 @@ final class UserBasedCacheResolver implements SidebarResolver
         protected Cache $cache,
         protected Guard $guard,
         protected Config $config
-    )
-    {
+    ) {
     }
 
     public function resolve(string $name): Sidebar
@@ -26,7 +25,7 @@ final class UserBasedCacheResolver implements SidebarResolver
             return $this->resolver->resolve($name);
         }
 
-        $userId   = $this->guard->check() ? $this->guard->user()->getAuthIdentifier() : null;
+        $userId = $this->guard->check() ? $this->guard->user()->getAuthIdentifier() : null;
         $duration = $this->config->get('sidebar.cache.duration');
 
         return $this->cache->tags(CacheKey::get($name))->remember(CacheKey::get($name, $userId), $duration, function () use ($name) {

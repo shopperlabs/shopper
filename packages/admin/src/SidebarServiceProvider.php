@@ -8,10 +8,10 @@ use Illuminate\Support\ServiceProvider;
 use Shopper\Events\DashboardSidebar;
 use Shopper\Events\OrderSidebar;
 use Shopper\Events\ShopSidebar;
+use Shopper\Sidebar\AdminSidebar;
 use Shopper\Sidebar\SidebarBuilder;
 use Shopper\Sidebar\SidebarCreator;
 use Shopper\Sidebar\SidebarManager;
-use Shopper\Sidebar\AdminSidebar;
 
 final class SidebarServiceProvider extends ServiceProvider
 {

@@ -11,7 +11,7 @@ final class SupportsCacheTags
 {
     public function isSatisfiedBy(Repository $repository): bool
     {
-        if (!method_exists($repository->getStore(), 'tags')) {
+        if (! method_exists($repository->getStore(), 'tags')) {
             throw new CacheTagsNotSupported('Cache tags are necessary to use this kind of caching. Consider using a different caching method');
         }
 

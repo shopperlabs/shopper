@@ -6,8 +6,8 @@ namespace Shopper\Sidebar\Presentation;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Shopper\Sidebar\Presentation\SidebarRenderer as SidebarRendererContract;
 use Shopper\Sidebar\Contracts\Sidebar;
+use Shopper\Sidebar\Presentation\SidebarRenderer as SidebarRendererContract;
 
 final class ShopperSidebarRenderer implements SidebarRendererContract
 {

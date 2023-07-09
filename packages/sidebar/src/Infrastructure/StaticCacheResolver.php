@@ -17,8 +17,7 @@ final class StaticCacheResolver implements SidebarResolver
         protected ContainerResolver $resolver,
         protected Cache $cache,
         protected Config $config
-    )
-    {
+    ) {
     }
 
     public function resolve(string $name): Sidebar
