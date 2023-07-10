@@ -19,11 +19,11 @@ use Shopper\Sidebar\Traits\RouteableTrait;
 
 class DefaultItem implements Item, Serializable
 {
-    use CallableTrait;
+    use AuthorizableTrait;
     use CacheableTrait;
+    use CallableTrait;
     use ItemableTrait;
     use RouteableTrait;
-    use AuthorizableTrait;
 
     protected Collection $badges;
 
@@ -126,7 +126,7 @@ class DefaultItem implements Item, Serializable
 
     public function iconSvg(): bool
     {
-        return $this->type === 'svg';
+        return 'svg' === $this->type;
     }
 
     public function badge(mixed $callbackOrValue = null, string $className = null): Badge

@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('legals'), function (Blueprint $table) {
+        Schema::create($this->getTableName('legals'), function (Blueprint $table): void {
             $table->id();
             $table->string('title')->unique();
             $table->string('slug')->nullable()->unique();

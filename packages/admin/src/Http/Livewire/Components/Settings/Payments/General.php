@@ -20,7 +20,7 @@ class General extends Component
 
     public function toggleStatus(int $id, int $status): void
     {
-        PaymentMethod::query()->find($id)->update(['is_enabled' => ! ($status === 1)]);
+        PaymentMethod::query()->find($id)->update(['is_enabled' => ! (1 === $status)]);
 
         $this->dispatchBrowserEvent('toggle-saved-' . $id);
 

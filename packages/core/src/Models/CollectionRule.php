@@ -48,7 +48,7 @@ class CollectionRule extends Model
     public function getFormattedValue(): string
     {
         // @phpstan-ignore-next-line
-        if ($this->rule === 'product_price') {
+        if ('product_price' === $this->rule) {
             // @phpstan-ignore-next-line
             return shopper_money_format(strtoupper($this->value));
         }

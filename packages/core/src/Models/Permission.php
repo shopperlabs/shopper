@@ -6,7 +6,7 @@ namespace Shopper\Core\Models;
 
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
-class Permission extends SpatiePermission
+final class Permission extends SpatiePermission
 {
     protected $casts = [
         'can_be_removed' => 'boolean',

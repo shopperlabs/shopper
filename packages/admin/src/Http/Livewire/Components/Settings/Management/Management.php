@@ -41,7 +41,7 @@ class Management extends Component
                 ->get(),
             'users' => (new UserRepository())
                 ->makeModel()
-                ->whereHas('roles', function (Builder $query) {
+                ->whereHas('roles', function (Builder $query): void {
                     $query->whereIn('name', [config('shopper.core.users.admin_role'), 'manager']);
                 })
                 ->orderBy('created_at', 'desc')

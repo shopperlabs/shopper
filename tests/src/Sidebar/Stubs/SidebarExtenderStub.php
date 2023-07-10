@@ -10,7 +10,7 @@ use Shopper\Sidebar\Contracts\Builder\Menu;
 use Shopper\Sidebar\Contracts\SidebarExtender;
 use Shopper\Sidebar\Domain\DefaultGroup;
 
-class SidebarExtenderStub implements SidebarExtender
+final class SidebarExtenderStub implements SidebarExtender
 {
     public function extendWith(Menu $menu): Menu
     {

@@ -13,7 +13,7 @@ return new class extends Migration
         $tableNames = config('permission.table_names');
         $columnNames = config('permission.column_names');
 
-        Schema::create($tableNames['permissions'], function (Blueprint $table) {
+        Schema::create($tableNames['permissions'], function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('guard_name');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create($tableNames['roles'], function (Blueprint $table) {
+        Schema::create($tableNames['roles'], function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('guard_name');
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
+        Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames): void {
             $table->unsignedBigInteger('permission_id');
 
             $table->string('model_type');
@@ -52,7 +52,7 @@ return new class extends Migration
             );
         });
 
-        Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames) {
+        Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames): void {
             $table->unsignedBigInteger('role_id');
 
             $table->string('model_type');
@@ -70,7 +70,7 @@ return new class extends Migration
             );
         });
 
-        Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
+        Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames): void {
             $table->unsignedBigInteger('permission_id');
             $table->unsignedBigInteger('role_id');
 
@@ -88,7 +88,7 @@ return new class extends Migration
         });
 
         app('cache')
-            ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
+            ->store('default' != config('permission.cache.store') ? config('permission.cache.store') : null)
             ->forget(config('permission.cache.key'));
     }
 

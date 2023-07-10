@@ -6,7 +6,6 @@ namespace Shopper\Http\Livewire\Components\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Http\Livewire\Components\Products\WithAttributes;
@@ -15,7 +14,7 @@ class Shipping extends Component
 {
     use WithAttributes;
 
-    public Model $product;
+    public $product;
 
     public int $productId;
 

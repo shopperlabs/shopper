@@ -15,10 +15,10 @@ use Shopper\Sidebar\Traits\ItemableTrait;
 
 class DefaultGroup implements Group, Serializable
 {
-    use CallableTrait;
-    use CacheableTrait;
-    use ItemableTrait;
     use AuthorizableTrait;
+    use CacheableTrait;
+    use CallableTrait;
+    use ItemableTrait;
 
     protected ?string $name = null;
 

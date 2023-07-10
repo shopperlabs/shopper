@@ -16,8 +16,8 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 class Collection extends Model implements SpatieHasMedia
 {
     use HasFactory;
-    use HasSlug;
     use HasMedia;
+    use HasSlug;
 
     protected $guarded = [];
 
@@ -42,7 +42,7 @@ class Collection extends Model implements SpatieHasMedia
 
     public function isAutomatic(): bool
     {
-        return $this->type === 'auto'; // @phpstan-ignore-line
+        return 'auto' === $this->type; // @phpstan-ignore-line
     }
 
     public function isManual(): bool

@@ -1,12 +1,19 @@
 {
   "preset": "laravel",
   "rules": {
+    "align_multiline_comment": true,
+    "array_indentation": true,
+    "array_syntax": true,
     "blank_line_before_statement": true,
     "concat_space": {
       "spacing": "one"
     },
     "declare_strict_types": true,
+    "no_empty_comment": true,
+    "ordered_traits": true,
     "method_argument_space": true,
-    "single_trait_insert_per_statement": true
+    "single_trait_insert_per_statement": true,
+    "use_arrow_functions": true,
+    "void_return": true
   }
 }

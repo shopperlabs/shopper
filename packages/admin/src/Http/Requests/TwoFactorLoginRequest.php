@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 
-class TwoFactorLoginRequest extends FormRequest
+final class TwoFactorLoginRequest extends FormRequest
 {
     /**
      * The user attempting the two factor challenge.

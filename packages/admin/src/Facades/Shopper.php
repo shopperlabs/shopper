@@ -15,7 +15,7 @@ use Shopper\Core\Shopper as ShopperCore;
  *
  * @see ShopperCore
  */
-class Shopper extends Facade
+final class Shopper extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

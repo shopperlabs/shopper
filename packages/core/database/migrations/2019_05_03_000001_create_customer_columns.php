@@ -10,11 +10,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table($this->getTableName('users'), function (Blueprint $table) {
+        Schema::table($this->getTableName('users'), function (Blueprint $table): void {
             $table->dropColumn('name');
             $table->string('password')->nullable()->change();
 
-            $table->after('id', function ($table) {
+            $table->after('id', function ($table): void {
                 $table->string('first_name')->nullable();
                 $table->string('last_name');
                 $table->enum('gender', ['male', 'female']);
@@ -32,7 +32,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table($this->getTableName('users'), function (Blueprint $table) {
+        Schema::table($this->getTableName('users'), function (Blueprint $table): void {
             $table->dropColumn([
                 'first_name',
                 'last_name',

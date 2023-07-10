@@ -7,7 +7,7 @@ namespace Shopper\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Attribute;
 
-class AttributeController extends ShopperBaseController
+final class AttributeController extends ShopperBaseController
 {
     public function index(): View
     {

@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Shopper\Services\Mailable;
 
-class TemplatesController extends ShopperBaseController
+final class TemplatesController extends ShopperBaseController
 {
     public function create(string $type, string $name, string $skeleton): View
     {

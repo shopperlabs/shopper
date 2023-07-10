@@ -6,7 +6,6 @@ namespace Shopper\Http\Livewire\Components\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
@@ -16,7 +15,7 @@ class Seo extends Component
 {
     use WithSeoAttributes;
 
-    public Model $product;
+    public $product;
 
     public int $productId;
 

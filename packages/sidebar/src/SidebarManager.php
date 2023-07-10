@@ -34,9 +34,7 @@ final class SidebarManager
     {
         foreach ($this->sidebars as $name) {
             $sidebar = $this->resolver->resolve($name);
-            $this->container->singleton($name, function () use ($sidebar) {
-                return $sidebar;
-            });
+            $this->container->singleton($name, fn () => $sidebar);
         }
     }
 

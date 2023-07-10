@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 use Shopper\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
 
-class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContract
+final class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContract
 {
     /**
      * Create an HTTP response that represents the object.

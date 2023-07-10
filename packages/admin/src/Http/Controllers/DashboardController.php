@@ -6,7 +6,7 @@ namespace Shopper\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 
-class DashboardController extends ShopperBaseController
+final class DashboardController extends ShopperBaseController
 {
     public function __invoke(): View
     {

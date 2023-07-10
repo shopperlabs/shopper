@@ -17,11 +17,11 @@ final class OrderSidebar extends AbstractAdminSidebar
     {
         $count = Order::query()->where('status', OrderStatus::PENDING->value)->count();
 
-        $menu->group(__('shopper::layout.sidebar.shop'), function (Group $group) use ($count) {
+        $menu->group(__('shopper::layout.sidebar.shop'), function (Group $group) use ($count): void {
             $group->weight(20);
             $group->setAuthorized();
 
-            $group->item(__('shopper::layout.sidebar.orders'), function (Item $item) use ($count) {
+            $group->item(__('shopper::layout.sidebar.orders'), function (Item $item) use ($count): void {
                 $item->weight(1);
                 $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
 
@@ -40,7 +40,7 @@ final class OrderSidebar extends AbstractAdminSidebar
                 );
             });
 
-            $group->item(__('shopper::layout.sidebar.discounts'), function (Item $item) {
+            $group->item(__('shopper::layout.sidebar.discounts'), function (Item $item): void {
                 $item->weight(9);
                 $item->setAuthorized($this->user->hasPermissionTo('browse_discounts'));
                 $item->route('shopper.discounts.index');

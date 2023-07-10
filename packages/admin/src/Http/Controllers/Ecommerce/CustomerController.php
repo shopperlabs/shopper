@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Http\Controllers\ShopperBaseController;
 
-class CustomerController extends ShopperBaseController
+final class CustomerController extends ShopperBaseController
 {
     public function index(): View
     {

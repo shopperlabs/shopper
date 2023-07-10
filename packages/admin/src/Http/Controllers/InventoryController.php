@@ -7,7 +7,7 @@ namespace Shopper\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Inventory;
 
-class InventoryController extends ShopperBaseController
+final class InventoryController extends ShopperBaseController
 {
     public function index(): View
     {

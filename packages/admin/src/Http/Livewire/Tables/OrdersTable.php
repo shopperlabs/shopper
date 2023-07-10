@@ -83,7 +83,7 @@ class OrdersTable extends DataTableComponent
                     'maxlength' => '25',
                 ])
                 ->filter(
-                    fn (Builder $query, string $value) => $query->whereHas('customer', function (Builder $query) use ($value) {
+                    fn (Builder $query, string $value) => $query->whereHas('customer', function (Builder $query) use ($value): void {
                         $query->where('first_name', 'like', '%' . $value . '%')
                             ->orWhere('last_name', 'like', '%' . $value . '%');
                     })
@@ -94,7 +94,7 @@ class OrdersTable extends DataTableComponent
                     'maxlength' => '25',
                 ])
                 ->filter(
-                    fn (Builder $query, string $value) => $query->whereHas('items', function (Builder $query) use ($value) {
+                    fn (Builder $query, string $value) => $query->whereHas('items', function (Builder $query) use ($value): void {
                         $query->where('name', 'like', '%' . $value . '%');
                     })
                 ),
@@ -114,8 +114,8 @@ class OrdersTable extends DataTableComponent
             Views\Column::make(__('shopper::layout.forms.label.status'), 'status')
                 ->view('shopper::livewire.tables.cells.orders.status'),
             Views\Column::make(__('shopper::words.customer'), 'user_id')
-                ->searchable(function (Builder $query, $searchTerm) {
-                    $query->whereHas('customer', function (Builder $query) use ($searchTerm) {
+                ->searchable(function (Builder $query, $searchTerm): void {
+                    $query->whereHas('customer', function (Builder $query) use ($searchTerm): void {
                         $query->where('first_name', 'like', '%' . $searchTerm . '%')
                             ->orWhere('last_name', 'like', '%' . $searchTerm . '%');
                     });

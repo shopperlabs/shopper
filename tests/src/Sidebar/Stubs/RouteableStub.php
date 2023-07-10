@@ -7,7 +7,7 @@ namespace Shopper\Tests\Sidebar\Stubs;
 use Illuminate\Container\Container;
 use Shopper\Sidebar\Traits\RouteableTrait;
 
-class RouteableStub
+final class RouteableStub
 {
     use RouteableTrait;
 

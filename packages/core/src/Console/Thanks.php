@@ -37,7 +37,7 @@ final class Thanks
             )
         );
 
-        if ($wantsToSupport === true) {
+        if (true === $wantsToSupport) {
             if (PHP_OS_FAMILY === 'Darwin') {
                 exec('open https://github.com/shopperlabs/framework');
             }

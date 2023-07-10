@@ -16,9 +16,9 @@ use Shopper\Sidebar\Traits\CallableTrait;
 
 class DefaultMenu implements Menu, Serializable
 {
-    use CallableTrait;
-    use CacheableTrait;
     use AuthorizableTrait;
+    use CacheableTrait;
+    use CallableTrait;
 
     protected Collection $groups;
 

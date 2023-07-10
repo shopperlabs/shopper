@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('product_has_relations', function (Blueprint $table) {
+        Schema::create('product_has_relations', function (Blueprint $table): void {
             $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
             $table->morphs('productable');
         });

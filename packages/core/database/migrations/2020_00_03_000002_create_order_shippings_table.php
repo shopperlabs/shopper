@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('order_shipping'), function (Blueprint $table) {
+        Schema::create($this->getTableName('order_shipping'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
             $table->date('shipped_at');

@@ -23,6 +23,6 @@ Route::resource('reviews', ReviewController::class);
 Route::resource('discounts', DiscountController::class);
 Route::resource('inventory-histories', InventoryHistoryController::class);
 
-Route::prefix('setting')->as('settings.')->group(function () {
+Route::prefix('setting')->as('settings.')->group(function (): void {
     require __DIR__ . '/setting.php';
 });

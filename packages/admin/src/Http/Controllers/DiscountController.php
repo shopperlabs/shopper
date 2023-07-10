@@ -7,7 +7,7 @@ namespace Shopper\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Repositories\DiscountRepository;
 
-class DiscountController extends ShopperBaseController
+final class DiscountController extends ShopperBaseController
 {
     public function index(): View
     {

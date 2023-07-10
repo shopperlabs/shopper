@@ -19,8 +19,8 @@ use Shopper\Http\Livewire\AbstractBaseComponent;
 class Create extends AbstractBaseComponent
 {
     use WithAttributes;
-    use WithSeoAttributes;
     use WithChoicesBrands;
+    use WithSeoAttributes;
 
     public ?Channel $defaultChannel = null;
 

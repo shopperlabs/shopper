@@ -6,7 +6,7 @@ namespace Shopper\Tests\Sidebar\Stubs;
 
 use Shopper\Sidebar\Traits\AuthorizableTrait;
 
-class AuthorizableStub
+final class AuthorizableStub
 {
     use AuthorizableTrait;
 }
