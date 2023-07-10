@@ -13,7 +13,7 @@ class Show extends Component
 {
     public Review $review;
 
-    public bool $approved;
+    public bool $approved = false;
 
     public function mount(Review $review): void
     {

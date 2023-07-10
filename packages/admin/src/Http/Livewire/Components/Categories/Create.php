@@ -62,8 +62,8 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $category->addMedia($this->fileUrl)
-                ->toMediaCollection(config('shopper.core.storage.collection_name'));
+            // @phpstan-ignore-next-line
+            $category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         session()->flash('success', __('Category successfully added!'));

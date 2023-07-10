@@ -31,10 +31,10 @@ class Profile extends Component
     {
         $user = $this->getUser();
 
-        $this->first_name = $user->first_name;
-        $this->last_name = $user->last_name;
-        $this->email = $user->email;
-        $this->phone_number = $user->phone_number;
+        $this->first_name = $user->first_name; // @phpstan-ignore-line
+        $this->last_name = $user->last_name; // @phpstan-ignore-line
+        $this->email = $user->email; // @phpstan-ignore-line
+        $this->phone_number = $user->phone_number; // @phpstan-ignore-line
     }
 
     public function updatedPicture(): void

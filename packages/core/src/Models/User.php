@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,6 +14,13 @@ use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property-read int $id
+ * @property-read string|null $first_name
+ * @property-read string $last_name
+ * @property-read Carbon|null $email_verified_at
+ * @property-read Carbon|null $birth_date
+ */
 class User extends Authenticatable
 {
     use CanHaveDiscount;

@@ -6,15 +6,13 @@ namespace Shopper\Http\Livewire\Components\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class RelatedProducts extends Component
 {
-    public Model $product;
+    public $product;
 
-    public Collection $relatedProducts;
+    public $relatedProducts;
 
     protected $listeners = [
         'onProductsAddInRelated' => 'render',

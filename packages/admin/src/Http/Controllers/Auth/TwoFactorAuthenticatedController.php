@@ -35,7 +35,7 @@ class TwoFactorAuthenticatedController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(TwoFactorLoginRequest $request): JsonResponse|RedirectResponse
+    public function store(TwoFactorLoginRequest $request): JsonResponse|RedirectResponse|FailedTwoFactorLoginResponse
     {
         $user = $request->challengedUser();
 

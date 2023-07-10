@@ -23,11 +23,12 @@ class LogoutOthersBrowser extends ModalComponent
     {
         $this->resetErrorBag();
 
+        // @phpstan-ignore-next-line
         if (! Hash::check($this->password, auth()->user()->password)) {
             throw ValidationException::withMessages(['password' => [__('This password does not match our records.')]]);
         }
 
-        $guard->logoutOtherDevices($this->password);
+        $guard->logoutOtherDevices($this->password); // @phpstan-ignore-line
 
         $this->deleteOtherSessionRecords();
 

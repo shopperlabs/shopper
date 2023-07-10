@@ -6,7 +6,6 @@ namespace Shopper\Http\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\ProductAttribute;
@@ -26,11 +25,11 @@ class AddProductAttribute extends ModalComponent
 
     public array $multipleValues = [];
 
-    public Collection $attributes;
+    public $attributes;
 
-    public Collection $values;
+    public $values;
 
-    public Collection $productAttributes;
+    public $productAttributes;
 
     public ?string $value = null;
 

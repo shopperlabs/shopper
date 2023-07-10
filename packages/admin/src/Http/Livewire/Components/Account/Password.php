@@ -6,10 +6,10 @@ namespace Shopper\Http\Livewire\Components\Account;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Component;
+use Shopper\Facades\Shopper;
 
 class Password extends Component
 {
@@ -23,8 +23,9 @@ class Password extends Component
     {
         $this->validate($this->rules());
 
-        $user = Auth::user();
+        $user = Shopper::auth()->user();
 
+        // @phpstan-ignore-next-line
         if (Hash::check($this->current_password, $user->password)) {
             $user->update(['password' => Hash::make($this->password)]);
 

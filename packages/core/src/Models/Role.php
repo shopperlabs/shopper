@@ -6,6 +6,13 @@ namespace Shopper\Core\Models;
 
 use Spatie\Permission\Models\Role as SpatieRole;
 
+/**
+ * @property-read int $id
+ * @property-read string $name
+ * @property-read string $guard_name
+ * @property-read string $display_name
+ * @property-read string|null $description
+ */
 class Role extends SpatieRole
 {
     public function isAdmin(): bool

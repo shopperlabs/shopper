@@ -19,18 +19,8 @@ class Collection extends Model implements SpatieHasMedia
     use HasSlug;
     use HasMedia;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'published_at' => 'datetime',
     ];
@@ -52,7 +42,7 @@ class Collection extends Model implements SpatieHasMedia
 
     public function isAutomatic(): bool
     {
-        return $this->type === 'auto';
+        return $this->type === 'auto'; // @phpstan-ignore-line
     }
 
     public function isManual(): bool

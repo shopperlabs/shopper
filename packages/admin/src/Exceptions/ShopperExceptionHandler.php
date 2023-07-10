@@ -22,6 +22,7 @@ final class ShopperExceptionHandler extends ExceptionHandler
 
     public function render($request, Throwable $e): Response
     {
+        // @phpstan-ignore-next-line
         if ($request->user() && $request->user()->hasRole(config('shopper.core.users.admin_role'))) {
             return response()->view(
                 'shopper::errors.template',

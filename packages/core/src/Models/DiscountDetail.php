@@ -13,11 +13,6 @@ class DiscountDetail extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'discountable_type',
         'discountable_id',

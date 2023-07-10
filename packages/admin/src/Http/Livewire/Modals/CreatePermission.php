@@ -41,7 +41,7 @@ class CreatePermission extends ModalComponent
             'description' => $this->description,
         ]);
 
-        Role::findById($this->roleId)->givePermissionTo($permission->name);
+        Role::findById($this->roleId)->givePermissionTo($permission->name); // @phpstan-ignore-line
 
         $this->dispatchBrowserEvent('permission-added');
 

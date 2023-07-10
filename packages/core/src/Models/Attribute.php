@@ -9,16 +9,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Traits\HasSlug;
 
+/**
+ * @property-read int $id
+ * @property-read string $name
+ * @property-read string $slug
+ * @property-read string|null $description
+ * @property-read string $type
+ * @property-read bool $is_enabled
+ * @property-read bool $is_searchable
+ * @property-read bool $is_filterable
+ */
 class Attribute extends Model
 {
     use HasFactory;
     use HasSlug;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'slug',
@@ -29,22 +34,12 @@ class Attribute extends Model
         'is_filterable',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'is_enabled' => 'boolean',
         'is_searchable' => 'boolean',
         'is_filterable' => 'boolean',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'type_formatted',
     ];
@@ -59,11 +54,6 @@ class Attribute extends Model
         return self::typesFields()[$this->type];
     }
 
-    /**
-     * Return available fields types.
-     *
-     * @return array<string>
-     */
     public static function typesFields(): array
     {
         return [
@@ -78,11 +68,6 @@ class Attribute extends Model
         ];
     }
 
-    /**
-     * Return attributes fields that has values by default.
-     *
-     * @return array<string>
-     */
     public static function fieldsWithValues(): array
     {
         return [
@@ -93,11 +78,6 @@ class Attribute extends Model
         ];
     }
 
-    /**
-     * Return attributes fields that has custom string values.
-     *
-     * @return array<string>
-     */
     public static function fieldsWithStringValues(): array
     {
         return [

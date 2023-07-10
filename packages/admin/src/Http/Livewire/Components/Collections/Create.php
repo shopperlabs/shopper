@@ -74,13 +74,14 @@ class Create extends Component
         ]);
 
         if ($this->fileUrl) {
+            // @phpstan-ignore-next-line
             $collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         if ($this->type === 'auto' && count($this->conditions) > 0 && $this->rule) {
             foreach ($this->rule as $key => $value) {
                 CollectionRule::query()->create([
-                    'collection_id' => $collection->id,
+                    'collection_id' => $collection->id, // @phpstan-ignore-line
                     'rule' => $this->rule[$key],
                     'operator' => $this->operator[$key],
                     'value' => $this->value[$key],

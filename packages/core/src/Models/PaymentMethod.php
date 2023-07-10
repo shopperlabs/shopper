@@ -10,32 +10,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Shopper\Core\Traits\HasSlug;
 
+/**
+ * @property-read int $id
+ * @property-read string $title
+ * @property-read string|null $logo
+ * @property string|null $description
+ * @property string|null $link_url
+ * @property string|null $instructions
+ */
 class PaymentMethod extends Model
 {
     use HasFactory;
     use HasSlug;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'is_enabled' => 'boolean',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'logo_url',
     ];

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Customers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,7 +12,7 @@ class Orders extends Component
 {
     use WithPagination;
 
-    public Model $customer;
+    public $customer;
 
     public function mount($customer): void
     {

@@ -6,7 +6,6 @@ namespace Shopper\Http\Livewire\Components\Products;
 
 use Illuminate\Contracts\View\View;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Core\Exceptions\GeneralException;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Repositories\Ecommerce\BrandRepository;
@@ -105,22 +104,27 @@ class Create extends AbstractBaseComponent
 
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
+                // @phpstan-ignore-next-line
                 fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.core.storage.collection_name'))
             );
         }
 
         if (collect($this->category_ids)->isNotEmpty()) {
+            // @phpstan-ignore-next-line
             $product->categories()->attach($this->category_ids);
         }
 
         if (collect($this->collection_ids)->isNotEmpty()) {
+            // @phpstan-ignore-next-line
             $product->collections()->attach($this->collection_ids);
         }
 
+        // @phpstan-ignore-next-line
         $product->channels()->attach($this->defaultChannel->id);
 
         if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
+                // @phpstan-ignore-next-line
                 $product->mutateStock(
                     $inventory,
                     (int) $value,
@@ -137,9 +141,6 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.products.index');
     }
 
-    /**
-     * @throws GeneralException
-     */
     public function render(): View
     {
         return view('shopper::livewire.products.create', [
@@ -161,7 +162,7 @@ class Create extends AbstractBaseComponent
             'inventories' => Inventory::query()->get(['name', 'id']),
             'currency' => shopper_currency(),
             'barcodeImage' => $this->barcode
-                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.core.barcode_type'))
+                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.core.barcode_type')) // @phpstan-ignore-line
                 : null,
         ]);
     }

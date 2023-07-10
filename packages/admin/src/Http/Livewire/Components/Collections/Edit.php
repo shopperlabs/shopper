@@ -6,23 +6,20 @@ namespace Shopper\Http\Livewire\Components\Collections;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Core\Traits\Attributes\WithConditions;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Http\Livewire\AbstractBaseComponent;
-use function Shopper\Http\Livewire\Collections\str_limit;
 
 class Edit extends AbstractBaseComponent
 {
     use WithConditions;
     use WithSeoAttributes;
 
-    public Model $collection;
+    public $collection;
 
-    public Collection $products;
+    public $products;
 
     public int $collectionId;
 
@@ -92,9 +89,7 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->collection
-                ->addMedia($this->fileUrl)
-                ->toMediaCollection(config('shopper.core.storage.collection_name'));
+            $this->collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         session()->flash('success', __('Collection successfully updated!'));

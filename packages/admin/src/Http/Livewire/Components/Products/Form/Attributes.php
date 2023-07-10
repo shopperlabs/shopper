@@ -7,7 +7,6 @@ namespace Shopper\Http\Livewire\Components\Products\Form;
 use Exception;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Core\Models\ProductAttribute;
@@ -22,9 +21,9 @@ class Attributes extends Component
 
     public int $productId;
 
-    public Collection $attributes;
+    public $attributes;
 
-    public Collection $productAttributes;
+    public $productAttributes;
 
     protected $listeners = ['onProductAttributeAdded'];
 

@@ -5,14 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Sidebar;
 
 use Shopper\Sidebar\Contracts\Builder\Menu;
-use Shopper\Sidebar\Contracts\ShouldCache;
 use Shopper\Sidebar\Contracts\Sidebar;
-use Shopper\Sidebar\Traits\CacheableTrait;
 
-final class AdminSidebar implements ShouldCache, Sidebar
+final class AdminSidebar implements Sidebar
 {
-    use CacheableTrait;
-
     public function __construct(protected Menu $menu)
     {
     }

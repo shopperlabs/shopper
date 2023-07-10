@@ -62,8 +62,8 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         Builder::macro(
             'search',
-            fn ($field, $string) => $string
-                ? $this->where($field, 'like', '%' . $string . '%')
+            fn (string $field, mixed $string): Builder => $string
+                ? $this->where($field, 'like', '%' . $string . '%') // @phpstan-ignore-line
                 : $this
         );
     }

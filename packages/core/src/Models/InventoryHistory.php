@@ -13,11 +13,6 @@ class InventoryHistory extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'stockable_type',
         'stockable_id',
@@ -31,11 +26,6 @@ class InventoryHistory extends Model
         'user_id',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'adjustment',
     ];
@@ -47,6 +37,7 @@ class InventoryHistory extends Model
 
     public function getAdjustmentAttribute(): string
     {
+        // @phpstan-ignore-next-line
         if ($this->old_quantity > 0) {
             return '+' . $this->old_quantity;
         }

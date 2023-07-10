@@ -12,11 +12,6 @@ trait WithSeoAttributes
 
     public ?string $seoDescription = null;
 
-    /**
-     * Define is the current action is create or update.
-     *
-     * @return false
-     */
     public function isUpdate(): bool
     {
         return false;

@@ -8,22 +8,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property-read int $id
+ * @property-read string $code
+ * @property-read string $type
+ * @property-read string|int $value
+ * @property-read string $apply_to
+ * @property-read string $eligibility
+ * @property-read int $usage_limit
+ * @property-read int $total_use
+ * @property-read bool $usage_limit_per_user
+ * @property-read bool $is_active
+ * @property-read \Illuminate\Support\Carbon $start_at
+ * @property-read \Illuminate\Support\Carbon|null $end_at
+ */
 class Discount extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'is_active' => 'boolean',
         'usage_limit_per_user' => 'boolean',
