@@ -12,7 +12,7 @@ trait WithChoicesCategories
 
     public function updatedSelectedCategory(array $choice): void
     {
-        if (count($choice) > 0 && $choice['value'] !== '0') {
+        if (count($choice) > 0 && '0' !== $choice['value']) {
             $this->parent_id = (int) $choice['value'];
             $this->parent = (new CategoryRepository())->getById($this->parent_id);
         } else {

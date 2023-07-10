@@ -7,7 +7,7 @@ namespace Shopper\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Review;
 
-class ReviewController extends ShopperBaseController
+final class ReviewController extends ShopperBaseController
 {
     public function index(): View
     {

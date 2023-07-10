@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Controller;
 use Shopper\Core\Models\Role;
 
-class SettingController extends Controller
+final class SettingController extends Controller
 {
     public function initialize(): View
     {

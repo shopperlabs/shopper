@@ -16,7 +16,7 @@ use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 
-class TestCase extends BaseTestCase
+final class TestCase extends BaseTestCase
 {
     use LazilyRefreshDatabase;
 

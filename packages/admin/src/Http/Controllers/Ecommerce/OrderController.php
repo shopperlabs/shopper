@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Order;
 use Shopper\Http\Controllers\ShopperBaseController;
 
-class OrderController extends ShopperBaseController
+final class OrderController extends ShopperBaseController
 {
     public function index(): View
     {

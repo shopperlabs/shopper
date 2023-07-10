@@ -12,8 +12,8 @@ use Shopper\Sidebar\Traits\CacheableTrait;
 
 class DefaultBadge implements Badge, Serializable
 {
-    use CacheableTrait;
     use AuthorizableTrait;
+    use CacheableTrait;
 
     protected mixed $value = null;
 

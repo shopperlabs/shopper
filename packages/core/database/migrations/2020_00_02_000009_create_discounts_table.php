@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('discounts'), function (Blueprint $table) {
+        Schema::create($this->getTableName('discounts'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
             $table->boolean('is_active')->default(false);
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->dateTime('end_at')->nullable();
         });
 
-        Schema::create($this->getTableName('discountables'), function (Blueprint $table) {
+        Schema::create($this->getTableName('discountables'), function (Blueprint $table): void {
             $this->addCommonFields($table);
             $table->string('condition')->nullable(); // apply_to, eligibility
             $table->unsignedInteger('total_use')->default(0);

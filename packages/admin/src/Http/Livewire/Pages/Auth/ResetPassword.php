@@ -44,7 +44,7 @@ final class ResetPassword extends Component
                 'email' => $this->email,
                 'password' => $this->password,
             ],
-            function ($user, string $password) {
+            function ($user, string $password): void {
                 $user->password = Hash::make($password);
                 $user->save();
 
@@ -52,7 +52,7 @@ final class ResetPassword extends Component
             }
         );
 
-        if ($response == Password::PASSWORD_RESET) {
+        if (Password::PASSWORD_RESET == $response) {
             $this->redirectRoute('shopper.dashboard');
         }
 

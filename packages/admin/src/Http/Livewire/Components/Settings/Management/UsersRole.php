@@ -32,7 +32,7 @@ class UsersRole extends Component
     {
         $users = (new UserRepository())
             ->makeModel()
-            ->whereHas('roles', function (Builder $query) {
+            ->whereHas('roles', function (Builder $query): void {
                 $query->where('name', $this->role->name);
             })
             ->orderBy('created_at', 'desc')

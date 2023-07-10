@@ -51,7 +51,7 @@ class AddProductAttribute extends ModalComponent
 
     public function save(): void
     {
-        if ($this->type === 'checkbox' || $this->type === 'colorpicker') {
+        if ('checkbox' === $this->type || 'colorpicker' === $this->type) {
             $this->validate(['multipleValues' => 'required|array']);
         } else {
             $this->validate(['value' => 'required', 'attribute_id' => 'required|int']);
@@ -62,7 +62,7 @@ class AddProductAttribute extends ModalComponent
             'attribute_id' => $this->attribute_id,
         ]);
 
-        if ($this->type === 'checkbox' || $this->type === 'colorpicker') {
+        if ('checkbox' === $this->type || 'colorpicker' === $this->type) {
             foreach ($this->multipleValues as $checkboxValue) {
                 ProductAttributeValue::query()->create([
                     'attribute_value_id' => $checkboxValue,
@@ -94,7 +94,7 @@ class AddProductAttribute extends ModalComponent
 
     public function updatedAttributeId(string $value): void
     {
-        if ($value === '0') {
+        if ('0' === $value) {
             return;
         }
 

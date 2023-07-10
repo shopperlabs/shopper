@@ -233,7 +233,7 @@ trait Templates
             return $replaced;
         }
 
-        return ! (file_put_contents($viewPath, $replaced) === false);
+        return ! (false === file_put_contents($viewPath, $replaced));
     }
 
     public static function previewMarkdownViewContent($simpleview, $content, $viewName, $template = false, $namespace = null)

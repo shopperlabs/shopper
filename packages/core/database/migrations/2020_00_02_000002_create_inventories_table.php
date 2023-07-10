@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('inventories'), function (Blueprint $table) {
+        Schema::create($this->getTableName('inventories'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
             $table->string('name');
@@ -30,7 +30,7 @@ return new class extends Migration
             $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));
         });
 
-        Schema::create($this->getTableName('inventory_histories'), function (Blueprint $table) {
+        Schema::create($this->getTableName('inventory_histories'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
             $table->morphs('stockable');

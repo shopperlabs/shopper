@@ -36,7 +36,7 @@ trait WithStock
 
     public function decrementStock(): void
     {
-        if ($this->realStock === 0) {
+        if (0 === $this->realStock) {
             return;
         }
 
@@ -48,7 +48,7 @@ trait WithStock
 
     public function updateCurrentStock(): void
     {
-        if ($this->value === 0) {
+        if (0 === $this->value) {
             return;
         }
 

@@ -14,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 use Shopper\Http\Requests\TwoFactorLoginRequest;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 
-class TwoFactorAuthenticatedController extends Controller
+final class TwoFactorAuthenticatedController extends Controller
 {
     public function __construct(protected StatefulGuard $guard)
     {

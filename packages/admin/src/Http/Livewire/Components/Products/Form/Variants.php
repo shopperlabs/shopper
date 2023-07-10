@@ -17,9 +17,9 @@ use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class Variants extends Component
 {
-    use WithPagination;
-    use WithFileUploads;
     use WithAttributes;
+    use WithFileUploads;
+    use WithPagination;
     use WithUploadProcess;
 
     public string $search = '';
@@ -65,7 +65,7 @@ class Variants extends Component
         return view('shopper::livewire.products.forms.form-variants', [
             'variants' => (new ProductRepository())
                 ->makeModel()
-                ->where(function (Builder $query) {
+                ->where(function (Builder $query): void {
                     $query->where('name', 'like', '%' . $this->search . '%');
                     $query->where('parent_id', $this->product->id);
                 })

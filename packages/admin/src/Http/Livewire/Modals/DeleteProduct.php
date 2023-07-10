@@ -30,7 +30,7 @@ class DeleteProduct extends ModalComponent
 
         event(new ProductDeleted($product));
 
-        if ($this->type === 'product') {
+        if ('product' === $this->type) {
             $product->delete();
         } else {
             $product->forceDelete();
@@ -38,7 +38,7 @@ class DeleteProduct extends ModalComponent
 
         session()->flash('success', __('The :item has been correctly removed.', ['item' => $this->type]));
 
-        if ($this->type === 'product') {
+        if ('product' === $this->type) {
             $this->redirectRoute('shopper.products.index');
         } else {
             $this->redirect($this->route);

@@ -45,9 +45,9 @@ if (! function_exists('setEnvironmentValue')) {
         if (\count($values) > 0) {
             $str .= "\n"; // In case the searched variable is in the last line without \n
             foreach ($values as $envKey => $envValue) {
-                if ($envValue === true) {
+                if (true === $envValue) {
                     $value = 'true';
-                } elseif ($envValue === false) {
+                } elseif (false === $envValue) {
                     $value = 'false';
                 } else {
                     $value = $envValue;
@@ -58,7 +58,7 @@ if (! function_exists('setEnvironmentValue')) {
                 $endOfLinePosition = mb_strpos($str, "\n", $keyPosition);
                 $oldLine = mb_substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
                 $space = mb_strpos($value, ' ');
-                $envValue = $space === false ? $value : '"' . $value . '"';
+                $envValue = false === $space ? $value : '"' . $value . '"';
 
                 // If key does not exist, add it
                 if (! $keyPosition || ! $endOfLinePosition || ! $oldLine) {
@@ -90,7 +90,7 @@ if (! function_exists('shopper_version')) {
 if (! function_exists('shopper_table')) {
     function shopper_table(string $table): string
     {
-        if (config('shopper.core.table_prefix') !== '') {
+        if ('' !== config('shopper.core.table_prefix')) {
             return config('shopper.core.table_prefix') . $table;
         }
 

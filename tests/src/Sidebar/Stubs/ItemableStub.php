@@ -10,10 +10,10 @@ use Shopper\Sidebar\Contracts\Builder\Itemable;
 use Shopper\Sidebar\Traits\CallableTrait;
 use Shopper\Sidebar\Traits\ItemableTrait;
 
-class ItemableStub implements Itemable
+final class ItemableStub implements Itemable
 {
-    use ItemableTrait;
     use CallableTrait;
+    use ItemableTrait;
 
     public function __construct(private Container $container)
     {

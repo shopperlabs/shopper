@@ -14,9 +14,9 @@ use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent
 {
-    use WithDiscountAttributes;
-    use WithDiscountActions;
     use HasPrice;
+    use WithDiscountActions;
+    use WithDiscountAttributes;
 
     protected $listeners = ['addSelectedProducts', 'addSelectedCustomers'];
 
@@ -38,7 +38,7 @@ class Create extends AbstractBaseComponent
 
     public function store(): void
     {
-        if ($this->minRequired !== 'none') {
+        if ('none' !== $this->minRequired) {
             $this->validate(['minRequiredValue' => 'required']);
         }
 
@@ -55,7 +55,7 @@ class Create extends AbstractBaseComponent
             'value' => $this->value,
             'apply_to' => $this->apply,
             'min_required' => $this->minRequired,
-            'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
+            'min_required_value' => 'none' !== $this->minRequired ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
             'usage_limit_per_user' => $this->usage_limit_per_user,
@@ -63,7 +63,7 @@ class Create extends AbstractBaseComponent
             'end_at' => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
-        if ($this->apply === 'products') {
+        if ('products' === $this->apply) {
             // Associate the discount to all the selected products.
             foreach ($this->selectedProducts as $productId) {
                 DiscountDetail::query()->create([
@@ -75,7 +75,7 @@ class Create extends AbstractBaseComponent
             }
         }
 
-        if ($this->eligibility === 'customers') {
+        if ('customers' === $this->eligibility) {
             // Associate the discount to all the selected users.
             foreach ($this->selectedCustomers as $customerId) {
                 DiscountDetail::query()->create([

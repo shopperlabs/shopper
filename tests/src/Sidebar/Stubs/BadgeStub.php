@@ -7,6 +7,6 @@ namespace Shopper\Tests\Sidebar\Stubs;
 use Shopper\Sidebar\Contracts\Builder\Badge;
 use Shopper\Sidebar\Domain\DefaultBadge;
 
-class BadgeStub extends DefaultBadge implements Badge
+final class BadgeStub extends DefaultBadge implements Badge
 {
 }

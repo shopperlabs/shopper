@@ -13,9 +13,9 @@ use Shopper\Sidebar\Traits\RouteableTrait;
 
 class DefaultAppend implements Append, Serializable
 {
+    use AuthorizableTrait;
     use CacheableTrait;
     use RouteableTrait;
-    use AuthorizableTrait;
 
     protected ?string $name = null;
 
@@ -83,6 +83,6 @@ class DefaultAppend implements Append, Serializable
 
     public function iconSvg(): bool
     {
-        return $this->type === 'svg';
+        return 'svg' === $this->type;
     }
 }

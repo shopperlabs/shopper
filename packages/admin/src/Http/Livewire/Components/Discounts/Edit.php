@@ -18,8 +18,8 @@ use Shopper\Http\Livewire\AbstractBaseComponent;
 class Edit extends AbstractBaseComponent
 {
     use HasPrice;
-    use WithDiscountAttributes;
     use WithDiscountActions;
+    use WithDiscountAttributes;
 
     public Discount $discount;
 
@@ -38,7 +38,7 @@ class Edit extends AbstractBaseComponent
         $this->apply = $discount->apply_to;
         $this->eligibility = $discount->eligibility;
         $this->usage_limit = $discount->usage_limit;
-        $this->usage_number = $discount->usage_limit !== null;
+        $this->usage_number = null !== $discount->usage_limit;
         $this->usage_limit_per_user = $discount->usage_limit_per_user;
         $this->is_active = $discount->is_active;
         $this->dateStart = $discount->start_at->format('Y-m-d H:m');
@@ -99,7 +99,7 @@ class Edit extends AbstractBaseComponent
 
     public function store(): void
     {
-        if ($this->minRequired !== 'none') {
+        if ('none' !== $this->minRequired) {
             $this->validate(['minRequiredValue' => 'required']);
         }
 
@@ -116,7 +116,7 @@ class Edit extends AbstractBaseComponent
             'value' => $this->value,
             'apply_to' => $this->apply,
             'min_required' => $this->minRequired,
-            'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
+            'min_required_value' => 'none' !== $this->minRequired ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
             'usage_limit_per_user' => $this->usage_limit_per_user,
@@ -124,7 +124,7 @@ class Edit extends AbstractBaseComponent
             'end_at' => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
-        if ($this->apply === 'products') {
+        if ('products' === $this->apply) {
             $this->discount->items()
                 ->where('condition', 'apply_to')
                 ->whereNotIn('discountable_id', $this->selectedProducts)
@@ -143,7 +143,7 @@ class Edit extends AbstractBaseComponent
             $this->discount->items()->where('condition', 'apply_to')->delete();
         }
 
-        if ($this->eligibility === 'customers') {
+        if ('customers' === $this->eligibility) {
             $this->discount->items()
                 ->where('condition', 'eligibility')
                 ->whereNotIn('discountable_id', $this->selectedCustomers)

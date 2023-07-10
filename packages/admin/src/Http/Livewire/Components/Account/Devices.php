@@ -16,7 +16,7 @@ class Devices extends Component
 {
     public function getSessionsProperty(): Collection
     {
-        if (config('session.driver') !== 'database') {
+        if ('database' !== config('session.driver')) {
             return collect();
         }
 
@@ -40,7 +40,7 @@ class Devices extends Component
 
     protected function createAgent($session): Agent
     {
-        return tap(new Agent(), function ($agent) use ($session) {
+        return tap(new Agent(), function ($agent) use ($session): void {
             $agent->setUserAgent($session->user_agent);
         });
     }

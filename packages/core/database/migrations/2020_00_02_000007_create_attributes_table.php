@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('attributes'), function (Blueprint $table) {
+        Schema::create($this->getTableName('attributes'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
             $table->string('name');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('is_filterable')->default(false);
         });
 
-        Schema::create($this->getTableName('attribute_values'), function (Blueprint $table) {
+        Schema::create($this->getTableName('attribute_values'), function (Blueprint $table): void {
             $table->id();
             $table->string('value', 50);
             $table->string('key')->unique();
@@ -30,13 +30,13 @@ return new class extends Migration
             $this->addForeignKey($table, 'attribute_id', $this->getTableName('attributes'), false);
         });
 
-        Schema::create($this->getTableName('product_attributes'), function (Blueprint $table) {
+        Schema::create($this->getTableName('product_attributes'), function (Blueprint $table): void {
             $table->id();
             $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
             $this->addForeignKey($table, 'attribute_id', $this->getTableName('attributes'), false);
         });
 
-        Schema::create($this->getTableName('attribute_value_product_attribute'), function (Blueprint $table) {
+        Schema::create($this->getTableName('attribute_value_product_attribute'), function (Blueprint $table): void {
             $table->id();
             $this->addForeignKey($table, 'attribute_value_id', $this->getTableName('attribute_values'));
             $this->addForeignKey($table, 'product_attribute_id', $this->getTableName('product_attributes'), false);

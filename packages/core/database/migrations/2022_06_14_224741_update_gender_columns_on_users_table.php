@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table($this->getTableName('users'), function (Blueprint $table) {
+        Schema::table($this->getTableName('users'), function (Blueprint $table): void {
             $table->string('gender')->nullable()->default('male')->change();
         });
     }

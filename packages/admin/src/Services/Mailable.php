@@ -16,8 +16,8 @@ use Throwable;
 
 final class Mailable
 {
-    use Templates;
     use Mailables;
+    use Templates;
 
     /**
      * Default type examples for being passed to reflected classes.

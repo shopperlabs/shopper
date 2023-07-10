@@ -7,6 +7,6 @@ namespace Shopper\Tests\Sidebar\Stubs;
 use Shopper\Sidebar\Contracts\Builder\Item;
 use Shopper\Sidebar\Domain\DefaultItem;
 
-class ItemStub extends DefaultItem implements Item
+final class ItemStub extends DefaultItem implements Item
 {
 }

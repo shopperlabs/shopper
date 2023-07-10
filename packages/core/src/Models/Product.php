@@ -30,11 +30,11 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
 {
     use CanHaveDiscount;
     use HasFactory;
+    use HasMedia;
     use HasPrice;
     use HasRecursiveRelationships;
-    use HasStock;
     use HasSlug;
-    use HasMedia;
+    use HasStock;
     use ReviewRateableTrait;
 
     protected $guarded = [];

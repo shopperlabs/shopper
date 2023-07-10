@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Shopper\Core\Models\Setting;
 
-class HasConfiguration
+final class HasConfiguration
 {
     public function handle(Request $request, Closure $next)
     {

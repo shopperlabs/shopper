@@ -7,6 +7,6 @@ namespace Shopper\Tests\Sidebar\Stubs;
 use Shopper\Sidebar\Contracts\Builder\Append;
 use Shopper\Sidebar\Domain\DefaultAppend;
 
-class AppendStub extends DefaultAppend implements Append
+final class AppendStub extends DefaultAppend implements Append
 {
 }

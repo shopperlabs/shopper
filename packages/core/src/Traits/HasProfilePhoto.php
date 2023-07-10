@@ -10,7 +10,7 @@ trait HasProfilePhoto
 {
     public function getPictureAttribute(): string
     {
-        if ($this->avatar_type === 'storage') {
+        if ('storage' === $this->avatar_type) {
             return Storage::disk(config('shopper.core.storage.disk_name'))->url($this->avatar_location);
         }
 

@@ -24,9 +24,9 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use CanHaveDiscount;
-    use HasRoles;
     use HasFactory;
     use HasProfilePhoto;
+    use HasRoles;
     use Notifiable;
 
     protected $guarded = [];
@@ -57,7 +57,7 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::deleting(function ($model) {
+        self::deleting(function ($model): void {
             $model->addresses()->delete();
             $model->roles()->detach();
             $model->orders()->delete();
@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function isVerified(): bool
     {
-        return $this->email_verified_at !== null;
+        return null !== $this->email_verified_at;
     }
 
     public function getFullNameAttribute(): string

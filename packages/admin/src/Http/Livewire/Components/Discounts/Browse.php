@@ -35,12 +35,12 @@ class Browse extends Component
         return view('shopper::livewire.discounts.browse', [
             'total' => Discount::query()->count(),
             'discounts' => Discount::query()->where('code', 'like', '%' . $this->search . '%')
-                ->where(function (Builder $query) {
-                    if ($this->isActive !== null) {
+                ->where(function (Builder $query): void {
+                    if (null !== $this->isActive) {
                         $query->where('is_active', (bool) ($this->isActive));
                     }
 
-                    if ($this->date !== null) {
+                    if (null !== $this->date) {
                         $query->whereDate('start_at', $this->date)
                             ->orWhereDate('end_at', $this->date);
                     }

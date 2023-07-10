@@ -42,7 +42,7 @@ class Review extends Model
 
     public function createRating(Model $reviewrateable, array $data, Model $author): self
     {
-        $rating = new static(); // @phpstan-ignore-line
+        $rating = new self();
         $rating->fill(array_merge($data, [
             'author_id' => $author->id, // @phpstan-ignore-line
             'author_type' => $author->getMorphClass(),
@@ -55,7 +55,7 @@ class Review extends Model
 
     public function updateRating(int $id, array $data): self
     {
-        $rating = static::find($id);
+        $rating = self::find($id);
         $rating->update($data);
 
         return $rating;
@@ -109,6 +109,6 @@ class Review extends Model
 
     public function deleteRating(int $id): ?bool
     {
-        return static::query()->find($id)->delete();
+        return self::query()->find($id)->delete();
     }
 }

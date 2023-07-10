@@ -36,13 +36,13 @@ class Inventory extends Model
     {
         parent::boot();
 
-        static::creating(function ($inventory) {
+        self::creating(function ($inventory): void {
             if ($inventory->is_default) {
                 static::query()->update(['is_default' => false]);
             }
         });
 
-        static::updating(function ($inventory) {
+        self::updating(function ($inventory): void {
             if ($inventory->is_default) {
                 static::query()->update(['is_default' => false]);
             }

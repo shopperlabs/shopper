@@ -106,7 +106,7 @@ class AttributesTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(function (Builder $builder, string $value) {
+                ->filter(function (Builder $builder, string $value): void {
                     // @phpstan-ignore-next-line
                     match ($value) {
                         'yes' => $builder->where('is_searchable', true),

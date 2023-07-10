@@ -28,23 +28,23 @@ final class Phone implements Rule
         $conditions = [];
         $conditions[] = mb_strlen($value) >= 10;
         $conditions[] = mb_strlen($value) <= 16;
-        $conditions[] = preg_match('/[^\\d]/i', $value) === 0;
+        $conditions[] = 0 === preg_match('/[^\\d]/i', $value);
 
         return (bool) array_product($conditions);
     }
 
     protected function isE123(string $value): bool
     {
-        return preg_match('/^(?:\((\+?\d+)?\)|\+?\d+) ?\d*(-?\d{2,3} ?){0,4}$/', $value) === 1;
+        return 1 === preg_match('/^(?:\((\+?\d+)?\)|\+?\d+) ?\d*(-?\d{2,3} ?){0,4}$/', $value);
     }
 
     protected function isE164(string $value): bool
     {
         $conditions = [];
-        $conditions[] = mb_strpos($value, '+') === 0;
+        $conditions[] = 0 === mb_strpos($value, '+');
         $conditions[] = mb_strlen($value) >= 9;
         $conditions[] = mb_strlen($value) <= 16;
-        $conditions[] = preg_match('/[^\\d+]/i', $value) === 0;
+        $conditions[] = 0 === preg_match('/[^\\d+]/i', $value);
 
         return (bool) array_product($conditions);
     }

@@ -10,7 +10,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('collections'), function (Blueprint $table) {
+        Schema::create($this->getTableName('collections'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
             $table->string('name');
@@ -24,7 +24,7 @@ return new class extends Migration
             $this->addSeoFields($table);
         });
 
-        Schema::create($this->getTableName('collection_rules'), function (Blueprint $table) {
+        Schema::create($this->getTableName('collection_rules'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
             $table->string('rule');

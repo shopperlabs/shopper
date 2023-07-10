@@ -6,7 +6,7 @@ namespace Shopper\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 
-class InventoryHistoryController extends ShopperBaseController
+final class InventoryHistoryController extends ShopperBaseController
 {
     public function index(): View
     {

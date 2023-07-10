@@ -16,9 +16,9 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 class Category extends Model implements SpatieHasMedia
 {
     use HasFactory;
-    use HasSlug;
-    use HasRecursiveRelationships;
     use HasMedia;
+    use HasRecursiveRelationships;
+    use HasSlug;
 
     protected $guarded = [];
 
@@ -39,7 +39,7 @@ class Category extends Model implements SpatieHasMedia
     public function getParentNameAttribute(): ?string
     {
         // @phpstan-ignore-next-line
-        if ($this->parent_id !== null) {
+        if (null !== $this->parent_id) {
             return $this->parent->name; // @phpstan-ignore-line
         }
 

@@ -33,7 +33,7 @@ trait Mailables
 
     public static function buildMailable($instance, $type = 'call')
     {
-        if ($type === 'call') {
+        if ('call' === $type) {
             if (null !== self::handleMailableViewDataArgs($instance)) {
                 return Container::getInstance()->call([self::handleMailableViewDataArgs($instance), 'build']);
             }
@@ -59,13 +59,13 @@ trait Mailables
             DB::beginTransaction();
 
             $args = collect($params)->map(function ($param) {
-                if ($param->getType() !== null) {
+                if (null !== $param->getType()) {
                     if (class_exists($param->getType()->getName())) {
                         $parameters = [
                             'is_instance' => true,
                             'instance' => $param->getType()->getName(),
                         ];
-                    } elseif ($param->getType()->getName() === 'array') {
+                    } elseif ('array' === $param->getType()->getName()) {
                         $parameters = [
                             'is_array' => true,
                             'arg' => $param->getName(),
@@ -119,13 +119,13 @@ trait Mailables
                 if (! isset($tokens[$index][0])) {
                     continue;
                 }
-                if ($tokens[$index][0] === T_NAMESPACE) {
+                if (T_NAMESPACE === $tokens[$index][0]) {
                     $index += 2; // Skip namespace keyword and whitespace
                     while (isset($tokens[$index]) && is_array($tokens[$index])) {
                         $namespace .= $tokens[$index++][1];
                     }
                 }
-                if ($tokens[$index][0] === T_CLASS && $tokens[$index + 1][0] === T_WHITESPACE && $tokens[$index + 2][0] === T_STRING) {
+                if (T_CLASS === $tokens[$index][0] && T_WHITESPACE === $tokens[$index + 1][0] && T_STRING === $tokens[$index + 2][0]) {
                     $index += 2; // Skip class keyword and whitespace
 
                     [$name] = explode('.', $phpFile->getFilename());
@@ -196,7 +196,7 @@ trait Mailables
      */
     protected static function getMarkdownViewName($mailable)
     {
-        if ($mailable === null) {
+        if (null === $mailable) {
             return;
         }
 
@@ -263,7 +263,7 @@ trait Mailables
 
         foreach ($properties as $prop) {
             if ($prop->class === $data->getName() || $prop->class === get_parent_class($data->getName()) &&
-                get_parent_class($data->getName()) !== 'Illuminate\Mail\Mailable' && ! $prop->isStatic()) {
+                'Illuminate\Mail\Mailable' !== get_parent_class($data->getName()) && ! $prop->isStatic()) {
                 $allProps[] = $prop->name;
             }
         }

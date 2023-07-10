@@ -53,7 +53,7 @@ class Address extends Model
     {
         parent::boot();
 
-        static::creating(function ($address) {
+        self::creating(function ($address): void {
             if ($address->is_default) {
                 $address->user->addresses()->where('type', $address->type)->update([
                     'is_default' => false,
@@ -76,7 +76,7 @@ class Address extends Model
 
     public function isDefault(): bool
     {
-        return $this->is_default === true;
+        return true === $this->is_default;
     }
 
     public function user(): BelongsTo

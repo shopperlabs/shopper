@@ -45,7 +45,7 @@ class CreateMailable extends ModalComponent
             return;
         }
 
-        if (mb_strtolower($name) === 'mailable') {
+        if ('mailable' === mb_strtolower($name)) {
             $this->addError('name', __('You cannot use this name'));
 
             return;

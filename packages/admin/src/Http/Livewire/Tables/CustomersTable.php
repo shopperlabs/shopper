@@ -101,14 +101,14 @@ class CustomersTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $query, string $value) => $query->where('opt_in', $value === 'yes')),
+                ->filter(fn (Builder $query, string $value) => $query->where('opt_in', 'yes' === $value)),
             'verified' => Views\Filters\SelectFilter::make(__('shopper::layout.forms.label.email_verified'))
                 ->options([
                     '' => __('shopper::layout.forms.label.any'),
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $query, $verified) => $verified === 'yes' ? $query->whereNotNull('email_verified_at') : $query->whereNull('email_verified_at')),
+                ->filter(fn (Builder $query, $verified) => 'yes' === $verified ? $query->whereNotNull('email_verified_at') : $query->whereNull('email_verified_at')),
         ];
     }
 

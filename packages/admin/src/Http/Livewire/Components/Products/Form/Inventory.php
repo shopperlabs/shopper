@@ -17,8 +17,8 @@ use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class Inventory extends Component
 {
-    use WithPagination;
     use WithAttributes;
+    use WithPagination;
     use WithStock;
 
     public $product;

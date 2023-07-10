@@ -128,7 +128,7 @@ class ReviewsTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $query, string $value) => $query->where('approved', $value === 'yes')),
+                ->filter(fn (Builder $query, string $value) => $query->where('approved', 'yes' === $value)),
         ];
     }
 
@@ -150,7 +150,7 @@ class ReviewsTable extends DataTableComponent
     {
         return Review::query()
             ->with(['reviewrateable', 'reviewrateable.media', 'author'])
-            ->whereHasMorph('reviewrateable', config('shopper.models.product'), function (Builder $query) {
+            ->whereHasMorph('reviewrateable', config('shopper.models.product'), function (Builder $query): void {
                 $query->when(
                     $this->columnSearch['name'] ?? null,
                     fn (Builder $query, string $name) => $query->where('name', 'like', '%' . $name . '%')

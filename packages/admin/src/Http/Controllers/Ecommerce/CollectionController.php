@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Http\Controllers\ShopperBaseController;
 
-class CollectionController extends ShopperBaseController
+final class CollectionController extends ShopperBaseController
 {
     public function index(): View
     {
