@@ -52,5 +52,5 @@ it('can use blade heroicon as default type', function (): void {
     $item->setName('demo');
     $item->setIcon('heroicon-o-chevron-right');
 
-    expect($item->isBladeType())->toBeTrue();
+    expect($item->iconSvg())->toBeFalse();
 })->group('Traits');

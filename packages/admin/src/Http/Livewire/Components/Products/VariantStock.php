@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Products;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Core\Repositories\InventoryHistoryRepository;
@@ -17,7 +16,7 @@ class VariantStock extends Component
     use WithPagination;
     use WithStock;
 
-    public Model $product;
+    public $product;
 
     public function mount($variant): void
     {

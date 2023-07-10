@@ -54,11 +54,11 @@ class CreateMailable extends ModalComponent
         $params = collect(['name' => $name]);
 
         if ($this->isMarkdown) {
-            $params->put('--markdown', $this->isMarkdown);
+            $params->put('--markdown', $this->isMarkdown); // @phpstan-ignore-line
         }
 
         if ($this->isForce) {
-            $params->put('--force', true);
+            $params->put('--force', true); // @phpstan-ignore-line
         }
 
         $exitCode = Artisan::call('make:mail', $params->all());

@@ -2,23 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Sidebar\Presentation;
+namespace Shopper\Sidebar\Presentation;
 
-use Illuminate\Contracts\View\Factory;
-use Maatwebsite\Sidebar\Group;
+use Shopper\Sidebar\Contracts\Builder\Group;
+use Shopper\Sidebar\Presentation\View\GroupRenderer;
 
-final class ShopperGroupRenderer
+final class ShopperGroupRenderer extends GroupRenderer
 {
     protected string $view = 'shopper::sidebar.group';
 
-    public function __construct(protected Factory $factory)
-    {
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\View|void
-     */
-    public function render(Group $group)
+    public function render(Group $group): ?string
     {
         if ($group->isAuthorized()) {
             $items = [];
@@ -31,5 +24,7 @@ final class ShopperGroupRenderer
                 'items' => $items,
             ])->render();
         }
+
+        return null;
     }
 }

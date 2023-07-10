@@ -9,7 +9,7 @@ use Shopper\Sidebar\Contracts\Sidebar;
 use Shopper\Sidebar\Presentation\AbstractRenderer;
 use Shopper\Sidebar\Presentation\SidebarRenderer as BaseSidebarRenderer;
 
-final class SidebarRenderer extends AbstractRenderer implements BaseSidebarRenderer
+class SidebarRenderer extends AbstractRenderer implements BaseSidebarRenderer
 {
     protected string $view = 'sidebar::menu';
 

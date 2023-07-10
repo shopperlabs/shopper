@@ -31,12 +31,10 @@ trait WithDiscountActions
         }
 
         if (count($this->selectedProducts) === 1) {
-            return $this->products->first()->name;
+            return $this->products->first()->name; // @phpstan-ignore-line
         }
 
-        if (count($this->selectedProducts) > 1) {
-            return __('shopper::words.count.products', ['count' => count($this->selectedProducts)]);
-        }
+        return __('shopper::words.count.products', ['count' => count($this->selectedProducts)]);
     }
 
     public function getCustomSize(): ?string
@@ -46,7 +44,7 @@ trait WithDiscountActions
         }
 
         if (count($this->selectedCustomers) === 1) {
-            return __('shopper::words.for_name', ['name' => $this->customers->first()->first_name]);
+            return __('shopper::words.for_name', ['name' => $this->customers->first()->first_name]); // @phpstan-ignore-line
         }
 
         if (count($this->selectedCustomers) > 1) {

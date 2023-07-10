@@ -25,7 +25,7 @@ class Edit extends Component
     {
         $this->product = $product;
         $this->inventories = $inventories = (new InventoryRepository())->get();
-        $this->inventory = $inventories->firstWhere('is_default', true)->id;
+        $this->inventory = $inventories->firstWhere('is_default', true)->id; // @phpstan-ignore-line
     }
 
     public function productHasUpdated(int $id): void

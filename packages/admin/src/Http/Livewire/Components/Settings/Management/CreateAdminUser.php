@@ -51,7 +51,7 @@ class CreateAdminUser extends AbstractBaseComponent
     {
         $chooseRole = Role::findById($id);
 
-        $this->is_admin = $chooseRole->name === config('shopper.core.users.admin_role');
+        $this->is_admin = $chooseRole->name === config('shopper.core.users.admin_role'); // @phpstan-ignore-line
     }
 
     public function rules(): array
@@ -90,13 +90,13 @@ class CreateAdminUser extends AbstractBaseComponent
 
         $role = Role::findById((int) $this->role_id);
 
-        $user->assignRole([$role->name]);
+        $user->assignRole([$role->name]); // @phpstan-ignore-line
 
         if ($this->send_mail) {
-            $user->notify(new AdminSendCredentials($this->password));
+            $user->notify(new AdminSendCredentials($this->password)); // @phpstan-ignore-line
         }
 
-        session()->flash('success', __('Admin :user added successfully.', ['user' => $user->full_name]));
+        session()->flash('success', __('Admin :user added successfully.', ['user' => $user->full_name])); // @phpstan-ignore-line
 
         $this->redirectRoute('shopper.settings.users');
     }

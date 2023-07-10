@@ -19,13 +19,15 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function getIcon(): string;
 
-    public function setIcon(string $icon, string $type = 'blade'): self;
+    public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): self;
+
+    public function getIconClass(): string;
 
     public function getToggleIcon(): string;
 
     public function toggleIcon(string $icon): self;
 
-    public function isBladeType(): bool;
+    public function iconSvg(): bool;
 
     public function getUrl(): string;
 
@@ -56,4 +58,8 @@ interface Item extends Itemable, Authorizable, Routeable
     public function getItemClass(): string;
 
     public function setItemClass(string $class): self;
+
+    public function getParentItemClass(): string;
+
+    public function setParentItemClass(string $class): self;
 }

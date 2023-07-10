@@ -8,27 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
     protected $hidden = [
         'locked',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'value' => 'array',
         'locked' => 'boolean',

@@ -107,6 +107,7 @@ class AttributesTable extends DataTableComponent
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
                 ->filter(function (Builder $builder, string $value) {
+                    // @phpstan-ignore-next-line
                     match ($value) {
                         'yes' => $builder->where('is_searchable', true),
                         'no' => $builder->where('is_searchable', false),
@@ -119,6 +120,7 @@ class AttributesTable extends DataTableComponent
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
                 ->filter(
+                    // @phpstan-ignore-next-line
                     fn (Builder $builder, string $value) => match ($value) {
                         'yes' => $builder->where('is_filterable', true),
                         'no' => $builder->where('is_filterable', false),
@@ -131,6 +133,7 @@ class AttributesTable extends DataTableComponent
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
                 ->filter(
+                    // @phpstan-ignore-next-line
                     fn (Builder $builder, string $value) => match ($value) {
                         'yes' => $builder->where('is_enabled', true),
                         'no' => $builder->where('is_enabled', false),

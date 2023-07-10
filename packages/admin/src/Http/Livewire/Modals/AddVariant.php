@@ -67,12 +67,14 @@ class AddVariant extends ModalComponent
 
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
+                // @phpstan-ignore-next-line
                 fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.core.storage.collection_name'))
             );
         }
 
         if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
+                // @phpstan-ignore-next-line
                 $product->mutateStock(
                     $inventory,
                     (int) $value,

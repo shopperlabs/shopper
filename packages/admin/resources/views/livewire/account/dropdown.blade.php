@@ -1,9 +1,9 @@
 <x-shopper::dropdown align="left" width="56" customAlignmentClasses="right-1" containerClasses="relative" contentClasses="bg-white dark:bg-secondary-800 text-left">
     <x-slot name="trigger">
         <button class="max-w-xs flex items-center text-sm rounded-full overflow-hidden focus:outline-none hover:bg-secondary-50 dark:focus:bg-secondary-700 dark:hover:bg-secondary-800 lg:p-1.5 lg:rounded-md">
-            <img class="h-8 w-8 rounded-full" src="{{ $picture }}" alt="{{ $email }}" />
+            <img class="h-8 w-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
             <span class="hidden ml-3 text-secondary-900 dark:text-white text-sm leading-5 font-medium lg:block">
-                {{ $full_name }}
+                {{ $user->full_name }}
             </span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="hidden shrink-0 ml-1 h-5 w-5 text-secondary-400 lg:inline">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
@@ -17,7 +17,7 @@
                 {{ __('shopper::layout.account_dropdown.sign_in') }}
             </p>
             <p class="text-sm leading-5 font-medium text-secondary-900 dark:text-white truncate">
-                {{ $email }}
+                {{ $user->email }}
             </p>
         </div>
         @can('add_products')

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Events;
+namespace Shopper\Sidebar;
 
-use Maatwebsite\Sidebar\Menu;
+use Shopper\Sidebar\Contracts\Builder\Menu;
 
-class BuildingSidebar
+final class SidebarBuilder
 {
     public function __construct(protected Menu $menu)
     {

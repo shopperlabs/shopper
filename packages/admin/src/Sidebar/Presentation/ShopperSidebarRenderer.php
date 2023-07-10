@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Sidebar\Presentation;
+namespace Shopper\Sidebar\Presentation;
 
 use Illuminate\Contracts\View\Factory;
-use Maatwebsite\Sidebar\Presentation\SidebarRenderer;
-use Maatwebsite\Sidebar\Sidebar;
+use Illuminate\Contracts\View\View;
+use Shopper\Sidebar\Contracts\Sidebar;
+use Shopper\Sidebar\Presentation\SidebarRenderer as SidebarRendererContract;
 
-final class ShopperSidebarRenderer implements SidebarRenderer
+final class ShopperSidebarRenderer implements SidebarRendererContract
 {
     protected string $view = 'shopper::sidebar.menu';
 
@@ -16,10 +17,7 @@ final class ShopperSidebarRenderer implements SidebarRenderer
     {
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\View|void
-     */
-    public function render(Sidebar $sidebar)
+    public function render(Sidebar $sidebar): ?View
     {
         $menu = $sidebar->getMenu();
 
@@ -33,5 +31,7 @@ final class ShopperSidebarRenderer implements SidebarRenderer
                 'groups' => $groups,
             ]);
         }
+
+        return null;
     }
 }

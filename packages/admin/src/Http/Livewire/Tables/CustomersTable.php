@@ -119,6 +119,6 @@ class CustomersTable extends DataTableComponent
     {
         return (new UserRepository())->makeModel()->newQuery()
             ->whereHas('roles', fn (Builder $query) => $query->where('name', config('shopper.core.users.default_role')))
-            ->when($this->getAppliedFilterWithValue('search'), fn (Builder $query, $term) => $query->research($term));
+            ->when($this->getAppliedFilterWithValue('search'), fn (Builder $query, $term): Builder => $query->research($term)); // @phpstan-ignore-line
     }
 }

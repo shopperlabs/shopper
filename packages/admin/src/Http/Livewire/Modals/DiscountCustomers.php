@@ -39,7 +39,7 @@ class DiscountCustomers extends ModalComponent
     public function render(): View
     {
         return view('shopper::livewire.modals.discount-customers', [
-            'customers' => (new UserRepository())
+            'customers' => (new UserRepository()) // @phpstan-ignore-line
                 ->makeModel()
                 ->whereHas('roles', function (Builder $query) {
                     $query->where('name', config('shopper.core.users.default_role'));

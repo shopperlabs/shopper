@@ -2,29 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Sidebar\Presentation;
+namespace Shopper\Sidebar\Presentation;
 
-use Illuminate\Contracts\View\Factory;
-use Maatwebsite\Sidebar\Item;
-use Maatwebsite\Sidebar\Presentation\ActiveStateChecker;
+use Shopper\Sidebar\Contracts\Builder\Item;
+use Shopper\Sidebar\Presentation\View\ItemRenderer;
 
-final class ShopperItemRenderer
+final class ShopperItemRenderer extends ItemRenderer
 {
     protected string $view = 'shopper::sidebar.item';
 
-    public function __construct(protected Factory $factory)
-    {
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\View|void
-     */
-    public function render(Item $item)
+    public function render(Item $item): ?string
     {
         if ($item->isAuthorized()) {
             $items = [];
             foreach ($item->getItems() as $child) {
-                $items[] = (new self($this->factory))->render($child);
+                $items[] = (new ShopperItemRenderer($this->factory))->render($child);
             }
 
             $badges = [];
@@ -45,5 +37,7 @@ final class ShopperItemRenderer
                 'active' => (new ActiveStateChecker())->isActive($item),
             ])->render();
         }
+
+        return null;
     }
 }

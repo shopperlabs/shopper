@@ -21,7 +21,11 @@ class DefaultAppend implements Append, Serializable
 
     protected string $icon = 'heroicon-s-plus-small';
 
+    protected string $iconClass = '';
+
     protected string $type = 'blade';
+
+    protected ?string $class = null;
 
     protected array $cacheables = [
         'name',
@@ -46,15 +50,39 @@ class DefaultAppend implements Append, Serializable
         return $this;
     }
 
+    public function getClass(): string
+    {
+        return $this->class;
+    }
+
+    public function setClass(string $className): Append
+    {
+        $this->class = $className;
+
+        return $this;
+    }
+
     public function getIcon(): string
     {
         return $this->icon;
     }
 
-    public function setIcon(string $icon): Append
+    public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): Append
     {
         $this->icon = $icon;
+        $this->type = $type;
+        $this->iconClass = $iconClass;
 
         return $this;
+    }
+
+    public function getIconClass(): string
+    {
+        return $this->iconClass;
+    }
+
+    public function iconSvg(): bool
+    {
+        return $this->type === 'svg';
     }
 }

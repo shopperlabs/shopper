@@ -14,18 +14,8 @@ class Channel extends Model
     use HasFactory;
     use HasSlug;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'is_default' => 'boolean',
     ];

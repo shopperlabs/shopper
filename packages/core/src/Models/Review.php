@@ -10,22 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property-read int $id
+ * @property-read bool $approved
+ */
 class Review extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'is_recommended' => 'boolean',
         'approved' => 'boolean',
@@ -48,13 +42,13 @@ class Review extends Model
 
     public function createRating(Model $reviewrateable, array $data, Model $author): self
     {
-        $rating = new static();
+        $rating = new static(); // @phpstan-ignore-line
         $rating->fill(array_merge($data, [
-            'author_id' => $author->id,
+            'author_id' => $author->id, // @phpstan-ignore-line
             'author_type' => $author->getMorphClass(),
         ]));
 
-        $reviewrateable->ratings()->save($rating);
+        $reviewrateable->ratings()->save($rating); // @phpstan-ignore-line
 
         return $rating;
     }

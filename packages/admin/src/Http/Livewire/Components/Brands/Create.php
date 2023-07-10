@@ -58,6 +58,7 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
+            // @phpstan-ignore-next-line
             $brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 

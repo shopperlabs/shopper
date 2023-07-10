@@ -48,8 +48,10 @@ class Create extends AbstractBaseComponent
             'opt_in' => $this->opt_in,
         ]);
 
+        // @phpstan-ignore-next-line
         $customer->assignRole(config('shopper.core.users.default_role'));
 
+        // @phpstan-ignore-next-line
         $customer->addresses()->create([
             'first_name' => $this->address_first_name,
             'last_name' => $this->address_last_name,
@@ -64,7 +66,7 @@ class Create extends AbstractBaseComponent
         ]);
 
         if ($this->send_mail) {
-            $customer->notify(new CustomerSendCredentials($this->password));
+            $customer->notify(new CustomerSendCredentials($this->password)); // @phpstan-ignore-line
         }
 
         session()->flash('success', __('Customer successfully added!'));

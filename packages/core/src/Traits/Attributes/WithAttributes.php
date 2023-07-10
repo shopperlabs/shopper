@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Traits\Attributes;
 
+use Illuminate\Database\Eloquent\Collection;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\ProductAttribute;
 
@@ -18,7 +19,7 @@ trait WithAttributes
         }
     }
 
-    public function getAttributes(): \Illuminate\Database\Eloquent\Collection|array
+    public function getAttributes(): Collection
     {
         return Attribute::query()
             ->whereNotIn('id', $this->productAttributes->pluck('attribute_id')->toArray())
@@ -26,7 +27,7 @@ trait WithAttributes
             ->get();
     }
 
-    public function getProductAttributes(): \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+    public function getProductAttributes(): \Illuminate\Support\Collection
     {
         return ProductAttribute::query()
             ->with('values')

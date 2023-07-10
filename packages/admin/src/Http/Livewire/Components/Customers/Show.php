@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Customers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Show extends AbstractBaseComponent
 {
-    public Model $customer;
+    public $customer;
 
     public int $user_id;
 
@@ -26,7 +25,7 @@ class Show extends AbstractBaseComponent
 
     protected $listeners = ['profileUpdate'];
 
-    public function mount(Model $customer): void
+    public function mount($customer): void
     {
         $this->customer = $customer->load('addresses');
         $this->user_id = $customer->id;

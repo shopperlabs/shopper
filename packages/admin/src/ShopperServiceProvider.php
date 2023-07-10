@@ -9,13 +9,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Notifications\Messages\MailMessage;
 use Livewire\Livewire;
-use Shopper\Core\Events\BuildingSidebar;
+use Shopper\Core\Shopper;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
-use Shopper\Events\DashboardSidebar;
-use Shopper\Events\OrderSidebar;
-use Shopper\Events\ShopSidebar;
-use Shopper\Http\Composers\GlobalComposer;
-use Shopper\Http\Composers\SidebarCreator;
 use Shopper\Http\Livewire\Pages;
 use Shopper\Http\Middleware\Authenticate;
 use Spatie\LaravelPackageTools\Package;
@@ -67,8 +62,8 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         Builder::macro(
             'search',
-            fn ($field, $string) => $string
-                ? $this->where($field, 'like', '%' . $string . '%')
+            fn (string $field, mixed $string): Builder => $string
+                ? $this->where($field, 'like', '%' . $string . '%') // @phpstan-ignore-line
                 : $this
         );
     }
@@ -77,11 +72,11 @@ final class ShopperServiceProvider extends PackageServiceProvider
     {
         $this->registerConfigFiles();
         $this->registerDatabase();
-        $this->registerViews();
 
-        $this->app['events']->listen(BuildingSidebar::class, DashboardSidebar::class);
-        $this->app['events']->listen(BuildingSidebar::class, ShopSidebar::class);
-        $this->app['events']->listen(BuildingSidebar::class, OrderSidebar::class);
+        $this->loadViewsFrom($this->root . '/resources/views', 'shopper');
+
+        $this->app->register(SidebarServiceProvider::class);
+        $this->app->scoped('shopper', fn () => new Shopper());
     }
 
     public function bootModelRelationName(): void
@@ -116,13 +111,5 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'auth.password-reset' => Pages\Auth\ResetPassword::class,
             'initialize' => Pages\Initialization::class,
         ];
-    }
-
-    public function registerViews(): void
-    {
-        $this->loadViewsFrom($this->root . '/resources/views', 'shopper');
-
-        view()->composer('*', GlobalComposer::class);
-        view()->creator('shopper::components.layouts.app.sidebar.secondary', SidebarCreator::class);
     }
 }

@@ -1,4 +1,4 @@
-<li @class([$group->getGroupClass()])>
+<li @class([$group->getClass()])>
     @if($group->shouldShowHeading())
         <h5 @class([$group->getHeadingClass()])>{{ $group->getName() }}</h5>
     @endif

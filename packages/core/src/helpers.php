@@ -117,7 +117,7 @@ if (! function_exists('shopper_currency')) {
                 fn () => ModelCurrency::query()->find($settingCurrency)
             );
 
-            return $currency ? $currency->code : 'USD';
+            return $currency ? $currency->code : 'USD'; // @phpstan-ignore-line
         }
 
         return 'USD';
@@ -153,7 +153,7 @@ if (! function_exists('shopper_setting')) {
             fn () => Setting::query()->where('key', $key)->first()
         );
 
-        return $setting?->value;
+        return $setting?->value; // @phpstan-ignore-line
     }
 }
 

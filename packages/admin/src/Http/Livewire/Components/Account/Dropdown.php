@@ -5,35 +5,25 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Account;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Shopper\Traits\HasAuthenticated;
 
 class Dropdown extends Component
 {
-    public string $full_name = '';
+    use HasAuthenticated;
 
-    public string $email = '';
-
-    public ?string $picture = null;
+    public $user;
 
     protected $listeners = ['updatedProfile'];
 
     public function mount(): void
     {
-        $user = Auth::user();
-
-        $this->full_name = $user->full_name;
-        $this->picture = $user->picture;
-        $this->email = $user->email;
+        $this->user = $this->getUser();
     }
 
     public function updatedProfile(): void
     {
-        $user = Auth::user();
-
-        $this->full_name = $user->full_name;
-        $this->picture = $user->picture;
-        $this->email = $user->email;
+        $this->user = $this->getUser();
     }
 
     public function render(): View

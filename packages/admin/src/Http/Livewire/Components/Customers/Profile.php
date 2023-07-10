@@ -6,13 +6,12 @@ namespace Shopper\Http\Livewire\Components\Customers;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Profile extends Component
 {
-    public Model $customer;
+    public $customer;
 
     public int $customer_id;
 

@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Shopper\Sidebar\Presentation\View;
 
-use Illuminate\Contracts\View\View;
 use Shopper\Sidebar\Contracts\Builder\Item;
 use Shopper\Sidebar\Presentation\AbstractRenderer;
 use Shopper\Sidebar\Presentation\ActiveStateChecker;
 
-final class ItemRenderer extends AbstractRenderer
+class ItemRenderer extends AbstractRenderer
 {
     protected string $view = 'sidebar::item';
 
-    public function render(Item $item): ?View
+    public function render(Item $item): ?string
     {
         if ($item->isAuthorized()) {
             $items = [];

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Sidebar\Domain;
 
 use Closure;
-use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Collection;
 use Serializable;
 use Shopper\Sidebar\Contracts\Builder\Append;
@@ -35,6 +35,8 @@ class DefaultItem implements Item, Serializable
 
     protected string $icon = 'heroicon-o-chevron-right';
 
+    protected string $iconClass = '';
+
     protected string $type = 'blade';
 
     protected string $toggleIcon = 'heroicon-o-chevron-down';
@@ -44,6 +46,8 @@ class DefaultItem implements Item, Serializable
     protected bool $newTab = false;
 
     protected string $itemClass = '';
+
+    protected string $parentItemClass = '';
 
     protected array $cacheables = [
         'name',
@@ -94,12 +98,18 @@ class DefaultItem implements Item, Serializable
         return $this->icon;
     }
 
-    public function setIcon(string $icon, string $type = 'blade'): Item
+    public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): Item
     {
         $this->icon = $icon;
         $this->type = $type;
+        $this->iconClass = $iconClass;
 
         return $this;
+    }
+
+    public function getIconClass(): string
+    {
+        return $this->iconClass;
     }
 
     public function getToggleIcon(): string
@@ -114,9 +124,9 @@ class DefaultItem implements Item, Serializable
         return $this;
     }
 
-    public function isBladeType(): bool
+    public function iconSvg(): bool
     {
-        return $this->type === 'blade';
+        return $this->type === 'svg';
     }
 
     public function badge(mixed $callbackOrValue = null, string $className = null): Badge
@@ -221,6 +231,18 @@ class DefaultItem implements Item, Serializable
     public function setItemClass(string $class): self
     {
         $this->itemClass = $class;
+
+        return $this;
+    }
+
+    public function getParentItemClass(): string
+    {
+        return $this->parentItemClass;
+    }
+
+    public function setParentItemClass(string $class): self
+    {
+        $this->parentItemClass = $class;
 
         return $this;
     }

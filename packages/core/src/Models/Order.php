@@ -13,33 +13,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Traits\HasPrice;
 
+/**
+ * @property-read int $id
+ * @property-read \App\Models\User $customer
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
+ * @property-read string $status
+ * @property-read int $shipping_total
+ */
 class Order extends Model
 {
     use HasFactory;
     use HasPrice;
     use SoftDeletes;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'status' => OrderStatus::class,
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'total',
     ];

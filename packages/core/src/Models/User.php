@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,6 +14,13 @@ use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasProfilePhoto;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @property-read int $id
+ * @property-read string|null $first_name
+ * @property-read string $last_name
+ * @property-read Carbon|null $email_verified_at
+ * @property-read Carbon|null $birth_date
+ */
 class User extends Authenticatable
 {
     use CanHaveDiscount;
@@ -21,18 +29,8 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var bool|string[]
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -42,22 +40,12 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
         'birth_date' => 'datetime',
     ];
 
-    /**
-     * The dynamic attributes from mutators that should be returned with the user object.
-     *
-     * @var array
-     */
     protected $appends = [
         'full_name',
         'picture',

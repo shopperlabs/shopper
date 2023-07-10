@@ -11,18 +11,8 @@ class Carrier extends Model
 {
     use HasSlug;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'is_enabled' => 'boolean',
     ];

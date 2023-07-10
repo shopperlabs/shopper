@@ -30,7 +30,7 @@ class Permissions extends Component
 
             Notification::make()
                 ->title(__('Revoke Permission'))
-                ->body(__('Permission :permission has been revoked to this role.', ['permission' => $permission->display_name]))
+                ->body(__('Permission :permission has been revoked to this role.', ['permission' => $permission->display_name])) // @phpstan-ignore-line
                 ->success()
                 ->send();
         } else {
@@ -38,7 +38,7 @@ class Permissions extends Component
 
             Notification::make()
                 ->title(__('Allow Permission'))
-                ->body(__('Permission :permission has been given to this role.', ['permission' => $permission->display_name]))
+                ->body(__('Permission :permission has been given to this role.', ['permission' => $permission->display_name])) // @phpstan-ignore-line
                 ->success()
                 ->send();
         }

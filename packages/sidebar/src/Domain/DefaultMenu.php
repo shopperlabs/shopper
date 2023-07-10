@@ -40,9 +40,7 @@ class DefaultMenu implements Menu, Serializable
             $group->setName($name);
         }
 
-        if ($callback) {
-            $this->call($callback, $group);
-        }
+        $this->call($callback, $group);
 
         $this->addGroup($group);
 

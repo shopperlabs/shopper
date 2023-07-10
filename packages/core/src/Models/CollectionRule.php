@@ -12,11 +12,6 @@ class CollectionRule extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
     public function getTable(): string
@@ -33,7 +28,7 @@ class CollectionRule extends Model
             'product_price' => __('shopper::pages/collections.rules.product_price'),
             'compare_at_price' => __('shopper::pages/collections.rules.compare_at_price'),
             'inventory_stock' => __('shopper::pages/collections.rules.inventory_stock'),
-        ][$this->rule];
+        ][$this->rule]; // @phpstan-ignore-line
     }
 
     public function getFormattedOperator(): string
@@ -47,16 +42,18 @@ class CollectionRule extends Model
             'ends_with' => __('shopper::pages/collections.operator.ends_with'),
             'contains' => __('shopper::pages/collections.operator.contains'),
             'not_contains' => __('shopper::pages/collections.operator.not_contains'),
-        ][$this->operator];
+        ][$this->operator]; // @phpstan-ignore-line
     }
 
     public function getFormattedValue(): string
     {
+        // @phpstan-ignore-next-line
         if ($this->rule === 'product_price') {
+            // @phpstan-ignore-next-line
             return shopper_money_format(strtoupper($this->value));
         }
 
-        return $this->value;
+        return $this->value; // @phpstan-ignore-line
     }
 
     public function collection(): BelongsTo

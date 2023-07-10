@@ -20,11 +20,15 @@ interface Group extends Itemable, Authorizable
 
     public function shouldShowHeading(): bool;
 
-    public function getClass(): string;
+    public function getClass(): ?string;
 
     public function setClass(string $class): self;
 
-    public function getGroupItemsClass(): string;
+    public function getHeadingClass(): ?string;
+
+    public function setHeadingClass(string $class): self;
+
+    public function getGroupItemsClass(): ?string;
 
     public function setGroupItemsClass(string $class): self;
 

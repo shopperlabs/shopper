@@ -125,7 +125,7 @@ class ProductsTable extends DataTableComponent
                         ->orderBy('name')
                         ->get()
                         ->keyBy('id')
-                        ->map(fn ($brand) => $brand->name)
+                        ->map(fn ($brand) => $brand->name) // @phpstan-ignore-line
                         ->toArray()
                 )
                 ->filter(

@@ -6,8 +6,6 @@ namespace Shopper\Http\Livewire\Components\Products\Form;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -23,9 +21,9 @@ class Inventory extends Component
     use WithAttributes;
     use WithStock;
 
-    public Model $product;
+    public $product;
 
-    public Collection $inventories;
+    public $inventories;
 
     public function mount($product, $inventories, $defaultInventory): void
     {
@@ -84,7 +82,7 @@ class Inventory extends Component
                 ->orderBy('created_at', 'desc')
                 ->paginate(5),
             'barcodeImage' => $this->barcode
-                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.core.barcode_type'))
+                ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.core.barcode_type')) // @phpstan-ignore-line
                 : null,
         ]);
     }

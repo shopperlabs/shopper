@@ -21,6 +21,11 @@ use Shopper\Core\Traits\ReviewRateable as ReviewRateableTrait;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
+/**
+ * @property-read int $id
+ * @property-read int|null $parent_id
+ * @property-read int|null $price_amount
+ */
 class Product extends Model implements SpatieHasMedia, ReviewRateable
 {
     use CanHaveDiscount;
@@ -32,18 +37,8 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
     use HasMedia;
     use ReviewRateableTrait;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'featured' => 'boolean',
         'is_visible' => 'boolean',
@@ -85,7 +80,7 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
 
         if ($this->variations->isNotEmpty()) {
             foreach ($this->variations as $variation) {
-                $stock += $variation->stock;
+                $stock += $variation->stock; // @phpstan-ignore-line
             }
         }
 

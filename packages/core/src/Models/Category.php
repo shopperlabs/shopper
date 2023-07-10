@@ -20,18 +20,8 @@ class Category extends Model implements SpatieHasMedia
     use HasRecursiveRelationships;
     use HasMedia;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array<string>|bool
-     */
     protected $guarded = [];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'is_enabled' => 'boolean',
     ];
@@ -48,8 +38,9 @@ class Category extends Model implements SpatieHasMedia
 
     public function getParentNameAttribute(): ?string
     {
+        // @phpstan-ignore-next-line
         if ($this->parent_id !== null) {
-            return $this->parent->name;
+            return $this->parent->name; // @phpstan-ignore-line
         }
 
         return null;

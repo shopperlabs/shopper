@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Categories;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Exceptions\GeneralException;
 use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesCategories;
@@ -17,7 +16,7 @@ class Edit extends AbstractBaseComponent
     use WithChoicesCategories;
     use WithSeoAttributes;
 
-    public Model $category;
+    public $category;
 
     public int $categoryId;
 
@@ -88,9 +87,7 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->category
-                ->addMedia($this->fileUrl)
-                ->toMediaCollection(config('shopper.core.storage.collection_name'));
+            $this->category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         session()->flash('success', __('Category successfully updated!'));

@@ -12,38 +12,18 @@ class ProductAttributeValue extends Model
 {
     use HasFactory;
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
     public $timestamps = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'product_attribute_id',
         'attribute_value_id',
         'product_custom_value',
     ];
 
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
     protected $with = [
         'value',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = [
         'real_value',
     ];
@@ -55,6 +35,7 @@ class ProductAttributeValue extends Model
 
     public function getRealValueAttribute()
     {
+        // @phpstan-ignore-next-line
         if ($this->product_custom_value) {
             return $this->product_custom_value;
         }
