@@ -7,7 +7,8 @@
         href="{{ $item->getUrl() }}"
         @class([
             $item->getItemClass(),
-            'current' => $active,
+            $item->getActiveClass() => $active,
+            $item->getInactiveClass() => ! $active,
         ])
         @if($item->getNewTab())target="_blank"@endif
     >
@@ -17,15 +18,17 @@
             @svg($item->getIcon(), $item->getIconClass())
         @endif
 
-        <span class="truncate">{{ $item->getName() }}</span>
+        <span class="item-name">{{ $item->getName() }}</span>
 
         @foreach($badges as $badge)
             {!! $badge !!}
         @endforeach
 
-        @if($item->hasItems())
-            {{ svg($item->getToggleIcon()) }}
-        @endif
+        <span class="toggle">
+            @if($item->hasItems())
+                @svg($item->getToggleIcon(), 'h-5 w-5')
+            @endif
+        </span>
     </a>
 
     @foreach($appends as $append)

@@ -39,13 +39,17 @@ class DefaultItem implements Item, Serializable
 
     protected string $type = 'blade';
 
-    protected string $toggleIcon = 'heroicon-o-chevron-down';
+    protected string $toggleIcon = 'heroicon-o-plus-sm';
 
     protected bool $activeWhen = false;
 
     protected bool $newTab = false;
 
     protected string $itemClass = '';
+
+    protected string $activeClass = '';
+
+    protected string $inactiveClass = '';
 
     protected string $parentItemClass = '';
 
@@ -231,6 +235,30 @@ class DefaultItem implements Item, Serializable
     public function setItemClass(string $class): self
     {
         $this->itemClass = $class;
+
+        return $this;
+    }
+
+    public function getActiveClass(): string
+    {
+        return $this->activeClass;
+    }
+
+    public function setActiveClass(string $class): self
+    {
+        $this->activeClass = $class;
+
+        return $this;
+    }
+
+    public function getInactiveClass(): string
+    {
+        return $this->inactiveClass;
+    }
+
+    public function setInactiveClass(string $class): self
+    {
+        $this->inactiveClass = $class;
 
         return $this;
     }
