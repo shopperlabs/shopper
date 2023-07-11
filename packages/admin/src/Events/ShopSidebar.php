@@ -81,8 +81,9 @@ final class ShopSidebar extends AbstractAdminSidebar
                     $item->weight(1);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_products') || $this->user->hasPermissionTo('browse_attributes'));
                     $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
+                    $item->setActiveClass('text-secondary-900 bg-secondary-100 dark:bg-secondary-700/50 dark:text-white');
                     $item->setInactiveClass('text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-700');
-                    $item->route('shopper.settings.attributes.index');
+                    $item->route('shopper.attributes.index');
                     $item->setIcon(icon: 'heroicon-o-clipboard-list', iconClass: 'w-5 h-5 mr-2');
                 });
             });

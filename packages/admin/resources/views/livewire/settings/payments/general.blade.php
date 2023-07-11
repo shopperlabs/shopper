@@ -12,11 +12,11 @@
     </x-shopper::breadcrumb>
 
     <div class="mt-3 relative pb-5 border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
-        <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
+        <div class="space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0">
             <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
                 {{ __('shopper::pages/settings.payment.title') }}
             </h3>
-            <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
+            <div class="flex space-x-3 lg:absolute lg:top-3 lg:right-0">
                 <span class="shadow-sm rounded-md">
                     <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-payment-method')" type="button">
                         {{ __('shopper::pages/settings.payment.create_payment') }}
@@ -75,7 +75,7 @@
                                     <x-shopper::tables.table-head>
                                         {{ __('shopper::layout.forms.label.website') }}
                                     </x-shopper::tables.table-head>
-                                    <x-shopper::tables.table-head class="hidden md:table-cell text-right">
+                                    <x-shopper::tables.table-head class="hidden lg:table-cell text-right">
                                         {{ __('shopper::layout.forms.label.updated_at') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="pr-6 text-right" />
@@ -109,7 +109,7 @@
                                                 </span>
                                             </div>
                                         </td>
-                                        <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5">
+                                        <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5">
                                             @if($method->link_url)
                                                 <a href="{!! starts_with($method->link_url, ['http://', 'https://']) ? $method->link_url : "https://{$method->link_url}" !!}" target="_blank" class="inline-flex items-center text-secondary-500 dark:text-secondary-400 hover:text-secondary-400 dark:hover:text-secondary-300 font-medium text-sm leading-5">
                                                     {{ $method->link_url }}
@@ -121,7 +121,7 @@
                                                 <span class="inline-flex h-0.5 rounded w-6 bg-secondary-700 dark:bg-secondary-500"></span>
                                             @endif
                                         </td>
-                                        <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 text-right dark:text-secondary-400">
+                                        <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 text-right dark:text-secondary-400">
                                             <time datetime="{{ $method->created_at->format('Y-m-d') }}" class="capitalize">{{ $method->created_at->formatLocalized('%d %B, %Y') }}</time>
                                         </td>
                                         <td class="pr-6">

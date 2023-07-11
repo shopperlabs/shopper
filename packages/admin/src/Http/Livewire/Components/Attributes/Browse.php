@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Http\Livewire\Components\Settings\Attributes;
+namespace Shopper\Http\Livewire\Components\Attributes;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -12,7 +12,7 @@ class Browse extends Component
 {
     public function render(): View
     {
-        return view('shopper::livewire.settings.attributes.browse', [
+        return view('shopper::livewire.attributes.browse', [
             'total' => Attribute::query()->count(),
         ]);
     }

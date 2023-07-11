@@ -15,7 +15,7 @@
         <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" :title="__('shopper::layout.sidebar.customers')" />
     </x-shopper::breadcrumb>
 
-    <div class="mt-5 md:flex md:items-center md:justify-between relative z-20">
+    <div class="mt-5 lg:flex lg:items-center lg:justify-between relative z-20">
         <div class="flex-1 min-w-0">
             <div class="flex items-start">
                 <div class="shrink-0 h-12 w-12">
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="hidden md:flex mt-4 flex md:mt-0 md:ml-4 space-x-2">
+        <div class="hidden lg:flex mt-4 flex lg:mt-0 lg:ml-4 space-x-2">
             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
                 <div>
                     <button @click="open = !open" class="flex items-center text-secondary-400 hover:text-secondary-500 focus:outline-none focus:text-secondary-500" aria-label="Options" id="options-menu" aria-haspopup="true" x-bind:aria-expanded="open">

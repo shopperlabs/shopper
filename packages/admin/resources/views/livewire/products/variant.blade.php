@@ -13,7 +13,7 @@
     </x-shopper::breadcrumb>
     <div class="relative z-30 pb-5 mt-3 border-b bg-secondary-100 border-secondary-200 dark:bg-secondary-900 dark:border-secondary-700">
         <div class="space-y-4">
-            <div class="space-y-3 md:flex md:items-start md:justify-between md:space-y-0">
+            <div class="space-y-3 lg:flex lg:items-start lg:justify-between lg:space-y-0">
                 <div class="flex items-center flex-1 min-w-0 space-x-3">
                     <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
                         {{ $variant->name }}
@@ -39,15 +39,15 @@
     </div>
 
     <div class="mt-6">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::pages/products.variants.variant_information') }}
                     </h3>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
                 <div class="overflow-hidden rounded-md shadow">
                     <div class="px-4 py-5 bg-white sm:p-6 dark:bg-secondary-800">
                         <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
@@ -96,15 +96,15 @@
     <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::words.pricing') }}
                     </h3>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
                 <div class="overflow-hidden rounded-md shadow">
                     <div class="px-4 py-5 bg-white sm:p-6 dark:bg-secondary-800">
                         <div class="grid gap-4 sm:grid-cols-4 sm:gap-6">
@@ -155,15 +155,15 @@
     <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::words.inventory') }}
                     </h3>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
                 <div class="overflow-hidden bg-white rounded-md shadow dark:bg-secondary-800">
                     <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         <div class="px-4 py-5 sm:p-6">

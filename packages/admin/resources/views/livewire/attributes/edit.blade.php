@@ -7,12 +7,12 @@
         })
    "
 >
-    <x-shopper::breadcrumb :back="route('shopper.settings.attributes.index')">
+    <x-shopper::breadcrumb :back="route('shopper.attributes.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.attributes.index')" :title="__('shopper::words.attributes')" />
+        <x-shopper::breadcrumb.link :link="route('shopper.attributes.index')" :title="__('shopper::words.attributes')" />
     </x-shopper::breadcrumb>
 
-    <div class="mt-3 pb-5 border-b border-secondary-200 space-y-3 md:flex md:items-center md:justify-between md:space-y-0 dark:border-secondary-700">
+    <div class="mt-3 pb-5 border-b border-secondary-200 space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0 dark:border-secondary-700">
         <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
             {{ $name }}
         </h3>

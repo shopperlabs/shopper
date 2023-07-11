@@ -44,13 +44,6 @@ return [
             'permission' => null,
         ],
         [
-            'name' => 'Attributes',
-            'description' => 'Manage additional attributes for your products.',
-            'icon' => 'heroicon-o-clipboard-list',
-            'route' => 'shopper.settings.attributes.index',
-            'permission' => null,
-        ],
-        [
             'name' => 'Shipping and delivery',
             'description' => 'Manage how you ship orders to customers.',
             'icon' => 'heroicon-o-truck',

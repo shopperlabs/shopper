@@ -1,6 +1,6 @@
 <div>
-    <div class="md:grid md:grid-cols-3 md:gap-6">
-        <div class="md:col-span-1">
+    <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+        <div class="lg:col-span-1">
             <div class="px-4 sm:px-0">
                 <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                     {{ __('shopper::words.shipping') }}
@@ -10,7 +10,7 @@
                 </p>
             </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="mt-5 lg:mt-0 lg:col-span-2">
             <div class="shadow sm:rounded-md sm:overflow-hidden">
                 <div class="px-4 py-5 bg-white dark:bg-secondary-800 sm:px-5 space-y-4">
                     <div class="relative flex items-start">
@@ -44,8 +44,8 @@
         <x-shopper::separator />
 
         <div class="mt-10 sm:mt-0">
-            <div class="md:grid md:grid-cols-3 md:gap-6">
-                <div class="md:col-span-1">
+            <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+                <div class="lg:col-span-1">
                     <div class="px-4 sm:px-0">
                         <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                             {{ __('shopper::pages/products.shipping.package_dimension') }}
@@ -55,7 +55,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="mt-5 md:mt-0 md:col-span-2">
+                <div class="mt-5 lg:mt-0 lg:col-span-2">
                     <div class="bg-white dark:bg-secondary-800 shadow sm:rounded-md sm:overflow-hidden p-4 sm:p-5">
                         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 sm:gap-y-4">
                             <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.width')">

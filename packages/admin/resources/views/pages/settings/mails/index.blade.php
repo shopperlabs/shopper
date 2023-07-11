@@ -17,7 +17,7 @@
         }"
         class="sm:-mx-8"
     >
-        <div class="mt-3 bg-secondary-100 z-30 relative pb-5 border-b border-secondary-200 md:flex md:items-center md:justify-between dark:bg-secondary-900 dark:border-secondary-700">
+        <div class="mt-3 bg-secondary-100 z-30 relative pb-5 border-b border-secondary-200 lg:flex lg:items-center lg:justify-between dark:bg-secondary-900 dark:border-secondary-700">
             <div class="flex-1 min-w-0 sm:px-8">
                 <h2 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
                     {{ __('shopper::pages/settings.mailable.email_config') }}

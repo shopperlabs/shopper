@@ -21,7 +21,7 @@
 
     <div class="sticky z-30 pb-5 mt-3 bg-secondary-100 dark:bg-secondary-900 sm:pb-0 top-4 sm:top-2 sm:-mx-8">
         <div class="space-y-4 sm:px-8">
-            <div class="space-y-3 md:flex md:items-start md:justify-between md:space-y-0">
+            <div class="space-y-3 lg:flex lg:items-start lg:justify-between lg:space-y-0">
                 <div class="flex-1 min-w-0">
                     <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
                         {{ $product->name }}

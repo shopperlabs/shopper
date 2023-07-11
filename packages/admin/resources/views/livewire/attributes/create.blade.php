@@ -1,25 +1,18 @@
-<div>
-    <x-shopper::breadcrumb :back="route('shopper.settings.attributes.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.attributes.index')" :title="__('shopper::words.attributes')" />
+<x-shopper::container>
+    <x-shopper::breadcrumb :back="route('shopper.attributes.index')" :current="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.attribute'))])">
+        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-shopper::breadcrumb.link :link="route('shopper.attributes.index')" :title="__('shopper::words.attributes')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="mt-3">
+    <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.attribute'))]) }}
         </x-slot>
-
-        <x-slot name="action">
-            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
-                <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('shopper::layout.forms.actions.save') }}
-            </x-shopper::buttons.primary>
-        </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-6 grid sm:grid-cols-6 gap-4 sm:gap-6">
+    <div class="mt-8 grid sm:grid-cols-6 gap-4 sm:gap-6">
         <div class="sm:col-span-4">
-            <div class="bg-white rounded-lg shadow p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-secondary-800">
+            <div class="bg-white rounded-lg shadow ring-1 ring-secondary-200 dark:ring-secondary-700 p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-secondary-800">
                 <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
                     <x-shopper::forms.input wire:model="name" id="name" type="text" autocomplete="off" />
                 </x-shopper::forms.group>
@@ -69,7 +62,7 @@
         </div>
         <div class="sm:col-span-2">
             <aside class="sticky top-6 space-y-5">
-                <div class="bg-white rounded-md shadow overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
+                <div class="bg-white rounded-lg shadow ring-1 ring-secondary-200 dark:ring-secondary-700 overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.slug')" for="slug" class="p-4 sm:p-5" :error="$errors->first('slug')" isRequired>
                         <x-shopper::forms.input wire:model="slug" id="slug" type="text" autocomplete="off" />
                     </x-shopper::forms.group>
@@ -93,4 +86,13 @@
             </aside>
         </div>
     </div>
-</div>
+
+    <div class="mt-6 border-t border-secondary-200 dark:border-secondary-700 pt-5 pb-10">
+        <div class="flex justify-end">
+            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
+                <x-shopper::loader wire:loading wire:target="store" class="text-white" />
+                {{ __('shopper::layout.forms.actions.save') }}
+            </x-shopper::buttons.primary>
+        </div>
+    </div>
+</x-shopper::container>

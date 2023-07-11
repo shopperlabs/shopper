@@ -1,17 +1,17 @@
-<div>
-    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+<x-shopper::container>
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('Staff & permissions')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="mt-3">
+    <x-shopper::heading class="mt-5">
         <x-slot name="title">
             {{ __('shopper::pages/settings.roles_permissions.header_title') }}
         </x-slot>
     </x-shopper::heading>
 
     <div class="mt-8 pb-10">
-        <div class="bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg shadow-md overflow-hidden">
+        <div class="bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow overflow-hidden">
             <div class="flex items-center">
                 <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('shopper::pages/settings.roles_permissions.role_available') }}
@@ -24,9 +24,9 @@
             <p class="mt-3 text-base leading-6 text-secondary-500 dark:text-secondary-400">
                 {{ __('shopper::pages/settings.roles_permissions.role_available_summary') }}
             </p>
-            <div class="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach($roles as $role)
-                    <a href="{{ route('shopper.settings.user.role', $role) }}" class="group flex flex-col justify-between border border-secondary-200 dark:border-secondary-700 p-4 rounded-md overflow-hidden hover:shadow-md">
+                    <a href="{{ route('shopper.settings.users.role', $role) }}" class="group flex flex-col justify-between border border-secondary-200 dark:border-secondary-700 p-4 rounded-md overflow-hidden hover:shadow-md">
                         <div class="flex items-center justify-between">
                             <span class="text-xs leading-4 text-secondary-400 dark:text-secondary-500 font-semibold uppercase tracking-wider">
                                 {{ $role->users->count() }} {{ str_plural(__('shopper::words.account'), $role->users->count()) }}
@@ -52,7 +52,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="mt-10 bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg shadow-md">
+        <div class="mt-10 bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow">
             <div class="pb-6 border-b border-secondary-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0  dark:border-secondary-700">
                 <div class="flex-1 min-w-0 max-w-2xl">
                     <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
@@ -63,7 +63,7 @@
                     </p>
                 </div>
                 <div>
-                    <x-shopper::buttons.primary :link="route('shopper.settings.user.new')">
+                    <x-shopper::buttons.primary :link="route('shopper.settings.users.new')">
                         <x-heroicon-o-user-add class="w-5 h-5 mr-1.5" />
                         {{ __('shopper::pages/settings.roles_permissions.add_admin') }}
                     </x-shopper::buttons.primary>
@@ -81,10 +81,10 @@
                                     <x-shopper::tables.table-head>
                                         {{ __('shopper::layout.forms.label.email') }}
                                     </x-shopper::tables.table-head>
-                                    <x-shopper::tables.table-head class="hidden md:table-cell text-right">
+                                    <x-shopper::tables.table-head class="hidden lg:table-cell text-right">
                                         {{ __('shopper::layout.forms.label.role') }}
                                     </x-shopper::tables.table-head>
-                                    <x-shopper::tables.table-head class="hidden md:table-cell text-right">
+                                    <x-shopper::tables.table-head class="hidden lg:table-cell text-right">
                                         {{ __('shopper::layout.forms.label.access') }}
                                     </x-shopper::tables.table-head>
                                     <x-shopper::tables.table-head class="pr-6" />
@@ -121,12 +121,12 @@
                                                 <span class="ml-1.5">{{ $user->email }}</span>
                                             </div>
                                         </td>
-                                        <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-right">
+                                        <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-right">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-secondary-100 text-secondary-800 dark:bg-secondary-700 dark:text-secondary-400">
                                                 {{ $user->roles_label }}
                                             </span>
                                         </td>
-                                        <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400 text-right">
+                                        <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400 text-right">
                                             {{ $user->hasRole(config('shopper.core.users.admin_role')) ? __('shopper::words.full') : __('shopper::words.limited') }}
                                         </td>
                                         <td class="pr-6 text-right">
@@ -183,4 +183,4 @@
             </div>
         </div>
     </div>
-</div>
+</x-shopper::container>

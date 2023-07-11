@@ -3,7 +3,7 @@
     footerClasses="border-t border-secondary-200 dark:border-secondary-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
     <x-slot name="content">
-        <div class="px-1 py-5 w-full h-auto md:h-125 overflow-y-auto hide-scroll">
+        <div class="px-1 py-5 w-full h-auto lg:h-125 overflow-y-auto hide-scroll">
             <div class="space-y-5">
                 <div class="space-y-5">
                     <div>

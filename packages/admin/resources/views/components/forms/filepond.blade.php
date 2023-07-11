@@ -31,7 +31,7 @@
     </div>
 
     @if(collect($images)->isNotEmpty())
-        <div class="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        <div class="grid grid-cols-2 gap-4 mt-4 sm:grid-cols-3 lg:grid-cols-4 lg:grid-cols-6">
             @foreach($images as $image)
                 <div class="relative flex flex-col items-center overflow-hidden h-24 text-center bg-secondary-100 border rounded-md select-none dark:bg-secondary-700 dark:border-secondary-700">
                     <button class="absolute top-0 right-0 z-50 p-1 bg-white rounded-bl focus:outline-none dark:bg-secondary-800" type="button" wire:click="removeMedia({{ $image->id }})">

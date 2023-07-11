@@ -1,4 +1,4 @@
-<div x-cloak x-show="sidebarOpen" class="md:hidden">
+<div x-cloak x-show="sidebarOpen" class="lg:hidden">
     <div x-cloak
          x-show="sidebarOpen"
          @click="sidebarOpen = false"

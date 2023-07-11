@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Http\Livewire\Components\Settings\Attributes;
+namespace Shopper\Http\Livewire\Components\Attributes;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -83,7 +83,7 @@ class Edit extends AbstractBaseComponent
 
     public function render(): View
     {
-        return view('shopper::livewire.settings.attributes.edit', [
+        return view('shopper::livewire.attributes.edit', [
             'fields' => Attribute::typesFields(),
         ]);
     }

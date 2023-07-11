@@ -1,21 +1,19 @@
 <div>
-    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('General')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
-    <div class="pb-5 mt-2 space-y-4 border-b sm:flex sm:items-center sm:justify-between sm:space-y-0 border-secondary-200 dark:border-secondary-700">
-        <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
-                {{ __('shopper::pages/settings.settings.title') }}
-            </h2>
-        </div>
-    </div>
+    <x-shopper::heading>
+        <x-slot name="title">
+            {{ __('shopper::pages/settings.settings.title') }}
+        </x-slot>
+    </x-shopper::heading>
 
     <x-shopper::validation-errors />
 
-    <div class="mt-8 md:grid md:grid-cols-3 md:gap-6">
-        <div class="md:col-span-1">
+    <div class="mt-8 lg:grid lg:grid-cols-3 lg:gap-6">
+        <div class="lg:col-span-1">
             <div class="px-4 sm:px-0">
                 <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                     {{ __('shopper::pages/settings.settings.store_details') }}
@@ -25,8 +23,8 @@
                 </p>
             </div>
         </div>
-        <div class="mt-5 md:mt-0 md:col-span-2">
-            <div class="bg-white rounded-md shadow dark:bg-secondary-800">
+        <div class="mt-5 lg:mt-0 lg:col-span-2">
+            <div class="bg-white rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow dark:bg-secondary-800">
                 <div class="px-4 py-5 sm:p-6">
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6">
@@ -84,8 +82,8 @@
     <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::pages/settings.settings.assets') }}
@@ -95,8 +93,8 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="overflow-hidden bg-white rounded-md shadow dark:bg-secondary-800">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
+                <div class="overflow-hidden bg-white rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <x-shopper::forms.group :label="__('shopper::layout.forms.label.logo')" for="logo" :error="$errors->first('logo')" noShadow>
                             <x-shopper::forms.avatar-upload wire:model.debounce.550ms="logo" id="photo">
@@ -180,8 +178,8 @@
     <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::pages/settings.settings.store_address') }}
@@ -191,8 +189,8 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white rounded-md shadow dark:bg-secondary-800">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
+                <div class="bg-white rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6">
@@ -252,8 +250,8 @@
     <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::pages/settings.settings.store_currency') }}
@@ -263,8 +261,8 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white rounded-md shadow dark:bg-secondary-800">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
+                <div class="bg-white rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <div class="col-span-6" wire:ignore>
@@ -292,8 +290,8 @@
     <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::pages/settings.settings.social_links') }}
@@ -303,8 +301,8 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="overflow-hidden bg-white rounded-md shadow dark:bg-secondary-800">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
+                <div class="overflow-hidden bg-white rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow dark:bg-secondary-800">
                     <div class="px-4 py-5 sm:p-6">
                         <div class="grid grid-cols-6 gap-6">
                             <x-shopper::forms.group class="col-span-6" :label="__('shopper::words.socials.facebook')" for="shop_facebook_link">

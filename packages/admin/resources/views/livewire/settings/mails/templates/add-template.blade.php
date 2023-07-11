@@ -24,7 +24,7 @@
     </div>
 
     <div class="mt-6 pb-10">
-        <div x-show="currentTab === 'html'" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 md:grid-cols-3 lg:col-span-3">
+        <div x-show="currentTab === 'html'" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 lg:grid-cols-3 lg:col-span-3">
             @foreach($skeletons->get('html') as $name => $subSkeletons)
                 <button wire:click='$emit("openModal", "shopper-modals.choose-skeleton", {{ json_encode([$name, 'html', $subSkeletons]) }})' type="button" class="block overflow-hidden group text-left">
                     <figure>
@@ -48,7 +48,7 @@
                 </button>
             @endforeach
         </div>
-        <div x-cloak x-show="currentTab === 'markdown'" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 md:grid-cols-3 lg:col-span-3">
+        <div x-cloak x-show="currentTab === 'markdown'" class="grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-5 sm:gap-y-6 lg:grid-cols-3 lg:col-span-3">
             @foreach($skeletons->get('markdown') as $name => $subSkeletons)
                 <button wire:click='$emit("openModal", "shopper-modals.choose-skeleton", {{ json_encode([$name, 'markdown', $subSkeletons]) }})' type="button" class="block group text-left">
                     <figure>

@@ -1,8 +1,8 @@
 <div>
 
     <div>
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-semibold leading-6 text-secondary-900">{{ __('API Keys') }}</h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-600">
@@ -10,7 +10,7 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
                 <div class="shadow rounded-md overflow-hidden">
                     <div class="px-4 py-5 bg-white sm:p-6 space-y-4">
                         <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">

@@ -18,7 +18,7 @@
         </x-shopper::breadcrumb>
 
         <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
-            <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
+            <div class="space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0">
                 <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
                     {{ __('shopper::pages/settings.legal.title') }}
                 </h3>

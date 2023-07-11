@@ -11,8 +11,8 @@
     </x-shopper::heading>
 
     <div class="mt-6">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
                 <div class="shadow sm:rounded-md sm:overflow-hidden">
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-3 gap-6">
@@ -82,8 +82,8 @@
     <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -101,7 +101,7 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
                 <div class="shadow overflow-hidden sm:rounded-md">
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-6 gap-6">
@@ -126,8 +126,8 @@
     <x-shopper::separator />
 
     <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -142,7 +142,7 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
                 <div class="shadow overflow-hidden sm:rounded-md">
                     <div class="px-4 py-5 sm:p-6 bg-white dark:bg-secondary-800">
                         <div class="grid grid-cols-6 gap-6">

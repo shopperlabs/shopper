@@ -6,7 +6,7 @@
 
     <div class="mt-3 bg-secondary-100 z-30 pb-5 border-b border-secondary-200 sticky top-0 -my-2 pt-4 sm:pt-1 sm:-my-0 sm:-mx-8 dark:bg-secondary-900 dark:border-secondary-700">
         <div class="sm:px-8 space-y-4">
-            <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
+            <div class="space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0">
                 <div class="flex-1 flex items-center space-x-4 min-w-0">
                     <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
                         {{ $order->number }}
@@ -136,8 +136,8 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-4 md:gap-4">
-                                            <div class="md:col-span-2">
+                                        <div class="min-w-0 flex-1 px-4 lg:grid lg:grid-cols-4 lg:gap-4">
+                                            <div class="lg:col-span-2">
                                                 <div class="text-sm leading-5 font-medium text-secondary-900 dark:text-white truncate">
                                                     {{ $item->name }}
                                                 </div>
@@ -145,7 +145,7 @@
                                                     <span class="truncate">{{ $item->product->sku ?? '' }}</span>
                                                 </div>
                                             </div>
-                                            <div class="hidden md:block">
+                                            <div class="hidden lg:block">
                                                 <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                                     {{ shopper_money_format($item->unit_price_amount) }} x {{ $item->quantity }}
                                                 </span>

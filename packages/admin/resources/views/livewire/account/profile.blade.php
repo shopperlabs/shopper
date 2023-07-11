@@ -1,7 +1,7 @@
 <div class="mt-6">
     <form wire:submit.prevent="save">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::pages/auth.account.profile_title') }}
@@ -11,7 +11,7 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
                 <div class="bg-white dark:bg-secondary-800 shadow rounded-md">
                     <div class="px-4 py-5 sm:p-6">
                         <x-shopper::forms.group

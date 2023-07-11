@@ -37,6 +37,10 @@ return [
     | Shops Livewire Components
     |--------------------------------------------------------------------------
     */
+    'attributes.browse' => Components\Attributes\Browse::class,
+    'attributes.create' => Components\Attributes\Create::class,
+    'attributes.edit' => Components\Attributes\Edit::class,
+    'attributes.values' => Components\Attributes\Values::class,
 
     'brands.browse' => Components\Brands\Browse::class,
     'brands.create' => Components\Brands\Create::class,
@@ -131,10 +135,6 @@ return [
     */
 
     'settings.analytics' => Components\Settings\Analytics::class,
-    'settings.attributes.browse' => Components\Settings\Attributes\Browse::class,
-    'settings.attributes.create' => Components\Settings\Attributes\Create::class,
-    'settings.attributes.edit' => Components\Settings\Attributes\Edit::class,
-    'settings.attributes.values' => Components\Settings\Attributes\Values::class,
     'settings.inventories.browse' => Components\Settings\Inventories\Browse::class,
     'settings.inventories.create' => Components\Settings\Inventories\Create::class,
     'settings.inventories.edit' => Components\Settings\Inventories\Edit::class,

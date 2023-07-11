@@ -6,13 +6,13 @@
     'url' => false,
 ])
 
-<div {{ $attributes->merge(['class' => 'relative w-full md:flex md:items-center py-12 lg:py-16']) }}>
-    <div class="w-full md:w-1/2 relative flex justify-center md:block">
+<div {{ $attributes->merge(['class' => 'relative w-full lg:flex lg:items-center py-12 lg:py-16']) }}>
+    <div class="w-full lg:w-1/2 relative flex justify-center lg:block">
         {{ $slot }}
     </div>
 
-    <div class="mt-10 w-full md:mt-0 md:w-1/2 relative lg:py-20 flex items-center justify-center">
-        <div class="w-full text-center sm:max-w-md md:text-left">
+    <div class="mt-10 w-full lg:mt-0 lg:w-1/2 relative lg:py-20 flex items-center justify-center">
+        <div class="w-full text-center sm:max-w-md lg:text-left">
             <h3 class="text-lg leading-6 sm:text-lg lg:text-2xl sm:leading-7 font-medium text-secondary-900 dark:text-white">
                 {{ $title }}
             </h3>

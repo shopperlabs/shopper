@@ -1,10 +1,10 @@
-<div>
-    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
+<x-shopper::container>
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::words.locations')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="mt-3">
+    <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::words.locations') }}
         </x-slot>
@@ -24,9 +24,9 @@
         </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-6">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
+    <div class="mt-8">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+            <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
                     <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::words.locations') }}
@@ -39,8 +39,8 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="bg-white shadow rounded-md overflow-hidden dark:bg-secondary-800">
+            <div class="mt-5 lg:mt-0 lg:col-span-2">
+                <div class="bg-white shadow rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 overflow-hidden dark:bg-secondary-800">
                     <ul class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         @foreach($inventories as $inventory)
                             <li>
@@ -103,4 +103,4 @@
     </div>
 
     <x-shopper::learn-more :name="__('shopper::words.location')" link="locations" />
-</div>
+</x-shopper::container>

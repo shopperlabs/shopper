@@ -8,7 +8,7 @@
         </a>
     </x-shopper::breadcrumb>
 
-    <div class="mt-2 md:flex md:items-center md:justify-between">
+    <div class="mt-2 lg:flex lg:items-center lg:justify-between">
         <div class="flex-1 min-w-0">
             <h2 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate pb-5 border-b border-secondary-200">
                 {{ __('Integrations') }}
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         <div class="rounded-md shadow overflow-hidden bg-white">
             <div class="p-4 sm:p-5 lg:pb-6 relative">
                 @if($github)

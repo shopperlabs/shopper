@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Http\Livewire\Components\Settings\Attributes;
+namespace Shopper\Http\Livewire\Components\Attributes;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
@@ -50,6 +50,6 @@ class Values extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.settings.attributes.values');
+        return view('shopper::livewire.attributes.values');
     }
 }

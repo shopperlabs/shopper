@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['class' => 'bg-secondary-50 dark:bg-secondary-800 border-r border-transparent md:border-secondary-200 md:dark:border-secondary-700']) }}>
+<div {{ $attributes->merge(['class' => 'bg-secondary-50 dark:bg-secondary-800 border-r border-transparent lg:border-secondary-200 lg:dark:border-secondary-700']) }}>
     <div class="flex flex-col h-full">
         <div class="bg-gradient-to-b from-secondary-200 dark:from-secondary-900">
             <div class="h-1 bg-gradient-to-br from-primary-600 to-primary-100 dark:to-primary-600/10"></div>
