@@ -1,0 +1,15 @@
+.sidebar {
+  @apply space-y-6;
+}
+
+.item-name {
+  @apply truncate flex-1;
+}
+
+.submenu {
+  @apply hidden mt-3 ml-4 pl-2 py-2 space-y-2 lg:space-y-3 border-l border-secondary-200 dark:border-secondary-700;
+}
+
+.current-group .submenu {
+  @apply block;
+}

@@ -39,7 +39,8 @@ module.exports = {
         40: '0.4',
       },
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans]
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        display: ['Mona Sans', ...defaultTheme.fontFamily.sans],
       },
       minHeight: {
         '(screen-content)': 'calc(100vh - 9.625rem)',

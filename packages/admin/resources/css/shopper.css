@@ -11,6 +11,7 @@
 
 @import 'base.css';
 @import 'components/select.css';
+@import 'components/sidebar.css';
 @import 'components/trix-editor.css';
 
 @layer base {
