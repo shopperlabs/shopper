@@ -1,3 +1,3 @@
-<div class="flex-1 pt-8 md:pt-10 pb-4 overflow-y-auto">
+<div class="px-4 mt-5 pb-2 overflow-y-auto">
     {!! $sidebar !!}
 </div>

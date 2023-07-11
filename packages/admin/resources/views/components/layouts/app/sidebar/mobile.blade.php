@@ -28,9 +28,7 @@
                 </button>
             </div>
 
-            <x-shopper::layouts.app.sidebar.primary />
-
-            <x-shopper::layouts.app.sidebar.secondary />
+            <x-shopper::layouts.app.sidebar.content class="w-full" />
         </div>
 
         <div class="shrink-0 w-14"></div>

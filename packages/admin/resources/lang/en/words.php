@@ -149,4 +149,5 @@ return [
     'default' => 'Default',
     'number_not_set' => 'Number not set',
     'added_on' => 'Added on',
+    'dark_mode' => 'Dark Mode',
 ];
