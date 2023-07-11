@@ -107,7 +107,7 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <div class="mt-6">
+        <div class="mt-8">
             <livewire:shopper-tables.attributes-table />
         </div>
     @endif

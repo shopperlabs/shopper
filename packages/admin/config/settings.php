@@ -30,13 +30,6 @@ return [
             'permission' => null,
         ],
         [
-            'name' => 'Email',
-            'description' => 'Manage email notifications that will be sent to your customers.',
-            'icon' => 'heroicon-o-mail',
-            'route' => 'shopper.settings.mails',
-            'permission' => null,
-        ],
-        [
             'name' => 'Locations',
             'description' => 'Manage the places you stock inventory and sell products.',
             'icon' => 'heroicon-o-location-marker',

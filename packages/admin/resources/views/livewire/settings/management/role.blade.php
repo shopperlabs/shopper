@@ -23,24 +23,24 @@
                 <div class="flex space-x-3">
                     @if($role->can_be_removed)
                         <span class="shadow-sm rounded-md">
-                        <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
-                            <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
-                            {{ __('shopper::layout.forms.actions.delete') }}
-                        </x-shopper::buttons.danger>
-                    </span>
+                            <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
+                                <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
+                                {{ __('shopper::layout.forms.actions.delete') }}
+                            </x-shopper::buttons.danger>
+                        </span>
                     @endif
                     <span class="shadow-sm rounded-md">
-                    <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
-                        <x-heroicon-o-key class="w-5 h-5 -ml-1 mr-2" />
-                        {{ __('shopper::pages/settings.roles_permissions.create_permission') }}
-                    </x-shopper::buttons.primary>
-                </span>
+                        <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
+                            <x-heroicon-o-key class="w-5 h-5 -ml-1 mr-2" />
+                            {{ __('shopper::pages/settings.roles_permissions.create_permission') }}
+                        </x-shopper::buttons.primary>
+                    </span>
                 </div>
             </x-slot>
         </x-shopper::heading>
     </x-shopper::container>
 
-    <div class="relative border-secondary-200 space-y-4 px-4 lg:py-5 lg:pb-0 lg:border-y lg:px-0 dark:border-secondary-700">
+    <div class="relative border-secondary-200 space-y-4 px-4 lg:pt-5 lg:pb-0 lg:border-y lg:px-0 dark:border-secondary-700">
         <div>
             <div class="lg:hidden">
                 <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}">

@@ -1,65 +1,60 @@
 <x-shopper::layouts.setting :title="__('shopper::pages/settings.legal.title')">
-
     <div
         x-data="{
-            options: ['refund', 'privacy', 'terms', 'shipping'],
+            options: ['privacy', 'terms', 'shipping', 'refund'],
             words: {
-                'refund': '{{ __('shopper::pages/settings.legal.refund') }}',
                 'privacy': '{{ __('shopper::pages/settings.legal.privacy') }}',
                 'terms': '{{ __('shopper::pages/settings.legal.terms_of_use') }}',
-                'shipping': '{{ __('shopper::pages/settings.legal.shipping') }}'
+                'shipping': '{{ __('shopper::pages/settings.legal.shipping') }}',
+                'refund': '{{ __('shopper::pages/settings.legal.refund') }}',
             },
-            currentTab: 'refund'
+            currentTab: 'privacy'
         }"
     >
-        <x-shopper::breadcrumb :back="route('shopper.settings.index')">
-            <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-            <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
-        </x-shopper::breadcrumb>
-
-        <div class="mt-3 pb-5 relative border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
-            <div class="space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0">
-                <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
+        <x-shopper::container>
+            <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::pages/settings.legal.title')">
+                <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+                <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+            </x-shopper::breadcrumb>
+            <x-shopper::heading class="border-b-0">
+                <x-slot name="title">
                     {{ __('shopper::pages/settings.legal.title') }}
-                </h3>
+                </x-slot>
+            </x-shopper::heading>
+        </x-shopper::container>
+
+        <div class="relative border-secondary-200 space-y-4 px-4 lg:pb-0 lg:border-y lg:px-0 dark:border-secondary-700">
+            <div class="lg:hidden">
+                <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}">
+                    <template x-for="option in options" :key="option">
+                        <option
+                            x-bind:value="option"
+                            x-text="words[option]"
+                            x-bind:selected="option === currentTab"
+                        ></option>
+                    </template>
+                </x-shopper::forms.select>
             </div>
-            <div>
-                <!-- Dropdown menu on small screens -->
-                <div class="sm:hidden">
-                    <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}">
-                        <template x-for="option in options" :key="option">
-                            <option
-                                x-bind:value="option"
-                                x-text="words[option]"
-                                x-bind:selected="option === currentTab"
-                            ></option>
-                        </template>
-                    </x-shopper::forms.select>
-                </div>
-                <!-- Tabs at small breakpoint and up -->
-                <div class="hidden sm:block">
-                    <nav class="-mb-px flex space-x-8">
-                        <button @click="currentTab = 'refund'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'refund' }">
-                            {{ __('shopper::pages/settings.legal.refund') }}
-                        </button>
 
-                        <button @click="currentTab = 'privacy'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'privacy' }">
-                            {{ __('shopper::pages/settings.legal.privacy') }}
-                        </button>
-
-                        <button @click="currentTab = 'terms'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'terms' }">
-                            {{ __('shopper::pages/settings.legal.terms_of_use') }}
-                        </button>
-
-                        <button @click="currentTab = 'shipping'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'shipping' }">
-                            {{ __('shopper::pages/settings.legal.shipping') }}
-                        </button>
-                    </nav>
-                </div>
+            <div class="hidden lg:block">
+                <nav class="-mb-px flex space-x-8 px-6">
+                    <button @click="currentTab = 'privacy'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'privacy' }">
+                        {{ __('shopper::pages/settings.legal.privacy') }}
+                    </button>
+                    <button @click="currentTab = 'terms'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'terms' }">
+                        {{ __('shopper::pages/settings.legal.terms_of_use') }}
+                    </button>
+                    <button @click="currentTab = 'shipping'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'shipping' }">
+                        {{ __('shopper::pages/settings.legal.shipping') }}
+                    </button>
+                    <button @click="currentTab = 'refund'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'refund' }">
+                        {{ __('shopper::pages/settings.legal.refund') }}
+                    </button>
+                </nav>
             </div>
         </div>
 
-        <div class="mt-6">
+        <x-shopper::container class="mt-8">
             <div x-show="currentTab === 'refund'">
                 <livewire:shopper-settings.legal.refund />
             </div>
@@ -72,9 +67,8 @@
             <div x-cloak x-show="currentTab === 'shipping'">
                 <livewire:shopper-settings.legal.shipping />
             </div>
-        </div>
+        </x-shopper::container>
 
         <x-shopper::learn-more :name="__('shopper::pages/settings.legal.title')" link="legal" />
     </div>
-
 </x-shopper::layouts.setting>

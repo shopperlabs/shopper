@@ -19,7 +19,7 @@
     </div>
 
     <section aria-labelledby="values_attributes_heading">
-        <div class="mt-5 bg-white pt-5 space-y-5 shadow rounded-md overflow-hidden dark:bg-secondary-800">
+        <div class="mt-5 bg-white pt-5 space-y-5 rounded-lg shadow ring-1 ring-secondary-200 dark:ring-secondary-700 overflow-hidden dark:bg-secondary-800">
             <div class="px-4 sm:px-5 flex items-center justify-between space-x-4">
                 <div>
                     <span class="shadow-sm rounded-md">
@@ -82,11 +82,11 @@
                                     @empty
                                         <tr>
                                             <td colspan="4" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium">
-                                                <div class="flex justify-center items-center space-x-2">
-                                                    <svg class="h-8 w-8 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <div class="flex flex-col justify-center items-center space-y-2 py-4">
+                                                    <svg class="h-8 w-8 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                                     </svg>
-                                                    <span class="text-xl font-medium py-8 text-secondary-500 dark:text-secondary-400">
+                                                    <span class="text-xl font-medium text-secondary-500 dark:text-secondary-400">
                                                         {{ __('shopper::words.no_values') }}
                                                     </span>
                                                 </div>

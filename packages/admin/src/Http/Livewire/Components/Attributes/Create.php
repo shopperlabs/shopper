@@ -54,7 +54,7 @@ class Create extends AbstractBaseComponent
 
         session()->flash('success', __('Attribute successfully added'));
 
-        $this->redirectRoute('shopper.settings.attributes.edit', $attribute);
+        $this->redirectRoute('shopper.attributes.edit', $attribute);
     }
 
     public function render(): View
