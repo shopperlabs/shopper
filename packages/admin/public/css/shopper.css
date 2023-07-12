@@ -4756,6 +4756,9 @@ html {
 .gap-y-8{
   row-gap: 2rem;
 }
+.gap-y-6{
+  row-gap: 1.5rem;
+}
 .-space-x-1 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(-0.25rem * var(--tw-space-x-reverse));
@@ -9859,6 +9862,11 @@ html {
     border-radius: 0.75rem;
   }
 
+  .sm\:border-y{
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+  }
+
   .sm\:border-b{
     border-bottom-width: 1px;
   }
@@ -10421,6 +10429,11 @@ html {
     row-gap: 1.25rem;
   }
 
+  .lg\:gap-x-10{
+    -moz-column-gap: 2.5rem;
+         column-gap: 2.5rem;
+  }
+
   .lg\:space-y-0 > :not([hidden]) ~ :not([hidden]){
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
@@ -10611,6 +10624,10 @@ html {
 
   .\32xl\:max-w-8xl{
     max-width: 88rem;
+  }
+
+  .\32xl\:p-6{
+    padding: 1.5rem;
   }
 
   .\32xl\:px-6{

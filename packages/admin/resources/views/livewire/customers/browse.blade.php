@@ -1,4 +1,4 @@
-<div>
+<x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::layout.sidebar.customers') }}
@@ -10,7 +10,7 @@
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
                             <x-shopper::buttons.primary :link="route('shopper.customers.create')">
-                                {{ __('shopper::words.actions_label.add_new', ['name' => __('customer')]) }}
+                                {{ __('shopper::words.actions_label.add_new', ['name' => __('shopper::words.customer')]) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -172,11 +172,11 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <div class="mt-6">
+        <div class="mt-8">
             <livewire:shopper-tables.customers-table />
         </div>
     @endif
 
     <x-shopper::learn-more :name="__('shopper::layout.sidebar.customers')" link="customers" />
 
-</div>
+</x-shopper::container>

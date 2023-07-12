@@ -1,4 +1,4 @@
-<div class="space-y-8">
+<x-shopper::container class="space-y-8">
     @forelse($orders as $order)
         <div class="bg-white border border-secondary-200 rounded-md shadow-sm overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:border-secondary-700 dark:divide-secondary-700">
             <div class="bg-secondary-100 dark:bg-secondary-700 py-3 px-4 sm:flex sm:items-center sm:justify-between">
@@ -111,10 +111,10 @@
             </div>
         </div>
     @empty
-        <div class="bg-white rounded-lg shadow-md overflow-hidden py-10 sm:py-12 flex items-center justify-center dark:bg-secondary-800">
-            <div class="flex justify-center items-center space-x-2">
-                <x-heroicon-o-shopping-bag class="h-8 w-8 text-secondary-400" />
-                <span class="font-medium py-8 text-secondary-400 text-xl">
+        <div class="py-6 flex items-center justify-center dark:bg-secondary-800">
+            <div class="flex flex-col justify-center items-center space-y-2">
+                <x-heroicon-o-shopping-bag class="h-8 w-8 text-primary-500" />
+                <span class="font-medium text-secondary-500 dark:text-secondary-400 text-xl">
                     {{ __('shopper::pages/customers.orders.empty_text') }}
                 </span>
             </div>
@@ -124,4 +124,4 @@
     <div class="flex items-center justify-between">
         {{ $orders->links() }}
     </div>
-</div>
+</x-shopper::container>
