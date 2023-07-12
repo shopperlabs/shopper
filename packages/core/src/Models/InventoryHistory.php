@@ -42,7 +42,7 @@ class InventoryHistory extends Model
             return '+' . $this->old_quantity;
         }
 
-        return $this->old_quantity;
+        return (string) $this->old_quantity;
     }
 
     public function inventory(): BelongsTo

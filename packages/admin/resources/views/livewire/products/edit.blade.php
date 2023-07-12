@@ -6,47 +6,45 @@
             'detail': '{{ __('shopper::words.overview') }}',
             'variants': '{{ __('shopper::words.variants') }}',
             'attributes': '{{ __('shopper::words.attributes') }}',
-            'inventory': '{{ __('shopper::words.inventory') }}',
+            'inventory': '{{ __('shopper::words.location') }}',
             'seo': '{{ __('shopper::words.seo') }}',
             'shipping': '{{ __('shopper::words.shipping') }}',
             'related': '{{ __('shopper::pages/products.related_products') }}'
         },
-        currentTab: 'detail'
+        currentTab: 'detail',
+        activeTab(tab) {
+            return this.currentTab === tab;
+        },
     }"
 >
-    <x-shopper::breadcrumb :back="route('shopper.products.index')">
-        <x-heroicon-s-chevron-left class="w-5 h-5 shrink-0 text-secondary-400" />
-        <x-shopper::breadcrumb.link :link="route('shopper.products.index')" :title="__('shopper::layout.sidebar.products')" />
-    </x-shopper::breadcrumb>
+    <x-shopper::container>
+        <x-shopper::breadcrumb :back="route('shopper.products.index')" :current="$product->name">
+            <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+            <x-shopper::breadcrumb.link :link="route('shopper.products.index')" :title="__('shopper::layout.sidebar.products')" />
+        </x-shopper::breadcrumb>
+    </x-shopper::container>
 
-    <div class="sticky z-30 pb-5 mt-3 bg-secondary-100 dark:bg-secondary-900 sm:pb-0 top-4 sm:top-2 sm:-mx-8">
-        <div class="space-y-4 sm:px-8">
-            <div class="space-y-3 lg:flex lg:items-start lg:justify-between lg:space-y-0">
-                <div class="flex-1 min-w-0">
-                    <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
-                        {{ $product->name }}
-                    </h3>
-                    <div class="mt-1">
-                        <span @class([
-                            'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-                            'bg-green-100 text-green-800' => $product->is_visible,
-                            'bg-yellow-100 text-yellow-800' => !$product->is_visible,
-                        ])>
-                            {{ $product->is_visible ? __('shopper::layout.forms.label.visible'): __('shopper::layout.forms.label.invisible') }}
-                        </span>
+    <div class="sticky z-30 mt-5 top-4 sm:top-2 bg-white/75 dark:bg-secondary-900 backdrop-blur-sm">
+        <div class="space-y-4">
+            <x-shopper::container>
+                <div class="space-y-3 lg:flex lg:items-start lg:justify-between lg:space-y-0">
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate font-display">
+                            {{ $product->name }}
+                        </h3>
                     </div>
-                </div>
-                <div class="flex pt-1 space-x-3">
+                    <div class="flex pt-1 space-x-3">
                     <span class="hidden sm:block">
                         <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode([$product->id, 'type' => 'product']) }})" type="button">
                             <x-heroicon-s-archive class="w-5 h-5 mr-2 -ml-1" />
                             {{ __('shopper::layout.forms.actions.delete') }}
                         </x-shopper::buttons.danger>
                     </span>
+                    </div>
                 </div>
-            </div>
-            <div class="pb-5 border-b sm:pb-0 border-secondary-200 dark:border-secondary-700">
-                <div class="sm:hidden">
+            </x-shopper::container>
+            <div class="pb-5 border-b lg:pb-0 border-secondary-200 dark:border-secondary-700">
+                <div class="px-4 lg:hidden">
                     <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}" class="block w-full py-2 pl-3 pr-10">
                         <template x-for="option in options" :key="option">
                             <option
@@ -58,33 +56,62 @@
                     </x-shopper::forms.select>
                 </div>
 
-                <div class="hidden sm:block">
-                    <nav class="flex -mb-px space-x-8">
-                        <button @click="currentTab = 'detail'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'detail' }">
+                <div class="hidden lg:block">
+                    <nav class="flex -mb-px space-x-8 px-4 2xl:px-6">
+                        <button
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            @click="currentTab = 'detail'"
+                            :class="activeTab('detail') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::words.overview') }}
                         </button>
-
-                        <button @click="currentTab = 'variants'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'variants' }">
+                        <button
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            @click="currentTab = 'variants'"
+                            :class="activeTab('variants') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::words.variants') }}
                         </button>
-
-                        <button @click="currentTab = 'attributes'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'attributes' }">
+                        <button
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            @click="currentTab = 'attributes'"
+                            :class="activeTab('attributes') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::words.attributes') }}
                         </button>
-
-                        <button @click="currentTab = 'inventory'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'inventory' }">
+                        <button
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            @click="currentTab = 'inventory'"
+                            :class="activeTab('inventory') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::words.location') }}
                         </button>
-
-                        <button @click="currentTab = 'seo'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'seo' }">
+                        <button
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            @click="currentTab = 'seo'"
+                            :class="activeTab('seo') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::words.seo') }}
                         </button>
-
-                        <button @click="currentTab = 'shipping'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'shipping' }">
+                        <button
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            @click="currentTab = 'shipping'"
+                            :class="activeTab('shipping') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::words.shipping') }}
                         </button>
-
-                        <button @click="currentTab = 'related'" type="button" class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'related' }">
+                        <button
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            @click="currentTab = 'related'"
+                            :class="activeTab('related') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::pages/products.related_products') }}
                         </button>
                     </nav>
@@ -93,7 +120,7 @@
         </div>
     </div>
 
-    <div class="pb-10 mt-6">
+    <div class="pb-10 mt-8">
         <div x-show="currentTab === 'detail'">
             <livewire:shopper-products.form.edit :product="$product" :currency="$currency" />
         </div>

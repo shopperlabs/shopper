@@ -20,15 +20,14 @@ class ProductsTable extends DataTableComponent
         'price_amount' => null,
     ];
 
-    public function boot(): void
-    {
-        $this->queryString['columnSearch'] = ['except' => null];
-    }
-
     public function configure(): void
     {
         $this->setPrimaryKey('key')
             ->setAdditionalSelects(['is_visible'])
+            ->setTableWrapperAttributes([
+                'default' => true,
+                'class' => 'ring-1 ring-secondary-200 dark:ring-secondary-700',
+            ])
             ->setTdAttributes(function (Views\Column $column) {
                 if ($column->isField('name')) {
                     return [
@@ -43,6 +42,11 @@ class ProductsTable extends DataTableComponent
                 'activate' => __('shopper::layout.forms.actions.activate'),
                 'deactivate' => __('shopper::layout.forms.actions.disabled'),
             ]);
+    }
+
+    public function boot(): void
+    {
+        $this->queryString['columnSearch'] = ['except' => null];
     }
 
     /**
@@ -148,7 +152,7 @@ class ProductsTable extends DataTableComponent
             Views\Column::make(__('shopper::layout.forms.label.price'), 'price_amount')
                 ->sortable()
                 ->searchable()
-                ->format(fn ($value) => $value ? '<span class="font-medium text-secondary-500 dark:text-secondary-400">' . shopper_money_format($value) . '</span>' : null)->html(),
+                ->format(fn ($value, $row) => $value ? '<span class="font-medium text-secondary-500 dark:text-secondary-400">' . $row->getPriceAmount()->formatted . '</span>' : null)->html(),
             Views\Column::make(__('shopper::layout.tables.sku'), 'sku')
                 ->sortable()
                 ->format(fn ($value) => $value ? '<span class="font-medium text-secondary-500 dark:text-secondary-400">' . $value . '</span>' : '<span class="inline-flex text-secondary-700 dark:text-secondary-500">&mdash;</span>')->html(),

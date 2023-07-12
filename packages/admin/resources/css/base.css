@@ -63,5 +63,5 @@ input[type="number"] {
 }
 
 .dark .scrolling::-webkit-scrollbar-thumb {
-   background-color: theme('colors.secondary.800');
+   background-color: theme('colors.secondary.700');
 }

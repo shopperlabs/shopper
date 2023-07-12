@@ -1,4 +1,4 @@
-<div class="p-4 sm:p-5 bg-white dark:bg-secondary-800 rounded-lg shadow-md overflow-hidden space-y-8">
+<x-shopper::container class="space-y-8">
     <div>
         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
             {{ __('shopper::pages/products.seo.title') }}
@@ -63,4 +63,4 @@
             </div>
         </div>
     </div>
-</div>
+</x-shopper::container>

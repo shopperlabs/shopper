@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -52,26 +53,61 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
         return shopper_table('products');
     }
 
-    public function getFormattedPriceAttribute(): ?string
+    protected function priceAmount(): Attribute
     {
-        if ($this->parent_id) {
-            return $this->price_amount
-                ? $this->formattedPrice($this->price_amount)
-                : ($this->parent->price_amount ? $this->formattedPrice($this->parent->price_amount) : null);
-        }
-
-        return $this->price_amount
-                ? $this->formattedPrice($this->price_amount)
-                : null;
+        return Attribute::make(
+            get: fn ($value) => $value / 100,
+            set: fn ($value) => $value * 100,
+        );
     }
 
-    public function getPriceAttribute(): ?Price
+    protected function oldPriceAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value / 100,
+            set: fn ($value) => $value * 100,
+        );
+    }
+
+    protected function costAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value / 100,
+            set: fn ($value) => $value * 100,
+        );
+    }
+
+    public function getPriceAmount(): ?Price
     {
         if (! $this->price_amount) {
             return null;
         }
 
+        if ($this->parent_id) {
+            return $this->price_amount
+                ? Price::from($this->price_amount)
+                : ($this->parent->price_amount ? Price::from($this->parent->price_amount) : null);
+        }
+
         return Price::from($this->price_amount);
+    }
+
+    public function getOldPriceAmount(): ?Price
+    {
+        if (! $this->old_price_amount) {
+            return null;
+        }
+
+        return Price::from($this->old_price_amount);
+    }
+
+    public function getCostAmount(): ?Price
+    {
+        if (! $this->cost_amount) {
+            return null;
+        }
+
+        return Price::from($this->cost_amount);
     }
 
     public function getVariationsStockAttribute(): int

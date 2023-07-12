@@ -9,7 +9,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="overflow-y-scroll h-96">
+        <div class="overflow-y-scroll h-96 scrolling">
             <div class="overflow-hidden">
                 @if($inventories->isNotEmpty())
                     <div class="relative flex items-center justify-between p-4 border-b sm:px-5 border-secondary-200 dark:border-secondary-700">
@@ -25,35 +25,35 @@
                             </x-shopper::forms.select>
                         </span>
                         <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-300">
-                            <span class="block mr-4 text-sm font-medium">{{ __('shopper::pages/products.quantity_available') }}</span>
-                            <x-stock-badge :stock="$product->stock" />
+                            <span class="hidden sm:block mr-4 text-sm font-medium">
+                                {{ __('shopper::pages/products.quantity_available') }}
+                            </span>
+                            <x-shopper::stock-badge :stock="$product->stock" />
                         </div>
                     </div>
                 @endif
 
-                <div class="flex items-center justify-between px-4 py-6 mb-2 sm:px-6">
+                <div class="space-y-2 sm:space-y-0 sm:flex sm:items-center sm:justify-between px-4 py-5 mb-2">
                     <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-300">
                         <span class="block mr-4 text-sm font-medium">{{ __('shopper::pages/products.current_qty_inventory') }}</span>
                         <x-shopper::stock-badge :stock="$currentStock" />
                     </div>
-                    <div class="ml-4">
+                    <div class="sm:ml-4">
                         <div class="flex items-center">
                             <div class="flex items-center pr-4">
                                 <p class="mr-4 text-sm font-medium text-secondary-700 dark:text-secondary-300">
                                     {{ $realStock }}
                                 </p>
-                                <div>
-                                    <div class="flex rounded-md shadow-sm">
-                                        <div class="relative flex items-stretch grow focus-within:z-10">
-                                            <x-shopper::forms.input wire:model="value" type="number" aria-label="{{ __('shopper::layout.forms.label.stock_number_value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
-                                        </div>
-                                        <button wire:click="decrementStock" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium bg-white border rounded-none border-secondary-300 dark:border-secondary-600 dark:bg-secondary-700 text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
-                                            <span>&minus;</span>
-                                        </button>
-                                        <button wire:click="incrementStock" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium bg-white border rounded-r-md border-secondary-300 dark:border-secondary-600 dark:bg-secondary-700 text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
-                                            <span>&plus;</span>
-                                        </button>
+                                <div class="flex rounded-md shadow-sm">
+                                    <div class="relative flex items-stretch grow focus-within:z-10">
+                                        <x-shopper::forms.input wire:model="value" type="number" aria-label="{{ __('shopper::layout.forms.label.stock_number_value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
                                     </div>
+                                    <button wire:click="decrementStock" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium bg-white border rounded-none border-secondary-300 dark:border-secondary-600 dark:bg-secondary-700 text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
+                                        <span>&minus;</span>
+                                    </button>
+                                    <button wire:click="incrementStock" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium bg-white border rounded-r-md border-secondary-300 dark:border-secondary-600 dark:bg-secondary-700 text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
+                                        <span>&plus;</span>
+                                    </button>
                                 </div>
                             </div>
                             <div class="flex items-center">
@@ -82,11 +82,11 @@
                 </div>
 
                 @if($histories->total() === 0)
-                    <div class="flex flex-col items-center justify-center p-4 sm:p-6">
+                    <div class="flex flex-col space-y-2 items-center justify-center p-4 sm:p-6">
                         <span class="shrink-0">
-                            <x-heroicon-o-document-text class="w-12 h-12 text-secondary-400" />
+                            <x-heroicon-o-document-text class="w-12 h-12 text-primary-500" />
                         </span>
-                        <h3 class="py-5 text-xl font-medium text-secondary-400">
+                        <h3 class="text-lg text-center font-medium text-secondary-500 dark:text-secondary-400">
                             {{ __('shopper::pages/products.inventory.empty') }}
                         </h3>
                     </div>
@@ -99,7 +99,6 @@
                                         <tr class="border-b bg-secondary-50 border-secondary-200 dark:bg-secondary-700 dark:border-secondary-700">
                                             <x-shopper::tables.table-head>{{ __('shopper::words.date') }}</x-shopper::tables.table-head>
                                             <x-shopper::tables.table-head>{{ __('shopper::words.event') }}</x-shopper::tables.table-head>
-                                            <x-shopper::tables.table-head>{{ __('shopper::words.location') }}</x-shopper::tables.table-head>
                                             <x-shopper::tables.table-head class="text-right">{{ __('shopper::words.adjustment') }}</x-shopper::tables.table-head>
                                             <x-shopper::tables.table-head class="text-right">{{ __('shopper::pages/products.inventory.movement') }}</x-shopper::tables.table-head>
                                         </tr>
@@ -107,19 +106,16 @@
                                     <tbody class="bg-white divide-y divide-secondary-100 dark:bg-secondary-800 dark:divide-secondary-700">
                                         @foreach($histories as $inventoryHistory)
                                             <tr>
-                                                <td class="px-6 py-4 text-sm leading-5 whitespace-no-wrap text-secondary-500 dark:text-secondary-400">
+                                                <td class="px-6 py-3 text-sm leading-5 whitespace-no-wrap text-secondary-500 dark:text-secondary-400">
                                                     {{ $inventoryHistory->created_at->diffForHumans() }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm leading-5 whitespace-no-wrap text-secondary-500 dark:text-secondary-400">
+                                                <td class="px-6 py-3 text-sm leading-5 whitespace-no-wrap text-secondary-500 dark:text-secondary-400">
                                                     {{ __($inventoryHistory->event) }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm leading-5 whitespace-no-wrap text-secondary-500 dark:text-secondary-400">
-                                                    {{ $inventoryHistory->inventory->name }}
-                                                </td>
-                                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->old_quantity > 0 ? 'text-green-500': 'text-red-500' }}">
+                                                <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->old_quantity > 0 ? 'text-green-500': 'text-red-500' }}">
                                                     {{ $inventoryHistory->adjustment }}
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-secondary-500 dark:text-secondary-400': 'text-red-500' }}">
+                                                <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-secondary-500 dark:text-secondary-400': 'text-red-500' }}">
                                                     {{ $inventoryHistory->quantity }}
                                                 </td>
                                             </tr>
@@ -154,7 +150,7 @@
     </x-slot>
 
     <x-slot name="buttons">
-        <span class="flex w-full rounded-md shadow-sm sm:w-auto">
+        <span class="flex w-full rounded-md sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
                 {{ __('shopper::layout.forms.actions.close') }}
             </x-shopper::buttons.default>

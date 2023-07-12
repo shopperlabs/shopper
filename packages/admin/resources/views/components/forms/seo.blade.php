@@ -7,7 +7,7 @@
                 {{ __('shopper::components.seo.title') }}
             </h3>
             @if(! $canUpdate)
-                <button wire:click="updateSeo" type="button" class="inline-flex items-center mt-2 lg:mt-0 text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-700 dark:text-primary-500/50">
+                <button wire:click="updateSeo" type="button" class="inline-flex items-center mt-2 lg:mt-0 text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-500 hover:text-primary-700">
                     {{ __('shopper::components.seo.edit_action') }}
                 </button>
             @endif

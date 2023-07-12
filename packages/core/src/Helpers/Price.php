@@ -10,17 +10,17 @@ final class Price
 {
     use HasPrice;
 
-    public int $amount;
+    public int|float $value;
 
     public string $formatted;
 
     public string $currency;
 
-    public function __construct(public int $cent)
+    public function __construct(int $cent)
     {
-        $this->amount = $cent / 100;
+        $this->value = $cent * 100;
         $this->currency = shopper_currency();
-        $this->formatted = $this->formattedPrice($this->amount);
+        $this->formatted = $this->formattedPrice($this->value);
     }
 
     public static function from(int $cent): self
