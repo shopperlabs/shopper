@@ -1,6 +1,6 @@
 @props(['slug', 'title', 'description', 'url', 'canUpdate'])
 
-<div class="bg-white rounded-lg shadow-md divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
+<div class="bg-white rounded-lg shadow ring-1 ring-secondary-200 dark:ring-secondary-700 divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
     <div class="p-4 sm:p-5">
         <div class="lg:flex lg:items-center lg:justify-between">
             <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
