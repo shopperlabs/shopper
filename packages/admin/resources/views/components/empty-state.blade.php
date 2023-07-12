@@ -13,10 +13,13 @@
 
     <div class="mt-10 w-full lg:mt-0 lg:w-1/2 relative lg:py-20 flex items-center justify-center">
         <div class="w-full text-center sm:max-w-md lg:text-left">
-            <h3 class="text-lg leading-6 sm:text-lg lg:text-2xl sm:leading-7 font-medium text-secondary-900 dark:text-white">
+            <h3 class="text-lg leading-6 sm:text-lg lg:text-2xl sm:leading-7 font-medium text-secondary-900 dark:text-white font-display">
                 {{ $title }}
             </h3>
-            <p class="mt-4 text-secondary-500 dark:text-secondary-400 text-base leading-6">{{ $content }}</p>
+            <p class="mt-4 text-secondary-500 dark:text-secondary-400 text-base leading-6">
+                {{ $content }}
+            </p>
+
             @if($permission)
                 @can($permission)
                     @if($button && $url)

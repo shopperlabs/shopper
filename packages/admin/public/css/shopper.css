@@ -3950,6 +3950,9 @@ html {
 .top-6{
   top: 1.5rem;
 }
+.top-14{
+  top: 3.5rem;
+}
 .z-0{
   z-index: 0;
 }
@@ -4759,6 +4762,9 @@ html {
 .gap-y-6{
   row-gap: 1.5rem;
 }
+.gap-y-5{
+  row-gap: 1.25rem;
+}
 .-space-x-1 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(-0.25rem * var(--tw-space-x-reverse));
@@ -4967,6 +4973,10 @@ html {
 .rounded-t-none{
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
+}
+.rounded-t-lg{
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 .rounded-bl{
   border-bottom-left-radius: 0.25rem;
@@ -5602,6 +5612,9 @@ html {
 .bg-zinc-500{
   --tw-bg-opacity: 1;
   background-color: rgb(113 113 122 / var(--tw-bg-opacity));
+}
+.bg-secondary-50\/50{
+  background-color: rgb(248 250 252 / 0.5);
 }
 .bg-opacity-10{
   --tw-bg-opacity: 0.1;
@@ -10434,6 +10447,10 @@ html {
          column-gap: 2.5rem;
   }
 
+  .lg\:gap-y-6{
+    row-gap: 1.5rem;
+  }
+
   .lg\:space-y-0 > :not([hidden]) ~ :not([hidden]){
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
@@ -10571,6 +10588,16 @@ html {
   .lg\:text-3xl{
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+
+  .lg\:text-xl{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .lg\:text-lg{
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 
   .lg\:shadow-none{

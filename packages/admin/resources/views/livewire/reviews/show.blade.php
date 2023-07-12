@@ -1,6 +1,6 @@
 <div>
-    <x-shopper::breadcrumb :back="route('shopper.reviews.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
+    <x-shopper::breadcrumb :back="route('shopper.reviews.index')" :current="$review->reviewrateable->name">
+        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" :title="__('shopper::layout.sidebar.reviews')" />
     </x-shopper::breadcrumb>
 
@@ -127,7 +127,7 @@
                             <span @class([
                                 'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5',
                                 'bg-green-100 text-green-800' => $review->approved,
-                                'bg-orange-100 text-orange-800' => !$review->approved,
+                                'bg-orange-100 text-orange-800' => ! $review->approved,
                             ])>
                                 {{ $review->approved ? __('shopper::pages/products.reviews.published') : __('shopper::pages/products.reviews.pending') }}
                             </span>
