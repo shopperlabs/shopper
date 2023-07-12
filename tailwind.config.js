@@ -6,6 +6,7 @@ module.exports = {
   content: [
     './packages/admin/resources/views/**/*.blade.php',
     './packages/admin/src/**/*.php',
+    './vendor/filament/**/*.blade.php',
     './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
     './vendor/wire-elements/modal/resources/views/*.blade.php',
     './vendor/wireui/wireui/resources/**/*.blade.php',
