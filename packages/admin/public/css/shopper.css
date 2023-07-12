@@ -7128,6 +7128,9 @@ html {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(113 113 122 / var(--tw-ring-opacity));
 }
+.ring-yellow-600\/20{
+  --tw-ring-color: rgb(202 138 4 / 0.2);
+}
 .ring-opacity-5{
   --tw-ring-opacity: 0.05;
 }

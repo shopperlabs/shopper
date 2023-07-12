@@ -31,7 +31,7 @@ final class OrderSidebar extends AbstractAdminSidebar
                 $item->setInactiveClass('text-secondary-700 dark:text-secondary-300 hover:text-secondary-900 dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-700');
 
                 if ($count > 0) {
-                    $item->badge($count);
+                    $item->badge($count, 'inline-flex items-center rounded-full bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20');
                 }
 
                 $item->route('shopper.orders.index');
