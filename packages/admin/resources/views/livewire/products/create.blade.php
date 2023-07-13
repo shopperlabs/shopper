@@ -1,6 +1,6 @@
-<div>
+<x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.products.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.products.index')" :title="__('shopper::layout.sidebar.products')" />
     </x-shopper::breadcrumb>
 
@@ -8,18 +8,11 @@
         <x-slot name="title">
             {{ __('shopper::words.actions_label.add_new', ['name' => __('shopper::words.product')]) }}
         </x-slot>
-
-        <x-slot name="action">
-            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
-                <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('shopper::layout.forms.actions.save') }}
-            </x-shopper::buttons.primary>
-        </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-6 space-y-5 lg:grid lg:grid-cols-6 lg:gap-6">
-        <div class="lg:col-span-4 space-y-5">
-            <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5">
+    <div class="mt-8 space-y-6 lg:grid lg:grid-cols-6 lg:gap-y-6 lg:gap-x-12 lg:space-y-0">
+        <div class="lg:col-span-4 space-y-8">
+            <div>
                 <div>
                     <x-shopper::forms.group
                         for="name"
@@ -33,6 +26,7 @@
                             type="text"
                             autocomplete="off"
                             placeholder="Apple, Nike, Samsung..."
+                            class="dark:bg-secondary-800"
                         />
                     </x-shopper::forms.group>
                 </div>
@@ -42,7 +36,7 @@
                     </x-shopper::forms.group>
                 </div>
             </div>
-            <div class="bg-white dark:bg-secondary-800 rounded-lg shadow p-4 sm:p-5 overflow-hidden">
+            <div>
                 <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                     {{ __('shopper::words.media') }}
                 </h4>
@@ -50,8 +44,8 @@
                     <livewire:shopper-forms.uploads.multiple />
                 </div>
             </div>
-            <div class="relative bg-white dark:bg-secondary-800 rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">
-                <div class="flex items-center justify-between px-4 sm:px-5">
+            <div>
+                <div class="flex items-center justify-between">
                     <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::words.pricing') }}
                     </h4>
@@ -59,7 +53,7 @@
                         <button @click="display = true" x-tooltip.raw="{{ __('shopper::pages/products.about_pricing') }}" type="button" class="inline-flex text-sm text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300">
                             <x-heroicon-o-question-mark-circle class="h-5 w-5" />
                         </button>
-                        <div x-show="display" @click.outside="display = false" class="absolute z-30 top-4 inset-x-0 p-4 mx-4 rounded-md bg-secondary-50 border border-secondary-100 dark:bg-secondary-700 dark:border-secondary-600">
+                        <div x-cloak x-show="display" @click.outside="display = false" class="absolute z-30 top-4 inset-x-0 p-4 mx-4 rounded-md bg-secondary-50 border border-secondary-100 dark:bg-secondary-700 dark:border-secondary-600">
                             <div class="flex">
                                 <div>
                                     <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
@@ -79,7 +73,7 @@
                     </div>
                 </div>
                 <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
-                    <div class="grid gap-4 sm:grid-cols-6 sm:gap-6 p-4 sm:p-5">
+                    <div class="grid gap-4 sm:grid-cols-6 sm:gap-6 py-5">
                         <div class="col-span-6 sm:col-span-3">
                             <x-inputs.currency
                                 :label="__('shopper::layout.forms.label.price_amount')"
@@ -105,7 +99,7 @@
                             />
                         </div>
                     </div>
-                    <div class="grid grid-cols-6 gap-6 p-4 sm:p-5">
+                    <div class="grid grid-cols-6 gap-6 sm:py-5">
                         <div class="col-span-6 sm:col-span-3">
                             <x-inputs.currency
                                 :label="__('shopper::layout.forms.label.cost_per_item')"
@@ -122,20 +116,20 @@
                     </div>
                 </div>
             </div>
-            <div class="bg-white dark:bg-secondary-800 rounded-lg shadow pt-4 sm:pt-5 overflow-hidden">
-                <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white px-4 sm:px-5">
-                    {{ __('shopper::words.inventory') }}
+            <div>
+                <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
+                    {{ __('shopper::words.location') }}
                 </h4>
                 <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
-                    <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 p-4 sm:p-5">
+                    <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 py-5">
                         <div class="sm:col-span-1">
                             <x-shopper::forms.group :label="__('shopper::layout.forms.label.sku')" for="sku" :error="$errors->first('sku')">
-                                <x-shopper::forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
+                                <x-shopper::forms.input wire:model.defer="sku" id="sku" type="text" class="dark:bg-secondary-800" autocomplete="off" />
                             </x-shopper::forms.group>
                         </div>
                         <div class="sm:col-span-1">
                             <x-shopper::forms.group :label="__('shopper::layout.forms.label.barcode')" for="barcode" :error="$errors->first('barcode')">
-                                <x-shopper::forms.input wire:model.defer="barcode" id="barcode" type="text" autocomplete="off" />
+                                <x-shopper::forms.input wire:model.defer="barcode" id="barcode" type="text" class="dark:bg-secondary-800" autocomplete="off" />
                             </x-shopper::forms.group>
                             @if($barcodeImage)
                                 <div class="mt-2 rounded-sm w-auto shrink-0">
@@ -144,7 +138,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 p-4 sm:p-5">
+                    <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 py-5">
                         @if($inventories->count() <= 1)
                             <div class="sm:col-span-1">
                                 <x-shopper::forms.group :label="__('shopper::layout.forms.label.quantity')" for="quantity">
@@ -154,6 +148,7 @@
                                         type="number"
                                         min="0"
                                         autocomplete="off"
+                                        class="dark:bg-secondary-800"
                                     />
                                 </x-shopper::forms.group>
                             </div>
@@ -171,6 +166,7 @@
                                     min="1"
                                     step="1"
                                     autocomplete="off"
+                                    class="dark:bg-secondary-800"
                                 />
                             </x-shopper::forms.group>
                         </div>
@@ -223,8 +219,8 @@
                     @endif
                 </div>
             </div>
-            <div class="bg-white dark:bg-secondary-800 rounded-lg shadow overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
-                <div class="p-4 sm:p-5">
+            <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
+                <div class="pb-5">
                     <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::words.shipping') }}
                     </h4>
@@ -254,7 +250,7 @@
                     </div>
                 </div>
                 @if($requiresShipping)
-                    <div class="p-4 sm:p-5">
+                    <div class="py-5">
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                             {{ __('shopper::words.weight_dimension') }}
                         </h4>
@@ -263,30 +259,30 @@
                         </p>
                         <div class="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-6 sm:gap-y-4">
                             <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.width')">
-                                <x-shopper::forms.input wire:model.defer="widthValue" id="WidthValue" type="text" placeholder="0" />
+                                <x-shopper::forms.input wire:model.defer="widthValue" id="WidthValue" type="text" class="dark:bg-secondary-800" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="WidthUnit" aria-label="{{ __('shopper::layout.forms.label.width_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper::forms.select wire:model.defer="WidthUnit" aria-label="{{ __('shopper::layout.forms.label.width_unit') }}" class="py-0 pl-2 pr-7 border-transparent dark:bg-secondary-800">
                                         <option value="cm">{{ __('shopper::words.unity.cm') }}</option>
                                         <option value="m">{{ __('shopper::words.unity.m') }}</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
                             <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.height')">
-                                <x-shopper::forms.input wire:model.defer="heightValue" id="heightValue" type="text" class="pl-3 pr-12" placeholder="0" />
+                                <x-shopper::forms.input wire:model.defer="heightValue" id="heightValue" type="text" class="pl-3 pr-12 dark:bg-secondary-800" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="heightUnit" aria-label="{{ __('shopper::layout.forms.label.height_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent">
+                                    <x-shopper::forms.select wire:model.defer="heightUnit" aria-label="{{ __('shopper::layout.forms.label.height_unit') }}" class="py-0 pl-2 pr-7 border-transparent dark:bg-secondary-800">
                                         <option value="cm">{{ __('shopper::words.unity.cm') }}</option>
                                         <option value="m">{{ __('shopper::words.unity.m') }}</option>
                                     </x-shopper::forms.select>
                                 </div>
                             </x-shopper::forms.group>
                             <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.weight')">
-                                <x-shopper::forms.input wire:model.defer="weightValue" id="weightValue" type="text" class="block w-full pl-3 pr-12" placeholder="0" />
+                                <x-shopper::forms.input wire:model.defer="weightValue" id="weightValue" type="text" class="block w-full pl-3 pr-12 dark:bg-secondary-800" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
                                     <x-shopper::forms.select
                                         wire:model.defer="weightUnit"
                                         aria-label="{{ __('shopper::layout.forms.label.weight_unit') }}"
-                                        class="py-0 pl-2 pr-7 border-transparent bg-transparent"
+                                        class="py-0 pl-2 pr-7 border-transparent dark:bg-secondary-800"
                                     >
                                         <option value="kg">{{ __('shopper::words.unity.kg') }}</option>
                                         <option value="g">{{ __('shopper::words.unity.g') }}</option>
@@ -298,14 +294,14 @@
                                     wire:model.defer="volumeValue"
                                     id="VolumeValue"
                                     type="text"
-                                    class="block w-full pl-3 pr-12"
+                                    class="block w-full pl-3 pr-12 dark:bg-secondary-800"
                                     placeholder="0"
                                 />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
                                     <x-shopper::forms.select
                                         wire:model.defer="VolumeUnit"
                                         aria-label="{{ __('shopper::layout.forms.label.volume_unit') }}"
-                                        class="py-0 pl-2 pr-7 border-transparent bg-transparent"
+                                        class="py-0 pl-2 pr-7 border-transparent dark:bg-secondary-800"
                                     >
                                         <option value="l">{{ __('shopper::words.unity.l') }}</option>
                                         <option value="ml">{{ __('shopper::words.unity.ml') }}</option>
@@ -327,7 +323,7 @@
         </div>
         <div class="lg:col-span-2">
             <aside class="space-y-5">
-                <div class="bg-white dark:bg-secondary-800 rounded-lg shadow divide-y divide-secondary-200 dark:divide-secondary-700">
+                <x-shopper::card class="divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="p-4 sm:p-5">
                         <x-shopper::label value="{{ __('shopper::pages/products.status') }}" />
                         <div class="mt-4 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
@@ -384,8 +380,8 @@
                             </p>
                         @endif
                     </div>
-                </div>
-                <div class="bg-white dark:bg-secondary-800 rounded-lg shadow">
+                </x-shopper::card>
+                <x-shopper::card>
                     <div class="px-4 pt-4 sm:px-5 sm:pt-5">
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                             {{ __('shopper::pages/products.product_associations') }}
@@ -412,15 +408,15 @@
                             </x-select>
                         </x-shopper::forms.group>
                     </div>
-                </div>
-                <div class="bg-white dark:bg-secondary-800 rounded-lg shadow">
+                </x-shopper::card>
+                <x-shopper::card>
                     <div class="px-4 pt-4 sm:px-5 sm:pt-5">
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                             {{ __('shopper::pages/products.product_categories') }}
                         </h4>
                     </div>
                     <div class="px-4 py-3">
-                        <div class="space-y-3 p-2 max-h-96 border border-dashed border-secondary-200 rounded-md shadow-sm overflow-scroll hide-scroll dark:border-secondary-700">
+                        <div class="space-y-3 p-2 max-h-96 border border-dashed border-secondary-200 rounded-lg shadow-sm overflow-scroll hide-scroll dark:border-secondary-700">
                             @forelse($categories as $category)
                                 <div @if($category->children->isNotEmpty()) x-data="{ display: true }" @endif class="space-y-3">
                                     <div class="relative flex justify-between">
@@ -475,7 +471,7 @@
                             @endforelse
                         </div>
                     </div>
-                </div>
+                </x-shopper::card>
             </aside>
         </div>
     </div>
@@ -488,4 +484,4 @@
             </x-shopper::buttons.primary>
         </div>
     </div>
-</div>
+</x-shopper::container>

@@ -13,20 +13,20 @@ final class AttributeController extends ShopperBaseController
     {
         $this->authorize('browse_attributes');
 
-        return view('shopper::pages.settings.attributes.index');
+        return view('shopper::pages.attributes.index');
     }
 
     public function create(): View
     {
         $this->authorize('add_attributes');
 
-        return view('shopper::pages.settings.attributes.create');
+        return view('shopper::pages.attributes.create');
     }
 
     public function edit(Attribute $attribute): View
     {
         $this->authorize('edit_attributes');
 
-        return view('shopper::pages.settings.attributes.edit', compact('attribute'));
+        return view('shopper::pages.attributes.edit', compact('attribute'));
     }
 }

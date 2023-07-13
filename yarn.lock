@@ -22,6 +22,11 @@
     "@jridgewell/gen-mapping" "^0.3.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
+"@awcodes/alpine-floating-ui@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@awcodes/alpine-floating-ui/-/alpine-floating-ui-3.5.0.tgz#5562f8e22f433c2e47332a68ec2b5c25fdeb39a6"
+  integrity sha512-T6nRG5KwLzVq5ysgd3GmtP6QQY/7UvpJXpAKfRu4sFFTByu6y67ao2J3BtXGDynNSEzHse56IBC12uhuSpW19Q==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.22.5":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.22.5.tgz#234d98e1551960604f1246e6475891a570ad5658"

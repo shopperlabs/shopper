@@ -1,5 +1,5 @@
 <div class="flex justify-center text-center my-10">
-    <div class="bg-secondary-50 dark:bg-secondary-800 overflow-hidden shadow-md rounded-md flex items-center">
+    <div class="bg-secondary-50 dark:bg-secondary-800 overflow-hidden ring-1 ring-secondary-200 dark:ring-secondary-700 shadow rounded-lg flex items-center">
         <div class="p-3 flex items-center justify-center shrink-0 border-r border-secondary-200 dark:border-secondary-700">
             <x-heroicon-o-information-circle class="w-5 h-5 text-secondary-500 dark:text-secondary-400" />
         </div>

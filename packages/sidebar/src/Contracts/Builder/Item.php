@@ -59,6 +59,14 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function setItemClass(string $class): self;
 
+    public function getActiveClass(): string;
+
+    public function setActiveClass(string $class): self;
+
+    public function getInactiveClass(): string;
+
+    public function setInactiveClass(string $class): self;
+
     public function getParentItemClass(): string;
 
     public function setParentItemClass(string $class): self;

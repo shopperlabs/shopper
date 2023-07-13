@@ -1,10 +1,10 @@
 <div>
-    <div class="my-6 md:flex md:items-center md:justify-between">
-        <div class="flex-1 min-w-0 flex flex-row items-center justify-between md:flex-col md:items-start">
+    <div class="my-6 lg:flex lg:items-center lg:justify-between">
+        <div class="flex-1 min-w-0 flex flex-row items-center justify-between lg:flex-col lg:items-start">
             <h2 class="text-2xl font-bold leading-7 text-secondary-600 sm:text-3xl sm:leading-9 sm:truncate">
                 {{ __('shopper::words.location') }}
             </h2>
-            <div class="md:mt-2 ml-4 md:ml-0">
+            <div class="lg:mt-2 ml-4 lg:ml-0">
                 <button type="button" class="text-secondary-400 text-sm inline-flex items-center hover:text-secondary-500 focus:text-secondary-600 leading-5 transition duration-150 ease-in-out">
                     <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mr-2">
                         <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -13,7 +13,7 @@
                 </button>
             </div>
         </div>
-        <div class="mt-4 flex md:mt-0 md:ml-4">
+        <div class="mt-4 flex lg:mt-0 lg:ml-4">
             <a href="{{ route('shopper.products.index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-brand-500 hover:bg-brand-600 focus:outline-none focus:border-brand-700 focus:shadow-outline-brand active:bg-brand-700 transition ease-in-out duration-150">{{ __('View products') }}</a>
         </div>
     </div>

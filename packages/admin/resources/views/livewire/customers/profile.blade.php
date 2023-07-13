@@ -1,7 +1,7 @@
-<div class="px-4 py-5 bg-white shadow overflow-hidden rounded-md sm:p-6 dark:bg-secondary-800">
+<x-shopper::container>
     <div class="space-y-6 divide-y divide-secondary-200 dark:divide-secondary-700">
         <div class="space-y-1">
-            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white font-display">
                 {{ __('shopper::pages/customers.profile.title') }}
             </h3>
             <p class="max-w-2xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">
@@ -197,7 +197,7 @@
     </div>
     <div class="mt-10 space-y-6 divide-y divide-secondary-200 dark:divide-secondary-700">
         <div class="space-y-1">
-            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white font-display">
                 {{ __('shopper::pages/customers.profile.account') }}
             </h3>
             <p class="max-w-2xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">
@@ -238,4 +238,4 @@
             </dl>
         </div>
     </div>
-</div>
+</x-shopper::container>

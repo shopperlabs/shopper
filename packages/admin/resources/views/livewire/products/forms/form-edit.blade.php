@@ -1,10 +1,10 @@
-<div>
-    <div class="grid gap-4 mt-6 xl:grid-cols-6 lg:gap-6">
-        <div class="space-y-5 xl:col-span-4">
-            <div class="p-4 bg-white rounded-lg shadow dark:bg-secondary-800 sm:p-5">
+<x-shopper::container>
+    <div class="grid gap-x-4 gap-y-5 mt-6 xl:grid-cols-6 lg:gap-y-6 lg:gap-x-12">
+        <div class="space-y-8 xl:col-span-4">
+            <div>
                 <div>
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
-                        <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
+                        <x-shopper::forms.input wire:model.defer="name" id="name" type="text" class="dark:bg-secondary-800 dark:border-secondary-800" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
                     </x-shopper::forms.group>
                 </div>
                 <div class="pt-4 mt-5 border-t border-secondary-200 dark:border-secondary-700">
@@ -13,7 +13,7 @@
                     </x-shopper::forms.group>
                 </div>
             </div>
-            <div class="p-4 overflow-hidden bg-white rounded-lg shadow dark:bg-secondary-800 sm:p-5">
+            <div>
                 <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                     {{ __('shopper::words.media') }}
                 </h4>
@@ -35,8 +35,8 @@
                     @enderror
                 </div>
             </div>
-            <div class="relative pt-4 overflow-hidden bg-white rounded-lg shadow dark:bg-secondary-800 sm:pt-5">
-                <div class="flex items-center justify-between px-4 sm:px-5">
+            <div class="relative">
+                <div class="flex items-center justify-between">
                     <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::words.pricing') }}
                     </h4>
@@ -44,7 +44,7 @@
                         <button @click="display = true" x-tooltip.raw="{{ __('shopper::pages/products.about_pricing') }}" type="button" class="inline-flex text-sm text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300">
                             <x-heroicon-o-question-mark-circle class="h-5 w-5" />
                         </button>
-                        <div x-show="display" @click.outside="display = false" class="absolute z-30 top-4 inset-x-0 p-4 mx-4 rounded-md bg-secondary-50 border border-secondary-100 dark:bg-secondary-700 dark:border-secondary-600">
+                        <div x-cloak x-show="display" @click.outside="display = false" class="absolute z-30 top-4 inset-x-0 p-4 mx-4 rounded-md bg-secondary-50 border border-secondary-100 dark:bg-secondary-700 dark:border-secondary-600">
                             <div class="flex">
                                 <div>
                                     <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
-                    <div class="grid gap-4 p-4 sm:grid-cols-6 sm:gap-6 sm:p-5">
+                    <div class="grid gap-4 sm:grid-cols-6 sm:gap-6 py-5">
                         <div class="col-span-6 sm:col-span-3">
                             <x-inputs.currency
                                 :label="__('shopper::layout.forms.label.price_amount')"
@@ -90,7 +90,7 @@
                             />
                         </div>
                     </div>
-                    <div class="grid grid-cols-6 gap-6 p-4 sm:p-5">
+                    <div class="grid grid-cols-6 gap-6 py-5">
                         <div class="col-span-6 sm:col-span-3">
                             <x-inputs.currency
                                 :label="__('shopper::layout.forms.label.cost_per_item')"
@@ -110,7 +110,7 @@
         </div>
         <div class="xl:col-span-2">
             <aside class="space-y-5">
-                <div class="bg-white divide-y rounded-lg shadow dark:bg-secondary-800 divide-secondary-200 dark:divide-secondary-700">
+                <x-shopper::card class="divide-y divide-secondary-200 dark:divide-secondary-700">
                     <div class="p-4 sm:p-5">
                         <x-shopper::label value="{{ __('shopper::pages/products.status') }}" />
                         <div class="mt-4 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
@@ -169,8 +169,8 @@
                             </p>
                         @endif
                     </div>
-                </div>
-                <div class="bg-white rounded-lg shadow dark:bg-secondary-800">
+                </x-shopper::card>
+                <x-shopper::card>
                     <div class="px-4 pt-4 sm:px-5 sm:pt-5">
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                             {{ __('shopper::pages/products.product_associations') }}
@@ -196,8 +196,8 @@
                             </x-select>
                         </x-shopper::forms.group>
                     </div>
-                </div>
-                <div class="bg-white rounded-lg shadow dark:bg-secondary-800">
+                </x-shopper::card>
+                <x-shopper::card>
                     <div class="px-4 pt-4 sm:px-5 sm:pt-5">
                         <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                             {{ __('shopper::pages/products.product_categories') }}
@@ -235,7 +235,7 @@
                             @endforeach
                         </div>
                     </div>
-                </div>
+                </x-shopper::card>
             </aside>
         </div>
     </div>
@@ -248,4 +248,4 @@
             </x-shopper::buttons.primary>
         </div>
     </div>
-</div>
+</x-shopper::container>

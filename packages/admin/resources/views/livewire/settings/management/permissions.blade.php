@@ -1,5 +1,5 @@
-<div class="bg-white shadow overflow-hidden rounded-md dark:bg-secondary-800">
-    <div class="px-4 pt-5 sm:px-6 flex flex-wrap items-baseline">
+<div class="overflow-hidden">
+    <div class="px-4 2xl:px-6 flex flex-wrap items-baseline">
         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
             {{ __('shopper::pages/settings.roles_permissions.permissions') }}
         </h3>
@@ -10,14 +10,14 @@
     <div class="mt-4 border-t border-secondary-200 overflow-x-auto divide-y divide-secondary-200 dark:border-secondary-700 dark:divide-secondary-700">
         @foreach($groupPermissions as $group => $permissions)
             <div>
-                <div class="w-full py-1.5 px-4 bg-secondary-100 dark:bg-secondary-700">
-                    <span class="text-sm font-bold leading-5 capitalize tracking-wide text-secondary-900 sm:text-base sm:leading-6 dark:text-white">
+                <div class="w-full py-1.5 px-4 lg:px-6 bg-secondary-50 dark:bg-secondary-700">
+                    <span class="text-xs uppercase font-semibold font-display leading-5 tracking-wider text-secondary-500 dark:text-secondary-400">
                         {{ ! empty($group) ? $group : __('shopper::pages/settings.roles_permissions.custom_permission') }}
                     </span>
                 </div>
-                <div class="px-4 py-1 divide-y divide-secondary-200 dark:divide-secondary-700">
+                <div class="py-1 divide-y divide-secondary-200 dark:divide-secondary-700">
                     @foreach($permissions as $permission)
-                        <div class="flex items-center justify-between py-2">
+                        <div class="flex items-center justify-between px-4 lg:px-6 py-2.5">
                             <div class="flex items-center space-x-3">
                                 <input
                                    id="permission_{{ $permission->id }}"

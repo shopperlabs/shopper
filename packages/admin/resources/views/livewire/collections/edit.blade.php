@@ -1,10 +1,10 @@
-<div>
+<x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.collections.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
+        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.collections.index')" :title="__('shopper::layout.sidebar.collections')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="mt-3">
+    <x-shopper::heading>
         <x-slot name="title">
             {{ $name }}
         </x-slot>
@@ -17,9 +17,9 @@
         </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-6 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-6 lg:gap-6">
+    <div class="mt-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-6 lg:gap-6">
         <div class="lg:col-span-4 space-y-5">
-            <div class="bg-white rounded-lg shadow p-4 sm:p-5 dark:bg-secondary-800">
+            <x-shopper::card class="p-4 sm:p-5">
                 <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
                     <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="{{ __('Summers Collections, Christmas promotions...') }}" />
                 </x-shopper::forms.group>
@@ -28,7 +28,7 @@
                         <livewire:shopper-forms.trix :value="$description" />
                     </x-shopper::forms.group>
                 </div>
-            </div>
+            </x-shopper::card>
 
             <livewire:shopper-collections.products :collection="$collection" />
 
@@ -42,7 +42,7 @@
         </div>
         <div class="lg:col-span-2">
             <aside class="sticky top-6 space-y-5">
-                <div class="bg-white rounded-md shadow p-4 sm:p-5 dark:bg-secondary-800">
+                <x-shopper::card class="p-4 sm:p-5">
                     <x-datetime-picker
                         :label="__('shopper::layout.forms.label.availability')"
                         :placeholder="__('shopper::layout.forms.placeholder.pick_a_date')"
@@ -65,15 +65,15 @@
                             {{ __('shopper::pages/collections.availability_description') }}
                         </p>
                     @endif
-                </div>
-                <div class="bg-white rounded-md shadow overflow-hidden p-4 sm:p-5 dark:bg-secondary-800">
+                </x-shopper::card>
+                <x-shopper::card class="overflow-hidden p-4 sm:p-5">
                     <h4 class="block text-sm font-medium leading-5 text-secondary-700 dark:text-secondary-300">
                         {{ __('shopper::layout.forms.label.image_preview') }}
                     </h4>
                     <div class="mt-1">
                         <livewire:shopper-forms.uploads.single :media="$collection->getFirstMedia(config('shopper.core.storage.collection_name'))" />
                     </div>
-                </div>
+                </x-shopper::card>
             </aside>
         </div>
     </div>
@@ -86,4 +86,4 @@
             </x-shopper::buttons.primary>
         </div>
     </div>
-</div>
+</x-shopper::container>

@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::layout.sidebar.discounts') }}
@@ -141,13 +141,16 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <div class="mt-6 bg-white dark:bg-secondary-800 shadow rounded-md">
-            <div class="p-4 sm:p-6 sm:pb-4">
-                <div class="flex items-start space-x-4">
-                    <x-shopper::forms.search
-                        :label="__('shopper::pages/discounts.search')"
-                        :placeholder="__('shopper::pages/discounts.search')"
-                    />
+        <x-shopper::card class="mt-6">
+        <div x-data="{ open: false }">
+            <div class="rounded-t-lg bg-secondary-50/50 dark:bg-secondary-900/50 p-4 sm:p-6">
+                <div class="flex items-start justify-between space-x-4">
+                    <div class="w-full lg:max-w-lg">
+                        <x-shopper::forms.search
+                            :label="__('shopper::pages/discounts.search')"
+                            :placeholder="__('shopper::pages/discounts.search')"
+                        />
+                    </div>
                     <div class="flex items-center space-x-3">
                         <div class="relative z-10 inline-flex shadow-sm rounded-md">
                             <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
@@ -303,8 +306,9 @@
                 </div>
             </div>
         </div>
+        </x-shopper::card>
     @endif
 
     <x-shopper::learn-more :name="__('shopper::layout.sidebar.discounts')" link="discounts" />
 
-</div>
+</x-shopper::container>

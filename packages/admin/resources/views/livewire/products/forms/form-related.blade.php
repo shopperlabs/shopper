@@ -1,7 +1,7 @@
-<div>
+<x-shopper::container>
     <div class="sm:flex sm:justify-between">
         <div>
-            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white font-display">
                 {{ __('shopper::pages/products.related.title') }}
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-secondary-500 dark:text-secondary-400">
@@ -18,8 +18,8 @@
     </div>
 
     <section aria-labelledby="similar_products_heading">
-        <div class="mt-5 bg-white dark:bg-secondary-800 p-4 sm:p-6 shadow rounded-md">
-            <div role="list" class="text-sm font-medium text-secondary-500 divide-y divide-secondary-200 dark:text-secondary-400 dark:divide-secondary-700 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-5 lg:divide-none" wire:poll.visible>
+        <x-shopper::card class="mt-5 p-4 sm:p-5">
+            <div role="list" class="text-sm font-medium text-secondary-500 divide-y divide-secondary-200 dark:text-secondary-400 dark:divide-secondary-700 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-5 lg:divide-none" wire:poll.visible.30s>
                 @forelse($relatedProducts as $relatedProduct)
                     <div class="flex py-6 space-x-6 lg:py-0">
                         <img src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $relatedProduct->name }}" class="flex-none w-20 h-20 bg-secondary-100 dark:bg-secondary-900 rounded-md object-center object-cover">
@@ -30,7 +30,7 @@
                                 </a>
                             </h3>
                             <p class="font-medium text-secondary-500 dark:text-secondary-400">
-                                {{ $relatedProduct->formattedPrice }}
+                                {{ $relatedProduct->getPriceAmount()?->formatted }}
                             </p>
                             <button wire:click="remove({{ $relatedProduct->id }})" type="button" class="inline-flex text-red-500 text-sm leading-5 focus:outline-none hover:underline">
                                 {{ __('shopper::layout.forms.actions.remove') }}
@@ -39,7 +39,7 @@
                     </div>
                 @empty
                     <div class="text-center lg:col-span-3">
-                        <x-heroicon-o-book-open class="mx-auto h-12 w-12 text-secondary-400" />
+                        <x-heroicon-o-book-open class="mx-auto h-12 w-12 text-primary-600" />
                         <h3 class="mt-2 text-base font-medium text-secondary-900 dark:text-white">
                             {{ __('shopper::pages/products.related.empty') }}
                         </h3>
@@ -55,6 +55,6 @@
                     </div>
                 @endforelse
             </div>
-        </div>
+        </x-shopper::card>
     </section>
-</div>
+</x-shopper::container>

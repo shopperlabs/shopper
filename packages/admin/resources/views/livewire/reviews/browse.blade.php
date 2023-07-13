@@ -1,4 +1,4 @@
-<div>
+<x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::layout.sidebar.reviews') }}
@@ -6,7 +6,7 @@
     </x-shopper::heading>
 
     @if($total === 0)
-        <div class="mt-10 relative w-full bg-white dark:bg-secondary-800 flex flex-col shadow-sm rounded-md items-center justify-center py-12 lg:py-16">
+        <div class="mt-10 relative w-full flex flex-col items-center justify-center py-12 lg:py-16">
             <div class="shrink-0 w-1/3 h-64">
                 <svg class="w-full h-full" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 320 230">
                     <style>
@@ -360,16 +360,20 @@
                 </svg>
             </div>
             <div class="mt-5 w-full sm:max-w-md space-y-3 text-center">
-                <p class="text-base leading-6 text-secondary-900 dark:text-white font-medium">{{ __('shopper::pages/products.reviews.title') }}</p>
-                <p class="text-sm text-secondary-500 dark:text-secondary-400">{{ __('shopper::pages/products.reviews.description') }}</p>
+                <h3 class="text-base leading-6 text-secondary-900 dark:text-white font-medium font-display lg:text-lg">
+                    {{ __('shopper::pages/products.reviews.title') }}
+                </h3>
+                <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                    {{ __('shopper::pages/products.reviews.description') }}
+                </p>
             </div>
         </div>
     @else
-        <div class="mt-6">
+        <div class="mt-8">
             <livewire:shopper-tables.reviews-table />
         </div>
     @endif
 
     <x-shopper::learn-more :name="__('shopper::layout.sidebar.reviews')" link="reviews" />
 
-</div>
+</x-shopper::container>

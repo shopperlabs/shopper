@@ -26,6 +26,10 @@ class CustomersTable extends DataTableComponent
                 'avatar_location',
             ])
             ->setDefaultSort('first_name')
+            ->setTableWrapperAttributes([
+                'default' => true,
+                'class' => 'ring-1 ring-secondary-200 dark:ring-secondary-700',
+            ])
             ->setBulkActions([
                 'delete' => __('shopper::layout.forms.actions.delete'),
                 'verified' => __('shopper::layout.forms.actions.verified'),

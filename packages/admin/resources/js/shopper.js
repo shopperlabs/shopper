@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs'
 import Focus from '@alpinejs/focus'
 import Tooltip from '@ryangjchandler/alpine-tooltip'
+import AlpineFloatingUI from '@awcodes/alpine-floating-ui'
 import Sortable from 'sortablejs'
 import * as FilePond from 'filepond'
 import NotificationsAlpinePlugin from '../../../../vendor/filament/notifications/dist/module.esm'
@@ -13,6 +14,7 @@ import mapBox from './plugins/mapBox'
 
 Alpine.plugin(Tooltip)
 Alpine.plugin(Focus)
+Alpine.plugin(AlpineFloatingUI)
 Alpine.plugin(NotificationsAlpinePlugin)
 Alpine.data('internationalNumber', internationalNumber)
 Alpine.data('mapBox', mapBox)

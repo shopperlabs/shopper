@@ -1,4 +1,12 @@
-/* Forms */
+@font-face {
+  font-family: 'Mona Sans';
+  font-weight: 200 900;
+  font-display: block;
+  font-style: normal;
+  font-stretch: 75% 125%;
+  src: url('./fonts/Mona-Sans.var.woff2') format('woff2');
+}
+
 input {
   width: 100%;
 }
@@ -13,7 +21,6 @@ input[type="number"] {
   margin: 0;
 }
 
-/* All custom class */
 .hide-scroll::-webkit-scrollbar {
   display: none;
 }
@@ -43,4 +50,18 @@ input[type="number"] {
 
 .iti__selected-flag {
   padding: 0 10px;
+}
+
+.scrolling::-webkit-scrollbar {
+   width: 0.5em;
+   height: 0.5em;
+ }
+
+.scrolling::-webkit-scrollbar-thumb {
+   background-color: theme('colors.secondary.100');
+   border-radius: 2px;
+}
+
+.dark .scrolling::-webkit-scrollbar-thumb {
+   background-color: theme('colors.secondary.700');
 }

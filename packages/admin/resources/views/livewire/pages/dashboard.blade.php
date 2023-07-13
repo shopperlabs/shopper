@@ -1,6 +1,6 @@
-<div>
+<x-shopper::container>
     <div class="flex items-center space-x-2">
-        <svg class="h-8 w-8 text-secondary-500" fill="currentColor" viewBox="0 0 24 24">
+        <svg class="h-8 w-8 text-secondary-500 dark:text-secondary-400" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8 3.6a1.2 1.2 0 1 1 2.4 0v6.6a.6.6 0 1 0 1.2 0V4.8a1.2 1.2 0 1 1 2.4 0v5.4a.6.6 0 1 0 1.2 0v-3a1.2 1.2 0 1 1 2.4 0v6a8.401 8.401 0 0 1-16.16 3.215A8.4 8.4 0 0 1 3.6 13.2v-2.4a1.2 1.2 0 0 1 2.4 0v3a.6.6 0 1 0 1.2 0v-9a1.2 1.2 0 0 1 2.4 0v5.4a.6.6 0 1 0 1.2 0V3.6z" />
         </svg>
         <h2 class="welcome text-3xl leading-8 font-bold text-secondary-900 dark:text-white sm:leading-9 sm:truncate">
@@ -8,7 +8,7 @@
         </h2>
     </div>
 
-    <div class="my-8 bg-white dark:bg-secondary-800 overflow-hidden shadow-lg rounded-lg">
+    <div class="my-8 bg-white border border-secondary-200 dark:border-secondary-700 dark:bg-secondary-800 overflow-hidden rounded-lg">
         <div class="p-6 border-b border-secondary-200 dark:border-secondary-700">
             <div class="text-xl text-secondary-900 dark:text-white font-medium">
                 {{ __('shopper::messages.dashboard.header') }}
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <div class="bg-secondary-50 dark:bg-secondary-700 grid grid-cols-1 md:grid-cols-2">
+        <div class="bg-secondary-50 dark:bg-secondary-700 grid grid-cols-1 lg:grid-cols-2">
             <div class="px-6 py-5">
                 <div class="flex items-center">
                     <x-heroicon-o-code class="w-6 h-6 text-primary-600" />
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="ml-10">
-                    <div class="mt-4 text-sm text-secondary-500 dark:text-secondary-400">
+                    <div class="mt-4 text-sm text-secondary-500 dark:text-secondary-300">
                         {{ __('shopper::messages.dashboard.cards.doc_description') }}
                     </div>
 
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="ml-10">
-                    <div class="mt-4 text-sm text-secondary-500 dark:text-secondary-400">
+                    <div class="mt-4 text-sm text-secondary-500 dark:text-secondary-300">
                         {{ __('shopper::messages.dashboard.cards.screencast_description') }}
                     </div>
 
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="ml-10">
-                    <div class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
+                    <div class="mt-2 text-sm text-secondary-500 dark:text-secondary-300">
                         {{ __('shopper::messages.dashboard.cards.theme_description') }}
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="ml-10">
-                    <div class="mt-2 text-sm text-secondary-500 dark:text-secondary-400">
+                    <div class="mt-2 text-sm text-secondary-500 dark:text-secondary-300">
                         {{ __('shopper::messages.dashboard.cards.product_description') }}
                     </div>
 
@@ -116,4 +116,4 @@
             </div>
         </div>
     </div>
-</div>
+</x-shopper::container>

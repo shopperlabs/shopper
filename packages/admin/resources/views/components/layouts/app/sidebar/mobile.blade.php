@@ -1,4 +1,4 @@
-<div x-cloak x-show="sidebarOpen" class="md:hidden">
+<div x-cloak x-show="sidebarOpen" class="lg:hidden">
     <div x-cloak
          x-show="sidebarOpen"
          @click="sidebarOpen = false"
@@ -28,9 +28,7 @@
                 </button>
             </div>
 
-            <x-shopper::layouts.app.sidebar.primary />
-
-            <x-shopper::layouts.app.sidebar.secondary />
+            <x-shopper::layouts.app.sidebar.content class="w-full" />
         </div>
 
         <div class="shrink-0 w-14"></div>

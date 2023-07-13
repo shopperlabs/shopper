@@ -14,6 +14,7 @@ module.exports = {
         primary: colors.blue,
         indigo: colors.blue,
         secondary: colors.slate,
+        gray: colors.slate,
         orange: colors.orange,
         positive: colors.emerald,
         success: colors.emerald,
@@ -28,6 +29,7 @@ module.exports = {
       spacing: {
         44: '11rem',
         18: '4.5rem',
+        70: '17.5rem',
         95: '23.75rem',
         125: '31.25rem',
         140: '35rem'
@@ -38,7 +40,8 @@ module.exports = {
         40: '0.4',
       },
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans]
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        display: ['Mona Sans', ...defaultTheme.fontFamily.sans],
       },
       minHeight: {
         '(screen-content)': 'calc(100vh - 9.625rem)',

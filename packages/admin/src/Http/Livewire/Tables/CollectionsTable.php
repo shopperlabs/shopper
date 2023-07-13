@@ -22,6 +22,10 @@ class CollectionsTable extends DataTableComponent
         $this->setPrimaryKey('id')
             ->setAdditionalSelects(['id', 'slug', 'sort'])
             ->setDefaultSort('name')
+            ->setTableWrapperAttributes([
+                'default' => true,
+                'class' => 'ring-1 ring-secondary-200 dark:ring-secondary-700',
+            ])
             ->setBulkActions([
                 'deleteSelected' => __('shopper::layout.forms.actions.delete'),
             ]);

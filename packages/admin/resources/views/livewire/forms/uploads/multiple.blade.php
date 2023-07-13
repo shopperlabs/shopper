@@ -1,8 +1,8 @@
 <div class="relative" x-data="{ focused: false }">
     <div
         x-ref="dragContainer"
-        :class="focused ? 'bg-secondary-50 ' : 'border-secondary-300 dark:border-secondary-700 bg-transparent'"
-        class="relative flex-1 w-full px-6 py-10 group flex justify-center border-2 border-secondary-300 border-dashed dark:border-secondary-700 hover:bg-secondary-50 dark:hover:bg-secondary-900 rounded-md cursor-pointer transition duration-150 ease-in-out">
+        :class="focused ? 'bg-secondary-100/50 dark:bg-secondary-700/50 ' : 'border-secondary-300 dark:border-secondary-700 bg-transparent'"
+        class="relative bg-secondary-50 dark:bg-secondary-800 flex-1 w-full px-6 py-10 group flex justify-center border-2 border-secondary-300 border-dashed dark:border-secondary-700 hover:bg-secondary-100/50 dark:hover:bg-secondary-700/50 rounded-lg cursor-pointer transition duration-150 ease-in-out">
         <div class="space-y-1 text-center">
             <svg class="mx-auto h-20 w-20 text-secondary-400 group-hover:text-primary-500" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 332.2 214" xml:space="preserve">
                 <style>

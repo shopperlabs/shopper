@@ -1,4 +1,4 @@
-<div>
+<x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::layout.sidebar.brands') }}
@@ -23,7 +23,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/brands.title')"
             :content="__('shopper::pages/brands.content')"
-            :button="__('shopper::words.actions_label.add_new', ['name' => __('brand')])"
+            :button="__('shopper::words.actions_label.add_new', ['name' => __('shopper::words.brand')])"
             permission="add_brands"
             :url="route('shopper.brands.create')"
         >
@@ -137,4 +137,4 @@
 
     <x-shopper::learn-more :name="__('shopper::layout.sidebar.brands')" link="brands" />
 
-</div>
+</x-shopper::container>

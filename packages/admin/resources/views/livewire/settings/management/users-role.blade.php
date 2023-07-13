@@ -1,5 +1,5 @@
-<div class="bg-white shadow overflow-hidden rounded-md dark:bg-secondary-800">
-    <div class="px-4 pt-5 sm:px-6 flex flex-wrap items-baseline">
+<div class="overflow-hidden">
+    <div class="px-4 2xl:px-6 flex flex-wrap items-baseline">
         <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
             {{ __('shopper::words.users') }}
         </h3>
@@ -18,10 +18,10 @@
                         <x-shopper::tables.table-head>
                             {{ __('shopper::layout.forms.label.email') }}
                         </x-shopper::tables.table-head>
-                        <x-shopper::tables.table-head class="hidden md:table-cell text-right">
+                        <x-shopper::tables.table-head class="hidden lg:table-cell text-right">
                             {{ __('shopper::layout.forms.label.role') }}
                         </x-shopper::tables.table-head>
-                        <x-shopper::tables.table-head class="hidden md:table-cell text-right">
+                        <x-shopper::tables.table-head class="hidden lg:table-cell text-right">
                             {{ __('shopper::layout.forms.label.access') }}
                         </x-shopper::tables.table-head>
                         <x-shopper::tables.table-head class="pr-6" />
@@ -55,12 +55,12 @@
                                     <span class="ml-1.5">{{ $user->email }}</span>
                                 </div>
                             </td>
-                            <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 text-right">
+                            <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 text-right">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-secondary-100 text-secondary-800 dark:bg-secondary-700 dark:text-secondary-400">
                                     {{ $user->roles_label }}
                                 </span>
                             </td>
-                            <td class="hidden md:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400 text-right">
+                            <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 dark:text-secondary-400 text-right">
                                 {{ $user->hasRole(config('shopper.core.users.admin_role')) ? __('shopper::words.full') : __('shopper::words.limited') }}
                             </td>
                             <td class="pr-6 text-right">

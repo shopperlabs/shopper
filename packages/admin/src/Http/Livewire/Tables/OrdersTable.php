@@ -16,16 +16,15 @@ class OrdersTable extends DataTableComponent
         'number' => null,
     ];
 
-    public function boot(): void
-    {
-        $this->queryString['columnSearch'] = ['except' => null];
-    }
-
     public function configure(): void
     {
         $this->setPrimaryKey('id')
             ->setAdditionalSelects(['id', 'currency', 'shipping_total', 'shipping_method'])
             ->setFilterLayoutSlideDown()
+            ->setTableWrapperAttributes([
+                'default' => true,
+                'class' => 'ring-1 ring-secondary-200 dark:ring-secondary-700',
+            ])
             ->setTdAttributes(function (Views\Column $column) {
                 if ($column->isField('id')) {
                     return [
@@ -43,6 +42,11 @@ class OrdersTable extends DataTableComponent
             ->setBulkActions([
                 'archived' => __('shopper::layout.forms.actions.archived'),
             ]);
+    }
+
+    public function boot(): void
+    {
+        $this->queryString['columnSearch'] = ['except' => null];
     }
 
     public function archived(): void
@@ -114,7 +118,7 @@ class OrdersTable extends DataTableComponent
             Views\Column::make(__('shopper::layout.forms.label.status'), 'status')
                 ->view('shopper::livewire.tables.cells.orders.status'),
             Views\Column::make(__('shopper::words.customer'), 'user_id')
-                ->searchable(function (Builder $query, $searchTerm): void {
+                ->searchable(function (Builder $query, string $searchTerm): void {
                     $query->whereHas('customer', function (Builder $query) use ($searchTerm): void {
                         $query->where('first_name', 'like', '%' . $searchTerm . '%')
                             ->orWhere('last_name', 'like', '%' . $searchTerm . '%');

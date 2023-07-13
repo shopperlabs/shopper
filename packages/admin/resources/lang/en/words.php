@@ -43,7 +43,7 @@ return [
     'results' => 'results',
     'media' => 'Media',
     'hide' => 'Hide',
-    'show' => 'show',
+    'show' => 'Show',
 
     'pricing' => 'Pricing',
     'price' => 'Price',
@@ -149,4 +149,5 @@ return [
     'default' => 'Default',
     'number_not_set' => 'Number not set',
     'added_on' => 'Added on',
+    'dark_mode' => 'Dark Mode',
 ];

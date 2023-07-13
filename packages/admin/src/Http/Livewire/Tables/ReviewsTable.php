@@ -29,6 +29,10 @@ class ReviewsTable extends DataTableComponent
                 'reviewrateable_type',
                 'author_type',
             ])
+            ->setTableWrapperAttributes([
+                'default' => true,
+                'class' => 'ring-1 ring-secondary-200 dark:ring-secondary-700',
+            ])
             ->setTdAttributes(function (Views\Column $column) {
                 if ($column->isField('reviewrateable_id')) {
                     return [

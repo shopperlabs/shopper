@@ -1,7 +1,7 @@
-<div>
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+<x-shopper::container>
+    <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
         @forelse($addresses as $address)
-            <div class="relative flex items-center px-6 py-5 rounded-lg bg-white shadow dark:bg-secondary-800">
+            <x-shopper::card class="relative flex items-center px-6 py-5">
                 <div class="flex-1 min-w-0">
                     <div class="focus:outline-none">
                         <span class="absolute inset-0" aria-hidden="true"></span>
@@ -26,14 +26,15 @@
                                 <span>{{ $address->phone_number }}</span> <br />
                                 <span>{{ $address->zipcode }}</span>,
                                 <span>{{ $address->country->name }}</span>
+                                <span>{{ isoToEmoji($address->country->cca2) }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </x-shopper::card>
         @empty
             <div class="sm:col-span-3 relative rounded-lg bg-white px-6 py-10 sm:py-12 shadow flex flex-col items-center dark:bg-secondary-800">
-                <div class="shrink-0 h-24 w-24 mx-auto text-secondary-400">
+                <div class="shrink-0 h-24 w-24 mx-auto text-primary-500">
                     <x-heroicon-o-map class="w-full h-full" />
                 </div>
                 <div class="mt-5 w-full sm:max-w-md space-y-2 text-center">
@@ -47,4 +48,4 @@
             </div>
         @endforelse
     </div>
-</div>
+</x-shopper::container>

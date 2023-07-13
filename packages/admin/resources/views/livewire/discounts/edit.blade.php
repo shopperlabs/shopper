@@ -1,6 +1,6 @@
-<div x-data="{ modal: false, show: false, on: @entangle('is_active') }">
-    <x-shopper::breadcrumb :back="route('shopper.discounts.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
+<x-shopper::container>
+    <x-shopper::breadcrumb :back="route('shopper.discounts.index')" :current="$discount->code">
+        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.discounts.index')" :title="__('shopper::layout.sidebar.discounts')" />
     </x-shopper::breadcrumb>
 
@@ -8,18 +8,11 @@
         <x-slot name="title">
             {{ $discount->code }}
         </x-slot>
-
-        <x-slot name="action">
-            <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
-                <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('shopper::layout.forms.actions.update') }}
-            </x-shopper::buttons.primary>
-        </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-6 grid gap-4 sm:grid-cols-6 sm:gap-6">
+    <div x-data="{ modal: false, show: false, on: @entangle('is_active') }" class="mt-6 grid gap-4 sm:grid-cols-6 sm:gap-6">
         <div class="lg:col-span-4 space-y-5">
-            <div class="bg-white p-4 sm:p-5 shadow rounded-md dark:bg-secondary-800">
+            <x-shopper::card class="p-4 sm:p-5">
                 <div class="w-full mb-3">
                     <div class="flex items-center justify-between">
                         <x-shopper::label for="code" :value="__('shopper::layout.forms.label.code')" />
@@ -44,8 +37,8 @@
                 <p class="mt-2 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
                     {{ __('shopper::pages/discounts.name_helptext') }}
                 </p>
-            </div>
-            <div class="bg-white divide-y divide-secondary-200 shadow rounded-md dark:bg-secondary-800 dark:divide-secondary-700">
+            </x-shopper::card>
+            <x-shopper::card class="divide-y divide-secondary-200 dark:divide-secondary-700">
                 <div class="p-4 sm:p-5">
                     <div class="flex items-center justify-between">
                         <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">
@@ -271,8 +264,8 @@
                         @endif
                     @endif
                 </div>
-            </div>
-            <div class="p-4 bg-white shadow rounded-md sm:p-5 dark:bg-secondary-800">
+            </x-shopper::card>
+            <x-shopper::card class="p-4 sm:p-5">
                 <h4 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('shopper::pages/discounts.usage_limits') }}
                 </h4>
@@ -322,8 +315,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="p-4 bg-white shadow rounded-md sm:p-5 dark:bg-secondary-800">
+            </x-shopper::card>
+            <x-shopper::card class="p-4 sm:p-5">
                 <h4 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('shopper::pages/discounts.active_dates') }}
                 </h4>
@@ -351,12 +344,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </x-shopper::card>
         </div>
         <div class="lg:col-span-2">
-            <aside class="sticky top-10">
-                <div class="space-y-5">
-                    <div class="px-4 py-5 bg-white shadow-md rounded-md sm:px-6 dark:bg-secondary-800">
+            <aside class="sticky top-14">
+                <x-shopper::card class="space-y-5 divide-y divide-secondary-200 dark:divide-secondary-700">
+                    <div class="p-4 sm:p-5">
                         <div class="flex items-center space-x-2">
                             <h4 class="font-medium text-base text-secondary-900 dark:text-white">
                                 {{ __('shopper::words.summary') }}
@@ -407,7 +400,7 @@
                             </ul>
                         @endif
                     </div>
-                    <div class="p-4 bg-white shadow-md rounded-md sm:p-5 dark:bg-secondary-800">
+                    <div class="p-4 sm:p-5">
                         <h4 class="text-secondary-900 font-medium text-base leading-6 dark:text-white">
                             {{ __('shopper::layout.forms.label.visibility') }}
                         </h4>
@@ -440,13 +433,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </x-shopper::card>
             </aside>
         </div>
     </div>
 
     <div class="mt-6 pt-5 pb-10 border-t border-secondary-200 dark:border-secondary-700">
-        <div class="flex items-center justify-between space-x-4">
+        <div class="flex items-center justify-end space-x-4">
             @can('delete_discounts')
                 <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-discount', {{ json_encode([$discount->id]) }})" type="button">
                     <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2"/>
@@ -461,5 +454,4 @@
             </div>
         </div>
     </div>
-
-</div>
+</x-shopper::container>

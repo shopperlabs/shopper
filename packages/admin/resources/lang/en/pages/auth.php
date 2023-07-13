@@ -61,7 +61,7 @@ return [
         'two_factor_description' => 'After entering your password, verify your identity with a second authentication method.',
         'two_factor_enabled' => 'You have enabled two factor authentication.',
         'two_factor_disabled' => 'You have not enabled two factor authentication.',
-        'two_factor_install_message' => 'To utilize two factor authentication, you must install the Google Authenticator application on your smartphone.',
+        'two_factor_install_message' => 'To use two factor authentication, you must install the Google Authenticator application on your smartphone.',
         'two_factor_secure' => 'With two factor authentication, only you can access your account — even if someone else has your password.',
         'two_factor_activation_message' => 'When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone\'s Google Authenticator application.',
         'two_factor_is_enabled' => 'Two factor authentication is now enabled. Scan the following QR code using your phone\'s authenticator application.',

@@ -149,4 +149,5 @@ return [
     'default' => 'Par défaut',
     'number_not_set' => 'Numéro non défini',
     'added_on' => 'Ajouté le',
+    'dark_mode' => 'Thème sombre',
 ];

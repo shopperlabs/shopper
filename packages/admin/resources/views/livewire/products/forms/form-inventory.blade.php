@@ -1,15 +1,15 @@
-<div>
+<x-shopper::container>
     <div>
         <div>
-            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white font-display">
                 {{ __('shopper::pages/products.inventory.title') }}
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-secondary-500 dark:text-secondary-400">
                 {{ __('shopper::pages/products.inventory.description') }}
             </p>
         </div>
-        <div class="mt-5 bg-white dark:bg-secondary-800 rounded-lg overflow-hidden shadow-md">
-            <div class="p-5 sm:p-5">
+        <x-shopper::card class="mt-5 overflow-hidden">
+            <div class="p-4">
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-5">
                     <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.sku')" for="sku" :error="$errors->first('sku')">
                         <x-shopper::forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
@@ -29,13 +29,13 @@
                     </x-shopper::forms.group>
                 </div>
             </div>
-            <div class="px-4 py-3 bg-secondary-50 dark:bg-transparent text-right sm:px-6">
+            <div class="px-4 py-3 text-right">
                 <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                     {{ __('shopper::layout.forms.actions.update') }}
                 </x-shopper::buttons.primary>
             </div>
-        </div>
+        </x-shopper::card>
     </div>
 
     <x-shopper::separator />
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div class="mt-5 bg-white dark:bg-secondary-800 shadow-md rounded-md overflow-hidden">
+    <x-shopper::card class="mt-5 overflow-hidden">
         @if($inventories->count() > 1)
             <div class="p-4 sm:p-5 relative flex items-center justify-between border-b border-secondary-200 dark:border-secondary-700">
                 <span class="relative z-0 inline-flex shadow-sm rounded-md">
@@ -70,7 +70,7 @@
                 </div>
             </div>
         @endif
-        <div class="sm:flex sm:items-start sm:justify-between px-4 sm:px-6 mb-2 py-6">
+        <div class="sm:flex sm:items-center sm:justify-between p-4 sm:px-5">
             <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-400">
                 <span class="block text-sm font-medium mr-4">
                     {{ __('shopper::pages/products.current_qty_inventory') }}
@@ -129,36 +129,36 @@
             </div>
         </div>
         @if($histories->isEmpty())
-            <div class="flex flex-col items-center justify-center p-4 sm:p-6">
+            <div class="flex flex-col items-center justify-center p-4 sm:py-5">
                 <span class="shrink-0">
-                    <x-heroicon-o-document-text class="h-12 w-12 text-secondary-400" />
+                    <x-heroicon-o-document-text class="h-12 w-12 text-primary-500" />
                 </span>
-                <h3 class="font-medium py-5 text-secondary-400 text-xl">
+                <h3 class="text-center font-medium text-secondary-500 dark:text-secondary-400 text-lg">
                     {{ __('shopper::pages/products.inventory.empty') }}
                 </h3>
             </div>
         @else
-            <div class="flex flex-col">
+            <div class="flex flex-col border-t border-secondary-200 dark:border-secondary-700">
                 <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
                     <div class="align-middle inline-block min-w-full overflow-hidden">
                         <table class="min-w-full">
                             <thead>
-                                <tr>
-                                    <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
+                                <tr class="border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700">
+                                    <x-shopper::tables.table-head>
                                         {{ __('shopper::words.date') }}
-                                    </th>
-                                    <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head>
                                         {{ __('shopper::words.event') }}
-                                    </th>
-                                    <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-left text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head>
                                         {{ __('shopper::words.location') }}
-                                    </th>
-                                    <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-right text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head class="text-right">
                                         {{ __('shopper::words.adjustment') }}
-                                    </th>
-                                    <th class="px-6 py-3 border-b border-secondary-200 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-700 text-right text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-400 tracking-wider">
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head class="text-right">
                                         {{ __('shopper::pages/products.inventory.movement') }}
-                                    </th>
+                                    </x-shopper::tables.table-head>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-secondary-100 dark:divide-secondary-700">
@@ -214,5 +214,5 @@
                 </div>
             </div>
         @endif
-    </div>
-</div>
+    </x-shopper::card>
+</x-shopper::container>

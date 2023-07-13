@@ -27,6 +27,10 @@ class BrandsTable extends DataTableComponent
                 'enabled' => __('shopper::layout.forms.actions.enable'),
                 'disabled' => __('shopper::layout.forms.actions.disable'),
             ])
+            ->setTableWrapperAttributes([
+                'default' => true,
+                'class' => 'ring-1 ring-secondary-200 dark:ring-secondary-700',
+            ])
             ->setTdAttributes(function (Views\Column $column) {
                 if ($column->isField('slug')) {
                     return [

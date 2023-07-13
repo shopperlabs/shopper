@@ -24,8 +24,12 @@ class AttributesTable extends DataTableComponent
         $this->setPrimaryKey('id')
             ->setAdditionalSelects(['id', 'is_enabled'])
             ->setDefaultSort('name')
-            ->setTableRowUrl(fn ($row) => route('shopper.settings.attributes.edit', $row))
-            ->setTdAttributes(function (Views\Column $column) {
+            ->setTableRowUrl(fn ($row): string => route('shopper.attributes.edit', $row))
+            ->setTableWrapperAttributes([
+                'default' => true,
+                'class' => 'ring-1 ring-secondary-200 dark:ring-secondary-700',
+            ])
+            ->setTdAttributes(function (Views\Column $column): array {
                 if ($column->isField('type')) {
                     return [
                         'class' => 'text-secondary-500',

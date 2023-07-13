@@ -1,4 +1,4 @@
-<div>
+<x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::layout.sidebar.collections') }}
@@ -148,10 +148,10 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <div class="mt-6">
+        <div class="mt-8">
             <livewire:shopper-tables.collections-table />
         </div>
     @endif
 
     <x-shopper::learn-more :name="__('shopper::layout.sidebar.collections')" link="collections" />
-</div>
+</x-shopper::container>

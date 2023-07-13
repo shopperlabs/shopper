@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 @endpush
 
-<div>
+<x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::layout.sidebar.orders') }}
@@ -115,13 +115,13 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <div class="mt-6">
+        <div class="mt-8">
             <livewire:shopper-tables.orders-table />
         </div>
     @endif
 
     <x-shopper::learn-more :name="__('shopper::layout.sidebar.orders')" link="orders" />
-</div>
+</x-shopper::container>
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

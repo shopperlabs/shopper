@@ -26,7 +26,7 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <span class="hidden md:inline-flex -ml-px relative items-center px-4 py-2 border border-secondary-300 bg-secondary-100 text-sm leading-5 font-medium text-secondary-700 hover:text-secondary-500 focus:z-10 focus:outline-none dark:bg-secondary-600 dark:text-secondary-300 dark:hover:text-white dark:border-secondary-600">{{ $page }}</span>
+                            <span class="hidden lg:inline-flex -ml-px relative items-center px-4 py-2 border border-secondary-300 bg-secondary-100 text-sm leading-5 font-medium text-secondary-700 hover:text-secondary-500 focus:z-10 focus:outline-none dark:bg-secondary-600 dark:text-secondary-300 dark:hover:text-white dark:border-secondary-600">{{ $page }}</span>
                         @else
                             <x-shopper::buttons.default type="button" class="-ml-px relative rounded-l-none rounded-r-none focus:z-10" wire:click="gotoPage({{ $page }})">{{ $page }}</x-shopper::buttons.default>
                         @endif
