@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Actions;
 
 use Closure;
@@ -12,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class RedirectIfTwoFactorAuthenticatable
 {
-    public function handle(array $data, Closure $next): Response | Redirector
+    public function handle(array $data, Closure $next): Response|Redirector
     {
         $user = $this->validateCredentials($data);
 
@@ -26,23 +28,23 @@ final class RedirectIfTwoFactorAuthenticatable
 
     protected function validateCredentials(array $request)
     {
-        $model = Shopper::auth()->getProvider()->getModel();
+        $model = Shopper::auth()->getProvider()->getModel(); // @phpstan-ignore-line
 
-        return tap($model::where('email', $request['email'])->first(), function ($user) use ($request) {
-            if (! $user || ! Hash::check(value: $request['password'], hashedValue:  $user->password)) {
+        return tap($model::where('email', $request['email'])->first(), function ($user) use ($request): void {
+            if (! $user || ! Hash::check(value: $request['password'], hashedValue: $user->password)) {
                 $this->throwFailedAuthenticationException();
             }
         });
     }
 
-    protected function throwFailedAuthenticationException()
+    protected function throwFailedAuthenticationException(): void
     {
         throw ValidationException::withMessages([
             'email' => __('shopper::messages.login.failed'),
         ]);
     }
 
-    protected function twoFactorChallengeResponse($user, bool $remember): Redirector | Response
+    protected function twoFactorChallengeResponse($user, bool $remember): Redirector|Response
     {
         request()->session()->put([
             'login.id' => $user->getKey(),

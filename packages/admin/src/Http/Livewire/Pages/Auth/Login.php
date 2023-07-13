@@ -54,7 +54,7 @@ final class Login extends Component
             RedirectIfTwoFactorAuthenticatable::class,
             AttemptToAuthenticate::class,
         ]))
-        ->then(fn ($request) => app(LoginResponse::class));
+            ->then(fn ($request) => app(LoginResponse::class));
     }
 
     public function render(): View

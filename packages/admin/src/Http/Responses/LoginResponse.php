@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Http\Responses;
 
 use Shopper\Contracts\LoginResponse as Responsable;

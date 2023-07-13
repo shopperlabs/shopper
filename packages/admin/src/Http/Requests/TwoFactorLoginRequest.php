@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Shopper\Http\Requests;
 
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\ValidationException;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
 use Shopper\Facades\Shopper;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
@@ -51,7 +49,7 @@ final class TwoFactorLoginRequest extends FormRequest
 
     public function hasChallengedUser(): bool
     {
-        $model = Shopper::auth()->getProvider()->getModel();
+        $model = Shopper::auth()->getProvider()->getModel(); // @phpstan-ignore-line
 
         return $this->session()->has('login.id') &&
             $model::find($this->session()->get('login.id'));
@@ -63,7 +61,7 @@ final class TwoFactorLoginRequest extends FormRequest
             return $this->challengedUser;
         }
 
-        $model = Shopper::auth()->getProvider()->getModel();
+        $model = Shopper::auth()->getProvider()->getModel(); // @phpstan-ignore-line
 
         if (! $this->session()->has('login.id') ||
             ! $user = $model::find($this->session()->pull('login.id'))) {

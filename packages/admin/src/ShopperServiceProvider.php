@@ -11,8 +11,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
 use Shopper\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
-use Shopper\Contracts\LoginResponse as LoginResponseContract;
 use Shopper\Contracts\LoginResponse;
+use Shopper\Contracts\LoginResponse as LoginResponseContract;
 use Shopper\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;
 use Shopper\Contracts\TwoFactorDisabledResponse as TwoFactorDisabledResponseContract;
 use Shopper\Contracts\TwoFactorEnabledResponse as TwoFactorEnabledResponseContract;
@@ -115,8 +115,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
     {
         Livewire::addPersistentMiddleware([Authenticate::class]);
 
-        foreach (array_merge(config('shopper.components', []),
-            $this->getLivewirePagesComponents()) as $alias => $component) {
+        foreach (array_merge(
+            config('shopper.components', []),
+            $this->getLivewirePagesComponents()
+        ) as $alias => $component) {
             Livewire::component("shopper-$alias", $component);
         }
     }
