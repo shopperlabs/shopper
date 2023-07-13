@@ -1,17 +1,17 @@
 <div class="mt-10 sm:mt-0">
-    <div class="lg:grid lg:grid-cols-3 lg:gap-6">
+    <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
         <div class="lg:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white">
+                <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
                     {{ __('shopper::pages/auth.account.two_factor_title') }}
                 </h3>
-                <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                     {{ __('shopper::pages/auth.account.two_factor_description') }}
                 </p>
             </div>
         </div>
         <div class="mt-5 lg:mt-0 lg:col-span-2">
-            <div class="shadow rounded-md bg-white overflow-hidden dark:bg-secondary-800">
+            <x-shopper::card>
                 <div class="p-4 sm:px-6 border-b border-secondary-200 dark:border-secondary-700">
                     <div class="flex items-center space-x-3">
                         <div @class([
@@ -30,7 +30,7 @@
                 </div>
                 <div class="px-4 py-5 sm:p-6 space-y-6">
                     @if (! $this->enabled)
-                        <div class="rounded-md bg-primary-50 p-4">
+                        <div class="rounded-md bg-primary-50 p-4 dark:bg-primary-600/10">
                             <div class="flex">
                                 <div class="shrink-0">
                                     <x-heroicon-s-information-circle class="h-5 w-5 text-primary-400" />
@@ -127,7 +127,7 @@
                         </div>
                     @endif
                 </div>
-            </div>
+            </x-shopper::card>
         </div>
     </div>
 </div>

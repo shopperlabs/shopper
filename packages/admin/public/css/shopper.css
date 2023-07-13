@@ -9254,6 +9254,18 @@ html {
   background-color: rgb(63 63 70 / var(--tw-bg-opacity));
 }
 
+:is(.dark .dark\:bg-primary-800\/50){
+  background-color: rgb(30 64 175 / 0.5);
+}
+
+:is(.dark .dark\:bg-primary-800\/20){
+  background-color: rgb(30 64 175 / 0.2);
+}
+
+:is(.dark .dark\:bg-primary-600\/20){
+  background-color: rgb(37 99 235 / 0.2);
+}
+
 :is(.dark .dark\:bg-opacity-60){
   --tw-bg-opacity: 0.6;
 }
