@@ -125,7 +125,7 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format($amount, ?string $currency = null): string
+    function shopper_money_format($amount, string $currency = null): string
     {
         $money = new Money($amount, new Currency($currency ?? shopper_currency()));
         $currencies = new ISOCurrencies();

@@ -157,12 +157,12 @@ trait ReviewRateable
         return round($quantity * $max > 0 ? ((int) $total * 100) / $quantity : 0, 1);
     }
 
-    public function rating(array $data, Model $author, ?Model $parent = null): Review
+    public function rating(array $data, Model $author, Model $parent = null): Review
     {
         return (new Review())->createRating($this, $data, $author);
     }
 
-    public function updateRating($id, $data, ?Model $parent = null): Review
+    public function updateRating($id, $data, Model $parent = null): Review
     {
         return (new Review())->updateRating($id, $data);
     }
