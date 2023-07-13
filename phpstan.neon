@@ -9,9 +9,9 @@ parameters:
         - packages/admin/src/Events/
         - packages/admin/src/Http/Livewire/Components/Discounts/WithDiscountActions.php
         - packages/admin/src/Http/Livewire/Pages/Auth/
-        - packages/admin/src/Services/Mailable.php
         - packages/core/src/Traits/
     ignoreErrors:
         - "#Called 'take' on Laravel collection, but could have been retrieved as a query.#"
         - "#^Call to an undefined method Shopper\\\\Core\\\\Repositories\\\\BaseRepository\\:\\:whereNull\\(\\)\\.$#"
     checkMissingIterableValueType: true
+    treatPhpDocTypesAsCertain: false
