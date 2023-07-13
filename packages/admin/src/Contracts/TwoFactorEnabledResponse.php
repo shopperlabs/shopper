@@ -6,6 +6,6 @@ namespace Shopper\Contracts;
 
 use Illuminate\Contracts\Support\Responsable;
 
-interface TwoFactorChallengeViewResponse extends Responsable
+interface TwoFactorEnabledResponse extends Responsable
 {
 }

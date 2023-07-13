@@ -7,10 +7,13 @@ namespace Shopper\Http\Livewire\Pages\Auth;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use DanHarrin\LivewireRateLimiting\WithRateLimiting;
 use Illuminate\Contracts\View\View;
+use Illuminate\Routing\Pipeline;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use Shopper\Actions\AttemptToAuthenticate;
+use Shopper\Actions\RedirectIfTwoFactorAuthenticatable;
+use Shopper\Contracts\LoginResponse;
 use Shopper\Core\Rules\RealEmailValidator;
-use Shopper\Core\Shopper;
 
 final class Login extends Component
 {
@@ -22,7 +25,7 @@ final class Login extends Component
 
     public bool $remember = false;
 
-    public function authenticate(): void
+    public function authenticate()
     {
         $this->validate([
             'email' => ['required', 'email', new RealEmailValidator()],
@@ -41,18 +44,17 @@ final class Login extends Component
             ]);
         }
 
-        if (! Shopper::auth()->attempt([
+        $request = [
             'email' => $this->email,
             'password' => $this->password,
-        ], $this->remember)) {
-            throw ValidationException::withMessages([
-                'email' => __('shopper::messages.login.failed'),
-            ]);
-        }
+            'remember' => $this->remember,
+        ];
 
-        session()->regenerate();
-
-        $this->redirectRoute('shopper.dashboard');
+        return (new Pipeline(app()))->send($request)->through(array_filter([
+            RedirectIfTwoFactorAuthenticatable::class,
+            AttemptToAuthenticate::class,
+        ]))
+        ->then(fn ($request) => app(LoginResponse::class));
     }
 
     public function render(): View

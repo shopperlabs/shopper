@@ -9,20 +9,13 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
+use Shopper\Facades\Shopper;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 
 final class TwoFactorLoginRequest extends FormRequest
 {
-    /**
-     * The user attempting the two factor challenge.
-     */
     protected $challengedUser;
 
-    /**
-     * Indicates if the user wished to be remembered after login.
-     *
-     * @var bool
-     */
     protected $remember;
 
     public function authorize(): bool
@@ -38,11 +31,6 @@ final class TwoFactorLoginRequest extends FormRequest
         ];
     }
 
-    /**
-     * Determine if the request has a valid two factor code.
-     *
-     * @throws ValidationException
-     */
     public function hasValidCode(): bool
     {
         return $this->code && app(TwoFactorAuthenticationProvider::class)->verify(
@@ -51,43 +39,31 @@ final class TwoFactorLoginRequest extends FormRequest
         );
     }
 
-    /**
-     * Get the valid recovery code if one exists on the request.
-     *
-     * @throws ValidationException
-     */
     public function validRecoveryCode(): ?string
     {
         if (! $this->recovery_code) {
             return null;
         }
 
-        return collect($this->challengedUser()->recoveryCodes())->first(fn ($code) => hash_equals($this->recovery_code, $code) ? $code : null);
+        return collect($this->challengedUser()->recoveryCodes())
+            ->first(fn ($code) => hash_equals($this->recovery_code, $code) ? $code : null);
     }
 
-    /**
-     * Determine if there is a challenged user in the current session.
-     */
     public function hasChallengedUser(): bool
     {
-        $model = app(StatefulGuard::class)->getProvider()->getModel();
+        $model = Shopper::auth()->getProvider()->getModel();
 
         return $this->session()->has('login.id') &&
             $model::find($this->session()->get('login.id'));
     }
 
-    /**
-     * Get the user that is attempting the two factor challenge.
-     *
-     * @throws ValidationException
-     */
     public function challengedUser()
     {
         if ($this->challengedUser) {
             return $this->challengedUser;
         }
 
-        $model = app(StatefulGuard::class)->getProvider()->getModel();
+        $model = Shopper::auth()->getProvider()->getModel();
 
         if (! $this->session()->has('login.id') ||
             ! $user = $model::find($this->session()->pull('login.id'))) {

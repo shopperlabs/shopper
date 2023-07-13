@@ -16,7 +16,11 @@
             style="clip-path: polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)"
         ></div>
     </div>
-    <div {{ $attributes->merge(['class' => 'relative w-full max-w-md overflow-hidden px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-secondary-50/70 dark:from-secondary-800/60']) }}>
-        {{ $slot }}
+    <div class="relative w-full max-w-md">
+        <div class="absolute -top-6 inset-x-0 ring-1 ring-secondary-200 dark:ring-secondary-700/50 transform scale-90 max-w-md px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-secondary-50/70 dark:from-secondary-800/60"></div>
+        <div class="absolute -top-3.5 inset-x-0 ring-1 ring-secondary-200 dark:ring-secondary-700/50 transform scale-95 max-w-md px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-secondary-50/70 dark:from-secondary-800/60"></div>
+        <div {{ $attributes->merge(['class' => 'relative w-full max-w-md overflow-hidden border-t border-secondary-200 dark:border-secondary-700/50 px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-secondary-50/70 dark:from-secondary-800/60']) }}>
+            {{ $slot }}
+        </div>
     </div>
 </div>
