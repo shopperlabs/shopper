@@ -7,7 +7,10 @@
             'address': '{{ __('shopper::pages/customers.addresses.title') }}',
             'orders': '{{ __('shopper::layout.sidebar.orders') }}'
         },
-        currentTab: 'profile'
+        currentTab: 'profile',
+        activeTab(tab) {
+            return this.currentTab === tab;
+        },
     }"
 >
     <x-shopper::container>
@@ -92,13 +95,28 @@
 
                 <div class="hidden pt-4 lg:block">
                     <nav class="-mb-px flex space-x-8 px-6">
-                        <button @click="currentTab = 'profile'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'profile' }">
+                        <button
+                            @click="currentTab = 'profile'"
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            :class="activeTab('profile') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::pages/customers.profile.title') }}
                         </button>
-                        <button @click="currentTab = 'address'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'address' }">
+                        <button
+                            @click="currentTab = 'address'"
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            :class="activeTab('address') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::pages/customers.addresses.title') }}
                         </button>
-                        <button @click="currentTab = 'orders'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'orders' }">
+                        <button
+                            @click="currentTab = 'orders'"
+                            type="button"
+                            class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                            :class="activeTab('orders') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                        >
                             {{ __('shopper::layout.sidebar.orders') }}
                         </button>
                     </nav>

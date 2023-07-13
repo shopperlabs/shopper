@@ -22,7 +22,7 @@
 
         <div class="mt-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-6 lg:gap-6">
             <div class="lg:col-span-4 space-y-5">
-                <div class="bg-white dark:bg-secondary-800 rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow p-4 sm:p-5">
+                <x-shopper::card class="p-4 sm:p-5">
                     <div>
                         <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" isRequired :error="$errors->first('name')">
                             <x-shopper::forms.input wire:model.defer="name" id="name" type="text" autocomplete="off" placeholder="Apple, Nike, Samsung..." />
@@ -57,7 +57,7 @@
                             <livewire:shopper-forms.trix :value="$description" />
                         </x-shopper::forms.group>
                     </div>
-                </div>
+                </x-shopper::card>
 
                 <x-shopper::forms.seo
                     slug="brands"
@@ -69,14 +69,14 @@
             </div>
             <div class="lg:col-span-2">
                 <aside class="sticky top-6 space-y-5">
-                    <div class="bg-white dark:bg-secondary-800 rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
+                    <x-shopper::card class="overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
                         <div class="p-4 sm:p-5">
                             <x-shopper::label :value="__('shopper::layout.forms.label.image_preview')" />
                             <div class="mt-1">
                                 <livewire:shopper-forms.uploads.single :media="$brand->getFirstMedia(config('shopper.core.storage.collection_name'))" />
                             </div>
                         </div>
-                    </div>
+                    </x-shopper::card>
                 </aside>
             </div>
         </div>

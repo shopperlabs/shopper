@@ -44,13 +44,6 @@ return [
             'permission' => null,
         ],
         [
-            'name' => 'Integrations',
-            'description' => 'Connect with third-party tools that you’re already using.',
-            'icon' => 'heroicon-o-clipboard-list',
-            'route' => null,
-            'permission' => null,
-        ],
-        [
             'name' => 'Analytics',
             'description' => 'Get a better understanding of where your traffic is coming from.',
             'icon' => 'heroicon-o-chart-bar',
@@ -58,24 +51,10 @@ return [
             'permission' => null,
         ],
         [
-            'name' => 'Taxes',
-            'description' => 'Manage how your store charges taxes.',
-            'icon' => 'heroicon-o-receipt-tax',
-            'route' => null,
-            'permission' => null,
-        ],
-        [
             'name' => 'Payment methods',
             'description' => 'Add different payment methods for your customers.',
             'icon' => 'heroicon-o-credit-card',
             'route' => 'shopper.settings.payments',
-            'permission' => null,
-        ],
-        [
-            'name' => 'Files',
-            'description' => 'Manage store assets (images, videos and documents).',
-            'icon' => 'heroicon-o-paper-clip',
-            'route' => null,
             'permission' => null,
         ],
         [

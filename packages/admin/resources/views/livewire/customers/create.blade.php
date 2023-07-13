@@ -84,15 +84,15 @@
                     <div x-data="{ show: false }" class="sm:col-span-6">
                         <div class="flex items-center justify-between">
                             <x-shopper::label for="password" :value="__('shopper::layout.forms.label.password')" />
-                            <div class="flex items-center divide-x divide-secondary-200 dark:divide-secondary-600">
-                                <button wire:click="generate" type="button" class="pr-2 text-primary-600 text-sm font-medium leading-5 hover:text-primary-500 dark:text-primary-500/50">
+                            <div class="flex items-center divide-x divide-primary-500">
+                                <button wire:click="generate" type="button" class="pr-2 text-primary-500 text-sm font-medium leading-5 focus:outline-none hover:text-primary-600">
                                     {{ __('shopper::words.generate') }}
                                 </button>
                                 <button
                                     @click="show = !show"
                                     x-text="show ? '{{ __('shopper::words.hide') }}' : '{{ __('shopper::words.show') }}'"
                                     type="button"
-                                    class="pl-2 text-sm text-leading-5 text-primary-600 hover:text-primary-700 focus:outline-none focus:text-primary-700 hover:underline dark:text-primary-500/50">
+                                    class="pl-2 text-sm text-leading-5 font-medium text-primary-500 hover:text-primary-600 focus:outline-none">
                                 </button>
                             </div>
                         </div>

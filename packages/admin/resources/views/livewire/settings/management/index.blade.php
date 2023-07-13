@@ -10,8 +10,8 @@
         </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-8 pb-10">
-        <div class="bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow overflow-hidden">
+    <div class="mt-8 pb-10 space-y-12">
+        <div>
             <div class="flex items-center">
                 <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('shopper::pages/settings.roles_permissions.role_available') }}
@@ -21,12 +21,12 @@
                     {{ __('shopper::pages/settings.roles_permissions.new_role') }}
                 </button>
             </div>
-            <p class="mt-3 text-base leading-6 text-secondary-500 dark:text-secondary-400">
+            <p class="mt-2 text-base leading-6 text-secondary-500 dark:text-secondary-400">
                 {{ __('shopper::pages/settings.roles_permissions.role_available_summary') }}
             </p>
-            <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach($roles as $role)
-                    <a href="{{ route('shopper.settings.users.role', $role) }}" class="group flex flex-col justify-between border border-secondary-200 dark:border-secondary-700 p-4 rounded-md overflow-hidden hover:shadow-md">
+                    <a href="{{ route('shopper.settings.users.role', $role) }}" class="group flex flex-col justify-between border border-secondary-200 dark:border-secondary-700 dark:bg-secondary-800 p-4 rounded-lg overflow-hidden hover:shadow-sm">
                         <div class="flex items-center justify-between">
                             <span class="text-xs leading-4 text-secondary-400 dark:text-secondary-500 font-semibold uppercase tracking-wider">
                                 {{ $role->users->count() }} {{ str_plural(__('shopper::words.account'), $role->users->count()) }}
@@ -52,7 +52,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="mt-10 bg-white dark:bg-secondary-800 p-4 sm:p-6 rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 shadow">
+        <div>
             <div class="pb-6 border-b border-secondary-200 space-y-3 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0  dark:border-secondary-700">
                 <div class="flex-1 min-w-0 max-w-2xl">
                     <h2 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">

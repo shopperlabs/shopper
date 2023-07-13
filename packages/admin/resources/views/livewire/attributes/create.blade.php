@@ -12,7 +12,7 @@
 
     <div class="mt-8 grid sm:grid-cols-6 gap-4 sm:gap-6">
         <div class="sm:col-span-4">
-            <div class="bg-white rounded-lg shadow ring-1 ring-secondary-200 dark:ring-secondary-700 p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-secondary-800">
+            <x-shopper::card class="p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6">
                 <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
                     <x-shopper::forms.input wire:model="name" id="name" type="text" autocomplete="off" />
                 </x-shopper::forms.group>
@@ -58,11 +58,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </x-shopper::card>
         </div>
         <div class="sm:col-span-2">
             <aside class="sticky top-6 space-y-5">
-                <div class="bg-white rounded-lg shadow ring-1 ring-secondary-200 dark:ring-secondary-700 overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
+                <x-shopper::card class="overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.slug')" for="slug" class="p-4 sm:p-5" :error="$errors->first('slug')" isRequired>
                         <x-shopper::forms.input wire:model="slug" id="slug" type="text" autocomplete="off" />
                     </x-shopper::forms.group>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </x-shopper::card>
             </aside>
         </div>
     </div>

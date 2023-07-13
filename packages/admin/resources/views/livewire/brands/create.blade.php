@@ -20,7 +20,7 @@
 
         <div class="mt-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-6 lg:gap-6">
             <div class="lg:col-span-4 space-y-5">
-                <div class="bg-white dark:bg-secondary-800 ring-1 ring-secondary-200 dark:ring-secondary-700 rounded-lg shadow p-4 sm:p-5">
+                <x-shopper::card class="p-4 sm:p-5">
                     <div>
                         <x-shopper::forms.group
                             for="name"
@@ -72,7 +72,7 @@
                             <livewire:shopper-forms.trix :value="$description" />
                         </x-shopper::forms.group>
                     </div>
-                </div>
+                </x-shopper::card>
 
                 <x-shopper::forms.seo
                     slug="brands"
@@ -84,14 +84,14 @@
             </div>
             <div class="lg:col-span-2">
                 <aside class="sticky top-6 space-y-5">
-                    <div class="bg-white dark:bg-secondary-800 ring-1 ring-secondary-200 dark:ring-secondary-700 rounded-lg shadow overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
+                    <x-shopper::card class="overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
                         <div class="p-4 sm:p-5">
                             <x-shopper::label :value="__('shopper::layout.forms.label.image_preview')" />
                             <div class="mt-1">
                                 <livewire:shopper-forms.uploads.single />
                             </div>
                         </div>
-                    </div>
+                    </x-shopper::card>
                 </aside>
             </div>
         </div>

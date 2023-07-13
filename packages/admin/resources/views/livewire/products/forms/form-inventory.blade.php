@@ -9,7 +9,7 @@
             </p>
         </div>
         <x-shopper::card class="mt-5 overflow-hidden">
-            <div class="p-5 sm:p-5">
+            <div class="p-4">
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-5">
                     <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.sku')" for="sku" :error="$errors->first('sku')">
                         <x-shopper::forms.input wire:model.defer="sku" id="sku" type="text" autocomplete="off" />
@@ -29,7 +29,7 @@
                     </x-shopper::forms.group>
                 </div>
             </div>
-            <div class="px-4 py-3 bg-secondary-50 dark:bg-secondary-900/30 text-right sm:px-6">
+            <div class="px-4 py-3 text-right">
                 <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                     {{ __('shopper::layout.forms.actions.update') }}
@@ -70,7 +70,7 @@
                 </div>
             </div>
         @endif
-        <div class="sm:flex sm:items-start sm:justify-between px-4 sm:px-6 py-6">
+        <div class="sm:flex sm:items-center sm:justify-between p-4 sm:px-5">
             <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-400">
                 <span class="block text-sm font-medium mr-4">
                     {{ __('shopper::pages/products.current_qty_inventory') }}
@@ -129,7 +129,7 @@
             </div>
         </div>
         @if($histories->isEmpty())
-            <div class="flex flex-col items-center justify-center p-4 sm:p-6">
+            <div class="flex flex-col items-center justify-center p-4 sm:py-5">
                 <span class="shrink-0">
                     <x-heroicon-o-document-text class="h-12 w-12 text-primary-500" />
                 </span>

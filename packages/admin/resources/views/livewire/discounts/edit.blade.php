@@ -439,7 +439,7 @@
     </div>
 
     <div class="mt-6 pt-5 pb-10 border-t border-secondary-200 dark:border-secondary-700">
-        <div class="flex items-center justify-between space-x-4">
+        <div class="flex items-center justify-end space-x-4">
             @can('delete_discounts')
                 <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-discount', {{ json_encode([$discount->id]) }})" type="button">
                     <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2"/>

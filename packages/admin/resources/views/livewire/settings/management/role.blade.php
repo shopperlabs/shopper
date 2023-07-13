@@ -6,7 +6,10 @@
             'users': '{{ __('shopper::words.users') }}',
             'permissions': '{{ __('shopper::pages/settings.roles_permissions.permissions') }}'
         },
-        currentTab: 'role'
+        currentTab: 'role',
+        activeTab(tab) {
+            return this.currentTab === tab;
+        },
     }"
 >
     <x-shopper::container>
@@ -56,15 +59,30 @@
 
             <div class="hidden lg:block">
                 <nav class="-mb-px flex space-x-8 px-6">
-                    <button @click="currentTab = 'role'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'role' }">
+                    <button
+                        @click="currentTab = 'role'"
+                        type="button"
+                        class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                        :class="activeTab('role') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                    >
                         {{ __('shopper::layout.forms.label.role') }}
                     </button>
 
-                    <button @click="currentTab = 'users'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'users' }">
+                    <button
+                        @click="currentTab = 'users'"
+                        type="button"
+                        class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                        :class="activeTab('users') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                    >
                         {{ __('shopper::words.users') }}
                     </button>
 
-                    <button @click="currentTab = 'permissions'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'permissions' }">
+                    <button
+                        @click="currentTab = 'permissions'"
+                        type="button"
+                        class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                        :class="activeTab('permissions') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                    >
                         {{ __('shopper::pages/settings.roles_permissions.permissions') }}
                     </button>
                 </nav>
@@ -75,46 +93,46 @@
     <div class="mt-6 pb-10">
         <div x-show="currentTab === 'role'">
             <x-shopper::container>
-                <div class="bg-white ring-1 ring-secondary-200 dark:ring-secondary-700 overflow-hidden rounded-lg dark:bg-secondary-800">
+                <div class="space-y-6 w-full lg:max-w-4xl">
                     @if(config('shopper.core.users.admin_role') === $role->name)
-                        <div class="pt-5 px-4 md:px-6">
-                            <div class="rounded-md bg-info-500 bg-opacity-10 p-4">
-                                <div class="flex">
-                                    <div class="shrink-0">
-                                        <x-heroicon-s-information-circle  class="h-5 w-5 text-info-400" />
-                                    </div>
-                                    <div class="ml-3 flex-1 lg:flex lg:justify-between">
-                                        <p class="text-sm leading-5 text-info-700">
-                                            {{ __('shopper::pages/settings.roles_permissions.role_alert_msg') }}
-                                        </p>
-                                        <p class="mt-3 text-sm leading-5 lg:mt-0 lg:ml-6">
-                                            <a href="https://laravelshopper.dev/roles-permissions" target="_blank" class="whitespace-no-wrap font-medium text-info-700 hover:text-info-600 transition ease-in-out duration-150">
-                                                {{ __('shopper::components.learn_more') }} &rarr;
-                                            </a>
-                                        </p>
-                                    </div>
+                        <div class="rounded-md bg-info-500 bg-opacity-10 p-4">
+                            <div class="flex">
+                                <div class="shrink-0">
+                                    <x-heroicon-s-information-circle  class="h-5 w-5 text-info-400" />
+                                </div>
+                                <div class="ml-3 flex-1 lg:flex lg:justify-between">
+                                    <p class="text-sm leading-5 text-info-700">
+                                        {{ __('shopper::pages/settings.roles_permissions.role_alert_msg') }}
+                                    </p>
+                                    <p class="mt-3 text-sm leading-5 lg:mt-0 lg:ml-6">
+                                        <a href="https://laravelshopper.dev/roles-permissions" target="_blank" class="whitespace-no-wrap font-medium text-info-700 hover:text-info-600 transition ease-in-out duration-150">
+                                            {{ __('shopper::components.learn_more') }} &rarr;
+                                        </a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     @endif
-                    <div class="px-4 py-5 lg:p-6">
-                        <div class="grid gap-4 md:grid-cols-2 md:gap-6">
-                            <x-shopper::forms.group :label="__('shopper::modals.roles.labels.name')" for="name" class="md:col-span-1" :error="$errors->first('name')" isRequired>
-                                <x-shopper::forms.input wire:model.lazy="name" type="text" id="name" placeholder="manager" />
-                            </x-shopper::forms.group>
-                            <x-shopper::forms.group :label="__('shopper::layout.forms.label.display_name')" for="display_name" class="md:col-span-1">
-                                <x-shopper::forms.input wire:model.lazy="display_name" type="text" id="display_name" placeholder="Manager" />
-                            </x-shopper::forms.group>
-                            <x-shopper::forms.group :label="__('shopper::layout.forms.label.description')" for="description" class="md:col-span-2">
-                                <x-shopper::forms.textarea wire:model.lazy="description" id="description" />
-                            </x-shopper::forms.group>
+                    <div>
+                        <div>
+                            <div class="grid gap-4 md:grid-cols-2 md:gap-6">
+                                <x-shopper::forms.group :label="__('shopper::modals.roles.labels.name')" for="name" class="md:col-span-1" :error="$errors->first('name')" isRequired>
+                                    <x-shopper::forms.input wire:model.defer="name" type="text" class="dark:bg-secondary-800 dark:border-transparent" id="name" placeholder="manager" />
+                                </x-shopper::forms.group>
+                                <x-shopper::forms.group :label="__('shopper::layout.forms.label.display_name')" for="display_name" class="md:col-span-1">
+                                    <x-shopper::forms.input wire:model.defer="display_name" type="text" class="dark:bg-secondary-800 dark:border-transparent" id="display_name" placeholder="Manager" />
+                                </x-shopper::forms.group>
+                                <x-shopper::forms.group :label="__('shopper::layout.forms.label.description')" for="description" class="md:col-span-2">
+                                    <x-shopper::forms.textarea wire:model.defer="description" id="description" class="dark:bg-secondary-800 dark:border-transparent" />
+                                </x-shopper::forms.group>
+                            </div>
                         </div>
-                    </div>
-                    <div class="px-4 py-3 text-right md:px-6">
-                        <x-shopper::buttons.primary wire:click="save" wire:loading.attr="disabled" type="button">
-                            <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                            {{ __('shopper::layout.forms.actions.update') }}
-                        </x-shopper::buttons.primary>
+                        <div class="mt-5 text-right">
+                            <x-shopper::buttons.primary wire:click="save" wire:loading.attr="disabled" type="button">
+                                <x-shopper::loader wire:loading wire:target="save" class="text-white" />
+                                {{ __('shopper::layout.forms.actions.update') }}
+                            </x-shopper::buttons.primary>
+                        </div>
                     </div>
                 </div>
             </x-shopper::container>

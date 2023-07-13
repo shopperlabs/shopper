@@ -13,11 +13,11 @@
             @can('add_inventories')
                 @if($inventories->count() < 5)
                     <div class="flex">
-                    <span class="shadow-sm rounded-md">
-                        <x-shopper::buttons.primary :link="route('shopper.settings.inventories.create')">
-                            {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.location'))]) }}
-                        </x-shopper::buttons.primary>
-                    </span>
+                        <span class="shadow-sm rounded-md">
+                            <x-shopper::buttons.primary :link="route('shopper.settings.inventories.create')">
+                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.location'))]) }}
+                            </x-shopper::buttons.primary>
+                        </span>
                     </div>
                 @endif
             @endcan
@@ -28,19 +28,19 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-6">
             <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
+                    <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
                         {{ __('shopper::words.locations') }}
                     </h3>
-                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                    <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __('shopper::pages/settings.location.description') }}
                     </p>
-                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                    <p class="mt-3 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                         {{ __('shopper::pages/settings.location.count', ['count' => $inventories->count()]) }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 lg:mt-0 lg:col-span-2">
-                <div class="bg-white shadow rounded-lg ring-1 ring-secondary-200 dark:ring-secondary-700 overflow-hidden dark:bg-secondary-800">
+                <x-shopper::card>
                     <ul class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         @foreach($inventories as $inventory)
                             <li>
@@ -97,7 +97,7 @@
                             </li>
                         @endforeach
                     </ul>
-                </div>
+                </x-shopper::card>
             </div>
         </div>
     </div>

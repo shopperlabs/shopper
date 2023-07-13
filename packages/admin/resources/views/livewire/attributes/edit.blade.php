@@ -46,10 +46,10 @@
             </x-slot>
         </x-shopper::heading>
 
-        <div class="mt-8 space-y-5">
+        <div class="mt-8">
             <div class="grid sm:grid-cols-6 gap-4 sm:gap-6">
                 <div class="sm:col-span-4">
-                    <div class="bg-white rounded-lg shadow ring-1 ring-secondary-200 dark:ring-secondary-700 p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-secondary-800">
+                    <x-shopper::card class="p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
                             <x-shopper::forms.input wire:model="name" id="name" type="text" autocomplete="off" />
                         </x-shopper::forms.group>
@@ -95,31 +95,31 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </x-shopper::card>
                 </div>
                 <div class="sm:col-span-2">
                     <aside class="sticky top-6 space-y-5">
-                        <div class="bg-white rounded-lg shadow ring-1 ring-secondary-200 dark:ring-secondary-700 overflow-hidden divide-y divide-secondary-200 dark:bg-secondary-800 dark:divide-secondary-700">
+                        <x-shopper::card class="overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
                             <x-shopper::forms.group :label="__('shopper::layout.forms.label.slug')" for="slug" class="p-4 sm:p-5" :error="$errors->first('slug')" isRequired>
                                 <x-shopper::forms.input wire:model="slug" id="slug" type="text" autocomplete="off" />
                             </x-shopper::forms.group>
                             <div class="p-4 sm:p-5">
                                 <div class="relative flex items-start">
                                     <div class="flex items-center h-5">
-                                    <span wire:model="isEnabled" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
-                                        <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
-                                        <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
-                                    </span>
+                                        <span wire:model="isEnabled" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
+                                            <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
+                                            <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
+                                        </span>
                                     </div>
                                     <div class="ml-3 text-sm leading-5">
-                                        <x-shopper::label for="online" :value="__('shopper::layout.forms.actions.enabled')"></x-shopper::label>
+                                        <x-shopper::label for="online" :value="__('shopper::layout.forms.actions.enabled')" />
                                         <p class="text-sm text-secondary-500 dark:text-secondary-400">
                                             {{ __('shopper::pages/attributes.attribute_visibility') }}
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </x-shopper::card>
                     </aside>
                 </div>
             </div>

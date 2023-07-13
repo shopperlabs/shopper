@@ -43,7 +43,7 @@ return [
     'results' => 'results',
     'media' => 'Media',
     'hide' => 'Hide',
-    'show' => 'show',
+    'show' => 'Show',
 
     'pricing' => 'Pricing',
     'price' => 'Price',

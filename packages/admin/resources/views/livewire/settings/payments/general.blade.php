@@ -2,7 +2,10 @@
     x-data="{
         options: ['general', 'notchpay'],
         words: {'general': '{{ __('General') }}', 'notchpay': '{{ __('Notch Pay') }}'},
-        currentTab: 'general'
+        currentTab: 'general',
+        activeTab(tab) {
+            return this.currentTab === tab;
+        },
     }"
 >
     <x-shopper::container>
@@ -27,7 +30,7 @@
         </x-shopper::heading>
     </x-shopper::container>
 
-    <div class="relative border-secondary-200 space-y-4 px-4 lg:pt-4 lg:pb-0 lg:border-y lg:px-0 dark:border-secondary-700">
+    <div class="relative border-secondary-200 space-y-4 px-4 lg:border-y lg:px-0 dark:border-secondary-700">
         <div class="lg:hidden">
             <x-shopper::forms.select x-model="currentTab" aria-label="Selected tab">
                 <template x-for="option in options" :key="option">
@@ -42,11 +45,21 @@
 
         <div class="hidden lg:block">
             <nav class="-mb-px flex space-x-8 px-6">
-                <button @click="currentTab = 'general'" type="button" class="whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" aria-current="page" :class="{ 'border-primary-500 text-primary-600 focus:text-primary-800 focus:border-primary-700': currentTab === 'general' }">
+                <button
+                    @click="currentTab = 'general'"
+                    type="button"
+                    class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                    :class="activeTab('general') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                >
                     {{ __('General') }}
                 </button>
 
-                <button @click="currentTab = 'notchpay'" type="button" class="inline-flex items-center whitespace-no-wrap pb-4 px-1 border-b-2 border-transparent font-medium text-sm leading-5 text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 dark:text-secondary-400 dark:hover:text-secondary-500 dark:hover:border-secondary-400 focus:outline-none" :class="{ 'border-green-500 text-green-600 focus:text-green-800 focus:border-green-700': currentTab === 'notchpay' }">
+                <button
+                    @click="currentTab = 'notchpay'"
+                    type="button"
+                    class="flex items-center px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                    :class="activeTab('notchpay') ? 'border-green-600 text-green-600' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                >
                     <x-shopper::icons.notchpay class="w-6 h-6 mr-2" />
                     {{ __('Notch Pay') }}
                 </button>
