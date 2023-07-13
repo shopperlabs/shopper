@@ -26,6 +26,8 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
  * @property-read int $id
  * @property-read int|null $parent_id
  * @property-read int|null $price_amount
+ * @property-read int|null $old_price_amount
+ * @property-read int|null $cost_amount
  */
 class Product extends Model implements SpatieHasMedia, ReviewRateable
 {

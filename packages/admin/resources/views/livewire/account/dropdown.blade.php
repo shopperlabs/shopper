@@ -49,11 +49,55 @@
             </div>
             <div class="border-t border-secondary-100 dark:border-secondary-700"></div>
             <div class="py-1" role="none">
-                <div class="flex items-center px-4 py-2 gap-x-4 text-sm leading-5 text-secondary-700 dark:text-secondary-400 transition duration-150 ease-in-out">
+                <div
+                    x-data="{
+                        theme: null,
+                        mode: null,
+
+                        init: function () {
+                            this.theme = localStorage.getItem('theme') || (this.isSystemDark() ? 'dark' : 'light')
+                            this.mode = localStorage.getItem('theme') ? 'manual' : 'auto'
+
+                            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+                                if (this.mode === 'manual') return
+
+                                if (event.matches && (! document.documentElement.classList.contains('dark'))) {
+                                    this.theme = 'dark'
+
+                                    document.documentElement.classList.add('dark')
+                                } else if ((! event.matches) && document.documentElement.classList.contains('dark')) {
+                                    this.theme = 'light'
+
+                                    document.documentElement.classList.remove('dark')
+                                }
+                            })
+
+                            $watch('theme', () => {
+                                if (this.mode === 'auto') return
+
+                                localStorage.setItem('theme', this.theme)
+
+                                if (this.theme === 'dark' && (! document.documentElement.classList.contains('dark'))) {
+                                    document.documentElement.classList.add('dark')
+                                } else if (this.theme === 'light' && document.documentElement.classList.contains('dark')) {
+                                    document.documentElement.classList.remove('dark')
+                                }
+
+                                $dispatch('dark-mode-toggled', this.theme)
+                            })
+                        },
+
+                        isSystemDark: function () {
+                            return window.matchMedia('(prefers-color-scheme: dark)').matches
+                        },
+                    }"
+                    class="flex items-center px-4 py-2 gap-x-4 text-sm leading-5 text-secondary-700 dark:text-secondary-400 transition duration-150 ease-in-out"
+                >
                     <button
                         type="button"
                         aria-pressed="false"
-                        class="darkModeToggle bg-secondary-200 dark:bg-secondary-900 relative flex items-center shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-primary-800 focus:ring-secondary-500"
+                        @click="mode = 'manual'; theme === 'dark' ? theme = 'light' : theme = 'dark'"
+                        class="bg-secondary-200 dark:bg-secondary-900 relative flex items-center shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-primary-800 focus:ring-secondary-500"
                     >
                         <span class="translate-x-0 dark:translate-x-5 relative inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200">
                             <span class="dark:hidden ease-in-out duration-100 absolute inset-0 h-full w-full flex items-center justify-center" aria-hidden="true">

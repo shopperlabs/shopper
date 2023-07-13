@@ -7,7 +7,6 @@ import * as FilePond from 'filepond'
 import NotificationsAlpinePlugin from '../../../../vendor/filament/notifications/dist/module.esm'
 
 import './helpers/window'
-import './helpers/darkMode'
 import './helpers/trix'
 import internationalNumber from './plugins/internationalNumber'
 import mapBox from './plugins/mapBox'
@@ -18,6 +17,23 @@ Alpine.plugin(AlpineFloatingUI)
 Alpine.plugin(NotificationsAlpinePlugin)
 Alpine.data('internationalNumber', internationalNumber)
 Alpine.data('mapBox', mapBox)
+
+Alpine.store(
+  'theme',
+  window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light',
+)
+
+window.addEventListener('dark-mode-toggled', (event) => {
+  Alpine.store('theme', event.detail)
+})
+
+window
+  .matchMedia('(prefers-color-scheme: dark)')
+  .addEventListener('change', (event) => {
+    Alpine.store('theme', event.matches ? 'dark' : 'light')
+  })
 
 window.Alpine = Alpine
 window.Sortable = Sortable
