@@ -150,4 +150,9 @@ return [
     'number_not_set' => 'Numéro non défini',
     'added_on' => 'Ajouté le',
     'dark_mode' => 'Thème sombre',
+    'view_shortcuts' => 'Voir les raccourcis',
+    'global_search' => 'Recherche globale',
+    'display_shortcuts' => 'Afficher les raccourcis',
+    'go_to_documentation' => 'Aller à la documentation',
+    'search' => 'Rechercher un contenu',
 ];

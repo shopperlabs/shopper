@@ -10,11 +10,13 @@ import './helpers/window'
 import './helpers/trix'
 import internationalNumber from './plugins/internationalNumber'
 import mapBox from './plugins/mapBox'
+import KeyPress from './plugins/keyPress'
 
 Alpine.plugin(Tooltip)
 Alpine.plugin(Focus)
 Alpine.plugin(AlpineFloatingUI)
 Alpine.plugin(NotificationsAlpinePlugin)
+Alpine.plugin(KeyPress)
 Alpine.data('internationalNumber', internationalNumber)
 Alpine.data('mapBox', mapBox)
 

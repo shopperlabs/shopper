@@ -1,5 +1,5 @@
 .sidebar {
-  @apply space-y-6;
+  @apply space-y-5;
 }
 
 .item-name {
@@ -7,7 +7,7 @@
 }
 
 .submenu {
-  @apply hidden mt-3 ml-4 pl-2 py-2 space-y-2 lg:space-y-3 border-l border-secondary-200 dark:border-secondary-700;
+  @apply hidden ml-8 mb-2 pl-2 py-2 space-y-2 lg:space-y-3;
 }
 
 .current-group .submenu {

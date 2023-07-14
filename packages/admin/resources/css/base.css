@@ -58,7 +58,7 @@ input[type="number"] {
  }
 
 .scrolling::-webkit-scrollbar-thumb {
-   background-color: theme('colors.secondary.100');
+   background-color: theme('colors.secondary.200');
    border-radius: 2px;
 }
 

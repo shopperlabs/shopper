@@ -37,7 +37,7 @@
     @include('shopper::includes._additional-styles')
     @stack('scripts')
 </head>
-<body {{ $attributes->merge(['class' => 'bg-white font-sans antialiased dark:bg-secondary-900']) }}>
+<body x-keypress {{ $attributes->merge(['class' => 'bg-white font-sans antialiased dark:bg-secondary-900']) }}>
 
     {{ $slot }}
 
