@@ -28,7 +28,7 @@
      x-show="show"
      x-on:close.stop="show = false"
      x-on:keydown.escape.window="show = false"
-     class="fixed z-10 inset-0 overflow-y-auto"
+     class="fixed z-[99] inset-0 overflow-y-auto"
      style="display: none;"
 >
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -40,7 +40,7 @@
              x-transition:leave="ease-in duration-200"
              x-transition:leave-start="opacity-100"
              x-transition:leave-end="opacity-0"
-             class="fixed inset-0 bg-secondary-500 bg-opacity-75 transition-opacity">
+             class="fixed inset-0 bg-secondary-500 backdrop-blur-sm bg-opacity-70 transition-opacity">
         </div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->

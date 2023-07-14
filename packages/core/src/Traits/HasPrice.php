@@ -14,11 +14,17 @@ trait HasPrice
 {
     public function formattedPrice(int|string $price): string
     {
-        $money = new Money($price, new Currency(shopper_currency()));
-        $currencies = new ISOCurrencies();
+        $money = new Money(
+            amount: $price,
+            currency: new Currency(shopper_currency())
+        );
 
         $numberFormatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);
-        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+
+        $moneyFormatter = new IntlMoneyFormatter(
+            formatter: $numberFormatter,
+            currencies: new ISOCurrencies()
+        );
 
         return $moneyFormatter->format($money);
     }

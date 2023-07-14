@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Traits;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use Shopper\Core\Models\Review;
@@ -157,12 +156,12 @@ trait ReviewRateable
         return round($quantity * $max > 0 ? ((int) $total * 100) / $quantity : 0, 1);
     }
 
-    public function rating(array $data, Model $author, Model $parent = null): Review
+    public function rating(array $data, $author, $parent = null): Review
     {
         return (new Review())->createRating($this, $data, $author);
     }
 
-    public function updateRating($id, $data, Model $parent = null): Review
+    public function updateRating($id, $data, $parent = null): Review
     {
         return (new Review())->updateRating($id, $data);
     }

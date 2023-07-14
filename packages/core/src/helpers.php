@@ -125,13 +125,19 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format($amount, string $currency = null): string
+    function shopper_money_format(int|string $amount, string $currency = null): string
     {
-        $money = new Money($amount, new Currency($currency ?? shopper_currency()));
-        $currencies = new ISOCurrencies();
+        $money = new Money(
+            amount: $amount,
+            currency: new Currency($currency ?? shopper_currency())
+        );
 
         $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
-        $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
+
+        $moneyFormatter = new IntlMoneyFormatter(
+            formatter: $numberFormatter,
+            currencies: new ISOCurrencies()
+        );
 
         return $moneyFormatter->format($money);
     }

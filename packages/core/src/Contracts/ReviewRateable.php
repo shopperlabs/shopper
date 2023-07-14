@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 interface ReviewRateable
@@ -35,9 +34,9 @@ interface ReviewRateable
 
     public function ratingPercent(int $max = 5): float;
 
-    public function rating(array $data, Model $author, Model $parent = null);
+    public function rating(array $data, $author, $parent = null);
 
-    public function updateRating(int $id, array $data, Model $parent = null);
+    public function updateRating(int $id, array $data, $parent = null);
 
     public function getAllRatings(int $id, string $sort = 'desc');
 

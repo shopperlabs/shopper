@@ -10,21 +10,18 @@ use Shopper\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginRespon
 
 final class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContract
 {
-    /**
-     * Create an HTTP response that represents the object.
-     *
-     * @throws ValidationException
-     */
     public function toResponse($request): RedirectResponse
     {
-        $message = __('The provided two factor authentication code was invalid.');
+        [$key, $message] = $request->filled('recovery_code')
+            ? ['recovery_code', __('The provided two factor recovery code was invalid.')]
+            : ['code', __('The provided two factor authentication code was invalid.')];
 
         if ($request->wantsJson()) {
-            throw ValidationException::withMessages(['code' => [$message]]);
+            throw ValidationException::withMessages([$key => $message]);
         }
 
-        return redirect()
-            ->route('shopper.login')
-            ->withErrors(['email' => $message]);
+        session()->flash('error', $message);
+
+        return back()->withErrors([$key => $message]);
     }
 }

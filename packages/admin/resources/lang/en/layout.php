@@ -55,6 +55,7 @@ return [
             'active' => 'Active',
             'inactive' => 'Inactive',
             'code' => 'Code',
+            'recovery_code' => 'Recovery Code',
             'visible' => 'Visible',
             'invisible' => 'Invisible',
             'search' => 'Search',

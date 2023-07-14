@@ -12,14 +12,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasProfilePhoto;
+use Shopper\Traits\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property-read int $id
  * @property-read string|null $first_name
  * @property-read string $last_name
+ * @property-read string $email
  * @property-read Carbon|null $email_verified_at
  * @property-read Carbon|null $birth_date
+ * @property-read string|null $two_factor_recovery_codes
+ * @property-read string|null $two_factor_secret
  */
 class User extends Authenticatable
 {
@@ -28,6 +32,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use HasRoles;
     use Notifiable;
+    use TwoFactorAuthenticatable;
 
     protected $guarded = [];
 

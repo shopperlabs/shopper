@@ -15,17 +15,11 @@ use Shopper\Contracts\TwoFactorAuthenticationProvider;
 
 trait TwoFactorAuthenticatable
 {
-    /**
-     * Get the user's two factor authentication recovery codes.
-     */
     public function recoveryCodes(): array
     {
         return json_decode(decrypt($this->two_factor_recovery_codes), true);
     }
 
-    /**
-     * Replace the given recovery code with a new one in the user's stored codes.
-     */
     public function replaceRecoveryCode(string $code): void
     {
         $this->forceFill([
@@ -37,9 +31,6 @@ trait TwoFactorAuthenticatable
         ])->save();
     }
 
-    /**
-     * Get the QR code SVG of the user's two factor authentication QR code URL.
-     */
     public function twoFactorQrCodeSvg(): string
     {
         $svg = (new Writer(
@@ -52,9 +43,6 @@ trait TwoFactorAuthenticatable
         return trim(mb_substr($svg, mb_strpos($svg, "\n") + 1));
     }
 
-    /**
-     * Get the two factor authentication QR code URL.
-     */
     public function twoFactorQrCodeUrl(): string
     {
         return app(TwoFactorAuthenticationProvider::class)->qrCodeUrl(
