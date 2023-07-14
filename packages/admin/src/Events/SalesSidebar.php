@@ -11,17 +11,17 @@ use Shopper\Sidebar\Contracts\Builder\Group;
 use Shopper\Sidebar\Contracts\Builder\Item;
 use Shopper\Sidebar\Contracts\Builder\Menu;
 
-final class OrderSidebar extends AbstractAdminSidebar
+final class SalesSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
         $count = Order::query()->where('status', OrderStatus::PENDING->value)->count();
 
-        $menu->group(__('shopper::layout.sidebar.shop'), function (Group $group) use ($count): void {
-            $group->weight(20);
+        $menu->group(__('shopper::layout.sidebar.sales'), function (Group $group) use ($count): void {
+            $group->weight(3);
             $group->setAuthorized();
-            $group->setHeadingClass('menu-heading text-xs leading-5 text-secondary-700 dark:text-secondary-300 uppercase tracking-wider mb-2 font-medium ml-3');
             $group->setGroupItemsClass('space-y-1');
+            $group->setHeadingClass('menu-heading text-xs leading-5 text-secondary-500 dark:text-secondary-400 uppercase tracking-wider mb-2 font-medium ml-3');
 
             $group->item(__('shopper::layout.sidebar.orders'), function (Item $item) use ($count): void {
                 $item->weight(1);
@@ -44,9 +44,8 @@ final class OrderSidebar extends AbstractAdminSidebar
                     type: 'svg'
                 );
             });
-
             $group->item(__('shopper::layout.sidebar.discounts'), function (Item $item): void {
-                $item->weight(9);
+                $item->weight(2);
                 $item->setAuthorized($this->user->hasPermissionTo('browse_discounts'));
                 $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
                 $item->setActiveClass('text-primary-600 bg-primary-50 dark:bg-primary-600/10');

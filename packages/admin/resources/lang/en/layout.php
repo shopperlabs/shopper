@@ -189,15 +189,16 @@ return [
     'sidebar' => [
         'dashboard' => 'Dashboard',
         'orders' => 'Orders',
-        'catalog' => 'Catalog',
         'brands' => 'Brands',
         'categories' => 'Categories',
         'collections' => 'Collections',
         'customers' => 'Customers',
         'reviews' => 'Reviews',
         'discounts' => 'Discounts',
-        'shop' => 'Shop',
         'products' => 'Products',
+        'catalog' => 'Catalog',
+        'shop' => 'Shop',
+        'sales' => 'Sales',
     ],
 
     'account_dropdown' => [
