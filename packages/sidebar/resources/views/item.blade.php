@@ -12,10 +12,12 @@
         ])
         @if($item->getNewTab())target="_blank"@endif
     >
-        @if($item->iconSvg())
-            {!! $item->getIcon() !!}
-        @else
-            @svg($item->getIcon(), $item->getIconClass())
+        @if($item->getIcon() !== null)
+            @if($item->iconSvg())
+                {!! $item->getIcon() !!}
+            @else
+                @svg($item->getIcon(), $item->getIconClass())
+            @endif
         @endif
 
         <span class="item-name">{{ $item->getName() }}</span>

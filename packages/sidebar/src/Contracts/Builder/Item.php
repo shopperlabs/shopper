@@ -17,7 +17,7 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function getWeight(): int;
 
-    public function getIcon(): string;
+    public function getIcon(): ?string;
 
     public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): self;
 

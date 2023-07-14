@@ -13,7 +13,7 @@ final class ShopSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
-        $menu->group(__('shopper::layout.sidebar.shop'), function (Group $group): void {
+        $menu->group(__('shopper::layout.sidebar.catalog'), function (Group $group): void {
             $group->weight(20);
             $group->setAuthorized();
 
@@ -61,7 +61,7 @@ final class ShopSidebar extends AbstractAdminSidebar
                 );
             });
 
-            $group->item(__('shopper::layout.sidebar.catalog'), function (Item $item): void {
+            $group->item(__('shopper::layout.sidebar.products'), function (Item $item): void {
                 $item->weight(2);
                 $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
                 $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
@@ -77,14 +77,13 @@ final class ShopSidebar extends AbstractAdminSidebar
                     type: 'svg'
                 );
 
-                $item->item(__('Attributes'), function (Item $item): void {
+                $item->item(__('shopper::words.attributes'), function (Item $item): void {
                     $item->weight(1);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_products') || $this->user->hasPermissionTo('browse_attributes'));
-                    $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
-                    $item->setActiveClass('text-secondary-900 bg-secondary-100 dark:bg-secondary-700/50 dark:text-white');
-                    $item->setInactiveClass('text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-700');
+                    $item->setItemClass('group flex items-center py-1 text-sm font-medium');
+                    $item->setActiveClass('text-secondary-900 dark:text-white');
+                    $item->setInactiveClass('text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300');
                     $item->route('shopper.attributes.index');
-                    $item->setIcon(icon: 'heroicon-o-clipboard-list', iconClass: 'w-5 h-5 mr-2');
                 });
             });
 
