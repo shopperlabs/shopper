@@ -12,14 +12,12 @@
                 {{ $subHeading }}
             @endisset
 
-            <main class="flex-1 relative z-0 py-3 lg:py-6">
+            <main class="flex-1 relative z-0 py-4 lg:py-6">
                 <div {{ $attributes->merge(['class' => 'min-h-(screen-content)']) }}>
                     {{ $slot }}
                 </div>
             </main>
         </div>
-
-        <x-shopper::wip />
     </div>
 
 </x-shopper::layouts.base>

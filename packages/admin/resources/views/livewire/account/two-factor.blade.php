@@ -1,7 +1,7 @@
 <div class="mt-10 sm:mt-0">
     <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
         <div class="lg:col-span-1">
-            <div class="px-4 sm:px-0">
+            <div>
                 <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
                     {{ __('shopper::pages/auth.account.two_factor_title') }}
                 </h3>
@@ -93,38 +93,25 @@
                         @endif
                     @endif
                 </div>
-                <div class="px-4 py-3 sm:px-6 text-right">
+                <div class="px-4 py-4 sm:px-6 flex justify-end">
                     @if(! $this->enabled)
-                        <x-shopper::confirms-password wire:then="enableTwoFactorAuthentication">
-                            <x-shopper::buttons.primary type="button" wire:loading.attr="disabled">
-                                {{ __('shopper::layout.forms.actions.enabled_two_factor') }}
-                            </x-shopper::buttons.primary>
-                        </x-shopper::confirms-password>
+                        <x-shopper::buttons.primary wire:click="startConfirmingPassword('enableTwoFactorAuthentication')" type="button" wire:loading.attr="disabled">
+                            <x-shopper::loader wire:loading wire:target="startConfirmingPassword" class="text-white" />
+                            {{ __('shopper::layout.forms.actions.enabled_two_factor') }}
+                        </x-shopper::buttons.primary>
                     @else
-                        <div class="sm:flex sm:flex-row-reverse">
-                            <x-shopper::confirms-password wire:then="disableTwoFactorAuthentication">
-                                <span class="flex w-full rounded-md sm:ml-3 sm:w-auto">
-                                    <x-shopper::buttons.danger wire:loading.attr="disabled" type="button">
-                                        {{ __('shopper::layout.forms.actions.disabled') }}
-                                    </x-shopper::buttons.danger>
-                                </span>
-                            </x-shopper::confirms-password>
+                        <div class="space-x-3 sm:flex sm:items-center">
+                            <x-shopper::buttons.danger wire:click="startConfirmingPassword('disableTwoFactorAuthentication')" wire:loading.attr="disabled" type="button">
+                                {{ __('shopper::layout.forms.actions.disabled') }}
+                            </x-shopper::buttons.danger>
                             @if ($showingRecoveryCodes)
-                                <x-shopper::confirms-password wire:then="regenerateRecoveryCodes">
-                                    <span class="mt-3 flex w-full rounded-md sm:mt-0 sm:w-auto">
-                                        <x-shopper::buttons.primary wire:loading.attr="disabled" type="button">
-                                            {{ __('shopper::layout.forms.actions.regenerate') }}
-                                        </x-shopper::buttons.primary>
-                                    </span>
-                                </x-shopper::confirms-password>
+                                <x-shopper::buttons.primary wire:click="startConfirmingPassword('regenerateRecoveryCodes')" wire:loading.attr="disabled" type="button">
+                                    {{ __('shopper::layout.forms.actions.regenerate') }}
+                                </x-shopper::buttons.primary>
                             @else
-                                <x-shopper::confirms-password wire:then="showRecoveryCodes">
-                                    <span class="mt-3 flex w-full rounded-md sm:mt-0 sm:w-auto">
-                                        <x-shopper::buttons.default wire:loading.attr="disabled" type="button" class="justify-center w-full">
-                                            {{ __('shopper::layout.forms.actions.show_recovery_code') }}
-                                        </x-shopper::buttons.default>
-                                    </span>
-                                </x-shopper::confirms-password>
+                                <x-shopper::buttons.default wire:click="startConfirmingPassword('showRecoveryCodes')" wire:loading.attr="disabled" type="button">
+                                    {{ __('shopper::layout.forms.actions.show_recovery_code') }}
+                                </x-shopper::buttons.default>
                             @endif
                         </div>
                     @endif

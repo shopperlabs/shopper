@@ -42,7 +42,7 @@ if (! function_exists('setEnvironmentValue')) {
         $envFile = app()->environmentFilePath();
         $str = file_get_contents($envFile);
 
-        if (\count($values) > 0) {
+        if (count($values) > 0) {
             $str .= "\n"; // In case the searched variable is in the last line without \n
             foreach ($values as $envKey => $envValue) {
                 if (true === $envValue) {
