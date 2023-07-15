@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Facades\Shopper;
 use Shopper\Actions\ConfirmPassword as ConfirmPasswordAction;
+use Shopper\Facades\Shopper;
 
 class ConfirmPassword extends ModalComponent
 {

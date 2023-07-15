@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Traits;
 
-use Illuminate\Validation\ValidationException;
-use Shopper\Actions\ConfirmPassword;
-use Shopper\Facades\Shopper;
-
 trait ConfirmsPasswords
 {
     public function startConfirmingPassword(string $action): void
