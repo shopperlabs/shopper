@@ -110,6 +110,7 @@ return [
     'modals.create-permission' => Livewire\Modals\CreatePermission::class,
     'modals.create-role' => Livewire\Modals\CreateRole::class,
     'modals.create-value' => Livewire\Modals\CreateValue::class,
+    'modals.confirm-password' => Livewire\Modals\ConfirmPassword::class,
     'modals.delete-customer' => Livewire\Modals\DeleteCustomer::class,
     'modals.delete-discount' => Livewire\Modals\DeleteDiscount::class,
     'modals.delete-inventory' => Livewire\Modals\DeleteInventory::class,

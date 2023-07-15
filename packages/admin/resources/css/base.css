@@ -65,3 +65,7 @@ input[type="number"] {
 .dark .scrolling::-webkit-scrollbar-thumb {
    background-color: theme('colors.secondary.700');
 }
+
+#ui-modal > div > div.fixed {
+  @apply z-40 backdrop-blur-sm;
+}

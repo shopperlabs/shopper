@@ -32,7 +32,7 @@
 
     <wireui:scripts />
     <livewire:scripts />
-    <script src="{{ mix('/js/shopper.js','shopper') }}" defer></script>
+    <script src="{{ mix('/js/shopper.js', 'shopper') }}" defer></script>
 
     @include('shopper::includes._additional-styles')
     @stack('scripts')
@@ -43,7 +43,10 @@
 
     <x-shopper::alert />
 
-    @livewire('livewire-ui-modal')
+    <div id="ui-modal">
+        @livewire('livewire-ui-modal')
+    </div>
+
     @livewire('notifications')
 
     @include('shopper::includes._additional-scripts')

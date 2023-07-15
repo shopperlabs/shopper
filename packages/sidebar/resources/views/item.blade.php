@@ -26,11 +26,18 @@
             {!! $badge !!}
         @endforeach
 
-        <span class="toggle">
-            @if($item->hasItems())
-                @svg($item->getToggleIcon(), 'h-5 w-5')
-            @endif
-        </span>
+        @if($item->hasItems())
+            <span class="toggle">
+                @if($item->toggleIconSvg())
+                    {!! $active ? $item->getActiveToggleIcon() : $item->getToggleIcon() !!}
+                @else
+                    @svg(
+                        $active ? $item->getActiveToggleIcon() : $item->getToggleIcon(),
+                        $active ? $item->getActiveToggleIconClass() : $item->getToggleIconClass()
+                   )
+                @endif
+            </span>
+        @endif
     </a>
 
     @foreach($appends as $append)

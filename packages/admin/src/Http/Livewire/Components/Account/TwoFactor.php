@@ -22,6 +22,13 @@ class TwoFactor extends Component
 
     public bool $showingRecoveryCodes = false;
 
+    protected $listeners = [
+        'enableTwoFactorAuthentication',
+        'showRecoveryCodes',
+        'regenerateRecoveryCodes',
+        'disableTwoFactorAuthentication',
+    ];
+
     public function enableTwoFactorAuthentication(EnableTwoFactorAuthentication $enable): void
     {
         if (config('shopper.auth.2fa_enabled')) {

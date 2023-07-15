@@ -25,9 +25,19 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function getToggleIcon(): string;
 
-    public function toggleIcon(string $icon): self;
+    public function getActiveToggleIcon(): string;
+
+    public function getToggleIconClass(): string;
+
+    public function getActiveToggleIconClass(): string;
+
+    public function toggleIcon(string $icon, string $type = 'blade', string $iconClass = ''): self;
+
+    public function toggleActiveIcon(string $icon, string $type = 'blade', string $iconClass = ''): self;
 
     public function iconSvg(): bool;
+
+    public function toggleIconSvg(): bool;
 
     public function getUrl(): string;
 

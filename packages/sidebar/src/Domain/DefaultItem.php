@@ -39,7 +39,15 @@ class DefaultItem implements Item, Serializable
 
     protected string $type = 'blade';
 
+    protected string $toggleIconType = 'blade';
+
     protected string $toggleIcon = 'heroicon-o-plus-sm';
+
+    protected string $toggleActiveIcon = 'heroicon-o-minus-sm';
+
+    protected string $toggleIconClass = 'h-5 w-5';
+
+    protected string $toggleActiveIconClass = 'h-5 w-5';
 
     protected bool $activeWhen = false;
 
@@ -60,6 +68,7 @@ class DefaultItem implements Item, Serializable
         'icon',
         'type',
         'toggleIcon',
+        'toggleActiveIcon',
         'items',
         'badges',
         'appends',
@@ -121,9 +130,35 @@ class DefaultItem implements Item, Serializable
         return $this->toggleIcon;
     }
 
-    public function toggleIcon(string $icon): self
+    public function getActiveToggleIcon(): string
+    {
+        return $this->toggleActiveIcon;
+    }
+
+    public function getToggleIconClass(): string
+    {
+        return $this->toggleIconClass;
+    }
+
+    public function getActiveToggleIconClass(): string
+    {
+        return $this->toggleActiveIconClass;
+    }
+
+    public function toggleIcon(string $icon, string $type = 'blade', string $iconClass = ''): self
     {
         $this->toggleIcon = $icon;
+        $this->toggleIconType = $type;
+        $this->toggleIconClass = $iconClass;
+
+        return $this;
+    }
+
+    public function toggleActiveIcon(string $icon, string $type = 'blade', string $iconClass = ''): self
+    {
+        $this->toggleActiveIcon = $icon;
+        $this->toggleIconType = $type;
+        $this->toggleActiveIconClass = $iconClass;
 
         return $this;
     }
@@ -131,6 +166,11 @@ class DefaultItem implements Item, Serializable
     public function iconSvg(): bool
     {
         return 'svg' === $this->type;
+    }
+
+    public function toggleIconSvg(): bool
+    {
+        return 'svg' === $this->toggleIconType;
     }
 
     public function badge(mixed $callbackOrValue = null, string $className = null): Badge
