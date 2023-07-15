@@ -4,7 +4,7 @@
         <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" :title="__('shopper::layout.sidebar.reviews')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="mt-3">
+    <x-shopper::heading class="mt-5">
         <x-slot name="title">
             {{ $review->reviewrateable->name }}
         </x-slot>

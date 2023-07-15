@@ -150,4 +150,9 @@ return [
     'number_not_set' => 'Number not set',
     'added_on' => 'Added on',
     'dark_mode' => 'Dark Mode',
+    'view_shortcuts' => 'View shortcuts',
+    'global_search' => 'Global search',
+    'display_shortcuts' => 'Display shortcuts',
+    'go_to_documentation' => 'Go to documentation',
+    'search' => 'Search content',
 ];

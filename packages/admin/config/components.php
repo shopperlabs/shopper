@@ -85,6 +85,8 @@ return [
     'reviews.browse' => Components\Reviews\Browse::class,
     'reviews.show' => Components\Reviews\Show::class,
 
+    'search' => Components\Search::class,
+
     /*
     |--------------------------------------------------------------------------
     | Forms Livewire Components

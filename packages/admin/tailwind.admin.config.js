@@ -1,6 +1,7 @@
 const colors = require('tailwindcss/colors')
 const defaultTheme = require('tailwindcss/defaultTheme')
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   safelist: [
     {
@@ -38,10 +39,14 @@ module.exports = {
         15: '.15',
         30: '0.3',
         40: '0.4',
+        50: '0.5',
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
         display: ['Mona Sans', ...defaultTheme.fontFamily.sans],
+      },
+      fontSize: {
+        xxs: ['0.625rem', { lineHeight: '1rem' }],
       },
       minHeight: {
         '(screen-content)': 'calc(100vh - 9.625rem)',

@@ -33,7 +33,7 @@ class DefaultItem implements Item, Serializable
 
     protected int $weight = 0;
 
-    protected string $icon = 'heroicon-o-chevron-right';
+    protected ?string $icon = null;
 
     protected string $iconClass = '';
 
@@ -97,7 +97,7 @@ class DefaultItem implements Item, Serializable
         return $this->weight;
     }
 
-    public function getIcon(): string
+    public function getIcon(): ?string
     {
         return $this->icon;
     }

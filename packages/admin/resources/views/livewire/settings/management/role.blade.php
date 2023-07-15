@@ -18,7 +18,7 @@
             <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('Staff & permissions')" />
         </x-shopper::breadcrumb>
 
-        <x-shopper::heading class="border-b-0">
+        <x-shopper::heading class="mt-5 border-b-0">
             <x-slot name="title">
                 {{ $display_name }}
             </x-slot>

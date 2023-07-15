@@ -5,7 +5,7 @@
             <x-shopper::breadcrumb.link :link="route('shopper.brands.index')" :title="__('shopper::layout.sidebar.brands')" />
         </x-shopper::breadcrumb>
 
-        <x-shopper::heading>
+        <x-shopper::heading class="mt-5">
             <x-slot name="title">
                 {{ $name }}
             </x-slot>

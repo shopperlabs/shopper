@@ -189,15 +189,16 @@ return [
     'sidebar' => [
         'dashboard' => 'Tableau de bord',
         'orders' => 'Commandes',
-        'catalog' => 'Catalogue',
         'brands' => 'Marques',
         'categories' => 'Catégories',
         'collections' => 'Collections',
         'customers' => 'Clients',
         'reviews' => 'Avis',
         'discounts' => 'Coupons',
-        'shop' => 'Magasin',
         'products' => 'Produits',
+        'catalog' => 'Catalogue',
+        'shop' => 'Magasin',
+        'sales' => 'Ventes',
     ],
 
     'account_dropdown' => [

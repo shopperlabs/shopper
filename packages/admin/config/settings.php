@@ -65,4 +65,5 @@ return [
             'permission' => null,
         ],
     ],
+
 ];
