@@ -4,7 +4,7 @@
         <x-shopper::breadcrumb.link :link="route('shopper.attributes.index')" :title="__('shopper::words.attributes')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading>
+    <x-shopper::heading class="mt-5">
         <x-slot name="title">
             {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.attribute'))]) }}
         </x-slot>

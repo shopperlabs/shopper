@@ -69,7 +69,7 @@
                     </x-shopper::buttons.primary>
                 </div>
             </div>
-            <div class="mt-6 border border-secondary-200 rounded-md dark:border-secondary-700">
+            <div class="mt-6 border border-secondary-200 rounded-lg overflow-hidden dark:border-secondary-700">
                 <div class="overflow-x-auto">
                     <div class="align-middle inline-block min-w-full">
                         <table class="min-w-full">

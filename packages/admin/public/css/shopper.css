@@ -5992,6 +5992,9 @@ html {
   --tw-bg-opacity: 1;
   background-color: rgb(113 113 122 / var(--tw-bg-opacity));
 }
+.bg-white\/90{
+  background-color: rgb(255 255 255 / 0.9);
+}
 .bg-opacity-10{
   --tw-bg-opacity: 0.1;
 }
@@ -9322,6 +9325,10 @@ html {
   background-color: rgb(63 63 70 / var(--tw-bg-opacity));
 }
 
+:is(.dark .dark\:bg-secondary-800\/90){
+  background-color: rgb(30 41 59 / 0.9);
+}
+
 :is(.dark .dark\:bg-opacity-60){
   --tw-bg-opacity: 0.6;
 }
@@ -11390,6 +11397,38 @@ html {
     top: auto;
   }
 
+  .lg\:top-\[3\.625rem\]{
+    top: 3.625rem;
+  }
+
+  .lg\:top-\[3\.65rem\]{
+    top: 3.65rem;
+  }
+
+  .lg\:top-\[3\.875rem\]{
+    top: 3.875rem;
+  }
+
+  .lg\:top-\[4\.25rem\]{
+    top: 4.25rem;
+  }
+
+  .lg\:top-\[4\.5rem\]{
+    top: 4.5rem;
+  }
+
+  .lg\:top-\[4\.375rem\]{
+    top: 4.375rem;
+  }
+
+  .lg\:top-\[4\.475rem\]{
+    top: 4.475rem;
+  }
+
+  .lg\:top-\[4\.425rem\]{
+    top: 4.425rem;
+  }
+
   .lg\:col-span-1{
     grid-column: span 1 / span 1;
   }
@@ -11541,6 +11580,14 @@ html {
 
   .lg\:max-w-xl{
     max-width: 36rem;
+  }
+
+  .lg\:max-w-sm{
+    max-width: 24rem;
+  }
+
+  .lg\:max-w-xs{
+    max-width: 20rem;
   }
 
   .lg\:flex-1{
@@ -11796,6 +11843,11 @@ html {
   .lg\:py-6{
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
+  }
+
+  .lg\:py-12{
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .lg\:pb-0{

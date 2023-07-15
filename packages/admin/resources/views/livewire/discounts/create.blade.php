@@ -4,7 +4,7 @@
         <x-shopper::breadcrumb.link :link="route('shopper.discounts.index')" :title="__('shopper::layout.sidebar.discounts')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading>
+    <x-shopper::heading class="mt-5">
         <x-slot name="title">
             {{ __('shopper::pages/discounts.actions.create') }}
         </x-slot>
