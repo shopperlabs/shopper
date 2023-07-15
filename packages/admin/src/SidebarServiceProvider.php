@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopper;
 
 use Illuminate\Support\ServiceProvider;
+use Shopper\Events\CatalogSidebar;
 use Shopper\Events\CustomerSidebar;
 use Shopper\Events\DashboardSidebar;
 use Shopper\Events\SalesSidebar;
-use Shopper\Events\CatalogSidebar;
 use Shopper\Sidebar\AdminSidebar;
 use Shopper\Sidebar\SidebarBuilder;
 use Shopper\Sidebar\SidebarCreator;
