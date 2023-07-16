@@ -9,13 +9,6 @@
             <x-slot name="title">
                 {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.brand'))]) }}
             </x-slot>
-
-            <x-slot name="action">
-                <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
-                    <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                    {{ __('shopper::layout.forms.actions.save') }}
-                </x-shopper::buttons.primary>
-            </x-slot>
         </x-shopper::heading>
 
         <div class="mt-8 space-y-5 lg:space-y-0 lg:grid lg:grid-cols-6 lg:gap-6">
@@ -93,6 +86,15 @@
                         </div>
                     </x-shopper::card>
                 </aside>
+            </div>
+        </div>
+
+        <div class="mt-6 border-t border-secondary-200 pt-5 pb-10 dark:border-secondary-700">
+            <div class="flex justify-end">
+                <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
+                    <x-shopper::loader wire:loading wire:target="store" class="text-white" />
+                    {{ __('shopper::layout.forms.actions.save') }}
+                </x-shopper::buttons.primary>
             </div>
         </div>
     </div>
