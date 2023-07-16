@@ -7,10 +7,10 @@
             <div class="mt-4 sm:mt-0 flex items-center space-x-3">
                 @if($collection->isManual())
                     <span class="inline-flex rounded-md shadow-sm">
-                    <x-shopper::buttons.default wire:click="$emit('openModal', 'shopper-modals.products-lists', {{ json_encode([$collection->id, $this->productsIds]) }})" type="button">
-                        {{ __('shopper::layout.forms.label.browse') }}
-                    </x-shopper::buttons.default>
-                </span>
+                        <x-shopper::buttons.default wire:click="$emit('openModal', 'shopper-modals.products-lists', {{ json_encode([$collection->id, $this->productsIds]) }})" type="button">
+                            {{ __('shopper::layout.forms.label.browse') }}
+                        </x-shopper::buttons.default>
+                    </span>
                 @endif
                 <div class="relative">
                     <x-shopper::label for="sort" class="sr-only" :value="__('Sort products by')" />
@@ -39,14 +39,14 @@
                         <div class="flex items-center">
                             @if($product->getFirstMediaUrl(config('shopper.core.storage.collection_name')))
                                 <span class="shrink-0 h-10 w-10 rounded-md overflow-hidden">
-                                        <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $product->name }}" />
-                                    </span>
+                                    <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $product->name }}" />
+                                </span>
                             @else
                                 <span class="flex items-center justify-center h-10 w-10 bg-secondary-100 text-secondary-300 rounded-md dark:bg-secondary-700 dark:text-secondary-400">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-                                            <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                    </span>
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                                        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </span>
                             @endif
                             <p class="ml-4 text-sm font-medium text-secondary-500 dark:text-secondary-400">
                                 {{ $product->name }}
@@ -60,22 +60,22 @@
             </div>
         @else
             <div class="py-5 w-full max-w-xs mx-auto flex flex-col items-center justify-center">
-                    <span class="shrink-0 w-10 h-10">
-                        <x-heroicon-o-book-open class="w-full h-full text-secondary-500" />
-                    </span>
+                <span class="shrink-0 w-10 h-10">
+                    <x-heroicon-o-book-open class="w-full h-full text-secondary-500" />
+                </span>
                 <p class="mt-2.5 text-sm text-secondary-500 leading-5 text-center dark:text-secondary-400">
                     {{ __('shopper::pages/collections.empty_collections') }}
                 </p>
                 @if($collection->isAutomatic())
                     <div class="relative mt-3">
-                            <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper::buttons.default type="button">
-                                    {{ __('shopper::pages/collections.conditions.update') }}
-                                    <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
-                                      {{ __('shopper::layout.soon') }}
-                                    </span>
-                                </x-shopper::buttons.default>
-                            </span>
+                        <span class="inline-flex rounded-md shadow-sm">
+                            <x-shopper::buttons.default type="button">
+                                {{ __('shopper::pages/collections.conditions.update') }}
+                                <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                                  {{ __('shopper::layout.soon') }}
+                                </span>
+                            </x-shopper::buttons.default>
+                        </span>
                     </div>
                 @endif
             </div>
