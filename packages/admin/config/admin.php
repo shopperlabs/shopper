@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'prefix' => env('SHOPPER_PREFIX', 'cpanel'),
+    'prefix' => env('SHOPPER_PREFIX', 'shopper'),
 
     /*
     |--------------------------------------------------------------------------
