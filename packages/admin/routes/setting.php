@@ -15,4 +15,8 @@ Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics'
 Route::view('/payments', 'shopper::pages.settings.payments.general')->name('payments');
 Route::view('/general', 'shopper::pages.settings.general')->name('shop');
 
-Route::resource('inventories', InventoryController::class);
+Route::prefix('inventories')->group(function (): void {
+    Route::get('/', [InventoryController::class, 'index'])->name('inventories');
+    Route::get('/create', [InventoryController::class, 'create'])->name('inventories.create');
+    Route::get('/{inventory}/edit', [InventoryController::class, 'edit'])->name('inventories.edit');
+});
