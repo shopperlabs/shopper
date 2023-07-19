@@ -32,7 +32,7 @@ class Browse extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.discounts.browse', [
+        return view('shopper::livewire.components.discounts.browse', [
             'total' => Discount::query()->count(),
             'discounts' => Discount::query()->where('code', 'like', '%' . $this->search . '%')
                 ->where(function (Builder $query): void {
