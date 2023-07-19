@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Tests\Database\Factories;
 
-use Shopper\Tests\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Shopper\Tests\Models\User;
 
 class UserFactory extends Factory
 {

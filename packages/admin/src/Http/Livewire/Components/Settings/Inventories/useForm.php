@@ -38,7 +38,7 @@ trait useForm
             'email' => array_merge([
                 'required',
                 'email',
-            ], $this->inventoryId ? [Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId)]: []),
+            ], $this->inventoryId ? [Rule::unique(shopper_table('inventories'), 'email')->ignore($this->inventoryId)] : []),
             'name' => 'required|max:100',
             'city' => 'required',
             'street_address' => 'required',
@@ -48,7 +48,7 @@ trait useForm
         ];
     }
 
-    public function save(Model | string $model): void
+    public function save(Model|string $model): void
     {
         $this->validate($this->rules());
 
