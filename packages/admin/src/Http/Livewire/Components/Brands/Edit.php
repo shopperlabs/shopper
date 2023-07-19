@@ -5,52 +5,26 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Brands;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Validation\Rule;
+use Shopper\Contracts\HasForm;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Http\Livewire\AbstractBaseComponent;
 
-class Edit extends AbstractBaseComponent
+class Edit extends AbstractBaseComponent implements HasForm
 {
+    use UseForm;
     use WithSeoAttributes;
 
     public $brand;
 
-    public int $brand_id;
-
-    public string $name;
-
-    public ?string $website = null;
-
-    public ?string $description = null;
-
-    public bool $is_enabled = false;
-
-    public ?string $fileUrl = null;
-
-    public $seoAttributes = [
-        'name' => 'name',
-        'description' => 'description',
-    ];
-
     protected $listeners = [
-        'shopper:fileUpdated' => 'onFileUpdate',
         'trix:valueUpdated' => 'onTrixValueUpdate',
+        'shopper:fileUpdated' => 'onFileUpdate',
     ];
-
-    public function onTrixValueUpdate(string $value): void
-    {
-        $this->description = $value;
-    }
-
-    public function onFileUpdate($file): void
-    {
-        $this->fileUrl = $file;
-    }
 
     public function mount($brand): void
     {
         $this->brand = $brand;
-        $this->brand_id = $brand->id;
+        $this->brandId = $brand->id;
         $this->name = $brand->name;
         $this->website = $brand->website;
         $this->description = $brand->description;
@@ -67,40 +41,19 @@ class Edit extends AbstractBaseComponent
 
     public function store(): void
     {
-        $this->validate($this->rules());
-
-        $this->brand->update([
-            'name' => $this->name,
-            'slug' => $this->name,
-            'website' => $this->website,
-            'description' => $this->description,
-            'is_enabled' => $this->is_enabled,
-            'seo_title' => $this->seoTitle,
-            'seo_description' => str_limit($this->seoDescription, 157),
-        ]);
+        $this->save($this->brand);
 
         if ($this->fileUrl) {
             $this->brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
-        session()->flash('success', __('Brand successfully updated!'));
+        session()->flash('success', __('shopper::pages/brands.notifications.updated'));
 
         $this->redirectRoute('shopper.brands.index');
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => [
-                'required',
-                'max:150',
-                Rule::unique(shopper_table('brands'), 'name')->ignore($this->brand_id),
-            ],
-        ];
-    }
-
     public function render(): View
     {
-        return view('shopper::livewire.brands.edit');
+        return view('shopper::livewire.components.brands.edit');
     }
 }
