@@ -13,7 +13,7 @@ use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Create extends AbstractBaseComponent implements HasForm
 {
-    use useForm;
+    use UseForm;
 
     public string $model = Inventory::class;
 

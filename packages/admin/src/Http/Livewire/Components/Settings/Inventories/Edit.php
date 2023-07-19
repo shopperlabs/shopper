@@ -13,7 +13,7 @@ use Shopper\Http\Livewire\AbstractBaseComponent;
 
 class Edit extends AbstractBaseComponent implements HasForm
 {
-    use useForm;
+    use UseForm;
 
     public Inventory $inventory;
 

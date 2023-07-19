@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
 use Shopper\Core\Rules\Phone;
 
-trait useForm
+trait UseForm
 {
     public ?int $inventoryId = null;
 
