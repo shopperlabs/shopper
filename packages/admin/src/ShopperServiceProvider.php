@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Shopper;
 
-use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Notifications\Messages\MailMessage;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
 use Shopper\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
@@ -63,14 +61,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->bootLivewireComponents();
 
         $this->bootModelRelationName();
-
-        /*ResetPassword::toMailUsing(
-            fn ($notifiable, string $token) => (new MailMessage())
-                ->view('shopper::mails.email')
-                ->line(__('shopper::pages/auth.email.mail.content'))
-                ->action(__('shopper::pages/auth.email.mail.action'), url(config('app.url') . route('shopper.password.reset', $token, false)))
-                ->line(__('shopper::pages/auth.email.mail.message'))
-        );*/
 
         Builder::macro(
             'search',

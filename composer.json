@@ -62,8 +62,13 @@
         "packages/sidebar/src"
       ],
       "Shopper\\Core\\": "packages/core/src",
-      "Shopper\\Sidebar\\": "packages/sidebar/src",
-      "Shopper\\Tests\\": "tests/src"
+      "Shopper\\Sidebar\\": "packages/sidebar/src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Shopper\\Tests\\": "tests/src",
+      "Shopper\\Tests\\Database\\Factories\\": "tests/database/factories"
     }
   },
   "extra": {
