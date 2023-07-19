@@ -9,4 +9,10 @@ return [
     'empty_selector' => '--- No category ---',
     'empty_parent' => 'No parent category',
     'parent' => 'in :parent',
+
+    'notifications' => [
+        'created' => 'Category successfully added!',
+        'updated' => 'Category successfully updated!',
+    ],
+
 ];

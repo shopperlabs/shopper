@@ -5,80 +5,39 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Categories;
 
 use Illuminate\Contracts\View\View;
+use Shopper\Contracts\HasForm;
 use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesCategories;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Http\Livewire\AbstractBaseComponent;
 
-class Create extends AbstractBaseComponent
+class Create extends AbstractBaseComponent implements HasForm
 {
+    use UseForm;
     use WithChoicesCategories;
     use WithSeoAttributes;
-
-    public string $name = '';
-
-    public ?int $parent_id = null;
-
-    public ?string $description = null;
-
-    public bool $is_enabled = true;
-
-    public ?string $fileUrl = null;
-
-    public $parent;
-
-    public $seoAttributes = [
-        'name' => 'name',
-        'description' => 'description',
-    ];
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
         'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
-    public function onTrixValueUpdate(string $value): void
-    {
-        $this->description = $value;
-    }
-
-    public function onFileUpdate($file): void
-    {
-        $this->fileUrl = $file;
-    }
-
     public function store(): void
     {
-        $this->validate($this->rules());
-
-        $category = (new CategoryRepository())->create([
-            'name' => $this->name,
-            'slug' => $this->parent ? $this->parent->slug . '-' . $this->name : $this->name,
-            'parent_id' => $this->parent_id,
-            'description' => $this->description,
-            'is_enabled' => $this->is_enabled,
-            'seo_title' => $this->seoTitle,
-            'seo_description' => $this->seoDescription,
-        ]);
+        $category = $this->save((new CategoryRepository())->model());
 
         if ($this->fileUrl) {
-            // @phpstan-ignore-next-line
             $category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
-        session()->flash('success', __('Category successfully added!'));
+        session()->flash('success', __('shopper::pages/categories.notifications.created'));
 
         $this->redirectRoute('shopper.categories.index');
     }
 
-    public function rules(): array
-    {
-        return ['name' => 'required|max:150'];
-    }
-
     public function render(): View
     {
-        return view('shopper::livewire.categories.create', [
+        return view('shopper::livewire.components.categories.create', [
             'categories' => (new CategoryRepository())
                 ->makeModel()
                 ->scopes('enabled')
