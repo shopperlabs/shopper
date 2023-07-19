@@ -25,7 +25,6 @@ class Create extends AbstractBaseComponent implements HasForm
         $brand = $this->save((new BrandRepository())->model());
 
         if ($this->fileUrl) {
-            // @phpstan-ignore-next-line
             $brand->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
