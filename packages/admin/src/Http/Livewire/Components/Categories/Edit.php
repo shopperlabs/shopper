@@ -6,7 +6,6 @@ namespace Shopper\Http\Livewire\Components\Categories;
 
 use Illuminate\Contracts\View\View;
 use Shopper\Contracts\HasForm;
-use Shopper\Core\Exceptions\GeneralException;
 use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesCategories;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
