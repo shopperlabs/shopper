@@ -11,8 +11,18 @@ return [
     'filtrable_description' => 'Vous pouvez utiliser cet attribut comme filtre dans votre boutique en ligne.',
     'attribute_visibility' => 'Définir la visibilité des attributs pour les clients.',
     'attribute_value' => 'Valeur de l\'attribut id',
+
     'values' => [
         'title' => 'Valeurs d\'attributs',
         'description' => 'Ajouter des valeurs par défaut pour cet attribut. Ces valeurs pourront être disponibles dans l\' onglet attributs des produits.',
     ],
+
+    'notifications' => [
+        'created' => 'L\'attribut a été créé avec succès!',
+        'updated' => 'L\'attribut a été mis à jour avec succès!',
+        'value_created' => 'Nouvelle valeur ajoutée pour :name',
+        'value_updated' => 'Votre valeur a été correctement mise à jour',
+        'value_removed' => 'Votre valeur a été correctement supprimée',
+    ],
+
 ];

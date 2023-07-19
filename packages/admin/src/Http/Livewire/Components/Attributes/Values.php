@@ -43,13 +43,13 @@ class Values extends Component
 
         Notification::make()
             ->title(__('shopper::layout.status.delete'))
-            ->body(__('Your value have been correctly removed'))
+            ->body(__('shopper::pages/attributes.notifications.value_removed'))
             ->success()
             ->send();
     }
 
     public function render(): View
     {
-        return view('shopper::livewire.attributes.values');
+        return view('shopper::livewire.components.attributes.values');
     }
 }

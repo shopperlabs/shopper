@@ -50,7 +50,7 @@ class UpdateValue extends ModalComponent
 
         Notification::make()
             ->title(__('shopper::components.tables.status.updated'))
-            ->body(__('Your value have been correctly updated'))
+            ->body(__('shopper::pages/attributes.notifications.value_updated'))
             ->success()
             ->send();
 

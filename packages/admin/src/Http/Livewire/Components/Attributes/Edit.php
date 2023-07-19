@@ -6,29 +6,15 @@ namespace Shopper\Http\Livewire\Components\Attributes;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Validation\Rule;
+use Shopper\Contracts\HasForm;
 use Shopper\Core\Models\Attribute;
 use Shopper\Http\Livewire\AbstractBaseComponent;
 
-class Edit extends AbstractBaseComponent
+class Edit extends AbstractBaseComponent implements HasForm
 {
+    use UseForm;
+
     public Attribute $attribute;
-
-    public int $attributeId;
-
-    public string $name;
-
-    public string $slug;
-
-    public string $type = 'text';
-
-    public ?string $description = null;
-
-    public bool $isEnabled = false;
-
-    public bool $isSearchable = false;
-
-    public bool $isFilterable = false;
 
     public function mount(Attribute $attribute): void
     {
@@ -43,35 +29,13 @@ class Edit extends AbstractBaseComponent
         $this->isFilterable = $attribute->is_filterable;
     }
 
-    public function rules(): array
-    {
-        return [
-            'name' => 'required|max:75',
-            'slug' => [
-                'required',
-                Rule::unique(shopper_table('attributes'), 'slug')->ignore($this->attributeId),
-            ],
-            'type' => 'required',
-        ];
-    }
-
     public function store(): void
     {
-        $this->validate($this->rules());
-
-        Attribute::query()->find($this->attributeId)->update([
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'type' => $this->type,
-            'description' => $this->description,
-            'is_enabled' => $this->isEnabled,
-            'is_searchable' => $this->isSearchable,
-            'is_filterable' => $this->isFilterable,
-        ]);
+        $this->save($this->attribute);
 
         Notification::make()
             ->title(__('shopper::components.tables.status.updated'))
-            ->body(__('Attribute has been successfully updated!'))
+            ->body(__('shopper::pages/attributes.notifications.updated'))
             ->success()
             ->send();
     }
@@ -83,7 +47,7 @@ class Edit extends AbstractBaseComponent
 
     public function render(): View
     {
-        return view('shopper::livewire.attributes.edit', [
+        return view('shopper::livewire.components.attributes.edit', [
             'fields' => Attribute::typesFields(),
         ]);
     }
