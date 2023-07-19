@@ -27,7 +27,7 @@
     <div class="mt-8">
         <div class="lg:grid lg:grid-cols-3 lg:gap-6">
             <div class="lg:col-span-1">
-                <div class="px-4 sm:px-0">
+                <div>
                     <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
                         {{ __('shopper::words.locations') }}
                     </h3>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="mt-5 lg:mt-0 lg:col-span-2">
-                <x-shopper::card>
+                <x-shopper::card class="overflow-hidden">
                     <ul class="divide-y divide-secondary-200 dark:divide-secondary-700">
                         @foreach($inventories as $inventory)
                             <li>
@@ -67,20 +67,20 @@
                                                 </div>
                                                 <div class="mt-2 sm:flex sm:justify-between">
                                                     <div class="sm:flex sm:space-x-4">
-                                                        <div class="flex items-center text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                                            <x-heroicon-s-flag class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 " />
+                                                        <div class="flex items-center text-sm text-secondary-500 dark:text-secondary-400">
+                                                            {{ isoToEmoji($inventory->country->cca2) }}
                                                             {{ $inventory->country->name }}
                                                         </div>
-                                                        <div class="mt-2 flex items-center text-sm leading-5 text-secondary-500 sm:mt-0 dark:text-secondary-400">
+                                                        <div class="mt-2 flex items-center text-sm text-secondary-500 sm:mt-0 dark:text-secondary-400">
                                                             <x-heroicon-s-location-marker class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                                             {{ $inventory->city }}
                                                         </div>
-                                                        <div class="mt-2 flex items-center text-sm leading-5 text-secondary-500 sm:mt-0">
+                                                        <div class="mt-2 flex items-center text-sm text-secondary-500 sm:mt-0">
                                                             <x-heroicon-s-phone class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                                             {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
                                                         </div>
                                                     </div>
-                                                    <div class="mt-2 flex items-center text-sm leading-5 text-secondary-500 sm:mt-0 dark:text-secondary-400">
+                                                    <div class="mt-2 flex items-center text-sm text-secondary-500 sm:mt-0 dark:text-secondary-400">
                                                         <x-heroicon-s-calendar class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                                         <span>
                                                             {{ __('shopper::words.added_on') }}

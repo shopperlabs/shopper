@@ -14,10 +14,10 @@ return new class extends Migration
             $table->dropColumn('name');
             $table->string('password')->nullable()->change();
 
-            $table->after('id', function ($table): void {
+            $table->after('id', function (Blueprint $table): void {
                 $table->string('first_name')->nullable();
                 $table->string('last_name');
-                $table->enum('gender', ['male', 'female']);
+                $table->string('gender')->default('male');
                 $table->string('phone_number')->nullable();
                 $table->date('birth_date')->nullable();
                 $table->string('avatar_type')->default('avatar_ui');

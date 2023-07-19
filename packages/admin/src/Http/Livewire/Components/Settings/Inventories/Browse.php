@@ -12,7 +12,7 @@ class Browse extends Component
 {
     public function render(): View
     {
-        return view('shopper::livewire.settings.inventories.browse', [
+        return view('shopper::livewire.components.settings.inventories.browse', [
             'inventories' => Inventory::query()
                 ->with('country')
                 ->get()

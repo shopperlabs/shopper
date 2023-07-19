@@ -33,14 +33,7 @@ return [
             'name' => 'Locations',
             'description' => 'Manage the places you stock inventory and sell products.',
             'icon' => 'heroicon-o-location-marker',
-            'route' => 'shopper.settings.inventories.index',
-            'permission' => null,
-        ],
-        [
-            'name' => 'Shipping and delivery',
-            'description' => 'Manage how you ship orders to customers.',
-            'icon' => 'heroicon-o-truck',
-            'route' => null,
+            'route' => 'shopper.settings.inventories',
             'permission' => null,
         ],
         [
