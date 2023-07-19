@@ -169,6 +169,6 @@ class Edit extends AbstractBaseComponent
 
     public function render(): View
     {
-        return view('shopper::livewire.discounts.edit');
+        return view('shopper::livewire.components.discounts.edit');
     }
 }

@@ -94,6 +94,6 @@ class Create extends AbstractBaseComponent
 
     public function render(): View
     {
-        return view('shopper::livewire.discounts.create');
+        return view('shopper::livewire.components.discounts.create');
     }
 }
