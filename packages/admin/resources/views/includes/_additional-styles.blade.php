@@ -1,6 +1,6 @@
 @if(! empty(config('shopper.admin.resources.stylesheets')))
     <!-- Additional CSS -->
-    @foreach(config('shopper.system.resources.stylesheets') as $css)
+    @foreach(config('shopper.admin.resources.stylesheets') as $css)
         @if (starts_with($css, ['http://', 'https://']))
             <link rel="stylesheet" type="text/css" href="{!! $css !!}">
         @else
