@@ -5,37 +5,19 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Categories;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Exceptions\GeneralException;
+use Shopper\Contracts\HasForm;
 use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesCategories;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Http\Livewire\AbstractBaseComponent;
 
-class Edit extends AbstractBaseComponent
+class Edit extends AbstractBaseComponent implements HasForm
 {
+    use UseForm;
     use WithChoicesCategories;
     use WithSeoAttributes;
 
     public $category;
-
-    public int $categoryId;
-
-    public string $name = '';
-
-    public ?int $parent_id = null;
-
-    public ?string $description = null;
-
-    public bool $is_enabled = false;
-
-    public ?string $fileUrl = null;
-
-    public $parent;
-
-    public $seoAttributes = [
-        'name' => 'name',
-        'description' => 'description',
-    ];
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
@@ -57,16 +39,6 @@ class Edit extends AbstractBaseComponent
         $this->parent = $category->parent_id ? $category->parent : null;
     }
 
-    public function onTrixValueUpdate(string $value): void
-    {
-        $this->description = $value;
-    }
-
-    public function onFileUpdate($file): void
-    {
-        $this->fileUrl = $file;
-    }
-
     public function isUpdate(): bool
     {
         return true;
@@ -74,38 +46,20 @@ class Edit extends AbstractBaseComponent
 
     public function store(): void
     {
-        $this->validate($this->rules());
-
-        $this->category->update([
-            'name' => $this->name,
-            'slug' => $this->parent ? $this->parent->slug . '-' . $this->name : $this->name,
-            'parent_id' => $this->parent_id,
-            'description' => $this->description,
-            'is_enabled' => $this->is_enabled,
-            'seo_title' => $this->seoTitle,
-            'seo_description' => str_limit($this->seoDescription, 157),
-        ]);
+        $this->save($this->category);
 
         if ($this->fileUrl) {
             $this->category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
-        session()->flash('success', __('Category successfully updated!'));
+        session()->flash('success', __('shopper::pages/categories.notifications.updated'));
 
         $this->redirectRoute('shopper.categories.index');
     }
 
-    public function rules(): array
-    {
-        return ['name' => 'sometimes|required|max:150'];
-    }
-
-    /**
-     * @throws GeneralException
-     */
     public function render(): View
     {
-        return view('shopper::livewire.categories.edit', [
+        return view('shopper::livewire.components.categories.edit', [
             'categories' => (new CategoryRepository())
                 ->makeModel()
                 ->scopes('enabled')
