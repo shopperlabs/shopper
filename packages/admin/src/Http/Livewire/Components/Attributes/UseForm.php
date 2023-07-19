@@ -32,7 +32,7 @@ trait UseForm
             'slug' => array_merge([
                 'required',
             ], $this->attributeId ? [
-                Rule::unique(shopper_table('attributes'), 'slug')->ignore($this->attributeId)
+                Rule::unique(shopper_table('attributes'), 'slug')->ignore($this->attributeId),
             ] : ['unique:' . shopper_table('attributes')]),
             'type' => 'required',
         ];
