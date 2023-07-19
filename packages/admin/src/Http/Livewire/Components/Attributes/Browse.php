@@ -12,7 +12,7 @@ class Browse extends Component
 {
     public function render(): View
     {
-        return view('shopper::livewire.attributes.browse', [
+        return view('shopper::livewire.components.attributes.browse', [
             'total' => Attribute::query()->count(),
         ]);
     }

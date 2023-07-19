@@ -43,7 +43,7 @@ class CreateValue extends ModalComponent
 
         Notification::make()
             ->title(__('shopper::layout.status.added'))
-            ->body(__('New value added for :name', ['name' => $this->attribute->name]))
+            ->body(__('shopper::pages/attributes.notifications.value_created', ['name' => $this->attribute->name]))
             ->success()
             ->send();
 
