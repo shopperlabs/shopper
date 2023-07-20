@@ -16,7 +16,7 @@ class Edit extends Component
 
     public Collection $inventories;
 
-    public int $inventory;
+    public ?int $inventory = null;
 
     protected $listeners = ['productHasUpdated'];
 
@@ -24,7 +24,7 @@ class Edit extends Component
     {
         $this->product = $product;
         $this->inventories = $inventories = (new InventoryRepository())->get();
-        $this->inventory = $inventories->firstWhere('is_default', true)->id; // @phpstan-ignore-line
+        $this->inventory = $inventories->firstWhere('is_default', true)->id ?? $inventories->first()?->id; // @phpstan-ignore-line
     }
 
     public function productHasUpdated(int $id): void

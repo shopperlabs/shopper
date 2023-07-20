@@ -133,7 +133,7 @@
                                     <h4 class="block text-sm font-medium leading-5 text-secondary-900 dark:text-white">
                                         {{ __('shopper::pages/products.quantity_inventory') }}
                                     </h4>
-                                    <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800">
+                                    <a href="{{ route('shopper.settings.inventories') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-600 hover:text-primary-800">
                                         {{ __('shopper::pages/products.manage_inventories') }}
                                     </a>
                                 </div>

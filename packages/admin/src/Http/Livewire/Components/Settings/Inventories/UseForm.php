@@ -48,7 +48,7 @@ trait UseForm
         ];
     }
 
-    public function save(Model|string $model): void
+    public function save(Model|string $model): mixed
     {
         $this->validate($this->rules());
 
@@ -66,6 +66,6 @@ trait UseForm
             'is_default' => $this->isDefault,
         ];
 
-        $this->inventoryId ? $model->update($values) : $model::query()->create($values);
+        return $this->inventoryId ? $model->update($values) : $model::query()->create($values);
     }
 }

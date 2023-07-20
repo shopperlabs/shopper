@@ -4,7 +4,7 @@ import Tooltip from '@ryangjchandler/alpine-tooltip'
 import AlpineFloatingUI from '@awcodes/alpine-floating-ui'
 import Sortable from 'sortablejs'
 import * as FilePond from 'filepond'
-import NotificationsAlpinePlugin from '../../../../vendor/filament/notifications/dist/module.esm'
+import NotificationsAlpinePlugin from '../../vendor/filament/notifications/dist/module.esm'
 
 import './helpers/window'
 import './helpers/trix'
