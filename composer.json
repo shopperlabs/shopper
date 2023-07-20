@@ -2,6 +2,7 @@
   "name": "shopper/framework",
   "description": "An e-commerce administration built with Laravel for create and manage online shop.",
   "license": "MIT",
+  "keywords": ["e-commerce", "Tallstack", "Store"],
   "authors": [
     {
       "name": "Arthur Monney",
@@ -16,6 +17,17 @@
     "blade-ui-kit/blade-heroicons": "^1.2",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "filament/notifications": "^2.17",
+    "illuminate/cache": "^9.0|^10.0",
+    "illuminate/console": "^9.0|^10.0",
+    "illuminate/container": "^9.0|^10.0",
+    "illuminate/contracts": "^9.0|^10.0",
+    "illuminate/cookie": "^9.0|^10.0",
+    "illuminate/database": "^9.0|^10.0",
+    "illuminate/http": "^9.0|^10.0",
+    "illuminate/routing": "^9.0|^10.0",
+    "illuminate/session": "^9.0|^10.0",
+    "illuminate/support": "^9.0|^10.0",
+    "illuminate/view": "^9.0|^10.0",
     "jenssegers/agent": "^2.6",
     "laravel/helpers": "^1.4.1",
     "livewire/livewire": "^2.10",
@@ -44,6 +56,7 @@
     "pestphp/pest-plugin-laravel": "^1.0",
     "pestphp/pest-plugin-livewire": "^1.0",
     "pestphp/pest-plugin-parallel": "^0.3",
+    "phpstan/phpstan": "^1.8",
     "phpunit/phpunit": "^8.4|^9.0",
     "reecem/mocker": "^1.2",
     "symplify/monorepo-builder": "^11.2"
@@ -84,12 +97,7 @@
     "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
     "pint": "./vendor/bin/pint",
     "pest": "./vendor/bin/pest",
-    "stan": "./vendor/bin/phpstan analyse",
-    "clean": [
-      "./vendor/bin/pint",
-      "./vendor/bin/pest",
-      "./vendor/bin/phpstan analyse"
-    ]
+    "stan": "./vendor/bin/phpstan analyse --memory-limit=1G"
   },
   "config": {
     "sort-packages": true,

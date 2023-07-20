@@ -1,6 +1,7 @@
 composer.lock
 /vendor
+/node_modules
 .phpunit.result.cache
-/.idea
-/.vscode
-.DS_Store
+yarn.lock
+mix-manifest.json
+package-lock.json

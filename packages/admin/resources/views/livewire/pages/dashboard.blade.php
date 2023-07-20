@@ -22,7 +22,7 @@
         <div class="bg-secondary-50 dark:bg-secondary-700 grid grid-cols-1 lg:grid-cols-2">
             <div class="px-6 py-5">
                 <div class="flex items-center">
-                    <x-heroicon-o-code class="w-6 h-6 text-primary-600" />
+                    <x-heroicon-o-code class="w-6 h-6 text-primary-500" />
                     <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
                         {{ __('shopper::messages.dashboard.cards.doc_title') }}
                     </h4>
@@ -34,7 +34,7 @@
                     </div>
 
                     <a href="https://laravelshopper.dev" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
+                        <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
                             <span>{{ __('shopper::messages.dashboard.cards.doc_link') }}</span>
 
                             <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
@@ -47,7 +47,7 @@
 
             <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600 sm:border-t-0">
                 <div class="flex items-center">
-                    <x-heroicon-o-film class="w-6 h-6 text-primary-600" />
+                    <x-heroicon-o-film class="w-6 h-6 text-primary-500" />
                     <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
                         {{ __('shopper::messages.dashboard.cards.screencast_title') }}
                     </h4>
@@ -59,7 +59,7 @@
                     </div>
 
                     <a href="https://www.youtube.com/channel/UCgxgoKJi3VA1eXxtjIs2tKw" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
+                        <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
                             <span>{{ __('shopper::messages.dashboard.cards.screencast_link') }}</span>
 
                             <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
@@ -72,7 +72,7 @@
 
             <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600">
                 <div class="flex items-center">
-                    <x-heroicon-o-color-swatch class="w-6 h-6 text-primary-600" />
+                    <x-heroicon-o-color-swatch class="w-6 h-6 text-primary-500" />
                     <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
                         {{ __('shopper::messages.dashboard.cards.theme_title') }}
                     </h4>
@@ -90,7 +90,7 @@
 
             <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600">
                 <div class="flex items-center">
-                    <x-heroicon-o-book-open class="w-6 h-6 text-primary-600" />
+                    <x-heroicon-o-book-open class="w-6 h-6 text-primary-500" />
                     <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
                         {{ __('shopper::messages.dashboard.cards.product_title') }}
                     </h4>
@@ -103,7 +103,7 @@
 
                     @can('add_products')
                         <a href="{{ route('shopper.products.create') }}" class="group">
-                            <div class="mt-3 flex items-center text-sm font-medium text-primary-600">
+                            <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
                                 <span>{{ __('shopper::messages.dashboard.cards.product_link') }}</span>
 
                                 <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">

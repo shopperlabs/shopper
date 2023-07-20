@@ -196,7 +196,7 @@
                                 <button wire:click="$emit('openModal', 'shopper-modals.update-variant-stock', {{ json_encode([$variant->id]) }})" type="button" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-500 hover:text-primary-600">
                                     {{ __('shopper::pages/products.variants.actions.update_stock') }}
                                 </button>
-                                <a href="{{ route('shopper.settings.inventories.index') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-500 hover:text-primary-600">
+                                <a href="{{ route('shopper.settings.inventories') }}" class="text-sm leading-5 bg-transparent outline-none focus:outline-none text-primary-500 hover:text-primary-600">
                                     {{ __('shopper::pages/products.variants.actions.manage_inventory') }}
                                 </a>
                             </div>
