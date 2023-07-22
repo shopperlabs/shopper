@@ -23,7 +23,7 @@ final class RedirectIfTwoFactorAuthenticatable
             return $this->twoFactorChallengeResponse($user, $data['remember']);
         }
 
-        return $next(request());
+        return $next($data);
     }
 
     protected function validateCredentials(array $request)
@@ -44,7 +44,7 @@ final class RedirectIfTwoFactorAuthenticatable
         ]);
     }
 
-    protected function twoFactorChallengeResponse($user, bool $remember): Redirector|Response
+    protected function twoFactorChallengeResponse($user, bool $remember): Redirector | Response
     {
         request()->session()->put([
             'login.id' => $user->getKey(),

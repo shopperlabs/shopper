@@ -11,16 +11,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class AttemptToAuthenticate
 {
-    public function handle(array $request, Closure $next): Response
+    public function handle(array $request, Closure $next)
     {
-        if (! Shopper::auth()->attempt([
+        $isLoggedIn = Shopper::auth()->attempt([
             'email' => $request['email'],
             'password' => $request['password'],
-        ], $request['remember'])) {
+        ], $request['remember']);
+
+        if (! $isLoggedIn) {
             $this->throwFailedAuthenticationException();
         }
 
-        return $next(request());
+        return $next($isLoggedIn);
     }
 
     protected function throwFailedAuthenticationException(): void

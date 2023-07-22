@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper\Http\Responses;
 
+use Livewire\Redirector;
 use Shopper\Contracts\LoginResponse as Responsable;
-use Symfony\Component\HttpFoundation\Response;
 
 final class LoginResponse implements Responsable
 {
-    public function toResponse($request): Response
+    public function toResponse($request): Redirector
     {
         return redirect()->intended(route('shopper.dashboard'));
     }
