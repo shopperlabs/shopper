@@ -10,7 +10,7 @@ use Shopper\Contracts\LoginResponse as Responsable;
 
 final class LoginResponse implements Responsable
 {
-    public function toResponse($request): Redirector | RedirectResponse
+    public function toResponse($request): Redirector|RedirectResponse
     {
         return redirect()->intended(route('shopper.dashboard'));
     }
