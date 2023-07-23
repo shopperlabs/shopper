@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.settings.inventories')" :current="__('shopper::pages/settings.location.add')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.settings.inventories')" :title="__('shopper::words.locations')" />
     </x-shopper::breadcrumb>
 

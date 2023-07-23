@@ -56,7 +56,7 @@
             <div class="p-4 sm:p-5 relative flex items-center justify-between border-b border-secondary-200 dark:border-secondary-700">
                 <span class="relative z-0 inline-flex shadow-sm rounded-md">
                     <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border-r-0 border border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-700">
-                        <x-heroicon-o-location-marker class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
+                        <x-untitledui-marker-pin class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
                     </span>
                     <x-shopper::forms.select wire:model.lazy="inventory" id="inventory" class="-ml-px block w-full pl-3 pr-9 py-2 rounded-l-none rounded-r-md" aria-label="{{ __('shopper::layout.forms.placeholder.select_inventory') }}">
                         @foreach($inventories as $inventory)
@@ -114,7 +114,7 @@
                         @if($histories->isNotEmpty())
                             <div class="flex items-center pl-4 space-x-4">
                                 <x-shopper::buttons.default wire:click="export" type="button">
-                                    <x-heroicon-o-cloud-download class="w-5 h-5 -ml-1 pr-2" />
+                                    <x-untitledui-download-cloud-01 class="w-5 h-5 mr-2" />
                                     {{ __('shopper::layout.forms.actions.export') }}
                                 </x-shopper::buttons.default>
                             </div>
@@ -129,9 +129,9 @@
             </div>
         </div>
         @if($histories->isEmpty())
-            <div class="flex flex-col items-center justify-center p-4 sm:py-5">
+            <div class="flex flex-col items-center justify-center p-4 sm:py-5 space-y-2">
                 <span class="shrink-0">
-                    <x-heroicon-o-document-text class="h-12 w-12 text-primary-500" />
+                    <x-untitledui-file-05 class="h-8 w-8 text-primary-500" />
                 </span>
                 <h3 class="text-center font-medium text-secondary-500 dark:text-secondary-400 text-lg">
                     {{ __('shopper::pages/products.inventory.empty') }}

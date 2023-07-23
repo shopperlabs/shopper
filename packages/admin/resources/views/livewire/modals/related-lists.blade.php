@@ -20,7 +20,7 @@
             @empty
                 <div class="p-4 h-full flex items-center justify-center">
                     <div class="text-center">
-                        <x-heroicon-o-book-open class="mx-auto h-10 w-10 text-secondary-400" />
+                        <x-untitledui-book-open class="mx-auto h-10 w-10 text-secondary-400" stroke-width="1.5" />
                         <p class="mt-2 text-base font-medium text-secondary-900 dark:text-white">
                             {{ __('shopper::pages/products.related.modal.no_results') }}
                         </p>

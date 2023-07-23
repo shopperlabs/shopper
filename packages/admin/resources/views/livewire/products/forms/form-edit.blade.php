@@ -42,9 +42,9 @@
                     </h4>
                     <div x-data="{ display: false }">
                         <button @click="display = true" x-tooltip.raw="{{ __('shopper::pages/products.about_pricing') }}" type="button" class="inline-flex text-sm text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300">
-                            <x-heroicon-o-question-mark-circle class="h-5 w-5" />
+                            <x-untitledui-help-circle class="h-5 w-5" />
                         </button>
-                        <div x-cloak x-show="display" @click.outside="display = false" class="absolute z-30 top-4 inset-x-0 p-4 mx-4 rounded-md bg-secondary-50 border border-secondary-100 dark:bg-secondary-700 dark:border-secondary-600">
+                        <div x-cloak x-show="display" @click.outside="display = false" class="absolute z-30 top-0 inset-x-0 p-4 mr-4 rounded-lg bg-secondary-50 border border-secondary-200 dark:bg-secondary-700 dark:border-secondary-600">
                             <div class="flex">
                                 <div>
                                     <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
@@ -55,7 +55,7 @@
                                     <div class="-mx-1.5 -my-1.5">
                                         <button @click="display = false" type="button" class="inline-flex bg-secondary-50 dark:bg-secondary-700 rounded-md p-1 text-secondary-500 dark:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-50 focus:ring-primary-600">
                                             <span class="sr-only">{{ __('words::words.dismiss') }}</span>
-                                            <x-heroicon-o-x class="h-5 w-5" />
+                                            <x-untitledui-x class="h-5 w-5" />
                                         </button>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                         <div class="mt-4 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
                                 <span class="flex items-center justify-center w-8 h-8 rounded-md bg-primary-600 shrink-0">
-                                    <x-heroicon-o-eye class="w-5 h-5 text-white" />
+                                    <x-untitledui-eye class="w-5 h-5 text-white" />
                                 </span>
                                 <span class="ml-3 text-sm font-semibold">
                                     {{ __('shopper::layout.forms.label.visible') }}
@@ -218,8 +218,8 @@
                                         </div>
                                         @if($category->children->isNotEmpty())
                                             <button type="button" @click="display = !display" class="text-secondary-500 dark:text-secondary-400" aria-expanded="true" x-bind:aria-expanded="display.toString()">
-                                                <x-heroicon-o-plus-sm x-show="!display" class="w-5 h-5" />
-                                                <x-heroicon-o-minus-sm x-show="display" class="w-5 h-5" />
+                                                <x-untitledui-plus x-show="!display" class="h-5 w-5" />
+                                                <x-untitledui-minus x-show="display" class="h-5 w-5" />
                                             </button>
                                         @endif
                                     </div>

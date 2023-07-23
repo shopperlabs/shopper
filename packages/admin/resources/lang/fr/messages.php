@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
 
     'dashboard' => [
-        'welcome_message' => 'Bienvenue sur le tableau de bord de <span>Shopper</span>',
+        'welcome_message' => 'Bienvenue sur le tableau de bord de Shopper',
         'header' => 'Commencez par les éléments de base de votre boutique en ligne',
         'description' => 'Pour commencer à construire votre nouvelle boutique avec Laravel Shopper, nous vous recommandons de commencer par ces étapes.
                             Le framework vous permet de créer votre boutique et de la configurer exactement comme vous le souhaitez.

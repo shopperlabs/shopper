@@ -89,7 +89,7 @@
             @foreach($images as $image)
                 <div class="relative flex flex-col items-center overflow-hidden h-24 text-center bg-secondary-100 border rounded-md select-none dark:bg-secondary-700 dark:border-secondary-700">
                     <button class="absolute top-0 right-0 z-50 p-1 bg-white rounded-bl focus:outline-none dark:bg-secondary-800" type="button" wire:click="removeMedia({{ $image->id }})">
-                        <x-heroicon-o-trash class="w-5 h-5 text-secondary-500 dark:text-secondary-400" />
+                        <x-untitledui-trash-03 class="w-5 h-5 text-secondary-500 dark:text-secondary-400" />
                     </button>
                     <img class="absolute inset-0 z-30 object-cover w-full h-full border-4 border-white dark:border-secondary-800 preview" src="{{ $image->getFullUrl() }}" alt="">
                     <div class="absolute bottom-0 left-0 right-0 flex flex-col p-2 text-xs bg-white dark:bg-secondary-800 bg-opacity-50 z-40 dark:bg-opacity-70">

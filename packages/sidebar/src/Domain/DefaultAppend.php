@@ -19,7 +19,7 @@ class DefaultAppend implements Append, Serializable
 
     protected ?string $name = null;
 
-    protected string $icon = 'heroicon-s-plus-small';
+    protected string $icon = 'untitledui-plus';
 
     protected string $iconClass = '';
 

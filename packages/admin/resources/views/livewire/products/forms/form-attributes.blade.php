@@ -43,7 +43,7 @@
                                             </div>
                                             <div class="ml-4 shrink-0">
                                                 <button wire:click="removeProductAttributeValue({{ $pValue->id }})" type="button" class="font-medium text-negative-600 hover:text-negative-500">
-                                                    <x-heroicon-o-trash class="h-5 w-5" />
+                                                    <x-untitledui-trash-03 class="h-5 w-5" />
                                                 </button>
                                             </div>
                                         </li>
@@ -59,10 +59,10 @@
             @empty
                 <div class="py-4 space-y-1 sm:py-6">
                     <div class="flex flex-col justify-center items-center space-y-2 py-5">
-                        <x-heroicon-o-clipboard-list class="h-8 w-8 text-primary-500" />
-                        <span class="font-medium text-secondary-400 dark:text-secondary-300 text-xl">
-                        {{ __('shopper::pages/products.attributes.empty_values') }}
-                    </span>
+                        <x-untitledui-file-05 class="h-8 w-8 text-primary-500" />
+                        <span class="font-medium text-secondary-500 dark:text-secondary-400 text-xl">
+                            {{ __('shopper::pages/products.attributes.empty_values') }}
+                        </span>
                     </div>
                 </div>
             @endforelse

@@ -3,7 +3,6 @@
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
-
     <x-slot name="title">
         <span class="flex flex-col">
             {{ __('shopper::modals.permissions.new') }}
@@ -64,5 +63,4 @@
             </x-shopper::buttons.default>
         </span>
     </x-slot>
-
 </x-shopper::modal>

@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::words.locations')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
@@ -48,8 +48,8 @@
                                     <div class="p-4 sm:p-6">
                                         <div class="flex items-center">
                                             <div class="shrink-0 hidden lg:block">
-                                                <span class="flex items-center justify-center h-12 w-12 bg-secondary-100 text-secondary-400 rounded-md dark:bg-secondary-700 dark:text-secondary-500">
-                                                    <x-heroicon-o-location-marker class="w-6 h-6" />
+                                                <span class="flex items-center justify-center h-12 w-12 bg-secondary-50 text-secondary-500 rounded-md dark:bg-secondary-700 dark:text-secondary-400">
+                                                    <x-untitledui-building-05 class="w-6 h-6" />
                                                 </span>
                                             </div>
                                             <div class="flex-1 lg:ml-4">
@@ -72,16 +72,16 @@
                                                             {{ $inventory->country->name }}
                                                         </div>
                                                         <div class="mt-2 flex items-center text-sm text-secondary-500 sm:mt-0 dark:text-secondary-400">
-                                                            <x-heroicon-s-location-marker class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+                                                            <x-untitledui-marker-pin-02 class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                                             {{ $inventory->city }}
                                                         </div>
                                                         <div class="mt-2 flex items-center text-sm text-secondary-500 sm:mt-0">
-                                                            <x-heroicon-s-phone class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+                                                            <x-untitledui-phone class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                                             {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
                                                         </div>
                                                     </div>
                                                     <div class="mt-2 flex items-center text-sm text-secondary-500 sm:mt-0 dark:text-secondary-400">
-                                                        <x-heroicon-s-calendar class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+                                                        <x-untitledui-calendar class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                                         <span>
                                                             {{ __('shopper::words.added_on') }}
                                                             <time datetime="{{ $inventory->created_at->format('d-m-Y') }}">

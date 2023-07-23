@@ -48,9 +48,9 @@
                             <td class="px-6 py-3 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                 <div class="flex items-center">
                                     @if($user->email_verified_at)
-                                        <x-heroicon-s-shield-check class="w-5 h-5 text-green-500" />
+                                        <x-untitledui-check-verified-02 class="w-5 h-5 text-green-500" />
                                     @else
-                                        <x-heroicon-s-shield-exclamation class="w-5 h-5 text-red-500" />
+                                        <x-untitledui-alert-circle class="w-5 h-5 text-danger-500" />
                                     @endif
                                     <span class="ml-1.5">{{ $user->email }}</span>
                                 </div>
@@ -66,7 +66,7 @@
                             <td class="pr-6 text-right">
                                 @if($user->id === auth()->id())
                                     <span class="flex items-center text-sm leading-5 text-secondary-500 text-right dark:text-secondary-400">
-                                        <x-heroicon-o-user-circle class="w-5 h-5 mr-1" />
+                                        <x-untitledui-user-circle class="w-5 h-5 mr-2" />
                                         {{ __('shopper::words.me') }}
                                     </span>
                                 @endif
@@ -74,14 +74,14 @@
                                     <x-shopper::dropdown customAlignmentClasses="right-12 -bottom-1">
                                         <x-slot name="trigger">
                                             <button id="admin-options-menu" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-secondary-400 rounded-full bg-transparent hover:text-secondary-500 focus:outline-none focus:text-secondary-500 focus:bg-secondary-100 dark:focus:bg-secondary-700 transition ease-in-out duration-150">
-                                                <x-heroicon-s-dots-vertical class="w-5 h-5" />
+                                                <x-untitledui-dots-vertical class="w-5 h-5" />
                                             </button>
                                         </x-slot>
 
                                         <x-slot name="content">
                                             <div class="py-1">
                                                 <button wire:click="removeUser({{ $user->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
-                                                    <x-heroicon-s-trash class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
+                                                    <x-untitledui-trash-03 class="mr-2 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
                                                     {{ __('shopper::layout.forms.actions.delete') }}
                                                 </button>
                                             </div>
@@ -93,9 +93,9 @@
                     @empty
                         <tr>
                             <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium">
-                                <div class="flex justify-center items-center space-x-2">
-                                    <x-heroicon-o-users class="h-8 w-8 text-secondary-400" />
-                                    <span class="font-medium py-8 text-secondary-400 text-xl">
+                                <div class="flex flex-col justify-center items-center space-y-2 py-6">
+                                    <x-untitledui-users class="h-8 w-8 text-primary-500" />
+                                    <span class="font-medium text-secondary-500 text-xl dark:text-secondary-400">
                                         {{ __('shopper::words.no_users') }}
                                     </span>
                                 </div>

@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('Staff & permissions')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
@@ -17,7 +17,7 @@
                     {{ __('shopper::pages/settings.roles_permissions.role_available') }}
                 </h2>
                 <button wire:click="$emit('openModal', 'shopper-modals.create-role')" type="button" class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-primary-700 bg-primary-100 hover:bg-primary-50 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary active:bg-primary-200 transition ease-in-out duration-150">
-                    <x-heroicon-s-plus-sm class="w-4 h-4 mr-1" />
+                    <x-untitledui-plus class="w-4 h-4 mr-1" />
                     {{ __('shopper::pages/settings.roles_permissions.new_role') }}
                 </button>
             </div>
@@ -44,7 +44,7 @@
                             <p class="mt-1 flex items-center text-sm text-primary-600 group-hover:text-primary-500">
                                 {{ __('shopper::words.view_details') }}
                                 <span class="ml-2">
-                                    <x-heroicon-o-arrow-narrow-right class="w-5 h-5" />
+                                    <x-untitledui-arrow-narrow-right class="w-5 h-5" />
                                 </span>
                             </p>
                         </div>
@@ -64,7 +64,7 @@
                 </div>
                 <div>
                     <x-shopper::buttons.primary :link="route('shopper.settings.users.new')">
-                        <x-heroicon-o-user-add class="w-5 h-5 mr-1.5" />
+                        <x-untitledui-user-plus class="w-5 h-5 mr-1.5" />
                         {{ __('shopper::pages/settings.roles_permissions.add_admin') }}
                     </x-shopper::buttons.primary>
                 </div>
@@ -114,9 +114,9 @@
                                         <td class="px-6 py-3 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                             <div class="flex items-center">
                                                 @if($user->email_verified_at)
-                                                    <x-heroicon-s-shield-check class="w-5 h-5 text-green-500" />
+                                                    <x-untitledui-check-verified-02 class="w-5 h-5 text-green-500" />
                                                 @else
-                                                    <x-heroicon-s-shield-exclamation class="w-5 h-5 text-red-500" />
+                                                    <x-untitledui-alert-circle class="w-5 h-5 text-danger-500" />
                                                 @endif
                                                 <span class="ml-1.5">{{ $user->email }}</span>
                                             </div>
@@ -132,7 +132,7 @@
                                         <td class="pr-6 text-right">
                                             @if($user->id === auth()->id())
                                                 <span class="flex items-center text-sm leading-5 text-secondary-500 text-right dark:text-secondary-400">
-                                                    <x-heroicon-o-user-circle class="w-5 h-5 mr-1" />
+                                                    <x-untitledui-user-circle class="w-5 h-5 mr-2" />
                                                     {{ __('shopper::words.me') }}
                                                 </span>
                                             @endif
@@ -140,14 +140,14 @@
                                                 <x-shopper::dropdown customAlignmentClasses="right-12 -bottom-1">
                                                     <x-slot name="trigger">
                                                         <button id="admin-options-menu" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-secondary-400 rounded-full bg-transparent hover:text-secondary-500 focus:outline-none focus:text-secondary-500 focus:bg-secondary-100 dark:focus:bg-secondary-700 transition ease-in-out duration-150">
-                                                            <x-heroicon-s-dots-vertical class="w-5 h-5" />
+                                                            <x-untitledui-dots-vertical class="w-5 h-5" />
                                                         </button>
                                                     </x-slot>
 
                                                     <x-slot name="content">
                                                         <div class="py-1">
                                                             <button wire:click="removeUser({{ $user->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
-                                                                <x-heroicon-s-trash class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
+                                                                <x-untitledui-trash-03 class="mr-2 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
                                                                 {{ __('shopper::layout.forms.actions.delete') }}
                                                             </button>
                                                         </div>

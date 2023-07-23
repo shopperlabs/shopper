@@ -39,9 +39,7 @@
                      class="flex items-center absolute h-full w-24 top-0 px-2.5 bg-gradient-to-r from-white dark:from-secondary-900"
                 >
                     <button @click="slideLeft()" type="button" class="flex items-center justify-center text-secondary-400 w-8 h-8 focus:outline-none rounded-full dark:text-secondary-500 hover:bg-secondary-50 dark:bg-secondary-800 transition duration-200 ease-in-out">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                        </svg>
+                        <x-untitledui-chevron-left class="w-6 h-6" />
                     </button>
                 </div>
                 <nav @scroll="onScroll()" class="-mb-px flex space-x-8 pl-6 pr-10 overflow-x-auto hide-scroll scroll-smooth" aria-label="Tabs" id="setting-tabs">
@@ -59,9 +57,7 @@
                      class="flex items-center justify-end absolute h-full w-24 top-0 right-0 px-2.5 bg-gradient-to-l from-white dark:from-secondary-900"
                 >
                     <button @click="slideRight()" type="button" class="flex items-center justify-center w-8 h-8 focus:outline-none rounded-full text-secondary-400 dark:text-secondary-500 hover:bg-secondary-50 dark:bg-secondary-800 transition duration-200 ease-in-out">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                        </svg>
+                        <x-untitledui-chevron-right class="w-6 h-6" />
                     </button>
                 </div>
             </div>

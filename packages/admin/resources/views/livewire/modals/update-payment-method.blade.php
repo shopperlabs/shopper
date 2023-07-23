@@ -9,7 +9,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 h-96 overflow-y-scroll hide-scroll">
+        <div class="grid gap-4 sm:grid-cols-2 px-1 -mx-1 sm:gap-6 h-96 overflow-y-scroll hide-scroll">
             <div class="sm:col-span-2">
                 <div>
                     <x-shopper::label value="{{ __('shopper::layout.forms.label.provider_logo') }}" />
@@ -22,7 +22,7 @@
                                     <img class="h-full w-full bg-center" src="{{ $logoUrl }}" alt="">
                                 @else
                                     <span class="h-12 w-12 flex items-center justify-center">
-                                        <x-heroicon-o-photograph class="w-8 h-8 text-secondary-400 dark:text-secondary-500" />
+                                        <x-untitledui-image class="w-6 h-6 text-secondary-500 dark:text-secondary-400" />
                                     </span>
                                 @endif
                             </span>

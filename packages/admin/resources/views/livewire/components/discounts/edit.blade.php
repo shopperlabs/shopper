@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.discounts.index')" :current="$discount->code">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.discounts.index')" :title="__('shopper::layout.sidebar.discounts')" />
     </x-shopper::breadcrumb>
 
@@ -16,7 +16,7 @@
         <div class="flex items-center justify-end space-x-4">
             @can('delete_discounts')
                 <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-discount', {{ json_encode([$discount->id]) }})" type="button">
-                    <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2"/>
+                    <x-untitledui-trash-03 class="w-5 h-5 -ml-1 mr-2"/>
                     {{ __('shopper::layout.forms.actions.delete') }}
                 </x-shopper::buttons.danger>
             @endcan

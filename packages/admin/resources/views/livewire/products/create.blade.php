@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.products.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.products.index')" :title="__('shopper::layout.sidebar.products')" />
     </x-shopper::breadcrumb>
 
@@ -44,16 +44,16 @@
                     <livewire:shopper-forms.uploads.multiple />
                 </div>
             </div>
-            <div>
+            <div class="relative">
                 <div class="flex items-center justify-between">
                     <h4 class="block text-base font-medium leading-6 text-secondary-900 dark:text-white">
                         {{ __('shopper::words.pricing') }}
                     </h4>
                     <div x-data="{ display: false }">
                         <button @click="display = true" x-tooltip.raw="{{ __('shopper::pages/products.about_pricing') }}" type="button" class="inline-flex text-sm text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-300">
-                            <x-heroicon-o-question-mark-circle class="h-5 w-5" />
+                            <x-untitledui-help-circle class="h-5 w-5" />
                         </button>
-                        <div x-cloak x-show="display" @click.outside="display = false" class="absolute z-30 top-4 inset-x-0 p-4 mx-4 rounded-md bg-secondary-50 border border-secondary-100 dark:bg-secondary-700 dark:border-secondary-600">
+                        <div x-cloak x-show="display" @click.outside="display = false" class="absolute z-30 top-0 inset-x-0 p-4 mr-5 rounded-lg bg-secondary-50 border border-secondary-200 dark:bg-secondary-700 dark:border-secondary-600">
                             <div class="flex">
                                 <div>
                                     <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
@@ -261,7 +261,11 @@
                             <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.width')">
                                 <x-shopper::forms.input wire:model.defer="widthValue" id="WidthValue" type="text" class="dark:bg-secondary-800" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="WidthUnit" aria-label="{{ __('shopper::layout.forms.label.width_unit') }}" class="py-0 pl-2 pr-7 border-transparent dark:bg-secondary-800">
+                                    <x-shopper::forms.select
+                                        wire:model.defer="WidthUnit"
+                                        aria-label="{{ __('shopper::layout.forms.label.width_unit') }}"
+                                        class="py-0 pl-2 pr-7 border-y-secondary-300 dark:bg-secondary-800"
+                                    >
                                         <option value="cm">{{ __('shopper::words.unity.cm') }}</option>
                                         <option value="m">{{ __('shopper::words.unity.m') }}</option>
                                     </x-shopper::forms.select>
@@ -270,7 +274,11 @@
                             <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.height')">
                                 <x-shopper::forms.input wire:model.defer="heightValue" id="heightValue" type="text" class="pl-3 pr-12 dark:bg-secondary-800" placeholder="0" />
                                 <div class="absolute inset-y-0 right-0 flex items-center">
-                                    <x-shopper::forms.select wire:model.defer="heightUnit" aria-label="{{ __('shopper::layout.forms.label.height_unit') }}" class="py-0 pl-2 pr-7 border-transparent dark:bg-secondary-800">
+                                    <x-shopper::forms.select
+                                        wire:model.defer="heightUnit"
+                                        aria-label="{{ __('shopper::layout.forms.label.height_unit') }}"
+                                        class="py-0 pl-2 pr-7 border-y-secondary-300 dark:bg-secondary-800"
+                                    >
                                         <option value="cm">{{ __('shopper::words.unity.cm') }}</option>
                                         <option value="m">{{ __('shopper::words.unity.m') }}</option>
                                     </x-shopper::forms.select>
@@ -282,7 +290,7 @@
                                     <x-shopper::forms.select
                                         wire:model.defer="weightUnit"
                                         aria-label="{{ __('shopper::layout.forms.label.weight_unit') }}"
-                                        class="py-0 pl-2 pr-7 border-transparent dark:bg-secondary-800"
+                                        class="py-0 pl-2 pr-7 border-y-secondary-300 dark:bg-secondary-800"
                                     >
                                         <option value="kg">{{ __('shopper::words.unity.kg') }}</option>
                                         <option value="g">{{ __('shopper::words.unity.g') }}</option>
@@ -301,7 +309,7 @@
                                     <x-shopper::forms.select
                                         wire:model.defer="VolumeUnit"
                                         aria-label="{{ __('shopper::layout.forms.label.volume_unit') }}"
-                                        class="py-0 pl-2 pr-7 border-transparent dark:bg-secondary-800"
+                                        class="py-0 pl-2 pr-7 border-y-secondary-300 dark:bg-secondary-800"
                                     >
                                         <option value="l">{{ __('shopper::words.unity.l') }}</option>
                                         <option value="ml">{{ __('shopper::words.unity.ml') }}</option>
@@ -329,9 +337,11 @@
                         <div class="mt-4 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
                             <div class="flex items-center">
                                 <span class="h-8 w-8 flex items-center justify-center rounded-md bg-primary-600 shrink-0">
-                                    <x-heroicon-o-eye class="h-5 w-5 text-white" />
+                                    <x-untitledui-eye class="h-5 w-5 text-white" />
                                 </span>
-                                <span class="font-semibold ml-3 text-sm">{{ __('shopper::layout.forms.label.visible') }}</span>
+                                <span class="font-semibold ml-3 text-sm">
+                                    {{ __('shopper::layout.forms.label.visible') }}
+                                </span>
                             </div>
                             <div>
                                 <span wire:model="isVisible"
@@ -438,8 +448,8 @@
                                                 aria-expanded="true"
                                                 x-bind:aria-expanded="display.toString()"
                                             >
-                                                <x-heroicon-o-plus-sm x-show="!display" class="h-5 w-5" />
-                                                <x-heroicon-o-minus-sm x-show="display" class="h-5 w-5" />
+                                                <x-untitledui-plus x-show="!display" class="h-5 w-5" />
+                                                <x-untitledui-minus x-show="display" class="h-5 w-5" />
                                             </button>
                                         @endif
                                     </div>
@@ -454,7 +464,7 @@
                                 </div>
                             @empty
                                 <div class="text-center py-4">
-                                    <x-heroicon-o-tag class="mx-auto h-12 w-12 text-secondary-400 dark:text-secondary-500" />
+                                    <x-untitledui-tag-03 class="mx-auto h-12 w-12 text-secondary-400 dark:text-secondary-500" />
                                     <h3 class="mt-2 text-sm font-medium text-secondary-900 dark:text-white">
                                         {{ __('shopper::pages/products.no_category') }}
                                     </h3>
@@ -463,7 +473,7 @@
                                     </p>
                                     <div class="mt-6">
                                         <x-shopper::buttons.primary :link="route('shopper.categories.create')">
-                                            <x-heroicon-s-plus class="-ml-1 mr-2 h-5 w-5"/>
+                                            <x-untitledui-plus class="-ml-1 mr-2 h-5 w-5" />
                                             {{ __('shopper::pages/products.new_category') }}
                                         </x-shopper::buttons.primary>
                                     </div>

@@ -58,7 +58,7 @@
                         <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.width')">
                             <x-shopper::forms.input wire:model.defer="widthValue" id="WidthValue" type="text" class="dark:bg-secondary-800" placeholder="0" />
                             <div class="absolute inset-y-0 right-0 flex items-center">
-                                <x-shopper::forms.select wire:model.defer="WidthUnit" aria-label="{{ __('shopper::layout.forms.label.width_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent dark:bg-secondary-800">
+                                <x-shopper::forms.select wire:model.defer="WidthUnit" aria-label="{{ __('shopper::layout.forms.label.width_unit') }}" class="py-0 pl-2 pr-7 border-y-secondary-300 dark:bg-secondary-800">
                                     <option value="cm">{{ __('shopper::words.unity.cm') }}</option>
                                     <option value="m">{{ __('shopper::words.unity.m') }}</option>
                                 </x-shopper::forms.select>
@@ -67,7 +67,7 @@
                         <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.height')">
                             <x-shopper::forms.input wire:model.defer="heightValue" id="heightValue" type="text" class="pl-3 pr-12 dark:bg-secondary-800" placeholder="0" />
                             <div class="absolute inset-y-0 right-0 flex items-center">
-                                <x-shopper::forms.select wire:model.defer="heightUnit" aria-label="{{ __('shopper::layout.forms.label.height_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent dark:bg-secondary-800">
+                                <x-shopper::forms.select wire:model.defer="heightUnit" aria-label="{{ __('shopper::layout.forms.label.height_unit') }}" class="py-0 pl-2 pr-7 border-y-secondary-300 dark:bg-secondary-800">
                                     <option value="cm">{{ __('shopper::words.unity.cm') }}</option>
                                     <option value="m">{{ __('shopper::words.unity.m') }}</option>
                                 </x-shopper::forms.select>
@@ -76,7 +76,7 @@
                         <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.weight')">
                             <x-shopper::forms.input wire:model.defer="weightValue" id="weightValue" type="text" class="block w-full pl-3 pr-12 dark:bg-secondary-800" placeholder="0" />
                             <div class="absolute inset-y-0 right-0 flex items-center">
-                                <x-shopper::forms.select wire:model.defer="weightUnit" aria-label="{{ __('shopper::layout.forms.label.weight_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent dark:bg-secondary-800">
+                                <x-shopper::forms.select wire:model.defer="weightUnit" aria-label="{{ __('shopper::layout.forms.label.weight_unit') }}" class="py-0 pl-2 pr-7 border-y-secondary-300 dark:bg-secondary-800">
                                     <option value="kg">{{ __('shopper::words.unity.kg') }}</option>
                                     <option value="g">{{ __('shopper::words.unity.g') }}</option>
                                 </x-shopper::forms.select>
@@ -85,7 +85,7 @@
                         <x-shopper::forms.group class="sm:col-span-1" :label="__('shopper::layout.forms.label.volume')">
                             <x-shopper::forms.input wire:model.defer="volumeValue" id="VolumeValue" type="text" class="block w-full pl-3 pr-12 dark:bg-secondary-800" placeholder="0" />
                             <div class="absolute inset-y-0 right-0 flex items-center">
-                                <x-shopper::forms.select wire:model.defer="VolumeUnit" aria-label="{{ __('shopper::layout.forms.label.volume_unit') }}" class="py-0 pl-2 pr-7 border-transparent bg-transparent dark:bg-secondary-800">
+                                <x-shopper::forms.select wire:model.defer="VolumeUnit" aria-label="{{ __('shopper::layout.forms.label.volume_unit') }}" class="py-0 pl-2 pr-7 border-y-secondary-300 dark:bg-secondary-800">
                                     <option value="l">{{ __('shopper::words.unity.l') }}</option>
                                     <option value="ml">{{ __('shopper::words.unity.ml') }}</option>
                                 </x-shopper::forms.select>

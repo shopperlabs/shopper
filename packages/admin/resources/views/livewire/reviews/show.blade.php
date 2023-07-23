@@ -1,6 +1,6 @@
 <div>
     <x-shopper::breadcrumb :back="route('shopper.reviews.index')" :current="$review->reviewrateable->name">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" :title="__('shopper::layout.sidebar.reviews')" />
     </x-shopper::breadcrumb>
 
@@ -22,7 +22,7 @@
             </div>
             <div class="ml-4">
                 <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-review', {{ json_encode([$review->id]) }})" type="button">
-                    <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2"/>
+                    <x-untitledui-trash-03 class="w-5 h-5 -ml-1 mr-2"/>
                     {{ __('shopper::layout.forms.actions.delete') }}
                 </x-shopper::buttons.danger>
             </div>
@@ -40,7 +40,7 @@
                                 <span>{{ $review->reviewrateable->sku }}</span> -
                             @endif
                             <span class="text-primary-500 border-b border-dashed border-primary-500 pb-0 5">
-                                {{ $review->reviewrateable->formatted_price ?? __('N/A') }}
+                                {{ $review->reviewrateable->getPriceAmount()?->formatted ?? __('N/A') }}
                             </span>
                         </p>
                     </dd>

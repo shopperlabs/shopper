@@ -50,10 +50,12 @@ final class Login extends Component
             'remember' => $this->remember,
         ];
 
-        return (new Pipeline(app()))->send($request)->through(array_filter([
-            RedirectIfTwoFactorAuthenticatable::class,
-            AttemptToAuthenticate::class,
-        ]))
+        return (new Pipeline(app()))
+            ->send($request)
+            ->through(array_filter([
+                config('shopper.auth.2fa_enabled') ? RedirectIfTwoFactorAuthenticatable::class : null,
+                AttemptToAuthenticate::class,
+            ]))
             ->then(fn ($request) => app(LoginResponse::class));
     }
 

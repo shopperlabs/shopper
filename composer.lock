@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "060a741267d093cb1a5e8868657c8c2b",
+    "content-hash": "25b7cbfb1ca8d2baccf3a948d743fe39",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3029,6 +3029,71 @@
                 "source": "https://github.com/maxmind/web-service-common-php/tree/v0.9.0"
             },
             "time": "2022-03-28T17:43:20+00:00"
+        },
+        {
+            "name": "mckenziearts/blade-untitledui-icons",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mckenziearts/blade-untitledui-icons.git",
+                "reference": "864878aa0b1e9700874862984004aac594ba1df8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mckenziearts/blade-untitledui-icons/zipball/864878aa0b1e9700874862984004aac594ba1df8",
+                "reference": "864878aa0b1e9700874862984004aac594ba1df8",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^1.5",
+                "illuminate/support": "^9.0|^10.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mckenziearts\\BladeUntitledUIIcons\\BladeUntitledUIIconsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mckenziearts\\BladeUntitledUIIcons\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arthur Monney",
+                    "homepage": "https://arthurmonney.me"
+                }
+            ],
+            "description": "A package to easily make use of UntitledUI icons in your Laravel Blade views.",
+            "homepage": "https://github.com/mckenziearts/blade-untitledui-icons",
+            "keywords": [
+                "Untitled UI",
+                "blade",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/mckenziearts/blade-untitledui-icons/issues",
+                "source": "https://github.com/mckenziearts/blade-untitledui-icons/tree/v1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://laravel.cm/sponsors",
+                    "type": "custom"
+                }
+            ],
+            "time": "2023-07-22T00:28:46+00:00"
         },
         {
             "name": "milon/barcode",

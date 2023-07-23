@@ -27,9 +27,17 @@
                     @elseif($type === 'datepicker')
                         <div x-data x-init="flatpickr($refs.input, {dateFormat: 'Y-m-d'});" class="relative rounded-md shadow-sm">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <x-heroicon-o-calendar class="h-5 w-5 text-secondary-400" />
+                                <x-untitledui-calendar class="h-5 w-5 text-secondary-400" />
                             </div>
-                            <input wire:model="value" x-ref="input" id="value" type="text" class="w-full pl-10 block w-full dark:bg-secondary-700 dark:text-white placeholder-secondary-500 dark:placeholder-secondary-400 rounded-md shadow-sm border-secondary-300 dark:border-secondary-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-secondary-900 focus:ring-opacity-50 sm:text-sm" placeholder="{{ __('Choose a date') }}" readonly />
+                            <input
+                                wire:model="value"
+                                x-ref="input"
+                                id="value"
+                                type="text"
+                                class="w-full pl-10 block dark:bg-secondary-700 dark:text-white placeholder-secondary-500 dark:placeholder-secondary-400 rounded-md shadow-sm border-secondary-300 dark:border-secondary-700 focus:border-primary-300 focus:ring focus:ring-primary-300 dark:focus:ring-offset-secondary-900 focus:ring-opacity-50 sm:text-sm"
+                                placeholder="{{ __('Choose a date') }}"
+                                readonly
+                            />
                         </div>
                     @elseif($type === 'richtext')
                         <livewire:shopper-forms.trix :value="$value" />
@@ -85,5 +93,4 @@
             </x-shopper::buttons.default>
         </span>
     </x-slot>
-
 </x-shopper::modal>

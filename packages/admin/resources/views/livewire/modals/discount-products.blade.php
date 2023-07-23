@@ -34,7 +34,7 @@
                                 {{ __('shopper::pages/discounts.modals.stock_available', ['stock' => $product->stock]) }}
                             </span>
                             <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                                {{ $product->formattedPrice }}
+                                {{ $product->getPriceAmount()?->formatted }}
                             </span>
                         </span>
                     </span>
@@ -56,5 +56,4 @@
             </x-shopper::buttons.default>
         </span>
     </x-slot>
-
 </x-shopper::modal>

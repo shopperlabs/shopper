@@ -5,7 +5,7 @@
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <span class="relative rounded-none rounded-l-md inline-flex items-center px-4 py-2 border border-secondary-300 dark:border-secondary-700 shadow-sm text-sm font-medium text-secondary-700 dark:text-white bg-white dark:bg-secondary-700 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-secondary-900 opacity-50 cursor-not-allowed" aria-disabled="true" aria-label="{{ __('Previous') }}">
-                    <x-heroicon-s-chevron-left class="h-5 w-5" />
+                    <x-untitledui-chevron-left class="h-5 w-5" />
                 </span>
             @else
                 <x-shopper::buttons.default type="button" class="relative inline-flex px-2 rounded-r-none rounded-l-md" wire:click="previousPage" rel="prev" aria-label="@lang('pagination.previous')">
@@ -37,11 +37,11 @@
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <x-shopper::buttons.default type="button" class="-ml-px relative px-2 rounded-l-none rounded-r-md" wire:click="nextPage" rel="next" aria-label="{{ __('Next') }}">
-                    <x-heroicon-s-chevron-right class="h-5 w-5" />
+                    <x-untitledui-chevron-right class="h-5 w-5" />
                 </x-shopper::buttons.default>
             @else
                 <x-shopper::buttons.default type="button" class="-ml-px relative px-2 rounded-l-none rounded-r-md focus:z-10 opacity-50 cursor-not-allowed" aria-disabled="true" aria-label="{{ __('Next') }}">
-                    <x-heroicon-s-chevron-right class="h-5 w-5" />
+                    <x-untitledui-chevron-right class="h-5 w-5" />
                 </x-shopper::buttons.default>
             @endif
         </span>

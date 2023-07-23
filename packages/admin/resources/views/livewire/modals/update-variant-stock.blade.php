@@ -15,7 +15,7 @@
                     <div class="relative flex items-center justify-between p-4 border-b sm:px-5 border-secondary-200 dark:border-secondary-700">
                         <span class="relative z-0 inline-flex rounded-md shadow-sm">
                             <span class="relative inline-flex items-center px-2 py-2 bg-white border border-r-0 rounded-l-md border-secondary-300 dark:border-secondary-700 dark:bg-secondary-700">
-                                <x-heroicon-o-location-marker class="w-5 h-5 text-secondary-500 dark:text-secondary-400" />
+                                <x-untitledui-marker-pin class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
                             </span>
                             <x-shopper::forms.select wire:model.lazy="inventory" id="inventory" class="block py-2 pl-3 -ml-px rounded-l-none pr-9 rounded-r-md" aria-label="{{ __('shopper::pages/products.modals.variants.select') }}">
                                 <option value="0">{{ __('shopper::pages/products.modals.variants.select') }}</option>
@@ -35,7 +35,9 @@
 
                 <div class="space-y-2 sm:space-y-0 sm:flex sm:items-center sm:justify-between px-4 py-5 mb-2">
                     <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-300">
-                        <span class="block mr-4 text-sm font-medium">{{ __('shopper::pages/products.current_qty_inventory') }}</span>
+                        <span class="block mr-4 text-sm font-medium">
+                            {{ __('shopper::pages/products.current_qty_inventory') }}
+                        </span>
                         <x-shopper::stock-badge :stock="$currentStock" />
                     </div>
                     <div class="sm:ml-4">
@@ -64,9 +66,7 @@
                                 @if($histories->isNotEmpty())
                                     <div class="flex items-center pl-4 space-x-4">
                                         <x-shopper::buttons.default wire:click="export" type="button">
-                                            <svg class="w-5 h-5 pr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
-                                            </svg>
+                                            <x-untitledui-download-cloud-01 class="w-5 h-5 mr-2" />
                                             {{ __('shopper::layout.forms.actions.export') }}
                                         </x-shopper::buttons.default>
                                     </div>
@@ -84,7 +84,7 @@
                 @if($histories->total() === 0)
                     <div class="flex flex-col space-y-2 items-center justify-center p-4 sm:p-6">
                         <span class="shrink-0">
-                            <x-heroicon-o-document-text class="w-12 h-12 text-primary-500" />
+                            <x-untitledui-file-05 class="h-8 w-8 text-primary-500" />
                         </span>
                         <h3 class="text-lg text-center font-medium text-secondary-500 dark:text-secondary-400">
                             {{ __('shopper::pages/products.inventory.empty') }}

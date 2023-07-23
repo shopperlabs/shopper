@@ -14,7 +14,7 @@
 >
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.settings.users')" :current="$display_name">
-            <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
             <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('Staff & permissions')" />
         </x-shopper::breadcrumb>
 
@@ -27,14 +27,14 @@
                     @if($role->can_be_removed)
                         <span class="shadow-sm rounded-md">
                             <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
-                                <x-heroicon-o-trash class="w-5 h-5 -ml-1 mr-2" />
+                                <x-untitledui-trash-03 class="w-5 h-5 mr-2" />
                                 {{ __('shopper::layout.forms.actions.delete') }}
                             </x-shopper::buttons.danger>
                         </span>
                     @endif
                     <span class="shadow-sm rounded-md">
                         <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
-                            <x-heroicon-o-key class="w-5 h-5 -ml-1 mr-2" />
+                            <x-untitledui-lock-04 class="w-5 h-5 -ml-1 mr-2" />
                             {{ __('shopper::pages/settings.roles_permissions.create_permission') }}
                         </x-shopper::buttons.primary>
                     </span>
@@ -98,7 +98,7 @@
                         <div class="rounded-md bg-info-500 bg-opacity-10 p-4">
                             <div class="flex">
                                 <div class="shrink-0">
-                                    <x-heroicon-s-information-circle  class="h-5 w-5 text-info-400" />
+                                    <x-untitledui-alert-circle  class="h-5 w-5 text-info-400" />
                                 </div>
                                 <div class="ml-3 flex-1 lg:flex lg:justify-between">
                                     <p class="text-sm leading-5 text-info-700">

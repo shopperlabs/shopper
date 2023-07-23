@@ -15,7 +15,7 @@
 >
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.customers.index')" :current="$customer->full_name">
-            <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
             <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" :title="__('shopper::layout.sidebar.customers')" />
         </x-shopper::breadcrumb>
 
@@ -23,7 +23,7 @@
             <div class="flex-1 min-w-0">
                 <div class="flex items-start">
                     <div class="shrink-0 h-12 w-12">
-                        <img class="h-12 w-12 rounded-lg" src="{{ $picture }}" alt="">
+                        <img class="h-12 w-12 rounded-lg" src="{{ $picture }}" alt="{{ $customer->full_name }}">
                     </div>
                     <div class="ml-4">
                         <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:truncate dark:text-white">
@@ -32,9 +32,9 @@
                         <div class="mt-1 flex items-center divide-x divide-secondary-200 dark:divide-secondary-700">
                             <div class="flex items-center pr-2">
                                 @if($customer->email_verified_at)
-                                    <x-heroicon-s-shield-check class="w-5 h-5 text-green-500" />
+                                    <x-untitledui-check-verified-02 class="w-5 h-5 text-green-500" />
                                 @else
-                                    <x-heroicon-s-shield-exclamation class="w-5 h-5 text-red-500" />
+                                    <x-untitledui-alert-circle class="w-5 h-5 text-danger-500" />
                                 @endif
                                 <span class="ml-1.5 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                     {{ $customer->email }}
@@ -51,7 +51,7 @@
                 <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
                     <div>
                         <button @click="open = !open" class="flex items-center text-secondary-400 hover:text-secondary-500 focus:outline-none focus:text-secondary-500" aria-label="Options" id="options-menu" aria-haspopup="true" x-bind:aria-expanded="open">
-                            <x-heroicon-o-dots-horizontal class="w-5 h-5" />
+                            <x-untitledui-dots-horizontal class="w-5 h-5" />
                         </button>
                     </div>
 

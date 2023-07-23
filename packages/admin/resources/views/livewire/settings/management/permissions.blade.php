@@ -35,7 +35,7 @@
                             <div class="flex items-center space-x-3">
                                 @if($permission->can_be_removed)
                                     <button wire:click="removePermission({{ $permission->id }})" type="button" class="inline-flex items-center text-sm leading-5 text-medium text-secondary-500 hover:text-red-500 focus:text-red-700 focus:outline-none focus:shadow-none dark:text-secondary-400 dark:hover:text-red-500">
-                                        <x-heroicon-o-trash class="w-5 h-5" />
+                                        <x-untitledui-trash-03 class="w-5 h-5" />
                                     </button>
                                 @endif
                                 @if($permission->users->count() > 0)

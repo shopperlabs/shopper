@@ -18,7 +18,7 @@
                         <span class="text-secondary-500 dark:text-secondary-400 text-sm truncate">{{ $user->email }}</span>
                     </span>
                 </span>
-                <x-heroicon-o-dots-vertical class="h-5 w-5 flex-shrink-0 text-secondary-400 group-hover:text-secondary-500 dark:text-secondary-500 dark:group-hover:text-secondary-400" />
+                <x-untitledui-dots-vertical class="h-5 w-5 flex-shrink-0 text-secondary-400 group-hover:text-secondary-500 dark:text-secondary-500 dark:group-hover:text-secondary-400" />
             </span>
         </button>
         <div x-show="dropdownOpen"

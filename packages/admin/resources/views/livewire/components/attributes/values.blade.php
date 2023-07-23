@@ -70,10 +70,10 @@
                                                     type="button"
                                                     class="text-secondary-500 hover:text-secondary-600 dark:text-secondary-400 dark:hover:text-secondary-500"
                                                 >
-                                                    <x-heroicon-o-pencil class="h-5 w-5" />
+                                                    <x-untitledui-edit-04 class="h-5 w-5" />
                                                 </button>
                                                 <button wire:click="removeValue({{ $v->id }})" type="button" class="text-red-600 hover:text-red-700 dark:text-red-500">
-                                                    <x-heroicon-o-trash class="h-5 w-5" />
+                                                    <x-untitledui-trash-03 class="h-5 w-5" />
                                                 </button>
                                             </div>
                                         </td>

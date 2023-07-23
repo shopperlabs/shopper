@@ -64,10 +64,8 @@
                         @if($order->paymentMethod->logo)
                             <img class="h-6 w-6 rounded-md object-cover" src="{{ $order->paymentMethod->logo_url }}" alt="payment icon" />
                         @else
-                            <span class="flex items-center justify-center h-6 w-6 bg-secondary-100 text-secondary-300 rounded-md dark:bg-secondary-700 dark:text-secondary-400">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
-                                </svg>
+                            <span class="inline-flex items-center justify-center h-6 w-6 bg-secondary-100 text-secondary-300 rounded-md dark:bg-secondary-700 dark:text-secondary-400">
+                                <x-untitledui-image class="h-4 w-4" />
                             </span>
                         @endif
                         <div class="ml-2">
@@ -106,14 +104,14 @@
                 </p>
                 <a href="{{ route('shopper.orders.show', $order) }}" class="inline-flex items-center text-primary-600 hover:text-primary-500 underline text-sm leading-5">
                     {{ __('shopper::pages/customers.orders.view') }}
-                    <x-heroicon-o-arrow-narrow-right class="h-5 w-5 ml-1.5" />
+                    <x-untitledui-arrow-narrow-right class="h-5 w-5 ml-2" />
                 </a>
             </div>
         </div>
     @empty
         <div class="py-6 flex items-center justify-center dark:bg-secondary-800">
             <div class="flex flex-col justify-center items-center space-y-2">
-                <x-heroicon-o-shopping-bag class="h-8 w-8 text-primary-500" />
+                <x-untitledui-shopping-bag class="h-8 w-8 text-primary-500" />
                 <span class="font-medium text-secondary-500 dark:text-secondary-400 text-xl">
                     {{ __('shopper::pages/customers.orders.empty_text') }}
                 </span>

@@ -23,7 +23,7 @@ final class RedirectIfTwoFactorAuthenticatable
             return $this->twoFactorChallengeResponse($user, $data['remember']);
         }
 
-        return $next(request());
+        return $next($data);
     }
 
     protected function validateCredentials(array $request)

@@ -3,7 +3,6 @@
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
-
     <x-slot name="title">
         {{ __('shopper::modals.attributes.new_value', ['attribute' => $attribute->name]) }}
     </x-slot>
@@ -54,5 +53,4 @@
             </x-shopper::buttons.default>
         </span>
     </x-slot>
-
 </x-shopper::modal>
