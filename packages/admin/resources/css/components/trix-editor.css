@@ -29,12 +29,22 @@ trix-toolbar .trix-active {
   padding-left: 0em !important;
 }
 
-[dir='rtl']
-trix-editor.prose
-:where(ul > li):not(:where([class~='not-prose'] *)),
-[dir='rtl']
-trix-editor.prose
-:where(ol > li):not(:where([class~='not-prose'] *)) {
+[dir='rtl'] trix-editor.prose :where(ul > li):not(:where([class~='not-prose'] *)),
+[dir='rtl'] trix-editor.prose :where(ol > li):not(:where([class~='not-prose'] *)) {
   padding-right: 0.375em !important;
   padding-left: 0em !important;
+}
+
+trix-editor::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+trix-editor::-webkit-scrollbar-thumb {
+  background-color: theme('colors.secondary.200');
+  border-radius: 4px;
+}
+
+.dark trix-editor::-webkit-scrollbar-thumb {
+  background-color: theme('colors.secondary.800');
 }

@@ -20,7 +20,7 @@
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
                                     <x-shopper::forms.group :error="$errors->first('firstName')">
-                                        <x-shopper::forms.input wire:model.lazy="firstName" id="firstName" type="text" autocomplete="off" />
+                                        <x-shopper::forms.input wire:model.defer="firstName" id="firstName" type="text" autocomplete="off" />
                                     </x-shopper::forms.group>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
                                     <x-shopper::forms.group :error="$errors->first('lastName')">
-                                        <x-shopper::forms.input wire:model.lazy="lastName" id="lastName" type="text" autocomplete="off" />
+                                        <x-shopper::forms.input wire:model.defer="lastName" id="lastName" type="text" autocomplete="off" />
                                     </x-shopper::forms.group>
                                 </div>
                             </div>
@@ -83,9 +83,9 @@
                         {{ __('shopper::layout.forms.label.photo') }}
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
-                    <span class="grow">
-                        <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="">
-                    </span>
+                        <span class="grow">
+                            <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="">
+                        </span>
                     </dd>
                 </div>
                 <div x-data="{ open: @entangle('emailUpdate') }" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
@@ -98,7 +98,7 @@
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
                                     <x-shopper::forms.group :error="$errors->first('email')">
-                                        <x-shopper::forms.input wire:model.debounce.350ms="email" id="email" type="text" autocomplete="off" />
+                                        <x-shopper::forms.input wire:model.defer="email" id="email" type="text" autocomplete="off" />
                                     </x-shopper::forms.group>
                                 </div>
                             </div>
@@ -129,12 +129,12 @@
                     <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
                             <p x-show="!open" class="flex items-center">
-                                <x-heroicon-o-cake class="w-5 h-5 -ml-1 mr-2.5 text-secondary-500 dark:text-secondary-400" />
+                                <x-untitledui-calendar-heart class="w-5 h-5 mr-2 text-secondary-500 dark:text-secondary-400" />
                                 <span>{{ $birthDateFormatted }}</span>
                             </p>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs relative rounded-md shadow-sm">
-                                    <x-datetime-picker :placeholder="__('1970-01-01')" wire:model.lazy="birthDate" parse-format="YYYY-MM-DD" :without-time="true" />
+                                    <x-datetime-picker :placeholder="__('1970-01-01')" wire:model.defer="birthDate" parse-format="YYYY-MM-DD" :without-time="true" />
                                 </div>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                             <span x-show="!open" class="capitalize">{{ $gender }}</span>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs">
-                                    <x-shopper::forms.select wire:model.lazy="gender" aria-label="{{ __('shopper::layout.forms.label.gender') }}">
+                                    <x-shopper::forms.select wire:model.defer="gender" aria-label="{{ __('shopper::layout.forms.label.gender') }}">
                                         <option value="male">{{ __('shopper::words.male') }}</option>
                                         <option value="female">{{ __('shopper::words.female') }}</option>
                                     </x-shopper::forms.select>

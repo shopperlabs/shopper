@@ -47,13 +47,7 @@
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $variant->is_visible ? 'bg-green-600': 'bg-secondary-400' }}"></div>
                                             <div class="truncate flex items-center">
-                                                @if($variant->getFirstMediaUrl(config('shopper.core.storage.collection_name')))
-                                                    <img class="h-8 w-8 rounded object-cover object-center" src="{{ $variant->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="" />
-                                                @else
-                                                    <div class="bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center h-8 w-8 rounded">
-                                                        <x-heroicon-o-photograph class="w-5 h-5 text-secondary-400" />
-                                                    </div>
-                                                @endif
+                                                <img class="h-8 w-8 rounded object-cover object-center" src="{{ $variant->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="" />
                                                 <span class="ml-2 truncate">
                                                     <span>{{ $variant->name }} </span>
                                                 </span>
@@ -76,21 +70,21 @@
                                         <x-shopper::dropdown customAlignmentClasses="right-6 bottom-2">
                                             <x-slot name="trigger">
                                                 <button id="variant-options-menu" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-secondary-400 rounded-full bg-transparent hover:text-secondary-500 focus:outline-none focus:text-secondary-500 focus:bg-secondary-100 dark:focus:bg-secondary-700 transition ease-in-out duration-150">
-                                                    <x-heroicon-s-dots-vertical class="w-5 h-5" />
+                                                    <x-untitledui-dots-vertical class="w-5 h-5" />
                                                 </button>
                                             </x-slot>
 
                                             <x-slot name="content">
                                                 <div class="py-1">
-                                                    <a href="{{ route('shopper.products.variant', ['product' => $product->id, 'id' => $variant->id]) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
-                                                        <x-heroicon-o-pencil class="mr-2 h-5 w-5" />
+                                                    <a href="{{ route('shopper.products.variant', ['product' => $product->id, 'id' => $variant->id]) }}" class="group flex items-center px-4 py-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
+                                                        <x-untitledui-edit-04 class="mr-2 h-5 w-5" />
                                                         {{ __('shopper::layout.forms.actions.edit') }}
                                                     </a>
                                                 </div>
                                                 <div class="border-t border-secondary-100 dark:border-secondary-600"></div>
                                                 <div class="py-1">
                                                     <button wire:click="remove({{ $variant->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400 dark:hover:bg-secondary-600 hover:bg-secondary-100 dark:hover:text-white hover:text-secondary-700 focus:outline-none focus:bg-secondary-100 dark:focus:bg-secondary-700 dark:focus:text-white focus:text-secondary-900" role="menuitem">
-                                                        <x-heroicon-o-trash class="mr-2 h-5 w-5" />
+                                                        <x-untitledui-trash-03 class="mr-2 h-5 w-5" />
                                                         {{ __('shopper::layout.forms.actions.delete') }}
                                                     </button>
                                                 </div>
@@ -102,7 +96,7 @@
                                 <tr>
                                     <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900">
                                         <div class="py-6 flex flex-col space-y-2 justify-center items-center">
-                                            <x-heroicon-o-book-open class="h-8 w-8 text-primary-500" />
+                                            <x-untitledui-book-open class="h-8 w-8 text-primary-500" />
                                             <span class="font-medium text-secondary-500 dark:text-secondary-400 text-xl">
                                                 {{ __('shopper::pages/products.variants.empty') }}
                                             </span>

@@ -2,7 +2,6 @@
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
-
     <x-slot name="content">
         <div class="sm:flex sm:items-start px-4 sm:px-6 pt-4">
             <div class="text-left">
@@ -39,5 +38,4 @@
             </x-shopper::buttons.default>
         </span>
     </x-slot>
-
 </x-shopper::modal>

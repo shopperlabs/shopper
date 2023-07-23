@@ -1,7 +1,7 @@
 <x-shopper::container>
     <div x-data="{ on: @entangle('is_enabled') }">
         <x-shopper::breadcrumb :back="route('shopper.categories.index')">
-            <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
             <x-shopper::breadcrumb.link :link="route('shopper.categories.index')" :title="__('shopper::layout.sidebar.categories')" />
         </x-shopper::breadcrumb>
 

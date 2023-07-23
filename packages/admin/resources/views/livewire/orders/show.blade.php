@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.orders.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.orders.index')" :title="__('shopper::layout.sidebar.orders')" />
     </x-shopper::breadcrumb>
 
@@ -34,7 +34,7 @@
                         @if(! $order->isPaid())
                             <span class="hidden sm:block">
                                 <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.archived-order', {{ json_encode([$order->id]) }})" type="button">
-                                    <x-heroicon-s-archive class="w-5 h-5 -ml-1 mr-2" />
+                                    <x-untitledui-trash-03 class="w-5 h-5 mr-2" />
                                     {{ __('shopper::layout.forms.actions.delete') }}
                                 </x-shopper::buttons.danger>
                             </span>
@@ -44,9 +44,7 @@
                             <x-slot name="trigger">
                                 <x-shopper::buttons.default>
                                     {{ __('shopper::layout.forms.actions.more_actions') }}
-                                    <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                    </svg>
+                                    <x-untitledui-chevron-selector-vertical class="w-5 h-5 ml-2" />
                                 </x-shopper::buttons.default>
                             </x-slot>
 
@@ -66,14 +64,14 @@
 
                                     @if($order->isPaid())
                                         <x-shopper::dropdown-button wire:click="markComplete" role="menuitem">
-                                            <x-heroicon-o-check-circle class="mr-3 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+                                            <x-untitledui-check-circle class="mr-2 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                             {{ __('shopper::layout.forms.actions.mark_complete') }}
                                         </x-shopper::dropdown-button>
                                     @endif
 
                                     @if($order->canBeCancelled())
                                         <x-shopper::dropdown-button wire:click="cancelOrder" role="menuitem">
-                                            <x-heroicon-s-x class="mr-3 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+                                            <x-untitledui-x class="mr-2 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                             {{ __('shopper::layout.forms.actions.cancel_order') }}
                                         </x-shopper::dropdown-button>
                                     @endif
@@ -83,15 +81,33 @@
                     @endif
 
                     <span class="relative z-0 inline-flex shadow-sm">
-                        <button @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif type="button" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400 hover:text-secondary-400 dark:hover:text-secondary-500 focus:z-10 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary dark:text-secondary-400 transition ease-in-out duration-150 @if(! $prevOrder) bg-secondary-100 dark:bg-secondary-800 hover:text-secondary-500 dark:text-secondary-400 disabled:opacity-50 @endif" aria-label="{{ __('Previous order') }}" @if(! $prevOrder) disabled @endif>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                            </svg>
+                        <button
+                            @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif
+                            type="button"
+                            @class([
+                                'relative inline-flex items-center px-2 py-2 rounded-l-lg border border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400 hover:text-secondary-400 dark:hover:text-secondary-500 focus:z-10 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary transition ease-in-out duration-150',
+                                'bg-secondary-50 disabled:opacity-50' => ! $prevOrder,
+                                'bg-white' => $prevOrder,
+                            ])
+                            class=" dark:text-secondary-400  @if(! $prevOrder)  @endif"
+                            aria-label="{{ __('Previous order') }}"
+                            @if(! $prevOrder) disabled @endif
+                        >
+                            <x-untitledui-chevron-left class="h-5 w-5" />
                         </button>
-                        <button @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif type="button" class="-ml-px relative inline-flex items-center px-2 py-2 rounded-r-md border border-secondary-300 dark:border-secondary-700 bg-white dark:bg-secondary-800 text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400 hover:text-secondary-400 dark:hover:text-secondary-500 focus:z-10 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary dark:text-secondary-400 transition ease-in-out duration-150 @if(! $nextOrder) bg-secondary-100 dark:bg-secondary-800 hover:text-secondary-500 dark:text-secondary-400 disabled:opacity-50 @endif" aria-label="{{ __('Next order') }}" @if(! $nextOrder) disabled @endif>
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                            </svg>
+                        <button
+                            @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
+                            type="button"
+                            @class([
+                                '-ml-px relative inline-flex items-center px-2 py-2 rounded-r-lg border border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400 hover:text-secondary-400 dark:hover:text-secondary-500 focus:z-10 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary transition ease-in-out duration-150',
+                                'bg-secondary-50 disabled:opacity-50' => ! $nextOrder,
+                                'bg-white' => $nextOrder,
+                            ])
+                            class=" @if(! $nextOrder) bg-secondary-100 dark:bg-secondary-800 hover:text-secondary-500 dark:text-secondary-400 disabled:opacity-50 @endif"
+                            aria-label="{{ __('Next order') }}"
+                            @if(! $nextOrder) disabled @endif
+                        >
+                            <x-untitledui-chevron-right class="h-5 w-5" />
                         </button>
                     </span>
                 </div>
@@ -125,15 +141,7 @@
                                     <div class="min-w-0 flex-1 flex items-center">
                                         <div class="shrink-0">
                                             <div class="shrink-0 h-10 w-10">
-                                                @if($item->product->getFirstMediaUrl(config('shopper.core.storage.collection_name')))
-                                                    <img class="h-10 w-10 rounded-md object-cover" src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $item->id }}" />
-                                                @else
-                                                    <span class="flex items-center justify-center h-10 w-10 bg-secondary-100 text-secondary-400 rounded-md dark:bg-secondary-800 dark:text-secondary-500">
-                                                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
-                                                            <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                    </span>
-                                                @endif
+                                                <img class="h-10 w-10 rounded-lg object-cover" src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $item->id }}" />
                                             </div>
                                         </div>
                                         <div class="min-w-0 flex-1 px-4 lg:grid lg:grid-cols-4 lg:gap-4">
@@ -189,9 +197,7 @@
                             <img class="h-10 w-10 rounded-md object-cover" src="{{ $order->paymentMethod->logo_url }}" alt="payment icon" />
                         @else
                             <span class="flex items-center justify-center h-10 w-10 bg-secondary-100 text-secondary-300 rounded-md dark:bg-secondary-800 dark:text-white">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
-                                    <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
+                                <x-untitledui-image class="h-6 w-6" />
                             </span>
                         @endif
                         <div class="ml-4">
@@ -241,9 +247,7 @@
                         <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
                             <div class="flex">
                                 <div class="shrink-0">
-                                    <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                    </svg>
+                                    <x-untitledui-alert-triangle class="h-5 w-5 text-yellow-400" />
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm text-yellow-700">
@@ -274,9 +278,7 @@
                         <x-slot name="trigger">
                             <x-shopper::buttons.default>
                                 {{ __('shopper::pages/orders.payment_actions') }}
-                                <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                </svg>
+                                <x-untitledui-chevron-selector-vertical class="w-5 h-5 ml-2" />
                             </x-shopper::buttons.default>
                         </x-slot>
 
@@ -410,7 +412,7 @@
                 <h3 class="text-xs uppercase tracking-wider font-medium leading-4 text-secondary-900 dark:text-white">
                     {{ __('shopper::pages/customers.addresses.billing') }}
                 </h3>
-                @if(! $billingAddress || ($billingAddress && $billingAddress->id === $order->shippingAddress->id ))
+                @if(! $billingAddress || ($billingAddress->id === $order->shippingAddress->id ))
                     <p class="mt-3 text-secondary-500 dark:text-secondary-400 text-sm leading-5">
                         {{ __('shopper::words.same_address') }}
                     </p>

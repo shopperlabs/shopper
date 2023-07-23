@@ -41,9 +41,9 @@ class DefaultItem implements Item, Serializable
 
     protected string $toggleIconType = 'blade';
 
-    protected string $toggleIcon = 'heroicon-o-plus-sm';
+    protected string $toggleIcon = 'untitledui-chevron-down';
 
-    protected string $toggleActiveIcon = 'heroicon-o-minus-sm';
+    protected string $toggleActiveIcon = 'untitledui-chevron-up';
 
     protected string $toggleIconClass = 'h-5 w-5';
 

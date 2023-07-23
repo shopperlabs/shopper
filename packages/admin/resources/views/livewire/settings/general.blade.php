@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('General')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
@@ -28,9 +28,7 @@
                 <div class="col-span-6">
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.store_name')" for="shop_name" isRequired :error="$errors->first('shop_name')">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg class="w-5 h-5 text-secondary-400" fill="currentColor" viewBox="0 0 24 24">
-                                <path fill-rule="evenodd" d="M22 5H2a1 1 0 0 0-1 1v4a3 3 0 0 0 2 2.82V22a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-9.18A3 3 0 0 0 23 10V6a1 1 0 0 0-1-1zm-7 2h2v3a1 1 0 1 1-2 0zm-4 0h2v3a1 1 0 1 1-2 0zM7 7h2v3a1 1 0 1 1-2 0zm-3 4a1 1 0 0 1-1-1V7h2v3a1 1 0 0 1-1 1zm10 10h-4v-2a2 2 0 1 1 4 0zm5 0h-3v-2a4 4 0 1 0-8 0v2H5v-8.18a3.17 3.17 0 0 0 1-.6 3 3 0 0 0 4 0 3 3 0 0 0 4 0 3 3 0 0 0 4 0c.293.26.632.464 1 .6zm2-11a1 1 0 1 1-2 0V7h2zM4.3 3H20a1 1 0 1 0 0-2H4.3a1 1 0 1 0 0 2z" clip-rule="evenodd"/>
-                            </svg>
+                            <x-untitledui-shop class="w-5 h-5 text-secondary-400 dark:text-secondary-500" />
                         </div>
                         <x-shopper::forms.input wire:model="shop_name" id="shop_name" type="text" class="pl-10 dark:bg-secondary-800 dark:border-transparent" autocomplete="off" />
                     </x-shopper::forms.group>
@@ -45,10 +43,7 @@
                         :helpText="__('shopper::pages/settings.settings.email_helper')"
                     >
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                            <svg class="w-5 h-5 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                            </svg>
+                            <x-untitledui-mail class="w-5 h-5 text-secondary-400 dark:text-secondary-500" />
                         </div>
                         <x-shopper::forms.input wire:model.defer="shop_email" id="shop_email" type="email" class="pl-10 dark:bg-secondary-800 dark:border-transparent" autocomplete="off" />
                     </x-shopper::forms.group>
@@ -99,9 +94,7 @@
                                     @elseif($shop_logo)
                                         <img class="object-cover w-12 h-12" src="{{ shopper_asset($shop_logo) }}" alt="Store logo">
                                     @else
-                                        <svg class="w-8 h-8 text-secondary-300 dark:text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
+                                        <x-untitledui-image class="w-6 h-6 text-secondary-500 dark:text-secondary-400" />
                                     @endif
                                 </span>
                         </x-shopper::forms.avatar-upload>
@@ -109,7 +102,7 @@
 
                     <div class="mt-6">
                         <x-shopper::label value="{{ __('shopper::layout.forms.label.cover_photo') }}" />
-                        <div class="mt-1">
+                        <div class="mt-2">
                             @if($cover)
                                 <div>
                                     <div class="overflow-hidden rounded-md shadow shrink-0">
@@ -117,9 +110,7 @@
                                     </div>
                                     <div class="flex items-center mt-1">
                                         <button wire:click="removeCover" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-danger-700 bg-danger-100 hover:bg-danger-50 focus:outline-none focus:border-danger-300 focus:shadow-outline-red active:bg-danger-200 transition ease-in-out duration-150">
-                                            <svg class="h-5 w-5 mr-1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
+                                            <x-untitledui-trash-03 class="h-5 w-5 mr-1.5" />
                                             {{ __('shopper::layout.forms.actions.remove') }}
                                         </button>
                                     </div>
@@ -131,20 +122,16 @@
                                     </div>
                                     <div class="flex items-center mt-1">
                                         <button wire:click="deleteCover" type="button" class="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-danger-700 bg-danger-100 hover:bg-danger-50 focus:outline-none focus:border-danger-300 focus:shadow-outline-red active:bg-danger-200 transition ease-in-out duration-150">
-                                            <svg class="h-5 w-5 mr-1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
+                                            <x-untitledui-trash-03 class="h-5 w-5 mr-1.5" />
                                             {{ __('shopper::layout.forms.actions.delete') }}
                                         </button>
                                     </div>
                                 </div>
                             @else
                                 <div class="w-full">
-                                    <label for="shop_cover" class="flex justify-center px-6 pt-5 pb-6 mt-2 border-2 border-dashed rounded-md cursor-pointer group border-secondary-300 dark:border-secondary-700">
+                                    <label for="shop_cover" class="flex justify-center p-6 border-2 border-dashed rounded-md cursor-pointer group border-secondary-300 dark:border-secondary-700">
                                         <div class="text-center">
-                                            <svg class="w-12 h-12 mx-auto text-secondary-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                            </svg>
+                                            <x-untitledui-image-plus class="w-12 h-12 mx-auto text-secondary-400 dark:text-secondary-500" stroke-width="1" />
                                             <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
                                                 <span class="font-medium transition duration-150 ease-in-out text-primary-600 group-hover:text-primary-500 focus:outline-none focus:underline">
                                                     {{ __('shopper::components.files.file') }}

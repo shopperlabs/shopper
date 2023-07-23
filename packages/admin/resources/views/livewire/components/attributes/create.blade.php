@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.attributes.index')" :current="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.attribute'))])">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.attributes.index')" :title="__('shopper::words.attributes')" />
     </x-shopper::breadcrumb>
 

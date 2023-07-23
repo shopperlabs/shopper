@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::words.analytics')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
@@ -40,10 +40,8 @@
                 <div>
                     <label class="inline-flex items-center text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">
                         {{ __('shopper::layout.forms.label.ga_json') }}
-                        <a href="https://github.com/spatie/laravel-analytics#how-to-obtain-the-credentials-to-communicate-with-google-analytics" target="_blank" class="ml-3 text-secondary-400 hover:text-secondary-500 outline-none focus:outline-none leading-4 transition duration-200 ease-in-out">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                            </svg>
+                        <a href="https://github.com/spatie/laravel-analytics#how-to-obtain-the-credentials-to-communicate-with-google-analytics" target="_blank" class="ml-3 text-secondary-400 hover:text-secondary-500 dark:text-secondary-500 dark:hover:text-secondary-400 outline-none focus:outline-none leading-4 transition duration-200 ease-in-out">
+                            <x-untitledui-info-circle class="w-5 h-5" />
                         </a>
                     </label>
                     <div class="mt-2 flex items-center">
@@ -51,7 +49,7 @@
                             <span>
                                 <input @focus="focused = true" @blur="focused = false" class="sr-only" type="file" id="json_file" wire:model="json_file">
                                 <label for="json_file" :class="{ 'outline-none border-primary-300 shadow-outline-primary': focused }" class="cursor-pointer inline-flex items-center py-2 px-3 border border-secondary-300 rounded-md text-sm leading-4 font-medium text-secondary-700 hover:text-secondary-500 shadow-sm dark:border-secondary-700 dark:text-secondary-400 dark:hover:text-white">
-                                    <x-heroicon-o-download class="h-5 w-5 mr-1.5" />
+                                    <x-untitledui-file-download-02 class="h-5 w-5 mr-1.5" />
                                     {{ __('shopper::layout.forms.actions.upload') }}
                                 </label>
                             </span>

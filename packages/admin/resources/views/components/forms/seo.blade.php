@@ -19,7 +19,7 @@
                 </p>
             @else
                 <div class="flex flex-col">
-                    <h3 class="text-base text-primary-800 font-medium leading-6 dark:text-primary-500/50">
+                    <h3 class="text-base text-primary-500 font-medium leading-6">
                         {{ $title }}
                     </h3>
                     <div class="mt-1 flex items-center space-x-2">

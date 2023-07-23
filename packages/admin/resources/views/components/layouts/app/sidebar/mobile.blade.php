@@ -22,10 +22,8 @@
              class="flex-1 flex max-w-xs w-full bg-white dark:bg-secondary-900 transform ease-in-out duration-200"
         >
             <div class="absolute top-0 right-0 -mr-14 p-1">
-                <button x-show="sidebarOpen" @click="sidebarOpen = false" class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-secondary-600">
-                    <svg class="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                <button x-show="sidebarOpen" @click="sidebarOpen = false" class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-secondary-500">
+                    <x-untitledui-x-close class="h-6 w-6 text-white" />
                 </button>
             </div>
 

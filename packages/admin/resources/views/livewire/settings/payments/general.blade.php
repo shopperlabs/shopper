@@ -10,7 +10,7 @@
 >
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::pages/settings.payment.title')">
-            <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
             <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
         </x-shopper::breadcrumb>
         <x-shopper::heading class="mt-5 border-b-0">
@@ -76,21 +76,21 @@
                 <div class="align-middle inline-block min-w-full">
                     <table class="min-w-full">
                         <thead>
-                        <tr class="border-t border-secondary-200 bg-secondary-50 dark:border-secondary-700 dark:bg-secondary-700">
-                            <x-shopper::tables.table-head>
-                                <span class="lg:pl-2">{{ __('shopper::layout.forms.label.title') }}</span>
-                            </x-shopper::tables.table-head>
-                            <x-shopper::tables.table-head>
-                                {{ __('shopper::layout.forms.label.status') }}
-                            </x-shopper::tables.table-head>
-                            <x-shopper::tables.table-head>
-                                {{ __('shopper::layout.forms.label.website') }}
-                            </x-shopper::tables.table-head>
-                            <x-shopper::tables.table-head class="hidden lg:table-cell text-right">
-                                {{ __('shopper::layout.forms.label.updated_at') }}
-                            </x-shopper::tables.table-head>
-                            <x-shopper::tables.table-head class="pr-6 text-right" />
-                        </tr>
+                            <tr class="border-t border-secondary-200 bg-secondary-50 dark:border-secondary-700 dark:bg-secondary-700">
+                                <x-shopper::tables.table-head>
+                                    <span class="lg:pl-2">{{ __('shopper::layout.forms.label.title') }}</span>
+                                </x-shopper::tables.table-head>
+                                <x-shopper::tables.table-head>
+                                    {{ __('shopper::layout.forms.label.status') }}
+                                </x-shopper::tables.table-head>
+                                <x-shopper::tables.table-head>
+                                    {{ __('shopper::layout.forms.label.website') }}
+                                </x-shopper::tables.table-head>
+                                <x-shopper::tables.table-head class="hidden lg:table-cell text-right">
+                                    {{ __('shopper::layout.forms.label.updated_at') }}
+                                </x-shopper::tables.table-head>
+                                <x-shopper::tables.table-head class="pr-6 text-right" />
+                            </tr>
                         </thead>
                         <tbody class="divide-y divide-secondary-100 dark:divide-secondary-700" x-max="1">
                         @forelse($methods as $method)
@@ -100,14 +100,14 @@
                                         <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $method->is_enabled ? 'bg-green-600': 'bg-secondary-400' }}"></div>
                                         <div class="flex items-center">
                                             @if($method->logo_url)
-                                                <img class="h-8 w-8 rounded object-cover object-center" src="{{ $method->logo_url }}" alt="">
+                                                <img class="h-8 w-8 rounded-md object-cover object-center" src="{{ $method->logo_url }}" alt="">
                                             @else
-                                                <div class="flex items-center justify-center h-8 w-8 bg-secondary-200 rounded dark:bg-secondary-700">
-                                                    <x-heroicon-o-photograph class="w-5 h-5 text-secondary-400 dark:text-secondary-500" />
+                                                <div class="flex items-center justify-center h-8 w-8 bg-secondary-100 rounded-md dark:bg-secondary-800">
+                                                    <x-untitledui-image class="w-5 h-5 text-secondary-400 dark:text-secondary-500" />
                                                 </div>
                                             @endif
                                             <span class="ml-2 truncate">
-                                                <span>{{ $method->title }} </span>
+                                                <span>{{ $method->title }}</span>
                                             </span>
                                         </div>
                                     </div>
@@ -124,36 +124,36 @@
                                     @if($method->link_url)
                                         <a href="{!! starts_with($method->link_url, ['http://', 'https://']) ? $method->link_url : "https://{$method->link_url}" !!}" target="_blank" class="inline-flex items-center text-secondary-500 dark:text-secondary-400 hover:text-secondary-400 dark:hover:text-secondary-300 font-medium text-sm leading-5">
                                             {{ $method->link_url }}
-                                            <svg class="w-5 h-5 -mr-1 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                            </svg>
+                                            <x-untitledui-link-external-01 class="w-5 h-5 ml-2" />
                                         </a>
                                     @else
                                         <span class="inline-flex h-0.5 rounded w-6 bg-secondary-700 dark:bg-secondary-500"></span>
                                     @endif
                                 </td>
                                 <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-secondary-500 text-right dark:text-secondary-400">
-                                    <time datetime="{{ $method->created_at->format('Y-m-d') }}" class="capitalize">{{ $method->created_at->formatLocalized('%d %B, %Y') }}</time>
+                                    <time datetime="{{ $method->created_at->format('Y-m-d') }}" class="capitalize">
+                                        {{ $method->created_at->formatLocalized('%d %B, %Y') }}
+                                    </time>
                                 </td>
                                 <td class="pr-6">
                                     <x-shopper::dropdown customAlignmentClasses="right-12 -bottom-1">
                                         <x-slot name="trigger">
                                             <button id="payment-options-menu-{{ $method->id }}" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-secondary-400 rounded-full bg-transparent hover:text-secondary-500 focus:outline-none focus:text-secondary-500 focus:bg-secondary-100 dark:focus:bg-secondary-700 transition ease-in-out duration-150">
-                                                <x-heroicon-s-dots-vertical class="w-5 h-5" />
+                                                <x-untitledui-dots-vertical class="w-5 h-5" />
                                             </button>
                                         </x-slot>
 
                                         <x-slot name="content">
                                             <div class="py-1">
                                                 <button wire:click="$emit('openModal', 'shopper-modals.update-payment-method', {{ json_encode([$method->id]) }})" wire:key="{{ $method->id }}" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
-                                                    <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
+                                                    <x-untitledui-edit-03 class="mr-2 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
                                                     {{ __('shopper::layout.forms.actions.edit') }}
                                                 </button>
                                             </div>
                                             <div class="border-t border-secondary-100 dark:border-secondary-600"></div>
                                             <div class="py-1">
                                                 <button wire:click="removePayment({{ $method->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
-                                                    <x-heroicon-s-trash class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
+                                                    <x-untitledui-trash-03 class="mr-2 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
                                                     {{ __('shopper::layout.forms.actions.delete') }}
                                                 </button>
                                             </div>
@@ -165,7 +165,7 @@
                             <tr>
                                 <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                                     <div class="flex flex-col justify-center items-center space-y-2 py-6">
-                                        <x-heroicon-o-credit-card class="h-8 w-8 text-primary-500" />
+                                        <x-untitledui-coins-hand class="h-8 w-8 text-primary-500" />
                                         <span class="font-medium text-secondary-400 text-xl">
                                             {{ __('shopper::pages/settings.payment.no_method') }}
                                         </span>

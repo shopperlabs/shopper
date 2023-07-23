@@ -19,7 +19,7 @@
 >
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.products.index')" :current="$product->name">
-            <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
             <x-shopper::breadcrumb.link :link="route('shopper.products.index')" :title="__('shopper::layout.sidebar.products')" />
         </x-shopper::breadcrumb>
     </x-shopper::container>
@@ -36,7 +36,7 @@
                     <div class="flex pt-1 space-x-3">
                     <span class="hidden sm:block">
                         <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode([$product->id, 'type' => 'product']) }})" type="button">
-                            <x-heroicon-s-archive class="w-5 h-5 mr-2 -ml-1" />
+                            <x-untitledui-trash-03 class="w-5 h-5 mr-2 -ml-1" />
                             {{ __('shopper::layout.forms.actions.delete') }}
                         </x-shopper::buttons.danger>
                     </span>

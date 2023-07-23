@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": "^8.1",
-    "blade-ui-kit/blade-heroicons": "^1.2",
+    "mckenziearts/blade-untitledui-icons": "^1.2",
     "illuminate/cache": "^9.0|^10.0",
     "illuminate/container": "^9.0|^10.0",
     "illuminate/contracts": "^9.0|^10.0",

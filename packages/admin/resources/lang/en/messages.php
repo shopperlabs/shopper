@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
 
     'dashboard' => [
-        'welcome_message' => 'Welcome to <span>Shopper</span> Dashboard',
+        'welcome_message' => 'Welcome to Shopper Dashboard',
         'header' => 'Start with the basic for your online store',
         'description' => ' To begin building your new store with Laravel Shopper, we recommend starting with these steps. The framework allows you to create
                            your store and configure it exactly as you want. You can make <span>integrations</span> to go faster if you want.',
@@ -18,8 +18,8 @@ return [
             'screencast_description' => 'Learn how to Learn to build a professional online store from start to finish with complete Shopper video lessons and sample codes to quickly set up your store.',
             'screencast_link' => 'Start watching Shopper',
 
-            'theme_title' => 'Themes',
-            'theme_description' => 'Your store is the website for your products. Get up and running quickly with an available theme, specially created for Shopper. Edit as needed or create your own theme.',
+            'theme_title' => 'Starter Kit',
+            'theme_description' => 'Your store is the website for your products. Get up and running quickly with an available starter kit, specially build for Shopper. Edit as needed or create your own theme.',
             'theme_link' => 'Find a Theme',
 
             'product_title' => 'Add product',

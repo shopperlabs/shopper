@@ -1,12 +1,12 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.products.index')">
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.products.edit', $product)"
             :title="$product->name"
             class="truncate"
         />
-        <x-heroicon-s-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <span class="text-secondary-500 dark:text-secondary-400 truncate">
             {{ $name }}
         </span>
@@ -28,7 +28,7 @@
             </div>
             <div class="hidden sm:block">
                 <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-product', {{ json_encode(['id' => $variant->id, 'type' => 'variant', 'route' => route('shopper.products.edit', $product)]) }})" type="button">
-                    <x-heroicon-o-trash class="w-5 h-5 mr-2 -ml-1" />
+                    <x-untitledui-trash-03 class="w-5 h-5 mr-2 -ml-1" />
                     {{ __('shopper::layout.forms.actions.delete') }}
                 </x-shopper::buttons.danger>
             </div>

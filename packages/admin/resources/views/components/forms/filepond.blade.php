@@ -35,7 +35,7 @@
             @foreach($images as $image)
                 <div class="relative flex flex-col items-center overflow-hidden h-24 text-center bg-secondary-100 border rounded-md select-none dark:bg-secondary-700 dark:border-secondary-700">
                     <button class="absolute top-0 right-0 z-50 p-1 bg-white rounded-bl focus:outline-none dark:bg-secondary-800 text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-300" type="button" wire:click="removeMedia({{ $image->id }})">
-                        <x-heroicon-o-trash class="w-5 h-5" />
+                        <x-untitledui-trash-03 class="w-5 h-5" />
                     </button>
                     <img class="absolute inset-0 z-30 object-cover w-full h-full border-4 border-white dark:border-secondary-800 preview" src="{{ $image->getFullUrl() }}" alt="">
                     <div wire:loading.class.remove="hidden" wire:target="removeMedia({{ $image->id }})" class="hidden absolute h-full w-full items-center justify-center text-center opacity-100 focus-within:opacity-100 inset-0 z-50 bg-secondary-800 bg-opacity-75">

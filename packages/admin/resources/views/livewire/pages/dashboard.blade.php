@@ -1,9 +1,6 @@
 <x-shopper::container>
-    <div class="flex items-center space-x-2">
-        <svg class="h-8 w-8 text-secondary-500 dark:text-secondary-400" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.8 3.6a1.2 1.2 0 1 1 2.4 0v6.6a.6.6 0 1 0 1.2 0V4.8a1.2 1.2 0 1 1 2.4 0v5.4a.6.6 0 1 0 1.2 0v-3a1.2 1.2 0 1 1 2.4 0v6a8.401 8.401 0 0 1-16.16 3.215A8.4 8.4 0 0 1 3.6 13.2v-2.4a1.2 1.2 0 0 1 2.4 0v3a.6.6 0 1 0 1.2 0v-9a1.2 1.2 0 0 1 2.4 0v5.4a.6.6 0 1 0 1.2 0V3.6z" />
-        </svg>
-        <h2 class="welcome text-3xl leading-8 font-bold text-secondary-900 dark:text-white sm:leading-9 sm:truncate">
+    <div class="flex items-center">
+        <h2 class="welcome text-3xl leading-8 font-bold text-secondary-900 dark:text-white sm:leading-9 sm:truncate font-display">
             {!! __('shopper::messages.dashboard.welcome_message') !!}
         </h2>
     </div>
@@ -13,28 +10,28 @@
             <div class="text-xl text-secondary-900 dark:text-white font-medium">
                 {{ __('shopper::messages.dashboard.header') }}
             </div>
-
-            <div class="welcome-description mt-4 text-secondary-500 dark:text-secondary-400">
+            <p class="welcome-description mt-4 text-secondary-500 dark:text-secondary-400">
                 {!! __('shopper::messages.dashboard.description') !!}
-            </div>
+            </p>
         </div>
 
-        <div class="bg-secondary-50 dark:bg-secondary-700 grid grid-cols-1 lg:grid-cols-2">
-            <div class="px-6 py-5">
+        <div class="bg-secondary-50 dark:bg-secondary-800 grid grid-cols-1 lg:grid-cols-2">
+            <div class="p-6 space-y-5">
                 <div class="flex items-center">
-                    <x-heroicon-o-code class="w-6 h-6 text-primary-500" />
-                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
+                    <div class="flex items-center justify-center h-10 w-10 bg-primary-100 dark:bg-primary-800/20 rounded-lg">
+                        <x-untitledui-brackets class="w-5 h-5 text-primary-500" />
+                    </div>
+                    <h4 class="ml-4 text-lg text-secondary-900 dark:text-white leading-6 font-semibold font-display">
                         {{ __('shopper::messages.dashboard.cards.doc_title') }}
                     </h4>
                 </div>
-
-                <div class="ml-10">
-                    <div class="mt-4 text-sm text-secondary-500 dark:text-secondary-300">
+                <div>
+                    <div class="text-sm text-secondary-500 dark:text-secondary-300">
                         {{ __('shopper::messages.dashboard.cards.doc_description') }}
                     </div>
 
                     <a href="https://laravelshopper.dev" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
+                        <div class="mt-5 flex items-center text-sm font-medium text-primary-500">
                             <span>{{ __('shopper::messages.dashboard.cards.doc_link') }}</span>
 
                             <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
@@ -45,21 +42,22 @@
                 </div>
             </div>
 
-            <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600 sm:border-t-0">
+            <div class="p-6 space-y-5 border-t border-secondary-200 dark:border-secondary-600 sm:border-t-0">
                 <div class="flex items-center">
-                    <x-heroicon-o-film class="w-6 h-6 text-primary-500" />
-                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
+                    <div class="flex items-center justify-center h-10 w-10 bg-primary-100 dark:bg-primary-800/20 rounded-lg">
+                        <x-untitledui-video-recorder class="w-5 h-5 text-primary-500" />
+                    </div>
+                    <h4 class="ml-4 text-lg text-secondary-900 dark:text-white leading-6 font-semibold font-display">
                         {{ __('shopper::messages.dashboard.cards.screencast_title') }}
                     </h4>
                 </div>
-
-                <div class="ml-10">
-                    <div class="mt-4 text-sm text-secondary-500 dark:text-secondary-300">
+                <div>
+                    <div class="text-sm text-secondary-500 dark:text-secondary-300">
                         {{ __('shopper::messages.dashboard.cards.screencast_description') }}
                     </div>
 
                     <a href="https://www.youtube.com/channel/UCgxgoKJi3VA1eXxtjIs2tKw" class="group">
-                        <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
+                        <div class="mt-5 flex items-center text-sm font-medium text-primary-500">
                             <span>{{ __('shopper::messages.dashboard.cards.screencast_link') }}</span>
 
                             <span class="ml-1 text-primary-500 transform translate-x-0 group-hover:translate-x-1 transition duration-200 ease-in-out">
@@ -70,33 +68,35 @@
                 </div>
             </div>
 
-            <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600">
+            <div class="p-6 space-y-5 border-t border-secondary-200 dark:border-secondary-600">
                 <div class="flex items-center">
-                    <x-heroicon-o-color-swatch class="w-6 h-6 text-primary-500" />
-                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
+                    <div class="flex items-center justify-center h-10 w-10 bg-primary-100 dark:bg-primary-800/20 rounded-lg">
+                        <x-untitledui-palette class="w-5 h-5 text-primary-500" />
+                    </div>
+                    <h4 class="ml-4 text-lg text-secondary-900 dark:text-white leading-6 font-semibold font-display">
                         {{ __('shopper::messages.dashboard.cards.theme_title') }}
                     </h4>
-                    <span class="ml-1.5 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
+                    <span class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-800/20 dark:text-primary-500">
                       {{ __('shopper::layout.soon') }}
                     </span>
                 </div>
-
-                <div class="ml-10">
-                    <div class="mt-2 text-sm text-secondary-500 dark:text-secondary-300">
+                <div>
+                    <p class="text-sm text-secondary-500 dark:text-secondary-300">
                         {{ __('shopper::messages.dashboard.cards.theme_description') }}
-                    </div>
+                    </p>
                 </div>
             </div>
 
-            <div class="px-6 py-5 border-t border-secondary-200 dark:border-secondary-600">
+            <div class="p-6 space-y-5 border-t border-secondary-200 dark:border-secondary-600">
                 <div class="flex items-center">
-                    <x-heroicon-o-book-open class="w-6 h-6 text-primary-500" />
-                    <h4 class="ml-4 text-base text-secondary-900 dark:text-white leading-6 font-medium">
+                    <div class="flex items-center justify-center h-10 w-10 bg-primary-100 dark:bg-primary-800/20 rounded-lg">
+                        <x-untitledui-file-plus class="w-5 h-5 text-primary-500" />
+                    </div>
+                    <h4 class="ml-4 text-lg text-secondary-900 dark:text-white leading-6 font-semibold font-display">
                         {{ __('shopper::messages.dashboard.cards.product_title') }}
                     </h4>
                 </div>
-
-                <div class="ml-10">
+                <div>
                     <div class="mt-2 text-sm text-secondary-500 dark:text-secondary-300">
                         {{ __('shopper::messages.dashboard.cards.product_description') }}
                     </div>
