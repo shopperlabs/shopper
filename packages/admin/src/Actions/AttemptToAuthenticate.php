@@ -7,7 +7,6 @@ namespace Shopper\Actions;
 use Closure;
 use Illuminate\Validation\ValidationException;
 use Shopper\Facades\Shopper;
-use Symfony\Component\HttpFoundation\Response;
 
 final class AttemptToAuthenticate
 {
