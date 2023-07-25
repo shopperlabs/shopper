@@ -18,6 +18,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property-read bool $is_enabled
  * @property-read bool $is_searchable
  * @property-read bool $is_filterable
+ * @property-read string|null $icon
  */
 class Attribute extends Model
 {
@@ -32,6 +33,7 @@ class Attribute extends Model
         'is_enabled',
         'is_searchable',
         'is_filterable',
+        'icon',
     ];
 
     protected $casts = [
@@ -57,14 +59,14 @@ class Attribute extends Model
     public static function typesFields(): array
     {
         return [
-            'text' => __('Text field :type', ['type' => '(input)']),
-            'number' => __('Text field :type', ['type' => '(number)']),
-            'richtext' => __('Richtext'),
-            'select' => __('Select'),
-            'checkbox' => __('Checkbox'),
-            'radio' => __('Radio'),
-            'colorpicker' => __('Color picker'),
-            'datepicker' => __('Date picker'),
+            'text' => __('shopper::layout.forms.label.text_field', ['type' => '(input)']),
+            'number' => __('shopper::layout.forms.label.text_field', ['type' => '(number)']),
+            'richtext' => __('shopper::layout.forms.label.richtext'),
+            'select' => __('shopper::layout.forms.label.select'),
+            'checkbox' => __('shopper::layout.forms.label.checkbox'),
+            'radio' => __('shopper::layout.forms.label.radio'),
+            'colorpicker' => __('shopper::layout.forms.label.colorpicker'),
+            'datepicker' => __('shopper::layout.forms.label.datepicker'),
         ];
     }
 

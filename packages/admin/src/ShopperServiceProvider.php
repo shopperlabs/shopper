@@ -16,6 +16,7 @@ use Shopper\Contracts\TwoFactorEnabledResponse as TwoFactorEnabledResponseContra
 use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 use Shopper\Core\Shopper;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
+use Shopper\Http\Livewire\Components;
 use Shopper\Http\Livewire\Pages;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
@@ -107,19 +108,23 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         foreach (array_merge(
             config('shopper.components', []),
-            $this->getLivewirePagesComponents()
+            $this->getLivewireComponents()
         ) as $alias => $component) {
             Livewire::component("shopper-$alias", $component);
         }
     }
 
-    protected function getLivewirePagesComponents(): array
+    protected function getLivewireComponents(): array
     {
         return [
             'auth.login' => Pages\Auth\Login::class,
             'auth.password' => Pages\Auth\ForgotPassword::class,
             'auth.password-reset' => Pages\Auth\ResetPassword::class,
             'initialize' => Pages\Initialization::class,
+            'forms.trix' => Components\Forms\Trix::class,
+            'forms.icon-picker' => Components\Forms\IconPicker::class,
+            'forms.uploads.multiple' => Components\Forms\Uploads\Multiple::class,
+            'forms.uploads.single' => Components\Forms\Uploads\Single::class,
         ];
     }
 

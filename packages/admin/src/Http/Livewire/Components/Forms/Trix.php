@@ -7,7 +7,7 @@ namespace Shopper\Http\Livewire\Components\Forms;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class Trix extends Component
+final class Trix extends Component
 {
     public string $trixId;
 
@@ -26,6 +26,6 @@ class Trix extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.forms.trix');
+        return view('shopper::livewire.components.forms.trix');
     }
 }

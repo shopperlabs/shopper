@@ -16,6 +16,8 @@ class Edit extends AbstractBaseComponent implements HasForm
 
     public Attribute $attribute;
 
+    protected $listeners = ['selectedIcon'];
+
     public function mount(Attribute $attribute): void
     {
         $this->attribute = $attribute;
@@ -23,6 +25,7 @@ class Edit extends AbstractBaseComponent implements HasForm
         $this->name = $attribute->name;
         $this->slug = $attribute->slug;
         $this->type = $attribute->type;
+        $this->icon = $attribute->icon;
         $this->description = $attribute->description;
         $this->isEnabled = $attribute->is_enabled;
         $this->isSearchable = $attribute->is_searchable;

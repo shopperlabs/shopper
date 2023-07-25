@@ -121,6 +121,14 @@ return [
             'ga_json' => 'Json Account Credentials',
             'gtag' => 'Your Google Tag Manager account ID',
             'pixel_id' => 'Your Facebook Pixel account ID',
+            'icon' => 'Icon',
+            'text_field' => 'Text field :type',
+            'richtext' => 'Rich text',
+            'select' => 'Select',
+            'checkbox' => 'Checkbox',
+            'radio' => 'Radio',
+            'colorpicker' => 'Color picker',
+            'datepicker' => 'Date picker',
         ],
 
         'placeholder' => [
@@ -136,6 +144,8 @@ return [
             'search_by' => 'Search by :label',
             'leave_comment' => 'Leave notes for this customer',
             'search_payment' => 'Search payment by provider name',
+            'icon_placeholder' => 'Search for an icon',
+            'no_icon' => 'No icon selected',
         ],
 
         'actions' => [

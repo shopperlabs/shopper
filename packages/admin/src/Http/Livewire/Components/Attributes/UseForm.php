@@ -17,6 +17,8 @@ trait UseForm
 
     public string $type = 'text';
 
+    public ?string $icon = null;
+
     public ?string $description = null;
 
     public bool $isEnabled = false;
@@ -43,6 +45,12 @@ trait UseForm
         $this->slug = str_slug($value);
     }
 
+    public function selectedIcon(string $icon): void
+    {
+        dd($icon);
+        $this->icon = $icon;
+    }
+
     public function save(Model|string $model): mixed
     {
         $this->validate($this->rules());
@@ -55,6 +63,7 @@ trait UseForm
             'is_enabled' => $this->isEnabled,
             'is_searchable' => $this->isSearchable,
             'is_filterable' => $this->isFilterable,
+            'icon' => $this->icon,
         ];
 
         return $this->attributeId ? $model->update($values) : $model::query()->create($values);

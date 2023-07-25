@@ -2,10 +2,10 @@
     <div class="sm:col-span-4">
         <x-shopper::card class="p-4 sm:p-5 grid gap-4 sm:grid-cols-2 sm:gap-6">
             <x-shopper::forms.group :label="__('shopper::layout.forms.label.name')" for="name" class="sm:col-span-1" :error="$errors->first('name')" isRequired>
-                <x-shopper::forms.input wire:model="name" id="name" type="text" autocomplete="off" />
+                <x-shopper::forms.input wire:model.lazy="name" id="name" type="text" autocomplete="off" />
             </x-shopper::forms.group>
             <x-shopper::forms.group for="type" :label="__('shopper::layout.forms.label.type')" class="sm:col-span-1">
-                <x-shopper::forms.select wire:model="type" id="type">
+                <x-shopper::forms.select wire:model.defer="type" id="type">
                     @foreach($fields as $key => $field)
                         <option value="{{ $key }}">{{ $field }}</option>
                     @endforeach
@@ -25,7 +25,7 @@
             <div class="sm:col-span-2 flex items-center space-x-4">
                 <div class="relative flex items-start">
                     <div class="flex items-center h-5">
-                        <x-shopper::forms.checkbox wire:model="isSearchable" id="is_searchable" />
+                        <x-shopper::forms.checkbox wire:model.defer="isSearchable" id="is_searchable" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
                         <x-shopper::label for="is_searchable" :value="__('shopper::layout.forms.label.is_searchable')" />
@@ -36,7 +36,7 @@
                 </div>
                 <div class="relative flex items-start">
                     <div class="flex items-center h-5">
-                        <x-shopper::forms.checkbox wire:model="isFilterable" id="is_filterable" />
+                        <x-shopper::forms.checkbox wire:model.defer="isFilterable" id="is_filterable" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
                         <x-shopper::label for="is_filterable" :value="__('shopper::layout.forms.label.is_filterable')" />
@@ -50,10 +50,13 @@
     </div>
     <div class="sm:col-span-2">
         <aside class="sticky top-6 space-y-5">
-            <x-shopper::card class="overflow-hidden divide-y divide-secondary-200 dark:divide-secondary-700">
-                <x-shopper::forms.group :label="__('shopper::layout.forms.label.slug')" for="slug" class="p-4 sm:p-5" :error="$errors->first('slug')" isRequired>
-                    <x-shopper::forms.input wire:model="slug" id="slug" type="text" autocomplete="off" />
-                </x-shopper::forms.group>
+            <x-shopper::card class="divide-y divide-secondary-200 dark:divide-secondary-700">
+                <div class="p-4 sm:p-5 space-y-5">
+                    <x-shopper::forms.group :label="__('shopper::layout.forms.label.slug')" for="slug" :error="$errors->first('slug')" isRequired>
+                        <x-shopper::forms.input wire:model.defer="slug" id="slug" type="text" autocomplete="off" />
+                    </x-shopper::forms.group>
+                    <livewire:shopper-forms.icon-picker :value="$icon" />
+                </div>
                 <div class="p-4 sm:p-5">
                     <div class="relative flex items-start">
                         <div class="flex items-center h-5">

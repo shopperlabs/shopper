@@ -35,6 +35,16 @@ module.exports = {
         danger: colors.red,
         info: colors.sky,
       },
+      animation: {
+        progress: 'progress 2s ease-in-out infinite',
+      },
+      keyframes: {
+        progress: {
+          '0%': { backgroundPosition: '-150% 0,-150% 0' },
+          '66%': { backgroundPosition: '250% 0,-150% 0' },
+          '100%': { backgroundPosition: '250% 0, 250% 0' },
+        },
+      },
       inset: {
         '-0.5': '-0.125rem',
       },
