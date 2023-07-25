@@ -121,6 +121,14 @@ return [
             'ga_json' => 'Références du compte en Json',
             'gtag' => 'ID de compte Google Tag Manager',
             'pixel_id' => 'ID du compte Facebook Pixel',
+            'icon' => 'Icône',
+            'text_field' => 'Champ de texte :type',
+            'richtext' => 'Rich Text',
+            'select' => 'Select',
+            'checkbox' => 'Checkbox',
+            'radio' => 'Radio',
+            'colorpicker' => 'Choix de couleurs',
+            'datepicker' => 'Date',
         ],
 
         'placeholder' => [
@@ -136,6 +144,8 @@ return [
             'search_by' => 'Rechercher par :label',
             'leave_comment' => 'Laisser des notes pour ce client',
             'search_payment' => 'Recherche de paiement par nom de fournisseur',
+            'icon_placeholder' => 'Rechercher une icône',
+            'no_icon' => 'Pas d\'icône sélectionnée',
         ],
 
         'actions' => [

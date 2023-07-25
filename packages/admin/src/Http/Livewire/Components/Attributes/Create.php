@@ -15,6 +15,8 @@ class Create extends AbstractBaseComponent implements HasForm
 
     public string $model = Attribute::class;
 
+    protected $listeners = ['selectedIcon'];
+
     public function store(): void
     {
         $attribute = $this->save($this->model);

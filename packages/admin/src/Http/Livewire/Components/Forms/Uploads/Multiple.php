@@ -10,7 +10,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Multiple extends Component
+final class Multiple extends Component
 {
     use WithFileUploads;
 
@@ -60,6 +60,6 @@ class Multiple extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.forms.uploads.multiple');
+        return view('shopper::livewire.components.forms.uploads.multiple');
     }
 }
