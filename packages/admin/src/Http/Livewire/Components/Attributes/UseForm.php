@@ -47,7 +47,6 @@ trait UseForm
 
     public function selectedIcon(string $icon): void
     {
-        dd($icon);
         $this->icon = $icon;
     }
 
