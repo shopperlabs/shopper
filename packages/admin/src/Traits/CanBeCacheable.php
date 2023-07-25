@@ -61,10 +61,7 @@ trait CanBeCacheable
         if ($value instanceof Closure) {
             return app()->call(
                 $value,
-                array_merge(
-                    isset($this->evaluationIdentifier) ? [$this->evaluationIdentifier => $this] : [],
-                    $parameters,
-                ),
+                array_merge([], $parameters),
             );
         }
 
