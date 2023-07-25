@@ -105,6 +105,6 @@ return [
     'icon-picker' => [
         'cache' => true,
         'duration' => '7 days',
-    ]
+    ],
 
 ];

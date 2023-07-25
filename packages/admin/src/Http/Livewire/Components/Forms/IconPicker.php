@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Forms;
 
 use BladeUI\Icons\Factory as IconFactory;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Livewire\Component;
 use Shopper\Traits\CanBeCacheable;
 use Shopper\Traits\HasCollectionPaginate;
-use Shopper\Traits\HasInfiniteScroll;
 
 final class IconPicker extends Component
 {
@@ -27,7 +24,7 @@ final class IconPicker extends Component
 
     public $perPage = 60;
 
-    public function mount(?string $value = null): void
+    public function mount(string $value = null): void
     {
         $this->value = $value;
     }
@@ -51,7 +48,8 @@ final class IconPicker extends Component
                 $iconsFactory = App::make(IconFactory::class);
 
                 return collect($iconsFactory->all());
-            });
+            }
+        );
 
         $icons = [];
 
