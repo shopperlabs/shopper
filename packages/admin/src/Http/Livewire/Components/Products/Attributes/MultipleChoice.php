@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Http\Livewire\Components\Products\Attributes;
 
 use Illuminate\Contracts\View\View;
