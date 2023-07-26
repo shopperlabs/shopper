@@ -86,10 +86,8 @@
                                     <tr>
                                         <td colspan="4" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium">
                                             <div class="flex flex-col justify-center items-center space-y-2 py-4">
-                                                <svg class="h-8 w-8 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                                </svg>
-                                                <span class="text-xl font-medium text-secondary-500 dark:text-secondary-400">
+                                                <x-untitledui-file-02 class="h-8 w-8 text-primary-500" />
+                                                <span class="text-lg font-medium text-secondary-500 dark:text-secondary-400">
                                                     {{ __('shopper::words.no_values') }}
                                                 </span>
                                             </div>

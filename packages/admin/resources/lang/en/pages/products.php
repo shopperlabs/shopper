@@ -90,7 +90,8 @@ return [
         'title' => 'Product Attributes',
         'description' => 'All the attributes associated with this product.',
         'add' => 'Add attribute',
-        'empty_values' => 'No attribute',
+        'empty_title' => 'No enabled Attributes',
+        'empty_values' => 'The attributes associated with this product are listed here.',
 
         'session' => [
             'delete' => 'Attribute removed',

@@ -32,7 +32,7 @@ class ProductAttribute extends Model
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(config('shopper.models.product'), 'product_id');
     }
 
     public function values(): HasMany

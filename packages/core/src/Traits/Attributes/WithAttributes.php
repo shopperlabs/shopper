@@ -21,9 +21,8 @@ trait WithAttributes
 
     public function getAttributes(): Collection
     {
-        return Attribute::query()
-            ->whereNotIn('id', $this->productAttributes->pluck('attribute_id')->toArray())
-            ->where('is_enabled', true)
+        return Attribute::with('values')
+            ->select(['id', 'name', 'type', 'is_enabled', 'icon', 'description'])
             ->get();
     }
 

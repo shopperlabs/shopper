@@ -7,6 +7,7 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Traits\HasSlug;
 
 /**
@@ -19,6 +20,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property-read bool $is_searchable
  * @property-read bool $is_filterable
  * @property-read string|null $icon
+ * @property-read \Illuminate\Database\Eloquent\Collection|array $values
  */
 class Attribute extends Model
 {
@@ -90,8 +92,32 @@ class Attribute extends Model
         ];
     }
 
+    public function hasMultipleValues(): bool
+    {
+        if (in_array($this->type, ['text', 'number', 'richtext', 'select', 'datepicker', 'radio'])) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isRichText(): bool
+    {
+        return $this->type === 'richtext';
+    }
+
+    public function isSelect(): bool
+    {
+        return $this->type === 'select';
+    }
+
     public function values(): HasMany
     {
         return $this->hasMany(AttributeValue::class);
+    }
+
+    public function products(): MorphToMany
+    {
+        return $this->morphToMany(config('shopper.models.product'), 'productable', 'product_has_relations');
     }
 }

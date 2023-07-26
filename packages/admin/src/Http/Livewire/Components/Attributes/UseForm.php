@@ -56,7 +56,7 @@ trait UseForm
 
         $values = [
             'name' => $this->name,
-            'slug' => $model->slug ?? str_slug($this->name),
+            'slug' => $model->name ?? $this->name,
             'type' => $this->type,
             'description' => $this->description,
             'is_enabled' => $this->isEnabled,

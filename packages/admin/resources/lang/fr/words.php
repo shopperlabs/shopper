@@ -155,4 +155,5 @@ return [
     'display_shortcuts' => 'Afficher les raccourcis',
     'go_to_documentation' => 'Aller à la documentation',
     'search' => 'Rechercher un contenu',
+    'icon_no_result' => 'Aucun résultat pour cette recherche.',
 ];

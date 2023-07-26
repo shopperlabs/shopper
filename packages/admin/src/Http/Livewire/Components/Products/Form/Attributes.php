@@ -25,6 +25,8 @@ class Attributes extends Component
 
     public $productAttributes;
 
+    public array $multipleValues = [];
+
     protected $listeners = ['onProductAttributeAdded'];
 
     public function mount($product): void

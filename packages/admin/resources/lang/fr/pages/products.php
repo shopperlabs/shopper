@@ -91,7 +91,8 @@ return [
         'title' => 'Attributs de produit',
         'description' => 'Tous les attributs associés à ce produit.',
         'add' => 'Ajouter attribut',
-        'empty_values' => 'Aucun attribut',
+        'empty_title' => 'Aucun attribut activé',
+        'empty_values' => 'Les attributs associés a ce produit seront listés ici.',
 
         'session' => [
             'delete' => 'Attribut supprimé',

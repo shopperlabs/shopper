@@ -47,7 +47,7 @@
             </div>
             <div class="max-h-64 overflow-hidden overflow-y-scroll scrolling py-4 px-3 space-y-5">
                 <div class="grid grid-cols-6 gap-x-3 gap-y-4">
-                    @foreach($icons as $icon)
+                    @forelse($icons as $icon)
                         <button
                             type="button"
                             title="{{ $icon }}"
@@ -60,7 +60,14 @@
                         >
                             <x-dynamic-component :component="$icon" class="w-5 h-5" />
                         </button>
-                    @endforeach
+                    @empty
+                        <div class="col-span-6 flex flex-col items-center justify-center py-6 gap-y-2">
+                            <x-untitledui-face-neutral class="h-8 w-8 text-primary-500" stroke-width="1.5" />
+                            <h4 class="text-base font-medium text-secondary-500 dark:text-secondary-400">
+                                {{ __('shopper::words.icon_no_result') }}
+                            </h4>
+                        </div>
+                    @endforelse
                 </div>
                 @if($icons->hasMorePages())
                     <button wire:click.prevent="loadMore" class="inline-flex items-center justify-center w-full text-sm leading-5 text-secondary-500 dark:text-secondary-500">
