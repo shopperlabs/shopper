@@ -36,50 +36,6 @@ if (! function_exists('generate_number')) {
     }
 }
 
-if (! function_exists('setEnvironmentValue')) {
-    function setEnvironmentValue(array $values): bool
-    {
-        $envFile = app()->environmentFilePath();
-        $str = file_get_contents($envFile);
-
-        if (count($values) > 0) {
-            $str .= "\n"; // In case the searched variable is in the last line without \n
-            foreach ($values as $envKey => $envValue) {
-                if (true === $envValue) {
-                    $value = 'true';
-                } elseif (false === $envValue) {
-                    $value = 'false';
-                } else {
-                    $value = $envValue;
-                }
-
-                $envKey = mb_strtoupper($envKey);
-                $keyPosition = mb_strpos($str, "{$envKey}=");
-                $endOfLinePosition = mb_strpos($str, "\n", $keyPosition);
-                $oldLine = mb_substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
-                $space = mb_strpos($value, ' ');
-                $envValue = false === $space ? $value : '"' . $value . '"';
-
-                // If key does not exist, add it
-                if (! $keyPosition || ! $endOfLinePosition || ! $oldLine) {
-                    $str .= "{$envKey}={$envValue}\n";
-                } else {
-                    $str = str_replace($oldLine, "{$envKey}={$envValue}", $str);
-                }
-                env($envKey, $envValue);
-            }
-        }
-
-        $str = mb_substr($str, 0, -1);
-
-        if (! file_put_contents($envFile, $str)) {
-            return false;
-        }
-
-        return true;
-    }
-}
-
 if (! function_exists('shopper_version')) {
     function shopper_version(): string
     {
