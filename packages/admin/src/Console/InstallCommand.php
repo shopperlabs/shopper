@@ -47,7 +47,6 @@ final class InstallCommand extends Command
         $this->progressBar->advance();
 
         $this->setupDatabaseConfig();
-        $this->addEnvVariable();
         $this->call('shopper:link');
         $this->progressBar->advance();
 
@@ -70,17 +69,6 @@ final class InstallCommand extends Command
 
         // Visually slow down the installation process so that the user can read what's happening
         usleep(350000);
-    }
-
-    protected function addEnvVariable(): void
-    {
-        $env = [
-            'SHOPPER_DASHBOARD_PREFIX' => config('shopper.admin.prefix'),
-        ];
-
-        $this->progressBar->advance();
-        setEnvironmentValue($env);
-        $this->info('Add SHOPPER_DASHBOARD_PREFIX to .env file');
     }
 
     protected function completeSetup(): void

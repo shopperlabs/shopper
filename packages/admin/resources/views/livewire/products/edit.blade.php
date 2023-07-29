@@ -24,7 +24,7 @@
         </x-shopper::breadcrumb>
     </x-shopper::container>
 
-    <div class="sticky z-30 mt-5 top-4 sm:top-2 bg-white/75 dark:bg-secondary-900 backdrop-blur-sm">
+    <div class="sticky z-30 mt-5 top-7 bg-white/75 dark:bg-secondary-900 backdrop-blur-sm">
         <div class="space-y-4">
             <x-shopper::container>
                 <div class="space-y-3 lg:flex lg:items-start lg:justify-between lg:space-y-0">

@@ -71,6 +71,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Date Format
+    |--------------------------------------------------------------------------
+    | You can customize this format using dayjs date string constants.
+    | Setting this value to null will use Carbon's default format.
+    |
+    | https://day.js.org/docs/en/display/format
+    |
+    */
+
+    'date_format' => 'LL',
+
+    /*
+    |--------------------------------------------------------------------------
     | Shopper Controllers config
     |--------------------------------------------------------------------------
     |

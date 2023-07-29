@@ -19,6 +19,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property-read bool $is_searchable
  * @property-read bool $is_filterable
  * @property-read string|null $icon
+ * @property-read \Illuminate\Database\Eloquent\Collection|array $values
  */
 class Attribute extends Model
 {
@@ -80,14 +81,19 @@ class Attribute extends Model
         ];
     }
 
-    public static function fieldsWithStringValues(): array
+    public function hasMultipleValues(): bool
     {
-        return [
-            'text',
-            'number',
-            'richtext',
-            'datepicker',
-        ];
+        return in_array($this->type, ['checkbox', 'colorpicker']);
+    }
+
+    public function hasTextValue(): bool
+    {
+        return in_array($this->type, ['text', 'number', 'richtext', 'datepicker']);
+    }
+
+    public function hasSingleValue(): bool
+    {
+        return in_array($this->type, ['radio', 'select']);
     }
 
     public function values(): HasMany

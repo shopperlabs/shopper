@@ -44,14 +44,22 @@ class Analytics extends Component
 
     public function store(): void
     {
-        Artisan::call('config:clear');
-
-        setEnvironmentValue([
+        $data = [
             'analytics_tracking_id' => $this->google_analytics_tracking_id,
             'analytics_view_id' => $this->google_analytics_view_id,
             'google_tag_manager_account_id' => $this->google_tag_manager_account_id,
             'facebook_pixel_account_id' => $this->facebook_pixel_account_id,
-        ]);
+        ];
+
+        Artisan::call('config:clear');
+
+        foreach ($data as $key => $value) {
+            file_put_contents(app()->environmentFilePath(), str_replace(
+                strtoupper($key) . '=' . env($value),
+                strtoupper($key) . '=' . $value,
+                file_get_contents(app()->environmentFilePath())
+            ));
+        }
 
         Setting::query()->updateOrCreate(['key' => 'google_analytics_add_js'], [
             'key' => 'google_analytics_add_js',

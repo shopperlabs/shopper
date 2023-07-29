@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+
     'customer' => 'Customer',
     'product' => 'Product',
     'brand' => 'Brand',
@@ -155,4 +156,7 @@ return [
     'display_shortcuts' => 'Display shortcuts',
     'go_to_documentation' => 'Go to documentation',
     'search' => 'Search content',
+    'icon_no_result' => 'No matching icons found',
+    'selection' => 'Selection',
+
 ];

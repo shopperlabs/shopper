@@ -29,25 +29,10 @@ return new class extends Migration
             $table->unsignedSmallInteger('position')->nullable()->default(1);
             $this->addForeignKey($table, 'attribute_id', $this->getTableName('attributes'), false);
         });
-
-        Schema::create($this->getTableName('product_attributes'), function (Blueprint $table): void {
-            $table->id();
-            $this->addForeignKey($table, 'product_id', $this->getTableName('products'), false);
-            $this->addForeignKey($table, 'attribute_id', $this->getTableName('attributes'), false);
-        });
-
-        Schema::create($this->getTableName('attribute_value_product_attribute'), function (Blueprint $table): void {
-            $table->id();
-            $this->addForeignKey($table, 'attribute_value_id', $this->getTableName('attribute_values'));
-            $this->addForeignKey($table, 'product_attribute_id', $this->getTableName('product_attributes'), false);
-            $table->longText('product_custom_value')->nullable();
-        });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists($this->getTableName('attribute_value_product_attribute'));
-        Schema::dropIfExists($this->getTableName('product_attributes'));
         Schema::dropIfExists($this->getTableName('attribute_values'));
         Schema::dropIfExists($this->getTableName('attributes'));
     }

@@ -77,11 +77,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->registerDatabase();
         $this->registerResponseBindings();
 
-        $this->app->singleton(TwoFactorAuthenticationProviderContract::class, function ($app) {
-            return new TwoFactorAuthenticationProvider(
-                $app->make(Google2FA::class)
-            );
-        });
+        $this->app->singleton(
+            TwoFactorAuthenticationProviderContract::class,
+            fn ($app) => new TwoFactorAuthenticationProvider($app->make(Google2FA::class))
+        );
 
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
 
@@ -125,6 +124,9 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'forms.icon-picker' => Components\Forms\IconPicker::class,
             'forms.uploads.multiple' => Components\Forms\Uploads\Multiple::class,
             'forms.uploads.single' => Components\Forms\Uploads\Single::class,
+            'products.attributes.multiple-choice' => Components\Products\Attributes\MultipleChoice::class,
+            'products.attributes.single-choice' => Components\Products\Attributes\SingleChoice::class,
+            'products.attributes.text' => Components\Products\Attributes\Text::class,
         ];
     }
 
