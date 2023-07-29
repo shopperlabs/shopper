@@ -93,7 +93,6 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'modals.add-product-attribute' => Livewire\Modals\AddProductAttribute::class,
     'modals.add-variant' => Livewire\Modals\AddVariant::class,
     'modals.archived-order' => Livewire\Modals\ArchiveOrder::class,
     'modals.create-payment-method' => Livewire\Modals\CreatePaymentMethod::class,

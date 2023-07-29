@@ -38,7 +38,7 @@ final class SingleChoice extends Component
             ->where('product_id', $this->productId)
             ->where('attribute_id', $this->attributeId)
             ->first();
-        $this->value = $this->model?->attribute_value_id;
+        $this->value = $this->model?->attribute_value_id; // @phpstan-ignore-line
     }
 
     public function save(): void

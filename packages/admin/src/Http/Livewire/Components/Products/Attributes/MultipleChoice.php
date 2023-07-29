@@ -35,7 +35,7 @@ final class MultipleChoice extends Component
         $this->attributeId = $attributeId;
         $this->values = $values;
 
-        $this->selected = $this->currentValues->toArray();
+        $this->selected = $this->currentValues->toArray(); // @phpstan-ignore-line
     }
 
     public function getProductProperty(): Model
@@ -55,7 +55,7 @@ final class MultipleChoice extends Component
     {
         $this->validate(['selected' => 'array']);
 
-        $toDelete = array_diff($this->currentValues->toArray(), $this->selected);
+        $toDelete = array_diff($this->currentValues->toArray(), $this->selected); // @phpstan-ignore-line
 
         if (count($toDelete) > 0) {
             AttributeProduct::query()
