@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Http\Livewire\Components\Products\Attributes;
 
-use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;

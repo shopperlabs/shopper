@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Http\Livewire\Components\Products\Attributes;
 
-use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\AttributeProduct;
 
 final class Text extends Component
