@@ -65,7 +65,7 @@ final class MultipleChoice extends Component
         }
 
         foreach ($this->selected as $value) {
-            if (! $this->currentValues->contains($value)) {
+            if (! $this->currentValues->contains($value)) { // @phpstan-ignore-line
                 AttributeProduct::query()->create([
                     'product_id' => $this->product->id, // @phpstan-ignore-line
                     'attribute_id' => $this->attributeId,
