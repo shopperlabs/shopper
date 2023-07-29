@@ -12,13 +12,14 @@ class ProductAttributeValue extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
-        'product_attribute_id',
+        'attribute_id',
         'attribute_value_id',
-        'product_custom_value',
+        'attribute_custom_value',
+        'product_id',
     ];
+
+    public $timestamps = false;
 
     protected $with = [
         'value',
@@ -33,7 +34,7 @@ class ProductAttributeValue extends Model
         return shopper_table('attribute_value_product_attribute');
     }
 
-    public function getRealValueAttribute()
+    public function getRealValueAttribute(): string
     {
         // @phpstan-ignore-next-line
         if ($this->product_custom_value) {

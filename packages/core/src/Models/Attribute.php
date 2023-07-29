@@ -82,42 +82,23 @@ class Attribute extends Model
         ];
     }
 
-    public static function fieldsWithStringValues(): array
-    {
-        return [
-            'text',
-            'number',
-            'richtext',
-            'datepicker',
-        ];
-    }
-
     public function hasMultipleValues(): bool
     {
-        if (in_array($this->type, ['text', 'number', 'richtext', 'select', 'datepicker', 'radio'])) {
-            return false;
-        }
-
-        return true;
+        return in_array($this->type, ['checkbox', 'colorpicker']);
     }
 
-    public function isRichText(): bool
+    public function hasTextValue(): bool
     {
-        return $this->type === 'richtext';
+        return in_array($this->type, ['text', 'number', 'richtext', 'datepicker']);
     }
 
-    public function isSelect(): bool
+    public function hasSingleValue(): bool
     {
-        return $this->type === 'select';
+        return in_array($this->type, ['radio', 'select']);
     }
 
     public function values(): HasMany
     {
         return $this->hasMany(AttributeValue::class);
-    }
-
-    public function products(): MorphToMany
-    {
-        return $this->morphToMany(config('shopper.models.product'), 'productable', 'product_has_relations');
     }
 }

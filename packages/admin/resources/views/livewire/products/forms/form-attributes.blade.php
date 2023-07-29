@@ -5,7 +5,7 @@
                 <aside class="sticky top-36">
                     <div class="space-y-5 flex flex-col">
                         @foreach($attributes as $attribute)
-                            <a href="{{ route('shopper.attributes.edit', $attribute) }}" class="inline-flex items-center text-sm leading-5 text-secondary-600 hover:text-secondary-900 dark:text-secondary-400 dark:hover:text-white transition duration-200 ease-in-out">
+                            <a href="{{ route('shopper.attributes.edit', $attribute) }}" id="attribute-{{ $attribute->id }}" class="inline-flex items-center text-sm leading-5 text-secondary-600 hover:text-secondary-900 dark:text-secondary-400 dark:hover:text-white transition duration-200 ease-in-out">
                                 @if($attribute->icon)
                                     <x-dynamic-component
                                         :component="$attribute->icon"
@@ -30,7 +30,7 @@
             </div>
             <div class="lg:col-span-6 space-y-10">
                 @foreach($attributes->where('is_enabled', true) as $attribute)
-                    <div>
+                    <div id="attribute-content-{{ $attribute->id }}">
                         <h4 class="inline-flex items-center gap-x-2">
                             @if($attribute->icon)
                                 <x-dynamic-component
@@ -47,9 +47,15 @@
                             <span class="text-secondary-900 dark:text-white font-display font-medium text-base leading-6">
                                 {{ $attribute->name }}
                             </span>
+                            @if($currentAttributes->contains($attribute->id))
+                                <span class="ml-2 inline-flex items-center gap-x-0.5 rounded-full bg-green-50 dark:bg-green-500/10 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20 dark:ring-green-500/20">
+                                    <x-heroicon-s-check-circle class="h-5 w-5" />
+                                    {{ __('shopper::layout.forms.actions.enabled') }}
+                                </span>
+                            @endif
                         </h4>
 
-                        <x-shopper::card class="mt-2 space-y-2 divide-y divide-secondary-200 dark:divide-secondary-700 overflow-hidden">
+                        <x-shopper::card class="mt-2 space-y-2 divide-y divide-secondary-200 dark:divide-secondary-700">
                             @if($attribute->description)
                                 <div class="p-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
                                     {{ $attribute->description }}
@@ -60,6 +66,24 @@
                                 <livewire:shopper-products.attributes.multiple-choice
                                     wire:key="attribute-multiple-{{  $attribute->id }}"
                                     :values="$attribute->values"
+                                    :type="$attribute->type"
+                                    :productId="$product->id"
+                                    :attributeId="$attribute->id"
+                                />
+                            @endif
+
+                            @if($attribute->hasSingleValue())
+                                <livewire:shopper-products.attributes.single-choice
+                                    wire:key="attribute-single-{{  $attribute->id }}"
+                                    :values="$attribute->values"
+                                    :productId="$product->id"
+                                    :attributeId="$attribute->id"
+                                />
+                            @endif
+
+                            @if($attribute->hasTextValue())
+                                <livewire:shopper-products.attributes.text
+                                    wire:key="attribute-text-{{  $attribute->id }}"
                                     :type="$attribute->type"
                                     :productId="$product->id"
                                     :attributeId="$attribute->id"

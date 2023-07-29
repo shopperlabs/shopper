@@ -205,7 +205,7 @@
                     </div>
                     <div class="px-4 py-3">
                         <div class="p-2 space-y-3 overflow-scroll border rounded-md shadow-sm max-h-96 border-secondary-200 hide-scroll dark:border-secondary-700">
-                            @foreach($categories as $category)
+                            @forelse($categories as $category)
                                 <div @if($category->children->isNotEmpty()) x-data="{ display: true }" @endif class="space-y-3">
                                     <div class="relative flex justify-between">
                                         <div class="flex items-start">
@@ -232,7 +232,23 @@
                                         </div>
                                     @endif
                                 </div>
-                            @endforeach
+                            @empty
+                                <div class="text-center py-4">
+                                    <x-untitledui-tag-03 class="mx-auto h-12 w-12 text-secondary-400 dark:text-secondary-500" />
+                                    <h3 class="mt-2 text-sm font-medium text-secondary-900 dark:text-white">
+                                        {{ __('shopper::pages/products.no_category') }}
+                                    </h3>
+                                    <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
+                                        {{ __('shopper::pages/products.no_category_text') }}
+                                    </p>
+                                    <div class="mt-6">
+                                        <x-shopper::buttons.primary :link="route('shopper.categories.create')">
+                                            <x-untitledui-plus class="-ml-1 mr-2 h-5 w-5" />
+                                            {{ __('shopper::pages/products.new_category') }}
+                                        </x-shopper::buttons.primary>
+                                    </div>
+                                </div>
+                            @endforelse
                         </div>
                     </div>
                 </x-shopper::card>

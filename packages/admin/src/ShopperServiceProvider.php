@@ -125,6 +125,8 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'forms.uploads.multiple' => Components\Forms\Uploads\Multiple::class,
             'forms.uploads.single' => Components\Forms\Uploads\Single::class,
             'products.attributes.multiple-choice' => Components\Products\Attributes\MultipleChoice::class,
+            'products.attributes.single-choice' => Components\Products\Attributes\SingleChoice::class,
+            'products.attributes.text' => Components\Products\Attributes\Text::class,
         ];
     }
 

@@ -187,6 +187,7 @@ return [
             'create' => 'Create',
             'upload' => 'Upload',
             'verified' => 'Verified',
+            'apply' => 'Apply',
         ],
 
         'error' => 'Your submission contains errors. Please try again',

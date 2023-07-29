@@ -163,6 +163,6 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
 
     public function attributes(): HasMany
     {
-        return $this->hasMany(ProductAttribute::class);
+        return $this->hasMany(AttributeProduct::class);
     }
 }

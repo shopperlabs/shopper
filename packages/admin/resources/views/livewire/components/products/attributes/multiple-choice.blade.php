@@ -1,4 +1,4 @@
-<div class="overflow-x-auto">
+<div class="overflow-hidden overflow-x-auto">
     <div class="align-middle inline-block min-w-full">
         <table class="min-w-full divide-y divide-secondary-200 dark:divide-secondary-700">
             <thead>
@@ -6,8 +6,14 @@
                     <x-shopper::tables.table-head>
                         <span class="lg:pl-2">{{ __('shopper::layout.forms.label.value') }}</span>
                     </x-shopper::tables.table-head>
-                    <x-shopper::tables.table-head>
-                        {{ __('Selected') }}
+                    <x-shopper::tables.table-head class="flex items-center justify-between">
+                        {{ __('shopper::words.selection') }}
+                        @if(count($selected) > 0 || $this->currentValues->isNotEmpty())
+                            <button wire:click="save" type="button" class="inline-flex items-center gap-x-2 text-xs leading-5 text-primary-500 uppercase tracking-wider hover:text-primary-600 font-medium">
+                                <x-shopper::loader wire:loading wire:target="save" />
+                                {{ __('shopper::layout.forms.actions.apply') }}
+                            </button>
+                        @endif
                     </x-shopper::tables.table-head>
                 </tr>
             </thead>
@@ -29,8 +35,8 @@
                         <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                             <div class="flex items-center h-5">
                                 <x-shopper::forms.checkbox
-                                    wire:model.defer="multipleValues"
-                                    id="value_{{ $value->id }}"
+                                    wire:model.lazy="selected"
+                                    id="attribute_value_{{ $value->id }}"
                                     value="{{ $value->id }}"
                                 />
                             </div>

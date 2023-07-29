@@ -11,7 +11,7 @@
             'shipping': '{{ __('shopper::words.shipping') }}',
             'related': '{{ __('shopper::pages/products.related_products') }}'
         },
-        currentTab: 'attributes',
+        currentTab: 'detail',
         activeTab(tab) {
             return this.currentTab === tab;
         },
