@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Shopper\Core\Models\User as Authenticatable;
 use Shopper\Tests\Database\Factories\UserFactory;
 
-class User extends Authenticatable
+final class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
