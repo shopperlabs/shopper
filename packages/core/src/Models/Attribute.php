@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -94,6 +95,21 @@ class Attribute extends Model
     public function hasSingleValue(): bool
     {
         return in_array($this->type, ['radio', 'select']);
+    }
+
+    public function scopeEnabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
+    }
+
+    public function scopeIsFilterable(Builder $query): Builder
+    {
+        return $query->where('is_filterable', true);
+    }
+
+    public function scopeIsSearchable(Builder $query): Builder
+    {
+        return $query->where('is_searchable', true);
     }
 
     public function values(): HasMany

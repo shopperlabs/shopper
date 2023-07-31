@@ -6,7 +6,7 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Setting extends Model
+final class Setting extends Model
 {
     protected $guarded = [];
 

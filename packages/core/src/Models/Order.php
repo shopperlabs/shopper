@@ -73,20 +73,12 @@ class Order extends Model
 
     public function canBeCancelled(): bool
     {
-        if ($this->status === OrderStatus::COMPLETED->value || $this->status === OrderStatus::PAID->value) {
-            return false;
-        }
-
-        return true;
+        return ! ($this->status === OrderStatus::COMPLETED->value || $this->status === OrderStatus::PAID->value);
     }
 
     public function isNotCancelled(): bool
     {
-        if ($this->status === OrderStatus::CANCELLED->value) {
-            return false;
-        }
-
-        return true;
+        return ! ($this->status === OrderStatus::CANCELLED->value);
     }
 
     public function isPending(): bool
