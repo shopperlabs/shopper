@@ -55,8 +55,8 @@ class Analytics extends Component
 
         foreach ($data as $key => $value) {
             file_put_contents(app()->environmentFilePath(), str_replace(
-                strtoupper($key) . '=' . env($value),
-                strtoupper($key) . '=' . $value,
+                mb_strtoupper($key) . '=' . env($value),
+                mb_strtoupper($key) . '=' . $value,
                 file_get_contents(app()->environmentFilePath())
             ));
         }

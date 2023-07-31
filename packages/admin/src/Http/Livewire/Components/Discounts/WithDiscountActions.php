@@ -12,22 +12,17 @@ trait WithDiscountActions
 {
     public function isEmpty(): bool
     {
-        if (
+        return
             ! $this->code &&
             ! $this->minRequiredValue &&
             ! $this->value &&
-            ! $this->usage_limit
-        ) {
-            return true;
-        }
-
-        return false;
+            ! $this->usage_limit;
     }
 
     public function getProductSize(): string
     {
         if (0 === count($this->selectedProducts)) {
-            return strtolower(__('shopper::layout.sidebar.products'));
+            return mb_strtolower(__('shopper::layout.sidebar.products'));
         }
 
         if (1 === count($this->selectedProducts)) {

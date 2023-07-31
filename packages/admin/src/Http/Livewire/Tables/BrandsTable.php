@@ -60,7 +60,7 @@ class BrandsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.delete'))
-                ->body(__('shopper::components.tables.messages.delete', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]))
+                ->body(__('shopper::components.tables.messages.delete', ['name' => mb_strtolower(__('shopper::layout.forms.label.brand'))]))
                 ->success()
                 ->send();
         }
@@ -83,7 +83,7 @@ class BrandsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('shopper::components.tables.messages.enabled', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]))
+                ->body(__('shopper::components.tables.messages.enabled', ['name' => mb_strtolower(__('shopper::layout.forms.label.brand'))]))
                 ->success()
                 ->send();
         }
@@ -106,7 +106,7 @@ class BrandsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('shopper::components.tables.messages.disabled', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]))
+                ->body(__('shopper::components.tables.messages.disabled', ['name' => mb_strtolower(__('shopper::layout.forms.label.brand'))]))
                 ->success()
                 ->send();
         }

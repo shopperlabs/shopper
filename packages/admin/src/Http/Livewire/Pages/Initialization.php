@@ -75,29 +75,17 @@ final class Initialization extends Component
 
     public function stepOneState(): bool
     {
-        if ($this->shop_email && $this->shop_name && $this->shop_country_id) {
-            return true;
-        }
-
-        return false;
+        return $this->shop_email && $this->shop_name && $this->shop_country_id;
     }
 
     public function stepTwoState(): bool
     {
-        if ($this->shop_street_address && $this->shop_city && $this->shop_zipcode) {
-            return true;
-        }
-
-        return false;
+        return $this->shop_street_address && $this->shop_city && $this->shop_zipcode;
     }
 
     public function stepTreeState(): bool
     {
-        if ($this->shop_facebook_link || $this->shop_instagram_link || $this->shop_twitter_link) {
-            return true;
-        }
-
-        return false;
+        return $this->shop_facebook_link || $this->shop_instagram_link || $this->shop_twitter_link;
     }
 
     public function messages(): array

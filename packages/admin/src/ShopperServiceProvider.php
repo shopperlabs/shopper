@@ -109,7 +109,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
             config('shopper.components', []),
             $this->getLivewireComponents()
         ) as $alias => $component) {
-            Livewire::component("shopper-$alias", $component);
+            Livewire::component("shopper-{$alias}", $component);
         }
     }
 

@@ -83,7 +83,7 @@ class OrdersTable extends DataTableComponent
                 ->filter(fn (Builder $query, $value) => $query->where('price_amount', '>=', $value)),
             'customer' => Views\Filters\TextFilter::make(__('shopper::words.customer'))
                 ->config([
-                    'placeholder' => __('shopper::layout.forms.placeholder.search_by', ['label' => strtolower(__('shopper::layout.forms.label.first_name'))]),
+                    'placeholder' => __('shopper::layout.forms.placeholder.search_by', ['label' => mb_strtolower(__('shopper::layout.forms.label.first_name'))]),
                     'maxlength' => '25',
                 ])
                 ->filter(
@@ -94,7 +94,7 @@ class OrdersTable extends DataTableComponent
                 ),
             'product' => Views\Filters\TextFilter::make(__('shopper::words.product'))
                 ->config([
-                    'placeholder' => __('shopper::layout.forms.placeholder.search_by', ['label' => strtolower(__('shopper::layout.forms.label.name'))]),
+                    'placeholder' => __('shopper::layout.forms.placeholder.search_by', ['label' => mb_strtolower(__('shopper::layout.forms.label.name'))]),
                     'maxlength' => '25',
                 ])
                 ->filter(
