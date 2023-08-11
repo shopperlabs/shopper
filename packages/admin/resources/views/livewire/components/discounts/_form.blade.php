@@ -11,15 +11,15 @@
                 <div class="mt-4 relative rounded-md shadow-sm">
                     <x-shopper::forms.input wire:model.lazy="code" id="code" type="text" placeholder="{{ __('Eg.: NOELCMR900') }}" autocomplete="off" />
                     @error('code')
-                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <svg class="h-5 w-5 text-danger-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                        </svg>
-                    </div>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-danger-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
                     @enderror
                 </div>
                 @error('code')
-                <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
                 @enderror
             </div>
             <p class="mt-2 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     @error('value')
-                    <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
+                        <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
                     @enderror
                 </div>
             </div>
@@ -92,11 +92,11 @@
                 </div>
                 @if($apply === 'products')
                     <div class="mt-4">
-                            <span class="inline-flex rounded-md shadow-sm">
-                                <x-shopper::buttons.default wire:click="$emit('openModal', 'shopper-modals.discount-products', {{ json_encode(['excludeIds' => $selectedProducts]) }})" type="button">
-                                    {{ __('shopper::pages/discounts.select_products') }}
-                                </x-shopper::buttons.default>
-                            </span>
+                        <span class="inline-flex rounded-md shadow-sm">
+                            <x-shopper::buttons.default wire:click="$emit('openModal', 'shopper-modals.discount-products', {{ json_encode(['excludeIds' => $selectedProducts]) }})" type="button">
+                                {{ __('shopper::pages/discounts.select_products') }}
+                            </x-shopper::buttons.default>
+                        </span>
                     </div>
                     @if(count($selectedProducts) > 0)
                         <div class="mt-2 divide-y divide-secondary-100 dark:divide-secondary-700">
@@ -316,8 +316,8 @@
                             :placeholder="__('shopper::pages/discounts.choose_start_date')"
                             wire:model.lazy="dateStart"
                             parse-format="YYYY-MM-DD HH:mm"
+                            display-format="{{ config('shopper.admin.date_time_format') }}"
                             time-format="24"
-                            without-timezone
                         />
                     </div>
                     <div class="sm:col-span-1">
@@ -326,8 +326,8 @@
                             :placeholder="__('shopper::pages/discounts.choose_end_date')"
                             wire:model.lazy="dateEnd"
                             parse-format="YYYY-MM-DD HH:mm"
+                            display-format="{{ config('shopper.admin.date_time_format') }}"
                             time-format="24"
-                            without-timezone
                         />
                     </div>
                 </div>

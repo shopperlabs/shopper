@@ -36,7 +36,7 @@ class CreateValue extends ModalComponent
 
         $this->attribute->values()->create([
             'value' => $this->value,
-            'key' => $this->key,
+            'key' => mb_strtolower($this->key),
         ]);
 
         $this->emit('updateValues');
