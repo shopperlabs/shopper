@@ -31,11 +31,10 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::CANCELLED->value]);
 
-        // TODO dispatch new event
+        event(new \Shopper\Core\Events\Orders\Cancel($this->order));
 
         Notification::make()
-            ->title(__('Cancelled'))
-            ->body(__('This order has been cancelled'))
+            ->body(__('shopper::pages/orders.notifications.cancelled'))
             ->success()
             ->send();
     }
@@ -46,11 +45,10 @@ class Show extends Component
 
         $this->order->update(['notes' => $this->notes]);
 
-        // TODO dispatch new event
+        event(new \Shopper\Core\Events\Orders\AddNote($this->order));
 
         Notification::make()
-            ->title(__('Notes added'))
-            ->body(__('Your note has been added and will be emailed to the user on their order.'))
+            ->body(__('shopper::pages/orders.notifications.note_added'))
             ->success()
             ->send();
     }
@@ -59,11 +57,10 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::REGISTER->value]);
 
-        // TODO dispatch new event
+        event(new \Shopper\Core\Events\Orders\Registered($this->order));
 
         Notification::make()
-            ->title(__('Updated Status'))
-            ->body(__('This order has been marked as register and notification has been sent to the customer by email'))
+            ->body(__('shopper::pages/orders.notifications.registered'))
             ->success()
             ->send();
     }
@@ -72,11 +69,10 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::PAID->value]);
 
-        // TODO dispatch new event
+        event(new \Shopper\Core\Events\Orders\Paid($this->order));
 
         Notification::make()
-            ->title(__('Updated Status'))
-            ->body(__('This order is marked as paid'))
+            ->body(__('shopper::pages/orders.notifications.paid'))
             ->success()
             ->send();
     }
@@ -85,11 +81,10 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::COMPLETED->value]);
 
-        // TODO dispatch new event
+        event(new \Shopper\Core\Events\Orders\Completed($this->order));
 
         Notification::make()
-            ->title(__('Updated Status'))
-            ->body(__('This order is marked as complete'))
+            ->body(__('shopper::pages/orders.notifications.completed'))
             ->success()
             ->send();
     }
@@ -110,7 +105,7 @@ class Show extends Component
                 ->latest('id')
                 ->first() ?? null,
             'billingAddress' => Address::query()
-                ->where('user_id', $this->order->customer->id) // @phpstan-ignore-line
+                ->where('user_id', $this->order->customer->id)
                 ->where('type', Address::TYPE_BILLING)
                 ->where('is_default', true)
                 ->first(),

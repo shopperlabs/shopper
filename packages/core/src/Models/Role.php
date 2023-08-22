@@ -8,10 +8,10 @@ use Spatie\Permission\Models\Role as SpatieRole;
 
 /**
  * @property-read int $id
- * @property-read string $name
- * @property-read string $guard_name
- * @property-read string $display_name
- * @property-read string|null $description
+ * @property string $name
+ * @property string $guard_name
+ * @property string $display_name
+ * @property string|null $description
  */
 final class Role extends SpatieRole
 {

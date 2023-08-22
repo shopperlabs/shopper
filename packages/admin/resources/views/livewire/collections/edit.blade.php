@@ -41,8 +41,8 @@
                         :placeholder="__('shopper::layout.forms.placeholder.pick_a_date')"
                         wire:model="publishedAt"
                         parse-format="YYYY-MM-DD HH:mm"
+                        display-format="{{ config('shopper.admin.date_time_format') }}"
                         time-format="24"
-                        without-timezone
                         class="dark:bg-secondary-700"
                     />
                     @if($publishedAt)

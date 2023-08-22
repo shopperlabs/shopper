@@ -4,7 +4,9 @@
     </button>
     <div class="flex-1 px-4 lg:px-6 flex items-center justify-between">
         <div class="flex-1 flex">
-            <livewire:shopper-search />
+            @if(config('shopper.components.search'))
+                <livewire:shopper-search />
+            @endif
         </div>
         <div class="ml-4 flex items-center lg:ml-6 divide-x divide-secondary-200 dark:divide-secondary-700">
             <div class="flex items-center space-x-4 lg:pr-4">
@@ -32,7 +34,9 @@
                          role="menu"
                     >
                         <ul class="py-1 divide-y divide-secondary-200 dark:divide-secondary-700" role="list">
-                            <x-shopper::shortcut :name="__('shopper::words.global_search')" command="Ctrl" param="K" />
+                            @if(config('shopper.components.search'))
+                                <x-shopper::shortcut :name="__('shopper::words.global_search')" command="Ctrl" param="K" />
+                            @endif
                             <x-shopper::shortcut :name="__('shopper::words.display_shortcuts')" command="Shift" param="F1" />
                             <x-shopper::shortcut :name="__('shopper::words.go_to_documentation')" command="Alt" param="D" />
                         </ul>

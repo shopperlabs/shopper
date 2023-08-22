@@ -56,7 +56,7 @@ class OrdersTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::layout.forms.actions.archived'))
-                ->body(__('The orders has successfully archived!'))
+                ->body(__('shopper::pages/orders.notifications.archived'))
                 ->success()
                 ->send();
         }
@@ -83,7 +83,7 @@ class OrdersTable extends DataTableComponent
                 ->filter(fn (Builder $query, $value) => $query->where('price_amount', '>=', $value)),
             'customer' => Views\Filters\TextFilter::make(__('shopper::words.customer'))
                 ->config([
-                    'placeholder' => __('shopper::layout.forms.placeholder.search_by', ['label' => strtolower(__('shopper::layout.forms.label.first_name'))]),
+                    'placeholder' => __('shopper::layout.forms.placeholder.search_by', ['label' => mb_strtolower(__('shopper::layout.forms.label.first_name'))]),
                     'maxlength' => '25',
                 ])
                 ->filter(
@@ -94,7 +94,7 @@ class OrdersTable extends DataTableComponent
                 ),
             'product' => Views\Filters\TextFilter::make(__('shopper::words.product'))
                 ->config([
-                    'placeholder' => __('shopper::layout.forms.placeholder.search_by', ['label' => strtolower(__('shopper::layout.forms.label.name'))]),
+                    'placeholder' => __('shopper::layout.forms.placeholder.search_by', ['label' => mb_strtolower(__('shopper::layout.forms.label.name'))]),
                     'maxlength' => '25',
                 ])
                 ->filter(

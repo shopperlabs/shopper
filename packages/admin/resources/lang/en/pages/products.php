@@ -68,6 +68,7 @@ return [
         'description' => 'This is where you will see the reviews of your customers and the ratings given to your products.',
         'view' => 'Reviews for :product',
         'published' => 'Published',
+        'pending' => 'Pending',
         'approved' => 'Approved Review',
         'approved_status' => 'Approved status',
         'approved_message' => 'Review approved status updated!',

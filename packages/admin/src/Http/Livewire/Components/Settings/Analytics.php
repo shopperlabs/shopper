@@ -33,6 +33,7 @@ class Analytics extends Component
 
     public function mount(): void
     {
+        /** @var Setting $ga_add_js */
         $ga_add_js = Setting::query()->where('key', 'google_analytics_add_js')->first();
         $this->google_analytics_tracking_id = env('ANALYTICS_TRACKING_ID');
         $this->google_analytics_view_id = env('ANALYTICS_VIEW_ID');
@@ -55,8 +56,8 @@ class Analytics extends Component
 
         foreach ($data as $key => $value) {
             file_put_contents(app()->environmentFilePath(), str_replace(
-                strtoupper($key) . '=' . env($value),
-                strtoupper($key) . '=' . $value,
+                mb_strtoupper($key) . '=' . env($value),
+                mb_strtoupper($key) . '=' . $value,
                 file_get_contents(app()->environmentFilePath())
             ));
         }

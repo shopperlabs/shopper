@@ -21,4 +21,14 @@ return [
         'archived_number' => 'Archived order :number',
         'archived_notice' => 'Are you sure you want to archived this order? This action will change the income you have earned so far in your store.',
     ],
+
+    'notifications' => [
+        'archived' => 'The orders has successfully archived !',
+        'cancelled' => 'The order has successfully cancelled !',
+        'note_added' => 'Your note has been added to this order.',
+        'registered' => 'The order has successfully registered !',
+        'paid' => 'The order is marked as paid !',
+        'completed' => 'The order is marked as completed !',
+    ],
+
 ];

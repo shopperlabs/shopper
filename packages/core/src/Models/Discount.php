@@ -10,17 +10,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property-read int $id
- * @property-read string $code
- * @property-read string $type
- * @property-read string|int $value
- * @property-read string $apply_to
- * @property-read string $eligibility
- * @property-read int $usage_limit
- * @property-read int $total_use
- * @property-read bool $usage_limit_per_user
- * @property-read bool $is_active
- * @property-read \Illuminate\Support\Carbon $start_at
- * @property-read \Illuminate\Support\Carbon|null $end_at
+ * @property string $code
+ * @property string $type
+ * @property string|int $value
+ * @property string $apply_to
+ * @property string $eligibility
+ * @property int $usage_limit
+ * @property int $total_use
+ * @property bool $usage_limit_per_user
+ * @property bool $is_active
+ * @property \Illuminate\Support\Carbon $start_at
+ * @property \Illuminate\Support\Carbon|null $end_at
  */
 class Discount extends Model
 {

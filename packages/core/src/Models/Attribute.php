@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,15 +12,15 @@ use Shopper\Core\Traits\HasSlug;
 
 /**
  * @property-read int $id
- * @property-read string $name
- * @property-read string $slug
- * @property-read string|null $description
- * @property-read string $type
- * @property-read bool $is_enabled
- * @property-read bool $is_searchable
- * @property-read bool $is_filterable
- * @property-read string|null $icon
- * @property-read \Illuminate\Database\Eloquent\Collection|array $values
+ * @property string $name
+ * @property string $slug
+ * @property string|null $description
+ * @property string $type
+ * @property bool $is_enabled
+ * @property bool $is_searchable
+ * @property bool $is_filterable
+ * @property string|null $icon
+ * @property \Illuminate\Database\Eloquent\Collection|array $values
  */
 class Attribute extends Model
 {
@@ -94,6 +95,21 @@ class Attribute extends Model
     public function hasSingleValue(): bool
     {
         return in_array($this->type, ['radio', 'select']);
+    }
+
+    public function scopeEnabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
+    }
+
+    public function scopeIsFilterable(Builder $query): Builder
+    {
+        return $query->where('is_filterable', true);
+    }
+
+    public function scopeIsSearchable(Builder $query): Builder
+    {
+        return $query->where('is_searchable', true);
     }
 
     public function values(): HasMany

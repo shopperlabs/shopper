@@ -12,8 +12,8 @@ use Shopper\Core\Traits\HasSlug;
 
 /**
  * @property-read int $id
- * @property-read string $title
- * @property-read string|null $logo
+ * @property string $title
+ * @property string|null $logo
  * @property string|null $description
  * @property string|null $link_url
  * @property string|null $instructions

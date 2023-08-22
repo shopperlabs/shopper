@@ -23,7 +23,7 @@ if (! function_exists('isoToEmoji')) {
             '',
             array_map(
                 fn (string $letter) => mb_chr(ord($letter) % 32 + 0x1F1E5),
-                str_split($code)
+                mb_str_split($code)
             )
         );
     }

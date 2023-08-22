@@ -22,7 +22,7 @@ final class ForgotPassword extends Component
 
         $response = $this->broker()->sendResetLink(['email' => $this->email]);
 
-        if (Password::RESET_LINK_SENT == $response) {
+        if (Password::RESET_LINK_SENT === $response) {
             session()->flash('success', trans($response));
 
             return;

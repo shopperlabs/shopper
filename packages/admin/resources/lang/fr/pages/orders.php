@@ -21,4 +21,14 @@ return [
         'archived_number' => 'Archivé la commande :number',
         'archived_notice' => 'Êtes-vous sûr de vouloir archiver cette commande ? Cette action modifiera le revenu que vous avez gagné jusqu\'à présent dans votre magasin.',
     ],
+
+    'notifications' => [
+        'archived' => 'La commande a été archivée avec succès !',
+        'cancelled' => 'La commande a été annulée avec succès !',
+        'note_added' => 'Votre note a été ajoutée à cette commande.',
+        'registered' => 'La commande a été enregistrée avec succès !',
+        'paid' => 'La commande est marquée comme payée !',
+        'completed' => 'La commande est marquée comme complète !',
+    ],
+
 ];

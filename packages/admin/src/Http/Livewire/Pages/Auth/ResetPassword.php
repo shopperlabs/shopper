@@ -52,7 +52,7 @@ final class ResetPassword extends Component
             }
         );
 
-        if (Password::PASSWORD_RESET == $response) {
+        if (Password::PASSWORD_RESET === $response) {
             $this->redirectRoute('shopper.dashboard');
         }
 

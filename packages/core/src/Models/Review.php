@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property-read int $id
- * @property-read bool $approved
+ * @property bool $approved
  */
 class Review extends Model
 {

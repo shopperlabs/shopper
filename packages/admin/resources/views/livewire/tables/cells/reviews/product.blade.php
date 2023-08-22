@@ -10,8 +10,8 @@
         @endif
         <span class="ml-2 flex flex-col">
             <span class="group-hover:text-secondary-700 dark:group-hover:text-secondary-300">{{ $row->reviewrateable->name }}</span>
-            <span class="text-xs leading-4 text-secondary-500 dark:text-secondary-400">
-                {{ $row->reviewrateable->formatted_price ?? __('N/A') }}
+            <span class="text-sm text-secondary-500 dark:text-secondary-400">
+                {{ $row->reviewrateable->getPriceAmount()?->formatted ?? __('N/A') }}
             </span>
         </span>
     </a>

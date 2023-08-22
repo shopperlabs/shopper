@@ -17,13 +17,13 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property-read int $id
- * @property-read string|null $first_name
- * @property-read string $last_name
- * @property-read string $email
- * @property-read Carbon|null $email_verified_at
- * @property-read Carbon|null $birth_date
- * @property-read string|null $two_factor_recovery_codes
- * @property-read string|null $two_factor_secret
+ * @property string|null $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property Carbon|null $email_verified_at
+ * @property Carbon|null $birth_date
+ * @property string|null $two_factor_recovery_codes
+ * @property string|null $two_factor_secret
  */
 class User extends Authenticatable
 {

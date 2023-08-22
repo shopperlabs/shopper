@@ -115,7 +115,7 @@ if (! function_exists('shopper_setting')) {
             fn () => Setting::query()->where('key', $key)->first()
         );
 
-        return $setting?->value; // @phpstan-ignore-line
+        return $setting?->value;
     }
 }
 

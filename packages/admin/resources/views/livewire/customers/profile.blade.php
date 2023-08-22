@@ -134,7 +134,13 @@
                             </p>
                             <div x-show="open" style="display: none">
                                 <div class="w-full sm:max-w-xs relative rounded-md shadow-sm">
-                                    <x-datetime-picker :placeholder="__('1970-01-01')" wire:model.defer="birthDate" parse-format="YYYY-MM-DD" :without-time="true" />
+                                    <x-datetime-picker
+                                        placeholder="1970-01-01"
+                                        wire:model.defer="birthDate"
+                                        parse-format="YYYY-MM-DD"
+                                        display-format="{{ config('shopper.admin.date_format') }}"
+                                        :without-time="true"
+                                    />
                                 </div>
                             </div>
                         </div>

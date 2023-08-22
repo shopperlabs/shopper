@@ -1,5 +1,5 @@
 {
-  "name": "shopper/framework",
+  "name": "shopper/shopper",
   "description": "A TALL Laravel e-commerce  admin panel to create and manage online shop.",
   "keywords": ["laravel", "livewire", "admin-panel", "shopper", "e-commerce", "headless", "store", "shop"],
   "license": "MIT",
@@ -34,7 +34,6 @@
     "shopper/core": "self.version",
     "shopper/sidebar": "self.version",
     "spatie/laravel-package-tools": "^1.15",
-    "staudenmeir/laravel-adjacency-list": "^1.0",
     "stevebauman/location": "^6.3.1",
     "wire-elements/modal": "^1.0.0",
     "wireui/wireui": "^1.17.9"

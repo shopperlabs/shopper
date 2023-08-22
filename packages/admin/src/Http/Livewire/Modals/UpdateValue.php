@@ -44,7 +44,7 @@ class UpdateValue extends ModalComponent
 
         AttributeValue::query()
             ->find($this->valueId)
-            ->update(['value' => $this->value, 'key' => $this->key]);
+            ->update(['value' => $this->value, 'key' => mb_strtolower($this->key)]);
 
         $this->emit('updateValues');
 

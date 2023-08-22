@@ -1,5 +1,5 @@
 {
-  "name": "shopper/framework",
+  "name": "shopper/shopper",
   "description": "An e-commerce administration built with Laravel for create and manage online shop.",
   "license": "MIT",
   "keywords": ["e-commerce", "Tallstack", "Store"],
