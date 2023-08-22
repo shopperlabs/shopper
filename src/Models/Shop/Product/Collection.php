@@ -59,7 +59,7 @@ class Collection extends Model implements HasMedia
             ->acceptsMimeTypes(['image/jpg', 'image/jpeg', 'image/png']);
     }
 
-    public function registerMediaConversions(?Media $media = null): void
+    public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb200x200')
             ->fit(Manipulations::FIT_CROP, 200, 200);
