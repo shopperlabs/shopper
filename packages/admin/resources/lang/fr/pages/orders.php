@@ -24,5 +24,11 @@ return [
 
     'notifications' => [
         'archived' => 'La commande a été archivée avec succès !',
+        'cancelled' => 'La commande a été annulée avec succès !',
+        'note_added' => 'Votre note a été ajoutée à cette commande.',
+        'registered' => 'La commande a été enregistrée avec succès !',
+        'paid' => 'La commande est marquée comme payée !',
+        'completed' => 'La commande est marquée comme complète !',
     ],
+
 ];

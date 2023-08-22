@@ -24,6 +24,11 @@ return [
 
     'notifications' => [
         'archived' => 'The orders has successfully archived !',
+        'cancelled' => 'The order has successfully cancelled !',
+        'note_added' => 'Your note has been added to this order.',
+        'registered' => 'The order has successfully registered !',
+        'paid' => 'The order is marked as paid !',
+        'completed' => 'The order is marked as completed !',
     ],
 
 ];
