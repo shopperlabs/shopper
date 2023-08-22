@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Shopper\Core\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
@@ -16,10 +17,10 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 
 /**
  * @property-read int $id
- * @property-read string $name
- * @property-read string $slug
- * @property-read int|null $parent_id
- * @property-read null|self $parent
+ * @property string $name
+ * @property string $slug
+ * @property int|null $parent_id
+ * @property null|self $parent
  */
 class Category extends Model implements SpatieHasMedia
 {
@@ -39,14 +40,11 @@ class Category extends Model implements SpatieHasMedia
         return shopper_table('categories');
     }
 
-    public function scopeEnabled(Builder $query): Builder
+    protected function parentName(): ?Attribute
     {
-        return $query->where('is_enabled', true);
-    }
-
-    public function getParentNameAttribute(): ?string
-    {
-        return $this->parent?->name;
+        return Attribute::make(
+            get: fn () => $this->parent?->name,
+        );
     }
 
     public function getCustomPaths(): array
@@ -58,6 +56,11 @@ class Category extends Model implements SpatieHasMedia
                 'separator' => '/',
             ],
         ];
+    }
+
+    public function scopeEnabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
     }
 
     public function descendantCategories(): HasManyOfDescendants

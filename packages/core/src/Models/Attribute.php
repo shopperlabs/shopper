@@ -12,15 +12,15 @@ use Shopper\Core\Traits\HasSlug;
 
 /**
  * @property-read int $id
- * @property-read string $name
- * @property-read string $slug
- * @property-read string|null $description
- * @property-read string $type
- * @property-read bool $is_enabled
- * @property-read bool $is_searchable
- * @property-read bool $is_filterable
- * @property-read string|null $icon
- * @property-read \Illuminate\Database\Eloquent\Collection|array $values
+ * @property string $name
+ * @property string $slug
+ * @property string|null $description
+ * @property string $type
+ * @property bool $is_enabled
+ * @property bool $is_searchable
+ * @property bool $is_filterable
+ * @property string|null $icon
+ * @property \Illuminate\Database\Eloquent\Collection|array $values
  */
 class Attribute extends Model
 {

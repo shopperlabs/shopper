@@ -11,16 +11,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property-read int $id
- * @property-read int $country_id
- * @property-read string $name
- * @property-read string $email
- * @property-read string $city
- * @property-read string|null $description
- * @property-read string|null $street_address
- * @property-read string|null $street_address_plus
- * @property-read string|null $zipcode
- * @property-read string|null $phone_number
- * @property-read bool $is_default
+ * @property int $country_id
+ * @property string $name
+ * @property string $email
+ * @property string $city
+ * @property string|null $description
+ * @property string|null $street_address
+ * @property string|null $street_address_plus
+ * @property string|null $zipcode
+ * @property string|null $phone_number
+ * @property bool $is_default
  */
 class Inventory extends Model
 {

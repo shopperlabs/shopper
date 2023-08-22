@@ -15,10 +15,10 @@ use Shopper\Core\Traits\HasPrice;
 
 /**
  * @property-read int $id
- * @property-read \App\Models\User $customer
- * @property-read \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
- * @property-read string $status
- * @property-read int $shipping_total
+ * @property \Shopper\Core\Models\User $customer
+ * @property \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
+ * @property string $status
+ * @property int $shipping_total
  */
 class Order extends Model
 {
