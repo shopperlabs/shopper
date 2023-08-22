@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Framework\Models\Traits\HasSlug;
-use Illuminate\Database\Eloquent\Builder;
 
 class Attribute extends Model
 {

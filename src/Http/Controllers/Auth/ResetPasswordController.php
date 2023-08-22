@@ -23,7 +23,7 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    public function showResetForm(Request $request, ?string $token = null): View
+    public function showResetForm(Request $request, string $token = null): View
     {
         return view('shopper::auth.passwords.reset-password')->with(
             ['token' => $token, 'email' => $request->email]

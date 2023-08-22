@@ -49,7 +49,7 @@ class Browse extends Component
     /**
      * Confirmation modal.
      */
-    public function confirmationEnable(string $provider, ?string $message = null): void
+    public function confirmationEnable(string $provider, string $message = null): void
     {
         $this->currentProvider = $provider;
         $this->confirmModalActivation = true;

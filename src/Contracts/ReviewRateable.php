@@ -35,9 +35,9 @@ interface ReviewRateable
 
     public function ratingPercent(int $max = 5): float;
 
-    public function rating(array $data, Model $author, ?Model $parent = null);
+    public function rating(array $data, Model $author, Model $parent = null);
 
-    public function updateRating(int $id, array $data, ?Model $parent = null);
+    public function updateRating(int $id, array $data, Model $parent = null);
 
     public function getAllRatings(int $id, string $sort = 'desc');
 
