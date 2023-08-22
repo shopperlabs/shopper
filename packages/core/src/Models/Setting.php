@@ -6,6 +6,12 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property-read int $id
+ * @property string $key
+ * @property string $display_name
+ * @property mixed $value
+ */
 final class Setting extends Model
 {
     protected $guarded = [];
