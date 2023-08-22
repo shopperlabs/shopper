@@ -110,7 +110,7 @@
   },
   "replace": {
     "shopper/core": "self.version",
-    "shopper/framework": "self.version",
+    "shopper/shopper": "self.version",
     "shopper/sidebar": "self.version"
   },
   "minimum-stability": "dev",
