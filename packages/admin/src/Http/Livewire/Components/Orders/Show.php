@@ -105,7 +105,7 @@ class Show extends Component
                 ->latest('id')
                 ->first() ?? null,
             'billingAddress' => Address::query()
-                ->where('user_id', $this->order->customer->id) // @phpstan-ignore-line
+                ->where('user_id', $this->order->customer->id)
                 ->where('type', Address::TYPE_BILLING)
                 ->where('is_default', true)
                 ->first(),

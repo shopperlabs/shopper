@@ -36,7 +36,7 @@ class Analytics extends Component
         $ga_add_js = Setting::query()->where('key', 'google_analytics_add_js')->first();
         $this->google_analytics_tracking_id = env('ANALYTICS_TRACKING_ID');
         $this->google_analytics_view_id = env('ANALYTICS_VIEW_ID');
-        $this->google_analytics_add_js = $ga_add_js->value ?? null;
+        $this->google_analytics_add_js = $ga_add_js->value ?? null; // @phpstan-ignore-line
         $this->google_tag_manager_account_id = env('GOOGLE_TAG_MANAGER_ACCOUNT_ID');
         $this->facebook_pixel_account_id = env('FACEBOOK_PIXEL_ACCOUNT_ID');
         $this->credentials_json = File::exists(storage_path('app/analytics/service-account-credentials.json'));

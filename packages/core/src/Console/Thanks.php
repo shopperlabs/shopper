@@ -20,7 +20,7 @@ final class Thanks
         '  - Tweet something about Shopper on Twitter:',
         '    <options=bold>https://twitter.com/laravelshopper</>',
         '  - Sponsor the creator:',
-        '    <options=bold>https://opencollective.com/shopperlabs</>',
+        '    <options=bold>https://github.com/sponsors/mckenziearts</>',
     ];
 
     public function __construct(private readonly OutputInterface $output)
