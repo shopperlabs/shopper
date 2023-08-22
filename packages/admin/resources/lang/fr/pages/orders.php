@@ -21,4 +21,8 @@ return [
         'archived_number' => 'Archivé la commande :number',
         'archived_notice' => 'Êtes-vous sûr de vouloir archiver cette commande ? Cette action modifiera le revenu que vous avez gagné jusqu\'à présent dans votre magasin.',
     ],
+
+    'notifications' => [
+        'archived' => 'La commande a été archivée avec succès !',
+    ],
 ];

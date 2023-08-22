@@ -1,4 +1,4 @@
-<div>
+<x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.reviews.index')" :current="$review->reviewrateable->name">
         <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" :title="__('shopper::layout.sidebar.reviews')" />
@@ -10,13 +10,13 @@
         </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-6 bg-white shadow rounded-lg overflow-hidden p-4 sm:p-5 dark:bg-secondary-800">
+    <div class="mt-8">
         <div class="flex items-center justify-between">
             <div class="space-y-">
                 <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
                     {{ __('shopper::pages/products.reviews.review') }}
                 </h3>
-                <p class="max-w-2xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                <p class="max-w-2xl text-base text-secondary-500 dark:text-secondary-400">
                     {{ __('shopper::pages/products.reviews.subtitle') }}
                 </p>
             </div>
@@ -100,7 +100,7 @@
                                     <div class="text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                                         {{ $review->author->full_name }}
                                     </div>
-                                    <div class="text-xs leading-4 text-secondary-500 truncate dark:text-secondary-400">
+                                    <div class="text-sm leading-4 text-secondary-500 truncate dark:text-secondary-400">
                                         {{ $review->author->email }}
                                     </div>
                                 </div>
@@ -151,4 +151,4 @@
             </dl>
         </div>
     </div>
-</div>
+</x-shopper::container>

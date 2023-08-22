@@ -56,7 +56,7 @@ class OrdersTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::layout.forms.actions.archived'))
-                ->body(__('The orders has successfully archived!'))
+                ->body(__('shopper::pages/orders.notifications.archived'))
                 ->success()
                 ->send();
         }

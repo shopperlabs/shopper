@@ -13,14 +13,12 @@
                     </h3>
                     <div class="p-1 flex items-center divide-x-2 divide-secondary-200 dark:divide-secondary-700">
                         <div class="flex items-center space-x-2 pr-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 border-2 rounded-full text-xs font-medium {{ $order->status->badge() }}">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $order->status->badge() }}">
                                 {{ $order->status->translateValue() }}
                             </span>
                         </div>
                         <div class="flex items-center px-4">
-                            <svg class="h-5 w-5 mr-1.5 text-secondary-500 dark:text-secondary-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-                            </svg>
+                            <x-untitledui-calendar class="h-5 w-5 mr-1.5 text-secondary-500 dark:text-secondary-400" />
                             <span class="text-secondary-700 font-medium text-sm leading-6 dark:text-secondary-300">
                                 <time datetime="{{ $order->created_at->format('F j, Y h:m') }}">
                                     {{ $order->created_at->formatLocalized('%d %B %G - %H:%M') }}
@@ -51,6 +49,7 @@
                             <x-slot name="content">
                                 <div class="py-1">
                                     @if($order->isPending())
+
                                         <x-shopper::dropdown-button wire:click="register" role="menuitem">
                                             {{ __('shopper::status.registered') }}
                                         </x-shopper::dropdown-button>
@@ -123,10 +122,10 @@
                         {{ __('shopper::layout.sidebar.products') }}
                     </h3>
                     <div class="flex items-center space-x-3">
-                        <span class="text-sm font-medium text-secondary-500 dark:text-secondary-400">
+                        <span class="text-sm font-medium text-secondary-500 dark:text-secondary-400 whitespace-nowrap">
                             {{ __('shopper::words.per_page') }}
                         </span>
-                        <x-shopper::forms.select wire:model="perPage" class="w-20" aria-label="{{ __('shopper::words.per_page_items') }}">
+                        <x-shopper::forms.select wire:model="perPage" class="!w-20" aria-label="{{ __('shopper::words.per_page_items') }}">
                             <option value="3">3</option>
                             <option value="5">5</option>
                             <option value="10">10</option>
@@ -175,7 +174,7 @@
                 </div>
                 <div class="mt-3 flex justify-end">
                     <div class="w-full sm:max-w-lg space-y-1 text-right">
-                        <div class="bg-secondary-200 rounded-md p-4 text-secondary-700 dark:text-secondary-300 dark:bg-secondary-800">
+                        <div class="bg-secondary-100 rounded-md p-4 text-secondary-700 dark:text-secondary-300 dark:bg-secondary-800">
                             <span class="text-base leading-6 font-semibold text-secondary-900 dark:text-white">
                                 {{ __('shopper::words.subtotal') }}
                             </span>
@@ -265,7 +264,7 @@
             <div class="py-4 sm:pr-8">
                 <div class="flex justify-end">
                     <div class="w-full sm:max-w-sm space-y-1 text-right text-secondary-700 dark:text-secondary-300">
-                        <div class="bg-secondary-200 rounded-md p-4 dark:bg-secondary-800">
+                        <div class="bg-secondary-100 rounded-md p-4 dark:bg-secondary-800">
                             <span class="text-base leading-6 font-semibold text-secondary-900 dark:text-white">
                                 {{ __('shopper::words.total') }}
                             </span>
@@ -327,7 +326,7 @@
                             <div>
                                 <label for="comment" class="sr-only">{{ __('shopper::layout.forms.label.comment') }}</label>
                                 <x-shopper::forms.textarea
-                                    wire:model.lazy="notes"
+                                    wire:model.defer="notes"
                                     id="comment"
                                     :placeholder="__('shopper::layout.forms.placeholder.leave_comment')"
                                     :value="$order->notes"

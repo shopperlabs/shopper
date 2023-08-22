@@ -21,4 +21,9 @@ return [
         'archived_number' => 'Archived order :number',
         'archived_notice' => 'Are you sure you want to archived this order? This action will change the income you have earned so far in your store.',
     ],
+
+    'notifications' => [
+        'archived' => 'The orders has successfully archived !',
+    ],
+
 ];
