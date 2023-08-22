@@ -1,6 +1,6 @@
 <x-shopper::layouts.app :title="$title ?? null">
     <x-slot name="subHeading">
-        <div class="sticky top-16 lg:top-[4.425rem] z-10 border-t border-b border-secondary-200 lg:border-t-0 dark:border-secondary-700 bg-white/80 dark:bg-secondary-800/80 backdrop-filter backdrop-blur-md">
+        <div class="sticky top-16 lg:top-[3.8rem] z-10 border-t border-b border-secondary-200 lg:border-t-0 dark:border-secondary-700 bg-white/80 dark:bg-secondary-800/80 backdrop-filter backdrop-blur-md">
             <div x-data="{
                     displayLeftArrow: false,
                     displayRightArrow: true,
