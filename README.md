@@ -72,7 +72,6 @@ We send an email about 3-4 emails per year. Sometimes less.
 
 - [Arthur Monney][link-author]
 - [Jean-Vincent QUILICHINI][link-author-2]
-- [MailEclipse](https://github.com/Qoraiche/laravel-mail-editor)
 - [All Contributors][link-contributors]
 
 And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
