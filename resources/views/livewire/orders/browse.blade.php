@@ -3,16 +3,16 @@
 @endpush
 
 <div>
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Orders') }}
+            {{ __('shopper::layout.sidebar.orders') }}
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
-            :title="__('Manage customers orders')"
-            :content="__('When customers place orders, this is where all the processing will be done, the management of refunds and the tracking of their order.')"
+        <x-shopper::empty-state
+            :title="__('shopper::pages/orders.title')"
+            :content="__('shopper::pages/orders.content')"
             permission="add_orders"
             class="lg:pb-0"
         >
@@ -113,14 +113,14 @@
                     </g>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6">
             <livewire:shopper-tables.orders-table />
         </div>
     @endif
 
-    <x-shopper-learn-more name="orders" link="https://docs.laravelshopper.io/docs/orders" />
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.orders')" link="orders" />
 </div>
 
 @push('scripts')

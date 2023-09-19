@@ -1,20 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Services\Mailable;
-use WireUi\Traits\Actions;
 
 class CreateMailable extends ModalComponent
 {
-    use Actions;
-
     public string $name = '';
+
     public ?string $markdownView = null;
+
     public bool $isMarkdown = false;
+
     public bool $isForce = false;
 
     public static function modalMaxWidth(): string
@@ -22,7 +26,7 @@ class CreateMailable extends ModalComponent
         return 'lg';
     }
 
-    public function generateMailable()
+    public function generateMailable(): void
     {
         $this->validate(['name' => 'required']);
 
@@ -60,7 +64,11 @@ class CreateMailable extends ModalComponent
         $exitCode = Artisan::call('make:mail', $params->all());
 
         if ($exitCode > -1) {
-            $this->notification()->success(__('Mailable Created'), __('You Mailable class has been created under the app/Mail folder on your project!'));
+            Notification::make()
+                ->title(__('Mailable Created'))
+                ->body(__('You Mailable class has been created under the app/Mail folder on your project!'))
+                ->success()
+                ->send();
 
             $this->emit('onMailableAction');
 
@@ -68,7 +76,7 @@ class CreateMailable extends ModalComponent
         }
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.create-mailable');
     }

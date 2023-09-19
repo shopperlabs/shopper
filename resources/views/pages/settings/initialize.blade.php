@@ -39,7 +39,7 @@
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="shrink-0 flex items-center">
-                            <x-shopper-application-logo class="w-auto h-9" />
+                            <x-shopper::application-logo class="w-auto h-9" />
                         </div>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:items-center">

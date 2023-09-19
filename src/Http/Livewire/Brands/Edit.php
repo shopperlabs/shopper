@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Brands;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Traits\WithSeoAttributes;
@@ -11,11 +14,17 @@ class Edit extends AbstractBaseComponent
     use WithSeoAttributes;
 
     public $brand;
+
     public int $brand_id;
+
     public string $name;
+
     public ?string $website = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = false;
+
     public ?string $fileUrl = null;
 
     public $seoAttributes = [
@@ -28,20 +37,17 @@ class Edit extends AbstractBaseComponent
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
 
-    /**
-     * Component mount instance.
-     */
-    public function mount($brand)
+    public function mount($brand): void
     {
         $this->brand = $brand;
         $this->brand_id = $brand->id;
@@ -50,15 +56,10 @@ class Edit extends AbstractBaseComponent
         $this->description = $brand->description;
         $this->is_enabled = $brand->is_enabled;
         $this->updateSeo = true;
-        $this->seoTitle = $brand->seo_title;
+        $this->seoTitle = $brand->seo_title ?? $brand->name;
         $this->seoDescription = $brand->seo_description;
     }
 
-    /**
-     * Define is the current action is create or update for the SEO Trait.
-     *
-     * @return false
-     */
     public function isUpdate(): bool
     {
         return true;
@@ -98,7 +99,7 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.brands.edit');
     }

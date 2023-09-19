@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Requests;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
@@ -23,17 +25,11 @@ class TwoFactorLoginRequest extends FormRequest
      */
     protected $remember;
 
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     */
     public function rules(): array
     {
         return [
@@ -101,9 +97,6 @@ class TwoFactorLoginRequest extends FormRequest
         return $this->challengedUser = $user;
     }
 
-    /**
-     * Determine if the user wanted to be remembered after login.
-     */
     public function remember(): bool
     {
         if (! $this->remember) {

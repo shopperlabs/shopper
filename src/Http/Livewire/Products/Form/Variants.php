@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
@@ -11,25 +15,25 @@ use Shopper\Framework\Events\Products\ProductRemoved;
 use Shopper\Framework\Http\Livewire\Products\WithAttributes;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
-use WireUi\Traits\Actions;
 
 class Variants extends Component
 {
-    use Actions,
-        WithPagination,
-        WithFileUploads,
-        WithAttributes,
-        WithUploadProcess;
+    use WithPagination;
+    use WithFileUploads;
+    use WithAttributes;
+    use WithUploadProcess;
 
     public string $search = '';
+
     public Model $product;
+
     public $quantity;
 
     public string $currency;
 
     protected $listeners = ['onVariantAdded' => 'render'];
 
-    public function mount($product, string $currency)
+    public function mount($product, string $currency): void
     {
         $this->product = $product;
         $this->currency = $currency;
@@ -40,7 +44,7 @@ class Variants extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function remove(int $id)
+    public function remove(int $id): void
     {
         $product = (new ProductRepository())->getById($id);
 
@@ -50,10 +54,14 @@ class Variants extends Component
 
         $this->dispatchBrowserEvent('item-removed');
 
-        $this->notification()->success(__('Deleted'), __('The variation has successfully removed!'));
+        Notification::make()
+            ->title(__('shopper::layout.status.delete'))
+            ->body(__('shopper::pages/products.notifications.variation_delete'))
+            ->success()
+            ->send();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-variants', [
             'variants' => (new ProductRepository())

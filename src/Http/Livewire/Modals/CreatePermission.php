@@ -1,28 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\User\Permission;
 use Shopper\Framework\Models\User\Role;
-use WireUi\Traits\Actions;
 
 class CreatePermission extends ModalComponent
 {
-    use Actions;
-
     public int $roleId;
+
     public string $name = '';
+
     public string $display_name = '';
+
     public string $description = '';
+
     public ?string $group = null;
 
-    public function mount(int $id)
+    public function mount(int $id): void
     {
         $this->roleId = $id;
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate([
             'name' => 'required|max:50|unique:permissions,name',
@@ -40,7 +45,11 @@ class CreatePermission extends ModalComponent
 
         $this->dispatchBrowserEvent('permission-added');
 
-        $this->notification()->success(__('Saved'), __('A new permission has been create and add to this role!'));
+        Notification::make()
+            ->title(__('Saved'))
+            ->body(__('A new permission has been create and add to this role!'))
+            ->success()
+            ->send();
 
         $this->emit('permissionAdded', $this->roleId);
 
@@ -52,7 +61,7 @@ class CreatePermission extends ModalComponent
         return 'lg';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.create-permission', [
             'groups' => Permission::groups(),

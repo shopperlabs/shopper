@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Events\Handlers;
 
 use Maatwebsite\Sidebar\Group;
@@ -9,21 +11,18 @@ use Shopper\Framework\Sidebar\AbstractAdminSidebar;
 
 class RegisterDashboardSidebar extends AbstractAdminSidebar
 {
-    /**
-     * Method used to define your sidebar menu groups and items.
-     */
     public function extendWith(Menu $menu): Menu
     {
-        $menu->group(__(''), function (Group $group) {
+        $menu->group('', function (Group $group) {
             $group->weight(1);
-            $group->authorize(true);
+            $group->authorize();
 
-            $group->item(__('Dashboard'), function (Item $item) {
+            $group->item(__('shopper::layout.sidebar.dashboard'), function (Item $item) {
                 $item->weight(1);
                 $item->route('shopper.dashboard');
                 $item->icon('
-                    <svg class="flex-shrink-0 -ml-1 mr-3 h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    <svg class="shrink-0 -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
                 ');
             });

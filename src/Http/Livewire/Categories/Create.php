@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Categories;
 
+use Illuminate\Contracts\View\View;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithChoicesCategories;
@@ -9,13 +12,19 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
-    use WithChoicesCategories, WithSeoAttributes;
+    use WithChoicesCategories;
+    use WithSeoAttributes;
 
     public string $name = '';
+
     public ?int $parent_id = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = true;
+
     public ?string $fileUrl = null;
+
     public $parent;
 
     public $seoAttributes = [
@@ -28,12 +37,12 @@ class Create extends AbstractBaseComponent
         'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
@@ -66,7 +75,7 @@ class Create extends AbstractBaseComponent
         return ['name' => 'required|max:150'];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.categories.create', [
             'categories' => (new CategoryRepository())

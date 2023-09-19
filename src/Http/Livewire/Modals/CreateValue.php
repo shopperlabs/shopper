@@ -1,21 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
-use WireUi\Traits\Actions;
 
 class CreateValue extends ModalComponent
 {
-    use Actions;
-
     public Attribute $attribute;
+
     public string $type = 'select';
+
     public string $value = '';
+
     public string $key = '';
 
-    public function mount(int $attributeId)
+    public function mount(int $attributeId): void
     {
         $this->attribute = $attribute = Attribute::find($attributeId);
         $this->type = $attribute->type;
@@ -26,7 +30,7 @@ class CreateValue extends ModalComponent
         return 'lg';
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate($this->rules());
 
@@ -37,7 +41,11 @@ class CreateValue extends ModalComponent
 
         $this->emit('updateValues');
 
-        $this->notification()->success(__('Added'), __('New value added for :name', ['name' => $this->attribute->name]));
+        Notification::make()
+            ->title(__('shopper::layout.status.added'))
+            ->body(__('New value added for :name', ['name' => $this->attribute->name]))
+            ->success()
+            ->send();
 
         $this->closeModal();
     }
@@ -50,7 +58,7 @@ class CreateValue extends ModalComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.create-value');
     }

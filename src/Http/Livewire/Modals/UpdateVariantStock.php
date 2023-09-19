@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\WithPagination;
 use LivewireUI\Modal\ModalComponent;
@@ -17,7 +20,7 @@ class UpdateVariantStock extends ModalComponent
 
     public Model $product;
 
-    public function mount(int $id)
+    public function mount(int $id): void
     {
         $this->product = $variant = (new ProductRepository())->getById($id);
         $this->stock = $variant->stock;
@@ -26,7 +29,7 @@ class UpdateVariantStock extends ModalComponent
 
     public static function modalMaxWidth(): string
     {
-        return '3xl';
+        return '4xl';
     }
 
     public function paginationView(): string
@@ -34,7 +37,7 @@ class UpdateVariantStock extends ModalComponent
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.update-variant-stock', [
             'currentStock' => (new InventoryHistoryRepository())

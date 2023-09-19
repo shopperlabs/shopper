@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Discounts;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,7 +15,9 @@ class Browse extends Component
     use WithPagination;
 
     public string $search = '';
+
     public ?string $isActive = null;
+
     public ?string $date = null;
 
     public function paginationView(): string
@@ -20,12 +25,12 @@ class Browse extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function resetActiveFilter()
+    public function resetActiveFilter(): void
     {
         $this->isActive = null;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.discounts.browse', [
             'total' => Discount::query()->count(),

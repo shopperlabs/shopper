@@ -1,42 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
-use WireUi\Traits\Actions;
+use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Traits\WithAttributes;
 
 class AddProductAttribute extends ModalComponent
 {
-    use Actions;
+    use WithAttributes;
 
-    public int $productId;
+    public $product;
+
     public string $type = 'text';
-    public array $attributes;
+
     public ?int $attribute_id = null;
+
     public array $multipleValues = [];
+
+    public Collection $attributes;
+
     public Collection $values;
+
+    public Collection $productAttributes;
+
     public ?string $value = null;
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->value = $value;
     }
 
-    public function mount(int $productId, array $attributes)
+    public function mount(int $productId): void
     {
-        $this->productId = $productId;
-        $this->attributes = $attributes;
+        $this->product = (new ProductRepository())->getById($productId);
+        $this->productAttributes = $this->getProductAttributes();
+        $this->attributes = $this->getAttributes();
     }
 
-    public function save()
+    public function save(): void
     {
         if ($this->type === 'checkbox' || $this->type === 'colorpicker') {
             $this->validate(['multipleValues' => 'required|array']);
@@ -45,7 +59,7 @@ class AddProductAttribute extends ModalComponent
         }
 
         $productAttribute = ProductAttribute::query()->create([
-            'product_id' => $this->productId,
+            'product_id' => $this->product->id,
             'attribute_id' => $this->attribute_id,
         ]);
 
@@ -68,14 +82,18 @@ class AddProductAttribute extends ModalComponent
             ]);
         }
 
-        $this->notification()->success(__('Attribute Added'), __('You have successfully added an attribute to this product!'));
+        Notification::make()
+            ->title(__('shopper::pages/products.attributes.session.added'))
+            ->body(__('shopper::pages/products.attributes.session.added_message'))
+            ->success()
+            ->send();
 
         $this->emit('onProductAttributeAdded');
 
         $this->closeModal();
     }
 
-    public function updatedAttributeId(string $value)
+    public function updatedAttributeId(string $value): void
     {
         if ($value === '0') {
             return;
@@ -95,7 +113,7 @@ class AddProductAttribute extends ModalComponent
         return 'xl';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.add-product-attribute');
     }

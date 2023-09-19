@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Add administrator'))
-
-@section('content')
+<x-shopper::layouts.setting :title="__('shopper::pages/settings.roles_permissions.add_admin')">
 
     <livewire:shopper-settings.management.create-admin-user />
 
-@endsection
+</x-shopper::layouts.setting>

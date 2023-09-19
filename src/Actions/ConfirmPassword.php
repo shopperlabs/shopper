@@ -1,15 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Actions;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Shopper\Framework\Shopper;
 
-class ConfirmPassword
+final class ConfirmPassword
 {
-    /**
-     * Confirm that the given password is valid for the given user.
-     */
     public function __invoke(StatefulGuard $guard, $user, string $password): bool
     {
         return $guard->validate([

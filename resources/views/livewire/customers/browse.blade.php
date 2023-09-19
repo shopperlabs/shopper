@@ -1,8 +1,7 @@
 <div>
-
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Customers') }}
+            {{ __('shopper::layout.sidebar.customers') }}
         </x-slot>
 
         <x-slot name="action">
@@ -10,21 +9,21 @@
                 @can('add_customers')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper-button :link="route('shopper.customers.create')">
-                                {{ __('Create') }}
-                            </x-shopper-button>
+                            <x-shopper::buttons.primary :link="route('shopper.customers.create')">
+                                {{ __('shopper::words.actions_label.add_new', ['name' => __('customer')]) }}
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan
             @endif
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
-            :title="__('Manage customer orders & details')"
-            :content="__('This is where you can manage your customer information and view their purchase history.')"
-            :button="__('Add customer')"
+        <x-shopper::empty-state
+            :title="__('shopper::pages/customers.title')"
+            :content="__('shopper::pages/customers.content')"
+            :button="__('shopper::words.actions_label.add_new', ['name' => __('customer')])"
             permission="add_customers"
             :url="route('shopper.customers.create')"
         >
@@ -171,13 +170,13 @@
                     </g>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6">
             <livewire:shopper-tables.customers-table />
         </div>
     @endif
 
-    <x-shopper-learn-more name="customers" link="https://docs.laravelshopper.io/docs/customers" />
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.customers')" link="customers" />
 
 </div>

@@ -1,6 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Brand Name
+    |--------------------------------------------------------------------------
+    |
+    | This will be displayed on the login page and in the sidebar's header.
+    |
+    */
+
+    'brand' => null,
+
+    'mapbox_token' => env('MAPBOX_PUBLIC_TOKEN', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +40,7 @@ return [
 
     'resources' => [
         'stylesheets' => [],
-        'scripts'     => [],
+        'scripts' => [],
     ],
 
     /*
@@ -41,7 +56,7 @@ return [
     */
 
     'cache' => [
-        'method'   => null,
+        'method' => null,
         'duration' => 1440,
     ],
 
@@ -122,7 +137,7 @@ return [
          * `\Shopper\Framework\Models\Shop\Product\Category` model.
          */
 
-        'category'  => \Shopper\Framework\Models\Shop\Product\Category::class,
+        'category' => \Shopper\Framework\Models\Shop\Product\Category::class,
 
         /*
          * Eloquent model should be used to retrieve your collections. Of course,
@@ -132,7 +147,7 @@ return [
          * `\Shopper\Framework\Models\Shop\Product\Collection` model.
          */
 
-        'collection'  => \Shopper\Framework\Models\Shop\Product\Collection::class,
+        'collection' => \Shopper\Framework\Models\Shop\Product\Collection::class,
 
         /*
          * Eloquent model should be used to retrieve your products. Of course,
@@ -142,7 +157,7 @@ return [
          * `\Shopper\Framework\Models\Shop\Product\Product` model.
          */
 
-        'product'  => \Shopper\Framework\Models\Shop\Product\Product::class,
+        'product' => \Shopper\Framework\Models\Shop\Product\Product::class,
 
     ],
 

@@ -4,7 +4,12 @@
     @if(collect($files)->isNotEmpty())
         <ul class="grid grid-rows-2 grid-cols-7 gap-4">
             @foreach($files as $file)
-                <li class="relative group @if($loop->first) row-span-2 col-span-3 h-44 @else col-span-1 h-20 @endif border border-secondary-300 dark:border-secondary-700 rounded-md overflow-hidden">
+                <li @class([
+                    'relative group border border-secondary-300 dark:border-secondary-700 rounded-md overflow-hidden',
+                    'row-span-2 col-span-3 h-44' => $loop->first,
+                    'col-span-1 h-20' => !$loop->first,
+                    ])
+                >
                     <img class="h-full w-full object-cover" src="{{ $file->temporaryUrl() }}" alt="" />
                     <div class="absolute h-full w-full flex items-center justify-center opacity-0 hover:opacity-100 focus-within:opacity-100 inset-0 bg-secondary-800 bg-opacity-75 transition duration-150 ease-in-out">
                         <button wire:click="removeUpload('files', '{{ $file->getFilename() }}')" type="button" class="inline-flex p-2 border-2 border-transparent text-white rounded-full hover:text-secondary-100 focus:outline-none focus:text-secondary-100 focus:bg-secondary-600 transition duration-150 ease-in-out">
@@ -55,12 +60,12 @@
                 </svg>
                 <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
                     <span class="font-medium text-primary-600 group-hover:text-primary-500 dark:group-hover:text-primary-500 focus:outline-none focus:underline transition duration-150 ease-in-out">
-                        {{ __('Upload a file') }}
+                        {{ __('shopper::words.components.files.upload_file') }}
                     </span>
-                    {{ __('or drag and drop') }}
+                    {{ __('shopper::components.files.drag_n_drop') }}
                 </p>
                 <p class="mt-1 text-xs text-secondary-500 dark:text-secondary-400">
-                    {{ __('PNG, JPG, GIF up to 1MB') }}
+                    {{ __('shopper::components.files.file_type_size', ['size' => 1]) }}
                 </p>
             </div>
             <input
@@ -91,8 +96,8 @@
                         <span class="w-full font-bold text-secondary-900 truncate dark:text-white">{{ $image->file_name }}</span>
                         <span class="text-xs text-secondary-900 dark:text-white">{{ $image->human_readable_size }}</span>
                     </div>
-                    <div wire:loading.class.remove="hidden" wire:target="removeMedia({{ $image->id }})" class="hidden absolute h-full w-full flex items-center justify-center text-center opacity-100 focus-within:opacity-100 inset-0 z-50 bg-secondary-800 bg-opacity-75">
-                        <x-shopper-loader wire:loading wire:target="removeMedia({{ $image->id }})" class="text-white" />
+                    <div wire:loading.class.remove="hidden" wire:target="removeMedia({{ $image->id }})" class="absolute h-full w-full flex items-center justify-center text-center opacity-100 focus-within:opacity-100 inset-0 z-50 bg-secondary-800 bg-opacity-75">
+                        <x-shopper::loader wire:loading wire:target="removeMedia({{ $image->id }})" class="text-white" />
                     </div>
                 </div>
             @endforeach
@@ -100,8 +105,10 @@
     @endif
 
     <div class="hidden mt-2 flex items-center" wire:loading.class.remove="hidden" wire:target="files">
-        <x-shopper-loader wire:loading wire:target="files" class="text-primary-600" />
-        <span class="ml-1.5 text-sm text-secondary-500 dark:text-secondary-400">{{ __('Uploading...') }}</span>
+        <x-shopper::loader wire:loading wire:target="files" class="text-primary-600" />
+        <span class="ml-1.5 text-sm text-secondary-500 dark:text-secondary-400">
+            {{ __('shopper::components.files.uploading') }}
+        </span>
     </div>
 </div>
 

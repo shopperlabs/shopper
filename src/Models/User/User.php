@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\User;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -8,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Cashier\Billable;
 use Shopper\Framework\Models\Shop\Order\Order;
 use Shopper\Framework\Models\Traits\CanHaveDiscount;
 use Shopper\Framework\Models\Traits\HasProfilePhoto;
@@ -17,14 +18,13 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Billable,
-        CanHaveDiscount,
-        HasRoles,
-        HasFactory,
-        HasProfilePhoto,
-        Notifiable,
-        SoftDeletes,
-        TwoFactorAuthenticatable;
+    use CanHaveDiscount;
+    use HasRoles;
+    use HasFactory;
+    use HasProfilePhoto;
+    use Notifiable;
+    use SoftDeletes;
+    use TwoFactorAuthenticatable;
 
     /**
      * The attributes that aren't mass assignable.
@@ -107,9 +107,9 @@ class User extends Authenticatable
 
     public function getFullNameAttribute(): string
     {
-        return $this->last_name
+        return $this->first_name
             ? $this->first_name . ' ' . $this->last_name
-            : $this->first_name;
+            : $this->last_name;
     }
 
     public function getBirthDateFormattedAttribute(): string
@@ -118,7 +118,7 @@ class User extends Authenticatable
             return $this->birth_date->formatLocalized('%d, %B %Y');
         }
 
-        return __('Not defined');
+        return __('shopper::words.not_defined');
     }
 
     public function getRolesLabelAttribute(): string

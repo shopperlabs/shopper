@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Integrations\Github;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Artisan;
 use Livewire\Component;
 
@@ -28,20 +31,14 @@ class Settings extends Component
      */
     public $github_webhook_url;
 
-    /**
-     * Component mount instance.
-     */
-    public function mount()
+    public function mount(): void
     {
         $this->github_key = env('SHOPPER_INTEGRATION_GITHUB_KEY', '');
         $this->github_secret = env('SHOPPER_INTEGRATION_GITHUB_SECRET', '');
         $this->github_webhook_url = env('SHOPPER_INTEGRATION_GITHUB_WEBHOOK_URL', '');
     }
 
-    /**
-     * Updated Stripe payment.
-     */
-    public function store()
+    public function store(): void
     {
         setEnvironmentValue([
             'shopper_integration_github_key' => $this->github_key,
@@ -57,7 +54,7 @@ class Settings extends Component
         ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.integrations.github.settings');
     }

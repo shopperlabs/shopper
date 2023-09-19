@@ -1,24 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Shopper\Framework\Http\Livewire;
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Blade Components
-    |--------------------------------------------------------------------------
-    |
-    | List with Shopper components.
-    | Change the alias to call the component with a different name.
-    | Extend the component and replace your changes in this file.
-    | Remove the component from this file if you don't want to use.
-    |
-    */
-
-    'blade' => [
-        //
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -36,8 +22,6 @@ return [
         'account.password' => Livewire\Account\Password::class,
         'account.profile' => Livewire\Account\Profile::class,
         'account.two-factor' => Livewire\Account\TwoFactor::class,
-
-        'analytics.dashboard' => Livewire\Analytics\Dashboard::class,
 
         'brands.browse' => Livewire\Brands\Browse::class,
         'brands.create' => Livewire\Brands\Create::class,
@@ -59,6 +43,8 @@ return [
         'customers.profile' => Livewire\Customers\Profile::class,
         'customers.show' => Livewire\Customers\Show::class,
 
+        'dashboard' => Livewire\Dashboard::class,
+
         'discounts.browse' => Livewire\Discounts\Browse::class,
         'discounts.create' => Livewire\Discounts\Create::class,
         'discounts.edit' => Livewire\Discounts\Edit::class,
@@ -79,14 +65,19 @@ return [
         'modals.create-role' => Livewire\Modals\CreateRole::class,
         'modals.create-value' => Livewire\Modals\CreateValue::class,
         'modals.delete-customer' => Livewire\Modals\DeleteCustomer::class,
+        'modals.delete-discount' => Livewire\Modals\DeleteDiscount::class,
         'modals.delete-inventory' => Livewire\Modals\DeleteInventory::class,
         'modals.delete-mailable' => Livewire\Modals\DeleteMailable::class,
         'modals.delete-product' => Livewire\Modals\DeleteProduct::class,
+        'modals.delete-review' => Livewire\Modals\DeleteReview::class,
         'modals.delete-role' => Livewire\Modals\DeleteRole::class,
         'modals.delete-template' => Livewire\Modals\DeleteTemplate::class,
+        'modals.discount-products' => Livewire\Modals\DiscountProducts::class,
+        'modals.discount-customers' => Livewire\Modals\DiscountCustomers::class,
         'modals.logout-others-browser' => Livewire\Modals\LogoutOthersBrowser::class,
         'modals.products-lists' => Livewire\Modals\ProductsLists::class,
         'modals.re-order-categories' => Livewire\Modals\ReOrderCategories::class,
+        'modals.related-list' => Livewire\Modals\RelatedList::class,
         'modals.update-payment-method' => Livewire\Modals\UpdatePaymentMethod::class,
         'modals.update-value' => Livewire\Modals\UpdateValue::class,
         'modals.update-variant-stock' => Livewire\Modals\UpdateVariantStock::class,
@@ -144,23 +135,4 @@ return [
         'tables.products-table' => Livewire\Tables\ProductsTable::class,
         'tables.reviews-table' => Livewire\Tables\ReviewsTable::class,
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Components Prefix
-    |--------------------------------------------------------------------------
-    |
-    | This value will set a prefix for all Shopper Admin components.
-    | By default it's shopper. This is useful if you want to avoid
-    | collision with components from other libraries.
-    |
-    | For example, it's reference components like:
-    |
-    | <x-shopper-input.textarea />
-    | <livewire:shopper-products.create />
-    |
-    */
-
-    'prefix' => 'shopper',
-
 ];

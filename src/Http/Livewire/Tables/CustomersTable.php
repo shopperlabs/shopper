@@ -1,103 +1,124 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Tables;
 
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
-use Rappasoft\LaravelLivewireTables\Views\Column;
-use Rappasoft\LaravelLivewireTables\Views\Filter;
+use Rappasoft\LaravelLivewireTables\Views;
+use Shopper\Framework\Exceptions\GeneralException;
 use Shopper\Framework\Repositories\UserRepository;
-use WireUi\Traits\Actions;
 
 class CustomersTable extends DataTableComponent
 {
-    use Actions;
-
-    public string $defaultSortColumn = 'first_name';
-
-    public array $bulkActions = [
-        'deleteSelected' => 'Delete',
-        'verified' => 'Verified',
-    ];
-
-    public array $sortNames = [
-        'email_verified_at' => 'Verified',
-    ];
-
-    public array $filterNames = [
-        'verified' => 'E-mail Verified',
-    ];
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id')
+            ->setAdditionalSelects([
+                'id',
+                'first_name',
+                'last_name',
+                'email',
+                'email_verified_at',
+                'avatar_type',
+                'avatar_location',
+            ])
+            ->setDefaultSort('first_name')
+            ->setBulkActions([
+                'delete' => __('shopper::layout.forms.actions.delete'),
+                'verified' => __('shopper::layout.forms.actions.verified'),
+            ]);
+    }
 
     public function columns(): array
     {
         return [
-            Column::make('Full Name', 'first_name')
+            Views\Column::make(__('shopper::layout.forms.label.full_name'), 'first_name')
                 ->sortable()
-                ->searchable(),
-            Column::make('Email Subscription', 'opt_in')->sortable(),
-            Column::make('Registered At', 'created_at')
-                ->addClass('text-right')
-                ->sortable(),
+                ->searchable()
+                ->view('shopper::livewire.tables.cells.customers.name'),
+            Views\Column::make(__('shopper::layout.forms.label.email_subscription'), 'opt_in')
+                ->view('shopper::livewire.tables.cells.customers.opt-in'),
+            Views\Column::make(__('shopper::layout.forms.label.registered_at'), 'created_at')
+                ->view('shopper::livewire.tables.cells.date'),
         ];
     }
 
-    public function verified()
+    /**
+     * @throws GeneralException
+     */
+    public function verified(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            (new UserRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->update(['email_verified_at' => now()]);
+        if (count($this->getSelected()) > 0) {
+            (new UserRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->getSelected())
+                ->update(['email_verified_at' => now()]);
 
-            $this->notification()->success(__('Verified'), __('The users has successfully verified!'));
+            Notification::make()
+                ->title(__('shopper::components.tables.status.verified'))
+                ->body(__('shopper::components.tables.messages.verified', ['name' => __('shopper::words.customer')]))
+                ->success()
+                ->send();
         }
 
         $this->selected = [];
 
-        $this->resetAll();
+        $this->clearSelected();
     }
 
-    public function deleteSelected()
+    /**
+     * @throws GeneralException
+     */
+    public function delete(): void
     {
-        if ($this->selectedRowsQuery->count() > 0) {
-            (new UserRepository())->makeModel()->newQuery()->whereIn('id', $this->selectedKeys())->delete();
+        if (count($this->getSelected()) > 0) {
+            (new UserRepository())->makeModel()
+                ->newQuery()
+                ->whereIn('id', $this->getSelected())
+                ->delete();
 
-            $this->notification()->success(__('Deleted'), __('The users has successfully removed!'));
+            Notification::make()
+                ->title(__('shopper::components.tables.status.delete'))
+                ->body(__('shopper::components.tables.messages.delete', ['name' => __('shopper::words.customer')]))
+                ->success()
+                ->send();
         }
 
         $this->selected = [];
 
-        $this->resetAll();
+        $this->clearSelected();
     }
 
     public function filters(): array
     {
         return [
-            'mailing' => Filter::make('E-mail Subscription')
-                ->select([
-                    '' => __('Any'),
-                    'yes' => __('Yes'),
-                    'no' => __('No'),
-                ]),
-            'verified' => Filter::make('E-mail Verified')
-                ->select([
-                    '' => __('Any'),
-                    'yes' => __('Yes'),
-                    'no' => __('No'),
-                ]),
+            'mailing' => Views\Filters\SelectFilter::make(__('shopper::layout.forms.label.email_subscription'))
+                ->options([
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
+                ])
+                ->filter(fn (Builder $query, string $value) => $query->where('opt_in', $value === 'yes')),
+            'verified' => Views\Filters\SelectFilter::make(__('shopper::layout.forms.label.email_verified'))
+                ->options([
+                    '' => __('shopper::layout.forms.label.any'),
+                    'yes' => __('shopper::layout.forms.label.yes'),
+                    'no' => __('shopper::layout.forms.label.no'),
+                ])
+                ->filter(fn (Builder $query, $verified) => $verified === 'yes' ? $query->whereNotNull('email_verified_at') : $query->whereNull('email_verified_at')),
         ];
     }
 
-    public function query(): Builder
+    /**
+     * @throws GeneralException
+     */
+    public function builder(): Builder
     {
         return (new UserRepository())->makeModel()->newQuery()
-            ->whereHas('roles', function (Builder $query) {
-                $query->where('name', config('shopper.system.users.default_role'));
-            })
-            ->when($this->getFilter('search'), fn ($query, $term) => $query->research($term))
-            ->when($this->getFilter('mailing'), fn ($query, $active) => $query->where('opt_in', $active === 'yes'))
-            ->when($this->getFilter('verified'), fn ($query, $verified) => $verified === 'yes' ? $query->whereNotNull('email_verified_at') : $query->whereNull('email_verified_at'));
-    }
-
-    public function rowView(): string
-    {
-        return 'shopper::livewire.tables.rows.customers-table';
+            ->whereHas('roles', fn (Builder $query) => $query->where('name', config('shopper.system.users.default_role')))
+            ->when($this->getAppliedFilterWithValue('search'), fn (Builder $query, $term) => $query->research($term));
     }
 }

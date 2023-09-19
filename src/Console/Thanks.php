@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Console;
 
 use const PHP_OS_FAMILY;
@@ -20,19 +22,10 @@ class Thanks
         '    <options=bold>https://github.com/sponsors/Sense</>',
     ];
 
-    /**
-     * @var OutputInterface
-     */
-    private $output;
-
-    public function __construct(OutputInterface $output)
+    public function __construct(private OutputInterface $output)
     {
-        $this->output = $output;
     }
 
-    /**
-     * Asks the user to support Pest.
-     */
     public function __invoke(): void
     {
         $wantsToSupport = (new SymfonyQuestionHelper())->ask(

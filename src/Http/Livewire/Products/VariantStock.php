@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -16,7 +19,7 @@ class VariantStock extends Component
 
     public Model $product;
 
-    public function mount($variant)
+    public function mount($variant): void
     {
         $this->product = $variant;
         $this->stock = $variant->stock;
@@ -28,7 +31,7 @@ class VariantStock extends Component
         return 'shopper::livewire.wire-pagination-links';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.variant-stock', [
             'currentStock' => (new InventoryHistoryRepository())

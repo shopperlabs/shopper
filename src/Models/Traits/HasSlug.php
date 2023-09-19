@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Traits;
 
 use Illuminate\Support\Str;
@@ -34,7 +36,7 @@ trait HasSlug
         return $slug;
     }
 
-    private function slugExists(string $slug, ?int $ignoreId = null): bool
+    private function slugExists(string $slug, int $ignoreId = null): bool
     {
         $query = $this->where('slug', $slug);
 

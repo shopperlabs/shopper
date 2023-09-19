@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Legal;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Traits\WithLegalActions;
-use WireUi\Traits\Actions;
 
 class Shipping extends Component
 {
-    use Actions, WithLegalActions;
+    use WithLegalActions;
 
     public string $title = 'Shipping policy';
 
@@ -16,19 +19,23 @@ class Shipping extends Component
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->content = $value;
     }
 
-    public function store()
+    public function store(): void
     {
         $this->storeValues($this->title, $this->content, $this->isEnabled);
 
-        $this->notification()->success(__('Updated'), __('Your shipping privacy has been successfully updated!'));
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('Your shipping policy has been successfully updated'))
+            ->success()
+            ->send();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.legal.shipping');
     }

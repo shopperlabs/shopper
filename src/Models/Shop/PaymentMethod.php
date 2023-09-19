@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Shop;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -10,7 +12,8 @@ use Shopper\Framework\Models\Traits\HasSlug;
 
 class PaymentMethod extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.

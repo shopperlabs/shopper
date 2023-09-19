@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Traits;
 
 use Money\Currencies\ISOCurrencies;
@@ -10,12 +12,7 @@ use NumberFormatter;
 
 trait HasPrice
 {
-    /**
-     * Return formatted price.
-     *
-     * @param int|string $price
-     */
-    public function formattedPrice($price): string
+    public function formattedPrice(int|string $price): string
     {
         $money = new Money($price, new Currency(shopper_currency()));
         $currencies = new ISOCurrencies();

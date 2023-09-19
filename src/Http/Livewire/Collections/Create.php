@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
-use function count;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Product\CollectionRule;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
@@ -12,13 +14,19 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends Component
 {
-    use WithConditions, WithSeoAttributes;
+    use WithConditions;
+    use WithSeoAttributes;
 
     public string $name = '';
+
     public ?string $description = null;
+
     public string $type = 'auto';
+
     public ?string $publishedAt = null;
+
     public ?string $publishedAtFormatted = null;
+
     public ?string $fileUrl = null;
 
     public string $condition_match = 'all';
@@ -33,27 +41,24 @@ class Create extends Component
         'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
 
-    public function updatedPublishedAt($value)
+    public function updatedPublishedAt($value): void
     {
         if ($value) {
             $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d H:i', $value)->toRfc7231String();
         }
     }
 
-    /**
-     * Save new entry to the database.
-     */
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -99,7 +104,7 @@ class Create extends Component
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.collections.create');
     }

@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
@@ -10,19 +14,21 @@ use Livewire\WithFileUploads;
 use Shopper\Framework\Events\Products\ProductUpdated;
 use Shopper\Framework\Repositories\InventoryRepository;
 use Shopper\Framework\Traits\WithUploadProcess;
-use WireUi\Traits\Actions;
 
 class Variant extends Component
 {
-    use Actions,
-        WithFileUploads,
-        WithUploadProcess,
-        WithAttributes;
+    use WithFileUploads;
+    use WithUploadProcess;
+    use WithAttributes;
 
     public Model $product;
+
     public Model $variant;
+
     public Collection $inventories;
+
     public string $currency;
+
     public $images = [];
 
     protected $listeners = [
@@ -30,7 +36,7 @@ class Variant extends Component
         'onVariantUpdated' => 'render',
     ];
 
-    public function mount($product, $variant, string $currency)
+    public function mount($product, $variant, string $currency): void
     {
         $this->inventories = (new InventoryRepository())->get(['name', 'id']);
         $this->product = $product;
@@ -46,7 +52,7 @@ class Variant extends Component
         $this->images = $variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate([
             'name' => [
@@ -87,19 +93,19 @@ class Variant extends Component
 
         $this->emitSelf('onVariantUpdated');
 
-        $this->notification()->success(__('Updated'), __('Variant successfully updated!'));
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('shopper::pages/products.notifications.variation_update'))
+            ->success()
+            ->send();
     }
 
-    /**
-     * Listen when a file is removed from the storage
-     * and update the user screen and remove image preview.
-     */
-    public function mediaDeleted()
+    public function mediaDeleted(): void
     {
         $this->images = $this->variant->getMedia(config('shopper.system.storage.disks.uploads'));
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.variant', [
             'media' => $this->variant->getFirstMedia(config('shopper.system.storage.disks.uploads')),

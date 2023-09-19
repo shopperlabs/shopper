@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits\Database;
 
 use Illuminate\Support\Facades\DB;
@@ -9,9 +11,9 @@ trait DisableForeignKeys
     /**
      * Command to disable foreign key for each database management.
      *
-     * @var array
+     * @var array<string, string[]>
      */
-    private $commands = [
+    private array $commands = [
         'mysql' => [
             'enable' => 'SET FOREIGN_KEY_CHECKS=1;',
             'disable' => 'SET FOREIGN_KEY_CHECKS=0;',
@@ -30,42 +32,27 @@ trait DisableForeignKeys
         ],
     ];
 
-    /**
-     * Disable foreign key checks for current db driver.
-     */
-    protected function disableForeignKeys()
+    protected function disableForeignKeys(): void
     {
         DB::statement($this->getDisableStatement());
     }
 
-    /**
-     * Enable foreign key checks for current db driver.
-     */
-    protected function enableForeignKeys()
+    protected function enableForeignKeys(): void
     {
         DB::statement($this->getEnableStatement());
     }
 
-    /**
-     * Return current driver enable command.
-     */
-    private function getEnableStatement()
+    private function getEnableStatement(): string
     {
         return $this->getDriverCommands()['enable'];
     }
 
-    /**
-     * Return current driver disable command.
-     */
-    private function getDisableStatement()
+    private function getDisableStatement(): string
     {
         return $this->getDriverCommands()['disable'];
     }
 
-    /**
-     * Returns command array for current db driver.
-     */
-    private function getDriverCommands()
+    private function getDriverCommands(): array
     {
         return $this->commands[DB::getDriverName()];
     }

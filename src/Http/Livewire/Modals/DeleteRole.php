@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\User\Role;
 
@@ -9,12 +12,12 @@ class DeleteRole extends ModalComponent
 {
     public int $roleId;
 
-    public function mount(int $id)
+    public function mount(int $id): void
     {
         $this->roleId = $id;
     }
 
-    public function delete()
+    public function delete(): void
     {
         Role::query()->find($this->roleId)->delete();
 
@@ -28,7 +31,7 @@ class DeleteRole extends ModalComponent
         return 'lg';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.delete-role');
     }

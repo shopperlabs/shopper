@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Traits;
 
+use Filament\Notifications\Notification;
 use Illuminate\Http\Response;
 use Maatwebsite\Excel\Excel;
 use Shopper\Framework\Exports\ProductInventoryExport;
@@ -10,17 +13,20 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 trait WithStock
 {
     public int $stock = 0;
-    public int $value = 0;
-    public int $realStock = 0;
-    public $inventory;
 
-    public function updatedValue(int $value)
+    public int $value = 0;
+
+    public int $realStock = 0;
+
+    public ?int $inventory = null;
+
+    public function updatedValue(int $value): void
     {
         $this->value = $value;
         $this->realStock = $this->stock + $this->value;
     }
 
-    public function incrementStock()
+    public function incrementStock(): void
     {
         $this->validate(['value' => 'required|integer']);
 
@@ -28,7 +34,7 @@ trait WithStock
         $this->realStock = $this->stock + $this->value;
     }
 
-    public function decrementStock()
+    public function decrementStock(): void
     {
         if ($this->realStock === 0) {
             return;
@@ -40,7 +46,7 @@ trait WithStock
         $this->realStock = $this->stock + $this->value;
     }
 
-    public function updateCurrentStock()
+    public function updateCurrentStock(): void
     {
         if ($this->value === 0) {
             return;
@@ -71,18 +77,14 @@ trait WithStock
         $this->value = 0;
         $this->realStock = $this->stock = $this->product->stock;
 
-        $this->notify([
-            'title' => __('Updated'),
-            'message' => __('Stock successfully Updated'),
-        ]);
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('Stock successfully Updated'))
+            ->success()
+            ->send();
     }
 
-    /**
-     * Export default product stock movement.
-     *
-     * @return BinaryFileResponse|Response
-     */
-    public function export()
+    public function export(): BinaryFileResponse|Response
     {
         return (new ProductInventoryExport())
             ->forProduct($this->product->id)

@@ -1,25 +1,17 @@
 import Choices from 'choices.js'
+import TomSelect from 'tom-select'
 
-/**
- * Create a multiselect element.
- *
- * @param {HTMLElement} element
- * @returns {Choices}
- */
-window.choices = (element) => {
+window.choices = element => {
   return new Choices(element, { removeItemButton: true })
 }
 
-/**
- * Create smooth scroll animation
- *
- * @param {string} selector
- */
-window.scrollToPosition = (selector) => document.querySelector(selector).scrollIntoView({behavior: 'smooth', block: 'end'})
+window.tomSelect = (element, options = {}) => {
+  return new TomSelect(element, options)
+}
 
-/**
- * Turns the first character of a string into a capital letter
- *
- * @param string
- */
-window.capitalize = (string) => string.replace(/^\w/, (c) => c.toUpperCase())
+window.scrollToPosition = selector => document.querySelector(selector)
+  .scrollIntoView({
+    behavior: 'smooth',
+    block: 'end',
+  })
+

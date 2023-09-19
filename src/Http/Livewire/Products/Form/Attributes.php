@@ -1,46 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products\Form;
 
 use Exception;
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
-use Shopper\Framework\Models\Shop\Product\Attribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttribute;
 use Shopper\Framework\Models\Shop\Product\ProductAttributeValue;
-use WireUi\Traits\Actions;
+use Shopper\Framework\Traits\WithAttributes;
 
 class Attributes extends Component
 {
-    use Actions;
+    use WithAttributes;
 
     public Model $product;
+
     public int $productId;
+
     public Collection $attributes;
+
     public Collection $productAttributes;
 
     protected $listeners = ['onProductAttributeAdded'];
 
-    public function mount($product)
+    public function mount($product): void
     {
         $this->product = $product;
         $this->productId = $product->id;
-        $this->getProductAttributes();
-        $this->getAttributes();
+
+        $this->onProductAttributeAdded();
     }
 
-    public function onProductAttributeAdded()
+    public function onProductAttributeAdded(): void
     {
-        $this->getProductAttributes();
-        $this->getAttributes();
+        $this->productAttributes = $this->getProductAttributes();
+        $this->attributes = $this->getAttributes();
     }
 
     public function removeProductAttributeValue(int $id): void
     {
-        ProductAttributeValue::find($id)->delete();
+        ProductAttributeValue::query()->find($id)->delete();
 
-        $this->notification()->success(__('Attribute value removed'), __('You have successfully removed the value of this attribute!'));
+        Notification::make()
+            ->title(__('shopper::pages/products.attributes.session.delete_value'))
+            ->body(__('shopper::pages/products.attributes.session.delete_value_message'))
+            ->success()
+            ->send();
 
         $this->emitSelf('onProductAttributeAdded');
     }
@@ -50,49 +60,22 @@ class Attributes extends Component
      *
      * @throws Exception
      */
-    public function removeProductAttribute(int $id)
+    public function removeProductAttribute(int $id): void
     {
         ProductAttribute::query()->find($id)->delete();
 
-        $this->getProductAttributes();
-        $this->getAttributes();
+        $this->productAttributes = $this->getProductAttributes();
+        $this->attributes = $this->getAttributes();
 
-        $this->notification()->success(__('Attribute removed'), __('You have successfully removed this attribute to product!'));
+        Notification::make()
+            ->title(__('shopper::pages/products.attributes.session.delete'))
+            ->body(__('shopper::pages/products.attributes.session.delete_message'))
+            ->success()
+            ->send();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.products.forms.form-attributes');
-    }
-
-    private function attributeModelValue(string $type): string
-    {
-        if (in_array($type, ['text', 'number', 'richtext', 'select', 'datepicker', 'radio'])) {
-            return 'single';
-        } else {
-            return 'multiple';
-        }
-    }
-
-    private function getProductAttributes()
-    {
-        $this->productAttributes = ProductAttribute::query()
-            ->with('values')
-            ->where('product_id', $this->product->id)
-            ->get()
-            ->map(function ($pa) {
-                $pa['type'] = $pa->attribute->type;
-                $pa['model'] = $this->attributeModelValue($pa->attribute->type);
-
-                return $pa;
-            });
-    }
-
-    private function getAttributes()
-    {
-        $this->attributes = Attribute::query()
-            ->whereNotIn('id', $this->productAttributes->pluck('attribute_id')->toArray())
-            ->where('is_enabled', true)
-            ->get();
     }
 }

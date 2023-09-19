@@ -1,47 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 
 class AttributeController extends ShopperBaseController
 {
-    /**
-     * Browse Attribute view page.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function index()
+    public function index(): View
     {
         $this->authorize('browse_attributes');
 
         return view('shopper::pages.settings.attributes.index');
     }
 
-    /**
-     * Create Attribute view page.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function create()
+    public function create(): View
     {
         $this->authorize('add_attributes');
 
         return view('shopper::pages.settings.attributes.create');
     }
 
-    /**
-     * Edit Attribute view page.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function edit(Attribute $attribute)
+    public function edit(Attribute $attribute): View
     {
         $this->authorize('edit_attributes');
 

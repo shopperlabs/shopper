@@ -1,48 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers\Ecommerce;
 
+use Illuminate\Contracts\View\View;
 use Shopper\Framework\Http\Controllers\ShopperBaseController;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
 
 class ProductController extends ShopperBaseController
 {
-    /**
-     * Return products list view.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function index()
+    public function index(): View
     {
         $this->authorize('browse_products');
 
         return view('shopper::pages.products.index');
     }
 
-    /**
-     * Display Create view.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function create()
+    public function create(): View
     {
         $this->authorize('add_products');
 
         return view('shopper::pages.products.create');
     }
 
-    /**
-     * Display Edit view.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function edit(int $id)
+    public function edit(int $id): View
     {
         $this->authorize('edit_products');
 
@@ -53,14 +35,7 @@ class ProductController extends ShopperBaseController
         ]);
     }
 
-    /**
-     * Display variant edit view.
-     *
-     * @return \Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function variant(int $product, int $id)
+    public function variant(int $product, int $id): View
     {
         $this->authorize('edit_products');
 

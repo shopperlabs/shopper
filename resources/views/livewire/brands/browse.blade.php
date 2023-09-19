@@ -1,30 +1,29 @@
 <div>
-
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Brands') }}
+            {{ __('shopper::layout.sidebar.brands') }}
         </x-slot>
 
         <x-slot name="action">
             @if($total > 0)
                 @can('add_brands')
-                    <div class="flex space-x-3">
-                    <span class="shadow-sm rounded-md">
-                        <x-shopper-button :link="route('shopper.brands.create')">
-                            {{ __('Create') }}
-                        </x-shopper-button>
-                    </span>
+                    <div class="flex">
+                        <span class="shadow-sm rounded-md">
+                            <x-shopper::buttons.primary :link="route('shopper.brands.create')">
+                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]) }}
+                            </x-shopper::buttons.primary>
+                        </span>
                     </div>
                 @endcan
             @endif
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
-            :title="__('Organize your products into brands')"
-            :content="__('Create brands and organize your products to make it easier for users to find products.')"
-            :button="__('Create brand')"
+        <x-shopper::empty-state
+            :title="__('shopper::pages/brands.title')"
+            :content="__('shopper::pages/brands.content')"
+            :button="__('shopper::words.actions_label.add_new', ['name' => __('brand')])"
             permission="add_brands"
             :url="route('shopper.brands.create')"
         >
@@ -129,13 +128,13 @@
                     <path class="st11" d="M195.5 139c7.4-14.2 22.4-24.2 38.3-25.6M230.9 198.3c-10.6-.1-21.1 6.2-25.9 15.7M175.9 180.2c-1.9-10.9-8.8-20.7-18.3-26.3M95.9 175.8c.6-15.2-7.3-30.5-20.1-38.6M125.7 67.7c5.4 3.6 9.1 9.5 10 15.9"/>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6">
             <livewire:shopper-tables.brands-table />
         </div>
     @endif
 
-    <x-shopper-learn-more name="brands" link="https://docs.laravelshopper.io/docs/brands" />
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.brands')" link="brands" />
 
 </div>

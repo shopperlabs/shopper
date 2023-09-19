@@ -3,5 +3,5 @@
 </option>
 
 @foreach($category->children as $child)
-    @include('shopper::components.forms.resources.views.components.forms.option-category', ['name' => "{$name} / {$category->name}", 'category' => $child])
+    @include('shopper::components.forms.option-category', ['name' => "{$name} / {$category->name}", 'category' => $child])
 @endforeach

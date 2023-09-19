@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
 use Shopper\Framework\Models\System\Country;
@@ -10,14 +14,23 @@ use Shopper\Framework\Rules\Phone;
 class Create extends AbstractBaseComponent
 {
     public string $name = '';
+
     public ?string $description = null;
+
     public string $email = '';
+
     public string $city = '';
+
     public string $street_address = '';
+
     public ?string $street_address_plus = null;
+
     public ?string $zipcode = null;
+
     public ?string $phone_number = null;
+
     public ?int $country_id = null;
+
     public bool $isDefault = false;
 
     public function rules(): array
@@ -33,7 +46,7 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -56,10 +69,10 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.inventories.create', [
-            'countries' => Country::select('name', 'id')->orderBy('name')->get(),
+            'countries' => Cache::get('countries', fn () => Country::select('name', 'id')->orderBy('name')->get()),
         ]);
     }
 }

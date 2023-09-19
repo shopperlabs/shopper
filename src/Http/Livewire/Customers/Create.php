@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Customers;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\System\Country;
@@ -15,15 +19,22 @@ class Create extends AbstractBaseComponent
     use WithAddress;
 
     public string $last_name = '';
+
     public string $first_name = '';
+
     public string $email = '';
+
     public string $phone_number = '';
+
     public bool $opt_in = false;
+
     public bool $send_mail = false;
+
     public string $password = '';
+
     public string $password_confirmation = '';
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -61,7 +72,7 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.customers.show', $customer);
     }
 
-    public function generate()
+    public function generate(): void
     {
         $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
     }
@@ -79,10 +90,10 @@ class Create extends AbstractBaseComponent
         ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.customers.create', [
-            'countries' => Country::query()->get(),
+            'countries' => Cache::get('countries-settings', fn () => Country::orderBy('name')->get()),
         ]);
     }
 }

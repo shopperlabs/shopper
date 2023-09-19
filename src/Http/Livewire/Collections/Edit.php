@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Collections;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\Rule;
@@ -13,17 +16,27 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithConditions, WithSeoAttributes;
+    use WithConditions;
+    use WithSeoAttributes;
 
     public Model $collection;
+
     public Collection $products;
+
     public int $collectionId;
+
     public string $name = '';
+
     public ?string $description = null;
+
     public string $type = 'auto';
-    public ?string $publishedAt = null;
+
+    public ?Carbon $publishedAt = null;
+
     public ?string $publishedAtFormatted = null;
+
     public string $condition_match = 'all';
+
     public ?string $fileUrl = null;
 
     public $seoAttributes = [
@@ -36,7 +49,7 @@ class Edit extends AbstractBaseComponent
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function mount($collection)
+    public function mount($collection): void
     {
         $this->collection = $collection;
         $this->products = $collection->products;
@@ -48,21 +61,21 @@ class Edit extends AbstractBaseComponent
         $this->publishedAt = $collection->published_at;
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d', $collection->published_at->toDateString())->toRfc7231String();
         $this->updateSeo = true;
-        $this->seoTitle = $collection->seo_title;
+        $this->seoTitle = $collection->seo_title ?? $collection->name;
         $this->seoDescription = $collection->seo_description;
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -78,7 +91,9 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $this->collection
+                ->addMedia($this->fileUrl)
+                ->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Collection successfully updated!'));
@@ -104,12 +119,12 @@ class Edit extends AbstractBaseComponent
         return true;
     }
 
-    public function updatedPublishedAt($value)
+    public function updatedPublishedAt($value): void
     {
         $this->publishedAtFormatted = Carbon::createFromFormat('Y-m-d H:i', $value)->toRfc7231String();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.collections.edit');
     }

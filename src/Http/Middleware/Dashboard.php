@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Middleware;
 
 use Closure;
@@ -9,9 +11,6 @@ use Shopper\Framework\Models\System\Setting;
 
 class Dashboard
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next)
     {
         $user = auth(config('shopper.auth.guard'))->user();

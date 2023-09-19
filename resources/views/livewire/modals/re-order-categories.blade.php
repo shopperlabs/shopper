@@ -1,11 +1,11 @@
-<x-shopper-modal
+<x-shopper::modal
     headerClasses="bg-white dark:bg-secondary-800 p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
     <x-slot name="title">
         <x-heroicon-o-sort-ascending class="w-5 h-5 -ml-1 mr-3 text-secondary-400" />
-        {{ __('Reorder categories') }}
+        {{ __('shopper::words.reorder') }}
     </x-slot>
 
     <x-slot name="content">
@@ -17,7 +17,9 @@
                             <x-heroicon-o-view-grid class="shrink-0 w-5 h-5 text-secondary-300" />
                             <div class="flex items-center space-x-3">
                                 <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $category->is_enabled ? 'bg-green-600': 'bg-secondary-400 dark:bg-secondary-900' }}"></div>
-                                <span class="text-sm leading-5 text-secondary-900 dark:text-white font-medium">{{ $category->name }}</span>
+                                <span class="text-sm leading-5 text-secondary-900 dark:text-white font-medium">
+                                    {{ $category->name }}
+                                </span>
                             </div>
                         </div>
                         <span class="ml-4 text-secondary-500 dark:text-secondary-400 leading-4 text-xs">
@@ -43,9 +45,9 @@
 
     <x-slot name="buttons">
         <span class="flex w-full rounded-md shadow-sm sm:w-auto">
-            <x-shopper-default-button wire:click="$emit('closeModal')" type="button">
-                {{ __('Close') }}
-            </x-shopper-default-button>
+            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
+                {{ __('shopper::layout.forms.actions.close') }}
+            </x-shopper::buttons.default>
         </span>
     </x-slot>
-</x-shopper-modal>
+</x-shopper::modal>

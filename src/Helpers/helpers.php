@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Money\Currencies\ISOCurrencies;
@@ -42,7 +44,7 @@ if (! \function_exists('generate_number')) {
         return sprintf(
             '%s%s',
             $generator['prefix'],
-            str_pad($next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
+            str_pad((string) $next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
         );
     }
 }
@@ -68,8 +70,8 @@ if (! \function_exists('setEnvironmentValue')) {
                 }
 
                 $envKey = mb_strtoupper($envKey);
-                $keyPosition = mb_strpos($str, "{$envKey}=");
-                $endOfLinePosition = mb_strpos($str, "\n", $keyPosition);
+                $keyPosition = (int) mb_strpos($str, "{$envKey}=");
+                $endOfLinePosition = (int) mb_strpos($str, "\n", $keyPosition);
                 $oldLine = mb_substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
                 $space = mb_strpos($value, ' ');
                 $envValue = $space === false ? $value : '"' . $value . '"';
@@ -140,7 +142,7 @@ if (! \function_exists('shopper_money_format')) {
     /**
      * Return money format.
      */
-    function shopper_money_format($amount, ?string $currency = null): string
+    function shopper_money_format($amount, string $currency = null): string
     {
         $money = new Money($amount, new Currency($currency ?? shopper_currency()));
         $currencies = new ISOCurrencies();
@@ -176,10 +178,30 @@ if (! \function_exists('shopper_setting')) {
     /**
      * Return shopper setting from the setting table.
      */
-    function shopper_setting(string $key): ?string
+    function shopper_setting(string $key): mixed
     {
         $setting = Cache::remember("shopper-setting-{$key}", 60 * 60 * 24, fn () => Setting::query()->where('key', $key)->first());
 
         return $setting?->value;
+    }
+}
+
+if (! function_exists('active')) {
+    /**
+     * Sets the menu item class for an active route.
+     */
+    function active($routes, string $activeClass = 'active', string $defaultClass = '', bool $condition = true): string
+    {
+        return call_user_func_array([app('router'), 'is'], (array) $routes) && $condition ? $activeClass : $defaultClass;
+    }
+}
+
+if (! function_exists('is_active')) {
+    /**
+     * Determines if the given routes are active.
+     */
+    function is_active($routes): bool
+    {
+        return (bool) call_user_func_array([app('router'), 'is'], (array) $routes);
     }
 }

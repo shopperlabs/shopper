@@ -1,13 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Actions;
 
-class DisableTwoFactorAuthentication
+final class DisableTwoFactorAuthentication
 {
-    /**
-     * Disable two factor authentication for the user.
-     */
-    public function __invoke($user)
+    public function __invoke($user): void
     {
         $user->forceFill([
             'two_factor_secret' => null,

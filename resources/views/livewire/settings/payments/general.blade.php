@@ -1,32 +1,32 @@
 <div
     x-data="{
         options: ['general', 'stripe'],
-        words: {'general': '{{ __("General") }}', 'stripe': '{{ __("Stripe") }}'},
+        words: {'general': '{{ __('General') }}', 'stripe': '{{ __('Stripe') }}'},
         currentTab: 'general'
     }"
 >
 
-    <x:shopper-breadcrumb back="shopper.settings.index">
-        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
-    </x:shopper-breadcrumb>
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
+        <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+    </x-shopper::breadcrumb>
 
     <div class="mt-3 relative pb-5 border-b border-secondary-200 space-y-4 sm:pb-0 dark:border-secondary-700">
         <div class="space-y-3 md:flex md:items-center md:justify-between md:space-y-0">
             <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white">
-                {{ __('Payment Methods') }}
+                {{ __('shopper::pages/settings.payment.title') }}
             </h3>
             <div class="flex space-x-3 md:absolute md:top-3 md:right-0">
                 <span class="shadow-sm rounded-md">
-                    <x-shopper-button wire:click="$emit('openModal', 'shopper-modals.create-payment-method')" type="button">
-                        {{ __('Create custom payment method') }}
-                    </x-shopper-button>
+                    <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-payment-method')" type="button">
+                        {{ __('shopper::pages/settings.payment.create_payment') }}
+                    </x-shopper::buttons.primary>
                 </span>
             </div>
         </div>
         <div>
             <div class="sm:hidden">
-                <x-shopper-forms.select x-model="currentTab" aria-label="Selected tab">
+                <x-shopper::forms.select x-model="currentTab" aria-label="Selected tab">
                     <template x-for="option in options" :key="option">
                         <option
                             x-bind:value="option"
@@ -34,7 +34,7 @@
                             x-bind:selected="option === currentTab"
                         ></option>
                     </template>
-                </x-shopper-forms.select>
+                </x-shopper::forms.select>
             </div>
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
@@ -55,26 +55,26 @@
         <div x-show="currentTab === 'general'">
             <div class="mt-6 bg-white shadow sm:rounded-md dark:bg-secondary-800">
                 <div class="p-4 sm:p-6 sm:pb-4">
-                    <x-shopper-forms.search label="Search payments" placeholder="Search payment by provider name" />
+                    <x-shopper::forms.search label="Search payments" :placeholder="__('shopper::layout.forms.placeholder.search_payment')" />
                 </div>
                 <div class="hidden sm:block">
                     <div class="align-middle inline-block min-w-full">
                         <table class="min-w-full">
                             <thead>
                                 <tr class="border-t border-secondary-200 bg-secondary-50 dark:border-secondary-700 dark:bg-secondary-700">
-                                    <x-shopper-tables.table-head>
-                                        <span class="lg:pl-2">{{ __('Title') }}</span>
-                                    </x-shopper-tables.table-head>
-                                    <x-shopper-tables.table-head>
-                                        {{ __('Status') }}
-                                    </x-shopper-tables.table-head>
-                                    <x-shopper-tables.table-head>
-                                        {{ __('Website') }}
-                                    </x-shopper-tables.table-head>
-                                    <x-shopper-tables.table-head class="hidden md:table-cell text-right">
-                                        {{ __('Updated at') }}
-                                    </x-shopper-tables.table-head>
-                                    <x-shopper-tables.table-head class="pr-6 text-right" />
+                                    <x-shopper::tables.table-head>
+                                        <span class="lg:pl-2">{{ __('shopper::layout.forms.label.title') }}</span>
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head>
+                                        {{ __('shopper::layout.forms.label.status') }}
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head>
+                                        {{ __('shopper::layout.forms.label.website') }}
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head class="hidden md:table-cell text-right">
+                                        {{ __('shopper::layout.forms.label.updated_at') }}
+                                    </x-shopper::tables.table-head>
+                                    <x-shopper::tables.table-head class="pr-6 text-right" />
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-secondary-100 dark:divide-secondary-700" x-max="1">
@@ -121,7 +121,7 @@
                                             <time datetime="{{ $method->created_at->format('Y-m-d') }}" class="capitalize">{{ $method->created_at->formatLocalized('%d %B, %Y') }}</time>
                                         </td>
                                         <td class="pr-6">
-                                            <x-shopper-dropdown customAlignmentClasses="right-12 -bottom-1">
+                                            <x-shopper::dropdown customAlignmentClasses="right-12 -bottom-1">
                                                 <x-slot name="trigger">
                                                     <button id="payment-options-menu-{{ $method->id }}" aria-has-popup="true" :aria-expanded="open" type="button" class="w-8 h-8 inline-flex items-center justify-center text-secondary-400 rounded-full bg-transparent hover:text-secondary-500 focus:outline-none focus:text-secondary-500 focus:bg-secondary-100 dark:focus:bg-secondary-700 transition ease-in-out duration-150">
                                                         <x-heroicon-s-dots-vertical class="w-5 h-5" />
@@ -132,18 +132,18 @@
                                                     <div class="py-1">
                                                         <button wire:click="$emit('openModal', 'shopper-modals.update-payment-method', {{ json_encode([$method->id]) }})" wire:key="{{ $method->id }}" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
                                                             <x-heroicon-s-pencil-alt class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
-                                                            {{ __('Edit') }}
+                                                            {{ __('shopper::layout.forms.actions.edit') }}
                                                         </button>
                                                     </div>
                                                     <div class="border-t border-secondary-100 dark:border-secondary-600"></div>
                                                     <div class="py-1">
                                                         <button wire:click="removePayment({{ $method->id }})" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-secondary-700 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-600 hover:text-secondary-900 dark:hover:text-white" role="menuitem">
                                                             <x-heroicon-s-trash class="mr-3 h-5 w-5 text-secondary-400 group-hover:text-secondary-500" />
-                                                            {{ __('Delete') }}
+                                                            {{ __('shopper::layout.forms.actions.delete') }}
                                                         </button>
                                                     </div>
                                                 </x-slot>
-                                            </x-shopper-dropdown>
+                                            </x-shopper::dropdown>
                                         </td>
                                     </tr>
                                 @empty
@@ -151,7 +151,9 @@
                                         <td colspan="5" class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-secondary-900 dark:text-white">
                                             <div class="flex justify-center items-center space-x-2">
                                                 <x-heroicon-o-credit-card class="h-8 w-8 text-secondary-400" />
-                                                <span class="font-medium py-8 text-secondary-400 text-xl">{{ __('No payments methods found') }}...</span>
+                                                <span class="font-medium py-8 text-secondary-400 text-xl">
+                                                    {{ __('shopper::pages/settings.payment.no_method') }}
+                                                </span>
                                             </div>
                                         </td>
                                     </tr>
@@ -167,13 +169,13 @@
                     <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                         <div>
                             <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-300">
-                                {{ __('Showing') }}
+                                {{ __('shopper::words.showing') }}
                                 <span class="font-medium">{{ ($methods->currentPage() - 1) * $methods->perPage() + 1 }}</span>
-                                {{ __('to') }}
+                                {{ __('shopper::words.to') }}
                                 <span class="font-medium">{{ ($methods->currentPage() - 1) * $methods->perPage() + count($methods->items()) }}</span>
-                                {{ __('of') }}
+                                {{ __('shopper::words.of') }}
                                 <span class="font-medium"> {!! $methods->total() !!}</span>
-                                {{ __('results') }}
+                                {{ __('shopper::words.results') }}
                             </p>
                         </div>
                         {{ $methods->links() }}

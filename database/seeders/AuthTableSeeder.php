@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Database\Seeders\Auth\PermissionRoleTableSeeder;
@@ -11,12 +13,10 @@ use Shopper\Framework\Traits\Database\TruncateTable;
 
 class AuthTableSeeder extends Seeder
 {
-    use DisableForeignKeys, TruncateTable;
+    use DisableForeignKeys;
+    use TruncateTable;
 
-    /**
-     * Run the database seeds.
-     */
-    public function run()
+    public function run(): void
     {
         $this->disableForeignKeys();
 

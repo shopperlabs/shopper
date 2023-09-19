@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Payments Methods'))
-
-@section('content')
+<x-shopper::layouts.setting :title="__('shopper::pages/settings.payment.title')">
 
     <livewire:shopper-settings.payments.general />
 
-@endsection
+</x-shopper::layouts.setting>

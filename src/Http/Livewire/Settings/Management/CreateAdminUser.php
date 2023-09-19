@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Management;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -15,28 +18,36 @@ use Shopper\Framework\Rules\RealEmailValidator;
 class CreateAdminUser extends AbstractBaseComponent
 {
     public bool $send_mail = false;
+
     public ?string $email = null;
+
     public ?string $password = null;
+
     public ?string $first_name = null;
+
     public ?string $last_name = null;
+
     public string $gender = 'male';
+
     public ?string $phone_number = null;
+
     public bool $is_admin = false;
+
     public $role_id;
 
-    public function generate()
+    public function generate(): void
     {
         $this->password = mb_substr(mb_strtoupper(uniqid(str_random(10))), 0, 10);
 
         $this->resetErrorBag(['password']);
     }
 
-    public function updated(string $field)
+    public function updated(string $field): void
     {
         $this->validateOnly($field, $this->rules(), $this->messages());
     }
 
-    public function updatedRoleId(int $id)
+    public function updatedRoleId(int $id): void
     {
         $chooseRole = Role::findById($id);
 
@@ -63,7 +74,7 @@ class CreateAdminUser extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules(), $this->messages());
 
@@ -78,6 +89,7 @@ class CreateAdminUser extends AbstractBaseComponent
         ]);
 
         $role = Role::findById((int) $this->role_id);
+
         $user->assignRole([$role->name]);
 
         if ($this->send_mail) {
@@ -103,7 +115,7 @@ class CreateAdminUser extends AbstractBaseComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.management.create', [
             'roles' => Role::query()

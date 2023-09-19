@@ -7,7 +7,7 @@
         <img src="https://github.com/shopperlabs/framework/workflows/tests/badge.svg" alt="Build Status">
     </a>
     <a href="https://laravel.com">
-        <img alt="Laravel v8.x" src="https://img.shields.io/badge/Laravel-v8.x-FF2D20">
+        <img alt="Laravel v9.x" src="https://img.shields.io/badge/Laravel-v9.x-FF2D20">
     </a>
     <a href="https://packagist.org/packages/shopper/framework">
         <img src="https://img.shields.io/packagist/dt/shopper/framework" alt="Total Downloads">
@@ -21,15 +21,14 @@
 </p>
 
 ## Introduction
-> ⚠️ Laravel Shopper is under development - Don't use it yet in production.
 
-[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 8.0+ which includes all the necessary for your online market application.
+[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 9.0+ which includes all the necessary for your online market application.
 Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 
 ## Installation
 
-Instructions on how to install Shopper can be found at the [installation guide](https://docs.laravelshopper.io/docs/installation).
+Instructions on how to install Shopper can be found at the [installation guide](https://laravelshopper.dev/installing).
 
 ### Quick start installation
 
@@ -45,7 +44,7 @@ Run this command to install Shopper in your project
 php artisan shopper:install
 ```
 
-The best place to learn Shopper is by [reading the documentation](https://docs.laravelshopper.io), [watching some screencasts](https://docs.laravelshopper.io/screencasts) or following some tutorials.
+The best place to learn Shopper is by [reading the documentation](https://laravelshopper.dev) or following some tutorials.
 
 ## Foundation library
 
@@ -57,21 +56,6 @@ You can communicate with us using the following mediums:
 
 * [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
 * [Join us on Discord](https://laravelshopper.io/discord) to chat with us.
-
-### Premium Support
-
-Shopper Framework can provide premium support for a monthly fee. Find out more via the [Sponsor Support Program](https://github.com/sponsors/sense).
-
-## ToDo/Roadmap
-- [x] Add `laravel-livewire-datatable` to replace all tables (https://github.com/rappasoft/laravel-livewire-tables)
-- [x] Replace all Shopper forms input components to `wire-ui` form components (https://livewire-wireui.com)
-- [ ] Add PayPal as default payment method
-- [ ] Add Shipping Methods
-- [ ] Add Tax rates
-- [ ] Publish Documentation 
-- [ ] Publish Demo Website (Private repository only for sponsors)
-- [ ] Many channels support (Facebook, Twitter, Instagram & Telegram)
-- [ ] Fix Mailable class with parameters
 
 ## Contributing
 
@@ -88,7 +72,6 @@ We send an email about 3-4 emails per year. Sometimes less.
 
 - [Arthur Monney][link-author]
 - [Jean-Vincent QUILICHINI][link-author-2]
-- [Laravel Fortify](https://github.com/laravel/fortify)
 - [MailEclipse](https://github.com/Qoraiche/laravel-mail-editor)
 - [All Contributors][link-contributors]
 
@@ -97,6 +80,10 @@ And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 ## License
 
 The Shopper Framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Sponsoring
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
 [link-author]: https://github.com/mckenziearts
 [link-author-2]: https://github.com/sense

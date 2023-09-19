@@ -1,8 +1,7 @@
 <div>
-
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Products') }}
+            {{ __('shopper::layout.sidebar.products') }}
         </x-slot>
 
         <x-slot name="action">
@@ -10,21 +9,21 @@
                 @can('add_products')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper-button :link="route('shopper.products.create')">
-                                {{ __('Create') }}
-                            </x-shopper-button>
+                            <x-shopper::buttons.primary :link="route('shopper.products.create')">
+                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.product'))]) }}
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan
             @endif
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
-            :title="__('Manage Catalog')"
-            :content="__('Get closer to your first sale by adding and manage products.')"
-            :button="__('Add product')"
+        <x-shopper::empty-state
+            :title="__('shopper::pages/products.title')"
+            :content="__('shopper::pages/products.content')"
+            :button="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.product'))])"
             permission="add_products"
             :url="route('shopper.products.create')"
             class="lg:pb-0"
@@ -252,13 +251,13 @@
                     </g>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6">
             <livewire:shopper-tables.products-table />
         </div>
     @endif
 
-    <x-shopper-learn-more name="products" link="https://docs.laravelshopper.io/docs/products" />
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.products')" link="products" />
 
 </div>

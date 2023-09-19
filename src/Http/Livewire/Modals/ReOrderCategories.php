@@ -1,16 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 
 class ReOrderCategories extends ModalComponent
 {
-    /**
-     * Update category parent position.
-     */
-    public function updateGroupOrder(array $items)
+    public function updateGroupOrder(array $items): void
     {
         foreach ($items as $item) {
             (new CategoryRepository())
@@ -22,10 +22,7 @@ class ReOrderCategories extends ModalComponent
         $this->emit('onCategoriesReordered');
     }
 
-    /**
-     * Update subcategory position.
-     */
-    public function updateCategoryOrder(array $groups)
+    public function updateCategoryOrder(array $groups): void
     {
         foreach ($groups as $group) {
             foreach ($group['items'] as $item) {
@@ -48,7 +45,7 @@ class ReOrderCategories extends ModalComponent
         return 'lg';
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.re-order-categories', [
             'categories' => (new CategoryRepository())

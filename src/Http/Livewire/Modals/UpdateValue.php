@@ -1,24 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Modals;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Framework\Models\Shop\Product\AttributeValue;
-use WireUi\Traits\Actions;
 
 class UpdateValue extends ModalComponent
 {
-    use Actions;
-
     public string $name;
+
     public string $type = 'select';
+
     public int $valueId;
+
     public string $value;
 
     public string $key;
 
-    public function mount(string $name, string $type, int $id)
+    public function mount(string $name, string $type, int $id): void
     {
         $value = AttributeValue::query()->find($id);
 
@@ -34,7 +38,7 @@ class UpdateValue extends ModalComponent
         return 'lg';
     }
 
-    public function save()
+    public function save(): void
     {
         $this->validate($this->rules());
 
@@ -44,7 +48,11 @@ class UpdateValue extends ModalComponent
 
         $this->emit('updateValues');
 
-        $this->notification()->success(__('Updated'), __('Your value have been correctly updated.'));
+        Notification::make()
+            ->title(__('shopper::components.tables.status.updated'))
+            ->body(__('Your value have been correctly updated'))
+            ->success()
+            ->send();
 
         $this->closeModal();
     }
@@ -60,7 +68,7 @@ class UpdateValue extends ModalComponent
         ];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.modals.update-value');
     }

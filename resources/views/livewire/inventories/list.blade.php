@@ -1,13 +1,15 @@
 <div>
     <div class="my-6 md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0 flex flex-row items-center justify-between md:flex-col md:items-start">
-            <h2 class="text-2xl font-bold leading-7 text-secondary-600 sm:text-3xl sm:leading-9 sm:truncate">{{ __('Inventory') }}</h2>
+            <h2 class="text-2xl font-bold leading-7 text-secondary-600 sm:text-3xl sm:leading-9 sm:truncate">
+                {{ __('shopper::words.location') }}
+            </h2>
             <div class="md:mt-2 ml-4 md:ml-0">
                 <button type="button" class="text-secondary-400 text-sm inline-flex items-center hover:text-secondary-500 focus:text-secondary-600 leading-5 transition duration-150 ease-in-out">
                     <svg fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mr-2">
                         <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
-                    <span>{{ __('Export') }}</span>
+                    <span>{{ __('shopper::layout.forms.actions.export') }}</span>
                 </button>
             </div>
         </div>
@@ -19,14 +21,14 @@
     <div
         x-data="{
             options: ['all'],
-            words: {'all': '{{ __("All") }}'},
+            words: {'all': '{{ __('shopper::words.all') }}'},
             currentTab: 'all'
         }"
         class="bg-white shadow overflow-hidden sm:rounded-md"
     >
         <div class="bg-white border-b border-secondary-200">
             <div class="sm:hidden p-4">
-                <select x-model="currentTab" aria-label="Selected tab" class="form-select form-select-shopper block w-full pl-3 pr-10 py-2 text-base leading-6 sm:text-sm sm:leading-5 transition ease-in-out duration-150">
+                <select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}" class="form-select form-select-shopper block w-full pl-3 pr-10 py-2 text-base leading-6 sm:text-sm sm:leading-5 transition ease-in-out duration-150">
                     <template x-for="option in options" :key="option">
                         <option
                             x-bind:value="option"
@@ -39,8 +41,8 @@
             <div class="hidden sm:block">
                 <div class="flex items-center justify-between">
                     <nav class="-mb-px flex">
-                        <button x-on:click="currentTab === all" type="button" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-brand-500 font-medium text-sm leading-5 text-brand-400 focus:outline-none focus:text-brand-500 focus:border-brand-500">
-                            {{ __('All') }}
+                        <button x-on:click="currentTab = all" type="button" class="whitespace-no-wrap ml-8 py-4 px-3 border-b-2 border-brand-500 font-medium text-sm leading-5 text-brand-400 focus:outline-none focus:text-brand-500 focus:border-brand-500">
+                            {{ __('shopper::words.all') }}
                         </button>
                     </nav>
                     @if($inventories->count() > 1)
@@ -115,13 +117,13 @@
                         <thead>
                             <tr>
                                 <th class="px-6 py-3 border-b border-secondary-200 text-left text-sm font-medium leading-4 text-secondary-700 tracking-wider">
-                                    {{ __('Name') }}
+                                    {{ __('shopper::layout.forms.label.name') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 text-left text-sm font-medium leading-4 text-secondary-700 tracking-wider">
-                                    {{ __("SKU") }}
+                                    {{ __('shopper::layout.forms.label.sku') }}
                                 </th>
                                 <th class="px-6 py-3 border-b border-secondary-200 text-center text-sm font-medium leading-4 text-secondary-700 tracking-wider">
-                                    {{ __("Available") }}
+                                    {{ __('Available') }}
                                 </th>
                             </tr>
                         </thead>
@@ -148,18 +150,18 @@
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 border-b border-secondary-200 text-sm leading-5 text-secondary-500">
-                                        {{ $product->sku ?? __("No Sku") }}
+                                        {{ $product->sku ?? __('No Sku') }}
                                     </td>
                                     <td class="px-6 py-4 border-b border-secondary-200 text-center">
-                                        <span class="text-sm inline-flex leading-5 font-semibold {{ $product->stock < 10 ? 'text-red-600' : 'text-green-600' }}">
-                                            {{ $product->stock }}
-                                        </span>
+                                        <x-shopper::stock-badge :stock="$product->stock" />
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
                                     <td colspan="4" class="px-6 py-10 whitespace-no-wrap">
-                                        <h3 class="text-lg text-center font-medium leading-6 text-secondary-700">{{ __("No inventory available.") }}</h3>
+                                        <h3 class="text-lg text-center font-medium leading-6 text-secondary-700">
+                                            {{ __('No inventory available.') }}
+                                        </h3>
                                     </td>
                                 </tr>
                             @endforelse

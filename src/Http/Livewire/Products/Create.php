@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Products;
 
+use Illuminate\Contracts\View\View;
 use Milon\Barcode\Facades\DNS1DFacade;
+use Shopper\Framework\Exceptions\GeneralException;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Channel;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
@@ -10,16 +14,23 @@ use Shopper\Framework\Repositories\Ecommerce\BrandRepository;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Framework\Repositories\Ecommerce\ProductRepository;
+use Shopper\Framework\Traits\WithChoicesBrands;
 use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Create extends AbstractBaseComponent
 {
-    use WithAttributes, WithSeoAttributes;
+    use WithAttributes;
+    use WithSeoAttributes;
+    use WithChoicesBrands;
 
     public ?Channel $defaultChannel = null;
+
     public array $category_ids = [];
+
     public array $collection_ids = [];
+
     public $quantity;
+
     public $files = [];
 
     public array $seoAttributes = [
@@ -33,17 +44,19 @@ class Create extends AbstractBaseComponent
         'shopper:filesUpdated' => 'onFilesUpdated',
     ];
 
-    public function mount()
+    public function mount(): void
     {
-        $this->defaultChannel = Channel::query()->where('slug', 'web-store')->first();
+        $this->defaultChannel = Channel::query()
+            ->where('slug', 'web-store')
+            ->first();
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFilesUpdated($files)
+    public function onFilesUpdated(array $files): void
     {
         $this->files = $files;
     }
@@ -58,7 +71,7 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -110,21 +123,24 @@ class Create extends AbstractBaseComponent
             foreach ($this->quantity as $inventory => $value) {
                 $product->mutateStock(
                     $inventory,
-                    $value,
+                    (int) $value,
                     [
-                        'event' => __('Initial inventory'),
+                        'event' => __('shopper::pages/products.inventory.initial'),
                         'old_quantity' => $value,
                     ]
                 );
             }
         }
 
-        session()->flash('success', __('Product successfully added!'));
+        session()->flash('success', __('shopper::pages/products.notifications.create'));
 
         $this->redirectRoute('shopper.products.index');
     }
 
-    public function render()
+    /**
+     * @throws GeneralException
+     */
+    public function render(): View
     {
         return view('shopper::livewire.products.create', [
             'brands' => (new BrandRepository())
@@ -139,7 +155,7 @@ class Create extends AbstractBaseComponent
                 ->orderBy('name')
                 ->get()
                 ->toTree(),
-            'collections' => (new CollectionRepository())->get(['name', 'id']),
+            'collections' => (new CollectionRepository())->with('media')->get(['name', 'id']),
             'inventories' => Inventory::query()->get(['name', 'id']),
             'currency' => shopper_currency(),
             'barcodeImage' => $this->barcode

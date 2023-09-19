@@ -1,31 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Actions;
 
 use Illuminate\Support\Collection;
 use Shopper\Framework\Contracts\TwoFactorAuthenticationProvider;
 
-class EnableTwoFactorAuthentication
+final class EnableTwoFactorAuthentication
 {
-    /**
-     * The two factor authentication provider.
-     *
-     * @var \Shopper\Framework\Contracts\TwoFactorAuthenticationProvider
-     */
-    protected $provider;
-
-    /**
-     * Create a new action instance.
-     */
-    public function __construct(TwoFactorAuthenticationProvider $provider)
+    public function __construct(protected TwoFactorAuthenticationProvider $provider)
     {
-        $this->provider = $provider;
     }
 
-    /**
-     * Enable two factor authentication for the user.
-     */
-    public function __invoke($user)
+    public function __invoke($user): void
     {
         $user->forceFill([
             'two_factor_secret' => encrypt($this->provider->generateSecretKey()),

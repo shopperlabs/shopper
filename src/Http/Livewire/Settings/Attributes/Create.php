@@ -1,21 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Attributes;
 
+use Illuminate\Contracts\View\View;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Product\Attribute;
 
 class Create extends AbstractBaseComponent
 {
     public string $name = '';
+
     public string $slug = '';
+
     public string $type = 'text';
+
     public ?string $description = null;
+
     public bool $isEnabled = false;
+
     public bool $isSearchable = false;
+
     public bool $isFilterable = false;
 
-    public function updatedName(string $value)
+    public function updatedName(string $value): void
     {
         $this->slug = str_slug($value);
     }
@@ -29,7 +38,7 @@ class Create extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -48,7 +57,7 @@ class Create extends AbstractBaseComponent
         $this->redirectRoute('shopper.settings.attributes.edit', $attribute);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.attributes.create', [
             'fields' => Attribute::typesFields(),

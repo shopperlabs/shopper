@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Categories;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Framework\Exceptions\GeneralException;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Framework\Traits\WithChoicesCategories;
@@ -10,16 +14,23 @@ use Shopper\Framework\Traits\WithSeoAttributes;
 
 class Edit extends AbstractBaseComponent
 {
-    use WithChoicesCategories, WithSeoAttributes;
+    use WithChoicesCategories;
+    use WithSeoAttributes;
 
     public Model $category;
+
     public int $categoryId;
+
     public string $name = '';
+
     public ?int $parent_id = null;
+
     public ?string $description = null;
+
     public bool $is_enabled = false;
+
     public ?string $fileUrl = null;
-    public $selectedCategory = [];
+
     public $parent;
 
     public $seoAttributes = [
@@ -32,7 +43,7 @@ class Edit extends AbstractBaseComponent
         'shopper:fileUpdated' => 'onFileUpdate',
     ];
 
-    public function mount($category)
+    public function mount($category): void
     {
         $this->category = $category;
         $this->categoryId = $category->id;
@@ -41,33 +52,28 @@ class Edit extends AbstractBaseComponent
         $this->description = $category->description;
         $this->is_enabled = $category->is_enabled;
         $this->updateSeo = true;
-        $this->seoTitle = $category->seo_title;
+        $this->seoTitle = $category->seo_title ?? $category->name;
         $this->seoDescription = $category->seo_description;
-        $this->selectedCategory = $category->parent_id ? $this->selectedCategory['value'] = $category->parent_id : [];
+        $this->selectedCategory = $category->parent_id ? [$category->parent_id] : [];
         $this->parent = $category->parent_id ? $category->parent : null;
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->description = $value;
     }
 
-    public function onFileUpdate($file)
+    public function onFileUpdate($file): void
     {
         $this->fileUrl = $file;
     }
 
-    /**
-     * Define is the current action is create or update for the SEO Trait.
-     *
-     * @return false
-     */
     public function isUpdate(): bool
     {
         return true;
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -82,7 +88,9 @@ class Edit extends AbstractBaseComponent
         ]);
 
         if ($this->fileUrl) {
-            $this->category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.system.storage.disks.uploads'));
+            $this->category
+                ->addMedia($this->fileUrl)
+                ->toMediaCollection(config('shopper.system.storage.disks.uploads'));
         }
 
         session()->flash('success', __('Category successfully updated!'));
@@ -95,7 +103,10 @@ class Edit extends AbstractBaseComponent
         return ['name' => 'sometimes|required|max:150'];
     }
 
-    public function render()
+    /**
+     * @throws GeneralException
+     */
+    public function render(): View
     {
         return view('shopper::livewire.categories.edit', [
             'categories' => (new CategoryRepository())

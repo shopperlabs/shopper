@@ -1,11 +1,12 @@
 <div>
-    <x:shopper-breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
-    </x:shopper-breadcrumb>
-    <x-shopper-heading>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+    </x-shopper::breadcrumb>
+
+    <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Attributes') }}
+            {{ __('shopper::words.attributes') }}
         </x-slot>
 
         <x-slot name="action">
@@ -13,21 +14,21 @@
                 @can('add_attributes')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper-button :link="route('shopper.settings.attributes.create')">
-                                {{ __('Create') }}
-                            </x-shopper-button>
+                            <x-shopper::buttons.primary :link="route('shopper.settings.attributes.create')">
+                                {{ __('shopper::layout.forms.actions.create') }}
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan
             @endif
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
-            :title="__('Manage Attributes')"
-            :content="__('Add custom attributes to your product to display for informations.')"
-            :button="__('Add attribute')"
+        <x-shopper::empty-state
+            :title="__('shopper::pages/attributes.title')"
+            :content="__('shopper::pages/attributes.content')"
+            :button="__('shopper::pages/attributes.add')"
             permission="add_attributes"
             :url="route('shopper.settings.attributes.create')"
         >
@@ -104,13 +105,13 @@
                     </g>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6">
             <livewire:shopper-tables.attributes-table />
         </div>
     @endif
 
-    <x-shopper-learn-more name="attributes" link="https://docs.laravelshopper.io/docs/attributes" />
+    <x-shopper::learn-more :name="__('shopper::words.attributes')" link="attributes" />
 
 </div>

@@ -1,87 +1,60 @@
 <div>
-    <div>
-        <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
-            {{ __('Similar Products') }}
-        </h3>
-        <p class="mt-1 max-w-2xl text-sm text-secondary-500 dark:text-secondary-400">
-            {{ __('All products that can be identified as similar or complementary to your product.') }}
-        </p>
+    <div class="sm:flex sm:justify-between">
+        <div>
+            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                {{ __('shopper::pages/products.related.title') }}
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-secondary-500 dark:text-secondary-400">
+                {{ __('shopper::pages/products.related.description') }}
+            </p>
+        </div>
+        @if($relatedProducts->isNotEmpty())
+            <div class="mt-6 lg:mt-0">
+                <x-shopper::buttons.primary type="button" wire:click="$emit('openModal', 'shopper-modals.related-list', {{ json_encode([$product->id, $this->productsIds]) }})">
+                    {{ __('shopper::layout.account_dropdown.add_product') }}
+                </x-shopper::buttons.primary>
+            </div>
+        @endif
     </div>
 
     <section aria-labelledby="similar_products_heading">
         <div class="mt-5 bg-white dark:bg-secondary-800 p-4 sm:p-6 shadow rounded-md">
-            {{--@if($products->isNotEmpty())
-                <div class="grid grid-cols-12 gap-4">
-                    <div class="col-span-5 bg-secondary-100 rounded-md px-3 py-4 dark:bg-secondary-900">
-                        <x-laravel-blade-sortable::sortable
-                            group="products"
-                            name="products"
-                            :allow-sort="false"
-                            ghost-class="opacity-25"
-                            wire:onSortOrderChange="handleOnSortOrderChanged"
-                            style="min-height:20rem;"
-                        >
-                            @foreach($products as $product)
-                                <x-laravel-blade-sortable::sortable-item
-                                    sort-key="{{ $product->id }}"
-                                    class="flex items-center border border-secondary-300 bg-white rounded-md shadow-sm py-2 px-3 dark:border-secondary-700 dark:bg-secondary-800"
-                                >
-                                    @if($product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
-                                        <img class="h-8 w-8 rounded object-cover object-center" src="{{ $product->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />
-                                    @else
-                                        <div class="bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center h-8 w-8 rounded">
-                                            <x-heroicon-o-photograph class="w-5 h-5 text-secondary-400" />
-                                        </div>
-                                    @endif
-                                    <span class="ml-3 truncate text-sm text-secondary-500 dark:text-secondary-400">{{ $product->name }}</span>
-                                </x-laravel-blade-sortable::sortable-item>
-                            @endforeach
-                        </x-laravel-blade-sortable::sortable>
-                    </div>
-
-                    <div class="col-span-2 flex items-center">
-                        <div class="space-y-2 flex-1">
-                            <button type="button" id="multiselect_rightSelected" class="inline-flex w-full justify-center items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-primary-700 bg-primary-100 hover:bg-primary-50 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary active:bg-primary-200 transition ease-in-out duration-150">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <button type="button" id="multiselect_leftSelected" class="inline-flex w-full justify-center items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-primary-700 bg-primary-100 hover:bg-primary-50 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary active:bg-primary-200 transition ease-in-out duration-150">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
+            <div role="list" class="text-sm font-medium text-secondary-500 divide-y divide-secondary-200 dark:text-secondary-400 dark:divide-secondary-700 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-5 lg:divide-none" wire:poll.visible>
+                @forelse($relatedProducts as $relatedProduct)
+                    <div class="flex py-6 space-x-6 lg:py-0">
+                        <img src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="{{ $relatedProduct->name }}" class="flex-none w-20 h-20 bg-secondary-100 dark:bg-secondary-900 rounded-md object-center object-cover">
+                        <div class="flex-auto space-y-2">
+                            <h3 class="text-secondary-900 dark:text-white">
+                                <a href="{{ route('shopper.products.edit', $relatedProduct) }}">
+                                    {{ $relatedProduct->name }}
+                                </a>
+                            </h3>
+                            <p class="font-medium text-secondary-500 dark:text-secondary-400">
+                                {{ $relatedProduct->formattedPrice }}
+                            </p>
+                            <button wire:click="remove({{ $relatedProduct->id }})" type="button" class="inline-flex text-red-500 text-sm leading-5 focus:outline-none hover:underline">
+                                {{ __('shopper::layout.forms.actions.remove') }}
                             </button>
                         </div>
                     </div>
-
-                    <div class="col-span-5 bg-secondary-100 rounded-md px-3 py-4 dark:bg-secondary-900">
-                        <x-laravel-blade-sortable::sortable
-                            group="products"
-                            name="related"
-                            :allow-sort="false"
-                            ghost-class="opacity-25"
-                            wire:onSortOrderChange="handleOnSortOrderChanged"
-                            style="min-height:20rem;"
-                        >
-                            @foreach($relatedProducts as $related)
-                                <x-laravel-blade-sortable::sortable-item
-                                    sort-key="{{ $related->id }}"
-                                    class="flex items-center border border-secondary-300 rounded-md shadow-sm py-2 px-3 dark:border-secondary-700 dark:bg-secondary-800"
-                                >
-                                    @if($related->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')))
-                                        <img class="h-8 w-8 rounded object-cover object-center" src="{{ $related->getFirstMediaUrl(config('shopper.system.storage.disks.uploads')) }}" alt="" />
-                                    @else
-                                        <div class="bg-secondary-200 dark:bg-secondary-700 flex items-center justify-center h-8 w-8 rounded">
-                                            <x-heroicon-o-photograph class="w-5 h-5 text-secondary-400" />
-                                        </div>
-                                    @endif
-                                    <span class="ml-3 truncate text-sm text-secondary-500 dark:text-secondary-400">{{ $related->name }}</span>
-                                </x-laravel-blade-sortable::sortable-item>
-                            @endforeach
-                        </x-laravel-blade-sortable::sortable>
+                @empty
+                    <div class="text-center lg:col-span-3">
+                        <x-heroicon-o-book-open class="mx-auto h-12 w-12 text-secondary-400" />
+                        <h3 class="mt-2 text-base font-medium text-secondary-900 dark:text-white">
+                            {{ __('shopper::pages/products.related.empty') }}
+                        </h3>
+                        <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
+                            {{ __('shopper::pages/products.related.add_content') }}
+                        </p>
+                        <div class="mt-6">
+                            <x-shopper::buttons.primary type="button" wire:click="$emit('openModal', 'shopper-modals.related-list', {{ json_encode([$product->id, $this->productsIds]) }})">
+                                <x-heroicon-s-plus class="-ml-1 mr-2 h-5 w-5" />
+                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.product'))]) }}
+                            </x-shopper::buttons.primary>
+                        </div>
                     </div>
-                </div>
-            @endif--}}
+                @endforelse
+            </div>
         </div>
     </section>
 </div>

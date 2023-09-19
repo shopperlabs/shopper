@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Console;
 
 use Exception;
@@ -7,35 +9,19 @@ use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 
-class UserCommand extends Command
+final class UserCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'shopper:admin';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Create user with admin role and all permissions.';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function handle(): void
     {
         $this->info('Create Admin User for Shopper administration panel');
         $this->createUser();
         $this->info('User created successfully.');
     }
 
-    /**
-     * Create admin user.
-     */
     protected function createUser(): void
     {
         $email = $this->ask('Email Address', 'admin@admin.com');
@@ -44,7 +30,6 @@ class UserCommand extends Command
         $password = $this->secret('Password');
         $confirmPassword = $this->secret('Confirm Password');
 
-        // Passwords don't match
         if ($password !== $confirmPassword) {
             $this->info('Passwords don\'t match');
         }
@@ -66,7 +51,7 @@ class UserCommand extends Command
             $user = tap((new $model())->forceFill($userData))->save();
 
             $user->assignRole(config('shopper.system.users.admin_role'));
-        } catch (Exception | QueryException $e) {
+        } catch (Exception|QueryException $e) {
             $this->error($e->getMessage());
         }
     }

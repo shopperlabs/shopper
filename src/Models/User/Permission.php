@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\User;
 
 use Spatie\Permission\Models\Permission as SpatiePermission;
@@ -21,21 +23,21 @@ class Permission extends SpatiePermission
     public static function groups(): array
     {
         return [
-            'system' => __('System'),
-            'brands' => __('Brands'),
-            'categories' => __('Categories'),
-            'collections' => __('Collections'),
-            'products' => __('Products'),
-            'customers' => __('Customers'),
-            'orders' => __('Orders'),
-            'discounts' => __('Discounts'),
+            'system' => __('shopper::words.system'),
+            'brands' => __('shopper::layout.sidebar.brands'),
+            'categories' => __('shopper::layout.sidebar.categories'),
+            'collections' => __('shopper::layout.sidebar.collections'),
+            'products' => __('shopper::layout.sidebar.products'),
+            'customers' => __('shopper::layout.sidebar.customers'),
+            'orders' => __('shopper::layout.sidebar.orders'),
+            'discounts' => __('shopper::layout.sidebar.discounts'),
         ];
     }
 
     /**
      * Generate permissions for the group name.
      */
-    public static function generate(string $item, ?string $group = null): void
+    public static function generate(string $item, string $group = null): void
     {
         self::query()->firstOrCreate([
             'name' => 'browse_' . $item,

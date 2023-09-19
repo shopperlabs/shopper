@@ -1,49 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Console;
 
 use Illuminate\Console\Command;
 use Shopper\Framework\Providers\ShopperServiceProvider;
-use Spatie\Analytics\AnalyticsServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 class InstallCommand extends Command
 {
-    /**
-     * @var ProgressBar
-     */
-    protected $progressBar;
+    protected ProgressBar $progressBar;
 
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'shopper:install';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Install Shopper e-commerce administration';
 
-    /**
-     * Create a new command instance.
-     */
     public function __construct()
     {
         parent::__construct();
 
         if (file_exists(config_path('shopper/system.php'))) {
-            $this->setHidden(true);
+            $this->setHidden();
         }
     }
 
-    /**
-     * Execute the console command.
-     */
     public function handle(): void
     {
         $this->progressBar = $this->output->createProgressBar(3);
@@ -57,7 +39,6 @@ class InstallCommand extends Command
         }
 
         $this->call('vendor:publish', ['--provider' => ShopperServiceProvider::class]);
-        $this->call('vendor:publish', ['--provider' => AnalyticsServiceProvider::class]);
         $this->call('vendor:publish', ['--provider' => MediaLibraryServiceProvider::class, '--tag' => 'migrations']);
         $this->progressBar->advance();
 
@@ -68,14 +49,11 @@ class InstallCommand extends Command
 
         $this->completeSetup();
 
-        if (! (bool) $this->option('no-interaction')) {
+        if (! $this->option('no-interaction')) {
             (new Thanks($this->output))();
         }
     }
 
-    /**
-     * Setup database configuration and seeder.
-     */
     protected function setupDatabaseConfig(): void
     {
         $this->info('Migrating the database tables into your application');
@@ -90,9 +68,6 @@ class InstallCommand extends Command
         usleep(350000);
     }
 
-    /**
-     * Set env variables.
-     */
     protected function addEnvVariable(): void
     {
         $env = [
@@ -126,7 +101,7 @@ class InstallCommand extends Command
         $this->comment("To create a user, run 'php artisan shopper:admin'");
     }
 
-    protected function introMessage()
+    protected function introMessage(): void
     {
         // Intro message
         $this->info('

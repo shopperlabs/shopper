@@ -1,29 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Console;
 
 use Illuminate\Console\Command;
 
-class PublishCommand extends Command
+final class PublishCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'shopper:publish {--force : Overwrite any existing files}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Publish all of the Shopper resources';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function handle(): void
     {
         $this->call('vendor:publish', [
             '--tag' => 'shopper-config',

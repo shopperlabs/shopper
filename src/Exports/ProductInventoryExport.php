@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Exports;
 
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -12,12 +15,7 @@ class ProductInventoryExport implements FromQuery, WithHeadings, WithMapping
 {
     use Exportable;
 
-    /**
-     * Product id.
-     *
-     * @var int
-     */
-    public $product;
+    public int $productId;
 
     public function headings(): array
     {
@@ -32,33 +30,28 @@ class ProductInventoryExport implements FromQuery, WithHeadings, WithMapping
         ];
     }
 
-    public function map($inventoryHistory): array
+    public function map($row): array
     {
         return [
-            $inventoryHistory->id,
-            $inventoryHistory->stockable->name,
-            $inventoryHistory->quantity,
-            $inventoryHistory->event,
-            $inventoryHistory->inventory->name,
-            $inventoryHistory->user->full_name,
-            $inventoryHistory->created_at->formatLocalized('%d %B, %Y'),
+            $row->id,
+            $row->stockable->name,
+            $row->quantity,
+            $row->event,
+            $row->inventory->name,
+            $row->user->full_name,
+            $row->created_at->formatLocalized('%d %B, %Y'),
         ];
     }
 
-    /**
-     * Get product to export all movements.
-     *
-     * @return $this
-     */
-    public function forProduct(int $product)
+    public function forProduct(int $productId): self
     {
-        $this->product = $product;
+        $this->productId = $productId;
 
         return $this;
     }
 
-    public function query()
+    public function query(): Builder
     {
-        return InventoryHistory::query()->where('stockable_id', $this->product);
+        return InventoryHistory::query()->where('stockable_id', $this->productId);
     }
 }

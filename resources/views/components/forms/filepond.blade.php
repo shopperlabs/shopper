@@ -14,7 +14,7 @@
                 allowFileTypeValidation: {{ $attributes->has('allowFileTypeValidation') ? 'true' : 'false' }},
                 acceptedFileTypes: {!! $attributes->get('acceptedFileTypes') ?? 'null' !!},
                 allowFileSizeValidation: {{ $attributes->has('allowFileSizeValidation') ? 'true' : 'false' }},
-                maxFileSize: {!! $attributes->has('maxFileSize') ? "'".$attributes->get('maxFileSize')."'" : 'null' !!},
+                maxFileSize: {!! $attributes->has('maxFileSize') ? "'" . $attributes->get('maxFileSize') . "'" : 'null' !!},
                 server: {
                     process:(fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
                         @this.upload('{{ $attributes->whereStartsWith('wire:model')->first() }}', file, load, error, progress)
@@ -43,31 +43,10 @@
                         <span class="text-xs text-secondary-900 dark:text-white">{{ $image->human_readable_size }}</span>
                     </div>
                     <div wire:loading.class.remove="hidden" wire:target="removeMedia({{ $image->id }})" class="hidden absolute h-full w-full flex items-center justify-center text-center opacity-100 focus-within:opacity-100 inset-0 z-50 bg-secondary-800 bg-opacity-75">
-                        <x-shopper-loader wire:loading wire:target="removeMedia({{ $image->id }})" class="text-white" />
+                        <x-shopper::loader wire:loading wire:target="removeMedia({{ $image->id }})" class="text-white" />
                     </div>
                 </div>
             @endforeach
         </div>
     @endif
 </div>
-
-@push('styles')
-    @once
-        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
-    @endonce
-@endpush
-
-@push('scripts')
-    @once
-        <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-        <script>
-            FilePond.registerPlugin(FilePondPluginFileValidateType);
-            FilePond.registerPlugin(FilePondPluginFileValidateSize);
-            FilePond.registerPlugin(FilePondPluginImagePreview);
-        </script>
-    @endonce
-@endpush

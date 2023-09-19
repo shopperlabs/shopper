@@ -1,48 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Reviews;
 
-use Exception;
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Framework\Models\Shop\Review;
-use WireUi\Traits\Actions;
 
 class Show extends Component
 {
-    use Actions;
-
     public Review $review;
+
     public bool $approved;
 
-    public function mount(Review $review)
+    public function mount(Review $review): void
     {
         $this->review = $review->load(['reviewrateable', 'author']);
         $this->approved = $review->approved;
     }
 
-    public function updatedApproved()
+    public function updatedApproved(): void
     {
         $this->approved = ! $this->review->approved;
         $this->review->update(['approved' => ! $this->review->approved]);
 
-        $this->notification()->success(__('Updated'), __('Review approved status updated!'));
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('shopper::pages/products.reviews.approved_message'))
+            ->success()
+            ->send();
     }
 
-    /**
-     * Remove a review from the storage.
-     *
-     * @throws Exception
-     */
-    public function remove()
-    {
-        $this->review->delete();
-
-        session()->flash('success', __('Review removed successfully.'));
-
-        $this->redirectRoute('shopper.reviews.index');
-    }
-
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.reviews.show');
     }

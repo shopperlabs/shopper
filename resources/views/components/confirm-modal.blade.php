@@ -46,23 +46,21 @@
         >
             <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
                 <button @click="confirm = false;" type="button" class="text-secondary-400 hover:text-secondary-500 focus:outline-none focus:text-secondary-500 transition ease-in-out duration-150" aria-label="Close">
-                    <svg class="h-6 w-6" x-description="Heroicon name: x" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <x-heroicon-o-x class="h-6 w-6"/>
                 </button>
             </div>
             {{ $slot }}
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <x-shopper-button wire:click="{{ $method }}" wire:loading.attr="disabled" type="button">
-                        <x-shopper-loader wire:loading wire:target="{{ $method }}" />
-                        {{ __('Confirm') }}
-                    </x-shopper-button>
+                    <x-shopper::buttons.primary wire:click="{{ $method }}" wire:loading.attr="disabled" type="button">
+                        <x-shopper::loader wire:loading wire:target="{{ $method }}" />
+                        {{ __('shopper::layout.forms.label.confirm') }}
+                    </x-shopper::buttons.primary>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <x-shopper-default-button @click="confirm = false;" type="button">
-                        {{ __('Cancel') }}
-                    </x-shopper-default-button>
+                    <x-shopper::buttons.default @click="confirm = false;" type="button">
+                        {{ __('shopper::layout.forms.actions.cancel') }}
+                    </x-shopper::buttons.default>
                 </span>
             </div>
         </div>

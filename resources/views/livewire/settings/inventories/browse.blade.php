@@ -1,12 +1,12 @@
 <div>
-    <x:shopper-breadcrumb back="shopper.settings.index">
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')">
         <x-heroicon-s-chevron-left class="shrink-0 h-5 w-5 text-secondary-400" />
-        <x-shopper-breadcrumb-link :link="route('shopper.settings.index')" title="Settings" />
-    </x:shopper-breadcrumb>
+        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+    </x-shopper::breadcrumb>
 
-    <x-shopper-heading class="mt-3">
+    <x-shopper::heading class="mt-3">
         <x-slot name="title">
-            {{ __('Locations') }}
+            {{ __('shopper::words.locations') }}
         </x-slot>
 
         <x-slot name="action">
@@ -14,26 +14,28 @@
                 @if($inventories->count() < 5)
                     <div class="flex">
                     <span class="shadow-sm rounded-md">
-                        <x-shopper-button :link="route('shopper.settings.inventories.create')">
-                            {{ __('Add location') }}
-                        </x-shopper-button>
+                        <x-shopper::buttons.primary :link="route('shopper.settings.inventories.create')">
+                            {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.location'))]) }}
+                        </x-shopper::buttons.primary>
                     </span>
                     </div>
                 @endif
             @endcan
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     <div class="mt-6">
         <div class="md:grid md:grid-cols-3 md:gap-6">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">{{ __('Locations') }}</h3>
+                    <h3 class="text-lg font-semibold leading-6 text-secondary-900 dark:text-white">
+                        {{ __('shopper::words.locations') }}
+                    </h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __('Manage the places you stock inventory, fulfill orders, and sell products.') }}
+                        {{ __('shopper::pages/settings.location.description') }}
                     </p>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
-                        {{ __('You’re using :count of 4 locations available.', ['count' => $inventories->count()]) }}
+                        {{ __('shopper::pages/settings.location.count', ['count' => $inventories->count()]) }}
                     </p>
                 </div>
             </div>
@@ -58,7 +60,7 @@
                                                     @if($inventory->is_default)
                                                         <div class="ml-2 shrink-0 flex">
                                                             <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-secondary-100 text-secondary-800 border-2 border-white dark:bg-secondary-700 dark:text-secondary-300 dark:border-secondary-800">
-                                                                {{ __('Default') }}
+                                                                {{ __('shopper::words.default') }}
                                                             </span>
                                                         </div>
                                                     @endif
@@ -75,14 +77,16 @@
                                                         </div>
                                                         <div class="mt-2 flex items-center text-sm leading-5 text-secondary-500 sm:mt-0">
                                                             <x-heroicon-s-phone class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
-                                                            {{ $inventory->phone_number ?? __('Number not set') }}
+                                                            {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
                                                         </div>
                                                     </div>
                                                     <div class="mt-2 flex items-center text-sm leading-5 text-secondary-500 sm:mt-0 dark:text-secondary-400">
                                                         <x-heroicon-s-calendar class="shrink-0 mr-1.5 h-5 w-5 text-secondary-400 dark:text-secondary-500" />
                                                         <span>
-                                                            {{ __('Added on') }}
-                                                            <time datetime="{{ $inventory->created_at->format('d-m-Y') }}">{{ $inventory->created_at->formatLocalized('%d %B %G') }}</time>
+                                                            {{ __('shopper::words.added_on') }}
+                                                            <time datetime="{{ $inventory->created_at->format('d-m-Y') }}">
+                                                                {{ $inventory->created_at->formatLocalized('%d %B %G') }}
+                                                            </time>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -98,5 +102,5 @@
         </div>
     </div>
 
-    <x-shopper-learn-more name="locations" link="https://docs.laravelshopper.io/docs/locations" />
+    <x-shopper::learn-more :name="__('shopper::words.location')" link="locations" />
 </div>

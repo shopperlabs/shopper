@@ -1,43 +1,61 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings;
 
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Framework\Models\System\Country;
 use Shopper\Framework\Models\System\Currency;
 use Shopper\Framework\Models\System\Setting;
-use WireUi\Traits\Actions;
 
 class General extends Component
 {
-    use Actions, WithFileUploads;
+    use WithFileUploads;
 
     public string $shop_name;
-    public ?string $shop_legal_name = null;
+
     public string $shop_email;
-    public ?string $shop_phone_number = null;
-    public ?string $shop_about = null;
+
     public string $shop_street_address;
+
     public string $shop_zipcode;
+
     public string $shop_city;
+
+    public ?string $shop_legal_name = null;
+
+    public ?string $shop_phone_number = null;
+
+    public ?string $shop_about = null;
+
     public ?string $shop_facebook_link = null;
+
     public ?string $shop_instagram_link = null;
+
     public ?string $shop_twitter_link = null;
+
     public ?string $shop_logo = null;
+
     public ?string $shop_cover = null;
+
     public ?int $shop_country_id = null;
+
     public ?int $shop_currency_id = null;
 
     public $logo;
+
     public $cover;
 
     protected $listeners = [
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $settings = Setting::whereIn('key', [
             'shop_name',
@@ -55,32 +73,21 @@ class General extends Component
             'shop_facebook_link',
             'shop_instagram_link',
             'shop_twitter_link',
-        ])->select('value', 'key')->get()->toArray();
+        ])->select('value', 'key')
+            ->get()
+            ->toArray();
 
         foreach ($settings as $setting) {
             $this->{$setting['key']} = $setting['value'] ?? null;
         }
     }
 
-    public function onTrixValueUpdate($value)
+    public function onTrixValueUpdate(string $value): void
     {
         $this->shop_about = $value;
     }
 
-    public function updatedShopCountryId($value)
-    {
-        $country = Country::query()->find($value);
-        $countryCurrency = array_slice($country->currencies, 0, 1);
-
-        foreach ($countryCurrency as $code => $name) {
-            $currency = Currency::where('code', $code)->first();
-            if ($currency->exists()) {
-                $this->shop_currency_id = $currency->id;
-            }
-        }
-    }
-
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -101,30 +108,37 @@ class General extends Component
         ];
 
         foreach ($keys as $key) {
-            Setting::query()->updateOrCreate(['key' => $key], [
-                'value' => $this->{$key},
-                'display_name' => Setting::lockedAttributesDisplayName($key),
-                'locked' => true,
-            ]);
+            $this->createUpdateSetting(key: $key, value: $this->{$key});
         }
 
         if ($this->logo) {
-            Setting::query()->updateOrCreate(['key' => 'shop_logo'], [
-                'value' => $this->logo->store('/', config('shopper.system.storage.disks.uploads')),
-                'display_name' => Setting::lockedAttributesDisplayName('shop_logo'),
-                'locked' => true,
-            ]);
+            $this->createUpdateSetting(
+                key: 'shop_logo',
+                value: $this->logo->store('/', config('shopper.system.storage.disks.uploads'))
+            );
         }
 
         if ($this->cover) {
-            Setting::query()->updateOrCreate(['key' => 'shop_cover'], [
-                'value' => $this->cover->store('/', config('shopper.system.storage.disks.uploads')),
-                'display_name' => Setting::lockedAttributesDisplayName('shop_cover'),
-                'locked' => true,
-            ]);
+            $this->createUpdateSetting(
+                key: 'shop_cover',
+                value: $this->cover->store('/', config('shopper.system.storage.disks.uploads'))
+            );
         }
 
-        $this->notification()->success(__('Updated'), __('Shop informations have been correctly updated!'));
+        Notification::make()
+            ->title(__('shopper::layout.status.updated'))
+            ->body(__('Shop informations have been correctly updated'))
+            ->success()
+            ->send();
+    }
+
+    public function createUpdateSetting(string $key, mixed $value): void
+    {
+        Setting::query()->updateOrCreate(['key' => $key], [
+            'value' => $value,
+            'display_name' => Setting::lockedAttributesDisplayName($key),
+            'locked' => true,
+        ]);
     }
 
     public function rules(): array
@@ -143,12 +157,12 @@ class General extends Component
         ];
     }
 
-    public function removeCover()
+    public function removeCover(): void
     {
         $this->cover = null;
     }
 
-    public function deleteCover()
+    public function deleteCover(): void
     {
         Setting::query()->updateOrCreate(['key' => 'shop_cover'], [
             'value' => null,
@@ -158,10 +172,14 @@ class General extends Component
 
         $this->shop_cover = null;
 
-        $this->notification()->success(__('Deleted'), __('Shop cover have been correctly removed!'));
+        Notification::make()
+            ->title(__('shopper::layout.status.delete'))
+            ->body(__('Shop cover have been correctly removed'))
+            ->success()
+            ->send();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.general', [
             'countries' => Cache::rememberForever('countries', fn () => Country::query()->orderBy('name')->get()),

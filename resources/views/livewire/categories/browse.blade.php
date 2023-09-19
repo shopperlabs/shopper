@@ -1,7 +1,7 @@
 <div>
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Categories') }}
+            {{ __('shopper::layout.sidebar.categories') }}
         </x-slot>
 
         <x-slot name="action">
@@ -9,21 +9,21 @@
                 @can('add_categories')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper-button :link="route('shopper.categories.create')">
-                                {{ __('Create') }}
-                            </x-shopper-button>
+                            <x-shopper::buttons.primary :link="route('shopper.categories.create')">
+                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.category'))]) }}
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan
             @endif
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
-            :title="__('Organize your products into categories')"
-            :content="__('Create and manage all your store categories to help your customers easily find products.')"
-            :button="__('Create category')"
+        <x-shopper::empty-state
+            :title="__('shopper::pages/categories.title')"
+            :content="__('shopper::pages/categories.content')"
+            :button="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.category'))])"
             permission="add_categories"
             :url="route('shopper.categories.create')"
         >
@@ -111,17 +111,13 @@
                     <path class="st1" d="M247.6 189.8H23.2c-.7 0-1.3.6-1.3 1.3 0 .7.6 1.3 1.3 1.3h224.4c.7 0 1.3-.6 1.3-1.3 0-.7-.6-1.3-1.3-1.3z"/>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6">
             <livewire:shopper-tables.categories-table />
         </div>
     @endif
 
-    <x-shopper-learn-more name="categories" link="https://docs.laravelshopper.io/docs/categories" />
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.categories')" link="categories" />
 
 </div>
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
-@endpush

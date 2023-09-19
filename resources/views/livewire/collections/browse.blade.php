@@ -1,8 +1,7 @@
 <div>
-
-    <x-shopper-heading>
+    <x-shopper::heading>
         <x-slot name="title">
-            {{ __('Collections') }}
+            {{ __('shopper::layout.sidebar.collections') }}
         </x-slot>
 
         <x-slot name="action">
@@ -10,21 +9,21 @@
                 @can('add_collections')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper-button :link="route('shopper.collections.create')">
-                                {{ __('Create') }}
-                            </x-shopper-button>
+                            <x-shopper::buttons.primary :link="route('shopper.collections.create')">
+                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.collection'))]) }}
+                            </x-shopper::buttons.primary>
                         </span>
                     </div>
                 @endcan
             @endif
         </x-slot>
-    </x-shopper-heading>
+    </x-shopper::heading>
 
     @if($total === 0)
-        <x-shopper-empty-state
-            :title="__('Organize your products into collection categories')"
-            :content="__('Create and manage all your collections to help your customers easily find products.')"
-            :button="__('Create collection')"
+        <x-shopper::empty-state
+            :title="__('shopper::pages/collections.title')"
+            :content="__('shopper::pages/collections.content')"
+            :button="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.collection'))])"
             permission="add_collections"
             :url="route('shopper.collections.create')"
         >
@@ -147,13 +146,12 @@
                     <path class="st34" d="M133.2 77.6c-.5-.2-1.1-.2-1.6-.3-.5-.1-.9-.1-1.4-.2-1-.1-2.1-.3-3.1-.4l-3-.3c-.9-.1-2.2-.4-2.9.2-.2.2-.2.6 0 .8.4.4.9.4 1.4.5.5.1.9.1 1.4.2 1 .1 2 .2 3 .4 1 .1 2 .3 3 .4.5.1.9.1 1.4.2.5.1 1.1.2 1.6.2.9-.1 1.1-1.4.2-1.7zM91.9 56.8c-.9-1.8-1.8-3.5-2.6-5.3-.4-.9-.8-1.8-1.3-2.6-.4-.7-1-2.5-2.1-2.2-1.4.4-.2 2.4.2 3.2l1.2 2.7c.8 1.8 1.7 3.6 2.6 5.3.7 1.3 2.7.2 2-1.1z"/>
                 </svg>
             </div>
-        </x-shopper-empty-state>
+        </x-shopper::empty-state>
     @else
         <div class="mt-6">
             <livewire:shopper-tables.collections-table />
         </div>
     @endif
 
-    <x-shopper-learn-more name="collections" link="https://docs.laravelshopper.io/docs/collections" />
-
+    <x-shopper::learn-more :name="__('shopper::layout.sidebar.collections')" link="collections" />
 </div>

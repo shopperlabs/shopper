@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Shop\Product;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,7 +12,8 @@ use Shopper\Framework\Models\Traits\HasSlug;
 
 class Attribute extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory;
+    use HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -46,17 +50,11 @@ class Attribute extends Model
         'type_formatted',
     ];
 
-    /**
-     * Get the table associated with the model.
-     */
     public function getTable(): string
     {
         return shopper_table('attributes');
     }
 
-    /**
-     * Return formatted type.
-     */
     public function getTypeFormattedAttribute(): string
     {
         return self::typesFields()[$this->type];
@@ -109,6 +107,21 @@ class Attribute extends Model
             'richtext',
             'datepicker',
         ];
+    }
+
+    public function scopeEnabled(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_enabled', $bool);
+    }
+
+    public function scopeSearchable(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_searchable', $bool);
+    }
+
+    public function scopeFilterable(Builder $query, bool $bool = true): Builder
+    {
+        return $query->where('is_filterable', $bool);
     }
 
     public function values(): HasMany

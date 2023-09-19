@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Livewire\Settings\Inventories;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Shopper\Framework\Http\Livewire\AbstractBaseComponent;
 use Shopper\Framework\Models\Shop\Inventory\Inventory;
@@ -11,19 +14,30 @@ use Shopper\Framework\Rules\Phone;
 class Edit extends AbstractBaseComponent
 {
     public Inventory $inventory;
+
     public int $inventoryId;
+
     public string $name;
+
     public ?string $description = null;
+
     public string $email;
+
     public string $city;
+
     public string $street_address;
+
     public ?string $street_address_plus = null;
+
     public string $zipcode;
+
     public ?string $phone_number = null;
+
     public int $country_id;
+
     public bool $isDefault = false;
 
-    public function mount(Inventory $inventory)
+    public function mount(Inventory $inventory): void
     {
         $this->inventory = $inventory;
         $this->inventoryId = $inventory->id;
@@ -56,7 +70,7 @@ class Edit extends AbstractBaseComponent
         ];
     }
 
-    public function store()
+    public function store(): void
     {
         $this->validate($this->rules());
 
@@ -78,7 +92,7 @@ class Edit extends AbstractBaseComponent
         $this->redirectRoute('shopper.settings.inventories.index');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.settings.inventories.edit', [
             'countries' => Country::query()->orderBy('name')->get(),

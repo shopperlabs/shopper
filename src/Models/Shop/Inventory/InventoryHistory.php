@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Models\Shop\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -62,7 +64,7 @@ class InventoryHistory extends Model
             return '+' . $this->old_quantity;
         }
 
-        return $this->old_quantity;
+        return (string) $this->old_quantity;
     }
 
     public function inventory(): BelongsTo

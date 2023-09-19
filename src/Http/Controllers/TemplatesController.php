@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Framework\Http\Controllers;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Shopper\Framework\Services\Mailable;
 
 class TemplatesController extends ShopperBaseController
 {
-    /**
-     * Create new template view.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create(string $type, string $name, string $skeleton)
+    public function create(string $type, string $name, string $skeleton): View
     {
         return view('shopper::pages.settings.mails.templates.create', [
             'skeleton' => Mailable::getTemplateSkeleton($type, $name, $skeleton),
@@ -21,12 +20,7 @@ class TemplatesController extends ShopperBaseController
         ]);
     }
 
-    /**
-     * Store a newly template to the resources folder.
-     *
-     * @return \Illuminate\Http\RedirectResponse|void
-     */
-    public function store(Request $request)
+    public function store(Request $request): ?RedirectResponse
     {
         $request->validate([
             'template_name' => 'required',

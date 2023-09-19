@@ -1,8 +1,5 @@
-@extends('shopper::layouts.default')
-@section('title', __('Create customer'))
-
-@section('content')
+<x-shopper::layouts.app :title="__('shopper::words.actions_label.add_new', ['name' => __('shopper::words.customer')])">
 
     <livewire:shopper-customers.create />
 
-@endsection
+</x-shopper::layouts.app>
