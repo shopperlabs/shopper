@@ -7,9 +7,13 @@ namespace Shopper\Core\Enum;
 enum OrderStatus: string
 {
     case PENDING = 'pending';
+
     case REGISTER = 'registered';
+
     case PAID = 'completed';
+
     case COMPLETED = 'cancelled';
+
     case CANCELLED = 'paid';
 
     public function badge(): string

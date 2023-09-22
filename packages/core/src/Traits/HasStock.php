@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Traits;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -12,12 +13,19 @@ use Shopper\Core\Models\InventoryHistory;
 
 trait HasStock
 {
-    public function getStockAttribute(): int
+    public function stock(): Attribute
     {
-        return $this->stock();
+        return Attribute::make(
+            get: fn () => $this->getStock(),
+        );
     }
 
-    public function stock(DateTimeInterface $date = null): int
+    public function inStock(int $quantity = 1): bool
+    {
+        return $this->stock > 0 && $this->stock >= $quantity;
+    }
+
+    public function getStock(DateTimeInterface $date = null): int
     {
         $date = $date ?: Carbon::now();
 
@@ -44,7 +52,7 @@ trait HasStock
             ->sum('quantity');
     }
 
-    public function increaseStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
+    public function mutateStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
     {
         return $this->createStockMutation($quantity, $inventoryId, $arguments);
     }
@@ -54,12 +62,7 @@ trait HasStock
         return $this->createStockMutation(-1 * abs($quantity), $inventoryId, $arguments);
     }
 
-    public function mutateStock(int $inventoryId, int $quantity = 1, array $arguments = []): InventoryHistory
-    {
-        return $this->createStockMutation($quantity, $inventoryId, $arguments);
-    }
-
-    public function clearStock(int $inventoryId = null, int $newQuantity = null, array $arguments = []): bool
+    public function clearStock(int $inventoryId = null, ?int $newQuantity = null, array $arguments = []): bool
     {
         $this->inventoryHistories()->delete();
 
@@ -68,11 +71,6 @@ trait HasStock
         }
 
         return true;
-    }
-
-    public function inStock(int $quantity = 1): bool
-    {
-        return $this->stock > 0 && $this->stock >= $quantity;
     }
 
     public function setStock(int $newQuantity, int $inventoryId, array $arguments = []): ?InventoryHistory
@@ -87,12 +85,7 @@ trait HasStock
         return $this->createStockMutation($deltaStock, $inventoryId, $arguments);
     }
 
-    public function inventoryHistories(): MorphMany
-    {
-        return $this->morphMany(InventoryHistory::class, 'stockable')->orderBy('created_at', 'desc');
-    }
-
-    protected function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
+    public function createStockMutation(int $quantity, int $inventoryId, array $arguments = []): InventoryHistory
     {
         $reference = Arr::get($arguments, 'reference');
 
@@ -110,5 +103,10 @@ trait HasStock
         })->toArray();
 
         return $this->inventoryHistories()->create($createArguments);
+    }
+
+    public function inventoryHistories(): MorphMany
+    {
+        return $this->morphMany(InventoryHistory::class, 'stockable')->orderBy('created_at', 'desc');
     }
 }

@@ -36,7 +36,7 @@ trait WithStock
 
     public function decrementStock(): void
     {
-        if (0 === $this->realStock) {
+        if ($this->realStock === 0) {
             return;
         }
 
@@ -48,18 +48,18 @@ trait WithStock
 
     public function updateCurrentStock(): void
     {
-        if (0 === $this->value) {
+        if ($this->value === 0) {
             return;
         }
 
         $this->validate(['value' => 'required|integer']);
 
         if ($this->realStock >= $this->stock) {
-            $this->product->increaseStock(
+            $this->product->mutateStock(
                 $this->inventory,
                 $this->value,
                 [
-                    'event' => __('Manually added'),
+                    'event' => __('shopper::pages/products.inventory.add'),
                     'old_quantity' => $this->value,
                 ]
             );
@@ -68,7 +68,7 @@ trait WithStock
                 $this->inventory,
                 $this->value,
                 [
-                    'event' => __('Manually removed'),
+                    'event' => __('shopper::pages/products.inventory.remove'),
                     'old_quantity' => $this->value,
                 ]
             );

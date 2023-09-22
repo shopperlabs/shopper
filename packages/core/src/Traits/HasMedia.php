@@ -17,7 +17,7 @@ trait HasMedia
         $this->addMediaCollection(config('shopper.core.storage.collection_name'))
             ->useDisk(config('shopper.core.storage.disk_name'))
             ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
-            ->useFallbackUrl(url('/shopper/images/placeholder.jpg'));
+            ->useFallbackUrl(url(config('shopper.media.fallback_url')));
     }
 
     public function registerMediaConversions(Media $media = null): void
