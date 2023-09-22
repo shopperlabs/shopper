@@ -5,7 +5,7 @@
         </div>
         <div class="px-4 py-3 bg-white dark:bg-secondary-800 text-secondary-500 dark:text-secondary-400 text-sm leading-5">
             {{ __('shopper::components.learn_more') }}
-            <a href="https://laravelshopper.dev/{{ $link }}" target="_blank" class="ml-1 inline-flex items-center text-primary-600 hover:text-primary-500 transition-colors duration-150 ease-in-out">
+            <a href="https://laravelshopper.dev/docs/2.x/{{ $link }}" target="_blank" class="ml-1 inline-flex items-center text-primary-600 hover:text-primary-500 transition-colors duration-150 ease-in-out">
                 {{ $name }}
                 <x-untitledui-arrow-circle-broken-right class="w-5 h-5 ml-2 text-secondary-500 dark:text-secondary-400" stroke-width="1.5" />
             </a>

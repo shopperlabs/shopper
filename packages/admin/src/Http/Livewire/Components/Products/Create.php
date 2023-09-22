@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\Ecommerce\BrandRepository;
 use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
 use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
@@ -74,6 +75,7 @@ class Create extends AbstractBaseComponent
     {
         $this->validate($this->rules());
 
+        /** @var Product $product */
         $product = (new ProductRepository())->create([
             'name' => $this->name,
             'slug' => $this->name,
@@ -86,7 +88,7 @@ class Create extends AbstractBaseComponent
             'price_amount' => $this->price_amount,
             'cost_amount' => $this->cost_amount,
             'type' => $this->type,
-            'requires_shipping' => $this->requiresShipping,
+            'require_shipping' => $this->requiresShipping,
             'backorder' => $this->backorder,
             'published_at' => $this->publishedAt ?? now(),
             'seo_title' => $this->seoTitle,
@@ -104,31 +106,26 @@ class Create extends AbstractBaseComponent
 
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
-                // @phpstan-ignore-next-line
                 fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.core.storage.collection_name'))
             );
         }
 
         if (collect($this->category_ids)->isNotEmpty()) {
-            // @phpstan-ignore-next-line
             $product->categories()->attach($this->category_ids);
         }
 
         if (collect($this->collection_ids)->isNotEmpty()) {
-            // @phpstan-ignore-next-line
             $product->collections()->attach($this->collection_ids);
         }
 
-        // @phpstan-ignore-next-line
         $product->channels()->attach($this->defaultChannel->id);
 
         if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
-                // @phpstan-ignore-next-line
                 $product->mutateStock(
-                    $inventory,
-                    (int) $value,
-                    [
+                    inventoryId: $inventory,
+                    quantity: (int) $value,
+                    arguments: [
                         'event' => __('shopper::pages/products.inventory.initial'),
                         'old_quantity' => $value,
                     ]
