@@ -27,7 +27,7 @@ return new class() extends Migration
             $table->enum('type', ['deliverable', 'downloadable'])->nullable();
             $table->boolean('backorder')->default(false);
             $table->boolean('requires_shipping')->default(false);
-            $table->dateTimeTz('published_at')->default(now())->nullable();
+            $table->dateTimeTz('published_at')->default(now());
 
             $this->addSeoFields($table);
             $this->addShippingFields($table);
