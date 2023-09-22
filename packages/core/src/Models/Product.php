@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Contracts\ReviewRateable;
+use Shopper\Core\Enum\Dimension\Length;
+use Shopper\Core\Enum\Dimension\Volume;
+use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Helpers\Price;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasMedia;
@@ -28,6 +31,8 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
  * @property int|null $price_amount
  * @property int|null $old_price_amount
  * @property int|null $cost_amount
+ * @property \Carbon\Carbon|null $published_at
+ * @property-read int $stock
  */
 class Product extends Model implements SpatieHasMedia, ReviewRateable
 {
@@ -48,6 +53,10 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
         'requires_shipping' => 'boolean',
         'backorder' => 'boolean',
         'published_at' => 'datetime',
+        'depth_unit' => Length::class,
+        'height_unit' => Length::class,
+        'volume_unit' => Volume::class,
+        'weight_unit' => Weight::class,
     ];
 
     public function getTable(): string
@@ -112,7 +121,7 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
         return Price::from($this->cost_amount);
     }
 
-    public function getVariationsStockAttribute(): int
+    public function variationsStock(): Attribute
     {
         $stock = 0;
 
@@ -122,7 +131,9 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
             }
         }
 
-        return $stock;
+        Return Attribute::make(
+            get: fn () => $stock,
+        );
     }
 
     public function scopePublish(Builder $query): Builder

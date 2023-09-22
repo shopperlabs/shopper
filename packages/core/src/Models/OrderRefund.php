@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Enum\OrderRefundStatus;
 
-class OrderRefund extends Model
+final class OrderRefund extends Model
 {
     use HasFactory;
 

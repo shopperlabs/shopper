@@ -18,7 +18,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property string|null $link_url
  * @property string|null $instructions
  */
-class PaymentMethod extends Model
+final class PaymentMethod extends Model
 {
     use HasFactory;
     use HasSlug;

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @property-read int $id
@@ -22,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $phone_number
  * @property bool $is_default
  */
-class Inventory extends Model
+final class Inventory extends Model
 {
     use HasFactory;
 
@@ -52,6 +53,11 @@ class Inventory extends Model
     public function getTable(): string
     {
         return shopper_table('inventories');
+    }
+
+    public function scopeDefault(Builder $query): Builder
+    {
+        return $query->where('is_default', true);
     }
 
     public function country(): BelongsTo

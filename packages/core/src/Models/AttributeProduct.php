@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AttributeProduct extends Model
+/**
+ * @property-read int $id
+ * @property string|null $attribute_custom_value
+ * @property AttributeValue|null $value
+ */
+final class AttributeProduct extends Model
 {
     use HasFactory;
 
@@ -27,10 +32,10 @@ class AttributeProduct extends Model
         return shopper_table('attribute_product');
     }
 
-    public function realValue(): AttributeCast
+    protected function realValue(): AttributeCast
     {
         return AttributeCast::make(
-            get: fn () => $this->attribute_custom_value ?? $this->value->value,
+            get: fn () => $this->attribute_custom_value ?? $this->value?->value,
         );
     }
 

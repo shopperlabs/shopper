@@ -22,7 +22,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property string|null $icon
  * @property \Illuminate\Database\Eloquent\Collection|array $values
  */
-class Attribute extends Model
+final class Attribute extends Model
 {
     use HasFactory;
     use HasSlug;
