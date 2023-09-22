@@ -15,16 +15,3 @@ if (! function_exists('is_active')) {
         return (bool) call_user_func_array([app('router'), 'is'], $routes);
     }
 }
-
-if (! function_exists('isoToEmoji')) {
-    function isoToEmoji(string $code): string
-    {
-        return implode(
-            '',
-            array_map(
-                fn (string $letter) => mb_chr(ord($letter) % 32 + 0x1F1E5),
-                mb_str_split($code)
-            )
-        );
-    }
-}

@@ -16,7 +16,9 @@ use Shopper\Facades\Shopper;
 if (! function_exists('generate_number')) {
     function generate_number(): string
     {
-        $lastOrder = Order::query()->orderBy('id', 'desc')->limit(1)->first();
+        $lastOrder = Order::query()->orderBy('id', 'desc')
+            ->limit(1)
+            ->first();
 
         $generator = [
             'start_sequence_from' => 1,
@@ -46,7 +48,7 @@ if (! function_exists('shopper_version')) {
 if (! function_exists('shopper_table')) {
     function shopper_table(string $table): string
     {
-        if ('' !== config('shopper.core.table_prefix')) {
+        if (config('shopper.core.table_prefix') !== '') {
             return config('shopper.core.table_prefix') . $table;
         }
 
@@ -120,17 +122,32 @@ if (! function_exists('shopper_setting')) {
 }
 
 if (! function_exists('useTryCatch')) {
-    function useTryCatch(Closure $closure): array
+    function useTryCatch(Closure $closure, ?Closure $catchable = null): array
     {
         $result = null;
         $throwable = null;
 
+        $catch = $catchable ?? fn (Throwable $exception) => $exception;
+
         try {
             $result = $closure();
         } catch (Throwable $exception) {
-            $throwable = $exception;
+            $throwable = $catch($exception);
         }
 
         return [$throwable, $result];
+    }
+}
+
+if (! function_exists('isoToEmoji')) {
+    function isoToEmoji(string $code): string
+    {
+        return implode(
+            '',
+            array_map(
+                fn (string $letter) => mb_chr(ord($letter) % 32 + 0x1F1E5),
+                mb_str_split($code)
+            )
+        );
     }
 }
