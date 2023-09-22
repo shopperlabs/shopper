@@ -37,4 +37,15 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Fallback image URL
+    |--------------------------------------------------------------------------
+    |
+    | If your media collection does not contain any items, this image should be displayed
+    |
+    */
+
+    'fallback' => '/shopper/images/placeholder.jpg',
+
 ];

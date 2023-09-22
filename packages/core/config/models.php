@@ -2,12 +2,6 @@
 
 declare(strict_types=1);
 
-use Shopper\Core\Models\Brand;
-use Shopper\Core\Models\Category;
-use Shopper\Core\Models\Channel;
-use Shopper\Core\Models\Collection;
-use Shopper\Core\Models\Product;
-
 return [
 
     /*
@@ -21,7 +15,7 @@ return [
     |
     */
 
-    'brand' => Brand::class,
+    'brand' => \Shopper\Core\Models\Brand::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -34,20 +28,20 @@ return [
     |
     */
 
-    'category' => Category::class,
+    'category' => \Shopper\Core\Models\Category::class,
 
     /*
     |--------------------------------------------------------------------------
     | Collection Model
     |--------------------------------------------------------------------------
     |
-    | Eloquent model should be used to retrieve your collections.  Of course,
+    | Eloquent model should be used to retrieve your collections. Of course,
     | if you want to change this to use a custom model, your model needs to extends the
     | \Shopper\Core\Models\Collection model.
     |
     */
 
-    'collection' => Collection::class,
+    'collection' => \Shopper\Core\Models\Collection::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -60,19 +54,19 @@ return [
     |
     */
 
-    'product' => Product::class,
+    'product' => \Shopper\Core\Models\Product::class,
 
     /*
     |--------------------------------------------------------------------------
     | Channel Model
     |--------------------------------------------------------------------------
     |
-    | Eloquent model should be used to retrieve your products. Of course,
+    | Eloquent model should be used to retrieve your channels. Of course,
     | If you want to change this to use a custom model, your model needs to extends the
     | \Shopper\Core\Models\Channel model.
     |
     */
 
-    'channel' => Channel::class,
+    'channel' => \Shopper\Core\Models\Channel::class,
 
 ];
