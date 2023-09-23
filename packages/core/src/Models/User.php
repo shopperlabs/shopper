@@ -25,6 +25,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $email
  * @property string $avatar_type
  * @property string|null $avatar_location
+ * @property string|null $phone_number
  * @property Carbon|null $email_verified_at
  * @property Carbon|null $birth_date
  * @property string|null $two_factor_recovery_codes

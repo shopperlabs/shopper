@@ -131,7 +131,7 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
             }
         }
 
-        Return Attribute::make(
+        return Attribute::make(
             get: fn () => $stock,
         );
     }

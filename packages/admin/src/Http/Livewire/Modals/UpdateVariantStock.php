@@ -22,8 +22,8 @@ class UpdateVariantStock extends ModalComponent
     public function mount(int $id): void
     {
         $this->product = $variant = (new ProductRepository())->getById($id);
-        $this->stock = $variant->stock; // @phpstan-ignore-line
-        $this->realStock = $variant->stock; // @phpstan-ignore-line
+        $this->stock = $variant->stock;
+        $this->realStock = $variant->stock;
     }
 
     public static function modalMaxWidth(): string

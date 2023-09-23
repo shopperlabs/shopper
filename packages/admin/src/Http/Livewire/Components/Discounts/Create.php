@@ -63,7 +63,7 @@ class Create extends AbstractBaseComponent
             'end_at' => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
-        if ('products' === $this->apply) {
+        if ($this->apply === 'products') {
             // Associate the discount to all the selected products.
             foreach ($this->selectedProducts as $productId) {
                 DiscountDetail::query()->create([
@@ -75,7 +75,7 @@ class Create extends AbstractBaseComponent
             }
         }
 
-        if ('customers' === $this->eligibility) {
+        if ($this->eligibility === 'customers') {
             // Associate the discount to all the selected users.
             foreach ($this->selectedCustomers as $customerId) {
                 DiscountDetail::query()->create([

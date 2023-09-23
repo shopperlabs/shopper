@@ -36,11 +36,11 @@ class Browse extends Component
             'total' => Discount::query()->count(),
             'discounts' => Discount::query()->where('code', 'like', '%' . $this->search . '%')
                 ->where(function (Builder $query): void {
-                    if (null !== $this->isActive) {
+                    if ($this->isActive !== null) {
                         $query->where('is_active', (bool) ($this->isActive));
                     }
 
-                    if (null !== $this->date) {
+                    if ($this->date !== null) {
                         $query->whereDate('start_at', $this->date)
                             ->orWhereDate('end_at', $this->date);
                     }

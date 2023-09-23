@@ -6,6 +6,7 @@ namespace Shopper\Http\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
@@ -31,7 +32,7 @@ class ProductsLists extends ModalComponent
         return '2xl';
     }
 
-    public function getProductsProperty()
+    public function getProductsProperty(): Collection
     {
         return (new ProductRepository())
             ->where('name', '%' . $this->search . '%', 'like')

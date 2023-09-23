@@ -62,7 +62,7 @@ trait HasStock
         return $this->createStockMutation(-1 * abs($quantity), $inventoryId, $arguments);
     }
 
-    public function clearStock(int $inventoryId = null, ?int $newQuantity = null, array $arguments = []): bool
+    public function clearStock(int $inventoryId = null, int $newQuantity = null, array $arguments = []): bool
     {
         $this->inventoryHistories()->delete();
 

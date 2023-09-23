@@ -89,7 +89,9 @@ class AttributesTable extends DataTableComponent
     public function disabled(): void
     {
         if (count($this->getSelected()) > 0) {
-            Attribute::query()->whereIn('id', $this->getSelected())->update(['is_enabled' => false]);
+            Attribute::query()
+                ->whereIn('id', $this->getSelected())
+                ->update(['is_enabled' => false]);
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))

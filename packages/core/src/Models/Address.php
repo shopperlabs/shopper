@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -67,16 +68,18 @@ final class Address extends Model
         return shopper_table('user_addresses');
     }
 
-    public function getFullNameAttribute(): string
+    public function fullName(): Attribute
     {
-        return $this->last_name
-            ? $this->first_name . ' ' . $this->last_name
-            : $this->first_name;
+        return Attribute::make(
+            get: fn () => $this->first_name
+                ? $this->first_name . ' ' . $this->last_name
+                : $this->last_name
+        );
     }
 
     public function isDefault(): bool
     {
-        return true === $this->is_default;
+        return $this->is_default === true;
     }
 
     public function user(): BelongsTo

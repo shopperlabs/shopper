@@ -30,7 +30,7 @@ class DeleteProduct extends ModalComponent
 
         event(new ProductDeleted($product));
 
-        if ('product' === $this->type) {
+        if ($this->type === 'product') {
             $product->delete();
         } else {
             $product->forceDelete();

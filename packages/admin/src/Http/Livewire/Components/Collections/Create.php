@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Core\Enum\CollectionType;
+use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\CollectionRule;
 use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
 use Shopper\Core\Traits\Attributes\WithConditions;
@@ -63,6 +64,7 @@ class Create extends Component
     {
         $this->validate($this->rules());
 
+        /** @var Collection $collection */
         $collection = (new CollectionRepository())->create([
             'name' => $this->name,
             'slug' => $this->name,
@@ -75,14 +77,13 @@ class Create extends Component
         ]);
 
         if ($this->fileUrl) {
-            // @phpstan-ignore-next-line
             $collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
         if ($this->type === CollectionType::AUTO->value && count($this->conditions) > 0 && $this->rule) {
             foreach ($this->rule as $key => $value) {
                 CollectionRule::query()->create([
-                    'collection_id' => $collection->id, // @phpstan-ignore-line
+                    'collection_id' => $collection->id,
                     'rule' => $this->rule[$key],
                     'operator' => $this->operator[$key],
                     'value' => $this->value[$key],

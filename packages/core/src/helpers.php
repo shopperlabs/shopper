@@ -122,7 +122,7 @@ if (! function_exists('shopper_setting')) {
 }
 
 if (! function_exists('useTryCatch')) {
-    function useTryCatch(Closure $closure, ?Closure $catchable = null): array
+    function useTryCatch(Closure $closure, Closure $catchable = null): array
     {
         $result = null;
         $throwable = null;

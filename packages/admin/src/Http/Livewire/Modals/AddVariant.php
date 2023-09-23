@@ -7,6 +7,7 @@ namespace Shopper\Http\Livewire\Modals;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
+use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Repositories\InventoryRepository;
 use Shopper\Http\Livewire\Components\Products\WithAttributes;
@@ -51,6 +52,7 @@ class AddVariant extends ModalComponent
     {
         $this->validate($this->rules());
 
+        /** @var Product $product */
         $product = (new ProductRepository())->create([
             'name' => $this->name,
             'slug' => $this->name,
@@ -67,14 +69,12 @@ class AddVariant extends ModalComponent
 
         if (collect($this->files)->isNotEmpty()) {
             collect($this->files)->each(
-                // @phpstan-ignore-next-line
                 fn ($file) => $product->addMedia($file)->toMediaCollection(config('shopper.core.storage.collection_name'))
             );
         }
 
         if ($this->quantity && count($this->quantity) > 0) {
             foreach ($this->quantity as $inventory => $value) {
-                // @phpstan-ignore-next-line
                 $product->mutateStock(
                     $inventory,
                     (int) $value,

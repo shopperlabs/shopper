@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Shopper\Core\Models\User;
 use Shopper\Core\Rules\RealEmailValidator;
 use Shopper\Traits\HasAuthenticated;
 
@@ -29,12 +30,13 @@ class Profile extends Component
 
     public function mount(): void
     {
+        /** @var User $user */
         $user = $this->getUser();
 
-        $this->first_name = $user->first_name; // @phpstan-ignore-line
-        $this->last_name = $user->last_name; // @phpstan-ignore-line
-        $this->email = $user->email; // @phpstan-ignore-line
-        $this->phone_number = $user->phone_number; // @phpstan-ignore-line
+        $this->first_name = $user->first_name;
+        $this->last_name = $user->last_name;
+        $this->email = $user->email;
+        $this->phone_number = $user->phone_number;
     }
 
     public function updatedPicture(): void

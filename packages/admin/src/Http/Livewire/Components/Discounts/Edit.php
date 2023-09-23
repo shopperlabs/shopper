@@ -99,7 +99,7 @@ class Edit extends AbstractBaseComponent
 
     public function store(): void
     {
-        if ('none' !== $this->minRequired) {
+        if ($this->minRequired !== 'none') {
             $this->validate(['minRequiredValue' => 'required']);
         }
 
@@ -116,7 +116,7 @@ class Edit extends AbstractBaseComponent
             'value' => $this->value,
             'apply_to' => $this->apply,
             'min_required' => $this->minRequired,
-            'min_required_value' => 'none' !== $this->minRequired ? $this->minRequiredValue : null,
+            'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
             'usage_limit_per_user' => $this->usage_limit_per_user,
@@ -124,7 +124,7 @@ class Edit extends AbstractBaseComponent
             'end_at' => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
-        if ('products' === $this->apply) {
+        if ($this->apply === 'products') {
             $this->discount->items()
                 ->where('condition', 'apply_to')
                 ->whereNotIn('discountable_id', $this->selectedProducts)
@@ -143,7 +143,7 @@ class Edit extends AbstractBaseComponent
             $this->discount->items()->where('condition', 'apply_to')->delete();
         }
 
-        if ('customers' === $this->eligibility) {
+        if ($this->eligibility === 'customers') {
             $this->discount->items()
                 ->where('condition', 'eligibility')
                 ->whereNotIn('discountable_id', $this->selectedCustomers)
