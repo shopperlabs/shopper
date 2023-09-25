@@ -7,7 +7,6 @@ namespace Shopper\Http\Livewire\Modals;
 use Illuminate\Contracts\View\View;
 use Livewire\WithPagination;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\Ecommerce\ProductRepository;
 use Shopper\Core\Repositories\InventoryHistoryRepository;
 use Shopper\Core\Repositories\InventoryRepository;
@@ -22,10 +21,9 @@ class UpdateVariantStock extends ModalComponent
 
     public function mount(int $id): void
     {
-        /** @var Product $variant */
         $this->product = $variant = (new ProductRepository())->getById($id);
-        $this->stock = $variant->stock;
-        $this->realStock = $variant->stock;
+        $this->stock = $variant->stock; // @phpstan-ignore-line
+        $this->realStock = $variant->stock; // @phpstan-ignore-line
     }
 
     public static function modalMaxWidth(): string
