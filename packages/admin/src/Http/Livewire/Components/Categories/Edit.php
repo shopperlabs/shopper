@@ -52,7 +52,7 @@ class Edit extends AbstractBaseComponent implements HasForm
             $this->category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
-        session()->flash('success', __('shopper::pages/categories.notifications.updated'));
+        session()->flash('success', __('shopper::notifications.actions.update', ['item' => __('shopper::words.category')]));
 
         $this->redirectRoute('shopper.categories.index');
     }

@@ -94,7 +94,7 @@ class Create extends Component
             $this->resetConditionsFields();
         }
 
-        session()->flash('success', __('Collection successfully added!'));
+        session()->flash('success', __('shopper::notifications.actions.create', ['item' => __('shopper::words.collection')]));
 
         $this->redirectRoute('shopper.collections.edit', $collection);
     }

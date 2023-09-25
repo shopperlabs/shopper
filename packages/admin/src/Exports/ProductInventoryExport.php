@@ -21,12 +21,12 @@ final class ProductInventoryExport implements FromQuery, WithHeadings, WithMappi
     {
         return [
             '#',
-            __('Product'),
-            __('Stock'),
-            __('Event'),
-            __('Inventory'),
-            __('User'),
-            __('Date'),
+            __('shopper::words.product'),
+            __('shopper::words.stock'),
+            __('shopper::words.event'),
+            __('shopper::words.location'),
+            __('shopper::words.user'),
+            __('shopper::words.date'),
         ];
     }
 

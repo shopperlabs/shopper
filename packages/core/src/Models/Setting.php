@@ -47,9 +47,9 @@ final class Setting extends Model
             'shop_phone_number' => __('shopper::layout.forms.label.phone_number'),
             'shop_lng' => __('shopper::layout.forms.label.longitude'),
             'shop_lat' => __('shopper::layout.forms.label.latitude'),
-            'shop_facebook_link' => __('Facebook'),
-            'shop_instagram_link' => __('Twitter'),
-            'shop_twitter_link' => __('Instagram'),
+            'shop_facebook_link' => __('shopper::words.socials.facebook'),
+            'shop_instagram_link' => __('shopper::words.socials.twitter'),
+            'shop_twitter_link' => __('shopper::words.socials.instagram'),
             'google_analytics_add_js' => __('shopper::layout.forms.label.ga_additional_script'),
         ][$key];
     }

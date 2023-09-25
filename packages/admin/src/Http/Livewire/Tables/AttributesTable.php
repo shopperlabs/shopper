@@ -57,7 +57,7 @@ class AttributesTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.delete'))
-                ->body(__('The attribute has successfully removed!'))
+                ->body(__('shopper::notifications.attributes.remove'))
                 ->success()
                 ->send();
         }
@@ -76,7 +76,7 @@ class AttributesTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('The attribute has successfully enabled!'))
+                ->body(__('shopper::notifications.attributes.enable'))
                 ->success()
                 ->send();
         }
@@ -95,7 +95,7 @@ class AttributesTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('The attribute has successfully disabled!'))
+                ->body(__('shopper::notifications.attributes.disable'))
                 ->success()
                 ->send();
         }

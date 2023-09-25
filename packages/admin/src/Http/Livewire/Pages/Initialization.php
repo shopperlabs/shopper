@@ -127,7 +127,7 @@ final class Initialization extends Component
 
         $this->storeHasSetup();
 
-        session()->flash('success', __('Store successfully setup, you can now manage everything.'));
+        session()->flash('success', __('shopper::notifications.initialize'));
 
         $this->redirectRoute('shopper.dashboard');
     }

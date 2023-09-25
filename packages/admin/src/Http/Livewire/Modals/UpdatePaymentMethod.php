@@ -70,7 +70,7 @@ class UpdatePaymentMethod extends ModalComponent
 
         Notification::make()
             ->title(__('shopper::components.tables.status.updated'))
-            ->body(__('Your payment method have been correctly updated'))
+            ->body(__('shopper::notifications.payment.update'))
             ->success()
             ->send();
 

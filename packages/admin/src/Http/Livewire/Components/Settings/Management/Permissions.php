@@ -30,16 +30,14 @@ class Permissions extends Component
             $this->role->revokePermissionTo($permission->name);
 
             Notification::make()
-                ->title(__('Revoke Permission'))
-                ->body(__('Permission :permission has been revoked to this role.', ['permission' => $permission->display_name]))
+                ->body(__('shopper::notifications.users_roles.permission_revoke', ['permission' => $permission->display_name]))
                 ->success()
                 ->send();
         } else {
             $this->role->givePermissionTo($permission->name);
 
             Notification::make()
-                ->title(__('Allow Permission'))
-                ->body(__('Permission :permission has been given to this role.', ['permission' => $permission->display_name]))
+                ->body(__('shopper::notifications.users_roles.permission_allow', ['permission' => $permission->display_name]))
                 ->success()
                 ->send();
         }
@@ -50,8 +48,7 @@ class Permissions extends Component
         Permission::query()->find($id)->delete();
 
         Notification::make()
-            ->title(__('Deleted'))
-            ->body(__('The permission has been correctly removed'))
+            ->body(__('shopper::notifications.actions.remove', ['item' => __('shopper::words.permission')]))
             ->success()
             ->send();
     }

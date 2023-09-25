@@ -21,7 +21,7 @@ class DeleteRole extends ModalComponent
     {
         Role::query()->find($this->roleId)->delete();
 
-        session()->flash('success', __('Role deleted successfully.'));
+        session()->flash('success', __('shopper::notifications.users_roles.role_deleted'));
 
         $this->redirectRoute('shopper.settings.users');
     }

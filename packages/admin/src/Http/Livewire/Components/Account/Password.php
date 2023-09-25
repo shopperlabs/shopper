@@ -32,12 +32,11 @@ class Password extends Component
             $this->reset('current_password', 'password', 'password_confirmation');
 
             Notification::make()
-                ->title(__('Password Changed!'))
-                ->body(__('You have been successfully updated your password!'))
+                ->body(__('shopper::notifications.users_roles.password_changed'))
                 ->success()
                 ->send();
         } else {
-            session()->flash('error', __('That is not your current password.'));
+            session()->flash('error', __('shopper::notifications.users_roles.current_password'));
         }
     }
 

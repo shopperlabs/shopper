@@ -76,8 +76,7 @@ class Analytics extends Component
         }
 
         Notification::make()
-            ->title(__('shopper::layout.status.updated'))
-            ->body(__('Your analytics configurations have been correctly updated'))
+            ->body(__('shopper::notifications.analytics'))
             ->success()
             ->send();
     }

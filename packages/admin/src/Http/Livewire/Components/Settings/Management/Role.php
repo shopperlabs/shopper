@@ -32,11 +32,8 @@ class Role extends Component
         $this->validate([
             'name' => [
                 'required',
-                Rule::unique('roles', 'name')->ignore($this->role->id),
+                Rule::unique(config('permission.table_names')['roles'], 'name')->ignore($this->role->id),
             ],
-        ], [
-            'name.required' => __('The role name is required.'),
-            'name.unique' => __('This name is already used.'),
         ]);
 
         RoleModel::query()->find($this->role->id)->update([
@@ -46,8 +43,7 @@ class Role extends Component
         ]);
 
         Notification::make()
-            ->title(__('shopper::components.tables.status.updated'))
-            ->body(__('Role updated successfully'))
+            ->body(__('shopper::notifications.actions.update', ['item' => __('shopper::words.role')]))
             ->success()
             ->send();
     }

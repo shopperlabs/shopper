@@ -38,7 +38,7 @@ class Create extends AbstractBaseComponent
 
     public function store(): void
     {
-        if ('none' !== $this->minRequired) {
+        if ($this->minRequired !== 'none') {
             $this->validate(['minRequiredValue' => 'required']);
         }
 
@@ -55,7 +55,7 @@ class Create extends AbstractBaseComponent
             'value' => $this->value,
             'apply_to' => $this->apply,
             'min_required' => $this->minRequired,
-            'min_required_value' => 'none' !== $this->minRequired ? $this->minRequiredValue : null,
+            'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
             'usage_limit_per_user' => $this->usage_limit_per_user,

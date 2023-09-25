@@ -9,6 +9,11 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Core\Enum\OrderStatus;
+use Shopper\Core\Events\Orders\AddNote;
+use Shopper\Core\Events\Orders\Cancel;
+use Shopper\Core\Events\Orders\Completed;
+use Shopper\Core\Events\Orders\Paid;
+use Shopper\Core\Events\Orders\Registered;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Order;
 
@@ -31,7 +36,7 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::CANCELLED->value]);
 
-        event(new \Shopper\Core\Events\Orders\Cancel($this->order));
+        event(new Cancel($this->order));
 
         Notification::make()
             ->body(__('shopper::pages/orders.notifications.cancelled'))
@@ -45,7 +50,7 @@ class Show extends Component
 
         $this->order->update(['notes' => $this->notes]);
 
-        event(new \Shopper\Core\Events\Orders\AddNote($this->order));
+        event(new AddNote($this->order));
 
         Notification::make()
             ->body(__('shopper::pages/orders.notifications.note_added'))
@@ -57,7 +62,7 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::REGISTER->value]);
 
-        event(new \Shopper\Core\Events\Orders\Registered($this->order));
+        event(new Registered($this->order));
 
         Notification::make()
             ->body(__('shopper::pages/orders.notifications.registered'))
@@ -69,7 +74,7 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::PAID->value]);
 
-        event(new \Shopper\Core\Events\Orders\Paid($this->order));
+        event(new Paid($this->order));
 
         Notification::make()
             ->body(__('shopper::pages/orders.notifications.paid'))
@@ -81,7 +86,7 @@ class Show extends Component
     {
         $this->order->update(['status' => OrderStatus::COMPLETED->value]);
 
-        event(new \Shopper\Core\Events\Orders\Completed($this->order));
+        event(new Completed($this->order));
 
         Notification::make()
             ->body(__('shopper::pages/orders.notifications.completed'))

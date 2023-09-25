@@ -59,11 +59,7 @@ class Profile extends Component
     {
         $this->validate(['firstName' => 'sometimes|required']);
 
-        $this->updateValue(
-            'first_name',
-            $this->firstName,
-            __('Customer First name updated successfully.')
-        );
+        $this->updateValue(field: 'first_name', value: $this->firstName);
 
         $this->firstNameUpdate = false;
         $this->emit('profileUpdate');
@@ -73,11 +69,7 @@ class Profile extends Component
     {
         $this->validate(['lastName' => 'sometimes|required']);
 
-        $this->updateValue(
-            'last_name',
-            $this->lastName,
-            __('Customer Last name updated successfully.')
-        );
+        $this->updateValue(field: 'last_name', value: $this->lastName);
 
         $this->lastNameUpdate = false;
         $this->emit('profileUpdate');
@@ -94,11 +86,7 @@ class Profile extends Component
             ],
         ]);
 
-        $this->updateValue(
-            'email',
-            $this->email,
-            __('Customer Email address updated successfully.')
-        );
+        $this->updateValue(field: 'email', value: $this->email);
 
         $this->emailUpdate = false;
         $this->emit('profileUpdate');
@@ -112,11 +100,7 @@ class Profile extends Component
 
     public function saveBirthDate(): void
     {
-        $this->updateValue(
-            'birth_date',
-            $this->birthDate,
-            __('Customer birth date updated successfully.')
-        );
+        $this->updateValue(field: 'birth_date', value: $this->birthDate);
 
         $this->birthDateUpdate = false;
         $this->birthDateFormatted = $this->customer->birth_date_formatted;
@@ -124,22 +108,14 @@ class Profile extends Component
 
     public function saveGender(): void
     {
-        $this->updateValue(
-            'gender',
-            $this->gender,
-            __('Customer gender updated successfully.')
-        );
+        $this->updateValue(field: 'gender', value: $this->gender);
 
         $this->genderUpdate = false;
     }
 
     public function updatedOptIn(): void
     {
-        $this->updateValue(
-            'opt_in',
-            $this->optIn,
-            __("You have updated the customer's marketing email subscription.")
-        );
+        $this->updateValue(field: 'opt_in', value: $this->optIn);
     }
 
     public function render(): View
@@ -147,13 +123,12 @@ class Profile extends Component
         return view('shopper::livewire.customers.profile');
     }
 
-    private function updateValue(string $field, mixed $value, string $message): void
+    private function updateValue(string $field, mixed $value): void
     {
         $this->customer->update([$field => $value]);
 
         Notification::make()
-            ->title(__('shopper::layout.status.updated'))
-            ->body($message)
+            ->body(__('shopper::notifications.actions.update', ['item' => __('shopper::words.customer')]))
             ->success()
             ->send();
     }

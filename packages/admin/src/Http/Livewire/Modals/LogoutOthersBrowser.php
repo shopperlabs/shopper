@@ -25,7 +25,7 @@ class LogoutOthersBrowser extends ModalComponent
 
         // @phpstan-ignore-next-line
         if (! Hash::check($this->password, auth()->user()->password)) {
-            throw ValidationException::withMessages(['password' => [__('This password does not match our records.')]]);
+            throw ValidationException::withMessages(['password' => [__('shopper::notifications.auth.password')]]);
         }
 
         $guard->logoutOtherDevices($this->password); // @phpstan-ignore-line

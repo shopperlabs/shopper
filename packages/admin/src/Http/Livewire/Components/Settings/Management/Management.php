@@ -25,7 +25,6 @@ class Management extends Component
         $this->dispatchBrowserEvent('user-removed');
 
         Notification::make()
-            ->title(__('shopper::layout.forms.actions.deleted'))
             ->body(__('shopper::notifications.users_roles.admin_deleted'))
             ->success()
             ->send();

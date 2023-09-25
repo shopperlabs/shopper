@@ -98,7 +98,7 @@ class CreateAdminUser extends AbstractBaseComponent
             $user->notify(new AdminSendCredentials($this->password));
         }
 
-        session()->flash('success', __('Admin :user added successfully.', ['user' => $user->full_name])); // @phpstan-ignore-line
+        session()->flash('success', __('shopper::notifications.actions.create', ['item' => $user->full_name])); // @phpstan-ignore-line
 
         $this->redirectRoute('shopper.settings.users');
     }

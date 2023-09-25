@@ -15,6 +15,7 @@ return [
     'review' => 'Review',
     'account' => 'Account',
     'users' => 'Users',
+    'user' => 'User',
     'analytics' => 'Analytics',
     'system' => 'System',
     'purchased' => 'Purchased',
@@ -25,6 +26,9 @@ return [
     'per_page_items' => 'Per page items',
     'not_available' => 'Not available',
     'available' => 'Available',
+    'stock' => 'Stock',
+    'permission' => 'Permission',
+    'role' => 'Role',
 
     'payment_method' => 'Payment Method',
     'shipping_method' => 'Shipping method',

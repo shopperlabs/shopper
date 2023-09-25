@@ -39,12 +39,12 @@ final class ResetPassword extends Component
         ]);
 
         $response = $this->broker()->reset(
-            [
+            credentials: [
                 'token' => $this->token,
                 'email' => $this->email,
                 'password' => $this->password,
             ],
-            function ($user, string $password): void {
+            callback: function ($user, string $password): void {
                 $user->password = Hash::make($password);
                 $user->save();
 
@@ -52,7 +52,7 @@ final class ResetPassword extends Component
             }
         );
 
-        if (Password::PASSWORD_RESET === $response) {
+        if ($response === Password::PASSWORD_RESET) {
             $this->redirectRoute('shopper.dashboard');
         }
 

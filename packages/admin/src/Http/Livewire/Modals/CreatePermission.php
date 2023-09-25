@@ -47,8 +47,7 @@ class CreatePermission extends ModalComponent
         $this->dispatchBrowserEvent('permission-added');
 
         Notification::make()
-            ->title(__('Saved'))
-            ->body(__('A new permission has been create and add to this role!'))
+            ->body(__('shopper::notifications.users_roles.permission_add'))
             ->success()
             ->send();
 

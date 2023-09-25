@@ -70,7 +70,7 @@ class Create extends AbstractBaseComponent
             $customer->notify(new CustomerSendCredentials($this->password));
         }
 
-        session()->flash('success', __('Customer successfully added!'));
+        session()->flash('success', __('shopper::notifications.actions.create', ['item' => __('shopper::words.customer')]));
 
         $this->redirectRoute('shopper.customers.show', $customer);
     }
@@ -96,7 +96,10 @@ class Create extends AbstractBaseComponent
     public function render(): View
     {
         return view('shopper::livewire.customers.create', [
-            'countries' => Cache::get('countries-settings', fn () => Country::orderBy('name')->get()),
+            'countries' => Cache::get(
+                key: 'countries-settings',
+                default: fn () => Country::query()->orderBy('name')->get()
+            ),
         ]);
     }
 }

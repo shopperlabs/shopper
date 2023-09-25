@@ -47,8 +47,7 @@ final class Single extends Component
         $this->media = null;
 
         Notification::make()
-            ->title(__('Removed'))
-            ->body(__('Media removed from the storage.'))
+            ->body(__('shopper::notifications.actions.remove', ['item' => __('shopper::words.media')]))
             ->success()
             ->send();
     }

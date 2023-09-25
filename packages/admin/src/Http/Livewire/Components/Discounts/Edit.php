@@ -38,7 +38,7 @@ class Edit extends AbstractBaseComponent
         $this->apply = $discount->apply_to;
         $this->eligibility = $discount->eligibility;
         $this->usage_limit = $discount->usage_limit;
-        $this->usage_number = null !== $discount->usage_limit;
+        $this->usage_number = $discount->usage_limit !== null;
         $this->usage_limit_per_user = $discount->usage_limit_per_user;
         $this->is_active = $discount->is_active;
         $this->dateStart = $discount->start_at->format('Y-m-d H:m');
@@ -53,9 +53,11 @@ class Edit extends AbstractBaseComponent
                 ->where('condition', 'eligibility')
                 ->get();
             $customers = collect();
+
             foreach ($customerConditions as $customerCondition) {
                 $customers->push($customerCondition->discountable);
             }
+
             $this->selectedCustomers = $customers->pluck('id')->all();
 
             $this->customers = (new UserRepository())
@@ -70,9 +72,11 @@ class Edit extends AbstractBaseComponent
                 ->where('condition', 'apply_to')
                 ->get();
             $products = collect();
+
             foreach ($productConditions as $productCondition) {
                 $products->push($productCondition->discountable);
             }
+
             $this->selectedProducts = $products->pluck('id')->all();
 
             $this->products = (new ProductRepository())

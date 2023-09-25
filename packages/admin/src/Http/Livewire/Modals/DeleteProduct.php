@@ -30,17 +30,13 @@ class DeleteProduct extends ModalComponent
 
         event(new ProductDeleted($product));
 
+        session()->flash('success', __('shopper::notifications.products.remove', ['item' => $this->type]));
+
         if ($this->type === 'product') {
             $product->delete();
-        } else {
-            $product->forceDelete();
-        }
-
-        session()->flash('success', __('The :item has been correctly removed.', ['item' => $this->type]));
-
-        if ('product' === $this->type) {
             $this->redirectRoute('shopper.products.index');
         } else {
+            $product->forceDelete();
             $this->redirect($this->route);
         }
     }

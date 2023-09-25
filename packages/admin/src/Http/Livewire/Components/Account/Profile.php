@@ -79,8 +79,7 @@ class Profile extends Component
         $this->emit('updatedProfile');
 
         Notification::make()
-            ->title(__('Profile Updated'))
-            ->body(__('Your profile have been successfully updated!'))
+            ->body(__('shopper::notifications.users_roles.profile_update'))
             ->success()
             ->send();
     }

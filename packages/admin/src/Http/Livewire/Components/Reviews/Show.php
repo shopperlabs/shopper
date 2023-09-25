@@ -27,7 +27,6 @@ class Show extends Component
         $this->review->update(['approved' => ! $this->review->approved]);
 
         Notification::make()
-            ->title(__('shopper::layout.status.updated'))
             ->body(__('shopper::pages/products.reviews.approved_message'))
             ->success()
             ->send();

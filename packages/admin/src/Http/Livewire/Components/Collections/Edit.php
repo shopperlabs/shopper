@@ -92,7 +92,7 @@ class Edit extends AbstractBaseComponent
             $this->collection->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
-        session()->flash('success', __('Collection successfully updated!'));
+        session()->flash('success', __('shopper::notifications.actions.update', ['item' => __('shopper::words.collection')]));
 
         $this->redirectRoute('shopper.collections.index');
     }
