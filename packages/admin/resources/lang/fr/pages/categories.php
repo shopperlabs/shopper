@@ -10,9 +10,4 @@ return [
     'empty_parent' => 'Pas de catégorie parente',
     'parent' => 'dans :parent',
 
-    'notifications' => [
-        'created' => 'Catégorie ajoutée avec succès!',
-        'updated' => 'Catégorie mise à jour avec succès!',
-    ],
-
 ];

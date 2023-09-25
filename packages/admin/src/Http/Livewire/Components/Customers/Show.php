@@ -53,7 +53,7 @@ class Show extends AbstractBaseComponent
             'first_name' => $this->first_name,
         ]);
 
-        session()->flash('success', __('Customer successfully updated!'));
+        session()->flash('success', __('shopper::notifications.actions.update', ['item' => __('shopper::words.customer')]));
 
         $this->redirectRoute('shopper.customers.index');
     }

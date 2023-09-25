@@ -20,7 +20,7 @@ use Shopper\Core\Traits\HasPrice;
  * @property OrderStatus $status
  * @property int $shipping_total
  */
-class Order extends Model
+final class Order extends Model
 {
     use HasFactory;
     use HasPrice;

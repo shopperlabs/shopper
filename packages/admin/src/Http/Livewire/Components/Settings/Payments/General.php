@@ -20,13 +20,14 @@ class General extends Component
 
     public function toggleStatus(int $id, int $status): void
     {
-        PaymentMethod::query()->find($id)->update(['is_enabled' => ! (1 === $status)]);
+        PaymentMethod::query()
+            ->find($id)
+            ->update(['is_enabled' => ! ($status === 1)]);
 
         $this->dispatchBrowserEvent('toggle-saved-' . $id);
 
         Notification::make()
-            ->title(__('shopper::layout.status.updated'))
-            ->body(__('Your payment method status have been correctly updated'))
+            ->body(__('shopper::notifications.payment.update'))
             ->success()
             ->send();
     }
@@ -38,8 +39,7 @@ class General extends Component
         $this->dispatchBrowserEvent('item-update');
 
         Notification::make()
-            ->title(__('Deleted'))
-            ->body(__('Your payment method have been correctly removed'))
+            ->body(__('shopper::notifications.actions.remove', ['item' => __('shopper::words.payment_method')]))
             ->success()
             ->send();
     }

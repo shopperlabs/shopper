@@ -9,9 +9,4 @@ return [
 
     'empty_brand' => 'Aucune marque',
 
-    'notifications' => [
-        'created' => 'Marque ajoutée avec succès !',
-        'updated' => 'Marque mise à jour avec succès !',
-    ],
-
 ];

@@ -6,6 +6,12 @@ namespace Shopper\Core\Models;
 
 use Spatie\Permission\Models\Permission as SpatiePermission;
 
+/**
+ * @property-read int $id
+ * @property string $name
+ * @property string|null $display_name
+ * @property bool $can_be_removed
+ */
 final class Permission extends SpatiePermission
 {
     protected $casts = [

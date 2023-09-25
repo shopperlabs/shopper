@@ -6,7 +6,7 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+final class Country extends Model
 {
     public $timestamps = false;
 

@@ -29,8 +29,7 @@ class Terms extends Component
         $this->storeValues(__($this->title), $this->content, $this->isEnabled);
 
         Notification::make()
-            ->title(__('shopper::layout.status.updated'))
-            ->body(__('Your terms of use has been successfully updated'))
+            ->body(__('shopper::notifications.legal'))
             ->success()
             ->send();
     }

@@ -93,7 +93,6 @@ class Variant extends Component
         $this->emitSelf('onVariantUpdated');
 
         Notification::make()
-            ->title(__('shopper::layout.status.updated'))
             ->body(__('shopper::pages/products.notifications.variation_update'))
             ->success()
             ->send();

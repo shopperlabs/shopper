@@ -54,7 +54,6 @@ class Variants extends Component
         $this->dispatchBrowserEvent('item-removed');
 
         Notification::make()
-            ->title(__('shopper::layout.status.delete'))
             ->body(__('shopper::pages/products.notifications.variation_delete'))
             ->success()
             ->send();

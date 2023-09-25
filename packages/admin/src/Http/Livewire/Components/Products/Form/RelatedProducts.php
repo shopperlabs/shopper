@@ -32,7 +32,6 @@ class RelatedProducts extends Component
         $this->emitSelf('onProductsAddInRelated');
 
         Notification::make()
-            ->title(__('shopper::layout.status.delete'))
             ->body(__('shopper::pages/products.notifications.remove_related'))
             ->success()
             ->send();

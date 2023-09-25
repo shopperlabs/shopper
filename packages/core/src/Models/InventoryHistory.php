@@ -4,12 +4,22 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class InventoryHistory extends Model
+/**
+ * @property-read int $id
+ * @property int $quantity
+ * @property int $old_quantity
+ * @property string|null $event
+ * @property string|null $description
+ * @property int $user_id
+ * @property int $inventory_id
+ */
+final class InventoryHistory extends Model
 {
     use HasFactory;
 
@@ -19,11 +29,11 @@ class InventoryHistory extends Model
         'reference_type',
         'reference_id',
         'inventory_id',
+        'user_id',
         'event',
         'quantity',
         'old_quantity',
         'description',
-        'user_id',
     ];
 
     protected $appends = [
@@ -35,14 +45,13 @@ class InventoryHistory extends Model
         return shopper_table('inventory_histories');
     }
 
-    public function getAdjustmentAttribute(): string
+    public function adjustment(): Attribute
     {
-        // @phpstan-ignore-next-line
-        if ($this->old_quantity > 0) {
-            return '+' . $this->old_quantity;
-        }
-
-        return (string) $this->old_quantity;
+        return Attribute::make(
+            get: fn () => $this->old_quantity > 0
+                ? '+' . $this->old_quantity
+                : $this->old_quantity
+        );
     }
 
     public function inventory(): BelongsTo

@@ -25,7 +25,7 @@ class ConfirmPassword extends ModalComponent
     {
         if (! app(ConfirmPasswordAction::class)(Shopper::auth(), Shopper::auth()->user(), $this->confirmablePassword)) {
             throw ValidationException::withMessages([
-                'confirmable_password' => [__('This password does not match our records.')],
+                'confirmable_password' => [__('shopper::notifications.auth.password')],
             ]);
         }
 

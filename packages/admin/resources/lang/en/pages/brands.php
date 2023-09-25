@@ -9,9 +9,4 @@ return [
 
     'empty_brand' => 'No brand',
 
-    'notifications' => [
-        'created' => 'Brand successfully added!',
-        'updated' => 'Brand successfully updated!',
-    ],
-
 ];

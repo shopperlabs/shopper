@@ -15,14 +15,15 @@ final class CoreServiceProvider extends ServiceProvider
     protected array $configFiles = [
         'core',
         'media',
+        'models',
     ];
 
     protected string $root = __DIR__ . '/..';
 
     public function boot(): void
     {
-        setlocale(LC_TIME, config('shopper.core.locale'));
-        Carbon::setLocale(config('shopper.core.locale'));
+        setlocale(LC_ALL, config('app.locale'));
+        Carbon::setLocale(config('app.locale'));
     }
 
     public function register(): void

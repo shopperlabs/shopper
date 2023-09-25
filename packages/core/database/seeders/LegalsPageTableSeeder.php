@@ -16,28 +16,28 @@ final class LegalsPageTableSeeder extends Seeder
 
         Legal::query()->create([
             'title' => $title = __('shopper::pages/settings.legal.refund'),
-            'slug' => str_slug($title),
+            'slug' => $title,
             'is_enabled' => true,
             'content' => null,
         ]);
 
         Legal::query()->create([
             'title' => $title = __('shopper::pages/settings.legal.privacy'),
-            'slug' => str_slug($title),
+            'slug' => $title,
             'is_enabled' => true,
             'content' => null,
         ]);
 
         Legal::query()->create([
             'title' => $title = __('shopper::pages/settings.legal.terms_of_use'),
-            'slug' => str_slug($title),
+            'slug' => $title,
             'is_enabled' => true,
             'content' => null,
         ]);
 
         Legal::query()->create([
             'title' => $title = __('shopper::pages/settings.legal.shipping'),
-            'slug' => str_slug($title),
+            'slug' => $title,
             'is_enabled' => true,
             'content' => null,
         ]);

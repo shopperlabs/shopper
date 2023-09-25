@@ -30,7 +30,7 @@ class Create extends AbstractBaseComponent implements HasForm
             $category->addMedia($this->fileUrl)->toMediaCollection(config('shopper.core.storage.collection_name'));
         }
 
-        session()->flash('success', __('shopper::pages/categories.notifications.created'));
+        session()->flash('success', __('shopper::notifications.actions.create', ['item' => __('shopper::words.category')]));
 
         $this->redirectRoute('shopper.categories.index');
     }

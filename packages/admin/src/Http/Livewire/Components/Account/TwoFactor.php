@@ -41,7 +41,7 @@ class TwoFactor extends Component
         $this->showingRecoveryCodes = true;
 
         Notification::make()
-            ->body(__('You have successfully enabled two-factor authentication.'))
+            ->body(__('shopper::notifications.users_roles.two_factor_enabled'))
             ->success()
             ->send();
     }
@@ -66,7 +66,7 @@ class TwoFactor extends Component
         $this->showingRecoveryCodes = true;
 
         Notification::make()
-            ->body(__('You have successfully regenerated your two-factor authentication recovery codes.'))
+            ->body(__('shopper::notifications.users_roles.two_factor_generate'))
             ->success()
             ->send();
     }
@@ -80,7 +80,7 @@ class TwoFactor extends Component
         $disable(Shopper::auth()->user());
 
         Notification::make()
-            ->body(__('You have successfully disabled two-factor authentication.'))
+            ->body(__('shopper::notifications.users_roles.two_factor_disabled'))
             ->success()
             ->send();
     }

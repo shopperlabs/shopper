@@ -126,8 +126,7 @@ class General extends Component
         }
 
         Notification::make()
-            ->title(__('shopper::layout.status.updated'))
-            ->body(__('Shop informations have been correctly updated'))
+            ->body(__('shopper::notifications.store_info'))
             ->success()
             ->send();
     }
@@ -173,8 +172,7 @@ class General extends Component
         $this->shop_cover = null;
 
         Notification::make()
-            ->title(__('shopper::layout.status.delete'))
-            ->body(__('Shop cover have been correctly removed'))
+            ->body(__('shopper::notifications.store_info'))
             ->success()
             ->send();
     }
@@ -182,8 +180,14 @@ class General extends Component
     public function render(): View
     {
         return view('shopper::livewire.settings.general', [
-            'countries' => Cache::rememberForever('countries', fn () => Country::query()->orderBy('name')->get()),
-            'currencies' => Cache::rememberForever('currencies', fn () => Currency::all()),
+            'countries' => Cache::rememberForever(
+                key: 'countries',
+                callback: fn () => Country::query()->orderBy('name')->get()
+            ),
+            'currencies' => Cache::rememberForever(
+                key: 'currencies',
+                callback: fn () => Currency::all()
+            ),
         ]);
     }
 }

@@ -62,7 +62,6 @@ class Inventory extends Component
         ]);
 
         Notification::make()
-            ->title(__('shopper::layout.status.updated'))
             ->body(__('shopper::pages/products.notifications.stock_update'))
             ->success()
             ->send();

@@ -19,10 +19,7 @@ class CreateRole extends ModalComponent
 
     public function save(): void
     {
-        $this->validate(['name' => 'required|unique:roles'], [
-            'name.required' => __('The role name is required.'),
-            'name.unique' => __('This name is already used.'),
-        ]);
+        $this->validate(['name' => 'required|unique:' . config('permission.table_names')['roles']]);
 
         Role::create([
             'name' => $this->name,

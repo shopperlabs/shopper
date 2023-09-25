@@ -117,6 +117,8 @@ return [
         'empty' => 'No adjustments made to inventory.',
         'movement' => 'Quantity Movement',
         'initial' => 'Initial inventory',
+        'add' => 'Manually added',
+        'remove' => 'Manually removed',
     ],
 
     'seo' => [

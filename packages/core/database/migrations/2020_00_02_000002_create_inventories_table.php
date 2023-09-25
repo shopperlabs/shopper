@@ -34,11 +34,10 @@ return new class() extends Migration
             $this->addCommonFields($table);
 
             $table->morphs('stockable');
-            $table->string('reference_type')->nullable();
-            $table->unsignedBigInteger('reference_id')->nullable();
+            $table->nullableMorphs('reference');
             $table->integer('quantity');
             $table->integer('old_quantity')->default(0);
-            $table->text('event')->nullable();
+            $table->string('event', 75)->nullable();
             $table->text('description')->nullable();
 
             $this->addForeignKey($table, 'inventory_id', $this->getTableName('inventories'), false);

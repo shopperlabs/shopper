@@ -22,22 +22,21 @@ class UsersRole extends Component
         $this->dispatchBrowserEvent('user-removed');
 
         Notification::make()
-            ->title(__('Deleted'))
-            ->body(__('Admin deleted successfully'))
+            ->body(__('shopper::notifications.users_roles.admin_deleted'))
             ->success()
             ->send();
     }
 
     public function render(): View
     {
-        $users = (new UserRepository())
-            ->makeModel()
-            ->whereHas('roles', function (Builder $query): void {
-                $query->where('name', $this->role->name);
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('shopper::livewire.settings.management.users-role', compact('users'));
+        return view('shopper::livewire.settings.management.users-role', [
+            'users' => (new UserRepository())
+                ->makeModel()
+                ->whereHas('roles', function (Builder $query): void {
+                    $query->where('name', $this->role->name);
+                })
+                ->orderBy('created_at', 'desc')
+                ->get(),
+        ]);
     }
 }

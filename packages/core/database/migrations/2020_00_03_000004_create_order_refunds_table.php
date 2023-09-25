@@ -15,7 +15,7 @@ return new class() extends Migration
 
             $table->longText('refund_reason')->nullable();
             $table->string('refund_amount')->nullable();
-            $table->enum('status', ['pending', 'treatment', 'partial-refund', 'refunded', 'cancelled', 'rejected'])->default('pending');
+            $table->string('status')->default(\Shopper\Core\Enum\OrderRefundStatus::PENDING->value);
             $table->longText('notes');
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);

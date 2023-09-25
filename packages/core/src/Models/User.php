@@ -6,6 +6,7 @@ namespace Shopper\Core\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,9 +18,14 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property-read int $id
+ * @property-read string $full_name
+ * @property-read string $picture
  * @property string|null $first_name
  * @property string $last_name
  * @property string $email
+ * @property string $avatar_type
+ * @property string|null $avatar_location
+ * @property string|null $phone_number
  * @property Carbon|null $email_verified_at
  * @property Carbon|null $birth_date
  * @property string|null $two_factor_recovery_codes
@@ -81,34 +87,36 @@ class User extends Authenticatable
 
     public function isVerified(): bool
     {
-        return null !== $this->email_verified_at;
+        return $this->email_verified_at !== null;
     }
 
-    public function getFullNameAttribute(): string
+    public function fullName(): Attribute
     {
-        return $this->first_name
-            ? $this->first_name . ' ' . $this->last_name
-            : $this->last_name;
+        return Attribute::make(
+            get: fn () => $this->first_name
+                ? $this->first_name . ' ' . $this->last_name
+                : $this->last_name
+        );
     }
 
-    public function getBirthDateFormattedAttribute(): string
+    public function birthDateFormatted(): Attribute
     {
-        if ($this->birth_date) {
-            return $this->birth_date->formatLocalized('%d, %B %Y');
-        }
-
-        return __('shopper::words.not_defined');
+        return Attribute::make(
+            get: fn () => $this->birth_date
+                ? $this->birth_date->isoFormat('%d, %B %Y')
+                : __('shopper::words.not_defined')
+        );
     }
 
-    public function getRolesLabelAttribute(): string
+    public function rolesLabel(): Attribute
     {
         $roles = $this->roles()->pluck('display_name')->toArray();
 
-        if (count($roles)) {
-            return implode(', ', array_map(fn ($item) => ucwords($item), $roles));
-        }
-
-        return 'N/A';
+        return Attribute::make(
+            get: fn () => count($roles)
+                ? implode(', ', array_map(fn ($item) => ucwords($item), $roles))
+                : 'N/A'
+        );
     }
 
     public function scopeResearch(Builder $query, $term): Builder

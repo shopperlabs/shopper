@@ -34,6 +34,7 @@ class CreatePermission extends ModalComponent
             'display_name' => 'required|max:75',
         ]);
 
+        /** @var Permission $permission */
         $permission = Permission::query()->create([
             'name' => $this->name,
             'group_name' => $this->group,
@@ -46,8 +47,7 @@ class CreatePermission extends ModalComponent
         $this->dispatchBrowserEvent('permission-added');
 
         Notification::make()
-            ->title(__('Saved'))
-            ->body(__('A new permission has been create and add to this role!'))
+            ->body(__('shopper::notifications.users_roles.permission_add'))
             ->success()
             ->send();
 

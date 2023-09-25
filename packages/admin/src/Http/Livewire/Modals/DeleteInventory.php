@@ -24,7 +24,7 @@ class DeleteInventory extends ModalComponent
     {
         Inventory::query()->find($this->inventoryId)->delete();
 
-        session()->flash('success', __('Inventory Successfully removed.'));
+        session()->flash('success', __('shopper::notifications.inventory.removed'));
 
         $this->redirectRoute('shopper.settings.inventories.index');
     }

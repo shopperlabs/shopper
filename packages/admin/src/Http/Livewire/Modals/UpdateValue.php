@@ -24,6 +24,7 @@ class UpdateValue extends ModalComponent
 
     public function mount(string $name, string $type, int $id): void
     {
+        /** @var AttributeValue $value */
         $value = AttributeValue::query()->find($id);
 
         $this->valueId = $id;

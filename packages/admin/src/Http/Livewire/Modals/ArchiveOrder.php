@@ -21,7 +21,7 @@ class ArchiveOrder extends ModalComponent
     {
         $this->order->delete();
 
-        session()->flash('success', __('Order successfully archived'));
+        session()->flash('success', __('shopper::notifications.orders.archived'));
 
         $this->redirectRoute('shopper.orders.index');
     }

@@ -57,7 +57,7 @@ class AttributesTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.delete'))
-                ->body(__('The attribute has successfully removed!'))
+                ->body(__('shopper::notifications.attributes.remove'))
                 ->success()
                 ->send();
         }
@@ -76,7 +76,7 @@ class AttributesTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('The attribute has successfully enabled!'))
+                ->body(__('shopper::notifications.attributes.enable'))
                 ->success()
                 ->send();
         }
@@ -89,11 +89,13 @@ class AttributesTable extends DataTableComponent
     public function disabled(): void
     {
         if (count($this->getSelected()) > 0) {
-            Attribute::query()->whereIn('id', $this->getSelected())->update(['is_enabled' => false]);
+            Attribute::query()
+                ->whereIn('id', $this->getSelected())
+                ->update(['is_enabled' => false]);
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.updated'))
-                ->body(__('The attribute has successfully disabled!'))
+                ->body(__('shopper::notifications.attributes.disable'))
                 ->success()
                 ->send();
         }

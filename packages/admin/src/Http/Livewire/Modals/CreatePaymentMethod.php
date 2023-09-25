@@ -52,8 +52,7 @@ class CreatePaymentMethod extends ModalComponent
         }
 
         Notification::make()
-            ->title(__('Saved'))
-            ->body(__('Your payment method have been correctly added!'))
+            ->body(__('shopper::notifications.payment.add'))
             ->success()
             ->send();
 

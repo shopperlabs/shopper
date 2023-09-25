@@ -26,7 +26,7 @@ class Channel extends Model
         return shopper_table('channels');
     }
 
-    public function scopeIsDefault(Builder $query): Builder
+    public function scopeDefault(Builder $query): Builder
     {
         return $query->where('is_default', true);
     }

@@ -37,6 +37,7 @@ return [
     | Shops Livewire Components
     |--------------------------------------------------------------------------
     */
+
     'attributes.browse' => Components\Attributes\Browse::class,
     'attributes.create' => Components\Attributes\Create::class,
     'attributes.edit' => Components\Attributes\Edit::class,

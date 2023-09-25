@@ -38,7 +38,7 @@ final class Text extends Component
             ->where('product_id', $this->productId)
             ->where('attribute_id', $this->attributeId)
             ->first();
-        $this->value = $this->model?->attribute_custom_value; // @phpstan-ignore-line
+        $this->value = $this->model?->attribute_custom_value;
     }
 
     public function onTrixValueUpdate(string $value): void

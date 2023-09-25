@@ -45,7 +45,7 @@ class CollectionsTable extends DataTableComponent
 
             Notification::make()
                 ->title(__('shopper::components.tables.status.delete'))
-                ->body(__('The attribute has successfully disabled!'))
+                ->body(__('shopper::components.tables.messages.delete', ['name' => mb_strtolower(__('shopper::words.collection'))]))
                 ->success()
                 ->send();
         }

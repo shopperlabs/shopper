@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Traits;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Storage;
 
 trait HasProfilePhoto
 {
-    public function getPictureAttribute(): string
+    public function picture(): Attribute
     {
-        if ('storage' === $this->avatar_type) {
-            return Storage::disk(config('shopper.core.storage.disk_name'))->url($this->avatar_location);
-        }
-
-        return $this->defaultProfilePhotoUrl();
+        return Attribute::make(
+            get: fn () => $this->avatar_type === 'storage'
+                ? Storage::disk(config('shopper.core.storage.disk_name'))->url($this->avatar_location)
+                : $this->defaultProfilePhotoUrl()
+        );
     }
 
     protected function defaultProfilePhotoUrl(): string

@@ -14,8 +14,12 @@
                       <span class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white dark:ring-secondary-700"></span>
                     </span>
                     <span class="flex min-w-0 flex-1 flex-col">
-                        <span class="text-secondary-900 dark:text-white text-sm font-medium truncate">{{ $user->full_name }}</span>
-                        <span class="text-secondary-500 dark:text-secondary-400 text-sm truncate">{{ $user->email }}</span>
+                        <span class="text-secondary-900 dark:text-white text-sm font-medium truncate">
+                            {{ $user->full_name }}
+                        </span>
+                        <span class="text-secondary-500 dark:text-secondary-400 text-sm truncate">
+                            {{ $user->email }}
+                        </span>
                     </span>
                 </span>
                 <x-untitledui-dots-vertical class="h-5 w-5 flex-shrink-0 text-secondary-400 group-hover:text-secondary-500 dark:text-secondary-500 dark:group-hover:text-secondary-400" />

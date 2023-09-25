@@ -10,7 +10,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | The menu for the generation of the page settings and layout.
-    | BladeUIKit Heroicon is the icon used. See https://blade-ui-kit.com/blade-icons?set=1
+    | BladeUIKit UntitledUI is the icon used. See https://blade-ui-kit.com/blade-icons?set=74
     |
     */
 

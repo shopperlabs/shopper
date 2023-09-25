@@ -38,7 +38,7 @@ class Edit extends AbstractBaseComponent
         $this->apply = $discount->apply_to;
         $this->eligibility = $discount->eligibility;
         $this->usage_limit = $discount->usage_limit;
-        $this->usage_number = null !== $discount->usage_limit;
+        $this->usage_number = $discount->usage_limit !== null;
         $this->usage_limit_per_user = $discount->usage_limit_per_user;
         $this->is_active = $discount->is_active;
         $this->dateStart = $discount->start_at->format('Y-m-d H:m');
@@ -53,9 +53,11 @@ class Edit extends AbstractBaseComponent
                 ->where('condition', 'eligibility')
                 ->get();
             $customers = collect();
+
             foreach ($customerConditions as $customerCondition) {
                 $customers->push($customerCondition->discountable);
             }
+
             $this->selectedCustomers = $customers->pluck('id')->all();
 
             $this->customers = (new UserRepository())
@@ -70,9 +72,11 @@ class Edit extends AbstractBaseComponent
                 ->where('condition', 'apply_to')
                 ->get();
             $products = collect();
+
             foreach ($productConditions as $productCondition) {
                 $products->push($productCondition->discountable);
             }
+
             $this->selectedProducts = $products->pluck('id')->all();
 
             $this->products = (new ProductRepository())
@@ -99,7 +103,7 @@ class Edit extends AbstractBaseComponent
 
     public function store(): void
     {
-        if ('none' !== $this->minRequired) {
+        if ($this->minRequired !== 'none') {
             $this->validate(['minRequiredValue' => 'required']);
         }
 
@@ -116,7 +120,7 @@ class Edit extends AbstractBaseComponent
             'value' => $this->value,
             'apply_to' => $this->apply,
             'min_required' => $this->minRequired,
-            'min_required_value' => 'none' !== $this->minRequired ? $this->minRequiredValue : null,
+            'min_required_value' => $this->minRequired !== 'none' ? $this->minRequiredValue : null,
             'eligibility' => $this->eligibility,
             'usage_limit' => $this->usage_limit ?? null,
             'usage_limit_per_user' => $this->usage_limit_per_user,
@@ -124,7 +128,7 @@ class Edit extends AbstractBaseComponent
             'end_at' => $this->dateEnd ? Carbon::createFromFormat('Y-m-d H:i', $this->dateEnd)->toDateTimeString() : null,
         ]);
 
-        if ('products' === $this->apply) {
+        if ($this->apply === 'products') {
             $this->discount->items()
                 ->where('condition', 'apply_to')
                 ->whereNotIn('discountable_id', $this->selectedProducts)
@@ -143,7 +147,7 @@ class Edit extends AbstractBaseComponent
             $this->discount->items()->where('condition', 'apply_to')->delete();
         }
 
-        if ('customers' === $this->eligibility) {
+        if ($this->eligibility === 'customers') {
             $this->discount->items()
                 ->where('condition', 'eligibility')
                 ->whereNotIn('discountable_id', $this->selectedCustomers)

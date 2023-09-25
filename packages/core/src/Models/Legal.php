@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Traits\HasSlug;
 
-class Legal extends Model
+final class Legal extends Model
 {
     use HasSlug;
 

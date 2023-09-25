@@ -9,10 +9,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
+/**
+ * @property-read int $id
+ * @property string $type
+ * @property string $name
+ * @property string $slug
+ * @property string|null $description
+ */
 class Collection extends Model implements SpatieHasMedia
 {
     use HasFactory;
@@ -32,17 +40,17 @@ class Collection extends Model implements SpatieHasMedia
 
     public function scopeManual(Builder $query): Builder
     {
-        return $query->where('type', 'manual');
+        return $query->where('type', CollectionType::MANUAL->value);
     }
 
     public function scopeAutomatic(Builder $query): Builder
     {
-        return $query->where('type', 'auto');
+        return $query->where('type', CollectionType::AUTO->value);
     }
 
     public function isAutomatic(): bool
     {
-        return 'auto' === $this->type; // @phpstan-ignore-line
+        return $this->type === CollectionType::AUTO->value;
     }
 
     public function isManual(): bool

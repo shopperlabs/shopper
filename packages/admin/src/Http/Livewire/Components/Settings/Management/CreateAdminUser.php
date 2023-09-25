@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Shopper\Core\Models\Role;
+use Shopper\Core\Models\User;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Core\Rules\Phone;
 use Shopper\Core\Rules\RealEmailValidator;
@@ -78,6 +79,7 @@ class CreateAdminUser extends AbstractBaseComponent
     {
         $this->validate($this->rules(), $this->messages());
 
+        /** @var User $user */
         $user = (new UserRepository())->create([
             'email' => $this->email,
             'first_name' => $this->first_name,
@@ -88,15 +90,16 @@ class CreateAdminUser extends AbstractBaseComponent
             'email_verified_at' => now()->toDateTimeString(),
         ]);
 
+        /** @var Role $role */
         $role = Role::findById((int) $this->role_id);
 
-        $user->assignRole([$role->name]); // @phpstan-ignore-line
+        $user->assignRole([$role->name]);
 
         if ($this->send_mail) {
-            $user->notify(new AdminSendCredentials($this->password)); // @phpstan-ignore-line
+            $user->notify(new AdminSendCredentials($this->password));
         }
 
-        session()->flash('success', __('Admin :user added successfully.', ['user' => $user->full_name])); // @phpstan-ignore-line
+        session()->flash('success', __('shopper::notifications.actions.create', ['item' => $user->full_name]));
 
         $this->redirectRoute('shopper.settings.users');
     }

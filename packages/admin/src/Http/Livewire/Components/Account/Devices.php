@@ -16,7 +16,7 @@ class Devices extends Component
 {
     public function getSessionsProperty(): Collection
     {
-        if ('database' !== config('session.driver')) {
+        if (config('session.driver') !== 'database') {
             return collect();
         }
 

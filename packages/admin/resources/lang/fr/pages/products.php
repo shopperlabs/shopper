@@ -117,6 +117,8 @@ return [
         'empty' => 'Aucun ajustement n\'a été effectué sur l\'inventaire.',
         'movement' => 'Mouvement des quantités',
         'initial' => 'Stock initial',
+        'add' => 'Ajout manuel',
+        'remove' => 'Retrait manuel',
     ],
 
     'seo' => [
