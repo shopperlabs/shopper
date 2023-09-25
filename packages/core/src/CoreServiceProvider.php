@@ -15,6 +15,7 @@ final class CoreServiceProvider extends ServiceProvider
     protected array $configFiles = [
         'core',
         'media',
+        'models',
     ];
 
     protected string $root = __DIR__ . '/..';

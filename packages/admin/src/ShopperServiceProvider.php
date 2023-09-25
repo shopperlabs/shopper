@@ -35,7 +35,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
         'admin',
         'auth',
         'components',
-        'models',
         'routes',
         'settings',
     ];
