@@ -90,6 +90,7 @@ class CreateAdminUser extends AbstractBaseComponent
             'email_verified_at' => now()->toDateTimeString(),
         ]);
 
+        /** @var Role $role */
         $role = Role::findById((int) $this->role_id);
 
         $user->assignRole([$role->name]);
@@ -98,7 +99,7 @@ class CreateAdminUser extends AbstractBaseComponent
             $user->notify(new AdminSendCredentials($this->password));
         }
 
-        session()->flash('success', __('shopper::notifications.actions.create', ['item' => $user->full_name])); // @phpstan-ignore-line
+        session()->flash('success', __('shopper::notifications.actions.create', ['item' => $user->full_name]));
 
         $this->redirectRoute('shopper.settings.users');
     }
