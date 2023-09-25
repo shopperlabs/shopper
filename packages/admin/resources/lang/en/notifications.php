@@ -7,7 +7,7 @@ return [
     'actions' => [
         'create' => ':item successfully added',
         'update' => ':item successfully updated',
-        'remove' => ':item successfully removed'
+        'remove' => ':item successfully removed',
     ],
 
     'attributes' => [
@@ -17,7 +17,7 @@ return [
     ],
 
     'auth' => [
-        'password' => 'This password does not match our records.'
+        'password' => 'This password does not match our records.',
     ],
 
     'analytics' => 'Your analytics configurations have been correctly updated',
