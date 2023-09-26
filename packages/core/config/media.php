@@ -46,6 +46,6 @@ return [
     |
     */
 
-    'fallback' => '/shopper/images/placeholder.jpg',
+    'fallback_url' => '/shopper/images/placeholder.jpg',
 
 ];
