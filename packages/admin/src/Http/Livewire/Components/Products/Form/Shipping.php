@@ -7,7 +7,7 @@ namespace Shopper\Http\Livewire\Components\Products\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class Shipping extends Component

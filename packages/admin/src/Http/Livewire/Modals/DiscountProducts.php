@@ -6,7 +6,7 @@ namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 
 class DiscountProducts extends ModalComponent
 {

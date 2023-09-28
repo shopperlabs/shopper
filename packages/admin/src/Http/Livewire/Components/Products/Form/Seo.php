@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 
 class Seo extends Component

@@ -7,9 +7,9 @@ namespace Shopper\Http\Livewire\Modals;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
+use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
-use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
 class AddVariant extends ModalComponent
@@ -105,7 +105,7 @@ class AddVariant extends ModalComponent
     public function render(): View
     {
         return view('shopper::livewire.modals.add-variant', [
-            'inventories' => (new InventoryRepository())->get(),
+            'inventories' => Inventory::all(),
         ]);
     }
 }

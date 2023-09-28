@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Discounts;
 
 use Carbon\Carbon;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Core\Repositories\UserRepository;
 
 trait WithDiscountActions

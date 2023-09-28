@@ -6,7 +6,7 @@ namespace Shopper\Http\Livewire\Components\Products;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 
 class Browse extends Component
 {

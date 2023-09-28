@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Products;
 
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Core\Models\Channel;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Repositories\Ecommerce\BrandRepository;
-use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
-use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\ChannelRepository;
+use Shopper\Core\Repositories\Store\BrandRepository;
+use Shopper\Core\Repositories\Store\CategoryRepository;
+use Shopper\Core\Repositories\Store\CollectionRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Core\Traits\Attributes\WithChoicesBrands;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Http\Livewire\AbstractBaseComponent;
@@ -23,7 +24,7 @@ class Create extends AbstractBaseComponent
     use WithChoicesBrands;
     use WithSeoAttributes;
 
-    public ?Channel $defaultChannel = null;
+    public ?Model $defaultChannel = null;
 
     public array $category_ids = [];
 
@@ -46,8 +47,8 @@ class Create extends AbstractBaseComponent
 
     public function mount(): void
     {
-        $this->defaultChannel = Channel::query()
-            ->where('slug', 'web-store')
+        $this->defaultChannel = (new ChannelRepository())
+            ->where('is_default', true)
             ->first();
     }
 

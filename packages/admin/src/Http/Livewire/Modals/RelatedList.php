@@ -7,7 +7,7 @@ namespace Shopper\Http\Livewire\Modals;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 
 class RelatedList extends ModalComponent
 {

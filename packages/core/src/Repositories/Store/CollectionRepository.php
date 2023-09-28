@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Core\Repositories\Ecommerce;
+namespace Shopper\Core\Repositories\Store;
 
 use Shopper\Core\Repositories\BaseRepository;
 

@@ -6,7 +6,7 @@ namespace Shopper\Http\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Core\Repositories\Store\CategoryRepository;
 
 class ReOrderCategories extends ModalComponent
 {

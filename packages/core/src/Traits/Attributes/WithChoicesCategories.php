@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Traits\Attributes;
 
-use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Core\Repositories\Store\CategoryRepository;
 
 trait WithChoicesCategories
 {

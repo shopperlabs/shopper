@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\DiscountDetail;
 use Shopper\Core\Models\User;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Core\Traits\HasPrice;
 use Shopper\Http\Livewire\AbstractBaseComponent;

@@ -6,7 +6,7 @@ namespace Shopper\Http\Livewire\Components\Brands;
 
 use Illuminate\Contracts\View\View;
 use Shopper\Contracts\HasForm;
-use Shopper\Core\Repositories\Ecommerce\BrandRepository;
+use Shopper\Core\Repositories\Store\BrandRepository;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Http\Livewire\AbstractBaseComponent;
 

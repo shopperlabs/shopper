@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Repositories\DiscountRepository;
+use Shopper\Core\Models\Discount;
 
 final class DiscountController extends ShopperBaseController
 {
@@ -23,12 +23,12 @@ final class DiscountController extends ShopperBaseController
         return view('shopper::pages.discounts.create');
     }
 
-    public function edit(int $id): View
+    public function edit(Discount $discount): View
     {
         $this->authorize('edit_discounts');
 
         return view('shopper::pages.discounts.edit', [
-            'discount' => (new DiscountRepository())->getById($id),
+            'discount' => $discount,
         ]);
     }
 }

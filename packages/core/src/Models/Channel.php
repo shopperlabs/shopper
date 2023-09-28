@@ -21,6 +21,23 @@ class Channel extends Model
         'is_default' => 'boolean',
     ];
 
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::creating(function ($channel): void {
+            if ($channel->is_default) {
+                static::query()->update(['is_default' => false]);
+            }
+        });
+
+        self::updating(function ($channel): void {
+            if ($channel->is_default) {
+                static::query()->update(['is_default' => false]);
+            }
+        });
+    }
+
     public function getTable(): string
     {
         return shopper_table('channels');

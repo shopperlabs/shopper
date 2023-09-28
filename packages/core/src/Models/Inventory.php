@@ -39,13 +39,13 @@ final class Inventory extends Model
 
         self::creating(function ($inventory): void {
             if ($inventory->is_default) {
-                static::query()->update(['is_default' => false]);
+                Inventory::query()->update(['is_default' => false]);
             }
         });
 
         self::updating(function ($inventory): void {
             if ($inventory->is_default) {
-                static::query()->update(['is_default' => false]);
+                Inventory::query()->update(['is_default' => false]);
             }
         });
     }

@@ -11,7 +11,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Shopper\Core\Events\Products\Deleted as ProductDeleted;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Core\Traits\Attributes\WithUploadProcess;
 use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
