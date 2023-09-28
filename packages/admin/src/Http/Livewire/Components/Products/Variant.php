@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Shopper\Core\Events\Products\Updated as ProductUpdated;
-use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Core\Models\Inventory;
 use Shopper\Core\Traits\Attributes\WithUploadProcess;
 
 class Variant extends Component
@@ -37,7 +37,7 @@ class Variant extends Component
 
     public function mount($product, $variant, string $currency): void
     {
-        $this->inventories = (new InventoryRepository())->get(['name', 'id']);
+        $this->inventories = Inventory::query()->select(['name', 'id'])->get();
         $this->product = $product;
         $this->variant = $variant;
         $this->name = $variant->name;

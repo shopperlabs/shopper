@@ -10,7 +10,7 @@ use Livewire\Component;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\CollectionRule;
-use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Core\Repositories\Store\CollectionRepository;
 use Shopper\Core\Traits\Attributes\WithConditions;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 

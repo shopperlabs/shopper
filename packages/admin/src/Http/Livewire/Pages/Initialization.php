@@ -10,9 +10,9 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
+use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Setting;
 use Shopper\Core\Repositories\ChannelRepository;
-use Shopper\Core\Repositories\InventoryRepository;
 use Shopper\Traits\HasAuthenticated;
 
 final class Initialization extends Component
@@ -134,7 +134,7 @@ final class Initialization extends Component
 
     public function storeHasSetup(): void
     {
-        (new InventoryRepository())->create([
+        Inventory::query()->create([
             'name' => $this->shop_name,
             'code' => Str::slug($this->shop_name),
             'email' => $this->shop_email,
@@ -149,7 +149,7 @@ final class Initialization extends Component
         ]);
 
         (new ChannelRepository())->create([
-            'name' => $name = __('Web Store'),
+            'name' => $name = 'Web Store',
             'slug' => $name,
             'url' => config('app.url'),
             'is_default' => true,

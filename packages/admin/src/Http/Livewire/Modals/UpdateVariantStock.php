@@ -7,9 +7,9 @@ namespace Shopper\Http\Livewire\Modals;
 use Illuminate\Contracts\View\View;
 use Livewire\WithPagination;
 use LivewireUI\Modal\ModalComponent;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
-use Shopper\Core\Repositories\InventoryHistoryRepository;
-use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\InventoryHistory;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Core\Traits\Attributes\WithStock;
 
 class UpdateVariantStock extends ModalComponent
@@ -39,17 +39,17 @@ class UpdateVariantStock extends ModalComponent
     public function render(): View
     {
         return view('shopper::livewire.modals.update-variant-stock', [
-            'currentStock' => (new InventoryHistoryRepository())
+            'currentStock' => InventoryHistory::query()
                 ->where('inventory_id', $this->inventory)
                 ->where('stockable_id', $this->product->id)
                 ->get()
                 ->sum('quantity'),
-            'histories' => (new InventoryHistoryRepository())
+            'histories' => InventoryHistory::query()
                 ->where('inventory_id', $this->inventory)
                 ->where('stockable_id', $this->product->id)
-                ->orderBy('created_at', 'desc')
+                ->orderByDesc('created_at')
                 ->paginate(3),
-            'inventories' => (new InventoryRepository())->all(),
+            'inventories' => Inventory::all(),
         ]);
     }
 }

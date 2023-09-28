@@ -7,8 +7,8 @@ namespace Shopper\Http\Livewire\Components\Products;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Shopper\Core\Repositories\InventoryHistoryRepository;
-use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Core\Models\Inventory;
+use Shopper\Core\Models\InventoryHistory;
 use Shopper\Core\Traits\Attributes\WithStock;
 
 class VariantStock extends Component
@@ -33,17 +33,17 @@ class VariantStock extends Component
     public function render(): View
     {
         return view('shopper::livewire.products.variant-stock', [
-            'currentStock' => (new InventoryHistoryRepository())
+            'currentStock' => InventoryHistory::query()
                 ->where('inventory_id', $this->inventory)
                 ->where('stockable_id', $this->product->id)
                 ->get()
                 ->sum('quantity'),
-            'histories' => (new InventoryHistoryRepository())
+            'histories' => InventoryHistory::query()
                 ->where('inventory_id', $this->inventory)
                 ->where('stockable_id', $this->product->id)
-                ->orderBy('created_at', 'desc')
+                ->orderByDesc('created_at')
                 ->paginate(3),
-            'inventories' => (new InventoryRepository())->all(),
+            'inventories' => Inventory::all(),
         ]);
     }
 }

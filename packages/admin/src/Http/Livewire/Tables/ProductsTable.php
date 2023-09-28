@@ -10,8 +10,8 @@ use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views;
 use Shopper\Core\Exceptions\GeneralException;
-use Shopper\Core\Repositories\Ecommerce\BrandRepository;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
+use Shopper\Core\Repositories\Store\BrandRepository;
+use Shopper\Core\Repositories\Store\ProductRepository;
 
 class ProductsTable extends DataTableComponent
 {

@@ -10,8 +10,7 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Milon\Barcode\Facades\DNS1DFacade;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
-use Shopper\Core\Repositories\InventoryHistoryRepository;
+use Shopper\Core\Models\InventoryHistory;
 use Shopper\Core\Traits\Attributes\WithStock;
 use Shopper\Http\Livewire\Components\Products\WithAttributes;
 
@@ -55,7 +54,7 @@ class Inventory extends Component
             ],
         ]);
 
-        (new ProductRepository())->getById($this->product->id)->update([
+        $this->product->update([
             'sku' => $this->sku ?? null,
             'barcode' => $this->barcode ?? null,
             'security_stock' => $this->securityStock ?? null,
@@ -70,15 +69,15 @@ class Inventory extends Component
     public function render(): View
     {
         return view('shopper::livewire.products.forms.form-inventory', [
-            'currentStock' => (new InventoryHistoryRepository())
+            'currentStock' => InventoryHistory::query()
                 ->where('inventory_id', $this->inventory)
                 ->where('stockable_id', $this->product->id)
                 ->get()
                 ->sum('quantity'),
-            'histories' => (new InventoryHistoryRepository())
+            'histories' => InventoryHistory::query()
                 ->where('inventory_id', $this->inventory)
                 ->where('stockable_id', $this->product->id)
-                ->orderBy('created_at', 'desc')
+                ->orderByDesc('created_at')
                 ->paginate(5),
             'barcodeImage' => $this->barcode
                 ? DNS1DFacade::getBarcodeHTML($this->barcode, config('shopper.core.barcode_type')) // @phpstan-ignore-line

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views;
 use Shopper\Core\Exceptions\GeneralException;
-use Shopper\Core\Repositories\Ecommerce\CategoryRepository;
+use Shopper\Core\Repositories\Store\CategoryRepository;
 
 class CategoriesTable extends DataTableComponent
 {

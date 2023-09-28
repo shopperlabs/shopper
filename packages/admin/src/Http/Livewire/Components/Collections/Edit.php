@@ -7,7 +7,7 @@ namespace Shopper\Http\Livewire\Components\Collections;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
-use Shopper\Core\Repositories\Ecommerce\CollectionRepository;
+use Shopper\Core\Repositories\Store\CollectionRepository;
 use Shopper\Core\Traits\Attributes\WithConditions;
 use Shopper\Core\Traits\Attributes\WithSeoAttributes;
 use Shopper\Http\Livewire\AbstractBaseComponent;

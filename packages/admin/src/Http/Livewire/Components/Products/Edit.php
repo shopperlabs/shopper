@@ -7,8 +7,8 @@ namespace Shopper\Http\Livewire\Components\Products;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
-use Shopper\Core\Repositories\Ecommerce\ProductRepository;
-use Shopper\Core\Repositories\InventoryRepository;
+use Shopper\Core\Models\Inventory;
+use Shopper\Core\Repositories\Store\ProductRepository;
 
 class Edit extends Component
 {
@@ -23,8 +23,8 @@ class Edit extends Component
     public function mount($product): void
     {
         $this->product = $product;
-        $this->inventories = $inventories = (new InventoryRepository())->get();
-        $this->inventory = $inventories->firstWhere('is_default', true)->id ?? $inventories->first()?->id; // @phpstan-ignore-line
+        $this->inventories = $inventories = Inventory::all();
+        $this->inventory = $inventories->firstWhere('is_default', true)->id ?? $inventories->first()?->id;
     }
 
     public function productHasUpdated(int $id): void

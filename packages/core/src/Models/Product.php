@@ -12,9 +12,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Contracts\ReviewRateable;
-use Shopper\Core\Enum\Dimension\Length;
-use Shopper\Core\Enum\Dimension\Volume;
-use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Helpers\Price;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasMedia;
@@ -53,10 +50,6 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
         'requires_shipping' => 'boolean',
         'backorder' => 'boolean',
         'published_at' => 'datetime',
-        'depth_unit' => Length::class,
-        'height_unit' => Length::class,
-        'volume_unit' => Volume::class,
-        'weight_unit' => Weight::class,
     ];
 
     public function getTable(): string
