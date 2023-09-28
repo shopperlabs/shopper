@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Contracts;
+namespace Shopper\Core\Contracts;
 
 interface RepositoryContract
 {
