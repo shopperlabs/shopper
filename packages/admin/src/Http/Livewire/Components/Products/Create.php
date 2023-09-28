@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Http\Livewire\Components\Products;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Milon\Barcode\Facades\DNS1DFacade;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
