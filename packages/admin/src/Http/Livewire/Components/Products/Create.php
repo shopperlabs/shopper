@@ -24,7 +24,7 @@ class Create extends AbstractBaseComponent
     use WithChoicesBrands;
     use WithSeoAttributes;
 
-    public ?Model $defaultChannel = null;
+    public $defaultChannel;
 
     public array $category_ids = [];
 

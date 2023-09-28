@@ -21,7 +21,7 @@ class Inventory extends Component
     use WithPagination;
     use WithStock;
 
-    public ?Model $product = null;
+    public $product;
 
     public $inventories;
 
