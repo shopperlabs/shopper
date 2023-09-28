@@ -28,14 +28,14 @@ We want to turn you around to the simpler side and get back to basics.
 
 ## Installation
 
-Instructions on how to install Shopper can be found at the [installation guide](https://laravelshopper.dev/installing).
+Instructions on how to install Shopper can be found at the [installation guide](https://laravelshopper.dev/docs).
 
 ### Quick start installation
 
 For advanced users, run this in your terminal to install Shopper from command line:
 
 ``` bash
-composer require shopper/shopper
+composer require shopper/framework
 ```
 
 Run this command to install Shopper in your project
@@ -55,7 +55,7 @@ The Framework uses [Laravel](https://laravel.com) as a foundation PHP framework.
 You can communicate with us using the following mediums:
 
 * [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
-* [Join us on Discord](https://laravelshopper.io/discord) to chat with us.
+* [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
 
 ## Contributing
 
@@ -65,7 +65,7 @@ Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 
 If you discover any security related issues, please email contact@shopperlabs.io instead of using the issue tracker.
 
-It's _heavily_ recommended that you **[subscribe to the Shopper Newsletter](http://laravelshopper.io)** so you can find out about any security updates, breaking changes or major features.
+It's _heavily_ recommended that you **[subscribe to the Shopper Newsletter](http://laravelshopper.dev)** so you can find out about any security updates, breaking changes or major features.
 We send an email about 3-4 emails per year. Sometimes less.
 
 ## Credits
