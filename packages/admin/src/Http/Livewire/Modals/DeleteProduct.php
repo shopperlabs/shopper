@@ -17,7 +17,7 @@ class DeleteProduct extends ModalComponent
 
     public ?string $route = null;
 
-    public function mount(int $id, string $type, string $route = null): void
+    public function mount(int $id, string $type, ?string $route = null): void
     {
         $this->productId = $id;
         $this->type = $type;

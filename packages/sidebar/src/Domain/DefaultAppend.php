@@ -83,6 +83,6 @@ class DefaultAppend implements Append, Serializable
 
     public function iconSvg(): bool
     {
-        return 'svg' === $this->type;
+        return $this->type === 'svg';
     }
 }

@@ -25,7 +25,7 @@ trait HasStock
         return $this->stock > 0 && $this->stock >= $quantity;
     }
 
-    public function getStock(DateTimeInterface $date = null): int
+    public function getStock(?DateTimeInterface $date = null): int
     {
         $date = $date ?: Carbon::now();
 
@@ -38,7 +38,7 @@ trait HasStock
             ->sum('quantity');
     }
 
-    public function stockInventory(int $inventoryId, string $date = null): int
+    public function stockInventory(int $inventoryId, ?string $date = null): int
     {
         $date = $date ?: Carbon::now();
 
@@ -62,7 +62,7 @@ trait HasStock
         return $this->createStockMutation(-1 * abs($quantity), $inventoryId, $arguments);
     }
 
-    public function clearStock(int $inventoryId = null, int $newQuantity = null, array $arguments = []): bool
+    public function clearStock(?int $inventoryId = null, ?int $newQuantity = null, array $arguments = []): bool
     {
         $this->inventoryHistories()->delete();
 

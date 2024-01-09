@@ -33,7 +33,7 @@ if (! function_exists('generate_number')) {
         return sprintf(
             '%s%s',
             $generator['prefix'],
-            str_pad((string) $next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
+            mb_str_pad((string) $next, $generator['pad_length'], $generator['pad_string'], \STR_PAD_LEFT)
         );
     }
 }
@@ -83,7 +83,7 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format(int|string $amount, string $currency = null): string
+    function shopper_money_format(int|string $amount, ?string $currency = null): string
     {
         $money = new Money(
             amount: $amount,
@@ -122,7 +122,7 @@ if (! function_exists('shopper_setting')) {
 }
 
 if (! function_exists('useTryCatch')) {
-    function useTryCatch(Closure $closure, Closure $catchable = null): array
+    function useTryCatch(Closure $closure, ?Closure $catchable = null): array
     {
         $result = null;
         $throwable = null;

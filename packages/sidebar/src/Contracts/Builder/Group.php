@@ -6,7 +6,7 @@ namespace Shopper\Sidebar\Contracts\Builder;
 
 use Illuminate\Support\Collection;
 
-interface Group extends Itemable, Authorizable
+interface Group extends Authorizable, Itemable
 {
     public function getName(): string;
 

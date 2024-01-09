@@ -20,7 +20,7 @@ trait HasMedia
             ->useFallbackUrl(url(config('shopper.media.fallback_url')));
     }
 
-    public function registerMediaConversions(Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $conversions = config('shopper.media.conversions', []);
 

@@ -22,9 +22,9 @@ final class IconPicker extends Component
 
     public string $search = '';
 
-    public $perPage = 60;
+    public int $perPage = 60;
 
-    public function mount(string $value = null): void
+    public function mount(?string $value = null): void
     {
         $this->value = $value;
     }

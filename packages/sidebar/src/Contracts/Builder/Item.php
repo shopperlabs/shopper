@@ -7,7 +7,7 @@ namespace Shopper\Sidebar\Contracts\Builder;
 use Illuminate\Support\Collection;
 use Shopper\Sidebar\Contracts\Routeable;
 
-interface Item extends Itemable, Authorizable, Routeable
+interface Item extends Authorizable, Itemable, Routeable
 {
     public function getName(): string;
 
@@ -45,13 +45,13 @@ interface Item extends Itemable, Authorizable, Routeable
 
     public function route(array|string $route, array $params = []): self;
 
-    public function badge(mixed $callbackOrValue = null, string $className = null): Badge;
+    public function badge(mixed $callbackOrValue = null, ?string $className = null): Badge;
 
     public function addBadge(Badge $badge): Badge;
 
     public function getBadges(): Collection;
 
-    public function append(mixed $callbackOrUrl = null, string $icon = null, string $name = null): Append;
+    public function append(mixed $callbackOrUrl = null, ?string $icon = null, ?string $name = null): Append;
 
     public function addAppend(Append $append): Append;
 

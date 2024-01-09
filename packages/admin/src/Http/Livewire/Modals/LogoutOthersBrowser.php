@@ -49,7 +49,7 @@ class LogoutOthersBrowser extends ModalComponent
 
     protected function deleteOtherSessionRecords(): void
     {
-        if ('database' !== config('session.driver')) {
+        if (config('session.driver') !== 'database') {
             return;
         }
 
