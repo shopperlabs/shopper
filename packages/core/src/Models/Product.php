@@ -31,7 +31,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
  * @property \Carbon\Carbon|null $published_at
  * @property-read int $stock
  */
-class Product extends Model implements SpatieHasMedia, ReviewRateable
+class Product extends Model implements ReviewRateable, SpatieHasMedia
 {
     use CanHaveDiscount;
     use HasFactory;
@@ -47,7 +47,7 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
     protected $casts = [
         'featured' => 'boolean',
         'is_visible' => 'boolean',
-        'requires_shipping' => 'boolean',
+        'require_shipping' => 'boolean',
         'backorder' => 'boolean',
         'published_at' => 'datetime',
     ];

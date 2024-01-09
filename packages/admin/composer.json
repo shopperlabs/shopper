@@ -1,5 +1,5 @@
 {
-  "name": "shopper/shopper",
+  "name": "shopper/framework",
   "description": "A TALL Laravel e-commerce  admin panel to create and manage online shop.",
   "keywords": ["laravel", "livewire", "admin-panel", "shopper", "e-commerce", "headless", "store", "shop"],
   "license": "MIT",

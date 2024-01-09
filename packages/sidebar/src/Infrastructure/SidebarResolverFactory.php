@@ -9,7 +9,7 @@ use Shopper\Sidebar\Exceptions\SidebarResolverNotSupported;
 
 final class SidebarResolverFactory
 {
-    public static function getClassName(string $name = null): string
+    public static function getClassName(?string $name = null): string
     {
         if ($name) {
             $class = __NAMESPACE__ . '\\' . Str::studly($name) . 'CacheResolver';

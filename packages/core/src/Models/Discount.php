@@ -42,7 +42,7 @@ final class Discount extends Model
 
     public function hasReachedLimit(): bool
     {
-        if (null !== $this->usage_limit) {
+        if ($this->usage_limit !== null) {
             return $this->total_use === $this->usage_limit;
         }
 

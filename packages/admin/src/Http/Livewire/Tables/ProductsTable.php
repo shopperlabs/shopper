@@ -122,7 +122,7 @@ class ProductsTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $query, $value) => $query->where('is_visible', 'yes' === $value)),
+                ->filter(fn (Builder $query, $value) => $query->where('is_visible', $value === 'yes')),
             'brands' => Views\Filters\MultiSelectFilter::make(__('shopper::layout.sidebar.brands'))
                 ->options(
                     (new BrandRepository())->makeModel()->newQuery()

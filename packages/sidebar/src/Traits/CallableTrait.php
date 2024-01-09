@@ -12,7 +12,7 @@ trait CallableTrait
 {
     use RouteDependencyResolverTrait;
 
-    public function call(Closure $callback = null, $caller = null)
+    public function call(?Closure $callback = null, $caller = null)
     {
         if ($callback instanceof Closure) {
             $parameters = $this->resolveMethodDependencies(

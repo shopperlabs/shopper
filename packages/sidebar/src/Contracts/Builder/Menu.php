@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 interface Menu extends Authorizable
 {
-    public function group(string $name, Closure $callback = null): Group;
+    public function group(string $name, ?Closure $callback = null): Group;
 
     public function addGroup(Group $group): self;
 

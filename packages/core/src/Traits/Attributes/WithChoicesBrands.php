@@ -10,7 +10,7 @@ trait WithChoicesBrands
 
     public function updatedSelectedBrand(array $choice): void
     {
-        if (count($choice) > 0 && '0' !== $choice['value']) {
+        if (count($choice) > 0 && $choice['value'] !== '0') {
             $this->brand_id = (int) $choice['value'];
         } else {
             $this->brand_id = null;

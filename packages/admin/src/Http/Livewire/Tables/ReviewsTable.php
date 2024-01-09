@@ -132,7 +132,7 @@ class ReviewsTable extends DataTableComponent
                     'yes' => __('shopper::layout.forms.label.yes'),
                     'no' => __('shopper::layout.forms.label.no'),
                 ])
-                ->filter(fn (Builder $query, string $value) => $query->where('approved', 'yes' === $value)),
+                ->filter(fn (Builder $query, string $value) => $query->where('approved', $value === 'yes')),
         ];
     }
 

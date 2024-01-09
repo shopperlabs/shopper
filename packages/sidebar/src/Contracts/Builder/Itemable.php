@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 interface Itemable
 {
-    public function item(string $name, Closure $callback = null): Item;
+    public function item(string $name, ?Closure $callback = null): Item;
 
     public function addItem(Item $item): Item;
 

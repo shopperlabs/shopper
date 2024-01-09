@@ -16,7 +16,7 @@ beforeEach(function (): void {
     $this->menu = new DefaultMenu($this->container);
 });
 
-function asContainerMock(MockInterface $container, string $name = null, int $weight = null): Group
+function asContainerMock(MockInterface $container, ?string $name = null, ?int $weight = null): Group
 {
     $group = Mockery::mock(Group::class);
     $group->shouldReceive('setName');

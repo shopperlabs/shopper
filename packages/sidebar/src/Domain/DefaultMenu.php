@@ -31,7 +31,7 @@ class DefaultMenu implements Menu, Serializable
         $this->groups = new Collection();
     }
 
-    public function group(string $name, Closure $callback = null): Group
+    public function group(string $name, ?Closure $callback = null): Group
     {
         if ($this->groups->has($name)) {
             $group = $this->groups->get($name);

@@ -13,7 +13,7 @@ final class Trix extends Component
 
     public ?string $value = null;
 
-    public function mount(string $value = null): void
+    public function mount(?string $value = null): void
     {
         $this->value = $value;
         $this->trixId = 'trix-' . uniqid();

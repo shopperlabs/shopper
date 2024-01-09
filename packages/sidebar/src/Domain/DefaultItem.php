@@ -165,15 +165,15 @@ class DefaultItem implements Item, Serializable
 
     public function iconSvg(): bool
     {
-        return 'svg' === $this->type;
+        return $this->type === 'svg';
     }
 
     public function toggleIconSvg(): bool
     {
-        return 'svg' === $this->toggleIconType;
+        return $this->toggleIconType === 'svg';
     }
 
-    public function badge(mixed $callbackOrValue = null, string $className = null): Badge
+    public function badge(mixed $callbackOrValue = null, ?string $className = null): Badge
     {
         $badge = $this->container->make(Badge::class);
 
@@ -204,7 +204,7 @@ class DefaultItem implements Item, Serializable
         return $this->badges;
     }
 
-    public function append(mixed $callbackOrUrl = null, string $icon = null, string $name = null): Append
+    public function append(mixed $callbackOrUrl = null, ?string $icon = null, ?string $name = null): Append
     {
         $append = $this->container->make(Append::class);
 

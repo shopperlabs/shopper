@@ -12,7 +12,7 @@ trait ItemableTrait
 {
     protected Collection $items;
 
-    public function item(string $name, Closure $callback = null): Item
+    public function item(string $name, ?Closure $callback = null): Item
     {
         if ($this->items->has($name)) {
             $item = $this->items->get($name);

@@ -25,7 +25,7 @@
                 </div>
                 <div class="relative flex items-start">
                     <div class="flex items-center h-5">
-                        <x-shopper::forms.checkbox wire:model.lazy="requiresShipping" id="required_shipping" />
+                        <x-shopper::forms.checkbox wire:model.lazy="requireShipping" id="required_shipping" />
                     </div>
                     <div class="ml-3 text-sm leading-5">
                         <x-shopper::label for="required_shipping" :value="__('shopper::pages/products.product_shipped')" />
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    @if($requiresShipping)
+    @if($requireShipping)
         <x-shopper::separator />
 
         <div class="mt-10 sm:mt-0">
