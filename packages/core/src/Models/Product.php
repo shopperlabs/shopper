@@ -47,7 +47,7 @@ class Product extends Model implements SpatieHasMedia, ReviewRateable
     protected $casts = [
         'featured' => 'boolean',
         'is_visible' => 'boolean',
-        'requires_shipping' => 'boolean',
+        'require_shipping' => 'boolean',
         'backorder' => 'boolean',
         'published_at' => 'datetime',
     ];
