@@ -26,7 +26,7 @@ trait WithAttributes
 
     public bool $backorder = false;
 
-    public bool $requiresShipping = false;
+    public bool $requireShipping = false;
 
     public bool $isVisible = true;
 

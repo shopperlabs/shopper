@@ -22,7 +22,7 @@ class Shipping extends Component
     {
         $this->product = $product;
         $this->productId = $product->id;
-        $this->requiresShipping = $product->requires_shipping;
+        $this->requireShipping = $product->require_shipping;
         $this->backorder = $product->backorder;
         $this->weightValue = floatval($product->weight_value);
         $this->weightUnit = $product->weight_unit;
@@ -37,7 +37,7 @@ class Shipping extends Component
     public function store(): void
     {
         (new ProductRepository())->getById($this->productId)->update([
-            'requires_shipping' => $this->requiresShipping,
+            'require_shipping' => $this->requireShipping,
             'backorder' => $this->backorder,
             'weight_value' => $this->weightValue ?? null,
             'weight_unit' => $this->weightUnit ?? null,
