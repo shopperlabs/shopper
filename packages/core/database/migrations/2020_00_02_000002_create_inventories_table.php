@@ -42,7 +42,6 @@ return new class() extends Migration
 
             $this->addForeignKey($table, 'inventory_id', $this->getTableName('inventories'), false);
             $this->addForeignKey($table, 'user_id', $this->getTableName('users'), false);
-            $table->index(['reference_type', 'reference_id']);
         });
     }
 
