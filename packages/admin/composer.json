@@ -32,6 +32,7 @@
     "illuminate/view": "^9.0|^10.0",
     "jenssegers/agent": "^2.6",
     "laravel/helpers": "^1.4.1",
+    "laravel/prompts": "^0.1.15",
     "livewire/livewire": "^2.10",
     "maatwebsite/excel": "^3.1",
     "mckenziearts/blade-untitledui-icons": "^1.2",

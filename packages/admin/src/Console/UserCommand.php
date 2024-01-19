@@ -10,6 +10,10 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 use Shopper\Core\Models\User;
 
+use function Laravel\Prompts\password;
+use function Laravel\Prompts\text;
+use function Laravel\Prompts\info;
+
 final class UserCommand extends Command
 {
     protected $signature = 'shopper:admin';
@@ -18,24 +22,43 @@ final class UserCommand extends Command
 
     public function handle(): void
     {
-        $this->info('Create Admin User for Shopper administration panel');
+        info('Create Admin User for Shopper administration panel');
         $this->createUser();
-        $this->info('User created successfully.');
+        info('User created successfully.');
     }
 
     protected function createUser(): void
     {
-        $email = $this->ask('Email Address', 'admin@shopper.dev');
-        $first_name = $this->ask('First Name', 'Shopper');
-        $last_name = $this->ask('Last Name', 'User');
-        $password = $this->secret('Password');
-        $confirmPassword = $this->secret('Confirm Password');
+        $email = text(
+            label: 'Your Email Address',
+            default: 'admin@shopper.dev',
+            required: true,
+            validate: fn (string $value) =>
+                User::where('email', $value)->exists()
+                    ? 'An admin with that email already exists.'
+                    : null,
+        );
+        $first_name = text(
+            label: 'What is your First Name',
+            default: 'Shopper',
+            required: true,
+        );
+        $last_name = text(
+            label: 'What is your Last Name',
+            default: 'User',
+            required: true,
+        );
+        $password = password(
+            label: 'Choose a Password',
+            required: true,
+            validate: fn (string $value) => match (true) {
+                strlen($value) < 6 => 'The password must be at least 6 characters.',
+                default => null
+            },
+            hint: 'Minimum 6 characters.'
+        );
 
-        if ($password !== $confirmPassword) {
-            $this->info('Passwords don\'t match');
-        }
-
-        $this->info('Creating admin account...');
+        info('Creating admin account...');
 
         $userData = [
             'email' => $email,
