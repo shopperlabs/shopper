@@ -1,4 +1,4 @@
-name: "Update Changelog"
+name: 'Update Changelog'
 
 on:
   release:
@@ -19,7 +19,6 @@ jobs:
         with:
           latest-version: ${{ github.event.release.name }}
           release-notes: ${{ github.event.release.body }}
-
 
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v4

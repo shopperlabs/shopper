@@ -34,7 +34,7 @@ Instructions on how to install Shopper can be found at the [installation guide](
 
 For advanced users, run this in your terminal to install Shopper from command line:
 
-``` bash
+```bash
 composer require shopper/framework
 ```
 
@@ -54,8 +54,8 @@ The Framework uses [Laravel](https://laravel.com) as a foundation PHP framework.
 
 You can communicate with us using the following mediums:
 
-* [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
-* [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
+-   [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
+-   [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
 
 ## Contributing
 
@@ -70,9 +70,10 @@ We send an email about 3-4 emails per year. Sometimes less.
 
 ## Credits
 
-- [Arthur Monney][link-author]
-- [Jean-Vincent QUILICHINI][link-author-2]
-- [All Contributors][link-contributors]
+-   [Arthur Monney](https://github.com/mckenziearts)
+-   [Jean-Vincent QUILICHINI](https://github.com/sense)
+-   [FilamentPHP](https://filamentphp.com)
+-   [All Contributors](../../contributors)
 
 And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
@@ -83,7 +84,3 @@ The Shopper Framework is open-sourced software licensed under the [MIT license](
 ## Sponsoring
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
-
-[link-author]: https://github.com/mckenziearts
-[link-author-2]: https://github.com/sense
-[link-contributors]: ../../contributors

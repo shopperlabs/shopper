@@ -3,11 +3,11 @@
 }
 
 .item-name {
-  @apply truncate flex-1;
+  @apply flex-1 truncate;
 }
 
 .submenu {
-  @apply hidden ml-8 mb-2 pl-2 py-2 space-y-2 lg:space-y-3;
+  @apply mb-2 ml-8 hidden space-y-2 py-2 pl-2 lg:space-y-3;
 }
 
 .current-group .submenu {

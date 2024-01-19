@@ -12,12 +12,14 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Shopper\Core\Shopper;
+use Shopper\Http\Controllers\AssetController;
 use Shopper\Http\Livewire\Pages\Initialization;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\Dashboard;
+use Shopper\Http\Middleware\DispatchShopper;
 use Shopper\Http\Middleware\HasConfiguration;
 use Shopper\Http\Middleware\RedirectIfAuthenticated;
+use Shopper\Shopper;
 use Shopper\Sidebar\Middleware\ResolveSidebars;
 
 Route::domain(config('shopper.admin.domain'))
@@ -29,6 +31,7 @@ Route::domain(config('shopper.admin.domain'))
         ShareErrorsFromSession::class,
         VerifyCsrfToken::class,
         SubstituteBindings::class,
+        DispatchShopper::class,
     ])
     ->name('shopper.')
     ->group(function (): void {
@@ -36,6 +39,8 @@ Route::domain(config('shopper.admin.domain'))
             Route::middleware([RedirectIfAuthenticated::class])->group(function (): void {
                 require __DIR__ . '/auth.php';
             });
+
+            Route::get('/assets/{file}', AssetController::class)->where('file', '.*')->name('asset');
 
             Route::post('/logout', function (Request $request): RedirectResponse {
                 Shopper::auth()->logout();

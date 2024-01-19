@@ -8,3 +8,18 @@
         @endif
     @endforeach
 @endif
+
+@foreach (\Shopper\Facades\Shopper::getScripts() as $name => $path)
+    @if (\Illuminate\Support\Str::of($path)->startsWith(['http://', 'https://']))
+        <script defer src="{{ $path }}"></script>
+    @elseif (\Illuminate\Support\Str::of($path)->startsWith('<'))
+        {!! $path !!}
+    @else
+        <script
+            defer
+            src="{{ route('shopper.asset', ['file' => "{$name}.js"]) }}"
+        ></script>
+    @endif
+@endforeach
+
+@stack('scripts')

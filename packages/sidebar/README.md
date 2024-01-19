@@ -1,8 +1,10 @@
 # Laravel Sidebar
+
 Laravel sidebar is a package that allow you to create and manage sidebar for your Laravel app.
 Originally forked from [SpartnerNL/Laravel-Sidebar](https://github.com/SpartnerNL/Laravel-Sidebar).
 
 ## Installation
+
 Require this package in your project by run the command:
 
 ```bash
@@ -32,4 +34,5 @@ php artisan vendor:publish --tag="config"
 See the wiki: https://github.com/Maatwebsite/Laravel-Sidebar/wiki
 
 ## License
+
 This package is licensed under MIT. You are free to use it in personal and commercial projects. Enjoy!

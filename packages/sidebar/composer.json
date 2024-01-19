@@ -1,7 +1,11 @@
 {
   "name": "shopper/sidebar",
   "description": "A sidebar builder for Laravel",
-  "keywords": ["laravel", "sidebar", "builder"],
+  "keywords": [
+    "laravel",
+    "sidebar",
+    "builder"
+  ],
   "license": "MIT",
   "authors": [
     {

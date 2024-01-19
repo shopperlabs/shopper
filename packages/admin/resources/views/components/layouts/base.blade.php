@@ -1,11 +1,9 @@
-@props(['title' => null])
+@props(['title' => config('app.name')])
 
 <!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    class="scroll-smooth"
-    x-data="{ darkMode: localStorage.getItem('theme') === 'dark'}"
-    x-bind:class="{ 'dark': darkMode }"
+    class="shopper scroll-smooth js-focus-visible min-h-screen antialiased"
 >
 <head>
     <meta charset="utf-8">
@@ -17,9 +15,13 @@
     <meta name="dashboard-url" content="{{ config('app.url') . '/' . shopper_prefix() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <x-shopper::favicons />
+    @if ($favicon = config('shopper.admin.favicon'))
+        <link rel="icon" href="{{ $favicon }}" />
+    @else
+        <x-shopper::favicons />
+    @endif
 
-    <title>{{ $title ?? config('app.name') }} // {{ __('shopper::layout.meta_title') }}</title>
+    <title>{{ $title }} // {{ __('shopper::layout.meta_title') }}</title>
 
     <link rel="dns-prefetch" href="{{ config('app.url') }}"/>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
@@ -28,16 +30,23 @@
     @stack('styles')
 
     <livewire:styles />
-    <link rel="stylesheet" type="text/css" href="{{ mix('/css/shopper.css', 'shopper') }}">
+    {{ \Shopper\Facades\Shopper::getThemeLink() }}
 
     <wireui:scripts />
-    <livewire:scripts />
-    <script src="{{ mix('/js/shopper.js', 'shopper') }}" defer></script>
+    <script
+        defer
+        src="{{
+        route('shopper.asset', [
+            'id' => get_asset_id('shopper.js'),
+            'file' => 'shopper.js',
+        ])
+    }}"
+    ></script>
 
     @include('shopper::includes._additional-styles')
     @stack('scripts')
 </head>
-<body x-keypress {{ $attributes->merge(['class' => 'bg-white font-sans antialiased dark:bg-secondary-900']) }}>
+<body x-keypress {{ $attributes->merge(['class' => 'bg-white font-sans dark:bg-secondary-900']) }}>
 
     {{ $slot }}
 
@@ -49,6 +58,7 @@
 
     @livewire('notifications')
 
+    <livewire:scripts />
     @include('shopper::includes._additional-scripts')
 
 </body>
