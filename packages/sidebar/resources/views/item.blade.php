@@ -16,7 +16,11 @@
             @if($item->iconSvg())
                 {!! $item->getIcon() !!}
             @else
-                @svg($item->getIcon(), $item->getIconClass())
+                {{ svg(
+                        name: $item->getIcon(),
+                        class: $item->getIconClass(),
+                        attributes: $item->getIconAttributes()
+                  ) }}
             @endif
         @endif
 

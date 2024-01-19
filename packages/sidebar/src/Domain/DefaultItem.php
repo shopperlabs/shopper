@@ -11,6 +11,7 @@ use Serializable;
 use Shopper\Sidebar\Contracts\Builder\Append;
 use Shopper\Sidebar\Contracts\Builder\Badge;
 use Shopper\Sidebar\Contracts\Builder\Item;
+use Shopper\Sidebar\Presentation\ActiveStateChecker;
 use Shopper\Sidebar\Traits\AuthorizableTrait;
 use Shopper\Sidebar\Traits\CacheableTrait;
 use Shopper\Sidebar\Traits\CallableTrait;
@@ -36,6 +37,8 @@ class DefaultItem implements Item, Serializable
     protected ?string $icon = null;
 
     protected string $iconClass = '';
+
+    protected array $iconAttributes = [];
 
     protected string $type = 'blade';
 
@@ -111,11 +114,12 @@ class DefaultItem implements Item, Serializable
         return $this->icon;
     }
 
-    public function setIcon(string $icon, string $type = 'blade', string $iconClass = ''): Item
+    public function setIcon(string $icon, string $type = 'blade', string $iconClass = '', array $attributes = []): Item
     {
         $this->icon = $icon;
         $this->type = $type;
         $this->iconClass = $iconClass;
+        $this->iconAttributes = $attributes;
 
         return $this;
     }
@@ -123,6 +127,16 @@ class DefaultItem implements Item, Serializable
     public function getIconClass(): string
     {
         return $this->iconClass;
+    }
+
+    public function isActive(): bool
+    {
+        return (new ActiveStateChecker())->isActive($this);
+    }
+
+    public function getIconAttributes(): array
+    {
+        return $this->iconAttributes;
     }
 
     public function getToggleIcon(): string

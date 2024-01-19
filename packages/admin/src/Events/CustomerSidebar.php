@@ -24,11 +24,14 @@ final class CustomerSidebar extends AbstractAdminSidebar
                 $item->setAuthorized($this->user->hasPermissionTo('browse_customers'));
                 $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
                 $item->setActiveClass('text-primary-600 bg-secondary-100 dark:bg-secondary-700/50');
-                $item->setInactiveClass('text-secondary-700 dark:text-secondary-300 hover:text-secondary-900 dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-700');
+                $item->setInactiveClass('text-secondary-600 dark:text-secondary-300 hover:text-secondary-900 dark:hover:text-white hover:bg-secondary-50 dark:hover:bg-gray-900');
                 $item->route('shopper.customers.index');
                 $item->setIcon(
                     icon: 'untitledui-users-02',
-                    iconClass: 'h-5 w-5 mr-2'
+                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    attributes: [
+                        'stroke-width' => '1.5',
+                    ],
                 );
             });
             $group->item(__('shopper::layout.sidebar.reviews'), function (Item $item): void {
@@ -36,11 +39,14 @@ final class CustomerSidebar extends AbstractAdminSidebar
                 $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
                 $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
                 $item->setActiveClass('text-primary-600 bg-secondary-100 dark:bg-secondary-700/50');
-                $item->setInactiveClass('text-secondary-700 dark:text-secondary-300 hover:text-secondary-900 dark:hover:text-white hover:bg-secondary-100 dark:hover:bg-secondary-700');
+                $item->setInactiveClass('text-secondary-600 dark:text-secondary-300 hover:text-secondary-900 dark:hover:text-white hover:bg-secondary-50 dark:hover:bg-gray-900');
                 $item->route('shopper.reviews.index');
                 $item->setIcon(
                     icon: 'untitledui-message-heart-square',
-                    iconClass: 'h-5 w-5 mr-2'
+                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    attributes: [
+                        'stroke-width' => '1.5',
+                    ],
                 );
             });
         });

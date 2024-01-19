@@ -13,9 +13,9 @@ mix.sourceMaps()
 mix.version()
 
 mix.js('packages/admin/resources/js/shopper.js', 'public')
-mix
-  .postCss('packages/admin/resources/css/shopper.css', 'public', [
-    tailwindcss('packages/admin/tailwind.config.js'),
+mix.postCss('packages/admin/resources/css/shopper.css', 'public', [
+    tailwindcss('./packages/admin/tailwind.config.js'),
+    require('autoprefixer')
   ])
   .options({
     processCssUrls: false,
