@@ -8,3 +8,16 @@
         @endif
     @endforeach
 @endif
+
+@foreach (\Shopper\Facades\Shopper::getStyles() as $name => $path)
+    @if (\Illuminate\Support\Str::of($path)->startsWith(['http://', 'https://']))
+        <link rel="stylesheet" href="{{ $path }}" />
+    @elseif (\Illuminate\Support\Str::of($path)->startsWith('<'))
+        {!! $path !!}
+    @else
+        <link
+            rel="stylesheet"
+            href="{{ route('shopper.asset', ['file' => "{$name}.css"]) }}"
+        />
+    @endif
+@endforeach

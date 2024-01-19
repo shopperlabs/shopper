@@ -70,9 +70,10 @@ We send an email about 3-4 emails per year. Sometimes less.
 
 ## Credits
 
-- [Arthur Monney][link-author]
-- [Jean-Vincent QUILICHINI][link-author-2]
-- [All Contributors][link-contributors]
+- [Arthur Monney](https://github.com/mckenziearts)
+- [Jean-Vincent QUILICHINI](https://github.com/sense)
+- [FilamentPHP](https://filamentphp.com)
+- [All Contributors](../../contributors)
 
 And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 
@@ -83,7 +84,3 @@ The Shopper Framework is open-sourced software licensed under the [MIT license](
 ## Sponsoring
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
-
-[link-author]: https://github.com/mckenziearts
-[link-author-2]: https://github.com/sense
-[link-contributors]: ../../contributors

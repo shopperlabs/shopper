@@ -11,8 +11,8 @@ mix.setResourceRoot('resources')
 mix.sourceMaps()
 mix.version()
 
-mix.js('resources/js/shopper.js', 'public/js')
-  .postCss('resources/css/shopper.css', 'public/css', [
+mix.js('resources/js/shopper.js', 'public')
+mix.postCss('resources/css/shopper.css', 'public', [
     require('tailwindcss'),
   ])
   .options({

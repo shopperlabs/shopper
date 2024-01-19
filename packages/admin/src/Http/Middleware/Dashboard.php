@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Shopper\Core\Models\Setting;
 use Shopper\Core\Models\User;
-use Shopper\Core\Shopper;
+use Shopper\Facades\Shopper;
 
 final class Dashboard
 {

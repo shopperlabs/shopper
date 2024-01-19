@@ -14,7 +14,6 @@ use Shopper\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthentication
 use Shopper\Contracts\TwoFactorDisabledResponse as TwoFactorDisabledResponseContract;
 use Shopper\Contracts\TwoFactorEnabledResponse as TwoFactorEnabledResponseContract;
 use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
-use Shopper\Core\Shopper;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Http\Livewire\Components;
 use Shopper\Http\Livewire\Pages;
@@ -61,6 +60,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->bootLivewireComponents();
 
         $this->bootModelRelationName();
+
+        \Shopper\Facades\Shopper::serving(function (): void {
+            \Shopper\Facades\Shopper::setServingStatus();
+        });
 
         Builder::macro(
             'search',
