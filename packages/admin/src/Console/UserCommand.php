@@ -10,9 +10,9 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 use Shopper\Core\Models\User;
 
+use function Laravel\Prompts\info;
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\text;
-use function Laravel\Prompts\info;
 
 final class UserCommand extends Command
 {
@@ -33,8 +33,7 @@ final class UserCommand extends Command
             label: 'Your Email Address',
             default: 'admin@shopper.dev',
             required: true,
-            validate: fn (string $value) =>
-                User::where('email', $value)->exists()
+            validate: fn (string $value) => User::where('email', $value)->exists()
                     ? 'An admin with that email already exists.'
                     : null,
         );
@@ -52,7 +51,7 @@ final class UserCommand extends Command
             label: 'Choose a Password',
             required: true,
             validate: fn (string $value) => match (true) {
-                strlen($value) < 6 => 'The password must be at least 6 characters.',
+                mb_strlen($value) < 6 => 'The password must be at least 6 characters.',
                 default => null
             },
             hint: 'Minimum 6 characters.'
