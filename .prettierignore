@@ -1,0 +1,5 @@
+*.md
+**/public
+**/dist
+**/vendor
+composer.lock

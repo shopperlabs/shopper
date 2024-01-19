@@ -34,7 +34,7 @@ Instructions on how to install Shopper can be found at the [installation guide](
 
 For advanced users, run this in your terminal to install Shopper from command line:
 
-``` bash
+```bash
 composer require shopper/framework
 ```
 
@@ -54,8 +54,8 @@ The Framework uses [Laravel](https://laravel.com) as a foundation PHP framework.
 
 You can communicate with us using the following mediums:
 
-* [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
-* [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
+-   [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
+-   [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
 
 ## Contributing
 
@@ -70,10 +70,10 @@ We send an email about 3-4 emails per year. Sometimes less.
 
 ## Credits
 
-- [Arthur Monney](https://github.com/mckenziearts)
-- [Jean-Vincent QUILICHINI](https://github.com/sense)
-- [FilamentPHP](https://filamentphp.com)
-- [All Contributors](../../contributors)
+-   [Arthur Monney](https://github.com/mckenziearts)
+-   [Jean-Vincent QUILICHINI](https://github.com/sense)
+-   [FilamentPHP](https://filamentphp.com)
+-   [All Contributors](../../contributors)
 
 And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
 

@@ -2,7 +2,11 @@
   "name": "shopper/framework",
   "description": "An e-commerce administration built with Laravel for create and manage online shop.",
   "license": "MIT",
-  "keywords": ["e-commerce", "Tallstack", "Store"],
+  "keywords": [
+    "e-commerce",
+    "Tallstack",
+    "Store"
+  ],
   "authors": [
     {
       "name": "Arthur Monney",

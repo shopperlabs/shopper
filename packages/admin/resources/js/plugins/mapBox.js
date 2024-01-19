@@ -21,7 +21,7 @@ export default (element, token) => ({
       container: this.container,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [this.lng, this.lat],
-      zoom: this.zoom
+      zoom: this.zoom,
     })
 
     // Add navigation control (the +/- zoom buttons)
@@ -31,16 +31,16 @@ export default (element, token) => ({
     map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
-          enableHighAccuracy: true
+          enableHighAccuracy: true,
         },
         trackUserLocation: true,
-        showUserHeading: true
-      })
+        showUserHeading: true,
+      }),
     )
 
     // Create a new marker.
     this.marker = new mapboxgl.Marker({
-      draggable: true
+      draggable: true,
     })
       .setLngLat([this.lng, this.lat])
       .addTo(map)
@@ -50,5 +50,5 @@ export default (element, token) => ({
       this.lng = lngLat.lng.toFixed(4)
       this.lat = lngLat.lat.toFixed(4)
     })
-  }
+  },
 })

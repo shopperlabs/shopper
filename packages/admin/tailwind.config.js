@@ -43,7 +43,7 @@ module.exports = {
         70: '17.5rem',
         95: '23.75rem',
         125: '31.25rem',
-        140: '35rem'
+        140: '35rem',
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
@@ -60,8 +60,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 }
