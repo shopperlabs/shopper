@@ -25,7 +25,7 @@ final class DashboardSidebar extends AbstractAdminSidebar
                 $item->setInactiveClass('text-secondary-600 dark:text-secondary-300 hover:text-secondary-900 hover:bg-secondary-50 dark:hover:text-white dark:hover:bg-gray-900');
                 $item->setIcon(
                     icon: 'untitledui-home-line',
-                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-secondary-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ]

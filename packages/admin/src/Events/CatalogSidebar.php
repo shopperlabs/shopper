@@ -28,7 +28,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $item->route('shopper.products.index');
                 $item->setIcon(
                     icon: 'untitledui-book-open',
-                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-secondary-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -52,7 +52,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $item->route('shopper.categories.index');
                 $item->setIcon(
                     icon: 'untitledui-tag-03',
-                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-secondary-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -67,7 +67,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $item->route('shopper.collections.index');
                 $item->setIcon(
                     icon: 'untitledui-align-horizontal-centre-02',
-                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-secondary-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -82,7 +82,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $item->route('shopper.brands.index');
                 $item->setIcon(
                     icon: 'untitledui-bookmark',
-                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-secondary-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],

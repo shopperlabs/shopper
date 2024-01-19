@@ -28,7 +28,7 @@ final class CustomerSidebar extends AbstractAdminSidebar
                 $item->route('shopper.customers.index');
                 $item->setIcon(
                     icon: 'untitledui-users-02',
-                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-secondary-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -43,7 +43,7 @@ final class CustomerSidebar extends AbstractAdminSidebar
                 $item->route('shopper.reviews.index');
                 $item->setIcon(
                     icon: 'untitledui-message-heart-square',
-                    iconClass: "mr-3 h-5 w-5 ". ($item->isActive() ? 'text-primary-600': 'text-secondary-400'),
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-secondary-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
