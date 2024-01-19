@@ -46,7 +46,7 @@
     @include('shopper::includes._additional-styles')
     @stack('scripts')
 </head>
-<body x-keypress {{ $attributes->merge(['class' => 'bg-white font-sans dark:bg-secondary-900']) }}>
+<body x-keypress {{ $attributes->merge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
 
     {{ $slot }}
 

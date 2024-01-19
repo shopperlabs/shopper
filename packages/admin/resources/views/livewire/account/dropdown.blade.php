@@ -1,7 +1,6 @@
 <div x-data="{ dropdownOpen: false }">
     <div
-        class="mt-4 relative rounded-lg p-2 group hover:bg-white dark:hover:bg-secondary-700 hover:shadow-md transition ease-in-out duration-200"
-        :class="dropdownOpen ? 'bg-white dark:bg-secondary-700 text-secondary-700 dark:text-white shadow-md' : 'text-secondary-500 dark:text-secondary-400'"
+        class="mt-4 relative rounded-lg p-2 group transition ease-in-out duration-200"
     >
         <button @click="dropdownOpen = !dropdownOpen" class="w-full text-sm leading-5 focus:outline-none text-left" type="button">
             <span class="flex w-full items-start justify-between">
@@ -34,7 +33,7 @@
              x-transition:leave-end="transform opacity-0 scale-95"
              @click.outside="dropdownOpen = false"
              x-cloak
-             class="absolute inset-x-0 bottom-18 z-10 mt-1 origin-bottom-left rounded-lg backdrop-blur-sm bg-white/60 dark:bg-secondary-700/60 shadow-lg focus:outline-none"
+             class="absolute inset-x-0 bottom-18 z-10 mt-1 origin-bottom-left rounded-lg backdrop-blur-sm bg-white/60 shadow-lg ring-1 ring-secondary-200 dark:bg-gray-900/80 dark:ring-gray-800"
              x-ref="menu-items"
              role="menu"
              aria-orientation="vertical"
