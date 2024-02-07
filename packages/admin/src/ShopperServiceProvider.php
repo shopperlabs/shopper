@@ -15,8 +15,8 @@ use Shopper\Contracts\TwoFactorDisabledResponse as TwoFactorDisabledResponseCont
 use Shopper\Contracts\TwoFactorEnabledResponse as TwoFactorEnabledResponseContract;
 use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
-use Shopper\Http\Livewire\Components;
-use Shopper\Http\Livewire\Pages;
+use Shopper\Livewire\Components;
+use Shopper\Livewire\Pages;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 use Shopper\Http\Responses\LoginResponse;

@@ -13,7 +13,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Shopper\Http\Controllers\AssetController;
-use Shopper\Http\Livewire\Pages\Initialization;
+use Shopper\Livewire\Pages\Initialization;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\Dashboard;
 use Shopper\Http\Middleware\DispatchShopper;

@@ -32,7 +32,7 @@
                 aria-label="{{ __('shopper::layout.forms.label.email') }}"
                 name="email"
                 type="email"
-                wire:model.lazy="email"
+                wire:model="email"
                 placeholder="{{ __('shopper::layout.forms.label.email') }}"
                 required
                 autofocus

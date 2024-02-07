@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-secondary-100 dark:bg-secondary-900">
     <nav id="navbar" x-data="{ open: false }" class="bg-white shadow-sm dark:bg-secondary-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="shrink-0 flex items-center">
@@ -88,7 +88,7 @@
     </nav>
 
     <header class="sticky top-0 z-30 hidden bg-white shadow-md lg:block lg:border-t lg:border-b lg:border-secondary-200 dark:bg-secondary-800 lg:dark:border-secondary-700">
-        <nav class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <nav class="px-4 mx-auto max-w-8xl sm:px-6 lg:px-8">
             <ul class="flex overflow-hidden">
                 <li class="relative overflow-hidden lg:flex-1">
                     <div class="overflow-hidden border border-b-0 border-secondary-200 rounded-t-md lg:border-0">
@@ -228,8 +228,8 @@
         </nav>
     </header>
 
-    <main class="py-5 mx-auto max-w-7xl sm:py-10">
-        <form wire:submit.prevent="store">
+    <main class="py-5 mx-auto max-w-8xl sm:py-10">
+        <form wire:submit="store">
             <div id="step-one" class="px-4 sm:px-6 lg:px-8">
                 <span class="text-sm font-medium uppercase text-primary-600 lg:hidden dark:text-primary-500">
                     {{ __('shopper::pages/settings.initialization.step', ['step' => 1]) }}

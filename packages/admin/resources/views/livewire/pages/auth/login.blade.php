@@ -24,7 +24,7 @@
                     aria-label="{{ __('shopper::layout.forms.label.email') }}"
                     name="email"
                     type="email"
-                    wire:model.defer="email"
+                    wire:model="email"
                     autocomplete="off"
                     class="relative block w-full px-3 py-2 border rounded-none appearance-none border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 placeholder-secondary-500 text-secondary-900 dark:text-secondary-300 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-secondary-900 focus:z-10 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.email') }}"
@@ -36,7 +36,7 @@
                     aria-label="{{ __('shopper::layout.forms.label.password') }}"
                     name="password"
                     type="password"
-                    wire:model.defer="password"
+                    wire:model="password"
                     class="relative block w-full px-3 py-2 border rounded-none appearance-none border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 placeholder-secondary-500 text-secondary-900 dark:text-secondary-300 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-secondary-900 focus:z-10 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.password') }}"
                     required

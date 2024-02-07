@@ -23,7 +23,7 @@
                     value="{{ $email ?? old('email') }}"
                     name="email"
                     type="email"
-                    wire:model.lazy="email"
+                    wire:model="email"
                     autocomplete="off"
                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 placeholder-secondary-500 text-secondary-900 dark:text-secondary-300 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-secondary-900 focus:z-10 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.email') }}"
@@ -36,7 +36,7 @@
                     aria-label="{{ __('shopper::layout.forms.label.password') }}"
                     name="password"
                     type="password"
-                    wire:model.lazy="password"
+                    wire:model="password"
                     class="appearance-none rounded-none relative block w-full px-3 py-2 border border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 placeholder-secondary-500 text-secondary-900 dark:text-secondary-300 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-secondary-900 focus:z-10 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.new_password') }}"
                     required

@@ -10,7 +10,8 @@
   "authors": [
     {
       "name": "Arthur Monney",
-      "email": "monneylobe@gmail.com"
+      "email": "monneylobe@gmail.com",
+      "role": "Developer"
     }
   ],
   "require": {
@@ -19,7 +20,7 @@
     "composer-runtime-api": "^2.1"
   },
   "require-dev": {
-    "blade-ui-kit/blade-heroicons": "^1.2",
+    "blade-ui-kit/blade-heroicons": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "doctrine/dbal": "^3.6",
     "larastan/larastan": "^2.0",
