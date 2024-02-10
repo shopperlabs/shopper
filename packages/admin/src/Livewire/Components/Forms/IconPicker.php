@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Livewire\Forms;
+namespace Shopper\Livewire\Components\Forms;
 
 use BladeUI\Icons\Factory as IconFactory;
 use Illuminate\Contracts\View\View;

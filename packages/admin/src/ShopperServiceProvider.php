@@ -15,14 +15,14 @@ use Shopper\Contracts\TwoFactorDisabledResponse as TwoFactorDisabledResponseCont
 use Shopper\Contracts\TwoFactorEnabledResponse as TwoFactorEnabledResponseContract;
 use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
-use Shopper\Livewire\Components;
-use Shopper\Livewire\Pages;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 use Shopper\Http\Responses\LoginResponse;
 use Shopper\Http\Responses\TwoFactorDisabledResponse;
 use Shopper\Http\Responses\TwoFactorEnabledResponse;
 use Shopper\Http\Responses\TwoFactorLoginResponse;
+use Shopper\Livewire\Components;
+use Shopper\Livewire\Pages;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

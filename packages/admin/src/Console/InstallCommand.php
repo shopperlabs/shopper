@@ -47,6 +47,7 @@ final class InstallCommand extends Command
         $this->progressBar->advance();
 
         $this->setupDatabaseConfig();
+        $this->call('filament:assets');
         $this->call('shopper:link');
         $this->progressBar->advance();
 

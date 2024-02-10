@@ -1,10 +1,13 @@
 # Node.js
 /node_modules
+/node_modules.nosync
 npm-debug.log
 yarn-error.log
 
 # Composer
-/vendor
+/**/vendor
+/**/composer.lock
+/vendor.nosync
 composer.phar
 
 # IDE

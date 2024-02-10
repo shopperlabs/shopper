@@ -53,9 +53,9 @@
 
     <x-shopper::alert />
 
-    <div id="ui-modal">
-        @livewire('livewire-ui-modal')
-    </div>
+{{--    <div id="ui-modal">--}}
+{{--        @livewire('livewire-ui-modal')--}}
+{{--    </div>--}}
 
     @livewire('notifications')
 

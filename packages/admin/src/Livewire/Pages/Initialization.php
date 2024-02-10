@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -17,9 +21,10 @@ use Shopper\Core\Repositories\ChannelRepository;
 use Shopper\Traits\HasAuthenticated;
 
 #[Layout('shopper::components.layouts.base')]
-final class Initialization extends Component
+final class Initialization extends Component implements HasForms
 {
     use HasAuthenticated;
+    use InteractsWithForms;
 
     public string $shop_name = '';
 
@@ -64,30 +69,18 @@ final class Initialization extends Component
         'trix:valueUpdated' => 'onTrixValueUpdate',
     ];
 
+    public ?array $data = [];
+
     public function mount(): void
     {
         $defaultCurrency = Currency::query()->where('code', shopper_currency())->first();
         $this->shop_currency_id = (int) $defaultCurrency->id;
+        $this->form->fill();
     }
 
     public function onTrixValueUpdate(string $value): void
     {
         $this->shop_about = $value;
-    }
-
-    public function stepOneState(): bool
-    {
-        return $this->shop_email && $this->shop_name && $this->shop_country_id;
-    }
-
-    public function stepTwoState(): bool
-    {
-        return $this->shop_street_address && $this->shop_city && $this->shop_zipcode;
-    }
-
-    public function stepTreeState(): bool
-    {
-        return $this->shop_facebook_link || $this->shop_instagram_link || $this->shop_twitter_link;
     }
 
     public function messages(): array
@@ -98,8 +91,20 @@ final class Initialization extends Component
         ];
     }
 
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                TextInput::make('shop_name')->required(),
+                TextInput::make('shop_email')
+                    ->required()
+                    ->email(),
+            ])->statePath('data');
+    }
+
     public function store(): void
     {
+        dd($this->form->getState());
         $this->validate();
 
         $keys = [

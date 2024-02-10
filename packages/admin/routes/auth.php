@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Shopper\Http\Controllers\Auth\TwoFactorAuthenticatedController;
-use Shopper\Http\Livewire\Pages\Auth\ForgotPassword;
-use Shopper\Http\Livewire\Pages\Auth\Login;
-use Shopper\Http\Livewire\Pages\Auth\ResetPassword;
+use Shopper\Livewire\Pages\Auth\ForgotPassword;
+use Shopper\Livewire\Pages\Auth\Login;
+use Shopper\Livewire\Pages\Auth\ResetPassword;
 
 Route::redirect('/', shopper_prefix() . '/login', 301);
 

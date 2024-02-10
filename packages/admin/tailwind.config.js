@@ -1,9 +1,11 @@
 import colors from 'tailwindcss/colors'
 import defaultTheme from 'tailwindcss/defaultTheme'
+import preset from './vendor/filament/support/tailwind.config.preset'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
+  presets: [preset],
   safelist: [
     {
       pattern: /max-w-(xl|2xl|3xl|4xl)/,
@@ -13,6 +15,7 @@ module.exports = {
   content: [
     './packages/admin/resources/views/**/*.blade.php',
     './packages/admin/src/**/*.php',
+    './vendor/filament/**/*.blade.php',
   ],
   theme: {
     extend: {
@@ -47,7 +50,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-        display: ['Inter', ...defaultTheme.fontFamily.mono],
+        heading: ['var(--font-heading)', ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
         xxs: ['0.625rem', { lineHeight: '1rem' }],

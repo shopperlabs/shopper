@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Livewire\Forms;
+namespace Shopper\Livewire\Components\Forms;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -26,6 +26,6 @@ final class Trix extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.forms.trix');
+        return view('shopper::livewire.components.forms.trix');
     }
 }
