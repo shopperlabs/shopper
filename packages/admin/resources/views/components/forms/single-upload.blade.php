@@ -34,6 +34,6 @@
         </label>
     @endif
     @if($error)
-        <p class="mt-2 text-sm text-negative-600">{{ $error }}</p>
+        <p class="mt-2 text-sm text-danger-600">{{ $error }}</p>
     @endif
 </div>

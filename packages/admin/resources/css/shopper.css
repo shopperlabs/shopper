@@ -1,7 +1,6 @@
 @import 'choices.js/public/assets/styles/choices.css';
 @import 'tom-select/dist/css/tom-select.default.min.css';
 @import 'flatpickr/dist/themes/light.css';
-@import 'intl-tel-input/build/css/intlTelInput.css';
 @import 'filepond/dist/filepond.min.css';
 @import 'trix/dist/trix.css';
 
@@ -13,6 +12,7 @@
 @import 'components/filepond.css';
 @import 'components/select.css';
 @import 'components/sidebar.css';
+@import 'components/intl-phone.css';
 @import 'components/trix-editor.css';
 
 @layer base {

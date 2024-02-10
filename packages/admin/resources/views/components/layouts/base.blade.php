@@ -30,6 +30,7 @@
     @stack('styles')
 
     <livewire:styles />
+    @filamentStyles
     {{ \Shopper\Facades\Shopper::getThemeLink() }}
 
     <wireui:scripts />
@@ -59,6 +60,7 @@
     @livewire('notifications')
 
     <livewire:scripts />
+    @filamentScripts
     @include('shopper::includes._additional-scripts')
 
 </body>

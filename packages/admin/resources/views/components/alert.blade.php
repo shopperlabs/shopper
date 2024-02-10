@@ -29,7 +29,7 @@
                         </div>
                         <div class="ml-4 shrink-0 flex">
                             <button @click="show = false;" class="inline-flex text-secondary-500 dark:text-secondary-400">
-                                <x-heroicon-s-x class="h-5 w-5" />
+                                <x-untitledui-x class="h-5 w-5" />
                             </button>
                         </div>
                     </div>

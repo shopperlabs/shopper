@@ -28,14 +28,6 @@ input[type='number'] {
   background-color: theme('colors.primary.900');
 }
 
-.iti {
-  display: block;
-}
-
-.iti__selected-flag {
-  padding: 0 10px;
-}
-
 .scrolling::-webkit-scrollbar {
   width: 0.5em;
   height: 0.5em;

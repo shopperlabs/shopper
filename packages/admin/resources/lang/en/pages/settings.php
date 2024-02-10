@@ -30,9 +30,9 @@ return [
         'step_2_description' => 'Don\'t Worry. You can change these setting at any time. Shopper allows you to start with the smallest level so that you can see the evolution of your shop.',
 
         'step_3' => 'Step 3 - Social links',
-        'social_description' => 'Your shop on social networks.',
+        'social_description' => 'Your shop on social networks',
         'step_3_description' => 'You can add links to your social media accounts so that your shop can be found easily on your social media pages.',
-        'action' => 'Setup my store',
+        'action' => 'Save',
     ],
 
     'settings' => [

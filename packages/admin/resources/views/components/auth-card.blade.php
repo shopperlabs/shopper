@@ -2,7 +2,7 @@
     <svg class="absolute inset-0 -z-10 hidden h-full w-full stroke-secondary-200 dark:stroke-secondary-800 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] sm:block" aria-hidden="true">
         <defs>
             <pattern id="55d3d46d-692e-45f2-becd-d8bdc9344f45" width="200" height="200" x="50%" y="0" patternUnits="userSpaceOnUse">
-                <path d="M.5 200V.5H200" fill="none"></path>
+                <path d="M.5 200V.5H200" fill="none" />
             </pattern>
         </defs>
         <svg x="50%" y="0" class="overflow-visible fill-secondary-50 dark:fill-secondary-700">
