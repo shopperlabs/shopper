@@ -15,10 +15,6 @@ use Shopper\Events\LoadShopper;
 
 final class Shopper
 {
-    protected array $scripts = [];
-
-    protected array $styles = [];
-
     protected bool $isServing = false;
 
     protected string|Htmlable|null $theme = null;
@@ -33,16 +29,6 @@ final class Shopper
         return config('shopper.admin.prefix');
     }
 
-    public function registerScripts(array $scripts): void
-    {
-        $this->scripts = array_merge($this->scripts, $scripts);
-    }
-
-    public function registerStyles(array $styles): void
-    {
-        $this->styles = array_merge($this->styles, $styles);
-    }
-
     public function registerTheme(string|Htmlable|null $theme): void
     {
         $this->theme = $theme;
@@ -51,16 +37,6 @@ final class Shopper
     public function registerViteTheme(string|array $theme, ?string $buildDirectory = null): void
     {
         $this->theme = app(Vite::class)($theme, $buildDirectory);
-    }
-
-    public function getScripts(): array
-    {
-        return $this->scripts;
-    }
-
-    public function getStyles(): array
-    {
-        return $this->styles;
     }
 
     public function getThemeLink(): Htmlable

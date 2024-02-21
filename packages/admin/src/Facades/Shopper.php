@@ -13,8 +13,6 @@ use Shopper\Shopper as ShopperPanel;
 /**
  * @method static StatefulGuard auth()
  * @method static string prefix()
- * @method static array getScripts()
- * @method static array getStyles()
  * @method static Htmlable getThemeLink()
  * @method static void registerScripts(array $scripts)
  * @method static void registerStyles(array $styles)

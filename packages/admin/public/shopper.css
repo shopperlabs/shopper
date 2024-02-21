@@ -7106,10 +7106,6 @@ html {
     margin-top: 0px;
   }
 
-  .sm\:mt-5{
-    margin-top: 1.25rem;
-  }
-
   .sm\:mt-px{
     margin-top: 1px;
   }
@@ -7294,10 +7290,6 @@ html {
 
   .sm\:border-l{
     border-left-width: 1px;
-  }
-
-  .sm\:border-t{
-    border-top-width: 1px;
   }
 
   .sm\:border-t-0{

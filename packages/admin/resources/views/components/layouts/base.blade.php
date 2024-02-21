@@ -25,12 +25,14 @@
 
     <link rel="dns-prefetch" href="{{ config('app.url') }}"/>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css"/>
 
     @stack('styles')
 
-    <livewire:styles />
-    @filamentStyles
+    @livewireScripts
     {{ \Shopper\Facades\Shopper::getThemeLink() }}
 
     <wireui:scripts />
@@ -45,7 +47,6 @@
     ></script>
 
     @include('shopper::includes._additional-styles')
-    @stack('scripts')
 </head>
 <body x-keypress {{ $attributes->merge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
 
@@ -59,8 +60,7 @@
 
     @livewire('notifications')
 
-    <livewire:scripts />
-    @filamentScripts
+    @livewireScriptConfig
     @include('shopper::includes._additional-scripts')
 
 </body>

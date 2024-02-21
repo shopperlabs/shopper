@@ -1,3 +1,5 @@
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
 import colors from 'tailwindcss/colors'
 import defaultTheme from 'tailwindcss/defaultTheme'
 import preset from './vendor/filament/support/tailwind.config.preset'
@@ -50,7 +52,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-        heading: ['var(--font-heading)', ...defaultTheme.fontFamily.mono],
+        heading: ['Figtree', ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
         xxs: ['0.625rem', { lineHeight: '1rem' }],
@@ -58,10 +60,7 @@ module.exports = {
       minHeight: {
         '(screen-content)': 'calc(100vh - 9.625rem)',
       },
-      maxWidth: {
-        '8xl': '88rem',
-      },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+  plugins: [forms, typography],
 }

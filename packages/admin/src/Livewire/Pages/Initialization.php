@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -21,10 +17,9 @@ use Shopper\Core\Repositories\ChannelRepository;
 use Shopper\Traits\HasAuthenticated;
 
 #[Layout('shopper::components.layouts.base')]
-final class Initialization extends Component implements HasForms
+final class Initialization extends Component
 {
     use HasAuthenticated;
-    use InteractsWithForms;
 
     public string $shop_name = '';
 
@@ -75,7 +70,6 @@ final class Initialization extends Component implements HasForms
     {
         $defaultCurrency = Currency::query()->where('code', shopper_currency())->first();
         $this->shop_currency_id = (int) $defaultCurrency->id;
-        $this->form->fill();
     }
 
     public function onTrixValueUpdate(string $value): void
@@ -91,20 +85,8 @@ final class Initialization extends Component implements HasForms
         ];
     }
 
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                TextInput::make('shop_name')->required(),
-                TextInput::make('shop_email')
-                    ->required()
-                    ->email(),
-            ])->statePath('data');
-    }
-
     public function store(): void
     {
-        dd($this->form->getState());
         $this->validate();
 
         $keys = [
@@ -168,6 +150,6 @@ final class Initialization extends Component implements HasForms
         return view('shopper::livewire.pages.initialization', [
             'countries' => Cache::get('countries-settings', fn () => Country::query()->orderBy('name')->get()),
             'currencies' => Cache::get('currencies-setting', fn () => Currency::query()->orderBy('name')->get()),
-        ]);
+        ])->title(__('shopper::pages/settings.initialization.shop_configuration'));
     }
 }
