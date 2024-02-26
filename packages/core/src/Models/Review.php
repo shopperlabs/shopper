@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property-read int $id
  * @property bool $approved
  */
-final class Review extends Model
+class Review extends Model
 {
     use HasFactory;
 

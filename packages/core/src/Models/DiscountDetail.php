@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-final class DiscountDetail extends Model
+class DiscountDetail extends Model
 {
     use HasFactory;
 

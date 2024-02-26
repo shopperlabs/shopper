@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int $quantity
  * @property int $unit_price_amount
  */
-final class OrderItem extends Model
+class OrderItem extends Model
 {
     use HasFactory;
 

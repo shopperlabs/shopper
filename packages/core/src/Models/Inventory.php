@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $phone_number
  * @property bool $is_default
  */
-final class Inventory extends Model
+class Inventory extends Model
 {
     use HasFactory;
 

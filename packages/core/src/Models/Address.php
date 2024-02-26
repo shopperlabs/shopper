@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $first_name
  * @property bool $is_default
  */
-final class Address extends Model
+class Address extends Model
 {
     use HasFactory;
 

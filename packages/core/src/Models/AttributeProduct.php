@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $attribute_custom_value
  * @property AttributeValue|null $value
  */
-final class AttributeProduct extends Model
+class AttributeProduct extends Model
 {
     use HasFactory;
 
