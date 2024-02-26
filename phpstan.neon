@@ -1,5 +1,5 @@
 includes:
-    - ./vendor/larastan/larastan/extension.neon
+    - ./vendor/nunomaduro/larastan/extension.neon
 
 parameters:
     level: 5
@@ -12,6 +12,5 @@ parameters:
         - packages/core/src/Traits/
     ignoreErrors:
         - "#Called 'take' on Laravel collection, but could have been retrieved as a query.#"
-        - "#^Call to an undefined method Shopper\\\\Core\\\\Repositories\\\\BaseRepository\\:\\:whereNull\\(\\)\\.$#"
     checkMissingIterableValueType: true
     treatPhpDocTypesAsCertain: false
