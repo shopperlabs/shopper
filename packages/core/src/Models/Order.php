@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Traits\HasPrice;
+use Shopper\Models\Address;
 
 /**
  * @property-read int $id

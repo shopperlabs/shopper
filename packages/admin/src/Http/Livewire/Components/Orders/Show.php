@@ -14,8 +14,8 @@ use Shopper\Core\Events\Orders\Cancel;
 use Shopper\Core\Events\Orders\Completed;
 use Shopper\Core\Events\Orders\Paid;
 use Shopper\Core\Events\Orders\Registered;
-use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Order;
+use Shopper\Models\Address;
 
 class Show extends Component
 {

@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property-read int $id
+ * @property string $last_name
+ * @property string|null $first_name
+ * @property bool $is_default
+ */
 class Address extends Model
 {
     use HasFactory;

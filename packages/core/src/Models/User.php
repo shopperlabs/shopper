@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasProfilePhoto;
+use Shopper\Models\Address;
 use Shopper\Traits\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
