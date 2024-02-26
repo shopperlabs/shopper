@@ -30,7 +30,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: mbstring, pdo, pdo_sqlite
+          tools: "composer:v2"
+          extensions: mbstring, curl, pdo, pdo_sqlite
           coverage: none
       - name: Install dependencies
         run: |

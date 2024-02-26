@@ -1,93 +1,93 @@
 {
-  "name": "shopper/framework",
-  "description": "An e-commerce administration built with Laravel for create and manage online shop.",
-  "license": "MIT",
-  "keywords": [
-    "e-commerce",
-    "Tallstack",
-    "Store"
-  ],
-  "authors": [
-    {
-      "name": "Arthur Monney",
-      "email": "monneylobe@gmail.com"
-    }
-  ],
-  "require": {
-    "php": "^8.1",
-    "ext-intl": "*",
-    "composer-runtime-api": "^2.1"
-  },
-  "require-dev": {
-    "blade-ui-kit/blade-heroicons": "^1.2",
-    "danharrin/livewire-rate-limiting": "^0.3|^1.0",
-    "doctrine/dbal": "^3.6",
-    "larastan/larastan": "^2.0",
-    "laravel/pint": "^1.1",
-    "mockery/mockery": "^1.4",
-    "nunomaduro/collision": "^5.11|^6.1",
-    "orchestra/testbench": "^7.0|^8.0",
-    "pestphp/pest": "^1.21",
-    "pestphp/pest-plugin-laravel": "^1.0",
-    "pestphp/pest-plugin-livewire": "^1.0",
-    "pestphp/pest-plugin-parallel": "^0.3",
-    "phpstan/phpstan": "^1.8",
-    "phpunit/phpunit": "^8.4|^9.0",
-    "reecem/mocker": "^1.2",
-    "spatie/laravel-package-tools": "^1.15",
-    "symplify/monorepo-builder": "^10.0"
-  },
-  "autoload": {
-    "files": [
-      "packages/admin/src/helpers.php",
-      "packages/core/src/helpers.php"
+    "name": "shopper/framework",
+    "description": "An e-commerce administration built with Laravel for create and manage online shop.",
+    "license": "MIT",
+    "keywords": [
+        "e-commerce",
+        "Tallstack",
+        "Store"
     ],
-    "psr-4": {
-      "Database\\Factories\\": "packages/core/database/factories",
-      "Database\\Seeders\\": "packages/core/database/seeders",
-      "Shopper\\": [
-        "packages/admin/src",
-        "packages/core/src",
-        "packages/sidebar/src"
-      ],
-      "Shopper\\Core\\": "packages/core/src",
-      "Shopper\\Sidebar\\": "packages/sidebar/src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Shopper\\Tests\\": "tests/src",
-      "Shopper\\Tests\\Database\\Factories\\": "tests/database/factories"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Shopper\\ShopperServiceProvider",
-        "Shopper\\Core\\CoreServiceProvider",
-        "Shopper\\Sidebar\\SidebarServiceProvider"
-      ]
-    }
-  },
-  "scripts": {
-    "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
-    "pint": "./vendor/bin/pint",
-    "pest": "./vendor/bin/pest",
-    "stan": "./vendor/bin/phpstan analyse --memory-limit=1G"
-  },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "composer/package-versions-deprecated": true,
-      "pestphp/pest-plugin": true,
-      "phpstan/extension-installer": true
-    }
-  },
-  "replace": {
-    "shopper/core": "self.version",
-    "shopper/framework": "self.version",
-    "shopper/sidebar": "self.version"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "authors": [
+        {
+            "name": "Arthur Monney",
+            "email": "monneylobe@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "ext-intl": "*",
+        "composer-runtime-api": "^2.1"
+    },
+    "require-dev": {
+        "blade-ui-kit/blade-heroicons": "^1.2",
+        "danharrin/livewire-rate-limiting": "^0.3|^1.0",
+        "doctrine/dbal": "^3.6",
+        "larastan/larastan": "^2.0",
+        "laravel/pint": "^1.1",
+        "mockery/mockery": "^1.4",
+        "nunomaduro/collision": "^5.11|^6.1",
+        "orchestra/testbench": "^7.0|^8.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.0",
+        "pestphp/pest-plugin-livewire": "^1.0",
+        "pestphp/pest-plugin-parallel": "^0.3",
+        "phpstan/phpstan": "^1.8",
+        "phpunit/phpunit": "^8.4|^9.0",
+        "reecem/mocker": "^1.2",
+        "spatie/laravel-package-tools": "^1.15",
+        "symplify/monorepo-builder": "^11.0"
+    },
+    "autoload": {
+        "files": [
+            "packages/admin/src/helpers.php",
+            "packages/core/src/helpers.php"
+        ],
+        "psr-4": {
+            "Database\\Factories\\": "packages/core/database/factories",
+            "Database\\Seeders\\": "packages/core/database/seeders",
+            "Shopper\\": [
+                "packages/admin/src",
+                "packages/core/src",
+                "packages/sidebar/src"
+            ],
+            "Shopper\\Core\\": "packages/core/src",
+            "Shopper\\Sidebar\\": "packages/sidebar/src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Shopper\\Tests\\": "tests/src",
+            "Shopper\\Tests\\Database\\Factories\\": "tests/database/factories"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Shopper\\ShopperServiceProvider",
+                "Shopper\\Core\\CoreServiceProvider",
+                "Shopper\\Sidebar\\SidebarServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
+        "pint": "./vendor/bin/pint",
+        "pest": "./vendor/bin/pest",
+        "stan": "./vendor/bin/phpstan analyse --memory-limit=1G"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "replace": {
+        "shopper/core": "2.0.8",
+        "shopper/framework": "2.0.8",
+        "shopper/sidebar": "2.0.8"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
