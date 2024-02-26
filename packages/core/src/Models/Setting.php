@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $display_name
  * @property mixed $value
  */
-final class Setting extends Model
+class Setting extends Model
 {
     protected $guarded = [];
 

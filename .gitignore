@@ -1,19 +1,15 @@
-# Node.js
-/node_modules
-npm-debug.log
-yarn-error.log
-
-# Composer
-/vendor
-composer.phar
-
-# IDE
 /.idea
 /.vscode
-
-# Laravel
+/**/node_modules
+/node_modules.nosync
+yarn-error.log
+/**/vendor
+/**/composer.lock
+/vendor.nosync
+composer.phar
 phpunit.xml
 .phpunit.result.cache
 .php-cs-fixer.cache
 build
+Thumbs.db
 

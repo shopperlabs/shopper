@@ -9,18 +9,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * @property-read int $id
- * @property string $last_name
- * @property string|null $first_name
- * @property bool $is_default
- */
-final class Address extends Model
+class Address extends Model
 {
     use HasFactory;
 
     public const TYPE_BILLING = 'billing';
-
     public const TYPE_SHIPPING = 'shipping';
 
     protected $fillable = [
