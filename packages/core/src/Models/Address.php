@@ -14,6 +14,7 @@ class Address extends Model
     use HasFactory;
 
     public const TYPE_BILLING = 'billing';
+
     public const TYPE_SHIPPING = 'shipping';
 
     protected $fillable = [
