@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon $start_at
  * @property \Illuminate\Support\Carbon|null $end_at
  */
-final class Discount extends Model
+class Discount extends Model
 {
     use HasFactory;
 

@@ -7,7 +7,7 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-final class Geolocation extends Model
+class Geolocation extends Model
 {
     protected $guarded = [];
 

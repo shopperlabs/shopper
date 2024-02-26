@@ -38,13 +38,6 @@ if (! function_exists('generate_number')) {
     }
 }
 
-if (! function_exists('shopper_version')) {
-    function shopper_version(): string
-    {
-        return Shopper::version();
-    }
-}
-
 if (! function_exists('shopper_table')) {
     function shopper_table(string $table): string
     {

@@ -6,7 +6,7 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class Currency extends Model
+class Currency extends Model
 {
     public $timestamps = false;
 
