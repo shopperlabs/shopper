@@ -27,7 +27,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(PushNextDevReleaseWorker::class);
 
     $parameters->set(Option::PACKAGE_DIRECTORIES, [
-        __DIR__.'/packages',
+        __DIR__ . '/packages',
     ]);
 
     // for "merge" command
