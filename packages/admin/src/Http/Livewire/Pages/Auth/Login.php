@@ -15,7 +15,7 @@ use Shopper\Actions\RedirectIfTwoFactorAuthenticatable;
 use Shopper\Contracts\LoginResponse;
 use Shopper\Core\Rules\RealEmailValidator;
 
-final class Login extends Component
+class Login extends Component
 {
     use WithRateLimiting;
 

@@ -6,11 +6,10 @@ namespace Shopper\Http\Responses;
 
 use Illuminate\Http\JsonResponse;
 use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
-use Symfony\Component\HttpFoundation\Response;
 
-final class TwoFactorEnabledResponse implements TwoFactorLoginResponseContract
+class TwoFactorEnabledResponse implements TwoFactorLoginResponseContract
 {
-    public function toResponse($request): Response
+    public function toResponse($request)
     {
         return $request->wantsJson()
             ? new JsonResponse('', 200)

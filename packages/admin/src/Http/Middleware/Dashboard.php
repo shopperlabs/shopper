@@ -11,7 +11,7 @@ use Shopper\Core\Models\Setting;
 use Shopper\Core\Models\User;
 use Shopper\Facades\Shopper;
 
-final class Dashboard
+class Dashboard
 {
     public function handle(Request $request, Closure $next)
     {

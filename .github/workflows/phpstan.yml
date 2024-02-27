@@ -3,6 +3,8 @@ name: "phpstan Static Analysis"
 on:
   push:
   pull_request:
+    branches:
+      - main
 
 jobs:
   phpstan:

@@ -7,7 +7,7 @@ namespace Shopper\Core\Events\Orders;
 use Illuminate\Queue\SerializesModels;
 use Shopper\Core\Models\Order;
 
-final class Completed
+class Completed
 {
     use SerializesModels;
 

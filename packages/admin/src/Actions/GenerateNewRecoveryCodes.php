@@ -6,7 +6,7 @@ namespace Shopper\Actions;
 
 use Illuminate\Support\Collection;
 
-final class GenerateNewRecoveryCodes
+class GenerateNewRecoveryCodes
 {
     public function __invoke($user): void
     {

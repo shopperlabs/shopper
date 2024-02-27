@@ -7,14 +7,12 @@ namespace Shopper\Actions;
 use Closure;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Livewire\Redirector;
 use Shopper\Facades\Shopper;
 use Shopper\Traits\TwoFactorAuthenticatable;
-use Symfony\Component\HttpFoundation\Response;
 
-final class RedirectIfTwoFactorAuthenticatable
+class RedirectIfTwoFactorAuthenticatable
 {
-    public function handle(array $data, Closure $next): Response|Redirector
+    public function handle(array $data, Closure $next)
     {
         $user = $this->validateCredentials($data);
 
@@ -44,7 +42,7 @@ final class RedirectIfTwoFactorAuthenticatable
         ]);
     }
 
-    protected function twoFactorChallengeResponse($user, bool $remember): Redirector|Response
+    protected function twoFactorChallengeResponse($user, bool $remember)
     {
         request()->session()->put([
             'login.id' => $user->getKey(),

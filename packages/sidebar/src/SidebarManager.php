@@ -9,7 +9,7 @@ use Shopper\Sidebar\Exceptions\LogicException;
 use Shopper\Sidebar\Infrastructure\SidebarFlusher;
 use Shopper\Sidebar\Infrastructure\SidebarResolver;
 
-final class SidebarManager
+class SidebarManager
 {
     protected array $sidebars = [];
 

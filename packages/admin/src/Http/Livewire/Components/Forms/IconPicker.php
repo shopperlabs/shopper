@@ -13,7 +13,7 @@ use Livewire\Component;
 use Shopper\Traits\CanBeCacheable;
 use Shopper\Traits\HasCollectionPaginate;
 
-final class IconPicker extends Component
+class IconPicker extends Component
 {
     use CanBeCacheable;
     use HasCollectionPaginate;

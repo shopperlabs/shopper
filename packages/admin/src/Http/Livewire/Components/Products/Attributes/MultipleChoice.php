@@ -12,7 +12,7 @@ use Livewire\Component;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Repositories\Store\ProductRepository;
 
-final class MultipleChoice extends Component
+class MultipleChoice extends Component
 {
     public Collection $values;
 

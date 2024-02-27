@@ -6,7 +6,7 @@ namespace Shopper\Actions;
 
 use Illuminate\Contracts\Auth\StatefulGuard;
 
-final class ConfirmPassword
+class ConfirmPassword
 {
     public function __invoke(StatefulGuard $guard, $user, string $password): bool
     {

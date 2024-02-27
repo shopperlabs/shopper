@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Core\Models\AttributeProduct;
 
-final class Text extends Component
+class Text extends Component
 {
     use Actions;
 
