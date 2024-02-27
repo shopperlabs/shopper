@@ -6,7 +6,7 @@ namespace Shopper\Core\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-final class Phone implements Rule
+class Phone implements Rule
 {
     public function passes($attribute, $value): bool
     {

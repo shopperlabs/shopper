@@ -7,7 +7,7 @@ namespace Shopper\Http\Livewire\Pages;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-final class Dashboard extends Component
+class Dashboard extends Component
 {
     public function render(): View
     {

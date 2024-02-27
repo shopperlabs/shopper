@@ -15,7 +15,7 @@ use Shopper\Core\Models\Setting;
 use Shopper\Core\Repositories\ChannelRepository;
 use Shopper\Traits\HasAuthenticated;
 
-final class Initialization extends Component
+class Initialization extends Component
 {
     use HasAuthenticated;
 

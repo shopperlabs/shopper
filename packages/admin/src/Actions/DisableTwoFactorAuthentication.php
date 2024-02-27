@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Actions;
 
-final class DisableTwoFactorAuthentication
+class DisableTwoFactorAuthentication
 {
     public function __invoke($user): void
     {

@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Livewire\Component;
 use Shopper\Core\Rules\RealEmailValidator;
-use Shopper\Core\Shopper;
+use Shopper\Facades\Shopper;
 
-final class ResetPassword extends Component
+class ResetPassword extends Component
 {
     public ?string $token = null;
 

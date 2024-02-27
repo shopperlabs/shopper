@@ -6,7 +6,7 @@ namespace Shopper\Core\Events\Products;
 
 use Illuminate\Queue\SerializesModels;
 
-final class Created
+class Created
 {
     use SerializesModels;
 

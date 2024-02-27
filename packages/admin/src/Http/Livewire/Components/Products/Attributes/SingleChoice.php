@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
 use Shopper\Core\Models\AttributeProduct;
 
-final class SingleChoice extends Component
+class SingleChoice extends Component
 {
     use Actions;
 
