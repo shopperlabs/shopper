@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Console;
 
 use Illuminate\Console\Command;
+use Shopper\Shopper;
 
 final class SymlinkCommand extends Command
 {
@@ -14,14 +15,15 @@ final class SymlinkCommand extends Command
 
     public function handle(): void
     {
-        $link = public_path('shopper');
+        $prefix = Shopper::prefix();
+        $link = public_path($prefix);
         $target = realpath(__DIR__ . '/../../public/');
 
         if (file_exists($link)) {
-            $this->error('The "public/shopper" directory already exists.');
+            $this->error('The "public/' . $prefix . '" directory already exists.');
         } else {
             $this->laravel->make('files')->link($target, $link);
-            $this->info('The [public/shopper] directory has been linked.');
+            $this->info('The [public/' . $prefix . '] directory has been linked.');
         }
 
         $this->info('The link have been created.');
