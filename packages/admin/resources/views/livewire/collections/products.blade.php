@@ -1,7 +1,7 @@
 <x-shopper::card class="overflow-hidden">
     <div class="bg-secondary-50 dark:bg-secondary-900 p-4 sm:py-5 sm:px-6">
         <div class="sm:flex sm:items-center sm:justify-between">
-            <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white font-display">
+            <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white font-heading">
                 {{ __('shopper::layout.sidebar.products') }}
             </h3>
             <div class="mt-4 sm:mt-0 flex items-center space-x-3">

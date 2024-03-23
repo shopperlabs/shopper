@@ -20,6 +20,7 @@
     "php": "^8.2",
     "bacon/bacon-qr-code": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
+    "gehrisandro/tailwind-merge-laravel": "^1.2",
     "illuminate/console": "^10.0|^11.0",
     "illuminate/contracts": "^10.0|^11.0",
     "illuminate/cookie": "^10.0|^11.0",

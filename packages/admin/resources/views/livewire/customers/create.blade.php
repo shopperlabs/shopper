@@ -13,7 +13,7 @@
     <div class="mt-8 lg:grid lg:grid-cols-3 lg:gap-x-10">
         <div class="lg:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-display">
+                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
                     {{ __('shopper::pages/customers.overview') }}
                 </h3>
                 <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
@@ -71,7 +71,7 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-x-10">
             <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-display">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
                         {{ __('shopper::pages/customers.security_title') }}
                     </h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:txt-secondary-400">
@@ -128,7 +128,7 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-x-10">
             <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-display">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
                         {{ __('shopper::pages/customers.address_title') }}
                     </h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
@@ -241,7 +241,7 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-x-10">
             <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-display">
+                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
                         {{ __('shopper::pages/customers.notification_title') }}
                     </h3>
                     <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">

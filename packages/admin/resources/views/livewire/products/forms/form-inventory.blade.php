@@ -1,7 +1,7 @@
 <x-shopper::container>
     <div>
         <div>
-            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white font-display">
+            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white font-heading">
                 {{ __('shopper::pages/products.inventory.title') }}
             </h3>
             <p class="mt-1 max-w-2xl text-sm text-secondary-500 dark:text-secondary-400">

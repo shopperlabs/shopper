@@ -5,7 +5,7 @@
         <div>
             <x-shopper::brand class="w-auto h-12 mx-auto" />
 
-            <h2 class="mt-6 text-3xl font-bold leading-9 text-center text-secondary-900 dark:text-white font-display">
+            <h2 class="mt-6 text-3xl font-bold leading-9 text-center text-secondary-900 dark:text-white font-heading">
                 {{ __('shopper::pages/auth.login.title') }}
             </h2>
             <p class="max-w-sm mt-3 text-sm text-center text-secondary-500 dark:text-secondary-400">

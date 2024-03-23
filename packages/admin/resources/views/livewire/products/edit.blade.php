@@ -29,7 +29,7 @@
             <x-shopper::container>
                 <div class="space-y-3 lg:flex lg:items-start lg:justify-between lg:space-y-0">
                     <div class="flex-1 min-w-0">
-                        <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate font-display">
+                        <h3 class="text-2xl font-bold leading-6 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate font-heading">
                             {{ $product->name }}
                         </h3>
                     </div>

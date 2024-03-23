@@ -3,6 +3,5 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-use Shopper\Http\Controllers\Ecommerce;
 
-Route::resource('collections', Ecommerce\CollectionController::class);
+Route::get('/', config('shopper.components.collection.pages.index'))->name('index');

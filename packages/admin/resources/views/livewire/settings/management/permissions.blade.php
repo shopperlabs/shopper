@@ -11,7 +11,7 @@
         @foreach($groupPermissions as $group => $permissions)
             <div>
                 <div class="w-full py-1.5 px-4 lg:px-6 bg-secondary-50 dark:bg-secondary-700">
-                    <span class="text-xs uppercase font-semibold font-display leading-5 tracking-wider text-secondary-500 dark:text-secondary-400">
+                    <span class="text-xs uppercase font-semibold font-heading leading-5 tracking-wider text-secondary-500 dark:text-secondary-400">
                         {{ ! empty($group) ? $group : __('shopper::pages/settings.roles_permissions.custom_permission') }}
                     </span>
                 </div>

@@ -1,7 +1,7 @@
 <div class="mt-8 lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
     <div class="lg:col-span-1">
         <div>
-            <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
+            <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
                 {{ __('shopper::pages/settings.location.detail') }}
             </h3>
             <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
@@ -69,7 +69,7 @@
     <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
         <div class="lg:col-span-1">
             <div>
-                <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
+                <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
                     {{ __('shopper::pages/settings.location.address') }}
                 </h3>
                 <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">

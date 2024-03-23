@@ -162,5 +162,6 @@ return [
     'search' => 'Rechercher un contenu',
     'icon_no_result' => 'Aucun résultat pour cette recherche.',
     'selection' => 'Séléction',
+    'sign_in_as' => 'Connecté avec',
 
 ];

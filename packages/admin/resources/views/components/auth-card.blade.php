@@ -19,7 +19,7 @@
     <div class="relative w-full max-w-md">
         <div class="absolute -top-6 inset-x-0 ring-1 ring-secondary-200 dark:ring-secondary-700/50 transform scale-90 max-w-md px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-secondary-50/70 dark:from-secondary-800/60"></div>
         <div class="absolute -top-3.5 inset-x-0 ring-1 ring-secondary-200 dark:ring-secondary-700/50 transform scale-95 max-w-md px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-secondary-50/70 dark:from-secondary-800/60"></div>
-        <div {{ $attributes->merge(['class' => 'relative w-full max-w-md overflow-hidden border-t border-secondary-200 dark:border-secondary-700/50 px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-secondary-50/70 dark:from-secondary-800/60']) }}>
+        <div {{ $attributes->twMerge(['class' => 'relative w-full max-w-md overflow-hidden border-t border-secondary-200 dark:border-secondary-700/50 px-6 py-10 rounded-xl backdrop-blur-sm bg-gradient-to-b from-secondary-50/70 dark:from-secondary-800/60']) }}>
             {{ $slot }}
         </div>
     </div>

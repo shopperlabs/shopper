@@ -15,7 +15,7 @@
     <div class="z-30 pb-5 mt-5 border-b border-secondary-200 dark:border-secondary-700">
         <div class="space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0">
             <div class="flex items-center flex-1 min-w-0 space-x-3">
-                <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white font-display">
+                <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:text-3xl sm:leading-9 sm:truncate dark:text-white font-heading">
                     {{ $variant->name }}
                 </h3>
                 <span @class([
@@ -90,7 +90,7 @@
     <div class="mt-10 sm:mt-0">
         <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
             <div class="lg:col-span-1">
-                <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white font-display">
+                <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white font-heading">
                     {{ __('shopper::words.pricing') }}
                 </h3>
             </div>
@@ -143,7 +143,7 @@
     <div class="mt-10 sm:mt-0">
         <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
             <div class="lg:col-span-1">
-                <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white font-display">
+                <h3 class="mt-2 text-lg font-semibold leading-6 text-secondary-900 dark:text-white font-heading">
                     {{ __('shopper::words.location') }}
                 </h3>
             </div>

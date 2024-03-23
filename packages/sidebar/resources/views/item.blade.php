@@ -10,7 +10,8 @@
             $item->getActiveClass() => $active,
             $item->getInactiveClass() => ! $active,
         ])
-        @if($item->getNewTab())target="_blank"@endif
+        @if($item->withSpa()) wire:navigate @endif
+        @if($item->getNewTab()) target="_blank" @endif
     >
         @if($item->getIcon() !== null)
             @if($item->iconSvg())

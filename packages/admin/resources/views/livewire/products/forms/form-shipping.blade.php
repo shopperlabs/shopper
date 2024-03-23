@@ -2,7 +2,7 @@
     <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
         <div class="lg:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
+                <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
                     {{ __('shopper::words.shipping') }}
                 </h3>
                 <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
@@ -45,7 +45,7 @@
             <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
                 <div class="lg:col-span-1">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
+                        <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
                             {{ __('shopper::pages/products.shipping.package_dimension') }}
                         </h3>
                         <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">

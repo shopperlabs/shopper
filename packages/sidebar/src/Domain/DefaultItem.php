@@ -56,6 +56,8 @@ class DefaultItem implements Item, Serializable
 
     protected bool $newTab = false;
 
+    protected bool $spa = false;
+
     protected string $itemClass = '';
 
     protected string $activeClass = '';
@@ -70,6 +72,7 @@ class DefaultItem implements Item, Serializable
         'url',
         'icon',
         'type',
+        'spa',
         'toggleIcon',
         'toggleActiveIcon',
         'items',
@@ -132,6 +135,13 @@ class DefaultItem implements Item, Serializable
     public function isActive(): bool
     {
         return (new ActiveStateChecker())->isActive($this);
+    }
+
+    public function useSpa(): Item
+    {
+        $this->spa = true;
+
+        return $this;
     }
 
     public function getIconAttributes(): array
@@ -279,6 +289,11 @@ class DefaultItem implements Item, Serializable
     public function getNewTab(): bool
     {
         return $this->newTab;
+    }
+
+    public function withSpa(): bool
+    {
+        return $this->spa;
     }
 
     public function getItemClass(): string

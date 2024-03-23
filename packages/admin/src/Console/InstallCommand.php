@@ -8,10 +8,11 @@ use Database\Seeders\ShopperSeeder;
 use Illuminate\Console\Command;
 use Shopper\Core\Console\Thanks;
 use Shopper\Core\CoreServiceProvider;
-use Shopper\Providers\ShopperServiceProvider;
+use Shopper\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
 
+#[AsCommand(name: 'shopper:install')]
 final class InstallCommand extends Command
 {
     protected ProgressBar $progressBar;

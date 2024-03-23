@@ -16,6 +16,7 @@ use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
 use Shopper\Facades\Shopper;
 use Shopper\Http\Middleware\Authenticate;
+use Shopper\Http\Middleware\DispatchShopper;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 use Shopper\Http\Responses\LoginResponse;
 use Shopper\Http\Responses\TwoFactorDisabledResponse;
@@ -25,12 +26,14 @@ use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
 use Shopper\Providers\SidebarServiceProvider;
 use Shopper\Providers\TwoFactorAuthenticationProvider;
+use Shopper\Traits\LoadComponents;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 final class ShopperServiceProvider extends PackageServiceProvider
 {
     use HasRegisterConfigAndMigrationFiles;
+    use LoadComponents;
 
     protected array $configFiles = [
         'admin',
@@ -39,6 +42,8 @@ final class ShopperServiceProvider extends PackageServiceProvider
         'routes',
         'settings',
     ];
+
+    protected array $componentsConfig = ['account', 'dashboard', 'setting'];
 
     protected string $root = __DIR__ . '/..';
 
@@ -50,6 +55,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
             ->hasViewComponents('shopper')
             ->hasRoute('web')
             ->hasCommands([
+                Console\ComponentPublishCommand::class,
                 Console\InstallCommand::class,
                 Console\PublishCommand::class,
                 Console\SymlinkCommand::class,
@@ -71,7 +77,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     public function packageRegistered(): void
     {
         $this->registerConfigFiles();
-        $this->registerDatabase();
+        $this->registerComponentsConfigFiles();
         $this->registerResponseBindings();
 
         $this->app->singleton(
@@ -82,6 +88,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
 
         $this->app->register(SidebarServiceProvider::class);
+
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel());
 
         $this->loadViewsFrom($this->root . '/resources/views', 'shopper');
@@ -100,9 +107,17 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
     protected function bootLivewireComponents(): void
     {
-        Livewire::addPersistentMiddleware([Authenticate::class]);
+        Livewire::addPersistentMiddleware([
+            Authenticate::class,
+            DispatchShopper::class,
+        ]);
 
-        foreach ($this->getLivewireComponents() as $alias => $component) {
+        foreach (array_merge(
+                $this->getLivewireComponents(),
+                $this->loadLivewireComponents('account'),
+                $this->loadLivewireComponents('dashboard'),
+                $this->loadLivewireComponents('setting'),
+             ) as $alias => $component) {
             Livewire::component("shopper-{$alias}", $component);
         }
     }

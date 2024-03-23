@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Livewire;
 use Shopper\Livewire\Components;
+use Shopper\Livewire\Pages;
 
 return [
 
@@ -13,7 +14,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'pages' => [],
+    'pages' => [
+        'index' => Pages\Settings\Index::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------

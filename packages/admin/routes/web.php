@@ -34,7 +34,8 @@ Route::domain(config('shopper.admin.domain'))
     ])
     ->group(function (): void {
         Route::prefix(shopper()->prefix())->group(function (): void {
-            Route::middleware([RedirectIfAuthenticated::class])->group(function (): void {
+            Route::middleware([RedirectIfAuthenticated::class])
+                ->as('shopper.')->group(function (): void {
                 require __DIR__ . '/auth.php';
             });
 

@@ -21,6 +21,8 @@ interface Item extends Authorizable, Itemable, Routeable
 
     public function isActive(): bool;
 
+    public function useSpa(): self;
+
     public function setIcon(string $icon, string $type = 'blade', string $iconClass = '', array $attributes = []): self;
 
     public function getIconClass(): string;
@@ -68,6 +70,8 @@ interface Item extends Authorizable, Itemable, Routeable
     public function isNewTab(bool $newTab): self;
 
     public function getNewTab(): bool;
+
+    public function withSpa(): bool;
 
     public function getItemClass(): string;
 

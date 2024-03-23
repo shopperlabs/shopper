@@ -8,7 +8,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Shopper Feature
+    | Shopper Features
     |--------------------------------------------------------------------------
     |
     | If you want extends your shopper admin panel with custom components features,

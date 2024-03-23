@@ -162,5 +162,6 @@ return [
     'search' => 'Search content',
     'icon_no_result' => 'No matching icons found',
     'selection' => 'Selection',
+    'sign_in_as' => 'Signed in as',
 
 ];

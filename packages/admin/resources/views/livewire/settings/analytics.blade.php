@@ -16,7 +16,7 @@
                 <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                     <x-shopper::icons.ga class="w-6 h-6" />
                 </div>
-                <h3 class="mt-5 text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
+                <h3 class="mt-5 text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
                     {{ __('shopper::pages/settings.analytics.google') }}
                 </h3>
                 <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
@@ -77,7 +77,7 @@
                     <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                         <x-shopper::icons.gtag class="h-6 w-6" />
                     </div>
-                    <h3 class="mt-5 text-lg font-medium leading-6 text-secondary-900 dark:text-white font-display">
+                    <h3 class="mt-5 text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
                         {{ __('shopper::pages/settings.analytics.gtag') }}
                     </h3>
                     <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
@@ -110,7 +110,7 @@
                     <div class="shrink-0 bg-white w-10 h-10 rounded flex items-center justify-center dark:bg-secondary-800">
                         <x-shopper::icons.pixel class="h-6 w-6" />
                     </div>
-                    <h3 class="mt-5 text-lg font-bold leading-6 text-secondary-900 dark:text-white font-display">
+                    <h3 class="mt-5 text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
                         {{ __('shopper::pages/settings.analytics.pixel') }}
                     </h3>
                     <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">

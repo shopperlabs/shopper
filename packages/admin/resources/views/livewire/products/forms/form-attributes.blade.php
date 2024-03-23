@@ -44,7 +44,7 @@
                                     stroke-width="1.5"
                                 />
                             @endif
-                            <span class="text-secondary-900 dark:text-white font-display font-medium text-base leading-6">
+                            <span class="text-secondary-900 dark:text-white font-heading font-medium text-base leading-6">
                                 {{ $attribute->name }}
                             </span>
                             @if($currentAttributes->contains($attribute->id))
@@ -97,7 +97,7 @@
     @else
         <div class="flex flex-col justify-center items-center py-5">
             <x-untitledui-file-05 class="h-10 w-10 text-primary-500" stroke-width="1.5" />
-            <h3 class="mt-2 text-lg font-medium font-display text-secondary-700 dark:text-secondary-300">
+            <h3 class="mt-2 text-lg font-medium font-heading text-secondary-700 dark:text-secondary-300">
                 {{ __('shopper::pages/products.attributes.empty_title') }}
             </h3>
             <span class="text-secondary-500 dark:text-secondary-400 text-base leading-5">
