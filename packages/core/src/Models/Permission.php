@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Permission as SpatiePermission;
  * @property string|null $display_name
  * @property bool $can_be_removed
  */
-final class Permission extends SpatiePermission
+class Permission extends SpatiePermission
 {
     protected $casts = [
         'can_be_removed' => 'boolean',

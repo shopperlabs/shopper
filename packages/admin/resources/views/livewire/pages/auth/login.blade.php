@@ -61,10 +61,19 @@
 
         <div class="mt-6">
             <x-shopper::buttons.primary type="submit" class="relative justify-center w-full group">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3" wire:loading.delay.remove wire:target="authenticate">
-                        <x-heroicon-s-lock-closed class="w-5 h-5 text-primary-500 group-hover:text-primary-400"/>
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3" wire:target="authenticate">
+                        <x-untitledui-lock-04
+                            class="w-5 h-5 text-primary-500 group-hover:text-primary-400"
+                            aria-hidden="true"
+                            wire:loading.delay.remove
+                        />
+                        <x-shopper::loader
+                            wire:loading
+                            wire:target="authenticate"
+                            class="text-white"
+                            aria-hidden="true"
+                        />
                     </span>
-                <x-shopper::loader wire:loading wire:target="authenticate" class="text-white" />
                 {{ __('shopper::pages/auth.login.action') }}
             </x-shopper::buttons.primary>
         </div>

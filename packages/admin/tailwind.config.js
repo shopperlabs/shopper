@@ -2,12 +2,13 @@ import forms from '@tailwindcss/forms'
 import typography from '@tailwindcss/typography'
 import colors from 'tailwindcss/colors'
 import defaultTheme from 'tailwindcss/defaultTheme'
-import preset from './vendor/filament/support/tailwind.config.preset'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  presets: [preset],
+  presets: [
+    require('./vendor/wireui/wireui/tailwind.config.js'),
+  ],
   safelist: [
     {
       pattern: /max-w-(xl|2xl|3xl|4xl)/,
@@ -15,9 +16,9 @@ module.exports = {
     },
   ],
   content: [
-    './packages/admin/resources/views/**/*.blade.php',
-    './packages/admin/src/**/*.php',
-    './vendor/filament/**/*.blade.php',
+    './resources/views/**/*.blade.php',
+    './src/**/*.php',
+    './vendor/wireui/wireui/**/*.{blade.php,php,ts}',
   ],
   theme: {
     extend: {

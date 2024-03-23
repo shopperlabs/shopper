@@ -4,8 +4,8 @@
   "license": "MIT",
   "keywords": [
     "e-commerce",
-    "Tallstack",
-    "Store"
+    "tallstack",
+    "store"
   ],
   "authors": [
     {
@@ -15,7 +15,7 @@
     }
   ],
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "ext-intl": "*",
     "composer-runtime-api": "^2.1"
   },
@@ -25,6 +25,7 @@
     "doctrine/dbal": "^3.6",
     "larastan/larastan": "^2.0",
     "laravel/pint": "^1.1",
+    "laravel/framework": "^10.0|^11.0",
     "mockery/mockery": "^1.4",
     "nunomaduro/collision": "^5.11|^6.1",
     "orchestra/testbench": "^7.0|^8.0",
@@ -71,7 +72,6 @@
     }
   },
   "scripts": {
-    "baseline": "./vendor/bin/phpstan analyse --generate-baseline",
     "pint": "./vendor/bin/pint",
     "pest": "./vendor/bin/pest",
     "stan": "./vendor/bin/phpstan analyse --memory-limit=1G"

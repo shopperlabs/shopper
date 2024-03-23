@@ -188,6 +188,8 @@ return [
             'upload' => 'Télécharger',
             'verified' => 'Vérifié',
             'apply' => 'Appliquer',
+            'next' => 'Suivant',
+            'back' => 'Retour',
         ],
 
         'error' => 'Votre soumission contient des erreurs. Veuillez réessayer',

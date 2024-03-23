@@ -22,27 +22,6 @@ final class AssetController
                 return $this->pretendResponseIsFile(__DIR__ . '/../../../public/shopper.js.map', 'application/json; charset=utf-8');
         }
 
-        if (Str::endsWith($file, '.js')) {
-            $name = Str::beforeLast($file, '.js');
-
-            if (array_key_exists($name, Shopper::getScripts())) {
-                return $this->pretendResponseIsFile(Shopper::getScripts()[$name], 'application/javascript; charset=utf-8');
-            } else {
-                abort(404);
-            }
-        }
-
-        if (Str::endsWith($file, '.css')) {
-            $name = Str::beforeLast($file, '.css');
-
-            abort_unless(
-                array_key_exists($name, Shopper::getStyles()),
-                404,
-            );
-
-            return $this->pretendResponseIsFile(Shopper::getStyles()[$name], 'text/css; charset=utf-8');
-        }
-
         abort(404);
     }
 

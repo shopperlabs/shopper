@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper;
+namespace Shopper\Providers;
 
 use PragmaRX\Google2FA\Google2FA;
 use Shopper\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthenticationProviderContract;

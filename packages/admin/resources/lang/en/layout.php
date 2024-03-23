@@ -188,6 +188,8 @@ return [
             'upload' => 'Upload',
             'verified' => 'Verified',
             'apply' => 'Apply',
+            'next' => 'Next',
+            'back' => 'Back',
         ],
 
         'error' => 'Your submission contains errors. Please try again',

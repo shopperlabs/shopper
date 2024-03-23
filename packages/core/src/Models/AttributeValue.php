@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $key
  * @property int $position
  */
-final class AttributeValue extends Model
+class AttributeValue extends Model
 {
     use HasFactory;
 

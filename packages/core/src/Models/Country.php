@@ -6,7 +6,18 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class Country extends Model
+/**
+ * @property-read int $id
+ * @property string $name
+ * @property string $name_official
+ * @property string $cca3
+ * @property string $cca2
+ * @property string $flag
+ * @property float $latitude
+ * @property float $longitude
+ * @property array $currencies
+ */
+class Country extends Model
 {
     public $timestamps = false;
 

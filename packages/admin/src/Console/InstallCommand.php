@@ -8,7 +8,7 @@ use Database\Seeders\ShopperSeeder;
 use Illuminate\Console\Command;
 use Shopper\Core\Console\Thanks;
 use Shopper\Core\CoreServiceProvider;
-use Shopper\ShopperServiceProvider;
+use Shopper\Providers\ShopperServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Helper\ProgressBar;
 

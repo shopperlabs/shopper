@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int $user_id
  * @property int $inventory_id
  */
-final class InventoryHistory extends Model
+class InventoryHistory extends Model
 {
     use HasFactory;
 

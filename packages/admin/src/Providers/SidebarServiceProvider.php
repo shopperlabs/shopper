@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper;
+namespace Shopper\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Shopper\Events\CatalogSidebar;

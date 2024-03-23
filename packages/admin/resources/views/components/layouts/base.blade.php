@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
     <meta name="base-url" content="{{ config('app.url') }}">
-    <meta name="dashboard-url" content="{{ config('app.url') . '/' . shopper_prefix() }}">
+    <meta name="dashboard-url" content="{{ config('app.url') . '/' . shopper()->prefix() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @if ($favicon = config('shopper.admin.favicon'))
@@ -31,8 +31,7 @@
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css"/>
 
     @stack('styles')
-
-    @livewireScripts
+    @livewireStyles
     {{ \Shopper\Facades\Shopper::getThemeLink() }}
 
     <wireui:scripts />
@@ -51,14 +50,6 @@
 <body x-keypress {{ $attributes->merge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
 
     {{ $slot }}
-
-    <x-shopper::alert />
-
-{{--    <div id="ui-modal">--}}
-{{--        @livewire('livewire-ui-modal')--}}
-{{--    </div>--}}
-
-    @livewire('notifications')
 
     @livewireScriptConfig
     @include('shopper::includes._additional-scripts')

@@ -20,9 +20,12 @@
     </a>
 </p>
 
+> [!CAUTION]
+> This branch is Work In Progress and should not be considered production-ready.
+
 ## Introduction
 
-[Shopper](https://laravelshopper.io) is an Admin Management build for Laravel 9.0+ which includes all the necessary for your online market application.
+[Shopper](https://laravelshopper.io) is a Headless e-commerce Admin Panel build for Laravel 10.0+ which includes all the necessary for your online store application.
 Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 

@@ -7,8 +7,25 @@ use Shopper\Livewire\Pages;
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Livewire Pages
+    |--------------------------------------------------------------------------
+    */
+
     'pages' => [],
 
-    'components' => [],
+    /*
+    |--------------------------------------------------------------------------
+    | Livewire Components
+    |--------------------------------------------------------------------------
+    */
+
+    'components' => [
+        'collections.browse' => Components\Collections\Browse::class,
+        'collections.create' => Components\Collections\Create::class,
+        'collections.edit' => Components\Collections\Edit::class,
+        'collections.products' => Components\Collections\Products::class,
+    ],
 
 ];

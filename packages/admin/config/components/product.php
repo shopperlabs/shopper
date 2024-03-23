@@ -2,12 +2,24 @@
 
 declare(strict_types=1);
 
+use Shopper\Livewire;
 use Shopper\Livewire\Components;
-use Shopper\Livewire\Pages;
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Livewire Pages
+    |--------------------------------------------------------------------------
+    */
+
     'pages' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Livewire Components
+    |--------------------------------------------------------------------------
+    */
 
     'components' => [
         'attributes.browse' => Components\Attributes\Browse::class,
@@ -27,6 +39,14 @@ return [
         'products.form.variants' => Components\Products\Form\Variants::class,
         'products.variant' => Components\Products\Variant::class,
         'products.variant-stock' => Components\Products\VariantStock::class,
+
+        'modals.add-variant' => Livewire\Modals\AddVariant::class,
+        'modals.create-value' => Livewire\Modals\CreateValue::class,
+        'modals.delete-product' => Livewire\Modals\DeleteProduct::class,
+        'modals.products-lists' => Livewire\Modals\ProductsLists::class,
+        'modals.related-products' => Livewire\Modals\RelatedProducts::class,
+        'modals.update-value' => Livewire\Modals\UpdateValue::class,
+        'modals.update-variant-stock' => Livewire\Modals\UpdateVariantStock::class,
     ],
 
 ];

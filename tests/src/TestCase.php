@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Shopper\Core\CoreServiceProvider;
-use Shopper\ShopperServiceProvider;
+use Shopper\Providers\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
 use Shopper\Tests\Models\User;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;

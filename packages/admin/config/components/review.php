@@ -2,13 +2,30 @@
 
 declare(strict_types=1);
 
+use Shopper\Livewire;
 use Shopper\Livewire\Components;
-use Shopper\Livewire\Pages;
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Livewire Pages
+    |--------------------------------------------------------------------------
+    */
+
     'pages' => [],
 
-    'components' => [],
+    /*
+    |--------------------------------------------------------------------------
+    | Livewire Components
+    |--------------------------------------------------------------------------
+    */
+
+    'components' => [
+        'reviews.browse' => Components\Reviews\Browse::class,
+        'reviews.show' => Components\Reviews\Show::class,
+
+        'modals.delete-review' => Livewire\Modals\DeleteReview::class,
+    ],
 
 ];

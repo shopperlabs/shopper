@@ -12,11 +12,11 @@ return [
 
     'initialization' => [
         'title' => 'Shop Initialization',
-        'step_one_title' => 'Store information',
+        'step_one_title' => 'Information',
         'step_one_description' => 'Provide useful information for your store.',
-        'step_two_title' => 'Address Information',
+        'step_two_title' => 'Address',
         'step_two_description' => 'Provide store address information.',
-        'step_tree_title' => 'Social Links (Optional)',
+        'step_tree_title' => 'Social Links',
         'step_tree_description' => 'Links to your social media accounts.',
 
         'step' => 'Step :step of 3',
@@ -27,7 +27,7 @@ return [
 
         'step_2' => 'Step 2 - Address information',
         'address_description' => 'You must specify address and location of your shop',
-        'step_2_description' => 'Don\'t Worry. You can change these setting at any time. Shopper allows you to start with the smallest level so that you can see the evolution of your shop.',
+        'step_2_description' => 'Don\'t worry. You can change these settings at any time. Shopper allows you to start with the smallest level so that you can see the evolution of your shop.',
 
         'step_3' => 'Step 3 - Social links',
         'social_description' => 'Your shop on social networks',
@@ -67,8 +67,9 @@ return [
     ],
 
     'validations' => [
-        'shop_name' => 'Store name is required',
         'country' => 'Country is required',
+        'shop_name' => 'Store name is required',
+        'shop_email' => 'Store e-mail is required',
     ],
 
     'notifications' => [

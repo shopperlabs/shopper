@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Repositories\Store\ProductRepository;
 
-class RelatedList extends ModalComponent
+class RelatedProducts extends ModalComponent
 {
     public $product;
 

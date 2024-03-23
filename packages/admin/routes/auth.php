@@ -8,7 +8,7 @@ use Shopper\Livewire\Pages\Auth\ForgotPassword;
 use Shopper\Livewire\Pages\Auth\Login;
 use Shopper\Livewire\Pages\Auth\ResetPassword;
 
-Route::redirect('/', shopper_prefix() . '/login', 301);
+Route::redirect('/', shopper()->prefix() . '/login', 301);
 
 // Authentication...
 Route::get('/login', Login::class)->name('login');

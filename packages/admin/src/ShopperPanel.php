@@ -13,18 +13,18 @@ use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Events\LoadShopper;
 
-final class Shopper
+final class ShopperPanel
 {
     protected bool $isServing = false;
 
     protected string|Htmlable|null $theme = null;
 
-    public static function auth(): Guard
+    public function auth(): Guard
     {
         return auth()->guard(config('shopper.auth.guard'));
     }
 
-    public static function prefix(): string
+    public function prefix(): string
     {
         return config('shopper.admin.prefix');
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
@@ -15,6 +14,7 @@ use Shopper\Contracts\TwoFactorDisabledResponse as TwoFactorDisabledResponseCont
 use Shopper\Contracts\TwoFactorEnabledResponse as TwoFactorEnabledResponseContract;
 use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 use Shopper\Core\Traits\HasRegisterConfigAndMigrationFiles;
+use Shopper\Facades\Shopper;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 use Shopper\Http\Responses\LoginResponse;
@@ -23,6 +23,8 @@ use Shopper\Http\Responses\TwoFactorEnabledResponse;
 use Shopper\Http\Responses\TwoFactorLoginResponse;
 use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
+use Shopper\Providers\SidebarServiceProvider;
+use Shopper\Providers\TwoFactorAuthenticationProvider;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -33,7 +35,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     protected array $configFiles = [
         'admin',
         'auth',
-        'components',
+        'features',
         'routes',
         'settings',
     ];
@@ -61,16 +63,9 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         $this->bootModelRelationName();
 
-        \Shopper\Facades\Shopper::serving(function (): void {
-            \Shopper\Facades\Shopper::setServingStatus();
+        Shopper::serving(function (): void {
+            Shopper::setServingStatus();
         });
-
-        Builder::macro(
-            'search',
-            fn (string $field, mixed $value): Builder => $value
-                ? $this->where($field, 'like', '%' . $value . '%') // @phpstan-ignore-line
-                : $this
-        );
     }
 
     public function packageRegistered(): void
@@ -87,7 +82,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
 
         $this->app->register(SidebarServiceProvider::class);
-        $this->app->scoped('shopper', fn (): Shopper => new Shopper());
+        $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel());
 
         $this->loadViewsFrom($this->root . '/resources/views', 'shopper');
     }
@@ -107,10 +102,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     {
         Livewire::addPersistentMiddleware([Authenticate::class]);
 
-        foreach (array_merge(
-            config('shopper.components', []),
-            $this->getLivewireComponents()
-        ) as $alias => $component) {
+        foreach ($this->getLivewireComponents() as $alias => $component) {
             Livewire::component("shopper-{$alias}", $component);
         }
     }
@@ -122,6 +114,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
             'auth.password' => Pages\Auth\ForgotPassword::class,
             'auth.password-reset' => Pages\Auth\ResetPassword::class,
             'initialize' => Pages\Initialization::class,
+            'initialize-wizard' => Components\Initialization\InitializationWizard::class,
+            'initialize-store-information' => Components\Initialization\Steps\StoreInformation::class,
+            'initialize-store-address' => Components\Initialization\Steps\StoreAddress::class,
+            'initialize-store-social-link' => Components\Initialization\Steps\StoreSocialLink::class,
             'forms.trix' => Components\Forms\Trix::class,
             'forms.icon-picker' => Components\Forms\IconPicker::class,
             'forms.uploads.multiple' => Components\Forms\Uploads\Multiple::class,

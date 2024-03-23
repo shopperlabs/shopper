@@ -17,12 +17,9 @@
     "source": "https://github.com/shopperlabs/framework"
   },
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "bacon/bacon-qr-code": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
-    "filament/notifications": "^3.2",
-    "filament/forms": "^3.2",
-    "filament/tables": "^3.2",
     "illuminate/console": "^10.0|^11.0",
     "illuminate/contracts": "^10.0|^11.0",
     "illuminate/cookie": "^10.0|^11.0",
@@ -43,10 +40,10 @@
     "psr/simple-cache": "^3.0",
     "shopper/core": "self.version",
     "shopper/sidebar": "self.version",
+    "spatie/laravel-livewire-wizard": "^2.2",
     "spatie/laravel-package-tools": "^1.15",
     "stevebauman/location": "^6.3.1",
-    "wire-elements/modal": "^2.0.0",
-    "wireui/wireui": "^1.17.9"
+    "wireui/wireui": "^2.0.0-beta.0"
   },
   "autoload": {
     "files": [
