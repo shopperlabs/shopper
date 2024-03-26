@@ -84,7 +84,7 @@ trait WithStock
             ->send();
     }
 
-    public function export(): BinaryFileResponse|Response
+    public function export(): BinaryFileResponse | Response
     {
         return (new ProductInventoryExport())
             ->forProduct($this->product->id)

@@ -1,6 +1,6 @@
 <x-shopper::container>
     <div class="flex-1 min-w-0">
-        <h2 class="text-2xl font-bold leading-7 text-secondary-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:text-3xl sm:leading-9 sm:truncate">
             {{ __('shopper::words.settings') }}
         </h2>
     </div>

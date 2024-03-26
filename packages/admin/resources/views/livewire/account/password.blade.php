@@ -2,10 +2,10 @@
     <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
         <div class="lg:col-span-1">
             <div>
-                <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
+                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white font-heading">
                     {{ __('shopper::pages/auth.account.password_title') }}
                 </h3>
-                <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/auth.account.password_description') }}
                 </p>
             </div>
@@ -28,7 +28,7 @@
                 @endif
                 <div class="grid gap-4 sm:grid-cols-6 sm:gap-6">
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.current_password')" for="current_password" class="sm:col-span-6" :error="$errors->first('current_password')">
-                        <x-shopper::forms.input wire:model.defer="current_password" id="current_password" type="password" class="dark:bg-secondary-800 dark:border-transparent" autocomplete="off" />
+                        <x-shopper::forms.input wire:model.defer="current_password" id="current_password" type="password" class="dark:bg-gray-800 dark:border-transparent" autocomplete="off" />
                     </x-shopper::forms.group>
 
                     <x-shopper::forms.group
@@ -38,11 +38,11 @@
                         :error="$errors->first('password')"
                         :helpText="__('shopper::pages/auth.account.password_helper_validation')"
                     >
-                        <x-shopper::forms.input wire:model.defer="password" id="password" type="password" class="dark:bg-secondary-800 dark:border-transparent" autocomplete="off" />
+                        <x-shopper::forms.input wire:model.defer="password" id="password" type="password" class="dark:bg-gray-800 dark:border-transparent" autocomplete="off" />
                     </x-shopper::forms.group>
 
                     <x-shopper::forms.group :label="__('shopper::layout.forms.label.confirm_password')" for="password_confirmation" class="sm:col-span-6" :error="$errors->first('password_confirmation')">
-                        <x-shopper::forms.input wire:model.defer="password_confirmation" id="password_confirmation" type="password" class="dark:bg-secondary-800 dark:border-transparent" autocomplete="off" />
+                        <x-shopper::forms.input wire:model.defer="password_confirmation" id="password_confirmation" type="password" class="dark:bg-gray-800 dark:border-transparent" autocomplete="off" />
                     </x-shopper::forms.group>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <x-shopper::modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -14,9 +14,9 @@
                 :placeholder="__('shopper::pages/discounts.modals.search_product')"
             />
         </div>
-        <div class="my-2 -mx-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
+        <div class="my-2 -mx-2 divide-y divide-gray-200 h-80 overflow-auto dark:divide-gray-700">
             @foreach($products as $product)
-                <label for="product_{{ $product->id }}" class="flex items-center py-3 cursor-pointer hover:bg-secondary-50 px-4 focus:bg-secondary-50 dark:hover:bg-secondary-700 dark:focus:bg-secondary-700">
+                <label for="product_{{ $product->id }}" class="flex items-center py-3 cursor-pointer hover:bg-gray-50 px-4 focus:bg-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-700">
                     <span class="mr-4">
                         <x-shopper::forms.checkbox
                             id="product_{{ $product->id }}"
@@ -26,14 +26,14 @@
                         />
                     </span>
                     <span class="flex flex-1 items-center justify-between">
-                        <span class="block font-medium text-sm text-secondary-700 dark:text-secondary-300">
+                        <span class="block font-medium text-sm text-gray-700 dark:text-gray-300">
                             {{ $product->name }}
                         </span>
                         <span class="flex items-center space-x-2">
-                            <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                            <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/discounts.modals.stock_available', ['stock' => $product->stock]) }}
                             </span>
-                            <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                            <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                 {{ $product->getPriceAmount()?->formatted }}
                             </span>
                         </span>

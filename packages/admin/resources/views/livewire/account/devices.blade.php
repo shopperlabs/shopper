@@ -2,10 +2,10 @@
     <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
         <div class="lg:col-span-1">
             <div>
-                <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
+                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white font-heading">
                     {{ __('shopper::pages/auth.account.device_title') }}
                 </h3>
-                <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/auth.account.device_description') }}
                 </p>
             </div>
@@ -13,23 +13,23 @@
         <div class="mt-5 lg:mt-0 lg:col-span-2">
             @if (count($this->sessions) > 0)
                 <x-shopper::card class="px-4 py-5 sm:px-6">
-                    <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                    <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/auth.account.empty_device') }}
                     </p>
-                    <div class="mt-2 divide-y divide-secondary-200 dark:divide-secondary-700">
+                    <div class="mt-2 divide-y divide-gray-200 dark:divide-gray-700">
                         @foreach($this->sessions as $session)
                             <div class="py-4 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
                                     <div class="shrink-0">
                                         @if ($session->agent->isDesktop())
-                                            <x-heroicon-o-desktop-computer class="w-8 h-8 text-secondary-500" />
+                                            <x-heroicon-o-desktop-computer class="w-8 h-8 text-gray-500" />
                                         @else
-                                            <x-heroicon-o-device-mobile class="w-8 h-8 text-secondary-500" />
+                                            <x-heroicon-o-device-mobile class="w-8 h-8 text-gray-500" />
                                         @endif
                                     </div>
                                     <div>
                                         <div class="flex items-center">
-                                            <h4 class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                            <h4 class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                                 <span class="text-green-500">
                                                     {{ __('shopper::words.browser_platform', [
                                                         'browser' => $session->agent->browser(),
@@ -43,12 +43,12 @@
                                                     {{ __('shopper::pages/auth.account.current_device') }}
                                                 </span>
                                             @else
-                                                <span class="ml-2 text-xs text-secondary-400 dark:text-secondary-500">
+                                                <span class="ml-2 text-xs text-gray-400 dark:text-gray-500">
                                                     {{ __('shopper::pages/auth.account.device_last_activity') }} {{ $session->last_active }}
                                                 </span>
                                             @endif
                                         </div>
-                                        <p class="mt-0.5 text-sm leading-4 text-secondary-500 dark:text-secondary-400">
+                                        <p class="mt-0.5 text-sm leading-4 text-gray-500 dark:text-gray-400">
                                             @if($session->location)
                                                 {{ $session->location->cityName }}, {{ $session->location->regionName }}, {{ $session->location->countryName }}
                                             @else

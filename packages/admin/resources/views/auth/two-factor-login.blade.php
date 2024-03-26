@@ -7,14 +7,14 @@
                 <x-shopper::brand class="mx-auto h-12 w-auto" />
 
                 <div class="mt-6 text-center">
-                    <h2 class="inline-flex items-center text-xl font-medium font-heading text-center leading-9 text-secondary-900 dark:text-white">
+                    <h2 class="inline-flex items-center text-xl font-medium font-heading text-center leading-9 text-gray-900 dark:text-white">
                         <x-heroicon-o-shield-check class="w-10 h-10 text-primary-600 -ml-1 mr-2" />
                         {{ __('shopper::pages/auth.two_factor.subtitle') }}
                     </h2>
-                    <p class="mt-1 text-sm leading-5 text-center text-secondary-500 dark:text-secondary-400" x-show="! recovery">
+                    <p class="mt-1 text-sm leading-5 text-center text-gray-500 dark:text-gray-400" x-show="! recovery">
                         {{ __('shopper::pages/auth.two_factor.authentication_code') }}
                     </p>
-                    <p class="mt-1 text-sm leading-5 text-center text-secondary-500 dark:text-secondary-400" x-show="recovery" style="display: none">
+                    <p class="mt-1 text-sm leading-5 text-center text-gray-500 dark:text-gray-400" x-show="recovery" style="display: none">
                         {{ __('shopper::pages/auth.two_factor.recovery_code') }}
                     </p>
                 </div>
@@ -29,10 +29,10 @@
                     </x-shopper::forms.group>
 
                     <div class="mt-5 flex items-center space-x-4">
-                        <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                        <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                             {{ __('shopper::pages/auth.two_factor.remember') }}
                             <button
-                                class="ml-1 text-sm text-secondary-500 hover:text-secondary-900 underline cursor-pointer dark:text-secondary-400 dark:hover:text-white"
+                                class="ml-1 text-sm text-gray-500 hover:text-gray-900 underline cursor-pointer dark:text-gray-400 dark:hover:text-white"
                                 type="button"
                                 x-show="! recovery"
                                 x-on:click="
@@ -46,7 +46,7 @@
                             <button
                                 x-show="recovery"
                                 type="button"
-                                class="ml-1 text-sm text-secondary-500 hover:text-secondary-900 underline cursor-pointer dark:text-secondary-400 dark:hover:text-white"
+                                class="ml-1 text-sm text-gray-500 hover:text-gray-900 underline cursor-pointer dark:text-gray-400 dark:hover:text-white"
                                 style="display: none"
                                 x-on:click="recovery = false; $nextTick(() => { $refs.code.focus() })"
                             >

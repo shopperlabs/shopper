@@ -1,5 +1,5 @@
 <x-shopper::modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -15,12 +15,12 @@
                     <x-shopper::label value="{{ __('shopper::layout.forms.label.provider_logo') }}" />
                     <div class="mt-2">
                         <x-shopper::forms.avatar-upload id="logo" wire:model.lazy='logo'>
-                            <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-secondary-100 dark:bg-secondary-700">
+                            <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
                                 @if($logo)
                                     <img class="h-full w-full bg-center" src="{{ $logo->temporaryUrl() }}" alt="">
                                 @else
                                     <span class="h-12 w-12 flex items-center justify-center">
-                                        <x-untitledui-image class="w-6 h-6 text-secondary-500 dark:text-secondary-400" />
+                                        <x-untitledui-image class="w-6 h-6 text-gray-500 dark:text-gray-400" />
                                     </span>
                                 @endif
                             </span>

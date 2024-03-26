@@ -6,7 +6,7 @@
             <div>
                 <div class="flex items-center space-x-4">
                     <x-untitledui-share-07
-                        class="h-6 w-6 text-secondary-400 dark:text-secondary-500"
+                        class="h-6 w-6 text-gray-400 dark:text-gray-500"
                         aria-hidden="true"
                         stroke-width="1"
                     />
@@ -15,13 +15,13 @@
                     </span>
                 </div>
                 <div class="mt-3">
-                    <h2 class="text-2xl font-heading font-medium text-secondary-900 dark:text-white">
+                    <h2 class="text-2xl font-heading font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::pages/settings.initialization.social_description') }}
-                        <span class="font-normal text-secondary-500 dark:text-secondary-400">
+                        <span class="font-normal text-gray-500 dark:text-gray-400">
                             ({{ __('shopper::layout.forms.label.optional') }})
                         </span>
                     </h2>
-                    <p class="mt-4 text-sm leading-6 text-secondary-500 lg:max-w-2xl dark:text-secondary-300">
+                    <p class="mt-4 text-sm leading-6 text-gray-500 lg:max-w-2xl dark:text-gray-300">
                         {{ __('shopper::pages/settings.initialization.step_3_description') }}
                     </p>
                 </div>
@@ -30,7 +30,7 @@
                 <x-shopper::forms.group class="col-span-6 lg:col-span-2" :label="__('shopper::words.socials.facebook')" for="facebook">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <x-shopper::icons.facebook
-                            class="w-5 h-5 text-secondary-400 dark:text-secondary-500"
+                            class="w-5 h-5 text-gray-400 dark:text-gray-500"
                             aria-hidden="true"
                         />
                     </div>
@@ -45,7 +45,7 @@
                 <x-shopper::forms.group class="col-span-6 lg:col-span-2" :label="__('shopper::words.socials.instagram')" for="instagram">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <x-shopper::icons.instagram
-                            class="w-5 h-5 text-secondary-400 dark:text-secondary-500"
+                            class="w-5 h-5 text-gray-400 dark:text-gray-500"
                             aria-hidden="true"
                         />
                     </div>
@@ -60,7 +60,7 @@
                 <x-shopper::forms.group class="col-span-6 lg:col-span-2" :label="__('shopper::words.socials.twitter')" for="twitter">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <x-shopper::icons.twitter
-                            class="w-5 h-5 text-secondary-400 dark:text-secondary-500"
+                            class="w-5 h-5 text-gray-400 dark:text-gray-500"
                             aria-hidden="true"
                         />
                     </div>
@@ -74,7 +74,7 @@
                 </x-shopper::forms.group>
             </div>
         </div>
-        <div class="mt-8 pt-10 border-t border-dashed border-secondary-200 dark:border-secondary-700">
+        <div class="mt-8 pt-10 border-t border-dashed border-gray-200 dark:border-gray-700">
             <div class="flex items-center justify-between space-x-4">
                 <x-shopper::buttons.default type="button" wire:click="previousStep">
                     {{ __('shopper::layout.forms.actions.back') }}

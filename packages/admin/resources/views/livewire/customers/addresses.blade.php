@@ -6,7 +6,7 @@
                     <div class="focus:outline-none">
                         <span class="absolute inset-0" aria-hidden="true"></span>
                         <div class="flex items-center justify-between space-x-2">
-                            <span class="inline-flex text-xs leading-4 text-secondary-500 dark:text-secondary-400">
+                            <span class="inline-flex text-xs leading-4 text-gray-500 dark:text-gray-400">
                                 {{ $address->type === 'shipping' ? __('shopper::pages/customers.addresses.shipping') : __('shopper::pages/customers.addresses.billing') }}
                             </span>
                             @if($address->is_default)
@@ -15,14 +15,14 @@
                                 </span>
                             @endif
                         </div>
-                        <h4 class="mt-1 block text-sm font-medium text-secondary-900 dark:text-white">
+                        <h4 class="mt-1 block text-sm font-medium text-gray-900 dark:text-white">
                             {{ $address->last_name . ' ' . $address->first_name }}
                         </h4>
                         <div class="mt-1 text-sm leading-5">
-                            <p class="text-secondary-500 dark:text-secondary-400">
+                            <p class="text-gray-500 dark:text-gray-400">
                                 {{ $address->street_address }}, {{ $address->city }}
                             </p>
-                            <div class="text-sm text-secondary-500 truncate dark:text-secondary-400">
+                            <div class="text-sm text-gray-500 truncate dark:text-gray-400">
                                 <span>{{ $address->phone_number }}</span> <br />
                                 <span>{{ $address->zipcode }}</span>,
                                 <span>{{ $address->country->name }}</span>
@@ -33,15 +33,15 @@
                 </div>
             </x-shopper::card>
         @empty
-            <div class="sm:col-span-3 relative rounded-lg bg-white px-6 py-10 sm:py-12 shadow flex flex-col items-center dark:bg-secondary-800">
+            <div class="sm:col-span-3 relative rounded-lg bg-white px-6 py-10 sm:py-12 shadow flex flex-col items-center dark:bg-gray-800">
                 <div class="shrink-0 h-24 w-24 mx-auto text-primary-500">
                     <x-heroicon-o-map class="w-full h-full" />
                 </div>
                 <div class="mt-5 w-full sm:max-w-md space-y-2 text-center">
-                    <p class="text-base leading-6 text-secondary-900 font-medium dark:text-white">
+                    <p class="text-base leading-6 text-gray-900 font-medium dark:text-white">
                         {{ __('shopper::pages/customers.addresses.customer') }}
                     </p>
-                    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.addresses.empty_text') }}
                     </p>
                 </div>

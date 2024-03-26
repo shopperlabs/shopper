@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.customers.index')">
-        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" :title="__('shopper::layout.sidebar.customers')" />
     </x-shopper::breadcrumb>
 
@@ -13,10 +13,10 @@
     <div class="mt-8 lg:grid lg:grid-cols-3 lg:gap-x-10">
         <div class="lg:col-span-1">
             <div class="px-4 sm:px-0">
-                <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
+                <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white font-heading">
                     {{ __('shopper::pages/customers.overview') }}
                 </h3>
-                <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/customers.overview_description') }}
                 </p>
             </div>
@@ -53,7 +53,7 @@
                 <div wire:ignore x-data="internationalNumber('#phone')" class="col-span-6 sm:col-span-3">
                     <div class="flex items-center justify-between">
                         <x-shopper::label for="phone" :value="__('shopper::layout.forms.label.phone_number')" />
-                        <span class="text-secondary-500 text-sm leading-5 dark:text-secondary-400">
+                        <span class="text-gray-500 text-sm leading-5 dark:text-gray-400">
                             {{ __('shopper::layout.forms.label.optional') }}
                         </span>
                     </div>
@@ -71,10 +71,10 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-x-10">
             <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
+                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white font-heading">
                         {{ __('shopper::pages/customers.security_title') }}
                     </h3>
-                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:txt-secondary-400">
+                    <p class="mt-4 text-sm leading-5 text-gray-500 dark:txt-gray-400">
                         {{ __('shopper::pages/customers.security_description') }}
                     </p>
                 </div>
@@ -128,10 +128,10 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-x-10">
             <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
+                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white font-heading">
                         {{ __('shopper::pages/customers.address_title') }}
                     </h3>
-                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                    <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.address_description') }}
                     </p>
                 </div>
@@ -241,10 +241,10 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-x-10">
             <div class="lg:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-bold leading-6 text-secondary-900 dark:text-white font-heading">
+                    <h3 class="text-lg font-bold leading-6 text-gray-900 dark:text-white font-heading">
                         {{ __('shopper::pages/customers.notification_title') }}
                     </h3>
-                    <p class="mt-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                    <p class="mt-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.notification_description') }}
                     </p>
                 </div>
@@ -257,7 +257,7 @@
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper::label for="opt_in" :value="__('shopper::pages/customers.marketing_email')" />
-                            <p class="text-sm mt-1 leading-5 text-secondary-500 dark:text-secondary-400">
+                            <p class="text-sm mt-1 leading-5 text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/customers.marketing_description') }}
                             </p>
                         </div>
@@ -269,7 +269,7 @@
                         </div>
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper::label for="send_mail" :value="__('shopper::pages/customers.send_credentials')" />
-                            <p class="text-sm mt-1 leading-5 text-secondary-500 dark:text-secondary-400">
+                            <p class="text-sm mt-1 leading-5 text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/customers.credential_description') }}
                             </p>
                         </div>
@@ -279,7 +279,7 @@
         </div>
     </div>
 
-    <div class="mt-10 pt-5 border-t border-secondary-200 dark:border-secondary-700">
+    <div class="mt-10 pt-5 border-t border-gray-200 dark:border-gray-700">
         <div class="flex justify-end">
             <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />

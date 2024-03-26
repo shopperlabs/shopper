@@ -16,6 +16,15 @@ return [
 
     'pages' => [
         'index' => Pages\Settings\Index::class,
+        'general' => Pages\Settings\General::class,
+        'inventory-index' => Pages\Settings\Inventories\Browse::class,
+        'inventory-create' => Pages\Settings\Inventories\Create::class,
+        'inventory-edit' => Pages\Settings\Inventories\Edit::class,
+        'legal' => Pages\Settings\LegalPage::class,
+        'analytics' => Pages\Settings\Analytics::class,
+        'payment' => Pages\Settings\Payment::class,
+        'team-index' => Pages\Settings\Team\Index::class,
+        'team-roles' => Pages\Settings\Team\RolePermission::class,
     ],
 
     /*
@@ -34,21 +43,16 @@ return [
         'modals.logout-others-browser' => Livewire\Modals\LogoutOthersBrowser::class,
         'modals.update-payment-method' => Livewire\Modals\UpdatePaymentMethod::class,
 
-        'settings.analytics' => Components\Settings\Analytics::class,
-        'settings.inventories.browse' => Components\Settings\Inventories\Browse::class,
-        'settings.inventories.create' => Components\Settings\Inventories\Create::class,
-        'settings.inventories.edit' => Components\Settings\Inventories\Edit::class,
-        'settings.general' => Components\Settings\General::class,
+        'settings.inventories.form' => Components\Settings\Inventories\InventoryForm::class,
         'settings.legal.privacy' => Components\Settings\Legal\Privacy::class,
         'settings.legal.refund' => Components\Settings\Legal\Refund::class,
         'settings.legal.shipping' => Components\Settings\Legal\Shipping::class,
         'settings.legal.terms' => Components\Settings\Legal\Terms::class,
-        'settings.management.create-admin-user' => Components\Settings\Management\CreateAdminUser::class,
-        'settings.management.management' => Components\Settings\Management\Management::class,
-        'settings.management.permissions' => Components\Settings\Management\Permissions::class,
-        'settings.management.role' => Components\Settings\Management\Role::class,
-        'settings.management.users-role' => Components\Settings\Management\UsersRole::class,
-        'settings.payments.general' => Components\Settings\Payments\General::class,
+        'settings.legal.form' => Components\Settings\Legal\PolicyForm::class,
+        'settings.team.permissions' => Components\Settings\Team\Permissions::class,
+        'settings.team.users' => Components\Settings\Team\UsersRole::class,
+
+        'slide-overs.create-team-member' => Livewire\SlideOvers\CreateTeamMember::class,
     ],
 
 ];

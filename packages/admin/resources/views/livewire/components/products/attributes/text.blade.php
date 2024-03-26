@@ -29,7 +29,7 @@
                     parse-format="YYYY-MM-DD"
                     display-format="{{ config('shopper.admin.date_format') }}"
                     without-time
-                    class="dark:bg-secondary-700"
+                    class="dark:bg-gray-700"
                 />
             @endif
         </div>

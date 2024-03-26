@@ -83,8 +83,9 @@ return [
     'browser_platform' => ':browser on :platform',
 
     'actions_label' => [
+        'add' => 'Add',
+        'add_new' => 'New :name',
         'update' => 'Update :name',
-        'add_new' => 'Add new :name',
         'edit' => 'Edit :name',
         'show' => 'View :name',
         'delete' => 'Delete :name',
@@ -139,7 +140,7 @@ return [
     'me' => 'Me',
     'invitation' => 'Invitation',
     'attention_needed' => 'Attention needed',
-    'attention_description' => 'This role gives this administrator the same rights and permissions as you.',
+    'attention_description' => 'The higher role (admin) gives this user the same rights and permissions as you.',
     'wip' => 'work in progress',
     'visit_documentation' => 'visit the documentation.',
     'namespace' => 'Namespace',

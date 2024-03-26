@@ -1,5 +1,5 @@
 <x-shopper::modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-200 dark:border-secondary-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-200 dark:border-gray-700"
     contentClasses="relative"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -12,10 +12,10 @@
         <div class="overflow-y-scroll h-96 scrolling">
             <div class="overflow-hidden">
                 @if($inventories->isNotEmpty())
-                    <div class="relative flex items-center justify-between p-4 border-b sm:px-5 border-secondary-200 dark:border-secondary-700">
+                    <div class="relative flex items-center justify-between p-4 border-b sm:px-5 border-gray-200 dark:border-gray-700">
                         <span class="relative z-0 inline-flex rounded-md shadow-sm">
-                            <span class="relative inline-flex items-center px-2 py-2 bg-white border border-r-0 rounded-l-md border-secondary-300 dark:border-secondary-700 dark:bg-secondary-700">
-                                <x-untitledui-marker-pin class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
+                            <span class="relative inline-flex items-center px-2 py-2 bg-white border border-r-0 rounded-l-md border-gray-300 dark:border-gray-700 dark:bg-gray-700">
+                                <x-untitledui-marker-pin class="h-5 w-5 text-gray-500 dark:text-gray-400" />
                             </span>
                             <x-shopper::forms.select wire:model.lazy="inventory" id="inventory" class="block py-2 pl-3 -ml-px rounded-l-none pr-9 rounded-r-md" aria-label="{{ __('shopper::pages/products.modals.variants.select') }}">
                                 <option value="0">{{ __('shopper::pages/products.modals.variants.select') }}</option>
@@ -24,7 +24,7 @@
                                 @endforeach
                             </x-shopper::forms.select>
                         </span>
-                        <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-300">
+                        <div class="relative z-0 inline-flex items-center leading-5 text-gray-700 dark:text-gray-300">
                             <span class="hidden sm:block mr-4 text-sm font-medium">
                                 {{ __('shopper::pages/products.quantity_available') }}
                             </span>
@@ -34,7 +34,7 @@
                 @endif
 
                 <div class="space-y-2 sm:space-y-0 sm:flex sm:items-center sm:justify-between px-4 py-5 mb-2">
-                    <div class="relative z-0 inline-flex items-center leading-5 text-secondary-700 dark:text-secondary-300">
+                    <div class="relative z-0 inline-flex items-center leading-5 text-gray-700 dark:text-gray-300">
                         <span class="block mr-4 text-sm font-medium">
                             {{ __('shopper::pages/products.current_qty_inventory') }}
                         </span>
@@ -43,17 +43,17 @@
                     <div class="sm:ml-4">
                         <div class="flex items-center">
                             <div class="flex items-center pr-4">
-                                <p class="mr-4 text-sm font-medium text-secondary-700 dark:text-secondary-300">
+                                <p class="mr-4 text-sm font-medium text-gray-700 dark:text-gray-300">
                                     {{ $realStock }}
                                 </p>
                                 <div class="flex rounded-md shadow-sm">
                                     <div class="relative flex items-stretch grow focus-within:z-10">
                                         <x-shopper::forms.input wire:model="value" type="number" aria-label="{{ __('shopper::layout.forms.label.stock_number_value') }}" id="stockValue" step="1" min="0" class="block w-32 rounded-r-none rounded-l-md" placeholder="12" />
                                     </div>
-                                    <button wire:click="decrementStock" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium bg-white border rounded-none border-secondary-300 dark:border-secondary-600 dark:bg-secondary-700 text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
+                                    <button wire:click="decrementStock" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium bg-white border rounded-none border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
                                         <span>&minus;</span>
                                     </button>
-                                    <button wire:click="incrementStock" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium bg-white border rounded-r-md border-secondary-300 dark:border-secondary-600 dark:bg-secondary-700 text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 dark:hover:bg-secondary-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
+                                    <button wire:click="incrementStock" type="button" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium bg-white border rounded-r-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500">
                                         <span>&plus;</span>
                                     </button>
                                 </div>
@@ -86,7 +86,7 @@
                         <span class="shrink-0">
                             <x-untitledui-file-05 class="h-8 w-8 text-primary-500" />
                         </span>
-                        <h3 class="text-lg text-center font-medium text-secondary-500 dark:text-secondary-400">
+                        <h3 class="text-lg text-center font-medium text-gray-500 dark:text-gray-400">
                             {{ __('shopper::pages/products.inventory.empty') }}
                         </h3>
                     </div>
@@ -96,26 +96,26 @@
                             <div class="inline-block min-w-full overflow-hidden align-middle">
                                 <table class="min-w-full">
                                     <thead>
-                                        <tr class="border-b bg-secondary-50 border-secondary-200 dark:bg-secondary-700 dark:border-secondary-700">
+                                        <tr class="border-b bg-gray-50 border-gray-200 dark:bg-gray-700 dark:border-gray-700">
                                             <x-shopper::tables.table-head>{{ __('shopper::words.date') }}</x-shopper::tables.table-head>
                                             <x-shopper::tables.table-head>{{ __('shopper::words.event') }}</x-shopper::tables.table-head>
                                             <x-shopper::tables.table-head class="text-right">{{ __('shopper::words.adjustment') }}</x-shopper::tables.table-head>
                                             <x-shopper::tables.table-head class="text-right">{{ __('shopper::pages/products.inventory.movement') }}</x-shopper::tables.table-head>
                                         </tr>
                                     </thead>
-                                    <tbody class="bg-white divide-y divide-secondary-100 dark:bg-secondary-800 dark:divide-secondary-700">
+                                    <tbody class="bg-white divide-y divide-gray-100 dark:bg-gray-800 dark:divide-gray-700">
                                         @foreach($histories as $inventoryHistory)
                                             <tr>
-                                                <td class="px-6 py-3 text-sm leading-5 whitespace-no-wrap text-secondary-500 dark:text-secondary-400">
+                                                <td class="px-6 py-3 text-sm leading-5 whitespace-no-wrap text-gray-500 dark:text-gray-400">
                                                     {{ $inventoryHistory->created_at->diffForHumans() }}
                                                 </td>
-                                                <td class="px-6 py-3 text-sm leading-5 whitespace-no-wrap text-secondary-500 dark:text-secondary-400">
+                                                <td class="px-6 py-3 text-sm leading-5 whitespace-no-wrap text-gray-500 dark:text-gray-400">
                                                     {{ __($inventoryHistory->event) }}
                                                 </td>
                                                 <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->old_quantity > 0 ? 'text-green-500': 'text-red-500' }}">
                                                     {{ $inventoryHistory->adjustment }}
                                                 </td>
-                                                <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-secondary-500 dark:text-secondary-400': 'text-red-500' }}">
+                                                <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 text-right {{ $inventoryHistory->quantity > 0 ? 'text-gray-500 dark:text-gray-400': 'text-red-500' }}">
                                                     {{ $inventoryHistory->quantity }}
                                                 </td>
                                             </tr>
@@ -124,13 +124,13 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between px-4 py-3 border-t border-secondary-200 sm:px-6 dark:border-secondary-700">
+                        <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200 sm:px-6 dark:border-gray-700">
                             <div class="flex justify-between flex-1 sm:hidden">
                                 {{ $histories->links('shopper::livewire.wire-mobile-pagination-links') }}
                             </div>
                             <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                                 <div>
-                                    <p class="text-sm leading-5 text-secondary-700 dark:text-secondary-300">
+                                    <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
                                         {{ __('shopper::words.showing') }}
                                         <span class="font-medium">{{ ($histories->currentPage() - 1) * $histories->perPage() + 1 }}</span>
                                         {{ __('shopper::words.to') }}

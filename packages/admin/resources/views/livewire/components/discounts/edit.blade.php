@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.discounts.index')" :current="$discount->code">
-        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.discounts.index')" :title="__('shopper::layout.sidebar.discounts')" />
     </x-shopper::breadcrumb>
 
@@ -12,7 +12,7 @@
 
     @include('shopper::livewire.components.discounts._form')
 
-    <div class="mt-8 pt-6 pb-10 border-t border-secondary-200 dark:border-secondary-700">
+    <div class="mt-8 pt-6 pb-10 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-end space-x-4">
             @can('delete_discounts')
                 <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-discount', {{ json_encode([$discount->id]) }})" type="button">

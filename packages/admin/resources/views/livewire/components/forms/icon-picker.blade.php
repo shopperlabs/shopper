@@ -4,9 +4,9 @@
         <div class="relative flex flex-grow items-stretch focus-within:z-10">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 @if($value)
-                    <x-dynamic-component :component="$value" class="h-5 w-5 text-secondary-500 dark:text-secondary-400" />
+                    <x-dynamic-component :component="$value" class="h-5 w-5 text-gray-500 dark:text-gray-400" />
                 @else
-                    <x-untitledui-face-frown class="h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+                    <x-untitledui-face-frown class="h-5 w-5 text-gray-400 dark:text-gray-500" />
                 @endif
             </div>
             <x-shopper::forms.input
@@ -19,8 +19,8 @@
                 readonly
             />
         </div>
-        <button @click="show = !show" type="button" class="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm ring-1 ring-inset ring-secondary-300 hover:bg-secondary-50 dark:ring-secondary-700 dark:hover:bg-secondary-800">
-            <x-untitledui-chevron-selector-vertical class="h-5 w-5 text-secondary-400 dark:text-secondary-500" />
+        <button @click="show = !show" type="button" class="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:ring-gray-700 dark:hover:bg-gray-800">
+            <x-untitledui-chevron-selector-vertical class="h-5 w-5 text-gray-400 dark:text-gray-500" />
         </button>
     </div>
     <div x-show="show" x-cloak
@@ -30,16 +30,16 @@
          x-transition:leave="transition ease-in duration-75"
          x-transition:leave-start="transform opacity-100 scale-100"
          x-transition:leave-end="transform opacity-0 scale-95"
-         class="absolute right-0 z-10 mt-2 w-full max-w-sm overflow-hidden origin-top-right rounded-lg bg-white dark:bg-secondary-800 shadow-lg ring-1 ring-black dark:ring-secondary-900 ring-opacity-5 focus:outline-none"
+         class="absolute right-0 z-10 mt-2 w-full max-w-sm overflow-hidden origin-top-right rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black dark:ring-gray-900 ring-opacity-5 focus:outline-none"
          role="menu"
     >
         <div>
             <div class="relative">
-                <div class="flex items-center px-4 py-3 bg-secondary-50/70 dark:bg-secondary-700/70 backdrop-blur-sm ring-1 ring-secondary-900/10 dark:ring-black/10">
+                <div class="flex items-center px-4 py-3 bg-gray-50/70 dark:bg-gray-700/70 backdrop-blur-sm ring-1 ring-gray-900/10 dark:ring-black/10">
                     <x-shopper::forms.input
                         type="search"
                         wire:model.debounce.550ms="search"
-                        class="dark:bg-secondary-800"
+                        class="dark:bg-gray-800"
                         :placeholder="__('shopper::layout.forms.placeholder.icon_placeholder')"
                     />
                 </div>
@@ -54,7 +54,7 @@
                             wire:click="selectedIcon('{{ $icon }}')"
                             @class([
                                 'inline-flex items-center justify-center text-sm leading-5 p-2 rounded-lg',
-                                'text-secondary-500 dark:text-secondary-400 hover:bg-secondary-50 hover:text-secondary-700 dark:hover:text-white dark:hover:bg-secondary-700' => $value !== $icon,
+                                'text-gray-500 dark:text-gray-400 hover:bg-gray-50 hover:text-gray-700 dark:hover:text-white dark:hover:bg-gray-700' => $value !== $icon,
                                 'bg-primary-500 text-white' => $value === $icon,
                             ])
                         >
@@ -63,14 +63,14 @@
                     @empty
                         <div class="col-span-6 flex flex-col items-center justify-center py-6 gap-y-2">
                             <x-untitledui-face-neutral class="h-8 w-8 text-primary-500" stroke-width="1.5" />
-                            <h4 class="text-base font-medium text-secondary-500 dark:text-secondary-400">
+                            <h4 class="text-base font-medium text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::words.icon_no_result') }}
                             </h4>
                         </div>
                     @endforelse
                 </div>
                 @if($icons->hasMorePages())
-                    <button wire:click.prevent="loadMore" class="inline-flex items-center justify-center w-full text-sm leading-5 text-secondary-500 dark:text-secondary-500">
+                    <button wire:click.prevent="loadMore" class="inline-flex items-center justify-center w-full text-sm leading-5 text-gray-500 dark:text-gray-500">
                         {{ __('Load more') }}
                     </button>
                 @endif

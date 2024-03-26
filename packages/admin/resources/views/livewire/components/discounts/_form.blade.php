@@ -22,21 +22,21 @@
                     <p class="mt-2 text-sm text-danger-600 dark:text-danger-500">{{ $message }}</p>
                 @enderror
             </div>
-            <p class="mt-2 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
+            <p class="mt-2 text-sm text-gray-500 leading-5 dark:text-gray-400">
                 {{ __('shopper::pages/discounts.name_helptext') }}
             </p>
         </x-shopper::card>
-        <x-shopper::card class="divide-y divide-secondary-200 dark:divide-secondary-700">
+        <x-shopper::card class="divide-y divide-gray-200 dark:divide-gray-700">
             <div class="p-4 sm:p-5">
                 <div class="flex items-center justify-between">
-                    <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">
+                    <h4 class="text-base leading-5 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::layout.forms.label.type') }}
                     </h4>
                     <div class="flex items-center space-x-3">
                         <div class="flex items-center">
                             <x-shopper::forms.radio wire:model.lazy="type" id="percentage" value="percentage" name="type" />
                             <label for="percentage" class="ml-3 cursor-pointer">
-                                <span class="block text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                                <span class="block text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.percentage') }}
                                 </span>
                             </label>
@@ -44,7 +44,7 @@
                         <div class="flex items-center">
                             <x-shopper::forms.radio wire:model.lazy="type" id="amount" value="fixed_amount" name="type" />
                             <label for="amount" class="ml-3 cursor-pointer">
-                                <span class="block text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                                <span class="block text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.fixed_amount') }}
                                 </span>
                             </label>
@@ -56,7 +56,7 @@
                     <div class="mt-1 relative rounded-md shadow-sm w-full sm:w-64">
                         <x-shopper::forms.input wire:model.lazy="value" id="value" type="text" autocomplete="off" />
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <span class="text-secondary-500 sm:text-sm sm:leading-5 dark:text-secondary-400">
+                            <span class="text-gray-500 sm:text-sm sm:leading-5 dark:text-gray-400">
                                 {{ $type === 'percentage' ? '%' : shopper_currency() }}
                             </span>
                         </div>
@@ -68,14 +68,14 @@
             </div>
             <div class="p-4 sm:p-5">
                 <div class="flex items-center justify-between">
-                    <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">
+                    <h4 class="text-base leading-5 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::pages/discounts.applies_to') }}
                     </h4>
                     <div class="flex items-center space-x-3">
                         <div class="flex items-center">
                             <x-shopper::forms.radio wire:model.lazy="apply" id="order" value="order" name="apply" />
                             <label for="order" class="ml-3 cursor-pointer">
-                                <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">
+                                <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('shopper::pages/discounts.entire_order') }}
                                 </span>
                             </label>
@@ -83,7 +83,7 @@
                         <div class="flex items-center">
                             <x-shopper::forms.radio wire:model.lazy="apply" id="product" value="products" name="apply" />
                             <label for="product" class="ml-3 cursor-pointer">
-                                <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">
+                                <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
                                     {{ __('shopper::pages/discounts.specific_products') }}
                                 </span>
                             </label>
@@ -99,7 +99,7 @@
                         </span>
                     </div>
                     @if(count($selectedProducts) > 0)
-                        <div class="mt-2 divide-y divide-secondary-100 dark:divide-secondary-700">
+                        <div class="mt-2 divide-y divide-gray-100 dark:divide-gray-700">
                             @foreach($products as $product)
                                 <div class="flex items-center justify-between py-2">
                                     <div class="flex items-center">
@@ -108,15 +108,15 @@
                                                 <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="" />
                                             </span>
                                         @else
-                                            <span class="flex items-center justify-center h-10 w-10 bg-secondary-100 text-secondary-300 rounded-md dark:bg-secondary-700 dark:text-secondary-500">
+                                            <span class="flex items-center justify-center h-10 w-10 bg-gray-100 text-gray-300 rounded-md dark:bg-gray-700 dark:text-gray-500">
                                                 <x-heroicon-o-photograph class="w-8 h-8" />
                                             </span>
                                         @endif
-                                        <p class="ml-4 text-sm font-medium text-secondary-500 dark:text-secondary-400">
+                                        <p class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">
                                             {{ $product->name }}
                                         </p>
                                     </div>
-                                    <button wire:key="product_{{ $product->id }}" wire:click="removeProduct({{ $product->id }})" type="button" class="text-secondary-500 text-sm font-medium inline-flex items-center dark:text-secondary-400">
+                                    <button wire:key="product_{{ $product->id }}" wire:click="removeProduct({{ $product->id }})" type="button" class="text-gray-500 text-sm font-medium inline-flex items-center dark:text-gray-400">
                                         <x-heroicon-s-x class="h-5 w-5" />
                                     </button>
                                 </div>
@@ -127,14 +127,14 @@
             </div>
             <div class="p-4">
                 <div>
-                    <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">
+                    <h4 class="text-base leading-5 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::pages/discounts.min_requirement') }}
                     </h4>
                     <div class="mt-4 space-y-3">
                         <div class="flex items-center">
                             <x-shopper::forms.radio wire:model.lazy="minRequired" id="none" value="none" name="min" />
                             <label for="none" class="ml-3 cursor-pointer">
-                                <span class="block text-sm leading-5 text-secondary-700 dark:text-secondary-300">
+                                <span class="block text-sm leading-5 text-gray-700 dark:text-gray-300">
                                     {{ __('shopper::pages/discounts.none') }}
                                 </span>
                             </label>
@@ -143,7 +143,7 @@
                             <div class="flex items-center">
                                 <x-shopper::forms.radio wire:model.lazy="minRequired" id="price" value="price" name="min" />
                                 <label for="price" class="ml-3 cursor-pointer">
-                                    <span class="block text-sm leading-5 text-secondary-700 dark:text-secondary-300">
+                                    <span class="block text-sm leading-5 text-gray-700 dark:text-gray-300">
                                         {{ __('shopper::pages/discounts.min_amount', ['currency' => shopper_currency()]) }}
                                     </span>
                                 </label>
@@ -158,12 +158,12 @@
                                         class="sm:w-64"
                                     />
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                        <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                             {{ shopper_currency() }}
                                         </span>
                                     </div>
                                 </div>
-                                <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.applies_only_selected') }}
                                 </p>
                             @endif
@@ -172,7 +172,7 @@
                             <div class="flex items-center">
                                 <x-shopper::forms.radio wire:model.debounce.350ms="minRequired" id="quantity" value="quantity" name="min" />
                                 <label for="quantity" class="ml-3 cursor-pointer">
-                                    <span class="block text-sm leading-5 text-secondary-700 dark:text-secondary-300">
+                                    <span class="block text-sm leading-5 text-gray-700 dark:text-gray-300">
                                         {{ __('shopper::pages/discounts.min_quantity') }}
                                     </span>
                                 </label>
@@ -187,7 +187,7 @@
                                         class="sm:w-64"
                                     />
                                 </div>
-                                <p class="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.applies_only_selected') }}
                                 </p>
                             @endif
@@ -200,14 +200,14 @@
             </div>
             <div class="p-4">
                 <div class="flex items-center justify-between">
-                    <h4 class="text-base leading-5 font-medium text-secondary-900 dark:text-white">
+                    <h4 class="text-base leading-5 font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::pages/discounts.customer_eligibility') }}
                     </h4>
                     <div class="flex items-center space-x-3">
                         <div class="flex items-center">
                             <x-shopper::forms.radio wire:model.lazy="eligibility" id="everyone" value="everyone" />
                             <label for="everyone" class="ml-3 cursor-pointer">
-                                <span class="block text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                                <span class="block text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.everyone') }}
                                 </span>
                             </label>
@@ -215,7 +215,7 @@
                         <div class="flex items-center">
                             <x-shopper::forms.radio wire:model.lazy="eligibility" id="customer" value="customers" />
                             <label for="customer" class="ml-3 cursor-pointer">
-                                <span class="block text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                                <span class="block text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/discounts.specific_customers') }}
                                 </span>
                             </label>
@@ -231,18 +231,18 @@
                         </span>
                     </div>
                     @if(count($selectedCustomers) > 0)
-                        <div class="mt-2 divide-y divide-secondary-100 dark:divide-secondary-700">
+                        <div class="mt-2 divide-y divide-gray-100 dark:divide-gray-700">
                             @foreach($customers as $customer)
                                 <div class="flex items-center justify-between py-2">
                                     <div class="flex items-center space-x-3">
-                                        <span class="text-sm font-medium text-secondary-900 dark:text-white">{{ $customer->full_name }}</span>
-                                        <span class="text-sm font-normal text-secondary-500 dark:text-secondary-400">{{ $customer->email }}</span>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">{{ $customer->full_name }}</span>
+                                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{{ $customer->email }}</span>
                                     </div>
                                     <button
                                         wire:key="customer_{{ $customer->id }}"
                                         wire:click="removeCustomer({{ $customer->id }})"
                                         type="button"
-                                        class="text-secondary-500 text-sm font-medium inline-flex items-center dark:text-secondary-400"
+                                        class="text-gray-500 text-sm font-medium inline-flex items-center dark:text-gray-400"
                                     >
                                         <x-heroicon-s-x class="h-5 w-5" />
                                     </button>
@@ -254,7 +254,7 @@
             </div>
         </x-shopper::card>
         <x-shopper::card class="p-4 sm:p-5">
-            <h4 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
+            <h4 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
                 {{ __('shopper::pages/discounts.usage_limits') }}
             </h4>
             <div class="mt-5 space-y-4">
@@ -266,7 +266,7 @@
                         <div class="ml-3 text-sm leading-5">
                             <x-shopper::label
                                 for="usage_number"
-                                class="text-secondary-500 cursor-pointer dark:text-secondary-400"
+                                class="text-gray-500 cursor-pointer dark:text-gray-400"
                                 :value="__('shopper::pages/discounts.usage_label')"
                             />
                         </div>
@@ -297,7 +297,7 @@
                     <div class="ml-3 text-sm leading-5">
                         <x-shopper::label
                             for="usage_limit_per_user"
-                            class="text-secondary-500 cursor-pointer dark:text-secondary-400"
+                            class="text-gray-500 cursor-pointer dark:text-gray-400"
                             :value="__('shopper::pages/discounts.limit_one_per_user')"
                         />
                     </div>
@@ -305,7 +305,7 @@
             </div>
         </x-shopper::card>
         <x-shopper::card class="p-4 sm:p-5">
-            <h4 class="text-base leading-6 font-medium text-secondary-900 dark:text-white">
+            <h4 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
                 {{ __('shopper::pages/discounts.active_dates') }}
             </h4>
             <div class="space-y-4 mt-4">
@@ -336,10 +336,10 @@
     </div>
     <div class="lg:col-span-2">
         <aside class="sticky top-14">
-            <x-shopper::card class="space-y-5 divide-y divide-secondary-200 dark:divide-secondary-700">
+            <x-shopper::card class="space-y-5 divide-y divide-gray-200 dark:divide-gray-700">
                 <div class="p-4 sm:p-5">
                     <div class="flex items-center space-x-2">
-                        <h4 class="font-medium text-base text-secondary-900 dark:text-white">
+                        <h4 class="font-medium text-base text-gray-900 dark:text-white">
                             {{ __('shopper::words.summary') }}
                         </h4>
                         @isset($discount)
@@ -350,16 +350,16 @@
                         @endisset
                     </div>
                     @if($this->isEmpty())
-                        <p class="text-secondary-500 text-sm mt-4 dark:text-secondary-400">
+                        <p class="text-gray-500 text-sm mt-4 dark:text-gray-400">
                             {{ __('shopper::pages/discounts.empty_code') }}
                         </p>
                     @else
                         @if($code !== '')
-                            <p class="text-base mt-4 font-bold text-secondary-700 leading-6 dark:text-secondary-300">
+                            <p class="text-base mt-4 font-bold text-gray-700 leading-6 dark:text-gray-300">
                                 {{ $code }}
                             </p>
                         @endif
-                        <ul class="list-disc list-inside mt-4 space-y-1 text-sm text-secondary-500 dark:text-secondary-400">
+                        <ul class="list-disc list-inside mt-4 space-y-1 text-sm text-gray-500 dark:text-gray-400">
                             @if($value !== '' && (int) $value > 0)
                                 <li>
                                     {{ $type === 'percentage' ? $value . ' %' : $this->formattedPrice($value * 100) }}
@@ -391,10 +391,10 @@
                     @endif
                 </div>
                 <div class="p-4 sm:p-5">
-                    <h4 class="text-secondary-900 font-medium text-base leading-6 dark:text-white">
+                    <h4 class="text-gray-900 font-medium text-base leading-6 dark:text-white">
                         {{ __('shopper::layout.forms.label.visibility') }}
                     </h4>
-                    <p class="text-sm mt-4 font-normal text-secondary-500 leading-5 dark:text-secondary-400">
+                    <p class="text-sm mt-4 font-normal text-gray-500 leading-5 dark:text-gray-400">
                         {{ __('shopper::words.set_visibility', ['name' => 'discount']) }}
                     </p>
                     <div class="mt-5 px-3 py-2.5 bg-primary-500 bg-opacity-10 rounded-md text-primary-600 flex items-center justify-between">
@@ -412,8 +412,8 @@
                                       @keydown.space.prevent="on = !on"
                                       :aria-checked="on.toString()"
                                       aria-checked="false"
-                                      x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }"
-                                      class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-secondary-200">
+                                      x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-primary-600': on }"
+                                      class="relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-primary bg-gray-200">
                                     <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                                     <span aria-hidden="true"
                                           x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }"

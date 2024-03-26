@@ -31,10 +31,10 @@
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css"/>
 
     @stack('styles')
-    @livewireStyles
+
+    @filamentStyles
     {{ \Shopper\Facades\Shopper::getThemeLink() }}
 
-    <wireui:scripts />
     <script
         defer
         src="{{
@@ -47,11 +47,15 @@
 
     @include('shopper::includes._additional-styles')
 </head>
-<body x-keypress {{ $attributes->twMerge(['class' => 'bg-white font-sans dark:bg-secondary-950']) }}>
+<body x-keypress {{ $attributes->twMerge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
 
     {{ $slot }}
 
-    @livewireScriptConfig
+    @livewire(\Filament\Notifications\Livewire\Notifications::class)
+    @livewire(\Shopper\Livewire\Components\SidePanel::class)
+
+    @filamentScripts
+
     @include('shopper::includes._additional-scripts')
 
 </body>

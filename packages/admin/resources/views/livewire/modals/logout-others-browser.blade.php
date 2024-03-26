@@ -5,10 +5,10 @@
     <x-slot name="content">
         <div class="sm:flex sm:items-start px-4 sm:px-6 pt-4">
             <div class="text-left">
-                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                     {{ __('shopper::words.logout_session') }}
                 </h3>
-                <p class="mt-1 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-400">
                     {{ __('shopper::words.logout_session_confirm') }}
                 </p>
             </div>

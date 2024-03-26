@@ -20,6 +20,7 @@
     "php": "^8.2",
     "bacon/bacon-qr-code": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
+    "filament/forms": "^3.2",
     "gehrisandro/tailwind-merge-laravel": "^1.2",
     "illuminate/console": "^10.0|^11.0",
     "illuminate/contracts": "^10.0|^11.0",
@@ -32,7 +33,7 @@
     "illuminate/view": "^10.0|^11.0",
     "jenssegers/agent": "^2.6",
     "laravel/prompts": "^0.1.15",
-    "livewire/livewire": "^3.0",
+    "livewire/livewire": "^3.4",
     "maatwebsite/excel": "^3.1",
     "mckenziearts/blade-untitledui-icons": "^1.2",
     "milon/barcode": "^10.0|^11.0",
@@ -43,8 +44,7 @@
     "shopper/sidebar": "self.version",
     "spatie/laravel-livewire-wizard": "^2.2",
     "spatie/laravel-package-tools": "^1.15",
-    "stevebauman/location": "^6.3.1",
-    "wireui/wireui": "^2.0.0-beta.0"
+    "stevebauman/location": "^6.3.1"
   },
   "autoload": {
     "files": [

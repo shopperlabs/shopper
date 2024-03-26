@@ -73,8 +73,7 @@ return [
     ],
 
     'notifications' => [
-        'create_inventory' => 'Inventory Successfully Added',
-        'update_inventory' => 'Inventory Successfully updated',
+        'inventory' => 'Inventory Successfully saved',
     ],
 
     'roles_permissions' => [
@@ -103,12 +102,13 @@ return [
         'with_role_name' => 'with :name role',
         'permissions_in_role' => 'in :name role',
         'custom_permission' => 'Custom permission',
+        'delete_team_member' => 'Are you sure you want to delete this member?',
     ],
 
     'location' => [
         'description' => 'Manage the places you stock inventory, fulfill orders, and sell products.',
         'count' => 'You’re using :count of 4 locations available.',
-        'add' => 'Add location',
+        'add' => 'Add Inventory',
         'detail' => 'Details',
         'detail_summary' => 'Give this location a short name to make it easy to identify. You’ll see this name in areas like products.',
         'address' => 'Inventory address',

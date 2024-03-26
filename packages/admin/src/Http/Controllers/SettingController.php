@@ -10,11 +10,6 @@ use Shopper\Core\Models\Role;
 
 final class SettingController extends Controller
 {
-    public function initialize(): View
-    {
-        return view('shopper::pages.settings.initialize');
-    }
-
     public function role(Role $role): View
     {
         return view('shopper::pages.settings.management.role', compact('role'));

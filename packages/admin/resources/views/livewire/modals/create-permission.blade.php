@@ -1,12 +1,12 @@
 <x-shopper::modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
     <x-slot name="title">
         <span class="flex flex-col">
             {{ __('shopper::modals.permissions.new') }}
-            <span class="mt-0.5 font-normal text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+            <span class="mt-0.5 font-normal text-sm leading-5 text-gray-500 dark:text-gray-400">
                 {{ __('shopper::modals.permissions.new_description') }}
             </span>
         </span>

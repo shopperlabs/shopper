@@ -73,8 +73,7 @@ return [
     ],
 
     'notifications' => [
-        'create_inventory' => 'Vous avez créé avec succès un nouvel inventaire !',
-        'update_inventory' => 'Vous avez mis à jour avec succès l\'inventaire !',
+        'inventory' => 'Inventaire enregistré avec succès!',
     ],
 
     'roles_permissions' => [
@@ -103,6 +102,7 @@ return [
         'with_role_name' => 'avec le rôle :name',
         'permissions_in_role' => 'pour le rôle :name',
         'custom_permission' => 'Permission personnalisée',
+        'delete_team_member' => 'Êtes-vous sûr de vouloir supprimer ce membre ?',
     ],
 
     'location' => [

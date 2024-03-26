@@ -5,10 +5,10 @@
         <div>
             <x-shopper::brand class="w-auto h-12 mx-auto" />
 
-            <h2 class="mt-6 text-3xl font-bold leading-9 text-center text-secondary-900 dark:text-white font-heading">
+            <h2 class="mt-6 text-3xl font-bold leading-9 text-center text-gray-900 dark:text-white font-heading">
                 {{ __('shopper::pages/auth.login.title') }}
             </h2>
-            <p class="max-w-sm mt-3 text-sm text-center text-secondary-500 dark:text-secondary-400">
+            <p class="max-w-sm mt-3 text-sm text-center text-gray-500 dark:text-gray-400">
                 {{ __('shopper::pages/auth.login.or') }}
                 <a href="{{ url('/') }}" class="font-medium transition duration-150 ease-in-out text-primary-600 hover:text-primary-500 focus:outline-none focus:underline">
                     {{ __('shopper::pages/auth.login.return_landing') }}
@@ -26,7 +26,7 @@
                     type="email"
                     wire:model="email"
                     autocomplete="off"
-                    class="relative block w-full px-3 py-2 border rounded-none appearance-none border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 placeholder-secondary-500 text-secondary-900 dark:text-secondary-300 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-secondary-900 focus:z-10 sm:text-sm"
+                    class="relative block w-full px-3 py-2 border rounded-none appearance-none border-gray-300 dark:border-gray-700 dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-300 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-gray-900 focus:z-10 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.email') }}"
                     required
                 />
@@ -37,7 +37,7 @@
                     name="password"
                     type="password"
                     wire:model="password"
-                    class="relative block w-full px-3 py-2 border rounded-none appearance-none border-secondary-300 dark:border-secondary-700 dark:bg-secondary-800 placeholder-secondary-500 text-secondary-900 dark:text-secondary-300 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-secondary-900 focus:z-10 sm:text-sm"
+                    class="relative block w-full px-3 py-2 border rounded-none appearance-none border-gray-300 dark:border-gray-700 dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-300 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-gray-900 focus:z-10 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.password') }}"
                     required
                 />
@@ -46,8 +46,8 @@
 
         <div class="flex items-center justify-between mt-6">
             <div class="flex items-center">
-                <input id="remember" name="remember" wire:model.defer="remember" type="checkbox" class="w-4 h-4 rounded text-primary-600 dark:bg-secondary-800 dark:border-secondary-700 focus:ring-primary-500 border-secondary-300 dark:focus:ring-offset-secondary-900">
-                <label for="remember" class="block ml-2 text-sm leading-5 cursor-pointer text-secondary-500 hover:text-secondary-900 dark:text-white dark:hover:text-secondary-300">
+                <input id="remember" name="remember" wire:model.defer="remember" type="checkbox" class="w-4 h-4 rounded text-primary-600 dark:bg-gray-800 dark:border-gray-700 focus:ring-primary-500 border-gray-300 dark:focus:ring-offset-gray-900">
+                <label for="remember" class="block ml-2 text-sm leading-5 cursor-pointer text-gray-500 hover:text-gray-900 dark:text-white dark:hover:text-gray-300">
                     {{ __('shopper::layout.forms.label.remember') }}
                 </label>
             </div>

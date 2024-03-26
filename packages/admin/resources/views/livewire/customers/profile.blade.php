@@ -1,20 +1,20 @@
 <x-shopper::container>
-    <div class="space-y-6 divide-y divide-secondary-200 dark:divide-secondary-700">
+    <div class="space-y-6 divide-y divide-gray-200 dark:divide-gray-700">
         <div class="space-y-1">
-            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white font-heading">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white font-heading">
                 {{ __('shopper::pages/customers.profile.title') }}
             </h3>
-            <p class="max-w-2xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+            <p class="max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-400">
                 {{ __('shopper::pages/customers.profile.description') }}
             </p>
         </div>
         <div>
-            <dl class="divide-y divide-secondary-200 dark:divide-secondary-700">
+            <dl class="divide-y divide-gray-200 dark:divide-gray-700">
                 <div x-data="{ open: @entangle('firstNameUpdate') }" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::layout.forms.label.first_name') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
                             <span x-show="!open">{{ $firstName }}</span>
                             <div x-show="open" style="display: none">
@@ -36,7 +36,7 @@
                                     <x-shopper::loader wire:loading wire:target="saveFirstName" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('shopper::layout.forms.actions.save') }}</span>
                                 </button>
-                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <span class="text-gray-300 dark:text-gray-700" aria-hidden="true">|</span>
                                 <button x-on:click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('shopper::layout.forms.actions.cancel') }}
                                 </button>
@@ -45,10 +45,10 @@
                     </dd>
                 </div>
                 <div x-data="{ open: @entangle('lastNameUpdate') }" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::layout.forms.label.last_name') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
                             <span x-show="!open">{{ $lastName }}</span>
                             <div x-show="open" style="display: none">
@@ -70,7 +70,7 @@
                                     <x-shopper::loader wire:loading wire:target="saveLastName" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('shopper::layout.forms.actions.save') }}</span>
                                 </button>
-                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <span class="text-gray-300 dark:text-gray-700" aria-hidden="true">|</span>
                                 <button x-on:click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('shopper::layout.forms.actions.cancel') }}
                                 </button>
@@ -79,20 +79,20 @@
                     </dd>
                 </div>
                 <div class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::layout.forms.label.photo') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">
                             <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="">
                         </span>
                     </dd>
                 </div>
                 <div x-data="{ open: @entangle('emailUpdate') }" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::layout.forms.label.email') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
                             <span x-show="!open">{{ $email }}</span>
                             <div x-show="open" style="display: none">
@@ -114,7 +114,7 @@
                                     <x-shopper::loader wire:loading wire:target="saveEmail" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('shopper::layout.forms.actions.save') }}</span>
                                 </button>
-                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <span class="text-gray-300 dark:text-gray-700" aria-hidden="true">|</span>
                                 <button x-on:click="$wire.cancelEmail()" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('shopper::layout.forms.actions.cancel') }}
                                 </button>
@@ -123,13 +123,13 @@
                     </dd>
                 </div>
                 <div x-data="{ open: @entangle('birthDateUpdate') }" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::layout.forms.label.birth_date') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
                             <p x-show="!open" class="flex items-center">
-                                <x-untitledui-calendar-heart class="w-5 h-5 mr-2 text-secondary-500 dark:text-secondary-400" />
+                                <x-untitledui-calendar-heart class="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400" />
                                 <span>{{ $birthDateFormatted }}</span>
                             </p>
                             <div x-show="open" style="display: none">
@@ -155,7 +155,7 @@
                                     <x-shopper::loader wire:loading wire:target="saveBirthDate" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('shopper::layout.forms.actions.save') }}</span>
                                 </button>
-                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <span class="text-gray-300 dark:text-gray-700" aria-hidden="true">|</span>
                                 <button @click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('shopper::layout.forms.actions.cancel') }}
                                 </button>
@@ -163,11 +163,11 @@
                         </div>
                     </dd>
                 </div>
-                <div x-data="{ open: @entangle('genderUpdate') }" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-secondary-200">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                <div x-data="{ open: @entangle('genderUpdate') }" class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::layout.forms.label.gender') }}
                     </dt>
-                    <dd class="flex items-center space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex items-center space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
                             <span x-show="!open" class="capitalize">{{ $gender }}</span>
                             <div x-show="open" style="display: none">
@@ -190,7 +190,7 @@
                                     <x-shopper::loader wire:loading wire:target="saveGender" class="text-primary-600" />
                                     <span class="ml-1.5">{{ __('shopper::layout.forms.actions.save') }}</span>
                                 </button>
-                                <span class="text-secondary-300 dark:text-secondary-700" aria-hidden="true">|</span>
+                                <span class="text-gray-300 dark:text-gray-700" aria-hidden="true">|</span>
                                 <button @click="open = false" type="button" class="font-medium text-primary-600 hover:text-primary-500">
                                     {{ __('shopper::layout.forms.actions.cancel') }}
                                 </button>
@@ -201,27 +201,27 @@
             </dl>
         </div>
     </div>
-    <div class="mt-10 space-y-6 divide-y divide-secondary-200 dark:divide-secondary-700">
+    <div class="mt-10 space-y-6 divide-y divide-gray-200 dark:divide-gray-700">
         <div class="space-y-1">
-            <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white font-heading">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white font-heading">
                 {{ __('shopper::pages/customers.profile.account') }}
             </h3>
-            <p class="max-w-2xl text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+            <p class="max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-400">
                 {{ __('shopper::pages/customers.profile.account_description') }}
             </p>
         </div>
         <div>
-            <dl class="divide-y divide-secondary-200 dark:divide-secondary-700">
+            <dl class="divide-y divide-gray-200 dark:divide-gray-700">
                 <div class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:pt-5">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.profile.marketing') }}
                     </dt>
-                    <dd class="flex text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2">
+                    <dd class="flex text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
                         <span role="checkbox"
                               x-data="{ on: @entangle('optIn') }"
                               x-on:click="on = !on"
                               @keydown.space.prevent="on = !on"
-                              x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }"
+                              x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-primary-600': on }"
                               :aria-checked="on.toString()"
                               aria-checked="true"
                               tabindex="0"
@@ -231,12 +231,12 @@
                         </span>
                     </dd>
                 </div>
-                <div class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-secondary-200 sm:dark:border-secondary-700">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                <div class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200 sm:dark:border-gray-700">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.profile.two_factor') }}
                     </dt>
-                    <dd class="flex text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold sm:ml-auto rounded-full {{ $hasEnabledTwoFactor ? 'bg-green-100 text-green-800': 'bg-secondary-100 text-secondary-800 dark:bg-secondary-700 dark:text-secondary-300' }}">
+                    <dd class="flex text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold sm:ml-auto rounded-full {{ $hasEnabledTwoFactor ? 'bg-green-100 text-green-800': 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }}">
                             {{ $hasEnabledTwoFactor ? __('shopper::layout.forms.actions.enabled') : __('shopper::layout.forms.actions.disabled') }}
                         </span>
                     </dd>

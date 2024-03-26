@@ -3,10 +3,10 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
             <div class="lg:col-span-1">
                 <div>
-                    <h3 class="text-lg font-medium leading-6 text-secondary-900 dark:text-white font-heading">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white font-heading">
                         {{ __('shopper::pages/auth.account.profile_title') }}
                     </h3>
-                    <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                    <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/auth.account.profile_description') }}
                     </p>
                 </div>
@@ -20,7 +20,7 @@
                         noShadow
                     >
                         <x-shopper::forms.avatar-upload wire:model.defer="picture" id="picture">
-                                <span class="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-secondary-100 dark:bg-secondary-700">
+                                <span class="flex items-center justify-center h-12 w-12 rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
                                     @if($picture)
                                         <img class="h-full w-full bg-cover" src="{{ $picture->temporaryUrl() }}" alt="">
                                     @else
@@ -36,7 +36,7 @@
                             :label="__('shopper::layout.forms.label.first_name')"
                             :error="$errors->first('first_name')"
                         >
-                            <x-shopper::forms.input type='text' wire:model.defer='first_name' class="dark:bg-secondary-800 dark:border-transparent" autocomplete='off' id='first_name' />
+                            <x-shopper::forms.input type='text' wire:model.defer='first_name' class="dark:bg-gray-800 dark:border-transparent" autocomplete='off' id='first_name' />
                         </x-shopper::forms.group>
 
                         <x-shopper::forms.group
@@ -45,7 +45,7 @@
                             :label="__('shopper::layout.forms.label.last_name')"
                             :error="$errors->first('last_name')"
                         >
-                            <x-shopper::forms.input type='text' wire:model.defer='last_name' class="dark:bg-secondary-800 dark:border-transparent" autocomplete='off' id='last_name' />
+                            <x-shopper::forms.input type='text' wire:model.defer='last_name' class="dark:bg-gray-800 dark:border-transparent" autocomplete='off' id='last_name' />
                         </x-shopper::forms.group>
 
                         <x-shopper::forms.group
@@ -56,13 +56,13 @@
                         >
                             <div class="relative mt-1">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <x-heroicon-s-mail class="h-5 w-5 text-secondary-400" />
+                                    <x-heroicon-s-mail class="h-5 w-5 text-gray-400" />
                                 </div>
                                 <x-shopper::forms.input
                                     wire:model.defer='email'
                                     id='email'
                                     type='email'
-                                    class='block pl-10 w-full sm:text-sm sm:leading-5 dark:bg-secondary-800 dark:border-transparent'
+                                    class='block pl-10 w-full sm:text-sm sm:leading-5 dark:bg-gray-800 dark:border-transparent'
                                     autocomplete='email-address'
                                 />
                             </div>
@@ -71,7 +71,7 @@
                         <div wire:ignore x-data="internationalNumber('#phone_number')" class="col-span-6 sm:col-span-3">
                             <div class="flex items-center justify-between">
                                 <x-shopper::label for="phone_number" :value="__('shopper::layout.forms.label.phone_number')" />
-                                <span class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::layout.forms.label.optional') }}
                                 </span>
                             </div>
@@ -80,7 +80,7 @@
                                     wire:model.defer="phone_number"
                                     id="phone_number"
                                     type="tel"
-                                    class="pr-10 dark:bg-secondary-800 dark:border-transparent"
+                                    class="pr-10 dark:bg-gray-800 dark:border-transparent"
                                     autocomplete="off"
                                 />
                             </div>

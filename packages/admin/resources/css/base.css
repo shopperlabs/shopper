@@ -33,27 +33,19 @@ input[type='number'] {
   height: 0.5em;
 }
 
-.dark .scrolling::-webkit-scrollbar-track {
-  background: theme('colors.secondary.800');
-}
-
 .scrolling::-webkit-scrollbar-thumb {
-  background-color: theme('colors.secondary.200');
+  background-color: theme('colors.gray.200');
   border-radius: 2px;
 }
 
 .scrolling::-webkit-scrollbar-thumb:hover {
-  background-color: theme('colors.secondary.300');
+  background-color: theme('colors.gray.300');
 }
 
 .dark .scrolling::-webkit-scrollbar-thumb {
-  background-color: theme('colors.secondary.700');
+  background-color: theme('colors.gray.700');
 }
 
 .dark .scrolling::-webkit-scrollbar-thumb:hover {
-  background-color: theme('colors.secondary.900');
-}
-
-#ui-modal > div > div.fixed {
-  @apply z-40 backdrop-blur-sm;
+  background-color: theme('colors.gray.900');
 }

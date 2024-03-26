@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.reviews.index')" :current="$review->reviewrateable->name">
-        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.reviews.index')" :title="__('shopper::layout.sidebar.reviews')" />
     </x-shopper::breadcrumb>
 
@@ -13,10 +13,10 @@
     <div class="mt-8">
         <div class="flex items-center justify-between">
             <div class="space-y-">
-                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                     {{ __('shopper::pages/products.reviews.review') }}
                 </h3>
-                <p class="max-w-2xl text-base text-secondary-500 dark:text-secondary-400">
+                <p class="max-w-2xl text-base text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/products.reviews.subtitle') }}
                 </p>
             </div>
@@ -27,15 +27,15 @@
                 </x-shopper::buttons.danger>
             </div>
         </div>
-        <div class="mt-6 border-t border-secondary-200 dark:border-secondary-700">
-            <dl class="divide-y divide-secondary-200 dark:divide-secondary-700">
+        <div class="mt-6 border-t border-gray-200 dark:border-gray-700">
+            <dl class="divide-y divide-gray-200 dark:divide-gray-700">
                 <div class="py-4 space-y-1 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::words.product') }}
                     </dt>
-                    <dd class="text-sm flex flex-col leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="text-sm flex flex-col leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">{{ $review->reviewrateable->name }}</span>
-                        <p class="mt-1 flex items-center space-x-4 text-secondary-500 leading-5 text-sm dark:text-secondary-400">
+                        <p class="mt-1 flex items-center space-x-4 text-gray-500 leading-5 text-sm dark:text-gray-400">
                             @if($review->reviewrateable->sku)
                                 <span>{{ $review->reviewrateable->sku }}</span> -
                             @endif
@@ -46,10 +46,10 @@
                     </dd>
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/products.reviews.rating') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
                             <span class="flex items-center">
                                 <svg fill="{{ $review->rating >= 1 ? 'currentColor' : 'none' }}" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-3 h-3 text-yellow-300" viewBox="0 0 24 24">
@@ -72,35 +72,35 @@
                     </dd>
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/products.reviews.review_content') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
-                            <p class="text-sm text-secondary-900 font-medium leading-5 dark:text-white">
+                            <p class="text-sm text-gray-900 font-medium leading-5 dark:text-white">
                                 {{ $review->title }}
                             </p>
-                            <p class="mt-1 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
+                            <p class="mt-1 text-sm text-gray-500 leading-5 dark:text-gray-400">
                                 {{ $review->content }}
                             </p>
                         </div>
                     </dd>
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/products.reviews.reviewer') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <div class="grow">
                             <div class="flex items-center">
                                 <div class="shrink-0 h-8 w-8">
                                     <img class="h-8 w-8 rounded-full" src="{{ $review->author->picture }}" alt="">
                                 </div>
                                 <div class="ml-4 truncate">
-                                    <div class="text-sm leading-5 font-medium text-secondary-900 dark:text-white">
+                                    <div class="text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         {{ $review->author->full_name }}
                                     </div>
-                                    <div class="text-sm leading-4 text-secondary-500 truncate dark:text-secondary-400">
+                                    <div class="text-sm leading-4 text-gray-500 truncate dark:text-gray-400">
                                         {{ $review->author->email }}
                                     </div>
                                 </div>
@@ -109,20 +109,20 @@
                     </dd>
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::layout.forms.label.created_at') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">
                           {{ $review->created_at->formatLocalized('%d %B %Y') }}
                         </span>
                     </dd>
                 </div>
                 <div class="py-4 space-y-1 sm:grid sm:py-5 sm:grid-cols-3 sm:gap-4">
-                    <dt class="text-sm leading-5 font-medium text-secondary-500 dark:text-secondary-400">
+                    <dt class="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/products.reviews.approved_status') }}
                     </dt>
-                    <dd class="flex space-x-4 text-sm leading-5 text-secondary-900 sm:mt-0 sm:col-span-2 dark:text-white">
+                    <dd class="flex space-x-4 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2 dark:text-white">
                         <span class="grow">
                             <span @class([
                                 'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium leading-5',
@@ -136,7 +136,7 @@
                             <span role="checkbox"
                                   x-data="{ on: @entangle('approved') }"
                                   x-on:click="on = !on"
-                                  x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }"
+                                  x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-primary-600': on }"
                                   :aria-checked="on.toString()"
                                   @keydown.space.prevent="on = !on"
                                   aria-checked="true"

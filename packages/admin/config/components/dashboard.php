@@ -25,6 +25,7 @@ return [
 
     'components' => [
         // 'search' => Components\Search::class,
+        'side-panel' => Components\SidePanel::class,
     ],
 
 ];

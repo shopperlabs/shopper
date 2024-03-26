@@ -3,24 +3,21 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-use Shopper\Http\Controllers\InventoryController;
-use Shopper\Http\Controllers\InventoryHistoryController;
-use Shopper\Http\Controllers\SettingController;
 
 Route::get('/', config('shopper.components.setting.pages.index'))->name('index');
-
-Route::view('/legal', 'shopper::pages.settings.legal')->name('legal');
-Route::view('/management', 'shopper::pages.settings.management.index')->name('users');
-Route::view('/management/user/new', 'shopper::pages.settings.management.create')->name('users.new');
-Route::get('/management/roles/{role}', [SettingController::class, 'role'])->name('users.role');
-Route::view('/analytics', 'shopper::pages.settings.analytics')->name('analytics');
-Route::view('/payments', 'shopper::pages.settings.payments.general')->name('payments');
-Route::view('/general', 'shopper::pages.settings.general')->name('shop');
-
-Route::resource('inventory-histories', InventoryHistoryController::class);
+Route::get('/general', config('shopper.components.setting.pages.general'))->name('shop');
 
 Route::prefix('inventories')->group(function (): void {
-    Route::get('/', [InventoryController::class, 'index'])->name('inventories');
-    Route::get('/create', [InventoryController::class, 'create'])->name('inventories.create');
-    Route::get('/{inventory}/edit', [InventoryController::class, 'edit'])->name('inventories.edit');
+    Route::get('/', config('shopper.components.setting.pages.inventory-index'))->name('inventories');
+    Route::get('/create', config('shopper.components.setting.pages.inventory-create'))->name('inventories.create');
+    Route::get('/{inventory}/edit', config('shopper.components.setting.pages.inventory-edit'))->name('inventories.edit');
+});
+
+Route::get('/legal', config('shopper.components.setting.pages.legal'))->name('legal');
+Route::get('/analytics', config('shopper.components.setting.pages.analytics'))->name('analytics');
+Route::get('/payments', config('shopper.components.setting.pages.payment'))->name('payments');
+
+Route::prefix('team')->group(function (): void {
+    Route::get('/', config('shopper.components.setting.pages.team-index'))->name('users');
+    Route::get('/roles/{role}', config('shopper.components.setting.pages.team-roles'))->name('users.role');
 });
