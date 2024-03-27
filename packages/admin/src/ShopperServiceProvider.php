@@ -113,11 +113,11 @@ final class ShopperServiceProvider extends PackageServiceProvider
         ]);
 
         foreach (array_merge(
-                $this->getLivewireComponents(),
-                $this->loadLivewireComponents('account'),
-                $this->loadLivewireComponents('dashboard'),
-                $this->loadLivewireComponents('setting'),
-             ) as $alias => $component) {
+            $this->getLivewireComponents(),
+            $this->loadLivewireComponents('account'),
+            $this->loadLivewireComponents('dashboard'),
+            $this->loadLivewireComponents('setting'),
+        ) as $alias => $component) {
             Livewire::component("shopper-{$alias}", $component);
         }
     }

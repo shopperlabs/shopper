@@ -49,7 +49,7 @@ class CreateTeamMember extends Component implements HasForms
                             ->required()
                             ->hintAction(
                                 Components\Actions\Action::make(__('shopper::words.generate'))
-                                    ->action(function (Set $set) {
+                                    ->action(function (Set $set): void {
                                         $set('password', Str::password(16));
                                     }),
                             ),
@@ -83,9 +83,10 @@ class CreateTeamMember extends Component implements HasForms
                     ->schema([
                         Components\Radio::make('role_id')
                             ->label(__('shopper::pages/settings.roles_permissions.choose_role'))
-                            ->options(Role::query()
-                                ->where('name', '<>', config('shopper.core.users.default_role'))
-                                ->pluck('display_name', 'id')
+                            ->options(
+                                Role::query()
+                                    ->where('name', '<>', config('shopper.core.users.default_role'))
+                                    ->pluck('display_name', 'id')
                             )
                             ->required()
                             ->live(onBlur: true),

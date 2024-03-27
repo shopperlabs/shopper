@@ -10,12 +10,9 @@ final class Feature
 {
     /**
      * Determine if the given feature is enabled.
-     *
-     * @param  string  $feature
-     * @return bool
      */
     public static function enabled(string $feature): bool
     {
-        return config('shopper.features.'. $feature) === FeatureState::ENABLED;
+        return config('shopper.features.' . $feature) === FeatureState::ENABLED;
     }
 }

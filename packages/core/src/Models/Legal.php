@@ -14,7 +14,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property string $title
  * @property string $slug
  * @property string | null $content
- * @property boolean $is_enabled
+ * @property bool $is_enabled
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */

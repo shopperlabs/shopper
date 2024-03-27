@@ -54,7 +54,7 @@ class Password extends Component implements HasForms
                             ->password()
                             ->revealable()
                             ->required(),
-                    ])
+                    ]),
             ])
             ->statePath('data');
     }

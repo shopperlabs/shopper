@@ -168,7 +168,7 @@ abstract class BaseRepository implements RepositoryContract
         return $models;
     }
 
-    public function updateById(int $id, array $data, array $options = []): Collection|Model
+    public function updateById(int $id, array $data, array $options = []): Collection | Model
     {
         $this->unsetClauses();
 
@@ -200,7 +200,7 @@ abstract class BaseRepository implements RepositoryContract
         return $this;
     }
 
-    public function whereIn(string $column, string|array $values): self
+    public function whereIn(string $column, string | array $values): self
     {
         $values = is_array($values) ? $values : [$values];
 

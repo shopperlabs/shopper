@@ -49,7 +49,7 @@ interface Item extends Authorizable, Itemable, Routeable
 
     public function setUrl(string $url): self;
 
-    public function route(array|string $route, array $params = []): self;
+    public function route(array | string $route, array $params = []): self;
 
     public function badge(mixed $callbackOrValue = null, ?string $className = null): Badge;
 

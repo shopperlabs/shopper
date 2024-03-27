@@ -69,7 +69,7 @@ return [
     'validations' => [
         'country' => 'Le pays est requis',
         'shop_name' => 'Le nom du magasin est obligatoire',
-        'shop_email' => "L'e-mail du magasin est requis"
+        'shop_email' => "L'e-mail du magasin est requis",
     ],
 
     'notifications' => [

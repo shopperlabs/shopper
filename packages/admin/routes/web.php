@@ -13,12 +13,12 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Shopper\Http\Controllers\AssetController;
-use Shopper\Livewire\Pages\Initialization;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\Dashboard;
 use Shopper\Http\Middleware\DispatchShopper;
 use Shopper\Http\Middleware\HasConfiguration;
 use Shopper\Http\Middleware\RedirectIfAuthenticated;
+use Shopper\Livewire\Pages\Initialization;
 use Shopper\Sidebar\Middleware\ResolveSidebars;
 
 Route::domain(config('shopper.admin.domain'))
@@ -36,8 +36,8 @@ Route::domain(config('shopper.admin.domain'))
         Route::prefix(shopper()->prefix())->group(function (): void {
             Route::middleware([RedirectIfAuthenticated::class])
                 ->as('shopper.')->group(function (): void {
-                require __DIR__ . '/auth.php';
-            });
+                    require __DIR__ . '/auth.php';
+                });
 
             Route::get('/assets/{file}', AssetController::class)
                 ->where('file', '.*')

@@ -47,7 +47,8 @@ if (! function_exists('get_asset_id')) {
 }
 
 if (! function_exists('shopper')) {
-    function shopper(): ShopperPanel {
+    function shopper(): ShopperPanel
+    {
         /** @var ShopperPanel $shopper */
         $shopper = app('shopper');
 

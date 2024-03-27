@@ -12,7 +12,7 @@ use Shopper\Facades\Shopper;
 
 final class RedirectIfAuthenticated
 {
-    public function handle(Request $request, Closure $next): RedirectResponse|Response
+    public function handle(Request $request, Closure $next): RedirectResponse | Response
     {
         if (Shopper::auth()->check()) {
             return redirect()->route('shopper.dashboard');

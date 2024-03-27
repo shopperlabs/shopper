@@ -50,7 +50,7 @@ final class StoreAddress extends StepComponent
     {
         return [
             'label' => __('shopper::pages/settings.initialization.step_two_title'),
-            'complete' =>  shopper_setting('street_address')
+            'complete' => shopper_setting('street_address')
                 && shopper_setting('city')
                 && shopper_setting('postal_code'),
         ];

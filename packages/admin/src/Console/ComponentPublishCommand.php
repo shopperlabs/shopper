@@ -30,23 +30,17 @@ final class ComponentPublishCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
     public function handle(): int
     {
         $config = $this->getBaseConfigurationFiles();
         dd($config);
+
         return 1;
     }
 
     /**
      * Publish the given file to the given destination.
-     *
-     * @param  string  $name
-     * @param  string  $file
-     * @param  string  $destination
-     * @return void
      */
     protected function publish(string $name, string $file, string $destination): void
     {
@@ -63,14 +57,12 @@ final class ComponentPublishCommand extends Command
 
     /**
      * Get an array containing the base configuration files.
-     *
-     * @return array
      */
     protected function getBaseConfigurationFiles(): array
     {
         $config = [];
 
-        foreach (Finder::create()->files()->name('*.php')->in(__DIR__.'/../../config/components') as $file) {
+        foreach (Finder::create()->files()->name('*.php')->in(__DIR__ . '/../../config/components') as $file) {
             $name = basename($file->getRealPath(), '.php');
 
             $config[$name] = $file->getRealPath();

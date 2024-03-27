@@ -44,7 +44,7 @@ class InventoryForm extends Component implements HasForms
                             ->placeholder('White House')
                             ->required()
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set) {
+                            ->afterStateUpdated(function (string $operation, $state, Forms\Set $set): void {
                                 $set('code', Str::slug($state));
                             }),
                         Forms\Components\Hidden::make('code'),

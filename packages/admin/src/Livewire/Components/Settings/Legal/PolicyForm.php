@@ -45,7 +45,7 @@ class PolicyForm extends Component implements HasForms
     public function store(): void
     {
         Legal::query()->updateOrCreate([
-            'slug' => Str::slug($this->form->getState()['title'])
+            'slug' => Str::slug($this->form->getState()['title']),
         ], $this->form->getState());
 
         Notification::make()

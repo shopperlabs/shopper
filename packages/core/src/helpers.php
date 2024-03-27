@@ -11,7 +11,6 @@ use Money\Money;
 use Shopper\Core\Models\Currency as ModelCurrency;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Setting;
-use Shopper\Facades\Shopper;
 
 if (! function_exists('generate_number')) {
     function generate_number(): string
@@ -76,7 +75,7 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format(int|string $amount, ?string $currency = null): string
+    function shopper_money_format(int | string $amount, ?string $currency = null): string
     {
         $money = new Money(
             amount: $amount,

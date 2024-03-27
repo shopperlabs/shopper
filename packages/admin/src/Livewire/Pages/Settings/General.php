@@ -47,9 +47,7 @@ class General extends Component implements HasForms
             ->select('value', 'key')
             ->get();
 
-        $this->form->fill($settings->mapWithKeys(function (Setting $item) {
-            return [$item['key'] => $item['value']];
-        })->toArray());
+        $this->form->fill($settings->mapWithKeys(fn (Setting $item) => [$item['key'] => $item['value']])->toArray());
     }
 
     public function form(Form $form): Form

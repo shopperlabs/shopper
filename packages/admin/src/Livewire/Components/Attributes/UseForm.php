@@ -50,7 +50,7 @@ trait UseForm
         $this->icon = $icon;
     }
 
-    public function save(Model|string $model): mixed
+    public function save(Model | string $model): mixed
     {
         $this->validate($this->rules());
 

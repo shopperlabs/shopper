@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Validate;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\Setting;
 use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Http\Controllers;
 
-use Illuminate\Support\Str;
-use Shopper\Facades\Shopper;
-
 final class AssetController
 {
     public function __invoke(string $file)

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Settings\Legal;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
 
