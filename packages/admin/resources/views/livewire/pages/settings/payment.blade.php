@@ -19,13 +19,15 @@
             </x-slot>
 
             <x-slot name="action">
-                <div class="flex space-x-3">
-                    <span class="shadow-sm rounded-md">
-                        <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-payment-method')" type="button">
-                            {{ __('shopper::pages/settings.payment.create_payment') }}
-                        </x-shopper::buttons.primary>
-                    </span>
-                </div>
+                <x-shopper::buttons.primary
+                    wire:click="$dispatch(
+                        'openModal',
+                        { component: 'shopper-modals.payment-method-form' }
+                    )"
+                    type="button"
+                >
+                    {{ __('shopper::pages/settings.payment.create_payment') }}
+                </x-shopper::buttons.primary>
             </x-slot>
         </x-shopper::heading>
     </x-shopper::container>
@@ -89,7 +91,7 @@
                         </thead>
                         <tbody class="divide-y divide-gray-100 dark:divide-gray-700" x-max="1">
                             @forelse($methods as $method)
-                                <tr>
+                                <tr wire:key="{{ $method->id }}">
                                     <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
                                         <div class="flex items-center space-x-3 lg:pl-2">
                                             <div class="shrink-0 w-2.5 h-2.5 rounded-full {{ $method->is_enabled ? 'bg-green-600': 'bg-gray-400' }}"></div>
@@ -109,7 +111,7 @@
                                     </td>
                                     <td class="px-6 py-3 whitespace-no-wrap text-right text-sm leading-5 font-medium">
                                         <div class="flex items-center">
-                                            <span x-data="{ on: @entangle($method->is_enabled) }"
+                                            <span x-data="{ on: @js($method->is_enabled) }"
                                                   role="checkbox"
                                                   tabindex="0"
                                                   wire:click="toggleStatus({{ $method->id }}, {{ $method->is_enabled ? 1 : 0 }})"
@@ -154,7 +156,17 @@
 
                                             <x-slot name="content">
                                                 <div class="py-1">
-                                                    <button wire:click="$emit('openModal', 'shopper-modals.update-payment-method', {{ json_encode([$method->id]) }})" wire:key="{{ $method->id }}" type="button" class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white" role="menuitem">
+                                                    <button
+                                                        wire:click="$dispatch(
+                                                            'openModal',
+                                                            {
+                                                                component: 'shopper-modals.payment-method-form',
+                                                                arguments: { paymentId: {{ $method->id }} }
+                                                            }
+                                                        )"
+                                                        type="button"
+                                                        class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
+                                                    >
                                                         <x-untitledui-edit-03
                                                             class="mr-2 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                                             aria-hidden="true"
@@ -165,6 +177,7 @@
                                                 <div class="border-t border-gray-100 dark:border-gray-600"></div>
                                                 <div class="py-1">
                                                     <button wire:click="removePayment({{ $method->id }})"
+                                                            wire:confirm="Are you sure you want to delete this payment provider?"
                                                             type="button"
                                                             class="group flex w-full items-center px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
                                                             role="menuitem"

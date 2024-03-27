@@ -54,6 +54,10 @@
     @livewire(\Filament\Notifications\Livewire\Notifications::class)
     @livewire(\Shopper\Livewire\Components\SidePanel::class)
 
+    <div class="ui-modal">
+        @livewire(\LivewireUI\Modal\Modal::class)
+    </div>
+
     @filamentScripts
 
     @include('shopper::includes._additional-scripts')

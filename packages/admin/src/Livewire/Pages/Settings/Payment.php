@@ -7,6 +7,7 @@ namespace Shopper\Livewire\Pages\Settings;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Core\Models\PaymentMethod;
@@ -18,18 +19,16 @@ class Payment extends Component
 
     public string $search = '';
 
-    protected $listeners = ['onPaymentMethodAdded' => 'render'];
-
     public function toggleStatus(int $id, int $status): void
     {
         PaymentMethod::query()
             ->find($id)
             ->update(['is_enabled' => ! ($status === 1)]);
 
-        $this->dispatchBrowserEvent('toggle-saved-' . $id);
+        $this->dispatch('onPaymentMethodAdded');
 
         Notification::make()
-            ->body(__('shopper::notifications.payment.update'))
+            ->title(__('shopper::notifications.payment.update'))
             ->success()
             ->send();
     }
@@ -38,14 +37,20 @@ class Payment extends Component
     {
         PaymentMethod::query()->find($id)->delete();
 
-        $this->dispatchBrowserEvent('item-update');
+        $this->dispatch('onPaymentMethodAdded');
 
         Notification::make()
-            ->body(__('shopper::notifications.actions.remove', ['item' => __('shopper::words.payment_method')]))
+            ->title(__('shopper::notifications.actions.remove', ['item' => __('shopper::words.payment_method')]))
             ->success()
             ->send();
     }
 
+    public function launchPaymentModal(int $id): void
+    {
+
+    }
+
+    #[On('onPaymentMethodAdded')]
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.payment', [

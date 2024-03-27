@@ -52,7 +52,7 @@ return [
     ],
 
     'payment' => [
-        'add' => 'Votre méthode de paiement a été correctement ajoutée',
+        'add' => 'Le moyen de paiement a été correctement enregistrée',
         'update' => 'Votre mode de paiement a été correctement mis à jour',
     ],
 

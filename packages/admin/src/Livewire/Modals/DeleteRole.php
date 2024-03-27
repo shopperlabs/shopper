@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Modals;
 
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\Role;
@@ -21,14 +22,17 @@ class DeleteRole extends ModalComponent
     {
         Role::query()->find($this->roleId)->delete();
 
-        session()->flash('success', __('shopper::notifications.users_roles.role_deleted'));
+        Notification::make()
+            ->title(__('shopper::notifications.users_roles.role_deleted'))
+            ->success()
+            ->send();
 
-        $this->redirectRoute('shopper.settings.users');
+        $this->redirectRoute(name: 'shopper.settings.users', navigate: true);
     }
 
     public static function modalMaxWidth(): string
     {
-        return 'lg';
+        return 'xl';
     }
 
     public function render(): View

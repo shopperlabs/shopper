@@ -16,7 +16,14 @@
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white">
                     {{ __('shopper::pages/settings.roles_permissions.role_available') }}
                 </h2>
-                <button wire:click="$emit('openModal', 'shopper-modals.create-role')" type="button" class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-sm leading-4 font-medium rounded-lg text-primary-700 bg-primary-100 hover:bg-primary-50 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary active:bg-primary-200 transition ease-in-out duration-150">
+                <button
+                    wire:click="$dispatch(
+                        'openModal',
+                        { component: 'shopper-modals.create-role' }
+                    )"
+                    type="button"
+                    class="ml-3 inline-flex items-center px-2.5 py-1.5 border border-transparent text-sm leading-4 font-medium rounded-lg text-primary-700 bg-primary-100 hover:bg-primary-50 focus:outline-none focus:border-primary-300 focus:shadow-outline-primary active:bg-primary-200 transition ease-in-out duration-150"
+                >
                     <x-untitledui-plus class="mr-2 w-5 h-5" aria-hidden="true" />
                     {{ __('shopper::pages/settings.roles_permissions.new_role') }}
                 </button>

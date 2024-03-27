@@ -27,7 +27,7 @@ class CreateRole extends ModalComponent
             'description' => $this->description,
         ]);
 
-        $this->emit('onRoleAdded');
+        $this->dispatch('teamUpdate');
 
         Notification::make()
             ->body(__('shopper::notifications.users_roles.role_added'))

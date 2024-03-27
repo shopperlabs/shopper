@@ -44,21 +44,21 @@ class CreatePermission extends ModalComponent
 
         Role::findById($this->roleId)->givePermissionTo($permission->name); // @phpstan-ignore-line
 
-        $this->dispatchBrowserEvent('permission-added');
+        $this->dispatch('permission-added');
 
         Notification::make()
             ->body(__('shopper::notifications.users_roles.permission_add'))
             ->success()
             ->send();
 
-        $this->emit('permissionAdded', $this->roleId);
+        $this->dispatch('permissionAdded');
 
         $this->closeModal();
     }
 
     public static function modalMaxWidth(): string
     {
-        return 'lg';
+        return 'xl';
     }
 
     public function render(): View

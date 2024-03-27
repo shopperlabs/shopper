@@ -25,7 +25,7 @@
             </x-shopper::buttons.danger>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
+            <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button">
                 {{ __('shopper::layout.forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>

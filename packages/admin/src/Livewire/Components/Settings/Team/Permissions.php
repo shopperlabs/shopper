@@ -6,6 +6,7 @@ namespace Shopper\Livewire\Components\Settings\Team;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Permission;
 use Shopper\Core\Models\Role;
@@ -13,11 +14,6 @@ use Shopper\Core\Models\Role;
 class Permissions extends Component
 {
     public Role $role;
-
-    public function permissionAdded(int $id): void
-    {
-        $this->role = Role::find($id);
-    }
 
     public function togglePermission(int $id): void
     {
@@ -51,6 +47,7 @@ class Permissions extends Component
             ->send();
     }
 
+    #[On('permissionAdded')]
     public function render(): View
     {
         return view('shopper::livewire.components.settings.team.permissions', [

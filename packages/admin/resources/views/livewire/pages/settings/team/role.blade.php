@@ -26,12 +26,30 @@
             <x-slot name="action">
                 <div class="flex space-x-3">
                     @if($role->can_be_removed)
-                        <x-shopper::buttons.danger wire:click="$emit('openModal', 'shopper-modals.delete-role', {{ json_encode(['id' => $role->id]) }})" type="button">
+                        <x-shopper::buttons.danger
+                            wire:click="$dispatch(
+                                'openModal',
+                                {
+                                    component: 'shopper-modals.delete-role',
+                                    arguments: { id: {{ $role->id }} }
+                                }
+                            )"
+                            type="button"
+                        >
                             <x-untitledui-trash-03 class="mr-2 w-5 h-5" aria-hidden="true" />
                             {{ __('shopper::layout.forms.actions.delete') }}
                         </x-shopper::buttons.danger>
                     @endif
-                    <x-shopper::buttons.primary wire:click="$emit('openModal', 'shopper-modals.create-permission', {{ json_encode(['id' => $role->id]) }})" type="button">
+                    <x-shopper::buttons.primary
+                        wire:click="$dispatch(
+                            'openModal',
+                            {
+                                component: 'shopper-modals.create-permission',
+                                arguments: { 'id': {{  $role->id }} }
+                             }
+                        )"
+                        type="button"
+                    >
                         <x-untitledui-lock-04 class="mr-2 w-5 h-5" aria-hidden="true" />
                         {{ __('shopper::pages/settings.roles_permissions.create_permission') }}
                     </x-shopper::buttons.primary>

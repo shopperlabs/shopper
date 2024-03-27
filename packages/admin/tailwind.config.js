@@ -10,14 +10,15 @@ module.exports = {
   presets: [preset],
   safelist: [
     {
-      pattern: /max-w-(xl|2xl|3xl|4xl)/,
-      variants: ['sm', 'md', 'lg', 'xl'],
+      pattern: /max-w-(xl|2xl|3xl|4xl|5xl|6xl|7xl)/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
   ],
   content: [
     './resources/views/**/*.blade.php',
     './src/**/*.php',
     './vendor/filament/**/*.blade.php',
+    './vendor/wire-elements/modal/resources/views/*.blade.php',
   ],
   theme: {
     extend: {

@@ -34,14 +34,13 @@ return [
     */
 
     'components' => [
-        'modals.create-payment-method' => Livewire\Modals\CreatePaymentMethod::class,
         'modals.create-permission' => Livewire\Modals\CreatePermission::class,
         'modals.create-role' => Livewire\Modals\CreateRole::class,
         'modals.confirm-password' => Livewire\Modals\ConfirmPassword::class,
         'modals.delete-inventory' => Livewire\Modals\DeleteInventory::class,
         'modals.delete-role' => Livewire\Modals\DeleteRole::class,
         'modals.logout-others-browser' => Livewire\Modals\LogoutOthersBrowser::class,
-        'modals.update-payment-method' => Livewire\Modals\UpdatePaymentMethod::class,
+        'modals.payment-method-form' => Livewire\Modals\PaymentMethodForm::class,
 
         'settings.inventories.form' => Components\Settings\Inventories\InventoryForm::class,
         'settings.legal.privacy' => Components\Settings\Legal\Privacy::class,

@@ -12,6 +12,10 @@ input[type='number'] {
   margin: 0;
 }
 
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 .hide-scroll::-webkit-scrollbar {
   display: none;
 }
@@ -29,13 +33,13 @@ input[type='number'] {
 }
 
 .scrolling::-webkit-scrollbar {
-  width: 0.5em;
-  height: 0.5em;
+  width: 4px;
+  height: 4px;
 }
 
 .scrolling::-webkit-scrollbar-thumb {
   background-color: theme('colors.gray.200');
-  border-radius: 2px;
+  border-radius: 8px;
 }
 
 .scrolling::-webkit-scrollbar-thumb:hover {
@@ -48,4 +52,8 @@ input[type='number'] {
 
 .dark .scrolling::-webkit-scrollbar-thumb:hover {
   background-color: theme('colors.gray.900');
+}
+
+.ui-modal > div > div.fixed {
+  @apply z-50 backdrop-blur-sm transition-opacity;
 }
