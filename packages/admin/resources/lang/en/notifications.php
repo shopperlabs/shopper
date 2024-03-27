@@ -52,7 +52,7 @@ return [
     ],
 
     'payment' => [
-        'add' => 'Your payment method have been correctly added!',
+        'add' => 'The payment method have been correctly save!',
         'update' => 'Your payment method have been correctly updated',
     ],
 

@@ -14,14 +14,14 @@
     }
   ],
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "mckenziearts/blade-untitledui-icons": "^1.2",
-    "illuminate/cache": "^9.0|^10.0",
-    "illuminate/container": "^9.0|^10.0",
-    "illuminate/contracts": "^9.0|^10.0",
-    "illuminate/support": "^9.0|^10.0",
-    "illuminate/routing": "^9.0|^10.0",
-    "illuminate/view": "^9.0|^10.0",
+    "illuminate/cache": "^10.0|^11.0",
+    "illuminate/container": "^10.0|^11.0",
+    "illuminate/contracts": "^10.0|^11.0",
+    "illuminate/support": "^10.0|^11.0",
+    "illuminate/routing": "^10.0|^11.0",
+    "illuminate/view": "^10.0|^11.0",
     "spatie/laravel-package-tools": "^1.15"
   },
   "autoload": {

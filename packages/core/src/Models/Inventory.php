@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Observers\InventoryObserver;
 
 /**
  * @property-read int $id
  * @property int $country_id
  * @property string $name
+ * @property string $code
  * @property string $email
  * @property string $city
  * @property string|null $description
@@ -23,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $phone_number
  * @property bool $is_default
  */
+#[ObservedBy(InventoryObserver::class)]
 class Inventory extends Model
 {
     use HasFactory;
@@ -32,23 +36,6 @@ class Inventory extends Model
     protected $casts = [
         'is_default' => 'boolean',
     ];
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::creating(function ($inventory): void {
-            if ($inventory->is_default) {
-                Inventory::query()->update(['is_default' => false]);
-            }
-        });
-
-        self::updating(function ($inventory): void {
-            if ($inventory->is_default) {
-                Inventory::query()->update(['is_default' => false]);
-            }
-        });
-    }
 
     public function getTable(): string
     {

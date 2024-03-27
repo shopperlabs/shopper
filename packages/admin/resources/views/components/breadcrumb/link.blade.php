@@ -1,5 +1,5 @@
 @props(['link', 'title'])
 
-<a href="{{ $link }}" {{ $attributes->merge(['class' => 'inline-flex items-center py-1.5 px-2 text-secondary-500 rounded-md hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-200 hover:bg-secondary-50 dark:hover:bg-secondary-800']) }}>
+<a href="{{ $link }}" {{ $attributes->twMerge(['class' => 'inline-flex items-center py-1.5 px-2 text-gray-500 rounded-md hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800']) }} wire:navigate>
     {{ $title }}
 </a>

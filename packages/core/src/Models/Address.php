@@ -46,10 +46,6 @@ class Address extends Model
         'is_default' => 'boolean',
     ];
 
-    protected $with = [
-        'country',
-    ];
-
     protected static function boot(): void
     {
         parent::boot();

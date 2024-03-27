@@ -1,24 +1,31 @@
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
 import colors from 'tailwindcss/colors'
 import defaultTheme from 'tailwindcss/defaultTheme'
+import preset from './vendor/filament/support/tailwind.config.preset'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
+  presets: [preset],
   safelist: [
     {
-      pattern: /max-w-(xl|2xl|3xl|4xl)/,
-      variants: ['sm', 'md', 'lg', 'xl'],
+      pattern: /max-w-(xl|2xl|3xl|4xl|5xl|6xl|7xl)/,
+      variants: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
   ],
   content: [
-    './packages/admin/resources/views/**/*.blade.php',
-    './packages/admin/src/**/*.php',
+    './resources/views/**/*.blade.php',
+    './src/**/*.php',
+    './vendor/filament/**/*.blade.php',
+    './vendor/wire-elements/modal/resources/views/*.blade.php',
   ],
   theme: {
     extend: {
       colors: {
         primary: colors.blue,
-        secondary: colors.slate,
+        custom: colors.blue,
+        secondary: colors.gray,
         success: colors.emerald,
         warning: colors.amber,
         danger: colors.red,
@@ -47,7 +54,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-        display: ['Inter', ...defaultTheme.fontFamily.mono],
+        heading: ['Figtree', ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
         xxs: ['0.625rem', { lineHeight: '1rem' }],
@@ -55,10 +62,7 @@ module.exports = {
       minHeight: {
         '(screen-content)': 'calc(100vh - 9.625rem)',
       },
-      maxWidth: {
-        '8xl': '88rem',
-      },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+  plugins: [forms, typography],
 }

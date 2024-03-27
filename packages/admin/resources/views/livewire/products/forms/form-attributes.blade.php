@@ -5,14 +5,14 @@
                 <aside class="sticky top-36">
                     <div class="space-y-5 flex flex-col">
                         @foreach($attributes as $attribute)
-                            <a href="{{ route('shopper.attributes.edit', $attribute) }}" id="attribute-{{ $attribute->id }}" class="inline-flex items-center text-sm leading-5 text-secondary-600 hover:text-secondary-900 dark:text-secondary-400 dark:hover:text-white transition duration-200 ease-in-out">
+                            <a href="{{ route('shopper.attributes.edit', $attribute) }}" id="attribute-{{ $attribute->id }}" class="inline-flex items-center text-sm leading-5 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition duration-200 ease-in-out">
                                 @if($attribute->icon)
                                     <x-dynamic-component
                                         :component="$attribute->icon"
-                                        class="h-5 w-5 text-secondary-400 dark:text-secondary-500 mr-2"
+                                        class="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2"
                                     />
                                 @else
-                                    <x-untitledui-octagon class="h-5 w-5 text-secondary-400 dark:text-secondary-500 mr-2" />
+                                    <x-untitledui-octagon class="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2" />
                                 @endif
                                 {{ $attribute->name }}
                                 @if(! $attribute->is_enabled)
@@ -35,16 +35,16 @@
                             @if($attribute->icon)
                                 <x-dynamic-component
                                     :component="$attribute->icon"
-                                    class="h-6 w-6 text-secondary-500 dark:text-secondary-400"
+                                    class="h-6 w-6 text-gray-500 dark:text-gray-400"
                                     stroke-width="1.5"
                                 />
                             @else
                                 <x-untitledui-octagon
-                                    class="h-6 w-6 text-secondary-500 dark:text-secondary-400"
+                                    class="h-6 w-6 text-gray-500 dark:text-gray-400"
                                     stroke-width="1.5"
                                 />
                             @endif
-                            <span class="text-secondary-900 dark:text-white font-display font-medium text-base leading-6">
+                            <span class="text-gray-900 dark:text-white font-heading font-medium text-base leading-6">
                                 {{ $attribute->name }}
                             </span>
                             @if($currentAttributes->contains($attribute->id))
@@ -55,9 +55,9 @@
                             @endif
                         </h4>
 
-                        <x-shopper::card class="mt-2 space-y-2 divide-y divide-secondary-200 dark:divide-secondary-700">
+                        <x-shopper::card class="mt-2 space-y-2 divide-y divide-gray-200 dark:divide-gray-700">
                             @if($attribute->description)
-                                <div class="p-4 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                <div class="p-4 text-sm leading-5 text-gray-500 dark:text-gray-400">
                                     {{ $attribute->description }}
                                 </div>
                             @endif
@@ -97,10 +97,10 @@
     @else
         <div class="flex flex-col justify-center items-center py-5">
             <x-untitledui-file-05 class="h-10 w-10 text-primary-500" stroke-width="1.5" />
-            <h3 class="mt-2 text-lg font-medium font-display text-secondary-700 dark:text-secondary-300">
+            <h3 class="mt-2 text-lg font-medium font-heading text-gray-700 dark:text-gray-300">
                 {{ __('shopper::pages/products.attributes.empty_title') }}
             </h3>
-            <span class="text-secondary-500 dark:text-secondary-400 text-base leading-5">
+            <span class="text-gray-500 dark:text-gray-400 text-base leading-5">
                 {{ __('shopper::pages/products.attributes.empty_values') }}
             </span>
             <x-shopper::buttons.primary :link="route('shopper.attributes.create')" class="mt-4">

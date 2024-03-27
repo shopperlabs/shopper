@@ -1,7 +1,7 @@
 <x-shopper::card class="overflow-hidden">
-    <div class="bg-secondary-50 dark:bg-secondary-900 p-4 sm:py-5 sm:px-6">
+    <div class="bg-gray-50 dark:bg-gray-900 p-4 sm:py-5 sm:px-6">
         <div class="sm:flex sm:items-center sm:justify-between">
-            <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white font-display">
+            <h3 class="text-base text-gray-900 leading-6 font-medium dark:text-white font-heading">
                 {{ __('shopper::layout.sidebar.products') }}
             </h3>
             <div class="mt-4 sm:mt-0 flex items-center space-x-3">
@@ -15,7 +15,7 @@
                 <div class="relative">
                     <x-shopper::label for="sort" class="sr-only" :value="__('Sort products by')" />
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <span class="text-sm text-secondary-500 leading-5 dark:text-secondary-400">
+                        <span class="text-sm text-gray-500 leading-5 dark:text-gray-400">
                             {{ __('shopper::layout.forms.label.sort_by') }}
                         </span>
                     </div>
@@ -31,20 +31,20 @@
             </div>
         </div>
     </div>
-    <div class="border-t border-secondary-200 p-4 sm:px-6 sm:py-5 dark:border-secondary-700" wire:poll.visible>
+    <div class="border-t border-gray-200 p-4 sm:px-6 sm:py-5 dark:border-gray-700" wire:poll.visible>
         @if($products->isNotEmpty())
-            <div class="divide-y divide-secondary-200 dark:divide-secondary-700">
+            <div class="divide-y divide-gray-200 dark:divide-gray-700">
                 @foreach($products as $product)
                     <div class="flex items-center justify-between py-2">
                         <div class="flex items-center">
                             <span class="shrink-0 h-10 w-10 rounded-md overflow-hidden">
                                 <img class="object-cover object-center w-full h-full block" src="{{ $product->getFirstMediaUrl(config('shopper.core.storage.collection_name')) }}" alt="{{ $product->name }}" />
                             </span>
-                            <p class="ml-4 text-sm font-medium text-secondary-500 dark:text-secondary-400">
+                            <p class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">
                                 {{ $product->name }}
                             </p>
                         </div>
-                        <button wire:key="product_{{ $loop->index }}" wire:click="removeProduct({{ $product->id }})" type="button" class="text-secondary-500 text-sm font-medium inline-flex items-center dark:text-secondary-400">
+                        <button wire:key="product_{{ $loop->index }}" wire:click="removeProduct({{ $product->id }})" type="button" class="text-gray-500 text-sm font-medium inline-flex items-center dark:text-gray-400">
                             <x-untitledui-x class="h-5 w-5"/>
                         </button>
                     </div>
@@ -53,9 +53,9 @@
         @else
             <div class="py-5 w-full max-w-xs mx-auto flex flex-col items-center justify-center">
                 <span class="shrink-0 w-10 h-10">
-                    <x-untitledui-book-open class="w-full h-full text-secondary-500" stroke-width="1.5" />
+                    <x-untitledui-book-open class="w-full h-full text-gray-500" stroke-width="1.5" />
                 </span>
-                <p class="mt-2.5 text-sm text-secondary-500 leading-5 text-center dark:text-secondary-400">
+                <p class="mt-2.5 text-sm text-gray-500 leading-5 text-center dark:text-gray-400">
                     {{ __('shopper::pages/collections.empty_collections') }}
                 </p>
                 @if($collection->isAutomatic())

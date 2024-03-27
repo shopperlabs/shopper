@@ -10,5 +10,5 @@ interface HasForm
 {
     public function rules(): array;
 
-    public function save(Model|string $model): mixed;
+    public function save(Model | string $model): mixed;
 }

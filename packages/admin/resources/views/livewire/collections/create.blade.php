@@ -1,6 +1,6 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.collections.index')">
-        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+        <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link :link="route('shopper.collections.index')" :title="__('shopper::layout.sidebar.collections')" />
     </x-shopper::breadcrumb>
 
@@ -24,7 +24,7 @@
             </x-shopper::card>
 
             <x-shopper::card class="overflow-hidden pt-4 sm:pt-5">
-                <h3 class="text-base text-secondary-900 leading-6 px-4 sm:px-5 font-medium dark:text-white">
+                <h3 class="text-base text-gray-900 leading-6 px-4 sm:px-5 font-medium dark:text-white">
                     {{ __('shopper::pages/collections.filter_type') }}
                 </h3>
                 <div
@@ -42,31 +42,31 @@
                     }"
                     class="p-4 sm:p-5"
                 >
-                    <div class="bg-white rounded-md grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-secondary-800" x-ref="radiogroup">
+                    <div class="bg-white rounded-md grid gap-4 sm:grid-cols-2 sm:gap-6 dark:bg-gray-800" x-ref="radiogroup">
 
-                        <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 0), 'bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10">
+                        <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 0), 'bg-primary-50 border-primary-200 dark:bg-gray-700 dark:border-gray-700 z-10': active === 0 }" class="relative border rounded-md p-4 flex bg-primary-50 border-primary-200 dark:bg-gray-700 dark:border-gray-700 z-10">
                             <div class="flex items-center h-5">
                                 <x-shopper::forms.radio wire:model.debounce.500ms="type" id="collection-type-0" name="type" value="manual" @click="select(0)" @keydown.space="select(0)" @keydown.arrow-up="onArrowUp(0)" @keydown.arrow-down="onArrowDown(0)"/>
                             </div>
                             <label for="collection-type-0" class="ml-3 flex flex-col cursor-pointer">
-                                <span :class="{ 'text-primary-900 dark:text-white': active === 0, 'text-secondary-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-primary-900 dark:text-white">
+                                <span :class="{ 'text-primary-900 dark:text-white': active === 0, 'text-gray-900 dark:text-white': !(active === 0) }" class="block text-sm leading-5 font-medium text-primary-900 dark:text-white">
                                     {{ __('shopper::pages/collections.manual') }}
                                 </span>
-                                <span :class="{ 'text-primary-700': active === 0, 'text-secondary-500 dark:text-secondary-400': !(active === 0) }" class="mt-0.5 block text-xs leading-4 text-primary-700">
+                                <span :class="{ 'text-primary-700': active === 0, 'text-gray-500 dark:text-gray-400': !(active === 0) }" class="mt-0.5 block text-xs leading-4 text-primary-700">
                                     {{ __('shopper::pages/collections.manual_description') }}
                                 </span>
                             </label>
                         </div>
 
-                        <div :class="{ 'border-secondary-200 dark:border-secondary-700': !(active === 1), 'bg-primary-50 border-primary-200 dark:bg-secondary-700 dark:border-secondary-700 z-10': active === 1 }" class="relative border rounded-md border-secondary-200 p-4 flex">
+                        <div :class="{ 'border-gray-200 dark:border-gray-700': !(active === 1), 'bg-primary-50 border-primary-200 dark:bg-gray-700 dark:border-gray-700 z-10': active === 1 }" class="relative border rounded-md border-gray-200 p-4 flex">
                             <div class="flex items-center h-5">
                                 <x-shopper::forms.radio wire:model.debounce.500ms="type" id="collection-type-1" name="type" value="auto" @click="select(1)" @keydown.space="select(1)" @keydown.arrow-up="onArrowUp(1)" @keydown.arrow-down="onArrowDown(1)"/>
                             </div>
                             <label for="collection-type-1" class="ml-3 flex flex-col cursor-pointer">
-                                <span :class="{ 'text-primary-900 dark:text-white': active === 1, 'text-secondary-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-secondary-900">
+                                <span :class="{ 'text-primary-900 dark:text-white': active === 1, 'text-gray-900 dark:text-white': !(active === 1) }" class="block text-sm leading-5 font-medium text-gray-900">
                                     {{ __('shopper::pages/collections.automatic') }}
                                 </span>
-                                <span :class="{ 'text-primary-700': active === 1, 'text-secondary-500 dark:text-secondary-400': !(active === 1) }" class="mt-0.5 block text-xs leading-4 text-secondary-500">
+                                <span :class="{ 'text-primary-700': active === 1, 'text-gray-500 dark:text-gray-400': !(active === 1) }" class="mt-0.5 block text-xs leading-4 text-gray-500">
                                     {{ __('shopper::pages/collections.automatic_description') }}
                                 </span>
                             </label>
@@ -75,18 +75,18 @@
                     </div>
                 </div>
                 @if($type === 'auto')
-                    <div class="border-t border-secondary-200 p-4 sm:p-5 space-y-5 dark:border-secondary-700">
-                        <h3 class="text-base text-secondary-900 leading-6 font-medium dark:text-white">
+                    <div class="border-t border-gray-200 p-4 sm:p-5 space-y-5 dark:border-gray-700">
+                        <h3 class="text-base text-gray-900 leading-6 font-medium dark:text-white">
                             {{ __('shopper::pages/collections.conditions.title') }}
                         </h3>
                         <div class="flex items-center space-x-6">
-                            <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                            <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/collections.conditions.products_match') }}
                             </p>
                             <div class="flex items-center">
                                 <x-shopper::forms.radio wire:model.lazy="condition_match" id="all" value="all" />
                                 <label for="all" class="ml-3 cursor-pointer">
-                                    <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">
+                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
                                         {{ __('shopper::pages/collections.conditions.all') }}
                                     </span>
                                 </label>
@@ -94,7 +94,7 @@
                             <div class="flex items-center">
                                 <x-shopper::forms.radio wire:model.lazy="condition_match" id="any" value="any" />
                                 <label for="any" class="ml-3 cursor-pointer">
-                                    <span class="block text-sm leading-5 font-medium text-secondary-700 dark:text-secondary-300">
+                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
                                         {{ __('shopper::pages/collections.conditions.any') }}
                                     </span>
                                 </label>
@@ -172,24 +172,24 @@
                         parse-format="YYYY-MM-DD HH:mm"
                         display-format="{{ config('shopper.admin.date_time_format') }}"
                         time-format="24"
-                        class="dark:bg-secondary-700"
+                        class="dark:bg-gray-700"
                     />
                     @if($publishedAt)
                         <div class="mt-2 flex items-start">
                             <div class="mt-1 shrink-0 w-2.5 h-2.5 rounded-full bg-primary-600"></div>
-                            <p class="ml-2.5 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
+                            <p class="ml-2.5 text-sm text-gray-500 leading-5 dark:text-gray-400">
                                 {{ __('shopper::words.published_on') }} <br>
                                 {{ $publishedAtFormatted }}
                             </p>
                         </div>
                     @else
-                        <p class="mt-2 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                        <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
                             {{ __('shopper::pages/collections.availability_description') }}
                         </p>
                     @endif
                 </x-shopper::card>
                 <x-shopper::card class="overflow-hidden p-4 sm:p-5">
-                    <h4 class="block text-sm font-medium leading-5 text-secondary-700 dark:text-secondary-300">
+                    <h4 class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">
                         {{ __('shopper::layout.forms.label.image_preview') }}
                     </h4>
                     <div class="mt-1">
@@ -200,7 +200,7 @@
         </div>
     </div>
 
-    <div class="mt-6 border-t border-secondary-200 pt-5 pb-10 dark:border-secondary-700">
+    <div class="mt-6 border-t border-gray-200 pt-5 pb-10 dark:border-gray-700">
         <div class="flex justify-end">
             <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />

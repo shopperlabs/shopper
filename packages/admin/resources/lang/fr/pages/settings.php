@@ -11,12 +11,12 @@ return [
     'mapbox_disabled' => 'Mapbox n\'a pas été activée.',
 
     'initialization' => [
-        'title' => 'Initialisation de la boutique',
-        'step_one_title' => 'Information de la boutique',
+        'title' => 'Configuration de la boutique',
+        'step_one_title' => 'Information',
         'step_one_description' => 'Fournissez des informations utiles pour votre magasin.',
-        'step_two_title' => 'Informations sur l\'adresse',
+        'step_two_title' => 'Adresse',
         'step_two_description' => 'Indiquez l\'adresse du magasin.',
-        'step_tree_title' => 'Liens sociaux (optionnel)',
+        'step_tree_title' => 'Liens sociaux',
         'step_tree_description' => 'Liens vers vos comptes de médias sociaux.',
 
         'step' => 'Étape :step sur 3',
@@ -67,13 +67,13 @@ return [
     ],
 
     'validations' => [
-        'shop_name' => 'Le nom du magasin est obligatoire',
         'country' => 'Le pays est requis',
+        'shop_name' => 'Le nom du magasin est obligatoire',
+        'shop_email' => "L'e-mail du magasin est requis",
     ],
 
     'notifications' => [
-        'create_inventory' => 'Vous avez créé avec succès un nouvel inventaire !',
-        'update_inventory' => 'Vous avez mis à jour avec succès l\'inventaire !',
+        'inventory' => 'Inventaire enregistré avec succès!',
     ],
 
     'roles_permissions' => [
@@ -102,6 +102,7 @@ return [
         'with_role_name' => 'avec le rôle :name',
         'permissions_in_role' => 'pour le rôle :name',
         'custom_permission' => 'Permission personnalisée',
+        'delete_team_member' => 'Êtes-vous sûr de vouloir supprimer ce membre ?',
     ],
 
     'location' => [

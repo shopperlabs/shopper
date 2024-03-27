@@ -43,17 +43,17 @@
                     </x-shopper::forms.select>
                 </x-shopper::forms.group>
             </div>
-            <div class="mt-5 py-4 border-t border-b border-secondary-200 dark:border-secondary-700">
+            <div class="mt-5 py-4 border-t border-b border-gray-200 dark:border-gray-700">
                 <div class="relative flex items-start">
                     <div class="flex items-center h-5">
-                        <span wire:model="is_enabled" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-secondary-200 dark:bg-secondary-700': !on, 'bg-primary-600': on }" class="bg-secondary-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
+                        <span wire:model="is_enabled" role="checkbox" tabindex="0" x-on:click="$dispatch('input', !on); on = !on" @keydown.space.prevent="on = !on" :aria-checked="on.toString()" aria-checked="false" x-bind:class="{ 'bg-gray-200 dark:bg-gray-700': !on, 'bg-primary-600': on }" class="bg-gray-200 relative inline-flex shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-outline-brand">
                             <input type="hidden" x-ref="input" aria-label="Visible" x-model="on" />
                             <span aria-hidden="true" x-bind:class="{ 'translate-x-5': on, 'translate-x-0': !on }" class="translate-x-0 inline-block h-5 w-5 rounded-full bg-white shadow transform transition ease-in-out duration-200"></span>
                         </span>
                     </div>
                     <div class="ml-3 text-sm leading-5">
                         <x-shopper::label for="online" :value="__('shopper::layout.forms.label.visibility')" />
-                        <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
                             {{ __('shopper::words.set_visibility', ['name' => strtolower(__('shopper::words.category'))]) }}
                         </p>
                     </div>

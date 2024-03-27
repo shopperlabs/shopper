@@ -5,11 +5,11 @@
                 <x-untitledui-alert-triangle class="h-6 w-6 text-danger-600" />
             </div>
             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <h3 class="text-lg leading-6 font-medium text-secondary-900 dark:text-white" id="modal-headline">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white" id="modal-headline">
                     {{ __('shopper::pages/discounts.modals.remove.title') }}
                 </h3>
                 <div class="mt-2">
-                    <p class="text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                    <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/discounts.modals.remove.description') }}
                     </p>
                 </div>

@@ -20,6 +20,6 @@
             </span>
         </div>
     </div>
-    <p class="mt-1 text-sm text-secondary-900 font-medium leading-5 dark:text-white">{{ $row->title }}</p>
-    <p class="text-sm text-secondary-500 leading-5 dark:text-secondary-400 truncate">{{ str_limit($row->content, 40) }}</p>
+    <p class="mt-1 text-sm text-gray-900 font-medium leading-5 dark:text-white">{{ $row->title }}</p>
+    <p class="text-sm text-gray-500 leading-5 dark:text-gray-400 truncate">{{ str_limit($row->content, 40) }}</p>
 </div>

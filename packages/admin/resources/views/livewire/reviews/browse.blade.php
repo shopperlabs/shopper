@@ -360,10 +360,10 @@
                 </svg>
             </div>
             <div class="mt-5 w-full sm:max-w-md space-y-3 text-center">
-                <h3 class="text-base leading-6 text-secondary-900 dark:text-white font-medium font-display lg:text-lg">
+                <h3 class="text-base leading-6 text-gray-900 dark:text-white font-medium font-heading lg:text-lg">
                     {{ __('shopper::pages/products.reviews.title') }}
                 </h3>
-                <p class="text-sm text-secondary-500 dark:text-secondary-400">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/products.reviews.description') }}
                 </p>
             </div>

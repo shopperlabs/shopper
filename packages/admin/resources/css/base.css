@@ -12,6 +12,10 @@ input[type='number'] {
   margin: 0;
 }
 
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 .hide-scroll::-webkit-scrollbar {
   display: none;
 }
@@ -28,40 +32,28 @@ input[type='number'] {
   background-color: theme('colors.primary.900');
 }
 
-.iti {
-  display: block;
-}
-
-.iti__selected-flag {
-  padding: 0 10px;
-}
-
 .scrolling::-webkit-scrollbar {
-  width: 0.5em;
-  height: 0.5em;
-}
-
-.dark .scrolling::-webkit-scrollbar-track {
-  background: theme('colors.secondary.800');
+  width: 4px;
+  height: 4px;
 }
 
 .scrolling::-webkit-scrollbar-thumb {
-  background-color: theme('colors.secondary.200');
-  border-radius: 2px;
+  background-color: theme('colors.gray.200');
+  border-radius: 8px;
 }
 
 .scrolling::-webkit-scrollbar-thumb:hover {
-  background-color: theme('colors.secondary.300');
+  background-color: theme('colors.gray.300');
 }
 
 .dark .scrolling::-webkit-scrollbar-thumb {
-  background-color: theme('colors.secondary.700');
+  background-color: theme('colors.gray.700');
 }
 
 .dark .scrolling::-webkit-scrollbar-thumb:hover {
-  background-color: theme('colors.secondary.900');
+  background-color: theme('colors.gray.900');
 }
 
-#ui-modal > div > div.fixed {
-  @apply z-40 backdrop-blur-sm;
+.ui-modal > div > div.fixed {
+  @apply z-50 backdrop-blur-sm transition-opacity;
 }

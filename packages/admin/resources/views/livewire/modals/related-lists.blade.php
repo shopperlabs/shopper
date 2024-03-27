@@ -1,5 +1,5 @@
 <x-shopper::modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -14,14 +14,14 @@
                 :placeholder="__('shopper::pages/products.related.modal.search_placeholder')"
             />
         </div>
-        <div class="my-2 -mx-2 divide-y divide-secondary-200 h-80 overflow-auto dark:divide-secondary-700">
+        <div class="my-2 -mx-2 divide-y divide-gray-200 h-80 overflow-auto dark:divide-gray-700">
             @forelse($this->products as $product)
                 <x-shopper::forms.label-product :product="$product" wire:key="{{ $product->id }}" />
             @empty
                 <div class="p-4 h-full flex items-center justify-center">
                     <div class="text-center">
-                        <x-untitledui-book-open class="mx-auto h-10 w-10 text-secondary-400" stroke-width="1.5" />
-                        <p class="mt-2 text-base font-medium text-secondary-900 dark:text-white">
+                        <x-untitledui-book-open class="mx-auto h-10 w-10 text-gray-400" stroke-width="1.5" />
+                        <p class="mt-2 text-base font-medium text-gray-900 dark:text-white">
                             {{ __('shopper::pages/products.related.modal.no_results') }}
                         </p>
                     </div>

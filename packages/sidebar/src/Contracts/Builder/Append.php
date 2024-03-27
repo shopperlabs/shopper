@@ -28,5 +28,5 @@ interface Append extends Authorizable, Routeable
 
     public function setUrl(string $url): self;
 
-    public function route(array|string $route, array $params = []): self;
+    public function route(array | string $route, array $params = []): self;
 }

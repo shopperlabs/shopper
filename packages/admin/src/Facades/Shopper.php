@@ -8,13 +8,11 @@ use Closure;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Facade;
-use Shopper\Shopper as ShopperPanel;
+use Shopper\ShopperPanel;
 
 /**
  * @method static StatefulGuard auth()
  * @method static string prefix()
- * @method static array getScripts()
- * @method static array getStyles()
  * @method static Htmlable getThemeLink()
  * @method static void registerScripts(array $scripts)
  * @method static void registerStyles(array $styles)

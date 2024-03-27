@@ -75,11 +75,6 @@ class User extends Authenticatable
         });
     }
 
-    public function getTable(): string
-    {
-        return shopper_table('users');
-    }
-
     public function isAdmin(): bool
     {
         return $this->hasRole(config('shopper.core.users.admin_role'));

@@ -1,0 +1,12 @@
+/.idea
+/.vscode
+/node_modules
+/node_modules.nosync
+yarn-error.log
+/vendor
+/composer.lock
+/vendor.nosync
+composer.phar
+phpunit.xml
+build
+

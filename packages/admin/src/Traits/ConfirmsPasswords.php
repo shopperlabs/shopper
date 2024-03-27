@@ -11,7 +11,7 @@ trait ConfirmsPasswords
         $this->resetErrorBag();
 
         if (! $this->passwordIsConfirmed()) {
-            $this->emit('openModal', 'shopper-modals.confirm-password', [
+            $this->dispatch('openModal', 'shopper-modals.confirm-password', [
                 'action' => $action,
             ]);
 
@@ -21,7 +21,7 @@ trait ConfirmsPasswords
         $this->emit($action);
     }
 
-    protected function ensurePasswordIsConfirmed(?int $maximumSecondsSinceConfirmation = null)
+    protected function ensurePasswordIsConfirmed(?int $maximumSecondsSinceConfirmation = null): mixed
     {
         $maximumSecondsSinceConfirmation = $maximumSecondsSinceConfirmation ?? config('auth.password_timeout', 900);
 

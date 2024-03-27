@@ -11,7 +11,6 @@ use Money\Money;
 use Shopper\Core\Models\Currency as ModelCurrency;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Setting;
-use Shopper\Facades\Shopper;
 
 if (! function_exists('generate_number')) {
     function generate_number(): string
@@ -76,7 +75,7 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format(int|string $amount, ?string $currency = null): string
+    function shopper_money_format(int | string $amount, ?string $currency = null): string
     {
         $money = new Money(
             amount: $amount,
@@ -94,19 +93,12 @@ if (! function_exists('shopper_money_format')) {
     }
 }
 
-if (! function_exists('shopper_prefix')) {
-    function shopper_prefix(): string
-    {
-        return Shopper::prefix();
-    }
-}
-
 if (! function_exists('shopper_setting')) {
-    function shopper_setting(string $key): mixed
+    function shopper_setting(string $key, bool $withCatch = true): mixed
     {
         $setting = Cache::remember(
             "shopper-setting-{$key}",
-            3600 * 24,
+            $withCatch ? 3600 * 24 : 1,
             fn () => Setting::query()->where('key', $key)->first()
         );
 

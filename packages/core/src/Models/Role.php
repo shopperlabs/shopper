@@ -13,7 +13,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
  * @property string $display_name
  * @property string|null $description
  */
-final class Role extends SpatieRole
+class Role extends SpatieRole
 {
     public function isAdmin(): bool
     {

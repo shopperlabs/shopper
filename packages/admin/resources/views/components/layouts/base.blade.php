@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="locale" content="{{ str_replace('_', '-', app()->getLocale()) }}">
     <meta name="base-url" content="{{ config('app.url') }}">
-    <meta name="dashboard-url" content="{{ config('app.url') . '/' . shopper_prefix() }}">
+    <meta name="dashboard-url" content="{{ config('app.url') . '/' . shopper()->prefix() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @if ($favicon = config('shopper.admin.favicon'))
@@ -25,14 +25,16 @@
 
     <link rel="dns-prefetch" href="{{ config('app.url') }}"/>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css"/>
 
     @stack('styles')
 
-    <livewire:styles />
+    @filamentStyles
     {{ \Shopper\Facades\Shopper::getThemeLink() }}
 
-    <wireui:scripts />
     <script
         defer
         src="{{
@@ -44,21 +46,20 @@
     ></script>
 
     @include('shopper::includes._additional-styles')
-    @stack('scripts')
 </head>
-<body x-keypress {{ $attributes->merge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
+<body x-keypress {{ $attributes->twMerge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
 
     {{ $slot }}
 
-    <x-shopper::alert />
+    @livewire(\Filament\Notifications\Livewire\Notifications::class)
+    @livewire(\Shopper\Livewire\Components\SidePanel::class)
 
-    <div id="ui-modal">
-        @livewire('livewire-ui-modal')
+    <div class="ui-modal">
+        @livewire(\LivewireUI\Modal\Modal::class)
     </div>
 
-    @livewire('notifications')
+    @filamentScripts
 
-    <livewire:scripts />
     @include('shopper::includes._additional-scripts')
 
 </body>

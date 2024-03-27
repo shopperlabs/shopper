@@ -1,12 +1,12 @@
 <x-shopper::modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-secondary-100 dark:border-secondary-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
     <x-slot name="title">
         <span class="flex flex-col">
             {{ __('shopper::modals.permissions.new') }}
-            <span class="mt-0.5 font-normal text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+            <span class="mt-0.5 font-normal text-sm leading-5 text-gray-500 dark:text-gray-400">
                 {{ __('shopper::modals.permissions.new_description') }}
             </span>
         </span>
@@ -24,21 +24,29 @@
             </x-shopper::forms.group>
             <x-shopper::forms.group
                 for="permission_name"
-                class="sm:col-span-2"
                 :label="__('shopper::modals.permissions.labels.name')"
                 :error="$errors->first('name')"
                 isRequired
             >
-                <x-shopper::forms.input wire:model.defer="name" type="text" id="permission_name" placeholder="create_post, manage_articles, etc" autocomplete="off" />
+                <x-shopper::forms.input
+                    wire:model="name"
+                    type="text"
+                    id="permission_name"
+                    placeholder="create_post, manage_articles, etc"
+                />
             </x-shopper::forms.group>
             <x-shopper::forms.group
                 :label="__('shopper::layout.forms.label.display_name')"
                 for="permission_display_name"
-                class="sm:col-span-2"
                 :error="$errors->first('display_name')"
                 isRequired
             >
-                <x-shopper::forms.input wire:model.defer="display_name" type="text" id="permission_display_name" placeholder="Create Blog posts" autocomplete="off" />
+                <x-shopper::forms.input
+                    wire:model="display_name"
+                    type="text"
+                    id="permission_display_name"
+                    placeholder="Create Blog posts"
+                />
             </x-shopper::forms.group>
             <x-shopper::forms.group
                 for="permission_description"
@@ -51,16 +59,12 @@
     </x-slot>
 
     <x-slot name="buttons">
-        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-            <x-shopper::buttons.primary wire:click="save" type="button">
-                <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                {{ __('shopper::layout.forms.actions.save') }}
-            </x-shopper::buttons.primary>
-        </span>
-        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
-                {{ __('shopper::layout.forms.actions.cancel') }}
-            </x-shopper::buttons.default>
-        </span>
+        <x-shopper::buttons.primary wire:click="save" type="button" class="sm:ml-3 sm:w-auto">
+            <x-shopper::loader wire:loading wire:target="save" class="text-white" />
+            {{ __('shopper::layout.forms.actions.save') }}
+        </x-shopper::buttons.primary>
+        <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button" class="mt-3 sm:mt-0 sm:w-auto">
+            {{ __('shopper::layout.forms.actions.cancel') }}
+        </x-shopper::buttons.default>
     </x-slot>
 </x-shopper::modal>

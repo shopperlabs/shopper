@@ -13,13 +13,12 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Shopper\Http\Controllers\AssetController;
-use Shopper\Http\Livewire\Pages\Initialization;
 use Shopper\Http\Middleware\Authenticate;
 use Shopper\Http\Middleware\Dashboard;
 use Shopper\Http\Middleware\DispatchShopper;
 use Shopper\Http\Middleware\HasConfiguration;
 use Shopper\Http\Middleware\RedirectIfAuthenticated;
-use Shopper\Shopper;
+use Shopper\Livewire\Pages\Initialization;
 use Shopper\Sidebar\Middleware\ResolveSidebars;
 
 Route::domain(config('shopper.admin.domain'))
@@ -33,36 +32,40 @@ Route::domain(config('shopper.admin.domain'))
         SubstituteBindings::class,
         DispatchShopper::class,
     ])
-    ->name('shopper.')
     ->group(function (): void {
-        Route::prefix(shopper_prefix())->group(function (): void {
-            Route::middleware([RedirectIfAuthenticated::class])->group(function (): void {
-                require __DIR__ . '/auth.php';
-            });
+        Route::prefix(shopper()->prefix())->group(function (): void {
+            Route::middleware([RedirectIfAuthenticated::class])
+                ->as('shopper.')->group(function (): void {
+                    require __DIR__ . '/auth.php';
+                });
 
-            Route::get('/assets/{file}', AssetController::class)->where('file', '.*')->name('asset');
+            Route::get('/assets/{file}', AssetController::class)
+                ->where('file', '.*')
+                ->name('shopper.asset');
 
             Route::post('/logout', function (Request $request): RedirectResponse {
-                Shopper::auth()->logout();
+                shopper()->auth()->logout();
 
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
                 return redirect()->route('shopper.login');
-            })->name('logout');
+            })->name('shopper.logout');
 
             Route::middleware([
                 Authenticate::class,
                 HasConfiguration::class,
                 ResolveSidebars::class,
-            ])->get('/initialize', Initialization::class)->name('initialize');
+            ])->get('/initialize', Initialization::class)->name('shopper.initialize');
 
             Route::middleware(array_merge([
                 Authenticate::class,
                 Dashboard::class,
                 ResolveSidebars::class,
             ], config('shopper.routes.middleware', [])))->group(function (): void {
-                require __DIR__ . '/cpanel.php';
+                Route::as('shopper.')->group(function (): void {
+                    require __DIR__ . '/cpanel.php';
+                });
 
                 if (config('shopper.routes.custom_file')) {
                     Route::namespace(config('shopper.admin.controllers.namespace'))

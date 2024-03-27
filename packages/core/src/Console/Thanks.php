@@ -16,7 +16,7 @@ final class Thanks
     private const FUNDING_MESSAGES = [
         '',
         '  - Star or contribute to Shopper:',
-        '    <options=bold>https://github.com/shopperlabs/framework</>',
+        '    <options=bold>https://github.com/shopperlabs/shopper</>',
         '  - Tweet something about Shopper on Twitter:',
         '    <options=bold>https://twitter.com/laravelshopper</>',
         '  - Sponsor the creator:',

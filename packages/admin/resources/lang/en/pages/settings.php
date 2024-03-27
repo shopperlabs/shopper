@@ -12,11 +12,11 @@ return [
 
     'initialization' => [
         'title' => 'Shop Initialization',
-        'step_one_title' => 'Store information',
+        'step_one_title' => 'Information',
         'step_one_description' => 'Provide useful information for your store.',
-        'step_two_title' => 'Address Information',
+        'step_two_title' => 'Address',
         'step_two_description' => 'Provide store address information.',
-        'step_tree_title' => 'Social Links (Optional)',
+        'step_tree_title' => 'Social Links',
         'step_tree_description' => 'Links to your social media accounts.',
 
         'step' => 'Step :step of 3',
@@ -27,12 +27,12 @@ return [
 
         'step_2' => 'Step 2 - Address information',
         'address_description' => 'You must specify address and location of your shop',
-        'step_2_description' => 'Don\'t Worry. You can change these setting at any time. Shopper allows you to start with the smallest level so that you can see the evolution of your shop.',
+        'step_2_description' => 'Don\'t worry. You can change these settings at any time. Shopper allows you to start with the smallest level so that you can see the evolution of your shop.',
 
         'step_3' => 'Step 3 - Social links',
-        'social_description' => 'Your shop on social networks.',
+        'social_description' => 'Your shop on social networks',
         'step_3_description' => 'You can add links to your social media accounts so that your shop can be found easily on your social media pages.',
-        'action' => 'Setup my store',
+        'action' => 'Save',
     ],
 
     'settings' => [
@@ -67,13 +67,13 @@ return [
     ],
 
     'validations' => [
-        'shop_name' => 'Store name is required',
         'country' => 'Country is required',
+        'shop_name' => 'Store name is required',
+        'shop_email' => 'Store e-mail is required',
     ],
 
     'notifications' => [
-        'create_inventory' => 'Inventory Successfully Added',
-        'update_inventory' => 'Inventory Successfully updated',
+        'inventory' => 'Inventory Successfully saved',
     ],
 
     'roles_permissions' => [
@@ -102,12 +102,13 @@ return [
         'with_role_name' => 'with :name role',
         'permissions_in_role' => 'in :name role',
         'custom_permission' => 'Custom permission',
+        'delete_team_member' => 'Are you sure you want to delete this member?',
     ],
 
     'location' => [
         'description' => 'Manage the places you stock inventory, fulfill orders, and sell products.',
         'count' => 'You’re using :count of 4 locations available.',
-        'add' => 'Add location',
+        'add' => 'Add Inventory',
         'detail' => 'Details',
         'detail_summary' => 'Give this location a short name to make it easy to identify. You’ll see this name in areas like products.',
         'address' => 'Inventory address',

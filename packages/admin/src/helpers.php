@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Str;
+use Shopper\ShopperPanel;
 
 if (! function_exists('active')) {
     function active(array $routes, string $activeClass = 'active', string $defaultClass = '', bool $condition = true): string
@@ -42,5 +43,15 @@ if (! function_exists('get_asset_id')) {
         }
 
         return (string) Str::of($file)->after('id=');
+    }
+}
+
+if (! function_exists('shopper')) {
+    function shopper(): ShopperPanel
+    {
+        /** @var ShopperPanel $shopper */
+        $shopper = app('shopper');
+
+        return $shopper;
     }
 }

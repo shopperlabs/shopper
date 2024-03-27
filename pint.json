@@ -27,6 +27,9 @@
     "simplified_if_return": true,
     "strict_comparison": true,
     "use_arrow_functions": true,
-    "void_return": true
+    "void_return": true,
+    "types_spaces": {
+      "space": "single"
+    }
   }
 }

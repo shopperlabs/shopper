@@ -10,7 +10,7 @@ class Price
 {
     use HasPrice;
 
-    public int|float $value;
+    public int | float $value;
 
     public string $formatted;
 

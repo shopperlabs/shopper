@@ -7,7 +7,7 @@
 }
 
 .submenu {
-  @apply my-3 ml-5 hidden space-y-2 py-2.5 border-l border-secondary-200 dark:border-gray-800 lg:space-y-3;
+  @apply my-3 ml-5 hidden space-y-2 py-2.5 border-l border-gray-200 dark:border-gray-800 lg:space-y-3;
 }
 
 .current-group .submenu {

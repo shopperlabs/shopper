@@ -15,7 +15,7 @@
 >
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.customers.index')" :current="$customer->full_name">
-            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-secondary-300 dark:text-secondary-600" />
+            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-gray-300 dark:text-gray-600" />
             <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" :title="__('shopper::layout.sidebar.customers')" />
         </x-shopper::breadcrumb>
 
@@ -26,21 +26,21 @@
                         <img class="h-12 w-12 rounded-lg" src="{{ $picture }}" alt="{{ $customer->full_name }}">
                     </div>
                     <div class="ml-4">
-                        <h3 class="text-2xl font-bold leading-6 text-secondary-900 sm:truncate dark:text-white">
+                        <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:truncate dark:text-white">
                             {{ $customer->full_name }}
                         </h3>
-                        <div class="mt-1 flex items-center divide-x divide-secondary-200 dark:divide-secondary-700">
+                        <div class="mt-1 flex items-center divide-x divide-gray-200 dark:divide-gray-700">
                             <div class="flex items-center pr-2">
                                 @if($customer->email_verified_at)
                                     <x-untitledui-check-verified-02 class="w-5 h-5 text-green-500" />
                                 @else
                                     <x-untitledui-alert-circle class="w-5 h-5 text-danger-500" />
                                 @endif
-                                <span class="ml-1.5 text-sm leading-5 text-secondary-500 dark:text-secondary-400">
+                                <span class="ml-1.5 text-sm leading-5 text-gray-500 dark:text-gray-400">
                                     {{ $customer->email }}
                                 </span>
                             </div>
-                            <p class="pl-2 text-sm text-secondary-500 leading-5 dark:text-secondary-400">
+                            <p class="pl-2 text-sm text-gray-500 leading-5 dark:text-gray-400">
                                 {{ __('shopper::pages/customers.period', ['period' => $customer->created_at->diffForHumans()]) }}
                             </p>
                         </div>
@@ -50,7 +50,7 @@
             <div class="hidden lg:flex mt-4 lg:mt-0 lg:ml-4 space-x-2">
                 <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
                     <div>
-                        <button @click="open = !open" class="flex items-center text-secondary-400 hover:text-secondary-500 focus:outline-none focus:text-secondary-500" aria-label="Options" id="options-menu" aria-haspopup="true" x-bind:aria-expanded="open">
+                        <button @click="open = !open" class="flex items-center text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="Options" id="options-menu" aria-haspopup="true" x-bind:aria-expanded="open">
                             <x-untitledui-dots-horizontal class="w-5 h-5" />
                         </button>
                     </div>
@@ -65,9 +65,9 @@
                          x-transition:leave-end="transform opacity-0 scale-95"
                          class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg"
                     >
-                        <div class="rounded-md bg-white shadow-xs dark:bg-secondary-800">
+                        <div class="rounded-md bg-white shadow-xs dark:bg-gray-800">
                             <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <button wire:click="$emit('openModal', 'shopper-modals.delete-customer', {{ json_encode([$customer->id]) }})" type="button" class="block w-full px-4 py-2 text-sm leading-5 text-left text-secondary-700 hover:bg-secondary-100 hover:text-secondary-900 focus:outline-none dark:text-secondary-300 dark:hover:text-white dark:hover:bg-secondary-700" role="menuitem">
+                                <button wire:click="$emit('openModal', 'shopper-modals.delete-customer', {{ json_encode([$customer->id]) }})" type="button" class="block w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700" role="menuitem">
                                     {{ __('shopper::layout.forms.actions.delete') }}
                                 </button>
                             </div>
@@ -80,7 +80,7 @@
 
     <div class="py-6">
         <div class="sticky top-0">
-            <div class="lg:border-y lg:border-secondary-200 dark:border-secondary-700">
+            <div class="lg:border-y lg:border-gray-200 dark:border-gray-700">
                 <div class="lg:hidden px-4">
                     <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}" class="pr-10">
                         <template x-for="option in options" :key="option">
@@ -99,7 +99,7 @@
                             @click="currentTab = 'profile'"
                             type="button"
                             class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
-                            :class="activeTab('profile') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                            :class="activeTab('profile') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
                         >
                             {{ __('shopper::pages/customers.profile.title') }}
                         </button>
@@ -107,7 +107,7 @@
                             @click="currentTab = 'address'"
                             type="button"
                             class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
-                            :class="activeTab('address') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                            :class="activeTab('address') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
                         >
                             {{ __('shopper::pages/customers.addresses.title') }}
                         </button>
@@ -115,7 +115,7 @@
                             @click="currentTab = 'orders'"
                             type="button"
                             class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
-                            :class="activeTab('orders') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-secondary-300 dark:hover:border-secondary-400 text-secondary-500 hover:text-secondary-700 dark:text-secondary-400 dark:hover:text-secondary-500'"
+                            :class="activeTab('orders') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
                         >
                             {{ __('shopper::layout.sidebar.orders') }}
                         </button>

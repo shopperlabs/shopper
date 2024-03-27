@@ -7,7 +7,6 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Shopper\Core\Traits\HasSlug;
 
 /**
@@ -41,7 +40,7 @@ class PaymentMethod extends Model
     public function getLogoUrlAttribute(): ?string
     {
         if ($this->logo) {
-            return Storage::disk(config('shopper.core.storage.disk_name'))->url($this->logo);
+            return shopper_asset($this->logo);
         }
 
         return null;

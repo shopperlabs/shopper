@@ -12,7 +12,7 @@
         @empty
             <div class="sm:col-span-2 lg:col-span-4 flex justify-center items-center space-x-2">
                 <x-untitledui-file-02 class="h-5 w-5 text-primary-500" />
-                <span class="leading-6 text-secondary-500 dark:text-secondary-400">
+                <span class="leading-6 text-gray-500 dark:text-gray-400">
                     {{ __('shopper::words.no_values') }}
                 </span>
             </div>

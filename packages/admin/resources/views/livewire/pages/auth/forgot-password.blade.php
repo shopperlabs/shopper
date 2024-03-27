@@ -18,10 +18,10 @@
 
     <div class="mt-4">
         <x-shopper::brand class="mx-auto h-12 w-auto" />
-        <h2 class="mt-6 text-3xl font-bold text-center leading-9 text-secondary-900 dark:text-white font-display">
+        <h2 class="mt-6 text-3xl font-bold text-center leading-9 text-gray-900 dark:text-white font-heading">
             {{ __('shopper::pages/auth.email.title') }}
         </h2>
-        <p class="mt-3 text-sm leading-5 text-center text-secondary-500 dark:text-secondary-400">
+        <p class="mt-3 text-sm leading-5 text-center text-gray-500 dark:text-gray-400">
             {{ __('shopper::pages/auth.email.message') }}
         </p>
     </div>
@@ -32,7 +32,7 @@
                 aria-label="{{ __('shopper::layout.forms.label.email') }}"
                 name="email"
                 type="email"
-                wire:model.lazy="email"
+                wire:model="email"
                 placeholder="{{ __('shopper::layout.forms.label.email') }}"
                 required
                 autofocus
@@ -49,7 +49,7 @@
             </x-shopper::buttons.primary>
         </div>
         <p class="mt-5 text-center text-sm">
-            <a href="{{ route('shopper.login') }}" class="inline-flex items-center text-secondary-500 hover:text-secondary-900 dark:text-secondary-500 dark:hover:text-white leading-5">
+            <a href="{{ route('shopper.login') }}" class="inline-flex items-center text-gray-500 hover:text-gray-900 dark:text-gray-500 dark:hover:text-white leading-5">
                 <x-heroicon-o-arrow-narrow-left class="w-5 h-5 mr-1.5"/>
                 {{ __('shopper::pages/auth.email.return_to_login') }}
             </a>

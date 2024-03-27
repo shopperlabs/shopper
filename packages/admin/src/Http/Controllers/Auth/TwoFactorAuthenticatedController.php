@@ -30,7 +30,7 @@ final class TwoFactorAuthenticatedController extends Controller
         return view('shopper::auth.two-factor-login');
     }
 
-    public function store(TwoFactorLoginRequest $request): FailedTwoFactorLoginResponse|JsonResponse|RedirectResponse
+    public function store(TwoFactorLoginRequest $request): FailedTwoFactorLoginResponse | JsonResponse | RedirectResponse
     {
         $user = $request->challengedUser();
 
