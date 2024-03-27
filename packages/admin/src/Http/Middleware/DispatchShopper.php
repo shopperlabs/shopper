@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Shopper\Events\LoadShopper;
 
-final class DispatchShopper
+class DispatchShopper
 {
     public function handle(Request $request, Closure $next)
     {

@@ -6,7 +6,7 @@ namespace Shopper\Actions;
 
 use Illuminate\Support\Str;
 
-final class RecoveryCode
+class RecoveryCode
 {
     public static function generate(): string
     {

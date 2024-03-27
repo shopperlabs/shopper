@@ -6,7 +6,7 @@ namespace Shopper\Core\Events\Products;
 
 use Illuminate\Queue\SerializesModels;
 
-final class Deleted
+class Deleted
 {
     use SerializesModels;
 

@@ -10,7 +10,7 @@ use Shopper\Contracts\TwoFactorAuthenticationProvider;
 use Shopper\Facades\Shopper;
 use Shopper\Http\Responses\FailedTwoFactorLoginResponse;
 
-final class TwoFactorLoginRequest extends FormRequest
+class TwoFactorLoginRequest extends FormRequest
 {
     protected $challengedUser;
 

@@ -12,4 +12,3 @@ phpunit.xml
 .php-cs-fixer.cache
 build
 Thumbs.db
-

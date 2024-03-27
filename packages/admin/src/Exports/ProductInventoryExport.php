@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Shopper\Core\Models\InventoryHistory;
 
-final class ProductInventoryExport implements FromQuery, WithHeadings, WithMapping
+class ProductInventoryExport implements FromQuery, WithHeadings, WithMapping
 {
     use Exportable;
 

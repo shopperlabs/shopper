@@ -6,7 +6,7 @@ namespace Shopper\Http\Responses;
 
 use Shopper\Contracts\LoginResponse as Responsable;
 
-final class LoginResponse implements Responsable
+class LoginResponse implements Responsable
 {
     public function toResponse($request)
     {

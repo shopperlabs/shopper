@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Validation\ValidationException;
 use Shopper\Facades\Shopper;
 
-final class AttemptToAuthenticate
+class AttemptToAuthenticate
 {
     public function handle(array $request, Closure $next)
     {

@@ -10,7 +10,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-final class Multiple extends Component
+class Multiple extends Component
 {
     use WithFileUploads;
 

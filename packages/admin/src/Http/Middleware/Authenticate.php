@@ -6,7 +6,7 @@ namespace Shopper\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-final class Authenticate extends Middleware
+class Authenticate extends Middleware
 {
     protected function authenticate($request, array $guards): void
     {

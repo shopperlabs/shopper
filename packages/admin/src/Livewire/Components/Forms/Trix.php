@@ -7,7 +7,7 @@ namespace Shopper\Livewire\Components\Forms;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-final class Trix extends Component
+class Trix extends Component
 {
     public string $trixId;
 

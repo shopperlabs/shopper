@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
 use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
 
-final class EnableTwoFactorAuthentication
+class EnableTwoFactorAuthentication
 {
     public function __construct(protected TwoFactorAuthenticationProvider $provider)
     {

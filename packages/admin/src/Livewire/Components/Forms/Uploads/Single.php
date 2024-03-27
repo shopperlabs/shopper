@@ -11,7 +11,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-final class Single extends Component
+class Single extends Component
 {
     use WithFileUploads;
 

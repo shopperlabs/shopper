@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 use Shopper\Facades\Shopper;
 use Shopper\Traits\TwoFactorAuthenticatable;
 
-final class RedirectIfTwoFactorAuthenticatable
+class RedirectIfTwoFactorAuthenticatable
 {
     public function handle(array $data, Closure $next)
     {

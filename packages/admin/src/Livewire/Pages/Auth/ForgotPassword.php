@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Password;
 use Livewire\Component;
 use Shopper\Core\Rules\RealEmailValidator;
 
-final class ForgotPassword extends Component
+class ForgotPassword extends Component
 {
     public string $email = '';
 
