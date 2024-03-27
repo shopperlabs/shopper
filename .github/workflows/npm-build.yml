@@ -25,7 +25,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build assets
-        run: yarn build
+        run: yarn run build
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
