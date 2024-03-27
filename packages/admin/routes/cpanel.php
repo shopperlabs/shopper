@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Shopper\Feature;
 
 Route::get('/dashboard', config('shopper.components.dashboard.pages.dashboard'))->name('dashboard');
-Route::view('/profile', 'shopper::pages.account.profile')->name('profile');
+Route::get('/profile', config('shopper.components.account.pages.index'))->name('profile');
 
 Route::prefix('setting')->as('settings.')->group(function (): void {
     require __DIR__ . '/admin/setting.php';

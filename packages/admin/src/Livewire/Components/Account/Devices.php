@@ -9,12 +9,14 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Stevebauman\Location\Facades\Location;
 
 class Devices extends Component
 {
-    public function getSessionsProperty(): Collection
+    #[Computed]
+    public function sessions(): Collection
     {
         if (config('session.driver') !== 'database') {
             return collect();
@@ -35,7 +37,7 @@ class Devices extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.account.devices');
+        return view('shopper::livewire.components.account.devices');
     }
 
     protected function createAgent($session): Agent

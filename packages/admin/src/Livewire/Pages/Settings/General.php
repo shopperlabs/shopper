@@ -77,6 +77,7 @@ class General extends Component implements HasForms
                                     ->required(),
                                 Components\TextInput::make('phone_number')
                                     ->label(__('shopper::layout.forms.label.phone_number'))
+                                    ->tel()
                                     ->helperText(__('shopper::pages/settings.settings.phone_number_helper')),
                             ]),
                     ]),
@@ -189,7 +190,7 @@ class General extends Component implements HasForms
         }
 
         Notification::make()
-            ->body(__('shopper::notifications.store_info'))
+            ->title(__('shopper::notifications.store_info'))
             ->success()
             ->send();
     }

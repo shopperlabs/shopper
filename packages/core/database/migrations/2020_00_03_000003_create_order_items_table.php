@@ -19,7 +19,7 @@ return new class() extends Migration
             $table->integer('quantity');
             $table->integer('unit_price_amount');
 
-            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'));
+            $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
         });
     }
 

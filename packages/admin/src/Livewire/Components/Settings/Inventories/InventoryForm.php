@@ -58,10 +58,9 @@ class InventoryForm extends Component implements HasForms
                             ->label(__('shopper::layout.forms.label.description'))
                             ->rows(3)
                             ->columnSpan('full'),
-                        Forms\Components\Checkbox::make('is_default')
-                            ->label(function () {
-                                return view('shopper::_partials.inventory-label');
-                            })
+                        Forms\Components\Toggle::make('is_default')
+                            ->label(__('shopper::pages/settings.location.set_default'))
+                            ->helperText(__('shopper::pages/settings.location.set_default_summary'))
                             ->columnSpan('full'),
                     ])
                     ->columns(),

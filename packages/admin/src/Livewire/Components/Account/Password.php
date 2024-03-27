@@ -4,56 +4,85 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Account;
 
+use Filament\Forms\Components;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
-use Shopper\Facades\Shopper;
+use Shopper\Components\Section;
+use Shopper\Core\Models\User;
 
-class Password extends Component
+class Password extends Component implements HasForms
 {
-    public string $current_password = '';
+    use InteractsWithForms;
 
-    public string $password = '';
+    public ?array $data = [];
 
-    public string $password_confirmation = '';
+    public function mount(): void
+    {
+        $this->form->fill();
+    }
+
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Section::make(__('shopper::pages/auth.account.password_title'))
+                    ->description(__('shopper::pages/auth.account.password_description'))
+                    ->aside()
+                    ->compact()
+                    ->schema([
+                        Components\TextInput::make('current_password')
+                            ->label(__('shopper::layout.forms.label.current_password'))
+                            ->password()
+                            ->currentPassword()
+                            ->revealable()
+                            ->required(),
+                        Components\TextInput::make('password')
+                            ->label(__('shopper::layout.forms.label.new_password'))
+                            ->helperText(__('shopper::pages/auth.account.password_helper_validation'))
+                            ->password()
+                            ->revealable()
+                            ->required()
+                            ->confirmed(),
+                        Components\TextInput::make('password_confirmation')
+                            ->label(__('shopper::layout.forms.label.confirm_password'))
+                            ->password()
+                            ->revealable()
+                            ->required(),
+                    ])
+            ])
+            ->statePath('data');
+    }
+
+    protected function onValidationError(ValidationException $exception): void
+    {
+        Notification::make()
+            ->title($exception->getMessage())
+            ->danger()
+            ->send();
+    }
 
     public function save(): void
     {
-        $this->validate($this->rules());
+        /** @var User $user */
+        $user = shopper()->auth()->user();
+        $data = $this->form->getState();
 
-        $user = Shopper::auth()->user();
+        $user->update(['password' => Hash::make(value: $data['password'])]);
 
-        // @phpstan-ignore-next-line
-        if (Hash::check($this->current_password, $user->password)) {
-            $user->update(['password' => Hash::make($this->password)]);
-
-            $this->reset('current_password', 'password', 'password_confirmation');
-
-            Notification::make()
-                ->body(__('shopper::notifications.users_roles.password_changed'))
-                ->success()
-                ->send();
-        } else {
-            session()->flash('error', __('shopper::notifications.users_roles.current_password'));
-        }
-    }
-
-    public function rules(): array
-    {
-        return [
-            'current_password' => 'required',
-            'password' => [
-                'required',
-                'confirmed',
-                Rules\Password::min(8)->numbers()->symbols()->mixedCase(),
-            ],
-        ];
+        Notification::make()
+            ->title(__('shopper::notifications.users_roles.password_changed'))
+            ->success()
+            ->send();
     }
 
     public function render(): View
     {
-        return view('shopper::livewire.account.password');
+        return view('shopper::livewire.components.account.password');
     }
 }

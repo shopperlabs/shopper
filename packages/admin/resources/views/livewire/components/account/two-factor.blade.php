@@ -1,16 +1,11 @@
 <div class="mt-10 sm:mt-0">
     <div class="lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
-        <div class="lg:col-span-1">
-            <div>
-                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white font-heading">
-                    {{ __('shopper::pages/auth.account.two_factor_title') }}
-                </h3>
-                <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
-                    {{ __('shopper::pages/auth.account.two_factor_description') }}
-                </p>
-            </div>
-        </div>
-        <div class="mt-5 lg:mt-0 lg:col-span-2">
+        <x-shopper::section-heading
+            class="lg:col-span-1"
+            :title="__('shopper::pages/auth.account.two_factor_title')"
+            :description="__('shopper::pages/auth.account.two_factor_description')"
+        />
+        <div class="mt-5 lg:mt-0 lg:col-span-2 lg:max-w-3xl">
             <x-shopper::card>
                 <div class="p-4 sm:px-6 border-b border-gray-200 dark:border-gray-700">
                     <div class="flex items-center space-x-3">

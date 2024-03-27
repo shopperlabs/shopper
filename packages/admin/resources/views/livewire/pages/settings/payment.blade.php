@@ -69,7 +69,7 @@
                 <div class="align-middle inline-block min-w-full">
                     <table class="min-w-full">
                         <thead>
-                            <tr class="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-700">
+                            <x-shopper::tables.table-row class="border-t">
                                 <x-shopper::tables.table-head>
                                     <span class="lg:pl-2">
                                         {{ __('shopper::layout.forms.label.title') }}
@@ -85,7 +85,7 @@
                                     {{ __('shopper::layout.forms.label.updated_at') }}
                                 </x-shopper::tables.table-head>
                                 <x-shopper::tables.table-head class="pr-6 text-right" />
-                            </tr>
+                            </x-shopper::tables.table-row>
                         </thead>
                         <tbody class="divide-y divide-gray-100 dark:divide-gray-700" x-max="1">
                             @forelse($methods as $method)

@@ -10,7 +10,7 @@ return new class() extends Migration
 {
     public function up(): void
     {
-        Schema::table($this->getTableName('users'), function (Blueprint $table): void {
+        Schema::table('users', function (Blueprint $table): void {
             $table->dropColumn('name');
             $table->string('password')->nullable()->change();
 

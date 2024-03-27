@@ -4183,6 +4183,10 @@ html {
   margin-top: auto;
 }
 
+.mr-auto {
+  margin-right: auto;
+}
+
 .line-clamp-\[--line-clamp\] {
   overflow: hidden;
   display: -webkit-box;
@@ -5133,6 +5137,11 @@ html {
 
 .gap-y-6 {
   row-gap: 1.5rem;
+}
+
+.gap-x-12 {
+  -moz-column-gap: 3rem;
+       column-gap: 3rem;
 }
 
 .-space-x-1 > :not([hidden]) ~ :not([hidden]) {
@@ -10482,8 +10491,20 @@ input[type='number'] {
     grid-column: span 2 / span 2;
   }
 
+  .md\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+
   .md\:col-start-\[--col-start-md\] {
     grid-column-start: var(--col-start-md);
+  }
+
+  .md\:col-start-2 {
+    grid-column-start: 2;
+  }
+
+  .md\:col-end-3 {
+    grid-column-end: 3;
   }
 
   .md\:block {

@@ -7,11 +7,12 @@ namespace Shopper\Livewire\Components\Account;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Actions\DisableTwoFactorAuthentication;
 use Shopper\Actions\EnableTwoFactorAuthentication;
 use Shopper\Actions\GenerateNewRecoveryCodes;
-use Shopper\Facades\Shopper;
 use Shopper\Traits\ConfirmsPasswords;
 
 class TwoFactor extends Component
@@ -22,30 +23,25 @@ class TwoFactor extends Component
 
     public bool $showingRecoveryCodes = false;
 
-    protected $listeners = [
-        'enableTwoFactorAuthentication',
-        'showRecoveryCodes',
-        'regenerateRecoveryCodes',
-        'disableTwoFactorAuthentication',
-    ];
-
+    #[On('enableTwoFactorAuthentication')]
     public function enableTwoFactorAuthentication(EnableTwoFactorAuthentication $enable): void
     {
         if (config('shopper.auth.2fa_enabled')) {
             $this->ensurePasswordIsConfirmed();
         }
 
-        $enable(Shopper::auth()->user());
+        $enable($this->user);
 
         $this->showingQrCode = true;
         $this->showingRecoveryCodes = true;
 
         Notification::make()
-            ->body(__('shopper::notifications.users_roles.two_factor_enabled'))
+            ->title(__('shopper::notifications.users_roles.two_factor_enabled'))
             ->success()
             ->send();
     }
 
+    #[On('showRecoveryCodes')]
     public function showRecoveryCodes(): void
     {
         if (config('shopper.auth.2fa_enabled')) {
@@ -55,29 +51,31 @@ class TwoFactor extends Component
         $this->showingRecoveryCodes = true;
     }
 
+    #[On('regenerateRecoveryCodes')]
     public function regenerateRecoveryCodes(GenerateNewRecoveryCodes $generate): void
     {
         if (config('shopper.auth.2fa_enabled')) {
             $this->ensurePasswordIsConfirmed();
         }
 
-        $generate(Shopper::auth()->user());
+        $generate($this->user);
 
         $this->showingRecoveryCodes = true;
 
         Notification::make()
-            ->body(__('shopper::notifications.users_roles.two_factor_generate'))
+            ->title(__('shopper::notifications.users_roles.two_factor_generate'))
             ->success()
             ->send();
     }
 
+    #[On('disableTwoFactorAuthentication')]
     public function disableTwoFactorAuthentication(DisableTwoFactorAuthentication $disable): void
     {
         if (config('shopper.auth.2fa_enabled')) {
             $this->ensurePasswordIsConfirmed();
         }
 
-        $disable(Shopper::auth()->user());
+        $disable($this->user);
 
         Notification::make()
             ->body(__('shopper::notifications.users_roles.two_factor_disabled'))
@@ -85,18 +83,20 @@ class TwoFactor extends Component
             ->send();
     }
 
-    public function getUserProperty(): Authenticatable
+    #[Computed]
+    public function user(): Authenticatable
     {
-        return Shopper::auth()->user();
+        return shopper()->auth()->user();
     }
 
-    public function getEnabledProperty(): bool
+    #[Computed]
+    public function enabled(): bool
     {
         return ! empty($this->user->two_factor_secret);
     }
 
     public function render(): View
     {
-        return view('shopper::livewire.account.two-factor');
+        return view('shopper::livewire.components.account.two-factor');
     }
 }

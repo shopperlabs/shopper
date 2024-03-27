@@ -4,88 +4,94 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Account;
 
+use Filament\Forms\Components;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use Shopper\Components\Section;
 use Shopper\Core\Models\User;
-use Shopper\Core\Rules\RealEmailValidator;
 use Shopper\Traits\HasAuthenticated;
 
-class Profile extends Component
+class Profile extends Component implements HasForms
 {
     use HasAuthenticated;
-    use WithFileUploads;
+    use InteractsWithForms;
 
-    public string $first_name;
-
-    public string $last_name;
-
-    public string $email;
-
-    public ?string $phone_number = null;
-
-    public $picture;
+    public ?array $data = [];
 
     public function mount(): void
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        $this->first_name = $user->first_name;
-        $this->last_name = $user->last_name;
-        $this->email = $user->email;
-        $this->phone_number = $user->phone_number;
+        $this->form->fill($this->getUser()->toArray());
     }
 
-    public function updatedPicture(): void
+    public function form(Form $form): Form
     {
-        $this->validate(['picture' => 'nullable|image|max:1024']);
+        return $form
+            ->schema([
+                Section::make(__('shopper::pages/auth.account.profile_title'))
+                    ->description(__('shopper::pages/auth.account.profile_description'))
+                    ->aside()
+                    ->compact()
+                    ->schema([
+                        Components\FileUpload::make('avatar_location')
+                            ->label(__('shopper::layout.forms.label.photo'))
+                            ->avatar()
+                            ->image()
+                            ->maxSize(1024)
+                            ->disk(config('shopper.core.storage.disk_name')),
+                        Components\Grid::make()
+                            ->schema([
+                                Components\TextInput::make('first_name')
+                                    ->label(__('shopper::layout.forms.label.first_name'))
+                                    ->required(),
+                                Components\TextInput::make('last_name')
+                                    ->label(__('shopper::layout.forms.label.last_name'))
+                                    ->required(),
+                                Components\TextInput::make('email')
+                                    ->label(__('shopper::layout.forms.label.email'))
+                                    ->prefixIcon('untitledui-mail')
+                                    ->autocomplete('email-address')
+                                    ->email()
+                                    ->required()
+                                    ->unique(
+                                        table: config('auth.providers.users.model', User::class),
+                                        ignorable: $this->getUser()
+                                    ),
+                                Components\TextInput::make('phone_number')
+                                    ->label(__('shopper::layout.forms.label.phone_number'))
+                                    ->tel(),
+                            ]),
+                    ]),
+            ])
+            ->statePath('data')
+            ->model($this->getUser());
     }
 
     public function save(): void
     {
-        $this->validate([
-            'email' => [
-                'required',
-                'email',
-                Rule::unique(shopper_table('users'), 'email')->ignore(auth()->id()),
-                new RealEmailValidator(),
-            ],
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'picture' => 'nullable|image|max:1024',
-        ]);
+        $this->getUser()
+            ->update(
+                array_merge(
+                    $this->form->getState(),
+                    filled($this->form->getState()['avatar_location'])
+                        ? ['avatar_type' => 'storage']
+                        : ['avatar_type' => 'avatar_ui']
+                )
+            );
 
-        $user = $this->getUser();
-
-        $user->update([
-            'last_name' => $this->last_name,
-            'first_name' => $this->first_name,
-            'email' => $this->email,
-            'phone_number' => $this->phone_number,
-        ]);
-
-        if ($this->picture) {
-            $filename = $this->picture->store('/', config('shopper.core.storage.disk_name'));
-
-            $user->update([
-                'avatar_type' => 'storage',
-                'avatar_location' => $filename,
-            ]);
-        }
-
-        $this->emit('updatedProfile');
+        $this->dispatch('updated-profile');
 
         Notification::make()
-            ->body(__('shopper::notifications.users_roles.profile_update'))
+            ->title(__('shopper::notifications.users_roles.profile_update'))
             ->success()
             ->send();
     }
 
     public function render(): View
     {
-        return view('shopper::livewire.account.profile');
+        return view('shopper::livewire.components.account.profile');
     }
 }
