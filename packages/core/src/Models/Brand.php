@@ -19,7 +19,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property string | null $website
  * @property string | null $description
  * @property int $position
- * @property boolean $is_enabled
+ * @property bool $is_enabled
  * @property string | null $seo_title
  * @property string | null $seo_description
  * @property array $metadata

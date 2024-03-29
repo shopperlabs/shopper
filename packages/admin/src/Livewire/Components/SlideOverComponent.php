@@ -60,7 +60,8 @@ abstract class SlideOverComponent extends Component implements PanelContract
 
     public function closePanel(): void
     {
-        $this->dispatch('closePanel',
+        $this->dispatch(
+            'closePanel',
             force: $this->forceClose,
             skipPreviousPanels: $this->skipPanels,
             destroySkipped: $this->destroySkipped
@@ -82,8 +83,11 @@ abstract class SlideOverComponent extends Component implements PanelContract
     {
         if (! array_key_exists(static::panelMaxWidth(), static::$maxWidths)) {
             throw new InvalidArgumentException(
-                sprintf('Panel max width [%s] is invalid. The width must be one of the following [%s].',
-                    static::panelMaxWidth(), implode(', ', array_keys(static::$maxWidths))),
+                sprintf(
+                    'Panel max width [%s] is invalid. The width must be one of the following [%s].',
+                    static::panelMaxWidth(),
+                    implode(', ', array_keys(static::$maxWidths))
+                ),
             );
         }
 
@@ -97,7 +101,7 @@ abstract class SlideOverComponent extends Component implements PanelContract
 
     public static function closePanelOnEscape(): bool
     {
-        return  true;
+        return true;
     }
 
     public static function closePanelOnEscapeIsForceful(): bool

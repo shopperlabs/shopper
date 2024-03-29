@@ -57,7 +57,7 @@ class BrandForm extends SlideOverComponent implements HasForms
                             ->url(),
                         Components\Toggle::make('is_enabled')
                             ->label(__('shopper::layout.forms.label.visibility'))
-                            ->helperText(__('shopper::words.set_visibility', ['name' => strtolower(__('shopper::words.brand'))])),
+                            ->helperText(__('shopper::words.set_visibility', ['name' => mb_strtolower(__('shopper::words.brand'))])),
                         Components\RichEditor::make('description')
                             ->label(__('shopper::layout.forms.label.description'))
                             ->toolbarButtons([
@@ -68,7 +68,7 @@ class BrandForm extends SlideOverComponent implements HasForms
                                 'strike',
                                 'underline',
                                 'undo',
-                            ])
+                            ]),
                     ]),
                 Section::make('Media')
                     ->collapsible()
@@ -78,7 +78,7 @@ class BrandForm extends SlideOverComponent implements HasForms
                             ->label(__('shopper::layout.forms.label.image_preview'))
                             ->collection(config('shopper.core.storage.collection_name'))
                             ->image()
-                            ->maxSize(1024)
+                            ->maxSize(1024),
                     ]),
                 Section::make('Seo')
                     ->collapsible()

@@ -10,12 +10,10 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Reflector;
-use Illuminate\Support\Str;
-use Livewire\Attributes\Locked;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Mechanisms\ComponentRegistry;
 use ReflectionClass;
+use ReflectionProperty;
 use Shopper\Contracts\PanelContract;
 
 class SlideOverPanel extends Component
@@ -40,7 +38,7 @@ class SlideOverPanel extends Component
             throw new Exception("[{$componentClass}] does not implement [{$requiredInterface}] interface.");
         }
 
-        $id = md5($component.serialize($arguments));
+        $id = md5($component . serialize($arguments));
 
         $arguments = collect($arguments)
             ->merge($this->resolveComponentProps($arguments, new $componentClass()))
@@ -87,7 +85,7 @@ class SlideOverPanel extends Component
         if (enum_exists($parameterClassName)) {
             $enum = $parameterClassName::tryFrom($parameterValue);
 
-            if($enum !== null) {
+            if ($enum !== null) {
                 return $enum;
             }
         }
@@ -104,9 +102,7 @@ class SlideOverPanel extends Component
     public function getPublicPropertyTypes($component): Collection
     {
         return collect($component->all())
-            ->map(function ($value, $name) use ($component) {
-                return Reflector::getParameterClassName(new \ReflectionProperty($component, $name));
-            })
+            ->map(fn ($value, $name) => Reflector::getParameterClassName(new ReflectionProperty($component, $name)))
             ->filter();
     }
 
