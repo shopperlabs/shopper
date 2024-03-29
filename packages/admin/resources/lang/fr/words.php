@@ -77,7 +77,7 @@ return [
     'is_enabled' => 'Est activé',
 
     'selected_tab' => 'Onglet sélectionné',
-    'set_visibility' => 'Rendre visible la\le :name pour les clients.',
+    'set_visibility' => 'Rendre visible :name pour les clients.',
     'set_global_visibility' => 'Visibilité de la page pour les clients.',
     'log_out' => 'Se déconnecter',
     'browser_platform' => ':browser sur :platform',

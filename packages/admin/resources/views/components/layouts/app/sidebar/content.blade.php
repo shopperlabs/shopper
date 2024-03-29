@@ -2,7 +2,7 @@
     <div class="h-1 rounded-lg bg-gradient-to-br from-primary-600 to-primary-100 dark:to-primary-600/10"></div>
     <div class="flex flex-col h-full">
         <div class="px-4 py-5">
-            <div class="relative flex items-start px-3 py-2.5 rounded-lg shadow-sm border border-gray-200 dark:shadow-lg dark:border-gray-800">
+            <div class="relative flex items-start px-3 py-2.5 rounded-lg bg-white shadow-sm ring-1 ring-gray-200 dark:bg-white/5 dark:ring-gray-800">
                 <a class="shrink-0" href="{{ route('shopper.dashboard') }}">
                     <x-shopper::brand class="h-8 w-auto" />
                     <span class="absolute inset-0"></span>

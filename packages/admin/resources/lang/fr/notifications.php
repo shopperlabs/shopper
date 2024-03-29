@@ -5,6 +5,7 @@ declare(strict_types=1);
 return [
 
     'actions' => [
+        'save' => ':item enregistré avec succès',
         'create' => ':item ajouté avec succès',
         'update' => ':item mis à jour avec succès',
         'remove' => ':item supprimé(e) avec succès',

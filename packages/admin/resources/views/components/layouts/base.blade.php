@@ -1,6 +1,6 @@
 @props(['title' => config('app.name')])
 
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
     class="shopper scroll-smooth js-focus-visible min-h-screen antialiased"
@@ -16,9 +16,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @if ($favicon = config('shopper.admin.favicon'))
-        <link rel="icon" href="{{ $favicon }}" />
+        <link rel="icon" href="{{ $favicon }}"/>
     @else
-        <x-shopper::favicons />
+        <x-shopper::favicons/>
     @endif
 
     <title>{{ $title }} // {{ __('shopper::layout.meta_title') }}</title>
@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css"/>
 
     @stack('styles')
@@ -49,18 +50,18 @@
 </head>
 <body x-keypress {{ $attributes->twMerge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
 
-    {{ $slot }}
+{{ $slot }}
 
-    @livewire(\Filament\Notifications\Livewire\Notifications::class)
-    @livewire(\Shopper\Livewire\Components\SidePanel::class)
+@livewire(\Filament\Notifications\Livewire\Notifications::class)
+@livewire(\Shopper\Livewire\Components\SlideOverPanel::class)
 
-    <div class="ui-modal">
-        @livewire(\LivewireUI\Modal\Modal::class)
-    </div>
+<div class="ui-modal">
+    @livewire(\LivewireUI\Modal\Modal::class)
+</div>
 
-    @filamentScripts
+@filamentScripts
 
-    @include('shopper::includes._additional-scripts')
+@include('shopper::includes._additional-scripts')
 
 </body>
 </html>

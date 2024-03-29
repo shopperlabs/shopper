@@ -4,6 +4,7 @@
 
 @import 'base.css';
 @import 'components/sidebar.css';
+@import 'components/filament.css';
 @import 'components/intl-phone.css';
 
 @layer base {

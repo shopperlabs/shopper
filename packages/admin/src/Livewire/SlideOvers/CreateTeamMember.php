@@ -13,14 +13,14 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Livewire\Component;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Role;
 use Shopper\Core\Models\User;
 use Shopper\Core\Repositories\UserRepository;
+use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Notifications\AdminSendCredentials;
 
-class CreateTeamMember extends Component implements HasForms
+class CreateTeamMember extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 

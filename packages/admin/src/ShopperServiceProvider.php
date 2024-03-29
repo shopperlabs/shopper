@@ -24,6 +24,7 @@ use Shopper\Http\Responses\TwoFactorEnabledResponse;
 use Shopper\Http\Responses\TwoFactorLoginResponse;
 use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
+use Shopper\Providers\FeatureServiceProvider;
 use Shopper\Providers\SidebarServiceProvider;
 use Shopper\Providers\TwoFactorAuthenticationProvider;
 use Shopper\Traits\LoadComponents;
@@ -88,6 +89,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->app->bind(LoginResponseContract::class, LoginResponse::class);
 
         $this->app->register(SidebarServiceProvider::class);
+        $this->app->register(FeatureServiceProvider::class);
 
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel());
 

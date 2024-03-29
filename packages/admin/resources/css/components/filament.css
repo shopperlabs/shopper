@@ -1,0 +1,16 @@
+.fi-modal-close-overlay {
+  @apply backdrop-blur-sm;
+}
+
+@keyframes shaking {
+  0% { transform: translateX(0) }
+  25% { transform: translateX(5px) }
+  50% { transform: translateX(-5px) }
+  75% { transform: translateX(5px) }
+  100% { transform: translateX(0) }
+}
+
+.horizontal-shake {
+  animation: shaking 0.35s normal;
+  animation-iteration-count: 1
+}
