@@ -19,11 +19,11 @@ class Browse extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.components.settings.inventories.browse', [
+        return view('shopper::livewire.pages.settings.inventories.browse', [
             'inventories' => Inventory::query()
                 ->with('country')
                 ->get()
-                ->take(4),
+                ->take(config('shopper.admin.inventory-limit')),
         ])->title(__('shopper::words.locations'));
     }
 }

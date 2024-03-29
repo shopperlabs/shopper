@@ -49,6 +49,7 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
                             ->required()
                             ->hintAction(
                                 Components\Actions\Action::make(__('shopper::words.generate'))
+                                    ->color('info')
                                     ->action(function (Set $set): void {
                                         $set('password', Str::password(16));
                                     }),

@@ -19,10 +19,11 @@
             <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('Staff & permissions')" />
         </x-shopper::breadcrumb>
 
-        <x-shopper::heading class="mt-5 border-b-0">
+        <x-shopper::heading class="my-6">
             <x-slot name="title">
                 {{ $role->display_name }}
             </x-slot>
+
             <x-slot name="action">
                 <div class="flex space-x-3">
                     @if($role->can_be_removed)
