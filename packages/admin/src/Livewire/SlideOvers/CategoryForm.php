@@ -56,9 +56,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                         Components\Select::make('parent_id')
                             ->label(__('shopper::layout.forms.label.parent'))
                             ->relationship('parent', 'name', fn (Builder $query) => $query->where('is_enabled', true))
-                            ->getOptionLabelFromRecordUsing(function (Model $model) {
-                                return $model->parent ? "{$model->parent->name} / {$model->name}" : $model->name;
-                            })
+                            ->getOptionLabelFromRecordUsing(fn (Model $model) => $model->parent ? "{$model->parent->name} / {$model->name}" : $model->name)
                             ->searchable()
                             ->placeholder(__('shopper::pages/categories.empty_parent')),
                         Components\Toggle::make('is_enabled')

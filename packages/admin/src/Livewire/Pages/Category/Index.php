@@ -42,7 +42,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::layout.forms.label.name'))
                     ->formatStateUsing(function (Model $model) {
                         return view('shopper::livewire.tables.cells.categories.name', [
-                            'category' => $model
+                            'category' => $model,
                         ]);
                     })
                     ->searchable()
@@ -141,7 +141,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             'openPanel',
                             component: 'shopper-slide-overs.re-order-categories'
                         )
-                    )
+                    ),
             ]);
     }
 
