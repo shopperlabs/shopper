@@ -13,9 +13,7 @@ Route::prefix('setting')->as('settings.')->group(function (): void {
 });
 
 if (Feature::enabled('brand')) {
-    Route::as('brands.')->prefix('brands')->group(function (): void {
-        require __DIR__ . '/admin/brand.php';
-    });
+    Route::get('/brands', config('shopper.components.brand.pages.index'))->name('brands.index');
 }
 
 if (Feature::enabled('category')) {

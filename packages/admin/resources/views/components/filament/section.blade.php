@@ -58,10 +58,10 @@
     }"
     @if ($collapsible)
         x-on:collapse-section.window="if ($event.detail.id == $el.id) isCollapsed = true"
-    x-on:expand="isCollapsed = false"
-    x-on:open-section.window="if ($event.detail.id == $el.id) isCollapsed = false"
-    x-on:toggle-section.window="if ($event.detail.id == $el.id) isCollapsed = ! isCollapsed"
-    x-bind:class="isCollapsed && 'fi-collapsed'"
+        x-on:expand="isCollapsed = false"
+        x-on:open-section.window="if ($event.detail.id == $el.id) isCollapsed = false"
+        x-on:toggle-section.window="if ($event.detail.id == $el.id) isCollapsed = ! isCollapsed"
+        x-bind:class="isCollapsed && 'fi-collapsed'"
     @endif
     {{
         $attributes->class([
@@ -80,7 +80,7 @@
             @endif
             @class([
                 'fi-section-header flex flex-col gap-3',
-                'cursor-pointer' => $collapsible,
+                'cursor-pointer px-4 py-2 bg-gray-100/75 rounded-lg dark:bg-white/5' => $collapsible,
                 match ($compact) {
                     true => 'p-0',
                     false => 'py-4',
@@ -176,9 +176,10 @@
         @endif
         @class([
             'fi-section-content-ctn',
-            'border-t border-gray-200 dark:border-white/10' => $hasHeader && (! $aside),
+            'border-t border-gray-200 dark:border-white/10' => $hasHeader && (! $aside) && (! $collapsible),
             'md:col-span-2 lg:max-w-3xl' => $aside,
             'md:order-first' => $contentBefore,
+            'pt-4 lg:pt-6 px-2' => $collapsible,
         ])
     >
         <div

@@ -4,9 +4,10 @@
     'button' => false,
     'permission' => false,
     'url' => false,
+    'panel' => null,
 ])
 
-<div {{ $attributes->twMerge(['class' => 'relative w-full lg:flex lg:items-center py-12 lg:py-16']) }}>
+<div {{ $attributes->twMerge(['class' => 'relative w-full lg:flex lg:items-center py-10 lg:py-12']) }}>
     <div class="w-full lg:w-1/2 relative flex justify-center lg:block">
         {{ $slot }}
     </div>
@@ -22,8 +23,12 @@
 
             @if($permission)
                 @can($permission)
-                    @if($button && $url)
+                    @if($url)
                         <x-shopper::buttons.primary :link="$url" class="mt-5">
+                            {{ $button }}
+                        </x-shopper::buttons.primary>
+                    @elseif($panel)
+                        <x-shopper::buttons.primary wire:click="$dispatch('openPanel', {{ $panel }})" class="mt-5">
                             {{ $button }}
                         </x-shopper::buttons.primary>
                     @endif

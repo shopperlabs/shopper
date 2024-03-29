@@ -71,7 +71,6 @@
                 <div>
                     <x-shopper::buttons.primary
                         wire:click="$dispatch('openPanel', {
-                            title: '{{ __('shopper::pages/settings.roles_permissions.add_admin') }}',
                             component: 'shopper-slide-overs.create-team-member'
                         })"
                     >

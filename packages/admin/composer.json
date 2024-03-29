@@ -21,6 +21,8 @@
     "bacon/bacon-qr-code": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "filament/forms": "^3.2",
+    "filament/spatie-laravel-media-library-plugin": "^3.2",
+    "filament/tables": "^3.2",
     "gehrisandro/tailwind-merge-laravel": "^1.2",
     "illuminate/console": "^10.0|^11.0",
     "illuminate/contracts": "^10.0|^11.0",

@@ -190,6 +190,7 @@ return [
             'apply' => 'Appliquer',
             'next' => 'Suivant',
             'back' => 'Retour',
+            'theme_switcher' => 'Activer :label theme',
         ],
 
         'error' => 'Votre soumission contient des erreurs. Veuillez réessayer',

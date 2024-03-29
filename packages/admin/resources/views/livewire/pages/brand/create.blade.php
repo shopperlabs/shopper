@@ -10,16 +10,5 @@
                 {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.brand'))]) }}
             </x-slot>
         </x-shopper::heading>
-
-        @include('shopper::livewire.components.brands._form')
-
-        <div class="mt-8 border-t border-gray-200 pt-6 pb-10 dark:border-gray-700">
-            <div class="flex justify-end">
-                <x-shopper::buttons.primary wire:click="store" wire.loading.attr="disabled" type="button">
-                    <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                    {{ __('shopper::layout.forms.actions.save') }}
-                </x-shopper::buttons.primary>
-            </div>
-        </div>
     </div>
 </x-shopper::container>

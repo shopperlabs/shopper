@@ -9,7 +9,10 @@
                 @can('add_brands')
                     <div class="flex">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper::buttons.primary :link="route('shopper.brands.create')">
+                            <x-shopper::buttons.primary
+                                wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.brand-form' })"
+                                type="button"
+                            >
                                 {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]) }}
                             </x-shopper::buttons.primary>
                         </span>
@@ -24,8 +27,8 @@
             :title="__('shopper::pages/brands.title')"
             :content="__('shopper::pages/brands.content')"
             :button="__('shopper::words.actions_label.add_new', ['name' => __('shopper::words.brand')])"
+            panel="{ component: 'shopper-slide-overs.brand-form' }"
             permission="add_brands"
-            :url="route('shopper.brands.create')"
         >
             <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 356 285">
@@ -131,7 +134,7 @@
         </x-shopper::empty-state>
     @else
         <div class="mt-8">
-            <livewire:shopper-tables.brands-table />
+            {{ $this->table }}
         </div>
     @endif
 
