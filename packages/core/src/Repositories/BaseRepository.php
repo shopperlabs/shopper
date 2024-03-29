@@ -139,7 +139,7 @@ abstract class BaseRepository implements RepositoryContract
         return $models;
     }
 
-    public function getById($id, array $columns = ['*']): Model
+    public function getById(int $id, array $columns = ['*']): Model
     {
         $this->unsetClauses();
 
@@ -148,7 +148,7 @@ abstract class BaseRepository implements RepositoryContract
         return $this->query->findOrFail($id, $columns);
     }
 
-    public function getByColumn(string $item, string $column, array $columns = ['*']): ?Model
+    public function getByColumn(string $column, mixed $item, array $columns = ['*']): ?Model
     {
         $this->unsetClauses();
 

@@ -13,7 +13,7 @@ return [
     */
 
     'pages' => [
-        'index' => Livewire\Pages\Brand\Index::class,
+        'brand-index' => Livewire\Pages\Brand\Index::class,
     ],
 
     /*

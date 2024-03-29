@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', config('shopper.components.setting.pages.index'))->name('index');
+Route::get('/', config('shopper.components.setting.pages.setting-index'))->name('index');
 Route::get('/general', config('shopper.components.setting.pages.general'))->name('shop');
 
 Route::prefix('inventories')->group(function (): void {

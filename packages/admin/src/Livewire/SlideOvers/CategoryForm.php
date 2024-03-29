@@ -11,28 +11,29 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
-use Shopper\Core\Repositories\Store\BrandRepository;
+use Shopper\Core\Repositories\Store\CategoryRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
-class BrandForm extends SlideOverComponent implements HasForms
+class CategoryForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public ?Model $brand = null;
+    public Model $category;
 
     public ?array $data = [];
 
-    public function mount(?int $brandId = null): void
+    public function mount(?int $categoryId = null): void
     {
-        $this->brand = $brandId
-            ? (new BrandRepository())->getById($brandId)
-            : (new BrandRepository())->makeModel();
+        $this->category = $categoryId
+            ? (new CategoryRepository())->getById($categoryId)
+            : (new CategoryRepository())->makeModel();
 
-        $this->form->fill($this->brand->toArray());
+        $this->form->fill($this->category->toArray());
     }
 
     public function form(Form $form): Form
@@ -45,17 +46,21 @@ class BrandForm extends SlideOverComponent implements HasForms
                     ->schema([
                         Components\TextInput::make('name')
                             ->label(__('shopper::layout.forms.label.name'))
-                            ->placeholder('Apple, Nike, Samsung...')
+                            ->placeholder('Women, Baby Shoes, MacBook...')
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(function (string $operation, $state, Set $set): void {
                                 $set('slug', Str::slug($state));
                             }),
                         Components\Hidden::make('slug'),
-                        Components\TextInput::make('website')
-                            ->label(__('shopper::layout.forms.label.website'))
-                            ->placeholder('https://example.com')
-                            ->url(),
+                        Components\Select::make('parent_id')
+                            ->label(__('shopper::layout.forms.label.parent'))
+                            ->relationship('parent', 'name', fn (Builder $query) => $query->where('is_enabled', true))
+                            ->getOptionLabelFromRecordUsing(function (Model $model) {
+                                return $model->parent ? "{$model->parent->name} / {$model->name}" : $model->name;
+                            })
+                            ->searchable()
+                            ->placeholder(__('shopper::pages/categories.empty_parent')),
                         Components\Toggle::make('is_enabled')
                             ->label(__('shopper::layout.forms.label.visibility'))
                             ->onColor('success')
@@ -95,24 +100,24 @@ class BrandForm extends SlideOverComponent implements HasForms
                     ]),
             ])
             ->statePath('data')
-            ->model($this->brand);
+            ->model($this->category);
     }
 
     public function save(): void
     {
-        if ($this->brand->id) {
-            $this->brand->update($this->form->getState());
+        if ($this->category->id) {
+            $this->category->update($this->form->getState());
         } else {
-            $brand = (new BrandRepository())->create($this->form->getState());
-            $this->form->model($brand)->saveRelationships();
+            $category = (new CategoryRepository())->create($this->form->getState());
+            $this->form->model($category)->saveRelationships();
         }
 
         Notification::make()
-            ->title(__('shopper::notifications.actions.save', ['item' => __('shopper::words.brand')]))
+            ->title(__('shopper::notifications.actions.save', ['item' => __('shopper::words.category')]))
             ->success()
             ->send();
 
-        $this->dispatch('brand-save');
+        $this->dispatch('category-save');
 
         $this->closePanel();
 
@@ -121,6 +126,6 @@ class BrandForm extends SlideOverComponent implements HasForms
 
     public function render(): View
     {
-        return view('shopper::livewire.slide-overs.brand-form');
+        return view('shopper::livewire.slide-overs.category-form');
     }
 }

@@ -8,11 +8,12 @@
             @if($total > 0)
                 @can('add_categories')
                     <div class="flex space-x-3">
-                        <span class="shadow-sm rounded-md">
-                            <x-shopper::buttons.primary :link="route('shopper.categories.create')">
-                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.category'))]) }}
-                            </x-shopper::buttons.primary>
-                        </span>
+                        <x-shopper::buttons.primary
+                            wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.category-form' })"
+                            type="button"
+                        >
+                            {{ __('shopper::words.actions_label.add_new', ['name' => mb_strtolower(__('shopper::words.category'))]) }}
+                        </x-shopper::buttons.primary>
                     </div>
                 @endcan
             @endif
@@ -25,7 +26,7 @@
             :content="__('shopper::pages/categories.content')"
             :button="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.category'))])"
             permission="add_categories"
-            :url="route('shopper.categories.create')"
+            panel="{ component: 'shopper-slide-overs.category-form' }"
         >
             <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 356 208">
@@ -114,7 +115,7 @@
         </x-shopper::empty-state>
     @else
         <div class="mt-8">
-            <livewire:shopper-tables.categories-table />
+            {{ $this->table }}
         </div>
     @endif
 
