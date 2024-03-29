@@ -6,20 +6,20 @@ use Illuminate\Support\Facades\Route;
 use Shopper\Feature;
 
 Route::get('/dashboard', config('shopper.components.dashboard.pages.dashboard'))->name('dashboard');
-Route::get('/profile', config('shopper.components.account.pages.index'))->name('profile');
+Route::get('/profile', config('shopper.components.account.pages.account-index'))->name('profile');
 
 Route::prefix('setting')->as('settings.')->group(function (): void {
     require __DIR__ . '/admin/setting.php';
 });
 
 if (Feature::enabled('brand')) {
-    Route::get('/brands', config('shopper.components.brand.pages.index'))->name('brands.index');
+    Route::get('/brands', config('shopper.components.brand.pages.brand-index'))
+        ->name('brands.index');
 }
 
 if (Feature::enabled('category')) {
-    Route::as('categories.')->prefix('categories')->group(function (): void {
-        require __DIR__ . '/admin/category.php';
-    });
+    Route::get('/categories', config('shopper.components.category.pages.category-index'))
+        ->name('categories.index');
 }
 
 if (Feature::enabled('collection')) {

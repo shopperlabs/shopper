@@ -163,5 +163,7 @@ return [
     'icon_no_result' => 'Aucun résultat pour cette recherche.',
     'selection' => 'Séléction',
     'sign_in_as' => 'Connecté avec',
+    'general' => 'Général',
+    'slug_description' => 'Utiliser pour la génération de bon format url sur votre boutique',
 
 ];

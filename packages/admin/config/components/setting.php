@@ -15,7 +15,7 @@ return [
     */
 
     'pages' => [
-        'index' => Pages\Settings\Index::class,
+        'setting-index' => Pages\Settings\Index::class,
         'general' => Pages\Settings\General::class,
         'inventory-index' => Pages\Settings\Inventories\Browse::class,
         'inventory-create' => Pages\Settings\Inventories\Create::class,

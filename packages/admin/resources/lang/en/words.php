@@ -164,5 +164,7 @@ return [
     'icon_no_result' => 'No matching icons found',
     'selection' => 'Selection',
     'sign_in_as' => 'Signed in as',
+    'general' => 'General',
+    'slug_description' => 'Use to generate the right url format for your store',
 
 ];

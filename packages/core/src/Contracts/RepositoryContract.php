@@ -26,7 +26,7 @@ interface RepositoryContract
 
     public function getById(int $id, array $columns = ['*']);
 
-    public function getByColumn(string $item, string $column, array $columns = ['*']);
+    public function getByColumn(string $column, mixed $item, array $columns = ['*']);
 
     public function paginate(int $limit = 25, array $columns = ['*'], string $pageName = 'page', $page = null);
 

@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Shopper\Livewire;
-use Shopper\Livewire\Components;
 
 return [
 
@@ -13,7 +12,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'pages' => [],
+    'pages' => [
+        'category-index' => Livewire\Pages\Category\Index::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -22,11 +23,8 @@ return [
     */
 
     'components' => [
-        'categories.browse' => Components\Categories\Browse::class,
-        'categories.create' => Components\Categories\Create::class,
-        'categories.edit' => Components\Categories\Edit::class,
-
-        'modals.re-order-categories' => Livewire\Modals\ReOrderCategories::class,
+        'slide-overs.category-form' => Livewire\SlideOvers\CategoryForm::class,
+        'slide-overs.re-order-categories' => Livewire\SlideOvers\ReOrderCategories::class,
     ],
 
 ];

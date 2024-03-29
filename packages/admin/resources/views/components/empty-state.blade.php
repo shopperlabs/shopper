@@ -28,7 +28,7 @@
                             {{ $button }}
                         </x-shopper::buttons.primary>
                     @elseif($panel)
-                        <x-shopper::buttons.primary wire:click="$dispatch('openPanel', {{ $panel }})" class="mt-5">
+                        <x-shopper::buttons.primary type="button" wire:click="$dispatch('openPanel', {{ $panel }})" class="mt-5">
                             {{ $button }}
                         </x-shopper::buttons.primary>
                     @endif

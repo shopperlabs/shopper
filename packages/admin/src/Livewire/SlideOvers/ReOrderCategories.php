@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Livewire\Modals;
+namespace Shopper\Livewire\SlideOvers;
 
 use Illuminate\Contracts\View\View;
-use LivewireUI\Modal\ModalComponent;
+use Livewire\Attributes\On;
 use Shopper\Core\Repositories\Store\CategoryRepository;
+use Shopper\Livewire\Components\SlideOverComponent;
 
-class ReOrderCategories extends ModalComponent
+class ReOrderCategories extends SlideOverComponent
 {
     public function updateGroupOrder(array $items): void
     {
         foreach ($items as $item) {
             (new CategoryRepository())
-                ->getById($item['value'])
+                ->getById((int) $item['value'])
                 ->update(['position' => $item['order']]);
         }
 
-        $this->emitSelf('notify-saved');
-        $this->emit('onCategoriesReordered');
+        $this->dispatch('category-save');
     }
 
     public function updateCategoryOrder(array $groups): void
@@ -27,29 +27,23 @@ class ReOrderCategories extends ModalComponent
         foreach ($groups as $group) {
             foreach ($group['items'] as $item) {
                 (new CategoryRepository())
-                    ->getById($item['value'])
+                    ->getById((int) $item['value'])
                     ->update([
-                        'parent_id' => $group['value'],
+                        'parent_id' => (int) $group['value'],
                         'position' => $item['order'],
                     ]);
             }
         }
 
-        $this->emitSelf('notify-saved');
-
-        $this->emit('onCategoriesReordered');
+        $this->dispatch('category-save');
     }
 
-    public static function modalMaxWidth(): string
-    {
-        return 'lg';
-    }
-
+    #[On('category-save')]
     public function render(): View
     {
-        return view('shopper::livewire.modals.re-order-categories', [
+        return view('shopper::livewire.slide-overs.re-order-categories', [
             'categories' => (new CategoryRepository())
-                ->with('childs')
+                ->with('children')
                 ->where('parent_id', null)
                 ->orderBy('position')
                 ->get(),

@@ -14,7 +14,7 @@ return [
     */
 
     'pages' => [
-        'index' => Pages\Account::class,
+        'account-index' => Pages\Account::class,
     ],
 
     /*

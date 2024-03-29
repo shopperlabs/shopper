@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
+use Shopper\Observers\CategoryObserver;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
@@ -22,6 +24,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
  * @property int|null $parent_id
  * @property null|self $parent
  */
+#[ObservedBy(CategoryObserver::class)]
 class Category extends Model implements SpatieHasMedia
 {
     use HasFactory;
@@ -33,6 +36,7 @@ class Category extends Model implements SpatieHasMedia
 
     protected $casts = [
         'is_enabled' => 'boolean',
+        'metadata' => 'array',
     ];
 
     public function getTable(): string
@@ -56,6 +60,13 @@ class Category extends Model implements SpatieHasMedia
                 'separator' => '/',
             ],
         ];
+    }
+
+    public function updateStatus(bool $status = true): void
+    {
+        $this->is_enabled = $status;
+
+        $this->save();
     }
 
     public function scopeEnabled(Builder $query): Builder

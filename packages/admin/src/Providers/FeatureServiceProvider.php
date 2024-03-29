@@ -14,6 +14,7 @@ final class FeatureServiceProvider extends ServiceProvider
 
     protected array $componentsConfig = [
         'brand',
+        'category',
     ];
 
     protected string $root = __DIR__ . '/../..';
@@ -32,8 +33,12 @@ final class FeatureServiceProvider extends ServiceProvider
 
     protected function components(): array
     {
-        return array_merge(
-            $this->loadLivewireComponents('brand'),
-        );
+        $components = [];
+
+        foreach ($this->componentsConfig as $config) {
+            $components = array_merge($this->loadLivewireComponents($config), $components);
+        }
+
+        return $components;
     }
 }
