@@ -12,8 +12,6 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Rule;
-use Livewire\Attributes\On;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 

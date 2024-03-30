@@ -6,7 +6,6 @@ namespace Shopper\Livewire\Components\Customers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class Addresses extends Component

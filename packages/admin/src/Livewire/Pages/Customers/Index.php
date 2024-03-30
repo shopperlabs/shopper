@@ -7,15 +7,14 @@ namespace Shopper\Livewire\Pages\Customers;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Models\Country;
-use Shopper\Core\Models\Order;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -53,8 +52,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('country')
                     ->label(__('shopper::layout.forms.label.country'))
                     ->getStateUsing(
-                        fn ($record): ?string =>
-                            Country::find($record->addresses->first()?->country_id)?->name ?? null
+                        fn ($record): ?string => Country::find($record->addresses->first()?->country_id)?->name ?? null
                     )
                     ->sortable(),
                 Tables\Columns\TextColumn::make('orders_count')
@@ -88,7 +86,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                                 $data['created_until'],
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
-                    })
+                    }),
             ])
             ->persistFiltersInSession()
             ->actions([

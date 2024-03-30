@@ -15,7 +15,6 @@ use Livewire\Component;
 use Shopper\Components\Form\AddressField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
-use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Inventory;
 
 class InventoryForm extends Component implements HasForms
