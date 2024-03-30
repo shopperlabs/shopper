@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <form class="mt-6" wire:submit.prevent="authenticate">
+    <form class="mt-6" wire:submit="authenticate">
         <div class="rounded-md shadow-sm">
             <div>
                 <input
