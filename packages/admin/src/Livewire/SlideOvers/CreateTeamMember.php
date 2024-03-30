@@ -13,6 +13,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Shopper\Components\Form\GenderField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Role;
 use Shopper\Core\Models\User;
@@ -67,14 +68,7 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
                         Components\TextInput::make('last_name')
                             ->label(__('shopper::layout.forms.label.last_name'))
                             ->required(),
-                        Components\Select::make('gender')
-                            ->label(__('shopper::layout.forms.label.gender'))
-                            ->options([
-                                'male' => __('shopper::words.male'),
-                                'female' => __('shopper::words.female'),
-                            ])
-                            ->default('male')
-                            ->native(false),
+                        GenderField::make(),
                         Components\TextInput::make('phone_number')
                             ->label(__('shopper::layout.forms.label.phone_number'))
                             ->tel(),

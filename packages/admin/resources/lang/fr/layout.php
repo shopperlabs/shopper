@@ -160,6 +160,7 @@ return [
             'disable' => 'Désactiver',
             'disabled' => 'Désactivé',
             'edit' => 'Éditer',
+            'view' => 'Voir',
             'enable' => 'Activer',
             'enabled' => 'Activé',
             'export' => 'Exportez',

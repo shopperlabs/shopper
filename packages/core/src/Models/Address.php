@@ -8,20 +8,23 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Enum\AddressType;
 
 /**
  * @property-read int $id
  * @property string $last_name
- * @property string|null $first_name
+ * @property string | null $first_name
+ * @property string | null $company_name
+ * @property string | null $street_address
+ * @property string | null $street_address_plus
+ * @property string $zipcode
+ * @property string $city
+ * @property string | null $phone_number
  * @property bool $is_default
  */
 class Address extends Model
 {
     use HasFactory;
-
-    public const TYPE_BILLING = 'billing';
-
-    public const TYPE_SHIPPING = 'shipping';
 
     protected $fillable = [
         'last_name',
@@ -44,6 +47,7 @@ class Address extends Model
 
     protected $casts = [
         'is_default' => 'boolean',
+        'type' => AddressType::class,
     ];
 
     protected static function boot(): void

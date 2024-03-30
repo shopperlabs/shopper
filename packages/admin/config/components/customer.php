@@ -13,7 +13,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'pages' => [],
+    'pages' => [
+        'customer-index' => Livewire\Pages\Customers\Index::class,
+        'customer-create' => Livewire\Pages\Customers\Create::class,
+        'customer-show' => Livewire\Pages\Customers\Show::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -23,11 +27,8 @@ return [
 
     'components' => [
         'customers.addresses' => Components\Customers\Addresses::class,
-        'customers.browse' => Components\Customers\Browse::class,
-        'customers.create' => Components\Customers\Create::class,
         'customers.orders' => Components\Customers\Orders::class,
         'customers.profile' => Components\Customers\Profile::class,
-        'customers.show' => Components\Customers\Show::class,
 
         'modals.delete-customer' => Livewire\Modals\DeleteCustomer::class,
     ],

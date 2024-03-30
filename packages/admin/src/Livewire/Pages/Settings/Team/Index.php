@@ -41,9 +41,7 @@ class Index extends Component
             'users' => (new UserRepository())
                 ->with('roles')
                 ->makeModel()
-                ->whereHas('roles', function (Builder $query): void {
-                    $query->whereIn('name', [config('shopper.core.users.admin_role'), 'manager']);
-                })
+                ->scopes('administrators')
                 ->orderBy('created_at', 'desc')
                 ->paginate(3),
         ])

@@ -12,6 +12,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Shopper\Components\Form\AddressField;
 use Shopper\Components\Section;
 use Shopper\Components\Separator;
 use Shopper\Core\Models\Country;
@@ -69,31 +70,7 @@ class InventoryForm extends Component implements HasForms
                     ->description(__('shopper::pages/settings.location.address_summary'))
                     ->aside()
                     ->compact()
-                    ->schema([
-                        Forms\Components\TextInput::make('street_address')
-                            ->label(__('shopper::layout.forms.label.street_address'))
-                            ->placeholder('Akwa Avenue 34...')
-                            ->columnSpan('full')
-                            ->required(),
-                        Forms\Components\TextInput::make('street_address_plus')
-                            ->label(__('shopper::layout.forms.label.street_address_plus'))
-                            ->columnSpan('full'),
-                        Forms\Components\TextInput::make('city')
-                            ->label(__('shopper::layout.forms.label.city'))
-                            ->required(),
-                        Forms\Components\TextInput::make('zipcode')
-                            ->label(__('shopper::layout.forms.label.postal_code'))
-                            ->required(),
-                        Forms\Components\Select::make('country_id')
-                            ->label(__('shopper::layout.forms.label.country'))
-                            ->options(Country::query()->pluck('name', 'id'))
-                            ->searchable()
-                            ->required()
-                            ->columnSpan('full'),
-                        Forms\Components\TextInput::make('phone_number')
-                            ->label(__('shopper::layout.forms.label.phone_number'))
-                            ->columnSpan('full'),
-                    ])
+                    ->schema(AddressField::make())
                     ->columns(),
             ])
             ->statePath('data')

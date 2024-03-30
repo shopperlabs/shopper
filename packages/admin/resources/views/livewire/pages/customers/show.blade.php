@@ -19,28 +19,39 @@
             <x-shopper::breadcrumb.link :link="route('shopper.customers.index')" :title="__('shopper::layout.sidebar.customers')" />
         </x-shopper::breadcrumb>
 
-        <div class="mt-5 lg:flex lg:items-center lg:justify-between relative z-20">
+        <div class="py-6 lg:flex lg:items-center lg:justify-between">
             <div class="flex-1 min-w-0">
                 <div class="flex items-start">
-                    <div class="shrink-0 h-12 w-12">
-                        <img class="h-12 w-12 rounded-lg" src="{{ $picture }}" alt="{{ $customer->full_name }}">
-                    </div>
+                    <img
+                        class="h-12 w-12 rounded-full object-cover"
+                        src="{{ $customer->picture }}"
+                        alt="{{ $customer->full_name }}"
+                    />
                     <div class="ml-4">
-                        <h3 class="text-2xl font-bold leading-6 text-gray-900 sm:truncate dark:text-white">
+                        <h3 class="text-2xl font-heading font-bold leading-6 text-gray-900 sm:truncate dark:text-white">
                             {{ $customer->full_name }}
                         </h3>
-                        <div class="mt-1 flex items-center divide-x divide-gray-200 dark:divide-gray-700">
-                            <div class="flex items-center pr-2">
+                        <div class="mt-1 flex items-center sm:space-x-2">
+                            <div class="flex items-center">
                                 @if($customer->email_verified_at)
-                                    <x-untitledui-check-verified-02 class="w-5 h-5 text-green-500" />
+                                    <x-untitledui-check-verified-02
+                                        class="w-5 h-5 text-green-500"
+                                        aria-hidden="true"
+                                    />
                                 @else
-                                    <x-untitledui-alert-circle class="w-5 h-5 text-danger-500" />
+                                    <x-untitledui-alert-circle
+                                        class="w-5 h-5 text-danger-500"
+                                        aria-hidden="true"
+                                    />
                                 @endif
                                 <span class="ml-1.5 text-sm leading-5 text-gray-500 dark:text-gray-400">
                                     {{ $customer->email }}
                                 </span>
                             </div>
-                            <p class="pl-2 text-sm text-gray-500 leading-5 dark:text-gray-400">
+                            <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 hidden flex-none fill-gray-300 dark:fill-gray-500 sm:block" aria-hidden="true">
+                                <circle cx="1" cy="1" r="1" />
+                            </svg>
+                            <p class="hidden text-sm text-gray-500 leading-5 dark:text-gray-400 sm:block">
                                 {{ __('shopper::pages/customers.period', ['period' => $customer->created_at->diffForHumans()]) }}
                             </p>
                         </div>
@@ -48,37 +59,25 @@
                 </div>
             </div>
             <div class="hidden lg:flex mt-4 lg:mt-0 lg:ml-4 space-x-2">
-                <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
-                    <div>
-                        <button @click="open = !open" class="flex items-center text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="Options" id="options-menu" aria-haspopup="true" x-bind:aria-expanded="open">
-                            <x-untitledui-dots-horizontal class="w-5 h-5" />
-                        </button>
-                    </div>
+                <div>
+                    <x-filament-actions::group
+                        :actions="[
+                            $this->deleteAction,
+                        ]"
+                        :label="__('shopper::layout.forms.actions.more_actions')"
+                        icon="heroicon-m-ellipsis-vertical"
+                        color="gray"
+                        size="sm"
+                        :button="true"
+                    />
 
-                    <div x-cloak
-                         x-show="open"
-                         x-transition:enter="transition ease-out duration-100"
-                         x-transition:enter-start="transform opacity-0 scale-95"
-                         x-transition:enter-end="transform opacity-100 scale-100"
-                         x-transition:leave="transition ease-in duration-75"
-                         x-transition:leave-start="transform opacity-100 scale-100"
-                         x-transition:leave-end="transform opacity-0 scale-95"
-                         class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg"
-                    >
-                        <div class="rounded-md bg-white shadow-xs dark:bg-gray-800">
-                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <button wire:click="$emit('openModal', 'shopper-modals.delete-customer', {{ json_encode([$customer->id]) }})" type="button" class="block w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700" role="menuitem">
-                                    {{ __('shopper::layout.forms.actions.delete') }}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <x-filament-actions::modals />
                 </div>
             </div>
         </div>
     </x-shopper::container>
 
-    <div class="py-6">
+    <div>
         <div class="sticky top-0">
             <div class="lg:border-y lg:border-gray-200 dark:border-gray-700">
                 <div class="lg:hidden px-4">
@@ -124,7 +123,7 @@
             </div>
         </div>
 
-        <div class="mt-8">
+        <div class="mt-10">
             <div x-show="currentTab === 'profile'">
                 <livewire:shopper-customers.profile :customer="$customer" />
             </div>
@@ -136,5 +135,4 @@
             </div>
         </div>
     </div>
-
 </div>

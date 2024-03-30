@@ -123,6 +123,23 @@ class User extends Authenticatable
         );
     }
 
+    public function scopeCustomers(Builder $query): Builder
+    {
+        return $query->whereHas('roles', function (Builder $query): void {
+            $query->where('name', config('shopper.core.users.default_role'));
+        });
+    }
+
+    public function scopeAdministrators(Builder $query): Builder
+    {
+        return $query->whereHas('roles', function (Builder $query): void {
+            $query->whereIn('name', [
+                config('shopper.core.users.admin_role'),
+                config('shopper.core.users.manager_role'),
+            ]);
+        });
+    }
+
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);

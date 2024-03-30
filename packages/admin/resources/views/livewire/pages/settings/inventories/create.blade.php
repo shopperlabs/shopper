@@ -4,7 +4,7 @@
         <x-shopper::breadcrumb.link :link="route('shopper.settings.inventories')" :title="__('shopper::words.locations')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="my-6">
+    <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::pages/settings.location.add') }}
         </x-slot>

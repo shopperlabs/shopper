@@ -3828,19 +3828,14 @@ html {
   margin-bottom: 1rem;
 }
 
-.my-8 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.my-5 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-}
-
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .\!mt-0 {
@@ -4393,6 +4388,10 @@ html {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-0\.5 {
+  width: 0.125rem;
 }
 
 .min-w-0 {
@@ -5899,6 +5898,14 @@ html {
   fill: rgba(var(--gray-50), 1);
 }
 
+.fill-gray-400 {
+  fill: rgba(var(--gray-400), 1);
+}
+
+.fill-gray-300 {
+  fill: rgba(var(--gray-300), 1);
+}
+
 .stroke-gray-200 {
   stroke: rgba(var(--gray-200), 1);
 }
@@ -6685,6 +6692,16 @@ html {
   color: rgba(var(--gray-500), var(--tw-placeholder-opacity));
 }
 
+.placeholder-gray-400::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(var(--gray-400), var(--tw-placeholder-opacity));
+}
+
+.placeholder-gray-400::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(var(--gray-400), var(--tw-placeholder-opacity));
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -6807,6 +6824,11 @@ html {
 .ring-danger-600 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(220 38 38 / var(--tw-ring-opacity));
+}
+
+.ring-gray-100 {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgba(var(--gray-100), var(--tw-ring-opacity));
 }
 
 .ring-gray-200 {
@@ -9535,6 +9557,14 @@ input[type='number'] {
   fill: rgba(var(--gray-900), 1);
 }
 
+:is(.dark .dark\:fill-gray-700) {
+  fill: rgba(var(--gray-700), 1);
+}
+
+:is(.dark .dark\:fill-gray-500) {
+  fill: rgba(var(--gray-500), 1);
+}
+
 :is(.dark .dark\:stroke-gray-900) {
   stroke: rgba(var(--gray-900), 1);
 }
@@ -10311,6 +10341,12 @@ input[type='number'] {
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+
+  .sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+    margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
   }
 
   .sm\:truncate {

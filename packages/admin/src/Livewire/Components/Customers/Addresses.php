@@ -20,12 +20,6 @@ class Addresses extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.customers.addresses', [
-            'addresses' => Cache::remember(
-                key: 'customer-addresses',
-                ttl: 60 * 60 * 24,
-                callback: fn () => $this->addresses
-            ),
-        ]);
+        return view('shopper::livewire.components.customers.addresses');
     }
 }

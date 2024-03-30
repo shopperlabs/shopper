@@ -28,6 +28,7 @@ class CustomerSidebar extends AbstractAdminSidebar
                     $item->setActiveClass('text-primary-600 bg-gray-100 dark:bg-gray-700/50');
                     $item->setInactiveClass('text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900');
                     $item->route('shopper.customers.index');
+                    $item->useSpa();
                     $item->setIcon(
                         icon: 'untitledui-users-02',
                         iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
@@ -46,6 +47,7 @@ class CustomerSidebar extends AbstractAdminSidebar
                     $item->setActiveClass('text-primary-600 bg-gray-100 dark:bg-gray-700/50');
                     $item->setInactiveClass('text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900');
                     $item->route('shopper.reviews.index');
+                    $item->useSpa();
                     $item->setIcon(
                         icon: 'untitledui-message-heart-square',
                         iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
