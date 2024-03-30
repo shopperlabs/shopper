@@ -23,7 +23,7 @@ class Edit extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.components.settings.inventories.edit')
+        return view('shopper::livewire.pages.settings.inventories.edit')
             ->title(__('shopper::words.locations') . ' ~ ' . $this->inventory->name);
     }
 }

@@ -3828,6 +3828,11 @@ html {
   margin-bottom: 1rem;
 }
 
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -3961,6 +3966,10 @@ html {
   margin-left: 1.25rem;
 }
 
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
 .ml-auto {
   margin-left: auto;
 }
@@ -4043,10 +4052,6 @@ html {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.ml-6 {
-  margin-left: 1.5rem;
 }
 
 .line-clamp-\[--line-clamp\] {
@@ -4383,6 +4388,10 @@ html {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-0\.5 {
+  width: 0.125rem;
 }
 
 .min-w-0 {
@@ -5099,6 +5108,12 @@ html {
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
+.space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.375rem * var(--tw-space-y-reverse));
+}
+
 .space-y-10 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -5157,12 +5172,6 @@ html {
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
-}
-
-.space-y-1\.5 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.375rem * var(--tw-space-y-reverse));
 }
 
 .divide-x > :not([hidden]) ~ :not([hidden]) {
@@ -5887,6 +5896,14 @@ html {
 
 .fill-gray-50 {
   fill: rgba(var(--gray-50), 1);
+}
+
+.fill-gray-400 {
+  fill: rgba(var(--gray-400), 1);
+}
+
+.fill-gray-300 {
+  fill: rgba(var(--gray-300), 1);
 }
 
 .stroke-gray-200 {
@@ -6675,6 +6692,16 @@ html {
   color: rgba(var(--gray-500), var(--tw-placeholder-opacity));
 }
 
+.placeholder-gray-400::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(var(--gray-400), var(--tw-placeholder-opacity));
+}
+
+.placeholder-gray-400::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgba(var(--gray-400), var(--tw-placeholder-opacity));
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -6797,6 +6824,11 @@ html {
 .ring-danger-600 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(220 38 38 / var(--tw-ring-opacity));
+}
+
+.ring-gray-100 {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgba(var(--gray-100), var(--tw-ring-opacity));
 }
 
 .ring-gray-200 {
@@ -8879,11 +8911,6 @@ input[type='number'] {
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
-.hover\:text-primary-700:hover {
-  --tw-text-opacity: 1;
-  color: rgb(29 78 216 / var(--tw-text-opacity));
-}
-
 .hover\:text-primary-800:hover {
   --tw-text-opacity: 1;
   color: rgb(30 64 175 / var(--tw-text-opacity));
@@ -9530,6 +9557,14 @@ input[type='number'] {
   fill: rgba(var(--gray-900), 1);
 }
 
+:is(.dark .dark\:fill-gray-700) {
+  fill: rgba(var(--gray-700), 1);
+}
+
+:is(.dark .dark\:fill-gray-500) {
+  fill: rgba(var(--gray-500), 1);
+}
+
 :is(.dark .dark\:stroke-gray-900) {
   stroke: rgba(var(--gray-900), 1);
 }
@@ -9590,10 +9625,6 @@ input[type='number'] {
 :is(.dark .dark\:text-green-400) {
   --tw-text-opacity: 1;
   color: rgb(74 222 128 / var(--tw-text-opacity));
-}
-
-:is(.dark .dark\:text-green-500\/50) {
-  color: rgb(34 197 94 / 0.5);
 }
 
 :is(.dark .dark\:text-primary-400) {
@@ -10312,6 +10343,12 @@ input[type='number'] {
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 
+  .sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+    margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+  }
+
   .sm\:truncate {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -10523,10 +10560,6 @@ input[type='number'] {
     display: block;
   }
 
-  .md\:flex {
-    display: flex;
-  }
-
   .md\:table-cell {
     display: table-cell;
   }
@@ -10589,10 +10622,6 @@ input[type='number'] {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .md\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
   .md\:grid-cols-\[--cols-md\] {
     grid-template-columns: var(--cols-md);
   }
@@ -10617,10 +10646,6 @@ input[type='number'] {
     justify-content: flex-end;
   }
 
-  .md\:justify-between {
-    justify-content: space-between;
-  }
-
   .md\:gap-1 {
     gap: 0.25rem;
   }
@@ -10636,18 +10661,6 @@ input[type='number'] {
 
   .md\:gap-y-6 {
     row-gap: 1.5rem;
-  }
-
-  .md\:space-x-4 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 0;
-    margin-right: calc(1rem * var(--tw-space-x-reverse));
-    margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
-  }
-
-  .md\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-y-reverse: 0;
-    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
-    margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 
   .md\:divide-y-0 > :not([hidden]) ~ :not([hidden]) {

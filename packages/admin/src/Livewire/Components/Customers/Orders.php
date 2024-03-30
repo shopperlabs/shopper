@@ -26,9 +26,9 @@ class Orders extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.customers.orders', [
+        return view('shopper::livewire.components.customers.orders', [
             'orders' => $this->customer->orders()
-                ->with(['customer', 'items', 'shippingAddress', 'paymentMethod'])
+                ->with(['items', 'shippingAddress', 'paymentMethod'])
                 ->simplePaginate(3),
         ]);
     }

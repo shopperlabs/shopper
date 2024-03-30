@@ -114,7 +114,7 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <div class="mt-8">
+        <div class="mt-10">
             {{ $this->table }}
         </div>
     @endif

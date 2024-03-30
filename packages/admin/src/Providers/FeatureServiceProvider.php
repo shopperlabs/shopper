@@ -15,6 +15,7 @@ final class FeatureServiceProvider extends ServiceProvider
     protected array $componentsConfig = [
         'brand',
         'category',
+        'customer',
     ];
 
     protected string $root = __DIR__ . '/../..';

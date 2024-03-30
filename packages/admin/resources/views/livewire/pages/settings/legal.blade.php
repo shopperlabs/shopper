@@ -18,7 +18,7 @@
             <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-gray-300 dark:text-gray-600" />
             <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
         </x-shopper::breadcrumb>
-        <x-shopper::heading class="mt-5 border-b-0">
+        <x-shopper::heading class="my-6">
             <x-slot name="title">
                 {{ __('shopper::pages/settings.legal.title') }}
             </x-slot>

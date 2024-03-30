@@ -4,13 +4,13 @@
         <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="mt-5">
+    <x-shopper::heading class="my-6">
         <x-slot name="title">
             {{ __('shopper::words.analytics') }}
         </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-8 lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
+    <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
         <div class="lg:col-span-1">
             <div>
                 <div class="shrink-0 bg-white w-10 h-10 rounded-lg ring-1 ring-gray-200 flex items-center justify-center dark:bg-gray-800 dark:ring-gray-700">

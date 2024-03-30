@@ -22,7 +22,7 @@ return new class() extends Migration
             $table->string('city');
             $table->string('phone_number')->nullable();
             $table->boolean('is_default')->default(false);
-            $table->enum('type', ['billing', 'shipping']);
+            $table->enum('type', \Shopper\Core\Enum\AddressType::cases());
 
             $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));
             $this->addForeignKey($table, 'user_id', $this->getTableName('users'), false);

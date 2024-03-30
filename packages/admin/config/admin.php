@@ -96,20 +96,13 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Shopper Controllers config
+    | Shopper Inventory Limit
     |--------------------------------------------------------------------------
     |
-    | If you want extends your shopper admin panel with great features,
-    | Here you can specify custom Controller Namespace and Shopper
-    | RouteServiceProvider will load all your controllers.
     |
     */
 
-    'controllers' => [
-
-        'namespace' => 'App\\Http\\Controllers\\Shopper',
-
-    ],
+    'inventory-limit' => 4,
 
     /*
     |--------------------------------------------------------------------------

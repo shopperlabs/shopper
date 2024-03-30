@@ -7,7 +7,9 @@
                         <span class="absolute inset-0" aria-hidden="true"></span>
                         <div class="flex items-center justify-between space-x-2">
                             <span class="inline-flex text-xs leading-4 text-gray-500 dark:text-gray-400">
-                                {{ $address->type === 'shipping' ? __('shopper::pages/customers.addresses.shipping') : __('shopper::pages/customers.addresses.billing') }}
+                                {{ $address->type === \Shopper\Core\Enum\AddressType::SHIPPING
+                                    ? __('shopper::pages/customers.addresses.shipping')
+                                    : __('shopper::pages/customers.addresses.billing') }}
                             </span>
                             @if($address->is_default)
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">

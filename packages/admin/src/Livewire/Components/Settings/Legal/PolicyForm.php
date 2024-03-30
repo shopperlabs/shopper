@@ -33,7 +33,8 @@ class PolicyForm extends Component implements HasForms
             ->schema([
                 Components\Hidden::make('title'),
                 Components\Toggle::make('is_enabled')
-                    ->label(__('shopper::layout.forms.actions.enabled')),
+                    ->label(__('shopper::layout.forms.actions.enabled'))
+                    ->onColor('success'),
                 Components\RichEditor::make('content')
                     ->label(__('shopper::layout.forms.label.content'))
                     ->required(),

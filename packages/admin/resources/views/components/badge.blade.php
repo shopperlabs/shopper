@@ -10,6 +10,6 @@
     };
 @endphp
 
-<span class="inline-flex px-2 text-xs leading-5 font-semibold rounded-full {{ $style }}">
+<span class="inline-flex px-2 py-0.5 text-xs leading-5 font-medium rounded-full {{ $style }}">
     {{ $value }}
 </span>

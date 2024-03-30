@@ -23,7 +23,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/customers.title')"
             :content="__('shopper::pages/customers.content')"
-            :button="__('shopper::words.actions_label.add_new', ['name' => __('customer')])"
+            :button="__('shopper::words.actions_label.add_new', ['name' => __('shopper::words.customer')])"
             permission="add_customers"
             :url="route('shopper.customers.create')"
         >
@@ -172,8 +172,8 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <div class="mt-8">
-            <livewire:shopper-tables.customers-table />
+        <div class="mt-10">
+            {{ $this->table }}
         </div>
     @endif
 

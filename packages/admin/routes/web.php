@@ -68,8 +68,7 @@ Route::domain(config('shopper.admin.domain'))
                 });
 
                 if (config('shopper.routes.custom_file')) {
-                    Route::namespace(config('shopper.admin.controllers.namespace'))
-                        ->group(config('shopper.routes.custom_file'));
+                    Route::as('shopper.')->group(config('shopper.routes.custom_file'));
                 }
             });
         });

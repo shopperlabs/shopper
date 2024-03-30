@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <form class="mt-6" wire:submit.prevent="authenticate">
+    <form class="mt-6" wire:submit="authenticate">
         <div class="rounded-md shadow-sm">
             <div>
                 <input
@@ -25,8 +25,8 @@
                     name="email"
                     type="email"
                     wire:model="email"
-                    autocomplete="off"
-                    class="relative block w-full px-3 py-2 border rounded-none appearance-none border-gray-300 dark:border-gray-700 dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-300 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-gray-900 focus:z-10 sm:text-sm"
+                    autocomplete="email address"
+                    class="relative block w-full px-3 py-1.5 border-0 rounded-t-lg ring-1 ring-inset ring-gray-300 placeholder-gray-400 text-gray-900 dark:text-gray-300 dark:bg-white/5 dark:ring-white/10 focus:outline-none focus:ring-primary-500 dark:focus:ring-primary-500 focus:z-10 focus:ring-2 dark:focus:ring-offset-gray-900 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.email') }}"
                     required
                 />
@@ -37,7 +37,7 @@
                     name="password"
                     type="password"
                     wire:model="password"
-                    class="relative block w-full px-3 py-2 border rounded-none appearance-none border-gray-300 dark:border-gray-700 dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-300 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-gray-900 focus:z-10 sm:text-sm"
+                    class="relative block w-full px-3 py-1.5 border-0 rounded-b-lg ring-1 ring-inset ring-gray-300 dark:bg-white/5 placeholder-gray-400 text-gray-900 dark:text-gray-300 dark:ring-white/10 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-500 focus:z-10 dark:focus:ring-offset-gray-900 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.password') }}"
                     required
                 />

@@ -17,6 +17,7 @@ return [
 
     'users' => [
         'admin_role' => 'administrator',
+        'manager_role' => 'manager',
         'default_role' => 'user',
     ],
 

@@ -6,7 +6,6 @@ namespace Shopper\Livewire\Pages\Settings\Team;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -41,9 +40,7 @@ class Index extends Component
             'users' => (new UserRepository())
                 ->with('roles')
                 ->makeModel()
-                ->whereHas('roles', function (Builder $query): void {
-                    $query->whereIn('name', [config('shopper.core.users.admin_role'), 'manager']);
-                })
+                ->scopes('administrators')
                 ->orderBy('created_at', 'desc')
                 ->paginate(3),
         ])
