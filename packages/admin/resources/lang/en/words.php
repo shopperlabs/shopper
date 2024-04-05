@@ -123,7 +123,7 @@ return [
     'no_users' => 'No users',
     'logout_session' => 'Logout Other Browser Sessions',
     'logout_session_confirm' => 'Please enter your password to confirm you would like to logout of your other browser sessions across all of your devices.',
-    'reorder' => 'Réorganiser',
+    'reorder' => 'Reorder',
     'all' => 'All',
     'actions' => 'Actions',
 

@@ -18,6 +18,7 @@
   },
   "require": {
     "php": "^8.2",
+    "akaunting/laravel-money": "^5.2",
     "bacon/bacon-qr-code": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "filament/forms": "^3.2",

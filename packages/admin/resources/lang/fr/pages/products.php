@@ -22,7 +22,7 @@ return [
     'status' => 'Statut du produit',
     'visible_help_text' => 'Ce produit sera caché de tous les canaux de vente.',
     'availability_description' => 'Spécifiez une date de publication pour que vos produits soient programmés sur votre boutique.',
-    'product_associations' => 'Associations de produits',
+    'product_associations' => 'Catégorisation',
     'product_categories' => 'Catégories du produit',
     'no_category' => 'Aucune catégorie',
     'no_category_text' => 'Commencez par créer une nouvelle catégorie.',
@@ -152,6 +152,7 @@ return [
     'notifications' => [
         'create' => 'Produit ajouté avec succès !',
         'update' => 'Produit mis à jour avec succès !',
+        'replicated' => 'Produit dupliqué!',
         'stock_update' => 'Le stock de produits a été mis à jour avec succès !',
         'seo_update' => 'Le référencement du produit a été mis à jour avec succès !',
         'shipping_update' => 'L\'expédition du produit a été mise à jour avec succès !',
@@ -161,5 +162,8 @@ return [
         'related_added' => 'Le produit a été ajouté avec succès aux produits connexes !',
         'remove_related' => 'Le produit a été supprimé avec succès des produits connexes !',
     ],
+
+    'images_helpText' => 'Ajouter des images à votre produit.',
+    'thumbnail_helpText' => 'Utilisé pour représenter votre produit lors du paiement, du partage social, et plus encore.',
 
 ];

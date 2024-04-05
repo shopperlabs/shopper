@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Helpers;
 
-use Shopper\Core\Traits\HasPrice;
-
-class Price
+final class Price
 {
-    use HasPrice;
-
     public int | float $value;
 
     public string $formatted;
@@ -18,9 +14,9 @@ class Price
 
     public function __construct(int $cent)
     {
-        $this->value = $cent * 100;
+        $this->value = $cent;
         $this->currency = shopper_currency();
-        $this->formatted = $this->formattedPrice($this->value);
+        $this->formatted = shopper_money_format(amount: $cent);
     }
 
     public static function from(int $cent): self

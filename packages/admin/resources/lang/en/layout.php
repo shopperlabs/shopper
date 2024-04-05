@@ -129,6 +129,7 @@ return [
             'radio' => 'Radio',
             'colorpicker' => 'Color picker',
             'datepicker' => 'Date picker',
+            'thumbnail' => 'Thumbnail',
         ],
 
         'placeholder' => [

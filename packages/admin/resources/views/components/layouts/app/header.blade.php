@@ -1,4 +1,4 @@
-<div class="sticky top-0 z-40 shrink-0 flex h-16 bg-white dark:bg-gray-900 lg:py-4 lg:h-auto border-b border-gray-200 dark:border-gray-700">
+<div class="sticky top-0 z-10 shrink-0 flex h-16 bg-white dark:bg-gray-900 lg:py-4 lg:h-auto border-b border-gray-200 dark:border-gray-700">
     <button @click.stop="sidebarOpen = true" class="px-4 border-r border-gray-200 dark:border-gray-700 text-gray-500 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 focus:text-gray-600 dark:focus:text-gray-500 lg:hidden" aria-label="Open sidebar">
         <x-untitledui-menu-03 class="h-6 w-6" />
     </button>

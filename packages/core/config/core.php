@@ -48,6 +48,7 @@ return [
 
     'storage' => [
         'collection_name' => 'uploads',
+        'thumbnail_collection' => 'thumbnail',
         'disk_name' => 'public',
     ],
 

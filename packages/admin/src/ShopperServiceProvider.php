@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper;
 
+use Akaunting\Money;
+use Closure;
+use Filament\Forms\Components\TextInput;
+use Filament\Support\Facades\FilamentColor;
+use Filament\Tables\Columns\Column;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Livewire\Livewire;
 use PragmaRX\Google2FA\Google2FA;
@@ -70,6 +76,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         $this->bootModelRelationName();
 
+        FilamentColor::register([
+            'primary' => config('shopper.admin.filament-color'),
+        ]);
+
         Shopper::serving(function (): void {
             Shopper::setServingStatus();
         });
@@ -94,6 +104,37 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel());
 
         $this->loadViewsFrom($this->root . '/resources/views', 'shopper');
+    }
+
+    public function bootingPackage(): void
+    {
+        TextColumn::macro('currency', function (string | Closure | null $currency = null, bool $shouldConvert = false): TextColumn {
+            /*** @var TextColumn $this */
+            $this->formatStateUsing(static function (Column $column, $state) use ($currency, $shouldConvert): ?string {
+                if (blank($state)) {
+                    return null;
+                }
+
+                if (blank($currency)) {
+                    $currency = shopper_currency();
+                }
+
+                return (new Money\Money(
+                    amount: $state,
+                    currency: (new Money\Currency(mb_strtoupper($column->evaluate($currency)))),
+                    convert: $shouldConvert,
+                ))->format();
+            });
+
+            return $this;
+        });
+
+        TextInput::macro('currencyMask', function ($thousandSeparator = ',', $decimalSeparator = '.', $precision = 2): TextInput {
+            $this->view = 'shopper::components.filament.forms.currency-mask';
+            $this->viewData(compact('thousandSeparator', 'decimalSeparator', 'precision'));
+
+            return $this;
+        });
     }
 
     protected function bootModelRelationName(): void

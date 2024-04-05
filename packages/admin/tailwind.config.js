@@ -59,7 +59,7 @@ module.exports = {
         xxs: ['0.625rem', { lineHeight: '1rem' }],
       },
       minHeight: {
-        '(screen-content)': 'calc(100vh - 9.625rem)',
+        '(screen-content)': 'calc(100vh - 7.185rem)',
       },
     },
   },

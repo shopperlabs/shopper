@@ -12,8 +12,30 @@ input[type='number'] {
   margin: 0;
 }
 
-::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background-color: transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: theme('colors.gray.200');
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: theme('colors.gray.300');
+}
+
+.dark *::-webkit-scrollbar-thumb {
+  background-color: theme('colors.gray.700');
+}
+
+.dark *::-webkit-scrollbar-thumb:hover {
+  background-color: theme('colors.gray.900');
 }
 
 .hide-scroll::-webkit-scrollbar {
@@ -32,28 +54,10 @@ input[type='number'] {
   background-color: theme('colors.primary.900');
 }
 
-.scrolling::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-.scrolling::-webkit-scrollbar-thumb {
-  background-color: theme('colors.gray.200');
-  border-radius: 8px;
-}
-
-.scrolling::-webkit-scrollbar-thumb:hover {
-  background-color: theme('colors.gray.300');
-}
-
-.dark .scrolling::-webkit-scrollbar-thumb {
-  background-color: theme('colors.gray.700');
-}
-
-.dark .scrolling::-webkit-scrollbar-thumb:hover {
-  background-color: theme('colors.gray.900');
-}
-
 .ui-modal > div > div.fixed {
   @apply z-50 backdrop-blur-sm transition-opacity;
+}
+
+.shopper-product-wizard > div {
+  @apply flex-1 h-full;
 }

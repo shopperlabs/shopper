@@ -22,7 +22,7 @@ return [
     'status' => 'Product status',
     'visible_help_text' => 'This product will be hidden from all sales channels.',
     'availability_description' => 'Specify a publication date so that your product are scheduled on your store.',
-    'product_associations' => 'Product associations',
+    'product_associations' => 'Associations',
     'product_categories' => 'Product categories',
     'no_category' => 'No Categories',
     'no_category_text' => 'Get started by creating a new category.',
@@ -152,6 +152,7 @@ return [
     'notifications' => [
         'create' => 'Product successfully added!',
         'update' => 'Product successfully updated!',
+        'replicated' => 'Product replicated!',
         'stock_update' => 'Product Stock successfully updated!',
         'seo_update' => 'Product SEO successfully updated!',
         'shipping_update' => 'Product shipping successfully updated!',
@@ -162,4 +163,6 @@ return [
         'remove_related' => 'The product has successfully removed from the related products!',
     ],
 
+    'images_helpText' => 'Add images to your product.',
+    'thumbnail_helpText' => 'Used to represent your product during checkout, social sharing and more.',
 ];

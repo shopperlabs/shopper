@@ -13,7 +13,11 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'pages' => [],
+    'pages' => [
+        'product-index' => Livewire\Pages\Product\Index::class,
+        'product-create' => Livewire\Pages\Product\Create::class,
+        'product-edit' => Livewire\Pages\Product\Index::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -27,9 +31,6 @@ return [
         'attributes.edit' => Components\Attributes\Edit::class,
         'attributes.values' => Components\Attributes\Values::class,
 
-        'products.browse' => Components\Products\Browse::class,
-        'products.create' => Components\Products\Create::class,
-        'products.edit' => Components\Products\Edit::class,
         'products.form.attributes' => Components\Products\Form\Attributes::class,
         'products.form.edit' => Components\Products\Form\Edit::class,
         'products.form.inventory' => Components\Products\Form\Inventory::class,

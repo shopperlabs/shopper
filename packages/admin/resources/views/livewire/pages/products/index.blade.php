@@ -7,13 +7,9 @@
         <x-slot name="action">
             @if($total > 0)
                 @can('add_products')
-                    <div class="flex space-x-3">
-                        <span class="shadow-sm rounded-md">
-                            <x-shopper::buttons.primary :link="route('shopper.products.create')">
-                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.product'))]) }}
-                            </x-shopper::buttons.primary>
-                        </span>
-                    </div>
+                    <x-shopper::buttons.primary :link="route('shopper.products.create')">
+                        {{ __('shopper::words.actions_label.add_new', ['name' => __('shopper::words.product')]) }}
+                    </x-shopper::buttons.primary>
                 @endcan
             @endif
         </x-slot>
@@ -253,8 +249,8 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <div class="mt-8">
-            <livewire:shopper-tables.products-table />
+        <div class="mt-10">
+            {{ $this->table }}
         </div>
     @endif
 
