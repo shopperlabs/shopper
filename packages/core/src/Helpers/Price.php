@@ -14,9 +14,9 @@ final class Price
 
     public function __construct(int $cent)
     {
-        $this->value = $cent;
+        $this->value = $cent * 100;
         $this->currency = shopper_currency();
-        $this->formatted = shopper_money_format(amount: $cent);
+        $this->formatted = shopper_money_format(amount: $this->value);
     }
 
     public static function from(int $cent): self

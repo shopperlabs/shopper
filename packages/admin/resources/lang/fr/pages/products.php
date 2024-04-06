@@ -124,7 +124,7 @@ return [
     'seo' => [
         'title' => 'Optimisation des moteurs de recherche',
         'description' => 'Améliorez votre classement et la façon dont votre page produit apparaîtra dans les résultats des moteurs de recherche.',
-        'sub_description' => 'Voici un aperçu du résultat de votre moteur de recherche, jouez avec !',
+        'sub_description' => 'Voici un aperçu imagé du résultat que peut donner un moteur de recherche, jouez avec !',
     ],
 
     'shipping' => [
@@ -152,6 +152,7 @@ return [
     'notifications' => [
         'create' => 'Produit ajouté avec succès !',
         'update' => 'Produit mis à jour avec succès !',
+        'media_update' => 'Images du produit mise à jour!',
         'replicated' => 'Produit dupliqué!',
         'stock_update' => 'Le stock de produits a été mis à jour avec succès !',
         'seo_update' => 'Le référencement du produit a été mis à jour avec succès !',

@@ -28,9 +28,9 @@
                         href="{{ route('shopper.settings.index') }}"
                         wire:navigate
                         @class([
-                            'flex items-center p-2 text-sm font-medium leading-5 rounded-md transition ease-in-out duration-150',
-                            'text-primary-500 bg-gray-100 dark:bg-gray-700/50' => request()->routeIs('shopper.settings*'),
-                            'hover:bg-gray-50 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white' => ! request()->routeIs('shopper.settings*')
+                            'sh-sidebar-item',
+                            'sh-sidebar-item-active' => request()->routeIs('shopper.settings*'),
+                            'sh-sidebar-item-inactive' => ! request()->routeIs('shopper.settings*')
                         ])
                     >
                         <x-untitledui-sliders class="mr-2 w-5 h-5" stroke-width="1.5" />
@@ -41,7 +41,7 @@
                 <a
                     href="https://laravelshopper.dev"
                     target="_blank"
-                    class="flex items-center p-2 text-sm font-medium leading-5 rounded-md text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white transition ease-in-out duration-150"
+                    class="sh-sidebar-item sh-sidebar-item-inactive"
                 >
                     <x-untitledui-code-browser class="mr-2 w-5 h-5" stroke-width="1.5" />
                     {{ __('shopper::messages.dashboard.cards.doc_title') }}

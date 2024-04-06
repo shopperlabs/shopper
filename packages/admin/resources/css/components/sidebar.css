@@ -2,6 +2,22 @@
   @apply space-y-5;
 }
 
+.sh-heading {
+  @apply text-xs leading-5 text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 font-medium ml-3;
+}
+
+.sh-sidebar-item {
+  @apply flex items-center rounded-lg py-2 px-3 text-sm font-medium transition ease-in-out duration-150;
+}
+
+.sh-sidebar-item-active {
+  @apply text-primary-600 bg-white ring-1 ring-inset ring-gray-200 shadow-sm dark:text-primary-500 dark:bg-gray-800 dark:ring-gray-700;
+}
+
+.sh-sidebar-item-inactive {
+  @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-900;
+}
+
 .item-name {
   @apply flex-1 truncate;
 }

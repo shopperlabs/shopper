@@ -16,7 +16,7 @@ return [
     'pages' => [
         'product-index' => Livewire\Pages\Product\Index::class,
         'product-create' => Livewire\Pages\Product\Create::class,
-        'product-edit' => Livewire\Pages\Product\Index::class,
+        'product-edit' => Livewire\Pages\Product\Edit::class,
     ],
 
     /*
@@ -32,7 +32,8 @@ return [
         'attributes.values' => Components\Attributes\Values::class,
 
         'products.form.attributes' => Components\Products\Form\Attributes::class,
-        'products.form.edit' => Components\Products\Form\Edit::class,
+        'products.form.edit' => Components\Products\Form\Edit::class, // Done
+        'products.form.media' => Components\Products\Form\Media::class, // Done
         'products.form.inventory' => Components\Products\Form\Inventory::class,
         'products.form.related-products' => Components\Products\Form\RelatedProducts::class,
         'products.form.seo' => Components\Products\Form\Seo::class,
@@ -43,7 +44,6 @@ return [
 
         'modals.add-variant' => Livewire\Modals\AddVariant::class,
         'modals.create-value' => Livewire\Modals\CreateValue::class,
-        'modals.delete-product' => Livewire\Modals\DeleteProduct::class,
         'modals.products-lists' => Livewire\Modals\ProductsLists::class,
         'modals.related-products' => Livewire\Modals\RelatedProducts::class,
         'modals.update-value' => Livewire\Modals\UpdateValue::class,

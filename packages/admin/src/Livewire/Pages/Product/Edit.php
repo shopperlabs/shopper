@@ -4,38 +4,48 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Product;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
-use Livewire\Component;
-use Shopper\Core\Models\Inventory;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Livewire\Attributes\On;
+use Shopper\Core\Models\Product;
+use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Edit extends Component
+class Edit extends AbstractPageComponent implements HasActions, HasForms
 {
-    public $product;
+    use InteractsWithActions;
+    use InteractsWithForms;
 
-    public Collection $inventories;
+    public Product $product;
 
-    public ?int $inventory = null;
-
-    protected $listeners = ['productHasUpdated'];
-
-    public function mount($product): void
+    public function deleteAction(): Action
     {
-        $this->product = $product;
-        $this->inventories = $inventories = Inventory::all();
-        $this->inventory = $inventories->firstWhere('is_default', true)->id ?? $inventories->first()?->id;
+        return Action::make(__('shopper::layout.forms.actions.delete'))
+            ->requiresConfirmation()
+            ->icon('untitledui-trash-03')
+            ->modalIcon('untitledui-trash-03')
+            ->color('danger')
+            ->button()
+            ->action(function (): void {
+                $this->product->delete();
+
+                Notification::make()
+                    ->title(__('shopper::components.tables.messages.delete', ['name' => __('shopper::words.product')]))
+                    ->success()
+                    ->send();
+
+                $this->redirectRoute(name: 'shopper.products.index', navigate: true);
+            });
     }
 
-    public function productHasUpdated(int $id): void
-    {
-        $this->product = (new ProductRepository())->getById($id);
-    }
-
+    #[On('productHasUpdated')]
     public function render(): View
     {
-        return view('shopper::livewire.products.edit', [
-            'currency' => shopper_currency(),
-        ]);
+        return view('shopper::livewire.pages.products.edit')
+            ->title(__('shopper::words.actions_label.edit', ['name' => $this->product->name]));
     }
 }

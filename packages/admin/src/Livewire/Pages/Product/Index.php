@@ -56,7 +56,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
                 Tables\Columns\TextColumn::make('price_amount')
                     ->label(__('shopper::layout.forms.label.price'))
-                    ->currency()
+                    ->money(shopper_currency())
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_visible')
@@ -113,7 +113,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 ])
                     ->tooltip('Actions'),
             ])
-            ->headerActions([])
             ->filters([
                 QueryBuilder::make()
                     ->constraints([

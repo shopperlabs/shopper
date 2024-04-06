@@ -22,15 +22,15 @@ class SalesSidebar extends AbstractAdminSidebar
             $group->weight(3);
             $group->setAuthorized();
             $group->setGroupItemsClass('space-y-1');
-            $group->setHeadingClass('menu-heading text-xs leading-5 text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 font-medium ml-3');
+            $group->setHeadingClass('sh-heading');
 
             if (Feature::enabled('order')) {
                 $group->item(__('shopper::layout.sidebar.orders'), function (Item $item) use ($count): void {
                     $item->weight(1);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
-                    $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
-                    $item->setActiveClass('text-primary-500 bg-gray-100 dark:bg-gray-700/50');
-                    $item->setInactiveClass('text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900');
+                    $item->setItemClass('sh-sidebar-item group');
+                    $item->setActiveClass('sh-sidebar-item-active');
+                    $item->setInactiveClass('sh-sidebar-item-inactive');
 
                     if ($count > 0) {
                         $item->badge($count, 'inline-flex items-center rounded-full bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20');
@@ -52,9 +52,9 @@ class SalesSidebar extends AbstractAdminSidebar
                 $group->item(__('shopper::layout.sidebar.discounts'), function (Item $item): void {
                     $item->weight(2);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_discounts'));
-                    $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
-                    $item->setActiveClass('text-primary-500 bg-gray-100 dark:bg-gray-700/50');
-                    $item->setInactiveClass('text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900');
+                    $item->setItemClass('sh-sidebar-item group');
+                    $item->setActiveClass('sh-sidebar-item-active');
+                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.discounts.index');
                     $item->setIcon(

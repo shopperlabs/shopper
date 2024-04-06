@@ -124,7 +124,7 @@ return [
     'seo' => [
         'title' => 'Search Engine Optimization',
         'description' => 'Improve your ranking and how your product page will appear in search engines results.',
-        'sub_description' => 'Here is a preview of your search engine result, play with it!',
+        'sub_description' => 'Here is a preview of what an search engine can display, play with it!',
     ],
 
     'shipping' => [
@@ -152,6 +152,7 @@ return [
     'notifications' => [
         'create' => 'Product successfully added!',
         'update' => 'Product successfully updated!',
+        'media_update' => 'Product media updated!',
         'replicated' => 'Product replicated!',
         'stock_update' => 'Product Stock successfully updated!',
         'seo_update' => 'Product SEO successfully updated!',

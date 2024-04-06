@@ -61,6 +61,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     protected function priceAmount(): Attribute
     {
         return Attribute::make(
+            get: fn ($value) => $value / 100,
             set: fn ($value) => $value * 100,
         );
     }
@@ -68,6 +69,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     protected function oldPriceAmount(): Attribute
     {
         return Attribute::make(
+            get: fn ($value) => $value / 100,
             set: fn ($value) => $value * 100,
         );
     }
@@ -75,6 +77,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     protected function costAmount(): Attribute
     {
         return Attribute::make(
+            get: fn ($value) => $value / 100,
             set: fn ($value) => $value * 100,
         );
     }

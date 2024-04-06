@@ -18,15 +18,15 @@ class CatalogSidebar extends AbstractAdminSidebar
             $group->weight(2);
             $group->setAuthorized();
             $group->setGroupItemsClass('space-y-1');
-            $group->setHeadingClass('menu-heading text-xs leading-5 text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 font-medium ml-3');
+            $group->setHeadingClass('sh-heading');
 
             if (Feature::enabled('product')) {
                 $group->item(__('shopper::layout.sidebar.products'), function (Item $item): void {
                     $item->weight(1);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
-                    $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
-                    $item->setActiveClass('text-primary-600 bg-gray-100 dark:bg-gray-700/50');
-                    $item->setInactiveClass('text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900');
+                    $item->setItemClass('sh-sidebar-item group');
+                    $item->setActiveClass('sh-sidebar-item-active');
+                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.products.index');
                     $item->setIcon(
@@ -53,9 +53,9 @@ class CatalogSidebar extends AbstractAdminSidebar
                 $group->item(__('shopper::layout.sidebar.categories'), function (Item $item): void {
                     $item->weight(2);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_categories'));
-                    $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
-                    $item->setActiveClass('text-primary-600 bg-gray-100 dark:bg-gray-700/50');
-                    $item->setInactiveClass('text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900');
+                    $item->setItemClass('sh-sidebar-item group');
+                    $item->setActiveClass('sh-sidebar-item-active');
+                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.categories.index');
                     $item->setIcon(
@@ -72,9 +72,9 @@ class CatalogSidebar extends AbstractAdminSidebar
                 $group->item(__('shopper::layout.sidebar.collections'), function (Item $item): void {
                     $item->weight(3);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_collections'));
-                    $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
-                    $item->setActiveClass('text-primary-600 bg-gray-100 dark:bg-gray-700/50');
-                    $item->setInactiveClass('text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900');
+                    $item->setItemClass('sh-sidebar-item group');
+                    $item->setActiveClass('sh-sidebar-item-active');
+                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.collections.index');
                     $item->setIcon(
@@ -91,9 +91,9 @@ class CatalogSidebar extends AbstractAdminSidebar
                 $group->item(__('shopper::layout.sidebar.brands'), function (Item $item): void {
                     $item->weight(4);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_brands'));
-                    $item->setItemClass('group flex items-center rounded-lg py-2 px-3 text-sm font-medium');
-                    $item->setActiveClass('text-primary-600 bg-gray-100 dark:bg-gray-700/50');
-                    $item->setInactiveClass('text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-900');
+                    $item->setItemClass('sh-sidebar-item group');
+                    $item->setActiveClass('sh-sidebar-item-active');
+                    $item->setInactiveClass('sh-sidebar-item-inactive');
                     $item->useSpa();
                     $item->route('shopper.brands.index');
                     $item->setIcon(

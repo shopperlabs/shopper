@@ -4,52 +4,74 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
-use Shopper\Core\Repositories\Store\ProductRepository;
-use Shopper\Livewire\Components\Products\WithAttributes;
+use Shopper\Components;
 
-class Shipping extends Component
+class Shipping extends Component implements HasForms
 {
-    use WithAttributes;
+    use InteractsWithForms;
 
     public $product;
 
-    public int $productId;
+    public ?array $data = [];
 
     public function mount($product): void
     {
         $this->product = $product;
-        $this->productId = $product->id;
-        $this->requireShipping = $product->require_shipping;
-        $this->backorder = $product->backorder;
-        $this->weightValue = floatval($product->weight_value);
-        $this->weightUnit = $product->weight_unit;
-        $this->heightValue = floatval($product->height_value);
-        $this->heightUnit = $product->height_unit;
-        $this->widthValue = floatval($product->width_value);
-        $this->widthUnit = $product->width_unit;
-        $this->volumeValue = floatval($product->volume_value);
-        $this->volumeUnit = $product->volume_unit;
+
+        $this->form->fill($this->product->toArray());
+    }
+
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Components\Section::make(__('shopper::words.shipping'))
+                    ->description(__('shopper::pages/products.shipping.description'))
+                    ->aside()
+                    ->compact()
+                    ->schema([
+                        Forms\Components\Checkbox::make('backorder')
+                            ->label(__('shopper::pages/products.product_can_returned'))
+                            ->helperText(__('shopper::pages/products.product_can_returned_help_text')),
+
+                        Forms\Components\Checkbox::make('require_shipping')
+                            ->label(__('shopper::pages/products.product_shipped'))
+                            ->helperText(__('shopper::pages/products.product_shipped_help_text'))
+                            ->default(true)
+                            ->live(),
+                    ]),
+
+                Forms\Components\Group::make()
+                    ->schema([
+                        Components\Separator::make(),
+
+                        Components\Section::make(__('shopper::pages/products.shipping.package_dimension'))
+                            ->description(__('shopper::pages/products.shipping.package_dimension_description'))
+                            ->aside()
+                            ->compact()
+                            ->schema([
+                                Forms\Components\Grid::make()
+                                    ->schema(Components\Form\ShippingField::make()),
+                            ]),
+                    ])
+                    ->visible(fn (Forms\Get $get): bool => $get('require_shipping')),
+            ])
+            ->statePath('data')
+            ->model($this->product);
     }
 
     public function store(): void
     {
-        (new ProductRepository())->getById($this->productId)->update([
-            'require_shipping' => $this->requireShipping,
-            'backorder' => $this->backorder,
-            'weight_value' => $this->weightValue ?? null,
-            'weight_unit' => $this->weightUnit ?? null,
-            'height_value' => $this->heightValue ?? null,
-            'height_unit' => $this->heightUnit ?? null,
-            'width_value' => $this->widthValue ?? null,
-            'width_unit' => $this->widthUnit ?? null,
-            'volume_value' => $this->volumeValue ?? null,
-            'volume_unit' => $this->volumeUnit ?? null,
-        ]);
+        $this->product->update($this->form->getState());
 
-        $this->emit('productHasUpdated', $this->productId);
+        $this->dispatch('productHasUpdated');
 
         Notification::make()
             ->body(__('shopper::pages/products.notifications.shipping_update'))
@@ -59,6 +81,6 @@ class Shipping extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.products.forms.form-shipping');
+        return view('shopper::livewire.components.products.forms.shipping');
     }
 }
