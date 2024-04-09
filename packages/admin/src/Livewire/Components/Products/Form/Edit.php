@@ -4,117 +4,169 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Livewire\WithFileUploads;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Livewire\Component;
+use Shopper\Components;
 use Shopper\Core\Events\Products\Updated;
-use Shopper\Core\Exceptions\GeneralException;
-use Shopper\Core\Repositories\Store\BrandRepository;
-use Shopper\Core\Repositories\Store\CategoryRepository;
-use Shopper\Core\Repositories\Store\CollectionRepository;
-use Shopper\Core\Traits\Attributes\WithChoicesBrands;
-use Shopper\Core\Traits\Attributes\WithSeoAttributes;
-use Shopper\Core\Traits\Attributes\WithUploadProcess;
-use Shopper\Livewire\AbstractBaseComponent;
-use Shopper\Livewire\Components\Products\WithAttributes;
+use Shopper\Feature;
 
-class Edit extends AbstractBaseComponent
+class Edit extends Component implements HasForms
 {
-    use WithAttributes;
-    use WithChoicesBrands;
-    use WithFileUploads;
-    use WithSeoAttributes;
-    use WithUploadProcess;
+    use InteractsWithForms;
 
     public $product;
 
-    public int $productId;
+    public ?array $data = [];
 
-    public string $currency;
-
-    public array $category_ids = [];
-
-    public array $collection_ids = [];
-
-    public $images = [];
-
-    protected $listeners = [
-        'trix:valueUpdated' => 'onTrixValueUpdate',
-        'mediaDeleted',
-    ];
-
-    public function mount($product, string $currency): void
+    public function mount($product): void
     {
-        $this->product = $product;
-        $this->productId = $product->id;
-        $this->name = $product->name;
-        $this->sku = $product->sku;
-        $this->brand_id = $product->brand_id;
-        $this->description = $product->description;
-        $this->isVisible = $product->is_visible;
-        $this->price_amount = $product->price_amount;
-        $this->old_price_amount = $product->old_price_amount;
-        $this->cost_amount = $product->cost_amount;
-        $this->publishedAt = $product->published_at?->format('Y-m-d H:m');
-        $this->publishedAtFormatted = $product->published_at?->toRfc7231String();
-        $this->collection_ids = $product->collections->pluck('id')->toArray();
-        $this->category_ids = $product->categories->pluck('id')->toArray();
-        $this->selectedBrand = $product->brand_id ? [$product->brand_id] : [];
-        $this->currency = $currency;
-        $this->images = $product->getMedia(config('shopper.core.storage.collection_name'));
+        $this->product = $product->load([
+            'brand',
+            'categories',
+            'collections',
+        ]);
+
+        $this->form->fill($this->product->toArray());
     }
 
-    public function onTrixValueUpdate(string $value): void
+    public function form(Form $form): Form
     {
-        $this->description = $value;
-    }
+        return $form
+            ->schema([
+                Forms\Components\Grid::make()
+                    ->schema([
+                        Forms\Components\Grid::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->label(__('shopper::layout.forms.label.name'))
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function ($state, Forms\Set $set): void {
+                                        $set('slug', Str::slug($state));
+                                    }),
+                                Forms\Components\TextInput::make('slug')
+                                    ->label(__('shopper::layout.forms.label.slug'))
+                                    ->disabled()
+                                    ->dehydrated()
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->unique(config('shopper.models.product'), 'slug', ignoreRecord: true),
 
-    public function mediaDeleted(): void
-    {
-        $this->images = $this->product->getMedia(config('shopper.core.storage.collection_name'));
-    }
+                                Forms\Components\RichEditor::make('description')
+                                    ->label(__('shopper::layout.forms.label.description'))
+                                    ->columnSpan('full'),
+                            ]),
 
-    public function rules(): array
-    {
-        return [
-            'name' => 'required',
-            'files.*' => 'nullable|image|max:5120',
-            'brand_id' => 'nullable|integer|exists:' . shopper_table('brands') . ',id',
-        ];
+                        Components\Separator::make()
+                            ->columnSpan('full'),
+
+                        Forms\Components\Grid::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('price_amount')
+                                    ->label(__('shopper::layout.forms.label.price_amount'))
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                                    ->suffix(shopper_currency())
+                                    ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
+
+                                Forms\Components\TextInput::make('old_price_amount')
+                                    ->label(__('shopper::layout.forms.label.compare_price'))
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                                    ->suffix(shopper_currency())
+                                    ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
+
+                                Forms\Components\TextInput::make('cost_amount')
+                                    ->label(__('shopper::layout.forms.label.cost_per_item'))
+                                    ->helperText(__('shopper::pages/products.cost_per_items_help_text'))
+                                    ->numeric()
+                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
+                                    ->suffix(shopper_currency())
+                                    ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
+                            ]),
+                    ])
+                    ->columnSpan(['lg' => 2]),
+
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make('Status')
+                            ->schema([
+                                Forms\Components\Toggle::make('is_visible')
+                                    ->label(__('shopper::layout.forms.label.visible'))
+                                    ->helperText(__('shopper::pages/products.visible_help_text'))
+                                    ->onColor('success')
+                                    ->default(true),
+
+                                Forms\Components\DateTimePicker::make('published_at')
+                                    ->label(__('shopper::layout.forms.label.availability'))
+                                    ->native(false)
+                                    ->default(now())
+                                    ->helperText(__('shopper::pages/products.availability_description'))
+                                    ->required(),
+                            ]),
+
+                        Forms\Components\Section::make(__('shopper::pages/products.product_associations'))
+                            ->schema([
+                                Forms\Components\Select::make('brand_id')
+                                    ->label(__('shopper::layout.forms.label.brand'))
+                                    ->relationship('brand', 'name', fn (Builder $query) => $query->where('is_enabled', true))
+                                    ->searchable()
+                                    ->visible(Feature::enabled('brand')),
+
+                                Forms\Components\Select::make('collections')
+                                    ->label(__('shopper::layout.sidebar.collections'))
+                                    ->relationship('collections', 'name', fn (Builder $query) => $query->where('is_enabled', true))
+                                    ->searchable()
+                                    ->multiple()
+                                    ->visible(Feature::enabled('collection')),
+
+                                Components\Form\SelectTree::make('categories')
+                                    ->label(__('shopper::layout.sidebar.categories'))
+                                    ->relationship(
+                                        relationship: 'categories',
+                                        titleAttribute: 'name',
+                                        parentAttribute: 'parent_id'
+                                    )
+                                    ->searchable()
+                                    ->independent(false)
+                                    ->enableBranchNode()
+                                    ->visible(Feature::enabled('category')),
+                            ])
+                            ->visible(
+                                Feature::enabled('brand')
+                                || Feature::enabled('category')
+                                || Feature::enabled('collection')
+                            ),
+                    ])
+                    ->columnSpan(['lg' => 1]),
+            ])
+            ->columns(3)
+            ->statePath('data')
+            ->model($this->product);
     }
 
     public function store(): void
     {
-        $this->validate($this->rules());
+        $data = $this->form->getState();
 
-        $this->product->update([
-            'name' => $this->name,
-            'slug' => $this->name,
-            'description' => $this->description,
-            'is_visible' => $this->isVisible,
-            'old_price_amount' => $this->old_price_amount,
-            'price_amount' => $this->price_amount,
-            'cost_amount' => $this->cost_amount,
-            'published_at' => $this->publishedAt,
-            'brand_id' => $this->brand_id,
-        ]);
+        $this->product->update(Arr::except($data, ['categories']));
 
-        if (collect($this->files)->isNotEmpty()) {
-            collect($this->files)->each(
-                fn ($file) => $this->product->addMedia($file->getRealPath())
-                    ->toMediaCollection(config('shopper.core.storage.collection_name'))
-            );
+        if (collect($data['categories'])->isNotEmpty()) {
+            $this->product->categories()->sync($data['categories']);
         }
-
-        if (collect($this->category_ids)->isNotEmpty()) {
-            $this->product->categories()->sync($this->category_ids);
-        }
-
-        $this->product->collections()->sync($this->collection_ids);
 
         event(new Updated($this->product));
 
-        $this->emit('productHasUpdated', $this->productId);
+        $this->dispatch('productHasUpdated');
 
         Notification::make()
             ->body(__('shopper::pages/products.notifications.update'))
@@ -122,25 +174,8 @@ class Edit extends AbstractBaseComponent
             ->send();
     }
 
-    /**
-     * @throws GeneralException
-     */
     public function render(): View
     {
-        return view('shopper::livewire.products.forms.form-edit', [
-            'brands' => (new BrandRepository())
-                ->makeModel()
-                ->scopes('enabled')
-                ->select('name', 'id')
-                ->get(),
-            'categories' => (new CategoryRepository())
-                ->makeModel()
-                ->scopes('enabled')
-                ->tree()
-                ->orderBy('name')
-                ->get()
-                ->toTree(),
-            'collections' => (new CollectionRepository())->get(['name', 'id']),
-        ]);
+        return view('shopper::livewire.components.products.forms.edit');
     }
 }

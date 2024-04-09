@@ -33,7 +33,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(
                 (new UserRepository())
-                    ->with('roles')
+                    ->with(['roles', 'addresses'])
                     ->makeModel()
                     ->scopes('customers')
                     ->newQuery()

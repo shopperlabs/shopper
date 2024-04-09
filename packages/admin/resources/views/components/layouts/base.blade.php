@@ -1,9 +1,9 @@
 @props(['title' => config('app.name')])
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    class="shopper scroll-smooth js-focus-visible min-h-screen antialiased"
+    class="shopper scroll-smooth min-h-screen antialiased"
 >
 <head>
     <meta charset="utf-8">
@@ -48,20 +48,20 @@
 
     @include('shopper::includes._additional-styles')
 </head>
-<body x-keypress {{ $attributes->twMerge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
+<body {{ $attributes->twMerge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
 
-{{ $slot }}
+    {{ $slot }}
 
-@livewire(\Filament\Notifications\Livewire\Notifications::class)
-@livewire(\Shopper\Livewire\Components\SlideOverPanel::class)
+    @livewire(\Filament\Notifications\Livewire\Notifications::class)
+    @livewire(\Shopper\Livewire\Components\SlideOverPanel::class)
 
-<div class="ui-modal">
-    @livewire(\LivewireUI\Modal\Modal::class)
-</div>
+    <div class="ui-modal">
+        @livewire(\LivewireUI\Modal\Modal::class)
+    </div>
 
-@filamentScripts
+    @filamentScripts
 
-@include('shopper::includes._additional-scripts')
+    @include('shopper::includes._additional-scripts')
 
 </body>
 </html>

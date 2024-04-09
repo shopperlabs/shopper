@@ -31,7 +31,12 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query((new CategoryRepository())->makeModel()->newQuery())
+            ->query(
+                (new CategoryRepository())
+                    ->makeModel()
+                    ->with('parent:id,name')
+                    ->newQuery()
+            )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.core.storage.collection_name'))
@@ -60,7 +65,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->date()
                     ->sortable(),
             ])
-            ->reorderable('position')
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_enabled'),
             ])
@@ -148,8 +152,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     #[On('category-save')]
     public function render(): View
     {
-        return view('shopper::livewire.pages.category.index', [
-            'total' => (new CategoryRepository())->count(),
-        ])->title(__('shopper::layout.sidebar.categories'));
+        return view('shopper::livewire.pages.category.index')
+            ->title(__('shopper::layout.sidebar.categories'));
     }
 }

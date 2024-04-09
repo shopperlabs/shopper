@@ -1,0 +1,252 @@
+@import "treeselectjs/dist/treeselectjs.css";
+
+.treeselect-input {
+  @apply text-base text-gray-900 pl-2.5 bg-transparent border-0 transition duration-75 sm:text-sm sm:leading-6;
+  /*font-size: 0.875rem;
+  color: rgba(var(--gray-950), var(--tw-text-opacity));
+  transition-duration: 75ms;
+  border-style: none;
+  line-height: 1.5rem;*/
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  padding-left: 8px;
+}
+
+.dark .treeselect > .treeselect-input {
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
+
+.treeselect-input--opened.treeselect-input--bottom {
+  border: inherit;
+  border-radius: inherit;
+}
+
+.treeselect-input__edit {
+  @apply bg-transparent placeholder-gray-400 dark:placeholder-gray-500;
+}
+
+.treeselect-input__tags-count {
+  margin-left: 9px;
+}
+
+.treeselect-list {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  --tw-bg-opacity: 1;
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+  0 4px 6px -4px var(--tw-shadow-color);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+  var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+  calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  --tw-ring-color: rgba(var(--gray-950), 0.05);
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+  var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+  var(--tw-shadow, 0 0 #0000);
+  border: none;
+}
+
+.treeselect-list__item {
+  padding: 1.1rem;
+  border-radius: 0.475rem;
+}
+
+.treeselect-list.treeselect-list--single-select .treeselect-list__item--single-selected {
+  --tw-bg-opacity: 1;
+  background-color: rgba(var(--gray-50), var(--tw-bg-opacity)) !important;
+}
+
+.treeselect-list__item:hover,
+.treeselect-list__item--focused {
+  --tw-bg-opacity: 1;
+  background-color: rgba(var(--gray-50), var(--tw-bg-opacity)) !important;
+}
+
+.treeselect-list.treeselect-list--single-select .treeselect-list__item--single-selected {
+  font-weight: 500;
+}
+
+.dark .treeselect-list {
+  --tw-bg-opacity: 1;
+  --tw-ring-color: hsla(0, 0%, 100%, 0.1);
+  background-color: rgba(var(--gray-900), var(--tw-bg-opacity));
+}
+
+.dark .treeselect-list {
+  --tw-bg-opacity: 1;
+  --tw-ring-color: hsla(0, 0%, 100%, 0.1);
+  background-color: rgba(var(--gray-900), var(--tw-bg-opacity));
+}
+
+.treeselect-input__edit {
+  border: transparent !important;
+  --tw-ring-color: none !important;
+  --tw-ring-shadow: none !important;
+}
+
+.dark .treeselect-list.treeselect-list--single-select .treeselect-list__item--single-selected,
+.dark .treeselect-list__item--focused,
+.dark .treeselect-list__item:hover,
+.dark .treeselect-list.treeselect-list--single-select .treeselect-list__item--single-selected,
+.dark .treeselect-list__item--focused,
+.dark .treeselect-list__item:hover {
+  background-color: hsla(0, 0%, 100%, 0.05) !important;
+}
+
+dark .treeselect-list__item--checked,
+.treeselect-list__item--checked {
+  background: transparent;
+}
+
+.treeselect-input__tags-element {
+  --tw-bg-opacity: 1;
+  --tw-text-opacity: 1;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+  var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+  calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  --tw-ring-inset: inset;
+  --tw-ring-color: rgba(var(--primary-600), 0.1);
+  align-items: center;
+  background-color: rgba(var(--primary-50), var(--tw-bg-opacity));
+  border-radius: 0.375rem;
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+  var(--tw-shadow, 0 0 #0000);
+  color: rgba(var(--primary-600), var(--tw-text-opacity));
+  display: inline-flex;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.25rem;
+  line-height: 1rem;
+  padding: 0.25rem 0.5rem;
+  word-break: break-all;
+}
+
+.dark .treeselect-input__tags-element {
+  --tw-text-opacity: 1;
+  --tw-ring-color: rgba(var(--primary-400), 0.3);
+  background-color: rgba(var(--primary-400), 0.1);
+  color: rgba(var(--primary-400), var(--tw-text-opacity));
+}
+
+.treeselect-list__item-checkbox-container {
+  border-radius: 0.25rem;
+  height: 16px;
+  min-width: 16px;
+  width: 16px;
+}
+
+.treeselect-list__item--checked .treeselect-list__item-checkbox-container,
+.treeselect-list__item--partial-checked .treeselect-list__item-checkbox-container {
+  background-color: theme('colors.primary.600');
+}
+
+.treeselect-list__item-checkbox {
+  transition-duration: 75ms;
+  background-color: transparent !important;
+  border: none;
+}
+
+.treeselect-list__item-checkbox-container {
+  background-color: #f8f5f5;
+  border: none;
+}
+
+.dark .treeselect-list__item-checkbox-container {
+  border: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.dark .treeselect-list__item-checkbox-container {
+  background-color: hsla(0, 0%, 100%, 0.05);
+}
+
+.treeselect-list__item-checkbox-icon {
+  height: 80%;
+  left: 0.1rem;
+  top: 0.1rem;
+  width: 80%;
+}
+
+.treeselect-input__tags-element:hover {
+  background-color: rgba(var(--primary-50), var(--tw-bg-opacity));
+}
+
+.treeselect-input__tags-element:hover .treeselect-input__tags-cross svg {
+  stroke: rgba(var(--gray-950), var(--tw-text-opacity));
+}
+
+.dark
+.treeselect-input__tags-element:hover
+.treeselect-input__tags-cross
+svg {
+  stroke: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.treeselect-input__tags-element {
+  color: rgba(var(--primary-600), var(--tw-text-opacity));
+}
+
+.dark .treeselect-input__tags-element {
+  color: rgba(var(--primary-400), var(--tw-text-opacity));
+}
+
+.dark .treeselect-input__tags-cross svg {
+  stroke-width: 3px;
+}
+
+.dark .treeselect-input__tags-cross svg {
+  stroke: rgb(255 255 255 / var(--tw-text-opacity));
+  opacity: 0.5;
+}
+
+.dark .treeselect-input__tags-element:hover svg {
+  opacity: 0.6;
+}
+
+.treeselect-input__clear svg {
+  opacity: 0.8;
+}
+
+.treeselect-input__tags {
+  margin-left: 3px;
+}
+
+.treeselect--disabled .treeselect-input__tags-cross {
+  display: none;
+}
+
+.treeselect--disabled .treeselect-input__arrow {
+  display: none;
+}
+
+.treeselect-input__arrow {
+  margin-right: 7px;
+}
+
+.treeselect--disabled .treeselect-input__clear {
+  display: none;
+}
+
+.treeselect-list__item--disabled {
+  cursor: not-allowed !important;
+}
+
+.dark .treeselect-list__item--disabled .treeselect-list__item-checkbox-container {
+  background-color: hsl(0deg 0% 30.77% / 5%);
+}
+
+[dir='rtl'] .treeselect-input__operators {
+  left: 2px !important;
+  right: unset;
+}
+
+[dir='rtl'] .treeselect-input {
+  padding: 2px 4px 2px 40px;
+}

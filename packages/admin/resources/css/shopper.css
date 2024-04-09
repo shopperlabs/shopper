@@ -6,6 +6,7 @@
 @import 'components/sidebar.css';
 @import 'components/filament.css';
 @import 'components/intl-phone.css';
+@import 'components/treeselect.css';
 
 @layer base {
   html {

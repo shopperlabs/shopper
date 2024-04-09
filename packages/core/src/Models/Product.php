@@ -50,6 +50,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
         'require_shipping' => 'boolean',
         'backorder' => 'boolean',
         'published_at' => 'datetime',
+        'metadata' => 'array',
     ];
 
     public function getTable(): string
@@ -114,13 +115,13 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
         return Price::from($this->cost_amount);
     }
 
-    public function variationsStock(): Attribute
+    public function variantsStock(): Attribute
     {
         $stock = 0;
 
-        if ($this->variations->isNotEmpty()) {
-            foreach ($this->variations as $variation) {
-                $stock += $variation->stock; // @phpstan-ignore-line
+        if ($this->variants->isNotEmpty()) {
+            foreach ($this->variants as $variant) {
+                $stock += $variant->stock; // @phpstan-ignore-line
             }
         }
 
@@ -135,7 +136,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
             ->where('is_visible', true);
     }
 
-    public function variations(): HasMany
+    public function variants(): HasMany
     {
         return $this->hasMany(config('shopper.models.product'), 'parent_id');
     }

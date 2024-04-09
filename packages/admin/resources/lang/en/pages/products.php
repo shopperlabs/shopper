@@ -22,7 +22,7 @@ return [
     'status' => 'Product status',
     'visible_help_text' => 'This product will be hidden from all sales channels.',
     'availability_description' => 'Specify a publication date so that your product are scheduled on your store.',
-    'product_associations' => 'Product associations',
+    'product_associations' => 'Associations',
     'product_categories' => 'Product categories',
     'no_category' => 'No Categories',
     'no_category_text' => 'Get started by creating a new category.',
@@ -124,7 +124,7 @@ return [
     'seo' => [
         'title' => 'Search Engine Optimization',
         'description' => 'Improve your ranking and how your product page will appear in search engines results.',
-        'sub_description' => 'Here is a preview of your search engine result, play with it!',
+        'sub_description' => 'Here is a preview of what an search engine can display, play with it!',
     ],
 
     'shipping' => [
@@ -140,7 +140,7 @@ return [
         'add_content' => 'Start by adding a related product to your product.',
 
         'modal' => [
-            'title' => 'Add Similar Products to this product',
+            'title' => 'Add Similar Products',
             'search' => 'Search product',
             'search_placeholder' => 'Search product by name',
             'action' => 'Add Selected Products',
@@ -152,6 +152,8 @@ return [
     'notifications' => [
         'create' => 'Product successfully added!',
         'update' => 'Product successfully updated!',
+        'media_update' => 'Product media updated!',
+        'replicated' => 'Product replicated!',
         'stock_update' => 'Product Stock successfully updated!',
         'seo_update' => 'Product SEO successfully updated!',
         'shipping_update' => 'Product shipping successfully updated!',
@@ -162,4 +164,6 @@ return [
         'remove_related' => 'The product has successfully removed from the related products!',
     ],
 
+    'images_helpText' => 'Add images to your product.',
+    'thumbnail_helpText' => 'Used to represent your product during checkout, social sharing and more.',
 ];

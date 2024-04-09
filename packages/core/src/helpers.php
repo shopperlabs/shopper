@@ -2,13 +2,10 @@
 
 declare(strict_types=1);
 
+use Akaunting\Money;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
-use Money\Currencies\ISOCurrencies;
-use Money\Currency;
-use Money\Formatter\IntlMoneyFormatter;
-use Money\Money;
-use Shopper\Core\Models\Currency as ModelCurrency;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Setting;
 
@@ -58,13 +55,13 @@ if (! function_exists('shopper_asset')) {
 if (! function_exists('shopper_currency')) {
     function shopper_currency(): string
     {
-        $settingCurrency = shopper_setting('shop_currency_id');
+        $settingCurrency = shopper_setting('currency_id');
 
         if ($settingCurrency) {
             $currency = Cache::remember(
                 'shopper-currency',
                 now()->addHour(),
-                fn () => ModelCurrency::query()->find($settingCurrency)
+                fn () => Currency::query()->find($settingCurrency)
             );
 
             return $currency ? $currency->code : 'USD'; // @phpstan-ignore-line
@@ -75,21 +72,15 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format(int | string $amount, ?string $currency = null): string
+    function shopper_money_format(int | float $amount, ?string $currency = null, bool $convert = false): string
     {
-        $money = new Money(
+        $money = new Money\Money(
             amount: $amount,
-            currency: new Currency($currency ?? shopper_currency())
+            currency: new Money\Currency($currency ?? shopper_currency()),
+            convert: $convert
         );
 
-        $numberFormatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
-
-        $moneyFormatter = new IntlMoneyFormatter(
-            formatter: $numberFormatter,
-            currencies: new ISOCurrencies()
-        );
-
-        return $moneyFormatter->format($money);
+        return $money->formatLocale(app()->getLocale());
     }
 }
 

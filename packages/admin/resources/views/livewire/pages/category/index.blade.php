@@ -1,3 +1,7 @@
+@php
+    $total = $this->table->getQuery()->count();
+@endphp
+
 <x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">

@@ -18,7 +18,7 @@ return new class() extends Migration
             $table->string('sku')->unique()->nullable();
             $table->string('barcode')->unique()->nullable();
             $table->longText('description')->nullable();
-            $table->integer('security_stock')->default(0);
+            $table->integer('security_stock')->nullable()->default(0);
             $table->boolean('featured')->default(false);
             $table->boolean('is_visible')->default(false);
             $table->integer('old_price_amount')->nullable();

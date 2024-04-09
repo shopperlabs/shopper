@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Filament\Support\Colors\Color;
+
 return [
 
     /*
@@ -65,6 +67,19 @@ return [
         'color' => '1d4ed8',
         'bg_color' => 'dbeafe',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Filament Primary UI color
+    |--------------------------------------------------------------------------
+    |
+    | By default on some elements filament does not take into account the "primary"
+    | color, to correct this after changing your primary color in your tailwind file
+    | you must also change it here.
+    |
+    */
+
+    'filament-color' => Color::Blue,
 
     /*
     |--------------------------------------------------------------------------

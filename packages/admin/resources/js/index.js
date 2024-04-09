@@ -1,7 +1,9 @@
 import SlideOverPanel from './components/panel'
+import SelectTree from './components/select-tree'
 import './components/sortable'
 
 window.SlideOverPanel = SlideOverPanel
+window.selectTree = SelectTree
 
 document.addEventListener('alpine:init', () => {
   const theme = localStorage.getItem('theme') ?? 'system'

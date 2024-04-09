@@ -24,10 +24,10 @@ class Show extends AbstractPageComponent implements HasActions, HasForms
 
     public function deleteAction(): Action
     {
-        return Action::make('delete')
-            ->label(__('shopper::layout.forms.actions.delete'))
+        return Action::make(__('shopper::layout.forms.actions.delete'))
             ->requiresConfirmation()
-            ->icon('untitledui-trash')
+            ->icon('untitledui-trash-03')
+            ->modalIcon('untitledui-trash-03')
             ->color('danger')
             ->action(function (): void {
                 $this->customer->delete();

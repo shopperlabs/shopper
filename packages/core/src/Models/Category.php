@@ -6,7 +6,6 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -42,13 +41,6 @@ class Category extends Model implements SpatieHasMedia
     public function getTable(): string
     {
         return shopper_table('categories');
-    }
-
-    protected function parentName(): ?Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->parent?->name,
-        );
     }
 
     public function getCustomPaths(): array

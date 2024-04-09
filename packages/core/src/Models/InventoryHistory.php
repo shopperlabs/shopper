@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * @property-read int $id
  * @property int $quantity
- * @property int $old_quantity
+ * @property int|null $old_quantity
  * @property string|null $event
  * @property string|null $description
  * @property int $user_id

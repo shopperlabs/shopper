@@ -10,6 +10,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Components\Section;
@@ -47,7 +48,11 @@ class General extends Component implements HasForms
             ->select('value', 'key')
             ->get();
 
-        $this->form->fill($settings->mapWithKeys(fn (Setting $item) => [$item['key'] => $item['value']])->toArray());
+        $this->form->fill(
+            $settings->mapWithKeys(
+                fn (Setting $item) => [$item['key'] => $item['value']]
+            )->toArray()
+        );
     }
 
     public function form(Form $form): Form
@@ -186,6 +191,8 @@ class General extends Component implements HasForms
         foreach ($keys as $key) {
             $this->createUpdateSetting(key: $key, value: $this->form->getState()[$key]);
         }
+
+        Cache::forget('shopper-setting-currency_id');
 
         Notification::make()
             ->title(__('shopper::notifications.store_info'))

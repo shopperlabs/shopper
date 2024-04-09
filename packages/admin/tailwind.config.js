@@ -24,7 +24,6 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.blue,
-        secondary: colors.gray,
         success: colors.emerald,
         warning: colors.amber,
         danger: colors.red,
@@ -59,7 +58,7 @@ module.exports = {
         xxs: ['0.625rem', { lineHeight: '1rem' }],
       },
       minHeight: {
-        '(screen-content)': 'calc(100vh - 9.625rem)',
+        '(screen-content)': 'calc(100vh - 7.185rem)',
       },
     },
   },
