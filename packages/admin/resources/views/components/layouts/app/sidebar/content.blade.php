@@ -3,10 +3,10 @@
     <div class="flex flex-col h-full">
         <div class="px-4 py-5">
             <div class="relative flex items-start px-3 py-2.5 rounded-lg bg-white shadow-sm ring-1 ring-gray-200 dark:bg-white/5 dark:ring-gray-800">
-                <a class="shrink-0" href="{{ route('shopper.dashboard') }}">
+                <x-shopper::link class="shrink-0" href="{{ route('shopper.dashboard') }}">
                     <x-shopper::brand class="h-8 w-auto" />
                     <span class="absolute inset-0"></span>
-                </a>
+                </x-shopper::link>
                 <div class="ml-3 truncate">
                     <h4 class="text-sm font-medium leading-4 text-gray-900 dark:text-white truncate font-heading">
                         {{ config('app.name') }}
@@ -24,9 +24,8 @@
 
             <div class="p-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
                 @can('access_setting')
-                    <a
+                    <x-shopper::link
                         href="{{ route('shopper.settings.index') }}"
-                        wire:navigate
                         @class([
                             'sh-sidebar-item',
                             'sh-sidebar-item-active' => request()->routeIs('shopper.settings*'),
@@ -35,7 +34,7 @@
                     >
                         <x-untitledui-sliders class="mr-2 w-5 h-5" stroke-width="1.5" />
                         {{ __('shopper::layout.account_dropdown.settings') }}
-                    </a>
+                    </x-shopper::link>
                 @endcan
 
                 <a

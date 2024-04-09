@@ -119,8 +119,7 @@
                 <livewire:shopper-products.form.shipping :product="$product" />
             </div>
             <div x-cloak x-show="activeTab === 'related'">
-                Related Product
-                {{--<livewire:shopper-products.form.related-products :product="$product" />--}}
+                <livewire:shopper-products.form.related-products :product="$product" />
             </div>
         </div>
     </div>

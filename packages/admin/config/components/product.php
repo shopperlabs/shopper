@@ -45,7 +45,7 @@ return [
         'modals.add-variant' => Livewire\Modals\AddVariant::class,
         'modals.create-value' => Livewire\Modals\CreateValue::class,
         'modals.products-lists' => Livewire\Modals\ProductsLists::class,
-        'modals.related-products' => Livewire\Modals\RelatedProducts::class,
+        'modals.related-products-list' => Livewire\Modals\RelatedProductsList::class,
         'modals.update-value' => Livewire\Modals\UpdateValue::class,
         'modals.update-variant-stock' => Livewire\Modals\UpdateVariantStock::class,
     ],

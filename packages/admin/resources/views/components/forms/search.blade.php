@@ -6,7 +6,7 @@
 
 <div class="flex flex-1">
     <label for="{{ $for }}" class="sr-only">{{ $label }}</label>
-    <div class="flex flex-1 rounded-md shadow-sm">
+    <div class="flex flex-1">
         <div class="relative grow focus-within:z-10">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <x-untitledui-search-sm

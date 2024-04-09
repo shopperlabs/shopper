@@ -140,7 +140,7 @@ return [
         'add_content' => 'Start by adding a related product to your product.',
 
         'modal' => [
-            'title' => 'Add Similar Products to this product',
+            'title' => 'Add Similar Products',
             'search' => 'Search product',
             'search_placeholder' => 'Search product by name',
             'action' => 'Add Selected Products',

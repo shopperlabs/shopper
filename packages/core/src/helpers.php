@@ -72,7 +72,7 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format(int | string $amount, ?string $currency = null, bool $convert = false): string
+    function shopper_money_format(int | float $amount, ?string $currency = null, bool $convert = false): string
     {
         $money = new Money\Money(
             amount: $amount,

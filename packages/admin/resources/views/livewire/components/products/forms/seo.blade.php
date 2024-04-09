@@ -1,6 +1,6 @@
 <x-shopper::container class="space-y-8">
     <div>
-        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+        <h3 class="font-heading leading-6 font-medium text-gray-900 dark:text-white">
             {{ __('shopper::pages/products.seo.title') }}
         </h3>
         <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-400">

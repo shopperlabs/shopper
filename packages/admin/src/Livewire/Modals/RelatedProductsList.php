@@ -9,25 +9,25 @@ use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Repositories\Store\ProductRepository;
 
-class RelatedProducts extends ModalComponent
+class RelatedProductsList extends ModalComponent
 {
     public $product;
 
     public string $search = '';
 
-    public array $exceptProductIds;
+    public array $exceptProductIds = [];
 
     public array $selectedProducts = [];
 
-    public function mount(int $id, array $exceptProductIds = []): void
+    public function mount(int $productId, array $ids = []): void
     {
-        $this->product = (new ProductRepository())->getById($id);
-        $this->exceptProductIds = $exceptProductIds;
+        $this->product = (new ProductRepository())->getById($productId);
+        $this->exceptProductIds = $ids;
     }
 
     public static function modalMaxWidth(): string
     {
-        return '2xl';
+        return '3xl';
     }
 
     public function getProductsProperty()
@@ -44,7 +44,7 @@ class RelatedProducts extends ModalComponent
         $currentProducts = $this->product->relatedProducts->pluck('id')->toArray();
         $this->product->relatedProducts()->sync(array_merge($this->selectedProducts, $currentProducts));
 
-        $this->emit('onProductsAddInRelated');
+        $this->dispatch('productHasUpdated');
 
         Notification::make()
             ->title(__('shopper::layout.status.added'))
@@ -57,6 +57,6 @@ class RelatedProducts extends ModalComponent
 
     public function render(): View
     {
-        return view('shopper::livewire.modals.related-lists');
+        return view('shopper::livewire.modals.related-products-list');
     }
 }

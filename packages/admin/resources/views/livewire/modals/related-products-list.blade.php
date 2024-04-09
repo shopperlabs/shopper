@@ -20,8 +20,12 @@
             @empty
                 <div class="p-4 h-full flex items-center justify-center">
                     <div class="text-center">
-                        <x-untitledui-book-open class="mx-auto h-10 w-10 text-gray-400" stroke-width="1.5" />
-                        <p class="mt-2 text-base font-medium text-gray-900 dark:text-white">
+                        <x-untitledui-book-open
+                            class="mx-auto h-8 w-8 text-gray-400 dark:text-gray-500"
+                            stroke-width="1.5"
+                            aria-hidden="true"
+                        />
+                        <p class="mt-2 font-medium text-gray-900 dark:text-white">
                             {{ __('shopper::pages/products.related.modal.no_results') }}
                         </p>
                     </div>
@@ -32,18 +36,19 @@
 
     <x-slot name="buttons">
         @if($this->products->isNotEmpty())
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <x-shopper::buttons.primary wire:click="addSelectedProducts" wire.loading.attr="disabled" type="button">
-                    <x-shopper::loader wire:loading wire:target="addSelectedProducts" class="text-white" />
-                    {{ __('shopper::pages/collections.modal.action') }}
-                </x-shopper::buttons.primary>
-            </span>
+            <x-shopper::buttons.primary
+                wire:click="addSelectedProducts"
+                wire.loading.attr="disabled"
+                type="button"
+                class="w-full sm:ml-3 sm:w-auto"
+            >
+                <x-shopper::loader wire:loading wire:target="addSelectedProducts" class="text-white" />
+                {{ __('shopper::pages/collections.modal.action') }}
+            </x-shopper::buttons.primary>
         @endif
-        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
-                {{ __('shopper::layout.forms.actions.cancel') }}
-            </x-shopper::buttons.default>
-        </span>
+        <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button" class="mt-3 w-full sm:mt-0 sm:w-auto">
+            {{ __('shopper::layout.forms.actions.cancel') }}
+        </x-shopper::buttons.default>
     </x-slot>
 
 </x-shopper::modal>

@@ -4,46 +4,57 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
-class RelatedProducts extends Component
+class RelatedProducts extends Component implements HasActions, HasForms
 {
+    use InteractsWithActions;
+    use InteractsWithForms;
+
     public $product;
-
-    public $relatedProducts;
-
-    protected $listeners = [
-        'onProductsAddInRelated' => 'render',
-    ];
 
     public function mount($product): void
     {
         $this->product = $product;
-        $this->relatedProducts = $product->relatedProducts;
     }
 
-    public function remove(int $id): void
+    public function removeAction(): Action
     {
-        $this->product->relatedProducts()->detach($id);
-        $this->relatedProducts = $this->product->relatedProducts;
+        return Action::make('remove')
+            ->label(__('shopper::layout.forms.actions.remove'))
+            ->icon('untitledui-trash-03')
+            ->action(function (array $arguments): void {
+                $this->product->relatedProducts()->detach($arguments['id']);
 
-        $this->emitSelf('onProductsAddInRelated');
+                $this->dispatch('productHasUpdated');
 
-        Notification::make()
-            ->body(__('shopper::pages/products.notifications.remove_related'))
-            ->success()
-            ->send();
+                Notification::make()
+                    ->title(__('shopper::pages/products.notifications.remove_related'))
+                    ->success()
+                    ->send();
+            });
     }
 
-    public function getProductsIdsProperty(): array
+    #[Computed]
+    public function productsIds(): array
     {
         return array_merge($this->product->relatedProducts->modelKeys(), [$this->product->id]);
     }
 
+    #[On('productHasUpdated')]
     public function render(): View
     {
-        return view('shopper::livewire.products.forms.form-related');
+        return view('shopper::livewire.components.products.forms.related', [
+            'relatedProducts' => $this->product->relatedProducts,
+        ]);
     }
 }
