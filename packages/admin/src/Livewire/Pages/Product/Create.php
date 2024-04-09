@@ -181,7 +181,7 @@ class Create extends AbstractPageComponent implements HasForms
                         ->schema([
                             Forms\Components\Placeholder::make('stock')
                                 ->label('Stock & Inventory')
-                                ->content(new HtmlString(Blade::render(<<<BLADE
+                                ->content(new HtmlString(Blade::render(<<<'BLADE'
                                     <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                         {{ __('Configure the inventory and stock for this product') }}
                                     </p>
@@ -236,7 +236,7 @@ class Create extends AbstractPageComponent implements HasForms
                                 ->schema([
                                     Forms\Components\Placeholder::make('shipping')
                                         ->label(__('shopper::words.weight_dimension'))
-                                        ->content(new HtmlString(Blade::render(<<<BLADE
+                                        ->content(new HtmlString(Blade::render(<<<'BLADE'
                                             <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                                 {{ __('shopper::pages/products.weight_dimension_help_text') }}
                                             </p>
@@ -268,7 +268,7 @@ class Create extends AbstractPageComponent implements HasForms
                                 ->reorderable(),
                         ]),
                 ])
-                    ->submitAction(new HtmlString(Blade::render(<<<BLADE
+                    ->submitAction(new HtmlString(Blade::render(<<<'BLADE'
                         <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
                             <x-shopper::loader wire:loading wire:target="store" class="text-white" />
                             {{ __('shopper::layout.forms.actions.save') }}
