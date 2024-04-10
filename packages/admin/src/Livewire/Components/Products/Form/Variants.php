@@ -8,7 +8,6 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
@@ -63,10 +62,10 @@ class Variants extends Component implements HasForms, HasTable
 
                 Tables\Columns\TextColumn::make('stock')
                     ->label(__('shopper::layout.tables.current_stock'))
-                    ->formatStateUsing(fn (Product $record): HtmlString =>
-                        new HtmlString(Blade::render(<<<BLADE
+                    ->formatStateUsing(
+                        fn (Product $record): HtmlString => new HtmlString(Blade::render(<<<BLADE
                             <div class="flex items-center">
-                                <x-shopper::stock-badge :stock="$record->stock" />
+                                <x-shopper::stock-badge :stock="{$record->stock}" />
                                 {{ __('shopper::words.in_stock') }}
                             </div>
                         BLADE))
@@ -93,7 +92,7 @@ class Variants extends Component implements HasForms, HasTable
                         ->color('danger')
                         ->requiresConfirmation()
                         ->modalIcon('untitledui-trash-03')
-                        ->action(function (Product $record) {
+                        ->action(function (Product $record): void {
                             event(new ProductDeleted($record));
 
                             $record->forceDelete();
@@ -130,13 +129,13 @@ class Variants extends Component implements HasForms, HasTable
             ->headerActions([
                 Tables\Actions\Action::make('add')
                     ->label(__('shopper::pages/products.variants.add'))
-                    ->action(fn () =>
-                        $this->dispatch(
+                    ->action(
+                        fn () => $this->dispatch(
                             'openPanel',
                             component: 'shopper-slide-overs.add-variant',
                             arguments: ['productId' => $this->product->id]
                         )
-                    )
+                    ),
             ])
             ->emptyStateHeading(__('shopper::pages/products.variants.empty'))
             ->emptyStateIcon('untitledui-book-open');

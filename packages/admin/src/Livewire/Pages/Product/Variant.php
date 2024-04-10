@@ -11,12 +11,11 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
+use Shopper\Components;
 use Shopper\Core\Events\Products\Updated as ProductUpdated;
 use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Livewire\Components\Products\VariantStock;
 use Shopper\Livewire\Pages\AbstractPageComponent;
-use Shopper\Components;
 
 class Variant extends AbstractPageComponent implements HasForms
 {
@@ -26,7 +25,7 @@ class Variant extends AbstractPageComponent implements HasForms
 
     public $variant;
 
-    public  ?array $data = [];
+    public ?array $data = [];
 
     public function mount(int $product, int $variantId): void
     {

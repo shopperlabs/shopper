@@ -86,7 +86,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                                             ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                             ->suffix(shopper_currency())
                                             ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
-                                    ])
+                                    ]),
                             ]),
                     ]),
 
