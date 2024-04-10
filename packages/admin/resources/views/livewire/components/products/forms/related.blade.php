@@ -1,12 +1,12 @@
 <x-shopper::container>
     <div class="sm:flex sm:justify-between">
         <div>
-            <h3 class="font-heading leading-6 font-medium text-gray-900 dark:text-white">
+            <x-filament::section.heading>
                 {{ __('shopper::pages/products.related.title') }}
-            </h3>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">
+            </x-filament::section.heading>
+            <x-filament::section.description class="mt-1 max-w-2xl">
                 {{ __('shopper::pages/products.related.description') }}
-            </p>
+            </x-filament::section.description>
         </div>
         @if($relatedProducts->isNotEmpty())
             <div class="mt-6 lg:mt-0">

@@ -61,3 +61,7 @@ input[type='number'] {
 .shopper-product-wizard > div {
   @apply flex-1 h-full;
 }
+
+.sh-input-media .filepond--list-scroller {
+  z-index: 100;
+}

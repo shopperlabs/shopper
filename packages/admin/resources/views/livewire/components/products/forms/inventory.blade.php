@@ -1,5 +1,5 @@
 <x-shopper::container>
-    <form wire:submit="save">
+    <form wire:submit="store">
         {{ $this->form }}
 
         <div class="mt-8 grid grid-cols-1 gap-x-6 md:grid-cols-3 md:gap-x-12">

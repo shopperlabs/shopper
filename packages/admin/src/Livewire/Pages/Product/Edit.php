@@ -22,6 +22,11 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
 
     public Product $product;
 
+    public function mount(): void
+    {
+        $this->authorize('edit_products');
+    }
+
     public function deleteAction(): Action
     {
         return Action::make(__('shopper::layout.forms.actions.delete'))

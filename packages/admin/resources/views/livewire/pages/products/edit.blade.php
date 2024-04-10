@@ -102,8 +102,7 @@
                 <livewire:shopper-products.form.media :product="$product" />
             </div>
             <div x-cloak x-show="activeTab === 'variants'">
-                Variants
-                {{--<livewire:shopper-products.form.variants :product="$product" />--}}
+                <livewire:shopper-products.form.variants :product="$product" />
             </div>
             <div x-cloak x-show="activeTab === 'attributes'">
                 Attributes

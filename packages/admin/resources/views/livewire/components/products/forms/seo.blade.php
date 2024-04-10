@@ -1,11 +1,11 @@
 <x-shopper::container class="space-y-8">
     <div>
-        <h3 class="font-heading leading-6 font-medium text-gray-900 dark:text-white">
+        <x-filament::section.heading>
             {{ __('shopper::pages/products.seo.title') }}
-        </h3>
-        <p class="mt-1 max-w-2xl text-sm leading-5 text-gray-500 dark:text-gray-400">
+        </x-filament::section.heading>
+        <x-filament::section.description class="mt-1 max-w-2xl">
             {{ __('shopper::pages/products.seo.description') }}
-        </p>
+        </x-filament::section.description>
     </div>
     <div class="grid gap-6 lg:grid-cols-2 lg:gap-x-10">
         <form wire:submit="store">

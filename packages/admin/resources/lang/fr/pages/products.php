@@ -165,6 +165,7 @@ return [
     ],
 
     'images_helpText' => 'Ajouter des images à votre produit.',
+    'variant_images_helpText' => 'Ajouter des images à votre variante.',
     'thumbnail_helpText' => 'Utilisé pour représenter votre produit lors du paiement, du partage social, et plus encore.',
 
 ];

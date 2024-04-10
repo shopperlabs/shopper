@@ -67,7 +67,7 @@ return [
     ],
 
     'variants' => 'Variantes',
-    'variant' => 'Variant',
+    'variant' => 'Variante',
     'overview' => 'Aperçu',
     'seo' => 'SEO',
     'in_stock' => 'en stock',
