@@ -15,18 +15,15 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Components;
 use Shopper\Core\Models\InventoryHistory;
-use Shopper\Core\Traits\Attributes\WithStock;
 
 class Inventory extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
-    // use WithStock;
 
     public $product;
 
@@ -37,10 +34,6 @@ class Inventory extends Component implements HasForms, HasTable
         $this->product = $product;
 
         $this->form->fill($this->product->toArray());
-        /*$this->inventories = $inventories;
-        $this->inventory = $defaultInventory;
-        $this->stock = $product->stock;
-        $this->realStock = $product->stock;*/
     }
 
     public function form(Form $form): Form
@@ -199,28 +192,12 @@ class Inventory extends Component implements HasForms, HasTable
 
     public function store(): void
     {
-        $this->validate([
-            'sku' => [
-                'nullable',
-                Rule::unique(shopper_table('products'), 'sku')->ignore($this->product->id),
-            ],
-            'barcode' => [
-                'nullable',
-                Rule::unique(shopper_table('products'), 'barcode')->ignore($this->product->id),
-            ],
-        ]);
-
         $this->product->update($this->form->getState());
-        $this->product->update([
-            'sku' => $this->sku ?? null,
-            'barcode' => $this->barcode ?? null,
-            'security_stock' => $this->securityStock ?? null,
-        ]);
 
         $this->dispatch('productHasUpdated');
 
         Notification::make()
-            ->body(__('shopper::pages/products.notifications.stock_update'))
+            ->title(__('shopper::pages/products.notifications.stock_update'))
             ->success()
             ->send();
     }

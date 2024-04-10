@@ -107,6 +107,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ->successNotificationTitle(__('shopper::pages/products.notifications.replicated')),
                     Tables\Actions\Action::make(__('shopper::layout.forms.actions.delete'))
                         ->icon('untitledui-trash-03')
+                        ->modalIcon('untitledui-trash-03')
                         ->color('danger')
                         ->requiresConfirmation()
                         ->action(fn (Product $record) => $record->delete()),

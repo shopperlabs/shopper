@@ -4,46 +4,101 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products;
 
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Actions\Action;
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
+use Filament\Support\Enums\MaxWidth;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\WithPagination;
 use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\InventoryHistory;
-use Shopper\Core\Traits\Attributes\WithStock;
 
-class VariantStock extends Component
+class VariantStock extends Component implements HasActions, HasForms
 {
-    use WithPagination;
-    use WithStock;
+    use InteractsWithActions;
+    use InteractsWithForms;
 
-    public $product;
+    public $variant;
 
-    public function mount($variant): void
+    public function mount($record): void
     {
-        $this->product = $variant;
-        $this->stock = $variant->stock;
-        $this->realStock = $variant->stock;
+        $this->variant = $record;
     }
 
-    public function paginationView(): string
+    public function stockAction(): Action
     {
-        return 'shopper::livewire.wire-pagination-links';
+        return Action::make('stock')
+            ->label(__('shopper::pages/products.variants.actions.update_stock'))
+            ->color('gray')
+            ->modal()
+            ->icon('untitledui-package')
+            ->modalHeading(__('shopper::pages/products.modals.variants.title'))
+            ->modalWidth(MaxWidth::ExtraLarge)
+            ->form([
+                Forms\Components\Select::make('inventory')
+                    ->label(__('shopper::pages/products.inventory_name'))
+                    ->options(Inventory::query()->pluck('name', 'id'))
+                    ->native(false)
+                    ->required(),
+
+                Forms\Components\TextInput::make('quantity')
+                    ->label(__('shopper::layout.forms.label.quantity'))
+                    ->placeholder('-10 or -5 or 50, etc')
+                    ->numeric()
+                    ->required(),
+            ])
+            ->action(function (array $data): void {
+                $inventoryId = (int) $data['inventory'];
+                $quantity = (int) $data['quantity'];
+
+                $currentStock = InventoryHistory::query()
+                    ->where('inventory_id', $inventoryId)
+                    ->where('stockable_id', $this->variant->id)
+                    ->where('stockable_type', 'product')
+                    ->get()
+                    ->sum('quantity');
+
+                $realTimeStock = $currentStock + $quantity;
+
+                if ($realTimeStock >= $currentStock) {
+                    $this->variant->mutateStock(
+                        $inventoryId,
+                        $quantity,
+                        [
+                            'event' => __('shopper::pages/products.inventory.add'),
+                            'old_quantity' => $quantity,
+                        ]
+                    );
+                } else {
+                    $this->variant->decreaseStock(
+                        $inventoryId,
+                        $quantity,
+                        [
+                            'event' => __('shopper::pages/products.inventory.remove'),
+                            'old_quantity' => $quantity,
+                        ]
+                    );
+                }
+
+                Notification::make()
+                    ->title(__('Stock successfully Updated'))
+                    ->success()
+                    ->send();
+
+                $this->dispatch('updateVariantInventory');
+            });
     }
 
+    #[On('updateVariantInventory')]
     public function render(): View
     {
-        return view('shopper::livewire.products.variant-stock', [
-            'currentStock' => InventoryHistory::query()
-                ->where('inventory_id', $this->inventory)
-                ->where('stockable_id', $this->product->id)
-                ->get()
-                ->sum('quantity'),
-            'histories' => InventoryHistory::query()
-                ->where('inventory_id', $this->inventory)
-                ->where('stockable_id', $this->product->id)
-                ->orderByDesc('created_at')
-                ->paginate(3),
-            'inventories' => Inventory::all(),
+        return view('shopper::livewire.components.products.variant-stock', [
+            'inventories' => Inventory::query()->get(),
         ]);
     }
 }

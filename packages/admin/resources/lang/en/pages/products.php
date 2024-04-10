@@ -165,5 +165,6 @@ return [
     ],
 
     'images_helpText' => 'Add images to your product.',
+    'variant_images_helpText' => 'Add images to your variant.',
     'thumbnail_helpText' => 'Used to represent your product during checkout, social sharing and more.',
 ];

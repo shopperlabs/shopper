@@ -45,6 +45,9 @@ class Media extends Component implements HasForms
                     ->image()
                     ->maxSize(1024)
                     ->imageEditor()
+                    ->extraAttributes([
+                        'class' => 'sh-input-media',
+                    ])
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3)

@@ -4,72 +4,147 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
+use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 use Shopper\Core\Events\Products\Deleted as ProductDeleted;
+use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\Store\ProductRepository;
-use Shopper\Core\Traits\Attributes\WithUploadProcess;
-use Shopper\Livewire\Components\Products\WithAttributes;
 
-class Variants extends Component
+class Variants extends Component implements HasForms, HasTable
 {
-    use WithAttributes;
-    use WithFileUploads;
-    use WithPagination;
-    use WithUploadProcess;
-
-    public string $search = '';
+    use InteractsWithForms;
+    use InteractsWithTable;
 
     public $product;
 
-    public $quantity;
-
-    public string $currency;
-
-    protected $listeners = ['onVariantAdded' => 'render'];
-
-    public function mount($product, string $currency): void
+    public function mount($product): void
     {
         $this->product = $product;
-        $this->currency = $currency;
     }
 
-    public function paginationView(): string
+    public function table(Table $table): Table
     {
-        return 'shopper::livewire.wire-pagination-links';
+        return $table
+            ->query(
+                (new ProductRepository())
+                    ->makeModel()
+                    ->where('parent_id', $this->product->id)
+                    ->newQuery()
+            )
+            ->columns([
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('images')
+                    ->collection(config('shopper.core.storage.collection_name'))
+                    ->stacked()
+                    ->circular()
+                    ->wrap()
+                    ->defaultImageUrl(config('shopper.media.fallback_url')),
+
+                Tables\Columns\TextColumn::make('name')
+                    ->label(__('shopper::layout.forms.label.name'))
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('sku')
+                    ->label(__('shopper::layout.tables.sku'))
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('stock')
+                    ->label(__('shopper::layout.tables.current_stock'))
+                    ->formatStateUsing(fn (Product $record): HtmlString =>
+                        new HtmlString(Blade::render(<<<BLADE
+                            <div class="flex items-center">
+                                <x-shopper::stock-badge :stock="$record->stock" />
+                                {{ __('shopper::words.in_stock') }}
+                            </div>
+                        BLADE))
+                    ),
+
+                Tables\Columns\TextColumn::make('price_amount')
+                    ->label(__('shopper::layout.forms.label.price'))
+                    ->money(shopper_currency())
+                    ->sortable(),
+            ])
+            ->actions([
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('edit')
+                        ->label(__('shopper::layout.forms.actions.edit'))
+                        ->icon('untitledui-edit-04')
+                        ->url(
+                            fn (Product $record): string => route(
+                                name: 'shopper.products.variant',
+                                parameters: ['variantId' => $record->id, 'product' => $this->product]
+                            ),
+                        ),
+                    Tables\Actions\Action::make(__('shopper::layout.forms.actions.delete'))
+                        ->icon('untitledui-trash-03')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->modalIcon('untitledui-trash-03')
+                        ->action(function (Product $record) {
+                            event(new ProductDeleted($record));
+
+                            $record->forceDelete();
+
+                            $this->dispatch('onVariantsUpdated');
+
+                            Notification::make()
+                                ->title(__('shopper::pages/products.notifications.variation_delete'))
+                                ->success()
+                                ->send();
+                        }),
+                ])
+                    ->tooltip('Actions'),
+            ])
+            ->groupedBulkActions([
+                Tables\Actions\DeleteBulkAction::make()
+                    ->label(__('shopper::layout.forms.actions.delete'))
+                    ->requiresConfirmation()
+                    ->action(function (Collection $records): void {
+                        $records->each->delete();
+
+                        Notification::make()
+                            ->title(__('shopper::components.tables.status.delete'))
+                            ->body(
+                                __('shopper::components.tables.messages.delete', [
+                                    'name' => mb_strtolower(__('shopper::words.variant')),
+                                ])
+                            )
+                            ->success()
+                            ->send();
+                    })
+                    ->deselectRecordsAfterCompletion(),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('add')
+                    ->label(__('shopper::pages/products.variants.add'))
+                    ->action(fn () =>
+                        $this->dispatch(
+                            'openPanel',
+                            component: 'shopper-slide-overs.add-variant',
+                            arguments: ['productId' => $this->product->id]
+                        )
+                    )
+            ])
+            ->emptyStateHeading(__('shopper::pages/products.variants.empty'))
+            ->emptyStateIcon('untitledui-book-open');
     }
 
-    public function remove(int $id): void
-    {
-        $product = (new ProductRepository())->getById($id);
-
-        event(new ProductDeleted($product));
-
-        $product->forceDelete();
-
-        $this->dispatchBrowserEvent('item-removed');
-
-        Notification::make()
-            ->body(__('shopper::pages/products.notifications.variation_delete'))
-            ->success()
-            ->send();
-    }
-
+    #[On('onVariantsUpdated')]
     public function render(): View
     {
-        return view('shopper::livewire.products.forms.form-variants', [
-            'variants' => (new ProductRepository())
-                ->makeModel()
-                ->where(function (Builder $query): void {
-                    $query->where('name', 'like', '%' . $this->search . '%');
-                    $query->where('parent_id', $this->product->id);
-                })
-                ->orderBy('created_at', 'desc')
-                ->paginate(10),
-        ]);
+        return view('shopper::livewire.components.products.forms.variants');
     }
 }

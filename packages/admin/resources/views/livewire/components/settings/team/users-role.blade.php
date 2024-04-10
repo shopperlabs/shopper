@@ -30,7 +30,7 @@
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700" x-max="1">
                     @forelse($users as $user)
                         <tr>
-                            <td class="px-6 py-3 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900 dark:text-white">
+                            <x-shopper::tables.table-cell class="whitespace-no-wrap">
                                 <div class="flex items-center">
                                     <div class="shrink-0 h-10 w-10">
                                         <img class="h-10 w-10 rounded-full" src="{{ $user->picture }}" alt="User avatar">
@@ -44,8 +44,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td class="px-6 py-3 text-sm leading-5 text-gray-500 dark:text-gray-400">
+                            </x-shopper::tables.table-cell>
+                            <x-shopper::tables.table-cell>
                                 <div class="flex items-center">
                                     @if($user->email_verified_at)
                                         <x-untitledui-check-verified-02 class="w-5 h-5 text-green-500" />
@@ -54,16 +54,16 @@
                                     @endif
                                     <span class="ml-1.5">{{ $user->email }}</span>
                                 </div>
-                            </td>
-                            <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 text-right">
+                            </x-shopper::tables.table-cell>
+                            <x-shopper::tables.table-cell class="hidden lg:table-cell whitespace-no-wrap">
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
                                     {{ $user->roles_label }}
                                 </span>
-                            </td>
-                            <td class="hidden lg:table-cell px-6 py-3 whitespace-no-wrap text-sm leading-5 text-gray-500 dark:text-gray-400 text-right">
+                            </x-shopper::tables.table-cell>
+                            <x-shopper::tables.table-cell class="hidden lg:table-cell whitespace-no-wrap text-right">
                                 {{ $user->hasRole(config('shopper.core.users.admin_role')) ? __('shopper::words.full') : __('shopper::words.limited') }}
-                            </td>
-                            <td class="pr-6 text-right">
+                            </x-shopper::tables.table-cell>
+                            <x-shopper::tables.table-cell class="pr-6 text-right">
                                 @if($user->id === auth()->id())
                                     <span class="flex items-center text-sm leading-5 text-gray-500 text-right dark:text-gray-400">
                                         <x-untitledui-user-circle class="w-5 h-5 mr-2" />
@@ -88,11 +88,11 @@
                                         </x-slot>
                                     </x-shopper::dropdown>
                                 @endif
-                            </td>
+                            </x-shopper::tables.table-cell>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-10 whitespace-no-wrap text-sm leading-5 font-medium">
+                            <x-shopper::tables.table-cell colspan="5" class="px-6 py-10 whitespace-no-wrap">
                                 <div class="flex flex-col justify-center items-center space-y-2">
                                     <x-untitledui-users
                                         class="h-10 w-10 text-primary-500"
@@ -103,7 +103,7 @@
                                         {{ __('shopper::words.no_users') }}
                                     </span>
                                 </div>
-                            </td>
+                            </x-shopper::tables.table-cell>
                         </tr>
                     @endforelse
                 </tbody>

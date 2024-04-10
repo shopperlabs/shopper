@@ -4071,6 +4071,10 @@ html {
   display: table;
 }
 
+.table-cell {
+  display: table-cell;
+}
+
 .table-row {
   display: table-row;
 }
@@ -5782,6 +5786,16 @@ html {
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
+.bg-success-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 250 229 / var(--tw-bg-opacity));
+}
+
+.bg-warning-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 243 199 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-10 {
   --tw-bg-opacity: 0.1;
 }
@@ -6639,6 +6653,16 @@ html {
   color: rgb(133 77 14 / var(--tw-text-opacity));
 }
 
+.text-success-800 {
+  --tw-text-opacity: 1;
+  color: rgb(6 95 70 / var(--tw-text-opacity));
+}
+
+.text-warning-800 {
+  --tw-text-opacity: 1;
+  color: rgb(146 64 14 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -7023,6 +7047,10 @@ input[type='number'] {
 .shopper-product-wizard > div {
   height: 100%;
   flex: 1 1 0%;
+}
+
+.sh-input-media .filepond--list-scroller {
+  z-index: 100;
 }
 
 .sidebar > :not([hidden]) ~ :not([hidden]) {

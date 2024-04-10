@@ -15,8 +15,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
+use Shopper\Actions\Store\InitialQuantityInventory;
 use Shopper\Components;
-use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\ChannelRepository;
 use Shopper\Core\Repositories\Store\ProductRepository;
@@ -296,20 +296,10 @@ class Create extends AbstractPageComponent implements HasForms
             $product->categories()->sync($data['categories']);
         }
 
-        $quantity = $data['quantity'];
+        $quantity = (int) $data['quantity'];
 
-        /** @var Inventory $inventory */
-        $inventory = Inventory::default()->first();
-
-        if ($inventory && $quantity && $quantity > 0) {
-            $product->mutateStock(
-                inventoryId: $inventory->id,
-                quantity: (int) $quantity,
-                arguments: [
-                    'event' => __('shopper::pages/products.inventory.initial'),
-                    'old_quantity' => $quantity,
-                ]
-            );
+        if ($quantity && $quantity > 0) {
+            (new InitialQuantityInventory())->handle($quantity, $product);
         }
 
         Notification::make()

@@ -1,4 +1,4 @@
-@props(['action', 'title'])
+@props(['action', 'title', 'description' => null])
 
 <form wire:submit="{{ $action }}" class="flex h-full flex-col divide-y divide-gray-200 dark:divide-gray-700">
     <div class="h-0 flex-1 overflow-y-auto scrolling py-6">
@@ -18,6 +18,13 @@
                     </button>
                 </div>
             </div>
+            @if($description)
+                <div class="mt-1">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        {{ $description }}
+                    </p>
+                </div>
+            @endif
         </header>
         <div class="mt-8 flex-1 px-4 sm:px-6">
             {{ $slot }}
