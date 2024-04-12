@@ -1,7 +1,7 @@
 @props(['action', 'title', 'description' => null])
 
 <form wire:submit="{{ $action }}" class="flex h-full flex-col divide-y divide-gray-200 dark:divide-gray-700">
-    <div class="h-0 flex-1 overflow-y-auto scrolling py-6">
+    <div class="h-0 flex-1 overflow-y-auto py-6">
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white">

@@ -15,8 +15,6 @@ trait CanBeCacheable
 
     protected null | int | DateInterval | DateTimeInterface | Closure $cacheDuration = null;
 
-    protected array $evaluationParametersToRemove = [];
-
     public function cacheable(bool | Closure $cacheable = true): static
     {
         $this->cacheable = $cacheable;
@@ -52,19 +50,5 @@ trait CanBeCacheable
         }
 
         return Cache::remember($key, $this->getCacheDuration(), $callback);
-    }
-
-    public function evaluate($value, array $parameters = [], array $exceptParameters = [])
-    {
-        $this->evaluationParametersToRemove = $exceptParameters;
-
-        if ($value instanceof Closure) {
-            return app()->call(
-                $value,
-                array_merge([], $parameters),
-            );
-        }
-
-        return $value;
     }
 }

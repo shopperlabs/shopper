@@ -13,13 +13,13 @@ return [
     'attribute_value' => 'Attribute value id',
 
     'values' => [
+        'slug' => 'Values',
         'title' => 'Attribute values',
         'description' => 'Add default values for this attribute. These values will be available on product attributes tabs.',
     ],
 
     'notifications' => [
-        'created' => 'Attribute has been successfully created',
-        'updated' => 'Attribute has been successfully updated!',
+        'save' => 'Attribute has been successfully save',
         'value_created' => 'New value added for :name',
         'value_updated' => 'Your value have been correctly updated',
         'value_removed' => 'Your value have been correctly removed',

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Traits\HasSlug;
 
 /**
@@ -15,7 +17,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property string $name
  * @property string $slug
  * @property string|null $description
- * @property string $type
+ * @property FieldType $type
  * @property bool $is_enabled
  * @property bool $is_searchable
  * @property bool $is_filterable
@@ -42,6 +44,7 @@ class Attribute extends Model
         'is_enabled' => 'boolean',
         'is_searchable' => 'boolean',
         'is_filterable' => 'boolean',
+        'type' => FieldType::class,
     ];
 
     protected $appends = [
@@ -53,23 +56,16 @@ class Attribute extends Model
         return shopper_table('attributes');
     }
 
-    public function getTypeFormattedAttribute(): string
+    public function typeFormatted(): CastAttribute
     {
-        return self::typesFields()[$this->type];
+        return CastAttribute::make(
+            get: fn () => self::typesFields()[$this->type->value]
+        );
     }
 
     public static function typesFields(): array
     {
-        return [
-            'text' => __('shopper::layout.forms.label.text_field', ['type' => '(input)']),
-            'number' => __('shopper::layout.forms.label.text_field', ['type' => '(number)']),
-            'richtext' => __('shopper::layout.forms.label.richtext'),
-            'select' => __('shopper::layout.forms.label.select'),
-            'checkbox' => __('shopper::layout.forms.label.checkbox'),
-            'radio' => __('shopper::layout.forms.label.radio'),
-            'colorpicker' => __('shopper::layout.forms.label.colorpicker'),
-            'datepicker' => __('shopper::layout.forms.label.datepicker'),
-        ];
+        return FieldType::options();
     }
 
     public static function fieldsWithValues(): array
@@ -95,6 +91,13 @@ class Attribute extends Model
     public function hasSingleValue(): bool
     {
         return in_array($this->type, ['radio', 'select']);
+    }
+
+    public function updateStatus(bool $status = true): void
+    {
+        $this->is_enabled = $status;
+
+        $this->save();
     }
 
     public function scopeEnabled(Builder $query): Builder

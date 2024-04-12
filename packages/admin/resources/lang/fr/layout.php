@@ -123,7 +123,7 @@ return [
             'pixel_id' => 'ID du compte Facebook Pixel',
             'icon' => 'Icône',
             'text_field' => 'Champ de texte :type',
-            'richtext' => 'Rich Text',
+            'richtext' => 'Éditeur de texte',
             'select' => 'Select',
             'checkbox' => 'Checkbox',
             'radio' => 'Radio',

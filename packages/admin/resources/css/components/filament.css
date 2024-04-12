@@ -14,3 +14,26 @@
   animation: shaking 0.35s normal;
   animation-iteration-count: 1
 }
+
+@layer components {
+  .filament-icon-picker .choices > .choices__list {
+    @apply px-2;
+  }
+
+  .filament-icon-picker .choices > .choices__inner > .choices__list.choices__list--single {
+    @apply w-full;
+  }
+
+  .filament-icon-picker .choices > .choices__list .choices__list {
+    @apply pb-2 gap-2;
+  }
+
+  .filament-icon-picker .choices > .choices__list .choices__list {
+    @apply grid;
+  }
+}
+.filament-icon-picker .choices > .choices__list .choices__list .choices__item.has-no-choices,
+.filament-icon-picker .choices > .choices__list .choices__list .choices__item.has-no-results,
+.filament-icon-picker .choices > .choices__list .choices__list .choices__item.choices__item--disabled {
+  @apply col-span-full;
+}
