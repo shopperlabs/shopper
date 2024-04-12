@@ -51,7 +51,7 @@ class AttributeForm extends SlideOverComponent implements HasForms
                     ->dehydrated()
                     ->required()
                     ->maxLength(255)
-                    ->unique(table: Attribute::class, column:  'slug', ignoreRecord: true),
+                    ->unique(table: Attribute::class, column: 'slug', ignoreRecord: true),
 
                 Forms\Components\Select::make('type')
                     ->label(__('shopper::layout.forms.label.type'))

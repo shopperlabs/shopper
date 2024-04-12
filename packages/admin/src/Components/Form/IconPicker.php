@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Components\Form;
 
+use BadMethodCallException;
 use BladeUI\Icons\Factory as IconFactory;
 use Closure;
 use Filament\Forms\Components\Select;
@@ -12,9 +13,7 @@ use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Traits\CanBeCacheable;
 
@@ -25,12 +24,19 @@ class IconPicker extends Select
     protected string $view = 'shopper::filament.form.icon-picker';
 
     protected array | Closure | null $sets = null;
+
     protected array | Closure | null $allowedIcons = null;
+
     protected array | Closure | null $disallowedIcons = null;
+
     protected bool | Closure $isHtmlAllowed = true;
+
     protected bool | Closure $isSearchable = true;
+
     protected Closure | string | Htmlable | null $itemTemplate = null;
+
     protected bool | Closure $show;
+
     protected string $layout = 'floating';
 
     public function setUp(): void
@@ -43,15 +49,13 @@ class IconPicker extends Select
         $this->getSearchResultsUsing = function (IconPicker $component, string $search, Collection $icons) {
 
             $iconsHash = md5(serialize($icons));
-            $key = "icon-picker.results.$iconsHash.$search";
+            $key = "icon-picker.results.{$iconsHash}.{$search}";
 
             return $this->tryCache($key, function () use ($component, $search, $icons) {
                 return collect($icons)
                     ->flatten()
                     ->filter(fn (string $icon) => str_contains($icon, $search))
-                    ->mapWithKeys(function (string $icon) use ($component) {
-                        return [$icon => $component->getItemTemplate(['icon' => $icon])];
-                    })
+                    ->mapWithKeys(fn (string $icon) => [$icon => $component->getItemTemplate(['icon' => $icon])])
                     ->toArray();
             });
         };
@@ -97,7 +101,7 @@ class IconPicker extends Select
         ]);
     }
 
-    public function disallowedIcons(array|Closure|string $disallowedIcons): static
+    public function disallowedIcons(array | Closure | string $disallowedIcons): static
     {
         $this->disallowedIcons = $disallowedIcons;
 
@@ -137,7 +141,7 @@ class IconPicker extends Select
 
     public function getSearchResults(string $search): array
     {
-        if (!$this->getSearchResultsUsing) {
+        if (! $this->getSearchResultsUsing) {
             return [];
         }
 
@@ -155,59 +159,59 @@ class IconPicker extends Select
         return $results;
     }
 
-    public function relationship(string|Closure|null $name = null, string|Closure|null $titleAttribute = null, ?Closure $modifyQueryUsing = null, bool $ignoreRecord = false): static
+    public function relationship(string | Closure | null $name = null, string | Closure | null $titleAttribute = null, ?Closure $modifyQueryUsing = null, bool $ignoreRecord = false): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function options(Arrayable|Closure|array|string|null $options): static
+    public function options(Arrayable | Closure | array | string | null $options): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function allowHtml(bool|Closure $condition = true): static
+    public function allowHtml(bool | Closure $condition = true): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function searchable(bool|array|Closure $condition = true): static
+    public function searchable(bool | array | Closure $condition = true): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
     public function getSearchResultsUsing(?Closure $callback): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
     public function getOptionLabelFromRecordUsing(?Closure $callback): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
     public function createOptionUsing(Closure $callback): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
     public function createOptionAction(?Closure $callback): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function createOptionForm(array|Closure|null $schema): static
+    public function createOptionForm(array | Closure | null $schema): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function schema(array|Closure $components): static
+    public function schema(array | Closure $components): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function multiple(bool|Closure $condition = true): static
+    public function multiple(bool | Closure $condition = true): static
     {
-        throw new \BadMethodCallException('Method not allowed.');
+        throw new BadMethodCallException('Method not allowed.');
     }
 
     private function loadIcons(): Collection
@@ -241,7 +245,7 @@ class IconPicker extends Select
                 foreach (File::files($path) as $file) {
                     $filename = $prefix . '-' . $file->getFilenameWithoutExtension();
 
-                    if ($allowedIcons && !in_array($filename, $allowedIcons)) {
+                    if ($allowedIcons && ! in_array($filename, $allowedIcons)) {
                         continue;
                     }
 

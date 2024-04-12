@@ -94,10 +94,10 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                         'value' => $record->value,
                     ])
                     ->form($this->formSchema())
-                    ->action(function (array $data, AttributeValue $record) {
+                    ->action(function (array $data, AttributeValue $record): void {
                         $record->update([
                             'key' => mb_strtolower($data['key']),
-                            'value' =>$data['value'],
+                            'value' => $data['value'],
                         ]);
 
                         $this->dispatch('$refresh');
@@ -117,7 +117,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                     ->color('danger')
                     ->badge()
                     ->requiresConfirmation()
-                    ->action(fn (Collection $records) => $records->each->delete())
+                    ->action(fn (Collection $records) => $records->each->delete()),
             ])
             ->headerActions([
                 Tables\Actions\Action::make('add')
@@ -127,14 +127,14 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                     ->modalHeading(__('shopper::modals.attributes.new_value', ['attribute' => $this->attribute->name]))
                     ->modalWidth(MaxWidth::ExtraLarge)
                     ->form($this->formSchema())
-                    ->action(function (array $data) {
+                    ->action(function (array $data): void {
                         $this->attribute->values()->create([
                             'key' => mb_strtolower($data['key']),
                             'value' => $data['value'],
                         ]);
 
                         $this->dispatch('$refresh');
-                    })
+                    }),
             ])
             ->emptyStateIcon('untitledui-file-02')
             ->emptyStateHeading(__('shopper::words.no_values'));

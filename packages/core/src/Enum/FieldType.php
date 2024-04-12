@@ -40,9 +40,8 @@ enum FieldType: string
     {
         return collect(self::cases())
             ->mapWithKeys(fn (self $enum) => [
-                $enum->value => $enum->label()
+                $enum->value => $enum->label(),
             ])
             ->toArray();
     }
-
 }

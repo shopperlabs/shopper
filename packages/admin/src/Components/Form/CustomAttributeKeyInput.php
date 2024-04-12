@@ -12,7 +12,7 @@ final class CustomAttributeKeyInput
 {
     public static function make(string $key, FieldType $type): Component
     {
-        return match($type) {
+        return match ($type) {
             FieldType::COLORPICKER => Components\ColorPicker::make($key)
                 ->default('#1E3A8A'),
             default => Components\TextInput::make($key)
