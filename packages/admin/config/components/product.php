@@ -18,6 +18,7 @@ return [
         'product-create' => Livewire\Pages\Product\Create::class,
         'product-edit' => Livewire\Pages\Product\Edit::class,
         'variant-edit' => Livewire\Pages\Product\Variant::class,
+        'attribute-index' => Livewire\Pages\Attribute\Browse::class,
     ],
 
     /*
@@ -27,11 +28,6 @@ return [
     */
 
     'components' => [
-        'attributes.browse' => Components\Attributes\Browse::class,
-        'attributes.create' => Components\Attributes\Create::class,
-        'attributes.edit' => Components\Attributes\Edit::class,
-        'attributes.values' => Components\Attributes\Values::class,
-
         'products.form.attributes' => Components\Products\Form\Attributes::class,
         'products.form.edit' => Components\Products\Form\Edit::class,
         'products.form.media' => Components\Products\Form\Media::class,
@@ -42,12 +38,12 @@ return [
         'products.form.variants' => Components\Products\Form\Variants::class,
         'products.variant-stock' => Components\Products\VariantStock::class,
 
-        'modals.create-value' => Livewire\Modals\CreateValue::class,
         'modals.products-lists' => Livewire\Modals\ProductsLists::class,
         'modals.related-products-list' => Livewire\Modals\RelatedProductsList::class,
-        'modals.update-value' => Livewire\Modals\UpdateValue::class,
 
         'slide-overs.add-variant' => Livewire\SlideOvers\AddVariantForm::class,
+        'slide-overs.attribute-form' => Livewire\SlideOvers\AttributeForm::class,
+        'slide-overs.attribute-values' => Livewire\SlideOvers\AttributeValues::class,
     ],
 
 ];

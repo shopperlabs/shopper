@@ -14,7 +14,10 @@
                 @can('add_attributes')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper::buttons.primary :link="route('shopper.attributes.create')">
+                            <x-shopper::buttons.primary
+                                wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.attribute-form' })"
+                                type="button"
+                            >
                                 {{ __('shopper::layout.forms.actions.create') }}
                             </x-shopper::buttons.primary>
                         </span>
@@ -30,7 +33,7 @@
             :content="__('shopper::pages/attributes.content')"
             :button="__('shopper::pages/attributes.add')"
             permission="add_attributes"
-            :url="route('shopper.attributes.create')"
+            panel="{ component: 'shopper-slide-overs.attribute-form' }"
         >
             <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 250">
@@ -108,7 +111,7 @@
         </x-shopper::empty-state>
     @else
         <div class="mt-8">
-            <livewire:shopper-tables.attributes-table />
+            {{ $this->table }}
         </div>
     @endif
 

@@ -18,8 +18,7 @@ return [
     ],
 
     'notifications' => [
-        'created' => 'L\'attribut a été créé avec succès!',
-        'updated' => 'L\'attribut a été mis à jour avec succès!',
+        'save' => 'L\'attribut a été enrégistré avec succès!',
         'value_created' => 'Nouvelle valeur ajoutée pour :name',
         'value_updated' => 'Votre valeur a été correctement mise à jour',
         'value_removed' => 'Votre valeur a été correctement supprimée',
