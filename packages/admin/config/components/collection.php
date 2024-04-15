@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use Shopper\Livewire\Components;
-use Shopper\Livewire\Pages;
+use Shopper\Livewire;
 
 return [
 
@@ -13,7 +12,10 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'pages' => [],
+    'pages' => [
+        'collection-index' => Livewire\Pages\Collection\Index::class,
+        'collection-edit' => Livewire\Pages\Collection\Edit::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -22,10 +24,12 @@ return [
     */
 
     'components' => [
-        'collections.browse' => Components\Collections\Browse::class,
-        'collections.create' => Components\Collections\Create::class,
-        'collections.edit' => Components\Collections\Edit::class,
-        'collections.products' => Components\Collections\Products::class,
+        'collections.products' => Livewire\Components\Collection\CollectionProducts::class,
+
+        'modals.products-list' => Livewire\Modals\CollectionProductsList::class,
+
+        'slide-overs.collection-rules' => Livewire\SlideOvers\CollectionRules::class,
+        'slide-overs.add-collection-form' => Livewire\SlideOvers\AddCollectionForm::class,
     ],
 
 ];

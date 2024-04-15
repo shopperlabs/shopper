@@ -16,24 +16,19 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Components;
 use Shopper\Core\Events\Products\Updated;
+use Shopper\Core\Models\Product;
 use Shopper\Feature;
 
 class Edit extends Component implements HasForms
 {
     use InteractsWithForms;
 
-    public $product;
+    public Product $product;
 
     public ?array $data = [];
 
-    public function mount($product): void
+    public function mount(): void
     {
-        $this->product = $product->load([
-            'brand',
-            'categories',
-            'collections',
-        ]);
-
         $this->form->fill($this->product->toArray());
     }
 
@@ -124,7 +119,7 @@ class Edit extends Component implements HasForms
 
                                 Forms\Components\Select::make('collections')
                                     ->label(__('shopper::layout.sidebar.collections'))
-                                    ->relationship('collections', 'name', fn (Builder $query) => $query->where('is_enabled', true))
+                                    ->relationship('collections', 'name')
                                     ->searchable()
                                     ->multiple()
                                     ->visible(Feature::enabled('collection')),

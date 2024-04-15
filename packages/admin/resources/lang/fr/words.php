@@ -69,7 +69,6 @@ return [
     'variants' => 'Variantes',
     'variant' => 'Variante',
     'overview' => 'Aperçu',
-    'seo' => 'SEO',
     'in_stock' => 'en stock',
     'out_stock' => 'stock épuisé',
     'event' => 'Action',
@@ -165,5 +164,14 @@ return [
     'sign_in_as' => 'Connecté avec',
     'general' => 'Général',
     'slug_description' => 'Utiliser pour la génération de bon format url sur votre boutique',
+
+    'seo' => [
+        'title' => 'Optimisation des moteurs de recherche',
+        'slug' => 'SEO',
+        'description' => 'Améliorez votre classement et la façon dont votre page :name apparaîtra dans les résultats des moteurs de recherche.',
+        'sub_description' => 'Voici un aperçu du résultat que peut donner un moteur de recherche, jouez avec !',
+    ],
+
+    'other' => ' autre(s)',
 
 ];

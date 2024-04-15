@@ -11,30 +11,22 @@ return [
     'manual' => 'Manual',
     'manual_description' => 'Add the products to this collection one by one.',
     'filter_type' => 'Collection Type',
-    'product_conditions' => 'Product Conditions',
+    'product_conditions' => 'Product conditions',
+    'availability_description' => 'Specify a publication date so that your collections are scheduled on your store.',
+    'empty_collections' => 'There are no products in this collection. Add or change conditions to dynamically add products.',
+    'remove_product' => 'The product have been correctly remove to this collection.',
 
     'conditions' => [
         'title' => 'Conditions',
-        'products_match' => 'Products must match:',
+        'products_match' => 'Products must match',
         'all' => 'All conditions',
         'any' => 'Any condition',
         'rules' => 'Rules',
         'choose_rule' => 'Choose a rule',
-        'select_operator' => 'Select Operator',
+        'select_operator' => 'Select operator',
         'add' => 'Add condition',
         'add_another' => 'Add another condition',
-        'update' => 'Update conditions',
-    ],
-
-    'availability_description' => 'Specify a publication date so that your collections are scheduled on your store.',
-
-    'order' => [
-        'alpha_asc' => 'Alpha Asc',
-        'alpha_desc' => 'Alpha Desc',
-        'price_asc' => 'Price Asc',
-        'price_desc' => 'Price Desc',
-        'created_asc' => 'Created Asc',
-        'created_desc' => 'Created Desc',
+        'update' => 'Update conditions successfully',
     ],
 
     'rules' => [
@@ -56,8 +48,6 @@ return [
         'contains' => 'Contains',
         'not_contains' => 'Not contains',
     ],
-
-    'empty_collections' => 'There are no products in this collection. Add or change conditions to dynamically add products.',
 
     'modal' => [
         'title' => 'Add Products to collection',

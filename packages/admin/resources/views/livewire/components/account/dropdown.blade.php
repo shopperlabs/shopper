@@ -1,5 +1,5 @@
 <div x-data="{ dropdownOpen: false }">
-    <div class="relative flex items-center rounded-lg group transition ease-in-out duration-200">
+    <div class="relative flex items-center rounded-xl group transition ease-in-out duration-200">
         <button
             @click="dropdownOpen = !dropdownOpen"
             class="relative inline-flex items-center w-full text-sm leading-5 rounded-full focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"

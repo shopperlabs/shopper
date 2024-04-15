@@ -1,5 +1,5 @@
 <div class="flex h-full flex-col divide-y divide-gray-200 dark:divide-gray-700">
-    <div class="h-0 flex-1 overflow-y-auto scrolling py-6">
+    <div class="h-0 flex-1 overflow-y-auto py-6">
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
                 <div class="flex items-center">

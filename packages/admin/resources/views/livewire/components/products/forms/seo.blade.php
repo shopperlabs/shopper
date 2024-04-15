@@ -1,10 +1,10 @@
 <x-shopper::container class="space-y-8">
     <div>
         <x-filament::section.heading>
-            {{ __('shopper::pages/products.seo.title') }}
+            {{ __('shopper::words.seo.title') }}
         </x-filament::section.heading>
         <x-filament::section.description class="mt-1 max-w-2xl">
-            {{ __('shopper::pages/products.seo.description') }}
+            {{ __('shopper::words.seo.description', ['name' => mb_strtolower(__('shopper::words.product'))]) }}
         </x-filament::section.description>
     </div>
     <div class="grid gap-6 lg:grid-cols-2 lg:gap-x-10">

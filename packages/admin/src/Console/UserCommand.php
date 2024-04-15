@@ -31,7 +31,7 @@ final class UserCommand extends Command
     {
         $email = text(
             label: 'Your Email Address',
-            default: 'admin@shopper.dev',
+            placeholder: 'admin@shopper.dev',
             required: true,
             validate: fn (string $value) => User::where('email', $value)->exists()
                     ? 'An admin with that email already exists.'
@@ -39,12 +39,12 @@ final class UserCommand extends Command
         );
         $first_name = text(
             label: 'What is your First Name',
-            default: 'Shopper',
+            placeholder: 'Shopper',
             required: true,
         );
         $last_name = text(
             label: 'What is your Last Name',
-            default: 'User',
+            placeholder: 'User',
             required: true,
         );
         $password = password(

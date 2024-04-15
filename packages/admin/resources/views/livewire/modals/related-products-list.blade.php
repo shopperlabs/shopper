@@ -39,6 +39,7 @@
             <x-shopper::buttons.primary
                 wire:click="addSelectedProducts"
                 wire.loading.attr="disabled"
+                :disabled="count($selectedProducts) <= 0"
                 type="button"
                 class="w-full sm:ml-3 sm:w-auto"
             >

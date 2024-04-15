@@ -121,12 +121,6 @@ return [
         'remove' => 'Retrait manuel',
     ],
 
-    'seo' => [
-        'title' => 'Optimisation des moteurs de recherche',
-        'description' => 'Améliorez votre classement et la façon dont votre page produit apparaîtra dans les résultats des moteurs de recherche.',
-        'sub_description' => 'Voici un aperçu imagé du résultat que peut donner un moteur de recherche, jouez avec !',
-    ],
-
     'shipping' => [
         'description' => 'Informations sur le produit à retourner ou définir si le produit peut être envoyé au client.',
         'package_dimension' => 'Dimension de l\'emballage',

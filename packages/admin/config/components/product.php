@@ -38,7 +38,6 @@ return [
         'products.form.variants' => Components\Products\Form\Variants::class,
         'products.variant-stock' => Components\Products\VariantStock::class,
 
-        'modals.products-lists' => Livewire\Modals\ProductsLists::class,
         'modals.related-products-list' => Livewire\Modals\RelatedProductsList::class,
 
         'slide-overs.add-variant' => Livewire\SlideOvers\AddVariantForm::class,

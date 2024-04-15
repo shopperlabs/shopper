@@ -12,10 +12,13 @@ return [
     'manual_description' => 'Ajoutez les produits à cette collection un par un.',
     'filter_type' => 'Type de Collection',
     'product_conditions' => 'Conditions du produit',
+    'availability_description' => 'Précisez une date de publication pour que la collection soit programmée sur votre boutique.',
+    'empty_collections' => 'Il n\'y a aucun produit dans cette collection. Ajoutez ou modifiez des conditions pour ajouter dynamiquement des produits.',
+    'remove_product' => 'Le produit a été correctement retiré de cette collection.',
 
     'conditions' => [
         'title' => 'Conditions',
-        'products_match' => 'Les produits doivent correspondre:',
+        'products_match' => 'Les produits doivent répondre',
         'all' => 'Toutes',
         'any' => 'N\'importe laquelle',
         'rules' => 'Règles',
@@ -23,18 +26,7 @@ return [
         'select_operator' => 'Sélectionnez l\'opérateur',
         'add' => 'Ajouter une condition',
         'add_another' => 'Ajouter une autre condition',
-        'update' => 'Modifier les conditions',
-    ],
-
-    'availability_description' => 'Précisez une date de publication pour que la collection soit programmée sur votre boutique.',
-
-    'order' => [
-        'alpha_asc' => 'Alpha Asc',
-        'alpha_desc' => 'Alpha Desc',
-        'price_asc' => 'Prix Asc',
-        'price_desc' => 'Prix Desc',
-        'created_asc' => 'Création Asc',
-        'created_desc' => 'Création Desc',
+        'update' => 'Modification les conditions avec succès',
     ],
 
     'rules' => [
@@ -56,8 +48,6 @@ return [
         'contains' => 'Contient',
         'not_contains' => 'Ne contient pas',
     ],
-
-    'empty_collections' => 'Il n\'y a aucun produit dans cette collection. Ajoutez ou modifiez des conditions pour ajouter dynamiquement des produits.',
 
     'modal' => [
         'title' => 'Ajouter des produits à la collection',

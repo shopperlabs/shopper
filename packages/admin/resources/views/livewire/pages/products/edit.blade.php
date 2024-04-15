@@ -80,7 +80,7 @@
                         x-on:click="activeTab = 'seo'"
                         icon="untitledui-monitor-02"
                     >
-                        {{ __('shopper::words.seo') }}
+                        {{ __('shopper::words.seo.slug') }}
                     </x-filament::tabs.item>
 
                     <x-filament::tabs.item

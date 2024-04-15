@@ -16,10 +16,11 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
- * @property string $type
+ * @property CollectionType $type
  * @property string $name
  * @property string $slug
  * @property string|null $description
+ * @property array|null $metadata
  */
 class Collection extends Model implements SpatieHasMedia
 {
@@ -31,6 +32,8 @@ class Collection extends Model implements SpatieHasMedia
 
     protected $casts = [
         'published_at' => 'datetime',
+        'metadata' => 'array',
+        'type' => CollectionType::class
     ];
 
     public function getTable(): string
@@ -50,7 +53,7 @@ class Collection extends Model implements SpatieHasMedia
 
     public function isAutomatic(): bool
     {
-        return $this->type === CollectionType::AUTO->value;
+        return $this->type === CollectionType::AUTO;
     }
 
     public function isManual(): bool
@@ -58,11 +61,18 @@ class Collection extends Model implements SpatieHasMedia
         return ! $this->isAutomatic();
     }
 
-    public function firstRule(): string
+    public function firstRule(): ?string
     {
         $condition = $this->rules()->first();
 
-        return $condition->getFormattedRule() . ' ' . $condition->getFormattedOperator() . ' ' . $condition->getFormattedValue();
+        if ($this->isAutomatic()) {
+            $words = $condition->getFormattedRule() . ' ' . $condition->getFormattedOperator() . ' ' . $condition->getFormattedValue();
+            $rules = $this->rules()->count();
+
+            return $words . ' ' . ($rules >= 2 ? '+ '. $rules - 1 . __('shopper::words.other') : '');
+        }
+
+        return null;
     }
 
     public function products(): MorphToMany
