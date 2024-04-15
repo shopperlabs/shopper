@@ -9,7 +9,10 @@
                 @can('add_collections')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper::buttons.primary :link="route('shopper.collections.create')">
+                            <x-shopper::buttons.primary
+                                type="button"
+                                wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.add-collection-form' })"
+                            >
                                 {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.collection'))]) }}
                             </x-shopper::buttons.primary>
                         </span>
@@ -25,7 +28,7 @@
             :content="__('shopper::pages/collections.content')"
             :button="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.collection'))])"
             permission="add_collections"
-            :url="route('shopper.collections.create')"
+            panel="{ component: 'shopper-slide-overs.add-collection-form' }"
         >
             <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 230">
@@ -149,7 +152,7 @@
         </x-shopper::empty-state>
     @else
         <div class="mt-8">
-            <livewire:shopper-tables.collections-table />
+            {{ $this->table }}
         </div>
     @endif
 

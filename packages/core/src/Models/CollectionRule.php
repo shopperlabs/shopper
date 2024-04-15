@@ -4,10 +4,21 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property-read int $id
+ * @property string $rule
+ * @property string $operator
+ * @property string $value
+ * @property int $collection_id
+ * @property Collection $collection
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
 class CollectionRule extends Model
 {
     use HasFactory;
@@ -28,7 +39,7 @@ class CollectionRule extends Model
             'product_price' => __('shopper::pages/collections.rules.product_price'),
             'compare_at_price' => __('shopper::pages/collections.rules.compare_at_price'),
             'inventory_stock' => __('shopper::pages/collections.rules.inventory_stock'),
-        ][$this->rule]; // @phpstan-ignore-line
+        ][$this->rule];
     }
 
     public function getFormattedOperator(): string
@@ -42,18 +53,16 @@ class CollectionRule extends Model
             'ends_with' => __('shopper::pages/collections.operator.ends_with'),
             'contains' => __('shopper::pages/collections.operator.contains'),
             'not_contains' => __('shopper::pages/collections.operator.not_contains'),
-        ][$this->operator]; // @phpstan-ignore-line
+        ][$this->operator];
     }
 
     public function getFormattedValue(): string
     {
-        // @phpstan-ignore-next-line
         if ($this->rule === 'product_price') {
-            // @phpstan-ignore-next-line
-            return shopper_money_format(mb_strtoupper($this->value));
+            return shopper_money_format((int) $this->value);
         }
 
-        return $this->value; // @phpstan-ignore-line
+        return $this->value;
     }
 
     public function collection(): BelongsTo

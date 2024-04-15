@@ -15,6 +15,7 @@ final class FeatureServiceProvider extends ServiceProvider
     protected array $componentsConfig = [
         'brand',
         'category',
+        'collection',
         'customer',
         'product',
     ];

@@ -60,7 +60,6 @@ class AttributeForm extends SlideOverComponent implements HasForms
                     ->native(false),
 
                 Components\Form\IconPicker::make('icon')
-                    ->cacheable(false)
                     ->label(__('shopper::layout.forms.label.icon')),
 
                 Forms\Components\Textarea::make('description')

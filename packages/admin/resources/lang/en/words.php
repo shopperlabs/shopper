@@ -69,7 +69,6 @@ return [
     'variants' => 'Variants',
     'variant' => 'Variant',
     'overview' => 'Overview',
-    'seo' => 'SEO',
     'in_stock' => 'in stock',
     'out_stock' => 'out stock',
     'event' => 'Event',
@@ -166,5 +165,14 @@ return [
     'sign_in_as' => 'Signed in as',
     'general' => 'General',
     'slug_description' => 'Use to generate the right url format for your store',
+
+    'seo' => [
+        'title' => 'Search Engine Optimization',
+        'slug' => 'SEO',
+        'description' => 'Improve your ranking and how your :name page will appear in search engines results.',
+        'sub_description' => 'Here is a preview of what an search engine can display, play with it!',
+    ],
+
+    'other' => ' other(s)',
 
 ];

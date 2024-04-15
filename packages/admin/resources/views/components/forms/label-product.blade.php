@@ -1,10 +1,10 @@
 @props(['product'])
 
-<label for="product_{{ $product->id }}" class="flex items-center px-2 py-3 cursor-pointer hover:bg-gray-50 focus:bg-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-700">
+<label for="product_{{ $product->id }}" class="flex items-center px-2 py-3 cursor-pointer hover:bg-gray-50 focus:bg-gray-50 dark:hover:bg-white/10 dark:focus:bg-gray-700">
     <span class="mr-4">
         <x-shopper::forms.checkbox
             id="product_{{ $product->id }}"
-            wire:model.debounce.250ms="selectedProducts"
+            wire:model.live.debounce.250ms="selectedProducts"
             aria-label="{{ __('shopper::words.product') }}"
             value="{{ $product->id }}"
         />

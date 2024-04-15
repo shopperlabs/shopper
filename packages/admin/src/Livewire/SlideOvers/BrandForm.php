@@ -78,7 +78,7 @@ class BrandForm extends SlideOverComponent implements HasForms
                     ->schema([
                         Components\SpatieMediaLibraryFileUpload::make('file')
                             ->label(__('shopper::layout.forms.label.image_preview'))
-                            ->collection(config('shopper.core.storage.collection_name'))
+                            ->collection(config('shopper.core.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(1024),
                     ]),

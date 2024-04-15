@@ -121,12 +121,6 @@ return [
         'remove' => 'Manually removed',
     ],
 
-    'seo' => [
-        'title' => 'Search Engine Optimization',
-        'description' => 'Improve your ranking and how your product page will appear in search engines results.',
-        'sub_description' => 'Here is a preview of what an search engine can display, play with it!',
-    ],
-
     'shipping' => [
         'description' => 'Product information about return product or define if product can be shipping to the customer.',
         'package_dimension' => 'Package dimension',
