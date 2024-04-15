@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property-read integer $id
+ * @property-read int $id
  * @property string $rule
  * @property string $operator
  * @property string $value

@@ -54,7 +54,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                             ->dehydrated()
                             ->required()
                             ->maxLength(255)
-                            ->unique(table: config('shopper.models.collection'), column:  'slug'),
+                            ->unique(table: config('shopper.models.collection'), column: 'slug'),
 
                         Forms\Components\DateTimePicker::make('published_at')
                             ->label(__('shopper::layout.forms.label.availability'))

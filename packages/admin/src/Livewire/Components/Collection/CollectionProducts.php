@@ -51,7 +51,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
                     ->modalIcon('untitledui-trash-03')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(function ($record) {
+                    ->action(function ($record): void {
                         $this->collection->products()->detach([$record->id]);
 
                         $this->dispatch('onProductsAddInCollection');
