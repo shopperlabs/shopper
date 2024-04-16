@@ -19,7 +19,7 @@ return new class() extends Migration
             $table->longText('notes');
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
-            $this->addForeignKey($table, 'user_id', $this->getTableName('users'));
+            $this->addForeignKey($table, 'user_id', 'users');
         });
     }
 
