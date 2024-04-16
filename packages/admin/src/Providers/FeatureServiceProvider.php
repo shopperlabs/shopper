@@ -18,6 +18,7 @@ final class FeatureServiceProvider extends ServiceProvider
         'collection',
         'customer',
         'product',
+        'review',
     ];
 
     protected string $root = __DIR__ . '/../..';

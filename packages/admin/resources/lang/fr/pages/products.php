@@ -70,6 +70,7 @@ return [
         'published' => 'Publié',
         'pending' => 'En attente',
         'approved' => 'Avis approuvé',
+        'is_recommended' => 'Avis recommandé',
         'approved_status' => 'Statut approuvé',
         'approved_message' => 'Mise à jour de l\'avis approuvée !',
 

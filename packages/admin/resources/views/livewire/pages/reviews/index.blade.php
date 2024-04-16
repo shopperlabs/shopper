@@ -370,7 +370,7 @@
         </div>
     @else
         <div class="mt-8">
-            <livewire:shopper-tables.reviews-table />
+            {{ $this->table }}
         </div>
     @endif
 

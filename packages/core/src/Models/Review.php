@@ -7,12 +7,15 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property-read int $id
  * @property bool $approved
+ * @property bool $is_recommended
+ * @property string | null $title
+ * @property string | null $content
+ * @property int $rating
  */
 class Review extends Model
 {
@@ -35,7 +38,7 @@ class Review extends Model
         return $this->morphTo();
     }
 
-    public function author(): BelongsTo
+    public function author(): MorphTo
     {
         return $this->morphTo('author');
     }
@@ -110,5 +113,12 @@ class Review extends Model
     public function deleteRating(int $id): ?bool
     {
         return self::query()->find($id)->delete();
+    }
+
+    public function updatedApproved(bool $approved = false): void
+    {
+        $this->approved = $approved;
+
+        $this->save();
     }
 }
