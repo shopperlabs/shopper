@@ -38,7 +38,7 @@
     "laravel/prompts": "^0.1.15",
     "livewire/livewire": "^3.4",
     "maatwebsite/excel": "^3.1",
-    "mckenziearts/blade-untitledui-icons": "^1.2",
+    "mckenziearts/blade-untitledui-icons": "^1.3",
     "milon/barcode": "^10.0|^11.0",
     "moneyphp/money": "^3.3",
     "pragmarx/google2fa": "^8.0",

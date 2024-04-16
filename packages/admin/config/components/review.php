@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Shopper\Livewire;
-use Shopper\Livewire\Components;
 
 return [
 
@@ -13,7 +12,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'pages' => [],
+    'pages' => [
+        'review-index' => Livewire\Pages\Reviews\Index::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -22,8 +23,7 @@ return [
     */
 
     'components' => [
-        'reviews.browse' => Components\Reviews\Browse::class,
-        'reviews.show' => Components\Reviews\Show::class,
+        'slide-overs.review-detail' => Livewire\SlideOvers\ReviewDetail::class,
 
         'modals.delete-review' => Livewire\Modals\DeleteReview::class,
     ],

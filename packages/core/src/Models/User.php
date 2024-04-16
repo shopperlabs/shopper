@@ -80,6 +80,11 @@ class User extends Authenticatable
         return $this->hasRole(config('shopper.core.users.admin_role'));
     }
 
+    public function isManager(): bool
+    {
+        return $this->hasRole(config('shopper.core.users.manager_role'));
+    }
+
     public function isVerified(): bool
     {
         return $this->email_verified_at !== null;

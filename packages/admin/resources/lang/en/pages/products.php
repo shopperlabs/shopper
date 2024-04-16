@@ -70,6 +70,7 @@ return [
         'published' => 'Published',
         'pending' => 'Pending',
         'approved' => 'Approved Review',
+        'is_recommended' => 'Recommended Review',
         'approved_status' => 'Approved status',
         'approved_message' => 'Review approved status updated!',
 
