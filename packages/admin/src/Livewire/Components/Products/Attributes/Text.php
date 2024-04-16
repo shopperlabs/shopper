@@ -12,8 +12,8 @@ use Filament\Forms\Contracts\HasForms;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Core\Enum\FieldType;
-use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Attribute;
+use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Product;
 
 class Text extends Component implements HasActions, HasForms

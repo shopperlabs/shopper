@@ -12,16 +12,15 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Product;
 
-class MultipleChoice extends Component implements HasForms, HasActions
+class MultipleChoice extends Component implements HasActions, HasForms
 {
-    use InteractsWithForms;
     use InteractsWithActions;
+    use InteractsWithForms;
 
     public Product $product;
 
