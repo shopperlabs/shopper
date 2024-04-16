@@ -11,6 +11,7 @@ return [
     'filtrable_description' => 'Vous pouvez utiliser cet attribut comme filtre dans votre boutique en ligne.',
     'attribute_visibility' => 'Définir la visibilité des attributs pour les clients.',
     'attribute_value' => 'Valeur de l\'attribut id',
+    'description' => 'Les attributes associés à votre produit. Ces attributs une fois sélectionnés, pourront être associés pour générer une combinaison de variantes',
 
     'values' => [
         'title' => 'Valeurs d\'attributs',

@@ -4,46 +4,38 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Attributes;
 
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
+use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
+use Shopper\Core\Models\Product;
 
-class SingleChoice extends Component
+class SingleChoice extends Component implements HasActions, HasForms
 {
     use Actions;
+    use InteractsWithActions;
+    use InteractsWithForms;
 
-    public Collection $values;
+    public Product $product;
 
-    public int $productId;
+    public Attribute $attribute;
 
-    public int $attributeId;
-
-    public ?Model $model = null;
+    public ?AttributeProduct $model = null;
 
     public ?int $value = null;
 
-    protected $listeners = [
-        'refresh' => '$refresh',
-    ];
-
-    public function mount(int $productId, int $attributeId, Collection $values): void
+    public function mount(): void
     {
-        $this->productId = $productId;
-        $this->attributeId = $attributeId;
-        $this->values = $values;
-
         $this->model = AttributeProduct::query()
-            ->where('product_id', $this->productId)
-            ->where('attribute_id', $this->attributeId)
+            ->where('product_id', $this->product->id)
+            ->where('attribute_id', $this->attribute->id)
             ->first();
-        $this->value = $this->model?->attribute_value_id; // @phpstan-ignore-line
-    }
 
-    public function save(): void
-    {
-        $this->store();
+        $this->value = $this->model?->attribute_value_id;
     }
 
     public function render(): View

@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property-read int $id
  * @property string|null $attribute_custom_value
+ * @property int $attribute_id
+ * @property int $attribute_value_id
+ * @property int $product_id
  * @property AttributeValue|null $value
  */
 class AttributeProduct extends Model

@@ -4,84 +4,79 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Attributes;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
+use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Core\Models\Product;
 
-class MultipleChoice extends Component
+class MultipleChoice extends Component implements HasForms, HasActions
 {
-    public Collection $values;
+    use InteractsWithForms;
+    use InteractsWithActions;
 
-    public string $type;
+    public Product $product;
 
-    public int $productId;
-
-    public int $attributeId;
+    public Attribute $attribute;
 
     public array $selected = [];
 
-    protected $listeners = [
-        'refresh' => '$refresh',
-    ];
+    public bool $activated;
 
-    public function mount(int $productId, string $type, int $attributeId, Collection $values): void
+    public function mount(): void
     {
-        $this->type = $type;
-        $this->productId = $productId;
-        $this->attributeId = $attributeId;
-        $this->values = $values;
-
         $this->selected = $this->currentValues->toArray(); // @phpstan-ignore-line
     }
 
-    public function getProductProperty(): Model
+    #[Computed]
+    public function currentValues(): \Illuminate\Support\Collection
     {
-        return (new ProductRepository())->getById($this->productId);
-    }
-
-    public function getCurrentValuesProperty(): \Illuminate\Support\Collection
-    {
-        return $this->product->attributes() // @phpstan-ignore-line
-            ->where('attribute_id', $this->attributeId)
+        return $this->product->attributes()
+            ->where('attribute_id', $this->attribute->id)
             ->get()
             ->pluck('attribute_value_id');
     }
 
-    public function save(): void
+    public function saveAction(): Action
     {
-        $this->validate(['selected' => 'array']);
+        return Action::make('save')
+            ->badge()
+            ->action(function (): void {
+                $toDelete = array_diff($this->currentValues->toArray(), $this->selected); // @phpstan-ignore-line
 
-        $toDelete = array_diff($this->currentValues->toArray(), $this->selected); // @phpstan-ignore-line
+                if (count($toDelete) > 0) {
+                    AttributeProduct::query()
+                        ->where('product_id', $this->product->id)
+                        ->whereIn('attribute_value_id', $toDelete)
+                        ->delete();
+                }
 
-        if (count($toDelete) > 0) {
-            AttributeProduct::query()
-                ->where('product_id', $this->product->id) // @phpstan-ignore-line
-                ->whereIn('attribute_value_id', $toDelete)
-                ->delete();
-        }
+                foreach ($this->selected as $value) {
+                    if (! $this->currentValues->contains($value)) { // @phpstan-ignore-line
+                        AttributeProduct::query()->create([
+                            'product_id' => $this->product->id,
+                            'attribute_id' => $this->attribute->id,
+                            'attribute_value_id' => $value,
+                        ]);
+                    }
+                }
 
-        foreach ($this->selected as $value) {
-            if (! $this->currentValues->contains($value)) { // @phpstan-ignore-line
-                AttributeProduct::query()->create([
-                    'product_id' => $this->product->id, // @phpstan-ignore-line
-                    'attribute_id' => $this->attributeId,
-                    'attribute_value_id' => $value,
-                ]);
-            }
-        }
+                Notification::make()
+                    ->title(__('shopper::pages/products.attributes.session.added_message'))
+                    ->success()
+                    ->send();
 
-        Notification::make()
-            ->title(__('shopper::pages/products.attributes.session.added'))
-            ->body(__('shopper::pages/products.attributes.session.added_message'))
-            ->success()
-            ->send();
-
-        $this->emitUp('onProductAttributeUpdated');
-        $this->emit('refresh');
+                $this->dispatch('$refresh')->self();
+            })
+            ->visible(count($this->selected) > 0 || $this->currentValues->isNotEmpty());
     }
 
     public function render(): View

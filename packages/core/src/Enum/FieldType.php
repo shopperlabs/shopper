@@ -12,15 +12,13 @@ enum FieldType: string
 
     case DATEPICKER = 'datepicker';
 
-    case NUMBER = 'number';
-
-    case RADIO = 'radio';
-
     case RICHTEXT = 'richtext';
 
     case SELECT = 'select';
 
     case TEXT = 'text';
+
+    case NUMBER = 'number';
 
     public function label(): string
     {
@@ -28,11 +26,10 @@ enum FieldType: string
             self::CHECKBOX => __('shopper::layout.forms.label.checkbox'),
             self::COLORPICKER => __('shopper::layout.forms.label.colorpicker'),
             self::DATEPICKER => __('shopper::layout.forms.label.datepicker'),
-            self::NUMBER => __('shopper::layout.forms.label.text_field', ['type' => '(number)']),
             self::RICHTEXT => __('shopper::layout.forms.label.richtext'),
-            self::RADIO => __('shopper::layout.forms.label.radio'),
             self::SELECT => __('shopper::layout.forms.label.select'),
             self::TEXT => __('shopper::layout.forms.label.text_field', ['type' => '(input)']),
+            self::NUMBER => __('shopper::layout.forms.label.text_field', ['type' => '(number)']),
         };
     }
 
