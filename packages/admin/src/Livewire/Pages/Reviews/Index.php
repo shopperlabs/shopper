@@ -45,7 +45,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                                         ? __('shopper::pages/products.reviews.published')
                                         : __('shopper::pages/products.reviews.pending')
                                 )
-                                ->color(fn (bool $state): string => $state ? 'success' : 'warning')
+                                ->color(fn (bool $state): string => $state ? 'success' : 'warning'),
                         ]),
                         Tables\Columns\TextColumn::make('created_at')
                             ->date()
