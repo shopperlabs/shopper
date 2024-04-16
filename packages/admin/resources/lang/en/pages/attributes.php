@@ -11,6 +11,7 @@ return [
     'filtrable_description' => 'You can use this attribute as a filter on your front store.',
     'attribute_visibility' => 'Set attribute visibility for the customers.',
     'attribute_value' => 'Attribute value id',
+    'description' => 'The attributes associated with your product. Once selected, these attributes can be combined to generate a combination of variants.',
 
     'values' => [
         'slug' => 'Values',

@@ -74,23 +74,22 @@ class Attribute extends Model
             'select',
             'checkbox',
             'colorpicker',
-            'radio',
         ];
     }
 
     public function hasMultipleValues(): bool
     {
-        return in_array($this->type, ['checkbox', 'colorpicker']);
-    }
-
-    public function hasTextValue(): bool
-    {
-        return in_array($this->type, ['text', 'number', 'richtext', 'datepicker']);
+        return in_array($this->type->value, ['checkbox', 'colorpicker']);
     }
 
     public function hasSingleValue(): bool
     {
-        return in_array($this->type, ['radio', 'select']);
+        return $this->type->value === 'select';
+    }
+
+    public function hasTextValue(): bool
+    {
+        return in_array($this->type->value, ['text', 'number', 'richtext', 'datepicker']);
     }
 
     public function updateStatus(bool $status = true): void

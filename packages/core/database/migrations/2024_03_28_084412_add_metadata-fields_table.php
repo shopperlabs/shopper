@@ -16,6 +16,7 @@ return new class extends Migration
         'collections',
         'discounts',
         'orders',
+        'order_refunds',
         'products',
         'payment_methods',
     ];

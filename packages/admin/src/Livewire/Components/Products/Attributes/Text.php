@@ -4,51 +4,90 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Attributes;
 
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
+use Shopper\Core\Enum\FieldType;
+use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
+use Shopper\Core\Models\Product;
 
-class Text extends Component
+class Text extends Component implements HasActions, HasForms
 {
     use Actions;
+    use InteractsWithActions;
+    use InteractsWithForms;
 
-    public string $type;
+    public Product $product;
 
-    public int $productId;
+    public Attribute $attribute;
 
-    public int $attributeId;
-
-    public ?Model $model = null;
+    public ?AttributeProduct $model = null;
 
     public ?string $value = null;
 
-    protected $listeners = [
-        'refresh' => '$refresh',
-        'trix:valueUpdated' => 'onTrixValueUpdate',
-    ];
+    public ?array $data = [];
 
-    public function mount(int $productId, string $type, int $attributeId): void
+    public function mount(): void
     {
-        $this->productId = $productId;
-        $this->type = $type;
-        $this->attributeId = $attributeId;
-
         $this->model = AttributeProduct::query()
-            ->where('product_id', $this->productId)
-            ->where('attribute_id', $this->attributeId)
+            ->where('product_id', $this->product->id)
+            ->where('attribute_id', $this->attribute->id)
+            ->whereNull('attribute_value_id')
             ->first();
+
         $this->value = $this->model?->attribute_custom_value;
+
+        $this->form->fill($this->model?->toArray());
     }
 
-    public function onTrixValueUpdate(string $value): void
+    public function form(Forms\Form $form): Forms\Form
     {
-        $this->value = $value;
+        return $form
+            ->schema([
+                Forms\Components\RichEditor::make('attribute_custom_value')
+                    ->hiddenLabel()
+                    ->toolbarButtons([
+                        'attachFiles',
+                        'bold',
+                        'italic',
+                        'link',
+                        'redo',
+                        'strike',
+                        'underline',
+                        'undo',
+                    ])
+                    ->required()
+                    ->visible($this->attribute->type === FieldType::RICHTEXT),
+
+                Forms\Components\DatePicker::make('attribute_custom_value')
+                    ->hiddenLabel()
+                    ->native(false)
+                    ->required()
+                    ->visible($this->attribute->type === FieldType::DATEPICKER),
+
+                Forms\Components\TextInput::make('attribute_custom_value')
+                    ->hiddenLabel()
+                    ->required()
+                    ->visible($this->attribute->type === FieldType::TEXT),
+
+                Forms\Components\TextInput::make('attribute_custom_value')
+                    ->hiddenLabel()
+                    ->numeric()
+                    ->required()
+                    ->visible($this->attribute->type === FieldType::NUMBER),
+            ])
+            ->statePath('data')
+            ->model($this->model);
     }
 
-    public function save(): void
+    public function store(): void
     {
-        $this->store('custom');
+        $this->saveData($this->form->getState());
     }
 
     public function render(): View

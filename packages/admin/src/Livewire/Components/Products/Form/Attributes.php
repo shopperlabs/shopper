@@ -5,64 +5,42 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Products\Form;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
+use Shopper\Core\Models\Product;
 
 class Attributes extends Component
 {
-    public Model $product;
+    public Product $product;
 
-    public Collection $attributes;
-
-    public int $productId;
-
-    public array $multipleValues = [];
-
-    protected $listeners = [
-        'onProductAttributeUpdated' => '$refresh',
-    ];
-
-    public function mount($product): void
+    public function groupProductAttributes(): Collection
     {
-        $this->product = $product;
-        $this->productId = $product->id;
-
-        $this->attributes = $this->getAttributes();
-    }
-
-    public function getAttributes(): Collection
-    {
-        return Attribute::with('values')
+        $attributes = Attribute::with('values')
             ->select(['id', 'name', 'type', 'is_enabled', 'icon', 'description'])
+            ->where('is_enabled', true)
             ->get();
+
+        return $attributes->map(function (Attribute $attribute) {
+            $attribute->group = $attribute->hasMultipleValues() || $attribute->hasSingleValue() ? 'choice' : 'text';
+
+            return $attribute;
+        })->groupBy('group');
     }
 
-    public function getAttributesValues(): \Illuminate\Support\Collection
-    {
-        return AttributeProduct::query()
-            ->where('product_id', $this->product->id) // @phpstan-ignore-line
-            ->get()
-            ->keys();
-    }
-
-    public function getCurrentAttributes(): \Illuminate\Support\Collection
-    {
-        return AttributeProduct::query()
-            ->where('product_id', $this->product->id) // @phpstan-ignore-line
-            ->distinct()
-            ->get()
-            ->groupBy('attribute_id')
-            ->keys();
-    }
-
+    #[On('attribute-save')]
     public function render(): View
     {
-        return view('shopper::livewire.products.forms.form-attributes', [
-            'currentAttributes' => $this->getCurrentAttributes(),
-            'attributesValues' => $this->getAttributesValues(),
+        return view('shopper::livewire.components.products.forms.attributes', [
+            'currentAttributes' => AttributeProduct::query()
+                ->where('product_id', $this->product->id)
+                ->distinct()
+                ->get()
+                ->groupBy('attribute_id')
+                ->keys(),
+            'productAttributes' => $this->groupProductAttributes(),
         ]);
     }
 }

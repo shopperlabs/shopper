@@ -16,7 +16,7 @@ return new class() extends Migration
             $table->json('ip_api')->nullable();
             $table->json('extreme_ip_lookup')->nullable();
 
-            $this->addForeignKey($table, 'user_id', $this->getTableName('users'), false);
+            $this->addForeignKey($table, 'user_id', 'users', false);
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), true);
         });
     }
