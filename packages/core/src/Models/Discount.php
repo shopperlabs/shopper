@@ -12,13 +12,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int $id
  * @property string $code
  * @property string $type
- * @property string|int $value
+ * @property int $value
  * @property string $apply_to
  * @property string $eligibility
  * @property int $usage_limit
  * @property int $total_use
  * @property bool $usage_limit_per_user
  * @property bool $is_active
+ * @property array $metadata
  * @property \Illuminate\Support\Carbon $start_at
  * @property \Illuminate\Support\Carbon|null $end_at
  */
@@ -33,6 +34,7 @@ class Discount extends Model
         'usage_limit_per_user' => 'boolean',
         'start_at' => 'datetime',
         'end_at' => 'datetime',
+        'metadata' => 'array',
     ];
 
     public function getTable(): string

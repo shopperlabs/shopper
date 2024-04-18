@@ -24,8 +24,6 @@ return [
 
     'components' => [
         'slide-overs.review-detail' => Livewire\SlideOvers\ReviewDetail::class,
-
-        'modals.delete-review' => Livewire\Modals\DeleteReview::class,
     ],
 
 ];

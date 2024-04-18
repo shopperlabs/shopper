@@ -71,7 +71,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::layout.forms.actions.edit'))
-                    ->color('info')
                     ->action(
                         fn ($record) => $this->dispatch(
                             'openPanel',
@@ -98,6 +97,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             ->success()
                             ->send();
                     })
+                    ->visible(auth()->user()->can('delete_categories'))
                     ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('enabled')
                     ->label(__('shopper::layout.forms.actions.enable'))

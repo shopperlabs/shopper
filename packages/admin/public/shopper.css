@@ -4533,6 +4533,10 @@ html {
   flex: none;
 }
 
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
 .shrink-0 {
   flex-shrink: 0;
 }
@@ -4802,12 +4806,12 @@ html {
   flex-wrap: wrap;
 }
 
-.items-start {
-  align-items: flex-start;
-}
-
 .\!items-start {
   align-items: flex-start !important;
+}
+
+.items-start {
+  align-items: flex-start;
 }
 
 .items-end {
@@ -5412,11 +5416,6 @@ html {
 .border-primary-300 {
   --tw-border-opacity: 1;
   border-color: rgb(147 197 253 / var(--tw-border-opacity));
-}
-
-.border-primary-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(96 165 250 / var(--tw-border-opacity));
 }
 
 .border-primary-500 {
@@ -6154,6 +6153,11 @@ html {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
+.\!text-sm {
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+}
+
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -6187,11 +6191,6 @@ html {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.\!text-sm {
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
 }
 
 .font-black {
@@ -6473,11 +6472,6 @@ html {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-yellow-300 {
-  --tw-text-opacity: 1;
-  color: rgb(253 224 71 / var(--tw-text-opacity));
 }
 
 .text-yellow-400 {
@@ -9399,11 +9393,6 @@ svg {
   border-color: rgba(var(--gray-300), var(--tw-border-opacity));
 }
 
-.hover\:border-primary-300:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(147 197 253 / var(--tw-border-opacity));
-}
-
 .hover\:bg-custom-400\/10:hover {
   background-color: rgba(var(--c-400), 0.1);
 }
@@ -10524,11 +10513,6 @@ svg {
   color: rgba(var(--gray-200), var(--tw-text-opacity));
 }
 
-:is(.dark .group:hover .dark\:group-hover\:text-gray-300) {
-  --tw-text-opacity: 1;
-  color: rgba(var(--gray-300), var(--tw-text-opacity));
-}
-
 :is(.dark .group:hover .dark\:group-hover\:text-gray-400) {
   --tw-text-opacity: 1;
   color: rgba(var(--gray-400), var(--tw-text-opacity));
@@ -10595,10 +10579,6 @@ svg {
 
   .sm\:ml-4 {
     margin-left: 1rem;
-  }
-
-  .sm\:ml-auto {
-    margin-left: auto;
   }
 
   .sm\:ms-auto {

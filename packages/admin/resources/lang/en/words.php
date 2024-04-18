@@ -164,6 +164,8 @@ return [
     'selection' => 'Selection',
     'sign_in_as' => 'Signed in as',
     'general' => 'General',
+    'configuration' => 'Configuration',
+    'conditions' => 'Conditions',
     'slug_description' => 'Use to generate the right url format for your store',
 
     'seo' => [
@@ -174,5 +176,8 @@ return [
     ],
 
     'other' => ' other(s)',
+    'feature' => 'Feature',
+    'feature_enabled' => 'You must enable :feature to activate this section.',
+    'amount' => 'Amount',
 
 ];

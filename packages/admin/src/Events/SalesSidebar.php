@@ -20,7 +20,9 @@ class SalesSidebar extends AbstractAdminSidebar
 
         $menu->group(__('shopper::layout.sidebar.sales'), function (Group $group) use ($count): void {
             $group->weight(3);
-            $group->setAuthorized();
+            $group->setAuthorized(
+                Feature::enabled('order') || Feature::enabled('discount')
+            );
             $group->setGroupItemsClass('space-y-1');
             $group->setHeadingClass('sh-heading');
 

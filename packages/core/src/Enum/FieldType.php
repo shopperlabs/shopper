@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
+use Shopper\Core\Traits\ArrayableEnum;
+
 enum FieldType: string
 {
+    use ArrayableEnum;
+
     case CHECKBOX = 'checkbox';
 
     case COLORPICKER = 'colorpicker';
@@ -31,14 +35,5 @@ enum FieldType: string
             self::TEXT => __('shopper::layout.forms.label.text_field', ['type' => '(input)']),
             self::NUMBER => __('shopper::layout.forms.label.text_field', ['type' => '(number)']),
         };
-    }
-
-    public static function options(): array
-    {
-        return collect(self::cases())
-            ->mapWithKeys(fn (self $enum) => [
-                $enum->value => $enum->label(),
-            ])
-            ->toArray();
     }
 }

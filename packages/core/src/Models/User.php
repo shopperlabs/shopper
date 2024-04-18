@@ -69,8 +69,8 @@ class User extends Authenticatable
         parent::boot();
 
         self::deleting(function ($model): void {
-            $model->addresses()->delete();
             $model->roles()->detach();
+            $model->addresses()->delete();
             $model->orders()->delete();
         });
     }

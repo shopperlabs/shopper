@@ -11,7 +11,7 @@ return [
     'category' => 'Catégorie',
     'attribute' => 'Attribut',
     'attributes' => 'Attributs',
-    'discount' => 'Coupon',
+    'discount' => 'Remise',
     'review' => 'Avis',
     'account' => 'Compte',
     'users' => 'Utilisateurs',
@@ -163,6 +163,8 @@ return [
     'selection' => 'Séléction',
     'sign_in_as' => 'Connecté avec',
     'general' => 'Général',
+    'configuration' => 'Configuration',
+    'conditions' => 'Conditions',
     'slug_description' => 'Utiliser pour la génération de bon format url sur votre boutique',
 
     'seo' => [
@@ -173,5 +175,8 @@ return [
     ],
 
     'other' => ' autre(s)',
+    'feature' => 'Fonctionnalité',
+    'feature_enabled' => 'Vous devez activé la fonctionnalité :feature pour activer cette section.',
+    'amount' => 'Montant',
 
 ];
