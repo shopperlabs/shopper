@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\On;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
@@ -138,6 +139,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->emptyStateHeading(__('shopper::pages/discounts.empty_message'));
     }
 
+    #[On('discount-save')]
     public function render(): View
     {
         return view('shopper::livewire.pages.discounts.index', [

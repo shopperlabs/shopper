@@ -343,7 +343,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
         $this->closePanel();
     }
 
-    #[On('discount-save')]
     public function render(): View
     {
         return view('shopper::livewire.slide-overs.discount-form');
