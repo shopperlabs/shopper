@@ -14,7 +14,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use Livewire\Attributes\On;
 use Shopper\Components\Separator;
 use Shopper\Components\Warning;
 use Shopper\Core\Enum\DiscountApplyTo;
