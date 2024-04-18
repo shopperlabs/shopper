@@ -82,7 +82,6 @@ class Create extends AbstractPageComponent implements HasForms
                                     Forms\Components\Toggle::make('is_visible')
                                         ->label(__('shopper::layout.forms.label.visible'))
                                         ->helperText(__('shopper::pages/products.visible_help_text'))
-                                        ->onColor('success')
                                         ->default(true),
 
                                     Forms\Components\DateTimePicker::make('published_at')

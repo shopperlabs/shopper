@@ -35,9 +35,8 @@ if (Feature::enabled('customer')) {
 }
 
 if (Feature::enabled('discount')) {
-    Route::as('discounts.')->prefix('discounts')->group(function (): void {
-        require __DIR__ . '/admin/discount.php';
-    });
+    Route::get('/discounts', config('shopper.components.discount.pages.discount-index'))
+        ->name('discounts.index');
 }
 
 if (Feature::enabled('order')) {
@@ -53,7 +52,6 @@ if (Feature::enabled('product')) {
 }
 
 if (Feature::enabled('review')) {
-    Route::as('reviews.')->prefix('reviews')->group(function (): void {
-        require __DIR__ . '/admin/review.php';
-    });
+    Route::get('/reviews', config('shopper.components.review.pages.review-index'))
+        ->name('reviews.index');
 }

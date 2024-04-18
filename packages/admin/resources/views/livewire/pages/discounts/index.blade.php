@@ -9,7 +9,10 @@
                 @can('add_discounts')
                     <div class="flex space-x-3">
                         <span class="shadow-sm rounded-md">
-                            <x-shopper::buttons.primary :link="route('shopper.discounts.create')">
+                            <x-shopper::buttons.primary
+                                type="button"
+                                wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.discount-form' })"
+                            >
                                 {{ __('shopper::pages/discounts.actions.create') }}
                             </x-shopper::buttons.primary>
                         </span>
@@ -25,7 +28,7 @@
             :content="__('shopper::pages/discounts.description')"
             :button="__('shopper::pages/discounts.actions.create')"
             permission="add_discounts"
-            :url="route('shopper.discounts.create')"
+            panel="{ component: 'shopper-slide-overs.discount-form' }"
         >
             <div class="shrink-0">
                 <svg class="w-auto h-64 lg:h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 528 380">
@@ -141,72 +144,11 @@
             </div>
         </x-shopper::empty-state>
     @else
-        <x-shopper::card class="mt-6">
+        <div class="mt-10">
+            {{ $this->table }}
+        </div>
+        {{--<x-shopper::card class="mt-6">
         <div x-data="{ open: false }">
-            <div class="rounded-t-lg bg-gray-50/50 dark:bg-gray-900/50 p-4 sm:p-6">
-                <div class="flex items-start justify-between space-x-4">
-                    <div class="w-full lg:max-w-lg">
-                        <x-shopper::forms.search
-                            :label="__('shopper::pages/discounts.search')"
-                            :placeholder="__('shopper::pages/discounts.search')"
-                        />
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <div class="relative z-10 inline-flex shadow-sm rounded-md">
-                            <div @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left">
-                                <x-shopper::buttons.default @click="open = !open" type="button">
-                                    {{ __('shopper::layout.forms.label.status') }}
-                                    <x-heroicon-s-chevron-down class="-mr-1 ml-2 h-5 w-5" />
-                                </x-shopper::buttons.default>
-                                <div x-cloak
-                                     x-show="open"
-                                     x-transition:enter="transition ease-out duration-100"
-                                     x-transition:enter-start="transform opacity-0 scale-95"
-                                     x-transition:enter-end="transform opacity-100 scale-100"
-                                     x-transition:leave="transition ease-in duration-75"
-                                     x-transition:leave-start="transform opacity-100 scale-100"
-                                     x-transition:leave-end="transform opacity-0 scale-95"
-                                     class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg"
-                                >
-                                    <div class="rounded-md bg-white shadow-xs dark:bg-gray-700" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                        <div class="py-1">
-                                            <div class="flex items-center py-2 px-4">
-                                                <x-shopper::forms.radio wire:model.lazy="isActive" id="isActive_enabled" name="is_active" value="1" />
-                                                <label for="isActive_enabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
-                                                        {{ __('shopper::layout.forms.label.active') }}
-                                                    </span>
-                                                </label>
-                                            </div>
-                                            <div class="flex items-center py-2 px-4">
-                                                <x-shopper::forms.radio wire:model.lazy="isActive" id="isActive_disabled" name="is_active" value="0" />
-                                                <label for="isActive_disabled" class="cursor-pointer ml-3">
-                                                    <span class="block text-sm leading-5 font-medium text-gray-700 dark:text-gray-300">
-                                                        {{ __('shopper::layout.forms.label.inactive') }}
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="border-t border-gray-200 dark:border-gray-600"></div>
-                                        <div class="py-1">
-                                            <button wire:click="resetActiveFilter" type="button" class="block px-4 py-2 text-sm text-left leading-5 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-500">
-                                                {{ __('shopper::layout.forms.actions.clear') }}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <x-datetime-picker
-                            wire:model="date"
-                            class="dark:bg-gray-700 dark:border-gray-700"
-                            parse-format="YYYY-MM-DD"
-                            :placeholder="__('shopper::layout.forms.placeholder.date')"
-                            :without-time="true"
-                        />
-                    </div>
-                </div>
-            </div>
             <div class="border-t border-gray-200 dark:border-gray-700">
                 <ul class="divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse($discounts as $discount)
@@ -235,78 +177,20 @@
                                                     {{ $discount->is_active ? __('shopper::layout.forms.label.active'): __('shopper::layout.forms.label.inactive') }}
                                                 </span>
                                             </div>
-                                            <div class="shrink-0 flex">
-                                                @if($discount->start_at > now())
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-yellow-100 text-yellow-800">
-                                                        <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-yellow-400" fill="currentColor" viewBox="0 0 8 8">
-                                                            <circle cx="4" cy="4" r="3" />
-                                                        </svg>
-                                                        {{ __('shopper::words.scheduled') }}
-                                                    </span>
-                                                @endif
-                                                @if($discount->start_at <= now())
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium leading-4 bg-purple-100 text-purple-800">
-                                                        <svg class="-ml-0.5 mr-1.5 h-2 w-2 text-purple-400" fill="currentColor" viewBox="0 0 8 8">
-                                                            <circle cx="4" cy="4" r="3" />
-                                                        </svg>
-                                                        {{ __('shopper::words.active_for_users') }}
-                                                    </span>
-                                                @endif
-                                            </div>
                                             <div class="flex items-center space-x-2">
-                                                @if($discount->end_at)
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $discount->start_at->format('d M') }}</span>
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400">-</span>
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ $discount->end_at->format('d M') }}</span>
-                                                @else
-                                                    <span class="text-sm text-gray-500 dark:text-gray-400">
-                                                        {{ __('shopper::words.from_date', ['date' => $discount->start_at->format('d M')]) }}
-                                                    </span>
-                                                @endif
+
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="ml-5 shrink-0">
-                                        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                        </svg>
                                     </div>
                                 </div>
                             </a>
                         </li>
                     @empty
-                        <li class="w-full flex items-center justify-center px-10 py-12">
-                            <div class="text-center">
-                                <x-heroicon-o-gift class="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
-                                <h3 class="mt-2 text-xl font-medium text-gray-900 dark:text-white">
-                                    {{ __('shopper::pages/discounts.empty_message') }}
-                                </h3>
-                            </div>
-                        </li>
                     @endforelse
                 </ul>
             </div>
-            <div class="px-4 py-3 border-t border-gray-200 rounded-b-md  flex items-center justify-between sm:px-6 dark:border-gray-700">
-                <div class="flex-1 flex justify-between sm:hidden">
-                    {{ $discounts->links('shopper::livewire.wire-mobile-pagination-links') }}
-                </div>
-                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                    <div>
-                        <p class="text-sm leading-5 text-gray-700 dark:text-gray-300">
-                            {{ __('shopper::words.showing') }}
-                            <span class="font-medium">{{ ($discounts->currentPage() - 1) * $discounts->perPage() + 1 }}</span>
-                            {{ __('shopper::words.to') }}
-                            <span class="font-medium">{{ ($discounts->currentPage() - 1) * $discounts->perPage() + count($discounts->items()) }}</span>
-                            {{ __('shopper::words.of') }}
-                            <span class="font-medium"> {!! $discounts->total() !!}</span>
-                            {{ __('shopper::words.results') }}
-                        </p>
-                    </div>
-                    {{ $discounts->links() }}
-                </div>
-            </div>
         </div>
-        </x-shopper::card>
+        </x-shopper::card>--}}
     @endif
 
     <x-shopper::learn-more :name="__('shopper::layout.sidebar.discounts')" link="discounts" />

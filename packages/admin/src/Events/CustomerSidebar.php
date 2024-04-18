@@ -16,7 +16,9 @@ class CustomerSidebar extends AbstractAdminSidebar
     {
         $menu->group(__('shopper::layout.sidebar.customers'), function (Group $group): void {
             $group->weight(3);
-            $group->setAuthorized();
+            $group->setAuthorized(
+                Feature::enabled('customer') || Feature::enabled('review')
+            );
             $group->setGroupItemsClass('space-y-1');
             $group->setHeadingClass('sh-heading');
 

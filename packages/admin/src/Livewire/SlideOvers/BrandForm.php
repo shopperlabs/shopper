@@ -58,7 +58,6 @@ class BrandForm extends SlideOverComponent implements HasForms
                             ->url(),
                         Components\Toggle::make('is_enabled')
                             ->label(__('shopper::layout.forms.label.visibility'))
-                            ->onColor('success')
                             ->helperText(__('shopper::words.set_visibility', ['name' => mb_strtolower(__('shopper::words.brand'))])),
                         Components\RichEditor::make('description')
                             ->label(__('shopper::layout.forms.label.description'))

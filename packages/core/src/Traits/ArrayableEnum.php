@@ -20,4 +20,17 @@ trait ArrayableEnum
     {
         return array_combine(self::values(), self::names());
     }
+
+    public static function options(): array
+    {
+        if (method_exists(self::class, 'label')) {
+            return collect(self::cases())
+                ->mapWithKeys(fn (self $enum) => [
+                    $enum->value => $enum->label(),
+                ])
+                ->toArray();
+        }
+
+        return [];
+    }
 }

@@ -29,8 +29,6 @@ return [
         'customers.addresses' => Components\Customers\Addresses::class,
         'customers.orders' => Components\Customers\Orders::class,
         'customers.profile' => Components\Customers\Profile::class,
-
-        'modals.delete-customer' => Livewire\Modals\DeleteCustomer::class,
     ],
 
 ];

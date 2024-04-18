@@ -16,7 +16,12 @@ class CatalogSidebar extends AbstractAdminSidebar
     {
         $menu->group(__('shopper::layout.sidebar.catalog'), function (Group $group): void {
             $group->weight(2);
-            $group->setAuthorized();
+            $group->setAuthorized(
+                Feature::enabled('product')
+                || Feature::enabled('category')
+                || Feature::enabled('collection')
+                || Feature::enabled('brand')
+            );
             $group->setGroupItemsClass('space-y-1');
             $group->setHeadingClass('sh-heading');
 

@@ -8,7 +8,7 @@ return [
     'description' => 'Create & Manage discount and promotions codes that apply at checkout or customers orders.',
 
     'actions' => [
-        'create' => 'Create code',
+        'create' => 'Create discount',
         'update' => 'Update code :code',
     ],
 
@@ -16,7 +16,11 @@ return [
     'search' => 'Search discount code',
     'name_helptext' => 'Customers will enter this discount code at checkout.',
     'percentage' => 'Percentage',
+    'percentage_description' => 'Discount applied in %',
     'fixed_amount' => 'Fixed amount',
+    'fixed_amount_description' => 'Discount in whole numbers',
+    'configuration_description' => 'The discount code applies from the moment you press the publish button, and remains active if not modified.',
+    'condition_description' => 'The discount code applies to all products if not modified.',
     'applies_to' => 'Applies To',
     'entire_order' => 'Entire order',
     'specific_products' => 'Specific products',
@@ -33,9 +37,11 @@ return [
     'select_customers' => 'Select customers',
     'usage_limits' => 'Usage limits',
     'usage_label' => 'Limit number of times this discount can be used in total',
+    'usage_label_description' => 'This limit applies to all customers, not individually.',
     'usage_value' => 'Usage limit value',
     'limit_one_per_user' => 'Limit to one use per customer',
     'active_dates' => 'Active dates',
+    'active_dates_description' => 'The dates on which the discount will be available to users.',
     'start_date' => 'Start date',
     'choose_start_date' => 'Choose start date period',
     'end_date' => 'End date',
@@ -68,7 +74,7 @@ return [
     'active_from_to' => 'Active from :start to :end',
     'one_per_customer' => 'one per customer',
 
-    'add_message' => 'Discount code :code created successfully!',
-    'update_message' => 'Discount code :code updated successfully!',
+    'save' => 'Discount code :code save successfully!',
+    'total_use' => 'Redemptions',
 
 ];

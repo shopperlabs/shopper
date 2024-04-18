@@ -17,6 +17,7 @@ final class FeatureServiceProvider extends ServiceProvider
         'category',
         'collection',
         'customer',
+        'discount',
         'product',
         'review',
     ];
