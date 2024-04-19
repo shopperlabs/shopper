@@ -48,7 +48,9 @@
         },
 
         getStepIndex: function (step) {
-            let index = this.getSteps().findIndex((indexedStep) => indexedStep === step)
+            let index = this.getSteps().findIndex(
+                (indexedStep) => indexedStep === step,
+            )
 
             if (index === -1) {
                 return 0
@@ -96,15 +98,15 @@
     x-on:next-wizard-step.window="if ($event.detail.statePath === '{{ $statePath }}') nextStep()"
     {{
         $attributes
-            ->merge([
-                'id' => $getId(),
-            ], escape: false)
+            ->merge(
+                [
+                    "id" => $getId(),
+                ],
+                escape: false,
+            )
             ->merge($getExtraAttributes(), escape: false)
             ->merge($getExtraAlpineAttributes(), escape: false)
-            ->class([
-                'fi-fo-wizard h-full',
-                'fi-contained' => $isContained,
-            ])
+            ->class(["fi-fo-wizard h-full", "fi-contained" => $isContained])
     }}
 >
     <input
@@ -126,9 +128,9 @@
             @endif
             role="list"
             @class([
-                'fi-fo-wizard-header grid divide-y divide-gray-200 scrolling dark:divide-white/5 md:grid-flow-col md:divide-y-0 md:overflow-x-auto xl:flex xl:flex-col',
-                'border-b border-gray-200 dark:border-white/10 xl:border-0 xl:py-10 xl:border-r' => $isContained,
-                'rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10' => ! $isContained,
+                "fi-fo-wizard-header scrolling grid divide-y divide-gray-200 dark:divide-white/5 md:grid-flow-col md:divide-y-0 md:overflow-x-auto xl:flex xl:flex-col",
+                "border-b border-gray-200 dark:border-white/10 xl:border-0 xl:border-r xl:py-10" => $isContained,
+                "rounded-xl bg-white shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-900 dark:ring-white/10" => ! $isContained,
             ])
         >
             @foreach ($getChildComponentContainer()->getComponents() as $step)
@@ -145,7 +147,7 @@
                         x-on:click="step = @js($step->getId())"
                         x-bind:disabled="! isStepAccessible(@js($step->getId()))"
                         role="step"
-                        class="fi-fo-wizard-header-step-button flex w-full h-full items-center gap-x-4 px-6 py-4 text-start"
+                        class="fi-fo-wizard-header-step-button flex h-full w-full items-center gap-x-4 px-6 py-4 text-start"
                     >
                         <div
                             class="fi-fo-wizard-header-step-icon-ctn flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
@@ -190,7 +192,7 @@
                                             getStepIndex(step) === {{ $loop->index }},
                                     }"
                                 >
-                                    {{ str_pad($loop->index + 1, 2, '0', STR_PAD_LEFT) }}
+                                    {{ str_pad($loop->index + 1, 2, "0", STR_PAD_LEFT) }}
                                 </span>
                             @endif
                         </div>
@@ -253,13 +255,13 @@
             </div>
             <div
                 @class([
-                    'flex items-center justify-between gap-x-3',
-                    'px-6' => $isContained,
-                    'mt-6' => ! $isContained,
+                    "flex items-center justify-between gap-x-3",
+                    "px-6" => $isContained,
+                    "mt-6" => ! $isContained,
                 ])
             >
                 <span x-cloak x-on:click="previousStep" x-show="! isFirstStep()">
-                    {{ $getAction('previous') }}
+                    {{ $getAction("previous") }}
                 </span>
 
                 <span x-show="isFirstStep()">
@@ -277,7 +279,7 @@
                     "
                     x-show="! isLastStep()"
                 >
-                    {{ $getAction('next') }}
+                    {{ $getAction("next") }}
                 </span>
 
                 <span x-show="isLastStep()">
@@ -286,5 +288,4 @@
             </div>
         </div>
     </div>
-
 </div>

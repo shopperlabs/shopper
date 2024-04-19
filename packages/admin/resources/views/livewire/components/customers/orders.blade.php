@@ -1,10 +1,14 @@
 <x-shopper::container class="space-y-8">
-    @forelse($orders as $order)
-        <div class="bg-white border border-gray-200 rounded-md shadow-sm overflow-hidden divide-y divide-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:divide-gray-700">
-            <div class="bg-gray-100 dark:bg-gray-700 py-3 px-4 sm:flex sm:items-center sm:justify-between">
+    @forelse ($orders as $order)
+        <div
+            class="divide-y divide-gray-200 overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800"
+        >
+            <div class="bg-gray-100 px-4 py-3 dark:bg-gray-700 sm:flex sm:items-center sm:justify-between">
                 <div class="flex-1 grow sm:grid sm:grid-cols-4 sm:gap-5">
                     <div>
-                        <dt class="text-xs leading-4 uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
+                        <dt
+                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400"
+                        >
                             {{ __('shopper::pages/customers.orders.placed') }}
                         </dt>
                         <dd class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
@@ -12,24 +16,29 @@
                         </dd>
                     </div>
                     <div class="mt-5 sm:mt-0">
-                        <dt class="text-xs leading-4 uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
+                        <dt
+                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400"
+                        >
                             {{ __('shopper::pages/customers.orders.total') }}
                         </dt>
                         <dd class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
                             {{ $order->total }}
                         </dd>
                     </div>
-                    <div class="sm:col-span-2 mt-5 sm:mt-0">
-                        <dt class="text-xs leading-4 uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
+                    <div class="mt-5 sm:col-span-2 sm:mt-0">
+                        <dt
+                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400"
+                        >
                             {{ __('shopper::pages/customers.orders.ship_to') }}
                         </dt>
                         <dd class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-                            {{ $order->shippingAddress->street_address }} {{ $order->shippingAddress->zipcode ?? '' }}, {{ $order->shippingAddress->country->name }}
+                            {{ $order->shippingAddress->street_address }}
+                            {{ $order->shippingAddress->zipcode ?? '' }}, {{ $order->shippingAddress->country->name }}
                         </dd>
                     </div>
                 </div>
-                <div class="mt-2 sm:mt-0 text-right sm:max-w-xs">
-                    <dt class="text-xs leading-4 uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
+                <div class="mt-2 text-right sm:mt-0 sm:max-w-xs">
+                    <dt class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.orders.order_number', ['number' => $order->number]) }}
                     </dt>
                     <dd class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
@@ -37,34 +46,44 @@
                     </dd>
                 </div>
             </div>
-            <div class="p-4 sm:px-5 sm:py-6 sm:grid sm:grid-cols-4 sm:gap-4">
+            <div class="p-4 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-5 sm:py-6">
                 <div class="sm:col-span-2">
                     <div class="flex items-center space-x-3">
-                        <h4 class="text-lg font-bold text-gray-900 leading-6 dark:text-white">
+                        <h4 class="text-lg font-bold leading-6 text-gray-900 dark:text-white">
                             {{ __('shopper::pages/customers.orders.items') }}
                         </h4>
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $order->status_classes }}">
+                        <span
+                            class="{{ $order->status_classes }} inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                        >
                             {{ $order->formatted_status }}
                         </span>
                     </div>
-                    <ul class="mt-3 pl-4 list-disc space-y-1">
-                        @foreach($order->items as $item)
-                            <li class="text-gray-500 text-sm leading-5 font-medium dark:text-gray-400">
+                    <ul class="mt-3 list-disc space-y-1 pl-4">
+                        @foreach ($order->items as $item)
+                            <li class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                                 {{ $item->name }} -
-                                <span class="text-gray-800 dark:text-gray-200">{{ shopper_money_format($item->unit_price_amount) }} x {{ $item->quantity }}</span>
+                                <span class="text-gray-800 dark:text-gray-200">
+                                    {{ shopper_money_format($item->unit_price_amount) }} x {{ $item->quantity }}
+                                </span>
                             </li>
                         @endforeach
                     </ul>
                 </div>
                 <div class="mt-4 sm:mt-0">
-                    <h5 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
+                    <h5 class="text-base font-medium leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::words.payment_method') }}
                     </h5>
                     <div class="mt-2 flex items-center">
-                        @if($order->paymentMethod->logo)
-                            <img class="h-6 w-6 rounded-md object-cover" src="{{ $order->paymentMethod->logo_url }}" alt="payment icon" />
+                        @if ($order->paymentMethod->logo)
+                            <img
+                                class="h-6 w-6 rounded-md object-cover"
+                                src="{{ $order->paymentMethod->logo_url }}"
+                                alt="payment icon"
+                            />
                         @else
-                            <span class="inline-flex items-center justify-center h-6 w-6 bg-gray-100 text-gray-300 rounded-md dark:bg-gray-700 dark:text-gray-400">
+                            <span
+                                class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-gray-300 dark:bg-gray-700 dark:text-gray-400"
+                            >
                                 <x-untitledui-image class="h-4 w-4" />
                             </span>
                         @endif
@@ -76,11 +95,11 @@
                     </div>
                 </div>
                 <div class="mt-4 sm:mt-0">
-                    <h5 class="text-base leading-6 font-medium text-gray-900 dark:text-white">
+                    <h5 class="text-base font-medium leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::words.shipping_method') }}
                     </h5>
                     <div class="mt-2 flex items-center">
-                        @if($order->shipping_method)
+                        @if ($order->shipping_method)
                             <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
                                 {{ $order->shipping_method }}
                             </p>
@@ -95,24 +114,27 @@
                     </div>
                 </div>
             </div>
-            <div class="py-3 px-4 flex items-center justify-between">
-                <p class="text-xs text-gray-900 font-medium leading-4 dark:text-white">
-                    <span class="uppercase tracking-wider mr-3 text-gray-500 dark:text-gray-400">
+            <div class="flex items-center justify-between px-4 py-3">
+                <p class="text-xs font-medium leading-4 text-gray-900 dark:text-white">
+                    <span class="mr-3 uppercase tracking-wider text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.orders.estimated') }}
                     </span>
                     {{ __('N/A') }}
                 </p>
-                <a href="{{ route('shopper.orders.show', $order) }}" class="inline-flex items-center text-primary-600 hover:text-primary-500 underline text-sm leading-5">
+                <a
+                    href="{{ route('shopper.orders.show', $order) }}"
+                    class="inline-flex items-center text-sm leading-5 text-primary-600 underline hover:text-primary-500"
+                >
                     {{ __('shopper::pages/customers.orders.view') }}
-                    <x-untitledui-arrow-narrow-right class="h-5 w-5 ml-2" />
+                    <x-untitledui-arrow-narrow-right class="ml-2 h-5 w-5" />
                 </a>
             </div>
         </div>
     @empty
-        <div class="py-6 flex items-center justify-center dark:bg-gray-800">
-            <div class="flex flex-col justify-center items-center space-y-2">
+        <div class="flex items-center justify-center py-6 dark:bg-gray-800">
+            <div class="flex flex-col items-center justify-center space-y-2">
                 <x-untitledui-shopping-bag class="h-8 w-8 text-primary-500" />
-                <span class="font-medium text-gray-500 dark:text-gray-400 text-xl">
+                <span class="text-xl font-medium text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/customers.orders.empty_text') }}
                 </span>
             </div>

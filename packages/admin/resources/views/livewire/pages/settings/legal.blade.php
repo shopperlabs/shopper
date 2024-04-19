@@ -9,14 +9,20 @@
         },
         currentTab: 'privacy',
         activeTab(tab) {
-            return this.currentTab === tab;
+            return this.currentTab === tab
         },
     }"
 >
     <x-shopper::container>
-        <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::pages/settings.legal.title')">
-            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-gray-300 dark:text-gray-600" />
-            <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+        <x-shopper::breadcrumb
+            :back="route('shopper.settings.index')"
+            :current="__('shopper::pages/settings.legal.title')"
+        >
+            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
+            <x-shopper::breadcrumb.link
+                :link="route('shopper.settings.index')"
+                :title="__('shopper::words.settings')"
+            />
         </x-shopper::breadcrumb>
         <x-shopper::heading class="my-6">
             <x-slot name="title">
@@ -25,7 +31,7 @@
         </x-shopper::heading>
     </x-shopper::container>
 
-    <div class="relative border-gray-200 space-y-4 px-4 lg:pb-0 lg:border-y lg:px-0 dark:border-gray-700">
+    <div class="relative space-y-4 border-gray-200 px-4 dark:border-gray-700 lg:border-y lg:px-0 lg:pb-0">
         <div class="lg:hidden">
             <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}">
                 <template x-for="option in options" :key="option">
@@ -43,7 +49,7 @@
                 <button
                     @click="currentTab = 'privacy'"
                     type="button"
-                    class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                    class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
                     :class="activeTab('privacy') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
                 >
                     {{ __('shopper::pages/settings.legal.privacy') }}
@@ -51,7 +57,7 @@
                 <button
                     @click="currentTab = 'terms'"
                     type="button"
-                    class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                    class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
                     :class="activeTab('terms') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
                 >
                     {{ __('shopper::pages/settings.legal.terms_of_use') }}
@@ -59,7 +65,7 @@
                 <button
                     @click="currentTab = 'shipping'"
                     type="button"
-                    class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                    class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
                     :class="activeTab('shipping') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
                 >
                     {{ __('shopper::pages/settings.legal.shipping') }}
@@ -67,7 +73,7 @@
                 <button
                     @click="currentTab = 'refund'"
                     type="button"
-                    class="px-1 pb-4 text-sm font-medium leading-5 whitespace-no-wrap border-b-2 focus:outline-none"
+                    class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
                     :class="activeTab('refund') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
                 >
                     {{ __('shopper::pages/settings.legal.refund') }}

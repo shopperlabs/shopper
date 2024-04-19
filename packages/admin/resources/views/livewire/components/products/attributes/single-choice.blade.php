@@ -1,15 +1,16 @@
 <x-shopper::attribute-card :activated="$activated" :attribute="$attribute">
     <x-slot:action>
         <div class="flex items-center gap-2">
-            @if($model)
+            @if ($model)
                 {{ ($this->removeAction)(['id' => $model->id]) }}
             @endif
+
             {{ ($this->saveAction)(['column' => 'value']) }}
         </div>
-    </x-slot:action>
+    </x-slot>
 
     <ul role="list" class="space-y-2">
-        @foreach($attribute->values as $value)
+        @foreach ($attribute->values as $value)
             <li class="flex items-center gap-2">
                 <x-shopper::forms.radio
                     wire:model.live.debounce="value"

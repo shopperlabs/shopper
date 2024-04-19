@@ -1,7 +1,10 @@
-@props(['style' => null, 'value'])
+@props([
+    'style' => null,
+    'value',
+])
 
 @php
-    $style = match($style ?? 'gray') {
+    $style = match ($style ?? 'gray') {
         'primary' => 'bg-primary-100 text-primary-800',
         'warning' => 'bg-warning-100 text-warning-800',
         'danger' => 'bg-danger-100 text-danger-800',
@@ -10,6 +13,6 @@
     };
 @endphp
 
-<span class="inline-flex px-2 py-0.5 text-xs leading-5 font-medium rounded-full {{ $style }}">
+<span class="{{ $style }} inline-flex rounded-full px-2 py-0.5 text-xs font-medium leading-5">
     {{ $value }}
 </span>

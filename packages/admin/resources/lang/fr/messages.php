@@ -9,7 +9,7 @@ return [
         'header' => 'Commencez par les éléments de base de votre boutique en ligne',
         'description' => 'Pour commencer à construire votre nouvelle boutique avec Laravel Shopper, nous vous recommandons de commencer par ces étapes.
                             Le framework vous permet de créer votre boutique et de la configurer exactement comme vous le souhaitez.
-                            Vous pouvez faire des <span>intégrations</span> pour aller plus vite si vous le souhaitez.',
+                            Vous pouvez faire des intégrations pour aller plus vite si vous le souhaitez.',
         'cards' => [
             'doc_title' => 'Documentation',
             'doc_description' => 'Apprenez à connaître Laravel Shopper en comprenant ses capacités de la bonne manière, que vous soyez nouveau sur le framework ou que vous ayez déjà travaillé dessus. Cette documentation est faite pour vous.',

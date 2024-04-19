@@ -1,23 +1,42 @@
 @if ($paginator->hasPages())
-
     @if ($paginator->onFirstPage())
-        <span aria-disabled="true" type="button" class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-lg text-gray-700 dark:text-white bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900 opacity-50 cursor-not-allowed">
+        <span
+            aria-disabled="true"
+            type="button"
+            class="inline-flex cursor-not-allowed items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 opacity-50 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:focus:ring-offset-gray-900"
+        >
             {{ __('pagination.previous') }}
         </span>
     @else
-        <x-shopper::buttons.default type="button" class="relative" wire:click="previousPage" rel="prev" aria-label="{{ __('pagination.previous') }}">
+        <x-shopper::buttons.default
+            type="button"
+            class="relative"
+            wire:click="previousPage"
+            rel="prev"
+            aria-label="{{ __('pagination.previous') }}"
+        >
             {{ __('pagination.previous') }}
         </x-shopper::buttons.default>
     @endif
 
     @if ($paginator->hasMorePages())
-        <x-shopper::buttons.default type="button" wire:click="nextPage" rel="next" class="ml-3 relative" aria-label="{{ __('Next') }}">
+        <x-shopper::buttons.default
+            type="button"
+            wire:click="nextPage"
+            rel="next"
+            class="relative ml-3"
+            aria-label="{{ __('Next') }}"
+        >
             {{ __('pagination.next') }}
         </x-shopper::buttons.default>
     @else
-        <span type="button" aria-disabled="true" class="ml-3 inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 shadow-sm text-sm font-medium rounded-lg text-gray-700 dark:text-white bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-gray-900 opacity-50 cursor-not-allowed" aria-label="{{ __('pagination.next') }}">
+        <span
+            type="button"
+            aria-disabled="true"
+            class="ml-3 inline-flex cursor-not-allowed items-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 opacity-50 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:focus:ring-offset-gray-900"
+            aria-label="{{ __('pagination.next') }}"
+        >
             {{ __('pagination.next') }}
         </span>
     @endif
-
 @endif

@@ -4,21 +4,21 @@
 @endphp
 
 @props([
-    'aside' => false,
-    'collapsed' => false,
-    'collapsible' => false,
-    'compact' => false,
-    'contentBefore' => false,
-    'description' => null,
-    'footerActions' => [],
-    'footerActionsAlignment' => Alignment::Start,
-    'headerActions' => [],
-    'headerEnd' => null,
-    'heading' => null,
-    'icon' => null,
-    'iconColor' => 'gray',
-    'iconSize' => IconSize::Large,
-    'persistCollapsed' => false,
+    "aside" => false,
+    "collapsed" => false,
+    "collapsible" => false,
+    "compact" => false,
+    "contentBefore" => false,
+    "description" => null,
+    "footerActions" => [],
+    "footerActionsAlignment" => Alignment::Start,
+    "headerActions" => [],
+    "headerEnd" => null,
+    "heading" => null,
+    "icon" => null,
+    "iconColor" => "gray",
+    "iconSize" => IconSize::Large,
+    "persistCollapsed" => false,
 ])
 
 @php
@@ -27,26 +27,16 @@
     $hasIcon = filled($icon);
 
     if (is_array($headerActions)) {
-        $headerActions = array_filter(
-            $headerActions,
-            fn ($headerAction): bool => $headerAction->isVisible(),
-        );
+        $headerActions = array_filter($headerActions, fn ($headerAction): bool => $headerAction->isVisible());
     }
 
     if (is_array($footerActions)) {
-        $footerActions = array_filter(
-            $footerActions,
-            fn ($footerAction): bool => $footerAction->isVisible(),
-        );
+        $footerActions = array_filter($footerActions, fn ($footerAction): bool => $footerAction->isVisible());
     }
 
-    $hasHeaderActions = $headerActions instanceof \Illuminate\Contracts\Support\Htmlable
-        ? ! \Filament\Support\is_slot_empty($headerActions)
-        : filled($headerActions);
+    $hasHeaderActions = $headerActions instanceof \Illuminate\Contracts\Support\Htmlable ? ! \Filament\Support\is_slot_empty($headerActions) : filled($headerActions);
 
-    $hasFooterActions = $footerActions instanceof \Illuminate\Contracts\Support\Htmlable
-        ? ! \Filament\Support\is_slot_empty($footerActions)
-        : filled($footerActions);
+    $hasFooterActions = $footerActions instanceof \Illuminate\Contracts\Support\Htmlable ? ! \Filament\Support\is_slot_empty($footerActions) : filled($footerActions);
 
     $hasHeader = $hasIcon || $hasHeading || $hasDescription || $collapsible || $hasHeaderActions || filled((string) $headerEnd);
 @endphp
@@ -65,10 +55,10 @@
     @endif
     {{
         $attributes->class([
-            'fi-section',
+            "fi-section",
             match ($aside) {
-                true => 'fi-aside grid grid-cols-1 items-start gap-x-6 gap-y-4 md:grid-cols-3 md:gap-y-6 md:gap-x-12',
-                false => '',
+                true => "fi-aside grid grid-cols-1 items-start gap-x-6 gap-y-4 md:grid-cols-3 md:gap-x-12 md:gap-y-6",
+                false => "",
             },
         ])
     }}
@@ -79,11 +69,11 @@
                 x-on:click="isCollapsed = ! isCollapsed"
             @endif
             @class([
-                'fi-section-header flex flex-col gap-3',
-                'cursor-pointer px-4 py-2 bg-gray-100/75 rounded-lg dark:bg-white/5' => $collapsible,
+                "fi-section-header flex flex-col gap-3",
+                "cursor-pointer rounded-lg bg-gray-100/75 px-4 py-2 dark:bg-white/5" => $collapsible,
                 match ($compact) {
-                    true => 'p-0',
-                    false => 'py-4',
+                    true => "p-0",
+                    false => "py-4",
                 } => ! $aside,
             ])
         >
@@ -92,16 +82,16 @@
                     <x-filament::icon
                         :icon="$icon"
                         @class([
-                            'fi-section-header-icon self-start',
+                            "fi-section-header-icon self-start",
                             match ($iconColor) {
-                                'gray' => 'text-gray-400 dark:text-gray-500',
-                                default => 'fi-color-custom text-custom-500 dark:text-custom-400',
+                                "gray" => "text-gray-400 dark:text-gray-500",
+                                default => "fi-color-custom text-custom-500 dark:text-custom-400",
                             },
                             is_string($iconColor) ? "fi-color-{$iconColor}" : null,
                             match ($iconSize) {
-                                IconSize::Small, 'sm' => 'h-4 w-4 mt-1',
-                                IconSize::Medium, 'md' => 'h-5 w-5 mt-0.5',
-                                IconSize::Large, 'lg' => 'h-6 w-6',
+                                IconSize::Small, "sm" => "h-4 w-4 mt-1",
+                                IconSize::Medium, "md" => "h-5 w-5 mt-0.5",
+                                IconSize::Large, "lg" => "h-6 w-6",
                                 default => $iconSize,
                             },
                         ])
@@ -109,8 +99,8 @@
                             \Filament\Support\get_color_css_variables(
                                 $iconColor,
                                 shades: [400, 500],
-                                alias: 'section.header.icon',
-                            ) => $iconColor !== 'gray',
+                                alias: "section.header.icon",
+                            ) => $iconColor !== "gray",
                         ])
                     />
                 @endif
@@ -175,19 +165,20 @@
             x-bind:class="{ 'invisible h-0 overflow-y-hidden border-none': isCollapsed }"
         @endif
         @class([
-            'fi-section-content-ctn',
-            'border-t border-gray-200 dark:border-white/10' => $hasHeader && (! $aside) && (! $collapsible),
-            'md:col-span-2 lg:max-w-3xl' => $aside,
-            'md:order-first' => $contentBefore,
-            'pt-4 lg:pt-6 px-2' => $collapsible,
+            "fi-section-content-ctn",
+            "border-t border-gray-200 dark:border-white/10" =>
+                $hasHeader && ! $aside && ! $collapsible,
+            "md:col-span-2 lg:max-w-3xl" => $aside,
+            "md:order-first" => $contentBefore,
+            "px-2 pt-4 lg:pt-6" => $collapsible,
         ])
     >
         <div
             @class([
-                'fi-section-content',
+                "fi-section-content",
                 match ($compact) {
-                    true => 'p-0',
-                    false => 'py-5',
+                    true => "p-0",
+                    false => "py-5",
                 },
             ])
         >
@@ -197,15 +188,12 @@
         @if ($hasFooterActions)
             <footer
                 @class([
-                    'fi-section-footer border-t border-gray-200 dark:border-white/10',
-                    'px-6 py-4' => ! $compact,
-                    'px-4 py-2.5' => $compact,
+                    "fi-section-footer border-t border-gray-200 dark:border-white/10",
+                    "px-6 py-4" => ! $compact,
+                    "px-4 py-2.5" => $compact,
                 ])
             >
-                <x-filament::actions
-                    :actions="$footerActions"
-                    :alignment="$footerActionsAlignment"
-                />
+                <x-filament::actions :actions="$footerActions" :alignment="$footerActionsAlignment" />
             </footer>
         @endif
     </div>

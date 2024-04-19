@@ -9,13 +9,16 @@
 ])
 
 <div {{ $attributes }}>
-    @if($label)
+    @if ($label)
         <div class="flex items-center justify-between">
             <label for="{{ $for }}" class="block text-sm font-medium leading-5 text-gray-700 dark:text-gray-300">
-                {{ $label }} @if($isRequired) <span class="text-danger-500">*</span> @endif
+                {{ $label }}
+                @if ($isRequired)
+                    <span class="text-danger-500">*</span>
+                @endif
             </label>
-            @if($optional)
-                <span class="text-gray-500 text-sm leading-5 dark:text-gray-400">
+            @if ($optional)
+                <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                     {{ __('shopper::layout.forms.label.optional') }}
                 </span>
             @endif
@@ -25,7 +28,7 @@
     <div @class([
         'relative',
         'mt-1' => $label,
-        'rounded-md shadow-sm' => !$noShadow
+        'rounded-md shadow-sm' => ! $noShadow,
     ])>
         {{ $slot }}
     </div>

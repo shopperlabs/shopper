@@ -1,4 +1,4 @@
-<form class="mt-5 lg:col-span-2 max-w-3xl" wire:submit="store">
+<form class="mt-5 max-w-3xl lg:col-span-2" wire:submit="store">
     {{ $this->form }}
 
     <div class="mt-6 flex justify-end">

@@ -1636,10 +1636,10 @@ postcss@^8.4.4:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-prettier-plugin-blade@^2.0.0:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-blade/-/prettier-plugin-blade-2.1.2.tgz#1d84c170706f0abc734530dbee8ae88ae89c4dcb"
-  integrity sha512-mZ2XNGv2lWpiEzxC9xnV4MQ2wSZadBcOaMoANq4RkSawoluViR4wYZ2WjsiOJ/E/wYawcA6z39ViXY5Xa78E2A==
+prettier-plugin-blade@^2:
+  version "2.1.12"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-blade/-/prettier-plugin-blade-2.1.12.tgz#e6e85d7d5769a385098d3d26fb8efc78c2220f7a"
+  integrity sha512-LnJp8NMSUaNab0s7+fjyifKqUBGFMlLLPOaIKoycwYkCVi/eJzPAZC/PPPVtjEXb8+5IZ3M52TBCD4S6R/eSmg==
 
 prettier-plugin-tailwindcss@^0.5.10:
   version "0.5.11"

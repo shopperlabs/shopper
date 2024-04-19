@@ -6,7 +6,7 @@
             {{ __('shopper::layout.sidebar.products') }}
         </x-filament::section.heading>
         <x-filament::section.description class="mt-1 max-w-2xl">
-            @if($collection->isAutomatic())
+            @if ($collection->isAutomatic())
                 {{ __('shopper::pages/collections.automatic_description') }}
             @else
                 {{ __('shopper::pages/collections.manual_description') }}

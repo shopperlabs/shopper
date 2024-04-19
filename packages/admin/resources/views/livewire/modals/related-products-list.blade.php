@@ -14,11 +14,11 @@
                 :placeholder="__('shopper::pages/products.related.modal.search_placeholder')"
             />
         </div>
-        <div class="my-2 -mx-2 divide-y divide-gray-200 h-80 overflow-auto dark:divide-gray-700">
-            @forelse($this->products as $product)
+        <div class="-mx-2 my-2 h-80 divide-y divide-gray-200 overflow-auto dark:divide-gray-700">
+            @forelse ($this->products as $product)
                 <x-shopper::forms.label-product :product="$product" wire:key="{{ $product->id }}" />
             @empty
-                <div class="p-4 h-full flex items-center justify-center">
+                <div class="flex h-full items-center justify-center p-4">
                     <div class="text-center">
                         <x-untitledui-book-open
                             class="mx-auto h-8 w-8 text-gray-400 dark:text-gray-500"
@@ -35,7 +35,7 @@
     </x-slot>
 
     <x-slot name="buttons">
-        @if($this->products->isNotEmpty())
+        @if ($this->products->isNotEmpty())
             <x-shopper::buttons.primary
                 wire:click="addSelectedProducts"
                 wire.loading.attr="disabled"
@@ -47,9 +47,13 @@
                 {{ __('shopper::pages/collections.modal.action') }}
             </x-shopper::buttons.primary>
         @endif
-        <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button" class="mt-3 w-full sm:mt-0 sm:w-auto">
+
+        <x-shopper::buttons.default
+            wire:click="$dispatch('closeModal')"
+            type="button"
+            class="mt-3 w-full sm:mt-0 sm:w-auto"
+        >
             {{ __('shopper::layout.forms.actions.cancel') }}
         </x-shopper::buttons.default>
     </x-slot>
-
 </x-shopper::modal>

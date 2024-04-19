@@ -14,7 +14,9 @@
 
     <x-shopper::separator />
 
-    <section class="fi-section fi-aside grid grid-cols-1 items-start gap-x-6 gap-y-4 lg:grid-cols-3 lg:gap-y-6 lg:gap-x-12">
+    <section
+        class="fi-section fi-aside grid grid-cols-1 items-start gap-x-6 gap-y-4 lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6"
+    >
         <div class="grid flex-1 gap-y-1">
             <x-filament::section.heading>
                 {{ __('shopper::pages/products.inventory.stock_title') }}

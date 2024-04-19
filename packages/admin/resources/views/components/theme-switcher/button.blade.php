@@ -22,9 +22,5 @@
             : 'text-gray-400 hover:text-gray-500 focus-visible:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 dark:focus-visible:text-gray-400'
     "
 >
-    <x-filament::icon
-        :alias="'shopper::theme-switcher.' . $theme . '-button'"
-        :icon="$icon"
-        class="h-5 w-5"
-    />
+    <x-filament::icon :alias="'shopper::theme-switcher.' . $theme . '-button'" :icon="$icon" class="h-5 w-5" />
 </button>
