@@ -21,7 +21,7 @@ use Livewire\Component;
 use Shopper\Core\Models\Role;
 
 #[Layout('shopper::components.layouts.setting')]
-class RolePermission extends Component implements HasForms, HasActions
+class RolePermission extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;

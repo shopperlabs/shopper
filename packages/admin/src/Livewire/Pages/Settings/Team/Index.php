@@ -49,7 +49,8 @@ class Index extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::layout.forms.label.access'))
                     ->color('gray')
-                    ->formatStateUsing(fn ($record) => $record->hasRole(config('shopper.core.users.admin_role'))
+                    ->formatStateUsing(
+                        fn ($record) => $record->hasRole(config('shopper.core.users.admin_role'))
                         ? __('shopper::words.full')
                         : __('shopper::words.limited')
                     ),

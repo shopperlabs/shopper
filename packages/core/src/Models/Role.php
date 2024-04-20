@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
  * @property-read int $id
  * @property string $name
  * @property string $guard_name
- * @property boolean $can_be_removed
+ * @property bool $can_be_removed
  * @property string $display_name
  * @property string|null $description
  */

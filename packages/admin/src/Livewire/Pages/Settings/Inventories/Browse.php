@@ -16,7 +16,7 @@ use Livewire\Component;
 use Shopper\Core\Models\Inventory;
 
 #[Layout('shopper::components.layouts.setting')]
-class Browse extends Component implements HasForms, HasActions
+class Browse extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;
@@ -33,7 +33,7 @@ class Browse extends Component implements HasForms, HasActions
             ->icon('untitledui-trash-03')
             ->color('danger')
             ->requiresConfirmation()
-            ->action(function (array $arguments) {
+            ->action(function (array $arguments): void {
                 Inventory::query()->find($arguments['id'])->delete();
 
                 Notification::make()
