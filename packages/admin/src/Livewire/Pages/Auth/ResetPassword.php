@@ -9,10 +9,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules\Password as PasswordRule;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Core\Rules\RealEmailValidator;
 use Shopper\Facades\Shopper;
 
+#[Layout('shopper::components.layouts.base')]
 class ResetPassword extends Component
 {
     public ?string $token = null;
@@ -67,8 +69,6 @@ class ResetPassword extends Component
     public function render(): View
     {
         return view('shopper::livewire.pages.auth.reset-password')
-            ->layout('shopper::components.layouts.base', [
-                'title' => __('shopper::pages/auth.reset.title'),
-            ]);
+            ->title(__('shopper::pages/auth.reset.title'));
     }
 }

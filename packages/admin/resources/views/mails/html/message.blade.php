@@ -21,7 +21,8 @@
     {{-- Footer --}}
     @slot('footer')
         @component('shopper::mails.html.footer')
-            © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+            © {{ date('Y') }} {{ config('app.name') }}.
+            @lang('All rights reserved.')
         @endcomponent
     @endslot
 @endcomponent

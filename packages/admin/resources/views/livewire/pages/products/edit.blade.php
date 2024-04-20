@@ -1,28 +1,40 @@
 <div>
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.products.index')" :current="$product->name">
-            <x-untitledui-chevron-left class="shrink-0 h-4 w-4 text-gray-300 dark:text-gray-600" />
-            <x-shopper::breadcrumb.link :link="route('shopper.products.index')" :title="__('shopper::layout.sidebar.products')" />
+            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+            <x-shopper::breadcrumb.link
+                :link="route('shopper.products.index')"
+                :title="__('shopper::layout.sidebar.products')"
+            />
         </x-shopper::breadcrumb>
     </x-shopper::container>
 
     <div
-        class="pt-6 pb-10"
+        class="pb-10 pt-6"
         x-data="{
-            options: ['detail', 'media', 'variants', 'attributes', 'inventory', 'seo', 'shipping', 'related'],
-            activeTab: 'detail'
+            options: [
+                'detail',
+                'media',
+                'variants',
+                'attributes',
+                'inventory',
+                'seo',
+                'shipping',
+                'related',
+            ],
+            activeTab: 'detail',
         }"
     >
-        <div class="sticky z-30 top-6 bg-white/75 dark:bg-gray-900/80 backdrop-blur-sm">
+        <div class="sticky top-6 z-30 bg-white/75 backdrop-blur-sm dark:bg-gray-900/80">
             <div class="space-y-4">
                 <x-shopper::container>
                     <x-shopper::heading>
                         <x-slot:title>
                             {{ $product->name }}
-                        </x-slot:title>
+                        </x-slot>
                         <x-slot:action>
                             {{ $this->deleteAction }}
-                        </x-slot:action>
+                        </x-slot>
                     </x-shopper::heading>
                 </x-shopper::container>
 

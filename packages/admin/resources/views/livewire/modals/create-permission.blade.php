@@ -6,7 +6,7 @@
     <x-slot name="title">
         <span class="flex flex-col">
             {{ __('shopper::modals.permissions.new') }}
-            <span class="mt-0.5 font-normal text-sm leading-5 text-gray-500 dark:text-gray-400">
+            <span class="mt-0.5 text-sm font-normal leading-5 text-gray-500 dark:text-gray-400">
                 {{ __('shopper::modals.permissions.new_description') }}
             </span>
         </span>
@@ -14,10 +14,14 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <x-shopper::forms.group :label="__('shopper::layout.forms.label.group_name')" for="group" class="sm:col-span-2">
+            <x-shopper::forms.group
+                :label="__('shopper::layout.forms.label.group_name')"
+                for="group"
+                class="sm:col-span-2"
+            >
                 <x-shopper::forms.select id="group" wire:model.defer="group">
                     <option>{{ __('shopper::words.no_group') }}</option>
-                    @foreach($groups as $key => $value)
+                    @foreach ($groups as $key => $value)
                         <option value="{{ $key }}">{{ $value }}</option>
                     @endforeach
                 </x-shopper::forms.select>

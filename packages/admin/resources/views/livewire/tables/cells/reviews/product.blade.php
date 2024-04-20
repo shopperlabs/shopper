@@ -1,11 +1,9 @@
 @php
-    $product = $getRecord()->reviewrateable
+    $product = $getRecord()->reviewrateable;
 @endphp
 
-<div class="flex items-center gap-2 py-2 truncate">
-    <p class="text-sm leading-6 text-gray-500 dark:text-gray-400">
-        {{ __('shopper::words.product') }} :
-    </p>
+<div class="flex items-center gap-2 truncate py-2">
+    <p class="text-sm leading-6 text-gray-500 dark:text-gray-400">{{ __('shopper::words.product') }} :</p>
     <x-filament::section.heading class="!text-sm">
         <x-shopper::link :href="route('shopper.products.edit', $product)" class="underline">
             {{ $product->name }}

@@ -12,26 +12,26 @@
         wire:key="{{ rand() }}"
         wire:ignore
         x-data="selectTree({
-            name: @js($getName()),
-            state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$getStatePath()}')") }},
-            options: @js($getTree()),
-            searchable: @js($isSearchable()),
-            showCount: @js($getWithCount()),
-            placeholder: @js($getPlaceholder()),
-            disabledBranchNode: @js(!$getEnableBranchNode()),
-            disabled: @js($isDisabled()),
-            isSingleSelect: @js(!$getMultiple()),
-            isIndependentNodes: @js($getIndependent()),
-            showTags: @js($getMultiple()),
-            alwaysOpen: @js($getAlwaysOpen()),
-            clearable: @js($getClearable()),
-            emptyText: @js($getEmptyLabel()),
-            expandSelected: @js($getExpandSelected()),
-            grouped: @js($getGrouped()),
-            openLevel: @js($getDefaultOpenLevel()),
-            direction: @js($getDirection()),
-            rtl: false,
-        })"
+                    name: @js($getName()),
+                    state: $wire.{{ $applyStateBindingModifiers("\$entangle('{$getStatePath()}')") }},
+                    options: @js($getTree()),
+                    searchable: @js($isSearchable()),
+                    showCount: @js($getWithCount()),
+                    placeholder: @js($getPlaceholder()),
+                    disabledBranchNode: @js(! $getEnableBranchNode()),
+                    disabled: @js($isDisabled()),
+                    isSingleSelect: @js(! $getMultiple()),
+                    isIndependentNodes: @js($getIndependent()),
+                    showTags: @js($getMultiple()),
+                    alwaysOpen: @js($getAlwaysOpen()),
+                    clearable: @js($getClearable()),
+                    emptyText: @js($getEmptyLabel()),
+                    expandSelected: @js($getExpandSelected()),
+                    grouped: @js($getGrouped()),
+                    openLevel: @js($getDefaultOpenLevel()),
+                    direction: @js($getDirection()),
+                    rtl: false,
+                })"
     >
         <x-filament::input.wrapper
             :suffix="$suffixLabel"

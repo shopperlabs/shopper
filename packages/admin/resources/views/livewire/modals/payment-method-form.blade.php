@@ -5,7 +5,7 @@
     form-action="save"
 >
     <x-slot name="title">
-        @if($this->paymentId)
+        @if ($this->paymentId)
             {{ __('shopper::modals.payment_method.update_title') }}
         @else
             {{ __('shopper::pages/settings.payment.create_payment') }}

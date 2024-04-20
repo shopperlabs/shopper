@@ -15,10 +15,10 @@
                     </span>
                 </div>
                 <div class="mt-3">
-                    <h2 class="text-2xl font-heading font-medium text-gray-900 dark:text-white">
+                    <h2 class="font-heading text-2xl font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::pages/settings.initialization.tell_about') }}
                     </h2>
-                    <p class="mt-3 text-sm leading-6 text-gray-500 lg:max-w-2xl dark:text-gray-300">
+                    <p class="mt-3 text-sm leading-6 text-gray-500 dark:text-gray-300 lg:max-w-2xl">
                         {{ __('shopper::pages/settings.initialization.step_1_description') }}
                     </p>
                 </div>
@@ -31,9 +31,9 @@
                     isRequired
                 >
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <x-untitledui-shop
-                                class="w-5 h-5 text-gray-400 dark:text-gray-500"
+                                class="h-5 w-5 text-gray-400 dark:text-gray-500"
                                 stroke-width="1.5"
                                 aria-hidden="true"
                             />
@@ -56,9 +56,9 @@
                     isRequired
                 >
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <x-untitledui-mail
-                                class="w-5 h-5 text-gray-400 dark:text-gray-500"
+                                class="h-5 w-5 text-gray-400 dark:text-gray-500"
                                 stroke-width="1.5"
                                 aria-hidden="true"
                             />
@@ -86,10 +86,10 @@
                                 x-data="{
                                     init() {
                                         tomSelect('#country_id', {})
-                                    }
+                                    },
                                 }"
                             >
-                                @foreach($countries as $country)
+                                @foreach ($countries as $country)
                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
                                 @endforeach
                             </select>
@@ -111,10 +111,10 @@
                                 x-data="{
                                     init() {
                                         tomSelect('#currency', {})
-                                    }
+                                    },
                                 }"
                             >
-                                @foreach($currencies as $currency)
+                                @foreach ($currencies as $currency)
                                     <option value="{{ $currency->id }}">
                                         {{ $currency->name . ' (' . $currency->code . ')' }}
                                     </option>
@@ -136,15 +136,10 @@
                 </div>
             </div>
         </div>
-        <div class="mt-8 pt-10 border-t border-dashed border-gray-200 dark:border-gray-700">
+        <div class="mt-8 border-t border-dashed border-gray-200 pt-10 dark:border-gray-700">
             <div class="flex justify-end">
                 <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
-                    <x-shopper::loader
-                        wire:loading
-                        wire:target="save"
-                        class="text-white"
-                        aria-hidden="true"
-                    />
+                    <x-shopper::loader wire:loading wire:target="save" class="text-white" aria-hidden="true" />
                     {{ __('shopper::layout.forms.actions.next') }}
                 </x-shopper::buttons.primary>
             </div>

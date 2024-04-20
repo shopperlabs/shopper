@@ -8,7 +8,7 @@
                 {{ __('shopper::pages/products.related.description') }}
             </x-filament::section.description>
         </div>
-        @if($relatedProducts->isNotEmpty())
+        @if ($relatedProducts->isNotEmpty())
             <div class="mt-6 lg:mt-0">
                 <x-shopper::buttons.primary
                     type="button"
@@ -24,23 +24,23 @@
     </div>
 
     <x-shopper::card class="mt-10 p-5">
-        @if($relatedProducts->isNotEmpty())
+        @if ($relatedProducts->isNotEmpty())
             <div role="list" class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-8">
-                @foreach($relatedProducts as $relatedProduct)
+                @foreach ($relatedProducts as $relatedProduct)
                     <div class="group relative">
                         <div class="relative">
                             <div class="h-70 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
                                 <img
                                     src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
                                     alt="{{ $relatedProduct->name }} Thumbnail"
-                                    class="h-full w-full object-cover object-center max-w-none"
-                                >
+                                    class="h-full w-full max-w-none object-cover object-center"
+                                />
                             </div>
                             <div class="absolute right-4 top-4">
                                 <x-filament-actions::group
                                     :actions="[
-                                    ($this->removeAction)(['id' => $relatedProduct->id]),
-                                ]"
+                                        ($this->removeAction)(['id' => $relatedProduct->id]),
+                                    ]"
                                     :badge="true"
                                     :icon-button="true"
                                     icon="untitledui-dots-vertical"
@@ -61,7 +61,7 @@
                                     {{ $relatedProduct->getPriceAmount()?->formatted }}
                                 </p>
                             </div>
-                            <div class="flex items-center shrink-0">
+                            <div class="flex shrink-0 items-center">
                                 <div
                                     @class([
                                         'h-1.5 w-1.5 self-center rounded-full',
@@ -75,13 +75,11 @@
                 @endforeach
             </div>
         @else
-            <div class="text-center flex flex-col justify-center items-center py-10">
-                <div class="h-12 w-12 flex items-center justify-center rounded-full text-gray-700 bg-gray-100 dark:text-white dark:bg-gray-900">
-                    <x-untitledui-book-open
-                        class="h-5 w-5"
-                        stroke-width="1.5"
-                        aria-hidden="true"
-                    />
+            <div class="flex flex-col items-center justify-center py-10 text-center">
+                <div
+                    class="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-white"
+                >
+                    <x-untitledui-book-open class="h-5 w-5" stroke-width="1.5" aria-hidden="true" />
                 </div>
                 <h3 class="mt-2 font-medium text-gray-900 dark:text-white">
                     {{ __('shopper::pages/products.related.empty') }}
@@ -97,11 +95,7 @@
                                 arguments: { productId: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
                             })"
                     >
-                        <x-untitledui-plus
-                            class="mr-2 h-5 w-5"
-                            stroke-width="1.5"
-                            aria-hidden="true"
-                        />
+                        <x-untitledui-plus class="mr-2 h-5 w-5" stroke-width="1.5" aria-hidden="true" />
                         {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.product'))]) }}
                     </x-shopper::buttons.primary>
                 </div>

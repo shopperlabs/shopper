@@ -30,7 +30,7 @@ class CreateRole extends ModalComponent
         $this->dispatch('teamUpdate');
 
         Notification::make()
-            ->body(__('shopper::notifications.users_roles.role_added'))
+            ->title(__('shopper::notifications.users_roles.role_added'))
             ->success()
             ->send();
 

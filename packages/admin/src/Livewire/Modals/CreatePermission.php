@@ -42,12 +42,12 @@ class CreatePermission extends ModalComponent
             'description' => $this->description,
         ]);
 
-        Role::findById($this->roleId)->givePermissionTo($permission->name); // @phpstan-ignore-line
+        Role::findById($this->roleId)->givePermissionTo($permission->name);
 
         $this->dispatch('permission-added');
 
         Notification::make()
-            ->body(__('shopper::notifications.users_roles.permission_add'))
+            ->title(__('shopper::notifications.users_roles.permission_add'))
             ->success()
             ->send();
 

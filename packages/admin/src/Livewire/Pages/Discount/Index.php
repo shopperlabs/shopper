@@ -26,6 +26,11 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
+    public function mount(): void
+    {
+        $this->authorize('browse_discounts');
+    }
+
     public function table(Table $table): Table
     {
         return $table

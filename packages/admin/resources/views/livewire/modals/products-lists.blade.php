@@ -14,8 +14,8 @@
                 :placeholder="__('shopper::pages/collections.modal.search_placeholder')"
             />
         </div>
-        <div class="my-2 -mx-2 divide-y divide-gray-200 h-92 overflow-auto dark:divide-gray-700">
-            @foreach($this->products as $product)
+        <div class="h-92 -mx-2 my-2 divide-y divide-gray-200 overflow-auto dark:divide-gray-700">
+            @foreach ($this->products as $product)
                 <x-shopper::forms.label-product :product="$product" wire:key="{{ $product->id }}" />
             @endforeach
         </div>
@@ -32,7 +32,11 @@
             <x-shopper::loader wire:loading wire:target="addSelectedProducts" class="text-white" />
             {{ __('shopper::pages/collections.modal.action') }}
         </x-shopper::buttons.primary>
-        <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button" class="mt-3 w-full sm:mt-0 sm:w-auto">
+        <x-shopper::buttons.default
+            wire:click="$dispatch('closeModal')"
+            type="button"
+            class="mt-3 w-full sm:mt-0 sm:w-auto"
+        >
             {{ __('shopper::layout.forms.actions.cancel') }}
         </x-shopper::buttons.default>
     </x-slot>

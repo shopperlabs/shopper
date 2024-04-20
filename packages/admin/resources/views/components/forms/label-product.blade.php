@@ -1,6 +1,11 @@
-@props(['product'])
+@props([
+    'product',
+])
 
-<label for="product_{{ $product->id }}" class="flex items-center px-2 py-3 cursor-pointer hover:bg-gray-50 focus:bg-gray-50 dark:hover:bg-white/10 dark:focus:bg-gray-700">
+<label
+    for="product_{{ $product->id }}"
+    class="flex cursor-pointer items-center px-2 py-3 hover:bg-gray-50 focus:bg-gray-50 dark:hover:bg-white/10 dark:focus:bg-gray-700"
+>
     <span class="mr-4">
         <x-shopper::forms.checkbox
             id="product_{{ $product->id }}"
@@ -10,7 +15,7 @@
         />
     </span>
     <span class="flex flex-1 items-center justify-between">
-        <span class="block font-medium text-sm text-gray-700 dark:text-gray-300">
+        <span class="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {{ $product->name }}
         </span>
         <span class="flex items-center space-x-2">

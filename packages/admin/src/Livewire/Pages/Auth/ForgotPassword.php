@@ -7,9 +7,11 @@ namespace Shopper\Livewire\Pages\Auth;
 use Illuminate\Auth\Passwords\PasswordBroker;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Password;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Core\Rules\RealEmailValidator;
 
+#[Layout('shopper::components.layouts.base')]
 class ForgotPassword extends Component
 {
     public string $email = '';
@@ -39,8 +41,6 @@ class ForgotPassword extends Component
     public function render(): View
     {
         return view('shopper::livewire.pages.auth.forgot-password')
-            ->layout('shopper::components.layouts.base', [
-                'title' => __('shopper::pages/auth.email.title'),
-            ]);
+            ->title(__('shopper::pages/auth.email.title'));
     }
 }

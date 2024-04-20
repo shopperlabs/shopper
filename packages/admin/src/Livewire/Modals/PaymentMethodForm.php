@@ -24,7 +24,7 @@ class PaymentMethodForm extends ModalComponent implements HasForms
 
     public function mount(?int $paymentId = null): void
     {
-        $this->paymentId = (int) $paymentId;
+        $this->paymentId = $paymentId;
 
         $this->form->fill(PaymentMethod::query()->find($paymentId)?->toArray());
     }

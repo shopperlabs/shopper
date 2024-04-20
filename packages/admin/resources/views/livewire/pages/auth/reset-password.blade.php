@@ -5,16 +5,16 @@
         <div>
             <x-shopper::brand class="mx-auto h-12 w-auto" />
 
-            <h2 class="mt-6 text-3xl font-bold font-heading text-center leading-9 text-gray-900 dark:text-white">
+            <h2 class="mt-6 text-center font-heading text-3xl font-bold leading-9 text-gray-900 dark:text-white">
                 {{ __('shopper::pages/auth.reset.title') }}
             </h2>
-            <p class="mt-3 text-sm leading-5 text-center">
+            <p class="mt-3 text-center text-sm leading-5">
                 {{ __('shopper::pages/auth.reset.message') }}
             </p>
         </div>
     </div>
     <form class="mt-6" wire:submit.prevent="resetPassword">
-        <input wire:model="token" type="hidden">
+        <input wire:model="token" type="hidden" />
 
         <div class="rounded-md shadow-sm">
             <div>
@@ -25,7 +25,7 @@
                     type="email"
                     wire:model="email"
                     autocomplete="off"
-                    class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-300 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-gray-900 focus:z-10 sm:text-sm"
+                    class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-offset-gray-900 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.email') }}"
                     required
                     autofocus
@@ -37,7 +37,7 @@
                     name="password"
                     type="password"
                     wire:model="password"
-                    class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 placeholder-gray-500 text-gray-900 dark:text-gray-300 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-offset-gray-900 focus:z-10 sm:text-sm"
+                    class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-primary-500 focus:outline-none focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-offset-gray-900 sm:text-sm"
                     placeholder="{{ __('shopper::layout.forms.label.new_password') }}"
                     required
                 />

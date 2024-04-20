@@ -66,15 +66,15 @@
                     ], escape: false)
             "
         />
-        @if($hasSelect)
-            @if($getPosition() === 'prefix')
+        @if ($hasSelect)
+            @if ($getPosition() === 'prefix')
                 <x-slot:prefix>
                     {{ $getSelectComponent() }}
-                </x-slot:prefix>
+                </x-slot>
             @else
                 <x-slot:suffix>
                     {{ $getSelectComponent() }}
-                </x-slot:suffix>
+                </x-slot>
             @endif
         @endif
     </x-filament::input.wrapper>

@@ -20,17 +20,10 @@
     $suffixLabel = $getSuffixLabel();
 @endphp
 
-<x-dynamic-component
-    :component="$getFieldWrapperView()"
-    :field="$field"
-    :has-inline-label="$hasInlineLabel"
->
-    <x-slot
-        name="label"
-        @class([
-            'sm:pt-1.5' => $hasInlineLabel,
-        ])
-    >
+<x-dynamic-component :component="$getFieldWrapperView()" :field="$field" :has-inline-label="$hasInlineLabel">
+    <x-slot name="label" @class([
+        'sm:pt-1.5' => $hasInlineLabel,
+    ])>
         {{ $getLabel() }}
     </x-slot>
 
@@ -44,33 +37,37 @@
 
             increment() {
                 if (this.state < this.maxValue && this.state >= this.minValue) {
-                  this.state++
-                  $wire.$refresh()
-                  if (this.state === this.maxValue) {
-                    this.isIncrementAllowed = false
-                  } else {
-                    this.isIncrementAllowed = true
-                    this.isDecrementAllowed = true
-                  }
+                    this.state++
+                    $wire.$refresh()
+                    if (this.state === this.maxValue) {
+                        this.isIncrementAllowed = false
+                    } else {
+                        this.isIncrementAllowed = true
+                        this.isDecrementAllowed = true
+                    }
                 }
             },
 
             decrement() {
-              if (this.state > 0 && this.state <= this.maxValue && this.state > this.minValue) {
-                  this.state--
-                  $wire.$refresh()
-                  if (this.state === this.minValue) {
-                    this.isDecrementAllowed = false
-                  } else {
-                    this.isIncrementAllowed = true
-                    this.isDecrementAllowed = true
-                  }
-               }
+                if (
+                    this.state > 0 &&
+                    this.state <= this.maxValue &&
+                    this.state > this.minValue
+                ) {
+                    this.state--
+                    $wire.$refresh()
+                    if (this.state === this.minValue) {
+                        this.isDecrementAllowed = false
+                    } else {
+                        this.isIncrementAllowed = true
+                        this.isDecrementAllowed = true
+                    }
+                }
             },
 
-            init: function() {
-              this.isIncrementAllowed = true
-              this.isDecrementAllowed = true
+            init: function () {
+                this.isIncrementAllowed = true
+                this.isDecrementAllowed = true
             },
         }"
     >
@@ -88,10 +85,10 @@
             :suffix-icon-color="$getSuffixIconColor()"
             :valid="! $errors->has($getStatePath)"
         >
-            <div class="w-full flex justify-between items-center gap-x-5">
+            <div class="flex w-full items-center justify-between gap-x-5">
                 <div class="grow">
-                    @if($getHeading !== null)
-                        <label for="{{ $id }}" class="pt-2 px-2.5 block text-xs text-gray-500 dark:text-gray-400">
+                    @if ($getHeading !== null)
+                        <label for="{{ $id }}" class="block px-2.5 pt-2 text-xs text-gray-500 dark:text-gray-400">
                             {{ $getHeading }}
                         </label>
                     @endif
@@ -117,29 +114,49 @@
                     />
                 </div>
 
-                @if($isStacked())
-                    <div class="flex flex-col -gap-y-px divide-y divide-gray-200 border-s border-gray-200 dark:divide-gray-700 dark:border-gray-700 ">
-                        <button :disabled="!isIncrementAllowed" @click="increment" type="button" class="w-7 h-8 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-se-lg bg-gray-50 text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                            @svg('heroicon-o-plus', 'shrink-0 w-4 h-4')
+                @if ($isStacked())
+                    <div
+                        class="-gap-y-px flex flex-col divide-y divide-gray-200 border-s border-gray-200 dark:divide-gray-700 dark:border-gray-700"
+                    >
+                        <button
+                            :disabled="!isIncrementAllowed"
+                            @click="increment"
+                            type="button"
+                            class="inline-flex h-8 w-7 items-center justify-center gap-x-2 rounded-se-lg bg-gray-50 text-sm font-medium text-gray-800 hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        >
+                            @svg('heroicon-o-plus', 'h-4 w-4 shrink-0')
                         </button>
-                        <button :disabled="!isDecrementAllowed" @click="decrement" type="button" class="w-7 h-8 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-ee-lg bg-gray-50 text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                            @svg('heroicon-o-minus', 'shrink-0 w-4 h-4')
+                        <button
+                            :disabled="!isDecrementAllowed"
+                            @click="decrement"
+                            type="button"
+                            class="inline-flex h-8 w-7 items-center justify-center gap-x-2 rounded-ee-lg bg-gray-50 text-sm font-medium text-gray-800 hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        >
+                            @svg('heroicon-o-minus', 'h-4 w-4 shrink-0')
                         </button>
                     </div>
                 @else
-                    <div class="px-2 flex justify-end items-center gap-x-1.5">
-                        <button :disabled="!isDecrementAllowed" @click="decrement" type="button" class="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                            @svg('heroicon-o-minus', 'shrink-0 w-3.5 h-3.5')
+                    <div class="flex items-center justify-end gap-x-1.5 px-2">
+                        <button
+                            :disabled="!isDecrementAllowed"
+                            @click="decrement"
+                            type="button"
+                            class="inline-flex h-6 w-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        >
+                            @svg('heroicon-o-minus', 'h-3.5 w-3.5 shrink-0')
                         </button>
-                        <button :disabled="!isIncrementAllowed" @click="increment" type="button" class="w-6 h-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-full border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                            @svg('heroicon-o-plus', 'shrink-0 w-3.5 h-3.5')
+                        <button
+                            :disabled="!isIncrementAllowed"
+                            @click="increment"
+                            type="button"
+                            class="inline-flex h-6 w-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        >
+                            @svg('heroicon-o-plus', 'h-3.5 w-3.5 shrink-0')
                         </button>
                     </div>
                 @endif
-
             </div>
         </x-filament::input.wrapper>
-
     </div>
 
     <style>
@@ -150,7 +167,7 @@
         }
 
         /* Firefox */
-        input[type=number].zeus-quantity {
+        input[type='number'].zeus-quantity {
             -moz-appearance: textfield;
         }
     </style>

@@ -3,9 +3,9 @@
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
     <x-slot name="content">
-        <div class="sm:flex sm:items-start px-4 sm:px-6 pt-4">
+        <div class="px-4 pt-4 sm:flex sm:items-start sm:px-6">
             <div class="text-left">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                     {{ __('shopper::words.logout_session') }}
                 </h3>
                 <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-400">
@@ -16,7 +16,12 @@
         <div class="p-4 sm:px-6">
             <div>
                 <div class="relative">
-                    <x-shopper::forms.input wire:model.lazy="password" aria-label="{{ __('shopper::layout.forms.label.password') }}" type="password" placeholder="{{ __('Enter your password') }}" />
+                    <x-shopper::forms.input
+                        wire:model.lazy="password"
+                        aria-label="{{ __('shopper::layout.forms.label.password') }}"
+                        type="password"
+                        placeholder="{{ __('Enter your password') }}"
+                    />
                 </div>
                 @error('password')
                     <p class="mt-2 text-sm text-danger-500">{{ $message }}</p>
@@ -27,7 +32,11 @@
 
     <x-slot name="buttons">
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-            <x-shopper::buttons.danger wire:click="logoutOtherBrowserSessions" wire:loading.attr="disabled" type="button">
+            <x-shopper::buttons.danger
+                wire:click="logoutOtherBrowserSessions"
+                wire:loading.attr="disabled"
+                type="button"
+            >
                 <x-shopper::loader wire:loading wire:target="logoutOtherBrowserSessions" class="text-white" />
                 {{ __('shopper::layout.forms.actions.logout_session') }}
             </x-shopper::buttons.danger>

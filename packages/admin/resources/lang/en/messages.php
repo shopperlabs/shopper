@@ -8,7 +8,7 @@ return [
         'welcome_message' => 'Welcome to Shopper Dashboard',
         'header' => 'Start with the basic for your online store',
         'description' => ' To begin building your new store with Laravel Shopper, we recommend starting with these steps. The framework allows you to create
-                           your store and configure it exactly as you want. You can make <span>integrations</span> to go faster if you want.',
+                           your store and configure it exactly as you want. You can make integrations to go faster if you want.',
         'cards' => [
             'doc_title' => 'Documentation',
             'doc_description' => 'Get to know Laravel Shopper by understanding its capabilities the right way, whether you are new to the framework or have already worked on it. This documentation is made for you.',
