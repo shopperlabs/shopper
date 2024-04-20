@@ -40,81 +40,74 @@
             <x-shopper::card class="overflow-hidden">
                 <ul class="divide-y divide-gray-200 dark:divide-gray-700">
                     @foreach ($inventories as $inventory)
-                        <li>
-                            <x-shopper::link
-                                href="{{ route('shopper.settings.inventories.edit', $inventory) }}"
-                                class="block hover:bg-gray-50 focus:outline-none dark:hover:bg-gray-900/20"
-                            >
-                                <div class="p-4 sm:p-6">
-                                    <div class="flex items-center">
-                                        <div class="hidden shrink-0 lg:block">
-                                            <span
-                                                class="flex h-10 w-10 items-center justify-center rounded-md bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10"
+                        <li class="p-4 sm:p-6">
+                            <div class="flex items-end gap-6">
+                                <div class="flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <p
+                                            class="truncate text-sm font-medium leading-5 text-primary-600 dark:text-primary-500"
+                                        >
+                                            {{ $inventory->name }}
+                                        </p>
+                                        @if ($inventory->is_default)
+                                            <div class="ml-2 flex shrink-0">
+                                                <x-filament::badge color="gray">
+                                                    {{ __('shopper::words.default') }}
+                                                </x-filament::badge>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="mt-2 sm:flex sm:justify-between">
+                                        <div class="sm:flex sm:space-x-4">
+                                            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
+                                                {{ isoToEmoji($inventory->country->cca2) }}
+                                                {{ $inventory->country->name }}
+                                            </div>
+                                            <div
+                                                class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
                                             >
-                                                <x-untitledui-building-05
-                                                    class="h-6 w-6 text-gray-500 dark:text-gray-400"
+                                                <x-untitledui-marker-pin-02
+                                                    class="mr-1.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                     aria-hidden="true"
                                                 />
-                                            </span>
+                                                {{ $inventory->city }}
+                                            </div>
+                                            <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                                <x-untitledui-phone
+                                                    class="mr-1.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                                                    aria-hidden="true"
+                                                />
+                                                {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
+                                            </div>
                                         </div>
-                                        <div class="flex-1 lg:ml-4">
-                                            <div class="flex items-center justify-between">
-                                                <p
-                                                    class="truncate text-sm font-medium leading-5 text-primary-600 dark:text-primary-500"
-                                                >
-                                                    {{ $inventory->name }}
-                                                </p>
-                                                @if ($inventory->is_default)
-                                                    <div class="ml-2 flex shrink-0">
-                                                        <x-filament::badge color="gray">
-                                                            {{ __('shopper::words.default') }}
-                                                        </x-filament::badge>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <div class="mt-2 sm:flex sm:justify-between">
-                                                <div class="sm:flex sm:space-x-4">
-                                                    <div
-                                                        class="flex items-center text-sm text-gray-500 dark:text-gray-400"
-                                                    >
-                                                        {{ isoToEmoji($inventory->country->cca2) }}
-                                                        {{ $inventory->country->name }}
-                                                    </div>
-                                                    <div
-                                                        class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
-                                                    >
-                                                        <x-untitledui-marker-pin-02
-                                                            class="mr-1.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
-                                                            aria-hidden="true"
-                                                        />
-                                                        {{ $inventory->city }}
-                                                    </div>
-                                                    <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                                                        <x-untitledui-phone
-                                                            class="mr-1.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
-                                                            aria-hidden="true"
-                                                        />
-                                                        {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
-                                                >
-                                                    <x-untitledui-calendar
-                                                        class="mr-1.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
-                                                    />
-                                                    <span>
-                                                        {{ __('shopper::words.added_on') }}
-                                                        <time datetime="{{ $inventory->created_at->format('d-m-Y') }}">
-                                                            {{ $inventory->created_at->formatLocalized('%d %B %G') }}
-                                                        </time>
-                                                    </span>
-                                                </div>
-                                            </div>
+                                        <div
+                                            class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+                                        >
+                                            <x-untitledui-calendar
+                                                class="mr-1.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                                            />
+                                            <span>
+                                                {{ __('shopper::words.added_on') }}
+                                                <time datetime="{{ $inventory->created_at->format('d-m-Y') }}">
+                                                    {{ $inventory->created_at->formatLocalized('%d %B %G') }}
+                                                </time>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                            </x-shopper::link>
+                                <div class="flex items-center gap-2">
+                                    <x-shopper::link
+                                        href="{{ route('shopper.settings.inventories.edit', $inventory) }}"
+                                        class="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-50 dark:hover:bg-gray-900/20"
+                                    >
+                                        <x-untitledui-edit-03
+                                            class="h-5 w-5 text-primary-600 dark:text-primary-500"
+                                            aria-hidden="true"
+                                        />
+                                    </x-shopper::link>
+                                    {{ ($this->removeAction)(['id' => $inventory->id]) }}
+                                </div>
+                            </div>
                         </li>
                     @endforeach
                 </ul>
@@ -122,5 +115,6 @@
         </div>
     </div>
 
+    <x-filament-actions::modals />
     <x-shopper::learn-more :name="__('shopper::words.location')" link="locations" />
 </x-shopper::container>

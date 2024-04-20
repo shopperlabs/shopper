@@ -36,13 +36,13 @@ return [
             'route' => 'shopper.settings.inventories',
             'permission' => null,
         ],
-        [
-            'name' => 'Analytics',
-            'description' => 'Get a better understanding of where your traffic is coming from.',
-            'icon' => svg('untitledui-pie-chart', 'h-6 w-6'),
-            'route' => 'shopper.settings.analytics',
-            'permission' => null,
-        ],
+//        [
+//            'name' => 'Analytics',
+//            'description' => 'Get a better understanding of where your traffic is coming from.',
+//            'icon' => svg('untitledui-pie-chart', 'h-6 w-6'),
+//            'route' => 'shopper.settings.analytics',
+//            'permission' => null,
+//        ],
         [
             'name' => 'Payment methods',
             'description' => 'Add different payment methods for your customers.',

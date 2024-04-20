@@ -59,7 +59,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::layout.forms.actions.edit'))
-                    ->color('info')
                     ->action(
                         fn ($record) => $this->dispatch(
                             'openPanel',

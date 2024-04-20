@@ -1,21 +1,10 @@
-<div
-    x-data="{
-        open: false,
-        options: ['profile', 'address', 'orders'],
-        words: {
-            'profile': '{{ __('shopper::pages/customers.profile.title') }}',
-            'address': '{{ __('shopper::pages/customers.addresses.title') }}',
-            'orders': '{{ __('shopper::layout.sidebar.orders') }}',
-        },
-        currentTab: 'profile',
-        activeTab(tab) {
-            return this.currentTab === tab
-        },
-    }"
->
+<div x-data="{
+    options: ['profile', 'address', 'orders'],
+    currentTab: 'profile',
+}">
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.customers.index')" :current="$customer->full_name">
-            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
+            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
                 :link="route('shopper.customers.index')"
                 :title="__('shopper::layout.sidebar.customers')"
@@ -78,53 +67,20 @@
         </div>
     </x-shopper::container>
 
-    <div>
+    <div class="relative">
         <div class="sticky top-0">
-            <div class="dark:border-gray-700 lg:border-y lg:border-gray-200">
-                <div class="px-4 lg:hidden">
-                    <x-shopper::forms.select
-                        x-model="currentTab"
-                        aria-label="{{ __('shopper::words.selected_tab') }}"
-                        class="pr-10"
-                    >
-                        <template x-for="option in options" :key="option">
-                            <option
-                                x-bind:value="option"
-                                x-text="words[option]"
-                                x-bind:selected="option === currentTab"
-                            ></option>
-                        </template>
-                    </x-shopper::forms.select>
-                </div>
-
-                <div class="hidden pt-4 lg:block">
-                    <nav class="-mb-px flex space-x-8 px-6">
-                        <button
-                            @click="currentTab = 'profile'"
-                            type="button"
-                            class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
-                            :class="activeTab('profile') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
-                        >
-                            {{ __('shopper::pages/customers.profile.title') }}
-                        </button>
-                        <button
-                            @click="currentTab = 'address'"
-                            type="button"
-                            class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
-                            :class="activeTab('address') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
-                        >
-                            {{ __('shopper::pages/customers.addresses.title') }}
-                        </button>
-                        <button
-                            @click="currentTab = 'orders'"
-                            type="button"
-                            class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
-                            :class="activeTab('orders') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
-                        >
-                            {{ __('shopper::layout.sidebar.orders') }}
-                        </button>
-                    </nav>
-                </div>
+            <div class="border-t border-gray-200 dark:border-gray-700">
+                <x-filament::tabs :contained="true">
+                    <x-filament::tabs.item alpine-active="currentTab === 'profile'" x-on:click="currentTab = 'profile'">
+                        {{ __('shopper::pages/customers.profile.title') }}
+                    </x-filament::tabs.item>
+                    <x-filament::tabs.item alpine-active="currentTab === 'address'" x-on:click="currentTab = 'address'">
+                        {{ __('shopper::pages/customers.addresses.title') }}
+                    </x-filament::tabs.item>
+                    <x-filament::tabs.item alpine-active="currentTab === 'orders'" x-on:click="currentTab = 'orders'">
+                        {{ __('shopper::layout.sidebar.orders') }}
+                    </x-filament::tabs.item>
+                </x-filament::tabs>
             </div>
         </div>
 

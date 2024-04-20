@@ -21,7 +21,7 @@ return [
         'inventory-create' => Pages\Settings\Inventories\Create::class,
         'inventory-edit' => Pages\Settings\Inventories\Edit::class,
         'legal' => Pages\Settings\LegalPage::class,
-        'analytics' => Pages\Settings\Analytics::class,
+        // 'analytics' => Pages\Settings\Analytics::class,
         'payment' => Pages\Settings\Payment::class,
         'team-index' => Pages\Settings\Team\Index::class,
         'team-roles' => Pages\Settings\Team\RolePermission::class,
@@ -37,8 +37,6 @@ return [
         'modals.create-permission' => Livewire\Modals\CreatePermission::class,
         'modals.create-role' => Livewire\Modals\CreateRole::class,
         'modals.confirm-password' => Livewire\Modals\ConfirmPassword::class,
-        'modals.delete-inventory' => Livewire\Modals\DeleteInventory::class,
-        'modals.delete-role' => Livewire\Modals\DeleteRole::class,
         'modals.logout-others-browser' => Livewire\Modals\LogoutOthersBrowser::class,
         'modals.payment-method-form' => Livewire\Modals\PaymentMethodForm::class,
 

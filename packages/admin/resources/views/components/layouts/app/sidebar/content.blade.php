@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="flex flex-1 flex-col justify-between overflow-hidden">
-            <div class="scrolling h-full flex-1 overflow-y-scroll">
+            <div class="h-full flex-1 overflow-y-scroll">
                 <x-shopper::layouts.app.sidebar.secondary />
             </div>
 
@@ -34,13 +34,13 @@
                             'sh-sidebar-item-inactive' => ! request()->routeIs('shopper.settings*'),
                         ])
                     >
-                        <x-untitledui-sliders class="mr-2 h-5 w-5" stroke-width="1.5" />
+                        <x-untitledui-sliders class="mr-2 h-5 w-5" stroke-width="1.5" aria-hidden="true" />
                         {{ __('shopper::layout.account_dropdown.settings') }}
                     </x-shopper::link>
                 @endcan
 
                 <a href="https://laravelshopper.dev" target="_blank" class="sh-sidebar-item sh-sidebar-item-inactive">
-                    <x-untitledui-code-browser class="mr-2 h-5 w-5" stroke-width="1.5" />
+                    <x-untitledui-code-browser class="mr-2 h-5 w-5" stroke-width="1.5" aria-hidden="true" />
                     {{ __('shopper::messages.dashboard.cards.doc_title') }}
                 </a>
             </div>

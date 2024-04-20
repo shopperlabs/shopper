@@ -6,7 +6,7 @@
         class="border-r border-gray-200 px-4 text-gray-500 focus:bg-gray-100 focus:text-gray-600 focus:outline-none dark:border-gray-700 dark:focus:bg-gray-800 dark:focus:text-gray-500 lg:hidden"
         aria-label="Open sidebar"
     >
-        <x-untitledui-menu-03 class="h-6 w-6" />
+        <x-untitledui-menu-03 class="h-6 w-6" aria-hidden="true" />
     </button>
     <div class="flex flex-1 items-center justify-between px-4 lg:px-6">
         <div class="flex flex-1">

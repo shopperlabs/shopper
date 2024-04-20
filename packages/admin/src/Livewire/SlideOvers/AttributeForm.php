@@ -25,7 +25,7 @@ class AttributeForm extends SlideOverComponent implements HasForms
 
     public function mount(?int $attributeId = null): void
     {
-        $this->authorize('add_attributes');
+        abort_unless($this->authorize('add_attributes') || $this->authorize('edit_attributes'), 403);
 
         $this->attribute = Attribute::query()->find($attributeId);
 

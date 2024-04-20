@@ -1,19 +1,7 @@
-<div
-    x-data="{
-        options: ['role', 'users', 'permissions'],
-        words: {
-            'role': '{{ __('shopper::layout.forms.label.role') }}',
-            'users': '{{ __('shopper::words.users') }}',
-            'permissions':
-                '{{ __('shopper::pages/settings.roles_permissions.permissions') }}',
-        },
-        currentTab: 'role',
-        activeTab(tab) {
-            return this.currentTab === tab
-        },
-    }"
-    class="pb-10"
->
+<div x-data="{
+    options: ['role', 'users', 'permissions'],
+    currentTab: 'role',
+}" class="pb-10">
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.settings.users')" :current="$role->display_name">
             <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
@@ -27,21 +15,7 @@
 
             <x-slot name="action">
                 <div class="flex space-x-3">
-                    @if ($role->can_be_removed)
-                        <x-shopper::buttons.danger
-                            wire:click="$dispatch(
-                                'openModal',
-                                {
-                                    component: 'shopper-modals.delete-role',
-                                    arguments: { id: {{ $role->id }} }
-                                }
-                            )"
-                            type="button"
-                        >
-                            <x-untitledui-trash-03 class="mr-2 h-5 w-5" aria-hidden="true" />
-                            {{ __('shopper::layout.forms.actions.delete') }}
-                        </x-shopper::buttons.danger>
-                    @endif
+                    {{ $this->deleteAction }}
 
                     <x-shopper::buttons.primary
                         wire:click="$dispatch(
@@ -61,49 +35,18 @@
         </x-shopper::heading>
     </x-shopper::container>
 
-    <div class="relative space-y-4 border-gray-200 px-4 dark:border-gray-700 lg:border-y lg:px-0 lg:pb-0 lg:pt-5">
-        <div>
-            <div class="lg:hidden">
-                <x-shopper::forms.select x-model="currentTab" aria-label="{{ __('shopper::words.selected_tab') }}">
-                    <template x-for="option in options" :key="option">
-                        <option
-                            x-bind:value="option"
-                            x-text="words[option]"
-                            x-bind:selected="option === currentTab"
-                        ></option>
-                    </template>
-                </x-shopper::forms.select>
-            </div>
-
-            <div class="hidden lg:block">
-                <nav class="-mb-px flex space-x-8 px-6">
-                    <button
-                        @click="currentTab = 'role'"
-                        type="button"
-                        class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
-                        :class="activeTab('role') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
-                    >
-                        {{ __('shopper::layout.forms.label.role') }}
-                    </button>
-                    <button
-                        @click="currentTab = 'users'"
-                        type="button"
-                        class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
-                        :class="activeTab('users') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
-                    >
-                        {{ __('shopper::words.users') }}
-                    </button>
-                    <button
-                        @click="currentTab = 'permissions'"
-                        type="button"
-                        class="whitespace-no-wrap border-b-2 px-1 pb-4 text-sm font-medium leading-5 focus:outline-none"
-                        :class="activeTab('permissions') ? 'border-primary-600 text-primary-500' : 'border-transparent hover:border-gray-300 dark:hover:border-gray-400 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-500'"
-                    >
-                        {{ __('shopper::pages/settings.roles_permissions.permissions') }}
-                    </button>
-                </nav>
-            </div>
-        </div>
+    <div class="relative border-t border-gray-200 dark:border-gray-700">
+        <x-filament::tabs :contained="true">
+            <x-filament::tabs.item alpine-active="currentTab === 'role'" x-on:click="currentTab = 'role'">
+                {{ __('shopper::layout.forms.label.role') }}
+            </x-filament::tabs.item>
+            <x-filament::tabs.item alpine-active="currentTab === 'users'" x-on:click="currentTab = 'users'">
+                {{ __('shopper::words.users') }}
+            </x-filament::tabs.item>
+            <x-filament::tabs.item alpine-active="currentTab === 'permissions'" x-on:click="currentTab = 'permissions'">
+                {{ __('shopper::pages/settings.roles_permissions.permissions') }}
+            </x-filament::tabs.item>
+        </x-filament::tabs>
     </div>
 
     <div class="mt-10">
@@ -154,4 +97,6 @@
             <livewire:shopper-settings.team.permissions :role="$role" />
         </div>
     </div>
+
+    <x-filament-actions::modals />
 </div>
