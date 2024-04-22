@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Livewire\Components\Orders;
+namespace Shopper\Livewire\Pages\Order;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Livewire\Component;
 use Livewire\WithPagination;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Events\Orders\AddNote;
@@ -16,8 +15,9 @@ use Shopper\Core\Events\Orders\Paid;
 use Shopper\Core\Events\Orders\Registered;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Order;
+use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Show extends Component
+class Detail extends AbstractPageComponent
 {
     use WithPagination;
 
@@ -26,6 +26,11 @@ class Show extends Component
     public int $perPage = 3;
 
     public ?string $notes = null;
+
+    public function mount(): void
+    {
+        $this->authorize('read_orders');
+    }
 
     public function goToOrder(int $id): void
     {
@@ -114,6 +119,7 @@ class Show extends Component
                 ->where('type', Address::TYPE_BILLING)
                 ->where('is_default', true)
                 ->first(),
-        ]);
+        ])
+            ->title(__('shopper::pages/orders.show_title', ['number' => $this->order->number]));
     }
 }

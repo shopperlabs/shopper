@@ -65,3 +65,7 @@ input[type='number'] {
 .sh-input-media .filepond--list-scroller {
     z-index: 100;
 }
+
+.sh-badge {
+  @apply flex items-center justify-center gap-x-1 rounded-md text-xs font-medium ring-1 ring-inset px-2 py-1 bg-warning-50 text-warning-600 ring-warning-600/10 dark:bg-warning-400/10 dark:text-warning-400 dark:ring-warning-400/30;
+}

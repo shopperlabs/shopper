@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Shopper\Livewire;
-use Shopper\Livewire\Components;
 
 return [
 
@@ -13,7 +12,10 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'pages' => [],
+    'pages' => [
+        'order-index' => Livewire\Pages\Order\Index::class,
+        'order-detail' => Livewire\Pages\Order\Detail::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -22,9 +24,6 @@ return [
     */
 
     'components' => [
-        'orders.browse' => Components\Orders\Browse::class,
-        'orders.show' => Components\Orders\Show::class,
-
         'modals.archived-order' => Livewire\Modals\ArchiveOrder::class,
     ],
 
