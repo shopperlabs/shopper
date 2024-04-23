@@ -10,6 +10,8 @@ return [
         'return_landing' => 'Retour à la page d\'accueil',
         'forgot_password' => 'Mot de passe oublié?',
         'action' => 'Connexion',
+        'failed' => 'Ces identifiants ne correspondent pas à nos enregistrements.',
+        'throttled' => 'Tentatives de connexion trop nombreuses. Veuillez essayer de nouveau dans :seconds secondes.',
     ],
 
     'reset' => [

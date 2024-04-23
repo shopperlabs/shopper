@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Shopper\Core\Rules\RealEmailValidator;
 use Shopper\Facades\Shopper;
 
 #[Layout('shopper::components.layouts.base')]
@@ -33,10 +32,13 @@ class ResetPassword extends Component
     {
         $this->validate([
             'token' => 'required',
-            'email' => ['required', 'email', new RealEmailValidator()],
+            'email' => ['required', 'email'],
             'password' => [
                 'required',
-                PasswordRule::min(8)->numbers()->symbols()->mixedCase(),
+                PasswordRule::min(8)
+                    ->numbers()
+                    ->symbols()
+                    ->mixedCase(),
             ],
         ]);
 

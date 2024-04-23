@@ -9,7 +9,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Shopper\Core\Rules\RealEmailValidator;
 
 #[Layout('shopper::components.layouts.base')]
 class ForgotPassword extends Component
@@ -19,7 +18,7 @@ class ForgotPassword extends Component
     public function sendResetPasswordLink(): void
     {
         $this->validate([
-            'email' => ['required', 'email', new RealEmailValidator()],
+            'email' => ['required', 'email'],
         ]);
 
         $response = $this->broker()->sendResetLink(['email' => $this->email]);

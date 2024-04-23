@@ -25,7 +25,7 @@ final class StoreInformation extends StepComponent
     #[Validate('required|int')]
     public ?int $country_id = null;
 
-    public ?int $currency_id = null;
+    public ?int $default_currency_id = null;
 
     public ?string $about = null;
 
@@ -35,7 +35,7 @@ final class StoreInformation extends StepComponent
         $this->email = shopper_setting('email', false);
         $this->about = shopper_setting('about', false);
         $this->country_id = (int) shopper_setting('country_id', false);
-        $this->currency_id = (int) shopper_setting('currency_id', false);
+        $this->default_currency_id = (int) shopper_setting('default_currency_id', false);
     }
 
     public function save(): void
@@ -47,7 +47,7 @@ final class StoreInformation extends StepComponent
             'email',
             'about',
             'country_id',
-            'currency_id',
+            'default_currency_id',
         ]);
 
         $this->nextStep();

@@ -17,7 +17,7 @@ final class StoreAddress extends StepComponent
     public ?string $street_address = null;
 
     #[Validate('required')]
-    public ?string $postal_code = null;
+    public ?string $postcode = null;
 
     #[Validate('required')]
     public ?string $city = null;
@@ -28,7 +28,7 @@ final class StoreAddress extends StepComponent
     {
         $this->street_address = shopper_setting('street_address', false);
         $this->city = shopper_setting('city', false);
-        $this->postal_code = shopper_setting('postal_code', false);
+        $this->postcode = shopper_setting('postcode', false);
         $this->phone_number = shopper_setting('phone_number', false);
     }
 
@@ -39,7 +39,7 @@ final class StoreAddress extends StepComponent
         $this->saveSettings([
             'street_address',
             'city',
-            'postal_code',
+            'postcode',
             'phone_number',
         ]);
 
@@ -52,7 +52,7 @@ final class StoreAddress extends StepComponent
             'label' => __('shopper::pages/settings.initialization.step_two_title'),
             'complete' => shopper_setting('street_address')
                 && shopper_setting('city')
-                && shopper_setting('postal_code'),
+                && shopper_setting('postcode'),
         ];
     }
 

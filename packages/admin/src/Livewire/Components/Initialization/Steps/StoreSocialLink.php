@@ -7,7 +7,6 @@ namespace Shopper\Livewire\Components\Initialization\Steps;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Shopper\Core\Models\Inventory;
-use Shopper\Core\Repositories\ChannelRepository;
 use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
@@ -41,17 +40,10 @@ final class StoreSocialLink extends StepComponent
             'code' => Str::slug($name),
             'email' => shopper_setting('email'),
             'street_address' => shopper_setting('street_address'),
-            'zipcode' => shopper_setting('postal_code'),
+            'postcode' => shopper_setting('postcode'),
             'city' => shopper_setting('city'),
             'phone_number' => shopper_setting('phone_number'),
             'country_id' => shopper_setting('country_id'),
-            'is_default' => true,
-        ]);
-
-        (new ChannelRepository())->create([
-            'name' => $name = 'Web Store',
-            'slug' => $name,
-            'url' => config('app.url'),
             'is_default' => true,
         ]);
     }

@@ -10,6 +10,8 @@ return [
         'return_landing' => 'Return to the landing page',
         'forgot_password' => 'Forgot your password?',
         'action' => 'Login',
+        'failed' => 'These credentials do not match our records.',
+        'throttled' => 'Too many login attempts. Please try again in :seconds seconds.',
     ],
 
     'reset' => [
@@ -70,4 +72,5 @@ return [
         'profile_title' => 'Profile Information',
         'profile_description' => 'Update your account\'s profile information and email address.',
     ],
+
 ];
