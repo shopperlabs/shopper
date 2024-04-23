@@ -8,7 +8,7 @@ use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 
-enum OrderStatus: string implements HasLabel, HasColor
+enum OrderStatus: string implements HasColor, HasLabel
 {
     use ArrayableEnum;
 

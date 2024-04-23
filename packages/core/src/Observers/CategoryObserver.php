@@ -22,9 +22,6 @@ final class CategoryObserver
     /**
      * Ensure that the parent slug is present on the category slug is selected
      * slug is "parent_slug_category_slug" when a parent category is choose
-     *
-     * @param Category $category
-     * @return void
      */
     protected function ensureParentSlugIsCorrectlySet(Category $category): void
     {

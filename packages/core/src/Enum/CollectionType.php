@@ -8,7 +8,7 @@ use Filament\Support\Contracts\HasDescription;
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 
-enum CollectionType: string implements HasLabel, HasDescription
+enum CollectionType: string implements HasDescription, HasLabel
 {
     use ArrayableEnum;
 

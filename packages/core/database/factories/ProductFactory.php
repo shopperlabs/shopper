@@ -36,7 +36,7 @@ class ProductFactory extends Factory
 
     public function configure(): ProductFactory
     {
-        return $this->afterCreating(function (Product $product) {
+        return $this->afterCreating(function (Product $product): void {
             try {
                 $product
                     ->addMediaFromUrl('')

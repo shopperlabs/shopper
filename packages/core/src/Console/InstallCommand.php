@@ -48,7 +48,7 @@ class InstallCommand extends Command
         $this->call('vendor:publish', ['--provider' => CoreServiceProvider::class]);
         $this->call(
             'vendor:publish',
-            ['--provider' => MediaLibraryServiceProvider::class,'--tag' => 'migrations']
+            ['--provider' => MediaLibraryServiceProvider::class, '--tag' => 'migrations']
         );
         $this->progressBar->advance();
 

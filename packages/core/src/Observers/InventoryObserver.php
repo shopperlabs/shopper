@@ -20,9 +20,6 @@ final class InventoryObserver
 
     /**
      * Ensures that only one default inventory exists.
-     *
-     * @param Inventory $inventory
-     * @return void
      */
     protected function ensureOnlyOneIsDefault(Inventory $inventory): void
     {
