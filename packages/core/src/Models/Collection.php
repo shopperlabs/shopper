@@ -43,17 +43,17 @@ class Collection extends Model implements SpatieHasMedia
 
     public function scopeManual(Builder $query): Builder
     {
-        return $query->where('type', CollectionType::MANUAL->value);
+        return $query->where('type', CollectionType::Manual->value);
     }
 
     public function scopeAutomatic(Builder $query): Builder
     {
-        return $query->where('type', CollectionType::AUTO->value);
+        return $query->where('type', CollectionType::Auto->value);
     }
 
     public function isAutomatic(): bool
     {
-        return $this->type === CollectionType::AUTO;
+        return $this->type === CollectionType::Auto;
     }
 
     public function isManual(): bool

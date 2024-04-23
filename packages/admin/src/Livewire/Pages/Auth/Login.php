@@ -14,7 +14,6 @@ use Livewire\Component;
 use Shopper\Actions\AttemptToAuthenticate;
 use Shopper\Actions\RedirectIfTwoFactorAuthenticatable;
 use Shopper\Contracts\LoginResponse;
-use Shopper\Core\Rules\RealEmailValidator;
 
 #[Layout('shopper::components.layouts.base')]
 final class Login extends Component
@@ -30,7 +29,7 @@ final class Login extends Component
     public function authenticate()
     {
         $this->validate([
-            'email' => ['required', 'email', new RealEmailValidator()],
+            'email' => ['required', 'email'],
             'password' => 'required',
         ]);
 
@@ -38,7 +37,7 @@ final class Login extends Component
 
         if ($throwable instanceof TooManyRequestsException) {
             throw ValidationException::withMessages([
-                'email' => __('shopper::messages.login.throttled', [
+                'email' => __('shopper::pages/auth.login.throttled', [
                     'seconds' => $throwable->secondsUntilAvailable,
                     'minutes' => ceil($throwable->secondsUntilAvailable / 60),
                 ]),

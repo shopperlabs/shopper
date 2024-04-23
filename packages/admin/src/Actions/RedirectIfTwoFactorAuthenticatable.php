@@ -38,7 +38,7 @@ class RedirectIfTwoFactorAuthenticatable
     protected function throwFailedAuthenticationException(): void
     {
         throw ValidationException::withMessages([
-            'email' => __('shopper::messages.login.failed'),
+            'email' => __('shopper::pages/auth.login.failed'),
         ]);
     }
 

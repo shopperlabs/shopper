@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
+use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 
-enum DiscountRequirement: string
+enum DiscountRequirement: string implements HasLabel
 {
     use ArrayableEnum;
 
-    case NONE = 'none';
+    case None = 'none';
 
-    case PRICE = 'price';
+    case Price = 'price';
 
-    case QUANTITY = 'quantity';
+    case Quantity = 'quantity';
 
-    public function label(): string
+    public function getLabel(): ?string
     {
         return match ($this) {
-            self::NONE => __('shopper::pages/discounts.none'),
-            self::PRICE => __('shopper::pages/discounts.min_amount', ['currency' => shopper_currency()]),
-            self::QUANTITY => __('shopper::pages/discounts.min_quantity'),
+            self::None => __('shopper-core::enum/discount.requirement.none'),
+            self::Price => __('shopper-core::enum/discount.requirement.min_amount', ['currency' => shopper_currency()]),
+            self::Quantity => __('shopper-core::enum/discount.requirement.min_quantity'),
         };
     }
 }

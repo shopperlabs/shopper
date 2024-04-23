@@ -5,7 +5,17 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Shopper\Models\Zone;
 
+/**
+ * @property-read int $id
+ * @property string $name
+ * @property string $code
+ * @property string $symbol
+ * @property string $format
+ * @property float $exchange_rate
+ */
 class Currency extends Model
 {
     public $timestamps = false;
@@ -20,6 +30,11 @@ class Currency extends Model
 
     public function getTable(): string
     {
-        return shopper_table('system_currencies');
+        return shopper_table('currencies');
+    }
+
+    public function zone(): HasOne
+    {
+        return $this->hasOne(Zone::class);
     }
 }

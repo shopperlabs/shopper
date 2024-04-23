@@ -4,18 +4,25 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Traits\HasPrice;
 
 /**
  * @property-read int $id
- * @property \Shopper\Core\Models\User $customer
+ * @property string $number
+ * @property int $price_amount
+ * @property string $notes
+ * @property string $currency
+ * @property string $shipping_method
+ * @property int | null $user_id
  * @property \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
  * @property OrderStatus $status
  * @property int $shipping_total
@@ -33,7 +40,7 @@ class Order extends Model
     ];
 
     protected $appends = [
-        'total',
+        'total_amount',
     ];
 
     public function __construct(array $attributes = [])
@@ -50,9 +57,16 @@ class Order extends Model
         return shopper_table('orders');
     }
 
-    public function getTotalAttribute(): string
+    protected static function newFactory(): OrderFactory
     {
-        return $this->formattedPrice($this->total());
+        return OrderFactory::new();
+    }
+
+    public function totalAmount(): Attribute
+    {
+        return Attribute::get(
+            fn () => $this->formattedPrice($this->total())
+        );
     }
 
     public function total(): int
@@ -60,45 +74,34 @@ class Order extends Model
         return $this->items->sum('total');
     }
 
-    public static function statusValues(): array
-    {
-        return [
-            OrderStatus::PENDING->value => __('shopper::status.pending'),
-            OrderStatus::REGISTER->value => __('shopper::status.registered'),
-            OrderStatus::COMPLETED->value => __('shopper::status.completed'),
-            OrderStatus::CANCELLED->value => __('shopper::status.cancelled'),
-            OrderStatus::PAID->value => __('shopper::status.paid'),
-        ];
-    }
-
     public function canBeCancelled(): bool
     {
-        return ! ($this->status->value === OrderStatus::COMPLETED->value || $this->status->value === OrderStatus::PAID->value);
+        return ! ($this->status === OrderStatus::Completed || $this->status === OrderStatus::New);
     }
 
     public function isNotCancelled(): bool
     {
-        return ! ($this->status->value === OrderStatus::CANCELLED->value);
+        return ! ($this->status === OrderStatus::Cancelled);
     }
 
     public function isPending(): bool
     {
-        return $this->status->value === OrderStatus::PENDING->value;
+        return $this->status === OrderStatus::Pending;
     }
 
     public function isRegister(): bool
     {
-        return $this->status->value === OrderStatus::REGISTER->value;
+        return $this->status === OrderStatus::Register;
     }
 
-    public function isPaid(): bool
+    public function isShipped(): bool
     {
-        return $this->status->value === OrderStatus::PAID->value;
+        return $this->status === OrderStatus::Shipped;
     }
 
     public function isCompleted(): bool
     {
-        return $this->status->value === OrderStatus::COMPLETED->value;
+        return $this->status === OrderStatus::Completed;
     }
 
     public function fullPriceWithShipping(): int
@@ -136,7 +139,7 @@ class Order extends Model
         $this->setRawAttributes(
             array_merge(
                 $this->attributes,
-                ['status' => OrderStatus::PENDING->value]
+                ['status' => OrderStatus::Pending]
             ),
             true
         );

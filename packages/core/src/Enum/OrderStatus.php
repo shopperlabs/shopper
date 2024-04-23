@@ -4,37 +4,51 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
-enum OrderStatus: string
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasLabel;
+use Shopper\Core\Traits\ArrayableEnum;
+
+enum OrderStatus: string implements HasColor, HasLabel
 {
-    case PENDING = 'pending';
+    use ArrayableEnum;
 
-    case REGISTER = 'registered';
+    case New = 'new';
 
-    case PAID = 'paid';
+    case Shipped = 'shipped';
 
-    case COMPLETED = 'completed';
+    case Delivered = 'delivered';
 
-    case CANCELLED = 'cancelled';
+    case Pending = 'pending';
 
-    public function badge(): string
+    case Register = 'registered';
+
+    case Completed = 'completed';
+
+    case Cancelled = 'cancelled';
+
+    public function getColor(): string | array | null
     {
         return match ($this) {
-            self::PENDING => 'bg-yellow-100 text-yellow-800',
-            self::REGISTER => 'bg-primary-100 text-primary-800',
-            self::PAID => 'bg-teal-100 text-teal-800',
-            self::CANCELLED => 'bg-pink-100 text-pink-800',
-            self::COMPLETED => 'bg-success-100 text-success-800',
+            self::New => 'info',
+            self::Cancelled => 'danger',
+            self::Completed => 'teal',
+            self::Delivered => 'sky',
+            self::Pending => 'warning',
+            self::Register => 'primary',
+            self::Shipped => 'indigo',
         };
     }
 
-    public function translateValue(): string
+    public function getLabel(): ?string
     {
         return match ($this) {
-            self::PENDING => __('shopper::status.pending'),
-            self::REGISTER => __('shopper::status.registered'),
-            self::COMPLETED => __('shopper::status.completed'),
-            self::CANCELLED => __('shopper::status.cancelled'),
-            self::PAID => __('shopper::status.paid'),
+            self::New => __('shopper-core::status.new'),
+            self::Completed => __('shopper-core::status.completed'),
+            self::Cancelled => __('shopper-core::status.cancelled'),
+            self::Delivered => __('shopper-core::status.delivered'),
+            self::Pending => __('shopper-core::status.pending'),
+            self::Register => __('shopper-core::status.registered'),
+            self::Shipped => __('shopper-core::status.shipped'),
         };
     }
 }

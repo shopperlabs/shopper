@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Shopper\Core\Database\Factories\OrderItemFactory;
 
 /**
  * @property-read int $id
@@ -31,6 +32,11 @@ class OrderItem extends Model
     public function getTable(): string
     {
         return shopper_table('order_items');
+    }
+
+    protected static function newFactory(): OrderItemFactory
+    {
+        return OrderItemFactory::new();
     }
 
     public function total(): int

@@ -48,7 +48,7 @@ class OrderRefund extends Model
         $this->setRawAttributes(
             array_merge(
                 $this->attributes,
-                ['status' => OrderRefundStatus::PENDING->value]
+                ['status' => OrderRefundStatus::Pending->value]
             ),
             true
         );

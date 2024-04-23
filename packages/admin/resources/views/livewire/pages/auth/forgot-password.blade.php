@@ -1,9 +1,9 @@
 <x-shopper::auth-card>
     @if (session()->has('success'))
-        <div class="rounded-md bg-green-100 p-4">
+        <div class="rounded-lg bg-green-100 p-4">
             <div class="flex">
                 <div class="shrink-0">
-                    <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                         <path
                             fill-rule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -30,14 +30,14 @@
         </p>
     </div>
 
-    <form class="mt-6" wire:submit.prevent="sendResetPasswordLink">
-        <div class="rounded-md shadow-sm">
+    <form class="mt-6" wire:submit="sendResetPasswordLink">
+        <div class="rounded-md">
             <x-shopper::forms.input
-                aria-label="{{ __('shopper::layout.forms.label.email') }}"
+                aria-label="{{ __('shopper::forms.label.email') }}"
                 name="email"
                 type="email"
                 wire:model="email"
-                placeholder="{{ __('shopper::layout.forms.label.email') }}"
+                placeholder="{{ __('shopper::forms.label.email') }}"
                 required
                 autofocus
             />
@@ -53,13 +53,13 @@
             </x-shopper::buttons.primary>
         </div>
         <p class="mt-5 text-center text-sm">
-            <a
+            <x-shopper::link
                 href="{{ route('shopper.login') }}"
                 class="inline-flex items-center leading-5 text-gray-500 hover:text-gray-900 dark:text-gray-500 dark:hover:text-white"
             >
-                <x-heroicon-o-arrow-narrow-left class="mr-1.5 h-5 w-5" />
+                <x-untitledui-arrow-narrow-left class="mr-1.5 h-5 w-5" />
                 {{ __('shopper::pages/auth.email.return_to_login') }}
-            </a>
+            </x-shopper::link>
         </p>
     </form>
 </x-shopper::auth-card>

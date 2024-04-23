@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Shopper\Observers\InventoryObserver;
 
 /**
  * @property-read int $id
@@ -22,16 +20,30 @@ use Shopper\Observers\InventoryObserver;
  * @property string|null $description
  * @property string|null $street_address
  * @property string|null $street_address_plus
- * @property string|null $zipcode
+ * @property string $postal_code
  * @property string|null $phone_number
  * @property bool $is_default
  */
-#[ObservedBy(InventoryObserver::class)]
 class Inventory extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'code',
+        'description',
+        'email',
+        'street_address',
+        'street_address_plus',
+        'postal_code',
+        'city',
+        'phone_number',
+        'priority',
+        'latitude',
+        'longitude',
+        'is_default',
+        'country_id',
+    ];
 
     protected $casts = [
         'is_default' => 'boolean',

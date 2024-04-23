@@ -19,7 +19,7 @@ return new class() extends Migration
             $table->string('email')->unique();
             $table->string('street_address');
             $table->string('street_address_plus')->nullable();
-            $table->string('zipcode');
+            $table->string('postal_code');
             $table->string('city');
             $table->string('phone_number')->nullable();
             $table->integer('priority')->default(0);
@@ -27,7 +27,7 @@ return new class() extends Migration
             $table->decimal('longitude', 10, 5)->nullable();
             $table->boolean('is_default')->default(false);
 
-            $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));
+            $this->addForeignKey($table, 'country_id', $this->getTableName('countries'));
         });
 
         Schema::create($this->getTableName('inventory_histories'), function (Blueprint $table): void {

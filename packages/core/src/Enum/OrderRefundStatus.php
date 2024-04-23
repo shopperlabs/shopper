@@ -4,29 +4,37 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
-enum OrderRefundStatus: string
+use Filament\Support\Contracts\HasLabel;
+use Shopper\Core\Traits\ArrayableEnum;
+
+enum OrderRefundStatus: string implements HasLabel
 {
-    case PENDING = 'pending';
+    use ArrayableEnum;
 
-    case TREATMENT = 'treatment';
+    case Awaiting = 'awaiting';
 
-    case PARTIAL_REFUND = 'partial-refund';
+    case Pending = 'pending';
 
-    case REFUNDED = 'refunded';
+    case Treatment = 'treatment';
 
-    case REJECTED = 'rejected';
+    case Partial_Refund = 'partial_refund';
 
-    case CANCELLED = 'cancelled';
+    case Refunded = 'refunded';
 
-    public function translateValue(): string
+    case Rejected = 'rejected';
+
+    case Cancelled = 'cancelled';
+
+    public function getLabel(): ?string
     {
         return match ($this) {
-            self::PENDING => __('shopper::status.pending'),
-            self::TREATMENT => __('shopper::status.treatment'),
-            self::PARTIAL_REFUND => __('shopper::status.partial-refund'),
-            self::REFUNDED => __('shopper::status.refunded'),
-            self::REJECTED => __('shopper::status.rejected'),
-            self::CANCELLED => __('shopper::status.cancelled'),
+            self::Awaiting => __('shopper-core::status.awaiting'),
+            self::Pending => __('shopper-core::status.pending'),
+            self::Treatment => __('shopper-core::status.treatment'),
+            self::Partial_Refund => __('shopper-core::status.partial-refund'),
+            self::Refunded => __('shopper-core::status.refunded'),
+            self::Rejected => __('shopper-core::status.rejected'),
+            self::Cancelled => __('shopper-core::status.cancelled'),
         };
     }
 }

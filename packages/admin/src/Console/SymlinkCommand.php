@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Console;
 
 use Illuminate\Console\Command;
-use Shopper\Shopper;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(name: 'shopper:link')]
 final class SymlinkCommand extends Command
 {
     protected $signature = 'shopper:link';
@@ -15,7 +16,7 @@ final class SymlinkCommand extends Command
 
     public function handle(): void
     {
-        $prefix = Shopper::prefix();
+        $prefix = shopper()->prefix();
         $link = public_path($prefix);
         $target = realpath(__DIR__ . '/../../public/');
 

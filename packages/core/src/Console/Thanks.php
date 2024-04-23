@@ -40,13 +40,13 @@ final class Thanks
 
         if ($wantsToSupport === true) {
             if (PHP_OS_FAMILY === 'Darwin') {
-                exec('open https://github.com/shopperlabs/framework');
+                exec('open https://github.com/shopperlabs/shopper');
             }
             if (PHP_OS_FAMILY === 'Windows') {
-                exec('start https://github.com/shopperlabs/framework');
+                exec('start https://github.com/shopperlabs/shopper');
             }
             if (PHP_OS_FAMILY === 'Linux') {
-                exec('xdg-open https://github.com/shopperlabs/framework');
+                exec('xdg-open https://github.com/shopperlabs/shopper');
             }
         }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database\Seeders\Auth;
+namespace Shopper\Core\Database\Seeders\Auth;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -51,14 +51,6 @@ final class PermissionsTableSeeder extends Seeder
             'group_name' => 'system',
             'display_name' => __('Impersonate User'),
             'description' => __('This permission allow user to logged with the account of another user.'),
-            'can_be_removed' => false,
-        ]);
-
-        Permission::query()->create([
-            'name' => 'view_analytics',
-            'group_name' => 'system',
-            'display_name' => __('Views & Reports analytics'),
-            'description' => __('This permission allow user to view, analyze and make reports statistics for shop.'),
             'can_be_removed' => false,
         ]);
 

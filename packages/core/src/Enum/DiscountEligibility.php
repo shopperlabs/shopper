@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
+use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 
-enum DiscountEligibility: string
+enum DiscountEligibility: string implements HasLabel
 {
     use ArrayableEnum;
 
-    case EVERYONE = 'everyone';
+    case Everyone = 'everyone';
 
-    case CUSTOMERS = 'customers';
+    case Customers = 'customers';
 
-    public function label(): string
+    public function getLabel(): ?string
     {
         return match ($this) {
-            self::EVERYONE => __('shopper::pages/discounts.everyone'),
-            self::CUSTOMERS => __('shopper::pages/discounts.specific_customers'),
+            self::Everyone => __('shopper-core::enum/discount.eligibility.everyone'),
+            self::Customers => __('shopper-core::enum/discount.eligibility.specific_customers'),
         };
     }
 }

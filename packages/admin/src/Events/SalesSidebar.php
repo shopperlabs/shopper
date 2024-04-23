@@ -16,7 +16,7 @@ class SalesSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
-        $count = Order::query()->where('status', OrderStatus::PENDING->value)->count();
+        $count = Order::query()->where('status', OrderStatus::Pending->value)->count();
 
         $menu->group(__('shopper::layout.sidebar.sales'), function (Group $group) use ($count): void {
             $group->weight(3);
@@ -35,7 +35,7 @@ class SalesSidebar extends AbstractAdminSidebar
                     $item->setInactiveClass('sh-sidebar-item-inactive');
 
                     if ($count > 0) {
-                        $item->badge($count, 'inline-flex items-center rounded-full bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20');
+                        $item->badge($count, 'sh-badge');
                     }
 
                     $item->useSpa();

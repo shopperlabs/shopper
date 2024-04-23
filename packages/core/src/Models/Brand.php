@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Database\Factories\BrandFactory;
 use Shopper\Core\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
@@ -40,6 +41,11 @@ class Brand extends Model implements SpatieHasMedia
     public function getTable(): string
     {
         return shopper_table('brands');
+    }
+
+    protected static function newFactory(): BrandFactory
+    {
+        return BrandFactory::new();
     }
 
     public function scopeEnabled(Builder $query): Builder
