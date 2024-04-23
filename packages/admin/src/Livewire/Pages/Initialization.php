@@ -14,6 +14,6 @@ final class Initialization extends Component
     public function render(): View
     {
         return view('shopper::livewire.pages.initialization')
-            ->title(__('shopper::pages/settings.initialization.title'));
+            ->title(__('shopper::pages/onboarding.title'));
     }
 }
