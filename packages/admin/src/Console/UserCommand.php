@@ -16,7 +16,7 @@ use function Laravel\Prompts\text;
 
 final class UserCommand extends Command
 {
-    protected $signature = 'shopper:admin';
+    protected $signature = 'shopper:user';
 
     protected $description = 'Create user with admin role and all permissions.';
 
@@ -31,7 +31,7 @@ final class UserCommand extends Command
     {
         $email = text(
             label: 'Your Email Address',
-            placeholder: 'admin@shopper.dev',
+            placeholder: 'admin@laravelshopper.dev',
             required: true,
             validate: fn (string $value) => User::where('email', $value)->exists()
                     ? 'An admin with that email already exists.'

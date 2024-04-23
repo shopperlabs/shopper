@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Shopper\Console;
 
-use Database\Seeders\ShopperSeeder;
 use Illuminate\Console\Command;
 use Shopper\Core\Console\Thanks;
-use Shopper\Core\CoreServiceProvider;
 use Shopper\ShopperServiceProvider;
-use Spatie\MediaLibrary\MediaLibraryServiceProvider;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-#[AsCommand(name: 'shopper:install')]
+use function Laravel\Prompts\info;
+
+#[AsCommand(name: 'shopper:panel-install')]
 final class InstallCommand extends Command
 {
     protected ProgressBar $progressBar;
 
-    protected $signature = 'shopper:install';
+    protected $signature = 'shopper:panel-install';
 
     protected $description = 'Install Shopper e-commerce admin panel';
 
@@ -32,23 +32,23 @@ final class InstallCommand extends Command
 
     public function handle(): void
     {
+        $this->newLine();
         $this->progressBar = $this->output->createProgressBar(3);
-        $this->introMessage();
         sleep(1);
 
-        $this->info('Installation of Shopper, setup database, publish assets and config files');
+        info('Installation of Shopper Panel, publish assets and config files');
 
         if (! $this->progressBar->getProgress()) {
             $this->progressBar->start();
         }
 
-        $this->call('vendor:publish', ['--provider' => CoreServiceProvider::class]);
         $this->call('vendor:publish', ['--provider' => ShopperServiceProvider::class]);
-        $this->call('vendor:publish', ['--provider' => MediaLibraryServiceProvider::class, '--tag' => 'migrations']);
         $this->progressBar->advance();
 
-        $this->setupDatabaseConfig();
+        info('Publish filament-forms assets...');
         $this->call('filament:assets');
+
+        info('Enable Shopper symlink for storage...');
         $this->call('shopper:link');
         $this->progressBar->advance();
 
@@ -59,26 +59,11 @@ final class InstallCommand extends Command
         }
     }
 
-    protected function setupDatabaseConfig(): void
-    {
-        $this->info('Migrating the database tables into your application');
-        $this->call('migrate');
-        $this->progressBar->advance();
-
-        $this->info('Flush data into the database');
-        $this->call('db:seed', ['--class' => ShopperSeeder::class]);
-        $this->progressBar->advance();
-
-        // Visually slow down the installation process so that the user can read what's happening
-        usleep(350000);
-    }
-
     protected function completeSetup(): void
     {
         $this->progressBar->finish();
 
-        // Outro message
-        $this->info("
+        info("
                                       ,@@@@@@@,
                               ,,,.   ,@@@@@@/@@,  .oo8888o.
                            ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o
@@ -92,21 +77,6 @@ final class InstallCommand extends Command
         ");
 
         $this->comment("Before create an admin user you have to change the extend class of your User Model to The Shopper User Model 'Shopper\\Core\\Models\\User'");
-        $this->comment("To create a user, run 'php artisan shopper:admin'");
-    }
-
-    protected function introMessage(): void
-    {
-        // Intro message
-        $this->info('
-                _____ __
-              / ___// /_  ____  ____  ____  ___  _____
-              \__ \/ __ \/ __ \/ __ \/ __ \/ _ \/ ___/
-             ___/ / / / / /_/ / /_/ / /_/ /  __/ /
-            /____/_/ /_/\____/ .___/ .___/\___/_/
-                            /_/   /_/
-
-            Installation started. Please wait...
-        ');
+        $this->comment("To create a user, run 'php artisan shopper:user'");
     }
 }
