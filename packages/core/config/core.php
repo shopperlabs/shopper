@@ -28,13 +28,13 @@ return [
     |
     | This prefix table can be used for the prefix of each shopper
     | tables in your database. For example your products table will have
-    | the current name `sp_products` if you are using 'sp_' as tables prefix.
+    | the current name `shopper_products` if you are using 'shopper_' as tables prefix.
     |
-    | Eg: 'table_prefix' => 'sp_'
+    | Eg: 'table_prefix' => 'shopper_'
     |
     */
 
-    'table_prefix' => '',
+    'table_prefix' => 'sh_',
 
     /*
     |--------------------------------------------------------------------------

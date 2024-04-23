@@ -10,7 +10,7 @@ return new class() extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('system_currencies'), function (Blueprint $table): void {
+        Schema::create($this->getTableName('currencies'), function (Blueprint $table): void {
             $table->id();
             $table->string('name');
             $table->string('code', 10)->index();
@@ -22,6 +22,6 @@ return new class() extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists($this->getTableName('system_currencies'));
+        Schema::dropIfExists($this->getTableName('currencies'));
     }
 };

@@ -4,36 +4,37 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
+use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 
-enum FieldType: string
+enum FieldType: string implements HasLabel
 {
     use ArrayableEnum;
 
-    case CHECKBOX = 'checkbox';
+    case Checkbox = 'checkbox';
 
-    case COLORPICKER = 'colorpicker';
+    case ColorPicker = 'colorpicker';
 
-    case DATEPICKER = 'datepicker';
+    case DatePicker = 'datepicker';
 
-    case RICHTEXT = 'richtext';
+    case RichText = 'richtext';
 
-    case SELECT = 'select';
+    case Select = 'select';
 
-    case TEXT = 'text';
+    case Text = 'text';
 
-    case NUMBER = 'number';
+    case Number = 'number';
 
-    public function label(): string
+    public function getLabel(): ?string
     {
         return match ($this) {
-            self::CHECKBOX => __('shopper::layout.forms.label.checkbox'),
-            self::COLORPICKER => __('shopper::layout.forms.label.colorpicker'),
-            self::DATEPICKER => __('shopper::layout.forms.label.datepicker'),
-            self::RICHTEXT => __('shopper::layout.forms.label.richtext'),
-            self::SELECT => __('shopper::layout.forms.label.select'),
-            self::TEXT => __('shopper::layout.forms.label.text_field', ['type' => '(input)']),
-            self::NUMBER => __('shopper::layout.forms.label.text_field', ['type' => '(number)']),
+            self::Checkbox => __('shopper-core::forms.checkbox'),
+            self::ColorPicker => __('shopper-core::forms.color_picker'),
+            self::DatePicker => __('shopper-core::forms.datepicker'),
+            self::RichText => __('shopper-core::forms.rich_text'),
+            self::Select => __('shopper-core::forms.select'),
+            self::Text => __('shopper-core::forms.text_field', ['type' => '(input)']),
+            self::Number => __('shopper-core::forms.text_field', ['type' => '(number)']),
         };
     }
 }

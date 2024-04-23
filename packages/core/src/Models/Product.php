@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Contracts\ReviewRateable;
+use Shopper\Core\Database\Factories\ProductFactory;
 use Shopper\Core\Helpers\Price;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasMedia;
@@ -56,6 +57,11 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     public function getTable(): string
     {
         return shopper_table('products');
+    }
+
+    protected static function newFactory(): ProductFactory
+    {
+        return ProductFactory::new();
     }
 
     protected function priceAmount(): Attribute

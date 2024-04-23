@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +14,7 @@ final class CurrenciesTableSeeder extends Seeder
 
     public function __construct()
     {
-        $this->currencies = include __DIR__ . '/currencies.php';
+        $this->currencies = include __DIR__ . '/../data/currencies.php';
     }
 
     public function run(): void

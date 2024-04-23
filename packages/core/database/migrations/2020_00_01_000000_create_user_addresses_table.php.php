@@ -18,14 +18,15 @@ return new class() extends Migration
             $table->string('company_name')->nullable();
             $table->string('street_address');
             $table->string('street_address_plus')->nullable();
-            $table->string('zipcode');
+            $table->string('postal_code');
             $table->string('city');
             $table->string('phone_number')->nullable();
-            $table->boolean('is_default')->default(false);
-            $table->enum('type', \Shopper\Core\Enum\AddressType::cases());
+            $table->boolean('shipping_default')->default(false);
+            $table->boolean('billing_default')->default(false);
+            $table->string('type')->nullable();
 
-            $this->addForeignKey($table, 'country_id', $this->getTableName('system_countries'));
-            $this->addForeignKey($table, 'user_id', $this->getTableName('users'), false);
+            $this->addForeignKey($table, 'country_id', $this->getTableName('countries'));
+            $this->addForeignKey($table, 'user_id', 'users', false);
         });
     }
 

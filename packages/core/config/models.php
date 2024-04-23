@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Shopper\Core\Models;
+
 return [
 
     /*
@@ -15,7 +17,7 @@ return [
     |
     */
 
-    'brand' => \Shopper\Core\Models\Brand::class,
+    'brand' => Models\Brand::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +30,7 @@ return [
     |
     */
 
-    'category' => \Shopper\Core\Models\Category::class,
+    'category' => Models\Category::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +43,7 @@ return [
     |
     */
 
-    'collection' => \Shopper\Core\Models\Collection::class,
+    'collection' => Models\Collection::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +56,7 @@ return [
     |
     */
 
-    'product' => \Shopper\Core\Models\Product::class,
+    'product' => Models\Product::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -67,6 +69,6 @@ return [
     |
     */
 
-    'channel' => \Shopper\Core\Models\Channel::class,
+    'channel' => Models\Channel::class,
 
 ];

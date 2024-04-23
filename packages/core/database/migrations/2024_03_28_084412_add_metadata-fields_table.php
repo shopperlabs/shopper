@@ -19,6 +19,7 @@ return new class extends Migration
         'order_refunds',
         'products',
         'payment_methods',
+        'user_addresses',
     ];
 
     public function up(): void

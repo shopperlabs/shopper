@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +14,7 @@ final class CountriesTableSeeder extends Seeder
 
     public function __construct()
     {
-        $this->countries = include __DIR__ . '/countries.php';
+        $this->countries = include __DIR__ . '/../data/countries.php';
     }
 
     public function run(): void
@@ -25,11 +25,14 @@ final class CountriesTableSeeder extends Seeder
             Country::query()->create([
                 'name' => $country['name']['common'],
                 'name_official' => $country['name']['official'],
+                'region' => $country['region'],
+                'subregion' => $country['subregion'],
                 'cca2' => $country['cca2'],
                 'cca3' => $country['cca3'],
                 'flag' => $country['flag'],
                 'latitude' => $country['latlng'][0],
                 'longitude' => $country['latlng'][1],
+                'phone_calling_code' => $country['idd'],
                 'currencies' => $country['currencies'],
             ]);
         }

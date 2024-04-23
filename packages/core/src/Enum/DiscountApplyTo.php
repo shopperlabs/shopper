@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Enum;
 
+use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 
-enum DiscountApplyTo: string
+enum DiscountApplyTo: string implements HasLabel
 {
     use ArrayableEnum;
 
-    case ORDER = 'order';
+    case Order = 'order';
 
-    case PRODUCTS = 'products';
+    case Products = 'products';
 
-    public function label(): string
+    public function getLabel(): ?string
     {
         return match ($this) {
-            self::ORDER => __('shopper::pages/discounts.entire_order'),
-            self::PRODUCTS => __('shopper::pages/discounts.specific_products'),
+            self::Order => __('shopper-core::enum/discount.apply.entire_order'),
+            self::Products => __('shopper-core::enum/discount.apply.specific_products'),
         };
     }
 }

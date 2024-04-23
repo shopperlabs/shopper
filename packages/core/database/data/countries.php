@@ -37,7 +37,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '97',
+                '97',
             ],
         ],
         'capital' => [
@@ -195,7 +195,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '3',
+                '3',
             ],
         ],
         'capital' => [
@@ -357,7 +357,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '44',
+                '44',
             ],
         ],
         'capital' => [
@@ -516,7 +516,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '264',
+                '264',
             ],
         ],
         'capital' => [
@@ -665,7 +665,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '5818',
+                '5818',
             ],
         ],
         'capital' => [
@@ -817,7 +817,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '55',
+                '55',
             ],
         ],
         'capital' => [
@@ -977,7 +977,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '76',
+                '76',
             ],
         ],
         'capital' => [
@@ -1135,7 +1135,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '71',
+                '71',
             ],
         ],
         'capital' => [
@@ -1292,7 +1292,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -1453,7 +1453,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '74',
+                '74',
             ],
         ],
         'capital' => [
@@ -1617,7 +1617,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '684',
+                '684',
             ],
         ],
         'capital' => [
@@ -1912,7 +1912,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '62',
+                '62',
             ],
         ],
         'capital' => [
@@ -2062,7 +2062,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '268',
+                '268',
             ],
         ],
         'capital' => [
@@ -2215,7 +2215,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '1',
+                '1',
             ],
         ],
         'capital' => [
@@ -2368,7 +2368,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '3',
+                '3',
             ],
         ],
         'capital' => [
@@ -2535,7 +2535,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '94',
+                '94',
             ],
         ],
         'capital' => [
@@ -2700,7 +2700,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '57',
+                '57',
             ],
         ],
         'capital' => [
@@ -2868,7 +2868,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '2',
+                '2',
             ],
         ],
         'capital' => [
@@ -3035,7 +3035,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '29',
+                '29',
             ],
         ],
         'capital' => [
@@ -3194,7 +3194,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '26',
+                '26',
             ],
         ],
         'capital' => [
@@ -3353,7 +3353,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '80',
+                '80',
             ],
         ],
         'capital' => [
@@ -3510,7 +3510,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '59',
+                '59',
             ],
         ],
         'capital' => [
@@ -3670,7 +3670,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '73',
+                '73',
             ],
         ],
         'capital' => [
@@ -3829,7 +3829,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '242',
+                '242',
             ],
         ],
         'capital' => [
@@ -3991,7 +3991,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '87',
+                '87',
             ],
         ],
         'capital' => [
@@ -4151,7 +4151,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '90',
+                '90',
             ],
         ],
         'capital' => [
@@ -4308,8 +4308,8 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '90',
-                1 => '47',
+                '90',
+                '47',
             ],
         ],
         'capital' => [
@@ -4464,7 +4464,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '75',
+                '75',
             ],
         ],
         'capital' => [
@@ -4635,7 +4635,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '01',
+                '01',
             ],
         ],
         'capital' => [
@@ -4792,7 +4792,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '441',
+                '441',
             ],
         ],
         'capital' => [
@@ -4960,7 +4960,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '91',
+                '91',
             ],
         ],
         'capital' => [
@@ -5134,7 +5134,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '99',
+                '99',
             ],
         ],
         'capital' => [
@@ -5284,7 +5284,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '5',
+                '5',
             ],
         ],
         'capital' => [
@@ -5450,7 +5450,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '246',
+                '246',
             ],
         ],
         'capital' => [
@@ -5607,7 +5607,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '73',
+                '73',
             ],
         ],
         'capital' => [
@@ -5768,7 +5768,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '75',
+                '75',
             ],
         ],
         'capital' => [
@@ -5920,7 +5920,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '7',
+                '7',
             ],
         ],
         'capital' => [
@@ -6075,7 +6075,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '67',
+                '67',
             ],
         ],
         'capital' => [
@@ -6235,7 +6235,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '36',
+                '36',
             ],
         ],
         'capital' => [
@@ -6401,7 +6401,6 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '',
             ],
         ],
         'capital' => [
@@ -6556,7 +6555,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '1',
+                '1',
             ],
         ],
         'capital' => [
@@ -6723,7 +6722,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '1',
+                '1',
             ],
         ],
         'capital' => [
@@ -6885,7 +6884,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '6',
+                '6',
             ],
         ],
         'capital' => [
@@ -7047,7 +7046,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '6',
+                '6',
             ],
         ],
         'capital' => [
@@ -7218,7 +7217,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '25',
+                '25',
             ],
         ],
         'capital' => [
@@ -7380,7 +7379,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '37',
+                '37',
             ],
         ],
         'capital' => [
@@ -7558,7 +7557,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '43',
+                '43',
             ],
         ],
         'capital' => [
@@ -7737,7 +7736,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '42',
+                '42',
             ],
         ],
         'capital' => [
@@ -7907,7 +7906,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '82',
+                '82',
             ],
         ],
         'capital' => [
@@ -8062,7 +8061,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '7',
+                '7',
             ],
         ],
         'capital' => [
@@ -8230,7 +8229,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '69',
+                '69',
             ],
         ],
         'capital' => [
@@ -8389,7 +8388,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '38',
+                '38',
             ],
         ],
         'capital' => [
@@ -8544,7 +8543,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '06',
+                '06',
             ],
         ],
         'capital' => [
@@ -8705,7 +8704,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '3',
+                '3',
             ],
         ],
         'capital' => [
@@ -8868,7 +8867,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '99',
+                '99',
             ],
         ],
         'capital' => [
@@ -9016,7 +9015,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '1',
+                '1',
             ],
         ],
         'capital' => [
@@ -9170,7 +9169,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '345',
+                '345',
             ],
         ],
         'capital' => [
@@ -9327,7 +9326,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '57',
+                '57',
             ],
         ],
         'capital' => [
@@ -9490,7 +9489,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '20',
+                '20',
             ],
         ],
         'capital' => [
@@ -9650,7 +9649,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '9',
+                '9',
             ],
         ],
         'capital' => [
@@ -9814,7 +9813,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '53',
+                '53',
             ],
         ],
         'capital' => [
@@ -9977,7 +9976,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '767',
+                '767',
             ],
         ],
         'capital' => [
@@ -10133,7 +10132,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '5',
+                '5',
             ],
         ],
         'capital' => [
@@ -10290,9 +10289,9 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '809',
-                1 => '829',
-                2 => '849',
+                '809',
+                '829',
+                '849',
             ],
         ],
         'capital' => [
@@ -10449,7 +10448,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '13',
+                '13',
             ],
         ],
         'capital' => [
@@ -10611,7 +10610,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '93',
+                '93',
             ],
         ],
         'capital' => [
@@ -10769,7 +10768,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '0',
+                '0',
             ],
         ],
         'capital' => [
@@ -10935,7 +10934,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '91',
+                '91',
             ],
         ],
         'capital' => [
@@ -11114,8 +11113,8 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '125288',
-                1 => '125289',
+                '125288',
+                '125289',
             ],
         ],
         'capital' => [
@@ -11271,7 +11270,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -11427,7 +11426,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '72',
+                '72',
             ],
         ],
         'capital' => [
@@ -11585,7 +11584,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '51',
+                '51',
             ],
         ],
         'capital' => [
@@ -11751,7 +11750,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '58',
+                '58',
             ],
         ],
         'capital' => [
@@ -11916,7 +11915,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '79',
+                '79',
             ],
         ],
         'capital' => [
@@ -12071,7 +12070,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '00',
+                '00',
             ],
         ],
         'capital' => [
@@ -12222,7 +12221,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '3',
+                '3',
             ],
         ],
         'capital' => [
@@ -12389,7 +12388,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '98',
+                '98',
             ],
         ],
         'capital' => [
@@ -12537,7 +12536,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '91',
+                '91',
             ],
         ],
         'capital' => [
@@ -12688,7 +12687,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '41',
+                '41',
             ],
         ],
         'capital' => [
@@ -12842,7 +12841,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -12994,7 +12993,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '95',
+                '95',
             ],
         ],
         'capital' => [
@@ -13160,7 +13159,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -13313,7 +13312,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '33',
+                '33',
             ],
         ],
         'capital' => [
@@ -13465,7 +13464,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '50',
+                '50',
             ],
         ],
         'capital' => [
@@ -13615,7 +13614,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '24',
+                '24',
             ],
         ],
         'capital' => [
@@ -13772,7 +13771,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '90',
+                '90',
             ],
         ],
         'capital' => [
@@ -13922,7 +13921,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '20',
+                '20',
             ],
         ],
         'capital' => [
@@ -14077,7 +14076,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '45',
+                '45',
             ],
         ],
         'capital' => [
@@ -14239,7 +14238,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '40',
+                '40',
             ],
         ],
         'capital' => [
@@ -14400,7 +14399,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '0',
+                '0',
             ],
         ],
         'capital' => [
@@ -14556,7 +14555,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '473',
+                '473',
             ],
         ],
         'capital' => [
@@ -14705,7 +14704,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '99',
+                '99',
             ],
         ],
         'capital' => [
@@ -14855,7 +14854,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '02',
+                '02',
             ],
         ],
         'capital' => [
@@ -15008,7 +15007,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '94',
+                '94',
             ],
         ],
         'capital' => [
@@ -15169,7 +15168,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '671',
+                '671',
             ],
         ],
         'capital' => [
@@ -15321,7 +15320,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '92',
+                '92',
             ],
         ],
         'capital' => [
@@ -15479,7 +15478,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '52',
+                '52',
             ],
         ],
         'capital' => [
@@ -15623,7 +15622,6 @@ return [
         'idd' => [
             'root' => '',
             'suffixes' => [
-                0 => '',
             ],
         ],
         'capital' => [
@@ -15773,7 +15771,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '04',
+                '04',
             ],
         ],
         'capital' => [
@@ -15927,7 +15925,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '85',
+                '85',
             ],
         ],
         'capital' => [
@@ -16092,7 +16090,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '09',
+                '09',
             ],
         ],
         'capital' => [
@@ -16246,7 +16244,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '6',
+                '6',
             ],
         ],
         'capital' => [
@@ -16402,7 +16400,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '2',
+                '2',
             ],
         ],
         'capital' => [
@@ -16564,7 +16562,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -16725,7 +16723,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '1',
+                '1',
             ],
         ],
         'capital' => [
@@ -16886,7 +16884,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '46',
+                '46',
             ],
         ],
         'capital' => [
@@ -17043,7 +17041,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '53',
+                '53',
             ],
         ],
         'capital' => [
@@ -17198,7 +17196,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '8',
+                '8',
             ],
         ],
         'capital' => [
@@ -17361,7 +17359,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '64',
+                '64',
             ],
         ],
         'capital' => [
@@ -17520,7 +17518,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '54',
+                '54',
             ],
         ],
         'capital' => [
@@ -17676,7 +17674,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '72',
+                '72',
             ],
         ],
         'capital' => [
@@ -17833,7 +17831,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '9',
+                '9',
             ],
         ],
         'capital' => [
@@ -17994,7 +17992,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '876',
+                '876',
             ],
         ],
         'capital' => [
@@ -18156,7 +18154,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -18311,7 +18309,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '62',
+                '62',
             ],
         ],
         'capital' => [
@@ -18468,7 +18466,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '1',
+                '1',
             ],
         ],
         'capital' => [
@@ -18624,8 +18622,14 @@ return [
         'idd' => [
             'root' => '+7',
             'suffixes' => [
-                0 => '6XX',
-                1 => '7XX',
+                '312',
+                '313',
+                '315',
+                '321',
+                '324',
+                '327',
+                '7172',
+                '73622',
             ],
         ],
         'capital' => [
@@ -18792,7 +18796,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '54',
+                '54',
             ],
         ],
         'capital' => [
@@ -18953,7 +18957,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '96',
+                '96',
             ],
         ],
         'capital' => [
@@ -19115,7 +19119,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '55',
+                '55',
             ],
         ],
         'capital' => [
@@ -19280,7 +19284,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '86',
+                '86',
             ],
         ],
         'capital' => [
@@ -19432,7 +19436,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '869',
+                '869',
             ],
         ],
         'capital' => [
@@ -19583,7 +19587,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '2',
+                '2',
             ],
         ],
         'capital' => [
@@ -19740,7 +19744,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '83',
+                '83',
             ],
         ],
         'capital' => [
@@ -19891,7 +19895,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '65',
+                '65',
             ],
         ],
         'capital' => [
@@ -20044,7 +20048,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '56',
+                '56',
             ],
         ],
         'capital' => [
@@ -20205,7 +20209,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '61',
+                '61',
             ],
         ],
         'capital' => [
@@ -20359,7 +20363,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '31',
+                '31',
             ],
         ],
         'capital' => [
@@ -20512,7 +20516,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '18',
+                '18',
             ],
         ],
         'capital' => [
@@ -20669,7 +20673,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '758',
+                '758',
             ],
         ],
         'capital' => [
@@ -20818,7 +20822,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '23',
+                '23',
             ],
         ],
         'capital' => [
@@ -20977,7 +20981,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -21138,7 +21142,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '66',
+                '66',
             ],
         ],
         'capital' => [
@@ -21291,7 +21295,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '70',
+                '70',
             ],
         ],
         'capital' => [
@@ -21454,7 +21458,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '52',
+                '52',
             ],
         ],
         'capital' => [
@@ -21612,7 +21616,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '71',
+                '71',
             ],
         ],
         'capital' => [
@@ -21771,7 +21775,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '53',
+                '53',
             ],
         ],
         'capital' => [
@@ -21924,7 +21928,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '90',
+                '90',
             ],
         ],
         'capital' => [
@@ -22082,7 +22086,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '12',
+                '12',
             ],
         ],
         'capital' => [
@@ -22237,7 +22241,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '77',
+                '77',
             ],
         ],
         'capital' => [
@@ -22389,7 +22393,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '73',
+                '73',
             ],
         ],
         'capital' => [
@@ -22547,7 +22551,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '61',
+                '61',
             ],
         ],
         'capital' => [
@@ -22700,7 +22704,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '60',
+                '60',
             ],
         ],
         'capital' => [
@@ -22852,7 +22856,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '2',
+                '2',
             ],
         ],
         'capital' => [
@@ -23011,7 +23015,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '92',
+                '92',
             ],
         ],
         'capital' => [
@@ -23163,7 +23167,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '89',
+                '89',
             ],
         ],
         'capital' => [
@@ -23321,7 +23325,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '23',
+                '23',
             ],
         ],
         'capital' => [
@@ -23483,7 +23487,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '56',
+                '56',
             ],
         ],
         'capital' => [
@@ -23635,7 +23639,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '5',
+                '5',
             ],
         ],
         'capital' => [
@@ -23792,7 +23796,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '82',
+                '82',
             ],
         ],
         'capital' => [
@@ -23947,7 +23951,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '76',
+                '76',
             ],
         ],
         'capital' => [
@@ -24106,7 +24110,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '670',
+                '670',
             ],
         ],
         'capital' => [
@@ -24259,7 +24263,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '58',
+                '58',
             ],
         ],
         'capital' => [
@@ -24416,7 +24420,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '22',
+                '22',
             ],
         ],
         'capital' => [
@@ -24571,7 +24575,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '664',
+                '664',
             ],
         ],
         'capital' => [
@@ -24720,7 +24724,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '96',
+                '96',
             ],
         ],
         'capital' => [
@@ -24877,7 +24881,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '30',
+                '30',
             ],
         ],
         'capital' => [
@@ -25034,7 +25038,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '65',
+                '65',
             ],
         ],
         'capital' => [
@@ -25192,7 +25196,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '0',
+                '0',
             ],
         ],
         'capital' => [
@@ -25345,7 +25349,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '62',
+                '62',
             ],
         ],
         'capital' => [
@@ -25532,7 +25536,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '64',
+                '64',
             ],
         ],
         'capital' => [
@@ -25695,7 +25699,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '87',
+                '87',
             ],
         ],
         'capital' => [
@@ -25844,7 +25848,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '27',
+                '27',
             ],
         ],
         'capital' => [
@@ -26005,7 +26009,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '72',
+                '72',
             ],
         ],
         'capital' => [
@@ -26157,7 +26161,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '34',
+                '34',
             ],
         ],
         'capital' => [
@@ -26313,7 +26317,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '05',
+                '05',
             ],
         ],
         'capital' => [
@@ -26470,7 +26474,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '83',
+                '83',
             ],
         ],
         'capital' => [
@@ -26620,7 +26624,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '1',
+                '1',
             ],
         ],
         'capital' => [
@@ -26782,7 +26786,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '7',
+                '7',
             ],
         ],
         'capital' => [
@@ -26941,7 +26945,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '77',
+                '77',
             ],
         ],
         'capital' => [
@@ -27098,7 +27102,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '74',
+                '74',
             ],
         ],
         'capital' => [
@@ -27260,7 +27264,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -27412,7 +27416,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '68',
+                '68',
             ],
         ],
         'capital' => [
@@ -27570,7 +27574,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '2',
+                '2',
             ],
         ],
         'capital' => [
@@ -27731,7 +27735,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '07',
+                '07',
             ],
         ],
         'capital' => [
@@ -27884,7 +27888,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -28043,7 +28047,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '1',
+                '1',
             ],
         ],
         'capital' => [
@@ -28205,7 +28209,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '3',
+                '3',
             ],
         ],
         'capital' => [
@@ -28361,7 +28365,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '80',
+                '80',
             ],
         ],
         'capital' => [
@@ -28521,7 +28525,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '75',
+                '75',
             ],
         ],
         'capital' => [
@@ -28675,7 +28679,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '8',
+                '8',
             ],
         ],
         'capital' => [
@@ -28837,8 +28841,8 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '787',
-                1 => '939',
+                '787',
+                '939',
             ],
         ],
         'capital' => [
@@ -28991,7 +28995,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '50',
+                '50',
             ],
         ],
         'capital' => [
@@ -29150,7 +29154,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '51',
+                '51',
             ],
         ],
         'capital' => [
@@ -29307,7 +29311,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '95',
+                '95',
             ],
         ],
         'capital' => [
@@ -29472,7 +29476,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '70',
+                '70',
             ],
         ],
         'capital' => [
@@ -29627,7 +29631,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '89',
+                '89',
             ],
         ],
         'capital' => [
@@ -29780,7 +29784,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '74',
+                '74',
             ],
         ],
         'capital' => [
@@ -29932,7 +29936,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '62',
+                '62',
             ],
         ],
         'capital' => [
@@ -30082,7 +30086,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '0',
+                '0',
             ],
         ],
         'capital' => [
@@ -30241,11 +30245,56 @@ return [
         'idd' => [
             'root' => '+7',
             'suffixes' => [
-                0 => '3XX',
-                1 => '4XX',
-                2 => '5XX',
-                3 => '8XX',
-                4 => '9XX',
+                '343',
+                '351',
+                '383',
+                '3412',
+                '3422',
+                '3472',
+                '3532',
+                '3812',
+                '3822',
+                '3842',
+                '3852',
+                '3912',
+                '39152',
+                '3952',
+                '401',
+                '471',
+                '472',
+                '473',
+                '474',
+                '475',
+                '481',
+                '482',
+                '483',
+                '484',
+                '485',
+                '487',
+                '491',
+                '492',
+                '493',
+                '494',
+                '495',
+                '4112',
+                '41322',
+                '4212',
+                '4232',
+                '42722',
+                '843',
+                '863',
+                '8152',
+                '8182',
+                '81622',
+                '8352',
+                '8412',
+                '8422',
+                '8442',
+                '8452',
+                '8462',
+                '8512',
+                '8552',
+                '8612',
             ],
         ],
         'capital' => [
@@ -30422,7 +30471,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '50',
+                '50',
             ],
         ],
         'capital' => [
@@ -30581,7 +30630,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '66',
+                '66',
             ],
         ],
         'capital' => [
@@ -30744,7 +30793,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '49',
+                '49',
             ],
         ],
         'capital' => [
@@ -30903,7 +30952,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '21',
+                '21',
             ],
         ],
         'capital' => [
@@ -31073,7 +31122,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '5',
+                '5',
             ],
         ],
         'capital' => [
@@ -31224,7 +31273,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '00',
+                '00',
             ],
         ],
         'capital' => [
@@ -31374,7 +31423,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '779',
+                '779',
             ],
         ],
         'capital' => [
@@ -31524,7 +31573,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '77',
+                '77',
             ],
         ],
         'capital' => [
@@ -31673,7 +31722,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '32',
+                '32',
             ],
         ],
         'capital' => [
@@ -31825,7 +31874,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '03',
+                '03',
             ],
         ],
         'capital' => [
@@ -31982,7 +32031,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '78',
+                '78',
             ],
         ],
         'capital' => [
@@ -32138,7 +32187,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '52',
+                '52',
             ],
         ],
         'capital' => [
@@ -32295,7 +32344,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '08',
+                '08',
             ],
         ],
         'capital' => [
@@ -32446,7 +32495,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '81',
+                '81',
             ],
         ],
         'capital' => [
@@ -32607,7 +32656,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '11',
+                '11',
             ],
         ],
         'capital' => [
@@ -32762,7 +32811,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '39',
+                '39',
             ],
         ],
         'capital' => [
@@ -32914,7 +32963,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '97',
+                '97',
             ],
         ],
         'capital' => [
@@ -33070,7 +33119,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '21',
+                '21',
             ],
         ],
         'capital' => [
@@ -33226,7 +33275,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '86',
+                '86',
             ],
         ],
         'capital' => [
@@ -33381,7 +33430,7 @@ return [
         'idd' => [
             'root' => '+4',
             'suffixes' => [
-                0 => '6',
+                '6',
             ],
         ],
         'capital' => [
@@ -33542,7 +33591,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '68',
+                '68',
             ],
         ],
         'capital' => [
@@ -33708,7 +33757,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '721',
+                '721',
             ],
         ],
         'capital' => [
@@ -33869,7 +33918,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '48',
+                '48',
             ],
         ],
         'capital' => [
@@ -34024,7 +34073,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '63',
+                '63',
             ],
         ],
         'capital' => [
@@ -34180,7 +34229,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '649',
+                '649',
             ],
         ],
         'capital' => [
@@ -34333,7 +34382,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '35',
+                '35',
             ],
         ],
         'capital' => [
@@ -34496,7 +34545,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '28',
+                '28',
             ],
         ],
         'capital' => [
@@ -34652,7 +34701,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '6',
+                '6',
             ],
         ],
         'capital' => [
@@ -34814,7 +34863,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '92',
+                '92',
             ],
         ],
         'capital' => [
@@ -34980,7 +35029,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '90',
+                '90',
             ],
         ],
         'capital' => [
@@ -35135,7 +35184,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '93',
+                '93',
             ],
         ],
         'capital' => [
@@ -35293,7 +35342,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '70',
+                '70',
             ],
         ],
         'capital' => [
@@ -35454,7 +35503,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '76',
+                '76',
             ],
         ],
         'capital' => [
@@ -35604,7 +35653,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '868',
+                '868',
             ],
         ],
         'capital' => [
@@ -35754,7 +35803,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '16',
+                '16',
             ],
         ],
         'capital' => [
@@ -35907,7 +35956,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '0',
+                '0',
             ],
         ],
         'capital' => [
@@ -36075,7 +36124,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '88',
+                '88',
             ],
         ],
         'capital' => [
@@ -36227,7 +36276,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '86',
+                '86',
             ],
         ],
         'capital' => [
@@ -36381,7 +36430,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '55',
+                '55',
             ],
         ],
         'capital' => [
@@ -36546,7 +36595,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '56',
+                '56',
             ],
         ],
         'capital' => [
@@ -36704,7 +36753,7 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '80',
+                '80',
             ],
         ],
         'capital' => [
@@ -36861,7 +36910,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '68',
+                '68',
             ],
         ],
         'capital' => [
@@ -37010,7 +37059,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '98',
+                '98',
             ],
         ],
         'capital' => [
@@ -37163,323 +37212,323 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '201',
-                1 => '202',
-                2 => '203',
-                3 => '205',
-                4 => '206',
-                5 => '207',
-                6 => '208',
-                7 => '209',
-                8 => '210',
-                9 => '212',
-                10 => '213',
-                11 => '214',
-                12 => '215',
-                13 => '216',
-                14 => '217',
-                15 => '218',
-                16 => '219',
-                17 => '220',
-                18 => '224',
-                19 => '225',
-                20 => '227',
-                21 => '228',
-                22 => '229',
-                23 => '231',
-                24 => '234',
-                25 => '239',
-                26 => '240',
-                27 => '248',
-                28 => '251',
-                29 => '252',
-                30 => '253',
-                31 => '254',
-                32 => '256',
-                33 => '260',
-                34 => '262',
-                35 => '267',
-                36 => '269',
-                37 => '270',
-                38 => '272',
-                39 => '274',
-                40 => '276',
-                41 => '281',
-                42 => '283',
-                43 => '301',
-                44 => '302',
-                45 => '303',
-                46 => '304',
-                47 => '305',
-                48 => '307',
-                49 => '308',
-                50 => '309',
-                51 => '310',
-                52 => '312',
-                53 => '313',
-                54 => '314',
-                55 => '315',
-                56 => '316',
-                57 => '317',
-                58 => '318',
-                59 => '319',
-                60 => '320',
-                61 => '321',
-                62 => '323',
-                63 => '325',
-                64 => '327',
-                65 => '330',
-                66 => '331',
-                67 => '334',
-                68 => '336',
-                69 => '337',
-                70 => '339',
-                71 => '346',
-                72 => '347',
-                73 => '351',
-                74 => '352',
-                75 => '360',
-                76 => '361',
-                77 => '364',
-                78 => '380',
-                79 => '385',
-                80 => '386',
-                81 => '401',
-                82 => '402',
-                83 => '404',
-                84 => '405',
-                85 => '406',
-                86 => '407',
-                87 => '408',
-                88 => '409',
-                89 => '410',
-                90 => '412',
-                91 => '413',
-                92 => '414',
-                93 => '415',
-                94 => '417',
-                95 => '419',
-                96 => '423',
-                97 => '424',
-                98 => '425',
-                99 => '430',
-                100 => '432',
-                101 => '434',
-                102 => '435',
-                103 => '440',
-                104 => '442',
-                105 => '443',
-                106 => '447',
-                107 => '458',
-                108 => '463',
-                109 => '464',
-                110 => '469',
-                111 => '470',
-                112 => '475',
-                113 => '478',
-                114 => '479',
-                115 => '480',
-                116 => '484',
-                117 => '501',
-                118 => '502',
-                119 => '503',
-                120 => '504',
-                121 => '505',
-                122 => '507',
-                123 => '508',
-                124 => '509',
-                125 => '510',
-                126 => '512',
-                127 => '513',
-                128 => '515',
-                129 => '516',
-                130 => '517',
-                131 => '518',
-                132 => '520',
-                133 => '530',
-                134 => '531',
-                135 => '534',
-                136 => '539',
-                137 => '540',
-                138 => '541',
-                139 => '551',
-                140 => '559',
-                141 => '561',
-                142 => '562',
-                143 => '563',
-                144 => '564',
-                145 => '567',
-                146 => '570',
-                147 => '571',
-                148 => '573',
-                149 => '574',
-                150 => '575',
-                151 => '580',
-                152 => '585',
-                153 => '586',
-                154 => '601',
-                155 => '602',
-                156 => '603',
-                157 => '605',
-                158 => '606',
-                159 => '607',
-                160 => '608',
-                161 => '609',
-                162 => '610',
-                163 => '612',
-                164 => '614',
-                165 => '615',
-                166 => '616',
-                167 => '617',
-                168 => '618',
-                169 => '619',
-                170 => '620',
-                171 => '623',
-                172 => '626',
-                173 => '628',
-                174 => '629',
-                175 => '630',
-                176 => '631',
-                177 => '636',
-                178 => '641',
-                179 => '646',
-                180 => '650',
-                181 => '651',
-                182 => '657',
-                183 => '660',
-                184 => '661',
-                185 => '662',
-                186 => '667',
-                187 => '669',
-                188 => '678',
-                189 => '681',
-                190 => '682',
-                191 => '701',
-                192 => '702',
-                193 => '703',
-                194 => '704',
-                195 => '706',
-                196 => '707',
-                197 => '708',
-                198 => '712',
-                199 => '713',
-                200 => '714',
-                201 => '715',
-                202 => '716',
-                203 => '717',
-                204 => '718',
-                205 => '719',
-                206 => '720',
-                207 => '724',
-                208 => '725',
-                209 => '727',
-                210 => '730',
-                211 => '731',
-                212 => '732',
-                213 => '734',
-                214 => '737',
-                215 => '740',
-                216 => '743',
-                217 => '747',
-                218 => '754',
-                219 => '757',
-                220 => '760',
-                221 => '762',
-                222 => '763',
-                223 => '765',
-                224 => '769',
-                225 => '770',
-                226 => '772',
-                227 => '773',
-                228 => '774',
-                229 => '775',
-                230 => '779',
-                231 => '781',
-                232 => '785',
-                233 => '786',
-                234 => '801',
-                235 => '802',
-                236 => '803',
-                237 => '804',
-                238 => '805',
-                239 => '806',
-                240 => '808',
-                241 => '810',
-                242 => '812',
-                243 => '813',
-                244 => '814',
-                245 => '815',
-                246 => '816',
-                247 => '817',
-                248 => '818',
-                249 => '828',
-                250 => '830',
-                251 => '831',
-                252 => '832',
-                253 => '843',
-                254 => '845',
-                255 => '847',
-                256 => '848',
-                257 => '850',
-                258 => '854',
-                259 => '856',
-                260 => '857',
-                261 => '858',
-                262 => '859',
-                263 => '860',
-                264 => '862',
-                265 => '863',
-                266 => '864',
-                267 => '865',
-                268 => '870',
-                269 => '872',
-                270 => '878',
-                271 => '901',
-                272 => '903',
-                273 => '904',
-                274 => '906',
-                275 => '907',
-                276 => '908',
-                277 => '909',
-                278 => '910',
-                279 => '912',
-                280 => '913',
-                281 => '914',
-                282 => '915',
-                283 => '916',
-                284 => '917',
-                285 => '918',
-                286 => '919',
-                287 => '920',
-                288 => '925',
-                289 => '928',
-                290 => '929',
-                291 => '930',
-                292 => '931',
-                293 => '934',
-                294 => '936',
-                295 => '937',
-                296 => '938',
-                297 => '940',
-                298 => '941',
-                299 => '947',
-                300 => '949',
-                301 => '951',
-                302 => '952',
-                303 => '954',
-                304 => '956',
-                305 => '959',
-                306 => '970',
-                307 => '971',
-                308 => '972',
-                309 => '973',
-                310 => '975',
-                311 => '978',
-                312 => '979',
-                313 => '980',
-                314 => '984',
-                315 => '985',
-                316 => '989',
+                '201',
+                '202',
+                '203',
+                '205',
+                '206',
+                '207',
+                '208',
+                '209',
+                '210',
+                '212',
+                '213',
+                '214',
+                '215',
+                '216',
+                '217',
+                '218',
+                '219',
+                '220',
+                '224',
+                '225',
+                '227',
+                '228',
+                '229',
+                '231',
+                '234',
+                '239',
+                '240',
+                '248',
+                '251',
+                '252',
+                '253',
+                '254',
+                '256',
+                '260',
+                '262',
+                '267',
+                '269',
+                '270',
+                '272',
+                '274',
+                '276',
+                '281',
+                '283',
+                '301',
+                '302',
+                '303',
+                '304',
+                '305',
+                '307',
+                '308',
+                '309',
+                '310',
+                '312',
+                '313',
+                '314',
+                '315',
+                '316',
+                '317',
+                '318',
+                '319',
+                '320',
+                '321',
+                '323',
+                '325',
+                '327',
+                '330',
+                '331',
+                '334',
+                '336',
+                '337',
+                '339',
+                '346',
+                '347',
+                '351',
+                '352',
+                '360',
+                '361',
+                '364',
+                '380',
+                '385',
+                '386',
+                '401',
+                '402',
+                '404',
+                '405',
+                '406',
+                '407',
+                '408',
+                '409',
+                '410',
+                '412',
+                '413',
+                '414',
+                '415',
+                '417',
+                '419',
+                '423',
+                '424',
+                '425',
+                '430',
+                '432',
+                '434',
+                '435',
+                '440',
+                '442',
+                '443',
+                '447',
+                '458',
+                '463',
+                '464',
+                '469',
+                '470',
+                '475',
+                '478',
+                '479',
+                '480',
+                '484',
+                '501',
+                '502',
+                '503',
+                '504',
+                '505',
+                '507',
+                '508',
+                '509',
+                '510',
+                '512',
+                '513',
+                '515',
+                '516',
+                '517',
+                '518',
+                '520',
+                '530',
+                '531',
+                '534',
+                '539',
+                '540',
+                '541',
+                '551',
+                '559',
+                '561',
+                '562',
+                '563',
+                '564',
+                '567',
+                '570',
+                '571',
+                '573',
+                '574',
+                '575',
+                '580',
+                '585',
+                '586',
+                '601',
+                '602',
+                '603',
+                '605',
+                '606',
+                '607',
+                '608',
+                '609',
+                '610',
+                '612',
+                '614',
+                '615',
+                '616',
+                '617',
+                '618',
+                '619',
+                '620',
+                '623',
+                '626',
+                '628',
+                '629',
+                '630',
+                '631',
+                '636',
+                '641',
+                '646',
+                '650',
+                '651',
+                '657',
+                '660',
+                '661',
+                '662',
+                '667',
+                '669',
+                '678',
+                '681',
+                '682',
+                '701',
+                '702',
+                '703',
+                '704',
+                '706',
+                '707',
+                '708',
+                '712',
+                '713',
+                '714',
+                '715',
+                '716',
+                '717',
+                '718',
+                '719',
+                '720',
+                '724',
+                '725',
+                '727',
+                '730',
+                '731',
+                '732',
+                '734',
+                '737',
+                '740',
+                '743',
+                '747',
+                '754',
+                '757',
+                '760',
+                '762',
+                '763',
+                '765',
+                '769',
+                '770',
+                '772',
+                '773',
+                '774',
+                '775',
+                '779',
+                '781',
+                '785',
+                '786',
+                '801',
+                '802',
+                '803',
+                '804',
+                '805',
+                '806',
+                '808',
+                '810',
+                '812',
+                '813',
+                '814',
+                '815',
+                '816',
+                '817',
+                '818',
+                '828',
+                '830',
+                '831',
+                '832',
+                '843',
+                '845',
+                '847',
+                '848',
+                '850',
+                '854',
+                '856',
+                '857',
+                '858',
+                '859',
+                '860',
+                '862',
+                '863',
+                '864',
+                '865',
+                '870',
+                '872',
+                '878',
+                '901',
+                '903',
+                '904',
+                '906',
+                '907',
+                '908',
+                '909',
+                '910',
+                '912',
+                '913',
+                '914',
+                '915',
+                '916',
+                '917',
+                '918',
+                '919',
+                '920',
+                '925',
+                '928',
+                '929',
+                '930',
+                '931',
+                '934',
+                '936',
+                '937',
+                '938',
+                '940',
+                '941',
+                '947',
+                '949',
+                '951',
+                '952',
+                '954',
+                '956',
+                '959',
+                '970',
+                '971',
+                '972',
+                '973',
+                '975',
+                '978',
+                '979',
+                '980',
+                '984',
+                '985',
+                '989',
             ],
         ],
         'capital' => [
@@ -37952,7 +38001,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '98',
+                '98',
             ],
         ],
         'capital' => [
@@ -38114,8 +38163,8 @@ return [
         'idd' => [
             'root' => '+3',
             'suffixes' => [
-                0 => '906698',
-                1 => '79',
+                '906698',
+                '79',
             ],
         ],
         'capital' => [
@@ -38270,7 +38319,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '784',
+                '784',
             ],
         ],
         'capital' => [
@@ -38419,7 +38468,7 @@ return [
         'idd' => [
             'root' => '+5',
             'suffixes' => [
-                0 => '8',
+                '8',
             ],
         ],
         'capital' => [
@@ -38574,7 +38623,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '284',
+                '284',
             ],
         ],
         'capital' => [
@@ -38724,7 +38773,7 @@ return [
         'idd' => [
             'root' => '+1',
             'suffixes' => [
-                0 => '340',
+                '340',
             ],
         ],
         'capital' => [
@@ -38874,7 +38923,7 @@ return [
         'idd' => [
             'root' => '+8',
             'suffixes' => [
-                0 => '4',
+                '4',
             ],
         ],
         'capital' => [
@@ -39037,7 +39086,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '78',
+                '78',
             ],
         ],
         'capital' => [
@@ -39191,7 +39240,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '81',
+                '81',
             ],
         ],
         'capital' => [
@@ -39346,7 +39395,7 @@ return [
         'idd' => [
             'root' => '+6',
             'suffixes' => [
-                0 => '85',
+                '85',
             ],
         ],
         'capital' => [
@@ -39498,7 +39547,7 @@ return [
         'idd' => [
             'root' => '+9',
             'suffixes' => [
-                0 => '67',
+                '67',
             ],
         ],
         'capital' => [
@@ -39691,7 +39740,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '7',
+                '7',
             ],
         ],
         'capital' => [
@@ -39861,7 +39910,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '60',
+                '60',
             ],
         ],
         'capital' => [
@@ -40107,7 +40156,7 @@ return [
         'idd' => [
             'root' => '+2',
             'suffixes' => [
-                0 => '63',
+                '63',
             ],
         ],
         'capital' => [

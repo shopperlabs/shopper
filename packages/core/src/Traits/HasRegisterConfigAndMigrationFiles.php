@@ -21,6 +21,5 @@ trait HasRegisterConfigAndMigrationFiles
         }
 
         $this->loadMigrationsFrom($this->root . '/database/migrations');
-        $this->publishes([$this->root . '/database/seeders' => database_path('seeders')], 'shopper-seeders');
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Traits\HasPrice;
 
@@ -56,6 +57,11 @@ class Order extends Model
         return shopper_table('orders');
     }
 
+    protected static function newFactory(): OrderFactory
+    {
+        return OrderFactory::new();
+    }
+
     public function totalAmount(): Attribute
     {
         return Attribute::get(
@@ -70,7 +76,7 @@ class Order extends Model
 
     public function canBeCancelled(): bool
     {
-        return ! ($this->status === OrderStatus::Completed || $this->status === OrderStatus::Paid);
+        return ! ($this->status === OrderStatus::Completed || $this->status === OrderStatus::New);
     }
 
     public function isNotCancelled(): bool
@@ -88,14 +94,14 @@ class Order extends Model
         return $this->status === OrderStatus::Register;
     }
 
-    public function isPaid(): bool
+    public function isShipped(): bool
     {
-        return $this->status === OrderStatus::Paid;
+        return $this->status === OrderStatus::Shipped;
     }
 
     public function isCompleted(): bool
     {
-        return $this->status === OrderStatus::COMPLETED;
+        return $this->status === OrderStatus::Completed;
     }
 
     public function fullPriceWithShipping(): int
@@ -133,7 +139,7 @@ class Order extends Model
         $this->setRawAttributes(
             array_merge(
                 $this->attributes,
-                ['status' => OrderStatus::Pending->value]
+                ['status' => OrderStatus::Pending]
             ),
             true
         );

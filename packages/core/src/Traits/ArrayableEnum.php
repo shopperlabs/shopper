@@ -23,10 +23,10 @@ trait ArrayableEnum
 
     public static function options(): array
     {
-        if (method_exists(self::class, 'label')) {
+        if (method_exists(self::class, 'getLabel')) {
             return collect(self::cases())
                 ->mapWithKeys(fn (self $enum) => [
-                    $enum->value => $enum->label(),
+                    $enum->value => $enum->getLabel(),
                 ])
                 ->toArray();
         }

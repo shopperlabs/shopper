@@ -71,7 +71,6 @@ class User extends Authenticatable
         self::deleting(function ($model): void {
             $model->roles()->detach();
             $model->addresses()->delete();
-            $model->orders()->delete();
         });
     }
 
@@ -116,15 +115,6 @@ class User extends Authenticatable
             get: fn () => count($roles)
                 ? implode(', ', array_map(fn ($item) => ucwords($item), $roles))
                 : 'N/A'
-        );
-    }
-
-    public function scopeResearch(Builder $query, $term): Builder
-    {
-        return $query->where(
-            fn ($query) => $query->where('last_name', 'like', '%' . $term . '%')
-                ->orWhere('first_name', 'like', '%' . $term . '%')
-                ->orWhere('email', 'like', '%' . $term . '%')
         );
     }
 

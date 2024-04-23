@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
-use Database\Seeders\Auth\PermissionRoleTableSeeder;
-use Database\Seeders\Auth\PermissionsTableSeeder;
-use Database\Seeders\Auth\RolesTableSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Database\Seeders\Auth\PermissionRoleTableSeeder;
+use Shopper\Core\Database\Seeders\Auth\PermissionsTableSeeder;
+use Shopper\Core\Database\Seeders\Auth\RolesTableSeeder;
 
 final class AuthTableSeeder extends Seeder
 {

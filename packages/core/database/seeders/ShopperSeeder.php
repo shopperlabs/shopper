@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database\Seeders;
+namespace Shopper\Core\Database\Seeders;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
@@ -17,6 +17,7 @@ final class ShopperSeeder extends Seeder
         $this->call(CountriesTableSeeder::class);
         $this->call(CurrenciesTableSeeder::class);
         $this->call(LegalsPageTableSeeder::class);
+        $this->call(ChannelSeeder::class);
 
         Model::reguard();
     }

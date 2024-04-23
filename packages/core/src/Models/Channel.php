@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Traits\HasSlug;
 
+/**
+ * @property-read int $id
+ * @property string $name
+ * @property string | null $slug
+ * @property string | null $description
+ * @property string | null $timezone
+ * @property string | null $url
+ * @property bool $is_default
+ */
 class Channel extends Model
 {
     use HasFactory;
@@ -20,23 +29,6 @@ class Channel extends Model
     protected $casts = [
         'is_default' => 'boolean',
     ];
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::creating(function ($channel): void {
-            if ($channel->is_default) {
-                static::query()->update(['is_default' => false]);
-            }
-        });
-
-        self::updating(function ($channel): void {
-            if ($channel->is_default) {
-                static::query()->update(['is_default' => false]);
-            }
-        });
-    }
 
     public function getTable(): string
     {

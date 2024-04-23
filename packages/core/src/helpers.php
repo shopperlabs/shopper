@@ -16,12 +16,7 @@ if (! function_exists('generate_number')) {
             ->limit(1)
             ->first();
 
-        $generator = [
-            'start_sequence_from' => 1,
-            'prefix' => '#',
-            'pad_length' => 1,
-            'pad_string' => '0',
-        ];
+        $generator = config('shopper.orders.generator');
 
         $last = $lastOrder ? $lastOrder->id : 0;
         $next = $generator['start_sequence_from'] + $last;
@@ -55,7 +50,7 @@ if (! function_exists('shopper_asset')) {
 if (! function_exists('shopper_currency')) {
     function shopper_currency(): string
     {
-        $settingCurrency = shopper_setting('currency_id');
+        $settingCurrency = shopper_setting('default_currency_id');
 
         if ($settingCurrency) {
             $currency = Cache::remember(

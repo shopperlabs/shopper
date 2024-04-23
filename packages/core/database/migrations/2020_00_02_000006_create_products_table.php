@@ -24,7 +24,7 @@ return new class() extends Migration
             $table->integer('old_price_amount')->nullable();
             $table->integer('price_amount')->nullable();
             $table->integer('cost_amount')->nullable();
-            $table->enum('type', ['deliverable', 'downloadable'])->nullable();
+            $table->string('type')->nullable();
             $table->boolean('backorder')->default(false);
             $table->boolean('requires_shipping')->default(false);
             $table->dateTimeTz('published_at')->default(now());

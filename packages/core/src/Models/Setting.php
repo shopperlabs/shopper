@@ -27,7 +27,7 @@ class Setting extends Model
 
     public function getTable(): string
     {
-        return shopper_table('system_settings');
+        return shopper_table('settings');
     }
 
     public static function lockedAttributesDisplayName(string $key): string
@@ -40,7 +40,8 @@ class Setting extends Model
             'cover' => __('shopper::layout.forms.label.cover_photo'),
             'about' => __('shopper::layout.forms.label.about'),
             'country_id' => __('shopper::layout.forms.label.country'),
-            'currency_id' => __('shopper::layout.forms.label.currency'),
+            'default_currency_id' => __('shopper::layout.forms.label.currency'),
+            'currencies' => __('shopper::layout.forms.label.currencies'),
             'street_address' => __('shopper::layout.forms.label.street_address'),
             'postal_code' => __('shopper::layout.forms.label.postal_code'),
             'city' => __('shopper::layout.forms.label.city'),

@@ -10,7 +10,7 @@ return new class() extends Migration
 {
     public function up(): void
     {
-        Schema::create($this->getTableName('system_settings'), function (Blueprint $table): void {
+        Schema::create($this->getTableName('settings'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
             $table->string('key')->unique();
@@ -22,6 +22,6 @@ return new class() extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('system_settings');
+        Schema::dropIfExists('settings');
     }
 };

@@ -16,9 +16,9 @@ return new class() extends Migration
             $table->string('name');
             $table->string('slug')->unique()->nullable();
             $table->longText('description')->nullable();
-            $table->enum('type', ['manual', 'auto']);
+            $table->string('type');
             $table->string('sort')->nullable();
-            $table->enum('match_conditions', ['all', 'any'])->nullable();
+            $table->string('match_conditions')->nullable();
             $table->dateTimeTz('published_at')->default(now());
 
             $this->addSeoFields($table);
