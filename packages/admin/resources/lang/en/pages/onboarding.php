@@ -32,4 +32,3 @@ return [
     'currency_description' => 'This is the main currency that will be displayed on your store.',
 
 ];
-

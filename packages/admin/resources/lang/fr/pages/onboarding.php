@@ -32,4 +32,3 @@ return [
     'currency_description' => "Il s'agit de la devise principale qui sera affiché sur votre boutique.",
 
 ];
-

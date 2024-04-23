@@ -158,7 +158,7 @@ class General extends Component implements HasForms
                     ->schema([
                         Components\TextInput::make('facebook_link')
                             ->prefix(
-                                fn (): HtmlString => new HtmlString(Blade::render(<<<Blade
+                                fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                                     <x-shopper::icons.facebook
                                         class="h-5 w-5 text-gray-400 dark:text-gray-500"
                                         aria-hidden="true"
@@ -171,7 +171,7 @@ class General extends Component implements HasForms
                             ->schema([
                                 Components\TextInput::make('instagram_link')
                                     ->prefix(
-                                        fn (): HtmlString => new HtmlString(Blade::render(<<<Blade
+                                        fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                                             <x-shopper::icons.instagram
                                                 class="h-5 w-5 text-gray-400 dark:text-gray-500"
                                                 aria-hidden="true"
@@ -182,7 +182,7 @@ class General extends Component implements HasForms
                                     ->placeholder('https://instagram.com/laravelshopper'),
                                 Components\TextInput::make('twitter_link')
                                     ->prefix(
-                                        fn (): HtmlString => new HtmlString(Blade::render(<<<Blade
+                                        fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                                             <x-shopper::icons.twitter
                                                 class="h-5 w-5 text-gray-400 dark:text-gray-500"
                                                 aria-hidden="true"
