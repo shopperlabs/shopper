@@ -10,9 +10,9 @@ trait SaveSettings
 {
     public function saveSettings(array $keys): void
     {
-        foreach ($keys as $key) {
+        foreach ($keys as $key => $value) {
             Setting::query()->updateOrCreate(['key' => $key], [
-                'value' => $this->{$key},
+                'value' => $value,
                 'display_name' => Setting::lockedAttributesDisplayName($key),
                 'locked' => true,
             ]);

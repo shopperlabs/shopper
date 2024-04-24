@@ -83,6 +83,7 @@ return [
         'logo' => 'Logo',
         'cover_photo' => 'Photo de couverture',
         'about' => 'A propos',
+        'default_currency' => 'Devise par défault',
         'currency' => 'Devise',
         'currencies' => 'Devises',
         'longitude' => 'Longitude',

@@ -10,7 +10,9 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Components\Section;
@@ -18,11 +20,13 @@ use Shopper\Components\Separator;
 use Shopper\Core\Models\Country;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
+use Shopper\Traits\SaveSettings;
 
 #[Layout('shopper::components.layouts.setting')]
 class General extends Component implements HasForms
 {
     use InteractsWithForms;
+    use SaveSettings;
 
     public ?array $data = [];
 
@@ -40,7 +44,8 @@ class General extends Component implements HasForms
             'postal_code',
             'city',
             'country_id',
-            'currency_id',
+            'default_currency_id',
+            'currencies',
             'facebook_link',
             'instagram_link',
             'twitter_link',
@@ -65,21 +70,21 @@ class General extends Component implements HasForms
                     ->compact()
                     ->schema([
                         Components\TextInput::make('name')
-                            ->label(__('shopper::layout.forms.label.store_name'))
+                            ->label(__('shopper::forms.label.store_name'))
                             ->prefixIcon('untitledui-shop')
                             ->maxLength(100)
                             ->required(),
                         Components\Grid::make()
                             ->schema([
                                 Components\TextInput::make('email')
-                                    ->label(__('shopper::layout.forms.label.email'))
+                                    ->label(__('shopper::forms.label.email'))
                                     ->prefixIcon('untitledui-mail')
                                     ->helperText(__('shopper::pages/settings.settings.email_helper'))
                                     ->autocomplete('email-address')
                                     ->email()
                                     ->required(),
                                 Components\TextInput::make('phone_number')
-                                    ->label(__('shopper::layout.forms.label.phone_number'))
+                                    ->label(__('shopper::forms.label.phone_number'))
                                     ->tel()
                                     ->helperText(__('shopper::pages/settings.settings.phone_number_helper')),
                             ]),
@@ -113,7 +118,7 @@ class General extends Component implements HasForms
                             ->placeholder('ShopStation LLC')
                             ->required(),
                         Components\RichEditor::make('about')
-                            ->label(__('shopper::layout.forms.label.about'))
+                            ->label(__('shopper::forms.label.about'))
                             ->fileAttachmentsDisk(config('shopper.core.storage.disk_name'))
                             ->fileAttachmentsDirectory(config('shopper.core.storage.collection_name')),
                         Components\TextInput::make('street_address')
@@ -152,14 +157,38 @@ class General extends Component implements HasForms
                     ->compact()
                     ->schema([
                         Components\TextInput::make('facebook_link')
+                            ->prefix(
+                                fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
+                                    <x-shopper::icons.facebook
+                                        class="h-5 w-5 text-gray-400 dark:text-gray-500"
+                                        aria-hidden="true"
+                                    />
+                                Blade))
+                            )
                             ->label(__('shopper::words.socials.facebook'))
                             ->placeholder('https://facebook.com/laravelshopper'),
                         Components\Grid::make()
                             ->schema([
                                 Components\TextInput::make('instagram_link')
+                                    ->prefix(
+                                        fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
+                                            <x-shopper::icons.instagram
+                                                class="h-5 w-5 text-gray-400 dark:text-gray-500"
+                                                aria-hidden="true"
+                                            />
+                                        Blade))
+                                    )
                                     ->label(__('shopper::words.socials.instagram'))
                                     ->placeholder('https://instagram.com/laravelshopper'),
                                 Components\TextInput::make('twitter_link')
+                                    ->prefix(
+                                        fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
+                                            <x-shopper::icons.twitter
+                                                class="h-5 w-5 text-gray-400 dark:text-gray-500"
+                                                aria-hidden="true"
+                                            />
+                                        Blade))
+                                    )
                                     ->label(__('shopper::words.socials.twitter'))
                                     ->placeholder('https://twitter.com/laravelshopper'),
                             ]),
@@ -170,43 +199,14 @@ class General extends Component implements HasForms
 
     public function store(): void
     {
-        $keys = [
-            'name',
-            'legal_name',
-            'email',
-            'phone_number',
-            'logo',
-            'cover',
-            'about',
-            'facebook_link',
-            'instagram_link',
-            'twitter_link',
-            'city',
-            'postal_code',
-            'street_address',
-            'currency_id',
-            'country_id',
-        ];
+        $this->saveSettings($this->form->getState());
 
-        foreach ($keys as $key) {
-            $this->createUpdateSetting(key: $key, value: $this->form->getState()[$key]);
-        }
-
-        Cache::forget('shopper-setting-currency_id');
+        Cache::forget('shopper-setting-default_currency_id');
 
         Notification::make()
             ->title(__('shopper::notifications.store_info'))
             ->success()
             ->send();
-    }
-
-    protected function createUpdateSetting(string $key, mixed $value): void
-    {
-        Setting::query()->updateOrCreate(['key' => $key], [
-            'value' => $value,
-            'display_name' => Setting::lockedAttributesDisplayName($key),
-            'locked' => true,
-        ]);
     }
 
     public function render(): View

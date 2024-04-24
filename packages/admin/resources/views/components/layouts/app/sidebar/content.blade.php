@@ -11,7 +11,7 @@
                 </x-shopper::link>
                 <div class="ml-3 truncate">
                     <h4 class="truncate font-heading text-sm font-medium leading-4 text-gray-900 dark:text-white">
-                        {{ config('app.name') }}
+                        {{ shopper_setting('name') }}
                     </h4>
                     <span class="text-sm text-gray-500 dark:text-gray-400">
                         {{ shopper_setting('email') }}
@@ -41,7 +41,7 @@
 
                 <a href="https://laravelshopper.dev" target="_blank" class="sh-sidebar-item sh-sidebar-item-inactive">
                     <x-untitledui-code-browser class="mr-2 h-5 w-5" stroke-width="1.5" aria-hidden="true" />
-                    {{ __('shopper::messages.dashboard.cards.doc_title') }}
+                    {{ __('shopper::pages/dashboard.cards.doc_title') }}
                 </a>
             </div>
         </div>
