@@ -45,7 +45,7 @@ class Channel extends Model
         return $this->morphToMany(
             config('shopper.models.product'),
             'productable',
-            'product_has_relations'
+            shopper_table('product_has_relations')
         );
     }
 }

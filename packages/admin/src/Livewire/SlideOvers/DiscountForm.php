@@ -91,11 +91,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->label(__('shopper::layout.forms.label.type'))
                             ->inline()
                             ->inlineLabel(false)
-                            ->options(DiscountType::options())
-                            ->descriptions([
-                                DiscountType::PERCENTAGE->value => __('shopper::pages/discounts.percentage_description'),
-                                DiscountType::FIXED_AMOUNT->value => __('shopper::pages/discounts.fixed_amount_description'),
-                            ])
+                            ->options(DiscountType::class)
                             ->required()
                             ->live(),
 
@@ -118,15 +114,15 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                 Forms\Components\TextInput::make('value')
                                     ->label(
                                         fn (Forms\Get $get): ?string => match ($get('type')) {
-                                            DiscountType::PERCENTAGE->value => __('shopper::pages/discounts.percentage'),
-                                            DiscountType::FIXED_AMOUNT->value => __('shopper::pages/discounts.fixed_amount'),
+                                            DiscountType::Percentage->value => __('shopper::pages/discounts.percentage'),
+                                            DiscountType::FixedAmount->value => __('shopper::pages/discounts.fixed_amount'),
                                             default => null
                                         }
                                     )
                                     ->suffix(
                                         fn (Forms\Get $get): ?string => match ($get('type')) {
-                                            DiscountType::PERCENTAGE->value => '%',
-                                            DiscountType::FIXED_AMOUNT->value => shopper_currency(),
+                                            DiscountType::Percentage->value => '%',
+                                            DiscountType::FixedAmount->value => shopper_currency(),
                                             default => null
                                         }
                                     )
@@ -205,7 +201,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
 
                         Forms\Components\Radio::make('apply_to')
                             ->label(__('shopper::pages/discounts.applies_to'))
-                            ->options(DiscountApplyTo::options())
+                            ->options(DiscountApplyTo::class)
                             ->inline()
                             ->required()
                             ->live(),
@@ -221,10 +217,10 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             )
                             ->minItems(1)
                             ->required(
-                                fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::PRODUCTS->value
+                                fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
                             )
                             ->visible(
-                                fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::PRODUCTS->value && Feature::enabled('product')
+                                fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value && Feature::enabled('product')
                             ),
 
                         Warning::make()
@@ -249,10 +245,10 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             )
                             ->minItems(1)
                             ->required(
-                                fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::CUSTOMERS->value
+                                fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
                             )
                             ->visible(
-                                fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::CUSTOMERS->value && Feature::enabled('customer')
+                                fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value && Feature::enabled('customer')
                             ),
 
                         Warning::make()
@@ -272,16 +268,16 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->numeric()
                             ->suffix(
                                 fn (Forms\Get $get): ?string => match ($get('min_required')) {
-                                    DiscountRequirement::PRICE->value => shopper_currency(),
+                                    DiscountRequirement::Price->value => shopper_currency(),
                                     default => null
                                 }
                             )
                             ->required(
-                                fn (Forms\Get $get): bool => $get('min_required') !== DiscountRequirement::NONE->value
+                                fn (Forms\Get $get): bool => $get('min_required') !== DiscountRequirement::None->value
                             )
                             ->visible(function (Forms\Get $get): bool {
                                 if ($get('min_required')) {
-                                    return $get('min_required') !== DiscountRequirement::NONE->value;
+                                    return $get('min_required') !== DiscountRequirement::None->value;
                                 }
 
                                 return false;

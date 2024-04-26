@@ -1,0 +1,9 @@
+.shiki {
+  @apply p-4 !bg-gray-50;
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}

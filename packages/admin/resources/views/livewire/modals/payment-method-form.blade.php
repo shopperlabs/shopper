@@ -6,9 +6,9 @@
 >
     <x-slot name="title">
         @if ($this->paymentId)
-            {{ __('shopper::modals.payment_method.update_title') }}
+            {{ __('shopper::pages/settings/payments.update_title') }}
         @else
-            {{ __('shopper::pages/settings.payment.create_payment') }}
+            {{ __('shopper::pages/settings/payments.add_payment') }}
         @endif
     </x-slot>
 
@@ -21,10 +21,10 @@
     <x-slot name="buttons">
         <x-shopper::buttons.primary wire:click="save" type="submit" class="sm:ml-3 sm:w-auto">
             <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-            {{ __('shopper::layout.forms.actions.save') }}
+            {{ __('shopper::forms.actions.save') }}
         </x-shopper::buttons.primary>
         <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button" class="mt-3 sm:mt-0 sm:w-auto">
-            {{ __('shopper::layout.forms.actions.cancel') }}
+            {{ __('shopper::forms.actions.cancel') }}
         </x-shopper::buttons.default>
     </x-slot>
 </x-shopper::modal>

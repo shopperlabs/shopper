@@ -77,7 +77,7 @@ class Collection extends Model implements SpatieHasMedia
 
     public function products(): MorphToMany
     {
-        return $this->morphToMany(config('shopper.models.product'), 'productable', 'product_has_relations');
+        return $this->morphToMany(config('shopper.models.product'), 'productable', shopper_table('product_has_relations'));
     }
 
     public function rules(): HasMany

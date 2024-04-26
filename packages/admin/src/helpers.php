@@ -55,3 +55,10 @@ if (! function_exists('shopper')) {
         return $shopper;
     }
 }
+
+if (! function_exists('shopper_fallback_url')) {
+    function shopper_fallback_url(): string
+    {
+        return url(shopper()->prefix() . '/images/placeholder.jpg');
+    }
+}

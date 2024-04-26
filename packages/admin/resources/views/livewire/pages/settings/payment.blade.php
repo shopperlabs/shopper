@@ -1,11 +1,11 @@
 <div x-data="{
-    options: ['general'],
+    options: @js($tabs),
     currentTab: 'general',
 }">
     <x-shopper::container>
         <x-shopper::breadcrumb
             :back="route('shopper.settings.index')"
-            :current="__('shopper::pages/settings.payment.title')"
+            :current="__('shopper::pages/settings/payments.title')"
         >
             <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
@@ -15,7 +15,7 @@
         </x-shopper::breadcrumb>
         <x-shopper::heading class="my-6">
             <x-slot name="title">
-                {{ __('shopper::pages/settings.payment.title') }}
+                {{ __('shopper::pages/settings/payments.title') }}
             </x-slot>
 
             <x-slot name="action">
@@ -26,7 +26,7 @@
                     )"
                     type="button"
                 >
-                    {{ __('shopper::pages/settings.payment.create_payment') }}
+                    {{ __('shopper::pages/settings/payments.add_payment') }}
                 </x-shopper::buttons.primary>
             </x-slot>
         </x-shopper::heading>

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return [
 
+    // Rename this file for general setting
+
     'empty_country_selector' => 'Please select a country',
     'logo_description' => 'The logo of your store that will be visible on your site. This assets will appear on your invoices.',
 
@@ -22,20 +24,6 @@ return [
         'social_links' => 'Social links',
         'social_links_summary' => 'Information about your different accounts on social networks. Users will be able to contact you directly on your official pages.',
         'update_information' => 'Update information',
-    ],
-
-    'payment' => [
-        'title' => 'Payments Methods',
-        'stripe_description' => 'Accept payments on your store using third-party providers such as Stripe.',
-        'stripe_enabled' => 'Stripe is available for your store.',
-        'stripe_disabled' => 'Stripe is not enabled.',
-        'stripe_provider' => 'This provider allows you to integrate Stripe PHP into your store to allow your customers to make payments.',
-        'stripe_about' => 'Learn more about Stripe Payment',
-        'stripe_actions' => 'Enabled Stripe Payment',
-        'stripe_environment' => 'Stripe has two environments Sandbox and Live, make sure to use sandbox for testing before going live.',
-        'stripe_dashboard' => 'API Keys can be grabbed from',
-        'create_payment' => 'Create payment method',
-        'no_method' => 'No payment methods found',
     ],
 
     'validations' => [

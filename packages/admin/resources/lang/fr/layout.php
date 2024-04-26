@@ -31,7 +31,6 @@ return [
     'back' => 'Retour',
     'view_site' => 'Voir le site',
     'meta_title' => 'Administration Shopper',
-    'soon' => 'Bientôt',
 
     'status' => [
         'delete' => 'Suppression',

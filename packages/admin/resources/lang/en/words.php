@@ -115,8 +115,6 @@ return [
     'environment' => 'Environnement',
     'discount_use' => '{1} Limit of 1 use|[2,*] Limit of :count uses',
 
-    'payment_method_help_text' => 'Displays to customers when they’re choosing a payment method',
-    'payment_method_instruction' => 'Displays to customers after they place an order with this payment method',
     'no_group' => 'No group',
     'no_values' => 'No values',
     'no_users' => 'No users',
@@ -179,5 +177,6 @@ return [
     'feature' => 'Feature',
     'feature_enabled' => 'You must enable :feature to activate this section.',
     'amount' => 'Amount',
+    'soon' => 'Soon',
 
 ];

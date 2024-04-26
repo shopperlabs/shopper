@@ -149,22 +149,22 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
 
     public function channels(): MorphToMany
     {
-        return $this->morphedByMany(config('shopper.models.channel'), 'productable', 'product_has_relations');
+        return $this->morphedByMany(config('shopper.models.channel'), 'productable', shopper_table(shopper_table('product_has_relations')));
     }
 
     public function relatedProducts(): MorphToMany
     {
-        return $this->morphedByMany(config('shopper.models.product'), 'productable', 'product_has_relations');
+        return $this->morphedByMany(config('shopper.models.product'), 'productable', shopper_table('product_has_relations'));
     }
 
     public function categories(): MorphToMany
     {
-        return $this->morphedByMany(config('shopper.models.category'), 'productable', 'product_has_relations');
+        return $this->morphedByMany(config('shopper.models.category'), 'productable', shopper_table('product_has_relations'));
     }
 
     public function collections(): MorphToMany
     {
-        return $this->morphedByMany(config('shopper.models.collection'), 'productable', 'product_has_relations');
+        return $this->morphedByMany(config('shopper.models.collection'), 'productable', shopper_table('product_has_relations'));
     }
 
     public function brand(): BelongsTo

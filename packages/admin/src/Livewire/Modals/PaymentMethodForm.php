@@ -39,31 +39,31 @@ class PaymentMethodForm extends ModalComponent implements HasForms
         return $form
             ->schema([
                 Components\FileUpload::make('logo')
-                    ->label(__('shopper::layout.forms.label.provider_logo'))
+                    ->label(__('shopper::forms.label.provider_logo'))
                     ->avatar()
                     ->image()
                     ->maxSize(1024)
                     ->disk(config('shopper.core.storage.disk_name'))
                     ->columnSpan('full'),
                 Components\TextInput::make('title')
-                    ->label(__('shopper::layout.forms.label.payment_method'))
-                    ->placeholder('Stripe')
+                    ->label(__('shopper::forms.label.payment_method'))
+                    ->placeholder('NotchPay')
                     ->required()
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', $state)),
                 Components\Hidden::make('slug'),
                 Components\TextInput::make('link_url')
-                    ->label(__('shopper::layout.forms.label.payment_doc'))
+                    ->label(__('shopper::forms.label.payment_doc'))
                     ->placeholder('https://notchpay.co')
                     ->url(),
                 Components\Textarea::make('description')
-                    ->label(__('shopper::layout.forms.label.additional_details'))
-                    ->helperText(__('shopper::words.payment_method_help_text'))
+                    ->label(__('shopper::forms.label.additional_details'))
+                    ->helperText(__('shopper::pages/settings/payments.help_text'))
                     ->rows(3)
                     ->columnSpan('full'),
                 Components\Textarea::make('instructions')
-                    ->label(__('shopper::layout.forms.label.payment_instruction'))
-                    ->helperText(__('shopper::words.payment_method_instruction'))
+                    ->label(__('shopper::forms.label.payment_instruction'))
+                    ->helperText(__('shopper::pages/settings/payments.instruction'))
                     ->rows(3)
                     ->columnSpan('full'),
             ])

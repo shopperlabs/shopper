@@ -30,14 +30,4 @@ return [
         'confirm_delete_msg' => 'Are you sure you want to delete this inventory? All this data will be removed. This action cannot be undone',
     ],
 
-    'mailable' => [
-        'delete_title' => 'Delete :class Mailable',
-        'confirm_delete_msg' => 'Are you sure you want to delete this Mailable class? If this class is used in your project this action will create a bug in your site',
-        'delete_template' => 'Delete :template Template',
-        'confirm_delete_template' => 'Are you sure you want to delete this Template ?',
-    ],
-
-    'payment_method' => [
-        'update_title' => 'Update payment method',
-    ],
 ];

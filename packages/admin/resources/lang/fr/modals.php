@@ -30,14 +30,4 @@ return [
         'confirm_delete_msg' => 'Êtes-vous sûr de vouloir supprimer cet inventaire ? Toutes ces données seront supprimées. Cette action ne peut être annulée',
     ],
 
-    'mailable' => [
-        'delete_title' => 'Supprimer :class Mailable',
-        'confirm_delete_msg' => 'Êtes-vous sûr de vouloir supprimer cette classe Mailable ? Si cette classe est utilisée dans votre projet, cette action créera un bogue dans votre site.',
-        'delete_template' => 'Supprimer :template Modèle',
-        'confirm_delete_template' => 'Êtes-vous sûr de vouloir supprimer ce modèle ?',
-    ],
-
-    'payment_method' => [
-        'update_title' => 'Mise à jour du mode de paiement',
-    ],
 ];
