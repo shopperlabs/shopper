@@ -25,6 +25,7 @@ return [
         'payment' => Pages\Settings\Payment::class,
         'team-index' => Pages\Settings\Team\Index::class,
         'team-roles' => Pages\Settings\Team\RolePermission::class,
+        'zones' => Pages\Settings\Zones::class,
     ],
 
     /*
@@ -48,8 +49,10 @@ return [
         'settings.legal.form' => Components\Settings\Legal\PolicyForm::class,
         'settings.team.permissions' => Components\Settings\Team\Permissions::class,
         'settings.team.users' => Components\Settings\Team\UsersRole::class,
+        'settings.zones.detail' => Components\Settings\Zones\Detail::class,
 
         'slide-overs.create-team-member' => Livewire\SlideOvers\CreateTeamMember::class,
+        'slide-overs.zone-form' => Livewire\SlideOvers\ZoneForm::class,
     ],
 
 ];

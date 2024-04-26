@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Models;
+namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Shopper\Core\Models\Carrier;
-use Shopper\Core\Models\Country;
-use Shopper\Core\Models\Currency;
-use Shopper\Core\Models\PaymentMethod;
 use Shopper\Core\Traits\HasSlug;
 
 /**
@@ -23,6 +20,9 @@ use Shopper\Core\Traits\HasSlug;
  * @property bool $is_enabled
  * @property int | null $currency_id
  * @property array $metadata
+ * @property string $carriers_name
+ * @property string $countries_name
+ * @property string $payments_name
  */
 class Zone extends Model
 {
@@ -48,6 +48,44 @@ class Zone extends Model
         return shopper_table('zones');
     }
 
+    public function isEnabled(): bool
+    {
+        return $this->is_enabled;
+    }
+
+    public function countriesName(): Attribute
+    {
+        $countries = $this->countries->pluck('name')->toArray();
+
+        return Attribute::make(
+            get: fn () => count($countries)
+                ? implode(', ', array_map(fn ($item) => ucwords($item), $countries))
+                : 'N/A'
+        );
+    }
+
+    public function carriersName(): Attribute
+    {
+        $carriers = $this->carriers->pluck('name')->toArray();
+
+        return Attribute::make(
+            get: fn () => count($carriers)
+                ? implode(', ', array_map(fn ($item) => ucwords($item), $carriers))
+                : 'N/A'
+        );
+    }
+
+    public function paymentsName(): Attribute
+    {
+        $paymentsMethods = $this->paymentMethods->pluck('title')->toArray();
+
+        return Attribute::make(
+            get: fn () => count($paymentsMethods)
+                ? implode(', ', array_map(fn ($item) => ucwords($item), $paymentsMethods))
+                : 'N/A'
+        );
+    }
+
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
@@ -60,16 +98,16 @@ class Zone extends Model
 
     public function countries(): MorphToMany
     {
-        return $this->morphedByMany(Country::class, 'zonable', 'zone_has_relations');
+        return $this->morphedByMany(Country::class, 'zonable', shopper_table('zone_has_relations'));
     }
 
     public function paymentMethods(): MorphToMany
     {
-        return $this->morphedByMany(PaymentMethod::class, 'zonable', 'zone_has_relations');
+        return $this->morphedByMany(PaymentMethod::class, 'zonable', shopper_table('zone_has_relations'));
     }
 
     public function carriers(): MorphToMany
     {
-        return $this->morphedByMany(Carrier::class, 'zonable', 'zone_has_relations');
+        return $this->morphedByMany(Carrier::class, 'zonable', shopper_table('zone_has_relations'));
     }
 }

@@ -6,7 +6,6 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Shopper\Models\Zone;
 
 /**
  * @property-read int $id

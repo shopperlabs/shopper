@@ -30,7 +30,7 @@ return [
     'permission' => 'Permission',
     'role' => 'Rôle',
 
-    'payment_method' => 'Méthode de paiement',
+    'payment_method' => 'Moyen de paiement',
     'shipping_method' => 'Mode de livraison',
     'no_shipping' => 'Pas de méthode d\'expédition',
     'estimated' => 'Délai de livraison estimé',
@@ -114,8 +114,6 @@ return [
     'environment' => 'Environnement',
     'discount_use' => '{1} Limité à une utilisation|[2,*] Limité à :count utilisations',
 
-    'payment_method_help_text' => "S'affiche pour les clients lorsqu'ils choisissent un mode de paiement",
-    'payment_method_instruction' => "S'affiche pour les clients après qu'ils ont passé une commande avec ce mode de paiement.",
     'no_group' => 'Aucun groupe',
     'no_values' => 'Aucune valeur',
     'no_users' => 'Aucun utilisateur',
@@ -178,5 +176,6 @@ return [
     'feature' => 'Fonctionnalité',
     'feature_enabled' => 'Vous devez activé la fonctionnalité :feature pour activer cette section.',
     'amount' => 'Montant',
+    'soon' => 'Bientôt',
 
 ];

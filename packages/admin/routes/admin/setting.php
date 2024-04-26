@@ -16,6 +16,7 @@ Route::prefix('inventories')->group(function (): void {
 Route::get('/legal', config('shopper.components.setting.pages.legal'))->name('legal');
 Route::get('/analytics', config('shopper.components.setting.pages.analytics'))->name('analytics');
 Route::get('/payments', config('shopper.components.setting.pages.payment'))->name('payments');
+Route::get('/zones', config('shopper.components.setting.pages.zones'))->name('zones');
 
 Route::prefix('team')->group(function (): void {
     Route::get('/', config('shopper.components.setting.pages.team-index'))->name('users');

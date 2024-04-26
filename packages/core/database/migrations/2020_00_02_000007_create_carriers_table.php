@@ -18,7 +18,7 @@ return new class() extends Migration
             $table->string('logo')->nullable();
             $table->string('link_url')->nullable();
             $table->string('description')->nullable();
-            $table->integer('shipping_amount')->default(0);
+            $table->integer('shipping_amount')->nullable();
             $table->boolean('is_enabled')->default(false);
         });
     }
