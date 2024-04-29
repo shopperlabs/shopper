@@ -16,33 +16,28 @@ class CatalogSidebar extends AbstractAdminSidebar
     {
         $menu->group(__('shopper::layout.sidebar.catalog'), function (Group $group): void {
             $group->weight(2);
-            $group->setAuthorized(
-                Feature::enabled('product')
-                || Feature::enabled('category')
-                || Feature::enabled('collection')
-                || Feature::enabled('brand')
-            );
+            $group->setAuthorized();
             $group->setGroupItemsClass('space-y-1');
             $group->setHeadingClass('sh-heading');
 
-            if (Feature::enabled('product')) {
-                $group->item(__('shopper::layout.sidebar.products'), function (Item $item): void {
-                    $item->weight(1);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
-                    $item->setItemClass('sh-sidebar-item group');
-                    $item->setActiveClass('sh-sidebar-item-active');
-                    $item->setInactiveClass('sh-sidebar-item-inactive');
-                    $item->useSpa();
-                    $item->route('shopper.products.index');
-                    $item->setIcon(
-                        icon: 'untitledui-book-open',
-                        iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
-                        attributes: [
-                            'stroke-width' => '1.5',
-                        ],
-                    );
+            $group->item(__('shopper::pages/products.menu'), function (Item $item): void {
+                $item->weight(1);
+                $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
+                $item->setItemClass('sh-sidebar-item group');
+                $item->setActiveClass('sh-sidebar-item-active');
+                $item->setInactiveClass('sh-sidebar-item-inactive');
+                $item->useSpa();
+                $item->route('shopper.products.index');
+                $item->setIcon(
+                    icon: 'untitledui-book-open',
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                    attributes: [
+                        'stroke-width' => '1.5',
+                    ],
+                );
 
-                    $item->item(__('shopper::words.attributes'), function (Item $item): void {
+                if (Feature::enabled('attribute')) {
+                    $item->item(__('shopper::pages/attributes.menu'), function (Item $item): void {
                         $item->weight(1);
                         $item->setAuthorized($this->user->hasPermissionTo('browse_products') || $this->user->hasPermissionTo('browse_attributes'));
                         $item->setItemClass('group flex items-center py-1 text-sm font-medium border-l-2 pl-5 -ml-px');
@@ -51,11 +46,11 @@ class CatalogSidebar extends AbstractAdminSidebar
                         $item->useSpa();
                         $item->route('shopper.attributes.index');
                     });
-                });
-            }
+                }
+            });
 
             if (Feature::enabled('category')) {
-                $group->item(__('shopper::layout.sidebar.categories'), function (Item $item): void {
+                $group->item(__('shopper::pages/categories.menu'), function (Item $item): void {
                     $item->weight(2);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_categories'));
                     $item->setItemClass('sh-sidebar-item group');
@@ -74,7 +69,7 @@ class CatalogSidebar extends AbstractAdminSidebar
             }
 
             if (Feature::enabled('collection')) {
-                $group->item(__('shopper::layout.sidebar.collections'), function (Item $item): void {
+                $group->item(__('shopper::pages/collections.menu'), function (Item $item): void {
                     $item->weight(3);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_collections'));
                     $item->setItemClass('sh-sidebar-item group');
@@ -93,7 +88,7 @@ class CatalogSidebar extends AbstractAdminSidebar
             }
 
             if (Feature::enabled('brand')) {
-                $group->item(__('shopper::layout.sidebar.brands'), function (Item $item): void {
+                $group->item(__('shopper::pages/brands.menu'), function (Item $item): void {
                     $item->weight(4);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_brands'));
                     $item->setItemClass('sh-sidebar-item group');

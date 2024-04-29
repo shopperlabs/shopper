@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Customers',
+    'single' => 'customer',
     'title' => 'Manage customer orders & details',
     'content' => 'This is where you can manage your customer information and view their purchase history.',
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Products',
+    'single' => 'product',
     'title' => 'Manage Catalog',
     'content' => 'Get closer to your first sale by adding and manage products.',
     'about_pricing' => 'About pricing display',
@@ -18,18 +20,20 @@ return [
     'product_can_returned_help_text' => 'Users have the option of returning this product if there is a problem or dissatisfaction.',
     'product_shipped' => 'This product will be shipped',
     'product_shipped_help_text' => 'Reassure to fill in the information concerning the shipment of the product.',
-    'weight_dimension_help_text' => 'Used to calculate shipping charges during checkout and to label prices during order processing.',
     'status' => 'Product status',
     'visible_help_text' => 'This product will be hidden from all sales channels.',
     'availability_description' => 'Specify a publication date so that your product are scheduled on your store.',
     'product_associations' => 'Associations',
-    'product_categories' => 'Product categories',
-    'no_category' => 'No Categories',
-    'no_category_text' => 'Get started by creating a new category.',
-    'new_category' => 'New category',
     'related_products' => 'Related Products',
     'quantity_available' => 'Quantity Available',
     'current_qty_inventory' => 'Current quantity on this inventory',
+    'stock_inventory_heading' => 'Stock & Inventory',
+    'stock_inventory_description' => 'Configure the inventory and stock for this :item',
+    'images_helpText' => 'Add images to your product.',
+    'variant_images_helpText' => 'Add images to your variant.',
+    'thumbnail_helpText' => 'Used to represent your product during checkout, social sharing and more.',
+    'weight_dimension' => 'Weight and Dimension',
+    'weight_dimension_help_text' => 'Used to calculate shipping charges during checkout and to label prices during order processing.',
 
     'modals' => [
         'title' => 'Delete this :item',
@@ -42,6 +46,8 @@ return [
     ],
 
     'variants' => [
+        'menu' => 'Variants',
+        'single' => 'variant',
         'title' => 'Products variations',
         'description' => 'All variations of your product. The variations can each have their stock and price.',
         'add' => 'Add variant',
@@ -50,12 +56,6 @@ return [
         'search_label' => 'Search variant',
         'search_placeholder' => 'Search product variant',
         'variant_information' => 'Variant information',
-
-        'actions' => [
-            'update' => 'Update variant',
-            'update_stock' => 'Update stock',
-            'manage_inventory' => 'Manage Inventories',
-        ],
 
         'modal' => [
             'title' => 'About the variation',
@@ -103,11 +103,6 @@ return [
             'added' => 'Attribute Added',
             'added_message' => 'You have successfully added an attribute to this product!',
         ],
-
-        'modals' => [
-            'title' => 'Add new attribute with value',
-            'input_placeholder' => 'Select the attribute to add',
-        ],
     ],
 
     'inventory' => [
@@ -145,8 +140,6 @@ return [
     ],
 
     'notifications' => [
-        'create' => 'Product successfully added!',
-        'update' => 'Product successfully updated!',
         'media_update' => 'Product media updated!',
         'replicated' => 'Product replicated!',
         'stock_update' => 'Product Stock successfully updated!',
@@ -159,7 +152,4 @@ return [
         'remove_related' => 'The product has successfully removed from the related products!',
     ],
 
-    'images_helpText' => 'Add images to your product.',
-    'variant_images_helpText' => 'Add images to your variant.',
-    'thumbnail_helpText' => 'Used to represent your product during checkout, social sharing and more.',
 ];

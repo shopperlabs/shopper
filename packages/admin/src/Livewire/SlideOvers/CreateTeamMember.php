@@ -40,11 +40,11 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
                     ->description(__('shopper::pages/settings.roles_permissions.login_information_summary'))
                     ->schema([
                         Components\TextInput::make('email')
-                            ->label(__('shopper::layout.forms.label.email'))
+                            ->label(__('shopper::forms.label.email'))
                             ->email()
                             ->required(),
                         Components\TextInput::make('password')
-                            ->label(__('shopper::layout.forms.label.password'))
+                            ->label(__('shopper::forms.label.password'))
                             ->password()
                             ->revealable()
                             ->required()
@@ -63,14 +63,14 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
                     ->description(__('shopper::pages/settings.roles_permissions.personal_information_summary'))
                     ->schema([
                         Components\TextInput::make('first_name')
-                            ->label(__('shopper::layout.forms.label.first_name'))
+                            ->label(__('shopper::forms.label.first_name'))
                             ->required(),
                         Components\TextInput::make('last_name')
-                            ->label(__('shopper::layout.forms.label.last_name'))
+                            ->label(__('shopper::forms.label.last_name'))
                             ->required(),
                         GenderField::make(),
                         Components\TextInput::make('phone_number')
-                            ->label(__('shopper::layout.forms.label.phone_number'))
+                            ->label(__('shopper::forms.label.phone_number'))
                             ->tel(),
                     ]),
                 Section::make(__('shopper::pages/settings.roles_permissions.role_information'))

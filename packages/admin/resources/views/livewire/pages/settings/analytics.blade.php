@@ -31,7 +31,7 @@
                 <div class="grid grid-cols-3 gap-6">
                     <x-shopper::forms.group
                         for="google_tracking_id"
-                        :label="__('shopper::layout.forms.label.ga_tracking_id')"
+                        :label="__('shopper::forms.label.ga_tracking_id')"
                         class="col-span-3"
                     >
                         <x-shopper::forms.input
@@ -44,7 +44,7 @@
                     </x-shopper::forms.group>
                     <x-shopper::forms.group
                         for="google_view_id"
-                        :label="__('shopper::layout.forms.label.ga_view_id')"
+                        :label="__('shopper::forms.label.ga_view_id')"
                         class="col-span-3"
                     >
                         <x-shopper::forms.input
@@ -57,7 +57,7 @@
                     </x-shopper::forms.group>
                     <x-shopper::forms.group
                         for="analytic_script"
-                        :label="__('shopper::layout.forms.label.ga_additional_script')"
+                        :label="__('shopper::forms.label.ga_additional_script')"
                         class="col-span-3"
                     >
                         <x-shopper::forms.textarea
@@ -71,7 +71,7 @@
                     <label
                         class="inline-flex items-center text-sm font-medium leading-5 text-gray-700 dark:text-gray-300"
                     >
-                        {{ __('shopper::layout.forms.label.ga_json') }}
+                        {{ __('shopper::forms.label.ga_json') }}
                         <a
                             href="https://github.com/spatie/laravel-analytics#how-to-obtain-the-credentials-to-communicate-with-google-analytics"
                             target="_blank"
@@ -97,7 +97,7 @@
                                     class="inline-flex cursor-pointer items-center rounded-md border border-gray-300 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:text-gray-500 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white"
                                 >
                                     <x-untitledui-file-download-02 class="mr-1.5 h-5 w-5" aria-hidden="true" />
-                                    {{ __('shopper::layout.forms.actions.upload') }}
+                                    {{ __('shopper::forms.actions.upload') }}
                                 </label>
                             </span>
                         </div>
@@ -142,7 +142,7 @@
             </div>
             <div class="mt-5 max-w-3xl lg:col-span-2 lg:mt-0">
                 <div>
-                    <x-shopper::forms.group for="google_tag_id" :label="__('shopper::layout.forms.label.gtag')">
+                    <x-shopper::forms.group for="google_tag_id" :label="__('shopper::forms.label.gtag')">
                         <x-shopper::forms.input
                             wire:model="google_tag_manager_account_id"
                             type="text"
@@ -187,10 +187,7 @@
             </div>
             <div class="mt-5 max-w-3xl lg:col-span-2 lg:mt-0">
                 <div>
-                    <x-shopper::forms.group
-                        for="pixel_facebook_id"
-                        :label="__('shopper::layout.forms.label.pixel_id')"
-                    >
+                    <x-shopper::forms.group for="pixel_facebook_id" :label="__('shopper::forms.label.pixel_id')">
                         <x-shopper::forms.input
                             wire:model="facebook_pixel_account_id"
                             type="text"
@@ -218,7 +215,7 @@
         <div class="flex justify-end">
             <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('shopper::layout.forms.actions.save') }}
+                {{ __('shopper::forms.actions.save') }}
             </x-shopper::buttons.primary>
         </div>
     </div>

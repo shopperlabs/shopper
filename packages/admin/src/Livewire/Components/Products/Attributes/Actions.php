@@ -15,7 +15,7 @@ trait Actions
     public function saveAction(): Action
     {
         return Action::make('save')
-            ->label(__('shopper::layout.forms.actions.save'))
+            ->label(__('shopper::forms.actions.save'))
             ->badge()
             ->action(
                 fn () => $this->saveData(['attribute_value_id' => $this->value])
@@ -28,7 +28,7 @@ trait Actions
         return Action::make('remove')
             ->badge()
             ->color('danger')
-            ->label(__('shopper::layout.forms.actions.remove'))
+            ->label(__('shopper::forms.actions.remove'))
             ->action(function (array $arguments): void {
                 AttributeProduct::query()->find($arguments['id'])->delete();
 

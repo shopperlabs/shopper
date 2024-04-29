@@ -1,7 +1,7 @@
 <x-shopper::container class="space-y-8">
     <div>
         <x-filament::section.heading>
-            {{ __('shopper::words.attributes') }}
+            {{ __('shopper::pages/attributes.menu') }}
         </x-filament::section.heading>
         <x-filament::section.description class="mt-1 max-w-2xl">
             {{ __('shopper::pages/attributes.description') }}
@@ -10,7 +10,7 @@
 
     @if ($productAttributes->isNotEmpty())
         <div>
-            @if ($productAttributes['choice']->isNotEmpty())
+            @if ($productAttributes->has('choice') && $productAttributes['choice']->isNotEmpty())
                 <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8">
                     @foreach ($productAttributes['choice'] as $attribute)
                         @if ($attribute->hasMultipleValues())
@@ -34,14 +34,14 @@
                 </div>
             @endif
 
-            @if ($productAttributes['text']->isNotEmpty())
+            @if ($productAttributes->has('text') && $productAttributes['text']->isNotEmpty())
                 <x-shopper::separator />
 
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
                     @foreach ($productAttributes['text'] as $productAttribute)
                         <div
                             @class([
-                                'lg:col-span-3' => $productAttribute->type === \Shopper\Core\Enum\FieldType::RICHTEXT,
+                                'lg:col-span-3' => $productAttribute->type === \Shopper\Core\Enum\FieldType::RichText,
                             ])
                         >
                             <livewire:shopper-products.attributes.text
@@ -76,7 +76,7 @@
                     type="button"
                     class="mt-4"
                 >
-                    {{ __('shopper::layout.forms.actions.create') }}
+                    {{ __('shopper::forms.actions.create') }}
                 </x-shopper::buttons.primary>
             </div>
         </x-shopper::card>

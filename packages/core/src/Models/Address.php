@@ -36,7 +36,7 @@ class Address extends Model
         'company_name',
         'street_address',
         'street_address_plus',
-        'postcode',
+        'postal_code',
         'city',
         'phone_number',
         'type',

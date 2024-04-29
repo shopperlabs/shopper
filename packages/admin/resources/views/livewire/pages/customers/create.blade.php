@@ -3,13 +3,13 @@
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.customers.index')"
-            :title="__('shopper::layout.sidebar.customers')"
+            :title="__('shopper::pages/customers.menu')"
         />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('shopper::words.actions_label.add_new', ['name' => __('shopper::words.customer')]) }}
+            {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]) }}
         </x-slot>
     </x-shopper::heading>
 
@@ -20,7 +20,7 @@
             <div class="flex justify-end">
                 <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                    {{ __('shopper::layout.forms.actions.save') }}
+                    {{ __('shopper::forms.actions.save') }}
                 </x-shopper::buttons.primary>
             </div>
         </div>

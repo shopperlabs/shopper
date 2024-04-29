@@ -37,7 +37,7 @@
             type="button"
             class="mt-3 w-full sm:mt-0 sm:w-auto"
         >
-            {{ __('shopper::layout.forms.actions.cancel') }}
+            {{ __('shopper::forms.actions.cancel') }}
         </x-shopper::buttons.default>
     </x-slot>
 </x-shopper::modal>

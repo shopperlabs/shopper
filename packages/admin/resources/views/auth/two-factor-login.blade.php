@@ -29,11 +29,7 @@
                 </div>
                 <form class="mt-5" action="{{ route('shopper.two-factor.post-login') }}" method="POST">
                     @csrf
-                    <x-shopper::forms.group
-                        x-show="! recovery"
-                        :label="__('shopper::layout.forms.label.code')"
-                        for="code"
-                    >
+                    <x-shopper::forms.group x-show="! recovery" :label="__('shopper::forms.label.code')" for="code">
                         <x-shopper::forms.input
                             id="code"
                             type="text"
@@ -46,7 +42,7 @@
 
                     <x-shopper::forms.group
                         x-show="recovery"
-                        :label="__('shopper::layout.forms.label.recovery_code')"
+                        :label="__('shopper::forms.label.recovery_code')"
                         for="recovery_code"
                         style="display: none"
                     >

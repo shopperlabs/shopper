@@ -38,22 +38,22 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
                     ->circular()
-                    ->defaultImageUrl(url(config('shopper.media.fallback_url')))
+                    ->defaultImageUrl(shopper_fallback_url())
                     ->grow(false),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('shopper::layout.forms.label.name'))
+                    ->label(__('shopper::forms.label.name'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('type')
-                    ->label(__('shopper::layout.forms.label.type'))
-                    ->formatStateUsing(fn (Model $record): string => $record->isAutomatic() ? __('shopper::pages/collections.automatic') : __('shopper::pages/collections.manual'))
+                    ->label(__('shopper::forms.label.type'))
+                    ->formatStateUsing(fn ($record): string => $record->isAutomatic() ? __('shopper::pages/collections.automatic') : __('shopper::pages/collections.manual'))
                     ->badge()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::pages/collections.product_conditions'))
-                    ->formatStateUsing(function (Model $record): string {
+                    ->formatStateUsing(function ($record): string {
                         if ($record->rules->isNotEmpty()) {
                             return ucfirst($record->firstRule());
                         }
@@ -62,12 +62,12 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     }),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('shopper::layout.forms.label.updated_at'))
+                    ->label(__('shopper::forms.label.updated_at'))
                     ->date(),
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')
-                    ->label(__('shopper::layout.forms.actions.edit'))
+                    ->label(__('shopper::forms.actions.edit'))
                     ->icon('untitledui-edit-04')
                     ->url(
                         fn (Model $record): string => route(
@@ -76,12 +76,12 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ),
                     ),
 
-                Tables\Actions\Action::make(__('shopper::layout.forms.actions.delete'))
+                Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
                     ->icon('untitledui-trash-03')
                     ->modalIcon('untitledui-trash-03')
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(fn (Model $record) => $record->delete()),
+                    ->action(fn ($record) => $record->delete()),
             ]);
     }
 
@@ -90,6 +90,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return view('shopper::livewire.pages.collections.browse', [
             'total' => (new CollectionRepository())->count(),
         ])
-            ->title(__('shopper::layout.sidebar.collections'));
+            ->title(__('shopper::pages/collections.menu'));
     }
 }

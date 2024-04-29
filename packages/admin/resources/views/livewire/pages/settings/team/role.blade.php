@@ -38,7 +38,7 @@
     <div class="relative border-t border-gray-200 dark:border-gray-700">
         <x-filament::tabs :contained="true">
             <x-filament::tabs.item alpine-active="currentTab === 'role'" x-on:click="currentTab = 'role'">
-                {{ __('shopper::layout.forms.label.role') }}
+                {{ __('shopper::forms.label.role') }}
             </x-filament::tabs.item>
             <x-filament::tabs.item alpine-active="currentTab === 'users'" x-on:click="currentTab = 'users'">
                 {{ __('shopper::words.users') }}
@@ -83,7 +83,7 @@
                         <div class="mt-5 text-right">
                             <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
                                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                                {{ __('shopper::layout.forms.actions.update') }}
+                                {{ __('shopper::forms.actions.update') }}
                             </x-shopper::buttons.primary>
                         </div>
                     </form>

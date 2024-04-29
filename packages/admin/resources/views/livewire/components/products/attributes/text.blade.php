@@ -11,7 +11,7 @@
 
         <div class="flex items-center justify-end">
             <x-filament::button type="submit" size="sm">
-                {{ __('shopper::layout.forms.actions.save') }}
+                {{ __('shopper::forms.actions.save') }}
             </x-filament::button>
         </div>
     </form>

@@ -38,14 +38,14 @@ class CollectionProducts extends Component implements HasForms, HasTable
             ->inverseRelationship('collections')
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
-                    ->label(__('shopper::layout.forms.label.thumbnail'))
+                    ->label(__('shopper::forms.label.thumbnail'))
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
                     ->circular()
-                    ->defaultImageUrl(config('shopper.media.fallback_url')),
+                    ->defaultImageUrl(shopper_fallback_url()),
                 Tables\Columns\TextColumn::make('name'),
             ])
             ->actions([
-                Tables\Actions\Action::make(__('shopper::layout.forms.actions.delete'))
+                Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
                     ->icon('untitledui-trash-03')
                     ->iconButton()
                     ->modalIcon('untitledui-trash-03')
@@ -76,7 +76,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
                     ->visible($this->collection->isAutomatic()),
 
                 Tables\Actions\Action::make('products')
-                    ->label(__('shopper::layout.forms.label.browse'))
+                    ->label(__('shopper::forms.label.browse'))
                     ->icon('untitledui-book-open')
                     ->button()
                     ->color('gray')

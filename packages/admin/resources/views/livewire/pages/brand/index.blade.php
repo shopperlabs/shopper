@@ -1,7 +1,7 @@
 <x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('shopper::layout.sidebar.brands') }}
+            {{ __('shopper::pages/brands.menu') }}
         </x-slot>
 
         <x-slot name="action">
@@ -13,7 +13,7 @@
                                 wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.brand-form' })"
                                 type="button"
                             >
-                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::layout.forms.label.brand'))]) }}
+                                {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/brands.single')]) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -26,7 +26,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/brands.title')"
             :content="__('shopper::pages/brands.content')"
-            :button="__('shopper::words.actions_label.add_new', ['name' => __('shopper::words.brand')])"
+            :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/brands.single')])"
             panel="{ component: 'shopper-slide-overs.brand-form' }"
             permission="add_brands"
         >
@@ -360,5 +360,5 @@
         </div>
     @endif
 
-    <x-shopper::learn-more :name="__('shopper::layout.sidebar.brands')" link="brands" />
+    <x-shopper::learn-more :name="__('shopper::pages/brands.menu')" link="brands" />
 </x-shopper::container>

@@ -7,7 +7,7 @@
             <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
                 :link="route('shopper.customers.index')"
-                :title="__('shopper::layout.sidebar.customers')"
+                :title="__('shopper::pages/customers.menu')"
             />
         </x-shopper::breadcrumb>
 
@@ -54,7 +54,7 @@
                         :actions="[
                             $this->deleteAction,
                         ]"
-                        :label="__('shopper::layout.forms.actions.more_actions')"
+                        :label="__('shopper::forms.actions.more_actions')"
                         icon="heroicon-m-ellipsis-vertical"
                         color="gray"
                         size="sm"
@@ -78,7 +78,7 @@
                         {{ __('shopper::pages/customers.addresses.title') }}
                     </x-filament::tabs.item>
                     <x-filament::tabs.item alpine-active="currentTab === 'orders'" x-on:click="currentTab = 'orders'">
-                        {{ __('shopper::layout.sidebar.orders') }}
+                        {{ __('shopper::pages/orders.menu') }}
                     </x-filament::tabs.item>
                 </x-filament::tabs>
             </div>

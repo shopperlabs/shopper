@@ -28,7 +28,7 @@
                 />
             </x-shopper::forms.group>
             <x-shopper::forms.group
-                :label="__('shopper::layout.forms.label.display_name')"
+                :label="__('shopper::forms.label.display_name')"
                 for="display_name"
                 class="sm:col-span-1"
             >
@@ -41,7 +41,7 @@
                 />
             </x-shopper::forms.group>
             <x-shopper::forms.group
-                :label="__('shopper::layout.forms.label.description')"
+                :label="__('shopper::forms.label.description')"
                 for="description"
                 class="sm:col-span-2"
             >
@@ -54,12 +54,12 @@
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <x-shopper::buttons.primary wire:click="save" type="button">
                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-                {{ __('shopper::layout.forms.actions.save') }}
+                {{ __('shopper::forms.actions.save') }}
             </x-shopper::buttons.primary>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button">
-                {{ __('shopper::layout.forms.actions.cancel') }}
+                {{ __('shopper::forms.actions.cancel') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

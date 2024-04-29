@@ -19,13 +19,11 @@ return [
     |
     */
 
-    'brand' => FeatureState::ENABLED,
-    'category' => FeatureState::ENABLED,
-    'customer' => FeatureState::ENABLED,
-    'collection' => FeatureState::ENABLED,
-    'discount' => FeatureState::ENABLED,
-    'order' => FeatureState::ENABLED,
-    'product' => FeatureState::ENABLED,
-    'review' => FeatureState::ENABLED,
+    'attribute' => FeatureState::Enabled,
+    'brand' => FeatureState::Enabled,
+    'category' => FeatureState::Enabled,
+    'collection' => FeatureState::Enabled,
+    'discount' => FeatureState::Enabled,
+    'review' => FeatureState::Enabled,
 
 ];

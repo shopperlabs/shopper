@@ -46,13 +46,13 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
     {
         return [
             CustomAttributeKeyInput::make('key', $this->attribute->type)
-                ->label(__('shopper::layout.forms.label.key'))
+                ->label(__('shopper::forms.label.key'))
                 ->helperText(__('shopper::modals.attributes.key_description'))
                 ->required()
                 ->unique(table: AttributeValue::class, column: 'key', ignoreRecord: true),
 
             Forms\Components\TextInput::make('value')
-                ->label(__('shopper::layout.forms.label.value'))
+                ->label(__('shopper::forms.label.value'))
                 ->placeholder('My value')
                 ->maxLength(75)
                 ->required(),
@@ -68,7 +68,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
             )
             ->columns([
                 Tables\Columns\TextColumn::make('key')
-                    ->label(__('shopper::layout.forms.label.key')),
+                    ->label(__('shopper::forms.label.key')),
 
                 Tables\Columns\TextColumn::make('id')
                     ->label('Hex')
@@ -76,10 +76,10 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                         'shopper::components.filament.attribute-color-badge',
                         ['key' => $record->key]
                     ))
-                    ->visible($this->attribute->type === FieldType::COLORPICKER),
+                    ->visible($this->attribute->type === FieldType::ColorPicker),
 
                 Tables\Columns\TextColumn::make('value')
-                    ->label(__('shopper::layout.forms.label.value')),
+                    ->label(__('shopper::forms.label.value')),
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')
@@ -87,7 +87,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                     ->color('gray')
                     ->iconButton()
                     ->modal()
-                    ->modalHeading(__('shopper::layout.forms.actions.edit'))
+                    ->modalHeading(__('shopper::forms.actions.edit'))
                     ->modalWidth(MaxWidth::ExtraLarge)
                     ->fillForm(fn (AttributeValue $record): array => [
                         'key' => $record->key,
@@ -112,7 +112,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
             ])
             ->bulkActions([
                 Tables\Actions\BulkAction::make('delete')
-                    ->label(__('shopper::layout.forms.actions.delete'))
+                    ->label(__('shopper::forms.actions.delete'))
                     ->icon('untitledui-trash-03')
                     ->color('danger')
                     ->badge()
@@ -121,7 +121,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
             ])
             ->headerActions([
                 Tables\Actions\Action::make('add')
-                    ->label(__('shopper::words.actions_label.add_new', ['name' => __('shopper::layout.forms.label.value')]))
+                    ->label(__('shopper::forms.actions.add_label', ['label' => __('shopper::forms.label.value')]))
                     ->badge()
                     ->modal()
                     ->modalHeading(__('shopper::modals.attributes.new_value', ['attribute' => $this->attribute->name]))

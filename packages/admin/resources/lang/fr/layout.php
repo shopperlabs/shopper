@@ -5,19 +5,13 @@ declare(strict_types=1);
 return [
 
     'sidebar' => [
-        'dashboard' => 'Tableau de bord',
-        'orders' => 'Commandes',
-        'brands' => 'Marques',
-        'categories' => 'Catégories',
-        'collections' => 'Collections',
-        'customers' => 'Clients',
-        'reviews' => 'Avis',
-        'discounts' => 'Coupons',
-        'products' => 'Produits',
         'catalog' => 'Catalogue',
-        'shop' => 'Magasin',
         'sales' => 'Ventes',
     ],
+
+    'back' => 'Retour',
+    'view_site' => 'Voir le site',
+    'meta_title' => 'Administration Shopper',
 
     'account_dropdown' => [
         'sign_in' => 'Connecté avec',
@@ -27,10 +21,6 @@ return [
         'settings' => 'Paramètres',
         'sign_out' => 'Déconnexion',
     ],
-
-    'back' => 'Retour',
-    'view_site' => 'Voir le site',
-    'meta_title' => 'Administration Shopper',
 
     'status' => [
         'delete' => 'Suppression',

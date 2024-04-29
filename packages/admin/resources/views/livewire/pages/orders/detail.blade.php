@@ -43,7 +43,7 @@
                                     type="button"
                                 >
                                     <x-untitledui-trash-03 class="mr-2 h-5 w-5" />
-                                    {{ __('shopper::layout.forms.actions.delete') }}
+                                    {{ __('shopper::forms.actions.delete') }}
                                 </x-shopper::buttons.danger>
                             </span>
                         @endif
@@ -51,7 +51,7 @@
                         <x-shopper::dropdown>
                             <x-slot name="trigger">
                                 <x-shopper::buttons.default>
-                                    {{ __('shopper::layout.forms.actions.more_actions') }}
+                                    {{ __('shopper::forms.actions.more_actions') }}
                                     <x-untitledui-chevron-selector-vertical class="ml-2 h-5 w-5" />
                                 </x-shopper::buttons.default>
                             </x-slot>
@@ -66,7 +66,7 @@
 
                                     @if ($order->isPending() || $order->isRegister())
                                         <x-shopper::dropdown-button wire:click="markPaid" role="menuitem">
-                                            {{ __('shopper::layout.forms.actions.mark_paid') }}
+                                            {{ __('shopper::forms.actions.mark_paid') }}
                                         </x-shopper::dropdown-button>
                                     @endif
 
@@ -75,14 +75,14 @@
                                             <x-untitledui-check-circle
                                                 class="mr-2 h-5 w-5 text-gray-400 dark:text-gray-500"
                                             />
-                                            {{ __('shopper::layout.forms.actions.mark_complete') }}
+                                            {{ __('shopper::forms.actions.mark_complete') }}
                                         </x-shopper::dropdown-button>
                                     @endif
 
                                     @if ($order->canBeCancelled())
                                         <x-shopper::dropdown-button wire:click="cancelOrder" role="menuitem">
                                             <x-untitledui-x class="mr-2 h-5 w-5 text-gray-400 dark:text-gray-500" />
-                                            {{ __('shopper::layout.forms.actions.cancel_order') }}
+                                            {{ __('shopper::forms.actions.cancel_order') }}
                                         </x-shopper::dropdown-button>
                                     @endif
                                 </div>
@@ -262,7 +262,7 @@
                             </div>
                             <div class="bg-gray-100 px-4 py-4 dark:bg-gray-700 sm:grid sm:grid-cols-3 sm:gap-4">
                                 <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {{ __('shopper::layout.forms.label.price') }}
+                                    {{ __('shopper::forms.label.price') }}
                                 </dt>
                                 <dd
                                     class="mt-1 text-sm font-medium text-gray-900 dark:text-white sm:col-span-2 sm:mt-0"
@@ -272,7 +272,7 @@
                             </div>
                             <div class="bg-gray-50 px-4 py-4 dark:bg-gray-800 sm:grid sm:grid-cols-3 sm:gap-4">
                                 <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                                    {{ __('shopper::layout.forms.label.tax') }}
+                                    {{ __('shopper::forms.label.tax') }}
                                 </dt>
                                 <dd
                                     class="mt-1 text-sm font-medium text-gray-900 dark:text-white sm:col-span-2 sm:mt-0"
@@ -338,13 +338,13 @@
 
                                 @if ($order->isPending() || $order->isRegister())
                                     <x-shopper::dropdown-button wire:click="markPaid" role="menuitem">
-                                        {{ __('shopper::layout.forms.actions.mark_paid') }}
+                                        {{ __('shopper::forms.actions.mark_paid') }}
                                     </x-shopper::dropdown-button>
                                 @endif
 
                                 @if ($order->isPaid())
                                     <x-shopper::dropdown-button wire:click="markComplete" role="menuitem">
-                                        {{ __('shopper::layout.forms.actions.mark_complete') }}
+                                        {{ __('shopper::forms.actions.mark_complete') }}
                                     </x-shopper::dropdown-button>
                                 @endif
                             </div>
@@ -372,12 +372,12 @@
                         @else
                             <div>
                                 <label for="comment" class="sr-only">
-                                    {{ __('shopper::layout.forms.label.comment') }}
+                                    {{ __('shopper::forms.label.comment') }}
                                 </label>
                                 <x-shopper::forms.textarea
                                     wire:model.defer="notes"
                                     id="comment"
-                                    :placeholder="__('shopper::layout.forms.placeholder.leave_comment')"
+                                    :placeholder="__('shopper::forms.placeholder.leave_comment')"
                                     :value="$order->notes"
                                 />
                                 @error('notes')
@@ -391,7 +391,7 @@
                                     type="button"
                                 >
                                     <x-shopper::loader wire:loading wire:target="leaveNotes" />
-                                    {{ __('shopper::layout.forms.actions.send') }}
+                                    {{ __('shopper::forms.actions.send') }}
                                 </x-shopper::buttons.primary>
                             </div>
                         @endif

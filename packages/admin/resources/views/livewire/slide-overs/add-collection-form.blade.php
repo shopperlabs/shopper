@@ -1,5 +1,5 @@
 <x-shopper::form-slider-over
-    :title="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.collection'))])"
+    :title="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/collections.single')])"
     action="store"
 >
     {{ $this->form }}

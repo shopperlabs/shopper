@@ -56,6 +56,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return view('shopper::livewire.pages.orders.index', [
             'total' => Order::query()->count(),
         ])
-            ->title(__('shopper::layout.sidebar.orders'));
+            ->title(__('shopper::pages/orders.menu'));
     }
 }

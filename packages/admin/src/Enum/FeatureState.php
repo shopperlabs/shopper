@@ -6,7 +6,7 @@ namespace Shopper\Enum;
 
 enum FeatureState: string
 {
-    case ENABLED = 'enabled';
+    case Enabled = 'enabled';
 
-    case DISABLED = 'disabled';
+    case Disabled = 'disabled';
 }

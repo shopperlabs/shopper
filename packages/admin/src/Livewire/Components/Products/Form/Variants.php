@@ -48,10 +48,10 @@ class Variants extends Component implements HasForms, HasTable
                     ->stacked()
                     ->circular()
                     ->wrap()
-                    ->defaultImageUrl(config('shopper.media.fallback_url')),
+                    ->defaultImageUrl(shopper_fallback_url()),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('shopper::layout.forms.label.name'))
+                    ->label(__('shopper::forms.label.name'))
                     ->searchable()
                     ->sortable(),
 
@@ -72,14 +72,14 @@ class Variants extends Component implements HasForms, HasTable
                     ),
 
                 Tables\Columns\TextColumn::make('price_amount')
-                    ->label(__('shopper::layout.forms.label.price'))
+                    ->label(__('shopper::forms.label.price'))
                     ->money(shopper_currency())
                     ->sortable(),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('edit')
-                        ->label(__('shopper::layout.forms.actions.edit'))
+                        ->label(__('shopper::forms.actions.edit'))
                         ->icon('untitledui-edit-04')
                         ->url(
                             fn (Product $record): string => route(
@@ -87,7 +87,7 @@ class Variants extends Component implements HasForms, HasTable
                                 parameters: ['variantId' => $record->id, 'product' => $this->product]
                             ),
                         ),
-                    Tables\Actions\Action::make(__('shopper::layout.forms.actions.delete'))
+                    Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
                         ->icon('untitledui-trash-03')
                         ->color('danger')
                         ->requiresConfirmation()
@@ -109,16 +109,16 @@ class Variants extends Component implements HasForms, HasTable
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()
-                    ->label(__('shopper::layout.forms.actions.delete'))
+                    ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         $records->each->delete();
 
                         Notification::make()
-                            ->title(__('shopper::components.tables.status.delete'))
+                            ->title(__('shopper::forms.actions.delete'))
                             ->body(
-                                __('shopper::components.tables.messages.delete', [
-                                    'name' => mb_strtolower(__('shopper::words.variant')),
+                                __('shopper::notifications.delete', [
+                                    'item' => __('shopper::pages/products.variants.single'),
                                 ])
                             )
                             ->success()

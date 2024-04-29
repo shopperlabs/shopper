@@ -27,7 +27,7 @@ enum CollectionType: string implements HasDescription, HasLabel
     public function getDescription(): ?string
     {
         return match ($this) {
-            self::Manuel => __('shopper-core::enum/collection.manual_description'),
+            self::Manual => __('shopper-core::enum/collection.manual_description'),
             self::Auto => __('shopper-core::enum/collection.automatic_description'),
         };
     }

@@ -1,7 +1,7 @@
 <x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('shopper::layout.sidebar.collections') }}
+            {{ __('shopper::pages/collections.menu') }}
         </x-slot>
 
         <x-slot name="action">
@@ -13,7 +13,7 @@
                                 type="button"
                                 wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.add-collection-form' })"
                             >
-                                {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.collection'))]) }}
+                                {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/collections.single')]) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -26,7 +26,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/collections.title')"
             :content="__('shopper::pages/collections.content')"
-            :button="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.collection'))])"
+            :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/collections.single')])"
             permission="add_collections"
             panel="{ component: 'shopper-slide-overs.add-collection-form' }"
         >
@@ -448,5 +448,5 @@
         </div>
     @endif
 
-    <x-shopper::learn-more :name="__('shopper::layout.sidebar.collections')" link="collections" />
+    <x-shopper::learn-more :name="__('shopper::pages/collections.menu')" link="collections" />
 </x-shopper::container>

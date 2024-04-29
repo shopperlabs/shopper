@@ -35,30 +35,30 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
                     ->circular()
-                    ->defaultImageUrl(url(config('shopper.media.fallback_url')))
+                    ->defaultImageUrl(shopper_fallback_url())
                     ->grow(false),
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('shopper::layout.forms.label.name'))
+                    ->label(__('shopper::forms.label.name'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('website')
-                    ->label(__('shopper::layout.forms.label.website'))
+                    ->label(__('shopper::forms.label.website'))
                     ->formatStateUsing(fn (string $state): View => view(
                         'shopper::livewire.tables.cells.brands.site',
                         ['state' => $state],
                     )),
                 Tables\Columns\IconColumn::make('is_enabled')
-                    ->label(__('shopper::layout.forms.label.visibility'))
+                    ->label(__('shopper::forms.label.visibility'))
                     ->boolean(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('shopper::layout.forms.label.updated_at'))
+                    ->label(__('shopper::forms.label.updated_at'))
                     ->date()
                     ->sortable(),
             ])
             ->reorderable('position')
             ->actions([
                 Tables\Actions\Action::make('edit')
-                    ->label(__('shopper::layout.forms.actions.edit'))
+                    ->label(__('shopper::forms.actions.edit'))
                     ->action(
                         fn ($record) => $this->dispatch(
                             'openPanel',
@@ -70,7 +70,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()
-                    ->label(__('shopper::layout.forms.actions.delete'))
+                    ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         $records->each->delete();
@@ -78,8 +78,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.delete'))
                             ->body(
-                                __('shopper::components.tables.messages.delete', [
-                                    'name' => mb_strtolower(__('shopper::layout.forms.label.brand')),
+                                __('shopper::notifications.delete', [
+                                    'item' => __('shopper::pages/brands.single'),
                                 ])
                             )
                             ->success()
@@ -87,7 +87,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     })
                     ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('enabled')
-                    ->label(__('shopper::layout.forms.actions.enable'))
+                    ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus();
@@ -95,8 +95,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))
                             ->body(
-                                __('shopper::components.tables.messages.enabled', [
-                                    'name' => mb_strtolower(__('shopper::layout.forms.label.brand')),
+                                __('shopper::notifications.enabled', [
+                                    'item' => __('shopper::pages/brands.single'),
                                 ])
                             )
                             ->success()
@@ -104,7 +104,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     })
                     ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('disabled')
-                    ->label(__('shopper::layout.forms.actions.disable'))
+                    ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus(status: false);
@@ -112,8 +112,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))
                             ->body(
-                                __('shopper::components.tables.messages.disabled', [
-                                    'name' => mb_strtolower(__('shopper::layout.forms.label.brand')),
+                                __('shopper::notifications.disabled', [
+                                    'item' => __('shopper::pages/brands.single'),
                                 ])
                             )
                             ->success()
@@ -132,6 +132,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return view('shopper::livewire.pages.brand.index', [
             'total' => (new BrandRepository())->count(),
-        ])->title(__('shopper::layout.sidebar.brands'));
+        ])->title(__('shopper::pages/brands.menu'));
     }
 }

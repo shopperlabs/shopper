@@ -4,7 +4,7 @@
             {{ __('shopper::words.seo.title') }}
         </x-filament::section.heading>
         <x-filament::section.description class="mt-1 max-w-2xl">
-            {{ __('shopper::words.seo.description', ['name' => mb_strtolower(__('shopper::words.product'))]) }}
+            {{ __('shopper::words.seo.description', ['name' => __('shopper::pages/products.single')]) }}
         </x-filament::section.description>
     </div>
     <div class="grid gap-6 lg:grid-cols-2 lg:gap-x-10">
@@ -15,7 +15,7 @@
                 <div class="flex justify-end">
                     <x-shopper::buttons.primary type="submit" wire.loading.attr="disabled">
                         <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                        {{ __('shopper::layout.forms.actions.update') }}
+                        {{ __('shopper::forms.actions.update') }}
                     </x-shopper::buttons.primary>
                 </div>
             </div>
@@ -23,7 +23,7 @@
 
         <div class="max-w-xl">
             <h4 class="text-sm leading-5 text-gray-600 dark:text-gray-400">
-                {{ __('shopper::pages/products.seo.sub_description') }}
+                {{ __('shopper::words.seo.sub_description') }}
             </h4>
             <div
                 class="mt-5 flex h-auto flex-col overflow-hidden rounded-xl bg-gray-100 p-1 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"

@@ -13,10 +13,10 @@ final class SeoField
     {
         return [
             TextInput::make('seo_title')
-                ->label(__('shopper::layout.forms.label.title')),
+                ->label(__('shopper::forms.label.title')),
             Textarea::make('seo_description')
-                ->label(__('shopper::layout.forms.label.description'))
-                ->hint(__('shopper::components.seo.characters'))
+                ->label(__('shopper::forms.label.description'))
+                ->hint(__('shopper::words.seo.characters'))
                 ->maxLength(160),
         ];
     }

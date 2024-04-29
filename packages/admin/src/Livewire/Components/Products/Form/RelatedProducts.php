@@ -30,7 +30,7 @@ class RelatedProducts extends Component implements HasActions, HasForms
     public function removeAction(): Action
     {
         return Action::make('remove')
-            ->label(__('shopper::layout.forms.actions.remove'))
+            ->label(__('shopper::forms.actions.remove'))
             ->icon('untitledui-trash-03')
             ->action(function (array $arguments): void {
                 $this->product->relatedProducts()->detach($arguments['id']);

@@ -29,7 +29,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
 
     public function deleteAction(): Action
     {
-        return Action::make(__('shopper::layout.forms.actions.delete'))
+        return Action::make(__('shopper::forms.actions.delete'))
             ->requiresConfirmation()
             ->icon('untitledui-trash-03')
             ->modalIcon('untitledui-trash-03')
@@ -39,7 +39,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
                 $this->product->delete();
 
                 Notification::make()
-                    ->title(__('shopper::components.tables.messages.delete', ['name' => __('shopper::words.product')]))
+                    ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/products.single')]))
                     ->success()
                     ->send();
 
@@ -51,6 +51,6 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
     public function render(): View
     {
         return view('shopper::livewire.pages.products.edit')
-            ->title(__('shopper::words.actions_label.edit', ['name' => $this->product->name]));
+            ->title(__('shopper::forms.actions.edit_label', ['label' => $this->product->name]));
     }
 }

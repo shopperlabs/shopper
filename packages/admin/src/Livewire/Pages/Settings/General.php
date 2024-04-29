@@ -96,13 +96,13 @@ class General extends Component implements HasForms
                     ->compact()
                     ->schema([
                         Components\FileUpload::make('logo')
-                            ->label(__('shopper::layout.forms.label.logo'))
+                            ->label(__('shopper::forms.label.logo'))
                             ->avatar()
                             ->image()
                             ->maxSize(1024)
                             ->disk(config('shopper.core.storage.collection_name')),
                         Components\FileUpload::make('cover')
-                            ->label(__('shopper::layout.forms.label.cover_photo'))
+                            ->label(__('shopper::forms.label.cover_photo'))
                             ->image()
                             ->maxSize(1024)
                             ->disk(config('shopper.core.storage.collection_name')),
@@ -114,7 +114,7 @@ class General extends Component implements HasForms
                     ->compact()
                     ->schema([
                         Components\TextInput::make('legal_name')
-                            ->label(__('shopper::layout.forms.label.legal_name'))
+                            ->label(__('shopper::forms.label.legal_name'))
                             ->placeholder('ShopStation LLC')
                             ->required(),
                         Components\RichEditor::make('about')
@@ -122,19 +122,19 @@ class General extends Component implements HasForms
                             ->fileAttachmentsDisk(config('shopper.core.storage.disk_name'))
                             ->fileAttachmentsDirectory(config('shopper.core.storage.collection_name')),
                         Components\TextInput::make('street_address')
-                            ->label(__('shopper::layout.forms.label.street_address'))
+                            ->label(__('shopper::forms.label.street_address'))
                             ->placeholder('Akwa Avenue 34')
                             ->required(),
                         Components\Grid::make()->schema([
                             Components\TextInput::make('city')
-                                ->label(__('shopper::layout.forms.label.city'))
+                                ->label(__('shopper::forms.label.city'))
                                 ->required(),
                             Components\TextInput::make('postal_code')
-                                ->label(__('shopper::layout.forms.label.postal_code'))
+                                ->label(__('shopper::forms.label.postal_code'))
                                 ->required(),
                         ]),
                         Components\Select::make('country_id')
-                            ->label(__('shopper::layout.forms.label.country'))
+                            ->label(__('shopper::forms.label.country'))
                             ->options(Country::query()->pluck('name', 'id'))
                             ->searchable(),
                     ]),
@@ -145,7 +145,7 @@ class General extends Component implements HasForms
                     ->compact()
                     ->schema([
                         Components\Select::make('currency_id')
-                            ->label(__('shopper::layout.forms.label.currency'))
+                            ->label(__('shopper::forms.label.currency'))
                             ->options(Currency::query()->pluck('name', 'id'))
                             ->required()
                             ->searchable(),

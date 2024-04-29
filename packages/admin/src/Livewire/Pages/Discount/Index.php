@@ -37,7 +37,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->query(Discount::query())
             ->columns([
                 Tables\Columns\TextColumn::make('code')
-                    ->label(__('shopper::layout.forms.label.code'))
+                    ->label(__('shopper::forms.label.code'))
                     ->badge()
                     ->searchable()
                     ->sortable(),
@@ -62,7 +62,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->badge(),
 
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label(__('shopper::layout.forms.label.status'))
+                    ->label(__('shopper::forms.label.status'))
                     ->boolean()
                     ->sortable(),
 
@@ -84,7 +84,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')
-                    ->label(__('shopper::layout.forms.actions.edit'))
+                    ->label(__('shopper::forms.actions.edit'))
                     ->action(
                         fn (Discount $record) => $this->dispatch(
                             'openPanel',
@@ -96,16 +96,15 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()
-                    ->label(__('shopper::layout.forms.actions.delete'))
+                    ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         $records->each->delete();
 
                         Notification::make()
-                            ->title(__('shopper::components.tables.status.delete'))
-                            ->body(
-                                __('shopper::components.tables.messages.delete', [
-                                    'name' => mb_strtolower(__('shopper::words.discount')),
+                            ->title(
+                                __('shopper::notifications.delete', [
+                                    'item' => __('shopper::pages/discounts.single'),
                                 ])
                             )
                             ->success()
@@ -150,6 +149,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return view('shopper::livewire.pages.discounts.index', [
             'total' => Discount::query()->count(),
         ])
-            ->title(__('shopper::layout.sidebar.discounts'));
+            ->title(__('shopper::pages/discounts.menu'));
     }
 }

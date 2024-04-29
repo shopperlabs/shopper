@@ -75,31 +75,24 @@
                 @endforeach
             </div>
         @else
-            <div class="flex flex-col items-center justify-center py-10 text-center">
-                <div
-                    class="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-white"
-                >
-                    <x-untitledui-book-open class="h-5 w-5" stroke-width="1.5" aria-hidden="true" />
-                </div>
-                <h3 class="mt-2 font-medium text-gray-900 dark:text-white">
-                    {{ __('shopper::pages/products.related.empty') }}
-                </h3>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                    {{ __('shopper::pages/products.related.add_content') }}
-                </p>
-                <div class="mt-6">
+            <x-shopper::empty-card
+                icon="untitledui-book-open"
+                :heading="__('shopper::pages/products.related.empty')"
+                :description="__('shopper::pages/products.related.add_content')"
+            >
+                <x-slot:action>
                     <x-shopper::buttons.primary
                         type="button"
                         wire:click="$dispatch('openModal', {
-                                component: 'shopper-modals.related-products-list',
-                                arguments: { productId: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
-                            })"
+                            component: 'shopper-modals.related-products-list',
+                            arguments: { productId: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
+                        })"
                     >
                         <x-untitledui-plus class="mr-2 h-5 w-5" stroke-width="1.5" aria-hidden="true" />
-                        {{ __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.product'))]) }}
+                        {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')]) }}
                     </x-shopper::buttons.primary>
-                </div>
-            </div>
+                </x-slot>
+            </x-shopper::empty-card>
         @endif
     </x-shopper::card>
 </x-shopper::container>

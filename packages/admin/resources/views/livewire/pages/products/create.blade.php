@@ -4,13 +4,13 @@
             <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
             <x-shopper::breadcrumb.link
                 :link="route('shopper.products.index')"
-                :title="__('shopper::layout.sidebar.products')"
+                :title="__('shopper::pages/products.menu')"
             />
         </x-shopper::breadcrumb>
 
         <x-shopper::heading class="mt-5">
             <x-slot name="title">
-                {{ __('shopper::words.actions_label.add_new', ['name' => __('shopper::words.product')]) }}
+                {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')]) }}
             </x-slot>
         </x-shopper::heading>
     </x-shopper::container>

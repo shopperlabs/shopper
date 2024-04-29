@@ -4,19 +4,9 @@ declare(strict_types=1);
 
 return [
 
-    'customer' => 'Customer',
-    'product' => 'Product',
-    'brand' => 'Brand',
-    'collection' => 'Collection',
-    'category' => 'Category',
-    'attribute' => 'Attribute',
-    'attributes' => 'Attributes',
-    'discount' => 'Discount',
-    'review' => 'Review',
     'account' => 'Account',
     'users' => 'Users',
     'user' => 'User',
-    'analytics' => 'Analytics',
     'system' => 'System',
     'purchased' => 'Purchased',
     'total' => 'Total',
@@ -55,16 +45,8 @@ return [
     'location' => 'Inventory',
     'locations' => 'Inventories',
     'dismiss' => 'Dismiss',
-    'weight_dimension' => 'Weight and Dimension',
+
     'published_on' => 'Will be published on:',
-    'unity' => [
-        'm' => 'm',
-        'cm' => 'cm',
-        'kg' => 'kg',
-        'g' => 'g',
-        'l' => 'l',
-        'ml' => 'ml',
-    ],
 
     'variants' => 'Variants',
     'variant' => 'Variant',
@@ -75,20 +57,10 @@ return [
     'adjustment' => 'Adjustment',
     'is_enabled' => 'Is Enabled',
 
-    'selected_tab' => 'Selected tab',
     'set_visibility' => 'Set :name visibility for the customers.',
     'set_global_visibility' => 'Setup page visibility for the customers.',
     'log_out' => 'Log out',
     'browser_platform' => ':browser on :platform',
-
-    'actions_label' => [
-        'add' => 'Add',
-        'add_new' => 'New :name',
-        'update' => 'Update :name',
-        'edit' => 'Edit :name',
-        'show' => 'View :name',
-        'delete' => 'Delete :name',
-    ],
 
     'generate' => 'Generate',
     'male' => 'Male',
@@ -171,6 +143,7 @@ return [
         'slug' => 'SEO',
         'description' => 'Improve your ranking and how your :name page will appear in search engines results.',
         'sub_description' => 'Here is a preview of what an search engine can display, play with it!',
+        'characters' => '160 characters',
     ],
 
     'other' => ' other(s)',
@@ -178,5 +151,6 @@ return [
     'feature_enabled' => 'You must enable :feature to activate this section.',
     'amount' => 'Amount',
     'soon' => 'Soon',
+    'learn_more' => 'Learn more about',
 
 ];

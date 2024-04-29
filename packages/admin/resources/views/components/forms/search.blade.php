@@ -1,7 +1,7 @@
 @props([
-    'label' => __('shopper::layout.forms.label.search'),
+    'label' => __('shopper::forms.label.search'),
     'for' => 'search-filter',
-    'placeholder' => __('shopper::layout.forms.label.search'),
+    'placeholder' => __('shopper::forms.label.search'),
 ])
 
 <div class="flex flex-1">

@@ -3,7 +3,7 @@
 @endphp
 
 <div>
-    @if ($discount->type === \Shopper\Core\Enum\DiscountType::PERCENTAGE->value)
+    @if ($discount->type === \Shopper\Core\Enum\DiscountType::Percentage->value)
         {{ $discount->value . '%' }}
     @else
         {{ shopper_money_format($discount->value * 100) }}

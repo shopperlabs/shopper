@@ -14,11 +14,7 @@
 
     <x-slot name="content">
         <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <x-shopper::forms.group
-                :label="__('shopper::layout.forms.label.group_name')"
-                for="group"
-                class="sm:col-span-2"
-            >
+            <x-shopper::forms.group :label="__('shopper::forms.label.group_name')" for="group" class="sm:col-span-2">
                 <x-shopper::forms.select id="group" wire:model.defer="group">
                     <option>{{ __('shopper::words.no_group') }}</option>
                     @foreach ($groups as $key => $value)
@@ -40,7 +36,7 @@
                 />
             </x-shopper::forms.group>
             <x-shopper::forms.group
-                :label="__('shopper::layout.forms.label.display_name')"
+                :label="__('shopper::forms.label.display_name')"
                 for="permission_display_name"
                 :error="$errors->first('display_name')"
                 isRequired
@@ -55,7 +51,7 @@
             <x-shopper::forms.group
                 for="permission_description"
                 class="sm:col-span-2"
-                :label="__('shopper::layout.forms.label.description')"
+                :label="__('shopper::forms.label.description')"
             >
                 <x-shopper::forms.textarea wire:model.defer="description" id="permission_description" />
             </x-shopper::forms.group>
@@ -65,10 +61,10 @@
     <x-slot name="buttons">
         <x-shopper::buttons.primary wire:click="save" type="button" class="sm:ml-3 sm:w-auto">
             <x-shopper::loader wire:loading wire:target="save" class="text-white" />
-            {{ __('shopper::layout.forms.actions.save') }}
+            {{ __('shopper::forms.actions.save') }}
         </x-shopper::buttons.primary>
         <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button" class="mt-3 sm:mt-0 sm:w-auto">
-            {{ __('shopper::layout.forms.actions.cancel') }}
+            {{ __('shopper::forms.actions.cancel') }}
         </x-shopper::buttons.default>
     </x-slot>
 </x-shopper::modal>

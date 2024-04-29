@@ -22,27 +22,27 @@ final class AddressField
     {
         return [
             Components\TextInput::make(self::getPrefix($prefix) . 'street_address')
-                ->label(__('shopper::layout.forms.label.street_address'))
+                ->label(__('shopper::forms.label.street_address'))
                 ->placeholder('Akwa Avenue 34...')
                 ->columnSpan('full')
                 ->required(),
             Components\TextInput::make(self::getPrefix($prefix) . 'street_address_plus')
-                ->label(__('shopper::layout.forms.label.street_address_plus'))
+                ->label(__('shopper::forms.label.street_address_plus'))
                 ->columnSpan('full'),
             Components\TextInput::make(self::getPrefix($prefix) . 'city')
-                ->label(__('shopper::layout.forms.label.city'))
+                ->label(__('shopper::forms.label.city'))
                 ->required(),
             Components\TextInput::make(self::getPrefix($prefix) . 'zipcode')
-                ->label(__('shopper::layout.forms.label.postal_code'))
+                ->label(__('shopper::forms.label.postal_code'))
                 ->required(),
             Components\Select::make(self::getPrefix($prefix) . 'country_id')
-                ->label(__('shopper::layout.forms.label.country'))
+                ->label(__('shopper::forms.label.country'))
                 ->options(Country::query()->pluck('name', 'id'))
                 ->searchable()
                 ->required()
                 ->columnSpan('full'),
             Components\TextInput::make(self::getPrefix($prefix) . 'phone_number')
-                ->label(__('shopper::layout.forms.label.phone_number'))
+                ->label(__('shopper::forms.label.phone_number'))
                 ->tel()
                 ->columnSpan('full'),
         ];

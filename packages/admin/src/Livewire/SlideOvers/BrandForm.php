@@ -44,7 +44,7 @@ class BrandForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Components\TextInput::make('name')
-                            ->label(__('shopper::layout.forms.label.name'))
+                            ->label(__('shopper::forms.label.name'))
                             ->placeholder('Apple, Nike, Samsung...')
                             ->required()
                             ->live(onBlur: true)
@@ -53,14 +53,14 @@ class BrandForm extends SlideOverComponent implements HasForms
                             }),
                         Components\Hidden::make('slug'),
                         Components\TextInput::make('website')
-                            ->label(__('shopper::layout.forms.label.website'))
+                            ->label(__('shopper::forms.label.website'))
                             ->placeholder('https://example.com')
                             ->url(),
                         Components\Toggle::make('is_enabled')
-                            ->label(__('shopper::layout.forms.label.visibility'))
-                            ->helperText(__('shopper::words.set_visibility', ['name' => mb_strtolower(__('shopper::words.brand'))])),
+                            ->label(__('shopper::forms.label.visibility'))
+                            ->helperText(__('shopper::words.set_visibility', ['name' => __('shopper::pages/brands.single')])),
                         Components\RichEditor::make('description')
-                            ->label(__('shopper::layout.forms.label.description'))
+                            ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([
                                 'bold',
                                 'italic',
@@ -76,12 +76,12 @@ class BrandForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Components\SpatieMediaLibraryFileUpload::make('file')
-                            ->label(__('shopper::layout.forms.label.image_preview'))
+                            ->label(__('shopper::forms.label.image_preview'))
                             ->collection(config('shopper.core.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(1024),
                     ]),
-                Section::make('Seo')
+                Section::make(__('shopper::words.seo.slug'))
                     ->collapsible()
                     ->compact()
                     ->schema(SeoField::make()),
@@ -107,7 +107,7 @@ class BrandForm extends SlideOverComponent implements HasForms
         }
 
         Notification::make()
-            ->title(__('shopper::notifications.actions.save', ['item' => __('shopper::words.brand')]))
+            ->title(__('shopper::notifications.save', ['item' => __('shopper::pages/brands.single')]))
             ->success()
             ->send();
 

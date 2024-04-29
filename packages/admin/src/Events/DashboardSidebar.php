@@ -17,7 +17,7 @@ class DashboardSidebar extends AbstractAdminSidebar
             $group->weight(1);
             $group->setAuthorized();
 
-            $group->item(__('shopper::layout.sidebar.dashboard'), function (Item $item): void {
+            $group->item(__('shopper::pages/dashboard.menu'), function (Item $item): void {
                 $item->weight(1);
                 $item->setItemClass('sh-sidebar-item group');
                 $item->setActiveClass('sh-sidebar-item-active');

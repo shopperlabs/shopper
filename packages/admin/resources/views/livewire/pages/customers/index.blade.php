@@ -1,7 +1,7 @@
 <x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('shopper::layout.sidebar.customers') }}
+            {{ __('shopper::pages/customers.menu') }}
         </x-slot>
 
         <x-slot name="action">
@@ -10,7 +10,7 @@
                     <div class="flex space-x-3">
                         <span class="rounded-md shadow-sm">
                             <x-shopper::buttons.primary :link="route('shopper.customers.create')">
-                                {{ __('shopper::words.actions_label.add_new', ['name' => __('shopper::words.customer')]) }}
+                                {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -23,7 +23,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/customers.title')"
             :content="__('shopper::pages/customers.content')"
-            :button="__('shopper::words.actions_label.add_new', ['name' => __('shopper::words.customer')])"
+            :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')])"
             permission="add_customers"
             :url="route('shopper.customers.create')"
         >
@@ -448,5 +448,5 @@
         </div>
     @endif
 
-    <x-shopper::learn-more :name="__('shopper::layout.sidebar.customers')" link="customers" />
+    <x-shopper::learn-more :name="__('shopper::pages/customers.menu')" link="customers" />
 </x-shopper::container>

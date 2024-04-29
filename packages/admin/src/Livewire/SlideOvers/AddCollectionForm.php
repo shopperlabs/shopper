@@ -40,7 +40,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label(__('shopper::layout.forms.label.name'))
+                            ->label(__('shopper::forms.label.name'))
                             ->placeholder('Summers Collections, Christmas promotions...')
                             ->required()
                             ->live(onBlur: true)
@@ -49,7 +49,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                             }),
 
                         Forms\Components\TextInput::make('slug')
-                            ->label(__('shopper::layout.forms.label.slug'))
+                            ->label(__('shopper::forms.label.slug'))
                             ->disabled()
                             ->dehydrated()
                             ->required()
@@ -57,7 +57,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                             ->unique(table: config('shopper.models.collection'), column: 'slug'),
 
                         Forms\Components\DateTimePicker::make('published_at')
-                            ->label(__('shopper::layout.forms.label.availability'))
+                            ->label(__('shopper::forms.label.availability'))
                             ->native(false)
                             ->default(now())
                             ->helperText(__('shopper::pages/collections.availability_description')),
@@ -65,17 +65,10 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                         Forms\Components\Radio::make('type')
                             ->label(__('shopper::pages/collections.filter_type'))
                             ->required()
-                            ->options([
-                                CollectionType::MANUAL->value => __('shopper::pages/collections.manual'),
-                                CollectionType::AUTO->value => __('shopper::pages/collections.automatic'),
-                            ])
-                            ->descriptions([
-                                CollectionType::MANUAL->value => __('shopper::pages/collections.manual_description'),
-                                CollectionType::AUTO->value => __('shopper::pages/collections.automatic_description'),
-                            ]),
+                            ->options(CollectionType::class),
 
                         Forms\Components\RichEditor::make('description')
-                            ->label(__('shopper::layout.forms.label.description'))
+                            ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([
                                 'bold',
                                 'italic',
@@ -92,13 +85,13 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Forms\Components\SpatieMediaLibraryFileUpload::make('file')
-                            ->label(__('shopper::layout.forms.label.image_preview'))
+                            ->label(__('shopper::forms.label.image_preview'))
                             ->collection(config('shopper.core.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(1024),
                     ]),
 
-                Section::make('Seo')
+                Section::make(__('shopper::words.seo.slug'))
                     ->collapsed()
                     ->compact()
                     ->schema(SeoField::make()),
@@ -122,7 +115,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
         $this->form->model($collection)->saveRelationships();
 
         Notification::make()
-            ->title(__('shopper::notifications.actions.create', ['item' => __('shopper::words.collection')]))
+            ->title(__('shopper::notifications.create', ['item' => __('shopper::pages/collections.single')]))
             ->success()
             ->send();
 

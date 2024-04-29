@@ -105,7 +105,7 @@
                             wire:loading.attr="disabled"
                         >
                             <x-shopper::loader wire:loading wire:target="startConfirmingPassword" class="text-white" />
-                            {{ __('shopper::layout.forms.actions.enabled_two_factor') }}
+                            {{ __('shopper::forms.actions.enabled_two_factor') }}
                         </x-shopper::buttons.primary>
                     @else
                         <div class="space-x-3 sm:flex sm:items-center">
@@ -114,7 +114,7 @@
                                 wire:loading.attr="disabled"
                                 type="button"
                             >
-                                {{ __('shopper::layout.forms.actions.disabled') }}
+                                {{ __('shopper::forms.actions.disabled') }}
                             </x-shopper::buttons.danger>
                             @if ($showingRecoveryCodes)
                                 <x-shopper::buttons.primary
@@ -122,7 +122,7 @@
                                     wire:loading.attr="disabled"
                                     type="button"
                                 >
-                                    {{ __('shopper::layout.forms.actions.regenerate') }}
+                                    {{ __('shopper::forms.actions.regenerate') }}
                                 </x-shopper::buttons.primary>
                             @else
                                 <x-shopper::buttons.default
@@ -130,7 +130,7 @@
                                     wire:loading.attr="disabled"
                                     type="button"
                                 >
-                                    {{ __('shopper::layout.forms.actions.show_recovery_code') }}
+                                    {{ __('shopper::forms.actions.show_recovery_code') }}
                                 </x-shopper::buttons.default>
                             @endif
                         </div>

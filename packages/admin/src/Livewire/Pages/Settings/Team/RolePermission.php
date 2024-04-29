@@ -46,11 +46,11 @@ class RolePermission extends Component implements HasActions, HasForms
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('display_name', Str::title($state)))
                     ->required(),
                 Components\TextInput::make('display_name')
-                    ->label(__('shopper::layout.forms.label.display_name'))
+                    ->label(__('shopper::forms.label.display_name'))
                     ->placeholder('Manager')
                     ->required(),
                 Components\Textarea::make('description')
-                    ->label(__('shopper::layout.forms.label.description'))
+                    ->label(__('shopper::forms.label.description'))
                     ->rows(4)
                     ->columnSpan('full'),
             ])
@@ -62,7 +62,7 @@ class RolePermission extends Component implements HasActions, HasForms
     public function deleteAction(): Action
     {
         return DeleteAction::make('delete')
-            ->label(__('shopper::layout.forms.actions.delete'))
+            ->label(__('shopper::forms.actions.delete'))
             ->icon('untitledui-trash-03')
             ->visible($this->role->can_be_removed)
             ->record($this->role)

@@ -59,6 +59,13 @@ if (! function_exists('shopper')) {
 if (! function_exists('shopper_fallback_url')) {
     function shopper_fallback_url(): string
     {
-        return url(shopper()->prefix() . '/images/placeholder.jpg');
+        return shopper_panel_assets('/images/placeholder.jpg');
+    }
+}
+
+if (! function_exists('shopper_panel_asset')) {
+    function shopper_panel_assets(string $asset): string
+    {
+        return url(shopper()->prefix() . $asset);
     }
 }

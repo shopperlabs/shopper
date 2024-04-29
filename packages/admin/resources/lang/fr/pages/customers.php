@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Clients',
+    'single' => 'client',
     'title' => 'Gérer les commandes et les détails des clients',
     'content' => 'C\'est ici que vous pouvez gérer les informations de vos clients et consulter leur historique d\'achat.',
 

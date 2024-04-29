@@ -69,7 +69,7 @@ class CollectionRules extends SlideOverComponent implements HasForms
                             ->required(),
 
                         Forms\Components\TextInput::make('value')
-                            ->label(__('shopper::layout.forms.label.value'))
+                            ->label(__('shopper::forms.label.value'))
                             ->required(),
                     ])
                     ->columns(3)

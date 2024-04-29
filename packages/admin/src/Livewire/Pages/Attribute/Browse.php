@@ -34,31 +34,31 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
             ->query(Attribute::query())
             ->columns([
                 IconColumn::make('icon')
-                    ->label(__('shopper::layout.forms.label.icon')),
+                    ->label(__('shopper::forms.label.icon')),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('shopper::layout.forms.label.name'))
+                    ->label(__('shopper::forms.label.name'))
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('type')
-                    ->label(__('shopper::layout.forms.label.type'))
+                    ->label(__('shopper::forms.label.type'))
                     ->formatStateUsing(fn (Attribute $record) => $record->type_formatted)
                     ->searchable(),
 
                 Tables\Columns\IconColumn::make('is_enabled')
-                    ->label(__('shopper::layout.forms.actions.enabled'))
+                    ->label(__('shopper::words.is_enabled'))
                     ->boolean(),
 
                 Tables\Columns\IconColumn::make('is_searchable')
-                    ->label(__('shopper::layout.forms.label.is_searchable'))
+                    ->label(__('shopper::forms.label.is_searchable'))
                     ->boolean(),
 
                 Tables\Columns\IconColumn::make('is_filterable')
-                    ->label(__('shopper::layout.forms.label.is_filterable'))
+                    ->label(__('shopper::forms.label.is_filterable'))
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('shopper::layout.forms.label.updated_at'))
+                    ->label(__('shopper::forms.label.updated_at'))
                     ->date()
                     ->sortable(),
             ])
@@ -77,7 +77,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                     ->visible(fn (Attribute $record) => in_array($record->type->value, Attribute::fieldsWithValues())),
 
                 Tables\Actions\Action::make('edit')
-                    ->label(__('shopper::layout.forms.actions.edit'))
+                    ->label(__('shopper::forms.actions.edit'))
                     ->color('gray')
                     ->icon('untitledui-edit-04')
                     ->action(
@@ -91,7 +91,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()
-                    ->label(__('shopper::layout.forms.actions.delete'))
+                    ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         $records->each->delete();
@@ -99,8 +99,8 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.delete'))
                             ->body(
-                                __('shopper::components.tables.messages.delete', [
-                                    'name' => mb_strtolower(__('shopper::words.attribute')),
+                                __('shopper::notifications.delete', [
+                                    'item' => __('shopper::pages/attributes.single'),
                                 ])
                             )
                             ->success()
@@ -108,7 +108,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                     })
                     ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('enabled')
-                    ->label(__('shopper::layout.forms.actions.enable'))
+                    ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus();
@@ -116,8 +116,8 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))
                             ->body(
-                                __('shopper::components.tables.messages.enabled', [
-                                    'name' => mb_strtolower(__('shopper::words.attribute')),
+                                __('shopper::notifications.enabled', [
+                                    'item' => __('shopper::pages/attributes.single'),
                                 ])
                             )
                             ->success()
@@ -125,7 +125,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                     })
                     ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('disabled')
-                    ->label(__('shopper::layout.forms.actions.disable'))
+                    ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus(status: false);
@@ -133,8 +133,8 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))
                             ->body(
-                                __('shopper::components.tables.messages.disabled', [
-                                    'name' => mb_strtolower(__('shopper::words.attribute')),
+                                __('shopper::notifications.disabled', [
+                                    'item' => __('shopper::pages/attributes.single'),
                                 ])
                             )
                             ->success()
@@ -144,11 +144,11 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_enabled')
-                    ->label(__('shopper::layout.forms.actions.enabled')),
+                    ->label(__('shopper::forms.actions.enable')),
                 Tables\Filters\TernaryFilter::make('is_searchable')
-                    ->label(__('shopper::layout.forms.label.is_searchable')),
+                    ->label(__('shopper::forms.label.is_searchable')),
                 Tables\Filters\TernaryFilter::make('is_filterable')
-                    ->label(__('shopper::layout.forms.label.is_filterable')),
+                    ->label(__('shopper::forms.label.is_filterable')),
             ]);
     }
 
@@ -158,6 +158,6 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
         return view('shopper::livewire.pages.attributes.browse', [
             'total' => Attribute::query()->count(),
         ])
-            ->title(__('shopper::words.attributes'));
+            ->title(__('shopper::pages/attributes.menu'));
     }
 }

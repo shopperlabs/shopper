@@ -33,7 +33,7 @@ class VariantStock extends Component implements HasActions, HasForms
     public function stockAction(): Action
     {
         return Action::make('stock')
-            ->label(__('shopper::pages/products.variants.actions.update_stock'))
+            ->label(__('shopper::forms.actions.update'))
             ->color('gray')
             ->modal()
             ->icon('untitledui-package')
@@ -47,7 +47,7 @@ class VariantStock extends Component implements HasActions, HasForms
                     ->required(),
 
                 Forms\Components\TextInput::make('quantity')
-                    ->label(__('shopper::layout.forms.label.quantity'))
+                    ->label(__('shopper::forms.label.quantity'))
                     ->placeholder('-10 or -5 or 50, etc')
                     ->numeric()
                     ->required(),
@@ -86,7 +86,7 @@ class VariantStock extends Component implements HasActions, HasForms
                 }
 
                 Notification::make()
-                    ->title(__('Stock successfully Updated'))
+                    ->title(__('shopper::notifications.update', ['item' => __('shopper::words.stock')]))
                     ->success()
                     ->send();
 

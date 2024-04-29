@@ -37,7 +37,7 @@ class Profile extends Component implements HasForms
                     ->compact()
                     ->schema([
                         Components\FileUpload::make('avatar_location')
-                            ->label(__('shopper::layout.forms.label.photo'))
+                            ->label(__('shopper::forms.label.photo'))
                             ->avatar()
                             ->image()
                             ->maxSize(1024)
@@ -45,13 +45,13 @@ class Profile extends Component implements HasForms
                         Components\Grid::make()
                             ->schema([
                                 Components\TextInput::make('first_name')
-                                    ->label(__('shopper::layout.forms.label.first_name'))
+                                    ->label(__('shopper::forms.label.first_name'))
                                     ->required(),
                                 Components\TextInput::make('last_name')
-                                    ->label(__('shopper::layout.forms.label.last_name'))
+                                    ->label(__('shopper::forms.label.last_name'))
                                     ->required(),
                                 Components\TextInput::make('email')
-                                    ->label(__('shopper::layout.forms.label.email'))
+                                    ->label(__('shopper::forms.label.email'))
                                     ->prefixIcon('untitledui-mail')
                                     ->autocomplete('email-address')
                                     ->email()
@@ -61,7 +61,7 @@ class Profile extends Component implements HasForms
                                         ignorable: $this->getUser()
                                     ),
                                 Components\TextInput::make('phone_number')
-                                    ->label(__('shopper::layout.forms.label.phone_number'))
+                                    ->label(__('shopper::forms.label.phone_number'))
                                     ->tel(),
                             ]),
                     ]),

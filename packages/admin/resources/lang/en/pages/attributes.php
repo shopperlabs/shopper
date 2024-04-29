@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+
+    'menu' => 'Attributes',
+    'single' => 'attribute',
     'title' => 'Manage Attributes',
     'content' => 'Add custom attributes to your product to display for informations',
     'add' => 'Add attribute',

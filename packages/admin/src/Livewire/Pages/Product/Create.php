@@ -53,7 +53,7 @@ class Create extends AbstractPageComponent implements HasForms
                             Components\Section::make()
                                 ->schema([
                                     Forms\Components\TextInput::make('name')
-                                        ->label(__('shopper::layout.forms.label.name'))
+                                        ->label(__('shopper::forms.label.name'))
                                         ->required()
                                         ->maxLength(255)
                                         ->live(onBlur: true)
@@ -61,7 +61,7 @@ class Create extends AbstractPageComponent implements HasForms
                                             $set('slug', Str::slug($state));
                                         }),
                                     Forms\Components\TextInput::make('slug')
-                                        ->label(__('shopper::layout.forms.label.slug'))
+                                        ->label(__('shopper::forms.label.slug'))
                                         ->disabled()
                                         ->dehydrated()
                                         ->required()
@@ -69,7 +69,7 @@ class Create extends AbstractPageComponent implements HasForms
                                         ->unique(config('shopper.models.product'), 'slug'),
 
                                     Forms\Components\RichEditor::make('description')
-                                        ->label(__('shopper::layout.forms.label.description'))
+                                        ->label(__('shopper::forms.label.description'))
                                         ->columnSpan('full'),
                                 ])
                                 ->compact()
@@ -80,12 +80,12 @@ class Create extends AbstractPageComponent implements HasForms
                             Forms\Components\Grid::make()
                                 ->schema([
                                     Forms\Components\Toggle::make('is_visible')
-                                        ->label(__('shopper::layout.forms.label.visible'))
+                                        ->label(__('shopper::forms.label.visible'))
                                         ->helperText(__('shopper::pages/products.visible_help_text'))
                                         ->default(true),
 
                                     Forms\Components\DateTimePicker::make('published_at')
-                                        ->label(__('shopper::layout.forms.label.availability'))
+                                        ->label(__('shopper::forms.label.availability'))
                                         ->native(false)
                                         ->default(now())
                                         ->helperText(__('shopper::pages/products.availability_description'))
@@ -97,21 +97,21 @@ class Create extends AbstractPageComponent implements HasForms
                         ->icon('untitledui-coins-stacked-02')
                         ->schema([
                             Forms\Components\TextInput::make('price_amount')
-                                ->label(__('shopper::layout.forms.label.price_amount'))
+                                ->label(__('shopper::forms.label.price_amount'))
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                 ->suffix(shopper_currency())
                                 ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
                             Forms\Components\TextInput::make('old_price_amount')
-                                ->label(__('shopper::layout.forms.label.compare_price'))
+                                ->label(__('shopper::forms.label.compare_price'))
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                 ->suffix(shopper_currency())
                                 ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
                             Forms\Components\TextInput::make('cost_amount')
-                                ->label(__('shopper::layout.forms.label.cost_per_item'))
+                                ->label(__('shopper::forms.label.cost_per_item'))
                                 ->helperText(__('shopper::pages/products.cost_per_items_help_text'))
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
@@ -132,7 +132,7 @@ class Create extends AbstractPageComponent implements HasForms
 
                             Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
                                 ->collection(config('shopper.core.storage.thumbnail_collection'))
-                                ->label(__('shopper::layout.forms.label.thumbnail'))
+                                ->label(__('shopper::forms.label.thumbnail'))
                                 ->helperText(__('shopper::pages/products.thumbnail_helpText'))
                                 ->image()
                                 ->maxSize(1024)
@@ -145,19 +145,20 @@ class Create extends AbstractPageComponent implements HasForms
                         ->icon('untitledui-git-branch')
                         ->schema([
                             Forms\Components\Select::make('brand_id')
-                                ->label(__('shopper::layout.forms.label.brand'))
+                                ->label(__('shopper::forms.label.brand'))
                                 ->relationship('brand', 'name', fn (Builder $query) => $query->where('is_enabled', true))
                                 ->searchable()
                                 ->visible(Feature::enabled('brand')),
 
                             Forms\Components\Select::make('collections')
-                                ->label(__('shopper::layout.sidebar.collections'))
+                                ->label(__('shopper::pages/collections.menu'))
                                 ->relationship('collections', 'name', fn (Builder $query) => $query->where('is_enabled', true))
                                 ->searchable()
                                 ->multiple()
                                 ->visible(Feature::enabled('collection')),
 
                             Components\Form\SelectTree::make('categories')
+                                ->label(__('shopper::pages/categories.menu'))
                                 ->relationship(
                                     relationship: 'categories',
                                     titleAttribute: 'name',
@@ -179,32 +180,32 @@ class Create extends AbstractPageComponent implements HasForms
                         ->icon('untitledui-package')
                         ->schema([
                             Forms\Components\Placeholder::make('stock')
-                                ->label('Stock & Inventory')
+                                ->label(__('shopper::pages/products.stock_inventory_heading'))
                                 ->content(new HtmlString(Blade::render(<<<'BLADE'
                                     <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
-                                        {{ __('Configure the inventory and stock for this product') }}
+                                        {{ __('shopper::pages/products.stock_inventory_description', ['item' => __('shopper::pages/products.single')]) }}
                                     </p>
                                 BLADE))),
 
                             Forms\Components\Grid::make()
                                 ->schema([
                                     Forms\Components\TextInput::make('sku')
-                                        ->label(__('shopper::layout.forms.label.sku'))
+                                        ->label(__('shopper::forms.label.sku'))
                                         ->unique(config('shopper.models.product'), 'sku')
                                         ->maxLength(255),
 
                                     Forms\Components\TextInput::make('barcode')
-                                        ->label(__('shopper::layout.forms.label.barcode'))
+                                        ->label(__('shopper::forms.label.barcode'))
                                         ->unique(config('shopper.models.product'), 'barcode')
                                         ->maxLength(255),
 
                                     Forms\Components\TextInput::make('quantity')
-                                        ->label(__('shopper::layout.forms.label.quantity'))
+                                        ->label(__('shopper::forms.label.quantity'))
                                         ->numeric()
                                         ->rules(['integer', 'min:1']),
 
                                     Forms\Components\TextInput::make('security_stock')
-                                        ->label(__('shopper::layout.forms.label.safety_stock'))
+                                        ->label(__('shopper::forms.label.safety_stock'))
                                         ->helperText(__('shopper::pages/products.safety_security_help_text'))
                                         ->numeric()
                                         ->default(0)
@@ -234,7 +235,7 @@ class Create extends AbstractPageComponent implements HasForms
                             Forms\Components\Group::make()
                                 ->schema([
                                     Forms\Components\Placeholder::make('shipping')
-                                        ->label(__('shopper::words.weight_dimension'))
+                                        ->label(__('shopper::pages/products.weight_dimension'))
                                         ->content(new HtmlString(Blade::render(<<<'BLADE'
                                             <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                                 {{ __('shopper::pages/products.weight_dimension_help_text') }}
@@ -250,11 +251,10 @@ class Create extends AbstractPageComponent implements HasForms
                     Components\Wizard\StepColumn::make('Seo & Metadata')
                         ->icon('untitledui-monitor-02')
                         ->schema([
-                            Forms\Components\Placeholder::make(__('shopper::pages/products.seo.title'))
-                                ->content(__('shopper::pages/products.seo.description'))
+                            Forms\Components\Placeholder::make(__('shopper::words.seo.title'))
                                 ->content(new HtmlString(Blade::render(<<<'BLADE'
                                     <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
-                                        {{ __('shopper::pages/products.seo.description') }}
+                                        {{ __('shopper::words.seo.description') }}
                                     </p>
                                 BLADE))),
 
@@ -270,7 +270,7 @@ class Create extends AbstractPageComponent implements HasForms
                     ->submitAction(new HtmlString(Blade::render(<<<'BLADE'
                         <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
                             <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                            {{ __('shopper::layout.forms.actions.save') }}
+                            {{ __('shopper::forms.actions.save') }}
                         </x-shopper::buttons.primary>
                      BLADE)))
                     ->persistStepInQueryString(),
@@ -289,7 +289,7 @@ class Create extends AbstractPageComponent implements HasForms
         );
         $this->form->model($product)->saveRelationships();
 
-        $product->channels()->attach($this->defaultChannel->id);
+        $product->channels()->sync([$this->defaultChannel->id]);
 
         if ($data['categories'] && count($data['categories']) > 0) {
             $product->categories()->sync($data['categories']);
@@ -312,6 +312,6 @@ class Create extends AbstractPageComponent implements HasForms
     public function render(): View
     {
         return view('shopper::livewire.pages.products.create')
-            ->title(__('shopper::words.actions_label.add_new', ['name' => __('shopper::words.product')]));
+            ->title(__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')]));
     }
 }

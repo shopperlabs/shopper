@@ -16,7 +16,6 @@ use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
-use Shopper\Feature;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -44,7 +43,7 @@ class Edit extends AbstractPageComponent implements HasForms
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
-                                    ->label(__('shopper::layout.forms.label.name'))
+                                    ->label(__('shopper::forms.label.name'))
                                     ->placeholder('Summers Collections, Christmas promotions...')
                                     ->required()
                                     ->live(onBlur: true)
@@ -53,7 +52,7 @@ class Edit extends AbstractPageComponent implements HasForms
                                     }),
 
                                 Forms\Components\TextInput::make('slug')
-                                    ->label(__('shopper::layout.forms.label.slug'))
+                                    ->label(__('shopper::forms.label.slug'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
@@ -66,17 +65,10 @@ class Edit extends AbstractPageComponent implements HasForms
                             ->inline()
                             ->inlineLabel(false)
                             ->required()
-                            ->options([
-                                CollectionType::MANUAL->value => __('shopper::pages/collections.manual'),
-                                CollectionType::AUTO->value => __('shopper::pages/collections.automatic'),
-                            ])
-                            ->descriptions([
-                                CollectionType::MANUAL->value => __('shopper::pages/collections.manual_description'),
-                                CollectionType::AUTO->value => __('shopper::pages/collections.automatic_description'),
-                            ]),
+                            ->options(CollectionType::class),
 
                         Forms\Components\RichEditor::make('description')
-                            ->label(__('shopper::layout.forms.label.description'))
+                            ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([
                                 'bold',
                                 'italic',
@@ -87,32 +79,31 @@ class Edit extends AbstractPageComponent implements HasForms
                                 'undo',
                             ]),
 
-                        Forms\Components\Livewire::make(CollectionProducts::class, ['collection' => $this->collection])
-                            ->visible(Feature::enabled('product')),
+                        Forms\Components\Livewire::make(CollectionProducts::class, ['collection' => $this->collection]),
                     ])
                     ->columnSpan(['lg' => 2]),
 
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\SpatieMediaLibraryFileUpload::make('file')
-                            ->label(__('shopper::layout.forms.label.image_preview'))
+                            ->label(__('shopper::forms.label.image_preview'))
                             ->collection(config('shopper.core.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(1024),
 
                         Forms\Components\DateTimePicker::make('published_at')
-                            ->label(__('shopper::layout.forms.label.availability'))
+                            ->label(__('shopper::forms.label.availability'))
                             ->native(false)
                             ->default(now())
                             ->helperText(__('shopper::pages/collections.availability_description')),
 
                         Forms\Components\Group::make()
                             ->schema([
-                                Forms\Components\Placeholder::make('seo')
+                                Forms\Components\Placeholder::make(__('shopper::words.seo.slug'))
                                     ->label(__('shopper::words.seo.title'))
                                     ->content(new HtmlString(Blade::render(<<<'BLADE'
                                         <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
-                                            {{ __('shopper::words.seo.description', ['name' => mb_strtolower(__('shopper::words.collection'))]) }}
+                                            {{ __('shopper::words.seo.description', ['name' => __('shopper::pages/collections.single')]) }}
                                         </p>
                                     BLADE))),
 
@@ -134,7 +125,7 @@ class Edit extends AbstractPageComponent implements HasForms
         $this->collection->update($this->form->getState());
 
         Notification::make()
-            ->title(__('shopper::notifications.actions.update', ['item' => __('shopper::words.collection')]))
+            ->title(__('shopper::notifications.update', ['item' => __('shopper::pages/collections.single')]))
             ->success()
             ->send();
     }
@@ -142,6 +133,6 @@ class Edit extends AbstractPageComponent implements HasForms
     public function render(): View
     {
         return view('shopper::livewire.pages.collections.edit')
-            ->title(__('shopper::words.actions_label.edit', ['name' => $this->collection->name]));
+            ->title(__('shopper::forms.actions.edit_label', ['label' => $this->collection->name]));
     }
 }

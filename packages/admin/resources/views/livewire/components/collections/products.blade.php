@@ -3,7 +3,7 @@
 
     <div>
         <x-filament::section.heading>
-            {{ __('shopper::layout.sidebar.products') }}
+            {{ __('shopper::pages/products.menu') }}
         </x-filament::section.heading>
         <x-filament::section.description class="mt-1 max-w-2xl">
             @if ($collection->isAutomatic())
