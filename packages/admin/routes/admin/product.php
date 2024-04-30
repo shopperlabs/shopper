@@ -17,4 +17,3 @@ if (\Shopper\Feature::enabled('attribute')) {
         Route::get('/', config('shopper.components.product.pages.attribute-index'))->name('index');
     });
 }
-
