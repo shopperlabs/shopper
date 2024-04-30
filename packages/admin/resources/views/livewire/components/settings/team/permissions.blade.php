@@ -1,10 +1,10 @@
 <div class="overflow-hidden">
     <div class="flex flex-wrap items-baseline px-4 2xl:px-6">
         <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
-            {{ __('shopper::pages/settings.roles_permissions.permissions') }}
+            {{ __('shopper::pages/settings/staff.permissions') }}
         </h3>
         <p class="ml-2 mt-1 truncate text-sm leading-5 text-gray-500">
-            {{ __('shopper::pages/settings.roles_permissions.permissions_in_role', ['name' => $role->display_name]) }}
+            {{ __('shopper::pages/settings/staff.permissions_in_role', ['name' => $role->display_name]) }}
         </p>
     </div>
     <div
@@ -16,7 +16,7 @@
                     <span
                         class="font-heading text-xs font-semibold uppercase leading-5 tracking-wider text-gray-500 dark:text-gray-400"
                     >
-                        {{ ! empty($group) ? $group : __('shopper::pages/settings.roles_permissions.custom_permission') }}
+                        {{ ! empty($group) ? $group : __('shopper::pages/settings/staff.custom_permission') }}
                     </span>
                 </div>
                 <div class="divide-y divide-gray-200 py-1 dark:divide-gray-700">

@@ -35,7 +35,7 @@
                         ])
                     >
                         <x-untitledui-sliders class="mr-2 h-5 w-5" stroke-width="1.5" aria-hidden="true" />
-                        {{ __('shopper::layout.account_dropdown.settings') }}
+                        {{ __('shopper::pages/settings/global.menu') }}
                     </x-shopper::link>
                 @endcan
 

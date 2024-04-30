@@ -17,8 +17,6 @@ return [
     'not_available' => 'Indisponible',
     'available' => 'Disponible',
     'stock' => 'Stock',
-    'permission' => 'Permission',
-    'role' => 'Rôle',
 
     'payment_method' => 'Moyen de paiement',
     'shipping_method' => 'Mode de livraison',
@@ -42,8 +40,6 @@ return [
 
     'pricing' => 'Tarification',
     'price' => 'Prix',
-    'location' => 'Inventaire',
-    'locations' => 'Inventaires',
     'dismiss' => 'Fermer',
 
     'published_on' => 'Sera publié le:',
@@ -55,7 +51,8 @@ return [
     'out_stock' => 'stock épuisé',
     'event' => 'Action',
     'adjustment' => 'Ajustement',
-    'is_enabled' => 'Est activé',
+    'is_enabled' => 'Activé',
+    'is_disabled' => 'Désactivé',
 
     'set_visibility' => 'Rendre visible :name pour les clients.',
     'set_global_visibility' => 'Visibilité de la page pour les clients.',
@@ -83,7 +80,6 @@ return [
 
     'images' => 'Images',
     'step' => 'Étape :number',
-    'settings' => 'Paramètres',
     'environment' => 'Environnement',
     'discount_use' => '{1} Limité à une utilisation|[2,*] Limité à :count utilisations',
 

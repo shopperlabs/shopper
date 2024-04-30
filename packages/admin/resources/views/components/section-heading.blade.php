@@ -4,12 +4,12 @@
 ])
 
 <div {{ $attributes }}>
-    <h3 class="font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white">
+    <x-filament::section.heading class="font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white">
         {{ $title }}
-    </h3>
+    </x-filament::section.heading>
     @if ($description)
-        <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
+        <x-filament::section.description class="mt-2 max-w-xl text-sm leading-5 text-gray-500 dark:text-gray-400">
             {{ $description }}
-        </p>
+        </x-filament::section.description>
     @endif
 </div>

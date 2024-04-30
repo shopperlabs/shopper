@@ -22,13 +22,13 @@ class Permission extends SpatiePermission
     {
         return [
             'system' => __('shopper::words.system'),
-            'brands' => __('shopper::layout.sidebar.brands'),
-            'categories' => __('shopper::layout.sidebar.categories'),
-            'collections' => __('shopper::layout.sidebar.collections'),
-            'products' => __('shopper::layout.sidebar.products'),
-            'customers' => __('shopper::layout.sidebar.customers'),
-            'orders' => __('shopper::layout.sidebar.orders'),
-            'discounts' => __('shopper::layout.sidebar.discounts'),
+            'brands' => __('shopper::pages/brands.menu'),
+            'categories' => __('shopper::pages/categories.menu'),
+            'collections' => __('shopper::pages/collections.menu'),
+            'products' => __('shopper::pages/products.menu'),
+            'customers' => __('shopper::pages/customers.menu'),
+            'orders' => __('shopper::pages/orders.menu'),
+            'discounts' => __('shopper::pages/discounts.menu'),
         ];
     }
 

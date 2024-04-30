@@ -9,11 +9,11 @@
 
     <x-slot name="content">
         <p class="text-sm text-gray-500 dark:text-gray-400">
-            {{ __('shopper::components.modal.content') }}
+            {{ __('shopper::pages/settings/global.confirm_password_content') }}
         </p>
         <div class="mt-4">
             <x-shopper::forms.input
-                wire:model.defer="confirmablePassword"
+                wire:model="confirmablePassword"
                 id="confirmable_password"
                 type="password"
                 placeholder="{{ __('shopper::forms.placeholder.password') }}"
@@ -34,7 +34,7 @@
             </x-shopper::buttons.primary>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-            <x-shopper::buttons.default wire:click="$emit('closeModal')" type="button">
+            <x-shopper::buttons.default wire:click="$dispatch('closeModal')" type="button">
                 {{ __('shopper::forms.actions.nevermind') }}
             </x-shopper::buttons.default>
         </span>

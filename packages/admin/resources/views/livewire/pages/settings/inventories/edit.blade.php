@@ -3,7 +3,7 @@
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.settings.inventories')"
-            :title="__('shopper::words.locations')"
+            :title="__('shopper::pages/settings/global.location.menu')"
         />
     </x-shopper::breadcrumb>
 

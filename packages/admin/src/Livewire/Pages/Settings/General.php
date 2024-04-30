@@ -8,6 +8,7 @@ use Filament\Forms\Components;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
@@ -64,8 +65,8 @@ class General extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make(__('shopper::pages/settings.settings.store_details'))
-                    ->description(__('shopper::pages/settings.settings.store_detail_summary'))
+                Section::make(__('shopper::pages/settings/global.general.store_details'))
+                    ->description(__('shopper::pages/settings/global.general.store_detail_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
@@ -79,19 +80,19 @@ class General extends Component implements HasForms
                                 Components\TextInput::make('email')
                                     ->label(__('shopper::forms.label.email'))
                                     ->prefixIcon('untitledui-mail')
-                                    ->helperText(__('shopper::pages/settings.settings.email_helper'))
+                                    ->helperText(__('shopper::pages/settings/global.general.email_helper'))
                                     ->autocomplete('email-address')
                                     ->email()
                                     ->required(),
                                 Components\TextInput::make('phone_number')
                                     ->label(__('shopper::forms.label.phone_number'))
                                     ->tel()
-                                    ->helperText(__('shopper::pages/settings.settings.phone_number_helper')),
+                                    ->helperText(__('shopper::pages/settings/global.general.phone_number_helper')),
                             ]),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.settings.assets'))
-                    ->description(__('shopper::pages/settings.settings.assets_summary'))
+                Section::make(__('shopper::pages/settings/global.general.assets'))
+                    ->description(__('shopper::pages/settings/global.general.assets_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
@@ -108,8 +109,8 @@ class General extends Component implements HasForms
                             ->disk(config('shopper.core.storage.collection_name')),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.settings.store_address'))
-                    ->description(__('shopper::pages/settings.settings.store_address_summary'))
+                Section::make(__('shopper::pages/settings/global.general.store_address'))
+                    ->description(__('shopper::pages/settings/global.general.store_address_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
@@ -139,20 +140,35 @@ class General extends Component implements HasForms
                             ->searchable(),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.settings.store_currency'))
-                    ->description(__('shopper::pages/settings.settings.store_currency_summary'))
+                Section::make(__('shopper::pages/settings/global.general.store_currency'))
+                    ->description(__('shopper::pages/onboarding.currency_description'))
                     ->aside()
                     ->compact()
                     ->schema([
-                        Components\Select::make('currency_id')
-                            ->label(__('shopper::forms.label.currency'))
-                            ->options(Currency::query()->pluck('name', 'id'))
+                        Components\Select::make('currencies')
+                            ->label(__('shopper::forms.label.currencies'))
+                            ->helperText(__('shopper::pages/onboarding.currencies_description'))
+                            ->options(Currency::query()->orderBy('name')->pluck('name', 'id'))
+                            ->searchable()
+                            ->multiple()
+                            ->minItems(1)
                             ->required()
-                            ->searchable(),
+                            ->live()
+                            ->native(false),
+                        Components\Select::make('default_currency_id')
+                            ->label(__('shopper::forms.label.default_currency'))
+                            ->options(
+                                fn (Get $get) => Currency::query()
+                                    ->select('name', 'id')
+                                    ->whereIn('id', $get('currencies'))
+                                    ->pluck('name', 'id')
+                            )
+                            ->native(false)
+                            ->required(),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.settings.social_links'))
-                    ->description(__('shopper::pages/settings.settings.social_links_summary'))
+                Section::make(__('shopper::pages/settings/global.general.social_links'))
+                    ->description(__('shopper::pages/settings/global.general.social_links_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
@@ -212,6 +228,6 @@ class General extends Component implements HasForms
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.general')
-            ->title(__('shopper::pages/settings.settings.title'));
+            ->title(__('shopper::pages/settings/global.general.title'));
     }
 }

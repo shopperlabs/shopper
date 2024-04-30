@@ -76,7 +76,7 @@ class RolePermission extends Component implements HasActions, HasForms
         $this->role->update($this->form->getState());
 
         Notification::make()
-            ->body(__('shopper::notifications.actions.update', ['item' => __('shopper::words.role')]))
+            ->body(__('shopper::notifications.update', ['item' => __('shopper::pages/settings/staff.role')]))
             ->success()
             ->send();
     }
@@ -84,6 +84,6 @@ class RolePermission extends Component implements HasActions, HasForms
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.team.role')
-            ->title(__('shopper::pages/settings.roles_permissions.roles') . ' ~ ' . $this->role->display_name);
+            ->title(__('shopper::pages/settings/staff.roles') . ' ~ ' . $this->role->display_name);
     }
 }

@@ -73,6 +73,6 @@ class Index extends Component implements HasForms, HasTable
                 ->orderBy('created_at')
                 ->get(),
         ])
-            ->title(__('shopper::pages/settings.roles_permissions.title'));
+            ->title(__('shopper::pages/settings/staff.title'));
     }
 }

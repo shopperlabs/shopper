@@ -18,7 +18,6 @@ return [
         'add_product' => 'Ajouter produit',
         'personal_account' => 'Compte Personnel',
         'manage_users' => 'Gestions des Admins',
-        'settings' => 'Paramètres',
         'sign_out' => 'Déconnexion',
     ],
 

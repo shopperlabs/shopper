@@ -4,28 +4,52 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Modals;
 
+use Filament\Forms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\Role;
 
-class CreateRole extends ModalComponent
+class CreateRole extends ModalComponent implements HasForms
 {
-    public string $name = '';
+    use InteractsWithForms;
 
-    public string $display_name = '';
+    public ?array $data = [];
 
-    public string $description = '';
+    public function mount(): void
+    {
+        $this->form->fill();
+    }
+
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->label(__('shopper::modals.roles.labels.name'))
+                    ->placeholder('manager')
+                    ->unique(table: Role::class, column: 'name')
+                    ->required(),
+
+                Forms\Components\TextInput::make('display_name')
+                    ->label(__('shopper::forms.label.display_name'))
+                    ->placeholder('Manager'),
+
+                Forms\Components\Textarea::make('description')
+                    ->label(__('shopper::forms.label.description'))
+                    ->rows(3)
+                    ->columnSpan('full'),
+            ])
+            ->columns()
+            ->statePath('data');
+    }
 
     public function save(): void
     {
-        $this->validate(['name' => 'required|unique:' . config('permission.table_names')['roles']]);
-
-        Role::create([
-            'name' => $this->name,
-            'display_name' => $this->display_name,
-            'description' => $this->description,
-        ]);
+        Role::create($this->form->getState());
 
         $this->dispatch('teamUpdate');
 

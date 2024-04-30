@@ -2,57 +2,24 @@
     headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+    form-action="save"
 >
     <x-slot name="title">
-        <span>{{ __('shopper::modals.roles.new') }}</span>
-        <p class="mt-1 text-sm font-normal leading-5 text-gray-500 dark:text-gray-400 sm:ml-3 sm:mt-0">
-            {{ __('shopper::modals.roles.new_description') }}
-        </p>
+        <span class="flex flex-col">
+            <span>{{ __('shopper::modals.roles.new') }}</span>
+            <span class="text-base font-normal leading-5 text-gray-500 dark:text-gray-400">
+                {{ __('shopper::modals.roles.new_description') }}
+            </span>
+        </span>
     </x-slot>
 
     <x-slot name="content">
-        <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-            <x-shopper::forms.group
-                :label="__('shopper::modals.roles.labels.name')"
-                for="name"
-                class="sm:col-span-1"
-                :error="$errors->first('name')"
-                isRequired
-            >
-                <x-shopper::forms.input
-                    wire:model.defer="name"
-                    type="text"
-                    id="name"
-                    placeholder="manager"
-                    autocomplete="off"
-                />
-            </x-shopper::forms.group>
-            <x-shopper::forms.group
-                :label="__('shopper::forms.label.display_name')"
-                for="display_name"
-                class="sm:col-span-1"
-            >
-                <x-shopper::forms.input
-                    wire:model.defer="display_name"
-                    type="text"
-                    id="display_name"
-                    placeholder="Manager"
-                    autocomplete="off"
-                />
-            </x-shopper::forms.group>
-            <x-shopper::forms.group
-                :label="__('shopper::forms.label.description')"
-                for="description"
-                class="sm:col-span-2"
-            >
-                <x-shopper::forms.textarea wire:model.defer="description" id="description" />
-            </x-shopper::forms.group>
-        </div>
+        {{ $this->form }}
     </x-slot>
 
     <x-slot name="buttons">
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-            <x-shopper::buttons.primary wire:click="save" type="button">
+            <x-shopper::buttons.primary type="submit">
                 <x-shopper::loader wire:loading wire:target="save" class="text-white" />
                 {{ __('shopper::forms.actions.save') }}
             </x-shopper::buttons.primary>

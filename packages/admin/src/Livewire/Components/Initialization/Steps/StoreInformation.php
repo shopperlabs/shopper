@@ -92,7 +92,7 @@ final class StoreInformation extends StepComponent implements HasForms
                 Forms\Components\Select::make('default_currency_id')
                     ->label(__('shopper::forms.label.default_currency'))
                     ->helperText(__('shopper::pages/onboarding.currency_description'))
-                    ->placeholder('Select currencies')
+                    ->placeholder(__('shopper::forms.placeholder.select_currencies'))
                     ->options(
                         fn (Forms\Get $get) => Currency::query()
                             ->select('name', 'id')

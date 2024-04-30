@@ -1,4 +1,4 @@
-<x-shopper::form-slider-over action="store" :title="__('shopper::pages/settings.roles_permissions.add_admin')">
+<x-shopper::form-slider-over action="store" :title="__('shopper::pages/settings/staff.add_admin')">
     {{ $this->form }}
     <div class="mt-6 rounded-lg bg-yellow-50 p-4">
         <div class="flex">

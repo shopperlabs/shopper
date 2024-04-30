@@ -17,8 +17,6 @@ return [
     'not_available' => 'Not available',
     'available' => 'Available',
     'stock' => 'Stock',
-    'permission' => 'Permission',
-    'role' => 'Role',
 
     'payment_method' => 'Payment Method',
     'shipping_method' => 'Shipping method',
@@ -42,8 +40,6 @@ return [
 
     'pricing' => 'Pricing',
     'price' => 'Price',
-    'location' => 'Inventory',
-    'locations' => 'Inventories',
     'dismiss' => 'Dismiss',
 
     'published_on' => 'Will be published on:',
@@ -55,7 +51,8 @@ return [
     'out_stock' => 'out stock',
     'event' => 'Event',
     'adjustment' => 'Adjustment',
-    'is_enabled' => 'Is Enabled',
+    'is_enabled' => 'Enabled',
+    'is_disabled' => 'Disabled',
 
     'set_visibility' => 'Set :name visibility for the customers.',
     'set_global_visibility' => 'Setup page visibility for the customers.',
@@ -83,7 +80,6 @@ return [
 
     'images' => 'Images',
     'step' => 'Step :number',
-    'settings' => 'Settings',
     'environment' => 'Environnement',
     'discount_use' => '{1} Limit of 1 use|[2,*] Limit of :count uses',
 

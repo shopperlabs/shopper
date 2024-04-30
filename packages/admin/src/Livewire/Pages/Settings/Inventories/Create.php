@@ -19,6 +19,6 @@ class Create extends Component
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.inventories.create')
-            ->title(__('shopper::pages/settings.location.add'));
+            ->title(__('shopper::pages/settings/global.location.add'));
     }
 }

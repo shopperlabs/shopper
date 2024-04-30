@@ -4,8 +4,11 @@
 }" class="pb-10">
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.settings.users')" :current="$role->display_name">
-            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
-            <x-shopper::breadcrumb.link :link="route('shopper.settings.users')" :title="__('Staff & permissions')" />
+            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+            <x-shopper::breadcrumb.link
+                :link="route('shopper.settings.users')"
+                :title="__('shopper::pages/settings/menu.staff')"
+            />
         </x-shopper::breadcrumb>
 
         <x-shopper::heading class="my-6">
@@ -28,7 +31,7 @@
                         type="button"
                     >
                         <x-untitledui-lock-04 class="mr-2 h-5 w-5" aria-hidden="true" />
-                        {{ __('shopper::pages/settings.roles_permissions.create_permission') }}
+                        {{ __('shopper::pages/settings/staff.create_permission') }}
                     </x-shopper::buttons.primary>
                 </div>
             </x-slot>
@@ -44,7 +47,7 @@
                 {{ __('shopper::words.users') }}
             </x-filament::tabs.item>
             <x-filament::tabs.item alpine-active="currentTab === 'permissions'" x-on:click="currentTab = 'permissions'">
-                {{ __('shopper::pages/settings.roles_permissions.permissions') }}
+                {{ __('shopper::pages/settings/staff.permissions') }}
             </x-filament::tabs.item>
         </x-filament::tabs>
     </div>
@@ -61,7 +64,7 @@
                                 </div>
                                 <div class="ml-3 flex-1 lg:flex lg:justify-between">
                                     <p class="text-sm leading-5 text-info-700">
-                                        {{ __('shopper::pages/settings.roles_permissions.role_alert_msg') }}
+                                        {{ __('shopper::pages/settings/staff.role_alert_msg') }}
                                     </p>
                                     <p class="mt-3 text-sm leading-5 lg:ml-6 lg:mt-0">
                                         <a
@@ -69,7 +72,7 @@
                                             target="_blank"
                                             class="whitespace-no-wrap font-medium text-info-700 transition duration-150 ease-in-out hover:text-info-600"
                                         >
-                                            {{ __('shopper::components.learn_more') }} &rarr;
+                                            {{ __('shopper::words.learn_more') }} &rarr;
                                         </a>
                                     </p>
                                 </div>

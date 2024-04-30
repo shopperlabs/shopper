@@ -18,7 +18,6 @@ return [
         'add_product' => 'Add product',
         'personal_account' => 'Personal Account',
         'manage_users' => 'Manage Users',
-        'settings' => 'Settings',
         'sign_out' => 'Sign out',
     ],
 

@@ -34,8 +34,8 @@ class InventoryForm extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make(__('shopper::pages/settings.location.detail'))
-                    ->description(__('shopper::pages/settings.location.detail_summary'))
+                Section::make(__('shopper::pages/settings/global.location.detail'))
+                    ->description(__('shopper::pages/settings/global.location.detail_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
@@ -59,14 +59,14 @@ class InventoryForm extends Component implements HasForms
                             ->rows(3)
                             ->columnSpan('full'),
                         Forms\Components\Toggle::make('is_default')
-                            ->label(__('shopper::pages/settings.location.set_default'))
-                            ->helperText(__('shopper::pages/settings.location.set_default_summary'))
+                            ->label(__('shopper::pages/settings/global.location.set_default'))
+                            ->helperText(__('shopper::pages/settings/global.location.set_default_summary'))
                             ->columnSpan('full'),
                     ])
                     ->columns(),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.location.address'))
-                    ->description(__('shopper::pages/settings.location.address_summary'))
+                Section::make(__('shopper::pages/settings/global.location.address'))
+                    ->description(__('shopper::pages/settings/global.location.address_summary'))
                     ->aside()
                     ->compact()
                     ->schema(AddressField::make())

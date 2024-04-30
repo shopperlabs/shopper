@@ -53,6 +53,6 @@ class Browse extends Component implements HasActions, HasForms
                 ->with('country')
                 ->get()
                 ->take(config('shopper.admin.inventory-limit')),
-        ])->title(__('shopper::words.locations'));
+        ])->title(__('shopper::pages/settings/global.location.menu'));
     }
 }

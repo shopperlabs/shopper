@@ -1,12 +1,15 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('Staff & permissions')">
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+        <x-shopper::breadcrumb.link
+            :link="route('shopper.settings.index')"
+            :title="__('shopper::pages/settings/global.menu')"
+        />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="my-6">
         <x-slot name="title">
-            {{ __('shopper::pages/settings.roles_permissions.header_title') }}
+            {{ __('shopper::pages/settings/staff.header_title') }}
         </x-slot>
     </x-shopper::heading>
 
@@ -14,7 +17,7 @@
         <div>
             <div class="flex items-center">
                 <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-                    {{ __('shopper::pages/settings.roles_permissions.role_available') }}
+                    {{ __('shopper::pages/settings/staff.role_available') }}
                 </h2>
                 <button
                     wire:click="$dispatch(
@@ -25,11 +28,11 @@
                     class="focus:shadow-outline-primary ml-3 inline-flex items-center rounded-lg border border-transparent bg-primary-100 px-2.5 py-1.5 text-sm font-medium leading-4 text-primary-700 transition duration-150 ease-in-out hover:bg-primary-50 focus:border-primary-300 focus:outline-none active:bg-primary-200"
                 >
                     <x-untitledui-plus class="mr-2 h-5 w-5" aria-hidden="true" />
-                    {{ __('shopper::pages/settings.roles_permissions.new_role') }}
+                    {{ __('shopper::pages/settings/staff.new_role') }}
                 </button>
             </div>
             <p class="mt-2 text-gray-500 dark:text-gray-400">
-                {{ __('shopper::pages/settings.roles_permissions.role_available_summary') }}
+                {{ __('shopper::pages/settings/staff.role_available_summary') }}
             </p>
             <div class="mt-6 grid gap-5 sm:grid-cols-3 lg:grid-cols-4">
                 @foreach ($roles as $role)
@@ -73,10 +76,10 @@
             >
                 <div class="min-w-0 max-w-2xl flex-1">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-white">
-                        {{ __('shopper::pages/settings.roles_permissions.admin_accounts') }}
+                        {{ __('shopper::pages/settings/staff.admin_accounts') }}
                     </h2>
                     <p class="mt-3 text-gray-500 dark:text-gray-400">
-                        {{ __('shopper::pages/settings.roles_permissions.admin_accounts_summary') }}
+                        {{ __('shopper::pages/settings/staff.admin_accounts_summary') }}
                     </p>
                 </div>
                 <div>
@@ -86,7 +89,7 @@
                         })"
                     >
                         <x-untitledui-user-plus class="mr-2 h-5 w-5" aria-hidden="true" />
-                        {{ __('shopper::pages/settings.roles_permissions.add_admin') }}
+                        {{ __('shopper::pages/settings/staff.add_admin') }}
                     </x-shopper::buttons.primary>
                 </div>
             </div>

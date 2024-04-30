@@ -4,7 +4,7 @@
             {{ __('shopper::words.users') }}
         </h3>
         <p class="ml-2 mt-1 truncate text-sm leading-5 text-gray-500 dark:text-gray-400">
-            {{ __('shopper::pages/settings.roles_permissions.with_role_name', ['name' => $role->display_name]) }}
+            {{ __('shopper::pages/settings/staff.with_role_name', ['name' => $role->display_name]) }}
         </p>
     </div>
     <div class="mt-4">

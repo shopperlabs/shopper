@@ -57,7 +57,10 @@
                             type="submit"
                             class="group flex w-full items-center rounded-lg px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-white/5"
                         >
-                            <x-untitledui-log-out class="mr-2 h-5 w-5 text-gray-400 dark:group-hover:text-gray-500" />
+                            <x-untitledui-log-out
+                                class="mr-2 h-5 w-5 text-gray-400 dark:group-hover:text-gray-500"
+                                aria-hidden="true"
+                            />
                             {{ __('shopper::layout.account_dropdown.sign_out') }}
                         </button>
                     </form>

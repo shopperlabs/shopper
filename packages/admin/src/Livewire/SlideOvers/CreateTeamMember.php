@@ -36,8 +36,8 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
     {
         return $form
             ->schema([
-                Section::make(__('shopper::pages/settings.roles_permissions.login_information'))
-                    ->description(__('shopper::pages/settings.roles_permissions.login_information_summary'))
+                Section::make(__('shopper::pages/settings/staff.login_information'))
+                    ->description(__('shopper::pages/settings/staff.login_information_summary'))
                     ->schema([
                         Components\TextInput::make('email')
                             ->label(__('shopper::forms.label.email'))
@@ -56,11 +56,11 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
                                     }),
                             ),
                         Components\Toggle::make('send_mail')
-                            ->label(__('shopper::pages/settings.roles_permissions.send_invite'))
-                            ->helperText(__('shopper::pages/settings.roles_permissions.send_invite_summary')),
+                            ->label(__('shopper::pages/settings/staff.send_invite'))
+                            ->helperText(__('shopper::pages/settings/staff.send_invite_summary')),
                     ]),
-                Section::make(__('shopper::pages/settings.roles_permissions.personal_information'))
-                    ->description(__('shopper::pages/settings.roles_permissions.personal_information_summary'))
+                Section::make(__('shopper::pages/settings/staff.personal_information'))
+                    ->description(__('shopper::pages/settings/staff.personal_information_summary'))
                     ->schema([
                         Components\TextInput::make('first_name')
                             ->label(__('shopper::forms.label.first_name'))
@@ -73,18 +73,17 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
                             ->label(__('shopper::forms.label.phone_number'))
                             ->tel(),
                     ]),
-                Section::make(__('shopper::pages/settings.roles_permissions.role_information'))
-                    ->description(__('shopper::pages/settings.roles_permissions.role_information_summary'))
+                Section::make(__('shopper::pages/settings/staff.role_information'))
+                    ->description(__('shopper::pages/settings/staff.role_information_summary'))
                     ->schema([
                         Components\Radio::make('role_id')
-                            ->label(__('shopper::pages/settings.roles_permissions.choose_role'))
+                            ->label(__('shopper::pages/settings/staff.choose_role'))
                             ->options(
                                 Role::query()
                                     ->where('name', '<>', config('shopper.core.users.default_role'))
                                     ->pluck('display_name', 'id')
                             )
-                            ->required()
-                            ->live(onBlur: true),
+                            ->required(),
                     ]),
             ])
             ->statePath('data');
@@ -119,7 +118,7 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
         }
 
         Notification::make()
-            ->body(__('shopper::notifications.actions.create', ['item' => $user->full_name]))
+            ->body(__('shopper::notifications.create', ['item' => $user->full_name]))
             ->success()
             ->send();
 
