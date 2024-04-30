@@ -9,20 +9,20 @@
 
             <div class="mt-8">
                 <div class="flex items-center justify-between">
-                    <div class="space-y-">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
+                    <div class="space-y-1">
+                        <x-filament::section.heading>
                             {{ __('shopper::pages/products.reviews.review') }}
-                        </h3>
-                        <p class="max-w-2xl text-base text-gray-500 dark:text-gray-400">
+                        </x-filament::section.heading>
+                        <x-filament::section.description class="max-w-2xl">
                             {{ __('shopper::pages/products.reviews.subtitle') }}
-                        </p>
+                        </x-filament::section.description>
                     </div>
                 </div>
                 <div class="mt-6 border-t border-gray-200 dark:border-gray-700">
                     <dl class="divide-y divide-gray-200 dark:divide-gray-700">
                         <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                             <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
-                                {{ __('shopper::words.product') }}
+                                {{ __('shopper::pages/products.single') }}
                             </dt>
                             <dd
                                 class="flex flex-col text-sm leading-5 text-gray-900 dark:text-white sm:col-span-2 sm:mt-0"
@@ -113,7 +113,7 @@
                         </div>
                         <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                             <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
-                                {{ __('shopper::layout.forms.label.created_at') }}
+                                {{ __('shopper::forms.label.created_at') }}
                             </dt>
                             <dd class="flex text-sm leading-5 text-gray-500 dark:text-gray-400 sm:col-span-2 sm:mt-0">
                                 <span class="grow">

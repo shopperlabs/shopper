@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Discounts',
+    'single' => 'discount',
     'title' => 'Manage discounts and promotions',
     'description' => 'Create & Manage discount and promotions codes that apply at checkout or customers orders.',
-
-    'actions' => [
-        'create' => 'Create discount',
-        'update' => 'Update code :code',
-    ],
 
     'empty_message' => 'No discount found...',
     'search' => 'Search discount code',

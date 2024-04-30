@@ -2,7 +2,7 @@
     action="store"
     :title="$attribute
         ? $attribute->name
-        : __('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.attribute'))])
+        : __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/attributes.single')])
     "
 >
     {{ $this->form }}

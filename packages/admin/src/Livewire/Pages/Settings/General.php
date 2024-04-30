@@ -8,6 +8,7 @@ use Filament\Forms\Components;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
@@ -64,8 +65,8 @@ class General extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make(__('shopper::pages/settings.settings.store_details'))
-                    ->description(__('shopper::pages/settings.settings.store_detail_summary'))
+                Section::make(__('shopper::pages/settings/global.general.store_details'))
+                    ->description(__('shopper::pages/settings/global.general.store_detail_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
@@ -79,42 +80,42 @@ class General extends Component implements HasForms
                                 Components\TextInput::make('email')
                                     ->label(__('shopper::forms.label.email'))
                                     ->prefixIcon('untitledui-mail')
-                                    ->helperText(__('shopper::pages/settings.settings.email_helper'))
+                                    ->helperText(__('shopper::pages/settings/global.general.email_helper'))
                                     ->autocomplete('email-address')
                                     ->email()
                                     ->required(),
                                 Components\TextInput::make('phone_number')
                                     ->label(__('shopper::forms.label.phone_number'))
                                     ->tel()
-                                    ->helperText(__('shopper::pages/settings.settings.phone_number_helper')),
+                                    ->helperText(__('shopper::pages/settings/global.general.phone_number_helper')),
                             ]),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.settings.assets'))
-                    ->description(__('shopper::pages/settings.settings.assets_summary'))
+                Section::make(__('shopper::pages/settings/global.general.assets'))
+                    ->description(__('shopper::pages/settings/global.general.assets_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
                         Components\FileUpload::make('logo')
-                            ->label(__('shopper::layout.forms.label.logo'))
+                            ->label(__('shopper::forms.label.logo'))
                             ->avatar()
                             ->image()
                             ->maxSize(1024)
                             ->disk(config('shopper.core.storage.collection_name')),
                         Components\FileUpload::make('cover')
-                            ->label(__('shopper::layout.forms.label.cover_photo'))
+                            ->label(__('shopper::forms.label.cover_photo'))
                             ->image()
                             ->maxSize(1024)
                             ->disk(config('shopper.core.storage.collection_name')),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.settings.store_address'))
-                    ->description(__('shopper::pages/settings.settings.store_address_summary'))
+                Section::make(__('shopper::pages/settings/global.general.store_address'))
+                    ->description(__('shopper::pages/settings/global.general.store_address_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
                         Components\TextInput::make('legal_name')
-                            ->label(__('shopper::layout.forms.label.legal_name'))
+                            ->label(__('shopper::forms.label.legal_name'))
                             ->placeholder('ShopStation LLC')
                             ->required(),
                         Components\RichEditor::make('about')
@@ -122,37 +123,52 @@ class General extends Component implements HasForms
                             ->fileAttachmentsDisk(config('shopper.core.storage.disk_name'))
                             ->fileAttachmentsDirectory(config('shopper.core.storage.collection_name')),
                         Components\TextInput::make('street_address')
-                            ->label(__('shopper::layout.forms.label.street_address'))
+                            ->label(__('shopper::forms.label.street_address'))
                             ->placeholder('Akwa Avenue 34')
                             ->required(),
                         Components\Grid::make()->schema([
                             Components\TextInput::make('city')
-                                ->label(__('shopper::layout.forms.label.city'))
+                                ->label(__('shopper::forms.label.city'))
                                 ->required(),
                             Components\TextInput::make('postal_code')
-                                ->label(__('shopper::layout.forms.label.postal_code'))
+                                ->label(__('shopper::forms.label.postal_code'))
                                 ->required(),
                         ]),
                         Components\Select::make('country_id')
-                            ->label(__('shopper::layout.forms.label.country'))
+                            ->label(__('shopper::forms.label.country'))
                             ->options(Country::query()->pluck('name', 'id'))
                             ->searchable(),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.settings.store_currency'))
-                    ->description(__('shopper::pages/settings.settings.store_currency_summary'))
+                Section::make(__('shopper::pages/settings/global.general.store_currency'))
+                    ->description(__('shopper::pages/onboarding.currency_description'))
                     ->aside()
                     ->compact()
                     ->schema([
-                        Components\Select::make('currency_id')
-                            ->label(__('shopper::layout.forms.label.currency'))
-                            ->options(Currency::query()->pluck('name', 'id'))
+                        Components\Select::make('currencies')
+                            ->label(__('shopper::forms.label.currencies'))
+                            ->helperText(__('shopper::pages/onboarding.currencies_description'))
+                            ->options(Currency::query()->orderBy('name')->pluck('name', 'id'))
+                            ->searchable()
+                            ->multiple()
+                            ->minItems(1)
                             ->required()
-                            ->searchable(),
+                            ->live()
+                            ->native(false),
+                        Components\Select::make('default_currency_id')
+                            ->label(__('shopper::forms.label.default_currency'))
+                            ->options(
+                                fn (Get $get) => Currency::query()
+                                    ->select('name', 'id')
+                                    ->whereIn('id', $get('currencies'))
+                                    ->pluck('name', 'id')
+                            )
+                            ->native(false)
+                            ->required(),
                     ]),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.settings.social_links'))
-                    ->description(__('shopper::pages/settings.settings.social_links_summary'))
+                Section::make(__('shopper::pages/settings/global.general.social_links'))
+                    ->description(__('shopper::pages/settings/global.general.social_links_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
@@ -212,6 +228,6 @@ class General extends Component implements HasForms
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.general')
-            ->title(__('shopper::pages/settings.settings.title'));
+            ->title(__('shopper::pages/settings/global.general.title'));
     }
 }

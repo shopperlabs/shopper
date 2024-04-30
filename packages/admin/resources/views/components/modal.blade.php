@@ -13,7 +13,7 @@
     <div class="{{ $headerClasses }}">
         @if (isset($title))
             <h3
-                class="flex items-center font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white lg:text-xl"
+                class="flex items-center font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white lg:text-xl"
             >
                 {{ $title }}
             </h3>

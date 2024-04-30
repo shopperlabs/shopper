@@ -4,19 +4,9 @@ declare(strict_types=1);
 
 return [
 
-    'customer' => 'Client',
-    'product' => 'Produit',
-    'brand' => 'Marque',
-    'collection' => 'Collection',
-    'category' => 'Catégorie',
-    'attribute' => 'Attribut',
-    'attributes' => 'Attributs',
-    'discount' => 'Remise',
-    'review' => 'Avis',
     'account' => 'Compte',
     'users' => 'Utilisateurs',
     'user' => 'Utilisateur',
-    'analytics' => 'Analytics',
     'system' => 'Système',
     'purchased' => 'Acheté',
     'total' => 'Total',
@@ -27,8 +17,6 @@ return [
     'not_available' => 'Indisponible',
     'available' => 'Disponible',
     'stock' => 'Stock',
-    'permission' => 'Permission',
-    'role' => 'Rôle',
 
     'payment_method' => 'Moyen de paiement',
     'shipping_method' => 'Mode de livraison',
@@ -52,19 +40,9 @@ return [
 
     'pricing' => 'Tarification',
     'price' => 'Prix',
-    'location' => 'Inventaire',
-    'locations' => 'Inventaires',
     'dismiss' => 'Fermer',
-    'weight_dimension' => 'Poids et dimensions',
+
     'published_on' => 'Sera publié le:',
-    'unity' => [
-        'm' => 'm',
-        'cm' => 'cm',
-        'kg' => 'kg',
-        'g' => 'g',
-        'l' => 'l',
-        'ml' => 'ml',
-    ],
 
     'variants' => 'Variantes',
     'variant' => 'Variante',
@@ -73,21 +51,13 @@ return [
     'out_stock' => 'stock épuisé',
     'event' => 'Action',
     'adjustment' => 'Ajustement',
-    'is_enabled' => 'Est activé',
+    'is_enabled' => 'Activé',
+    'is_disabled' => 'Désactivé',
 
-    'selected_tab' => 'Onglet sélectionné',
     'set_visibility' => 'Rendre visible :name pour les clients.',
     'set_global_visibility' => 'Visibilité de la page pour les clients.',
     'log_out' => 'Se déconnecter',
     'browser_platform' => ':browser sur :platform',
-
-    'actions_label' => [
-        'update' => 'Modifier :name',
-        'add_new' => 'Ajout :name',
-        'edit' => 'Éditer :name',
-        'show' => 'Afficher :name',
-        'delete' => 'Supprimer :name',
-    ],
 
     'generate' => 'Générer',
     'male' => 'Homme',
@@ -110,7 +80,6 @@ return [
 
     'images' => 'Images',
     'step' => 'Étape :number',
-    'settings' => 'Paramètres',
     'environment' => 'Environnement',
     'discount_use' => '{1} Limité à une utilisation|[2,*] Limité à :count utilisations',
 
@@ -170,6 +139,7 @@ return [
         'slug' => 'SEO',
         'description' => 'Améliorez votre classement et la façon dont votre page :name apparaîtra dans les résultats des moteurs de recherche.',
         'sub_description' => 'Voici un aperçu du résultat que peut donner un moteur de recherche, jouez avec !',
+        'characters' => '160 caractères',
     ],
 
     'other' => ' autre(s)',
@@ -177,5 +147,6 @@ return [
     'feature_enabled' => 'Vous devez activé la fonctionnalité :feature pour activer cette section.',
     'amount' => 'Montant',
     'soon' => 'Bientôt',
+    'learn_more' => 'En savoir plus',
 
 ];

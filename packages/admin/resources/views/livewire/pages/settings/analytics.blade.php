@@ -1,7 +1,13 @@
 <x-shopper::container>
-    <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::words.analytics')">
+    <x-shopper::breadcrumb
+        :back="route('shopper.settings.index')"
+        :current="__('shopper::pages/settings/menu.analytic')"
+    >
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+        <x-shopper::breadcrumb.link
+            :link="route('shopper.settings.index')"
+            :title="__('shopper::pages/settings/global.menu')"
+        />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="my-6">
@@ -19,10 +25,10 @@
                     <x-shopper::icons.ga class="h-6 w-6" aria-hidden="true" />
                 </div>
                 <h3 class="mt-5 font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white">
-                    {{ __('shopper::pages/settings.analytics.google') }}
+                    {{ __('shopper::pages/settings/global.analytics.google') }}
                 </h3>
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                    {{ __('shopper::pages/settings.analytics.google_description') }}
+                    {{ __('shopper::pages/settings/global.analytics.google_description') }}
                 </p>
             </div>
         </div>
@@ -31,7 +37,7 @@
                 <div class="grid grid-cols-3 gap-6">
                     <x-shopper::forms.group
                         for="google_tracking_id"
-                        :label="__('shopper::layout.forms.label.ga_tracking_id')"
+                        :label="__('shopper::forms.label.ga_tracking_id')"
                         class="col-span-3"
                     >
                         <x-shopper::forms.input
@@ -44,7 +50,7 @@
                     </x-shopper::forms.group>
                     <x-shopper::forms.group
                         for="google_view_id"
-                        :label="__('shopper::layout.forms.label.ga_view_id')"
+                        :label="__('shopper::forms.label.ga_view_id')"
                         class="col-span-3"
                     >
                         <x-shopper::forms.input
@@ -57,7 +63,7 @@
                     </x-shopper::forms.group>
                     <x-shopper::forms.group
                         for="analytic_script"
-                        :label="__('shopper::layout.forms.label.ga_additional_script')"
+                        :label="__('shopper::forms.label.ga_additional_script')"
                         class="col-span-3"
                     >
                         <x-shopper::forms.textarea
@@ -71,7 +77,7 @@
                     <label
                         class="inline-flex items-center text-sm font-medium leading-5 text-gray-700 dark:text-gray-300"
                     >
-                        {{ __('shopper::layout.forms.label.ga_json') }}
+                        {{ __('shopper::forms.label.ga_json') }}
                         <a
                             href="https://github.com/spatie/laravel-analytics#how-to-obtain-the-credentials-to-communicate-with-google-analytics"
                             target="_blank"
@@ -97,7 +103,7 @@
                                     class="inline-flex cursor-pointer items-center rounded-md border border-gray-300 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:text-gray-500 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white"
                                 >
                                     <x-untitledui-file-download-02 class="mr-1.5 h-5 w-5" aria-hidden="true" />
-                                    {{ __('shopper::layout.forms.actions.upload') }}
+                                    {{ __('shopper::forms.actions.upload') }}
                                 </label>
                             </span>
                         </div>
@@ -112,7 +118,7 @@
 
                         @if (! $json_file && ! $credentials_json)
                             <span class="ml-4 text-sm text-gray-400 dark:text-gray-500">
-                                {{ __('shopper::pages/settings.analytics.no_json') }}
+                                {{ __('shopper::pages/settings/global.analytics.no_json') }}
                             </span>
                         @endif
                     </div>
@@ -133,16 +139,16 @@
                         <x-shopper::icons.gtag class="h-6 w-6" aria-hidden="true" />
                     </div>
                     <h3 class="mt-5 font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white">
-                        {{ __('shopper::pages/settings.analytics.gtag') }}
+                        {{ __('shopper::pages/settings/global.analytics.gtag') }}
                     </h3>
                     <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
-                        {{ __('shopper::pages/settings.analytics.gtag_description') }}
+                        {{ __('shopper::pages/settings/global.analytics.gtag_description') }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 max-w-3xl lg:col-span-2 lg:mt-0">
                 <div>
-                    <x-shopper::forms.group for="google_tag_id" :label="__('shopper::layout.forms.label.gtag')">
+                    <x-shopper::forms.group for="google_tag_id" :label="__('shopper::forms.label.gtag')">
                         <x-shopper::forms.input
                             wire:model="google_tag_manager_account_id"
                             type="text"
@@ -152,13 +158,13 @@
                         />
                     </x-shopper::forms.group>
                     <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                        {{ __('shopper::components.learn_more') }}
+                        {{ __('shopper::words.learn_more') }}
                         <a
                             href="https://marketingplatform.google.com/about/tag-manager"
                             target="_blank"
                             class="text-primary-500 hover:text-primary-400"
                         >
-                            {{ __('shopper::pages/settings.analytics.gtag') }}
+                            {{ __('shopper::pages/settings/global.analytics.gtag') }}
                         </a>
                     </p>
                 </div>
@@ -178,19 +184,16 @@
                         <x-shopper::icons.pixel class="h-6 w-6" aria-hidden="true" />
                     </div>
                     <h3 class="mt-5 font-heading text-lg font-bold leading-6 text-gray-900 dark:text-white">
-                        {{ __('shopper::pages/settings.analytics.pixel') }}
+                        {{ __('shopper::pages/settings/global.analytics.pixel') }}
                     </h3>
                     <p class="mt-2 text-sm leading-5 text-gray-500 dark:text-gray-400">
-                        {{ __('shopper::pages/settings.analytics.pixel_description') }}
+                        {{ __('shopper::pages/settings/global.analytics.pixel_description') }}
                     </p>
                 </div>
             </div>
             <div class="mt-5 max-w-3xl lg:col-span-2 lg:mt-0">
                 <div>
-                    <x-shopper::forms.group
-                        for="pixel_facebook_id"
-                        :label="__('shopper::layout.forms.label.pixel_id')"
-                    >
+                    <x-shopper::forms.group for="pixel_facebook_id" :label="__('shopper::forms.label.pixel_id')">
                         <x-shopper::forms.input
                             wire:model="facebook_pixel_account_id"
                             type="text"
@@ -200,13 +203,13 @@
                         />
                     </x-shopper::forms.group>
                     <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                        {{ __('shopper::components.learn_more') }}
+                        {{ __('shopper::words.learn_more') }}
                         <a
                             href="https://www.facebook.com/business/learn/facebook-ads-pixel"
                             target="_blank"
                             class="text-primary-500 hover:text-primary-400"
                         >
-                            {{ __('shopper::pages/settings.analytics.pixel') }}
+                            {{ __('shopper::pages/settings/global.analytics.pixel') }}
                         </a>
                     </p>
                 </div>
@@ -218,7 +221,7 @@
         <div class="flex justify-end">
             <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                {{ __('shopper::layout.forms.actions.save') }}
+                {{ __('shopper::forms.actions.save') }}
             </x-shopper::buttons.primary>
         </div>
     </div>

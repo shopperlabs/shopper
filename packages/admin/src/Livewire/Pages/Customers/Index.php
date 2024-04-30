@@ -40,34 +40,34 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             )
             ->columns([
                 Tables\Columns\ViewColumn::make('first_name')
-                    ->label(__('shopper::layout.forms.label.full_name'))
+                    ->label(__('shopper::forms.label.full_name'))
                     ->view('shopper::livewire.tables.cells.customers.name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\ViewColumn::make('email')
-                    ->label(__('shopper::layout.forms.label.email'))
+                    ->label(__('shopper::forms.label.email'))
                     ->view('shopper::livewire.tables.cells.customers.email')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('country')
-                    ->label(__('shopper::layout.forms.label.country'))
+                    ->label(__('shopper::forms.label.country'))
                     ->getStateUsing(
                         fn ($record): ?string => Country::find($record->addresses->first()?->country_id)?->name ?? null
                     )
                     ->sortable(),
                 Tables\Columns\TextColumn::make('orders_count')
                     ->counts([
-                        'orders' => fn (Builder $query) => $query->where('status', OrderStatus::PAID->value),
+                        'orders' => fn (Builder $query) => $query->where('status', OrderStatus::Pending->value),
                     ])
                     ->label(__('shopper::pages/customers.orders.placed')),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('shopper::layout.forms.label.registered_at'))
+                    ->label(__('shopper::forms.label.registered_at'))
                     ->date()
                     ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('email_verified_at')
-                    ->label(__('shopper::layout.forms.label.email_verified'))
+                    ->label(__('shopper::forms.label.email_verified'))
                     ->nullable(),
                 Tables\Filters\Filter::make('created_at')
                     ->form([
@@ -91,8 +91,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->persistFiltersInSession()
             ->actions([
                 Tables\Actions\Action::make('view')
-                    ->label(__('shopper::layout.forms.actions.view'))
-                    ->color('info')
+                    ->label(__('shopper::forms.actions.view'))
                     ->url(fn ($record): string => route('shopper.customers.show', $record)),
             ]);
     }
@@ -105,6 +104,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 ->scopes('customers')
                 ->count(),
         ])
-            ->title(__('shopper::layout.sidebar.customers'));
+            ->title(__('shopper::pages/customers.menu'));
     }
 }

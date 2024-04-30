@@ -48,8 +48,8 @@ class Variant extends AbstractPageComponent implements HasForms
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
-                                    ->label(__('shopper::layout.forms.label.name'))
-                                    ->placeholder('Model Y, Model S (Eg. for and Tesla car)')
+                                    ->label(__('shopper::forms.label.name'))
+                                    ->placeholder('Model Y, Model S (Eg. for Tesla)')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
@@ -58,7 +58,7 @@ class Variant extends AbstractPageComponent implements HasForms
                                     }),
 
                                 Forms\Components\TextInput::make('slug')
-                                    ->label(__('shopper::layout.forms.label.slug'))
+                                    ->label(__('shopper::forms.label.slug'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
@@ -66,14 +66,14 @@ class Variant extends AbstractPageComponent implements HasForms
                                     ->unique(config('shopper.models.product'), 'slug', ignoreRecord: true),
 
                                 Forms\Components\TextInput::make('price_amount')
-                                    ->label(__('shopper::layout.forms.label.price_amount'))
+                                    ->label(__('shopper::forms.label.price_amount'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->suffix(shopper_currency())
                                     ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
                                 Forms\Components\TextInput::make('old_price_amount')
-                                    ->label(__('shopper::layout.forms.label.compare_price'))
+                                    ->label(__('shopper::forms.label.compare_price'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->suffix(shopper_currency())
@@ -104,18 +104,18 @@ class Variant extends AbstractPageComponent implements HasForms
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('sku')
-                                    ->label(__('shopper::layout.forms.label.sku'))
+                                    ->label(__('shopper::forms.label.sku'))
                                     ->unique(config('shopper.models.product'), 'sku', ignoreRecord: true)
                                     ->required()
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('barcode')
-                                    ->label(__('shopper::layout.forms.label.barcode'))
+                                    ->label(__('shopper::forms.label.barcode'))
                                     ->unique(config('shopper.models.product'), 'barcode', ignoreRecord: true)
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('security_stock')
-                                    ->label(__('shopper::layout.forms.label.safety_stock'))
+                                    ->label(__('shopper::forms.label.safety_stock'))
                                     ->numeric()
                                     ->default(0)
                                     ->rules(['integer', 'min:0']),

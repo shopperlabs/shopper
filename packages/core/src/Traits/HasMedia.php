@@ -17,13 +17,13 @@ trait HasMedia
         $this->addMediaCollection(config('shopper.core.storage.collection_name'))
             ->useDisk(config('shopper.core.storage.disk_name'))
             ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
-            ->useFallbackUrl(url(config('shopper.media.fallback_url')));
+            ->useFallbackUrl(shopper_fallback_url());
 
         $this->addMediaCollection(config('shopper.core.storage.thumbnail_collection'))
             ->singleFile()
             ->useDisk(config('shopper.core.storage.disk_name'))
             ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
-            ->useFallbackUrl(url(config('shopper.media.fallback_url')));
+            ->useFallbackUrl(shopper_fallback_url());
     }
 
     public function registerMediaConversions(?Media $media = null): void

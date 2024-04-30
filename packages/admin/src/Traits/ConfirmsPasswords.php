@@ -18,7 +18,7 @@ trait ConfirmsPasswords
             return;
         }
 
-        $this->emit($action);
+        $this->dispatch($action);
     }
 
     protected function ensurePasswordIsConfirmed(?int $maximumSecondsSinceConfirmation = null): mixed

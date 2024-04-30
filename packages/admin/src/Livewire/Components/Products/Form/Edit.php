@@ -41,7 +41,7 @@ class Edit extends Component implements HasForms
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
-                                    ->label(__('shopper::layout.forms.label.name'))
+                                    ->label(__('shopper::forms.label.name'))
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
@@ -49,7 +49,7 @@ class Edit extends Component implements HasForms
                                         $set('slug', Str::slug($state));
                                     }),
                                 Forms\Components\TextInput::make('slug')
-                                    ->label(__('shopper::layout.forms.label.slug'))
+                                    ->label(__('shopper::forms.label.slug'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
@@ -57,7 +57,7 @@ class Edit extends Component implements HasForms
                                     ->unique(config('shopper.models.product'), 'slug', ignoreRecord: true),
 
                                 Forms\Components\RichEditor::make('description')
-                                    ->label(__('shopper::layout.forms.label.description'))
+                                    ->label(__('shopper::forms.label.description'))
                                     ->columnSpan('full'),
                             ]),
 
@@ -67,21 +67,21 @@ class Edit extends Component implements HasForms
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('price_amount')
-                                    ->label(__('shopper::layout.forms.label.price_amount'))
+                                    ->label(__('shopper::forms.label.price_amount'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->suffix(shopper_currency())
                                     ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
                                 Forms\Components\TextInput::make('old_price_amount')
-                                    ->label(__('shopper::layout.forms.label.compare_price'))
+                                    ->label(__('shopper::forms.label.compare_price'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->suffix(shopper_currency())
                                     ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
                                 Forms\Components\TextInput::make('cost_amount')
-                                    ->label(__('shopper::layout.forms.label.cost_per_item'))
+                                    ->label(__('shopper::forms.label.cost_per_item'))
                                     ->helperText(__('shopper::pages/products.cost_per_items_help_text'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
@@ -96,13 +96,13 @@ class Edit extends Component implements HasForms
                         Forms\Components\Section::make('Status')
                             ->schema([
                                 Forms\Components\Toggle::make('is_visible')
-                                    ->label(__('shopper::layout.forms.label.visible'))
+                                    ->label(__('shopper::forms.label.visible'))
                                     ->helperText(__('shopper::pages/products.visible_help_text'))
                                     ->onColor('success')
                                     ->default(true),
 
                                 Forms\Components\DateTimePicker::make('published_at')
-                                    ->label(__('shopper::layout.forms.label.availability'))
+                                    ->label(__('shopper::forms.label.availability'))
                                     ->native(false)
                                     ->default(now())
                                     ->helperText(__('shopper::pages/products.availability_description'))
@@ -112,20 +112,20 @@ class Edit extends Component implements HasForms
                         Forms\Components\Section::make(__('shopper::pages/products.product_associations'))
                             ->schema([
                                 Forms\Components\Select::make('brand_id')
-                                    ->label(__('shopper::layout.forms.label.brand'))
+                                    ->label(__('shopper::forms.label.brand'))
                                     ->relationship('brand', 'name', fn (Builder $query) => $query->where('is_enabled', true))
                                     ->searchable()
                                     ->visible(Feature::enabled('brand')),
 
                                 Forms\Components\Select::make('collections')
-                                    ->label(__('shopper::layout.sidebar.collections'))
+                                    ->label(__('shopper::pages/collections.menu'))
                                     ->relationship('collections', 'name')
                                     ->searchable()
                                     ->multiple()
                                     ->visible(Feature::enabled('collection')),
 
                                 Components\Form\SelectTree::make('categories')
-                                    ->label(__('shopper::layout.sidebar.categories'))
+                                    ->label(__('shopper::pages/categories.menu'))
                                     ->relationship(
                                         relationship: 'categories',
                                         titleAttribute: 'name',
@@ -164,7 +164,7 @@ class Edit extends Component implements HasForms
         $this->dispatch('productHasUpdated');
 
         Notification::make()
-            ->body(__('shopper::pages/products.notifications.update'))
+            ->body(__('shopper::notifications.update', ['item' => __('shopper::pages/products.single')]))
             ->success()
             ->send();
     }

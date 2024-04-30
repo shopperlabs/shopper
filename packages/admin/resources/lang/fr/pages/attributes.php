@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+
+    'menu' => 'Attributs',
+    'single' => 'attribut',
     'title' => 'Gérer les attributs',
     'content' => 'Ajoutez des attributs personnalisés à votre produit pour afficher des informations',
     'add' => 'Ajouter un attribut',

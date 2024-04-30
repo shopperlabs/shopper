@@ -22,7 +22,7 @@
                 </h3>
                 <x-shopper::badge
                     :style="$product->is_visible ? 'success' : 'warning'"
-                    :value="$product->is_visible ? __('shopper::layout.forms.label.visible'): __('shopper::layout.forms.label.invisible')"
+                    :value="$product->is_visible ? __('shopper::forms.label.visible'): __('shopper::forms.label.invisible')"
                 />
             </div>
         </div>
@@ -34,7 +34,7 @@
             <div class="flex justify-end border-t border-gray-200 pt-8 dark:border-gray-700">
                 <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="store" />
-                    {{ __('shopper::pages/products.variants.actions.update') }}
+                    {{ __('shopper::forms.actions.update') }}
                 </x-shopper::buttons.primary>
             </div>
         </div>

@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+
+    'menu' => 'Orders',
+    'single' => 'order',
     'title' => 'Manage customers orders',
     'show_title' => 'Detail Order ~ :number',
     'content' => 'When customers place orders, this is where all the processing will be done, the management of refunds and the tracking of their order.',

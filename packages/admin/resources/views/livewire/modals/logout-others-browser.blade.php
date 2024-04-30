@@ -18,7 +18,7 @@
                 <div class="relative">
                     <x-shopper::forms.input
                         wire:model.lazy="password"
-                        aria-label="{{ __('shopper::layout.forms.label.password') }}"
+                        aria-label="{{ __('shopper::forms.label.password') }}"
                         type="password"
                         placeholder="{{ __('Enter your password') }}"
                     />
@@ -38,12 +38,12 @@
                 type="button"
             >
                 <x-shopper::loader wire:loading wire:target="logoutOtherBrowserSessions" class="text-white" />
-                {{ __('shopper::layout.forms.actions.logout_session') }}
+                {{ __('shopper::forms.actions.logout_session') }}
             </x-shopper::buttons.danger>
         </span>
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
             <x-shopper::buttons.default wire:click="$emit('closeModal')" wire:loading.attr="disabled" type="button">
-                {{ __('shopper::layout.forms.actions.nevermind') }}
+                {{ __('shopper::forms.actions.nevermind') }}
             </x-shopper::buttons.default>
         </span>
     </x-slot>

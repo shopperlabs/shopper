@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 return [
+
+    'menu' => 'Commandes',
+    'single' => 'commande',
     'title' => 'Gérer les commandes des clients',
     'show_title' => 'Détail de la commande ~ :number',
     'content' => "Lorsque les clients passent des commandes, c'est là que s'effectuent tous les traitements, la gestion des remboursements et le suivi de leurs commandes.",

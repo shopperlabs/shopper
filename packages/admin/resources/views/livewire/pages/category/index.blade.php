@@ -5,7 +5,7 @@
 <x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('shopper::layout.sidebar.categories') }}
+            {{ __('shopper::pages/categories.menu') }}
         </x-slot>
 
         <x-slot name="action">
@@ -16,7 +16,7 @@
                             wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.category-form' })"
                             type="button"
                         >
-                            {{ __('shopper::words.actions_label.add_new', ['name' => mb_strtolower(__('shopper::words.category'))]) }}
+                            {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/categories.single')]) }}
                         </x-shopper::buttons.primary>
                     </div>
                 @endcan
@@ -28,7 +28,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/categories.title')"
             :content="__('shopper::pages/categories.content')"
-            :button="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.category'))])"
+            :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/categories.single')])"
             permission="add_categories"
             panel="{ component: 'shopper-slide-overs.category-form' }"
         >
@@ -347,5 +347,5 @@
         </div>
     @endif
 
-    <x-shopper::learn-more :name="__('shopper::layout.sidebar.categories')" link="categories" />
+    <x-shopper::learn-more :name="__('shopper::pages/categories.menu')" link="categories" />
 </x-shopper::container>

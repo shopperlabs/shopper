@@ -1,18 +1,18 @@
 <x-shopper::container>
     <x-shopper::breadcrumb
         :back="route('shopper.settings.inventories')"
-        :current="__('shopper::pages/settings.location.add')"
+        :current="__('shopper::pages/settings/global.location.add')"
     >
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.settings.inventories')"
-            :title="__('shopper::words.locations')"
+            :title="__('shopper::pages/settings/global.location.menu')"
         />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('shopper::pages/settings.location.add') }}
+            {{ __('shopper::pages/settings/global.location.add') }}
         </x-slot>
     </x-shopper::heading>
 

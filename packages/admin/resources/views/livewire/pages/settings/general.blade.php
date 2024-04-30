@@ -1,12 +1,15 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('General')">
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+        <x-shopper::breadcrumb.link
+            :link="route('shopper.settings.index')"
+            :title="__('shopper::pages/settings/global.menu')"
+        />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-6">
         <x-slot name="title">
-            {{ __('shopper::pages/settings.settings.title') }}
+            {{ __('shopper::pages/settings/global.general.title') }}
         </x-slot>
     </x-shopper::heading>
 
@@ -17,7 +20,7 @@
             <div class="flex justify-end">
                 <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
                     <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                    {{ __('shopper::layout.forms.actions.save') }}
+                    {{ __('shopper::forms.actions.save') }}
                 </x-shopper::buttons.primary>
             </div>
         </div>

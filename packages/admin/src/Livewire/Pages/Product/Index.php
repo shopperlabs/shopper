@@ -44,29 +44,29 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
-                    ->label(__('shopper::layout.forms.label.thumbnail'))
+                    ->label(__('shopper::forms.label.thumbnail'))
                     ->square()
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
-                    ->defaultImageUrl(config('shopper.media.fallback_url')),
+                    ->defaultImageUrl(shopper_fallback_url()),
 
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('shopper::layout.forms.label.name'))
+                    ->label(__('shopper::forms.label.name'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('price_amount')
-                    ->label(__('shopper::layout.forms.label.price'))
+                    ->label(__('shopper::forms.label.price'))
                     ->money(shopper_currency())
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_visible')
-                    ->label(__('shopper::layout.forms.label.availability'))
+                    ->label(__('shopper::forms.label.availability'))
                     ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('brand.name')
-                    ->label(__('shopper::layout.forms.label.brand'))
+                    ->label(__('shopper::forms.label.brand'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
@@ -85,7 +85,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->toggledHiddenByDefault(),
 
                 Tables\Columns\TextColumn::make('published_at')
-                    ->label(__('shopper::layout.forms.label.published_at'))
+                    ->label(__('shopper::forms.label.published_at'))
                     ->searchable()
                     ->dateTime()
                     ->toggleable()
@@ -94,7 +94,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('edit')
-                        ->label(__('shopper::layout.forms.actions.edit'))
+                        ->label(__('shopper::forms.actions.edit'))
                         ->icon('untitledui-edit-04')
                         ->url(
                             fn (Product $record): string => route(
@@ -106,7 +106,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ->icon('untitledui-copy-dashed')
                         ->excludeAttributes(['variants_count', 'slug'])
                         ->successNotificationTitle(__('shopper::pages/products.notifications.replicated')),
-                    Tables\Actions\Action::make(__('shopper::layout.forms.actions.delete'))
+                    Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
                         ->icon('untitledui-trash-03')
                         ->modalIcon('untitledui-trash-03')
                         ->color('danger')
@@ -122,7 +122,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         NumberConstraint::make('price_amount')
                             ->icon('untitledui-bank-note'),
                         BooleanConstraint::make('is_visible')
-                            ->label(__('shopper::layout.forms.label.availability')),
+                            ->label(__('shopper::forms.label.availability')),
                         BooleanConstraint::make('backorder'),
                         DateConstraint::make('published_at'),
                     ])
@@ -137,6 +137,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return view('shopper::livewire.pages.products.index', [
             'total' => (new ProductRepository())->count(),
         ])
-            ->title(__('shopper::layout.sidebar.products'));
+            ->title(__('shopper::pages/products.menu'));
     }
 }

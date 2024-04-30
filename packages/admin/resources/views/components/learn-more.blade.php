@@ -6,7 +6,7 @@
             <x-untitledui-info-circle class="h-5 w-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
         </div>
         <div class="bg-white px-4 py-3 text-sm leading-5 text-gray-500 dark:bg-gray-800 dark:text-gray-400">
-            {{ __('shopper::components.learn_more') }}
+            {{ __('shopper::words.learn_more') }}
             <a
                 href="https://laravelshopper.dev/docs/2.x/{{ $link }}"
                 target="_blank"

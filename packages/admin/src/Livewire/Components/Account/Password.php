@@ -37,20 +37,20 @@ class Password extends Component implements HasForms
                     ->compact()
                     ->schema([
                         Components\TextInput::make('current_password')
-                            ->label(__('shopper::layout.forms.label.current_password'))
+                            ->label(__('shopper::forms.label.current_password'))
                             ->password()
                             ->currentPassword()
                             ->revealable()
                             ->required(),
                         Components\TextInput::make('password')
-                            ->label(__('shopper::layout.forms.label.new_password'))
+                            ->label(__('shopper::forms.label.new_password'))
                             ->helperText(__('shopper::pages/auth.account.password_helper_validation'))
                             ->password()
                             ->revealable()
                             ->required()
                             ->confirmed(),
                         Components\TextInput::make('password_confirmation')
-                            ->label(__('shopper::layout.forms.label.confirm_password'))
+                            ->label(__('shopper::forms.label.confirm_password'))
                             ->password()
                             ->revealable()
                             ->required(),

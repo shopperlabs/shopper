@@ -19,7 +19,7 @@
             </label>
             @if ($optional)
                 <span class="text-sm leading-5 text-gray-500 dark:text-gray-400">
-                    {{ __('shopper::layout.forms.label.optional') }}
+                    {{ __('shopper::forms.label.optional') }}
                 </span>
             @endif
         </div>

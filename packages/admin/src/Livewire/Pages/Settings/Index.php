@@ -12,6 +12,6 @@ class Index extends AbstractPageComponent
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.index')
-            ->title(__('shopper::words.settings'));
+            ->title(__('shopper::pages/settings/global.menu'));
     }
 }

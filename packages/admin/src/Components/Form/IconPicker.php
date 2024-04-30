@@ -72,7 +72,7 @@ class IconPicker extends Select
                     'icon' => $icon,
                 ])->render();
             })
-            ->placeholder(__('shopper::layout.forms.placeholder.icon_placeholder'));
+            ->placeholder(__('shopper::forms.placeholder.icon_placeholder'));
     }
 
     public function sets(array | Closure | string | null $sets = null): static

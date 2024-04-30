@@ -4,7 +4,10 @@
         :current="__('shopper::pages/settings/zones.title')"
     >
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
-        <x-shopper::breadcrumb.link :link="route('shopper.settings.index')" :title="__('shopper::words.settings')" />
+        <x-shopper::breadcrumb.link
+            :link="route('shopper.settings.index')"
+            :title="__('shopper::pages/settings/global.menu')"
+        />
     </x-shopper::breadcrumb>
 
     <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-6">
@@ -58,7 +61,7 @@
                                         @endif
                                     </span>
                                     <x-filament::badge size="sm" :color="$zone->isEnabled() ? 'success': 'warning'">
-                                        {{ $zone->isEnabled() ? __('shopper::forms.actions.enabled') : __('shopper::forms.actions.disabled') }}
+                                        {{ $zone->isEnabled() ? __('shopper::words.is_enabled') : __('shopper::words.is_disabled') }}
                                     </x-filament::badge>
                                 </span>
                                 <span

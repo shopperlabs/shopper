@@ -51,8 +51,8 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('name')
-                                    ->label(__('shopper::layout.forms.label.name'))
-                                    ->placeholder('Model Y, Model S (Eg. for and Tesla car)')
+                                    ->label(__('shopper::forms.label.name'))
+                                    ->placeholder('Model Y, Model S (Eg. for Tesla)')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
@@ -61,7 +61,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                                     }),
 
                                 Forms\Components\TextInput::make('slug')
-                                    ->label(__('shopper::layout.forms.label.slug'))
+                                    ->label(__('shopper::forms.label.slug'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
@@ -74,14 +74,14 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                                 Forms\Components\Grid::make()
                                     ->schema([
                                         Forms\Components\TextInput::make('price_amount')
-                                            ->label(__('shopper::layout.forms.label.price_amount'))
+                                            ->label(__('shopper::forms.label.price_amount'))
                                             ->numeric()
                                             ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                             ->suffix(shopper_currency())
                                             ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
                                         Forms\Components\TextInput::make('old_price_amount')
-                                            ->label(__('shopper::layout.forms.label.compare_price'))
+                                            ->label(__('shopper::forms.label.compare_price'))
                                             ->numeric()
                                             ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                             ->suffix(shopper_currency())
@@ -95,34 +95,34 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Forms\Components\Placeholder::make('stock')
-                            ->label('Stock & Inventory')
+                            ->label(__('shopper::pages/products.stock_inventory_heading'))
                             ->content(new HtmlString(Blade::render(<<<'BLADE'
                                 <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
-                                    {{ __('Configure the inventory and stock for this variant') }}
+                                    {{ __('shopper::pages/products.stock_inventory_description', ['item' => __('shopper::pages/products.variants.single')]) }}
                                 </p>
                             BLADE))),
 
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('sku')
-                                    ->label(__('shopper::layout.forms.label.sku'))
+                                    ->label(__('shopper::forms.label.sku'))
                                     ->unique(config('shopper.models.product'), 'sku')
                                     ->required()
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('barcode')
-                                    ->label(__('shopper::layout.forms.label.barcode'))
+                                    ->label(__('shopper::forms.label.barcode'))
                                     ->unique(config('shopper.models.product'), 'barcode')
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('quantity')
-                                    ->label(__('shopper::layout.forms.label.quantity'))
+                                    ->label(__('shopper::forms.label.quantity'))
                                     ->numeric()
                                     ->required()
                                     ->rules(['integer', 'min:1']),
 
                                 Forms\Components\TextInput::make('security_stock')
-                                    ->label(__('shopper::layout.forms.label.safety_stock'))
+                                    ->label(__('shopper::forms.label.safety_stock'))
                                     ->numeric()
                                     ->default(0)
                                     ->rules(['integer', 'min:0']),
@@ -146,7 +146,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Forms\Components\Placeholder::make('shipping')
-                            ->label(__('shopper::words.weight_dimension'))
+                            ->label(__('shopper::pages/products.weight_dimension'))
                             ->content(new HtmlString(Blade::render(<<<'BLADE'
                                 <p class="max-w-2xl text-sm text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::pages/products.weight_dimension_help_text') }}

@@ -50,21 +50,21 @@ class Create extends AbstractPageComponent implements HasForms
                     ->columns()
                     ->schema([
                         Components\TextInput::make('first_name')
-                            ->label(__('shopper::layout.forms.label.first_name'))
+                            ->label(__('shopper::forms.label.first_name'))
                             ->required(),
                         Components\TextInput::make('last_name')
-                            ->label(__('shopper::layout.forms.label.last_name'))
+                            ->label(__('shopper::forms.label.last_name'))
                             ->required(),
                         Components\TextInput::make('email')
-                            ->label(__('shopper::layout.forms.label.email'))
+                            ->label(__('shopper::forms.label.email'))
                             ->prefixIcon('untitledui-mail')
                             ->autocomplete('email-address')
                             ->email()
                             ->unique()
                             ->required(),
                         Components\TextInput::make('phone_number')
-                            ->label(__('shopper::layout.forms.label.phone_number'))
-                            ->hint(__('shopper::layout.forms.label.optional'))
+                            ->label(__('shopper::forms.label.phone_number'))
+                            ->hint(__('shopper::forms.label.optional'))
                             ->tel(),
                         GenderField::make(),
                     ]),
@@ -75,7 +75,7 @@ class Create extends AbstractPageComponent implements HasForms
                     ->aside()
                     ->schema([
                         Components\TextInput::make('password')
-                            ->label(__('shopper::layout.forms.label.password'))
+                            ->label(__('shopper::forms.label.password'))
                             ->password()
                             ->revealable()
                             ->required()
@@ -89,7 +89,7 @@ class Create extends AbstractPageComponent implements HasForms
                             ->confirmed()
                             ->dehydrateStateUsing(fn (string $state): string => Hash::make($state)),
                         Components\TextInput::make('password_confirmation')
-                            ->label(__('shopper::layout.forms.label.confirm_password'))
+                            ->label(__('shopper::forms.label.confirm_password'))
                             ->password()
                             ->revealable()
                             ->required(),
@@ -136,7 +136,7 @@ class Create extends AbstractPageComponent implements HasForms
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'is_default' => true,
-            'type' => AddressType::SHIPPING,
+            'type' => AddressType::Shipping,
         ]);
 
         /** @var User $customer */
@@ -154,7 +154,7 @@ class Create extends AbstractPageComponent implements HasForms
         }
 
         Notification::make()
-            ->title(__('shopper::notifications.actions.create', ['item' => __('shopper::words.customer')]))
+            ->title(__('shopper::notifications.create', ['item' => __('shopper::pages/customers.single')]))
             ->success()
             ->send();
 
@@ -169,6 +169,6 @@ class Create extends AbstractPageComponent implements HasForms
                 default: fn () => Country::query()->orderBy('name')->get()
             ),
         ])
-            ->title(__('shopper::words.actions_label.add_new', ['name' => __('shopper::words.customer')]));
+            ->title(__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]));
     }
 }

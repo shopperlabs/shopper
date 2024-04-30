@@ -64,7 +64,7 @@
                                     <div class="ml-4">
                                         <span class="inline-flex rounded-md shadow-sm">
                                             <x-shopper::buttons.primary
-                                                wire:click="$emit('openModal', 'shopper-modals.logout-others-browser')"
+                                                wire:click="$dispatch('openModal', 'shopper-modals.logout-others-browser')"
                                                 wire:loading.attr="disabled"
                                                 type="button"
                                             >
@@ -103,7 +103,7 @@
                                     target="_blank"
                                     class="font-medium text-yellow-700 underline transition duration-150 ease-in-out hover:text-yellow-600"
                                 >
-                                    {{ __('shopper::components.learn_more') }} &rarr;
+                                    {{ __('shopper::words.learn_more') }} &rarr;
                                 </a>
                             </p>
                         </div>

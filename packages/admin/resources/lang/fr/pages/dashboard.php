@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Tableau de bord',
     'welcome_message' => 'Bienvenue sur le tableau de bord de Shopper',
     'header' => 'Commencez par les éléments de base de votre boutique en ligne',
     'description' => 'Pour commencer à construire votre nouvelle boutique avec Laravel Shopper, nous vous recommandons de commencer par ces étapes.

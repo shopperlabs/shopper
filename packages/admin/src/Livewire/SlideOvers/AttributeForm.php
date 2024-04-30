@@ -12,6 +12,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Shopper\Components;
+use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -37,7 +38,7 @@ class AttributeForm extends SlideOverComponent implements HasForms
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label(__('shopper::layout.forms.label.name'))
+                    ->label(__('shopper::forms.label.name'))
                     ->required()
                     ->live(onBlur: true)
                     ->maxLength(75)
@@ -46,7 +47,7 @@ class AttributeForm extends SlideOverComponent implements HasForms
                     }),
 
                 Forms\Components\TextInput::make('slug')
-                    ->label(__('shopper::layout.forms.label.slug'))
+                    ->label(__('shopper::forms.label.slug'))
                     ->disabled()
                     ->dehydrated()
                     ->required()
@@ -54,31 +55,31 @@ class AttributeForm extends SlideOverComponent implements HasForms
                     ->unique(table: Attribute::class, column: 'slug', ignoreRecord: true),
 
                 Forms\Components\Select::make('type')
-                    ->label(__('shopper::layout.forms.label.type'))
-                    ->options(Attribute::typesFields())
+                    ->label(__('shopper::forms.label.type'))
+                    ->options(FieldType::class)
                     ->required()
                     ->native(false),
 
                 Components\Form\IconPicker::make('icon')
-                    ->label(__('shopper::layout.forms.label.icon')),
+                    ->label(__('shopper::forms.label.icon')),
 
                 Forms\Components\Textarea::make('description')
-                    ->label(__('shopper::layout.forms.label.description'))
+                    ->label(__('shopper::forms.label.description'))
                     ->rows(3),
 
                 Forms\Components\Toggle::make('is_enabled')
-                    ->label(__('shopper::layout.forms.actions.enabled'))
+                    ->label(__('shopper::forms.actions.enable'))
                     ->onColor('success')
                     ->helperText(__('shopper::pages/attributes.attribute_visibility')),
 
                 Components\Separator::make(),
 
                 Forms\Components\Checkbox::make('is_searchable')
-                    ->label(__('shopper::layout.forms.label.is_searchable'))
+                    ->label(__('shopper::forms.label.is_searchable'))
                     ->helperText(__('shopper::pages/attributes.searchable_description')),
 
                 Forms\Components\Checkbox::make('is_filterable')
-                    ->label(__('shopper::layout.forms.label.is_filterable'))
+                    ->label(__('shopper::forms.label.is_filterable'))
                     ->helperText(__('shopper::pages/attributes.filtrable_description')),
             ])
             ->statePath('data')

@@ -4,7 +4,7 @@
 ])
 
 @php
-    $label = __('shopper::layout.forms.actions.theme_switcher', ['label' => $theme]);
+    $label = __('shopper::forms.actions.theme_switcher', ['label' => $theme]);
 @endphp
 
 <button

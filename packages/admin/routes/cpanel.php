@@ -12,6 +12,18 @@ Route::prefix('setting')->as('settings.')->group(function (): void {
     require __DIR__ . '/admin/setting.php';
 });
 
+Route::as('customers.')->prefix('customers')->group(function (): void {
+    require __DIR__ . '/admin/customer.php';
+});
+
+Route::as('orders.')->prefix('orders')->group(function (): void {
+    require __DIR__ . '/admin/order.php';
+});
+
+Route::prefix('products')->group(function (): void {
+    require __DIR__ . '/admin/product.php';
+});
+
 if (Feature::enabled('brand')) {
     Route::get('/brands', config('shopper.components.brand.pages.brand-index'))
         ->name('brands.index');
@@ -28,27 +40,9 @@ if (Feature::enabled('collection')) {
     });
 }
 
-if (Feature::enabled('customer')) {
-    Route::as('customers.')->prefix('customers')->group(function (): void {
-        require __DIR__ . '/admin/customer.php';
-    });
-}
-
 if (Feature::enabled('discount')) {
     Route::get('/discounts', config('shopper.components.discount.pages.discount-index'))
         ->name('discounts.index');
-}
-
-if (Feature::enabled('order')) {
-    Route::as('orders.')->prefix('orders')->group(function (): void {
-        require __DIR__ . '/admin/order.php';
-    });
-}
-
-if (Feature::enabled('product')) {
-    Route::prefix('products')->group(function (): void {
-        require __DIR__ . '/admin/product.php';
-    });
 }
 
 if (Feature::enabled('review')) {

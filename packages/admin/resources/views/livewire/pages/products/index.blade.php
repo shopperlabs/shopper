@@ -1,14 +1,14 @@
 <x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('shopper::layout.sidebar.products') }}
+            {{ __('shopper::pages/products.menu') }}
         </x-slot>
 
         <x-slot name="action">
             @if ($total > 0)
                 @can('add_products')
                     <x-shopper::buttons.primary :link="route('shopper.products.create')">
-                        {{ __('shopper::words.actions_label.add_new', ['name' => __('shopper::words.product')]) }}
+                        {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')]) }}
                     </x-shopper::buttons.primary>
                 @endcan
             @endif
@@ -19,7 +19,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/products.title')"
             :content="__('shopper::pages/products.content')"
-            :button="__('shopper::words.actions_label.add_new', ['name' => strtolower(__('shopper::words.product'))])"
+            :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')])"
             permission="add_products"
             :url="route('shopper.products.create')"
             class="lg:pb-0"
@@ -598,5 +598,5 @@
         </div>
     @endif
 
-    <x-shopper::learn-more :name="__('shopper::layout.sidebar.products')" link="products" />
+    <x-shopper::learn-more :name="__('shopper::pages/products.menu')" link="products" />
 </x-shopper::container>

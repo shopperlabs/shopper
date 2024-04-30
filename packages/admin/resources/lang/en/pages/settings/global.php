@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 return [
 
-    // Rename this file for general setting
+    'menu' => 'Settings',
+    'single' => 'setting',
 
     'empty_country_selector' => 'Please select a country',
     'logo_description' => 'The logo of your store that will be visible on your site. This assets will appear on your invoices.',
+    'confirm_password_content' => 'For your security, please confirm your password to continue.',
 
-    'settings' => [
+    'general' => [
         'title' => 'Store Setting',
         'store_details' => 'Store details',
         'store_detail_summary' => 'Your customers will use this information to contact you.',
@@ -20,54 +22,15 @@ return [
         'store_address' => 'Store address',
         'store_address_summary' => 'This address will appear on your invoices. You can edit the address used.',
         'store_currency' => 'Store currency',
-        'store_currency_summary' => 'This is the currency your products are sold in. After your first sale, currency is locked in and can’t be changed.',
         'social_links' => 'Social links',
         'social_links_summary' => 'Information about your different accounts on social networks. Users will be able to contact you directly on your official pages.',
-        'update_information' => 'Update information',
-    ],
-
-    'validations' => [
-        'country' => 'Country is required',
-        'shop_name' => 'Store name is required',
-        'shop_email' => 'Store e-mail is required',
-    ],
-
-    'notifications' => [
-        'inventory' => 'Inventory Successfully saved',
-    ],
-
-    'roles_permissions' => [
-        'title' => 'User Roles & Access Management',
-        'header_title' => 'Administrators & roles',
-        'role_available' => 'Administrator role available',
-        'role_available_summary' => 'A role provides access to predefined menus and features so that depending on the assigned role and permissions an administrator can have access to what he needs.',
-        'new_role' => 'Add new role',
-        'admin_accounts' => 'Administrators accounts',
-        'admin_accounts_summary' => 'These are the members who are already in your store with their associated roles. You can assign new roles to existing member here.',
-        'add_admin' => 'Add administrator',
-        'users_role' => 'Users & roles',
-        'login_information' => 'Login information',
-        'login_information_summary' => 'This information will be useful for the administrator to connect to the administration of Shopper.',
-        'send_invite' => 'Send Invite',
-        'send_invite_summary' => 'Send an invitation to this administrator by email with his login information.',
-        'personal_information' => 'Personal Information',
-        'personal_information_summary' => 'Information related to the admin profile.',
-        'role_information' => 'Role Information',
-        'role_information_summary' => 'Assign roles to this administrator who will limit the actions he can do.',
-        'roles' => 'Roles',
-        'permissions' => 'Permissions',
-        'choose_role' => 'Choose a role for this admin',
-        'create_permission' => 'Create permission',
-        'role_alert_msg' => 'You are about to update the admin role, this could block your access to the dashboard.',
-        'with_role_name' => 'with :name role',
-        'permissions_in_role' => 'in :name role',
-        'custom_permission' => 'Custom permission',
-        'delete_team_member' => 'Are you sure you want to delete this member?',
     ],
 
     'location' => [
+        'menu' => 'Inventories',
+        'single' => 'inventory',
         'description' => 'Manage the places you stock inventory, fulfill orders, and sell products.',
-        'count' => 'You’re using :count of 4 locations available.',
+        'count' => 'You’re using :count of locations available.',
         'add' => 'Add Inventory',
         'detail' => 'Details',
         'detail_summary' => 'Give this location a short name to make it easy to identify. You’ll see this name in areas like products.',

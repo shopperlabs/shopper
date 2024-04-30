@@ -65,9 +65,9 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make('delete')
-                    ->label(__('shopper::layout.forms.actions.delete')),
+                    ->label(__('shopper::forms.actions.delete')),
                 Tables\Actions\Action::make('view')
-                    ->label(__('shopper::layout.forms.actions.view'))
+                    ->label(__('shopper::forms.actions.view'))
                     ->icon('untitledui-eye')
                     ->action(
                         fn (Review $record) => $this->dispatch(
@@ -95,6 +95,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return view('shopper::livewire.pages.reviews.index', [
             'total' => Review::query()->count(),
         ])
-            ->title(__('shopper::layout.sidebar.reviews'));
+            ->title(__('shopper::pages/reviews.menu'));
     }
 }

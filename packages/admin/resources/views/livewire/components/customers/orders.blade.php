@@ -84,7 +84,7 @@
                             <span
                                 class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-gray-300 dark:bg-gray-700 dark:text-gray-400"
                             >
-                                <x-untitledui-image class="h-4 w-4" />
+                                <x-untitledui-image class="h-4 w-4" aria-hidden="true" />
                             </span>
                         @endif
                         <div class="ml-2">
@@ -126,22 +126,16 @@
                     class="inline-flex items-center text-sm leading-5 text-primary-600 underline hover:text-primary-500"
                 >
                     {{ __('shopper::pages/customers.orders.view') }}
-                    <x-untitledui-arrow-narrow-right class="ml-2 h-5 w-5" />
+                    <x-untitledui-arrow-narrow-right class="ml-2 h-5 w-5" aria-hidden="true" />
                 </a>
             </div>
         </div>
     @empty
-        <div class="flex items-center justify-center py-6 dark:bg-gray-800">
-            <div class="flex flex-col items-center justify-center space-y-2">
-                <x-untitledui-shopping-bag class="h-8 w-8 text-primary-500" />
-                <span class="text-xl font-medium text-gray-500 dark:text-gray-400">
-                    {{ __('shopper::pages/customers.orders.empty_text') }}
-                </span>
-            </div>
-        </div>
+        <x-shopper::card class="sm:col-span-3">
+            <x-shopper::empty-card
+                icon="untitledui-shopping-bag"
+                :heading="__('shopper::pages/customers.orders.empty_text')"
+            />
+        </x-shopper::card>
     @endforelse
-
-    <div class="flex items-center justify-between">
-        {{ $orders->links() }}
-    </div>
 </x-shopper::container>

@@ -1,7 +1,7 @@
 <x-shopper::container>
     <x-shopper::heading>
         <x-slot name="title">
-            {{ __('shopper::layout.sidebar.discounts') }}
+            {{ __('shopper::pages/discounts.menu') }}
         </x-slot>
 
         <x-slot name="action">
@@ -13,7 +13,7 @@
                                 type="button"
                                 wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.discount-form' })"
                             >
-                                {{ __('shopper::pages/discounts.actions.create') }}
+                                {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')]) }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -26,7 +26,7 @@
         <x-shopper::empty-state
             :title="__('shopper::pages/discounts.title')"
             :content="__('shopper::pages/discounts.description')"
-            :button="__('shopper::pages/discounts.actions.create')"
+            :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')])"
             permission="add_discounts"
             panel="{ component: 'shopper-slide-overs.discount-form' }"
         >
@@ -450,53 +450,7 @@
         <div class="mt-10">
             {{ $this->table }}
         </div>
-        {{--
-            <x-shopper::card class="mt-6">
-            <div x-data="{ open: false }">
-            <div class="border-t border-gray-200 dark:border-gray-700">
-            <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-            @forelse($discounts as $discount)
-            <li>
-            <a href="{{ route('shopper.discounts.edit', $discount) }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 dark:hover:bg-gray-700 dark:focus:bg-gray-700">
-            <div class="px-4 py-4 flex items-center sm:px-6">
-            <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-            <div>
-            <div class="text-sm leading-5 font-semibold text-primary-500 truncate">
-            {{ $discount->code }}
-            </div>
-            <div class="mt-2 flex">
-            <ul class="divide-x divide-gray-200 flex items-center text-sm leading-5 text-gray-500 dark:text-gray-400 dark:divide-gray-600">
-            <li class="pr-2">
-            <span>{{ $discount->total_use }}/{{ $discount->usage_limit ?? __('shopper::words.unlimited') }} {{ __('shopper::words.used') }}</span>
-            </li>
-            @if($discount->usage_limit_per_user)
-            <li class="px-2"><span>{{ __('shopper::words.once_per_user') }}</span></li>
-            @endif
-            </ul>
-            </div>
-            </div>
-            <div class="mt-4 shrink-0 sm:mt-0 flex space-x-6 items-center">
-            <div class="shrink-0 flex">
-            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $discount->is_active ? 'bg-green-100 text-green-800': 'bg-orange-100 text-orange-800' }}">
-            {{ $discount->is_active ? __('shopper::layout.forms.label.active'): __('shopper::layout.forms.label.inactive') }}
-            </span>
-            </div>
-            <div class="flex items-center space-x-2">
-            
-            </div>
-            </div>
-            </div>
-            </div>
-            </a>
-            </li>
-            @empty
-            @endforelse
-            </ul>
-            </div>
-            </div>
-            </x-shopper::card>
-        --}}
     @endif
 
-    <x-shopper::learn-more :name="__('shopper::layout.sidebar.discounts')" link="discounts" />
+    <x-shopper::learn-more :name="__('shopper::pages/discounts.menu')" link="discounts" />
 </x-shopper::container>

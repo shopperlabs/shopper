@@ -16,7 +16,7 @@
                     :value="$value->value"
                     class="cursor-pointer"
                 />
-                @if ($attribute->type === \Shopper\Core\Enum\FieldType::COLORPICKER)
+                @if ($attribute->type === \Shopper\Core\Enum\FieldType::ColorPicker)
                     <span
                         class="inline-flex items-center rounded-full p-1 ring-1 ring-inset ring-gray-200 dark:text-gray-300 dark:ring-gray-700"
                     >

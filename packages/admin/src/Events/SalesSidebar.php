@@ -20,38 +20,34 @@ class SalesSidebar extends AbstractAdminSidebar
 
         $menu->group(__('shopper::layout.sidebar.sales'), function (Group $group) use ($count): void {
             $group->weight(3);
-            $group->setAuthorized(
-                Feature::enabled('order') || Feature::enabled('discount')
-            );
+            $group->setAuthorized();
             $group->setGroupItemsClass('space-y-1');
             $group->setHeadingClass('sh-heading');
 
-            if (Feature::enabled('order')) {
-                $group->item(__('shopper::layout.sidebar.orders'), function (Item $item) use ($count): void {
-                    $item->weight(1);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
-                    $item->setItemClass('sh-sidebar-item group');
-                    $item->setActiveClass('sh-sidebar-item-active');
-                    $item->setInactiveClass('sh-sidebar-item-inactive');
+            $group->item(__('shopper::pages/orders.menu'), function (Item $item) use ($count): void {
+                $item->weight(1);
+                $item->setAuthorized($this->user->hasPermissionTo('browse_orders'));
+                $item->setItemClass('sh-sidebar-item group');
+                $item->setActiveClass('sh-sidebar-item-active');
+                $item->setInactiveClass('sh-sidebar-item-inactive');
 
-                    if ($count > 0) {
-                        $item->badge($count, 'sh-badge');
-                    }
+                if ($count > 0) {
+                    $item->badge($count, 'sh-badge');
+                }
 
-                    $item->useSpa();
-                    $item->route('shopper.orders.index');
-                    $item->setIcon(
-                        icon: 'untitledui-shopping-bag',
-                        iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
-                        attributes: [
-                            'stroke-width' => '1.5',
-                        ],
-                    );
-                });
-            }
+                $item->useSpa();
+                $item->route('shopper.orders.index');
+                $item->setIcon(
+                    icon: 'untitledui-shopping-bag',
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                    attributes: [
+                        'stroke-width' => '1.5',
+                    ],
+                );
+            });
 
             if (Feature::enabled('discount')) {
-                $group->item(__('shopper::layout.sidebar.discounts'), function (Item $item): void {
+                $group->item(__('shopper::pages/discounts.menu'), function (Item $item): void {
                     $item->weight(2);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_discounts'));
                     $item->setItemClass('sh-sidebar-item group');

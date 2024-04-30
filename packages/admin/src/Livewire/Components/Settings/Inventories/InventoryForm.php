@@ -34,13 +34,13 @@ class InventoryForm extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make(__('shopper::pages/settings.location.detail'))
-                    ->description(__('shopper::pages/settings.location.detail_summary'))
+                Section::make(__('shopper::pages/settings/global.location.detail'))
+                    ->description(__('shopper::pages/settings/global.location.detail_summary'))
                     ->aside()
                     ->compact()
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label(__('shopper::layout.forms.label.name'))
+                            ->label(__('shopper::forms.label.name'))
                             ->placeholder('White House')
                             ->required()
                             ->live(onBlur: true)
@@ -49,24 +49,24 @@ class InventoryForm extends Component implements HasForms
                             }),
                         Forms\Components\Hidden::make('code'),
                         Forms\Components\TextInput::make('email')
-                            ->label(__('shopper::layout.forms.label.email'))
+                            ->label(__('shopper::forms.label.email'))
                             ->autocomplete('email-address')
                             ->email()
                             ->unique(ignoreRecord: true)
                             ->required(),
                         Forms\Components\Textarea::make('description')
-                            ->label(__('shopper::layout.forms.label.description'))
+                            ->label(__('shopper::forms.label.description'))
                             ->rows(3)
                             ->columnSpan('full'),
                         Forms\Components\Toggle::make('is_default')
-                            ->label(__('shopper::pages/settings.location.set_default'))
-                            ->helperText(__('shopper::pages/settings.location.set_default_summary'))
+                            ->label(__('shopper::pages/settings/global.location.set_default'))
+                            ->helperText(__('shopper::pages/settings/global.location.set_default_summary'))
                             ->columnSpan('full'),
                     ])
                     ->columns(),
                 Separator::make(),
-                Section::make(__('shopper::pages/settings.location.address'))
-                    ->description(__('shopper::pages/settings.location.address_summary'))
+                Section::make(__('shopper::pages/settings/global.location.address'))
+                    ->description(__('shopper::pages/settings/global.location.address_summary'))
                     ->aside()
                     ->compact()
                     ->schema(AddressField::make())

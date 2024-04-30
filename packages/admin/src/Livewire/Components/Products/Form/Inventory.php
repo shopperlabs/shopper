@@ -48,17 +48,17 @@ class Inventory extends Component implements HasForms, HasTable
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('sku')
-                                    ->label(__('shopper::layout.forms.label.sku'))
+                                    ->label(__('shopper::forms.label.sku'))
                                     ->unique(config('shopper.models.product'), 'sku', ignoreRecord: true)
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('barcode')
-                                    ->label(__('shopper::layout.forms.label.barcode'))
+                                    ->label(__('shopper::forms.label.barcode'))
                                     ->unique(config('shopper.models.product'), 'barcode', ignoreRecord: true)
                                     ->maxLength(255),
 
                                 Forms\Components\TextInput::make('security_stock')
-                                    ->label(__('shopper::layout.forms.label.safety_stock'))
+                                    ->label(__('shopper::forms.label.safety_stock'))
                                     ->helperText(__('shopper::pages/products.safety_security_help_text'))
                                     ->numeric()
                                     ->default(0)
@@ -133,7 +133,7 @@ class Inventory extends Component implements HasForms, HasTable
                             ->required(),
 
                         Forms\Components\TextInput::make('quantity')
-                            ->label(__('shopper::layout.forms.label.quantity'))
+                            ->label(__('shopper::forms.label.quantity'))
                             ->placeholder('-10 or -5 or 50, etc')
                             ->numeric()
                             ->required(),

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+
     'permissions' => [
         'new' => 'New permission',
         'new_description' => 'Add a new permission and directly assign to this role',

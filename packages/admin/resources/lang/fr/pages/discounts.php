@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Réductions',
+    'single' => 'réduction',
     'title' => 'Gérer les remises et les promotions',
     'description' => 'Créez et gérez les codes de réduction et de promotion qui s\'appliquent à la caisse ou aux commandes des clients.',
-
-    'actions' => [
-        'create' => 'Créer un code',
-        'update' => 'Modifier le code :code',
-    ],
 
     'empty_message' => 'Aucune réduction trouvée...',
     'search' => 'Rechercher un code de réduction',

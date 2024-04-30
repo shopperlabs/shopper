@@ -4342,10 +4342,6 @@ html {
   width: 100vw;
 }
 
-.w-1\/4 {
-  width: 25%;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -5150,10 +5146,6 @@ html {
 
 .overflow-y-hidden {
   overflow-y: hidden;
-}
-
-.overflow-x-scroll {
-  overflow-x: scroll;
 }
 
 .overflow-y-scroll {
@@ -11260,10 +11252,6 @@ html.dark .shiki span {
 
   .lg\:p-5 {
     padding: 1.25rem;
-  }
-
-  .lg\:p-6 {
-    padding: 1.5rem;
   }
 
   .lg\:px-0 {

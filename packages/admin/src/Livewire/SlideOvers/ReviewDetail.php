@@ -25,7 +25,7 @@ class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
     public function approvedAction(): Action
     {
         return Action::make('approved')
-            ->label(__('shopper::layout.forms.actions.update'))
+            ->label(__('shopper::forms.actions.update'))
             ->size(ActionSize::Small)
             ->action(function (): void {
                 $this->review->updatedApproved(! $this->review->approved);

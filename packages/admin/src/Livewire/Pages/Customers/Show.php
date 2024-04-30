@@ -24,7 +24,7 @@ class Show extends AbstractPageComponent implements HasActions, HasForms
 
     public function deleteAction(): Action
     {
-        return Action::make(__('shopper::layout.forms.actions.delete'))
+        return Action::make(__('shopper::forms.actions.delete'))
             ->requiresConfirmation()
             ->icon('untitledui-trash-03')
             ->modalIcon('untitledui-trash-03')
@@ -33,7 +33,7 @@ class Show extends AbstractPageComponent implements HasActions, HasForms
                 $this->customer->delete();
 
                 Notification::make()
-                    ->title(__('shopper::components.tables.messages.delete', ['name' => __('shopper::words.customer')]))
+                    ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/customers.single')]))
                     ->success()
                     ->send();
 
@@ -51,6 +51,6 @@ class Show extends AbstractPageComponent implements HasActions, HasForms
     public function render(): View
     {
         return view('shopper::livewire.pages.customers.show')
-            ->title(__('shopper::words.actions_label.show', ['name' => $this->customer->full_name]));
+            ->title(__('shopper::forms.actions.show_label', ['label' => $this->customer->full_name]));
     }
 }

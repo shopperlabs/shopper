@@ -12,7 +12,7 @@ final class GenderField
     public static function make(): Component
     {
         return Select::make('gender')
-            ->label(__('shopper::layout.forms.label.gender'))
+            ->label(__('shopper::forms.label.gender'))
             ->options([
                 'male' => __('shopper::words.male'),
                 'female' => __('shopper::words.female'),

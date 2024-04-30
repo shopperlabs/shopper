@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Produits',
+    'single' => 'produit',
     'title' => 'Gérer le catalogue',
     'content' => 'Rapprochez-vous de votre première vente en ajoutant et en gérant des produits.',
     'about_pricing' => 'A propos des prix',
@@ -18,18 +20,20 @@ return [
     'product_can_returned_help_text' => 'Les utilisateurs ont la possibilité de retourner ce produit en cas de problème ou d\'insatisfaction.',
     'product_shipped' => 'Ce produit sera expédié',
     'product_shipped_help_text' => 'Renseignez les informations concernant l\'expédition du produit.',
-    'weight_dimension_help_text' => 'Utilisé pour calculer les frais d\'expédition lors du passage à la caisse et pour étiqueter les prix lors du traitement des commandes.',
     'status' => 'Statut du produit',
     'visible_help_text' => 'Ce produit sera caché de tous les canaux de vente.',
     'availability_description' => 'Spécifiez une date de publication pour que vos produits soient programmés sur votre boutique.',
     'product_associations' => 'Catégorisation',
-    'product_categories' => 'Catégories du produit',
-    'no_category' => 'Aucune catégorie',
-    'no_category_text' => 'Commencez par créer une nouvelle catégorie.',
-    'new_category' => 'Nouvelle catégorie',
     'related_products' => 'Produits apparentés',
     'quantity_available' => 'Quantité disponible',
     'current_qty_inventory' => 'Quantité actuelle de cet inventaire',
+    'stock_inventory_heading' => 'Stock & Inventaire',
+    'stock_inventory_description' => "Configurer l'inventaire et le stock pour ce(tte) :item",
+    'images_helpText' => 'Ajouter des images à votre produit.',
+    'variant_images_helpText' => 'Ajouter des images à votre variante.',
+    'thumbnail_helpText' => 'Utilisé pour représenter votre produit lors du paiement, du partage social, et plus encore.',
+    'weight_dimension' => 'Poids et dimensions',
+    'weight_dimension_help_text' => 'Utilisé pour calculer les frais d\'expédition lors du passage à la caisse et pour étiqueter les prix lors du traitement des commandes.',
 
     'modals' => [
         'title' => 'Supprimer ce/cette :item',
@@ -42,6 +46,8 @@ return [
     ],
 
     'variants' => [
+        'menu' => 'Variantes',
+        'single' => 'variante',
         'title' => 'Variations de produits',
         'description' => 'Toutes les variantes de votre produit. Les variations peuvent avoir chacune leur stock et leur prix.',
         'add' => 'Ajouter une variante',
@@ -50,12 +56,6 @@ return [
         'search_label' => 'Recherche de variantes',
         'search_placeholder' => 'Rechercher une variante du produit',
         'variant_information' => 'Informations sur la variante',
-
-        'actions' => [
-            'update' => 'Variante de mise à jour',
-            'update_stock' => 'Mise à jour du stock',
-            'manage_inventory' => 'Gérer les inventaires',
-        ],
 
         'modal' => [
             'title' => 'À propos de la variation',
@@ -103,11 +103,6 @@ return [
             'added' => 'Attribut ajouté',
             'added_message' => 'Vous avez ajouté avec succès un attribut à ce produit!',
         ],
-
-        'modals' => [
-            'title' => 'Ajouter un nouvel attribut avec une valeur',
-            'input_placeholder' => 'Sélectionnez l\'attribut à ajouter',
-        ],
     ],
 
     'inventory' => [
@@ -145,8 +140,6 @@ return [
     ],
 
     'notifications' => [
-        'create' => 'Produit ajouté avec succès !',
-        'update' => 'Produit mis à jour avec succès !',
         'media_update' => 'Images du produit mise à jour!',
         'replicated' => 'Produit dupliqué!',
         'stock_update' => 'Le stock de produits a été mis à jour avec succès !',
@@ -158,9 +151,5 @@ return [
         'related_added' => 'Le produit a été ajouté avec succès aux produits connexes !',
         'remove_related' => 'Le produit a été supprimé avec succès des produits connexes !',
     ],
-
-    'images_helpText' => 'Ajouter des images à votre produit.',
-    'variant_images_helpText' => 'Ajouter des images à votre variante.',
-    'thumbnail_helpText' => 'Utilisé pour représenter votre produit lors du paiement, du partage social, et plus encore.',
 
 ];

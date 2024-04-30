@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Collections',
+    'single' => 'collection',
     'title' => 'Organisez vos produits en différentes collections',
     'content' => 'Créez et gérez toutes vos collections pour aider vos clients à trouver facilement des groupes ou des types de produits.',
     'automatic' => 'Automatique',

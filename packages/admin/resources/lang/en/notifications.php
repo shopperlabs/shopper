@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 return [
 
-    'actions' => [
-        'save' => ':item successfully save',
-        'create' => ':item successfully added',
-        'update' => ':item successfully updated',
-        'remove' => ':item successfully removed',
-    ],
-
-    'attributes' => [
-        'remove' => 'The attribute has successfully removed',
-        'enable' => 'The attribute has successfully enabled',
-        'disable' => 'The attribute has successfully disabled',
-    ],
+    'save' => ':item successfully save',
+    'create' => ':item successfully created',
+    'update' => ':item successfully updated',
+    'delete' => ':item successfully deleted',
+    'enabled' => ':item has successfully enabled',
+    'disabled' => ':item has successfully disabled',
+    'verified' => ':item has successfully verified',
+    'approved' => ':item has successfully approved',
+    'disapproved' => ':item has successfully disapproved',
+    'visibility' => ':item has successfully updated visibility',
 
     'auth' => [
         'password' => 'This password does not match our records.',

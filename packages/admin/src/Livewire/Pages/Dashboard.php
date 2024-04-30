@@ -11,6 +11,6 @@ class Dashboard extends AbstractPageComponent
     public function render(): View
     {
         return view('shopper::livewire.pages.dashboard')
-            ->title(__('shopper::layout.sidebar.dashboard'));
+            ->title(__('shopper::pages/dashboard.menu'));
     }
 }

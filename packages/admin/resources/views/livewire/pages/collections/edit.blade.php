@@ -3,7 +3,7 @@
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.collections.index')"
-            :title="__('shopper::layout.sidebar.collections')"
+            :title="__('shopper::pages/collections.menu')"
         />
     </x-shopper::breadcrumb>
 
@@ -21,7 +21,7 @@
                 <div class="flex justify-end">
                     <x-shopper::buttons.primary type="submit" wire.loading.attr="disabled">
                         <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-                        {{ __('shopper::layout.forms.actions.update') }}
+                        {{ __('shopper::forms.actions.update') }}
                     </x-shopper::buttons.primary>
                 </div>
             </div>

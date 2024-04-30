@@ -45,7 +45,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Components\TextInput::make('name')
-                            ->label(__('shopper::layout.forms.label.name'))
+                            ->label(__('shopper::forms.label.name'))
                             ->placeholder('Women, Baby Shoes, MacBook...')
                             ->required()
                             ->live(onBlur: true)
@@ -54,7 +54,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                             }),
                         Components\Hidden::make('slug'),
                         Components\Select::make('parent_id')
-                            ->label(__('shopper::layout.forms.label.parent'))
+                            ->label(__('shopper::forms.label.parent'))
                             ->relationship('parent', 'name', fn (Builder $query) => $query->where('is_enabled', true))
                             ->getOptionLabelFromRecordUsing(
                                 fn (Model $model) => $model->parent
@@ -64,10 +64,10 @@ class CategoryForm extends SlideOverComponent implements HasForms
                             ->searchable()
                             ->placeholder(__('shopper::pages/categories.empty_parent')),
                         Components\Toggle::make('is_enabled')
-                            ->label(__('shopper::layout.forms.label.visibility'))
-                            ->helperText(__('shopper::words.set_visibility', ['name' => mb_strtolower(__('shopper::words.brand'))])),
+                            ->label(__('shopper::forms.label.visibility'))
+                            ->helperText(__('shopper::words.set_visibility', ['name' => __('shopper::pages/categories.single')])),
                         Components\RichEditor::make('description')
-                            ->label(__('shopper::layout.forms.label.description'))
+                            ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([
                                 'bold',
                                 'italic',
@@ -83,12 +83,12 @@ class CategoryForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Components\SpatieMediaLibraryFileUpload::make('file')
-                            ->label(__('shopper::layout.forms.label.image_preview'))
+                            ->label(__('shopper::forms.label.image_preview'))
                             ->collection(config('shopper.core.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(1024),
                     ]),
-                Section::make('Seo')
+                Section::make(__('shopper::words.seo.slug'))
                     ->collapsible()
                     ->compact()
                     ->schema(SeoField::make()),
@@ -114,7 +114,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
         }
 
         Notification::make()
-            ->title(__('shopper::notifications.actions.save', ['item' => __('shopper::words.category')]))
+            ->title(__('shopper::notifications.save', ['item' => __('shopper::pages/categories.single')]))
             ->success()
             ->send();
 

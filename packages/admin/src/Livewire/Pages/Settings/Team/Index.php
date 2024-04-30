@@ -34,20 +34,20 @@ class Index extends Component implements HasForms, HasTable
             )
             ->columns([
                 Tables\Columns\ViewColumn::make('full_name')
-                    ->label(__('shopper::layout.forms.label.full_name'))
+                    ->label(__('shopper::forms.label.full_name'))
                     ->view('shopper::livewire.tables.cells.administrators.name'),
 
                 Tables\Columns\TextColumn::make('email')
-                    ->label(__('shopper::layout.forms.label.email'))
+                    ->label(__('shopper::forms.label.email'))
                     ->icon(fn ($record): string => $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle')
                     ->iconColor(fn ($record): string => $record->email_verified_at ? 'success' : 'danger'),
 
                 Tables\Columns\TextColumn::make('roles_label')
-                    ->label(__('shopper::layout.forms.label.role'))
+                    ->label(__('shopper::forms.label.role'))
                     ->badge(),
 
                 Tables\Columns\TextColumn::make('id')
-                    ->label(__('shopper::layout.forms.label.access'))
+                    ->label(__('shopper::forms.label.access'))
                     ->color('gray')
                     ->formatStateUsing(
                         fn ($record) => $record->hasRole(config('shopper.core.users.admin_role'))
@@ -57,7 +57,7 @@ class Index extends Component implements HasForms, HasTable
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make('delete')
-                    ->label(__('shopper::layout.forms.actions.delete'))
+                    ->label(__('shopper::forms.actions.delete'))
                     ->visible(fn ($record) => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin())
                     ->successNotificationTitle(__('shopper::notifications.users_roles.admin_deleted')),
             ]);
@@ -73,6 +73,6 @@ class Index extends Component implements HasForms, HasTable
                 ->orderBy('created_at')
                 ->get(),
         ])
-            ->title(__('shopper::pages/settings.roles_permissions.title'));
+            ->title(__('shopper::pages/settings/staff.title'));
     }
 }

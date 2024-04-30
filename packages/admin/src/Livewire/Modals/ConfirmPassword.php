@@ -33,14 +33,14 @@ class ConfirmPassword extends ModalComponent
 
         $this->stopConfirmingPassword();
 
-        $this->emit($this->action);
+        $this->dispatch($this->action);
 
         $this->closeModal();
     }
 
     public function stopConfirmingPassword(): void
     {
-        $this->confirmablePassword = '';
+        $this->reset('confirmablePassword');
     }
 
     public static function modalMaxWidth(): string

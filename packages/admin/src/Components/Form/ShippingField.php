@@ -15,7 +15,7 @@ final class ShippingField
     {
         return [
             TextInputSelect::make('width_value')
-                ->label(__('shopper::layout.forms.label.width'))
+                ->label(__('shopper::forms.label.width'))
                 ->numeric()
                 ->select(
                     fn () => Forms\Components\Select::make('width_unit')
@@ -26,7 +26,7 @@ final class ShippingField
                 ),
 
             TextInputSelect::make('height_value')
-                ->label(__('shopper::layout.forms.label.height'))
+                ->label(__('shopper::forms.label.height'))
                 ->numeric()
                 ->select(
                     fn () => Forms\Components\Select::make('height_unit')
@@ -37,7 +37,7 @@ final class ShippingField
                 ),
 
             TextInputSelect::make('weight_value')
-                ->label(__('shopper::layout.forms.label.weight'))
+                ->label(__('shopper::forms.label.weight'))
                 ->numeric()
                 ->select(
                     fn () => Forms\Components\Select::make('weight_unit')
@@ -48,7 +48,7 @@ final class ShippingField
                 ),
 
             TextInputSelect::make('volume_value')
-                ->label(__('shopper::layout.forms.label.volume'))
+                ->label(__('shopper::forms.label.volume'))
                 ->numeric()
                 ->select(
                     fn () => Forms\Components\Select::make('volume_unit')

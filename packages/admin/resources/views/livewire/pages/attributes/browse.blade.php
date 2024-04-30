@@ -3,13 +3,13 @@
         <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.products.index')"
-            :title="__('shopper::layout.sidebar.products')"
+            :title="__('shopper::pages/products.menu')"
         />
     </x-shopper::breadcrumb>
 
     <x-shopper::heading class="mt-5">
         <x-slot name="title">
-            {{ __('shopper::words.attributes') }}
+            {{ __('shopper::pages/attributes.menu') }}
         </x-slot>
 
         <x-slot name="action">
@@ -21,7 +21,7 @@
                                 wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.attribute-form' })"
                                 type="button"
                             >
-                                {{ __('shopper::layout.forms.actions.create') }}
+                                {{ __('shopper::forms.actions.create') }}
                             </x-shopper::buttons.primary>
                         </span>
                     </div>
@@ -256,5 +256,5 @@
         </div>
     @endif
 
-    <x-shopper::learn-more :name="__('shopper::words.attributes')" link="attributes" />
+    <x-shopper::learn-more :name="__('shopper::pages/attributes.menu')" link="attributes" />
 </x-shopper::container>

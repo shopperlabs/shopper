@@ -14,35 +14,31 @@ class CustomerSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
-        $menu->group(__('shopper::layout.sidebar.customers'), function (Group $group): void {
+        $menu->group(__('shopper::pages/customers.menu'), function (Group $group): void {
             $group->weight(3);
-            $group->setAuthorized(
-                Feature::enabled('customer') || Feature::enabled('review')
-            );
+            $group->setAuthorized();
             $group->setGroupItemsClass('space-y-1');
             $group->setHeadingClass('sh-heading');
 
-            if (Feature::enabled('customer')) {
-                $group->item(__('shopper::layout.sidebar.customers'), function (Item $item): void {
-                    $item->weight(1);
-                    $item->setAuthorized($this->user->hasPermissionTo('browse_customers'));
-                    $item->setItemClass('sh-sidebar-item group');
-                    $item->setActiveClass('sh-sidebar-item-active');
-                    $item->setInactiveClass('sh-sidebar-item-inactive');
-                    $item->route('shopper.customers.index');
-                    $item->useSpa();
-                    $item->setIcon(
-                        icon: 'untitledui-users-02',
-                        iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
-                        attributes: [
-                            'stroke-width' => '1.5',
-                        ],
-                    );
-                });
-            }
+            $group->item(__('shopper::pages/customers.menu'), function (Item $item): void {
+                $item->weight(1);
+                $item->setAuthorized($this->user->hasPermissionTo('browse_customers'));
+                $item->setItemClass('sh-sidebar-item group');
+                $item->setActiveClass('sh-sidebar-item-active');
+                $item->setInactiveClass('sh-sidebar-item-inactive');
+                $item->route('shopper.customers.index');
+                $item->useSpa();
+                $item->setIcon(
+                    icon: 'untitledui-users-02',
+                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                    attributes: [
+                        'stroke-width' => '1.5',
+                    ],
+                );
+            });
 
             if (Feature::enabled('review')) {
-                $group->item(__('shopper::layout.sidebar.reviews'), function (Item $item): void {
+                $group->item(__('shopper::pages/reviews.menu'), function (Item $item): void {
                     $item->weight(2);
                     $item->setAuthorized($this->user->hasPermissionTo('browse_products'));
                     $item->setItemClass('sh-sidebar-item group');

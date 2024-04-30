@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Components\Separator;
-use Shopper\Components\Warning;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
@@ -23,7 +22,6 @@ use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Core\Repositories\UserRepository;
-use Shopper\Feature;
 use Shopper\Jobs\DiscountCustomersJobs;
 use Shopper\Jobs\DiscountProductsJob;
 use Shopper\Livewire\Components\SlideOverComponent;
@@ -88,7 +86,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->label(__('shopper::words.general')),
 
                         Forms\Components\Radio::make('type')
-                            ->label(__('shopper::layout.forms.label.type'))
+                            ->label(__('shopper::forms.label.type'))
                             ->inline()
                             ->inlineLabel(false)
                             ->options(DiscountType::class)
@@ -98,7 +96,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('code')
-                                    ->label(__('shopper::layout.forms.label.code'))
+                                    ->label(__('shopper::forms.label.code'))
                                     ->placeholder('CMRSUMMER900')
                                     ->helperText(__('shopper::pages/discounts.name_helptext'))
                                     ->hintAction(
@@ -131,8 +129,8 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ]),
 
                         Forms\Components\Toggle::make('is_active')
-                            ->label(__('shopper::layout.forms.label.visibility'))
-                            ->helperText(__('shopper::words.set_visibility', ['name' => mb_strtolower(__('shopper::words.discount'))])),
+                            ->label(__('shopper::forms.label.visibility'))
+                            ->helperText(__('shopper::words.set_visibility', ['name' => __('shopper::pages/discounts.single')])),
                     ]),
 
                 Separator::make(),
@@ -220,17 +218,13 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                 fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
                             )
                             ->visible(
-                                fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value && Feature::enabled('product')
+                                fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
                             ),
-
-                        Warning::make()
-                            ->feature('product')
-                            ->visible(! Feature::enabled('product')),
 
                         Forms\Components\Radio::make('eligibility')
                             ->label(__('shopper::pages/discounts.customer_eligibility'))
                             ->inline()
-                            ->options(DiscountEligibility::options())
+                            ->options(DiscountEligibility::class)
                             ->required()
                             ->live(),
 
@@ -248,18 +242,14 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                 fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
                             )
                             ->visible(
-                                fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value && Feature::enabled('customer')
+                                fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
                             ),
-
-                        Warning::make()
-                            ->feature('customer')
-                            ->visible(! Feature::enabled('customer')),
 
                         Forms\Components\Radio::make('min_required')
                             ->label(__('shopper::pages/discounts.min_requirement'))
                             ->inline()
                             ->inlineLabel(false)
-                            ->options(DiscountRequirement::options())
+                            ->options(DiscountRequirement::class)
                             ->required()
                             ->live(),
 

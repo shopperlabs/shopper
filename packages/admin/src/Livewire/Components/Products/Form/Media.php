@@ -40,14 +40,11 @@ class Media extends Component implements HasForms
 
                 Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
-                    ->label(__('shopper::layout.forms.label.thumbnail'))
+                    ->label(__('shopper::forms.label.thumbnail'))
                     ->helperText(__('shopper::pages/products.thumbnail_helpText'))
                     ->image()
                     ->maxSize(1024)
                     ->imageEditor()
-                    ->extraAttributes([
-                        'class' => 'sh-input-media',
-                    ])
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3)

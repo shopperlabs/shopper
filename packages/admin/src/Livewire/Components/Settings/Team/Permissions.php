@@ -42,7 +42,7 @@ class Permissions extends Component
         Permission::query()->find($id)->delete();
 
         Notification::make()
-            ->body(__('shopper::notifications.actions.remove', ['item' => __('shopper::words.permission')]))
+            ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/staff.permission')]))
             ->success()
             ->send();
     }

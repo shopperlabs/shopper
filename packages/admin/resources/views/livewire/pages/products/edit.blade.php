@@ -4,7 +4,7 @@
             <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
                 :link="route('shopper.products.index')"
-                :title="__('shopper::layout.sidebar.products')"
+                :title="__('shopper::pages/products.menu')"
             />
         </x-shopper::breadcrumb>
     </x-shopper::container>
@@ -63,20 +63,22 @@
                         {{ __('shopper::words.variants') }}
                     </x-filament::tabs.item>
 
-                    <x-filament::tabs.item
-                        alpine-active="activeTab === 'attributes'"
-                        x-on:click="activeTab = 'attributes'"
-                        icon="untitledui-puzzle-piece"
-                    >
-                        {{ __('shopper::words.attributes') }}
-                    </x-filament::tabs.item>
+                    @if (\Shopper\Feature::enabled('attribute'))
+                        <x-filament::tabs.item
+                            alpine-active="activeTab === 'attributes'"
+                            x-on:click="activeTab = 'attributes'"
+                            icon="untitledui-puzzle-piece"
+                        >
+                            {{ __('shopper::pages/attributes.menu') }}
+                        </x-filament::tabs.item>
+                    @endif
 
                     <x-filament::tabs.item
                         alpine-active="activeTab === 'inventory'"
                         x-on:click="activeTab = 'inventory'"
                         icon="untitledui-package"
                     >
-                        {{ __('shopper::words.location') }}
+                        {{ __('shopper::pages/products.stock_inventory_heading') }}
                     </x-filament::tabs.item>
 
                     <x-filament::tabs.item
@@ -116,9 +118,13 @@
             <div x-cloak x-show="activeTab === 'variants'">
                 <livewire:shopper-products.form.variants :product="$product" />
             </div>
-            <div x-cloak x-show="activeTab === 'attributes'">
-                <livewire:shopper-products.form.attributes :product="$product" />
-            </div>
+
+            @if (\Shopper\Feature::enabled('attribute'))
+                <div x-cloak x-show="activeTab === 'attributes'">
+                    <livewire:shopper-products.form.attributes :product="$product" />
+                </div>
+            @endif
+
             <div x-cloak x-show="activeTab === 'inventory'">
                 <livewire:shopper-products.form.inventory :product="$product" />
             </div>

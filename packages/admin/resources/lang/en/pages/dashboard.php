@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
 
+    'menu' => 'Dashboard',
     'welcome_message' => 'Welcome to Shopper Dashboard',
     'header' => 'Start with the basic for your online store',
     'description' => 'To begin building your new store with Laravel Shopper, we recommend starting with these steps. The framework allows you to create

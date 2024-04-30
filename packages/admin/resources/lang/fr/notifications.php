@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 return [
 
-    'actions' => [
-        'save' => ':item enregistré avec succès',
-        'create' => ':item ajouté avec succès',
-        'update' => ':item mis à jour avec succès',
-        'remove' => ':item supprimé(e) avec succès',
-    ],
+    'save' => ':item enregistré avec succès',
+    'create' => ':item ajouté avec succès',
+    'update' => ':item mis à jour avec succès',
+    'delete' => ':item supprimé(e) avec succès',
+    'enabled' => ':item activé(e) avec succès',
+    'disabled' => ':item désactivé(e) avec succès',
+    'verified' => ':item vérifié(e) avec succès',
+    'approved' => ':item approuvé(e) avec succès',
+    'disapproved' => ':item désapprouvé(e) avec succès',
+    'visibility' => 'Visibilité pour :item a été modifiée avec succès',
 
     'attributes' => [
         'remove' => 'L\'attribut a été supprimé avec succès',

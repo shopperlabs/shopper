@@ -41,10 +41,10 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
                     ->circular()
-                    ->defaultImageUrl(url(config('shopper.media.fallback_url')))
+                    ->defaultImageUrl(shopper_fallback_url())
                     ->grow(false),
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('shopper::layout.forms.label.name'))
+                    ->label(__('shopper::forms.label.name'))
                     ->formatStateUsing(function (Model $model) {
                         return view('shopper::livewire.tables.cells.categories.name', [
                             'category' => $model,
@@ -53,15 +53,15 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('slug')
-                    ->label(__('shopper::layout.forms.label.slug'))
+                    ->label(__('shopper::forms.label.slug'))
                     ->description(__('shopper::words.slug_description'))
                     ->badge()
                     ->color('gray'),
                 Tables\Columns\IconColumn::make('is_enabled')
-                    ->label(__('shopper::layout.forms.label.visibility'))
+                    ->label(__('shopper::forms.label.visibility'))
                     ->boolean(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('shopper::layout.forms.label.updated_at'))
+                    ->label(__('shopper::forms.label.updated_at'))
                     ->date()
                     ->sortable(),
             ])
@@ -70,7 +70,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')
-                    ->label(__('shopper::layout.forms.actions.edit'))
+                    ->label(__('shopper::forms.actions.edit'))
                     ->action(
                         fn ($record) => $this->dispatch(
                             'openPanel',
@@ -82,7 +82,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()
-                    ->label(__('shopper::layout.forms.actions.delete'))
+                    ->label(__('shopper::forms.actions.delete'))
                     ->requiresConfirmation()
                     ->action(function (Collection $records): void {
                         $records->each->delete();
@@ -90,8 +90,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.delete'))
                             ->body(
-                                __('shopper::components.tables.messages.delete', [
-                                    'name' => mb_strtolower(__('shopper::words.category')),
+                                __('shopper::notifications.delete', [
+                                    'item' => __('shopper::pages/categories.single'),
                                 ])
                             )
                             ->success()
@@ -100,7 +100,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->visible(auth()->user()->can('delete_categories'))
                     ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('enabled')
-                    ->label(__('shopper::layout.forms.actions.enable'))
+                    ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus();
@@ -108,8 +108,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))
                             ->body(
-                                __('shopper::components.tables.messages.enabled', [
-                                    'name' => mb_strtolower(__('shopper::words.category')),
+                                __('shopper::notifications.enabled', [
+                                    'item' => __('shopper::pages/categories.single'),
                                 ])
                             )
                             ->success()
@@ -117,7 +117,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     })
                     ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('disabled')
-                    ->label(__('shopper::layout.forms.actions.disable'))
+                    ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
                         $records->each->updateStatus(status: false);
@@ -125,8 +125,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))
                             ->body(
-                                __('shopper::components.tables.messages.disabled', [
-                                    'name' => mb_strtolower(__('shopper::words.category')),
+                                __('shopper::notifications.disabled', [
+                                    'item' => __('shopper::pages/categories.single'),
                                 ])
                             )
                             ->success()
@@ -153,6 +153,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function render(): View
     {
         return view('shopper::livewire.pages.category.index')
-            ->title(__('shopper::layout.sidebar.categories'));
+            ->title(__('shopper::pages/categories.menu'));
     }
 }

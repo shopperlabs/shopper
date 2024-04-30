@@ -30,7 +30,7 @@
                         <div class="rounded-md bg-primary-50 p-4 dark:bg-primary-600/10">
                             <div class="flex">
                                 <div class="shrink-0">
-                                    <x-heroicon-s-information-circle class="h-5 w-5 text-primary-400" />
+                                    <x-heroicon-s-information-circle class="h-5 w-5 text-primary-400" aria-hidden="" />
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-sm leading-5 text-primary-700">
@@ -42,7 +42,7 @@
                                             target="_blank"
                                             class="whitespace-no-wrap font-medium text-primary-700 transition duration-150 ease-in-out hover:text-primary-600"
                                         >
-                                            {{ __('shopper::components.learn_more') }} &rarr;
+                                            {{ __('shopper::words.learn_more') }} &rarr;
                                         </a>
                                     </p>
                                 </div>
@@ -53,7 +53,7 @@
                     <div class="flex items-start">
                         <div class="shrink-0">
                             <span class="block h-12 w-12">
-                                <x-heroicon-o-shield-check class="h-full w-full text-primary-600" />
+                                <x-heroicon-o-shield-check class="h-full w-full text-primary-600" aria-hidden="true" />
                             </span>
                         </div>
                         <div class="ml-4">
@@ -105,7 +105,7 @@
                             wire:loading.attr="disabled"
                         >
                             <x-shopper::loader wire:loading wire:target="startConfirmingPassword" class="text-white" />
-                            {{ __('shopper::layout.forms.actions.enabled_two_factor') }}
+                            {{ __('shopper::forms.actions.enabled_two_factor') }}
                         </x-shopper::buttons.primary>
                     @else
                         <div class="space-x-3 sm:flex sm:items-center">
@@ -114,7 +114,7 @@
                                 wire:loading.attr="disabled"
                                 type="button"
                             >
-                                {{ __('shopper::layout.forms.actions.disabled') }}
+                                {{ __('shopper::forms.actions.disable') }}
                             </x-shopper::buttons.danger>
                             @if ($showingRecoveryCodes)
                                 <x-shopper::buttons.primary
@@ -122,7 +122,7 @@
                                     wire:loading.attr="disabled"
                                     type="button"
                                 >
-                                    {{ __('shopper::layout.forms.actions.regenerate') }}
+                                    {{ __('shopper::forms.actions.regenerate_code') }}
                                 </x-shopper::buttons.primary>
                             @else
                                 <x-shopper::buttons.default
@@ -130,7 +130,7 @@
                                     wire:loading.attr="disabled"
                                     type="button"
                                 >
-                                    {{ __('shopper::layout.forms.actions.show_recovery_code') }}
+                                    {{ __('shopper::forms.actions.show_recovery_code') }}
                                 </x-shopper::buttons.default>
                             @endif
                         </div>
