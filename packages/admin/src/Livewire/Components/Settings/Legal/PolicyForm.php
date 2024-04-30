@@ -33,7 +33,7 @@ class PolicyForm extends Component implements HasForms
             ->schema([
                 Components\Hidden::make('title'),
                 Components\Toggle::make('is_enabled')
-                    ->label(__('shopper::forms.actions.enabled'))
+                    ->label(__('shopper::words.is_enabled'))
                     ->onColor('success'),
                 Components\RichEditor::make('content')
                     ->label(__('shopper::forms.label.content'))
@@ -50,6 +50,7 @@ class PolicyForm extends Component implements HasForms
         ], $this->form->getState());
 
         Notification::make()
+            ->title($this->legal->title)
             ->body(__('shopper::notifications.legal'))
             ->success()
             ->send();
