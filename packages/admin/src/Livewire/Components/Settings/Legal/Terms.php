@@ -14,6 +14,9 @@ class Terms extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.components.settings.legal.terms');
+        return view('shopper::livewire.components.settings.legal.index', [
+            'title' => __('shopper::pages/settings/global.legal.terms_of_use'),
+            'description' => __('shopper::pages/settings/global.legal.summary', ['policy' => __('shopper::pages/settings/global.legal.terms_of_use')]),
+        ]);
     }
 }

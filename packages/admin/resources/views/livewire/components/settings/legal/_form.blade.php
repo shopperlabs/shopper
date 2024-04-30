@@ -2,7 +2,7 @@
     {{ $this->form }}
 
     <div class="mt-6 flex justify-end">
-        <x-shopper::buttons.primary wire:click="store" type="submit" wire:loading.attr="disabled">
+        <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
             <x-shopper::loader wire:loading wire:target="store" class="text-white" />
             {{ __('shopper::forms.actions.save') }}
         </x-shopper::buttons.primary>

@@ -14,6 +14,9 @@ class Shipping extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.components.settings.legal.shipping');
+        return view('shopper::livewire.components.settings.legal.index', [
+            'title' => __('shopper::pages/settings/global.legal.shipping'),
+            'description' => __('shopper::pages/settings/global.legal.summary', ['policy' => __('shopper::pages/settings/global.legal.shipping')]),
+        ]);
     }
 }

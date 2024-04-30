@@ -14,6 +14,9 @@ class Privacy extends Component
 
     public function render(): View
     {
-        return view('shopper::livewire.components.settings.legal.privacy');
+        return view('shopper::livewire.components.settings.legal.index', [
+            'title' => __('shopper::pages/settings/global.legal.privacy'),
+            'description' => __('shopper::pages/settings/global.legal.summary', ['policy' => __('shopper::pages/settings/global.legal.privacy')]),
+        ]);
     }
 }
