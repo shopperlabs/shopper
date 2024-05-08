@@ -42,7 +42,7 @@ final class ComponentPublishCommand extends Command
 
         if (is_null($this->argument('name')) && $this->option('all')) {
             foreach ($config as $key => $file) {
-                $this->publish($key, $file, $this->getShopperComponentsConfigFolder().'/'.$key.'.php');
+                $this->publish($key, $file, $this->getShopperComponentsConfigFolder() . '/' . $key . '.php');
             }
 
             return;
@@ -50,9 +50,7 @@ final class ComponentPublishCommand extends Command
 
         $name = (string) (is_null($this->argument('name')) ? select(
             label: 'Which components configuration file would you like to publish?',
-            options: collect($config)->map(function (string $path) {
-                return basename($path, '.php');
-            }),
+            options: collect($config)->map(fn (string $path) => basename($path, '.php')),
         ) : $this->argument('name'));
 
         if (! is_null($name) && ! isset($config[$name])) {
@@ -61,7 +59,7 @@ final class ComponentPublishCommand extends Command
             return 1;
         }
 
-        $this->publish($name, $config[$name], $this->getShopperComponentsConfigFolder().'/'.$name.'.php');
+        $this->publish($name, $config[$name], $this->getShopperComponentsConfigFolder() . '/' . $name . '.php');
     }
 
     /**
@@ -102,6 +100,6 @@ final class ComponentPublishCommand extends Command
 
     protected function getShopperComponentsConfigFolder(): string
     {
-        return $this->laravel->configPath().'/shopper/components';
+        return $this->laravel->configPath() . '/shopper/components';
     }
 }
