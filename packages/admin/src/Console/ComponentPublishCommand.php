@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Shopper\Console;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Finder\Finder;
+
+use function Laravel\Prompts\select;
 
 #[AsCommand(name: 'shopper:component:publish')]
 final class ComponentPublishCommand extends Command
@@ -30,13 +33,35 @@ final class ComponentPublishCommand extends Command
 
     /**
      * Execute the console command.
+     *
+     * @return int|void
      */
-    public function handle(): int
+    public function handle()
     {
         $config = $this->getBaseConfigurationFiles();
-        dd($config);
 
-        return 1;
+        if (is_null($this->argument('name')) && $this->option('all')) {
+            foreach ($config as $key => $file) {
+                $this->publish($key, $file, $this->getShopperComponentsConfigFolder().'/'.$key.'.php');
+            }
+
+            return;
+        }
+
+        $name = (string) (is_null($this->argument('name')) ? select(
+            label: 'Which components configuration file would you like to publish?',
+            options: collect($config)->map(function (string $path) {
+                return basename($path, '.php');
+            }),
+        ) : $this->argument('name'));
+
+        if (! is_null($name) && ! isset($config[$name])) {
+            $this->components->error('Unrecognized component configuration file.');
+
+            return 1;
+        }
+
+        $this->publish($name, $config[$name], $this->getShopperComponentsConfigFolder().'/'.$name.'.php');
     }
 
     /**
@@ -50,9 +75,13 @@ final class ComponentPublishCommand extends Command
             return;
         }
 
+        if (! File::exists($this->getShopperComponentsConfigFolder())) {
+            File::makeDirectory($this->getShopperComponentsConfigFolder());
+        }
+
         copy($file, $destination);
 
-        $this->components->info("Published '{$name}' configuration file.");
+        $this->components->info("Published '{$name}' components configuration file.");
     }
 
     /**
@@ -69,5 +98,10 @@ final class ComponentPublishCommand extends Command
         }
 
         return collect($config)->sortKeys()->all();
+    }
+
+    protected function getShopperComponentsConfigFolder(): string
+    {
+        return $this->laravel->configPath().'/shopper/components';
     }
 }
