@@ -90,7 +90,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                             ]),
                     ]),
 
-                Components\Section::make(__('shopper::words.location'))
+                Components\Section::make(__('shopper::pages/settings/menu.location'))
                     ->collapsible()
                     ->compact()
                     ->schema([
@@ -162,6 +162,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                     ->compact()
                     ->schema([
                         Forms\Components\KeyValue::make('metadata')
+                            ->hiddenLabel()
                             ->reorderable(),
                     ]),
             ])

@@ -14,7 +14,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use function Laravel\Prompts\info;
 
 #[AsCommand(name: 'shopper:install')]
-class InstallCommand extends Command
+final class InstallCommand extends Command
 {
     protected $signature = 'shopper:install';
 

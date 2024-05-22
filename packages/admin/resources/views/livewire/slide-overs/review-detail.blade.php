@@ -117,7 +117,7 @@
                             </dt>
                             <dd class="flex text-sm leading-5 text-gray-500 dark:text-gray-400 sm:col-span-2 sm:mt-0">
                                 <span class="grow">
-                                    {{ $review->created_at->formatLocalized('%d %B %Y') }}
+                                    {{ $review->created_at->translatedFormat('j F Y') }}
                                 </span>
                             </dd>
                         </div>

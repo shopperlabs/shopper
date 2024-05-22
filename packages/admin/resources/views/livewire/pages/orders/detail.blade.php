@@ -27,8 +27,8 @@
                         <div class="flex items-center px-4">
                             <x-untitledui-calendar class="mr-1.5 h-5 w-5 text-gray-500 dark:text-gray-400" />
                             <span class="text-sm font-medium leading-6 text-gray-700 dark:text-gray-300">
-                                <time datetime="{{ $order->created_at->format('F j, Y h:m') }}">
-                                    {{ $order->created_at->formatLocalized('%d %B %G - %H:%M') }}
+                                <time class="capitalize" datetime="{{ $order->created_at->format('F j, Y h:m') }}">
+                                    {{ $order->created_at->translatedFormat('j F Y H:i') }}
                                 </time>
                             </span>
                         </div>

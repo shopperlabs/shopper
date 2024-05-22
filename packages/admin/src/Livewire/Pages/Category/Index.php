@@ -88,8 +88,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         $records->each->delete();
 
                         Notification::make()
-                            ->title(__('shopper::components.tables.status.delete'))
-                            ->body(
+                            ->title(
                                 __('shopper::notifications.delete', [
                                     'item' => __('shopper::pages/categories.single'),
                                 ])
@@ -106,8 +105,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         $records->each->updateStatus();
 
                         Notification::make()
-                            ->title(__('shopper::components.tables.status.updated'))
-                            ->body(
+                            ->title(
                                 __('shopper::notifications.enabled', [
                                     'item' => __('shopper::pages/categories.single'),
                                 ])
@@ -123,8 +121,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         $records->each->updateStatus(status: false);
 
                         Notification::make()
-                            ->title(__('shopper::components.tables.status.updated'))
-                            ->body(
+                            ->title(
                                 __('shopper::notifications.disabled', [
                                     'item' => __('shopper::pages/categories.single'),
                                 ])

@@ -48,6 +48,13 @@ class Brand extends Model implements SpatieHasMedia
         return BrandFactory::new();
     }
 
+    public function updateStatus(bool $status = true): void
+    {
+        $this->is_enabled = $status;
+
+        $this->save();
+    }
+
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
@@ -56,12 +63,5 @@ class Brand extends Model implements SpatieHasMedia
     public function products(): HasMany
     {
         return $this->hasMany(config('shopper.models.product'));
-    }
-
-    public function updateStatus(bool $status = true): void
-    {
-        $this->is_enabled = $status;
-
-        $this->save();
     }
 }

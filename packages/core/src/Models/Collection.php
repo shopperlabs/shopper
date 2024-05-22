@@ -19,8 +19,8 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property CollectionType $type
  * @property string $name
  * @property string $slug
- * @property string|null $description
- * @property array|null $metadata
+ * @property string | null $description
+ * @property array | null $metadata
  */
 class Collection extends Model implements SpatieHasMedia
 {

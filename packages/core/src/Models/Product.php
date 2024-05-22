@@ -149,7 +149,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
 
     public function channels(): MorphToMany
     {
-        return $this->morphedByMany(config('shopper.models.channel'), 'productable', shopper_table(shopper_table('product_has_relations')));
+        return $this->morphedByMany(config('shopper.models.channel'), 'productable', shopper_table('product_has_relations'));
     }
 
     public function relatedProducts(): MorphToMany

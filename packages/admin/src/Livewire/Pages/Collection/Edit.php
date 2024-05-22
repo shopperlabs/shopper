@@ -60,13 +60,6 @@ class Edit extends AbstractPageComponent implements HasForms
                                     ->unique(config('shopper.models.collection'), 'slug', ignoreRecord: true),
                             ]),
 
-                        Forms\Components\Radio::make('type')
-                            ->label(__('shopper::pages/collections.filter_type'))
-                            ->inline()
-                            ->inlineLabel(false)
-                            ->required()
-                            ->options(CollectionType::class),
-
                         Forms\Components\RichEditor::make('description')
                             ->label(__('shopper::forms.label.description'))
                             ->toolbarButtons([

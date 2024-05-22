@@ -1,7 +1,7 @@
 @props(['title' => config('app.name')])
 
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="shopper min-h-screen scroll-smooth antialiased">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="sh min-h-screen scroll-smooth antialiased">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />

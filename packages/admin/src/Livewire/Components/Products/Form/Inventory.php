@@ -89,7 +89,7 @@ class Inventory extends Component implements HasForms, HasTable
                     ->label(__('shopper::words.event')),
 
                 Tables\Columns\TextColumn::make('inventory.name')
-                    ->label(__('shopper::words.location')),
+                    ->label(__('shopper::pages/settings/menu.location')),
 
                 Tables\Columns\TextColumn::make('adjustment')
                     ->label(__('shopper::words.adjustment'))
@@ -185,7 +185,7 @@ class Inventory extends Component implements HasForms, HasTable
             ])
             ->groups([
                 Tables\Grouping\Group::make('inventory.name')
-                    ->label(__('shopper::words.location'))
+                    ->label(__('shopper::pages/settings/menu.location'))
                     ->collapsible(),
             ]);
     }

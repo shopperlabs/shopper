@@ -71,25 +71,30 @@ class Attribute extends Model
     public static function fieldsWithValues(): array
     {
         return [
-            'select',
-            'checkbox',
-            'colorpicker',
+            FieldType::Checkbox,
+            FieldType::ColorPicker,
+            FieldType::Select,
         ];
     }
 
     public function hasMultipleValues(): bool
     {
-        return in_array($this->type->value, ['checkbox', 'colorpicker']);
+        return in_array($this->type, [FieldType::Checkbox, FieldType::ColorPicker]);
     }
 
     public function hasSingleValue(): bool
     {
-        return $this->type->value === 'select';
+        return $this->type === FieldType::Select;
     }
 
     public function hasTextValue(): bool
     {
-        return in_array($this->type->value, ['text', 'number', 'richtext', 'datepicker']);
+        return in_array($this->type, [
+            FieldType::Text,
+            FieldType::Number,
+            FieldType::RichText,
+            FieldType::DatePicker,
+        ]);
     }
 
     public function updateStatus(bool $status = true): void

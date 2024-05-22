@@ -97,7 +97,7 @@ class Variant extends AbstractPageComponent implements HasForms
 
                 Components\Separator::make(),
 
-                Components\Section::make(__('shopper::words.location'))
+                Components\Section::make(__('shopper::pages/settings/menu.location'))
                     ->compact()
                     ->aside()
                     ->schema([

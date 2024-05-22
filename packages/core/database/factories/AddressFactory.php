@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Country;
 
@@ -23,7 +24,7 @@ class AddressFactory extends Factory
             'street_address_plus' => $this->faker->streetSuffix(),
             'city' => $this->faker->city(),
             'postcode' => $this->faker->postcode(),
-            'type' => $this->faker->randomElement(['billing', 'shipping']),
+            'type' => $this->faker->randomElement(AddressType::names()),
             'shipping_default' => $this->faker->boolean,
             'billing_default' => $this->faker->boolean,
         ];

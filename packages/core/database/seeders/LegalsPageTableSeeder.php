@@ -15,29 +15,29 @@ final class LegalsPageTableSeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         Legal::query()->create([
-            'title' => $title = __('shopper::pages/settings.legal.refund'),
-            'slug' => $title,
+            'title' => __('shopper::pages/settings/global.legal.refund'),
+            'slug' => 'refund',
             'is_enabled' => true,
             'content' => null,
         ]);
 
         Legal::query()->create([
-            'title' => $title = __('shopper::pages/settings.legal.privacy'),
-            'slug' => $title,
+            'title' => __('shopper::pages/settings/global.legal.privacy'),
+            'slug' => 'privacy',
             'is_enabled' => true,
             'content' => null,
         ]);
 
         Legal::query()->create([
-            'title' => $title = __('shopper::pages/settings.legal.terms_of_use'),
-            'slug' => $title,
+            'title' => __('shopper::pages/settings/global.legal.terms_of_use'),
+            'slug' => 'terms-of-use',
             'is_enabled' => true,
             'content' => null,
         ]);
 
         Legal::query()->create([
-            'title' => $title = __('shopper::pages/settings.legal.shipping'),
-            'slug' => $title,
+            'title' => __('shopper::pages/settings/global.legal.shipping'),
+            'slug' => 'shipping',
             'is_enabled' => true,
             'content' => null,
         ]);
