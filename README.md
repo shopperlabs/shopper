@@ -7,7 +7,7 @@
         <img src="https://github.com/shopperlabs/framework/workflows/tests/badge.svg" alt="Build Status">
     </a>
     <a href="https://laravel.com">
-        <img alt="Laravel v9.x" src="https://img.shields.io/badge/Laravel-v9.x-FF2D20">
+        <img alt="Laravel v10.x" src="https://img.shields.io/badge/Laravel-v10.x-FF2D20">
     </a>
     <a href="https://packagist.org/packages/shopper/framework">
         <img src="https://img.shields.io/packagist/dt/shopper/framework" alt="Total Downloads">

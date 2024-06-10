@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Traits;
 
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -33,14 +33,14 @@ trait HasMedia
         foreach ($conversions as $key => $conversion) {
             $this->addMediaConversion($key)
                 ->fit(
-                    Manipulations::FIT_FILL,
+                    Fit::Fill,
                     $conversion['width'],
                     $conversion['height']
                 )->keepOriginalImageFormat();
         }
 
         $this->addMediaConversion('thumb_200')
-            ->fit(Manipulations::FIT_CROP, 200, 200)
+            ->fit(Fit::Crop, 200, 200)
             ->keepOriginalImageFormat();
     }
 }

@@ -10,7 +10,6 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\Validate;
 use Shopper\Core\Models\Setting;
 use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
@@ -19,17 +18,6 @@ final class StoreAddress extends StepComponent implements HasForms
 {
     use InteractsWithForms;
     use SaveSettings;
-
-    #[Validate('required|string')]
-    public ?string $street_address = null;
-
-    #[Validate('required')]
-    public ?string $postcode = null;
-
-    #[Validate('required')]
-    public ?string $city = null;
-
-    public ?string $phone_number = null;
 
     public ?array $data = [];
 

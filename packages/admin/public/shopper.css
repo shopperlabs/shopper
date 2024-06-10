@@ -3681,6 +3681,10 @@ html {
   z-index: 1;
 }
 
+.order-first {
+  order: -9999;
+}
+
 .col-\[--col-span-default\] {
   grid-column: var(--col-span-default);
 }
@@ -4677,6 +4681,12 @@ html {
           user-select: none;
 }
 
+.select-all {
+  -webkit-user-select: all;
+     -moz-user-select: all;
+          user-select: all;
+}
+
 .resize-none {
   resize: none;
 }
@@ -5575,6 +5585,10 @@ html {
 
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;
+}
+
+.\!bg-none {
+  background-image: none !important;
 }
 
 .bg-gradient-to-b {

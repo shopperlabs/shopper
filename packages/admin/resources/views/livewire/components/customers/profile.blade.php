@@ -100,7 +100,7 @@
                     <dd class="flex text-sm leading-5 text-gray-900 sm:col-span-2 sm:mt-0">
                         <x-shopper::badge
                             :style="$customer->opt_in ? 'success' : 'gray'"
-                            :value="$customer->opt_in ? __('shopper::forms.actions.enabled') : __('shopper::forms.actions.disabled')"
+                            :value="$customer->opt_in ? __('shopper::forms.actions.enable') : __('shopper::forms.actions.disable')"
                         />
                     </dd>
                 </div>
@@ -111,7 +111,7 @@
                     <dd class="flex text-sm leading-5 text-gray-900 dark:text-white sm:col-span-2 sm:mt-0">
                         <x-shopper::badge
                             :style="$customer->two_factor_secret ? 'success' : 'gray'"
-                            :value="$customer->two_factor_secret ? __('shopper::forms.actions.enabled') : __('shopper::forms.actions.disabled')"
+                            :value="$customer->two_factor_secret ? __('shopper::forms.actions.enable') : __('shopper::forms.actions.disable')"
                         />
                     </dd>
                 </div>

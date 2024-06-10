@@ -122,7 +122,6 @@ class Inventory extends Component implements HasForms, HasTable
                 Tables\Actions\Action::make('stock')
                     ->label('Add stock')
                     ->icon('untitledui-package')
-                    ->modal()
                     ->color('gray')
                     ->modalWidth(MaxWidth::ExtraLarge)
                     ->form([

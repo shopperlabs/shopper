@@ -22,12 +22,6 @@ final class StoreSocialLink extends StepComponent implements HasForms
     use InteractsWithForms;
     use SaveSettings;
 
-    public ?string $facebook_link = null;
-
-    public ?string $instagram_link = null;
-
-    public ?string $twitter_link = null;
-
     public ?array $data = [];
 
     public function mount(): void
