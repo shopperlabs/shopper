@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
-use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
