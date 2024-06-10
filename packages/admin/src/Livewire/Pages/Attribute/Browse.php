@@ -74,7 +74,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                             arguments: ['attributeId' => $record->id]
                         )
                     )
-                    ->visible(fn (Attribute $record) => in_array($record->type->value, Attribute::fieldsWithValues())),
+                    ->visible(fn (Attribute $record) => in_array($record->type, Attribute::fieldsWithValues())),
 
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
@@ -97,8 +97,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                         $records->each->delete();
 
                         Notification::make()
-                            ->title(__('shopper::components.tables.status.delete'))
-                            ->body(
+                            ->title(
                                 __('shopper::notifications.delete', [
                                     'item' => __('shopper::pages/attributes.single'),
                                 ])
@@ -114,8 +113,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                         $records->each->updateStatus();
 
                         Notification::make()
-                            ->title(__('shopper::components.tables.status.updated'))
-                            ->body(
+                            ->title(
                                 __('shopper::notifications.enabled', [
                                     'item' => __('shopper::pages/attributes.single'),
                                 ])

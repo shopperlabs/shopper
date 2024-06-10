@@ -12,7 +12,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
-use Shopper\Core\Models\Product;
+use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Edit extends AbstractPageComponent implements HasActions, HasForms
@@ -20,11 +20,13 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
     use InteractsWithActions;
     use InteractsWithForms;
 
-    public Product $product;
+    public $product;
 
     public function mount(): void
     {
         $this->authorize('edit_products');
+
+        $this->product = (new ProductRepository())->getById((int) $this->product);
     }
 
     public function deleteAction(): Action

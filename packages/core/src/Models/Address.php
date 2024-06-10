@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\AddressFactory;
 use Shopper\Core\Enum\AddressType;
+use Shopper\Core\Observers\AddressObserver;
 
 /**
  * @property-read int $id
@@ -59,6 +60,13 @@ class Address extends Model
     public function getTable(): string
     {
         return shopper_table('user_addresses');
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::observe(AddressObserver::class);
     }
 
     protected static function newFactory(): AddressFactory

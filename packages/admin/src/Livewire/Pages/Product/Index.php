@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
@@ -68,8 +69,9 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('brand.name')
                     ->label(__('shopper::forms.label.brand'))
                     ->searchable()
-                    ->toggleable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(Feature::enabled('brand'))
+                    ->hidden(! Feature::enabled('brand')),
 
                 Tables\Columns\ViewColumn::make('stock')
                     ->label(__('shopper::layout.tables.stock'))

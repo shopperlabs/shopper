@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Shopper\Core\Database\Factories\UserFactory;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasProfilePhoto;
 use Shopper\Traits\TwoFactorAuthenticatable;
@@ -72,6 +73,11 @@ class User extends Authenticatable
             $model->roles()->detach();
             $model->addresses()->delete();
         });
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
     }
 
     public function isAdmin(): bool

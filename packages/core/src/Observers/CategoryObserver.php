@@ -23,12 +23,12 @@ final class CategoryObserver
      * Ensure that the parent slug is present on the category slug is selected
      * slug is "parent_slug_category_slug" when a parent category is choose
      */
-    protected function ensureParentSlugIsCorrectlySet(Category $category): void
+    protected function ensureParentSlugIsCorrectlySet($category): void
     {
-        if ($category->parent_id) {
+        if (filled($category->parent_id)) {
             /** @var Category | null $parent */
             $parent = (new CategoryRepository())
-                ->getByColumn('parent_id', $category->parent_id, ['slug']);
+                ->getByColumn('id', (int) $category->parent_id, ['slug']);
 
             if ($parent) {
                 $category->slug = $parent->slug . '-' . $category->name;

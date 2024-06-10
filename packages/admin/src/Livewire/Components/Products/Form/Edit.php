@@ -155,7 +155,7 @@ class Edit extends Component implements HasForms
 
         $this->product->update(Arr::except($data, ['categories']));
 
-        if (collect($data['categories'])->isNotEmpty()) {
+        if (Feature::enabled('category') && array_key_exists('categories', $data) && collect($data['categories'])->isNotEmpty()) {
             $this->product->categories()->sync($data['categories']);
         }
 

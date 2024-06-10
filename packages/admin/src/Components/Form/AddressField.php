@@ -32,7 +32,7 @@ final class AddressField
             Components\TextInput::make(self::getPrefix($prefix) . 'city')
                 ->label(__('shopper::forms.label.city'))
                 ->required(),
-            Components\TextInput::make(self::getPrefix($prefix) . 'zipcode')
+            Components\TextInput::make(self::getPrefix($prefix) . 'postal_code')
                 ->label(__('shopper::forms.label.postal_code'))
                 ->required(),
             Components\Select::make(self::getPrefix($prefix) . 'country_id')

@@ -18,6 +18,7 @@ final class ShopperSeeder extends Seeder
         $this->call(CurrenciesTableSeeder::class);
         $this->call(LegalsPageTableSeeder::class);
         $this->call(ChannelSeeder::class);
+        $this->call(CarrierSeeder::class);
 
         Model::reguard();
     }

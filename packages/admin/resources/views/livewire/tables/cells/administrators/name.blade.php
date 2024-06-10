@@ -20,7 +20,7 @@
         <div class="text-sm leading-5 text-gray-500 dark:text-gray-400">
             {{ __('shopper::words.registered_on') }}
             <time datetime="{{ $user->created_at->format('Y-m-d') }}" class="capitalize">
-                {{ $user->created_at->formatLocalized('%d %B %Y') }}
+                {{ $user->created_at->translatedFormat('j F Y') }}
             </time>
         </div>
     </div>

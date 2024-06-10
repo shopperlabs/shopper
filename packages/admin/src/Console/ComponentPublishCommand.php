@@ -68,7 +68,7 @@ final class ComponentPublishCommand extends Command
     protected function publish(string $name, string $file, string $destination): void
     {
         if (file_exists($destination) && ! $this->option('force')) {
-            $this->components->error("The '{$name}' configuration file already exists.");
+            $this->components->error("The '{$name}' components configuration file already exists.");
 
             return;
         }

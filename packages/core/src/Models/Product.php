@@ -26,9 +26,17 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 /**
  * @property-read int $id
  * @property int|null $parent_id
+ * @property string $name
+ * @property string|null $slug
+ * @property string|null $sku
+ * @property string|null $barcode
+ * @property bool $featured
  * @property int|null $price_amount
  * @property int|null $old_price_amount
  * @property int|null $cost_amount
+ * @property int|null $security_stock
+ * @property string|null $seo_title
+ * @property string|null $seo_description
  * @property \Carbon\Carbon|null $published_at
  * @property-read int $stock
  */
@@ -149,7 +157,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
 
     public function channels(): MorphToMany
     {
-        return $this->morphedByMany(config('shopper.models.channel'), 'productable', shopper_table(shopper_table('product_has_relations')));
+        return $this->morphedByMany(config('shopper.models.channel'), 'productable', shopper_table('product_has_relations'));
     }
 
     public function relatedProducts(): MorphToMany

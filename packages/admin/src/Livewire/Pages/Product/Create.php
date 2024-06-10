@@ -176,7 +176,7 @@ class Create extends AbstractPageComponent implements HasForms
                             || Feature::enabled('collection')
                         ),
 
-                    Components\Wizard\StepColumn::make(__('shopper::words.location'))
+                    Components\Wizard\StepColumn::make(__('shopper::pages/settings/menu.location'))
                         ->icon('untitledui-package')
                         ->schema([
                             Forms\Components\Placeholder::make('stock')
@@ -291,7 +291,7 @@ class Create extends AbstractPageComponent implements HasForms
 
         $product->channels()->sync([$this->defaultChannel->id]);
 
-        if ($data['categories'] && count($data['categories']) > 0) {
+        if (Feature::enabled('category') && array_key_exists('categories', $data) && count($data['categories']) > 0) {
             $product->categories()->sync($data['categories']);
         }
 

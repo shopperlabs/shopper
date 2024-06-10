@@ -7,7 +7,7 @@ return [
         'new' => 'Nouvelle permission',
         'new_description' => 'Ajouter une nouvelle autorisation et l\'attribuer directement à ce rôle',
         'labels' => [
-            'name' => 'Nom de la permission (en minuscules)',
+            'name' => 'Permission (en minuscules)',
         ],
     ],
 

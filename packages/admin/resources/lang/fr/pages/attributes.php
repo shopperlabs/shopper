@@ -17,6 +17,7 @@ return [
     'description' => 'Les attributes associés à votre produit. Ces attributs une fois sélectionnés, pourront être associés pour générer une combinaison de variantes',
 
     'values' => [
+        'slug' => 'Valeurs',
         'title' => 'Valeurs d\'attributs',
         'description' => 'Ajouter des valeurs par défaut pour cet attribut. Ces valeurs pourront être disponibles dans l\' onglet attributs des produits.',
     ],

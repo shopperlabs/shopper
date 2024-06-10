@@ -75,7 +75,7 @@
                                     datetime="{{ $permission->created_at->format('Y-m-d') }}"
                                     class="text-xs font-medium capitalize leading-5 text-gray-400 dark:text-gray-500"
                                 >
-                                    {{ $permission->created_at->formatLocalized('%b %d') }}
+                                    {{ $permission->created_at->translatedFormat('j F') }}
                                 </time>
                             </div>
                         </div>

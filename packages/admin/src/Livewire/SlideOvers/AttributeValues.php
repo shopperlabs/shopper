@@ -86,7 +86,6 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                     ->icon('untitledui-edit-04')
                     ->color('gray')
                     ->iconButton()
-                    ->modal()
                     ->modalHeading(__('shopper::forms.actions.edit'))
                     ->modalWidth(MaxWidth::ExtraLarge)
                     ->fillForm(fn (AttributeValue $record): array => [
@@ -123,7 +122,6 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
                 Tables\Actions\Action::make('add')
                     ->label(__('shopper::forms.actions.add_label', ['label' => __('shopper::forms.label.value')]))
                     ->badge()
-                    ->modal()
                     ->modalHeading(__('shopper::modals.attributes.new_value', ['attribute' => $this->attribute->name]))
                     ->modalWidth(MaxWidth::ExtraLarge)
                     ->form($this->formSchema())

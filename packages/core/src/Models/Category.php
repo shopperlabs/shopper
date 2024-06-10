@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\CategoryFactory;
+use Shopper\Core\Observers\CategoryObserver;
 use Shopper\Core\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
@@ -40,6 +41,13 @@ class Category extends Model implements SpatieHasMedia
     public function getTable(): string
     {
         return shopper_table('categories');
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::observe(CategoryObserver::class);
     }
 
     protected static function newFactory(): CategoryFactory

@@ -21,10 +21,10 @@ class ProductInventoryExport implements FromQuery, WithHeadings, WithMapping
     {
         return [
             '#',
-            __('shopper::words.product'),
+            __('shopper::pages/products.single'),
             __('shopper::words.stock'),
             __('shopper::words.event'),
-            __('shopper::words.location'),
+            __('shopper::pages/settings/menu.location'),
             __('shopper::words.user'),
             __('shopper::words.date'),
         ];

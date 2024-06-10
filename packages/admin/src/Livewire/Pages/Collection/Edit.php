@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
-use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -59,13 +58,6 @@ class Edit extends AbstractPageComponent implements HasForms
                                     ->maxLength(255)
                                     ->unique(config('shopper.models.collection'), 'slug', ignoreRecord: true),
                             ]),
-
-                        Forms\Components\Radio::make('type')
-                            ->label(__('shopper::pages/collections.filter_type'))
-                            ->inline()
-                            ->inlineLabel(false)
-                            ->required()
-                            ->options(CollectionType::class),
 
                         Forms\Components\RichEditor::make('description')
                             ->label(__('shopper::forms.label.description'))

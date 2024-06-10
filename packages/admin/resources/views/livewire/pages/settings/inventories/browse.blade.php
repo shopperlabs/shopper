@@ -101,8 +101,11 @@
                                             />
                                             <span class="ml-2">
                                                 {{ __('shopper::words.added_on') }}
-                                                <time datetime="{{ $inventory->created_at->format('d-m-Y') }}">
-                                                    {{ $inventory->created_at->formatLocalized('%d %B %G') }}
+                                                <time
+                                                    class="capitalize"
+                                                    datetime="{{ $inventory->created_at->format('d-m-Y') }}"
+                                                >
+                                                    {{ $inventory->created_at->translatedFormat('j F Y') }}
                                                 </time>
                                             </span>
                                         </div>

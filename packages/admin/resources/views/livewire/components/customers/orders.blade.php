@@ -12,7 +12,7 @@
                             {{ __('shopper::pages/customers.orders.placed') }}
                         </dt>
                         <dd class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
-                            {{ $order->created_at->formatLocalized('%d %B %G - %H:%M') }}
+                            {{ $order->created_at->translatedFormat('j F Y H:i') }}
                         </dd>
                     </div>
                     <div class="mt-5 sm:mt-0">

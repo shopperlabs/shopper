@@ -39,24 +39,16 @@
 
     <x-shopper::container class="mt-8">
         <div x-show="currentTab === 'refund'">
-            <livewire:shopper-settings.legal.refund
-                :legal="$legals[Str::slug(__('shopper::pages/settings/global.legal.refund'))]"
-            />
+            <livewire:shopper-settings.legal.refund :legal="$legals['refund']" />
         </div>
         <div x-cloak x-show="currentTab === 'privacy'">
-            <livewire:shopper-settings.legal.privacy
-                :legal="$legals[Str::slug(__('shopper::pages/settings/global.legal.privacy'))]"
-            />
+            <livewire:shopper-settings.legal.privacy :legal="$legals['privacy']" />
         </div>
         <div x-cloak x-show="currentTab === 'terms'">
-            <livewire:shopper-settings.legal.terms
-                :legal="$legals[Str::slug(__('shopper::pages/settings/global.legal.terms_of_use'))]"
-            />
+            <livewire:shopper-settings.legal.terms :legal="$legals['terms-of-use']" />
         </div>
         <div x-cloak x-show="currentTab === 'shipping'">
-            <livewire:shopper-settings.legal.shipping
-                :legal="$legals[Str::slug(__('shopper::pages/settings/global.legal.shipping'))]"
-            />
+            <livewire:shopper-settings.legal.shipping :legal="$legals['shipping']" />
         </div>
     </x-shopper::container>
 

@@ -15,7 +15,7 @@ class OrderFactory extends Factory
     {
         return [
             'number' => '#SH' . $this->faker->unique()->randomNumber(6),
-            'currency' => mb_strtolower(shopper_currency()),
+            'currency_code' => mb_strtolower(shopper_currency()),
             'total_price' => $this->faker->randomFloat(2, 100, 2000),
             'status' => $this->faker->randomElement(['new', 'processing', 'shipped', 'delivered', 'cancelled']),
             'shipping_price' => $this->faker->randomFloat(2, 100, 500),

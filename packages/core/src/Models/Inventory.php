@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Observers\InventoryObserver;
 
 /**
  * @property-read int $id
@@ -52,6 +53,13 @@ class Inventory extends Model
     public function getTable(): string
     {
         return shopper_table('inventories');
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::observe(InventoryObserver::class);
     }
 
     public function scopeDefault(Builder $query): Builder

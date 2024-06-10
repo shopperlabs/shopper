@@ -21,7 +21,7 @@
             </h5>
             @if ($activated)
                 <x-filament::badge size="sm" color="success" icon="untitledui-check-verified">
-                    {{ __('shopper::forms.actions.enabled') }}
+                    {{ __('shopper::forms.actions.enable') }}
                 </x-filament::badge>
             @endif
         </div>

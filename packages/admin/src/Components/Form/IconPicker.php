@@ -189,7 +189,7 @@ class IconPicker extends Select
         throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function createOptionUsing(Closure $callback): static
+    public function createOptionUsing(?Closure $callback): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
