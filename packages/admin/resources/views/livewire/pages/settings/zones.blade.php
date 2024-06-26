@@ -41,7 +41,7 @@
                             <x-filament::input.radio
                                 name="zone"
                                 value="{{ $zone->id }}"
-                                wire:model.live.debounce.350ms="currentZoneId"
+                                wire:model.live="currentZoneId"
                                 class="mt-0.5"
                                 aria-labelledby="zone-{{ $zone->id }}-label"
                                 aria-describedby="zone-{{ $zone->id }}-description"

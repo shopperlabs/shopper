@@ -50,8 +50,10 @@ return [
         'settings.team.permissions' => Components\Settings\Team\Permissions::class,
         'settings.team.users' => Components\Settings\Team\UsersRole::class,
         'settings.zones.detail' => Components\Settings\Zones\Detail::class,
+        'settings.zones.shipping-options' => Components\Settings\Zones\ZoneShippingOptions::class,
 
         'slide-overs.create-team-member' => Livewire\SlideOvers\CreateTeamMember::class,
+        'slide-overs.shipping-option-form' => Livewire\SlideOvers\ShippingOptionForm::class,
         'slide-overs.zone-form' => Livewire\SlideOvers\ZoneForm::class,
     ],
 

@@ -3543,6 +3543,10 @@ html {
   inset: -0.625rem;
 }
 
+.-inset-px {
+  inset: -1px;
+}
+
 .inset-0 {
   inset: 0px;
 }
@@ -5346,6 +5350,11 @@ html {
 .border-green-400 {
   --tw-border-opacity: 1;
   border-color: rgb(74 222 128 / var(--tw-border-opacity));
+}
+
+.border-indigo-600 {
+  --tw-border-opacity: 1;
+  border-color: rgb(79 70 229 / var(--tw-border-opacity));
 }
 
 .border-primary-300 {
@@ -9341,6 +9350,11 @@ html.dark .shiki span {
   background-color: rgb(255 255 255 / 0.75);
 }
 
+.hover\:bg-danger-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 242 242 / var(--tw-bg-opacity));
+}
+
 .hover\:text-custom-600:hover {
   --tw-text-opacity: 1;
   color: rgba(var(--c-600), var(--tw-text-opacity));
@@ -9407,6 +9421,11 @@ html.dark .shiki span {
 .hover\:text-yellow-600:hover {
   --tw-text-opacity: 1;
   color: rgb(202 138 4 / var(--tw-text-opacity));
+}
+
+.hover\:text-danger-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .hover\:opacity-100:hover {
@@ -10145,6 +10164,10 @@ html.dark .shiki span {
   background-color: rgb(255 255 255 / 0.05);
 }
 
+:is(.dark .dark\:hover\:bg-danger-800\/50:hover) {
+  background-color: rgb(153 27 27 / 0.5);
+}
+
 :is(.dark .dark\:hover\:text-custom-300:hover) {
   --tw-text-opacity: 1;
   color: rgba(var(--c-300), var(--tw-text-opacity));
@@ -10380,9 +10403,18 @@ html.dark .shiki span {
     margin-right: 0px;
   }
 
+  .sm\:mx-1 {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+
   .sm\:my-8 {
     margin-top: 2rem;
     margin-bottom: 2rem;
+  }
+
+  .sm\:ml-0 {
+    margin-left: 0px;
   }
 
   .sm\:ml-3 {
@@ -10407,6 +10439,10 @@ html.dark .shiki span {
 
   .sm\:inline-block {
     display: inline-block;
+  }
+
+  .sm\:inline {
+    display: inline;
   }
 
   .sm\:flex {
@@ -10553,6 +10589,10 @@ html.dark .shiki span {
 
   .sm\:flex-row-reverse {
     flex-direction: row-reverse;
+  }
+
+  .sm\:flex-col {
+    flex-direction: column;
   }
 
   .sm\:flex-nowrap {
@@ -10736,6 +10776,10 @@ html.dark .shiki span {
 
   .sm\:text-left {
     text-align: left;
+  }
+
+  .sm\:text-right {
+    text-align: right;
   }
 
   .sm\:align-middle {

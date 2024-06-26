@@ -10,43 +10,38 @@ use Filament\Actions\Contracts\HasActions;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
 
 #[Lazy]
-class Detail extends Component implements HasActions, HasForms
+class ZoneShippingOptions extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;
 
     public ?Zone $zone = null;
 
-    #[On('refresh-zone')]
-    public function mount(?int $currentZoneId = null): void
-    {
-        $this->zone = Zone::with([
-            'countries',
-            'currency',
-            'carriers',
-            'paymentMethods',
-            'shippingOptions',
-        ])->find($currentZoneId);
-    }
-
     public function deleteAction(): Action
     {
-        return DeleteAction::make('delete')
-            ->record($this->zone)
+        return Action::make('delete')
+            ->requiresConfirmation()
             ->icon('untitledui-trash-03')
+            ->color('danger')
             ->iconButton()
-            ->successNotificationTitle(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/zones.single')]))
-            ->after(function (): void {
-                $this->reset('zone');
+            ->action(function (array $arguments): void {
+                CarrierOption::query()->find($arguments['id'])->delete();
 
-                $this->dispatch('refresh-zones');
+                Notification::make()
+                    ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/zones.shipping_options.single')]))
+                    ->success()
+                    ->send();
+
+                $this->dispatch('$refresh');
             });
     }
 
@@ -57,18 +52,13 @@ class Detail extends Component implements HasActions, HasForms
             ->icon('untitledui-edit-03')
             ->action(fn (array $arguments) => $this->dispatch(
                 'openPanel',
-                component: 'shopper-slide-overs.zone-form',
-                arguments: ['zoneId' => $arguments['id']]
+                component: 'shopper-slide-overs.shipping-option-form',
+                arguments: ['zoneId' => $arguments['zone_id'], 'optionId' => $arguments['option_id']]
             ));
-    }
-
-    public function placeholder(): View
-    {
-        return view('shopper::placeholders.detail-zone');
     }
 
     public function render(): View
     {
-        return view('shopper::livewire.components.settings.zones.detail');
+        return view('shopper::livewire.components.settings.zones.shipping-options');
     }
 }

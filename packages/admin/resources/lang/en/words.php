@@ -139,7 +139,7 @@ return [
         'slug' => 'SEO',
         'description' => 'Improve your ranking and how your :name page will appear in search engines results.',
         'sub_description' => 'Here is a preview of what an search engine can display, play with it!',
-        'characters' => '160 characters',
+        'characters' => '160 characters', // to replace in blade file
     ],
 
     'other' => ' other(s)',
@@ -148,5 +148,6 @@ return [
     'amount' => 'Amount',
     'soon' => 'Soon',
     'learn_more' => 'Learn more about',
+    'characters' => ':number characters',
 
 ];

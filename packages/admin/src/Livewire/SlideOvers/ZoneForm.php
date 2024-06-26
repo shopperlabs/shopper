@@ -75,7 +75,7 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label(__('shopper::forms.label.name'))
-                            ->placeholder('Afrique')
+                            ->placeholder('Africa')
                             ->required()
                             ->live(onBlur: true)
                             ->afterStateUpdated(function ($state, Forms\Set $set): void {
@@ -177,11 +177,11 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
         $this->zone->paymentMethods()->sync($data['payments']);
 
         Notification::make()
-            ->title(__('shopper::notifications.actions.save', ['item' => $this->zone->name]))
+            ->title(__('shopper::notifications.save', ['item' => $this->zone->name]))
             ->success()
             ->send();
 
-        $this->dispatch('refreshZones');
+        $this->dispatch('refresh-zones');
 
         $this->closePanel();
     }
