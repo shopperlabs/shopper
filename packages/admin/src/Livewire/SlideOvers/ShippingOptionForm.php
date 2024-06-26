@@ -14,7 +14,6 @@ use Shopper\Components\Separator;
 use Shopper\Contracts\SlideOverForm;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
-use Shopper\Livewire\Components\Settings\Zones\ZoneShippingOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\InteractsWithSlideOverForm;
 
