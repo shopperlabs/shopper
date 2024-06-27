@@ -117,20 +117,18 @@
                         {{ __('shopper::pages/dashboard.cards.product_description') }}
                     </div>
 
-                    @if (\Shopper\Feature::enabled('product'))
-                        @can('add_products')
-                            <x-shopper::link href="{{ route('shopper.products.create') }}" class="group">
-                                <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
-                                    <span>{{ __('shopper::pages/dashboard.cards.product_link') }}</span>
-                                    <span
-                                        class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
-                                    >
+                    @can('add_products')
+                        <x-shopper::link href="{{ route('shopper.products.create') }}" class="group">
+                            <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
+                                <span>{{ __('shopper::pages/dashboard.cards.product_link') }}</span>
+                                <span
+                                    class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
+                                >
                                         <x-untitledui-arrow-right class="h-5 w-5" aria-hidden="true" />
                                     </span>
-                                </div>
-                            </x-shopper::link>
-                        @endcan
-                    @endif
+                            </div>
+                        </x-shopper::link>
+                    @endcan
                 </div>
             </div>
         </div>

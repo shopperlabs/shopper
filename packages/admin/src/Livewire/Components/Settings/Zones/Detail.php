@@ -24,7 +24,7 @@ class Detail extends Component implements HasActions, HasForms
 
     public ?Zone $zone = null;
 
-    #[On('zoneRefresh')]
+    #[On('refresh-zone')]
     public function mount(?int $currentZoneId = null): void
     {
         $this->zone = Zone::with([
@@ -32,6 +32,7 @@ class Detail extends Component implements HasActions, HasForms
             'currency',
             'carriers',
             'paymentMethods',
+            'shippingOptions',
         ])->find($currentZoneId);
     }
 
@@ -41,11 +42,11 @@ class Detail extends Component implements HasActions, HasForms
             ->record($this->zone)
             ->icon('untitledui-trash-03')
             ->iconButton()
-            ->successNotificationTitle(__('shopper::notifications.actions.remove', ['item' => 'zone']))
+            ->successNotificationTitle(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/zones.single')]))
             ->after(function (): void {
                 $this->reset('zone');
 
-                $this->dispatch('refreshZones');
+                $this->dispatch('refresh-zones');
             });
     }
 

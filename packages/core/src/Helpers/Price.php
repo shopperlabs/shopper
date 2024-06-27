@@ -12,11 +12,11 @@ final class Price
 
     public string $currency;
 
-    public function __construct(int | float $cent)
+    public function __construct(int | float $cent, ?string $currency = null)
     {
         $this->value = $cent;
-        $this->currency = shopper_currency();
-        $this->formatted = shopper_money_format(amount: $this->value);
+        $this->currency = $currency ?? shopper_currency();
+        $this->formatted = shopper_money_format(amount: $this->value, currency: $this->currency);
     }
 
     public static function from(int | float $cent): self

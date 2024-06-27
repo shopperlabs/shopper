@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Traits\HasSlug;
 
@@ -23,6 +24,9 @@ use Shopper\Core\Traits\HasSlug;
  * @property string $carriers_name
  * @property string $countries_name
  * @property string $payments_name
+ * @property \Shopper\Core\Models\Currency $currency
+ * @property \Illuminate\Database\Eloquent\Collection $carriers
+ * @property \Illuminate\Database\Eloquent\Collection $shippingOptions
  */
 class Zone extends Model
 {
@@ -109,5 +113,10 @@ class Zone extends Model
     public function carriers(): MorphToMany
     {
         return $this->morphedByMany(Carrier::class, 'zonable', shopper_table('zone_has_relations'));
+    }
+
+    public function shippingOptions(): HasMany
+    {
+        return $this->hasMany(CarrierOption::class);
     }
 }

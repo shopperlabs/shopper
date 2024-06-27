@@ -1,4 +1,4 @@
-<div>
+<div class="space-y-10">
     @if ($zone)
         <x-shopper::card class="divide-y divide-gray-200 dark:divide-gray-700">
             <div class="flex items-center justify-between p-4 lg:p-5">
@@ -13,7 +13,7 @@
                 </div>
                 <div class="flex items-center space-x-3 pl-4">
                     {{ ($this->editAction)(['id' => $zone->id]) }}
-                    {{ $this->deleteAction }}
+                    {{ ($this->deleteAction)(['id' => $zone->id]) }}
                 </div>
             </div>
             <div class="p-4 lg:p-5">
@@ -38,7 +38,7 @@
                         :heading="__('shopper::pages/settings/carriers.title')"
                         :content="$zone->carriers_name"
                     />
-                    <div class="lg:col-span-2">
+                    <div class="lg:col-span-2" wire:ignore>
                         <x-shopper::description-list.item icon="untitledui-brackets" heading="Metadata">
                             <x-shopper::code-preview
                                 :code="$zone->metadata"
@@ -53,12 +53,14 @@
                 </div>
             </div>
         </x-shopper::card>
+
+        <livewire:shopper-settings.zones.shipping-options :$zone />
     @else
         <x-shopper::card>
             <x-shopper::empty-card
                 icon="untitledui-globe-05"
-                :heading="__('Aucune zone sélectionner')"
-                :description="__('Veuillez sélectionner une zone pour avoir plus de détails')"
+                :heading="__('shopper::pages/settings/zones.empty_detail_heading')"
+                :description="__('shopper::pages/settings/zones.empty_detail_description')"
             />
         </x-shopper::card>
     @endif

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Traits\HasSlug;
 
 /**
@@ -21,6 +23,7 @@ use Shopper\Core\Traits\HasSlug;
  */
 class Carrier extends Model
 {
+    use HasFactory;
     use HasSlug;
 
     protected $fillable = [
@@ -47,5 +50,10 @@ class Carrier extends Model
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
+    }
+
+    public function options(): HasMany
+    {
+        return $this->hasMany(CarrierOption::class);
     }
 }
