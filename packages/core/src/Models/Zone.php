@@ -27,6 +27,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property \Shopper\Core\Models\Currency $currency
  * @property \Illuminate\Database\Eloquent\Collection $carriers
  * @property \Illuminate\Database\Eloquent\Collection $shippingOptions
+ * @property \Illuminate\Database\Eloquent\Collection $paymentMethods
  */
 class Zone extends Model
 {

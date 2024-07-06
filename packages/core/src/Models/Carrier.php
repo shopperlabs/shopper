@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Traits\HasSlug;
+use Shopper\Core\Traits\HasZones;
 
 /**
  * @property-read int $id
@@ -25,6 +26,7 @@ class Carrier extends Model
 {
     use HasFactory;
     use HasSlug;
+    use HasZones;
 
     protected $fillable = [
         'name',
