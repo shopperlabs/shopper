@@ -7,7 +7,7 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Shopper\Core\Traits\HasZones;
 
 /**
  * @property-read int $id
@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class Country extends Model
 {
     use HasFactory;
+    use HasZones;
 
     public $timestamps = false;
 
@@ -63,10 +64,5 @@ class Country extends Model
         return Attribute::get(
             fn () => url(shopper()->prefix() . '/images/flags/' . mb_strtolower($this->cca2) . '.svg')
         );
-    }
-
-    public function zone(): MorphOne
-    {
-        return $this->morphOne(ZoneRelation::class, 'zonable');
     }
 }

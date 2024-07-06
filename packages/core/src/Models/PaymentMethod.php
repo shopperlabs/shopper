@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Traits\HasSlug;
+use Shopper\Core\Traits\HasZones;
 
 /**
  * @property-read int $id
@@ -21,6 +23,7 @@ class PaymentMethod extends Model
 {
     use HasFactory;
     use HasSlug;
+    use HasZones;
 
     protected $guarded = [];
 
@@ -37,13 +40,11 @@ class PaymentMethod extends Model
         return shopper_table('payment_methods');
     }
 
-    public function getLogoUrlAttribute(): ?string
+    public function LogoUrl(): ?Attribute
     {
-        if ($this->logo) {
-            return shopper_asset($this->logo);
-        }
-
-        return null;
+        return Attribute::make(
+            get: fn () => $this->logo ? shopper_asset($this->logo) : null,
+        );
     }
 
     public function scopeEnabled(Builder $query): Builder
