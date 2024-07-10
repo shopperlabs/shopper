@@ -22,6 +22,7 @@
 
 > [!CAUTION]
 > This branch is Work In Progress and should not be considered production-ready.
+> Please do not upgrade from v1. A guide will be available for that
 
 ## Introduction
 

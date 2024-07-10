@@ -20,12 +20,12 @@ use Shopper\Core\Traits\HasPrice;
  * @property string $number
  * @property int $price_amount
  * @property string $notes
- * @property string $currency
+ * @property string $currency_code
  * @property string $shipping_method
  * @property int | null $user_id
  * @property \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
  * @property OrderStatus $status
- * @property int $shipping_total
+ * @property CarrierOption $shippingOption
  */
 class Order extends Model
 {
@@ -65,7 +65,7 @@ class Order extends Model
     public function totalAmount(): Attribute
     {
         return Attribute::get(
-            fn () => $this->formattedPrice($this->total())
+            fn () => $this->formattedPrice($this->total(), $this->currency_code)
         );
     }
 
@@ -104,19 +104,19 @@ class Order extends Model
         return $this->status === OrderStatus::Completed;
     }
 
-    public function fullPriceWithShipping(): int
-    {
-        return $this->total() + $this->shipping_total;
-    }
-
     public function shippingAddress(): BelongsTo
     {
-        return $this->belongsTo(Address::class, 'shipping_address_id');
+        return $this->belongsTo(OrderAddress::class, 'shipping_address_id');
+    }
+
+    public function billingAddress(): BelongsTo
+    {
+        return $this->belongsTo(OrderAddress::class, 'billing_address_id');
     }
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
+        return $this->belongsTo(config('auth.providers.users.model', User::class), 'customer_id');
     }
 
     public function paymentMethod(): BelongsTo
@@ -132,6 +132,11 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function shippingOption(): BelongsTo
+    {
+        return $this->belongsTo(CarrierOption::class, 'shipping_option_id');
     }
 
     protected function setDefaultOrderStatus(): void
