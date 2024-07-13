@@ -6,6 +6,4 @@ namespace Shopper\Exceptions;
 
 use Exception;
 
-final class InvalidEmailException extends Exception
-{
-}
+final class InvalidEmailException extends Exception {}

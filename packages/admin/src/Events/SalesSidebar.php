@@ -16,7 +16,7 @@ class SalesSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {
-        $count = Order::query()->where('status', OrderStatus::Pending->value)->count();
+        $count = Order::query()->where('status', OrderStatus::Pending())->count();
 
         $menu->group(__('shopper::layout.sidebar.sales'), function (Group $group) use ($count): void {
             $group->weight(3);

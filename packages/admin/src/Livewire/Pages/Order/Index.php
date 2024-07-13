@@ -11,6 +11,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Models\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -27,27 +28,71 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Order::query()->with('customer'))
+            ->query(
+                Order::query()->with([
+                    'customer',
+                    'items',
+                    'zone',
+                ])
+            )
             ->columns([
                 Tables\Columns\TextColumn::make('number')
+                    ->label('#')
                     ->searchable()
+                    ->extraAttributes(['class' => 'uppercase'])
                     ->sortable(),
-
-                Tables\Columns\TextColumn::make('status')
-                    ->badge(),
-
-                Tables\Columns\TextColumn::make('customer.first_name')
-                    ->searchable()
-                    ->sortable()
-                    ->formatStateUsing(fn (Order $record): string => $record->customer->full_name)
-                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('shopper::words.date'))
                     ->date()
                     ->toggleable(),
+
+                Tables\Columns\TextColumn::make('status')
+                    ->label(__('shopper::forms.label.status'))
+                    ->badge(),
+
+                Tables\Columns\TextColumn::make('customer.first_name')
+                    ->label(__('shopper::words.customer'))
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn (Model $model): View => view(
+                        'shopper::livewire.tables.cells.orders.customer',
+                        ['order' => $model->load('customer'),
+                        ]
+                    ))
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('id')
+                    ->label(__('shopper::words.purchased'))
+                    ->formatStateUsing(fn (Model $model): View => view(
+                        'shopper::livewire.tables.cells.orders.purchased',
+                        ['order' => $model->load('items'),
+                        ]
+                    )),
+
+                Tables\Columns\TextColumn::make('currency_code')
+                    ->label(__('shopper::forms.label.price_amount'))
+                    ->formatStateUsing(
+                        fn ($state, Order $record): string => shopper_money_format($record->total(), $state)
+                    ),
+
+                Tables\Columns\TextColumn::make('zone.name')
+                    ->label(__('shopper::pages/settings/zones.single'))
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
-            ->actions([])
+            ->actions([
+                Tables\Actions\Action::make('view')
+                    ->label(__('shopper::words.details'))
+                    ->url(
+                        fn (Order $record): string => route(
+                            name: 'shopper.orders.detail',
+                            parameters: ['order' => $record]
+                        ),
+                    ),
+            ])
             ->filters([]);
     }
 

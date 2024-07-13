@@ -10,9 +10,7 @@ use Shopper\Sidebar\Exceptions\LogicException;
 
 final class ContainerResolver implements SidebarResolver
 {
-    public function __construct(protected Container $container)
-    {
-    }
+    public function __construct(protected Container $container) {}
 
     public function resolve(string $name): Sidebar
     {

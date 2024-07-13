@@ -12,8 +12,7 @@ final class FlushesSidebarCache
     public function __construct(
         protected Container $container,
         protected SidebarManager $manager
-    ) {
-    }
+    ) {}
 
     public function handle(): void
     {

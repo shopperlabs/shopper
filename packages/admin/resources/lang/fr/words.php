@@ -17,6 +17,7 @@ return [
     'not_available' => 'Indisponible',
     'available' => 'Disponible',
     'stock' => 'Stock',
+    'customer' => 'Client',
 
     'payment_method' => 'Moyen de paiement',
     'shipping_method' => 'Mode de livraison',
@@ -98,6 +99,7 @@ return [
         'twitter' => 'Twitter',
     ],
 
+    'details' => 'Afficher',
     'view_details' => 'Voir les détails',
     'registered_on' => 'Enregistré le',
     'full' => 'Complet',
@@ -149,5 +151,6 @@ return [
     'soon' => 'Bientôt',
     'learn_more' => 'En savoir plus',
     'characters' => ':number caractères',
+    'number_more' => ':number autre(s)',
 
 ];

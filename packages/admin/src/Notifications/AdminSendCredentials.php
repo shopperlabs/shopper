@@ -9,9 +9,7 @@ use Illuminate\Notifications\Notification;
 
 final class AdminSendCredentials extends Notification
 {
-    public function __construct(public string $password)
-    {
-    }
+    public function __construct(public string $password) {}
 
     public function via($notifiable): array
     {

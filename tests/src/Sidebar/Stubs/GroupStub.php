@@ -7,6 +7,4 @@ namespace Shopper\Tests\Sidebar\Stubs;
 use Shopper\Sidebar\Contracts\Builder\Group;
 use Shopper\Sidebar\Domain\DefaultGroup;
 
-final class GroupStub extends DefaultGroup implements Group
-{
-}
+final class GroupStub extends DefaultGroup implements Group {}

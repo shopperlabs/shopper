@@ -11,7 +11,5 @@ class Cancel
 {
     use SerializesModels;
 
-    public function __construct(public Order $order)
-    {
-    }
+    public function __construct(public Order $order) {}
 }

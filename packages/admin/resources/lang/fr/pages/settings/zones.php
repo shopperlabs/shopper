@@ -5,7 +5,7 @@ declare(strict_types=1);
 return [
 
     'title' => 'Zones',
-    'single' => 'zone',
+    'single' => 'Zone',
     'description' => 'Les zones représentent les marchés sur lesquels vous allez opérer.',
     'add_action' => 'Ajouter une zone',
     'empty_heading' => 'Aucunes zones',

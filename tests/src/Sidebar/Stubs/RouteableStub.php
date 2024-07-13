@@ -11,7 +11,5 @@ final class RouteableStub
 {
     use RouteableTrait;
 
-    public function __construct(private Container $container)
-    {
-    }
+    public function __construct(private Container $container) {}
 }

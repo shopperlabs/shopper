@@ -6,6 +6,4 @@ namespace Shopper\Sidebar\Exceptions;
 
 use Exception;
 
-final class CacheTagsNotSupported extends Exception
-{
-}
+final class CacheTagsNotSupported extends Exception {}

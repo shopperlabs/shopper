@@ -21,11 +21,19 @@ use Shopper\Core\Traits\HasPrice;
  * @property int $price_amount
  * @property string $notes
  * @property string $currency_code
- * @property string $shipping_method
- * @property int | null $user_id
+ * @property int | null $zone_id
+ * @property int | null $shipping_address_id
+ * @property int | null $payment_method_id
+ * @property int | null $billing_address_id
+ * @property int | null $customer_id
  * @property \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
  * @property OrderStatus $status
+ * @property \Illuminate\Foundation\Auth\User | User $customer
  * @property CarrierOption $shippingOption
+ * @property OrderAddress | null $shippingAddress
+ * @property OrderAddress | null $billingAddress
+ * @property PaymentMethod | null $paymentMethod
+ * @property Zone | null $zone
  */
 class Order extends Model
 {
@@ -76,12 +84,12 @@ class Order extends Model
 
     public function canBeCancelled(): bool
     {
-        return ! ($this->status === OrderStatus::Completed || $this->status === OrderStatus::New);
+        return $this->status === OrderStatus::Completed || $this->status === OrderStatus::New;
     }
 
     public function isNotCancelled(): bool
     {
-        return ! ($this->status === OrderStatus::Cancelled);
+        return $this->status !== OrderStatus::Cancelled;
     }
 
     public function isPending(): bool
@@ -104,6 +112,11 @@ class Order extends Model
         return $this->status === OrderStatus::Completed;
     }
 
+    public function isPaid(): bool
+    {
+        return $this->status === OrderStatus::Paid;
+    }
+
     public function shippingAddress(): BelongsTo
     {
         return $this->belongsTo(OrderAddress::class, 'shipping_address_id');
@@ -122,6 +135,11 @@ class Order extends Model
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    public function zone(): BelongsTo
+    {
+        return $this->belongsTo(Zone::class, 'zone_id');
     }
 
     public function refund(): HasOne

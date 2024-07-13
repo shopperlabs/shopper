@@ -124,8 +124,8 @@
                                 <span
                                     class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
                                 >
-                                        <x-untitledui-arrow-right class="h-5 w-5" aria-hidden="true" />
-                                    </span>
+                                    <x-untitledui-arrow-right class="h-5 w-5" aria-hidden="true" />
+                                </span>
                             </div>
                         </x-shopper::link>
                     @endcan

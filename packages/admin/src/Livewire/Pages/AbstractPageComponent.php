@@ -8,6 +8,4 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout(name: 'shopper::components.layouts.app')]
-abstract class AbstractPageComponent extends Component
-{
-}
+abstract class AbstractPageComponent extends Component {}

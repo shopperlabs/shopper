@@ -12,7 +12,7 @@ use NumberFormatter;
 
 trait HasPrice
 {
-    public function formattedPrice(int | string $price, string $currencyCode = null): string
+    public function formattedPrice(int | string $price, ?string $currencyCode = null): string
     {
         $money = new Money(
             amount: $price,

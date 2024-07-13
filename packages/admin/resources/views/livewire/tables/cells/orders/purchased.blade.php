@@ -1,11 +1,23 @@
-@if ($row->items_count === 1)
-    <span class="font-medium text-gray-700 dark:text-gray-300">
-        {{ $row->items->first()->name }}
-    </span>
-@endif
+@php
+    $firstItem = $order->items->first();
+@endphp
 
-@if ($row->items_count > 1)
-    <span class="font-medium text-gray-700 dark:text-gray-300">
-        {{ $row->items->first()->name }} + {{ __(':number more', ['number' => $row->items_count - 1]) }}
-    </span>
-@endif
+<div class="flex items-center gap-2">
+    <img
+        class="h-8 w-8 rounded-full object-cover"
+        src="{{ $firstItem->product->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
+        alt="Avatar {{ $firstItem->product->name }}"
+    />
+
+    @if ($order->items->count() === 1)
+        <span class="font-medium text-gray-700 dark:text-gray-300">
+            {{ $firstItem->name }}
+        </span>
+    @endif
+
+    @if ($order->items->count() > 1)
+        <span class="font-medium text-gray-700 dark:text-gray-300">
+            {{ $firstItem->name }} + {{ __('shopper::words.number_more', ['number' => $order->items->count() - 1]) }}
+        </span>
+    @endif
+</div>

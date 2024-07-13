@@ -1,31 +1,31 @@
 .sidebar {
-    @apply space-y-5;
+  @apply space-y-5;
 }
 
 .sh-heading {
-    @apply mb-2 ml-3 text-xs font-medium uppercase leading-5 tracking-wider text-gray-500 dark:text-gray-400;
+  @apply mb-2 ml-3 text-xs font-medium uppercase leading-5 tracking-wider text-gray-500 dark:text-gray-400;
 }
 
 .sh-sidebar-item {
-    @apply flex items-center rounded-lg px-3 py-2 text-sm font-medium transition duration-150 ease-in-out;
+  @apply flex items-center rounded-lg px-3 py-2 text-sm font-medium transition duration-150 ease-in-out;
 }
 
 .sh-sidebar-item-active {
-    @apply bg-white text-primary-600 shadow-sm ring-1 ring-inset ring-gray-200 dark:bg-gray-800 dark:text-primary-500 dark:ring-gray-700;
+  @apply bg-white text-primary-600 shadow-sm ring-1 ring-inset ring-gray-200 dark:bg-gray-800 dark:text-primary-500 dark:ring-gray-700;
 }
 
 .sh-sidebar-item-inactive {
-    @apply text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white;
+  @apply text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white;
 }
 
 .item-name {
-    @apply flex-1 truncate;
+  @apply flex-1 truncate;
 }
 
 .submenu {
-    @apply my-3 ml-5 hidden space-y-2 border-l border-gray-200 py-2.5 dark:border-gray-800 lg:space-y-3;
+  @apply my-3 ml-5 hidden space-y-2 border-l border-gray-200 py-2.5 dark:border-gray-800 lg:space-y-3;
 }
 
 .current-group .submenu {
-    @apply block;
+  @apply block;
 }

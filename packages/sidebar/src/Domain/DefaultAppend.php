@@ -34,9 +34,7 @@ class DefaultAppend implements Append, Serializable
         'type',
     ];
 
-    public function __construct(protected Container $container)
-    {
-    }
+    public function __construct(protected Container $container) {}
 
     public function getName(): string
     {

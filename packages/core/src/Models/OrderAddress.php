@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,15 +12,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property-read int $id
- * @protected string $last_name
- * @protected string $first_name
- * @protected string $street_address
- * @protected string | null $street_address_plus
- * @protected string $postal_code
- * @protected string $city
- * @protected string | null $company
- * @protected string | null $phone
- * @protected string | null $country_name
+ * @property string $last_name
+ * @property string $first_name
+ * @property string $full_name
+ * @property string $street_address
+ * @property string | null $street_address_plus
+ * @property string $postal_code
+ * @property string $city
+ * @property string | null $company
+ * @property string | null $phone
+ * @property string | null $country_name
  */
 class OrderAddress extends Model
 {
@@ -41,6 +43,15 @@ class OrderAddress extends Model
     public function getTable(): string
     {
         return shopper_table('order_addresses');
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->first_name
+                ? $this->first_name . ' ' . $this->last_name
+                : $this->last_name
+        );
     }
 
     public function orders(): HasMany

@@ -13,12 +13,16 @@ return [
 
     'no_shipping_method' => "Cette commande n'a pas de méthode d'expédition",
     'read_about_shipping' => 'En savoir plus sur la livraison',
+    'no_payment_method' => "Cette commande n'a pas de méthode de paiement connue",
+    'read_about_payment' => 'En savoir plus sur les méthodes de paiement',
     'payment_actions' => 'Actions de paiement',
     'send_invoice' => 'Envoyer la facture',
     'private_notes' => 'Notes privées',
     'customer_date' => 'Client depuis :date',
-    'customer_orders' => 'Ce client a déjà passé :number commande(s)',
+    'customer_orders' => 'il a déjà passé :number commande(s)',
     'customer_infos' => 'Informations du client',
+    'customer_infos_empty' => 'Aucune informations disponible à propos de ce client',
+    'no_customer' => 'Customer not available',
 
     'modals' => [
         'archived_number' => 'Archivé la commande :number',

@@ -8,14 +8,9 @@ use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\Order;
 
-class ArchiveOrder extends ModalComponent
+final class ArchiveOrder extends ModalComponent
 {
     public Order $order;
-
-    public function mount(int $id): void
-    {
-        $this->order = Order::find($id);
-    }
 
     public function archived(): void
     {
@@ -23,12 +18,12 @@ class ArchiveOrder extends ModalComponent
 
         session()->flash('success', __('shopper::notifications.orders.archived'));
 
-        $this->redirectRoute('shopper.orders.index');
+        $this->redirectRoute('shopper.orders.index', navigate: true);
     }
 
     public static function modalMaxWidth(): string
     {
-        return 'lg';
+        return 'xl';
     }
 
     public function render(): View
