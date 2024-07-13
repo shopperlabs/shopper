@@ -6,6 +6,4 @@ namespace Shopper\Components\Wizard;
 
 use Filament\Forms\Components\Wizard\Step;
 
-class StepColumn extends Step
-{
-}
+class StepColumn extends Step {}

@@ -16,8 +16,7 @@ final class UserBasedCacheResolver implements SidebarResolver
         protected Cache $cache,
         protected Guard $guard,
         protected Config $config
-    ) {
-    }
+    ) {}
 
     public function resolve(string $name): Sidebar
     {

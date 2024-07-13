@@ -8,7 +8,5 @@ use Shopper\Sidebar\Infrastructure\SidebarFlusher;
 
 final class NullSidebarFlusher implements SidebarFlusher
 {
-    public function flush(string $name): void
-    {
-    }
+    public function flush(string $name): void {}
 }

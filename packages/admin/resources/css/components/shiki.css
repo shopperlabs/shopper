@@ -1,5 +1,5 @@
 .shiki {
-  @apply p-4 !bg-gray-50;
+  @apply !bg-gray-50 p-4;
 }
 
 html.dark .shiki,

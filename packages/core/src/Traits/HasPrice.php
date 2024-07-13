@@ -12,11 +12,13 @@ use NumberFormatter;
 
 trait HasPrice
 {
-    public function formattedPrice(int | string $price): string
+    public function formattedPrice(int | string $price, ?string $currencyCode = null): string
     {
         $money = new Money(
             amount: $price,
-            currency: new Currency(shopper_currency())
+            currency: new Currency(
+                code: $currencyCode ?? shopper_currency()
+            )
         );
 
         $numberFormatter = new NumberFormatter(app()->getLocale(), NumberFormatter::CURRENCY);

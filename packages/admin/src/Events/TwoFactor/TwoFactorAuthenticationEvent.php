@@ -10,7 +10,5 @@ abstract class TwoFactorAuthenticationEvent
 {
     use Dispatchable;
 
-    public function __construct(public $user)
-    {
-    }
+    public function __construct(public $user) {}
 }

@@ -9,9 +9,7 @@ use Shopper\Contracts\TwoFactorAuthenticationProvider as TwoFactorAuthentication
 
 final class TwoFactorAuthenticationProvider implements TwoFactorAuthenticationProviderContract
 {
-    public function __construct(protected Google2FA $engine)
-    {
-    }
+    public function __construct(protected Google2FA $engine) {}
 
     public function generateSecretKey(): string
     {

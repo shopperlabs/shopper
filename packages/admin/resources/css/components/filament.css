@@ -1,49 +1,49 @@
 .fi-modal-close-overlay {
-    @apply backdrop-blur-sm;
+  @apply backdrop-blur-sm;
 }
 
 @keyframes shaking {
-    0% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(5px);
-    }
-    50% {
-        transform: translateX(-5px);
-    }
-    75% {
-        transform: translateX(5px);
-    }
-    100% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .horizontal-shake {
-    animation: shaking 0.35s normal;
-    animation-iteration-count: 1;
+  animation: shaking 0.35s normal;
+  animation-iteration-count: 1;
 }
 
 @layer components {
-    .filament-icon-picker .choices > .choices__list {
-        @apply px-2;
-    }
+  .filament-icon-picker .choices > .choices__list {
+    @apply px-2;
+  }
 
-    .filament-icon-picker .choices > .choices__inner > .choices__list.choices__list--single {
-        @apply w-full;
-    }
+  .filament-icon-picker .choices > .choices__inner > .choices__list.choices__list--single {
+    @apply w-full;
+  }
 
-    .filament-icon-picker .choices > .choices__list .choices__list {
-        @apply gap-2 pb-2;
-    }
+  .filament-icon-picker .choices > .choices__list .choices__list {
+    @apply gap-2 pb-2;
+  }
 
-    .filament-icon-picker .choices > .choices__list .choices__list {
-        @apply grid;
-    }
+  .filament-icon-picker .choices > .choices__list .choices__list {
+    @apply grid;
+  }
 }
 .filament-icon-picker .choices > .choices__list .choices__list .choices__item.has-no-choices,
 .filament-icon-picker .choices > .choices__list .choices__list .choices__item.has-no-results,
 .filament-icon-picker .choices > .choices__list .choices__list .choices__item.choices__item--disabled {
-    @apply col-span-full;
+  @apply col-span-full;
 }

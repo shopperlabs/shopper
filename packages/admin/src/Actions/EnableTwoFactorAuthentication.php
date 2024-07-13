@@ -10,9 +10,7 @@ use Shopper\Events\TwoFactor\TwoFactorAuthenticationEnabled;
 
 class EnableTwoFactorAuthentication
 {
-    public function __construct(protected TwoFactorAuthenticationProvider $provider)
-    {
-    }
+    public function __construct(protected TwoFactorAuthenticationProvider $provider) {}
 
     public function __invoke($user): void
     {

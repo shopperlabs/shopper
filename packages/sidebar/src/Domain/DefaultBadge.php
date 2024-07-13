@@ -24,9 +24,7 @@ class DefaultBadge implements Badge, Serializable
         'class',
     ];
 
-    public function __construct(protected Container $container)
-    {
-    }
+    public function __construct(protected Container $container) {}
 
     public function getValue(): mixed
     {

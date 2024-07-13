@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Pages\Order;
 
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\WithPagination;
@@ -13,12 +18,13 @@ use Shopper\Core\Events\Orders\Cancel;
 use Shopper\Core\Events\Orders\Completed;
 use Shopper\Core\Events\Orders\Paid;
 use Shopper\Core\Events\Orders\Registered;
-use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
-class Detail extends AbstractPageComponent
+class Detail extends AbstractPageComponent implements HasActions, HasForms
 {
+    use InteractsWithActions;
+    use InteractsWithForms;
     use WithPagination;
 
     public Order $order;
@@ -34,19 +40,7 @@ class Detail extends AbstractPageComponent
 
     public function goToOrder(int $id): void
     {
-        $this->redirectRoute('shopper.orders.show', $id);
-    }
-
-    public function cancelOrder(): void
-    {
-        $this->order->update(['status' => OrderStatus::CANCELLED->value]);
-
-        event(new Cancel($this->order));
-
-        Notification::make()
-            ->body(__('shopper::pages/orders.notifications.cancelled'))
-            ->success()
-            ->send();
+        $this->redirectRoute('shopper.orders.detail', $id, navigate: true);
     }
 
     public function leaveNotes(): void
@@ -63,45 +57,77 @@ class Detail extends AbstractPageComponent
             ->send();
     }
 
-    public function register(): void
+    public function cancelOrderAction(): Action
     {
-        $this->order->update(['status' => OrderStatus::REGISTER->value]);
+        return Action::make('cancel_order')
+            ->label(__('shopper::forms.actions.cancel_order'))
+            ->visible($this->order->canBeCancelled())
+            ->action(function (): void {
+                $this->order->update(['status' => OrderStatus::Cancelled()]);
 
-        event(new Registered($this->order));
+                event(new Cancel($this->order));
 
-        Notification::make()
-            ->body(__('shopper::pages/orders.notifications.registered'))
-            ->success()
-            ->send();
+                Notification::make()
+                    ->body(__('shopper::pages/orders.notifications.cancelled'))
+                    ->success()
+                    ->send();
+            });
     }
 
-    public function markPaid(): void
+    public function registerAction(): Action
     {
-        $this->order->update(['status' => OrderStatus::PAID->value]);
+        return Action::make('register')
+            ->label(__('shopper-core::status.registered'))
+            ->visible($this->order->isPending())
+            ->action(function (): void {
+                $this->order->update(['status' => OrderStatus::Register()]);
 
-        event(new Paid($this->order));
+                event(new Registered($this->order));
 
-        Notification::make()
-            ->body(__('shopper::pages/orders.notifications.paid'))
-            ->success()
-            ->send();
+                Notification::make()
+                    ->body(__('shopper::pages/orders.notifications.registered'))
+                    ->success()
+                    ->send();
+            });
     }
 
-    public function markComplete(): void
+    public function markPaidAction(): Action
     {
-        $this->order->update(['status' => OrderStatus::COMPLETED->value]);
+        return Action::make('mark_paid')
+            ->label(__('shopper::forms.actions.mark_paid'))
+            ->visible($this->order->isPending() || $this->order->isRegister())
+            ->action(function (): void {
+                $this->order->update(['status' => OrderStatus::Paid()]);
 
-        event(new Completed($this->order));
+                event(new Paid($this->order));
 
-        Notification::make()
-            ->body(__('shopper::pages/orders.notifications.completed'))
-            ->success()
-            ->send();
+                Notification::make()
+                    ->body(__('shopper::pages/orders.notifications.paid'))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    public function markCompleteAction(): Action
+    {
+        return Action::make('mark_complete')
+            ->label(__('shopper::forms.actions.mark_complete'))
+            ->visible($this->order->isPaid())
+            ->action(function (): void {
+                $this->order->update(['status' => OrderStatus::Completed()]);
+
+                event(new Completed($this->order));
+
+                Notification::make()
+                    ->body(__('shopper::pages/orders.notifications.completed'))
+                    ->success()
+                    ->send();
+            });
     }
 
     public function render(): View
     {
-        return view('shopper::livewire.orders.show', [
+        return view('shopper::livewire.pages.orders.detail', [
             'items' => $this->order
                 ->items()
                 ->with('product')
@@ -109,16 +135,14 @@ class Detail extends AbstractPageComponent
             'nextOrder' => Order::query()
                 ->where('id', '>', $this->order->id)
                 ->oldest('id')
-                ->first() ?? null,
+                ->first(),
             'prevOrder' => Order::query()
                 ->where('id', '<', $this->order->id)
                 ->latest('id')
-                ->first() ?? null,
-            'billingAddress' => Address::query()
-                ->where('user_id', $this->order->customer->id)
-                ->where('type', Address::TYPE_BILLING)
-                ->where('is_default', true)
                 ->first(),
+            'billingAddress' => $this->order->billingAddress->load('customer'),
+            'shippingAddress' => $this->order->shippingAddress->load('customer'),
+            'shippingOption' => $this->order->shippingOption,
         ])
             ->title(__('shopper::pages/orders.show_title', ['number' => $this->order->number]));
     }

@@ -25,8 +25,7 @@ class DiscountCustomersJobs implements ShouldQueue
         public string $eligibility,
         public array $customersIds,
         public Discount $discount
-    ) {
-    }
+    ) {}
 
     public function handle(): void
     {

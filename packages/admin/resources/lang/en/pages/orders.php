@@ -13,12 +13,16 @@ return [
 
     'no_shipping_method' => "This order don't have a shipping method",
     'read_about_shipping' => 'Read more about shipping',
+    'no_payment_method' => "This order don't have a payment method",
+    'read_about_payment' => 'Read more about payment method',
     'payment_actions' => 'Payment actions',
     'send_invoice' => 'Send invoice',
     'private_notes' => 'Private notes',
     'customer_date' => 'Customer since :date',
-    'customer_orders' => 'This customer has already placed :number order(s)',
+    'customer_orders' => 'has already placed :number order(s)',
     'customer_infos' => 'Contact Information',
+    'customer_infos_empty' => 'No information available for this customer',
+    'no_customer' => 'Client inconnu',
 
     'modals' => [
         'archived_number' => 'Archived order :number',

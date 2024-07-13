@@ -6,6 +6,4 @@ namespace Shopper\Sidebar\Exceptions;
 
 use Exception;
 
-final class SidebarFlusherNotSupported extends Exception
-{
-}
+final class SidebarFlusherNotSupported extends Exception {}

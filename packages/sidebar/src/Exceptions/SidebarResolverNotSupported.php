@@ -6,6 +6,4 @@ namespace Shopper\Sidebar\Exceptions;
 
 use Exception;
 
-final class SidebarResolverNotSupported extends Exception
-{
-}
+final class SidebarResolverNotSupported extends Exception {}

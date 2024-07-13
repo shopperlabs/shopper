@@ -16,8 +16,7 @@ class SidebarManager
     public function __construct(
         protected Container $container,
         protected SidebarResolver $resolver
-    ) {
-    }
+    ) {}
 
     public function register(string $name): self
     {

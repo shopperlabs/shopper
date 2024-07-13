@@ -10,9 +10,7 @@ use Shopper\Sidebar\SidebarManager;
 
 class ResolveSidebars
 {
-    public function __construct(protected SidebarManager $sidebarManager)
-    {
-    }
+    public function __construct(protected SidebarManager $sidebarManager) {}
 
     public function handle(Request $request, Closure $next)
     {

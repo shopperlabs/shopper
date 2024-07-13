@@ -10,7 +10,5 @@ class Updated
 {
     use SerializesModels;
 
-    public function __construct(public $product)
-    {
-    }
+    public function __construct(public $product) {}
 }
