@@ -133,13 +133,11 @@
                                     <div class="flex items-start">
                                         <div class="flex min-w-0 flex-1 items-center">
                                             <div class="shrink-0">
-                                                <div class="h-10 w-10 shrink-0">
-                                                    <img
-                                                        class="h-10 w-10 rounded-lg object-cover"
-                                                        src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
-                                                        alt="{{ $item->name }}"
-                                                    />
-                                                </div>
+                                                <img
+                                                    class="h-10 w-10 rounded-lg object-cover"
+                                                    src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
+                                                    alt="{{ $item->name }}"
+                                                />
                                             </div>
                                             <div class="min-w-0 flex-1 px-4 lg:grid lg:grid-cols-4 lg:gap-4">
                                                 <div class="lg:col-span-2">
@@ -196,7 +194,7 @@
                     <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::words.payment_method') }}
                     </h3>
-                    @if($order->paymentMethod)
+                    @if ($order->paymentMethod)
                         <div class="flex py-4">
                             @if ($order->paymentMethod->logo)
                                 <img
@@ -241,7 +239,7 @@
                                         <a
                                             href="https://laravelshopper.dev/docs/2.x/payment-methods"
                                             target="_blank"
-                                            class="inline-flex mt-1.5 text-sm leading-5 font-medium text-yellow-700 underline hover:text-yellow-600"
+                                            class="mt-1.5 inline-flex text-sm font-medium leading-5 text-yellow-700 underline hover:text-yellow-600"
                                         >
                                             {{ __('shopper::pages/orders.read_about_payment') }}
                                         </a>

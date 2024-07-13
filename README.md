@@ -54,6 +54,28 @@ The best place to learn Shopper is by [reading the documentation](https://larave
 
 The Framework uses [Laravel](https://laravel.com) as a foundation PHP framework.
 
+## Roadmap
+
+Laravel Shopper has been under active development for several months.
+Significant changes have been made, so it's important not to migrate from version 1 (if you've already used it).
+
+A beta release for version 2 is now available, and here's a roadmap of upcoming additions for the coming months.
+
+- [x] Manage Catalog (Products, Categories, Collections)
+- [x] Manage Orders
+- [x] Manage Discount Codes
+- [x] Manage Customers
+- [x] Manage Products reviews
+- [x] Manage Payment methods
+- [x] Manage Zones (market zone model in Shopify)
+- [x] Support Multi currencies in setting
+- [x] Support Multi inventories
+- [ ] Generate Variant based on product attributes
+- [ ] Support multi currencies for product / variant
+- [ ] Support taxes
+- [ ] Dynamic product association based on collections configuration 
+- [ ] Feature & Unit Tests
+
 ## Contact
 
 You can communicate with us using the following mediums:

@@ -56,6 +56,7 @@
                         ]"
                         :label="__('shopper::forms.actions.more_actions')"
                         icon="heroicon-m-ellipsis-vertical"
+                        dropdown-width="sh-dropdown-width"
                         color="gray"
                         size="sm"
                         :button="true"
