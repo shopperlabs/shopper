@@ -1,4 +1,8 @@
 <div>
+    @php
+        $total = $order->total() + $shippingOption?->price;
+    @endphp
+
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.orders.index')">
             <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
@@ -329,7 +333,7 @@
                                     {{ __('shopper::words.total') }}
                                 </span>
                                 <span class="font-semibold">
-                                    {{ shopper_money_format($order->total() + $shippingOption->price, $order->currency_code) }}
+                                    {{ shopper_money_format($total, $order->currency_code) }}
                                 </span>
                             </div>
                         </div>
@@ -427,7 +431,7 @@
                                     aria-hidden="true"
                                 />
                                 <span class="text-sm text-gray-500 dark:text-gray-400">
-                                    {{ __('Client inconnu') }}
+                                    {{ __('shopper::pages/orders.no_customer') }}
                                 </span>
                             </div>
                         @endif
@@ -457,58 +461,62 @@
                         </p>
                     @endif
                 </div>
-                <div class="py-4">
-                    <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
-                        {{ __('shopper::pages/customers.addresses.shipping') }}
-                    </h3>
-                    <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
-                        {{ $order->shippingAddress->full_name }}
-                        <br />
-                        @if ($order->shippingAddress->company)
-                            {{ $order->shippingAddress->company }}
+                @if($shippingAddress)
+                    <div class="py-4">
+                        <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
+                            {{ __('shopper::pages/customers.addresses.shipping') }}
+                        </h3>
+                        <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                            {{ $order->shippingAddress->full_name }}
                             <br />
-                        @endif
-
-                        {{ $order->shippingAddress->street_address }}
-                        <br />
-                        {{ $order->shippingAddress->postal_code }}, {{ $order->shippingAddress->city }}
-                        <br />
-                        {{ $order->shippingAddress->country_name }}
-                        <br />
-                        @if ($order->shippingAddress->phone)
-                            <span>{{ $order->shippingAddress->phone }}</span>
-                        @endif
-                    </p>
-                </div>
-                <div class="space-y-3 py-4">
-                    <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
-                        {{ __('shopper::pages/customers.addresses.billing') }}
-                    </h3>
-                    @if ($billingAddress->is($shippingAddress))
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                            {{ __('shopper::words.same_address') }}
-                        </p>
-                    @else
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                            {{ $billingAddress->full_name }}
-                            <br />
-                            @if ($billingAddress->company)
-                                {{ $billingAddress->company }}
+                            @if ($order->shippingAddress->company)
+                                {{ $order->shippingAddress->company }}
                                 <br />
                             @endif
 
-                            {{ $billingAddress->street_address }}
+                            {{ $order->shippingAddress->street_address }}
                             <br />
-                            {{ $billingAddress->postal_code }}, {{ $billingAddress->city }}
+                            {{ $order->shippingAddress->postal_code }}, {{ $order->shippingAddress->city }}
                             <br />
-                            {{ $billingAddress->country_name }}
+                            {{ $order->shippingAddress->country_name }}
                             <br />
-                            @if ($billingAddress->phone)
-                                <span>{{ $billingAddress->phone }}</span>
+                            @if ($order->shippingAddress->phone)
+                                <span>{{ $order->shippingAddress->phone }}</span>
                             @endif
                         </p>
+                    </div>
+                    @if($billingAddress)
+                        <div class="space-y-3 py-4">
+                            <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
+                                {{ __('shopper::pages/customers.addresses.billing') }}
+                            </h3>
+                            @if ($billingAddress->is($shippingAddress))
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ __('shopper::words.same_address') }}
+                                </p>
+                            @else
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ $billingAddress->full_name }}
+                                    <br />
+                                    @if ($billingAddress->company)
+                                        {{ $billingAddress->company }}
+                                        <br />
+                                    @endif
+
+                                    {{ $billingAddress->street_address }}
+                                    <br />
+                                    {{ $billingAddress->postal_code }}, {{ $billingAddress->city }}
+                                    <br />
+                                    {{ $billingAddress->country_name }}
+                                    <br />
+                                    @if ($billingAddress->phone)
+                                        <span>{{ $billingAddress->phone }}</span>
+                                    @endif
+                                </p>
+                            @endif
+                        </div>
                     @endif
-                </div>
+                @endif
             </div>
         </div>
     </x-shopper::container>
