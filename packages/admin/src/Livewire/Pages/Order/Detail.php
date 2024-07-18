@@ -140,8 +140,8 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
                 ->where('id', '<', $this->order->id)
                 ->latest('id')
                 ->first(),
-            'billingAddress' => $this->order->billingAddress->load('customer'),
-            'shippingAddress' => $this->order->shippingAddress->load('customer'),
+            'billingAddress' => $this->order->billingAddress?->load('customer'),
+            'shippingAddress' => $this->order->shippingAddress?->load('customer'),
             'shippingOption' => $this->order->shippingOption,
         ])
             ->title(__('shopper::pages/orders.show_title', ['number' => $this->order->number]));
