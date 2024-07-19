@@ -50,13 +50,13 @@ if (! function_exists('shopper_asset')) {
 if (! function_exists('shopper_currency')) {
     function shopper_currency(): string
     {
-        $settingCurrency = shopper_setting('default_currency_id');
+        $currencyId = shopper_setting('default_currency_id');
 
-        if ($settingCurrency) {
+        if ($currencyId) {
             $currency = Cache::remember(
                 'shopper-currency',
                 now()->addHour(),
-                fn () => Currency::query()->find($settingCurrency)
+                fn () => Currency::query()->find($currencyId)
             );
 
             return $currency ? $currency->code : 'USD'; // @phpstan-ignore-line
