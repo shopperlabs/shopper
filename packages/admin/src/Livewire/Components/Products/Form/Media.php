@@ -36,6 +36,7 @@ class Media extends Component implements HasForms
                     ->label(__('shopper::words.images'))
                     ->helperText(__('shopper::pages/products.images_helpText'))
                     ->multiple()
+                    ->panelLayout('grid')
                     ->columnSpan(['lg' => 2]),
 
                 Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')

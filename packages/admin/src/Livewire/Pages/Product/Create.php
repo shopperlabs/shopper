@@ -128,6 +128,7 @@ class Create extends AbstractPageComponent implements HasForms
                                 ->label(__('shopper::words.images'))
                                 ->helperText(__('shopper::pages/products.images_helpText'))
                                 ->multiple()
+                                ->panelLayout('grid')
                                 ->columnSpan(['lg' => 3]),
 
                             Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
@@ -152,7 +153,7 @@ class Create extends AbstractPageComponent implements HasForms
 
                             Forms\Components\Select::make('collections')
                                 ->label(__('shopper::pages/collections.menu'))
-                                ->relationship('collections', 'name', fn (Builder $query) => $query->where('is_enabled', true))
+                                ->relationship('collections', 'name')
                                 ->searchable()
                                 ->multiple()
                                 ->visible(Feature::enabled('collection')),
@@ -291,7 +292,7 @@ class Create extends AbstractPageComponent implements HasForms
 
         $product->channels()->sync([$this->defaultChannel->id]);
 
-        if (Feature::enabled('category') && array_key_exists('categories', $data) && count($data['categories']) > 0) {
+        if (Feature::enabled('category') && array_key_exists('categories', $data) && is_array($data['categories'])) {
             $product->categories()->sync($data['categories']);
         }
 
@@ -302,7 +303,7 @@ class Create extends AbstractPageComponent implements HasForms
         }
 
         Notification::make()
-            ->title(__('shopper::pages/products.notifications.create'))
+            ->title(__('shopper::notifications.create', ['item' => $product->name]))
             ->success()
             ->send();
 

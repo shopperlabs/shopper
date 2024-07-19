@@ -46,7 +46,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->square()
+                    ->circular()
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
                     ->defaultImageUrl(shopper_fallback_url()),
 
