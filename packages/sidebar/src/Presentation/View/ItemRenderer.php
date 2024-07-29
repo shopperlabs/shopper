@@ -35,7 +35,7 @@ class ItemRenderer extends AbstractRenderer
                 'items' => $items,
                 'badges' => $badges,
                 'appends' => $appends,
-                'active' => (new ActiveStateChecker())->isActive($item),
+                'active' => (new ActiveStateChecker)->isActive($item),
             ])->render();
         }
 

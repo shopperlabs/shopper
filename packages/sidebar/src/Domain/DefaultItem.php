@@ -83,9 +83,9 @@ class DefaultItem implements Item, Serializable
 
     public function __construct(protected Container $container)
     {
-        $this->items = new Collection();
-        $this->badges = new Collection();
-        $this->appends = new Collection();
+        $this->items = new Collection;
+        $this->badges = new Collection;
+        $this->appends = new Collection;
     }
 
     public function getName(): string
@@ -134,7 +134,7 @@ class DefaultItem implements Item, Serializable
 
     public function isActive(): bool
     {
-        return (new ActiveStateChecker())->isActive($this);
+        return (new ActiveStateChecker)->isActive($this);
     }
 
     public function useSpa(): Item

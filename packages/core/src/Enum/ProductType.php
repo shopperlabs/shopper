@@ -7,10 +7,18 @@ namespace Shopper\Core\Enum;
 use Filament\Support\Contracts\HasDescription;
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
+use Shopper\Core\Traits\HasEnumStaticMethods;
 
+/**
+ * @method static string External()
+ * @method static string Downloadable()
+ * @method static string Simple()
+ * @method static string VariableProduct()
+ */
 enum ProductType: string implements HasDescription, HasLabel
 {
     use ArrayableEnum;
+    use HasEnumStaticMethods;
 
     case External = 'external';
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Exceptions;
+namespace Shopper\Core\Exceptions;
 
 use Error;
 

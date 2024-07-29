@@ -94,7 +94,7 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
         $data = $this->form->getState();
 
         /** @var User $user */
-        $user = (new UserRepository())->create([
+        $user = (new UserRepository)->create([
             'email' => $data['email'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],

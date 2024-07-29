@@ -44,14 +44,14 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
     {
         $this->zone = $zoneId
             ? Zone::with(['countries', 'paymentMethods', 'carriers'])->find($zoneId)
-            : new Zone();
+            : new Zone;
 
         $this->title = $zoneId
             ? $this->zone->name
             : __('shopper::pages/settings/zones.add_action');
 
         $this->countriesInZone = Country::query()
-            ->whereHas('zone')
+            ->whereHas('zones')
             ->pluck('id')
             ->toArray();
 
@@ -92,6 +92,7 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
                     ->label(__('shopper::forms.label.countries'))
                     ->placeholder(__('shopper::forms.placeholder.select_countries'))
                     ->multiple()
+                    ->required()
                     ->options(
                         Country::query()
                             ->select('name', 'id')

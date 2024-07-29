@@ -175,7 +175,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
         $data = $this->form->getState();
 
         /** @var Product $product */
-        $product = (new ProductRepository())->create(
+        $product = (new ProductRepository)->create(
             Arr::except($data, ['quantity'])
         );
         $this->form->model($product)->saveRelationships();
@@ -183,7 +183,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
         $quantity = (int) $data['quantity'];
 
         if ($quantity && $quantity > 0) {
-            (new InitialQuantityInventory())->handle($quantity, $product);
+            (new InitialQuantityInventory)->handle($quantity, $product);
         }
 
         Notification::make()

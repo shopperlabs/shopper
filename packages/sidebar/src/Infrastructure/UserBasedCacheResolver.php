@@ -20,7 +20,7 @@ final class UserBasedCacheResolver implements SidebarResolver
 
     public function resolve(string $name): Sidebar
     {
-        if (! (new SupportsCacheTags())->isSatisfiedBy($this->cache)) {
+        if (! (new SupportsCacheTags)->isSatisfiedBy($this->cache)) {
             return $this->resolver->resolve($name);
         }
 

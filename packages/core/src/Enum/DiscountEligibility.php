@@ -6,10 +6,16 @@ namespace Shopper\Core\Enum;
 
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
+use Shopper\Core\Traits\HasEnumStaticMethods;
 
+/**
+ * @method static string Everyone()
+ * @method static string Customers()
+ */
 enum DiscountEligibility: string implements HasLabel
 {
     use ArrayableEnum;
+    use HasEnumStaticMethods;
 
     case Everyone = 'everyone';
 

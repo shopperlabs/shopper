@@ -7,10 +7,16 @@ namespace Shopper\Core\Enum;
 use Filament\Support\Contracts\HasDescription;
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
+use Shopper\Core\Traits\HasEnumStaticMethods;
 
+/**
+ * @method static string Manual()
+ * @method static string Auto()
+ */
 enum CollectionType: string implements HasDescription, HasLabel
 {
     use ArrayableEnum;
+    use HasEnumStaticMethods;
 
     case Manual = 'manual';
 

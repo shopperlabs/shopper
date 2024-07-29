@@ -26,7 +26,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
     {
         $this->authorize('edit_products');
 
-        $this->product = (new ProductRepository())->getById((int) $this->product);
+        $this->product = (new ProductRepository)->getById((int) $this->product);
     }
 
     public function deleteAction(): Action

@@ -85,7 +85,7 @@ abstract class BaseRepository implements RepositoryContract
 
     public function createMultiple(array $data): Collection
     {
-        $models = new Collection();
+        $models = new Collection;
 
         foreach ($data as $d) {
             $models->push($this->create($d));

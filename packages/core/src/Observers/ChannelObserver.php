@@ -23,7 +23,7 @@ final class ChannelObserver
     {
         if ($channel->is_default) {
             /** @var Channel | null $defaultChannel */
-            $defaultChannel = (new ChannelRepository())
+            $defaultChannel = (new ChannelRepository)
                 ->makeModel()
                 ->where('id', '!=', $channel->id)
                 ->where('is_default', true)

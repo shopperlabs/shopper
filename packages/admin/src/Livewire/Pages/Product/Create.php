@@ -37,7 +37,7 @@ class Create extends AbstractPageComponent implements HasForms
 
         $this->form->fill();
 
-        $this->defaultChannel = (new ChannelRepository())
+        $this->defaultChannel = (new ChannelRepository)
             ->where('is_default', true)
             ->first();
     }
@@ -285,7 +285,7 @@ class Create extends AbstractPageComponent implements HasForms
         $data = $this->form->getState();
 
         /** @var Product $product */
-        $product = (new ProductRepository())->create(
+        $product = (new ProductRepository)->create(
             Arr::except($data, ['quantity', 'categories'])
         );
         $this->form->model($product)->saveRelationships();
@@ -299,7 +299,7 @@ class Create extends AbstractPageComponent implements HasForms
         $quantity = (int) $data['quantity'];
 
         if ($quantity && $quantity > 0) {
-            (new InitialQuantityInventory())->handle($quantity, $product);
+            (new InitialQuantityInventory)->handle($quantity, $product);
         }
 
         Notification::make()

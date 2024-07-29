@@ -158,41 +158,41 @@ trait ReviewRateable
 
     public function rating(array $data, $author, $parent = null): Review
     {
-        return (new Review())->createRating($this, $data, $author);
+        return (new Review)->createRating($this, $data, $author);
     }
 
     public function updateRating($id, $data, $parent = null): Review
     {
-        return (new Review())->updateRating($id, $data);
+        return (new Review)->updateRating($id, $data);
     }
 
     public function getAllRatings(int $id, string $sort = 'desc'): Collection
     {
-        return (new Review())->getAllRatings($id, $sort);
+        return (new Review)->getAllRatings($id, $sort);
     }
 
     public function getApprovedRatings(int $id, string $sort = 'desc'): Collection
     {
-        return (new Review())->getApprovedRatings($id, $sort);
+        return (new Review)->getApprovedRatings($id, $sort);
     }
 
     public function getNotApprovedRatings(int $id, string $sort = 'desc'): Collection
     {
-        return (new Review())->getNotApprovedRatings($id, $sort);
+        return (new Review)->getNotApprovedRatings($id, $sort);
     }
 
     public function getRecentRatings(int $id, int $limit = 5, string $sort = 'desc'): Collection
     {
-        return (new Review())->getRecentRatings($id, $limit, $sort);
+        return (new Review)->getRecentRatings($id, $limit, $sort);
     }
 
     public function getRecentUserRatings(int $id, int $limit = 5, bool $approved = true, string $sort = 'desc'): Collection
     {
-        return (new Review())->getRecentUserRatings($id, $limit, $approved, $sort);
+        return (new Review)->getRecentUserRatings($id, $limit, $approved, $sort);
     }
 
     public function deleteRating($id): ?bool
     {
-        return (new Review())->deleteRating($id);
+        return (new Review)->deleteRating($id);
     }
 }

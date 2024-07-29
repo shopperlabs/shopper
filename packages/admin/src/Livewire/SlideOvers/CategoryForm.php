@@ -30,8 +30,8 @@ class CategoryForm extends SlideOverComponent implements HasForms
     public function mount(?int $categoryId = null): void
     {
         $this->category = $categoryId
-            ? (new CategoryRepository())->getById($categoryId)
-            : (new CategoryRepository())->makeModel();
+            ? (new CategoryRepository)->getById($categoryId)
+            : (new CategoryRepository)->makeModel();
 
         $this->form->fill($this->category->toArray());
     }
@@ -109,7 +109,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
         if ($this->category->id) {
             $this->category->update($this->form->getState());
         } else {
-            $category = (new CategoryRepository())->create($this->form->getState());
+            $category = (new CategoryRepository)->create($this->form->getState());
             $this->form->model($category)->saveRelationships();
         }
 

@@ -29,7 +29,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return $table
             ->query(
-                (new CollectionRepository())
+                (new CollectionRepository)
                     ->makeModel()
                     ->with('rules')
                     ->newQuery()
@@ -88,7 +88,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function render(): View
     {
         return view('shopper::livewire.pages.collections.browse', [
-            'total' => (new CollectionRepository())->count(),
+            'total' => (new CollectionRepository)->count(),
         ])
             ->title(__('shopper::pages/collections.menu'));
     }

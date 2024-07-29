@@ -27,7 +27,7 @@ final class Thanks
 
     public function __invoke(): void
     {
-        $wantsToSupport = (new SymfonyQuestionHelper())->ask(
+        $wantsToSupport = (new SymfonyQuestionHelper)->ask(
             new ArrayInput([]),
             $this->output,
             new ConfirmationQuestion(

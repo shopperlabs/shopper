@@ -31,8 +31,8 @@ class Variant extends AbstractPageComponent implements HasForms
     {
         $this->authorize('edit_products');
 
-        $this->product = (new ProductRepository())->getById($product);
-        $this->variant = (new ProductRepository())->getById($variantId);
+        $this->product = (new ProductRepository)->getById($product);
+        $this->variant = (new ProductRepository)->getById($variantId);
 
         $this->form->fill($this->variant->toArray());
     }

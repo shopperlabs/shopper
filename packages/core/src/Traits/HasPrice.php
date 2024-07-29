@@ -25,7 +25,7 @@ trait HasPrice
 
         $moneyFormatter = new IntlMoneyFormatter(
             formatter: $numberFormatter,
-            currencies: new ISOCurrencies()
+            currencies: new ISOCurrencies
         );
 
         return $moneyFormatter->format($money);

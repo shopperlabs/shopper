@@ -12,7 +12,7 @@ final class UserBasedSidebarFlusher implements SidebarFlusher
 
     public function flush(string $name): void
     {
-        if ((new SupportsCacheTags())->isSatisfiedBy($this->cache)) {
+        if ((new SupportsCacheTags)->isSatisfiedBy($this->cache)) {
             $this->cache->tags(CacheKey::get($name))->flush();
         }
     }
