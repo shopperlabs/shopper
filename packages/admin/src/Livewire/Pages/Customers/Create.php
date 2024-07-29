@@ -140,7 +140,7 @@ class Create extends AbstractPageComponent implements HasForms
         ]);
 
         /** @var User $customer */
-        $customer = (new UserRepository())->create(array_merge(
+        $customer = (new UserRepository)->create(array_merge(
             $customerData,
             ['email_verified_at' => now()->toDateTimeString()],
         ));

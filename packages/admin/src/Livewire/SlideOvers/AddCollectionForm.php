@@ -111,7 +111,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
     public function store(): void
     {
         /** @var Collection $collection */
-        $collection = (new CollectionRepository())->create($this->form->getState());
+        $collection = (new CollectionRepository)->create($this->form->getState());
         $this->form->model($collection)->saveRelationships();
 
         Notification::make()

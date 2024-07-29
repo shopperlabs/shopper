@@ -19,7 +19,7 @@ it('a sidebar can be extended with an extender', function (): void {
     $group->setName('demo');
     $this->menu->addGroup($group);
 
-    $extender = new SidebarExtenderStub();
+    $extender = new SidebarExtenderStub;
     $extender->extendWith(menu: $this->menu);
 
     $this->menu->add(

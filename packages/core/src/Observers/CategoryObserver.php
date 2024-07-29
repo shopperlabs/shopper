@@ -27,7 +27,7 @@ final class CategoryObserver
     {
         if (filled($category->parent_id)) {
             /** @var Category | null $parent */
-            $parent = (new CategoryRepository())
+            $parent = (new CategoryRepository)
                 ->getByColumn('id', (int) $category->parent_id, ['slug']);
 
             if ($parent) {

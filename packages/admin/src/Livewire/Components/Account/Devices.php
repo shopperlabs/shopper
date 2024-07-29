@@ -42,7 +42,7 @@ class Devices extends Component
 
     protected function createAgent($session): Agent
     {
-        return tap(new Agent(), function ($agent) use ($session): void {
+        return tap(new Agent, function ($agent) use ($session): void {
             $agent->setUserAgent($session->user_agent);
         });
     }

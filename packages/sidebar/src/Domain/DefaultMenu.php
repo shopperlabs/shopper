@@ -28,7 +28,7 @@ class DefaultMenu implements Menu, Serializable
 
     public function __construct(protected Container $container)
     {
-        $this->groups = new Collection();
+        $this->groups = new Collection;
     }
 
     public function group(string $name, ?Closure $callback = null): Group

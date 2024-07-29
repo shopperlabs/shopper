@@ -17,6 +17,6 @@ final class ItemableStub implements Itemable
 
     public function __construct(private Container $container)
     {
-        $this->items = new Collection();
+        $this->items = new Collection;
     }
 }

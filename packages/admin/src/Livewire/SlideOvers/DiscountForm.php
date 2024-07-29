@@ -40,7 +40,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
 
         $this->discount = $discountId
             ? Discount::query()->find($discountId)
-            : new Discount();
+            : new Discount;
 
         $products = collect();
         $customers = collect();
@@ -207,7 +207,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                         Forms\Components\Select::make('products')
                             ->multiple()
                             ->options(
-                                (new ProductRepository())
+                                (new ProductRepository)
                                     ->makeModel()
                                     ->scopes('publish')
                                     ->get()
@@ -231,7 +231,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                         Forms\Components\Select::make('customers')
                             ->multiple()
                             ->options(
-                                (new UserRepository())
+                                (new UserRepository)
                                     ->makeModel()
                                     ->scopes('customers')
                                     ->get()

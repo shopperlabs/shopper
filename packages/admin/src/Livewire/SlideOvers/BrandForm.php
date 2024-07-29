@@ -29,8 +29,8 @@ class BrandForm extends SlideOverComponent implements HasForms
     public function mount(?int $brandId = null): void
     {
         $this->brand = $brandId
-            ? (new BrandRepository())->getById($brandId)
-            : (new BrandRepository())->makeModel();
+            ? (new BrandRepository)->getById($brandId)
+            : (new BrandRepository)->makeModel();
 
         $this->form->fill($this->brand->toArray());
     }
@@ -102,7 +102,7 @@ class BrandForm extends SlideOverComponent implements HasForms
         if ($this->brand->id) {
             $this->brand->update($this->form->getState());
         } else {
-            $brand = (new BrandRepository())->create($this->form->getState());
+            $brand = (new BrandRepository)->create($this->form->getState());
             $this->form->model($brand)->saveRelationships();
         }
 

@@ -44,7 +44,7 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
     {
         $this->zone = $zoneId
             ? Zone::with(['countries', 'paymentMethods', 'carriers'])->find($zoneId)
-            : new Zone();
+            : new Zone;
 
         $this->title = $zoneId
             ? $this->zone->name

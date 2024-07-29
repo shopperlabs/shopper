@@ -18,7 +18,7 @@ final class CustomerSendCredentials extends Notification
 
     public function toMail($notifiable): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->subject(__('Welcome to ') . config('app.name'))
             ->greeting(__('Hello :full_name', ['full_name' => $notifiable->full_name]))
             ->line(__('An account has been created for you on the website ') . config('app.url'))

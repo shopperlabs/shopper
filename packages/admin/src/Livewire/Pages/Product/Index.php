@@ -36,7 +36,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return $table
             ->query(
-                (new ProductRepository())
+                (new ProductRepository)
                     ->with(['brand', 'variants'])
                     ->makeModel()
                     ->newQuery()
@@ -137,7 +137,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function render(): View
     {
         return view('shopper::livewire.pages.products.index', [
-            'total' => (new ProductRepository())->count(),
+            'total' => (new ProductRepository)->count(),
         ])
             ->title(__('shopper::pages/products.menu'));
     }

@@ -45,7 +45,7 @@ class Review extends Model
 
     public function createRating(Model $reviewrateable, array $data, Model $author): self
     {
-        $rating = new self();
+        $rating = new self;
         $rating->fill(array_merge($data, [
             'author_id' => $author->id, // @phpstan-ignore-line
             'author_type' => $author->getMorphClass(),

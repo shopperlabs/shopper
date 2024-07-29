@@ -45,7 +45,7 @@ class Show extends AbstractPageComponent implements HasActions, HasForms
     {
         $this->authorize('read_customers');
 
-        $this->customer = (new UserRepository())->with(['addresses', 'orders'])->getById($user);
+        $this->customer = (new UserRepository)->with(['addresses', 'orders'])->getById($user);
     }
 
     public function render(): View

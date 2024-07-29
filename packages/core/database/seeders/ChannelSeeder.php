@@ -11,7 +11,7 @@ final class ChannelSeeder extends Seeder
 {
     public function run(): void
     {
-        (new ChannelRepository())->create([
+        (new ChannelRepository)->create([
             'name' => $name = 'Web Store',
             'slug' => $name,
             'url' => config('app.url'),

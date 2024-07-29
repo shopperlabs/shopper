@@ -27,7 +27,7 @@ class Index extends Component implements HasForms, HasTable
     {
         return $table
             ->query(
-                (new UserRepository())
+                (new UserRepository)
                     ->with('roles')
                     ->makeModel()
                     ->scopes('administrators')

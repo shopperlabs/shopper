@@ -30,7 +30,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query((new BrandRepository())->makeModel()->newQuery())
+            ->query((new BrandRepository)->makeModel()->newQuery())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
@@ -129,7 +129,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function render(): View
     {
         return view('shopper::livewire.pages.brand.index', [
-            'total' => (new BrandRepository())->count(),
+            'total' => (new BrandRepository)->count(),
         ])->title(__('shopper::pages/brands.menu'));
     }
 }

@@ -41,7 +41,7 @@ class DefaultGroup implements Group, Serializable
 
     public function __construct(protected Container $container)
     {
-        $this->items = new Collection();
+        $this->items = new Collection;
     }
 
     public function getName(): string

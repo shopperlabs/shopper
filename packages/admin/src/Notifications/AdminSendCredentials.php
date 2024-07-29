@@ -18,7 +18,7 @@ final class AdminSendCredentials extends Notification
 
     public function toMail($notifiable): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->subject(__('Welcome to Shopper'))
             ->greeting("Hello {$notifiable->full_name}")
             ->line(__('An account has been created for you as Administrator on the website ') . config('app.url'))

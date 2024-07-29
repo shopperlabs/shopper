@@ -14,7 +14,7 @@ class ReOrderCategories extends SlideOverComponent
     public function updateGroupOrder(array $items): void
     {
         foreach ($items as $item) {
-            (new CategoryRepository())
+            (new CategoryRepository)
                 ->getById((int) $item['value'])
                 ->update(['position' => $item['order']]);
         }
@@ -26,7 +26,7 @@ class ReOrderCategories extends SlideOverComponent
     {
         foreach ($groups as $group) {
             foreach ($group['items'] as $item) {
-                (new CategoryRepository())
+                (new CategoryRepository)
                     ->getById((int) $item['value'])
                     ->update([
                         'parent_id' => (int) $group['value'],
@@ -42,7 +42,7 @@ class ReOrderCategories extends SlideOverComponent
     public function render(): View
     {
         return view('shopper::livewire.slide-overs.re-order-categories', [
-            'categories' => (new CategoryRepository())
+            'categories' => (new CategoryRepository)
                 ->with('children')
                 ->where('parent_id', null)
                 ->orderBy('position')
