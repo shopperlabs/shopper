@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shopper\Enum\Traits;
+namespace Shopper\Core\Traits;
 
 use BackedEnum;
-use Shopper\Exceptions\UndefinedEnumCaseError;
+use Shopper\Core\Exceptions\UndefinedEnumCaseError;
 
 /**
  * @mixin BackedEnum

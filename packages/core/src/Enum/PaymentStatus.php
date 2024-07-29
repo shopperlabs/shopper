@@ -6,10 +6,18 @@ namespace Shopper\Core\Enum;
 
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
+use Shopper\Core\Traits\HasEnumStaticMethods;
 
+/**
+ * @method static string Paid()
+ * @method static string Pending()
+ * @method static string Completed()
+ * @method static string Cancelled()
+ */
 enum PaymentStatus: string implements HasLabel
 {
     use ArrayableEnum;
+    use HasEnumStaticMethods;
 
     case Paid = 'paid';
 

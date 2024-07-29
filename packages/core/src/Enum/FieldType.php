@@ -6,10 +6,21 @@ namespace Shopper\Core\Enum;
 
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
+use Shopper\Core\Traits\HasEnumStaticMethods;
 
+/**
+ * @method static string Checkbox()
+ * @method static string ColorPicker()
+ * @method static string DatePicker()
+ * @method static string RichText()
+ * @method static string Select()
+ * @method static string Text()
+ * @method static string Number()
+ */
 enum FieldType: string implements HasLabel
 {
     use ArrayableEnum;
+    use HasEnumStaticMethods;
 
     case Checkbox = 'checkbox';
 

@@ -6,10 +6,21 @@ namespace Shopper\Core\Enum;
 
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
+use Shopper\Core\Traits\HasEnumStaticMethods;
 
+/**
+ * @method static string Awaiting()
+ * @method static string Pending()
+ * @method static string Treatment()
+ * @method static string Partial_Refund()
+ * @method static string Refunded()
+ * @method static string Rejected()
+ * @method static string Cancelled()
+ */
 enum OrderRefundStatus: string implements HasLabel
 {
     use ArrayableEnum;
+    use HasEnumStaticMethods;
 
     case Awaiting = 'awaiting';
 

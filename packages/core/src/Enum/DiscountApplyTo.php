@@ -6,10 +6,16 @@ namespace Shopper\Core\Enum;
 
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
+use Shopper\Core\Traits\HasEnumStaticMethods;
 
+/**
+ * @method static string Order()
+ * @method static string Products()
+ */
 enum DiscountApplyTo: string implements HasLabel
 {
     use ArrayableEnum;
+    use HasEnumStaticMethods;
 
     case Order = 'order';
 

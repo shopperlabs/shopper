@@ -7,7 +7,7 @@ namespace Shopper\Core\Enum;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
-use Shopper\Enum\Traits\HasEnumStaticMethods;
+use Shopper\Core\Traits\HasEnumStaticMethods;
 
 /**
  * @method static string New()

@@ -16,8 +16,9 @@ use Shopper\Core\Observers\AddressObserver;
  * @property-read int $id
  * @property string $last_name
  * @property string | null $first_name
+ * @property string $full_name
  * @property string | null $company_name
- * @property string | null $street_address
+ * @property string $street_address
  * @property string | null $street_address_plus
  * @property string $postal_code
  * @property string $city
