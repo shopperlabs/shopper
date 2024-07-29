@@ -15,19 +15,21 @@
                             </span>
                         </div>
                         <h4 class="mt-1 block text-sm font-medium text-gray-900 dark:text-white">
-                            {{ $address->last_name . ' ' . $address->first_name }}
+                            {{ $address->full_name }}
                         </h4>
                         <div class="mt-1 text-sm leading-5">
                             <p class="text-gray-500 dark:text-gray-400">
-                                {{ $address->street_address }}, {{ $address->city }}
+                                {{ $address->street_address }}
                             </p>
-                            <div class="truncate text-sm text-gray-500 dark:text-gray-400">
-                                <span>{{ $address->phone_number }}</span>
-                                <br />
-                                <span>{{ $address->zipcode }}</span>
-                                ,
-                                <span>{{ $address->country->name }}</span>
-                                <span class="inline-flex h-6 w-6 rounded-full">{{ $address->country->svg_flag }}</span>
+                            <div class="flex flex-col space-y-0.5 truncate text-sm text-gray-500 dark:text-gray-400">
+                                <span>{{ $address->postal_code }}, {{ $address->city }}</span>
+                                <span class="inline-flex items-center gap-2 shrink-0">
+                                    <span>{{ $address->country->name }}</span>
+                                    <img src="{{ $address->country->svg_flag }}" class="size-5 rounded-full object-center object-cover" alt="Country flag">
+                                </span>
+                                @if($address->phone_number)
+                                    <span>{{ $address->phone_number }}</span>
+                                @endif
                             </div>
                         </div>
                     </div>
