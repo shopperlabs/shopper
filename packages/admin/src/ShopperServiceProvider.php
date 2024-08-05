@@ -7,6 +7,7 @@ namespace Shopper;
 use Akaunting\Money;
 use Closure;
 use Filament\Forms\Components\TextInput;
+use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentColor;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
@@ -77,7 +78,12 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->bootModelRelationName();
 
         FilamentColor::register([
-            'primary' => config('shopper.admin.filament-color'),
+            'primary' => config('shopper.admin.filament_color'),
+            'teal' => Color::Teal,
+            'green' => Color::Green,
+            'sky' => Color::Sky,
+            'indigo' => Color::Indigo,
+            'info' => Color::Cyan,
         ]);
 
         Shopper::serving(function (): void {

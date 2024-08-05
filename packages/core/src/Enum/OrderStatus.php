@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Enum;
 
 use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
@@ -19,7 +20,7 @@ use Shopper\Core\Traits\HasEnumStaticMethods;
  * @method static string Completed()
  * @method static string Cancelled()
  */
-enum OrderStatus: string implements HasColor, HasLabel
+enum OrderStatus: string implements HasColor, HasIcon, HasLabel
 {
     use ArrayableEnum;
     use HasEnumStaticMethods;
@@ -51,6 +52,20 @@ enum OrderStatus: string implements HasColor, HasLabel
             self::Pending => 'warning',
             self::Register => 'primary',
             self::Shipped => 'indigo',
+        };
+    }
+
+    public function getIcon(): ?string
+    {
+        return match ($this) {
+            self::New => 'untitledui-stars-02',
+            self::Shipped => 'heroicon-o-truck',
+            self::Delivered => 'untitledui-package-check',
+            self::Pending => 'untitledui-hourglass-03',
+            self::Paid => 'heroicon-o-banknotes',
+            self::Register => 'untitledui-file-check-02',
+            self::Completed => 'heroicon-o-check-badge',
+            self::Cancelled => 'heroicon-o-minus-circle',
         };
     }
 

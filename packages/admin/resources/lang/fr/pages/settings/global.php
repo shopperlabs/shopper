@@ -30,7 +30,7 @@ return [
         'menu' => 'Inventaires',
         'single' => 'inventaire',
         'description' => 'Gérez les endroits où vous stockez des marchandises, remplissez des commandes et vendez des produits.',
-        'count' => 'Vous utilisez :count sur les inventaires disponible.',
+        'count' => 'Vous utilisez :count sur les :total inventaires disponible.',
         'add' => 'Ajout d\'un inventaire',
         'detail' => 'Détails',
         'detail_summary' => "Donnez à cet emplacement un nom court pour qu'il soit facile à identifier. Vous verrez ce nom dans des domaines tels que les produits.",
