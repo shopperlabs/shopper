@@ -12,24 +12,31 @@ jobs:
     if: github.event.pull_request.merged == true
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: 2.x
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: '16.x'
+          version: 8
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - name: Build assets
-        run: yarn run build
+        run: pnpm build
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           branch: 2.x
           commit_message: >
-            chore: Compile assets
+            chore: Build assets

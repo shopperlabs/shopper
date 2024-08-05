@@ -23,7 +23,7 @@
                         </h3>
                         <div class="flex items-center divide-x-2 divide-gray-200 p-1 dark:divide-gray-700">
                             <div class="flex items-center space-x-2 pr-4">
-                                <x-filament::badge size="sm" :color="$order->status->getColor()">
+                                <x-filament::badge size="md" :color="$order->status->getColor()" :icon="$order->status->getIcon()">
                                     {{ $order->status->getLabel() }}
                                 </x-filament::badge>
                             </div>

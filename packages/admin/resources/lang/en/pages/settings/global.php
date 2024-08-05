@@ -30,7 +30,7 @@ return [
         'menu' => 'Inventories',
         'single' => 'inventory',
         'description' => 'Manage the places you stock inventory, fulfill orders, and sell products.',
-        'count' => 'You’re using :count of locations available.',
+        'count' => 'You’re using :count of the :total available inventories.',
         'add' => 'Add Inventory',
         'detail' => 'Details',
         'detail_summary' => 'Give this location a short name to make it easy to identify. You’ll see this name in areas like products.',

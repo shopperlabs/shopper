@@ -17,7 +17,7 @@
 
         <x-slot name="action">
             @can('add_inventories')
-                @if ($inventories->count() < (int) config('shopper.admin.inventory-limit') + 1)
+                @if ($inventories->count() < (int) config('shopper.admin.inventory_limit') + 1)
                     <div class="flex">
                         <x-shopper::buttons.primary :link="route('shopper.settings.inventories.create')">
                             {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/settings/global.location.single')]) }}
@@ -38,7 +38,7 @@
                     {{ __('shopper::pages/settings/global.location.description') }}
                 </x-filament::section.description>
                 <x-filament::section.description class="mt-3">
-                    {{ __('shopper::pages/settings/global.location.count', ['count' => $inventories->count()]) }}
+                    {{ __('shopper::pages/settings/global.location.count', ['count' => $inventories->count(), 'total' => config('shopper.admin.inventory_limit')]) }}
                 </x-filament::section.description>
             </div>
         </div>

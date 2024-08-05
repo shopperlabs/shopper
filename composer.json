@@ -35,6 +35,7 @@
     "phpstan/phpstan": "^1.8",
     "phpunit/phpunit": "^10.5",
     "reecem/mocker": "^1.2",
+    "shopper/core": "*",
     "spatie/laravel-package-tools": "^1.15",
     "symplify/monorepo-builder": "^10.0"
   },
@@ -83,11 +84,12 @@
       "phpstan/extension-installer": true
     }
   },
-  "replace": {
-    "shopper/core": "self.version",
-    "shopper/framework": "self.version",
-    "shopper/sidebar": "self.version"
-  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./packages/core"
+    }
+  ],
   "minimum-stability": "dev",
   "prefer-stable": true
 }

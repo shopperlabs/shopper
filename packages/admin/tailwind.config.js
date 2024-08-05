@@ -5,7 +5,7 @@ import defaultTheme from 'tailwindcss/defaultTheme'
 import preset from './vendor/filament/support/tailwind.config.preset'
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: 'class',
   presets: [preset],
   safelist: [
@@ -27,7 +27,6 @@ module.exports = {
         success: colors.emerald,
         warning: colors.amber,
         danger: colors.red,
-        info: colors.sky,
       },
       animation: {
         progress: 'progress 2s ease-in-out infinite',
