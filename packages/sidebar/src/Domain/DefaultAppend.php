@@ -83,4 +83,22 @@ class DefaultAppend implements Append, Serializable
     {
         return $this->type === 'svg';
     }
+
+    public function __serialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'url' => $this->url,
+            'icon' => $this->icon,
+            'type' => $this->type,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->name = $data['name'];
+        $this->url = $data['url'];
+        $this->icon = $data['icon'];
+        $this->type = $data['type'];
+    }
 }

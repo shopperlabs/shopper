@@ -343,4 +343,38 @@ class DefaultItem implements Item, Serializable
 
         return $this;
     }
+
+    public function __serialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'weight' => $this->weight,
+            'url' => $this->url,
+            'icon' => $this->icon,
+            'toggleIcon' => $this->toggleIcon,
+            'toggleActiveIcon' => $this->toggleActiveIcon,
+            'items' => $this->items,
+            'badges' => $this->badges,
+            'appends' => $this->appends,
+            'authorized' => $this->authorized,
+            'spa' => $this->spa,
+            'type' => $this->type,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->name = $data['name'];
+        $this->weight = $data['weight'];
+        $this->url = $data['url'];
+        $this->icon = $data['icon'];
+        $this->toggleActiveIcon = $data['toggleActiveIcon'];
+        $this->toggleIcon = $data['toggleIcon'];
+        $this->items = $data['items'];
+        $this->badges = $data['badges'];
+        $this->appends = $data['appends'];
+        $this->authorized = $data['authorized'];
+        $this->spa = $data['spa'];
+        $this->type = $data['type'];
+    }
 }

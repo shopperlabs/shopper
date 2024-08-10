@@ -1,0 +1,4 @@
+name: Bug report
+description: Report a problem you're experiencing
+labels: bug,unconfirmed,medium priority
+projects: ['shopper']
