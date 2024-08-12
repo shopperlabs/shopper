@@ -13,6 +13,9 @@ use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Collection;
 use Shopper\Livewire\Components\SlideOverComponent;
 
+/**
+ * @property Forms\Form $form
+ */
 class CollectionRules extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;

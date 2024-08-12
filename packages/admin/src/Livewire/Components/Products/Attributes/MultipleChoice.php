@@ -17,6 +17,9 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Product;
 
+/**
+ * @property \Illuminate\Support\Collection $currentValues
+ */
 class MultipleChoice extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
@@ -32,7 +35,7 @@ class MultipleChoice extends Component implements HasActions, HasForms
 
     public function mount(): void
     {
-        $this->selected = $this->currentValues->toArray(); // @phpstan-ignore-line
+        $this->selected = $this->currentValues->toArray();
     }
 
     #[Computed]
@@ -49,7 +52,7 @@ class MultipleChoice extends Component implements HasActions, HasForms
         return Action::make('save')
             ->badge()
             ->action(function (): void {
-                $toDelete = array_diff($this->currentValues->toArray(), $this->selected); // @phpstan-ignore-line
+                $toDelete = array_diff($this->currentValues->toArray(), $this->selected);
 
                 if (count($toDelete) > 0) {
                     AttributeProduct::query()
@@ -59,7 +62,7 @@ class MultipleChoice extends Component implements HasActions, HasForms
                 }
 
                 foreach ($this->selected as $value) {
-                    if (! $this->currentValues->contains($value)) { // @phpstan-ignore-line
+                    if (! $this->currentValues->contains($value)) {
                         AttributeProduct::query()->create([
                             'product_id' => $this->product->id,
                             'attribute_id' => $this->attribute->id,

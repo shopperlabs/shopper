@@ -17,6 +17,9 @@ use Shopper\Core\Models\Inventory;
 use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
+/**
+ * @property Forms\Form $form
+ */
 final class StoreSocialLink extends StepComponent implements HasForms
 {
     use InteractsWithForms;

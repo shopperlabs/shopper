@@ -1,5 +1,5 @@
 <x-shopper::container class="space-y-8">
-    @if($orders->isNotEmpty())
+    @if ($orders->isNotEmpty())
         @foreach ($orders as $order)
             @php
                 $total = $order->total() + (int) $order->shippingOption?->price;
@@ -45,7 +45,9 @@
                         </div>
                     </div>
                     <div class="mt-2 text-right sm:mt-0 sm:max-w-xs">
-                        <dt class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400">
+                        <dt
+                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-500 dark:text-gray-400"
+                        >
                             {{ __('shopper::pages/customers.orders.details') }}
                         </dt>
                         <dd class="mt-1 text-sm font-medium uppercase text-gray-700 dark:text-gray-300">
@@ -59,7 +61,11 @@
                             <h4 class="font-medium leading-6 text-gray-900 dark:text-white">
                                 {{ __('shopper::pages/customers.orders.items') }}
                             </h4>
-                            <x-filament::badge size="md" :color="$order->status->getColor()" :icon="$order->status->getIcon()">
+                            <x-filament::badge
+                                size="md"
+                                :color="$order->status->getColor()"
+                                :icon="$order->status->getIcon()"
+                            >
                                 {{ $order->status->getLabel() }}
                             </x-filament::badge>
                         </div>
@@ -77,9 +83,9 @@
                                         <p class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                                             {{ $item->name }} -
                                             <span class="text-gray-700 dark:text-gray-200">
-                                            {{ $item->quantity }} x
-                                            {{ shopper_money_format($item->unit_price_amount) }}
-                                        </span>
+                                                {{ $item->quantity }} x
+                                                {{ shopper_money_format($item->unit_price_amount) }}
+                                            </span>
                                         </p>
                                     </div>
                                 </li>
@@ -102,8 +108,8 @@
                                     <span
                                         class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-gray-300 dark:bg-gray-700 dark:text-gray-400"
                                     >
-                                    <x-untitledui-image class="h-4 w-4" aria-hidden="true" />
-                                </span>
+                                        <x-untitledui-image class="h-4 w-4" aria-hidden="true" />
+                                    </span>
                                 @endif
                                 <div class="ml-2">
                                     <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -128,8 +134,8 @@
                                         {{ $order->shippingOption->name }} -
                                     </p>
                                     <span class="text-sm font-medium text-gray-900 dark:text-white">
-                                    {{ shopper_money_format($order->shippingOption->price, $order->currency_code) }}
-                                </span>
+                                        {{ shopper_money_format($order->shippingOption->price, $order->currency_code) }}
+                                    </span>
                                 </div>
                                 @if ($order->shippingOption->description)
                                     <p class="mt-0.5 text-sm leading-6 text-gray-500 dark:text-gray-400">
@@ -146,9 +152,9 @@
                 </div>
                 <div class="flex items-center justify-between px-4 py-3">
                     <p class="text-xs font-medium leading-4 text-gray-900 dark:text-white">
-                    <span class="mr-3 uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                        {{ __('shopper::pages/customers.orders.estimated') }}
-                    </span>
+                        <span class="mr-3 uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                            {{ __('shopper::pages/customers.orders.estimated') }}
+                        </span>
                         {{ __('N/A') }}
                     </p>
                     <x-shopper::link

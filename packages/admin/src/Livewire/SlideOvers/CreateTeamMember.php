@@ -21,6 +21,9 @@ use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Notifications\AdminSendCredentials;
 
+/**
+ * @property Form $form
+ */
 class CreateTeamMember extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;

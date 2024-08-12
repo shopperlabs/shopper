@@ -117,6 +117,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     {
         TextColumn::macro('currency', function (string | Closure | null $currency = null, bool $shouldConvert = false): TextColumn {
             /*** @var TextColumn $this */
+            // @phpstan-ignore-next-line
             $this->formatStateUsing(static function (Column $column, $state) use ($currency, $shouldConvert): ?string {
                 if (blank($state)) {
                     return null;
@@ -133,14 +134,14 @@ final class ShopperServiceProvider extends PackageServiceProvider
                 ))->format();
             });
 
-            return $this;
+            return $this; // @phpstan-ignore-line
         });
 
         TextInput::macro('currencyMask', function ($thousandSeparator = ',', $decimalSeparator = '.', $precision = 2): TextInput {
-            $this->view = 'shopper::components.filament.forms.currency-mask';
-            $this->viewData(compact('thousandSeparator', 'decimalSeparator', 'precision'));
+            $this->view = 'shopper::components.filament.forms.currency-mask'; // @phpstan-ignore-line
+            $this->viewData(compact('thousandSeparator', 'decimalSeparator', 'precision')); // @phpstan-ignore-line
 
-            return $this;
+            return $this; // @phpstan-ignore-line
         });
     }
 

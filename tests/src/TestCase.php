@@ -6,9 +6,10 @@ namespace Shopper\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
-use Filament\Notifications\NotificationsServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Filament\Actions\ActionsServiceProvider;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Livewire\LivewireServiceProvider;
+use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\ShopperServiceProvider;
@@ -19,11 +20,13 @@ use Spatie\Permission\PermissionServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
-    use RefreshDatabase;
+    use LazilyRefreshDatabase;
+    use WithWorkbench;
 
     protected function getPackageProviders($app): array
     {
         return [
+            ActionsServiceProvider::class,
             CoreServiceProvider::class,
             PermissionServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
@@ -32,7 +35,6 @@ abstract class TestCase extends BaseTestCase
             SidebarServiceProvider::class,
             LivewireServiceProvider::class,
             MediaLibraryServiceProvider::class,
-            NotificationsServiceProvider::class,
         ];
     }
 

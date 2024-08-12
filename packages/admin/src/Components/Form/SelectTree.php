@@ -92,7 +92,7 @@ class SelectTree extends Field implements HasAffixActions
             // Check if the relationship is a BelongsToMany relationship.
             if ($relationship instanceof BelongsToMany) {
                 // Retrieve related model instances and extract their IDs into an array.
-                $state = $relationship->getResults()
+                $state = $relationship->getResults() // @phpstan-ignore-line
                     ->pluck($relationship->getRelatedKeyName())
                     ->toArray();
 
@@ -150,7 +150,7 @@ class SelectTree extends Field implements HasAffixActions
 
         if ($this->withTrashed) {
             $nullParentQuery->withTrashed($this->withTrashed);
-            $nonNullParentQuery->withTrashed($this->withTrashed);
+            $nonNullParentQuery->withTrashed($this->withTrashed); // @phpstan-ignore-line
         }
 
         $nullParentResults = $nullParentQuery->get();
@@ -500,7 +500,7 @@ class SelectTree extends Field implements HasAffixActions
         $action = Action::make($this->getCreateOptionActionName())
             ->form(function (SelectTree $component, Form $form): array | Form | null {
                 return $component->getCreateOptionActionForm($form->model(
-                    $component->getRelationship() ? $component->getRelationship()->getModel()::class : null,
+                    $component->getRelationship() ? $component->getRelationship()->getModel()::class : null, // @phpstan-ignore-line
                 ));
             })
             ->action(static function (Action $action, array $arguments, SelectTree $component, array $data, ComponentContainer $form): void {

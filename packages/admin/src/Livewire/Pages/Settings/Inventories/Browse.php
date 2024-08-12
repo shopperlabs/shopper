@@ -51,8 +51,8 @@ class Browse extends Component implements HasActions, HasForms
         return view('shopper::livewire.pages.settings.inventories.browse', [
             'inventories' => Inventory::query()
                 ->with('country')
-                ->get()
-                ->take(config('shopper.admin.inventory-limit')),
+                ->limit(config('shopper.admin.inventory_limit'))
+                ->get(),
         ])->title(__('shopper::pages/settings/global.location.menu'));
     }
 }

@@ -49,4 +49,18 @@ class DefaultBadge implements Badge, Serializable
 
         return $this;
     }
+
+    public function __serialize(): array
+    {
+        return [
+            'value' => $this->value,
+            'class' => $this->class,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->value = $data['value'];
+        $this->class = $data['class'];
+    }
 }

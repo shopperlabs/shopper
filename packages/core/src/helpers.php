@@ -59,7 +59,7 @@ if (! function_exists('shopper_currency')) {
                 fn () => Currency::query()->find($currencyId)
             );
 
-            return $currency ? $currency->code : 'USD'; // @phpstan-ignore-line
+            return $currency ? $currency->code : 'USD';
         }
 
         return 'USD';

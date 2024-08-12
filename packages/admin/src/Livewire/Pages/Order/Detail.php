@@ -11,6 +11,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Validate;
 use Livewire\WithPagination;
 use Shopper\Core\Enum\OrderStatus;
 use Shopper\Core\Events\Orders\AddNote;
@@ -31,6 +32,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
 
     public int $perPage = 3;
 
+    #[Validate('required')]
     public ?string $notes = null;
 
     public function mount(): void
@@ -45,7 +47,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
 
     public function leaveNotes(): void
     {
-        $this->validate(['notes' => 'required']);
+        $this->validate();
 
         $this->order->update(['notes' => $this->notes]);
 

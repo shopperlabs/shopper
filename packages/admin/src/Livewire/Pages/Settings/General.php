@@ -23,6 +23,9 @@ use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Setting;
 use Shopper\Traits\SaveSettings;
 
+/**
+ * @property Form $form
+ */
 #[Layout('shopper::components.layouts.setting')]
 class General extends Component implements HasForms
 {

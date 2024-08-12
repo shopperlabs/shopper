@@ -83,7 +83,7 @@ class SlideOverPanel extends Component
         }
 
         if (enum_exists($parameterClassName)) {
-            $enum = $parameterClassName::tryFrom($parameterValue);
+            $enum = $parameterClassName::tryFrom($parameterValue); // @phpstan-ignore-line
 
             if ($enum !== null) {
                 return $enum;
@@ -102,7 +102,7 @@ class SlideOverPanel extends Component
     public function getPublicPropertyTypes($component): Collection
     {
         return collect($component->all())
-            ->map(fn ($value, $name) => Reflector::getParameterClassName(new ReflectionProperty($component, $name)))
+            ->map(fn ($value, $name) => Reflector::getParameterClassName(new ReflectionProperty($component, $name))) // @phpstan-ignore-line
             ->filter();
     }
 

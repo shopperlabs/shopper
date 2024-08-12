@@ -115,4 +115,22 @@ class DefaultGroup implements Group, Serializable
 
         return $this;
     }
+
+    public function __serialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'items' => $this->items,
+            'weight' => $this->weight,
+            'heading' => $this->heading,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->name = $data['name'];
+        $this->items = $data['items'];
+        $this->weight = $data['weight'];
+        $this->heading = $data['heading'];
+    }
 }

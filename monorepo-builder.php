@@ -34,6 +34,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters->set(Option::DATA_TO_APPEND, [
         ComposerJsonSection::REQUIRE_DEV => [
             'phpunit/phpunit' => '^10.5',
+            'mockery/mockery' => '^1.6.9',
+            'pestphp/pest' => '^2.34.7',
+            'pestphp/pest-plugin-laravel' => '^2.4',
             'symplify/monorepo-builder' => '^10.0',
         ],
     ]);

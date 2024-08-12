@@ -15,14 +15,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
+use Shopper\Core\Models\Brand;
 use Shopper\Core\Repositories\Store\BrandRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
+/**
+ * @property Form $form
+ */
 class BrandForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public ?Model $brand = null;
+    /**
+     * @var Brand|Model|null
+     */
+    public $brand = null;
 
     public ?array $data = [];
 
@@ -99,7 +106,8 @@ class BrandForm extends SlideOverComponent implements HasForms
 
     public function save(): void
     {
-        if ($this->brand->id) {
+        // @phpstan-ignore-next-line
+        if ($this->brand?->id) {
             $this->brand->update($this->form->getState());
         } else {
             $brand = (new BrandRepository)->create($this->form->getState());

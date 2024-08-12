@@ -20,7 +20,10 @@ class DefaultMenu implements Menu, Serializable
     use CacheableTrait;
     use CallableTrait;
 
-    protected Collection $groups;
+    /**
+     * @var Collection|Group[]
+     */
+    protected Collection | array $groups;
 
     protected array $cacheables = [
         'groups',
@@ -78,5 +81,17 @@ class DefaultMenu implements Menu, Serializable
         }
 
         return $this;
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'groups' => $this->groups,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->groups = $data['groups'];
     }
 }

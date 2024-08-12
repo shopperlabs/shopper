@@ -110,7 +110,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
                     ->action(function (Collection $records): void {
-                        $records->each->updateStatus();
+                        $records->each->updateStatus(); // @phpstan-ignore-line
 
                         Notification::make()
                             ->title(
@@ -126,7 +126,7 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
-                        $records->each->updateStatus(status: false);
+                        $records->each->updateStatus(status: false); // @phpstan-ignore-line
 
                         Notification::make()
                             ->title(__('shopper::components.tables.status.updated'))

@@ -104,7 +104,8 @@ trait ReviewRateable
     {
         return $this->ratings()
             ->selectRaw('count(rating) as countReviewRateable')
-            ->pluck('countReviewRateable')->first();
+            ->pluck('countReviewRateable')
+            ->first();
     }
 
     public function countCustomerServiceRating(bool $onlyApproved = false): Collection

@@ -16,6 +16,9 @@ use Livewire\Component;
 use Shopper\Components\Section;
 use Shopper\Core\Models\User;
 
+/**
+ * @property Form $form
+ */
 class Password extends Component implements HasForms
 {
     use InteractsWithForms;
@@ -71,9 +74,8 @@ class Password extends Component implements HasForms
     {
         /** @var User $user */
         $user = shopper()->auth()->user();
-        $data = $this->form->getState();
 
-        $user->update(['password' => Hash::make(value: $data['password'])]);
+        $user->update(['password' => Hash::make(value: $this->form->getState()['password'])]);
 
         Notification::make()
             ->title(__('shopper::notifications.users_roles.password_changed'))

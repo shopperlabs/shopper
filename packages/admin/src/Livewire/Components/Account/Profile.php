@@ -15,6 +15,9 @@ use Shopper\Components\Section;
 use Shopper\Core\Models\User;
 use Shopper\Traits\HasAuthenticated;
 
+/**
+ * @property Form $form
+ */
 class Profile extends Component implements HasForms
 {
     use HasAuthenticated;

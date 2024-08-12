@@ -23,7 +23,11 @@
                         </h3>
                         <div class="flex items-center divide-x-2 divide-gray-200 p-1 dark:divide-gray-700">
                             <div class="flex items-center space-x-2 pr-4">
-                                <x-filament::badge size="md" :color="$order->status->getColor()" :icon="$order->status->getIcon()">
+                                <x-filament::badge
+                                    size="md"
+                                    :color="$order->status->getColor()"
+                                    :icon="$order->status->getIcon()"
+                                >
                                     {{ $order->status->getLabel() }}
                                 </x-filament::badge>
                             </div>
@@ -461,9 +465,11 @@
                         </p>
                     @endif
                 </div>
-                @if($shippingAddress)
+                @if ($shippingAddress)
                     <div class="py-4">
-                        <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
+                        <h3
+                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white"
+                        >
                             {{ __('shopper::pages/customers.addresses.shipping') }}
                         </h3>
                         <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
@@ -485,9 +491,11 @@
                             @endif
                         </p>
                     </div>
-                    @if($billingAddress)
+                    @if ($billingAddress)
                         <div class="space-y-3 py-4">
-                            <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
+                            <h3
+                                class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white"
+                            >
                                 {{ __('shopper::pages/customers.addresses.billing') }}
                             </h3>
                             @if ($billingAddress->is($shippingAddress))

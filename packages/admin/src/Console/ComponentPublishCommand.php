@@ -40,7 +40,7 @@ final class ComponentPublishCommand extends Command
     {
         $config = $this->getBaseConfigurationFiles();
 
-        if (is_null($this->argument('name')) && $this->option('all')) {
+        if (! $this->argument('name') && $this->option('all')) {
             foreach ($config as $key => $file) {
                 $this->publish($key, $file, $this->getShopperComponentsConfigFolder() . '/' . $key . '.php');
             }
@@ -48,12 +48,12 @@ final class ComponentPublishCommand extends Command
             return;
         }
 
-        $name = (string) (is_null($this->argument('name')) ? select(
+        $name = (string) (! $this->argument('name') ? select(
             label: 'Which components configuration file would you like to publish?',
             options: collect($config)->map(fn (string $path) => basename($path, '.php')),
         ) : $this->argument('name'));
 
-        if (! is_null($name) && ! isset($config[$name])) {
+        if (! $name && ! isset($config[$name])) {
             $this->components->error('Unrecognized component configuration file.');
 
             return 1;

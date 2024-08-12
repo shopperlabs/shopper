@@ -22,6 +22,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property bool $is_searchable
  * @property bool $is_filterable
  * @property string|null $icon
+ * @property string $type_formatted
  * @property \Illuminate\Database\Eloquent\Collection|array $values
  */
 class Attribute extends Model

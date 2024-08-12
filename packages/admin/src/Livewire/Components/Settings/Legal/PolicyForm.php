@@ -14,6 +14,9 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
 
+/**
+ * @property Form $form
+ */
 class PolicyForm extends Component implements HasForms
 {
     use InteractsWithForms;

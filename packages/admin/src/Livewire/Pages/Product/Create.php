@@ -23,6 +23,9 @@ use Shopper\Core\Repositories\Store\ProductRepository;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
+/**
+ * @property Form $form
+ */
 class Create extends AbstractPageComponent implements HasForms
 {
     use InteractsWithForms;
@@ -96,21 +99,21 @@ class Create extends AbstractPageComponent implements HasForms
                     Components\Wizard\StepColumn::make(__('shopper::words.pricing'))
                         ->icon('untitledui-coins-stacked-02')
                         ->schema([
-                            Forms\Components\TextInput::make('price_amount')
+                            Forms\Components\TextInput::make('price_amount') // @phpstan-ignore-line
                                 ->label(__('shopper::forms.label.price_amount'))
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                 ->suffix(shopper_currency())
                                 ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
-                            Forms\Components\TextInput::make('old_price_amount')
+                            Forms\Components\TextInput::make('old_price_amount') // @phpstan-ignore-line
                                 ->label(__('shopper::forms.label.compare_price'))
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                 ->suffix(shopper_currency())
                                 ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
-                            Forms\Components\TextInput::make('cost_amount')
+                            Forms\Components\TextInput::make('cost_amount') // @phpstan-ignore-line
                                 ->label(__('shopper::forms.label.cost_per_item'))
                                 ->helperText(__('shopper::pages/products.cost_per_items_help_text'))
                                 ->numeric()

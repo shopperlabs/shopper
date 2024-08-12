@@ -16,6 +16,9 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Product;
 
+/**
+ * @property Forms\Form $form
+ */
 class Text extends Component implements HasActions, HasForms
 {
     use Actions;
@@ -62,24 +65,24 @@ class Text extends Component implements HasActions, HasForms
                         'undo',
                     ])
                     ->required()
-                    ->visible($this->attribute->type === FieldType::RICHTEXT),
+                    ->visible($this->attribute->type === FieldType::RichText),
 
                 Forms\Components\DatePicker::make('attribute_custom_value')
                     ->hiddenLabel()
                     ->native(false)
                     ->required()
-                    ->visible($this->attribute->type === FieldType::DATEPICKER),
+                    ->visible($this->attribute->type === FieldType::DatePicker),
 
                 Forms\Components\TextInput::make('attribute_custom_value')
                     ->hiddenLabel()
                     ->required()
-                    ->visible($this->attribute->type === FieldType::TEXT),
+                    ->visible($this->attribute->type === FieldType::Text),
 
                 Forms\Components\TextInput::make('attribute_custom_value')
                     ->hiddenLabel()
                     ->numeric()
                     ->required()
-                    ->visible($this->attribute->type === FieldType::NUMBER),
+                    ->visible($this->attribute->type === FieldType::Number),
             ])
             ->statePath('data')
             ->model($this->model);

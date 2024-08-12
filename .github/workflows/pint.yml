@@ -15,11 +15,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.3
-      - name: Install Composer
+      - name: Install dependencies
         run: composer install --no-interaction
       - name: Run Laravel Pint
         run: composer pint
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: fix code formatting
+          commit_message: >
+            chore: fix code formatting

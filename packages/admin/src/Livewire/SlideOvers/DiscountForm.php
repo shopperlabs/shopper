@@ -26,6 +26,9 @@ use Shopper\Jobs\DiscountCustomersJobs;
 use Shopper\Jobs\DiscountProductsJob;
 use Shopper\Livewire\Components\SlideOverComponent;
 
+/**
+ * @property Forms\Form $form
+ */
 class DiscountForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;

@@ -14,6 +14,9 @@ use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\PaymentMethod;
 
+/**
+ * @property Form $form
+ */
 class PaymentMethodForm extends ModalComponent implements HasForms
 {
     use InteractsWithForms;

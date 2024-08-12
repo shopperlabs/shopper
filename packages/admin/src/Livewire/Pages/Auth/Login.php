@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Shopper\Actions\AttemptToAuthenticate;
 use Shopper\Actions\RedirectIfTwoFactorAuthenticatable;
@@ -20,18 +21,17 @@ final class Login extends Component
 {
     use WithRateLimiting;
 
+    #[Validate('required|email')]
     public string $email = '';
 
+    #[Validate('required')]
     public string $password = '';
 
     public bool $remember = false;
 
     public function authenticate()
     {
-        $this->validate([
-            'email' => ['required', 'email'],
-            'password' => 'required',
-        ]);
+        $this->validate();
 
         [$throwable] = useTryCatch(fn () => $this->rateLimit(5));
 

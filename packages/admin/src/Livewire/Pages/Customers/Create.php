@@ -27,6 +27,9 @@ use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Notifications\CustomerSendCredentials;
 
+/**
+ * @property Form $form
+ */
 class Create extends AbstractPageComponent implements HasForms
 {
     use InteractsWithForms;
@@ -36,6 +39,7 @@ class Create extends AbstractPageComponent implements HasForms
     public function mount(): void
     {
         $this->authorize('add_customers');
+
         $this->form->fill();
     }
 

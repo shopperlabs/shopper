@@ -32,7 +32,7 @@ class RelatedProductsList extends ModalComponent
 
     public function getProductsProperty()
     {
-        return (new ProductRepository)
+        return (new ProductRepository) // @phpstan-ignore-line
             ->where('name', '%' . $this->search . '%', 'like')
             ->whereNull('parent_id')
             ->get(['name', 'price_amount', 'id'])

@@ -14,6 +14,9 @@ use Shopper\Core\Models\Setting;
 use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
+/**
+ * @property Forms\Form $form
+ */
 final class StoreAddress extends StepComponent implements HasForms
 {
     use InteractsWithForms;

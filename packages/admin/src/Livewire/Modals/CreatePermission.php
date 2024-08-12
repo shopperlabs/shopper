@@ -14,6 +14,9 @@ use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\Permission;
 use Shopper\Core\Models\Role;
 
+/**
+ * @property Form $form
+ */
 class CreatePermission extends ModalComponent implements HasForms
 {
     use InteractsWithForms;

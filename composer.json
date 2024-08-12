@@ -20,24 +20,32 @@
     "composer-runtime-api": "^2.1"
   },
   "require-dev": {
+    "akaunting/laravel-money": "^5.2",
+    "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-heroicons": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "doctrine/dbal": "^3.6",
-    "larastan/larastan": "^2.0",
+    "filament/filament": "^3.2",
+    "filament/spatie-laravel-media-library-plugin": "^3.2",
+    "jenssegers/agent": "^2.6",
+    "larastan/larastan": "^2.9",
     "laravel/pint": "^1.16",
     "laravel/framework": "^10.0|^11.0",
     "mockery/mockery": "^1.4",
+    "pragmarx/google2fa": "^8.0",
     "nunomaduro/collision": "^7.10.0|^8.1.1",
-    "orchestra/testbench": "^7.0|^8.0",
+    "orchestra/testbench": "^8.20|^9.0",
     "pestphp/pest": "^2.34",
     "pestphp/pest-plugin-laravel": "^2.4",
     "pestphp/pest-plugin-livewire": "^2.1",
     "phpstan/phpstan": "^1.8",
     "phpunit/phpunit": "^10.5",
-    "reecem/mocker": "^1.2",
     "shopper/core": "*",
+    "spatie/laravel-livewire-wizard": "^2.2",
+    "stevebauman/location": "^7.2",
     "spatie/laravel-package-tools": "^1.15",
-    "symplify/monorepo-builder": "^10.0"
+    "symplify/monorepo-builder": "^10.0",
+    "wire-elements/modal": "^2.0"
   },
   "autoload": {
     "files": [
@@ -72,9 +80,17 @@
     }
   },
   "scripts": {
+    "cs": [
+      "pint",
+      "npm run prettier"
+    ],
     "pint": "./vendor/bin/pint",
-    "pest": "./vendor/bin/pest",
-    "stan": "./vendor/bin/phpstan analyse --memory-limit=1G"
+    "test:pest": "pest --parallel",
+    "test:phpstan": "phpstan analyse --memory-limit=2G",
+    "test": [
+      "@test:pest",
+      "@test:phpstan"
+    ]
   },
   "config": {
     "sort-packages": true,

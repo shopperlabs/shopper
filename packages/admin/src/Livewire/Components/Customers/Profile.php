@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Components\Customers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Component;
+use Shopper\Core\Models\User;
 
 class Profile extends Component
 {
-    public Model $customer;
+    /**
+     * @var User
+     */
+    public $customer;
 
     public function render(): View
     {

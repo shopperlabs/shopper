@@ -12,6 +12,9 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
+/**
+ * @property Forms\Form $form
+ */
 class Media extends Component implements HasForms
 {
     use InteractsWithForms;

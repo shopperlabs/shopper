@@ -69,7 +69,7 @@ class Collection extends Model implements SpatieHasMedia
             $words = $condition->getFormattedRule() . ' ' . $condition->getFormattedOperator() . ' ' . $condition->getFormattedValue();
             $rules = $this->rules()->count();
 
-            return $words . ' ' . ($rules >= 2 ? '+ ' . $rules - 1 . __('shopper::words.other') : '');
+            return $words . ' ' . ($rules >= 2 ? '+ ' . ($rules - 1) . __('shopper::words.other') : '');
         }
 
         return null;
