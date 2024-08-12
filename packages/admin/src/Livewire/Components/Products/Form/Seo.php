@@ -13,6 +13,9 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Shopper\Components;
 
+/**
+ * @property Forms\Form $form
+ */
 class Seo extends Component implements HasForms
 {
     use InteractsWithForms;

@@ -11,7 +11,6 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -20,7 +19,7 @@ class Show extends AbstractPageComponent implements HasActions, HasForms
     use InteractsWithActions;
     use InteractsWithForms;
 
-    public Model $customer;
+    public $customer;
 
     public function deleteAction(): Action
     {

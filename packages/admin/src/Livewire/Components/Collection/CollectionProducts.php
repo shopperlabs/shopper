@@ -85,7 +85,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
                         component: 'shopper-modals.products-list',
                         arguments: [
                             'collectionId' => $this->collection->id,
-                            'exceptProductIds' => $this->productsIds,
+                            'exceptProductIds' => $this->productsIds, // @phpstan-ignore-line
                         ]
                     ))
                     ->visible($this->collection->isManual()),

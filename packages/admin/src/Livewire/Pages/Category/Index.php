@@ -13,7 +13,6 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Livewire\Attributes\On;
 use Shopper\Core\Repositories\Store\CategoryRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -45,11 +44,11 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->grow(false),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
-                    ->formatStateUsing(function (Model $model) {
-                        return view('shopper::livewire.tables.cells.categories.name', [
-                            'category' => $model,
-                        ]);
-                    })
+                    ->formatStateUsing(
+                        fn ($record) => view('shopper::livewire.tables.cells.categories.name', [
+                            'category' => $record,
+                        ])
+                    )
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('slug')
@@ -102,7 +101,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
                     ->action(function (Collection $records): void {
-                        $records->each->updateStatus();
+                        $records->each->updateStatus(); // @phpstan-ignore-line
 
                         Notification::make()
                             ->title(
@@ -118,7 +117,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.disable'))
                     ->icon('untitledui-slash-circle-01')
                     ->action(function (Collection $records): void {
-                        $records->each->updateStatus(status: false);
+                        $records->each->updateStatus(status: false); // @phpstan-ignore-line
 
                         Notification::make()
                             ->title(

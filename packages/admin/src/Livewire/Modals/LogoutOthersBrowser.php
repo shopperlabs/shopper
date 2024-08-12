@@ -32,7 +32,7 @@ class LogoutOthersBrowser extends ModalComponent
 
         $this->deleteOtherSessionRecords();
 
-        $this->emit('loggedOut');
+        $this->dispatch('loggedOut');
 
         $this->closeModal();
     }

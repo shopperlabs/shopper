@@ -20,6 +20,9 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Shopper\Core\Models\Role;
 
+/**
+ * @property Form $form
+ */
 #[Layout('shopper::components.layouts.setting')]
 class RolePermission extends Component implements HasActions, HasForms
 {

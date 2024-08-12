@@ -18,6 +18,9 @@ use Shopper\Core\Models\Collection;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
+/**
+ * @property Form $form
+ */
 class Edit extends AbstractPageComponent implements HasForms
 {
     use InteractsWithForms;

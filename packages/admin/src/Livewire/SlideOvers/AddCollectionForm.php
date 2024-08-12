@@ -18,6 +18,9 @@ use Shopper\Core\Models\Collection;
 use Shopper\Core\Repositories\Store\CollectionRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
+/**
+ * @property Forms\Form $form
+ */
 class AddCollectionForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;

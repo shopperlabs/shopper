@@ -28,7 +28,7 @@ class DiscountProductsJob implements ShouldQueue
 
     public function handle(): void
     {
-        if ($this->applyTo === DiscountApplyTo::PRODUCTS->value) {
+        if ($this->applyTo === DiscountApplyTo::Products()) {
             // Remove all the products that's not been selected that already exist during creation of the discount
             $this->discount->items()
                 ->where('condition', 'apply_to')

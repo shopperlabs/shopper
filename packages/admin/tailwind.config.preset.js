@@ -2,12 +2,9 @@ import forms from '@tailwindcss/forms'
 import typography from '@tailwindcss/typography'
 import colors from 'tailwindcss/colors'
 import defaultTheme from 'tailwindcss/defaultTheme'
-import preset from './vendor/filament/support/tailwind.config.preset'
 
-/** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
-  presets: [preset],
   safelist: [
     {
       pattern: /max-w-(xl|2xl|3xl|4xl|5xl|6xl|7xl)/,
@@ -17,7 +14,6 @@ export default {
   content: [
     './resources/views/**/*.blade.php',
     './src/**/*.php',
-    './vendor/filament/**/*.blade.php',
     './vendor/wire-elements/modal/resources/views/*.blade.php',
   ],
   theme: {

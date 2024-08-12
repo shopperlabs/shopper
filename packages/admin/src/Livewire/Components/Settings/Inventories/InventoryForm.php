@@ -17,6 +17,9 @@ use Shopper\Components\Section;
 use Shopper\Components\Separator;
 use Shopper\Core\Models\Inventory;
 
+/**
+ * @property Forms\Form $form
+ */
 class InventoryForm extends Component implements HasForms
 {
     use InteractsWithForms;

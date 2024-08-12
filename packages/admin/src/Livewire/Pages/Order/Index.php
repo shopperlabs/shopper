@@ -29,11 +29,13 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return $table
             ->query(
-                Order::query()->with([
-                    'customer',
-                    'items',
-                    'zone',
-                ])
+                Order::query()
+                    ->with([
+                        'customer',
+                        'items',
+                        'zone',
+                    ])
+                    ->latest()
             )
             ->columns([
                 Tables\Columns\TextColumn::make('number')
@@ -45,6 +47,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('shopper::words.date'))
                     ->date()
+                    ->sortable()
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('status')
@@ -57,8 +60,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->sortable()
                     ->formatStateUsing(fn (Model $model): View => view(
                         'shopper::livewire.tables.cells.orders.customer',
-                        ['order' => $model->load('customer'),
-                        ]
+                        ['order' => $model->load('customer')]
                     ))
                     ->toggleable(),
 
@@ -66,8 +68,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::words.purchased'))
                     ->formatStateUsing(fn (Model $model): View => view(
                         'shopper::livewire.tables.cells.orders.purchased',
-                        ['order' => $model->load('items'),
-                        ]
+                        ['order' => $model->load('items')]
                     )),
 
                 Tables\Columns\TextColumn::make('currency_code')

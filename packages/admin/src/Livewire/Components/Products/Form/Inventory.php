@@ -20,6 +20,9 @@ use Livewire\Component;
 use Shopper\Components;
 use Shopper\Core\Models\InventoryHistory;
 
+/**
+ * @property Forms\Form $form
+ */
 class Inventory extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;

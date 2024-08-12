@@ -14,6 +14,7 @@ use Shopper\Core\Traits\HasZones;
 /**
  * @property-read int $id
  * @property string $title
+ * @property string $slug
  * @property string|null $logo
  * @property string|null $description
  * @property string|null $link_url

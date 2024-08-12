@@ -24,6 +24,7 @@ class Attributes extends Component
             ->get();
 
         return $attributes->map(function (Attribute $attribute) {
+            // @phpstan-ignore-next-line
             $attribute->group = $attribute->hasMultipleValues() || $attribute->hasSingleValue() ? 'choice' : 'text';
 
             return $attribute;

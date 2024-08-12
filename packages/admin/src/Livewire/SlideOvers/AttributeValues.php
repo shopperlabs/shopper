@@ -45,7 +45,7 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
     public function formSchema(): array
     {
         return [
-            CustomAttributeKeyInput::make('key', $this->attribute->type)
+            CustomAttributeKeyInput::make('key', $this->attribute->type) // @phpstan-ignore-line
                 ->label(__('shopper::forms.label.key'))
                 ->helperText(__('shopper::modals.attributes.key_description'))
                 ->required()

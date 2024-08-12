@@ -19,6 +19,9 @@ use Shopper\Core\Events\Products\Updated;
 use Shopper\Core\Models\Product;
 use Shopper\Feature;
 
+/**
+ * @property Forms\Form $form
+ */
 class Edit extends Component implements HasForms
 {
     use InteractsWithForms;
@@ -66,21 +69,21 @@ class Edit extends Component implements HasForms
 
                         Forms\Components\Grid::make()
                             ->schema([
-                                Forms\Components\TextInput::make('price_amount')
+                                Forms\Components\TextInput::make('price_amount')  // @phpstan-ignore-line
                                     ->label(__('shopper::forms.label.price_amount'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->suffix(shopper_currency())
                                     ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
-                                Forms\Components\TextInput::make('old_price_amount')
+                                Forms\Components\TextInput::make('old_price_amount')  // @phpstan-ignore-line
                                     ->label(__('shopper::forms.label.compare_price'))
                                     ->numeric()
                                     ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                     ->suffix(shopper_currency())
                                     ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
 
-                                Forms\Components\TextInput::make('cost_amount')
+                                Forms\Components\TextInput::make('cost_amount')  // @phpstan-ignore-line
                                     ->label(__('shopper::forms.label.cost_per_item'))
                                     ->helperText(__('shopper::pages/products.cost_per_items_help_text'))
                                     ->numeric()

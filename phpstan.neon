@@ -6,11 +6,9 @@ parameters:
     paths:
         - packages
     excludePaths:
+        - packages/admin/src/Livewire/Pages/Auth
         - packages/admin/src/Events/
-        - packages/admin/src/Http/Livewire/Components/Discounts/WithDiscountActions.php
-        - packages/admin/src/Http/Livewire/Pages/Auth/
         - packages/core/src/Traits/
     ignoreErrors:
-        - "#Called 'take' on Laravel collection, but could have been retrieved as a query.#"
     checkMissingIterableValueType: true
     treatPhpDocTypesAsCertain: false

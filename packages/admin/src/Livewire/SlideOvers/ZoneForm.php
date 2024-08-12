@@ -23,6 +23,9 @@ use Shopper\Core\Models\Zone;
 use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\InteractsWithSlideOverForm;
 
+/**
+ * @property Forms\Form $form
+ */
 class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
 {
     use InteractsWithForms;

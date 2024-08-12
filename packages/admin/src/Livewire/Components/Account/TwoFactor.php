@@ -15,6 +15,9 @@ use Shopper\Actions\EnableTwoFactorAuthentication;
 use Shopper\Actions\GenerateNewRecoveryCodes;
 use Shopper\Traits\ConfirmsPasswords;
 
+/**
+ * @property Authenticatable $user
+ */
 class TwoFactor extends Component
 {
     use ConfirmsPasswords;

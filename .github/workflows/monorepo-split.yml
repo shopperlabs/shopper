@@ -3,7 +3,6 @@ name: monorepo-split
 on:
   push:
     branches:
-      - main
       - '2.*'
     tags: '*'
 
@@ -32,4 +31,4 @@ jobs:
           branch: 2.x
           tag: ${{ steps.previous-tag.outputs.tag }}
           user_name: 'Arthur Monney'
-          user_email: 'monneylobe@gmail.com'
+          user_email: 'contact@arthurmonney.me'

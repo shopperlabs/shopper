@@ -23,11 +23,15 @@
                             </p>
                             <div class="flex flex-col space-y-0.5 truncate text-sm text-gray-500 dark:text-gray-400">
                                 <span>{{ $address->postal_code }}, {{ $address->city }}</span>
-                                <span class="inline-flex items-center gap-2 shrink-0">
+                                <span class="inline-flex shrink-0 items-center gap-2">
                                     <span>{{ $address->country->name }}</span>
-                                    <img src="{{ $address->country->svg_flag }}" class="size-5 rounded-full object-center object-cover" alt="Country flag">
+                                    <img
+                                        src="{{ $address->country->svg_flag }}"
+                                        class="size-5 rounded-full object-cover object-center"
+                                        alt="Country flag"
+                                    />
                                 </span>
-                                @if($address->phone_number)
+                                @if ($address->phone_number)
                                     <span>{{ $address->phone_number }}</span>
                                 @endif
                             </div>

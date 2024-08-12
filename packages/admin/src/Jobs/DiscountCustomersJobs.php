@@ -29,7 +29,7 @@ class DiscountCustomersJobs implements ShouldQueue
 
     public function handle(): void
     {
-        if ($this->eligibility === DiscountEligibility::CUSTOMERS->value) {
+        if ($this->eligibility === DiscountEligibility::Customers()) {
             // Remove all the customers that's not been selected that already exist during creation of the discount
             $this->discount->items()
                 ->where('condition', 'eligibility')

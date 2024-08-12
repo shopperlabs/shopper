@@ -2,3 +2,76 @@ name: Bug report
 description: Report a problem you're experiencing
 labels: bug,unconfirmed,medium priority
 projects: ['shopper']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a bug report, please search the existing issues (both open and closed).
+
+        ---
+
+        Thank you for taking the time to file a bug report. To address this bug as fast as possible, we need some information.
+  - type: input
+    id: package-version
+    attributes:
+      label: Package Version
+      description: Please provide the full version of the package you have installed.
+      placeholder: v2.0.0
+    validations:
+      required: true
+  - type: input
+    id: laravel-version
+    attributes:
+      label: Laravel Version
+      description: Please provide the full Laravel version of your project.
+      placeholder: v10.0.0
+    validations:
+      required: true
+  - type: input
+    id: livewire-version
+    attributes:
+      label: Livewire Version
+      description: Please provide the full Livewire version of your project, if applicable.
+      placeholder: v3.0.0
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP Version
+      description: Please provide the full PHP version of your server.
+      placeholder: PHP 8.3.0
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem description
+      description: What happened when you experienced the problem?
+    validations:
+      required: true
+  - type: textarea
+    id: expectation
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Which steps do we need to take to reproduce the problem? Any code examples need to be **as short as possible**, remove any code that is unrelated to the bug.  **This issue will be automatically closed and not reviewed if detailed replication steps are missing.**
+    validations:
+      required: true
+  - type: input
+    id: reproduction
+    attributes:
+      label: Reproduction repository (issue will be closed if this is not valid)
+      description: The URL of a public GitHub repository which reproduces the problem. **Please do not link to your actual project**, what we need instead is a _minimal_ reproduction in a fresh project without any unnecessary code. This means it doesn\'t matter if your real project is private / confidential, since we want a link to a separate, isolated reproduction. This allows us to fix the problem much quicker. **This issue will be automatically closed and not reviewed if this is missing. Please make sure to format the URL starting with `https://github.com` - only repositories hosted on GitHub are accepted.**
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: If applicable, provide relevant log output. No need for backticks here.
+      render: shell

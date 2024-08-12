@@ -19,6 +19,7 @@ use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
  * @property Zone $zone
+ * @property Form $form
  */
 class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOverForm
 {
@@ -67,7 +68,7 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
                             ->placeholder('Standard option...')
                             ->required(),
 
-                        Forms\Components\TextInput::make('price')
+                        Forms\Components\TextInput::make('price') // @phpstan-ignore-line
                             ->label(__('shopper::forms.label.price'))
                             ->numeric()
                             ->required()

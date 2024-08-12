@@ -16,14 +16,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
+use Shopper\Core\Models\Category;
 use Shopper\Core\Repositories\Store\CategoryRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
+/**
+ * @property Form $form
+ */
 class CategoryForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public Model $category;
+    /**
+     * @var Category|Model
+     */
+    public $category;
 
     public ?array $data = [];
 
@@ -57,7 +64,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                             ->label(__('shopper::forms.label.parent'))
                             ->relationship('parent', 'name', fn (Builder $query) => $query->where('is_enabled', true))
                             ->getOptionLabelFromRecordUsing(
-                                fn (Model $model) => $model->parent
+                                fn ($model) => $model->parent
                                     ? "{$model->parent->name} / {$model->name}"
                                     : $model->name
                             )
@@ -106,6 +113,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
 
     public function save(): void
     {
+        // @phpstan-ignore-next-line
         if ($this->category->id) {
             $this->category->update($this->form->getState());
         } else {

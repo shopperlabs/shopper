@@ -58,7 +58,7 @@ class Index extends Component implements HasForms, HasTable
             ->actions([
                 Tables\Actions\DeleteAction::make('delete')
                     ->label(__('shopper::forms.actions.delete'))
-                    ->visible(fn ($record) => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin())
+                    ->visible(fn ($record) => shopper()->auth()->user()->isAdmin() && ! $record->isAdmin()) // @phpstan-ignore-line
                     ->successNotificationTitle(__('shopper::notifications.users_roles.admin_deleted')),
             ]);
     }

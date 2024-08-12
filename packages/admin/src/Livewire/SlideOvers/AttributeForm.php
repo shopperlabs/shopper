@@ -16,6 +16,9 @@ use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Components\SlideOverComponent;
 
+/**
+ * @property Forms\Form $form
+ */
 class AttributeForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;

@@ -21,6 +21,7 @@ class Orders extends Component
         return view('shopper::livewire.components.customers.orders', [
             'orders' => $this->customer->orders()
                 ->with(['items', 'shippingAddress', 'paymentMethod', 'shippingOption'])
+                ->latest()
                 ->simplePaginate(3),
         ]);
     }

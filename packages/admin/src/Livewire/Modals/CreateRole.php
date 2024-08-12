@@ -13,6 +13,9 @@ use Illuminate\Contracts\View\View;
 use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\Role;
 
+/**
+ * @property Form $form
+ */
 class CreateRole extends ModalComponent implements HasForms
 {
     use InteractsWithForms;
