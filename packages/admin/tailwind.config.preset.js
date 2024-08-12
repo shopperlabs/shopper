@@ -14,7 +14,6 @@ export default {
   content: [
     './resources/views/**/*.blade.php',
     './src/**/*.php',
-    './vendor/wire-elements/modal/resources/views/*.blade.php',
   ],
   theme: {
     extend: {
