@@ -42,8 +42,7 @@
     "shopper/sidebar": "self.version",
     "spatie/laravel-livewire-wizard": "^2.2",
     "spatie/laravel-package-tools": "^1.15",
-    "stevebauman/location": "^7.2",
-    "wire-elements/modal": "^2.0"
+    "stevebauman/location": "^7.2"
   },
   "autoload": {
     "files": [

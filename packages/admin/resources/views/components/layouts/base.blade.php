@@ -51,10 +51,13 @@
 
         @livewire(\Filament\Notifications\Livewire\Notifications::class)
         @livewire(\Shopper\Livewire\Components\SlideOverPanel::class)
+        @livewire(\Shopper\Livewire\Components\Modal::class)
 
-        <div class="ui-modal">
-            @livewire(\LivewireUI\Modal\Modal::class)
-        </div>
+        @isset($filamentModal)
+            <div class="ui-modal">
+                {{ $filamentModal }}
+            </div>
+        @endisset
 
         @filamentScripts
 

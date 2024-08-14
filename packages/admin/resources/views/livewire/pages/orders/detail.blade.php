@@ -72,7 +72,7 @@
                                 :label="__('shopper::forms.actions.more_actions')"
                                 icon="untitledui-chevron-selector-vertical"
                                 color="gray"
-                                size="sm"
+                                size="md"
                                 dropdown-width="sh-dropdown-width"
                                 dropdown-placement="bottom-start"
                                 :button="true"

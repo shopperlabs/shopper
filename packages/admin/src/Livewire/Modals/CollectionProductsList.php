@@ -8,9 +8,9 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
-use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Repositories\Store\CollectionRepository;
 use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Livewire\Components\ModalComponent;
 
 class CollectionProductsList extends ModalComponent
 {
@@ -30,7 +30,7 @@ class CollectionProductsList extends ModalComponent
 
     public static function modalMaxWidth(): string
     {
-        return '3xl';
+        return 'xl';
     }
 
     #[Computed]

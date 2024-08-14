@@ -44,8 +44,7 @@
     "spatie/laravel-livewire-wizard": "^2.2",
     "stevebauman/location": "^7.2",
     "spatie/laravel-package-tools": "^1.15",
-    "symplify/monorepo-builder": "^10.0",
-    "wire-elements/modal": "^2.0"
+    "symplify/monorepo-builder": "^10.0"
   },
   "autoload": {
     "files": [

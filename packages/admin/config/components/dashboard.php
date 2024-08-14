@@ -26,6 +26,7 @@ return [
     'components' => [
         // 'search' => Components\Search::class,
         'side-panel' => Components\SlideOverPanel::class,
+        'modal' => Components\Modal::class,
     ],
 
 ];
