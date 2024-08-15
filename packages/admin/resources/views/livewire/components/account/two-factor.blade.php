@@ -11,7 +11,7 @@
                     <div class="flex items-center space-x-3">
                         <div
                             @class([
-                                'h-2.5 w-2.5 shrink-0 rounded-full',
+                                'size-2.5 shrink-0 rounded-full',
                                 'bg-green-400' => $this->enabled,
                                 'bg-gray-400 dark:bg-gray-500' => ! $this->enabled,
                             ])
@@ -27,20 +27,20 @@
                 </div>
                 <div class="space-y-6 px-4 py-5 sm:p-6">
                     @if (! $this->enabled)
-                        <div class="rounded-md bg-primary-50 p-4 dark:bg-primary-600/10">
+                        <div class="rounded-md bg-primary-50 p-4 dark:bg-primary-800/20">
                             <div class="flex">
                                 <div class="shrink-0">
-                                    <x-heroicon-s-information-circle class="h-5 w-5 text-primary-400" aria-hidden="" />
+                                    <x-heroicon-s-information-circle class="size-5 text-primary-400" aria-hidden="" />
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm leading-5 text-primary-700">
+                                    <p class="text-sm leading-5 text-primary-500">
                                         {{ __('shopper::pages/auth.account.two_factor_install_message') }}
                                     </p>
                                     <p class="mt-3 text-sm leading-5">
                                         <a
                                             href="https://support.google.com/accounts/answer/1066447"
                                             target="_blank"
-                                            class="whitespace-no-wrap font-medium text-primary-700 transition duration-150 ease-in-out hover:text-primary-600"
+                                            class="whitespace-no-wrap font-medium text-primary-500 transition duration-150 ease-in-out hover:text-primary-600"
                                         >
                                             {{ __('shopper::words.learn_more') }} &rarr;
                                         </a>
@@ -52,7 +52,7 @@
 
                     <div class="flex items-start">
                         <div class="shrink-0">
-                            <span class="block h-12 w-12">
+                            <span class="block size-12">
                                 <x-heroicon-o-shield-check class="h-full w-full text-primary-600" aria-hidden="true" />
                             </span>
                         </div>

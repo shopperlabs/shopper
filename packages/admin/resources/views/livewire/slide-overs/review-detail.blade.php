@@ -54,7 +54,7 @@
                                             {{-- format-ignore-start --}}
                                             <x-heroicon-s-star
                                                 @class([
-                                                    'h-4 w-4 shrink-0',
+                                                    'size-4 shrink-0',
                                                     'text-yellow-400' => $review->rating >= $star,
                                                     'text-gray-300' => $review->rating < $star,
                                                 ])
@@ -94,7 +94,7 @@
                                     <div class="flex items-center">
                                         <div class="shrink-0">
                                             <img
-                                                class="h-8 w-8 rounded-full"
+                                                class="size-8 rounded-full"
                                                 src="{{ $review->author->picture }}"
                                                 alt=""
                                             />

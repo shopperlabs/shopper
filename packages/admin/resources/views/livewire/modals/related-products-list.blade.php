@@ -21,7 +21,7 @@
                 <div class="flex h-full items-center justify-center p-4">
                     <div class="text-center">
                         <x-untitledui-book-open
-                            class="mx-auto h-8 w-8 text-gray-400 dark:text-gray-500"
+                            class="mx-auto size-8 text-gray-400 dark:text-gray-500"
                             stroke-width="1.5"
                             aria-hidden="true"
                         />

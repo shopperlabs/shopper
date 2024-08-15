@@ -4,7 +4,7 @@
 
 <div class="flex items-center gap-2">
     <img
-        class="h-8 w-8 rounded-full object-cover"
+        class="size-8 rounded-full object-cover"
         src="{{ $firstItem->product->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
         alt="Avatar {{ $firstItem->product->name }}"
     />

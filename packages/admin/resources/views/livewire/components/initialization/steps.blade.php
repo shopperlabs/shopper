@@ -11,13 +11,13 @@
         >
             <span
                 @class([
-                    "relative flex h-6 w-6 items-center justify-center rounded-full text-xs leading-5",
+                    "relative flex size-6 items-center justify-center rounded-full text-xs leading-5",
                     "bg-primary-600" => $step->complete,
                     "border border-gray-300 bg-white text-gray-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-400" => ! $step->complete,
                 ])
             >
                 @if ($step->complete)
-                    <x-untitledui-check-circle class="h-5 w-5 text-white" stroke-width="1.5" aria-hidden="true" />
+                    <x-untitledui-check-circle class="size-5 text-white" stroke-width="1.5" aria-hidden="true" />
                 @else
                     {{ $loop->index + 1 }}
                 @endif
@@ -37,7 +37,7 @@
             @if (! $loop->last)
                 <div class="ml-5">
                     <x-untitledui-chevron-right
-                        class="h-5 w-5 text-gray-400 dark:text-gray-300"
+                        class="size-5 text-gray-400 dark:text-gray-300"
                         stroke-width="1.5"
                         aria-hidden="true"
                     />

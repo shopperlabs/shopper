@@ -2,7 +2,7 @@
     <x-shopper::card class="divide-y divide-gray-200 dark:divide-gray-700">
         <div class="flex items-center justify-between p-4 lg:p-5">
             <div class="flex items-start space-x-3">
-                <x-heroicon-o-truck class="h-6 w-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                <x-heroicon-o-truck class="size-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />
                 <div class="space-y-1">
                     <x-filament::section.heading>
                         {{ __('shopper::pages/settings/zones.shipping_options.title') }}

@@ -88,7 +88,7 @@
                             arguments: { productId: {{ $product->id }}, ids: {{ json_encode($this->productsIds) }} },
                         })"
                     >
-                        <x-untitledui-plus class="mr-2 h-5 w-5" stroke-width="1.5" aria-hidden="true" />
+                        <x-untitledui-plus class="mr-2 size-5" stroke-width="1.5" aria-hidden="true" />
                         {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')]) }}
                     </x-shopper::buttons.primary>
                 </x-slot>

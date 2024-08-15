@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center justify-center">
     <div class="relative flex w-full items-center justify-center gap-2 px-4">
-        <div class="grow-1 relative h-6 w-6 shrink-0 gap-1">
+        <div class="grow-1 relative size-6 shrink-0 gap-1">
             <x-filament::icon icon="{{ $icon }}" class="absolute h-full w-full" aria-hidden="true" />
             {{-- Ugly fix for choices.js not registering clicks on SVGs. --}}
             <div class="absolute z-10 h-full w-full"></div>

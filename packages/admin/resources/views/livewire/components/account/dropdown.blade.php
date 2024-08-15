@@ -5,7 +5,7 @@
             class="relative inline-flex w-full items-center rounded-full text-sm leading-5 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
             type="button"
         >
-            <img class="h-8 w-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
+            <img class="size-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
             <span class="sr-only">{{ $user->full_name }}</span>
             <span
                 class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white dark:ring-gray-700"
@@ -58,7 +58,7 @@
                             class="group flex w-full items-center rounded-lg px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-white/5"
                         >
                             <x-untitledui-log-out
-                                class="mr-2 h-5 w-5 text-gray-400 dark:group-hover:text-gray-500"
+                                class="mr-2 size-5 text-gray-400 dark:group-hover:text-gray-500"
                                 aria-hidden="true"
                             />
                             {{ __('shopper::layout.account_dropdown.sign_out') }}

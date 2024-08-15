@@ -7,7 +7,7 @@
 
     @if ($total === 0)
         <div class="relative mt-10 flex w-full flex-col items-center justify-center py-12 lg:py-16">
-            <div class="h-64 w-1/3 shrink-0">
+            <div class="h-64 w-1/3 shrink-0 lg:h-auto">
                 <svg class="h-full w-full" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 320 230">
                     <style>
                         .st0 {
@@ -1026,11 +1026,11 @@
                     </g>
                 </svg>
             </div>
-            <div class="mt-5 w-full space-y-3 text-center sm:max-w-md">
-                <h3 class="font-heading text-base font-medium leading-6 text-gray-900 dark:text-white lg:text-lg">
+            <div class="mt-5 w-full space-y-4 text-center sm:max-w-md">
+                <h3 class="font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white sm:text-lg sm:leading-7 lg:text-2xl">
                     {{ __('shopper::pages/products.reviews.title') }}
                 </h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                <p class="text-base leading-6 text-gray-500 dark:text-gray-400">
                     {{ __('shopper::pages/products.reviews.description') }}
                 </p>
             </div>

@@ -53,12 +53,6 @@
         @livewire(\Shopper\Livewire\Components\SlideOverPanel::class)
         @livewire(\Shopper\Livewire\Components\Modal::class)
 
-        @isset($filamentModal)
-            <div class="ui-modal">
-                {{ $filamentModal }}
-            </div>
-        @endisset
-
         @filamentScripts
 
         @include('shopper::includes._additional-scripts')

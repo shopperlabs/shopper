@@ -8,9 +8,9 @@
 <div {{ $attributes->twMerge(['class' => 'flex flex-col items-center justify-center px-8 py-10 text-center']) }}>
     @if ($icon)
         <div
-            class="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-white"
+            class="flex size-12 items-center justify-center rounded-full bg-gray-100 text-gray-700 dark:bg-gray-900 dark:text-white"
         >
-            @svg($icon, 'h-5 w-5', ['aria-hidden' => 'true'])
+            @svg($icon, 'size-5', ['aria-hidden' => 'true'])
         </div>
     @endif
 

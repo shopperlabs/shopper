@@ -10,7 +10,7 @@
                     <h2
                         class="inline-flex items-center text-center font-heading text-xl font-medium leading-9 text-gray-900 dark:text-white"
                     >
-                        <x-heroicon-o-shield-check class="-ml-1 mr-2 h-10 w-10 text-primary-600" aria-hidden="true" />
+                        <x-heroicon-o-shield-check class="-ml-1 mr-2 size-10 text-primary-600" aria-hidden="true" />
                         {{ __('shopper::pages/auth.two_factor.subtitle') }}
                     </h2>
                     <p

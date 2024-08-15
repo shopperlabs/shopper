@@ -4,7 +4,7 @@
 }" class="pb-10">
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.settings.users')" :current="$role->display_name">
-            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
                 :link="route('shopper.settings.users')"
                 :title="__('shopper::pages/settings/menu.staff')"
@@ -30,7 +30,7 @@
                         )"
                         type="button"
                     >
-                        <x-untitledui-lock-04 class="mr-2 h-5 w-5" aria-hidden="true" />
+                        <x-untitledui-lock-04 class="mr-2 size-5" aria-hidden="true" />
                         {{ __('shopper::pages/settings/staff.create_permission') }}
                     </x-shopper::buttons.primary>
                 </div>
@@ -60,7 +60,7 @@
                         <div class="rounded-md bg-info-500 bg-opacity-10 p-4">
                             <div class="flex">
                                 <div class="shrink-0">
-                                    <x-untitledui-alert-circle class="h-5 w-5 text-info-400" aria-hidden="true" />
+                                    <x-untitledui-alert-circle class="size-5 text-info-400" aria-hidden="true" />
                                 </div>
                                 <div class="ml-3 flex-1 lg:flex lg:justify-between">
                                     <p class="text-sm leading-5 text-info-700">

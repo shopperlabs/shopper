@@ -3,7 +3,7 @@
         :back="route('shopper.settings.index')"
         :current="__('shopper::pages/settings/menu.analytic')"
     >
-        <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
+        <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.settings.index')"
             :title="__('shopper::pages/settings/global.menu')"
@@ -20,9 +20,9 @@
         <div class="lg:col-span-1">
             <div>
                 <div
-                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+                    class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
                 >
-                    <x-shopper::icons.ga class="h-6 w-6" aria-hidden="true" />
+                    <x-shopper::icons.ga class="size-6" aria-hidden="true" />
                 </div>
                 <h3 class="mt-5 font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white">
                     {{ __('shopper::pages/settings/global.analytics.google') }}
@@ -83,7 +83,7 @@
                             target="_blank"
                             class="ml-3 leading-4 text-gray-400 outline-none transition duration-200 ease-in-out hover:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:text-gray-400"
                         >
-                            <x-untitledui-info-circle class="h-5 w-5" aria-hidden="true" />
+                            <x-untitledui-info-circle class="size-5" aria-hidden="true" />
                         </a>
                     </label>
                     <div class="mt-2 flex items-center">
@@ -102,7 +102,7 @@
                                     :class="{ 'outline-none border-primary-300 shadow-outline-primary': focused }"
                                     class="inline-flex cursor-pointer items-center rounded-md border border-gray-300 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:text-gray-500 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white"
                                 >
-                                    <x-untitledui-file-download-02 class="mr-1.5 h-5 w-5" aria-hidden="true" />
+                                    <x-untitledui-file-download-02 class="mr-1.5 size-5" aria-hidden="true" />
                                     {{ __('shopper::forms.actions.upload') }}
                                 </label>
                             </span>
@@ -134,9 +134,9 @@
             <div class="lg:col-span-1">
                 <div>
                     <div
-                        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+                        class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
                     >
-                        <x-shopper::icons.gtag class="h-6 w-6" aria-hidden="true" />
+                        <x-shopper::icons.gtag class="size-6" aria-hidden="true" />
                     </div>
                     <h3 class="mt-5 font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::pages/settings/global.analytics.gtag') }}
@@ -179,9 +179,9 @@
             <div class="lg:col-span-1">
                 <div>
                     <div
-                        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+                        class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
                     >
-                        <x-shopper::icons.pixel class="h-6 w-6" aria-hidden="true" />
+                        <x-shopper::icons.pixel class="size-6" aria-hidden="true" />
                     </div>
                     <h3 class="mt-5 font-heading text-lg font-bold leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::pages/settings/global.analytics.pixel') }}

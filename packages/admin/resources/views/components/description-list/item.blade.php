@@ -6,7 +6,7 @@
 
 <div {{ $attributes->twMerge(['class' => 'flex items-start space-x-3 overflow-hidden']) }}>
     @if ($icon)
-        @svg($icon, 'mt-0.5 h-5 w-5 text-gray-400 dark:text-gray-500', ['aria-hidden' => true])
+        @svg($icon, 'mt-0.5 size-5 text-gray-400 dark:text-gray-500', ['aria-hidden' => true])
     @endif
 
     <div class="flex-1">

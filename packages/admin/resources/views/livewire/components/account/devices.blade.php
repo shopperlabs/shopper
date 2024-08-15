@@ -18,9 +18,9 @@
                                 <div class="flex items-center space-x-3">
                                     <div class="shrink-0 text-gray-500 dark:text-gray-400">
                                         @if ($session->agent->isDesktop())
-                                            <x-untitledui-monitor-02 class="h-8 w-8" aria-hidden="true" />
+                                            <x-untitledui-monitor-02 class="size-8" aria-hidden="true" />
                                         @else
-                                            <x-untitledui-phone class="h-8 w-8" aria-hidden="true" />
+                                            <x-untitledui-phone class="size-8" aria-hidden="true" />
                                         @endif
                                     </div>
                                     <div>
@@ -78,11 +78,11 @@
                     </div>
                 </x-shopper::card>
             @else
-                <div class="rounded-lg border-l-4 border-yellow-400 bg-yellow-50 p-4">
+                <div class="rounded-lg border-l-4 ring-1 ring-warning-100 border-warning-400 bg-warning-50 p-4 dark:ring-warning-800/50 dark:bg-warning-800/20">
                     <div class="flex">
                         <div class="shrink-0">
                             <svg
-                                class="h-5 w-5 text-yellow-400"
+                                class="size-5 text-warning-400"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
@@ -95,13 +95,13 @@
                                 />
                             </svg>
                         </div>
-                        <div class="ml-3">
-                            <p class="text-sm leading-5 text-yellow-700">
+                        <div class="ml-3 text-warning-500">
+                            <p class="text-sm leading-5">
                                 {{ __('shopper::pages/auth.account.device_enabled_feature') }}
                                 <a
                                     href="https://laravel.com/docs/session"
                                     target="_blank"
-                                    class="font-medium text-yellow-700 underline transition duration-150 ease-in-out hover:text-yellow-600"
+                                    class="font-medium underline transition duration-150 ease-in-out hover:text-warning-600"
                                 >
                                     {{ __('shopper::words.learn_more') }} &rarr;
                                 </a>

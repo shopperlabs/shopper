@@ -5,7 +5,7 @@
 
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.orders.index')">
-            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" />
+            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" />
             <x-shopper::breadcrumb.link
                 :link="route('shopper.orders.index')"
                 :title="__('shopper::pages/orders.menu')"
@@ -33,7 +33,7 @@
                             </div>
                             <div class="flex items-center gap-2 px-4">
                                 <x-untitledui-calendar
-                                    class="h-5 w-5 text-gray-400 dark:text-gray-500"
+                                    class="size-5 text-gray-400 dark:text-gray-500"
                                     stroke-width="1.5"
                                     aria-hidden="true"
                                 />
@@ -54,7 +54,7 @@
                                         type="button"
                                     >
                                         <x-untitledui-trash-03
-                                            class="mr-2 h-5 w-5"
+                                            class="mr-2 size-5"
                                             stroke-width="1.5"
                                             aria-hidden="true"
                                         />
@@ -91,7 +91,7 @@
                                 aria-label="{{ __('Previous order') }}"
                                 @if(! $prevOrder) disabled @endif
                             >
-                                <x-untitledui-chevron-left class="h-5 w-5" stroke-width="1.5" aria-hidden="true" />
+                                <x-untitledui-chevron-left class="size-5" stroke-width="1.5" aria-hidden="true" />
                             </button>
                             <button
                                 @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
@@ -104,7 +104,7 @@
                                 aria-label="{{ __('Next order') }}"
                                 @if(! $nextOrder) disabled @endif
                             >
-                                <x-untitledui-chevron-right class="h-5 w-5" stroke-width="1.5" aria-hidden="true" />
+                                <x-untitledui-chevron-right class="size-5" stroke-width="1.5" aria-hidden="true" />
                             </button>
                         </span>
                     </div>
@@ -142,7 +142,7 @@
                                         <div class="flex min-w-0 flex-1 items-center">
                                             <div class="shrink-0">
                                                 <img
-                                                    class="h-10 w-10 rounded-lg object-cover"
+                                                    class="size-10 rounded-lg object-cover"
                                                     src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
                                                     alt="{{ $item->name }}"
                                                 />
@@ -206,15 +206,15 @@
                         <div class="flex py-4">
                             @if ($order->paymentMethod->logo)
                                 <img
-                                    class="h-10 w-10 rounded-md object-cover"
+                                    class="size-10 rounded-md object-cover"
                                     src="{{ $order->paymentMethod->logo_url }}"
                                     alt="payment icon"
                                 />
                             @else
                                 <span
-                                    class="flex h-10 w-10 items-center justify-center rounded-md bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-white"
+                                    class="flex size-10 items-center justify-center rounded-md bg-gray-100 text-gray-300 dark:bg-gray-800 dark:text-white"
                                 >
-                                    <x-untitledui-image class="h-6 w-6" stroke-width="1.5" aria-hidden="true" />
+                                    <x-untitledui-image class="size-6" stroke-width="1.5" aria-hidden="true" />
                                 </span>
                             @endif
                             <div class="ml-4">
@@ -235,7 +235,7 @@
                                 <div class="flex">
                                     <div class="shrink-0">
                                         <x-untitledui-alert-triangle
-                                            class="h-5 w-5 text-yellow-400"
+                                            class="size-5 text-yellow-400"
                                             stroke-width="1.5"
                                             aria-hidden="true"
                                         />
@@ -305,7 +305,7 @@
                                 <div class="flex">
                                     <div class="shrink-0">
                                         <x-untitledui-alert-triangle
-                                            class="h-5 w-5 text-yellow-400"
+                                            class="size-5 text-yellow-400"
                                             stroke-width="1.5"
                                             aria-hidden="true"
                                         />
@@ -350,7 +350,7 @@
                     <div class="mt-5 flex space-x-3">
                         <div class="shrink-0">
                             <img
-                                class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 ring-4 ring-white dark:bg-gray-500 dark:ring-gray-800"
+                                class="flex size-10 items-center justify-center rounded-full bg-gray-400 ring-4 ring-white dark:bg-gray-500 dark:ring-gray-800"
                                 src="{{ auth()->user()->picture }}"
                                 alt="Customer avatar"
                             />
@@ -402,7 +402,7 @@
                             <div class="flex items-center space-x-4">
                                 <div class="shrink-0">
                                     <img
-                                        class="h-8 w-8 rounded-full"
+                                        class="size-8 rounded-full"
                                         src="{{ $order->customer->picture }}"
                                         alt="Customer profile"
                                     />
@@ -430,7 +430,7 @@
                                 class="inline-flex items-center gap-2 rounded-sm bg-gray-50 px-4 py-2 dark:bg-gray-800"
                             >
                                 <x-untitledui-user-02
-                                    class="h-5 w-5 text-gray-400 dark:text-gray-500"
+                                    class="size-5 text-gray-400 dark:text-gray-500"
                                     stroke-width="1.5"
                                     aria-hidden="true"
                                 />

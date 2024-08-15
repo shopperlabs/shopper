@@ -23,9 +23,9 @@
             <div class="space-y-5 p-6">
                 <div class="flex items-center">
                     <div
-                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
+                        class="flex size-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
                     >
-                        <x-untitledui-brackets class="h-5 w-5 text-primary-500" aria-hidden="true" />
+                        <x-untitledui-brackets class="size-5 text-primary-500" aria-hidden="true" />
                     </div>
                     <h4 class="ml-4 font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::pages/dashboard.cards.doc_title') }}
@@ -42,7 +42,7 @@
                             <span
                                 class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
                             >
-                                <x-untitledui-arrow-right class="h-5 w-5" aria-hidden="true" />
+                                <x-untitledui-arrow-narrow-right class="size-5" aria-hidden="true" />
                             </span>
                         </div>
                     </a>
@@ -52,9 +52,9 @@
             <div class="space-y-5 border-t border-gray-200 p-6 dark:border-gray-600 sm:border-t-0">
                 <div class="flex items-center">
                     <div
-                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
+                        class="flex size-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
                     >
-                        <x-untitledui-video-recorder class="h-5 w-5 text-primary-500" aria-hidden="true" />
+                        <x-untitledui-video-recorder class="size-5 text-primary-500" aria-hidden="true" />
                     </div>
                     <h4 class="ml-4 font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::pages/dashboard.cards.screencast_title') }}
@@ -71,7 +71,7 @@
                             <span
                                 class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
                             >
-                                <x-untitledui-arrow-right class="h-5 w-5" aria-hidden="true" />
+                                <x-untitledui-arrow-narrow-right class="size-5" aria-hidden="true" />
                             </span>
                         </div>
                     </a>
@@ -81,9 +81,9 @@
             <div class="space-y-5 border-t border-gray-200 p-6 dark:border-gray-600">
                 <div class="flex items-center">
                     <div
-                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
+                        class="flex size-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
                     >
-                        <x-untitledui-palette class="h-5 w-5 text-primary-500" aria-hidden="true" />
+                        <x-untitledui-palette class="size-5 text-primary-500" aria-hidden="true" />
                     </div>
                     <h4 class="ml-4 font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::pages/dashboard.cards.theme_title') }}
@@ -104,9 +104,9 @@
             <div class="space-y-5 border-t border-gray-200 p-6 dark:border-gray-600">
                 <div class="flex items-center">
                     <div
-                        class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
+                        class="flex size-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-800/20"
                     >
-                        <x-untitledui-file-plus class="h-5 w-5 text-primary-500" aria-hidden="true" />
+                        <x-untitledui-file-plus class="size-5 text-primary-500" aria-hidden="true" />
                     </div>
                     <h4 class="ml-4 font-heading text-lg font-semibold leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::pages/dashboard.cards.product_title') }}
@@ -124,7 +124,7 @@
                                 <span
                                     class="ml-1 translate-x-0 transform text-primary-500 transition duration-200 ease-in-out group-hover:translate-x-1"
                                 >
-                                    <x-untitledui-arrow-right class="h-5 w-5" aria-hidden="true" />
+                                    <x-untitledui-arrow-narrow-right class="size-5" aria-hidden="true" />
                                 </span>
                             </div>
                         </x-shopper::link>

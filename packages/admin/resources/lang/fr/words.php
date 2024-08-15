@@ -107,7 +107,7 @@ return [
     'me' => 'Moi',
     'invitation' => 'Invitation',
     'attention_needed' => 'Attention requise',
-    'attention_description' => 'Le rôle le plus élevé (admin) donne à cet utilisateur les mêmes droits et autorisations que vous.',
+    'attention_description' => 'Le rôle le plus élevé (:role) donne à cet utilisateur les mêmes droits et autorisations que vous.',
     'wip' => 'en cours',
     'visit_documentation' => 'visiter la documentation.',
     'namespace' => 'Namespace',

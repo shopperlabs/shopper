@@ -6,7 +6,7 @@
             <div>
                 <div class="flex items-center space-x-4">
                     <x-untitledui-globe-05
-                        class="h-6 w-6 text-gray-400 dark:text-gray-500"
+                        class="size-6 text-gray-400 dark:text-gray-500"
                         aria-hidden="true"
                         stroke-width="1"
                     />

@@ -4,7 +4,7 @@
 }">
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.customers.index')" :current="$customer->full_name">
-            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
                 :link="route('shopper.customers.index')"
                 :title="__('shopper::pages/customers.menu')"
@@ -15,7 +15,7 @@
             <div class="min-w-0 flex-1">
                 <div class="flex items-start">
                     <img
-                        class="h-12 w-12 rounded-full object-cover"
+                        class="size-12 rounded-full object-cover"
                         src="{{ $customer->picture }}"
                         alt="{{ $customer->full_name }}"
                     />
@@ -26,9 +26,9 @@
                         <div class="mt-1 flex items-center sm:space-x-2">
                             <div class="flex items-center">
                                 @if ($customer->email_verified_at)
-                                    <x-untitledui-check-verified-02 class="h-5 w-5 text-green-500" aria-hidden="true" />
+                                    <x-untitledui-check-verified-02 class="size-5 text-green-500" aria-hidden="true" />
                                 @else
-                                    <x-untitledui-alert-circle class="h-5 w-5 text-danger-500" aria-hidden="true" />
+                                    <x-untitledui-alert-circle class="size-5 text-danger-500" aria-hidden="true" />
                                 @endif
                                 <span class="ml-1.5 text-sm leading-5 text-gray-500 dark:text-gray-400">
                                     {{ $customer->email }}

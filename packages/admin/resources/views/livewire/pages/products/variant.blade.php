@@ -1,12 +1,12 @@
 <x-shopper::container>
     <x-shopper::breadcrumb :back="route('shopper.products.index')">
-        <x-untitledui-chevron-left class="h-4 w-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+        <x-untitledui-chevron-left class="size-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.products.edit', $product)"
             :title="$product->name"
             class="truncate"
         />
-        <x-untitledui-chevron-left class="h-4 w-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+        <x-untitledui-chevron-left class="size-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <span class="truncate text-gray-500 dark:text-gray-400">
             {{ $variant->name }}
         </span>

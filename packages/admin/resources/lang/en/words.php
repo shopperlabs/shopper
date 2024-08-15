@@ -107,7 +107,7 @@ return [
     'me' => 'Me',
     'invitation' => 'Invitation',
     'attention_needed' => 'Attention needed',
-    'attention_description' => 'The higher role (admin) gives this user the same rights and permissions as you.',
+    'attention_description' => 'The higher role (:role) gives this user the same rights and permissions as you.',
     'wip' => 'work in progress',
     'visit_documentation' => 'visit the documentation.',
     'namespace' => 'Namespace',

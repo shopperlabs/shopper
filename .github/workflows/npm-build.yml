@@ -26,8 +26,14 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          composer install --no-interaction
+          pnpm install
       - name: Build assets
         run: pnpm build
       - name: Pull changes

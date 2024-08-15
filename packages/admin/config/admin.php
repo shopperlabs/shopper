@@ -32,10 +32,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Admin Brand Name
+    | Admin Brand Logo
     |--------------------------------------------------------------------------
     |
     | This will be displayed on the login page and in the sidebar's header.
+    | This is your site's logo. It will be loaded directly from the public folder
+    | Ex: '/images/logo.svg'
     |
     */
 

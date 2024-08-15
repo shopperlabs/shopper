@@ -17,7 +17,7 @@
                         wire:click="$dispatch('closePanel')"
                     >
                         <span class="sr-only">Close panel</span>
-                        <x-untitledui-x class="h-6 w-6" stroke-width="1.5" aria-hidden="true" />
+                        <x-untitledui-x class="size-6" stroke-width="1.5" aria-hidden="true" />
                     </button>
                 </div>
             </div>

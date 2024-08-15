@@ -7,7 +7,7 @@
 }
 
 .sh-sidebar-item {
-  @apply flex items-center rounded-lg px-3 py-2 text-sm font-medium transition duration-150 ease-in-out;
+  @apply flex items-center rounded-lg gap-2 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out;
 }
 
 .sh-sidebar-item-active {
@@ -16,6 +16,18 @@
 
 .sh-sidebar-item-inactive {
   @apply text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white;
+}
+
+.sh-sidebar-item-submenu {
+  @apply flex items-center py-1 border-l-2 text-sm font-medium pl-5 -ml-px;
+}
+
+.sh-sidebar-item-submenu-active {
+  @apply text-gray-700 border-primary-500 dark:text-white;
+}
+
+.sh-sidebar-item-submenu-inactive {
+  @apply text-gray-500 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300 dark:hover:border-gray-800 dark:hover:text-gray-300;
 }
 
 .item-name {
