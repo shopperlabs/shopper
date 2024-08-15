@@ -6,8 +6,8 @@ namespace Shopper\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Livewire\Components\ModalComponent;
 
 class RelatedProductsList extends ModalComponent
 {
@@ -23,11 +23,6 @@ class RelatedProductsList extends ModalComponent
     {
         $this->product = (new ProductRepository)->getById($productId);
         $this->exceptProductIds = $ids;
-    }
-
-    public static function modalMaxWidth(): string
-    {
-        return '3xl';
     }
 
     public function getProductsProperty()

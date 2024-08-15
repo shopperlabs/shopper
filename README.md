@@ -99,6 +99,7 @@ We send an email about 3-4 emails per year. Sometimes less.
 -   [Arthur Monney](https://github.com/mckenziearts)
 -   [Jean-Vincent QUILICHINI](https://github.com/sense)
 -   [FilamentPHP](https://filamentphp.com)
+-   [Wire Elements](https://wire-elements.dev)
 -   [All Contributors](../../contributors)
 
 And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨

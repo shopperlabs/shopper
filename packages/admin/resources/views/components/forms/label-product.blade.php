@@ -14,8 +14,8 @@
             value="{{ $product->id }}"
         />
     </span>
-    <span class="flex flex-1 items-center justify-between">
-        <span class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+    <span class="flex flex-1 items-center justify-between truncate">
+        <span class="block text-sm font-medium text-gray-700 truncate dark:text-gray-300">
             {{ $product->name }}
         </span>
         <span class="flex items-center space-x-2">

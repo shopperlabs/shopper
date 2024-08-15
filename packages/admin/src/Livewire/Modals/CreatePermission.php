@@ -10,9 +10,9 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\Permission;
 use Shopper\Core\Models\Role;
+use Shopper\Livewire\Components\ModalComponent;
 
 /**
  * @property Form $form

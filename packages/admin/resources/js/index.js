@@ -1,4 +1,5 @@
 import SlideOverPanel from './components/panel'
+import Modal from './components/modal'
 import SelectTree from './components/select-tree'
 import CodePreview from './components/code-preview'
 import './components/sortable'
@@ -6,6 +7,7 @@ import './components/sortable'
 window.SlideOverPanel = SlideOverPanel
 window.selectTree = SelectTree
 window.codePreview = CodePreview
+window.modal = Modal
 
 document.addEventListener('alpine:init', () => {
   const theme = localStorage.getItem('theme') ?? 'system'

@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use LivewireUI\Modal\ModalComponent;
+use Shopper\Livewire\Components\ModalComponent;
 
 class LogoutOthersBrowser extends ModalComponent
 {

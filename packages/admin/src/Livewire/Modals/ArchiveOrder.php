@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
-use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\Order;
+use Shopper\Livewire\Components\ModalComponent;
 
-final class ArchiveOrder extends ModalComponent
+class ArchiveOrder extends ModalComponent
 {
     public Order $order;
 

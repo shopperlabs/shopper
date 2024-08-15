@@ -11,8 +11,8 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use LivewireUI\Modal\ModalComponent;
 use Shopper\Core\Models\PaymentMethod;
+use Shopper\Livewire\Components\ModalComponent;
 
 /**
  * @property Form $form

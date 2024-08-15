@@ -5,7 +5,7 @@
     'footerClasses' => 'p-4 sm:flex sm:p-6',
 ])
 
-<div {{ $attributes->twMerge(['class' => 'h-full bg-white dark:bg-gray-800']) }}>
+<div {{ $attributes->twMerge(['class' => 'h-full']) }}>
     @if ($formAction)
         {{-- format-ignore-start --}}<form wire:submit="{{ $formAction }}">{{-- format-ignore-end --}}
     @endif
