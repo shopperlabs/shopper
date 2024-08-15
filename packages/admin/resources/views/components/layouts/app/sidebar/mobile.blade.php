@@ -27,9 +27,9 @@
                 <button
                     x-show="sidebarOpen"
                     @click="sidebarOpen = false"
-                    class="flex h-12 w-12 items-center justify-center rounded-full focus:bg-gray-500 focus:outline-none"
+                    class="flex size-12 items-center justify-center rounded-full focus:bg-gray-500 focus:outline-none"
                 >
-                    <x-untitledui-x-close class="h-6 w-6 text-white" aria-hidden="true" />
+                    <x-untitledui-x-close class="size-6 text-white" aria-hidden="true" />
                 </button>
             </div>
 

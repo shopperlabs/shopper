@@ -30,7 +30,7 @@ class CatalogSidebar extends AbstractAdminSidebar
                 $item->route('shopper.products.index');
                 $item->setIcon(
                     icon: 'untitledui-book-open',
-                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                    iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -40,9 +40,9 @@ class CatalogSidebar extends AbstractAdminSidebar
                     $item->item(__('shopper::pages/attributes.menu'), function (Item $item): void {
                         $item->weight(1);
                         $item->setAuthorized($this->user->hasPermissionTo('browse_products') || $this->user->hasPermissionTo('browse_attributes'));
-                        $item->setItemClass('group flex items-center py-1 text-sm font-medium border-l-2 pl-5 -ml-px');
-                        $item->setActiveClass('text-gray-700 border-primary-500 dark:text-white');
-                        $item->setInactiveClass('text-gray-500 dark:text-gray-400 hover:text-gray-700 border-transparent hover:border-gray-300 dark:hover:border-gray-800 dark:hover:text-gray-300');
+                        $item->setItemClass('sh-sidebar-item-submenu group');
+                        $item->setActiveClass('sh-sidebar-item-submenu-active');
+                        $item->setInactiveClass('sh-sidebar-item-submenu-inactive');
                         $item->useSpa();
                         $item->route('shopper.attributes.index');
                     });
@@ -60,7 +60,7 @@ class CatalogSidebar extends AbstractAdminSidebar
                     $item->route('shopper.categories.index');
                     $item->setIcon(
                         icon: 'untitledui-tag-03',
-                        iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],
@@ -79,7 +79,7 @@ class CatalogSidebar extends AbstractAdminSidebar
                     $item->route('shopper.collections.index');
                     $item->setIcon(
                         icon: 'untitledui-align-horizontal-centre-02',
-                        iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],
@@ -98,7 +98,7 @@ class CatalogSidebar extends AbstractAdminSidebar
                     $item->route('shopper.brands.index');
                     $item->setIcon(
                         icon: 'untitledui-bookmark',
-                        iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],

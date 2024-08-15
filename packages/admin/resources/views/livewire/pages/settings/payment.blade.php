@@ -7,7 +7,7 @@
             :back="route('shopper.settings.index')"
             :current="__('shopper::pages/settings/payments.title')"
         >
-            <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+            <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
                 :link="route('shopper.settings.index')"
                 :title="__('shopper::pages/settings/global.menu')"

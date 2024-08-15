@@ -36,7 +36,7 @@
                     </dt>
                     <dd class="flex space-x-4 text-sm leading-5 text-gray-900 dark:text-white sm:col-span-2 sm:mt-0">
                         <span class="grow">
-                            <img class="h-8 w-8 rounded-full" src="{{ $customer->picture }}" alt="" />
+                            <img class="size-8 rounded-full" src="{{ $customer->picture }}" alt="" />
                         </span>
                     </dd>
                 </div>
@@ -58,7 +58,7 @@
                         <div class="grow">
                             <p class="flex items-center">
                                 <x-untitledui-calendar-heart
-                                    class="mr-2 h-5 w-5 text-gray-500 dark:text-gray-400"
+                                    class="mr-2 size-5 text-gray-500 dark:text-gray-400"
                                     stroke-width="1.5"
                                     aria-hidden="true"
                                 />

@@ -39,7 +39,7 @@ class SalesSidebar extends AbstractAdminSidebar
                 $item->route('shopper.orders.index');
                 $item->setIcon(
                     icon: 'untitledui-shopping-bag',
-                    iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                    iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -57,7 +57,7 @@ class SalesSidebar extends AbstractAdminSidebar
                     $item->route('shopper.discounts.index');
                     $item->setIcon(
                         icon: 'untitledui-sale-03',
-                        iconClass: 'mr-3 h-5 w-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],

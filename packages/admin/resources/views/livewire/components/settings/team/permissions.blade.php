@@ -27,7 +27,7 @@
                                     id="permission_{{ $permission->id }}"
                                     name="permissions"
                                     type="checkbox"
-                                    class="dark:focus:offset-gray-800 h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
+                                    class="dark:focus:offset-gray-800 size-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700"
                                     wire:key="{{ $permission->id }}"
                                     value="{{ $permission->id }}"
                                     aria-label="permission_{{ $permission->id }}"
@@ -46,7 +46,7 @@
                                         type="button"
                                         class="text-medium inline-flex items-center text-sm leading-5 text-gray-500 hover:text-red-500 focus:text-red-700 focus:shadow-none focus:outline-none dark:text-gray-400 dark:hover:text-red-500"
                                     >
-                                        <x-untitledui-trash-03 class="h-5 w-5" aria-hidden="true" />
+                                        <x-untitledui-trash-03 class="size-5" aria-hidden="true" />
                                     </button>
                                 @endif
 
@@ -55,7 +55,7 @@
                                         <div class="flex shrink-0 -space-x-1">
                                             @foreach ($permission->users->limit(3) as $user)
                                                 <img
-                                                    class="shadow-solid h-6 w-6 max-w-none rounded-full"
+                                                    class="shadow-solid size-6 max-w-none rounded-full"
                                                     src="{{ $user->picture }}"
                                                     alt=""
                                                 />

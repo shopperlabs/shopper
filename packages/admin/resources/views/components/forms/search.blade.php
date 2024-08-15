@@ -9,7 +9,7 @@
     <div class="flex flex-1">
         <div class="relative grow focus-within:z-10">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <x-untitledui-search-sm class="h-5 w-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+                <x-untitledui-search-sm class="size-5 text-gray-400 dark:text-gray-500" aria-hidden="true" />
             </div>
             <x-shopper::forms.input
                 type="search"

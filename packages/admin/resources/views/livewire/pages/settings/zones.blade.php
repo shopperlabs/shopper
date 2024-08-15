@@ -3,7 +3,7 @@
         :back="route('shopper.settings.index')"
         :current="__('shopper::pages/settings/zones.title')"
     >
-        <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+        <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.settings.index')"
             :title="__('shopper::pages/settings/global.menu')"
@@ -31,7 +31,7 @@
                         >
                             <span class="absolute -inset-2.5"></span>
                             <span class="sr-only">Open Panel</span>
-                            <x-untitledui-plus class="h-6 w-6" aria-hidden="true" />
+                            <x-untitledui-plus class="size-6" aria-hidden="true" />
                         </button>
                     </div>
                 </x-slot>

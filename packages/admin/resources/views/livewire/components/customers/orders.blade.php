@@ -75,7 +75,7 @@
                                     <div class="flex items-center gap-2">
                                         <div class="shrink-0">
                                             <img
-                                                class="h-8 w-8 rounded-full object-cover"
+                                                class="size-8 rounded-full object-cover"
                                                 src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
                                                 alt="{{ $item->name }}"
                                             />
@@ -100,15 +100,15 @@
                             <div class="flex items-center">
                                 @if ($order->paymentMethod->logo)
                                     <img
-                                        class="h-6 w-6 rounded-md object-cover"
+                                        class="size-6 rounded-md object-cover"
                                         src="{{ $order->paymentMethod->logo_url }}"
                                         alt="payment icon"
                                     />
                                 @else
                                     <span
-                                        class="inline-flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-gray-300 dark:bg-gray-700 dark:text-gray-400"
+                                        class="inline-flex size-6 items-center justify-center rounded-md bg-gray-100 text-gray-300 dark:bg-gray-700 dark:text-gray-400"
                                     >
-                                        <x-untitledui-image class="h-4 w-4" aria-hidden="true" />
+                                        <x-untitledui-image class="size-4" aria-hidden="true" />
                                     </span>
                                 @endif
                                 <div class="ml-2">
@@ -162,7 +162,7 @@
                         class="inline-flex items-center text-sm leading-5 text-primary-600 underline hover:text-primary-500"
                     >
                         {{ __('shopper::pages/customers.orders.view') }}
-                        <x-untitledui-arrow-narrow-right class="ml-2 h-5 w-5" aria-hidden="true" />
+                        <x-untitledui-arrow-narrow-right class="ml-2 size-5" aria-hidden="true" />
                     </x-shopper::link>
                 </div>
             </div>

@@ -3,7 +3,7 @@
         {{-- format-ignore-start --}}
         <x-heroicon-s-star
             @class([
-                'h-4 w-4 shrink-0',
+                'size-4 shrink-0',
                 'text-yellow-400' => $getState() >= $star,
                 'text-gray-300' => $getState() < $star,
             ])

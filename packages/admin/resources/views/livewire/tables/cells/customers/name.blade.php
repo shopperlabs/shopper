@@ -1,7 +1,7 @@
 <div class="text-sm font-medium leading-5 text-gray-900 dark:text-white">
     <div class="flex items-center space-x-2">
         <img
-            class="h-8 w-8 rounded-full object-cover"
+            class="size-8 rounded-full object-cover"
             src="{{ $getRecord()->picture }}"
             alt="{{ $getRecord()->full_name }}"
         />

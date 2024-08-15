@@ -3,7 +3,7 @@
         <header class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
                 <div class="flex items-center">
-                    <x-untitledui-switch-vertical class="mr-2 h-5 w-5 text-gray-400" aria-hidden="true" />
+                    <x-untitledui-switch-vertical class="mr-2 size-5 text-gray-400" aria-hidden="true" />
                     <h2 class="text-lg font-medium text-gray-900 dark:text-white">
                         {{ __('shopper::words.reorder') }}
                     </h2>
@@ -15,7 +15,7 @@
                         wire:click="$dispatch('closePanel')"
                     >
                         <span class="sr-only">Close panel</span>
-                        <x-untitledui-x class="h-6 w-6" stroke-width="1.5" aria-hidden="true" />
+                        <x-untitledui-x class="size-6" stroke-width="1.5" aria-hidden="true" />
                     </button>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     <div class="flex items-center justify-center rounded-md bg-gray-50 px-3 py-1.5 dark:bg-white/5">
                         <div class="flex flex-1 items-center" wire:sortable.handle>
                             <x-untitledui-dots-grid
-                                class="mr-2 h-5 w-5 text-gray-400 dark:text-gray-500"
+                                class="mr-2 size-5 text-gray-400 dark:text-gray-500"
                                 stroke-width="1.5"
                                 aria-hidden="true"
                             />

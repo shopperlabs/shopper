@@ -150,7 +150,7 @@
                         class="fi-fo-wizard-header-step-button flex h-full w-full items-center gap-x-4 px-6 py-4 text-start"
                     >
                         <div
-                            class="fi-fo-wizard-header-step-icon-ctn flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+                            class="fi-fo-wizard-header-step-icon-ctn flex size-10 shrink-0 items-center justify-center rounded-full"
                             x-bind:class="{
                                 'bg-primary-600 dark:bg-primary-500':
                                     getStepIndex(step) > {{ $loop->index }},
@@ -166,7 +166,7 @@
                                 icon="heroicon-o-check"
                                 x-cloak="x-cloak"
                                 x-show="getStepIndex(step) > {{ $loop->index }}"
-                                class="fi-fo-wizard-header-step-icon h-6 w-6 text-white"
+                                class="fi-fo-wizard-header-step-icon size-6 text-white"
                             />
 
                             @if (filled($icon = $step->getIcon()))
@@ -175,7 +175,7 @@
                                     stroke-width="1.5"
                                     x-cloak="x-cloak"
                                     x-show="getStepIndex(step) <= {{ $loop->index }}"
-                                    class="fi-fo-wizard-header-step-icon h-6 w-6"
+                                    class="fi-fo-wizard-header-step-icon size-6"
                                     x-bind:class="{
                                         'text-gray-500 dark:text-gray-400': getStepIndex(step) !== {{ $loop->index }},
                                         'text-primary-600 dark:text-primary-500': getStepIndex(step) === {{ $loop->index }},

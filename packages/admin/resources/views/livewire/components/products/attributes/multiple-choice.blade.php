@@ -21,7 +21,7 @@
                         class="inline-flex items-center rounded-full p-1 ring-1 ring-inset ring-gray-200 dark:text-gray-300 dark:ring-gray-700"
                     >
                         <x-shopper::icons.contrast
-                            class="h-5 w-5"
+                            class="size-5"
                             style="color: {{ $value->key }}"
                             aria-hidden="true"
                         />

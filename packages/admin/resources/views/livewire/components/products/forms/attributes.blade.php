@@ -60,7 +60,7 @@
             <div class="flex flex-col items-center justify-center">
                 <div class="flex items-center justify-center rounded-full bg-gray-100 p-3 dark:bg-gray-500/20">
                     <x-untitledui-file-05
-                        class="h-6 w-6 text-gray-500 dark:text-gray-400"
+                        class="size-6 text-gray-500 dark:text-gray-400"
                         stroke-width="1.5"
                         aria-hidden="true"
                     />

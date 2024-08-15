@@ -7,7 +7,7 @@
         <div class="grid gap-6 sm:grid-cols-2">
             @foreach ([0, 1, 2, 3] as $item)
                 <div class="flex items-start space-x-3">
-                    <x-shopper::skeleton class="h-5 w-5 rounded-full dark:bg-gray-900" />
+                    <x-shopper::skeleton class="size-5 rounded-full dark:bg-gray-900" />
                     <div class="flex-1 space-y-1">
                         <x-shopper::skeleton class="h-4 w-1/3 dark:bg-gray-900" />
                         <x-shopper::skeleton class="h-4 w-1/2 dark:bg-gray-900" />
@@ -17,7 +17,7 @@
 
             <div class="lg:col-span-2">
                 <div class="flex items-start space-x-3">
-                    <x-shopper::skeleton class="h-5 w-5 rounded-full dark:bg-gray-900" />
+                    <x-shopper::skeleton class="size-5 rounded-full dark:bg-gray-900" />
                     <div class="flex-1 space-y-2">
                         <x-shopper::skeleton class="h-4 w-1/3 dark:bg-gray-900" />
                         <x-shopper::skeleton class="h-11 w-full dark:bg-gray-900" />

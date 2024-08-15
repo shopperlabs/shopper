@@ -34,7 +34,7 @@
                         <div class="h-3 w-3 rounded-full border border-yellow-400 bg-yellow-500"></div>
                         <div class="h-3 w-3 rounded-full border border-green-400 bg-green-500"></div>
                     </div>
-                    <x-untitledui-google-chrome class="h-5 w-5 text-gray-500 dark:text-gray-300" />
+                    <x-untitledui-google-chrome class="size-5 text-gray-500 dark:text-gray-300" />
                 </div>
                 <div class="mt-2 h-full w-full overflow-auto rounded-lg bg-white p-4 dark:bg-gray-950 sm:p-6">
                     <div class="flex flex-col">

@@ -73,7 +73,7 @@
                     <div class="space-y-16 px-5 py-8">
                         <div class="flex items-center space-x-3">
                             <x-untitledui-home-line
-                                class="h-6 w-6 text-gray-400"
+                                class="size-6 text-gray-400"
                                 stroke-width="1.5"
                                 aria-hidden="true"
                             />

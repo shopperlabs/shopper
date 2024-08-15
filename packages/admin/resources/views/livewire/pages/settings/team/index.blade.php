@@ -1,6 +1,6 @@
 <x-shopper::container>
-    <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('Staff & permissions')">
-        <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+    <x-shopper::breadcrumb :back="route('shopper.settings.index')" :current="__('shopper::pages/settings/menu.staff')">
+        <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.settings.index')"
             :title="__('shopper::pages/settings/global.menu')"
@@ -25,9 +25,9 @@
                         { component: 'shopper-modals.create-role' }
                     )"
                     type="button"
-                    class="focus:shadow-outline-primary ml-3 inline-flex items-center rounded-lg border border-transparent bg-primary-100 px-2.5 py-1.5 text-sm font-medium leading-4 text-primary-700 transition duration-150 ease-in-out hover:bg-primary-50 focus:border-primary-300 focus:outline-none active:bg-primary-200"
+                    class="ml-3 inline-flex items-center gap-2 rounded-md ring-1 ring-inset ring-primary-600/10 bg-primary-50 px-2 py-1 text-xs font-semibold text-primary-600 hover:bg-primary-100 dark:text-primary-400 dark:ring-primary-400/30 dark:bg-primary-400/20 dark:hover:bg-primary-400/10 focus:outline-none"
                 >
-                    <x-untitledui-plus class="mr-2 h-5 w-5" aria-hidden="true" />
+                    <x-untitledui-plus class="size-5" aria-hidden="true" />
                     {{ __('shopper::pages/settings/staff.new_role') }}
                 </button>
             </div>
@@ -50,7 +50,7 @@
                             <div class="ml-4 flex overflow-hidden">
                                 @foreach ($role->users as $admin)
                                     <img
-                                        class="{{ $loop->first ? '' : '-ml-1' }} shadow-solid inline-block h-6 w-6 rounded-full"
+                                        class="{{ $loop->first ? '' : '-ml-1' }} shadow-solid inline-block size-6 rounded-full"
                                         src="{{ $admin->picture }}"
                                         alt=""
                                     />
@@ -63,7 +63,7 @@
                             </h3>
                             <p class="mt-1 flex items-center text-sm text-primary-600 group-hover:text-primary-500">
                                 {{ __('shopper::words.view_details') }}
-                                <x-untitledui-arrow-narrow-right class="ml-2 h-5 w-5" aria-hidden="true" />
+                                <x-untitledui-arrow-narrow-right class="ml-2 size-5" aria-hidden="true" />
                             </p>
                         </div>
                     </x-shopper::link>
@@ -88,7 +88,7 @@
                             component: 'shopper-slide-overs.create-team-member'
                         })"
                     >
-                        <x-untitledui-user-plus class="mr-2 h-5 w-5" aria-hidden="true" />
+                        <x-untitledui-user-plus class="mr-2 size-5" aria-hidden="true" />
                         {{ __('shopper::pages/settings/staff.add_admin') }}
                     </x-shopper::buttons.primary>
                 </div>

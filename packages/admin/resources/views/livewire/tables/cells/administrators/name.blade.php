@@ -3,8 +3,8 @@
 @endphp
 
 <div class="flex items-center">
-    <div class="h-10 w-10 shrink-0">
-        <img class="h-10 w-10 rounded-full" src="{{ $user->picture }}" alt="{{ $user->last_name }} avatar" />
+    <div class="size-10 shrink-0">
+        <img class="size-10 rounded-full" src="{{ $user->picture }}" alt="{{ $user->last_name }} avatar" />
     </div>
     <div class="ml-4">
         <div class="flex items-center gap-2">

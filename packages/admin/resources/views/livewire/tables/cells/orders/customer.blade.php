@@ -1,6 +1,6 @@
 <div class="flex items-center gap-2">
     <img
-        class="h-8 w-8 rounded-full"
+        class="size-8 rounded-full"
         src="{{ $order->customer->picture }}"
         alt="Avatar {{ $order->customer->full_name }}"
     />

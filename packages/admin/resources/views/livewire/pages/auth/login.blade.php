@@ -3,7 +3,7 @@
         <x-shopper::validation-errors />
 
         <div>
-            <x-shopper::brand class="mx-auto h-12 w-auto" />
+            <x-shopper::brand class="mx-auto size-12" />
 
             <h2 class="mt-6 text-center font-heading text-3xl font-bold leading-9 text-gray-900 dark:text-white">
                 {{ __('shopper::pages/auth.login.title') }}
@@ -54,7 +54,7 @@
                     name="remember"
                     wire:model="remember"
                     type="checkbox"
-                    class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:focus:ring-offset-gray-900"
+                    class="size-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:focus:ring-offset-gray-900"
                 />
                 <x-shopper::label
                     for="remember"
@@ -77,7 +77,7 @@
             <x-shopper::buttons.primary type="submit" class="group relative w-full justify-center">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3" wire:target="authenticate">
                     <x-untitledui-lock-04
-                        class="h-5 w-5 text-primary-500 group-hover:text-primary-400"
+                        class="size-5 text-primary-500 group-hover:text-primary-400"
                         aria-hidden="true"
                         wire:loading.remove
                     />

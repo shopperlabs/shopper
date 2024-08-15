@@ -3,7 +3,7 @@
         :back="route('shopper.settings.index')"
         :current="__('shopper::pages/settings/global.location.menu')"
     >
-        <x-untitledui-chevron-left class="h-4 w-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+        <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
         <x-shopper::breadcrumb.link
             :link="route('shopper.settings.index')"
             :title="__('shopper::pages/settings/global.menu')"
@@ -71,7 +71,7 @@
                                                 <img
                                                     src="{{ $inventory->country->svg_flag }}"
                                                     alt="{{ $inventory->country->name }} flag"
-                                                    class="h-5 w-5 shrink-0 rounded-full object-cover"
+                                                    class="size-5 shrink-0 rounded-full object-cover"
                                                 />
                                                 {{ $inventory->country->name }}
                                             </div>
@@ -79,14 +79,14 @@
                                                 class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
                                             >
                                                 <x-untitledui-marker-pin-02
-                                                    class="mr-1.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                                                    class="mr-1.5 size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                     aria-hidden="true"
                                                 />
                                                 {{ $inventory->city }}
                                             </div>
                                             <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
                                                 <x-untitledui-phone
-                                                    class="mr-1.5 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                                                    class="mr-1.5 size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                     aria-hidden="true"
                                                 />
                                                 {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
@@ -96,7 +96,7 @@
                                             class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
                                         >
                                             <x-untitledui-calendar
-                                                class="h-5 w-5 shrink-0 text-gray-400 dark:text-gray-500"
+                                                class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                 aria-hidden="true"
                                             />
                                             <span class="ml-2">
@@ -114,10 +114,10 @@
                                 <div class="flex items-center gap-2">
                                     <x-shopper::link
                                         href="{{ route('shopper.settings.inventories.edit', $inventory) }}"
-                                        class="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-50 dark:hover:bg-gray-900/20"
+                                        class="inline-flex size-10 items-center justify-center rounded-full hover:bg-gray-50 dark:hover:bg-gray-900/20"
                                     >
                                         <x-untitledui-edit-03
-                                            class="h-5 w-5 text-primary-600 dark:text-primary-500"
+                                            class="size-5 text-primary-600 dark:text-primary-500"
                                             aria-hidden="true"
                                         />
                                     </x-shopper::link>

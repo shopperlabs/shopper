@@ -124,7 +124,7 @@
                             type="button"
                             class="inline-flex h-8 w-7 items-center justify-center gap-x-2 rounded-se-lg bg-gray-50 text-sm font-medium text-gray-800 hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                         >
-                            @svg('heroicon-o-plus', 'h-4 w-4 shrink-0')
+                            @svg('heroicon-o-plus', 'size-4 shrink-0')
                         </button>
                         <button
                             :disabled="!isDecrementAllowed"
@@ -132,7 +132,7 @@
                             type="button"
                             class="inline-flex h-8 w-7 items-center justify-center gap-x-2 rounded-ee-lg bg-gray-50 text-sm font-medium text-gray-800 hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                         >
-                            @svg('heroicon-o-minus', 'h-4 w-4 shrink-0')
+                            @svg('heroicon-o-minus', 'size-4 shrink-0')
                         </button>
                     </div>
                 @else
@@ -141,7 +141,7 @@
                             :disabled="!isDecrementAllowed"
                             @click="decrement"
                             type="button"
-                            class="inline-flex h-6 w-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            class="inline-flex size-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                         >
                             @svg('heroicon-o-minus', 'h-3.5 w-3.5 shrink-0')
                         </button>
@@ -149,7 +149,7 @@
                             :disabled="!isIncrementAllowed"
                             @click="increment"
                             type="button"
-                            class="inline-flex h-6 w-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            class="inline-flex size-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                         >
                             @svg('heroicon-o-plus', 'h-3.5 w-3.5 shrink-0')
                         </button>
