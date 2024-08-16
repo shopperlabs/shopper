@@ -27,6 +27,7 @@
     "doctrine/dbal": "^3.6",
     "filament/filament": "^3.2",
     "filament/spatie-laravel-media-library-plugin": "^3.2",
+    "gehrisandro/tailwind-merge-laravel": "^1.2",
     "jenssegers/agent": "^2.6",
     "larastan/larastan": "^2.9",
     "laravel/pint": "^1.16",
@@ -87,8 +88,8 @@
     "test:pest": "pest --parallel",
     "test:phpstan": "phpstan analyse --memory-limit=2G",
     "test": [
-      "@test:pest",
-      "@test:phpstan"
+      "@test:phpstan",
+      "@test:pest"
     ]
   },
   "config": {

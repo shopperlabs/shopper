@@ -12,7 +12,7 @@ class HasConfiguration
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Setting::query()->where('key', 'shop_email')->exists()) {
+        if (Setting::query()->where('key', 'email')->exists()) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json(['setup' => true]);
             }
