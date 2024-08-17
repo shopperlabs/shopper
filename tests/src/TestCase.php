@@ -7,34 +7,55 @@ namespace Shopper\Tests;
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Filament\Forms\FormsServiceProvider;
+use Filament\Notifications\NotificationsServiceProvider;
+use Filament\Support\SupportServiceProvider;
+use Filament\Tables\TablesServiceProvider;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
+use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
+use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Shopper\Core\CoreServiceProvider;
+use Shopper\Core\Database\Seeders\ShopperSeeder;
+use Shopper\Core\Models\User;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
-use Shopper\Tests\Models\User;
+use Spatie\LivewireWizard\WizardServiceProvider;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
+use TailwindMerge\Laravel\TailwindMergeServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
-    use LazilyRefreshDatabase;
+    use RefreshDatabase;
+    use WithLaravelMigrations;
     use WithWorkbench;
+
+    protected bool $seed = true;
+
+    protected string $seeder = ShopperSeeder::class;
 
     protected function getPackageProviders($app): array
     {
         return [
-            ActionsServiceProvider::class,
             CoreServiceProvider::class,
+            ActionsServiceProvider::class,
             PermissionServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
+            BladeUntitledUIIconsServiceProvider::class,
             BladeIconsServiceProvider::class,
+            LivewireServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
-            LivewireServiceProvider::class,
+            FormsServiceProvider::class,
+            SupportServiceProvider::class,
+            NotificationsServiceProvider::class,
+            TablesServiceProvider::class,
             MediaLibraryServiceProvider::class,
+            TailwindMergeServiceProvider::class,
+            WizardServiceProvider::class,
         ];
     }
 
@@ -43,8 +64,17 @@ abstract class TestCase extends BaseTestCase
         $app['config']->set('auth.providers.users.model', User::class);
     }
 
-    protected function defineDatabaseMigrations(): void
+    protected function asAdmin(): TestCase
     {
-        $this->loadLaravelMigrations();
+        return $this->actingAs($this->makeAdminUser(), config('shopper.auth.guard'));
+    }
+
+    protected function makeAdminUser(): User
+    {
+        $admin = User::factory()->create();
+
+        $admin->assignRole(config('shopper.core.users.admin_role'));
+
+        return $admin;
     }
 }

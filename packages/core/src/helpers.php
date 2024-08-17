@@ -80,11 +80,11 @@ if (! function_exists('shopper_money_format')) {
 }
 
 if (! function_exists('shopper_setting')) {
-    function shopper_setting(string $key, bool $withCatch = true): mixed
+    function shopper_setting(string $key, bool $withCache = true): mixed
     {
         $setting = Cache::remember(
             "shopper-setting-{$key}",
-            $withCatch ? 3600 * 24 : 1,
+            $withCache ? 3600 * 24 : 1,
             fn () => Setting::query()->where('key', $key)->first()
         );
 
@@ -107,18 +107,5 @@ if (! function_exists('useTryCatch')) {
         }
 
         return [$throwable, $result];
-    }
-}
-
-if (! function_exists('isoToEmoji')) {
-    function isoToEmoji(string $code): string
-    {
-        return implode(
-            '',
-            array_map(
-                fn (string $letter) => mb_chr(ord($letter) % 32 + 0x1F1E5),
-                mb_str_split($code)
-            )
-        );
     }
 }

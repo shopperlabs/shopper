@@ -75,7 +75,10 @@ class User extends Authenticatable
         });
     }
 
-    protected static function newFactory(): UserFactory
+    /**
+     * @return UserFactory|null
+     */
+    protected static function newFactory()
     {
         return UserFactory::new();
     }

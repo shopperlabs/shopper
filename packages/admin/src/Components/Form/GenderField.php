@@ -6,6 +6,7 @@ namespace Shopper\Components\Form;
 
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Select;
+use Shopper\Core\Enum\GenderType;
 
 final class GenderField
 {
@@ -13,11 +14,8 @@ final class GenderField
     {
         return Select::make('gender')
             ->label(__('shopper::forms.label.gender'))
-            ->options([
-                'male' => __('shopper::words.male'),
-                'female' => __('shopper::words.female'),
-            ])
-            ->default('male')
+            ->options(GenderType::class)
+            ->default(GenderType::Male())
             ->native(false);
     }
 }

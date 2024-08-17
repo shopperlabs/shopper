@@ -15,7 +15,7 @@ Route::get('/login', Login::class)->name('login');
 Route::get('/password/reset', ForgotPassword::class)->name('password.request');
 Route::get('/password/reset/{token}', ResetPassword::class)->name('password.reset');
 
-// Two Factor Authentication...
+// Two-Factor Authentication...
 if (config('shopper.auth.2fa_enabled')) {
     Route::get('/two-factor-login', [TwoFactorAuthenticatedController::class, 'create'])
         ->name('two-factor.login');

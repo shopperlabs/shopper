@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Shopper\Core\Enum\GenderType;
 use Shopper\Core\Helpers\Migration;
 
 return new class extends Migration
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->after('id', function (Blueprint $table): void {
                 $table->string('first_name')->nullable();
                 $table->string('last_name');
-                $table->string('gender')->default('male');
+                $table->string('gender')->default(GenderType::Male());
                 $table->string('phone_number')->nullable();
                 $table->date('birth_date')->nullable();
                 $table->string('avatar_type')->default('avatar_ui');
@@ -45,10 +46,6 @@ return new class extends Migration
                 'opt_in',
                 'last_login_at',
                 'last_login_ip',
-                'stripe_id',
-                'card_brand',
-                'card_last_four',
-                'trial_ends_at',
             ]);
 
             $table->string('name');

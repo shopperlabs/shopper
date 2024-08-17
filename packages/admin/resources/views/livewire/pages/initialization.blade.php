@@ -1,10 +1,10 @@
 <div class="min-h-screen lg:grid lg:grid-cols-5 lg:gap-x-20">
     <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-20 lg:col-span-3 lg:max-w-xl">
-        <livewire:shopper-initialize-wizard />
+        <livewire:shopper-initialize-wizard show-step="shopper-initialize-store-social-link" />
     </main>
-    <div class="hidden min-h-full px-1 pt-1.5 lg:col-span-2 lg:flex">
+    <div class="hidden min-h-full p-1.5 lg:col-span-2 lg:flex">
         <div
-            class="relative flex flex-1 overflow-hidden rounded-br-2xl rounded-tr-2xl bg-gray-50 pl-32 pt-32 dark:bg-gray-800"
+            class="relative flex flex-1 overflow-hidden rounded-2xl ring-1 ring-gray-950/10 bg-gray-50 pl-32 pt-32 dark:ring-white/20 dark:bg-gray-800"
         >
             <svg
                 class="absolute inset-0 z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)] dark:stroke-gray-900"
@@ -58,16 +58,16 @@
                     "
                 ></div>
             </div>
-            <div class="relative z-20 flex h-full w-full rounded-tl-2xl bg-white shadow-xl dark:bg-gray-950">
+            <div class="relative z-20 flex h-full w-full rounded-tl-2xl bg-white shadow-xl dark:bg-gray-900">
                 <div class="p-8">
-                    <x-shopper::brand class="h-10 w-auto" />
+                    <x-shopper::brand class="size-10" />
                 </div>
                 <div
                     class="flex-1 divide-y divide-gray-100 border-l border-gray-100 pl-4 dark:divide-gray-700 dark:border-gray-700"
                 >
                     <div class="px-5 py-8">
                         <h2 class="font-heading text-xl font-bold text-gray-900 dark:text-white">
-                            {{ shopper_setting(key: 'name', withCatch: false) ?? config('app.name') }}
+                            {{ shopper_setting(key: 'name', withCache: false) ?? config('app.name') }}
                         </h2>
                     </div>
                     <div class="space-y-16 px-5 py-8">
