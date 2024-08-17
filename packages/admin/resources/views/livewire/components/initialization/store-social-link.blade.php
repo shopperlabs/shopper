@@ -14,17 +14,15 @@
                         {{ __('shopper::pages/onboarding.step_3') }}
                     </span>
                 </div>
-                <div class="mt-3">
-                    <h2 class="font-heading text-2xl font-medium text-gray-900 dark:text-white">
-                        {{ __('shopper::pages/onboarding.social_description') }}
-                        <span class="font-normal text-gray-500 dark:text-gray-400">
-                            ({{ __('shopper::forms.label.optional') }})
-                        </span>
-                    </h2>
-                    <p class="mt-4 text-sm leading-6 text-gray-500 dark:text-gray-300 lg:max-w-2xl">
-                        {{ __('shopper::pages/onboarding.step_3_description') }}
-                    </p>
-                </div>
+                <h2 class="font-heading text-2xl font-medium text-gray-900 dark:text-white">
+                    {{ __('shopper::pages/onboarding.social_description') }}
+                    <span class="font-normal text-gray-500 dark:text-gray-400">
+                        ({{ __('shopper::forms.label.optional') }})
+                    </span>
+                </h2>
+                <p class="text-sm leading-6 text-gray-500 dark:text-gray-300 lg:max-w-2xl">
+                    {{ __('shopper::pages/onboarding.step_3_description') }}
+                </p>
             </div>
             <div class="mt-10">
                 {{ $this->form }}

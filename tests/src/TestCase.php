@@ -19,7 +19,6 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
 use Shopper\Core\Models\User;
-use Shopper\Facades\Shopper;
 use Shopper\ShopperServiceProvider;
 use Shopper\Sidebar\SidebarServiceProvider;
 use Spatie\LivewireWizard\WizardServiceProvider;

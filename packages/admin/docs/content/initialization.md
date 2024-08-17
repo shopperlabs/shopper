@@ -1,37 +1,17 @@
 # Customization
 
-Once you have installed Shopper, you need to set up a store to serve as your first location.  After creating a new user, you need to login via the url `/shopper/login`. After logging in you need to fill in the required information to access the Laravel Shopper dashboard
+Once you have installed Shopper, you need to set up a store to serve as your first location. After creating a new user, you have to logged in via the url `/shopper/login`.
+After logging in, if it's your first time, you'll be redirected to your store's initialization page. This step is essential for your store's basic information (country, currencies, location).
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/customization.png" alt="Shopper Config Example">
-  <div class="caption">Store customization</div>
+  <img src="/img/screenshots/{{version}}/initialization.png" alt="Shopper Initialization Step">
+  <div class="caption">Store initialization</div>
 </div>
 
 Defines your shop’s address country and state, where you are based as a seller. It determines default tax rates and customer locations.
 
 ## Global
-All thoses informations is stored using the **Setting** Model which is located `\Shopper\Core\Models\Setting`
-
-```php
-namespace Shopper\Core\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
-class Setting extends Model
-{
-  /**
-   * The attributes that are mass assignable.
-   *
-   * @var array
-   */
-  protected $fillable = [
-    'display_name',
-    'key',
-    'value',
-    'locked',
-  ];
-}
-```
+All these data are stored using the **Setting** Model which is located `\Shopper\Core\Models\Setting`
 
 ### Fields
 
@@ -43,21 +23,18 @@ class Setting extends Model
 | `value` | json      | Nullable, represents the value of the key that will be displayed when the parameter is requested |
 | `locked`  | boolean   | default is false (0), allows to define if this parameter can be updated |
 
-### Component
-Shopper is made of several Livewire components, to make the configuration easier and more adaptable to any kind of system.
-
-The component used to manage the configuration and customization of the store is found in the component configuration file `config/shopper/components.php`.
-
-So you can replace it and configure your store the way you want. Yes it's magic 🎩
-
 ### Retrieving setting
-By default to retrieve the value of a key you can use the helper function `shopper_setting()` passing the desired key as parameter
+To retrieve the value of a key you can use the helper function `shopper_setting()` passing the desired key as param
 
 ```php
 shopper_setting('my_key')
 ```
 
-This value is cached for one day and under the key `shopper-setting-{$key}`
+This value is cached for one day and under the key `shopper-setting-{$key}`. But if you don't want the data to be cached, and you want to receive the last value every time, set `false` as the second parameter.
+
+```php
+shopper_setting('my_key', withCache: false)
+```
 
 ## Store
 When you launch your store the first important thing to do is to fill in the information about this store.
@@ -71,7 +48,7 @@ Your customers and the different services you might use need to know the informa
 
 The information stored in this section is available using the following keys: `shop_name` for the store name, `shop_email` for the email and `shop_country_id` for the Country.
 
-## Currency
+### Currency
 Choose the default currency for the store. Only one may be selected.
 
 <div class="screenshot">
@@ -79,11 +56,11 @@ Choose the default currency for the store. Only one may be selected.
   <div class="caption">Store currency</div>
 </div>
 
-For currency configurations we use the [moneyphp/money](https://github.com/moneyphp/money) package. At the moment, the formatter does it automatically depending on the currency.
+For currency configurations we use the [akaunting/laravel-money](https://github.com/akaunting/laravel-money) package. At the moment, the formatter does it automatically depending on the currency.
 
 As you may have noticed in the code, there is also a helper that returns the currency you registered `shopper_currency()`. This will return the currency configured in your admin panel: **USD**, **XAF**, **EUR**, etc
 
-## Location
+## Address
 Most stores keep their products in different locations around the world. When setting up this configuration you need to define a location that will be set as the default location for your products.
 
 When shipping an order, the products to be delivered/shipped will start from this location and thus the shipping price can be set according to this.
@@ -122,7 +99,7 @@ Channels represent a single sales channel, which can be one of the following thi
 
 or pretty much anything similar you can imagine.
 
-By default when you set up your store Shopper creates a sales channel at the same time as your first location with the same location information.
+During the shopper installation, with the execution of the seeder `ShopperSeeder`, we create a default sale channel named `Web Store` .
 
 ```php
 (new ChannelRepository())->create([

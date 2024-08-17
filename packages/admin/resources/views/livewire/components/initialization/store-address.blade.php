@@ -3,7 +3,7 @@
 
     <form wire:submit="save" class="flex-1">
         <div class="space-y-10">
-            <div>
+            <div class="space-y-3">
                 <div class="flex items-center space-x-4">
                     <x-untitledui-globe-05
                         class="size-6 text-gray-400 dark:text-gray-500"
@@ -14,14 +14,12 @@
                         {{ __('shopper::pages/onboarding.step_2') }}
                     </span>
                 </div>
-                <div class="mt-3">
-                    <h2 class="font-heading text-2xl font-medium text-gray-900 dark:text-white">
-                        {{ __('shopper::pages/onboarding.address_description') }}
-                    </h2>
-                    <p class="mt-3 text-sm leading-6 text-gray-500 dark:text-gray-300 lg:max-w-2xl">
-                        {{ __('shopper::pages/onboarding.step_2_description') }}
-                    </p>
-                </div>
+                <h2 class="font-heading text-2xl font-medium text-gray-900 dark:text-white">
+                    {{ __('shopper::pages/onboarding.address_description') }}
+                </h2>
+                <p class="text-sm leading-6 text-gray-500 dark:text-gray-300 lg:max-w-2xl">
+                    {{ __('shopper::pages/onboarding.step_2_description') }}
+                </p>
             </div>
             <div class="mt-10">
                 {{ $this->form }}

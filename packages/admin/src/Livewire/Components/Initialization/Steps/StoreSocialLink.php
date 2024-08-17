@@ -40,7 +40,7 @@ final class StoreSocialLink extends StepComponent implements HasForms
                     ->prefix(
                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                             <x-shopper::icons.facebook
-                                class="h-5 w-5 text-gray-400 dark:text-gray-500"
+                                class="size-5 text-gray-400 dark:text-gray-500"
                                 aria-hidden="true"
                             />
                         Blade))
@@ -52,7 +52,7 @@ final class StoreSocialLink extends StepComponent implements HasForms
                     ->prefix(
                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                             <x-shopper::icons.instagram
-                                class="h-5 w-5 text-gray-400 dark:text-gray-500"
+                                class="size-5 text-gray-400 dark:text-gray-500"
                                 aria-hidden="true"
                             />
                         Blade))
@@ -64,7 +64,7 @@ final class StoreSocialLink extends StepComponent implements HasForms
                     ->prefix(
                         fn (): HtmlString => new HtmlString(Blade::render(<<<'Blade'
                             <x-shopper::icons.twitter
-                                class="h-5 w-5 text-gray-400 dark:text-gray-500"
+                                class="size-5 text-gray-400 dark:text-gray-500"
                                 aria-hidden="true"
                             />
                         Blade))

@@ -31,7 +31,10 @@ it('can not access dashboard with unfinished configuration', function (): void {
     $this->get($this->prefix . '/dashboard')
         ->assertRedirect($this->prefix . '/initialize');
 
-    expect(shopper_setting('email'))->toBeNull();
+    expect(shopper_setting('email', false))
+        ->toBeNull()
+        ->and(shopper_setting('street_address', false))
+        ->toBeNull();
 });
 
 it('can view first initialization wizard steps', function (): void {
