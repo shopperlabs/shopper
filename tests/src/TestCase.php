@@ -14,7 +14,7 @@ use Filament\Tables\TablesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
-use Orchestra\Testbench\Attributes\WithMigration;
+use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Shopper\Core\CoreServiceProvider;
@@ -27,22 +27,15 @@ use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\Permission\PermissionServiceProvider;
 use TailwindMerge\Laravel\TailwindMergeServiceProvider;
 
-#[WithMigration]
 abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase;
     use WithWorkbench;
+    use WithLaravelMigrations;
 
     protected bool $seed = true;
 
     protected string $seeder = ShopperSeeder::class;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->loadLaravelMigrations();
-    }
 
     protected function getPackageProviders($app): array
     {
