@@ -11,6 +11,7 @@ use Filament\Forms\FormsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
@@ -34,6 +35,13 @@ abstract class TestCase extends BaseTestCase
     protected bool $seed = true;
 
     protected string $seeder = ShopperSeeder::class;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations();
+    }
 
     protected function getPackageProviders($app): array
     {
@@ -60,11 +68,6 @@ abstract class TestCase extends BaseTestCase
     protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('auth.providers.users.model', User::class);
-    }
-
-    protected function defineDatabaseMigrations(): void
-    {
-        $this->loadLaravelMigrations();
     }
 
     protected function asAdmin(): TestCase
