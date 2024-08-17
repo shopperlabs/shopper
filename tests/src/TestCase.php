@@ -30,8 +30,8 @@ use TailwindMerge\Laravel\TailwindMergeServiceProvider;
 abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase;
-    use WithWorkbench;
     use WithLaravelMigrations;
+    use WithWorkbench;
 
     protected bool $seed = true;
 
