@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Observers;
 
 use Shopper\Core\Models\Category;
-use Shopper\Core\Repositories\Store\CategoryRepository;
+use Shopper\Core\Repositories\CategoryRepository;
 
 final class CategoryObserver
 {
@@ -28,7 +28,7 @@ final class CategoryObserver
         if (filled($category->parent_id)) {
             /** @var Category | null $parent */
             $parent = (new CategoryRepository)
-                ->getByColumn('id', (int) $category->parent_id, ['slug']);
+                ->getById((int) $category->parent_id, ['slug']);
 
             if ($parent) {
                 $category->slug = $parent->slug . '-' . $category->name;

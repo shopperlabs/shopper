@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Category;
-use Shopper\Core\Repositories\Store\CategoryRepository;
+use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**

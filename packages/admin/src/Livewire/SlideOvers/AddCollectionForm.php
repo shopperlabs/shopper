@@ -15,7 +15,7 @@ use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
-use Shopper\Core\Repositories\Store\CollectionRepository;
+use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**

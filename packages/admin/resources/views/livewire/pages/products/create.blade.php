@@ -1,4 +1,4 @@
-<div class="flex min-h-(screen-content) flex-col space-y-10">
+<div class="flex min-h-[calc(100vh-7.185rem)] flex-col space-y-10">
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.products.index')">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" />

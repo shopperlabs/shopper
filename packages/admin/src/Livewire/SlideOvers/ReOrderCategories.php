@@ -6,7 +6,7 @@ namespace Shopper\Livewire\SlideOvers;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
-use Shopper\Core\Repositories\Store\CategoryRepository;
+use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 class ReOrderCategories extends SlideOverComponent

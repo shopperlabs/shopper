@@ -27,7 +27,7 @@
 }
 
 .sh-sidebar-item-submenu-inactive {
-  @apply text-gray-500 dark:text-gray-400 hover:text-gray-700 hover:border-gray-300 dark:hover:border-gray-800 dark:hover:text-gray-300;
+  @apply text-gray-500 dark:text-gray-400 border-transparent hover:text-gray-700 hover:border-gray-300 dark:hover:border-gray-800 dark:hover:text-gray-300;
 }
 
 .item-name {

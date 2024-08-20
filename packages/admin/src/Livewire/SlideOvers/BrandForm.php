@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
 use Shopper\Core\Models\Brand;
-use Shopper\Core\Repositories\Store\BrandRepository;
+use Shopper\Core\Repositories\BrandRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
@@ -37,7 +37,7 @@ class BrandForm extends SlideOverComponent implements HasForms
     {
         $this->brand = $brandId
             ? (new BrandRepository)->getById($brandId)
-            : (new BrandRepository)->makeModel();
+            : (new BrandRepository)->query()->newModelInstance();
 
         $this->form->fill($this->brand->toArray());
     }

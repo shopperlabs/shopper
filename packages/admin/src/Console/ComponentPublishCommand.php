@@ -50,7 +50,7 @@ final class ComponentPublishCommand extends Command
 
         $name = (string) (! $this->argument('name') ? select(
             label: 'Which components configuration file would you like to publish?',
-            options: collect($config)->map(fn (string $path) => basename($path, '.php')),
+            options: collect($config)->map(fn (string $path) => ucfirst(basename($path, '.php'))),
         ) : $this->argument('name'));
 
         if (! $name && ! isset($config[$name])) {

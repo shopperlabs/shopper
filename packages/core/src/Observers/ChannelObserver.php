@@ -24,7 +24,7 @@ final class ChannelObserver
         if ($channel->is_default) {
             /** @var Channel | null $defaultChannel */
             $defaultChannel = (new ChannelRepository)
-                ->makeModel()
+                ->query()
                 ->where('id', '!=', $channel->id)
                 ->where('is_default', true)
                 ->first();

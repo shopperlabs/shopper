@@ -13,6 +13,9 @@ use Shopper\Livewire\Components\Initialization\Steps\StoreAddress;
 use Shopper\Livewire\Components\Initialization\Steps\StoreInformation;
 use Shopper\Livewire\Components\Initialization\Steps\StoreSocialLink;
 use Shopper\Livewire\Pages\Initialization;
+use Shopper\Tests\TestCase;
+
+uses(TestCase::class);
 
 beforeEach(function (): void {
     $this->prefix = Shopper::prefix();

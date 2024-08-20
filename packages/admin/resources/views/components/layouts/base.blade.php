@@ -46,7 +46,7 @@
 
         @include('shopper::includes._additional-styles')
     </head>
-    <body {{ $attributes->twMerge(['class' => 'bg-white font-sans dark:bg-gray-950']) }}>
+    <body {{ $attributes->twMerge(['class' => 'sh-body bg-gray-50 font-sans dark:bg-gray-950']) }}>
         {{ $slot }}
 
         @livewire(\Filament\Notifications\Livewire\Notifications::class)

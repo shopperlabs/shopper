@@ -12,7 +12,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
-use Shopper\Core\Repositories\Store\CollectionRepository;
+use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable

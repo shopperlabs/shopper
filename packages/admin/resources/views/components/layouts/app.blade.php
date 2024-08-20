@@ -1,4 +1,4 @@
-<x-shopper::layouts.base :title="$title ?? null" class="overflow-hidden bg-gray-50">
+<x-shopper::layouts.base :title="$title ?? null">
     <div
         class="flex h-screen overflow-hidden"
         x-data="{ sidebarOpen: false }"
@@ -18,7 +18,7 @@
                     {{ $subHeading }}
                 @endisset
 
-                <main class="z-0 flex-1 pt-4 lg:pt-10">
+                <main class="sh-main z-0 flex-1 pt-4 lg:pt-10">
                     <div {{ $attributes->twMerge(['class' => 'flex-1 min-h-full']) }}>
                         {{ $slot }}
                     </div>

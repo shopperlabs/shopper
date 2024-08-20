@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 use Shopper\Actions\Store\InitialQuantityInventory;
 use Shopper\Components;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**

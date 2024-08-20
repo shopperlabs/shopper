@@ -8,8 +8,8 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
-use Shopper\Core\Repositories\Store\CollectionRepository;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Core\Repositories\CollectionRepository;
+use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Livewire\Components\ModalComponent;
 
 class CollectionProductsList extends ModalComponent
