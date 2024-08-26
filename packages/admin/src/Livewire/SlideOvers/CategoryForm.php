@@ -12,11 +12,9 @@ use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
-use Shopper\Core\Models\Category;
 use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
