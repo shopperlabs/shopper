@@ -37,6 +37,7 @@ class CollectionProductsList extends ModalComponent
     public function products(): Collection
     {
         return (new ProductRepository) // @phpstan-ignore-line
+            ->query()
             ->where('name', '%' . $this->search . '%', 'like')
             ->whereNull('parent_id')
             ->get(['name', 'price_amount', 'id'])

@@ -27,9 +27,6 @@ class CategoryForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    /**
-     * @var Category|Model
-     */
     public $category;
 
     public ?array $data = [];
@@ -38,7 +35,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
     {
         $this->category = $categoryId
             ? (new CategoryRepository)->getById($categoryId)
-            : (new CategoryRepository)->makeModel();
+            : (new CategoryRepository)->query()->newModelInstance();
 
         $this->form->fill($this->category->toArray());
     }
@@ -113,7 +110,6 @@ class CategoryForm extends SlideOverComponent implements HasForms
 
     public function save(): void
     {
-        // @phpstan-ignore-next-line
         if ($this->category->id) {
             $this->category->update($this->form->getState());
         } else {

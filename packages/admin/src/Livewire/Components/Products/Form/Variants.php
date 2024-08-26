@@ -38,7 +38,7 @@ class Variants extends Component implements HasForms, HasTable
         return $table
             ->query(
                 (new ProductRepository)
-                    ->makeModel()
+                    ->query()
                     ->where('parent_id', $this->product->id)
                     ->newQuery()
             )

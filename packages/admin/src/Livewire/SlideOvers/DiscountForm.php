@@ -211,7 +211,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->multiple()
                             ->options(
                                 (new ProductRepository)
-                                    ->makeModel()
+                                    ->query()
                                     ->scopes('publish')
                                     ->get()
                                     ->pluck('name', 'id')
@@ -235,7 +235,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->multiple()
                             ->options(
                                 (new UserRepository)
-                                    ->makeModel()
+                                    ->query()
                                     ->scopes('customers')
                                     ->get()
                                     ->pluck('full_name', 'id')

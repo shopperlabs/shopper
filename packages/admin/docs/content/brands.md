@@ -69,13 +69,13 @@ return [
     ```
 
 ### Components
-By default, Livewire components are not published. To customize components, you must publish them.
+By default, brands Livewire components are not published. To customize components, you must publish them.
 
 ```bash
 php artisan shopper:component:publish brand
 ```
 
-This command will publish all Livewire components used for brands management (from pages to form components).
+This command will publish all Livewire components used for brand management (from pages to form components).
 Once you've published the component, you can find it in the `brand.php` locate in the `config/shopper/components` folder.
 
 ```php
@@ -162,16 +162,17 @@ use Illuminate\View\View;
 
 class BrandsComposer
 {
-  public function compose(View $view): void
-  {
-    $view->with('brands', Brand::enabled()->get()->take(12));
-  }
+    public function compose(View $view): void
+    {
+        $view->with('brands', Brand::enabled()->get()->take(12));
+    }
 }
 ```
 
 - Then you have to add it in your **AppServiceProvider**
 
 ```php
+    
 namespace App\Providers;
 
 use App\View\Composers\BrandsComposer;
@@ -180,10 +181,10 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-  public function boot(): void
-  {
-    View::composer('partials.brands', BrandsComposer::class); // [tl! focus]
-  }
+    public function boot(): void
+    {
+        View::composer('partials.brands', BrandsComposer::class); // [tl! focus]
+    }
 }
 ```
 
@@ -193,3 +194,24 @@ And in your front-end you can browse your brands to have a display like this
   <img src="/img/screenshots/{{version}}/brand-lists.png" alt="Brands preview list">
   <div class="caption">Brands example list</div>
 </div>
+
+## Disabled Brand
+
+Sometimes in your store, you won't have a brand name for your products (it's rare but possible), especially if you make them yourself.
+In this case, you can hide brands on the sidebar and disabled all brand-related functionalities in your store.
+
+To disable brand-related functionalities, open the `features.php` configuration file in the `config/shopper` folder and set the brand key to disable.
+
+```php
+use Shopper\Enum\FeatureState;
+
+return [
+    'attribute' => FeatureState::Enabled,
+    'brand' => FeatureState::Enabled, // [tl! --]
+    'brand' => FeatureState::Disabled, // [tl! ++]
+    'category' => FeatureState::Enabled,
+    'collection' => FeatureState::Enabled,
+    'discount' => FeatureState::Enabled,
+    'review' => FeatureState::Enabled,
+];
+```

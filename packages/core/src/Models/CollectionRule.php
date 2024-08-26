@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\Carbon;
+use Database\Factories\CollectionRuleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,11 +24,16 @@ class CollectionRule extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     public function getTable(): string
     {
         return shopper_table('collection_rules');
+    }
+
+    protected static function newFactory(): CollectionRuleFactory
+    {
+        return CollectionRuleFactory::new();
     }
 
     public function getFormattedRule(): string
@@ -54,15 +60,6 @@ class CollectionRule extends Model
             'contains' => __('shopper::pages/collections.operator.contains'),
             'not_contains' => __('shopper::pages/collections.operator.not_contains'),
         ][$this->operator];
-    }
-
-    public function getFormattedValue(): string
-    {
-        if ($this->rule === 'product_price') {
-            return shopper_money_format((int) $this->value);
-        }
-
-        return $this->value;
     }
 
     public function collection(): BelongsTo

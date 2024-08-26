@@ -44,6 +44,7 @@ class ReOrderCategories extends SlideOverComponent
         return view('shopper::livewire.slide-overs.re-order-categories', [
             'categories' => (new CategoryRepository)
                 ->with('children')
+                ->query()
                 ->where('parent_id', null)
                 ->orderBy('position')
                 ->get(),

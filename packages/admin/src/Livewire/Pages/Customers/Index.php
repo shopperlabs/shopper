@@ -34,9 +34,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->query(
                 (new UserRepository)
                     ->with(['roles', 'addresses'])
-                    ->makeModel()
+                    ->query()
                     ->scopes('customers')
-                    ->newQuery()
             )
             ->columns([
                 Tables\Columns\ViewColumn::make('first_name')
@@ -100,7 +99,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     {
         return view('shopper::livewire.pages.customers.index', [
             'total' => (new UserRepository)
-                ->makeModel()
+                ->query()
                 ->scopes('customers')
                 ->count(),
         ])

@@ -38,8 +38,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->query(
                 (new ProductRepository)
                     ->with(['brand', 'variants'])
-                    ->makeModel()
-                    ->newQuery()
+                    ->query()
                     ->withCount(['variants'])
                     ->where('parent_id', null)
             )

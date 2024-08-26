@@ -7,7 +7,6 @@ namespace Shopper\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Shopper\Core\Models\Setting;
 use Shopper\Core\Models\User;
 use Shopper\Facades\Shopper;
 
@@ -22,7 +21,7 @@ class Dashboard
             abort(403, __('Unauthorized'));
         }
 
-        if (! Setting::query()->where('key', 'email')->exists()) {
+        if (is_null(shopper_setting('email')) || is_null(shopper_setting('street_address'))) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response(__('Unauthorized'), Response::HTTP_UNAUTHORIZED);
             }

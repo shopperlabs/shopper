@@ -41,6 +41,7 @@ class Create extends AbstractPageComponent implements HasForms
         $this->form->fill();
 
         $this->defaultChannel = (new ChannelRepository)
+            ->query()
             ->where('is_default', true)
             ->first();
     }

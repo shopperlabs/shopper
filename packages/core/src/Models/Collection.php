@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Database\Factories\CollectionFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +29,7 @@ class Collection extends Model implements SpatieHasMedia
     use HasMedia;
     use HasSlug;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'published_at' => 'datetime',
@@ -41,14 +42,19 @@ class Collection extends Model implements SpatieHasMedia
         return shopper_table('collections');
     }
 
-    public function scopeManual(Builder $query): Builder
+    protected static function newFactory(): CollectionFactory
     {
-        return $query->where('type', CollectionType::Manual->value);
+        return CollectionFactory::new();
     }
 
-    public function scopeAutomatic(Builder $query): Builder
+    public function scopeManual(Builder $query): void
     {
-        return $query->where('type', CollectionType::Auto->value);
+        $query->where('type', CollectionType::Manual());
+    }
+
+    public function scopeAutomatic(Builder $query): void
+    {
+        $query->where('type', CollectionType::Auto());
     }
 
     public function isAutomatic(): bool

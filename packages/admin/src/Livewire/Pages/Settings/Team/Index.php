@@ -29,7 +29,7 @@ class Index extends Component implements HasForms, HasTable
             ->query(
                 (new UserRepository)
                     ->with('roles')
-                    ->makeModel()
+                    ->query()
                     ->scopes('administrators')
             )
             ->columns([

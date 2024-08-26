@@ -8459,6 +8459,10 @@ html.dark .shiki span {
   border-color: rgb(255 255 255 / 0.1);
 }
 
+.dark\:border-white\/20:is(.dark *) {
+  border-color: rgb(255 255 255 / 0.2);
+}
+
 .dark\:border-white\/5:is(.dark *) {
   border-color: rgb(255 255 255 / 0.05);
 }
@@ -8575,6 +8579,10 @@ html.dark .shiki span {
 
 .dark\:bg-white\/5:is(.dark *) {
   background-color: rgb(255 255 255 / 0.05);
+}
+
+.dark\:bg-white\/20:is(.dark *) {
+  background-color: rgb(255 255 255 / 0.2);
 }
 
 .dark\:from-gray-800\/60:is(.dark *) {

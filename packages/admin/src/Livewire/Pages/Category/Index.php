@@ -32,9 +32,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(
                 (new CategoryRepository)
-                    ->makeModel()
                     ->with('parent:id,name')
-                    ->newQuery()
+                    ->query()
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
