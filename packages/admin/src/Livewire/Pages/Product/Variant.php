@@ -13,7 +13,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Shopper\Components;
 use Shopper\Core\Events\Products\Updated as ProductUpdated;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Livewire\Components\Products\VariantStock;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 

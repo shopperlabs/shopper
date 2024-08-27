@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Shopper\Core\Database\Factories\OrderFactory;
 use Shopper\Core\Enum\OrderStatus;
-use Shopper\Core\Traits\HasPrice;
+use Shopper\Core\Helpers\Price;
 
 /**
  * @property-read int $id
@@ -21,34 +21,30 @@ use Shopper\Core\Traits\HasPrice;
  * @property int $price_amount
  * @property string $notes
  * @property string $currency_code
+ * @property int $total_amount
  * @property int | null $zone_id
  * @property int | null $shipping_address_id
  * @property int | null $payment_method_id
  * @property int | null $billing_address_id
  * @property int | null $customer_id
- * @property \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
  * @property OrderStatus $status
- * @property \Illuminate\Foundation\Auth\User | User $customer
  * @property CarrierOption $shippingOption
  * @property OrderAddress | null $shippingAddress
  * @property OrderAddress | null $billingAddress
  * @property PaymentMethod | null $paymentMethod
  * @property Zone | null $zone
+ * @property \Illuminate\Foundation\Auth\User | User $customer
+ * @property \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
  */
 class Order extends Model
 {
     use HasFactory;
-    use HasPrice;
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'status' => OrderStatus::class,
-    ];
-
-    protected $appends = [
-        'total_amount',
     ];
 
     public function __construct(array $attributes = [])
@@ -73,7 +69,7 @@ class Order extends Model
     public function totalAmount(): Attribute
     {
         return Attribute::get(
-            fn () => $this->formattedPrice($this->total(), $this->currency_code)
+            fn () => Price::from(amount: $this->total(), currency: $this->currency_code)
         );
     }
 

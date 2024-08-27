@@ -6,7 +6,7 @@ namespace Shopper\Livewire\Modals;
 
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Livewire\Components\ModalComponent;
 
 class RelatedProductsList extends ModalComponent

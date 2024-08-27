@@ -6,7 +6,7 @@ namespace Shopper\Livewire\SlideOvers;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
-use Shopper\Core\Repositories\Store\CategoryRepository;
+use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 class ReOrderCategories extends SlideOverComponent
@@ -44,6 +44,7 @@ class ReOrderCategories extends SlideOverComponent
         return view('shopper::livewire.slide-overs.re-order-categories', [
             'categories' => (new CategoryRepository)
                 ->with('children')
+                ->query()
                 ->where('parent_id', null)
                 ->orderBy('position')
                 ->get(),

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Enum;
 
 use Filament\Support\Contracts\HasLabel;
+use Shopper\Core\Traits\ArrayableEnum;
 use Shopper\Core\Traits\HasEnumStaticMethods;
 
 /**
@@ -13,6 +14,7 @@ use Shopper\Core\Traits\HasEnumStaticMethods;
  */
 enum GenderType: string implements HasLabel
 {
+    use ArrayableEnum;
     use HasEnumStaticMethods;
 
     case Male = 'male';

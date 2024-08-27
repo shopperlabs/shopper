@@ -4,43 +4,32 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Contracts;
 
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+
+/**
+ * @property-read DatabaseManager $database
+ */
 interface RepositoryContract
 {
-    public function all(array $columns = ['*']);
+    public function all(array $columns = ['*']): Collection;
 
-    public function count();
+    public function get(array $columns = ['*']): Collection;
 
-    public function create(array $data);
+    public function getById(int $id, array $columns = ['*']): ?object;
 
-    public function createMultiple(array $data);
+    public function getByColumn(string $column, mixed $item, array $columns = ['*']): ?object;
 
-    public function delete();
+    public function create(array $attributes): object;
 
-    public function deleteById(int $id);
+    public function update(int $id, array $attributes, array $options = []): void;
 
-    public function deleteMultipleById(array $ids);
+    public function delete(int $id): void;
 
-    public function first(array $columns = ['*']);
-
-    public function get(array $columns = ['*']);
-
-    public function getById(int $id, array $columns = ['*']);
-
-    public function getByColumn(string $column, mixed $item, array $columns = ['*']);
-
-    public function paginate(int $limit = 25, array $columns = ['*'], string $pageName = 'page', $page = null);
-
-    public function updateById(int $id, array $data, array $options = []);
-
-    public function limit(int $limit);
-
-    public function orderBy(string $column, string $direction);
-
-    public function where(string $column, mixed $value, string $operator = '=');
-
-    public function whereIn(string $column, string | array $values);
+    public function count(): int;
 
     public function with($relations);
 
-    public function pluck(string $column, $key = null);
+    public function query(): Builder;
 }

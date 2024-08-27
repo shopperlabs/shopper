@@ -5,7 +5,6 @@
 @import 'base.css';
 @import 'components/sidebar.css';
 @import 'components/filament.css';
-@import 'components/intl-phone.css';
 @import 'components/treeselect.css';
 @import 'components/shiki.css';
 
@@ -16,11 +15,5 @@
 
   :root.dark {
     color-scheme: dark;
-  }
-
-  [dir='rtl'] select {
-    background-position: left 0.5rem center !important;
-    padding-left: 2.5rem;
-    padding-right: 0.75rem;
   }
 }

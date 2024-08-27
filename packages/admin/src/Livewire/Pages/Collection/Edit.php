@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
-use Shopper\Core\Models\Collection;
+use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Livewire\Components\Collection\CollectionProducts;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -25,13 +25,15 @@ class Edit extends AbstractPageComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public Collection $collection;
+    public $collection;
 
     public ?array $data = [];
 
-    public function mount(): void
+    public function mount(int $collection): void
     {
         $this->authorize('edit_collections');
+
+        $this->collection = (new CollectionRepository)->with('rules')->getById($collection);
 
         $this->form->fill($this->collection->toArray());
     }

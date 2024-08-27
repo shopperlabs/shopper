@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Shopper\Core\Models\Brand;
 
-class BrandFactory extends Factory
+/**
+ * @extends Factory<Brand>
+ */
+final class BrandFactory extends Factory
 {
     protected $model = Brand::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
@@ -19,7 +27,7 @@ class BrandFactory extends Factory
             'slug' => Str::slug($name),
             'website' => 'https://www.' . $this->faker->domainName(),
             'description' => $this->faker->realText(),
-            'is_visible' => $this->faker->boolean(),
+            'is_enabled' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
             'updated_at' => $this->faker->dateTimeBetween('-5 month', 'now'),
         ];

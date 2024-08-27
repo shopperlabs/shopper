@@ -17,6 +17,7 @@ use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
 use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Shopper\Core\CoreServiceProvider;
 use Shopper\Core\Database\Seeders\ShopperSeeder;
 use Shopper\Core\Models\User;
@@ -40,12 +41,13 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
-            CoreServiceProvider::class,
             ActionsServiceProvider::class,
-            PermissionServiceProvider::class,
+            BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeUntitledUIIconsServiceProvider::class,
             BladeIconsServiceProvider::class,
+            CoreServiceProvider::class,
+            PermissionServiceProvider::class,
             LivewireServiceProvider::class,
             ShopperServiceProvider::class,
             SidebarServiceProvider::class,
@@ -62,6 +64,10 @@ abstract class TestCase extends BaseTestCase
     protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('auth.providers.users.model', User::class);
+        $app['config']->set('view.paths', [
+            ...$app['config']->get('view.paths'),
+            __DIR__ . '/../../packages/admin/resources/views',
+        ]);
     }
 
     protected function asAdmin(): TestCase

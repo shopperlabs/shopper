@@ -14,7 +14,8 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
-use Shopper\Core\Repositories\Store\BrandRepository;
+use Shopper\Core\Repositories\BrandRepository;
+use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
@@ -30,7 +31,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query((new BrandRepository)->makeModel()->newQuery())
+            ->query((new BrandRepository)->query())
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.core.storage.thumbnail_collection'))
@@ -66,7 +67,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             arguments: ['brandId' => $record->id]
                         )
                     )
-                    ->visible(auth()->user()->can('edit_brands')),
+                    ->visible(Shopper::auth()->user()->can('edit_brands')),
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()

@@ -14,7 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
-use Shopper\Core\Repositories\Store\CategoryRepository;
+use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
@@ -32,9 +32,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(
                 (new CategoryRepository)
-                    ->makeModel()
                     ->with('parent:id,name')
-                    ->newQuery()
+                    ->query()
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')

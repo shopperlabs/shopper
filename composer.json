@@ -20,7 +20,6 @@
     "composer-runtime-api": "^2.1"
   },
   "require-dev": {
-    "akaunting/laravel-money": "^5.2",
     "bacon/bacon-qr-code": "^2.0",
     "blade-ui-kit/blade-heroicons": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
@@ -66,8 +65,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Shopper\\Tests\\": "tests/src",
-      "Shopper\\Tests\\Database\\Factories\\": "tests/database/factories"
+      "Shopper\\Tests\\": "tests/src"
     }
   },
   "extra": {
@@ -82,7 +80,7 @@
   "scripts": {
     "cs": [
       "pint",
-      "npm run prettier"
+      "npx run prettier"
     ],
     "pint": "./vendor/bin/pint",
     "test:pest": "pest --parallel",

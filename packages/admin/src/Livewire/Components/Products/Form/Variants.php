@@ -19,7 +19,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Events\Products\Deleted as ProductDeleted;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Core\Repositories\ProductRepository;
 
 class Variants extends Component implements HasForms, HasTable
 {
@@ -38,7 +38,7 @@ class Variants extends Component implements HasForms, HasTable
         return $table
             ->query(
                 (new ProductRepository)
-                    ->makeModel()
+                    ->query()
                     ->where('parent_id', $this->product->id)
                     ->newQuery()
             )

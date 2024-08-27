@@ -10,6 +10,8 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Shopper\Core\Enum\Operator;
+use Shopper\Core\Enum\Rule;
 use Shopper\Core\Models\Collection;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -48,27 +50,12 @@ class CollectionRules extends SlideOverComponent implements HasForms
                     ->schema([
                         Forms\Components\Select::make('rule')
                             ->label(__('shopper::pages/collections.conditions.choose_rule'))
-                            ->options([
-                                'product_title' => __('shopper::pages/collections.rules.product_title'),
-                                'product_brand' => __('shopper::pages/collections.rules.product_brand'),
-                                'product_category' => __('shopper::pages/collections.rules.product_category'),
-                                'product_price' => __('shopper::pages/collections.rules.product_price'),
-                                'compare_at_price' => __('shopper::pages/collections.rules.compare_at_price'),
-                                'inventory_stock' => __('shopper::pages/collections.rules.inventory_stock'),
-                            ])
+                            ->options(Rule::class)
                             ->required(),
 
                         Forms\Components\Select::make('operator')
                             ->label(__('shopper::pages/collections.conditions.select_operator'))
-                            ->options([
-                                'equals_to' => __('shopper::pages/collections.operator.equals_to'),
-                                'not_equals_to' => __('shopper::pages/collections.operator.not_equals_to'),
-                                'less_than' => __('shopper::pages/collections.operator.less_than'),
-                                'greater_than' => __('shopper::pages/collections.operator.greater_than'),
-                                'starts_with' => __('shopper::pages/collections.operator.starts_with'),
-                                'contains' => __('shopper::pages/collections.operator.contains'),
-                                'not_contains' => __('shopper::pages/collections.operator.not_contains'),
-                            ])
+                            ->options(Operator::class)
                             ->required(),
 
                         Forms\Components\TextInput::make('value')

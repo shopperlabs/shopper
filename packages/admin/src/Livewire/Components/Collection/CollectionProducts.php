@@ -18,6 +18,9 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Core\Models\Collection;
 
+/**
+ * @property-read array $productsIds
+ */
 class CollectionProducts extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
@@ -85,7 +88,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
                         component: 'shopper-modals.products-list',
                         arguments: [
                             'collectionId' => $this->collection->id,
-                            'exceptProductIds' => $this->productsIds, // @phpstan-ignore-line
+                            'exceptProductIds' => $this->productsIds,
                         ]
                     ))
                     ->visible($this->collection->isManual()),

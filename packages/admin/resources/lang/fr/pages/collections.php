@@ -31,26 +31,6 @@ return [
         'update' => 'Modification les conditions avec succès',
     ],
 
-    'rules' => [
-        'product_title' => 'Titre du Produit',
-        'product_brand' => 'Marque du Produit',
-        'product_category' => 'Catégorie du Produit',
-        'product_price' => 'Prix du Produit',
-        'compare_at_price' => 'Comparer au prix',
-        'inventory_stock' => 'Stock d\'inventaire',
-    ],
-
-    'operator' => [
-        'equals_to' => 'Égal à',
-        'not_equals_to' => 'Pas égal à',
-        'less_than' => 'Moins que',
-        'greater_than' => 'Plus grand que',
-        'starts_with' => 'Commence avec',
-        'ends_with' => 'Termine par',
-        'contains' => 'Contient',
-        'not_contains' => 'Ne contient pas',
-    ],
-
     'modal' => [
         'title' => 'Ajouter des produits à la collection',
         'search' => 'Rechercher un produit',

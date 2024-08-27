@@ -29,7 +29,7 @@ class UsersRole extends Component implements HasForms, HasTable
             ->query(
                 (new UserRepository)
                     ->with('roles')
-                    ->makeModel()
+                    ->query()
                     ->whereHas('roles', function (Builder $query): void {
                         $query->where('name', $this->role->name);
                     })

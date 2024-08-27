@@ -9,10 +9,18 @@ use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Address;
 use Shopper\Core\Models\Country;
 
-class AddressFactory extends Factory
+/**
+ * @extends Factory<Address>
+ */
+final class AddressFactory extends Factory
 {
     protected $model = Address::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
@@ -24,7 +32,7 @@ class AddressFactory extends Factory
             'street_address_plus' => $this->faker->streetSuffix(),
             'city' => $this->faker->city(),
             'postcode' => $this->faker->postcode(),
-            'type' => $this->faker->randomElement(AddressType::names()),
+            'type' => $this->faker->randomElement(AddressType::values()),
             'shipping_default' => $this->faker->boolean,
             'billing_default' => $this->faker->boolean,
         ];

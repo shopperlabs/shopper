@@ -18,7 +18,7 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Shopper\Core\Models\Product;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -38,8 +38,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->query(
                 (new ProductRepository)
                     ->with(['brand', 'variants'])
-                    ->makeModel()
-                    ->newQuery()
+                    ->query()
                     ->withCount(['variants'])
                     ->where('parent_id', null)
             )
@@ -58,7 +57,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
                 Tables\Columns\TextColumn::make('price_amount')
                     ->label(__('shopper::forms.label.price'))
-                    ->money(shopper_currency())
+                    ->money(currency: shopper_currency())
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_visible')

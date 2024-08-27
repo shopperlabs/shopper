@@ -58,7 +58,7 @@ use Shopper\Core\Models;
 
 return [
     // ...
-  'brand' => \App\Models\Brand::class,
+    'brand' => \App\Models\Brand::class,
 
     // ...
     'category' => Models\Category::class, // [tl! focus]

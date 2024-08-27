@@ -11,8 +11,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
-use Shopper\Core\Repositories\Store\CollectionRepository;
+use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
@@ -30,9 +29,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(
                 (new CollectionRepository)
-                    ->makeModel()
                     ->with('rules')
-                    ->newQuery()
+                    ->query()
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
@@ -53,13 +51,9 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::pages/collections.product_conditions'))
-                    ->formatStateUsing(function ($record): string {
-                        if ($record->rules->isNotEmpty()) {
-                            return ucfirst($record->firstRule());
-                        }
-
-                        return 'N/A';
-                    }),
+                    ->formatStateUsing(
+                        fn ($record): string => $record->rules->isNotEmpty() ? ucfirst($record->firstRule()) : 'N/A'
+                    ),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
@@ -70,7 +64,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.edit'))
                     ->icon('untitledui-edit-04')
                     ->url(
-                        fn (Model $record): string => route(
+                        fn ($record): string => route(
                             name: 'shopper.collections.edit',
                             parameters: ['collection' => $record]
                         ),

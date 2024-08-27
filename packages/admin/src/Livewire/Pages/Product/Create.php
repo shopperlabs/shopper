@@ -19,7 +19,7 @@ use Shopper\Actions\Store\InitialQuantityInventory;
 use Shopper\Components;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\ChannelRepository;
-use Shopper\Core\Repositories\Store\ProductRepository;
+use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -41,6 +41,7 @@ class Create extends AbstractPageComponent implements HasForms
         $this->form->fill();
 
         $this->defaultChannel = (new ChannelRepository)
+            ->query()
             ->where('is_default', true)
             ->first();
     }
