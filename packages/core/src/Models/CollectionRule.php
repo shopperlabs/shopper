@@ -9,11 +9,13 @@ use Database\Factories\CollectionRuleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Enum\Operator;
+use Shopper\Core\Enum\Rule;
 
 /**
  * @property-read int $id
- * @property string $rule
- * @property string $operator
+ * @property Rule $rule
+ * @property Operator $operator
  * @property string $value
  * @property int $collection_id
  * @property Collection $collection
@@ -25,6 +27,11 @@ class CollectionRule extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'rule' => Rule::class,
+        'operator' => Operator::class,
+    ];
 
     public function getTable(): string
     {
@@ -38,28 +45,21 @@ class CollectionRule extends Model
 
     public function getFormattedRule(): string
     {
-        return [
-            'product_title' => __('shopper::pages/collections.rules.product_title'),
-            'product_brand' => __('shopper::pages/collections.rules.product_brand'),
-            'product_category' => __('shopper::pages/collections.rules.product_category'),
-            'product_price' => __('shopper::pages/collections.rules.product_price'),
-            'compare_at_price' => __('shopper::pages/collections.rules.compare_at_price'),
-            'inventory_stock' => __('shopper::pages/collections.rules.inventory_stock'),
-        ][$this->rule];
+        return Rule::options()[$this->rule->value];
     }
 
     public function getFormattedOperator(): string
     {
-        return [
-            'equals_to' => __('shopper::pages/collections.operator.equals_to'),
-            'not_equals_to' => __('shopper::pages/collections.operator.not_equals_to'),
-            'less_than' => __('shopper::pages/collections.operator.less_than'),
-            'greater_than' => __('shopper::pages/collections.operator.greater_than'),
-            'starts_with' => __('shopper::pages/collections.operator.starts_with'),
-            'ends_with' => __('shopper::pages/collections.operator.ends_with'),
-            'contains' => __('shopper::pages/collections.operator.contains'),
-            'not_contains' => __('shopper::pages/collections.operator.not_contains'),
-        ][$this->operator];
+        return Operator::options()[$this->operator->value];
+    }
+
+    public function getFormattedValue(): string
+    {
+        if ($this->rule === Rule::ProductPrice) {
+            return shopper_money_format((int) $this->value);
+        }
+
+        return $this->value;
     }
 
     public function collection(): BelongsTo

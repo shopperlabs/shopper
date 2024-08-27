@@ -69,10 +69,11 @@ class Collection extends Model implements SpatieHasMedia
 
     public function firstRule(): ?string
     {
-        $condition = $this->rules()->first();
+        /** @var CollectionRule $collectionRule */
+        $collectionRule = $this->rules()->first();
 
         if ($this->isAutomatic()) {
-            $words = $condition->getFormattedRule() . ' ' . $condition->getFormattedOperator() . ' ' . $condition->getFormattedValue();
+            $words = $collectionRule->getFormattedRule() . ' ' . $collectionRule->getFormattedOperator() . ' ' . $collectionRule->getFormattedValue();
             $rules = $this->rules()->count();
 
             return $words . ' ' . ($rules >= 2 ? '+ ' . ($rules - 1) . __('shopper::words.other') : '');

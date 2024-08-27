@@ -16,7 +16,6 @@ use Shopper\Core\Database\Factories\ProductFactory;
 use Shopper\Core\Helpers\Price;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasMedia;
-use Shopper\Core\Traits\HasPrice;
 use Shopper\Core\Traits\HasSlug;
 use Shopper\Core\Traits\HasStock;
 use Shopper\Core\Traits\ReviewRateable as ReviewRateableTrait;
@@ -25,19 +24,23 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 /**
  * @property-read int $id
- * @property int|null $parent_id
  * @property string $name
- * @property string|null $slug
- * @property string|null $sku
- * @property string|null $barcode
+ * @property int | null $parent_id
+ * @property string | null $slug
+ * @property string | null $sku
+ * @property string | null $barcode
+ * @property bool $is_visible
  * @property bool $featured
- * @property int|null $price_amount
- * @property int|null $old_price_amount
- * @property int|null $cost_amount
- * @property int|null $security_stock
- * @property string|null $seo_title
- * @property string|null $seo_description
- * @property \Carbon\Carbon|null $published_at
+ * @property bool $require_shipping
+ * @property bool $backorder
+ * @property int | null $price_amount
+ * @property int | null $old_price_amount
+ * @property int | null $cost_amount
+ * @property int | null $security_stock
+ * @property string | null $seo_title
+ * @property string | null $seo_description
+ * @property \Carbon\Carbon | null $published_at
+ * @property array | null $metadata
  * @property-read int|null $stock
  */
 class Product extends Model implements ReviewRateable, SpatieHasMedia
@@ -45,13 +48,12 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     use CanHaveDiscount;
     use HasFactory;
     use HasMedia;
-    use HasPrice;
     use HasRecursiveRelationships;
     use HasSlug;
     use HasStock;
     use ReviewRateableTrait;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'featured' => 'boolean',
@@ -144,9 +146,9 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
         );
     }
 
-    public function scopePublish(Builder $query): Builder
+    public function scopePublish(Builder $query): void
     {
-        return $query->whereDate('published_at', '<=', now())
+        $query->whereDate('published_at', '<=', now())
             ->where('is_visible', true);
     }
 

@@ -11,7 +11,6 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Shopper\Core\Models\Order;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -58,7 +57,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::words.customer'))
                     ->searchable()
                     ->sortable()
-                    ->formatStateUsing(fn (Model $model): View => view(
+                    ->formatStateUsing(fn (Order $model): View => view(
                         'shopper::livewire.tables.cells.orders.customer',
                         ['order' => $model->load('customer')]
                     ))
@@ -66,7 +65,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::words.purchased'))
-                    ->formatStateUsing(fn (Model $model): View => view(
+                    ->formatStateUsing(fn (Order $model): View => view(
                         'shopper::livewire.tables.cells.orders.purchased',
                         ['order' => $model->load('items')]
                     )),
@@ -74,7 +73,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('currency_code')
                     ->label(__('shopper::forms.label.price_amount'))
                     ->formatStateUsing(
-                        fn ($state, Order $record): string => shopper_money_format($record->total(), $state)
+                        fn ($state, Order $record): string => shopper_money_format(amount: $record->total(), currency: $state)
                     ),
 
                 Tables\Columns\TextColumn::make('zone.name')

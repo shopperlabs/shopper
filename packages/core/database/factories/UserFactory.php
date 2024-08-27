@@ -7,14 +7,23 @@ namespace Shopper\Core\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Shopper\Core\Enum\GenderType;
 use Shopper\Core\Models\User;
 
-class UserFactory extends Factory
+/**
+ * @extends Factory<User>
+ */
+final class UserFactory extends Factory
 {
     protected static ?string $password;
 
     protected $model = User::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
@@ -22,8 +31,8 @@ class UserFactory extends Factory
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'gender' => $this->faker->randomElement(['male', 'female']),
-            'password' => static::$password ??= Hash::make('password'),
+            'gender' => $this->faker->randomElement(GenderType::values()),
+            'password' => self::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }

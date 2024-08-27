@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
 
-class CollectionFactory extends Factory
+/**
+ * @extends Factory<Collection>
+ */
+final class CollectionFactory extends Factory
 {
     protected $model = Collection::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [

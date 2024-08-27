@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Shopper\Core\Models\Brand;
 
-class BrandFactory extends Factory
+/**
+ * @extends Factory<Brand>
+ */
+final class BrandFactory extends Factory
 {
     protected $model = Brand::class;
 
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [

@@ -109,3 +109,30 @@ if (! function_exists('useTryCatch')) {
         return [$throwable, $result];
     }
 }
+
+if (! function_exists('is_no_division_currency')) {
+    function is_no_division_currency(string $currency): bool
+    {
+        return in_array($currency, [
+            'BIF',
+            'CLP',
+            'DJF',
+            'GNF',
+            'HTG',
+            'JPY',
+            'KMF',
+            'KRW',
+            'MGA',
+            'PYG',
+            'RWF',
+            'VND',
+            'VUV',
+            'XAF',
+            'XAG',
+            'XAU',
+            'XDR',
+            'XOF',
+            'XPF',
+        ]);
+    }
+}
