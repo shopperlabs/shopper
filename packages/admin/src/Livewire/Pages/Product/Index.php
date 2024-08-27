@@ -57,10 +57,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
                 Tables\Columns\TextColumn::make('price_amount')
                     ->label(__('shopper::forms.label.price'))
-                    ->money(
-                        currency: shopper_currency(),
-                        divideBy: is_no_division_currency(shopper_currency()) ? 1 : 100
-                    )
+                    ->money(currency: shopper_currency())
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('is_visible')
