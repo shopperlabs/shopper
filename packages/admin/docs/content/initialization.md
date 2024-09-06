@@ -11,19 +11,21 @@ After logging in, if it's your first time, you'll be redirected to your store's 
 Defines your shop’s address country and state, where you are based as a seller. It determines default tax rates and customer locations.
 
 ## Global
+
 All these data are stored using the **Setting** Model which is located `\Shopper\Core\Models\Setting`
 
 ### Fields
 
-| Name        | Type      | Notes |
-|--------------|-----------|------------|
-| `id`  | autoinc   |       |
-| `key` | string    | Unique, the configuration key that will be used to retrieve this information. |
-| `display_name` | string    | Nullable, represents the display name for the key that has been set for better reading|
-| `value` | json      | Nullable, represents the value of the key that will be displayed when the parameter is requested |
-| `locked`  | boolean   | default is false (0), allows to define if this parameter can be updated |
+| Name           | Type    | Notes                                                                                            |
+|----------------|---------|--------------------------------------------------------------------------------------------------|
+| `id`           | autoinc |                                                                                                  |
+| `key`          | string  | Unique, the configuration key that will be used to retrieve this information.                    |
+| `display_name` | string  | Nullable, represents the display name for the key that has been set for better reading           |
+| `value`        | json    | Nullable, represents the value of the key that will be displayed when the parameter is requested |
+| `locked`       | boolean | default is false (0), allows to define if this parameter can be updated                          |
 
 ### Retrieving setting
+
 To retrieve the value of a key you can use the helper function `shopper_setting()` passing the desired key as param
 
 ```php
@@ -37,8 +39,8 @@ shopper_setting('my_key', withCache: false)
 ```
 
 ## Store
-When you launch your store the first important thing to do is to fill in the information about this store.
 
+When you launch your store the first important thing to do is to fill in the information about this store.
 Your customers and the different services you might use need to know the information about your store.
 
 <div class="screenshot">
@@ -49,6 +51,7 @@ Your customers and the different services you might use need to know the informa
 The information stored in this section is available using the following keys: `shop_name` for the store name, `shop_email` for the email and `shop_country_id` for the Country.
 
 ### Currency
+
 Choose the default currency for the store. Only one may be selected.
 
 <div class="screenshot">
@@ -61,6 +64,7 @@ For currency configurations we use the [akaunting/laravel-money](https://github.
 As you may have noticed in the code, there is also a helper that returns the currency you registered `shopper_currency()`. This will return the currency configured in your admin panel: **USD**, **XAF**, **EUR**, etc
 
 ## Address
+
 Most stores keep their products in different locations around the world. When setting up this configuration you need to define a location that will be set as the default location for your products.
 
 When shipping an order, the products to be delivered/shipped will start from this location and thus the shipping price can be set according to this.
@@ -70,22 +74,14 @@ When shipping an order, the products to be delivered/shipped will start from thi
   <div class="caption">Store location address</div>
 </div>
 
-You must fill in the address of your location. You can specify GPS coordinates if you want customers to be able to geolocate you on a map with this information.
-
-Laravel Shopper uses mapbox to display this map. To configure your map you can go to the [mapbox documentation](https://docs.mapbox.com/mapbox-gl-js/api/).
-
-<div class="screenshot">
-  <img src="/img/screenshots/{{version}}/customization-map.png" alt="Store location with mapbox">
-  <div class="caption">Store with enable mapbox</div>
-</div>
-
-The keys registered in the database during this section: `shop_street_address`, `shop_zipcode`, `shop_city`, `shop_phone_number`, `shop_lng` and `shop_lat`.
+The keys registered in the database during this section: `street_address`, `zipcode`, `city`, `phone_number`, `lng` and `lat`.
 
 :::warning
 If you modify the Livewire component that takes care of registering those information you can also decide to change the name of its keys.
 :::
 
 ## Channel
+
 In today's E-commerce the shop site is no longer the only point of sale.
 
 Channels represent a single sales channel, which can be one of the following things:
@@ -113,6 +109,7 @@ During the shopper installation, with the execution of the seeder `ShopperSeeder
 This sales channel will be automatically assigned to all products that are added to your site. The implementation of a sales channel management will be done later
 
 ## Social Links
+
 If you want your customers to find you easily on social networks, you can fill in all the links directly by putting the full url.
 
 This step is completely optional
@@ -125,6 +122,7 @@ This step is completely optional
 The keys registered in the database during this section: `shop_facebook_link`, `shop_instagram_link` and `shop_twitter_link`.
 
 ## Update setting
+
 You can update your store information when needed, edit your store images, update the complete address, the legal name of your shop, etc.
 
 Laravel Shopper at the moment doesn't manage several currencies so you must select with what currency you will sell on your site.

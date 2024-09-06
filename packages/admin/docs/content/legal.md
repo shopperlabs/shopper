@@ -5,17 +5,19 @@ As with any e-commerce site, it is important for users to know the terms and con
 This section allows you to set up your pages for your privacy policy, return policy, terms of use and shipping policy to be presented to customers.
 
 ## Fields
+
 The model used is `Shopper\Core\Models\Legal`.
 
-| Name        | Type      | Required   |  Notes   |
-|--------------|-----------|------------|------------|
-| `id`  | autoinc   |            |   auto     |
-| `title` | string  | yes | Unique, title of the legal page |
-| `slug` | string  | yes | Unique, this is dynamically generated based on the title |
-| `content`| longText | no | nullable, the text of the legal page |
-| `is_enabled` | boolean | no | Default `false`, define if this legal page is ready to use|
+| Name         | Type     | Required | Notes                                                      |
+|--------------|----------|----------|------------------------------------------------------------|
+| `id`         | autoinc  |          | auto                                                       |
+| `title`      | string   | yes      | Unique, title of the legal page                            |
+| `slug`       | string   | yes      | Unique, this is dynamically generated based on the title   |
+| `content`    | longText | no       | nullable, the text of the legal page                       |
+| `is_enabled` | boolean  | no       | Default `false`, define if this legal page is ready to use |
 
 ## Components
+
 The components used to manage Legal page are found in the component configuration file `config/shopper/components.php`. Each component corresponds to the page that is defined
 
 ```php
@@ -35,6 +37,7 @@ return [
 ```
 
 ## Add Legal content
+
 In your administration area you must click on the "cog" icon to display the settings page of your store.
 
 - From your admin panel, on the blue sidebar click on the cog icon, go to `Settings > Legal`.
@@ -56,6 +59,7 @@ Shopper does not generate the routes for the legal pages, you should set them up
 :::
 
 ## Retrieve Data
+
 Once the information is filled in, we can display it to our users in the views we have created.
 
 To do this we will start by creating a controller that will take care of collecting our information and send it to a view
@@ -106,6 +110,7 @@ class LegalController extends Controller
 `Legal::enabled()` is a scope to retrieve the page only when it is available. This is a simple way to retrieve the pages but you can do it otherwise all the front-end code depends on you. To learn more about the scopes you can consult the [documentation](https://laravel.com/docs/10.x/eloquent#local-scopes).
 
 ### Routes
+
 Once we have created the controllers we will associate the routes that will allow us to display our contents. We will display our content in the `web.php`.
 
 ```php
@@ -121,6 +126,7 @@ Route::get('/shipping', [LegalController::class, 'shipping'])->name('legal.shipp
 ```
 
 ### Views
+
 You can create views in this way to arrange the content of your legal pages.
 
 ``` files theme:github-light
