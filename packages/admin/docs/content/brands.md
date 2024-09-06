@@ -6,6 +6,7 @@ Unless you make your own products, you'll be registering your product's brands i
 If you sell your own products, you must at least create your company as a brand: this helps your customer find what they are looking for, and this can bring some valuable search engine points.
 
 ## Overview
+
 The management of brands is exactly the same as the one done in most of the e-commerce website creation tools: only the name can change.
 It is mainly used to facilitate the navigation of customers in your catalog, as it is increasingly common to search for a specific brand.
 
@@ -17,7 +18,8 @@ It is mainly used to facilitate the navigation of customers in your catalog, as 
 New brands are automatically activated and available for your online store, even if they do not contain any products yet. You must deactivate them so that they do not appear online.
 
 ### Fields
-The model used is `Shopper\Framework\Models\Shop\Product\Brand`.
+
+The model used is `Shopper\Models\Brand`.
 
 | Name              | Type     | Required | Notes                                                    |
 |-------------------|----------|----------|----------------------------------------------------------|
@@ -93,6 +95,7 @@ return [
 ```
 
 ## Manage Brands
+
 The brands are accessible via the Brands Menu on the left sidebar.
 You can update the livewire page component in the configuration file to use your own.
 
@@ -105,16 +108,18 @@ php artisan make:shopper-page Brand
 This page will extend shopper's default layout, and you can render the view you want.
 
 ### Create brand
-Click on the "Create" button on the brands page, which will display and slideover.
+
+Click on the "Create" button on the brands page, which will display the form.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/brand-form.png" alt="Create brand">
+  <img src="/img/screenshots/{{version}}/create-brand.png" alt="Create brand">
   <div class="caption">Create brand</div>
 </div>
 
 Save your changes in order to be taken back to the brand's list. Required fields are marked with an **asterisk (*)**
 
 ## Retrieve Data
+
 Once you have your brands you want to display them in your store, you can retrieve them this way in your controller
 
 ```php
@@ -191,7 +196,7 @@ class AppServiceProvider extends ServiceProvider
 And in your front-end you can browse your brands to have a display like this
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/brand-lists.png" alt="Brands preview list">
+  <img src="/img/screenshots/{{version}}/brand-lists.png" alt="Brands list">
   <div class="caption">Brands example list</div>
 </div>
 
@@ -200,7 +205,7 @@ And in your front-end you can browse your brands to have a display like this
 Sometimes in your store, you won't have a brand name for your products (it's rare but possible), especially if you make them yourself.
 In this case, you can hide brands on the sidebar and disabled all brand-related functionalities in your store.
 
-To disable brand-related functionalities, open the `features.php` configuration file in the `config/shopper` folder and set the brand key to disable.
+To disable brands-related functionalities, open the `features.php` configuration file in the `config/shopper` folder and set the brand key to disable.
 
 ```php
 use Shopper\Enum\FeatureState;
