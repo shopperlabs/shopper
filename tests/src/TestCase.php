@@ -14,7 +14,6 @@ use Filament\Tables\TablesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\LivewireServiceProvider;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
-use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchestra\Testbench\Concerns\WithWorkbench;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
@@ -31,12 +30,21 @@ use TailwindMerge\Laravel\TailwindMergeServiceProvider;
 abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase;
-    use WithLaravelMigrations;
     use WithWorkbench;
 
     protected bool $seed = true;
 
     protected string $seeder = ShopperSeeder::class;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations();
+
+        // Freeze time to avoid timestamp errors
+        $this->freezeTime();
+    }
 
     protected function getPackageProviders($app): array
     {

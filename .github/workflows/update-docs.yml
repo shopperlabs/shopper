@@ -8,6 +8,7 @@ on:
 
 env:
   SCREENSHOT_PATH: public/img/screenshots/${{ github.ref_name }}
+  DOC_REPOSITORY_NAME: laravelshopper.dev
 
 jobs:
   docs:
@@ -16,20 +17,27 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Setting Git Account
-        run: |
-          git config --global user.email "monneylobe@gmail.com"
-          git config --global user.name "Arthur Monney"
       - name: Cloning docs repository
-        run: git clone --depth=1 https://${{ secrets.ACCESS_TOKEN }}@github.com/shopperlabs/laravelshopper.dev-next.git updated-docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: |
+          git clone --depth=1 https://github.com/shopperlabs/laravelshopper.dev.git
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - name: Create and Copy folders assets
         run: |
-          mkdir -p "./updated-docs/$SCREENSHOT_PATH"
-          cp -R -f packages/admin/docs/content ./updated-docs/resources/docs
-          cp -R -f packages/admin/docs/screenshots "./updated-docs/$SCREENSHOT_PATH"
-      - name: Publishing assets
+          mkdir -p "./$DOC_REPOSITORY_NAME/$SCREENSHOT_PATH"
+          cp -Rf packages/admin/docs/content "./$DOC_REPOSITORY_NAME/resources/docs"
+          cp -Rf packages/admin/docs/screenshots "./$DOC_REPOSITORY_NAME/$SCREENSHOT_PATH"
+      - name: Commit and Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          cd updated-docs
-          git add .
-          git commit -m "docs: Update docs"
-          git push origin main
+          cd $DOC_REPOSITORY_NAME
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "docs: update /resources/docs folder with latest changes"
+            git push origin main
+          else
+            echo "No changes to commit."
+          fi
