@@ -1,6 +1,10 @@
 name: pint
 
-on: push
+on:
+  push:
+    branches:
+      - '*.x'
+  pull_request:
 
 jobs:
   pint:

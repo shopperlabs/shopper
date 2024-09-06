@@ -3,7 +3,7 @@ name: npm-build
 on:
   pull_request:
     branches:
-      - 2.x
+      - '*.x'
     types:
       - closed
 

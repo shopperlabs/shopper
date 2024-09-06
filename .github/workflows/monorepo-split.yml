@@ -3,7 +3,7 @@ name: monorepo-split
 on:
   push:
     branches:
-      - '2.*'
+      - 2.x
     tags: '*'
 
 jobs:

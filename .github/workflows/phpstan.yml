@@ -2,6 +2,8 @@ name: phpstan
 
 on:
   push:
+    branches:
+      - '*.x'
   pull_request:
 
 jobs:
