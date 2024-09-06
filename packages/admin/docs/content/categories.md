@@ -1,10 +1,13 @@
 # Categories
+
 Categories are the primary way to group products with similar features. You can also add subcategories if desired.
 
 For example, if you sell clothing, you might have “t-shirts”, “hoodies” and “pants” as categories.
 
 ## Overview
-Shopper gives you a possibility to categorize your products in a very flexible way, which is one of the most vital functionalities of the modern e-commerce systems. The categories system in Shopper use the [Laravel Adjacency List](https://github.com/staudenmeir/laravel-adjacency-list) package to create categories trees like this
+
+Shopper gives you a possibility to categorize your products in a very flexible way, which is one of the most vital functionalities of the modern e-commerce systems.
+The categories system in Shopper use the [Laravel Adjacency List](https://github.com/staudenmeir/laravel-adjacency-list) package to create categories trees like this
 
 ```plain theme:github-light
 Category
@@ -32,19 +35,20 @@ Category
 </div>
 
 ### Fields
+
 The model used is `Shopper\Core\Models\Category`.
 
-| Name        | Type      | Required   |  Notes   |
-|-------------|-----------|------------|------------|
-| `id` | autoinc |         |  auto  |
-| `name`    | string  | yes |   |
-| `slug`    | string  | yes | Unique, default value is generated using category name |
-| `description` | longText  | no | Nullable |
-| `position` | string  | no | Default `0` |
-| `is_enabled` | boolean  | no | Default `false` |
-| `seo_title` | string  | no | Nullable, for seo title max length is 60  |
-| `seo_description` | string  | no | Nullable, for seo description max length is 160 |
-| `parent_id` | bigint  | no |  |
+| Name              | Type     | Required | Notes                                                  |
+|-------------------|----------|----------|--------------------------------------------------------|
+| `id`              | autoinc  |          | auto                                                   |
+| `name`            | string   | yes      |                                                        |
+| `slug`            | string   | yes      | Unique, default value is generated using category name |
+| `description`     | longText | no       | Nullable                                               |
+| `position`        | string   | no       | Default `0`                                            |
+| `is_enabled`      | boolean  | no       | Default `false`                                        |
+| `seo_title`       | string   | no       | Nullable, for seo title max length is 60               |
+| `seo_description` | string   | no       | Nullable, for seo description max length is 160        |
+| `parent_id`       | bigint   | no       |                                                        |
 
 :::tip
 Models are customizable, and we recommend changing the **Category** model when you configure your store.
@@ -84,37 +88,36 @@ return [
 
 3. Update `category` key for the model on the `shopper/models.php` config file to use our new model
     ```php
-    return [
-      'models' => [
-        // ...
-        'brand' => \App\Models\Brand::class,
-
-        // ...
-        'category'  => \App\Models\Category::class, // [tl! focus]
-      ]
-    ];
+    'category' => Models\Category::class, // [tl! --]
+    'category' => \App\Models\Category::class, // [tl! ++]
     ```
 
 ### Components
-Livewire components for managing categories are available in the component configuration file `config/shopper/components.php`.
+
+By default, categories Livewire components are not published. To customize components, you must publish them.
+
+```bash
+php artisan shopper:component:publish category
+```
 
 ```php
-use Shopper\Http\Livewire;
+use Shopper\Livewire;
 
 return [
-  'livewire' => [
 
-    'categories.browse' => Livewire\Categories\Browse::class,
-    'categories.create' => Livewire\Categories\Create::class,
-    'categories.edit' => Livewire\Categories\Edit::class,
-
-    'tables.categories-table' => Livewire\Tables\CategoriesTable::class,
-
-  ];
+    'pages' => [
+        'category-index' => Livewire\Pages\Category\Index::class,
+    ];
+  
+    'components' => [
+        'slide-overs.category-form' => Livewire\SlideOvers\CategoryForm::class,
+        'slide-overs.re-order-categories' => Livewire\SlideOvers\ReOrderCategories::class,
+    ],
 ];
 ```
 
 ## Manage Categories
+
 Categories are determinant of how people will navigate on your site and search for your products. You should focus on your category tree and how categories are organized even before you start creating product sheets.
 
 The categories are accessible via the **Categories** Menu on the left sidebar. The display page is rendered by the Livewire component `Shopper\Framework\Http\Livewire\Categories\Browse` and for the display of the categories table is the component `Shopper\Framework\Http\Livewire\Tables\CategoriesTable`.
@@ -122,22 +125,16 @@ The categories are accessible via the **Categories** Menu on the left sidebar. T
 You can modify them in the component configuration file to use your own.
 
 ### Create category
+
 Click on the "Create" button on the categories page, and a creation form appears.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/create-category.png" alt="Create category form">
+  <img src="/img/screenshots/{{version}}/category-create.png" alt="Create category form">
   <div class="caption">Create category</div>
 </div>
 
 Save your changes in order to be taken back to the categories list. Required fields are marked with an **asterisk (*)**
-
-The SEO section allows you to define how your category information should be displayed in search engines. To modify the content you click on the button "Edit SEO preview". It uses the same blade component as the brands.
-
-<div class="screenshot">
-  <img src="/img/screenshots/{{version}}/seo-preview.gif" alt="Seo form">
-  <div class="caption">Seo form preview</div>
-</div>
-
+The SEO section allows you to define how your category information should be displayed in search engines.
 Once you have finished configuring your category, save it, and you are ready to fill it with products.
 
 If you use another interface (e.g. API) to save your categories, you can save directly using your Model
@@ -153,7 +150,6 @@ $category = Category::create([
 ```
 
 The slug cannot be null, you have to fill in the value of the category name and according to that the slug will be generated.
-
 In case a slug already exists, the slug will be automatically extended to prevent duplicates:
 
 ```php
@@ -170,7 +166,6 @@ echo $category2->slug;
 ```
 
 And if the category has a parent, the child's slug will be generated with the parent's directly
-
 This generation is done when adding a category in Shopper. But you can change this behavior by extending the category create [Shopper\Framework\Http\Livewire\Categories\Create](https://github.com/shopperlabs/framework/blob/main/src/Http/Livewire/Categories/Create.php) Livewire component or by creating a new one.
 
 ```php
@@ -178,8 +173,8 @@ use App\Models\Category;
 
 $category = Category::create(['name' => 'Photo', 'slug' => 'photo']);
 $categoryChild = Category::create([
-  'name' => 'Camera',
-  'slug' => $this->parent ? $this->parent->slug . '-' . 'Camera' : 'Camera',
+  'name' => $name = 'Camera',
+  'slug' => $this->parent ? $this->parent->slug . '-' . $name : $name,
   'parent_id' => $caregory->id
 ]);
 
@@ -209,22 +204,16 @@ $child = Category::create([
 ]);
 ```
 
-On Shopper, to specify the parent category you just have to choose via the select field
-
-<div class="screenshot">
-  <img src="/img/screenshots/{{version}}/category-parent.png" alt="category parent">
-  <div class="caption">Category parent</div>
-</div>
-
 ### Update category
-The "Modify" button allows you to modify the category.
+
+The "Update" button allows you to modify the category.
 
 :::info
 It is important to know that if you update the category name, the slug will automatically be updated as well.
 :::
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/update-category.png" alt="update category">
+  <img src="/img/screenshots/{{version}}/category-update.png" alt="update category">
   <div class="caption">Update Category</div>
 </div>
 
