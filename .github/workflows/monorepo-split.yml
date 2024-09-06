@@ -28,7 +28,7 @@ jobs:
           package_directory: 'packages/${{ matrix.package }}'
           repository_organization: 'shopperlabs'
           repository_name: '${{ matrix.package }}'
-          branch: ${{ github.ref_name }}
+          branch: 2.x
           tag: ${{ steps.previous-tag.outputs.tag }}
           user_name: 'Arthur Monney'
           user_email: 'contact@arthurmonney.me'

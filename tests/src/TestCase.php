@@ -31,12 +31,21 @@ use TailwindMerge\Laravel\TailwindMergeServiceProvider;
 abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase;
-    use WithLaravelMigrations;
     use WithWorkbench;
 
     protected bool $seed = true;
 
     protected string $seeder = ShopperSeeder::class;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations();
+
+        // Freeze time to avoid timestamp errors
+        $this->freezeTime();
+    }
 
     protected function getPackageProviders($app): array
     {
