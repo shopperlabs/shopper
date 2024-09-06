@@ -72,19 +72,19 @@ describe('Category', function (): void {
             ->call('save')
             ->assertHasNoFormErrors()
             ->assertDispatched('category-save');
+
         expect((new CategoryRepository)->count())->toBe(2);
     });
 
-    it('can set parent_id child to null if parent are deleted', function (): void {
+    it('has parent_id field null when parent category is deleted', function (): void {
         $parent = Category::factory()->create(['name' => 'Parent']);
-        $child = Category::factory()->create(['name' => 'Enfant', 'parent_id' => $parent->id]);
+        $child = Category::factory()->create(['name' => 'Child', 'parent_id' => $parent->id]);
 
         expect($child->parent_id)->toBe($parent->id);
 
         $parent->delete();
-
         $child->refresh();
+
         expect($child->parent_id)->toBeNull();
     });
-
 })->group('category');
