@@ -1,0 +1,35 @@
+name: Sync docs
+on:
+  push:
+    branches:
+      - '*.x'
+    paths:
+      - 'packages/admin/docs/**'
+
+env:
+  SCREENSHOT_PATH: public/img/screenshots/${{ github.ref_name }}
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setting Git Account
+        run: |
+          git config --global user.email "monneylobe@gmail.com"
+          git config --global user.name "Arthur Monney"
+      - name: Cloning docs repository
+        run: git clone --depth=1 https://${{ secrets.ACCESS_TOKEN }}@github.com/shopperlabs/laravelshopper.dev-next.git updated-docs
+      - name: Create and Copy folders assets
+        run: |
+          mkdir -p "./updated-docs/$SCREENSHOT_PATH"
+          cp -R -f packages/admin/docs/content ./updated-docs/resources/docs
+          cp -R -f packages/admin/docs/screenshots "./updated-docs/$SCREENSHOT_PATH"
+      - name: Publishing assets
+        run: |
+          cd updated-docs
+          git add .
+          git commit -m "docs: Update docs"
+          git push origin main

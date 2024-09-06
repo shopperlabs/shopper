@@ -41,6 +41,6 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          branch: 2.x
+          branch: ${{ github.ref_name }}
           commit_message: >
             chore: Build assets
