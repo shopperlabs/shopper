@@ -126,7 +126,7 @@ You can modify them in the component configuration file to use your own.
 
 ### Create category
 
-Click on the "Create" button on the categories page, and a creation form appears.
+Click on the "Create" button on the categories page, and the form display.
 
 <div class="screenshot">
   <img src="/img/screenshots/{{version}}/category-create.png" alt="Create category form">
@@ -218,8 +218,8 @@ It is important to know that if you update the category name, the slug will auto
 </div>
 
 ## Retrieve Data
-With Shopper Framework you are the master of your front-end. After extending the model you can make all the necessary queries to retrieve your data.
 
+With Shopper, you are the master of your front-end. After extending the model you can make all the necessary queries to retrieve your data.
 We just recommend that you always use the `enabled` scope to ensure that only active categories are visible
 
 ```php
@@ -255,3 +255,25 @@ Category::find($id)->siblings()->delete();
 ```
 
 The complete documentation is available in the readme of [Laravel Adjacency List](https://github.com/staudenmeir/laravel-adjacency-list)
+
+## Disabled Category
+
+It may be that your store sells only one type of product, and that you don't need to categorize them (maybe it's just keyboards).
+If you don't want to use the functionalities attached to categories and simplify your administration interface, you can simply deactivate the categories feature.
+
+This will hide categories on the sidebar and disabled all categories-related functionalities in your store.
+To disable categories-related functionalities, open the `features.php` configuration file in the `config/shopper` folder and set the category key to disable.
+
+```php
+use Shopper\Enum\FeatureState;
+
+return [
+    'attribute' => FeatureState::Enabled,
+    'brand' => FeatureState::Enabled,
+    'category' => FeatureState::Enabled, // [tl! --]
+    'category' => FeatureState::Disabled, // [tl! ++]
+    'collection' => FeatureState::Enabled,
+    'discount' => FeatureState::Enabled,
+    'review' => FeatureState::Enabled,
+];
+```

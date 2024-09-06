@@ -112,11 +112,23 @@ This page will extend shopper's default layout, and you can render the view you 
 Click on the "Create" button on the brands page, which will display the form.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/create-brand.png" alt="Create brand">
+  <img src="/img/screenshots/{{version}}/brand-create.png" alt="Create brand">
   <div class="caption">Create brand</div>
 </div>
 
 Save your changes in order to be taken back to the brand's list. Required fields are marked with an **asterisk (*)**
+
+If you use another interface (e.g. API) to save your brands, you can save directly using your Model
+
+```php
+use App\Models\Brand;
+
+$category = Brand::create([
+  'name' => $name = 'Matanga',
+  'slug' => $name,
+  'is_enabled' => true,
+]);
+```
 
 ## Retrieve Data
 
@@ -197,7 +209,7 @@ And in your front-end you can browse your brands to have a display like this
 
 <div class="screenshot">
   <img src="/img/screenshots/{{version}}/brand-lists.png" alt="Brands list">
-  <div class="caption">Brands example list</div>
+  <div class="caption">Brands list</div>
 </div>
 
 ## Disabled Brand

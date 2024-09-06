@@ -1,7 +1,9 @@
 # Configuration
+
 Shopper uses standard Laravel config files and environment variables for application-level settings
 
 ## Config Files
+
 With the installation of Shopper you will find new configurations files located in `config/shopper/`. They are PHP files named by area of responsibility.
 
 ``` files theme:github-light

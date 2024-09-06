@@ -185,15 +185,15 @@ To view the image of a collection you can consult the [Media documentation](/med
 
 <div class="screenshot">
   <img src="/img/screenshots/{{version}}/collection-preview.png" alt="collections data">
-  <div class="caption">Example of collections</div>
+  <div class="caption">Collections</div>
 </div>
 
 ## Disabled Collection
 
-Sometimes in your store, you won't have a brand name for your products (it's rare but possible), especially if you make them yourself.
-In this case, you can hide brands on the sidebar and disabled all brand-related functionalities in your store.
+Collections aren't necessarily easy for every store to adopt, so in some circumstances categories may suffice for grouping your products.
+If you don't plan to use collections in your store, you can simply deactivate them.
 
-To disable collections-related functionalities, open the `features.php` configuration file in the `config/shopper` folder and set the brand key to disable.
+To disable collections-related functionalities, open the `features.php` configuration file in the `config/shopper` folder and set the collection key to disable.
 
 ```php
 use Shopper\Enum\FeatureState;
