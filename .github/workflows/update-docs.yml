@@ -40,7 +40,7 @@ jobs:
           cd $DOCUMENTATION_REPOSITORY_NAME
           if [ -n "$(git status --porcelain)" ]; then
             git add .
-            git commit -m "docs: update /resources/docs folder with latest changes"
+            git commit -m "docs: update documentation with latest changes"
             git push https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/shopperlabs/laravelshopper.dev.git
           else
             echo "No changes to commit."
