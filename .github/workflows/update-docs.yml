@@ -30,8 +30,8 @@ jobs:
         run: |
           mkdir -p "./$DOCUMENTATION_REPOSITORY_NAME/$SCREENSHOT_PATH"
           mkdir -p "./$DOCUMENTATION_REPOSITORY_NAME/$DOCUMENTATION_PATH"
-          cp -rf packages/admin/docs/content "./$DOCUMENTATION_REPOSITORY_NAME/$DOCUMENTATION_PATH"
-          cp -rf packages/admin/docs/screenshots "./$DOCUMENTATION_REPOSITORY_NAME/$SCREENSHOT_PATH"
+          cp -rf packages/admin/docs/content/* "./$DOCUMENTATION_REPOSITORY_NAME/$DOCUMENTATION_PATH/"
+          cp -rf packages/admin/docs/screenshots/* "./$DOCUMENTATION_REPOSITORY_NAME/$SCREENSHOT_PATH/"
           echo "Copied updated docs to the laravelshopper.dev repository!"
       - name: Commit and Push Changes
         env:
