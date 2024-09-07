@@ -6,11 +6,6 @@ on:
     paths:
       - 'packages/admin/docs/**'
 
-env:
-  DOCUMENTATION_REPOSITORY_NAME: laravelshopper.dev
-  SCREENSHOT_PATH: public/img/screenshots/${{ github.ref_name }}
-  DOCUMENTATION_PATH: resources/docs/${{ github.ref_name }}
-
 jobs:
   docs:
     runs-on: ubuntu-latest
@@ -22,26 +17,27 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          git clone --depth=1 https://github.com/shopperlabs/laravelshopper.dev.git
+          git clone --depth=1 --branch ${{ github.ref_name }} https://github.com/shopperlabs/docs.git || git clone https://github.com/shopperlabs/docs.git
+          cd docs
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          echo "Cloned laravelshopper.dev repository!"
-      - name: Create and Copy folders assets
+          cd ..
+          echo "Cloned docs repository!"
+      - name: Copy screenshots assets and content of Content folder
         run: |
-          mkdir -p "./$DOCUMENTATION_REPOSITORY_NAME/$SCREENSHOT_PATH"
-          mkdir -p "./$DOCUMENTATION_REPOSITORY_NAME/$DOCUMENTATION_PATH"
-          cp -rf packages/admin/docs/content/* "./$DOCUMENTATION_REPOSITORY_NAME/$DOCUMENTATION_PATH/"
-          cp -rf packages/admin/docs/screenshots/* "./$DOCUMENTATION_REPOSITORY_NAME/$SCREENSHOT_PATH/"
+          cp -rf packages/admin/docs/screenshots docs/
+          cp -rf packages/admin/docs/content/* docs/
           echo "Copied updated docs to the laravelshopper.dev repository!"
       - name: Commit and Push Changes
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
-          cd $DOCUMENTATION_REPOSITORY_NAME
+          cd docs
           if [ -n "$(git status --porcelain)" ]; then
             git add .
             git commit -m "docs: update documentation with latest changes"
-            git push https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/shopperlabs/laravelshopper.dev.git
+            git remote set-url origin https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/shopperlabs/docs.git
+            git push origin ${{ github.ref_name }}
           else
             echo "No changes to commit."
           fi

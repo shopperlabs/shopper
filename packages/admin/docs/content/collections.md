@@ -35,7 +35,7 @@ Where products can be added to any category, collections cannot. Depending on th
 As mentioned above, the collections in Shopper are inspired by [Shopify collections](https://help.shopify.com/en/manual/products/collections). So there are also 2 types of collections: "Manual" and "Automatic" and the configuration for each is different.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/collections.png" alt="Collections">
+  <img src="/screenshots/{{version}}/collections.png" alt="Collections">
   <div class="caption">Collections</div>
 </div>
 
@@ -149,7 +149,7 @@ return [
 Form your Shopper admin on the sidebar go to **Collections**. The display page is rendered by the Livewire component `Shopper\Livewire\Pages\Collection\Index::class`.
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/collection-empty-state.png" alt="Collections empty data">
+    <img src="/screenshots/{{version}}/collection-empty-state.png" alt="Collections empty data">
   	<div class="caption">Collections</div>
 </div>
 
@@ -162,7 +162,7 @@ You can create two types of collections as we said: `Automatic` and `Manual` col
 Only automatic collections have rules for automating them. When you choose to create an automatic collection the rules section will be available in the edit form.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/collection-rules.png" alt="automatic collection rules">
+  <img src="/screenshots/{{version}}/collection-rules.png" alt="automatic collection rules">
   <div class="caption">Automatic collection rules</div>
 </div>
 
@@ -184,7 +184,7 @@ $collection = Collection::findBySlug('summers-clothes');
 To view the image of a collection you can consult the [Media documentation](/media#retrieving-images). And you can display collections in your frontend.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/collection-preview.png" alt="collections data">
+  <img src="/screenshots/{{version}}/collection-preview.png" alt="collections data">
   <div class="caption">Collections</div>
 </div>
 

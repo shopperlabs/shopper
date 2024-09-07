@@ -4,7 +4,7 @@
   - [Contribution Guide](/docs/{{version}}/contributing)
 - ##### Getting Started
   - [Requirements](/docs/{{version}}/requirements)
-  - [Installation](/docs/{{version}}/installation)
+  - [Installation](/docs/{{version}}/getting-started)
   - [Configuration](/docs/{{version}}/configuration)
 - ##### Concepts
   - [Customization](/docs/{{version}}/customization)

@@ -4,7 +4,7 @@ In e-commerce stores, customers are one if not the fundamental point for the fun
 The first page under the "Customers" menu gives you a list of all the registered users on your shop.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/customers.png" alt="Customers">
+  <img src="/screenshots/{{version}}/customers.png" alt="Customers">
   <div class="caption">Customers</div>
 </div>
 
@@ -68,14 +68,14 @@ Alternatively, you can add a customer to your store manually.
 From your Shopper admin, go to Customers and click on "Add customer" button.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/create-customer.png" alt="Create customer">
+  <img src="/screenshots/{{version}}/create-customer.png" alt="Create customer">
   <div class="caption">Create customer</div>
 </div>
 
 When creating a customer manually, you should also fill in an address that will be used when he places an order in your store.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/customer-address.png" alt="customer address form">
+  <img src="/screenshots/{{version}}/customer-address.png" alt="customer address form">
   <div class="caption">Customer address form</div>
 </div>
 
@@ -84,7 +84,7 @@ _Optional_: If the customer has agreed to receive marketing emails, and you have
 And you can also check the **Send customer credentials** checkbox to sent an email to the customer with their login information.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/customer-notification.png" alt="customer notification">
+  <img src="/screenshots/{{version}}/customer-notification.png" alt="customer notification">
   <div class="caption">Customer notifications</div>
 </div>
 
@@ -113,7 +113,7 @@ The clients that are displayed in the listing page are those that have the `user
 In the case where you would like to have more information on a given customer, you can click on the customer name row in the customer's list. A new page appears.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/customer-informations.png" alt="customer informations">
+  <img src="/screenshots/{{version}}/customer-informations.png" alt="customer informations">
   <div class="caption">Customer informations</div>
 </div>
 

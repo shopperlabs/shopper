@@ -11,7 +11,7 @@ Laravel Shopper is a free open-source e-commerce application based on the [TALL 
 The navigation at the left contains the available panels for everyday use:
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/dashboard.png" alt="Shopper Global Set Example">
+    <img src="/screenshots/{{version}}/dashboard.png" alt="Shopper Global Set Example">
     <div class="caption">The dashboard and the Getting Started panel</div>
 </div>
 

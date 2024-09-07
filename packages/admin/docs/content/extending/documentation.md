@@ -2,5 +2,5 @@
   - [Overview](/docs/{{version}}/control-panel)
   - [Navigation](/docs/{{version}}/navigation)
 - ##### Components
-  - [Forms](/docs/{{version}}/forms)
+  - [SlideOver](/docs/{{version}}/slideover)
   - [Modals](/docs/{{version}}/modals)

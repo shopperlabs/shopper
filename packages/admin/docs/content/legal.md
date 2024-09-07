@@ -42,14 +42,14 @@ In your administration area you must click on the "cog" icon to display the sett
 - From your admin panel, on the blue sidebar click on the cog icon, go to `Settings > Legal`.
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/settings-legal.png" alt="legal setting">
+    <img src="/screenshots/{{version}}/settings-legal.png" alt="legal setting">
     <div class="caption">Settings > Legal</div>
 </div>
 
 Once in this page, all the legal pages are displayed as a tab. You can just fill in the content of each page and click on the Enable switch to retrieve the content of your page and display it in your front-end.
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/legal-screenshot.png" alt="legal pages">
+    <img src="/screenshots/{{version}}/legal-screenshot.png" alt="legal pages">
     <div class="caption">Legal pages</div>
 </div>
 
