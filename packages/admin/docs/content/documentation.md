@@ -12,7 +12,6 @@
   - [Roles / Permissions](/docs/{{version}}/roles-permissions)
   - [Two Factor Authenticator](/docs/{{version}}/two-factor)
   - [Legal](/docs/{{version}}/legal)
-  - [Media](/docs/{{version}}/media)
 - ##### Control Panel
   - [Dashboard](/docs/{{version}}/dashboard)
   - [Brands](/docs/{{version}}/brands)
