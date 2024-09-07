@@ -35,28 +35,34 @@ The model used is `Shopper\Core\Models\Inventory`.
 | `priority`            | integer | default (`0`) | no                                                                                                        |
 | `latitude`            | decimal | no            | Nullable, GPS latitude coordinates                                                                        |
 | `longitude`           | decimal | no            | Nullable, GPS longitude coordinates                                                                       |
-| `is_default`          | boolean | no            | Default `false`, define location as defaut for stock                                                      |
+| `is_default`          | boolean | no            | Default `false`, define location as default for stock                                                     |
 | `country_id`          | string  | yes           | foreign key for country, each location must be linked to a country                                        |
 
 ### Components
 
-The components used to manage locations are found in the component configuration file `config/shopper/components.php`.
+The components used to manage locations are found in the component configuration file `config/shopper/components/setting.php`.
+This configuration file is not available by default. But if you want to update or change the settings components, you can publish them with the command
+
+```bash
+php artisan shopper:component:publish setting
+```
 
 ```php
-use Shopper\Core\Http\Livewire;
-use Shopper\Core\Http\Livewire\Components;
+use Shopper\Livewire\Pages;
 
 return [
 
-  'livewire' => [
-
-    'modals.delete-inventory' => Livewire\Modals\DeleteInventory::class, // [tl! focus]
-
-    'settings.inventories.browse' => Components\Settings\Inventories\Browse::class, // [tl! focus]
-    'settings.inventories.create' => Components\Settings\Inventories\Create::class,// [tl! focus]
-    'settings.inventories.edit' => Components\Settings\Inventories\Edit::class,// [tl! focus]
-
-  ];
+    'pages' => [
+        // ...
+        'inventory-index' => Pages\Settings\Inventories\Browse::class,
+        'inventory-create' => Pages\Settings\Inventories\Create::class,
+        'inventory-edit' => Pages\Settings\Inventories\Edit::class,
+        // ...
+    ];
+    
+    'components' => [
+        
+    ],
 
 ];
 ```
@@ -73,35 +79,37 @@ In your administration area you must click on the "cog" icon to display the sett
 
 <div class="screenshot">
   <img src="/img/screenshots/{{version}}/settings-location.png" alt="Setting location">
-  <div class="caption">Settings > locations</div>
+  <div class="caption">Settings > Locations</div>
 </div>
 
 ### Add location
+
 In your administration area you must click on the "cog" icon to display the settings page of your store.
 
 1. Click Add location.
 2. Enter a unique name and an address for the location.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/add-location.png" alt="Add location">
-  <div class="caption">Add location</div>
+  <img src="/img/screenshots/{{version}}/location-create.png" alt="Add location">
+  <div class="caption">Create location</div>
 </div>
 
 ### Edit location
+
 To update a location you click on an available location among those you have saved and you will have the update page.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/update-location.png" alt="update location">
+  <img src="/img/screenshots/{{version}}/location-update.png" alt="update location">
   <div class="caption">Update location</div>
 </div>
 
 ### Define a default location
-The default location is the one in which all products will be collected with each order. If this location is empty the products will be searched in another and if it is the only one the product will be out of stock on your store.
 
+The default location is the one in which all products will be collected with each order. If this location is empty the products will be searched in another and if it is the only one the product will be out of stock on your store.
 You select a location and during the modification you click on the checkbox **Set as default inventory**
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/default-location.png" alt="Set default location">
+  <img src="/img/screenshots/{{version}}/location-default.png" alt="Set default location">
   <div class="caption">Set default location</div>
 </div>
 
@@ -109,10 +117,10 @@ You select a location and during the modification you click on the checkbox **Se
 To delete a location you must click on a location to display it and at the bottom of the page you click on the delete button.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/delete-location.png" alt="Delete location">
+  <img src="/img/screenshots/{{version}}/location-delete.png" alt="Delete location">
   <div class="caption">Delete location confirmation</div>
 </div>
 
 :::danger
-Once the location removed, all inventories will changed and this could complicate your inventory management. This is why you have a confirmation modal to be sure that this is indeed what you want to proceed.
+Once the location removed, all inventories will be changed and this could complicate your inventory management. This is why you have a confirmation modal to be sure that this is indeed what you want to proceed.
 :::

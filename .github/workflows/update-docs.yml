@@ -24,11 +24,13 @@ jobs:
           git clone --depth=1 https://github.com/shopperlabs/laravelshopper.dev.git
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          echo "Cloned laravelshopper.dev repository!"
       - name: Create and Copy folders assets
         run: |
           mkdir -p "./$DOC_REPOSITORY_NAME/$SCREENSHOT_PATH"
-          cp -Rf packages/admin/docs/content "./$DOC_REPOSITORY_NAME/resources/docs"
-          cp -Rf packages/admin/docs/screenshots "./$DOC_REPOSITORY_NAME/$SCREENSHOT_PATH"
+          cp -rf packages/admin/docs/content "./$DOC_REPOSITORY_NAME/resources/docs"
+          cp -rf packages/admin/docs/screenshots "./$DOC_REPOSITORY_NAME/$SCREENSHOT_PATH"
+          echo "Copied docs to the laravelshopper.dev repository!"
       - name: Commit and Push Changes
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
@@ -37,7 +39,7 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git add .
             git commit -m "docs: update /resources/docs folder with latest changes"
-            git push origin main
+            git push https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/shopperlabs/laravelshopper.dev.git
           else
             echo "No changes to commit."
           fi
