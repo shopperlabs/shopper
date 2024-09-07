@@ -85,7 +85,7 @@ To run the project you may use the built-in server: `php artisan serve`
 
 After that, run `composer dump-autoload` to finish your installation!
 
-If your are using Laravel Valet you can easily access with your project name with `.test` at the end when you navigate on you project.
+If using Laravel Valet or Laravel Herd you can easily access with your project name with `.test` at the end when you navigate on you project.
 
 ```bash
 http://laravelshopper.test/cpanel/login

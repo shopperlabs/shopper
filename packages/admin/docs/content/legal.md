@@ -18,21 +18,20 @@ The model used is `Shopper\Core\Models\Legal`.
 
 ## Components
 
-The components used to manage Legal page are found in the component configuration file `config/shopper/components.php`. Each component corresponds to the page that is defined
+The components used to manage Legal page are found in the component configuration file `config/shopper/components/setting.php`. Each component corresponds to the page that is defined
 
 ```php
-use Shopper\Http\Livewire\Components;
+use Shopper\Livewire;
 
 return [
-    'livewire' => [
-
+    'pages' => [
+        // ...
         'settings.legal.privacy' => Components\Settings\Legal\Privacy::class,
         'settings.legal.refund' => Components\Settings\Legal\Refund::class,
         'settings.legal.shipping' => Components\Settings\Legal\Shipping::class,
         'settings.legal.terms' => Components\Settings\Legal\Terms::class,
-
+        // ...
     ];
-
 ];
 ```
 
