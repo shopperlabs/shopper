@@ -136,7 +136,7 @@ class AppServiceProvider extends ServiceProvider
 We will have this in our sidebar
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/sidebar-screen.png" alt="Blog sidebar">
+    <img src="/screenshots/{{version}}/sidebar-screen.png" alt="Blog sidebar">
     <div class="caption">Blog sidebar</div>
 </div>
 

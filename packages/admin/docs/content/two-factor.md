@@ -27,14 +27,14 @@ When you install an authenticator app, make sure that you follow its instruction
 From your administrator interface, click on your name with account picture in the upper right corner. Next click on **Personal Account**
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/account-dropdown.png" alt="Account dropdown">
+    <img src="/screenshots/{{version}}/account-dropdown.png" alt="Account dropdown">
     <div class="caption">Account Dropdown</div>
 </div>
 
 Scroll to the two factor authenticate section on the screen, click **Enable authentication**. This action will trigger a modal to ask you to confirm your password
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/two-factor-section.png" alt="Two factor section Screenshot">
+    <img src="/screenshots/{{version}}/two-factor-section.png" alt="Two factor section Screenshot">
     <div class="caption">Two factor section</div>
 </div>
 
@@ -43,7 +43,7 @@ Enter your current password in the space provided and click **Enable**.
 If the user loses access to their mobile device, the login page will allow them to authenticate using one of their recovery codes instead of the temporary token provided by their mobile device's authenticator application.
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/two-factor-code.png" alt="Two factor code Screenshot">
+    <img src="/screenshots/{{version}}/two-factor-code.png" alt="Two factor code Screenshot">
     <div class="caption">Two factor QRcode & Recovery Code</div>
 </div>
 
@@ -56,7 +56,7 @@ Now when you try to log in, two-factor authentication will require your mobile d
 You will go to the Shopper administration login page. You will enter your email address and password and click on the **Login** button. On the next page, you need to authenticate using the method you've used to set up two-factor authentication.
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/auth-two-factor-authentication.png" alt="Two factor login Screenshot">
+    <img src="/screenshots/{{version}}/auth-two-factor-authentication.png" alt="Two factor login Screenshot">
     <div class="caption">Two factor Login</div>
 </div>
 
@@ -71,6 +71,6 @@ From your administrator interface, click on your name and your account photo in 
 In the Two-factor authentication section, use the Disable button for the authentication method you want to deactivate. This will ask you for a password confirmation, you enter your password and click on confirm to completely deactivate the Two-factor authentication.
 
 <div class="screenshot">
-    <img src="/img/screenshots/{{version}}/two-factor-disable.png" alt="Two factor disable Screenshot">
+    <img src="/screenshots/{{version}}/two-factor-disable.png" alt="Two factor disable Screenshot">
     <div class="caption">Two factor disable</div>
 </div>

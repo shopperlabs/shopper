@@ -11,7 +11,7 @@ The management of brands is exactly the same as the one done in most of the e-co
 It is mainly used to facilitate the navigation of customers in your catalog, as it is increasingly common to search for a specific brand.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/brands.png" alt="Brands">
+  <img src="/screenshots/{{version}}/brands.png" alt="Brands">
   <div class="caption">Brands</div>
 </div>
 
@@ -112,7 +112,7 @@ This page will extend shopper's default layout, and you can render the view you 
 Click on the "Create" button on the brands page, which will display the form.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/brand-create.png" alt="Create brand">
+  <img src="/screenshots/{{version}}/brand-create.png" alt="Create brand">
   <div class="caption">Create brand</div>
 </div>
 
@@ -208,7 +208,7 @@ class AppServiceProvider extends ServiceProvider
 And in your front-end you can browse your brands to have a display like this
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/brand-lists.png" alt="Brands list">
+  <img src="/screenshots/{{version}}/brand-lists.png" alt="Brands list">
   <div class="caption">Brands list</div>
 </div>
 

@@ -1,9 +1,11 @@
 # Control Panel
+
 The control panel may be customized in a number of different ways. You may add new pages, menus, a stylesheet, or maybe you just want to add some arbitrary Javascript.
 
 When you need to add features to your Shopper administration, you can first set up some configurations
 
 ## Adding CSS and JS assets
+
 Shopper can load extra stylesheets and Javascript files located in the `public/` directory.
 
 You may register assets to be loaded in the Control Panel using the `scripts` and `stylesheets` keys of the resources in the `config/shopper/admin.php` config file. This will accept a array of links.
@@ -30,6 +32,7 @@ Depending on how you will use your css and js files, the order is important
 These commands will make Shopper expect files at `public/css/admin.css` and `public/js/admin.js` respectively for local links.
 
 ## Customize Shopper theme
+
 Shopper is built using Tallstack presets, but you are not limited to that because the base css file is already built for production.
 
 But if you want to customize your dashboard using Tailwind css you must first install Tailwind in your project. You can read the [documentation](https://tailwindcss.com/docs/guides/laravel)
@@ -106,6 +109,7 @@ module.export = {
 ```
 
 ### Branding Logo
+
 After update (or not) the colors of your administration theme to reflect your brand. You'll probably want to change the logo to display
 
 By default, Laravel Shopper logo is used next to your application name in the administration panel.
@@ -140,6 +144,7 @@ It can be a simple svg or an image tag.
 ```
 
 ## Adding control panel routes
+
 If you need to have custom routes for the control panel:
 
 1. Create a routes file. Name it whatever you want, for example: `routes/shopper.php`

@@ -55,9 +55,10 @@ class User extends Authenticatable
 
 ## Create an Admin user
 
-Now we can create a new superuser and sign into the Dashboard and start creating some content to display on the frontend.
+Now we can create a new superuser and sign in into the Dashboard and start creating some content to display on the frontend.
 
 Run the following command to create a user with supreme \(at the moment of creation\) rights:
+
 ```bash
 php artisan shopper:user
 ```
@@ -65,7 +66,7 @@ php artisan shopper:user
 And you will be prompted for the user email, firstname, lastname and password. You can now login to start create products
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/product-screenshot.png" alt="Product creation screenshot">
+  <img src="/screenshots/{{version}}/product-screenshot.png" alt="Product creation screenshot">
 </div>
 
 ## New Shopper Directory

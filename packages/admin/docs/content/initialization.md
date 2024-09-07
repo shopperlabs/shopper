@@ -4,7 +4,7 @@ Once you have installed Shopper, you need to set up a store to serve as your fir
 After logging in, if it's your first time, you'll be redirected to your store's initialization page. This step is essential for your store's basic information (country, currencies, location).
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/initialization.png" alt="Shopper Initialization Step">
+  <img src="/screenshots/{{version}}/initialization.png" alt="Shopper Initialization Step">
   <div class="caption">Store initialization</div>
 </div>
 
@@ -44,7 +44,7 @@ When you launch your store the first important thing to do is to fill in the inf
 Your customers and the different services you might use need to know the information about your store.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/store-information.png" alt="Store information">
+  <img src="/screenshots/{{version}}/store-information.png" alt="Store information">
   <div class="caption">Store information</div>
 </div>
 
@@ -55,7 +55,7 @@ The information stored in this section is available using the following keys: `s
 Choose the default currency for the store. Only one may be selected.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/store-currency.png" alt="Store currency">
+  <img src="/screenshots/{{version}}/store-currency.png" alt="Store currency">
   <div class="caption">Store currency</div>
 </div>
 
@@ -70,7 +70,7 @@ Most stores keep their products in different locations around the world. When se
 When shipping an order, the products to be delivered/shipped will start from this location and thus the shipping price can be set according to this.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/customization-map-off.png" alt="Store location">
+  <img src="/screenshots/{{version}}/customization-map-off.png" alt="Store location">
   <div class="caption">Store location address</div>
 </div>
 
@@ -115,7 +115,7 @@ If you want your customers to find you easily on social networks, you can fill i
 This step is completely optional
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/customization-social-media.png" alt="Store social links">
+  <img src="/screenshots/{{version}}/customization-social-media.png" alt="Store social links">
   <div class="caption">Store social links</div>
 </div>
 
@@ -132,7 +132,7 @@ To edit your shop information, you must:
 - From your administration, on the blue sidebar click on the settings icon at the bottom of the page **Settings > General**
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/setting.jpg" alt="Admin Panel setting">
+  <img src="/screenshots/{{version}}/setting.jpg" alt="Admin Panel setting">
   <div class="caption">Admin setting</div>
 </div>
 
@@ -156,7 +156,7 @@ return [
 ```
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/store-setting-update.png" alt="Admin update setting">
+  <img src="/screenshots/{{version}}/store-setting-update.png" alt="Admin update setting">
   <div class="caption">Admin update setting</div>
 </div>
 

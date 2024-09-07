@@ -61,7 +61,7 @@ RBAC (Role Based Access Control) or ACL (Access Control Layer) is an approach to
 To view the roles and permissions management page, you must go to the `Settings > Staff & Permissions`
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/settings-staff.png" alt="Setting Staff & permissions">
+  <img src="/screenshots/{{version}}/settings-staff.png" alt="Setting Staff & permissions">
   <div class="caption">Settings > Staff & permissions</div>
 </div>
 
@@ -149,7 +149,7 @@ A Role is a set of permissions to perform certain operations within the system, 
 The user role does not appear, modifying it could lead to bugs on your store so it is not listed here.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/roles-admins.png" alt="roles and admins users">
+  <img src="/screenshots/{{version}}/roles-admins.png" alt="roles and admins users">
   <div class="caption">Roles & Admins</div>
 </div>
 
@@ -161,7 +161,7 @@ It's **strongly** advised to not change the name of roles when they are already 
 To add a new role, you must click on `Add a new role` button. Required fields are marked with asterisks
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/add-role.png" alt="addd new role">
+  <img src="/screenshots/{{version}}/add-role.png" alt="addd new role">
   <div class="caption">Add new role</div>
 </div>
 
@@ -173,7 +173,7 @@ To modify a role you must click on the role you want to modify to access the edi
 And as already mentioned, all Shopper features are livewire components. So you can change everything at any time to fit your store.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/update-role.png" alt="update role">
+  <img src="/screenshots/{{version}}/update-role.png" alt="update role">
   <div class="caption">Update role</div>
 </div>
 
@@ -181,14 +181,14 @@ And as already mentioned, all Shopper features are livewire components. So you c
 In addition to creating an administrator from the command line you can also do it from the Shopper interface, you just need to click on **Add Administrator** button.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/add-admin.png" alt="add new admin">
+  <img src="/screenshots/{{version}}/add-admin.png" alt="add new admin">
   <div class="caption">Add admin</div>
 </div>
 
 Then you fill in the information of your administrator with the role chosen for him
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/admin-user-form.png" alt="add new admin form">
+  <img src="/screenshots/{{version}}/admin-user-form.png" alt="add new admin form">
   <div class="caption">Add admin form</div>
 </div>
 
@@ -229,7 +229,7 @@ Let’s assume that you would like to add a new permission to ACL. You will need
 In the way that when a admin are granted of a specific role, he take all role's permissions.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/permissions-browse.png" alt="Role's permissions example">
+  <img src="/screenshots/{{version}}/permissions-browse.png" alt="Role's permissions example">
   <div class="caption">Role's permissions example</div>
 </div>
 
@@ -238,7 +238,7 @@ As you may have noticed all permissions are grouped by type, and the available t
 To add a new permission you just need to click on the **Create permission** button.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/add-permission.png" alt="Add permission">
+  <img src="/screenshots/{{version}}/add-permission.png" alt="Add permission">
   <div class="caption">Add permission</div>
 </div>
 
@@ -247,6 +247,6 @@ After adding your permission it will be automatically associated with the role a
 If the permission has no group it will be in a `Custom permissions` section.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/custom-permissions.png" alt="new permission">
+  <img src="/screenshots/{{version}}/custom-permissions.png" alt="new permission">
   <div class="caption">New permission</div>
 </div>

@@ -7,7 +7,7 @@ If you have already used [Shopify](https://shopify.com) it is a bit the same mod
 You can set up multiple locations in your store so that you can track inventory and have excel documents of the products ordered in each of your locations. Your locations can be retail stores, warehouses, popups, or any other place where you manage or store inventory. With multiple locations, you have better visibility into your inventory in your business.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/location-admin.png" alt="Locations">
+  <img src="/screenshots/{{version}}/location-admin.png" alt="Locations">
   <div class="caption">Locations</div>
 </div>
 
@@ -78,7 +78,7 @@ In your administration area you must click on the "cog" icon to display the sett
 - From your admin panel, on the blue sidebar click on the cog icon, go to `Settings > Locations`.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/settings-location.png" alt="Setting location">
+  <img src="/screenshots/{{version}}/settings-location.png" alt="Setting location">
   <div class="caption">Settings > Locations</div>
 </div>
 
@@ -90,7 +90,7 @@ In your administration area you must click on the "cog" icon to display the sett
 2. Enter a unique name and an address for the location.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/location-create.png" alt="Add location">
+  <img src="/screenshots/{{version}}/location-create.png" alt="Add location">
   <div class="caption">Create location</div>
 </div>
 
@@ -99,7 +99,7 @@ In your administration area you must click on the "cog" icon to display the sett
 To update a location you click on an available location among those you have saved and you will have the update page.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/location-update.png" alt="update location">
+  <img src="/screenshots/{{version}}/location-update.png" alt="update location">
   <div class="caption">Update location</div>
 </div>
 
@@ -109,7 +109,7 @@ The default location is the one in which all products will be collected with eac
 You select a location and during the modification you click on the checkbox **Set as default inventory**
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/location-default.png" alt="Set default location">
+  <img src="/screenshots/{{version}}/location-default.png" alt="Set default location">
   <div class="caption">Set default location</div>
 </div>
 
@@ -117,7 +117,7 @@ You select a location and during the modification you click on the checkbox **Se
 To delete a location you must click on a location to display it and at the bottom of the page you click on the delete button.
 
 <div class="screenshot">
-  <img src="/img/screenshots/{{version}}/location-delete.png" alt="Delete location">
+  <img src="/screenshots/{{version}}/location-delete.png" alt="Delete location">
   <div class="caption">Delete location confirmation</div>
 </div>
 

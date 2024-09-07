@@ -38,7 +38,7 @@ To update it you just have to fill in the logo link in your public folder
   |
   */
 
-  'brand' => '/img/screenshots/{{version}}/logo.svg',
+  'brand' => '/screenshots/{{version}}/logo.svg',
 ```
 
 ### Controllers
