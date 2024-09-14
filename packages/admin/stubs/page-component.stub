@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace [namespace];
+
+use Illuminate\Contracts\View\View;
+use Shopper\Livewire\Pages\AbstractPageComponent;
+
+class [class] extends AbstractPageComponent
+{
+    public function render(): View
+    {
+        return view('[view]');
+    }
+}

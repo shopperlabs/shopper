@@ -32,7 +32,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Admin Brand Logo
+    | Pages
+    |--------------------------------------------------------------------------
+    |
+    | This is the namespace and directory that Shopper save page components
+    |
+    */
+
+    'pages' => [
+        'namespace' => 'App\\Shopper',
+        'view_path' => resource_path('views/shopper'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Brand Logo
     |--------------------------------------------------------------------------
     |
     | This will be displayed on the login page and in the sidebar's header.
@@ -85,10 +99,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Shopper Resource
+    | Additional Resources
     |--------------------------------------------------------------------------
     |
-    | Automatically connect the stored links. For example js and css files.
+    | Automatically load the assets links. For js and css files.
+    |
+    | Example:
+    |
+    | 'stylesheets' => [
+    |    asset('/my-script.css'),
+    |   'https://example.com/my-style.css'
+    | ]
     |
     */
 
@@ -99,9 +120,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Shopper Inventory Limit
+    | Inventory Limit
     |--------------------------------------------------------------------------
     |
+    | Limits the number of inventories your store can manage, making it easier
+    | to manage your stock.
     |
     */
 
@@ -109,7 +132,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Caching
+    | Caching Blade Icons
     |--------------------------------------------------------------------------
     |
     | This section lets you configure the caching option of the icon picker component.
@@ -117,9 +140,6 @@ return [
     | Since icon packs are often packed with a lots of icons,
     | searching through all of them can take quite a lot of time, which is
     | why the plugin caches each field with it's configuration and search queries.
-    |
-    | This section let's you configure how caching should be done or disable it
-    | if you wish.
     |
     */
 
