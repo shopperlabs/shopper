@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper\Console;
 
-use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
