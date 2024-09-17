@@ -1,4 +1,5 @@
 # Brands
+
 Most e-commerce sites sell products from several manufacturers. And each supplier can be represented by a brand.
 
 Unless you make your own products, you'll be registering your product's brands in Shopper.
@@ -143,25 +144,25 @@ use Carbon\Carbon;
 
 class HomeController extends Controller
 {
-  public function __invoke()
-  {
-    $products = Product::with('categories', 'attributes')
-      ->publish()
-      ->take(8)
-      ->get()
-      ->map(function ($product) {
-        $product['is_new'] = $product->created_at
-          ->addDays(8)
-          ->greaterThanOrEqualTo(Carbon::now());
+    public function __invoke()
+    {
+        $products = Product::with('categories', 'attributes')
+          ->publish()
+          ->take(8)
+          ->get()
+          ->map(function ($product) {
+              $product['is_new'] = $product->created_at
+                ->addDays(8)
+                ->greaterThanOrEqualTo(Carbon::now());
+    
+              return $product;
+        });
 
-        return $product;
-    });
-
-    return view('home', [
-      'products' =>  $products,
-      'brands' => Brand::query()->get()->take(12), // [tl! focus]
-    ]);
-  }
+        return view('home', [
+            'products' =>  $products,
+            'brands' => Brand::query()->get()->take(12), // [tl! focus]
+        ]);
+    }
 }
 ```
 
