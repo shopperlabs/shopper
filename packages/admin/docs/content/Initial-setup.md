@@ -76,7 +76,7 @@ define an address that will be set as the default location for your products.
 When shipping an order, the products to be delivered/shipped will start from this location and thus the shipping price can be set according to this.
 
 <div class="screenshot" aria-hidden="true">
-  <img src="/img/screenshots/{{version}}/initialization-step-2.png" alt="Store address">
+  <img src="/screenshots/{{version}}/initialization-step-2.png" alt="Store address">
   <div class="caption">Store address</div>
 </div>
 
@@ -138,7 +138,7 @@ It's the `Shopper\Livewire\Pages\Settings\General` component under the key `page
 
 ```php
 use Shopper\Livewire\Components;
-use Shopper\Livewire\Pages;
+use Shopper\Livewire\Pages; // [tl! focus]
 
 return [
     'pages' => [

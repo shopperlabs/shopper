@@ -112,7 +112,7 @@ final class MakePageCommand extends FileManipulationCommand
     {
         $stubsDirectory = __DIR__ . '/../../stubs';
 
-        return match ($type) {
+        return match ($type) { // @phpstan-ignore-line
             'class' => $stubsDirectory . '/page-component.stub',
             'view' => $stubsDirectory . '/view.stub',
         };

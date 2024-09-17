@@ -21,6 +21,7 @@ jobs:
           cd docs
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          rm -rf screenshots/
           cd ..
           echo "Cloned docs repository!"
       - name: Copy screenshots assets and content of Content folder
