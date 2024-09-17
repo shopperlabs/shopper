@@ -1,165 +1,145 @@
 # Configuration
 
-Shopper uses standard Laravel config files and environment variables for application-level settings
+Shopper uses standard Laravel config files and environment variables for application-level settings.
 
-## Config Files
+With the installation of Shopper you will find new configurations files located in `config/shopper/`.
+Shopper is a build components blocks, and by default all configuration files are not published and will be published in a `components` folder inside the Shopper configuration folder.
 
-With the installation of Shopper you will find new configurations files located in `config/shopper/`. They are PHP files named by area of responsibility.
+Here's the list of configuration files that are published during installation
 
 ``` files theme:github-light
 config/shopper/
     admin.php
     auth.php
-    components.php
     core.php
+    features.php
     media.php
     models.php
+    orders.php
     routes.php
     settings.php
 ```
 
-And the `admin.php` is the main file, you can find various options to change the configuration of your Shopper installation.
+### Control Panel
 
-## System
-All the basic configurations for using shopper can be found in this file. The management of the locale, the models to use and additional resources (scripts and styles) to the administration.
+By default, when you install the package, the dashboard is accessible via the prefix `/cpanel`. 
+You can update this configuration in the `admin.php` file, or you can add the `SHOPPER_PREFIX` variable to your `.env` environment file.
 
-### Brand logo
-By default, the Shopper logo will be used as the brand logo in the administration panel.
-
-To update it you just have to fill in the logo link in your public folder
-
-```php
-/*
-  |--------------------------------------------------------------------------
-  | Brand Name
-  |--------------------------------------------------------------------------
-  |
-  | This will be displayed on the login page and in the sidebar's header.
-  |
-  */
-
-  'brand' => '/screenshots/{{version}}/logo.svg',
-```
-
-### Controllers
-By default Shopper loads controllers that are defined in this namespace. You can change it if you have a different structure. These controllers are used to extend and add functionalities in the administration.
-
-In your config file you have the controllers key that define the controller's namespace for your extended Controllers:
-
-``` php
-'controllers' => [
-    'namespace' => 'App\\Http\\Controllers\\Shopper',
-],
-```
-
-### Models
-Models used are defined in the models key, if you want to use your own models you can replace them on the `models.php` config file.
-
-``` php
-
-  'brand' => \Shopper\Core\Models\Brand::class,
-
-  'category' => \Shopper\Core\Models\Category::class,
-
-  'collection' => \Shopper\Core\Models\Collection::class,
-
-  'product' => \Shopper\Core\Models\Product::class,
-
-```
-
-### Additional resources
-During your work you may need to add your own style tables or javascript scenarios globally for all the pages, so you need to add them to relevant arrays.
-
-```php
-'resources' => [
-    'stylesheets' => [
-        //'css/custom.css',
-    ],
-    'scripts' => [
-        //'js/custom.js',
-    ],
-],
-```
-
-## Routes
-The configuration of the routes allows you to specify a prefix to access your dashboard, the addition of middleware and the configuration file to add more routes to your administration.
-
-### Prefix
-
-```php
-// config/shopper/admin.php
+```php filename=config/shopper/admin.php
 'prefix' => env('SHOPPER_PREFIX', 'cpanel'),
 ```
 
-The system installed on the website can be easily defined by the dashboard prefix, for example it is `wp-admin` for WordPress, and it gives an opportunity to automatically search for old vulnerable versions of software and gain control over it.
+:::tip
+If you update this configuration, you have to republish the assets to take the new link. 
+The assets are dynamically loaded by a symbolic link named as the prefix.
+```php
+php artisan shopper:link
+```
+:::
 
-There are other reasons but we won't speak of them in this section. The point is that Shopper allows to change dashboard prefix to every other name, `admin` or `administrator` for example.
-
-### Middleware
+If you want to configure a specific domain, you can add a `SHOPPER_DOMAIN` variable to your environment file. 
+This config will use [Laravel](https://laravel.com/docs/routing#route-group-subdomain-routing) `Route::domain()` function
 
 ```php
-// config/shopper/routes.php
-'middleware' => [],
+'domain' => env('SHOPPER_DOMAIN'),
 ```
 
-Shopper gives you the ability to add middleware to all of your routes. These middlewares will be applied to all the routes of your administration.
+### Database tables prefix
 
-### Additional dashboard routes
+During installation, all tables are prefixed with `sh_` so that they don't conflict with existing tables in your application database. 
+If you change this prefix after installation, you'll need to refresh migration for the configuration to take effect.
 
-```php
-// Eg.: base_path('routes/shopper.php')
-'custom_file' => null,
+```php filename=config/shopper/core.php
+'table_prefix' => 'sh_',
 ```
 
-By default none of your routes in the `web.php` file will be accessible and loaded in the shopper administration. So that your routes added in the sidebar can have the middleware applied to the dashboard, you must fill in an additional routing file and this will be automatically loaded by Shopper's internal RouteServiceProvider.
+Run laravel refresh migration command: `php artisan migrate:refresh`
+Re-run the Shopper Database table seeder: `php artisan db:seed --class=\Shopper\Core\Database\Seeders\ShopperSeeder` 
 
-## Components
-The main features of Laravel Shopper is to handle Livewire components to add new functionnalities to your admin panel. 
+:::warning
+If you do this knowing that you already have data in your database, you risk losing it. Think carefully, because you'll be on your own afterwards.
+:::
 
-For this purpose you have a component file that lists all Livewire components used within Laravel Shopper. You can for each feature modify the associated or extends component to add functionality or even change the view to fit your own logic.
+### Models
 
-Here is an example of some components
+Models used are defined in the models config `shopper/models.php` file, if you want to use your own models you can replace them on this file.
 
 ```php
-use Shopper\Http\Livewire\Components;
+use Shopper\Core\Models;
 
 return [
-    /*
-    |--------------------------------------------------------------------------
-    | Livewire Components
-    |--------------------------------------------------------------------------
-    |
-    | Below you reference all the Livewire components that should be loaded
-    | for your app. By default all components from Shopper Kit are loaded in.
-    |
-    */
-    'livewire' => [
-        'account.devices' => Components\Account\Devices::class,
-        'account.dropdown' => Components\Account\Dropdown::class,
-        'account.password' => Components\Account\Password::class,
-    ],
+    'brand' => Models\Brand::class,
+
+    'category' => Models\Category::class,
+
+    'collection' => Models\Collection::class,
+
+    'product' => Models\Product::class,
+
+    'channel' => Models\Channel::class,
 ];
 ```
 
-## Settings
-Settings are a very important part of an e-commerce site administration. Shopper has understood this very well and has set up a settings file, to allow you to add or modify the default settings of Shopper.
+### Added Middleware
+
+Shopper gives you the ability to add extra middlewares. All these middlewares will be applied to authenticated routes
+
+```php filename=config/shopper/routes.php
+'middleware' => [],
+```
+
+### Additional dashboard routes
+
+By default, none of your routes in the `web.php` file will be accessible and loaded in the shopper administration.
+Routes added in the sidebar have the middleware applied to the dashboard, you must fill in an additional routing file and this will be automatically loaded by Shopper
+
+```php filename=config/shopper/routes.php
+// E.g.: base_path('routes/shopper.php')
+'custom_file' => null,
+```
+
+### Components
+
+The main features of Shopper is to handle Livewire components to add new functionalities to your admin panel.
+
+For this purpose you have components files that lists each Livewire components used within Laravel Shopper. 
+You can extend component to add functionality and even change the view to fit your own logic.
+
+Here is a list of components files available. All these files can be published with `php artisan shopper:component:publish`
+
+```files theme:github-light
+config/shopper/components
+    account.php
+    brand.php
+    category.php
+    collection.php
+    customer.php
+    dashboard.php
+    discount.php
+    order.php
+    product.php
+    review.php
+    setting.php
+```
+
+You can publish each file individually, allowing you to replace or customize components. 
+All you need to do is issue the same command, but this time specify the name of the configuration file
+
+```bash
+php artisan shopper:component:publish brand
+```
+
+### Settings
+
+Settings are a very important part of an e-commerce site administration. 
+Shopper has understood this very well and has set up a settings file, to allow you to add or modify the default settings of Shopper.
 
 In this file you can add parameters or delete those you don't need to simplify your store or to make it larger
 
 ```php
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Setting Menu
-    |--------------------------------------------------------------------------
-    |
-    | The menu for the generation of the page settings and layout.
-    | BladeUIKit Heroicon is the icon used. See https://blade-ui-kit.com/blade-icons?set=1
-    |
-    */
-
     'items' => [
+        // ...
         [
             'name' => 'General',
             'description' => 'View and update your store information.',
@@ -174,72 +154,12 @@ return [
             'route' => 'shopper.settings.users',
             'permission' => null,
         ],
-
+        // ...
     ],
 ];
 ```
 
-## Mapbox
-Shopper uses Mapbox to enter the geographic coordinates (latitude and longitude) of your store so that you can easily tell your customers your location.
-
-To activate mapbox you need to go to the [API](https://docs.mapbox.com/mapbox-gl-js/api/) documentation and create an API token. Once this is done you need to add the key `MAPBOX_PUBLIC_TOKEN` with the token value to your `.env` file
-
-```bash
-MAPBOX_PUBLIC_TOKEN=your_token_here
-```
-
-## Update Configurations
-In your `config/filesystems.php` config file add the following to the disks and links section:
-
-``` php
-'disks' => [
-    // Shopper Uploads Disks. [tl! highlight:13]
-    'avatars' => [ // [tl! collapse:start]
-        'driver' => 'local',
-        'root' => storage_path('app/avatars'),
-        'url' => env('APP_URL').'/avatars',
-        'visibility' => 'public',
-    ], // [tl! collapse:end]
-
-    'uploads' => [ // [tl! collapse:start]
-        'driver' => 'local',
-        'root' => storage_path('app/uploads'),
-        'url' => env('APP_URL').'/uploads',
-        'visibility' => 'public',
-    ], // [tl! collapse:end]
-
-],
-
-/*
-|--------------------------------------------------------------------------
-| Symbolic Links
-|--------------------------------------------------------------------------
-|
-| Here you may configure the symbolic links that will be created when the
-| `storage:link` Artisan command is executed. The array keys should be
-| the locations of the links and the values should be their targets.
-|
-*/
-
-'links' => [
-    // [tl! highlight:2]
-    public_path('avatars') => storage_path('app/avatars'),
-    public_path('uploads') => storage_path('app/uploads'),
-],
-
-```
-
-### Create New Folders
-After adding the 2 entries in the filesystem config file, you must create them and add them to the .gitignore file.
-In your storage directory create 2 new folders called `avatars` and `uploads`.
-
-```bash
-mkdir storage/app/avatars && mkdir storage/app/uploads
-```
-
-In each new folder that you have created (avatars and uploads) you must create a .gitignore file which will contain the following line
-
-```bash
-*
-!.gitignore
-```
+:::warning
+Be careful: if you delete items from the configuration, you will no longer have access to certain interfaces, 
+and this can make the user experience more complex.
+:::

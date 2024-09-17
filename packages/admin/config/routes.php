@@ -22,9 +22,8 @@ return [
     | Shopper Custom backend route file
     |--------------------------------------------------------------------------
     |
-    | This value sets the file to load for Shopper admin custom routes. This
-    | depend of your application.
-    | Eg.: base_path('routes/shopper.php')
+    | This value sets the file to load for Shopper admin custom routes.
+    | E.g.: base_path('routes/shopper.php')
     |
     */
 

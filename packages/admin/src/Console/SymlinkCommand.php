@@ -12,7 +12,7 @@ final class SymlinkCommand extends Command
 {
     protected $signature = 'shopper:link';
 
-    protected $description = 'Create a symbolic link from "vendor/shopper" to "public/shopper" and add Storage symbolic link';
+    protected $description = 'Create a symbolic link from "vendor/shopper" to public folder';
 
     public function handle(): void
     {

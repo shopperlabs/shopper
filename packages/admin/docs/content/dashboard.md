@@ -26,11 +26,11 @@ The component used is `Shopper\Livewire\Pages\Dashboard` and can also be found i
 ```php
 namespace Shopper\Livewire\Pages;
 
-use Livewire\Component;
+use Illuminate\Contracts\View\View;
 
-class Dashboard extends Component
+class Dashboard extends AbstractPageComponent
 {
-    public function render()
+    public function render(): View
     {
         return view('shopper::livewire.pages.dashboard')
             ->layout('shopper::components.layouts.app', [
@@ -39,15 +39,3 @@ class Dashboard extends Component
     }
 }
 ```
-
-## Layout
-
-Shopper comes with a [Tailwind CSS](https://tailwindcss.com) based design and you can [extend](/extending/control-panel) the default layout for your components.
-
-``` blade
-<x-shopper::container>
-    {{-- Your content here --}}
-</x-shopper::container>
-```
-
-All pages that will be on the administration must have this content and extend the default layout of Shopper

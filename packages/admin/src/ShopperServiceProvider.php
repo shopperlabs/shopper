@@ -66,6 +66,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
                 Console\ComponentPublishCommand::class,
                 Console\InstallCommand::class,
                 Console\PublishCommand::class,
+                Console\MakePageCommand::class,
                 Console\SymlinkCommand::class,
                 Console\UserCommand::class,
             ]);
