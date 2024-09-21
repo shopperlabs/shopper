@@ -49,7 +49,11 @@
                                     dropdown-placement="bottom-start"
                                 />
 
-                                <x-filament-actions::modals />
+                                <div x-data>
+                                    <template x-teleport="body">
+                                        <x-filament-actions::modals />
+                                    </template>
+                                </div>
                             </div>
                         </div>
                         <div class="mt-4 flex items-start justify-between">

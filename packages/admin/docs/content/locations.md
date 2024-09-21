@@ -1,21 +1,23 @@
 # Locations
 
-By default, when you install Laravel Shopper for the first time you configure and create your shop, and this allows you to create a first location which will have the information you defined. This is the initial location in which all products will be stored.
+By default, when you install Shopper for the first time, you configure and create your shop and this allows you to create a first location which will have the information you defined. 
+This is the initial location in which all products are stored.
 
-If you have already used [Shopify](https://shopify.com) it is a bit the same model, but a little simpler so that you can modify it because the system is accessible for any type of business.
+If you have already used [Shopify](https://shopify.com) it's a bit the same model, but a little simpler so that you can update it because the system is accessible for any type of business.
 
-You can set up multiple locations in your store so that you can track inventory and have excel documents of the products ordered in each of your locations. Your locations can be retail stores, warehouses, popups, or any other place where you manage or store inventory. With multiple locations, you have better visibility into your inventory in your business.
+You can set up multiple locations in your store so that you can track inventory and have Excel documents of the products ordered in each of your locations. 
+Your locations can be *retail stores*, *warehouses*, *popups*, or any other place where you manage or store inventory. With multiple locations, you have better visibility into your inventory in your business.
 
-<div class="screenshot">
-  <img src="/screenshots/{{version}}/location-admin.png" alt="Locations">
-  <div class="caption">Locations</div>
-</div>
-
-A location is a physical place or space where you perform any or all of the following activities: Selling products, shipping or fulfillment orders, and inventory inventory (this may even be your apartment).
+A location is a physical place or space where you perform any or all of the following activities: Selling products, shipping or fulfillment orders, and inventory (this may even be your apartment).
 
 ## Setup locations
 
 From the administration area of your store you can't manage more than 4 inventories. This system being still experimental we are working on it to make it simpler to facilitate the management of your store.
+You can change this value if you want to be able to manage many more inventories. The configuration to update is in the file `config/shopper/admin.php` on the key `inventory_limit`.
+
+```php filename=config/shopper/admin.php
+'inventory_limit' => 4,
+```
 
 ### Fields
 
@@ -24,19 +26,20 @@ The model used is `Shopper\Core\Models\Inventory`.
 | Name                  | Type    | Required      | Notes                                                                                                     |
 |-----------------------|---------|---------------|-----------------------------------------------------------------------------------------------------------|
 | `id`                  | autoinc |               | auto                                                                                                      |
+| `name`                | string  | yes           | Name of the inventory                                                                                     |
 | `code`                | string  | yes           | Unique, the code is a unique element that allows to index an inventory in a unique way, a bit like a slug |
 | `description`         | text    | no            | nullable                                                                                                  |
 | `email`               | string  | yes           | Unique, the location email address                                                                        |
 | `street_address`      | string  | yes           | The address details (street, nr, building, etc)                                                           |
 | `street_address_plus` | string  | no            | The second address details (optional)                                                                     |
-| `zipcode`             | string  | yes           | National identification code. (optional)                                                                  |
+| `postal_code`         | string  | yes           | National identification code. (optional)                                                                  |
 | `city`                | string  | yes           | The city/settlement                                                                                       |
 | `phone_number`        | string  | no            | Nullable                                                                                                  |
-| `priority`            | integer | default (`0`) | no                                                                                                        |
+| `priority`            | integer | default (`0`) | N/A                                                                                                       |
 | `latitude`            | decimal | no            | Nullable, GPS latitude coordinates                                                                        |
 | `longitude`           | decimal | no            | Nullable, GPS longitude coordinates                                                                       |
 | `is_default`          | boolean | no            | Default `false`, define location as default for stock                                                     |
-| `country_id`          | string  | yes           | foreign key for country, each location must be linked to a country                                        |
+| `country_id`          | string  | yes           | foreign key for country, each location must be linked to a Country                                        |
 
 ### Components
 
@@ -46,6 +49,8 @@ This configuration file is not available by default. But if you want to update o
 ```bash
 php artisan shopper:component:publish setting
 ```
+
+This file contains all Livewire components for settings. Here is only the list of inventory components
 
 ```php
 use Shopper\Livewire\Pages;
@@ -61,7 +66,7 @@ return [
     ];
     
     'components' => [
-        
+        // ...
     ],
 
 ];
@@ -75,52 +80,58 @@ You can also change the views too and return your own views.
 
 In your administration area you must click on the "cog" icon to display the settings page of your store.
 
-- From your admin panel, on the blue sidebar click on the cog icon, go to `Settings > Locations`.
+From your admin panel, on the blue sidebar click on the cog icon, go to `Settings > Locations`.
 
 <div class="screenshot">
-  <img src="/screenshots/{{version}}/settings-location.png" alt="Setting location">
+  <img src="/screenshots/{{version}}/setting-locations.png" alt="Setting location">
   <div class="caption">Settings > Locations</div>
 </div>
 
 ### Add location
 
-In your administration area you must click on the "cog" icon to display the settings page of your store.
+To create a new location, in your Locations page:
 
-1. Click Add location.
-2. Enter a unique name and an address for the location.
+- Click on "New inventory".
+- Enter a unique name and an address for the location.
+- Fill all the required fields
+- Click the "Save" button
 
 <div class="screenshot">
-  <img src="/screenshots/{{version}}/location-create.png" alt="Add location">
+  <img src="/screenshots/{{version}}/setting-location-create.png" alt="Add location">
   <div class="caption">Create location</div>
 </div>
 
 ### Edit location
 
-To update a location you click on an available location among those you have saved and you will have the update page.
+To update a location you click on an available location.
 
-<div class="screenshot">
-  <img src="/screenshots/{{version}}/location-update.png" alt="update location">
-  <div class="caption">Update location</div>
-</div>
+- Click on the "edit icon" of the location you want to update
+- Edit any of the location’s details.
+- Click the "Save" button
 
 ### Define a default location
 
-The default location is the one in which all products will be collected with each order. If this location is empty the products will be searched in another and if it is the only one the product will be out of stock on your store.
-You select a location and during the modification you click on the checkbox **Set as default inventory**
+The default location is the one in which all products will be collected with each order. If this location is empty the 
+products will be searched in another and if it is the only one the product will be out of stock on your store.
+
+To set a default location:
+- Go to the locations page
+- Click on the edit icon for the location you want to set as default
+- Toggle the **Set as default inventory** and hit the save button
 
 <div class="screenshot">
-  <img src="/screenshots/{{version}}/location-default.png" alt="Set default location">
-  <div class="caption">Set default location</div>
+  <img src="/screenshots/{{version}}/setting-location-default.png" alt="Default location">
+  <div class="caption">Choose default location</div>
 </div>
 
 ### Delete location
-To delete a location you must click on a location to display it and at the bottom of the page you click on the delete button.
-
-<div class="screenshot">
-  <img src="/screenshots/{{version}}/location-delete.png" alt="Delete location">
-  <div class="caption">Delete location confirmation</div>
-</div>
 
 :::danger
-Once the location removed, all inventories will be changed and this could complicate your inventory management. This is why you have a confirmation modal to be sure that this is indeed what you want to proceed.
+Once the location removed, all inventories will be changed and this could complicate your inventory management.
+This is why you have a confirmation modal to be sure that this is indeed what you want to proceed.
 :::
+
+To delete a location:
+- Go to the inventory page
+- Find the location you want to delete and click on the <x-untitledui-trash-03 class="size-5 text-red-500" stroke-width="1.5" aria-hidden="true"> icon at its right.
+- Confirm your action on the modal to delete the location

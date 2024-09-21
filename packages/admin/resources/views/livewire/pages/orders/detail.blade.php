@@ -314,7 +314,7 @@
                                         <p class="text-sm text-yellow-700">
                                             {{ __('shopper::pages/orders.no_shipping_method') }}
                                             <a
-                                                href="https://laravelshopper.dev/docs/2.x/shipping"
+                                                href="https://laravelshopper.dev/docs/{{  shopper()->version() }}/shipping"
                                                 target="_blank"
                                                 class="font-medium text-yellow-700 underline hover:text-yellow-600"
                                             >
@@ -390,9 +390,7 @@
                     </div>
                 </div>
             </div>
-            <div
-                class="divide-y divide-gray-200 border-t border-gray-200 py-2 dark:divide-gray-700 dark:border-gray-700 sm:col-span-2 sm:border-l sm:border-t-0 sm:pl-8"
-            >
+            <div class="divide-y divide-gray-200 border-t border-gray-200 py-2 dark:divide-gray-700 dark:border-gray-700 sm:col-span-2 sm:border-l sm:border-t-0 sm:pl-8">
                 <div class="py-4">
                     <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::words.customer') }}
@@ -467,9 +465,7 @@
                 </div>
                 @if ($shippingAddress)
                     <div class="py-4">
-                        <h3
-                            class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white"
-                        >
+                        <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
                             {{ __('shopper::pages/customers.addresses.shipping') }}
                         </h3>
                         <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
@@ -493,9 +489,7 @@
                     </div>
                     @if ($billingAddress)
                         <div class="space-y-3 py-4">
-                            <h3
-                                class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white"
-                            >
+                            <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
                                 {{ __('shopper::pages/customers.addresses.billing') }}
                             </h3>
                             @if ($billingAddress->is($shippingAddress))
@@ -529,5 +523,9 @@
         </div>
     </x-shopper::container>
 
-    <x-filament-actions::modals />
+    <div x-data>
+        <template x-teleport="body">
+            <x-filament-actions::modals />
+        </template>
+    </div>
 </div>

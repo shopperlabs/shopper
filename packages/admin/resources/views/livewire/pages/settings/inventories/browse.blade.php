@@ -28,13 +28,13 @@
         </x-slot>
     </x-shopper::heading>
 
-    <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-6">
+    <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6">
         <div class="lg:col-span-1">
             <div>
                 <x-filament::section.heading>
                     {{ __('shopper::pages/settings/global.location.menu') }}
                 </x-filament::section.heading>
-                <x-filament::section.description class="mt-2">
+                <x-filament::section.description class="mt-1">
                     {{ __('shopper::pages/settings/global.location.description') }}
                 </x-filament::section.description>
                 <x-filament::section.description class="mt-3">
@@ -64,10 +64,8 @@
                                         @endif
                                     </div>
                                     <div class="mt-2 sm:flex sm:justify-between">
-                                        <div class="sm:flex sm:space-x-4">
-                                            <div
-                                                class="flex items-center gap-x-2 text-sm text-gray-500 dark:text-gray-400"
-                                            >
+                                        <div class="sm:flex sm:gap-x-4">
+                                            <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                                                 <img
                                                     src="{{ $inventory->country->svg_flag }}"
                                                     alt="{{ $inventory->country->name }} flag"
@@ -75,26 +73,22 @@
                                                 />
                                                 {{ $inventory->country->name }}
                                             </div>
-                                            <div
-                                                class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
-                                            >
+                                            <div class="mt-2 flex gap-2 items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
                                                 <x-untitledui-marker-pin-02
-                                                    class="mr-1.5 size-5 shrink-0 text-gray-400 dark:text-gray-500"
+                                                    class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                     aria-hidden="true"
                                                 />
                                                 {{ $inventory->city }}
                                             </div>
-                                            <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                            <div class="mt-2 flex gap-2 items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
                                                 <x-untitledui-phone
-                                                    class="mr-1.5 size-5 shrink-0 text-gray-400 dark:text-gray-500"
+                                                    class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                     aria-hidden="true"
                                                 />
                                                 {{ $inventory->phone_number ?? __('shopper::words.number_not_set') }}
                                             </div>
                                         </div>
-                                        <div
-                                            class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
-                                        >
+                                        <div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
                                             <x-untitledui-calendar
                                                 class="size-5 shrink-0 text-gray-400 dark:text-gray-500"
                                                 aria-hidden="true"
@@ -133,6 +127,11 @@
         </div>
     </div>
 
-    <x-filament-actions::modals />
+    <div x-data>
+        <template x-teleport="body">
+            <x-filament-actions::modals />
+        </template>
+    </div>
+
     <x-shopper::learn-more :name="__('shopper::pages/settings/global.location.menu')" link="locations" />
 </x-shopper::container>

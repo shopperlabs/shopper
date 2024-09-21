@@ -20,6 +20,7 @@ use Shopper\ShopperPanel;
  * @method static void registerViteTheme(string | array $theme, string | null $buildDirectory = null)
  * @method static void serving(Closure $callback)
  * @method static void setServingStatus(bool $condition = true)
+ * @method static string version()
  *
  * @see ShopperPanel
  */
