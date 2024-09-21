@@ -88,7 +88,7 @@ class InventoryForm extends Component implements HasForms
         }
 
         Notification::make()
-            ->body(__('shopper::pages/settings.notifications.inventory'))
+            ->title(__('shopper::notifications.save', ['item' => __('shopper::pages/settings/global.location.single')]))
             ->success()
             ->send();
 

@@ -10,8 +10,8 @@
         />
     </x-shopper::breadcrumb>
 
-    <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-6">
-        <aside class="lg:sticky lg:top-4 lg:pr-4">
+    <div class="mt-10 lg:grid lg:grid-cols-3 lg:gap-x-12 lg:gap-y-6">
+        <aside class="lg:sticky lg:top-4">
             <x-shopper::card-with-gray-heading class="max-w-lg space-y-6">
                 <x-slot:heading>
                     <div class="space-y-1">

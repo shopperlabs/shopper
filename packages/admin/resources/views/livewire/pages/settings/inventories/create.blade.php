@@ -10,7 +10,7 @@
         />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading>
+    <x-shopper::heading class="my-6">
         <x-slot name="title">
             {{ __('shopper::pages/settings/global.location.add') }}
         </x-slot>

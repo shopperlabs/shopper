@@ -65,5 +65,9 @@
         </x-shopper::card>
     @endif
 
-    <x-filament-actions::modals />
+    <div x-data>
+        <template x-teleport="body">
+            <x-filament-actions::modals />
+        </template>
+    </div>
 </div>

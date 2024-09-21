@@ -37,13 +37,18 @@ class Browse extends Component implements HasActions, HasForms
                 Inventory::query()->find($arguments['id'])->delete();
 
                 Notification::make()
-                    ->title(__('shopper::notifications.inventory.removed'))
+                    ->title(__('shopper::notifications.delete', ['item' => __('shopper::pages/settings/global.location.single')]))
                     ->success()
                     ->send();
 
                 $this->dispatch('$refresh');
             })
-            ->visible(shopper()->auth()->user()->can('delete_inventories'));
+            ->visible(
+                shopper()
+                    ->auth()
+                    ->user()
+                    ->can('delete_inventories')
+            );
     }
 
     public function render(): View

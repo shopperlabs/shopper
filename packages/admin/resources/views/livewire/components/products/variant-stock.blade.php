@@ -6,7 +6,11 @@
         <div class="ml-4 flex items-center">
             {{ $this->stockAction }}
 
-            <x-filament-actions::modals />
+            <div x-data>
+                <template x-teleport="body">
+                    <x-filament-actions::modals />
+                </template>
+            </div>
         </div>
     </div>
 

@@ -67,4 +67,9 @@ final class ShopperPanel
     {
         Event::listen(LoadShopper::class, $callback);
     }
+
+    public function version(): string
+    {
+        return '2.x';
+    }
 }
