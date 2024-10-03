@@ -116,7 +116,7 @@ products will be searched in another and if it is the only one the product will 
 
 To set a default location:
 - Go to the locations page
-- Click on the edit icon for the location you want to set as default
+- Click on the "_Edit_" icon for the location you want to set as default
 - Toggle the **Set as default inventory** and hit the save button
 
 <div class="screenshot">
@@ -133,5 +133,5 @@ This is why you have a confirmation modal to be sure that this is indeed what yo
 
 To delete a location:
 - Go to the inventory page
-- Find the location you want to delete and click on the <x-untitledui-trash-03 class="size-5 text-red-500" stroke-width="1.5" aria-hidden="true"> icon at its right.
+- Find the location you want to delete and click on the "_Delete_" icon at its right.
 - Confirm your action on the modal to delete the location
