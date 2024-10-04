@@ -111,7 +111,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel);
 
         $this->loadViewsFrom($this->root . '/resources/views', 'shopper');
-        $this->publishes([$this->root . '/resources/views' => $this->app->resourcePath('views/vendor/shopper')], 'shopper-views');
     }
 
     public function bootingPackage(): void
