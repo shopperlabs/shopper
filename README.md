@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://laravelshopper.io" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
+    <a href="https://laravelshopper.dev" title="Shopper Dashboard Screenshoot"><img src="https://github.com/shopperlabs/art/blob/main/socialcard.png"></a>
 </p>
 
 <p align="center">
@@ -26,7 +26,7 @@
 
 ## Introduction
 
-[Shopper](https://laravelshopper.io) is a Headless e-commerce Admin Panel build for Laravel 10.0+ which includes all the necessary for your online store application.
+[Shopper](https://laravelshopper.dev) is a Headless e-commerce Admin Panel build for Laravel 10.0+ which includes all the necessary for your online store application.
 Web Application has made using Laravel. We feel building ecommerce websites has become a convoluted and confusing process that leaves developers unsatisfied.
 We want to turn you around to the simpler side and get back to basics.
 
