@@ -7,7 +7,6 @@ namespace Shopper\Core\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Enum\AddressType;
 use Shopper\Core\Models\Address;
-use Shopper\Core\Models\Country;
 
 /**
  * @extends Factory<Address>
