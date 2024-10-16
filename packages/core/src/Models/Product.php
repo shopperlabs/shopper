@@ -41,7 +41,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
  * @property string | null $seo_description
  * @property \Carbon\Carbon | null $published_at
  * @property array | null $metadata
- * @property-read int|null $stock
+ * @property-read int | null $stock
  */
 class Product extends Model implements ReviewRateable, SpatieHasMedia
 {

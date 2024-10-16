@@ -7,7 +7,7 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-final class ProductRelation extends Model
+class ProductRelation extends Model
 {
     public $timestamps = false;
 

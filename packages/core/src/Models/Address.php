@@ -22,6 +22,7 @@ use Shopper\Core\Observers\AddressObserver;
  * @property string | null $street_address_plus
  * @property string $postal_code
  * @property string $city
+ * @property AddressType $type
  * @property string | null $phone_number
  * @property bool $shipping_default
  * @property bool $billing_default
@@ -48,10 +49,6 @@ class Address extends Model
         'billing_default',
     ];
 
-    protected $appends = [
-        'full_name',
-    ];
-
     protected $casts = [
         'billing_default' => 'boolean',
         'shipping_default' => 'boolean',
@@ -75,7 +72,7 @@ class Address extends Model
         return AddressFactory::new();
     }
 
-    public function fullName(): Attribute
+    protected function fullName(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->first_name
