@@ -21,16 +21,16 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int $id
  * @property-read string $full_name
  * @property-read string $picture
- * @property string|null $first_name
+ * @property string | null $first_name
  * @property string $last_name
  * @property string $email
  * @property string $avatar_type
- * @property string|null $avatar_location
- * @property string|null $phone_number
- * @property Carbon|null $email_verified_at
- * @property Carbon|null $birth_date
- * @property string|null $two_factor_recovery_codes
- * @property string|null $two_factor_secret
+ * @property string | null $avatar_location
+ * @property string | null $phone_number
+ * @property Carbon | null $email_verified_at
+ * @property Carbon | null $birth_date
+ * @property string | null $two_factor_recovery_codes
+ * @property string | null $two_factor_secret
  */
 class User extends Authenticatable
 {
@@ -41,7 +41,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $hidden = [
         'password',
@@ -75,10 +75,7 @@ class User extends Authenticatable
         });
     }
 
-    /**
-     * @return UserFactory|null
-     */
-    protected static function newFactory()
+    protected static function newFactory(): UserFactory
     {
         return UserFactory::new();
     }
@@ -98,7 +95,7 @@ class User extends Authenticatable
         return $this->email_verified_at !== null;
     }
 
-    public function fullName(): Attribute
+    protected function fullName(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->first_name
@@ -107,7 +104,7 @@ class User extends Authenticatable
         );
     }
 
-    public function birthDateFormatted(): Attribute
+    protected function birthDateFormatted(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->birth_date

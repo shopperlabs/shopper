@@ -13,11 +13,12 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 /**
  * @property-read int $id
  * @property int $quantity
- * @property int|null $old_quantity
- * @property string|null $event
- * @property string|null $description
+ * @property int | null $old_quantity
+ * @property string | null $event
+ * @property string | null $description
  * @property int $user_id
  * @property int $inventory_id
+ * @property string | int $adjustment
  */
 class InventoryHistory extends Model
 {
@@ -36,16 +37,12 @@ class InventoryHistory extends Model
         'description',
     ];
 
-    protected $appends = [
-        'adjustment',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('inventory_histories');
     }
 
-    public function adjustment(): Attribute
+    protected function adjustment(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->old_quantity > 0

@@ -48,16 +48,12 @@ class Attribute extends Model
         'type' => FieldType::class,
     ];
 
-    protected $appends = [
-        'type_formatted',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('attributes');
     }
 
-    public function typeFormatted(): CastAttribute
+    protected function typeFormatted(): CastAttribute
     {
         return CastAttribute::make(
             get: fn () => self::typesFields()[$this->type->value]
