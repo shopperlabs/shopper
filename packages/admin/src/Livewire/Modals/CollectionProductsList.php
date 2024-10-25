@@ -8,6 +8,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Shopper\Core\Repositories\CollectionRepository;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Livewire\Components\ModalComponent;
@@ -18,7 +19,8 @@ class CollectionProductsList extends ModalComponent
 
     public string $search = '';
 
-    public array $exceptProductIds;
+    #[Locked]
+    public array $exceptProductIds = [];
 
     public array $selectedProducts = [];
 
@@ -38,8 +40,11 @@ class CollectionProductsList extends ModalComponent
     {
         return (new ProductRepository) // @phpstan-ignore-line
             ->query()
-            ->where('name', '%' . $this->search . '%', 'like')
-            ->whereNull('parent_id')
+            ->where(
+                column: 'name',
+                operator: 'like',
+                value: '%' . $this->search . '%'
+            )
             ->get(['name', 'price_amount', 'id'])
             ->except($this->exceptProductIds);
     }

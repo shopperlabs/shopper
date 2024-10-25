@@ -12,9 +12,10 @@
             <x-shopper::forms.search
                 :label="__('shopper::pages/collections.modal.search')"
                 :placeholder="__('shopper::pages/collections.modal.search_placeholder')"
+                wire:model.live.debounce.550ms="search"
             />
         </div>
-        <div class="h-92 -mx-2 my-2 divide-y divide-gray-200 overflow-auto dark:divide-gray-700">
+        <div class="h-80 -mx-2 my-2 divide-y divide-gray-200 overflow-auto dark:divide-gray-700">
             @foreach ($this->products as $product)
                 <x-shopper::forms.label-product :product="$product" wire:key="{{ $product->id }}" />
             @endforeach

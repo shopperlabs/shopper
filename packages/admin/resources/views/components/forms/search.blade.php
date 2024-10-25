@@ -13,10 +13,10 @@
             </div>
             <x-shopper::forms.input
                 type="search"
-                id="search-filter"
-                wire:model.live.debounce.550ms="search"
+                id="{{ $for }}"
                 class="pl-10"
                 :placeholder="$placeholder"
+                {{ $attributes->except(['placeholder']) }}
             />
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                 <x-shopper::loader wire:loading wire:target="search" class="text-primary-600" />

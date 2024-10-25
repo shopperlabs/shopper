@@ -12,6 +12,7 @@
             <x-shopper::forms.search
                 :label="__('shopper::pages/products.related.modal.search')"
                 :placeholder="__('shopper::pages/products.related.modal.search_placeholder')"
+                wire:model.live.debounce.550ms="search"
             />
         </div>
         <div class="-mx-2 my-2 h-80 divide-y divide-gray-200 overflow-auto dark:divide-gray-700">
