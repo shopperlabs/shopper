@@ -92,7 +92,7 @@ class SelectTree extends Field implements HasAffixActions
             // Check if the relationship is a BelongsToMany relationship.
             if ($relationship instanceof BelongsToMany) {
                 // Retrieve related model instances and extract their IDs into an array.
-                $state = $relationship->getResults() // @phpstan-ignore-line
+                $state = $relationship->getResults()
                     ->pluck($relationship->getRelatedKeyName())
                     ->toArray();
 
