@@ -20,17 +20,17 @@ describe('Category', function (): void {
 
         livewire(Pages\Category\Index::class)
             ->assertSee(__('shopper::pages/categories.menu'));
-    });
+    })->group('category');
 
-    it('can validate `required` fields on add categorie form', function (): void {
+    it('can validate `required` fields on add category form', function (): void {
         livewire(CategoryForm::class)
             ->assertFormExists()
             ->fillForm([])
             ->call('save')
             ->assertHasFormErrors(['name' => 'required']);
-    });
+    })->group('category');
 
-    it('can create a categorie', function (): void {
+    it('can create a category', function (): void {
         livewire(CategoryForm::class)
             ->assertFormExists()
             ->fillForm([
@@ -41,7 +41,7 @@ describe('Category', function (): void {
             ->assertDispatched('category-save');
 
         expect((new CategoryRepository)->count())->toBe(1);
-    });
+    })->group('category');
 
     it('will generate a slug when brand slug already exists', function (): void {
         Category::factory()->create(['name' => 'Old category', 'slug' => 'my-first-category']);
@@ -58,7 +58,7 @@ describe('Category', function (): void {
             ->toBe(2)
             ->and((new CategoryRepository)->getById(2)?->slug)
             ->toBe('my-first-category-1');
-    });
+    })->group('category');
 
     it('can create category with parent', function (): void {
         $parent = Category::factory()->create(['name' => 'Parent']);
@@ -74,7 +74,7 @@ describe('Category', function (): void {
             ->assertDispatched('category-save');
 
         expect((new CategoryRepository)->count())->toBe(2);
-    });
+    })->group('category');
 
     it('has parent_id field null when parent category is deleted', function (): void {
         $parent = Category::factory()->create(['name' => 'Parent']);
@@ -86,5 +86,5 @@ describe('Category', function (): void {
         $child->refresh();
 
         expect($child->parent_id)->toBeNull();
-    });
-})->group('category');
+    })->group('category');
+});
