@@ -10,7 +10,7 @@ use Shopper\Core\Models\CarrierOption;
 /**
  * @extends Factory<CarrierOption>
  */
-final class CarrierOptionFactory extends Factory
+class CarrierOptionFactory extends Factory
 {
     protected $model = CarrierOption::class;
 

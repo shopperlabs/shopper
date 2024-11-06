@@ -10,7 +10,7 @@ use Shopper\Core\Models\OrderItem;
 /**
  * @extends Factory<OrderItem>
  */
-final class OrderItemFactory extends Factory
+class OrderItemFactory extends Factory
 {
     protected $model = OrderItem::class;
 

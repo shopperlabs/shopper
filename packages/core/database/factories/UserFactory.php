@@ -13,7 +13,7 @@ use Shopper\Core\Models\User;
 /**
  * @extends Factory<User>
  */
-final class UserFactory extends Factory
+class UserFactory extends Factory
 {
     protected static ?string $password;
 

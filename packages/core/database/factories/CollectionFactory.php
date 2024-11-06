@@ -11,7 +11,7 @@ use Shopper\Core\Models\Collection;
 /**
  * @extends Factory<Collection>
  */
-final class CollectionFactory extends Factory
+class CollectionFactory extends Factory
 {
     protected $model = Collection::class;
 

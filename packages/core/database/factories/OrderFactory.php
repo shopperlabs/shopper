@@ -11,7 +11,7 @@ use Shopper\Core\Models\Order;
 /**
  * @extends Factory<Order>
  */
-final class OrderFactory extends Factory
+class OrderFactory extends Factory
 {
     protected $model = Order::class;
 

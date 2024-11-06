@@ -10,7 +10,7 @@ use Shopper\Core\Models\CollectionRule;
 /**
  * @extends Factory<CollectionRule>
  */
-final class CollectionRuleFactory extends Factory
+class CollectionRuleFactory extends Factory
 {
     protected $model = CollectionRule::class;
 

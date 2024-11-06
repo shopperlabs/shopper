@@ -11,7 +11,7 @@ use Shopper\Core\Models\Address;
 /**
  * @extends Factory<Address>
  */
-final class AddressFactory extends Factory
+class AddressFactory extends Factory
 {
     protected $model = Address::class;
 

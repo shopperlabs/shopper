@@ -11,7 +11,7 @@ use Shopper\Core\Models\Brand;
 /**
  * @extends Factory<Brand>
  */
-final class BrandFactory extends Factory
+class BrandFactory extends Factory
 {
     protected $model = Brand::class;
 
