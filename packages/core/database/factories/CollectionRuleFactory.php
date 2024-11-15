@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database\Factories;
+namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Models\CollectionRule;
