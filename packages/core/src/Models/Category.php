@@ -73,6 +73,16 @@ class Category extends Model implements SpatieHasMedia
         $this->save();
     }
 
+    /**
+     * Use to display custom label into filament relationship select form component
+     */
+    public function getLabelOptionName(): string
+    {
+        return $this->parent
+            ? $this->parent->getLabelOptionName() . ' / ' . $this->name
+            : $this->name;
+    }
+
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);

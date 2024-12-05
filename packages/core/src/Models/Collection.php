@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Database\Factories\CollectionFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Core\Database\Factories\CollectionFactory;
 use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
