@@ -32,6 +32,7 @@ You can update this configuration in the `admin.php` file, or you can add the `S
 :::tip
 If you update this configuration, you have to republish the assets to take the new link. 
 The assets are dynamically loaded by a symbolic link named as the prefix.
+
 ```php
 php artisan shopper:link
 ```

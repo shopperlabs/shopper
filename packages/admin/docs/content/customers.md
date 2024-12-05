@@ -1,4 +1,5 @@
 # Customers
+
 In e-commerce stores, customers are one if not the fundamental point for the functioning of your store.
 
 The first page under the "Customers" menu gives you a list of all the registered users on your shop.
@@ -11,60 +12,72 @@ The first page under the "Customers" menu gives you a list of all the registered
 During the [installation](/installing#update-existing-files) of Shopper, one of the first things required is to inherit to our model User the features of the model User that is in Shopper.
 
 ## Fields
-The model used is `App\Models\User` which extends the `\Shopper\Framework\Models\User\User` model. 
+
+The model used is `App\Models\User` which extends the `\Shopper\Core\Models\User` model. 
 
 :::warning
 During the installation of Shopper, the `name` column of the users table is removed and replaced by 2 new fields which are `first_name` and `last_name`.
 :::
 
-| Name        | Type      | Required   |  Notes   |
-|-------------|-----------|------------|------------|
-| `id` | autoinc |         |  auto  |
-| `first_name` | string  | no | Nullable  |
-| `last_name` | string  | yes |  |
-| `email` | string  | yes | Unique  |
-| `password` | string  | no | Nullable  |
-| `email_verified_at` | timestamp  | no | Nullable  |
-| `gender` | enum  | yes | values `['male', 'female']` |
-| `phone_number` | string  | no | Nullable  |
-| `birth_date` | date  | no | Nullable  |
-| `avatar_type` | string  | no | default [ui-avatars](https://ui-avatars.com/)  |
-| `avatar_location` | string  | no | Nullable, picture filename  |
-| `timezone` | string  | no | Nullable  |
-| `opt_in` | boolean  | no | default `false`, this field is for mailing subcription  |
-| `last_login_at` | timestamp  | no | Nullable  |
-| `last_login_ip` | string  | no | Nullable  |
+| Name                | Type      | Required | Notes                                                            |
+|---------------------|-----------|----------|------------------------------------------------------------------|
+| `id`                | autoinc   |          | auto                                                             |
+| `first_name`        | string    | no       | Nullable                                                         |
+| `last_name`         | string    | yes      |                                                                  |
+| `email`             | string    | yes      | Unique                                                           |
+| `password`          | string    | no       | Nullable                                                         |
+| `email_verified_at` | timestamp | no       | Nullable                                                         |
+| `gender`            | enum      | yes      | values `['male', 'female']`                                      |
+| `phone_number`      | string    | no       | Nullable                                                         |
+| `birth_date`        | date      | no       | Nullable                                                         |
+| `avatar_type`       | string    | no       | default [ui-avatars](https://ui-avatars.com/)                    |
+| `avatar_location`   | string    | no       | Nullable, picture filename                                       |
+| `timezone`          | string    | no       | Nullable                                                         |
+| `opt_in`            | boolean   | no       | default `false`, this field can be used for mailing subscription |
+| `last_login_at`     | timestamp | no       | Nullable                                                         |
+| `last_login_ip`     | string    | no       | Nullable                                                         |
 
 ## Components
-The components used to manage customers are found in the component configuration file `config/shopper/components.php`.
+
+By default, brands Livewire components are not published. To customize components, you must publish them.
+
+```bash
+php artisan shopper:component:publish customer
+```
+
+This command will publish all Livewire components used for brand management (from pages to form components).
+Once you've published the component, you can find it in the `customer.php` locate in the `config/shopper/components` folder.
+
 
 ```php
-use Shopper\Framework\Http\Livewire;
+use Shopper\Livewire;
+use Shopper\Livewire\Components;
 
 return [
 
-  'livewire' => [
-      'modals.delete-customer' => Livewire\Modals\DeleteCustomer::class,
+  'pages' => [
+      'customer-index' => Livewire\Pages\Customers\Index::class,
+      'customer-create' => Livewire\Pages\Customers\Create::class,
+      'customer-show' => Livewire\Pages\Customers\Show::class,
+  ],
 
-      'customers.addresses' => Livewire\Customers\Addresses::class,
-      'customers.browse' => Livewire\Customers\Browse::class,
-      'customers.create' => Livewire\Customers\Create::class,
-      'customers.orders' => Livewire\Customers\Orders::class,
-      'customers.profile' => Livewire\Customers\Profile::class,
-      'customers.show' => Livewire\Customers\Show::class,
-
-      'tables.customers-table' => Livewire\Tables\CustomersTable::class,
-  ];
+  'components' => [
+      'customers.addresses' => Components\Customers\Addresses::class,
+      'customers.orders' => Components\Customers\Orders::class,
+      'customers.profile' => Components\Customers\Profile::class,
+  ],
 
 ];
 ```
 
 ## Manage Customers
+
 When a new customer places an order with your store, their name and information are automatically added to your customer list. A customer profile is created when a customer interacts with your store.
 
 Alternatively, you can add a customer to your store manually.
 
 ### Create customer
+
 From your Shopper admin, go to Customers and click on "Add customer" button.
 
 <div class="screenshot">

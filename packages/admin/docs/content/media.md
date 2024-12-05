@@ -42,5 +42,5 @@ For more information on what's available, see [Defining conversions](https://spa
 To get an image with full url on a product, a brand or a collection
 
 ```php
-$product->getFirstMediaUrl(config('shopper.core.storage.disk_name'))
+$product->getFirstMediaUrl(config('shopper.media.storage.disk_name'))
 ```

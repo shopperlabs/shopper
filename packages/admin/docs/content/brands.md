@@ -72,6 +72,7 @@ return [
     ```
 
 ### Components
+
 By default, brands Livewire components are not published. To customize components, you must publish them.
 
 ```bash
@@ -160,7 +161,7 @@ class HomeController extends Controller
 
         return view('home', [
             'products' =>  $products,
-            'brands' => Brand::query()->get()->take(12), // [tl! focus]
+            'brands' => Brand::enabled()->get()->take(12), // [tl! focus]
         ]);
     }
 }
