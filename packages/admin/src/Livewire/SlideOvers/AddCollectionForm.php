@@ -89,7 +89,7 @@ class AddCollectionForm extends SlideOverComponent implements HasForms
                     ->schema([
                         Forms\Components\SpatieMediaLibraryFileUpload::make('file')
                             ->label(__('shopper::forms.label.image_preview'))
-                            ->collection(config('shopper.core.storage.thumbnail_collection'))
+                            ->collection(config('shopper.media.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(1024),
                     ]),

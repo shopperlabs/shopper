@@ -31,7 +31,7 @@
                         <div class="relative">
                             <div class="h-70 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
                                 <img
-                                    src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
+                                    src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
                                     alt="{{ $relatedProduct->name }} Thumbnail"
                                     class="h-full w-full max-w-none object-cover object-center"
                                 />

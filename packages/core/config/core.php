@@ -38,22 +38,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Storage Disk
-    |--------------------------------------------------------------------------
-    |
-    | Specifies the configuration for resources storage, this will be to store
-    | all media of your products, brands, categories, etc.
-    |
-    */
-
-    'storage' => [
-        'collection_name' => 'uploads',
-        'thumbnail_collection' => 'thumbnail',
-        'disk_name' => 'public',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Barcode type
     |--------------------------------------------------------------------------
     |

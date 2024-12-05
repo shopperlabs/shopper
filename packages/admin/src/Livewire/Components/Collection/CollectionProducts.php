@@ -42,7 +42,7 @@ class CollectionProducts extends Component implements HasForms, HasTable
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->collection(config('shopper.core.storage.thumbnail_collection'))
+                    ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->circular()
                     ->defaultImageUrl(shopper_fallback_url()),
                 Tables\Columns\TextColumn::make('name'),

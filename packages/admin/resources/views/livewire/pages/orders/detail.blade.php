@@ -143,7 +143,7 @@
                                             <div class="shrink-0">
                                                 <img
                                                     class="size-10 rounded-lg object-cover"
-                                                    src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
+                                                    src="{{ $item->product->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
                                                     alt="{{ $item->name }}"
                                                 />
                                             </div>

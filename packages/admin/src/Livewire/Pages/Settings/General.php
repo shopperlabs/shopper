@@ -104,12 +104,12 @@ class General extends Component implements HasForms
                             ->avatar()
                             ->image()
                             ->maxSize(1024)
-                            ->disk(config('shopper.core.storage.collection_name')),
+                            ->disk(config('shopper.media.storage.collection_name')),
                         Components\FileUpload::make('cover')
                             ->label(__('shopper::forms.label.cover_photo'))
                             ->image()
                             ->maxSize(1024)
-                            ->disk(config('shopper.core.storage.collection_name')),
+                            ->disk(config('shopper.media.storage.collection_name')),
                     ]),
                 Separator::make(),
                 Section::make(__('shopper::pages/settings/global.general.store_address'))
@@ -123,8 +123,8 @@ class General extends Component implements HasForms
                             ->required(),
                         Components\RichEditor::make('about')
                             ->label(__('shopper::forms.label.about'))
-                            ->fileAttachmentsDisk(config('shopper.core.storage.disk_name'))
-                            ->fileAttachmentsDirectory(config('shopper.core.storage.collection_name')),
+                            ->fileAttachmentsDisk(config('shopper.media.storage.disk_name'))
+                            ->fileAttachmentsDirectory(config('shopper.media.storage.collection_name')),
                         Components\TextInput::make('street_address')
                             ->label(__('shopper::forms.label.street_address'))
                             ->placeholder('Akwa Avenue 34')

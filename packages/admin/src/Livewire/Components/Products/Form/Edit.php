@@ -132,11 +132,12 @@ class Edit extends Component implements HasForms
                                     ->relationship(
                                         relationship: 'categories',
                                         titleAttribute: 'name',
-                                        parentAttribute: 'parent_id'
+                                        parentAttribute: 'parent_id',
+                                        modifyQueryUsing: fn (Builder $query) => $query->where('is_enabled', true)
                                     )
-                                    ->searchable()
                                     ->independent(false)
-                                    ->enableBranchNode()
+                                    ->grouped(false)
+                                    ->searchable()
                                     ->visible(Feature::enabled('category')),
                             ])
                             ->visible(

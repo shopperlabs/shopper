@@ -44,47 +44,39 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
+                    ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->circular()
-                    ->collection(config('shopper.core.storage.thumbnail_collection'))
-                    ->defaultImageUrl(shopper_fallback_url()),
-
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('price_amount')
                     ->label(__('shopper::forms.label.price'))
                     ->money(currency: shopper_currency())
                     ->sortable(),
-
                 Tables\Columns\IconColumn::make('is_visible')
                     ->label(__('shopper::forms.label.availability'))
                     ->sortable()
                     ->toggleable(),
-
                 Tables\Columns\TextColumn::make('brand.name')
                     ->label(__('shopper::forms.label.brand'))
                     ->searchable()
                     ->sortable()
                     ->toggleable(Feature::enabled('brand'))
                     ->hidden(! Feature::enabled('brand')),
-
                 Tables\Columns\ViewColumn::make('stock')
                     ->label(__('shopper::layout.tables.stock'))
                     ->toggleable()
                     ->view('shopper::livewire.tables.cells.products.stock')
                     ->toggledHiddenByDefault(),
-
                 Tables\Columns\TextColumn::make('sku')
                     ->label(__('shopper::layout.tables.sku'))
                     ->searchable()
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
-
                 Tables\Columns\TextColumn::make('published_at')
                     ->label(__('shopper::forms.label.published_at'))
                     ->searchable()

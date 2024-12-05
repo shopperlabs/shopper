@@ -137,11 +137,19 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                     ->collapsed()
                     ->compact()
                     ->schema([
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
+                            ->collection(config('shopper.media.storage.thumbnail_collection'))
+                            ->label(__('shopper::forms.label.thumbnail'))
+                            ->helperText(__('shopper::pages/products.thumbnail_helpText'))
+                            ->image()
+                            ->maxSize(config('shopper.media.max_size.thumbnail')),
                         Forms\Components\SpatieMediaLibraryFileUpload::make('images')
-                            ->multiple()
+                            ->collection(config('shopper.media.storage.collection_name'))
+                            ->label(__('shopper::words.images'))
                             ->helperText(__('shopper::pages/products.variant_images_helpText'))
-                            ->collection(config('shopper.core.storage.collection_name'))
-                            ->maxSize(1024),
+                            ->multiple()
+                            ->panelLayout('grid')
+                            ->maxSize(config('shopper.media.max_size.images')),
                     ]),
 
                 Components\Section::make(__('shopper::words.shipping'))

@@ -44,7 +44,7 @@ class Profile extends Component implements HasForms
                             ->avatar()
                             ->image()
                             ->maxSize(1024)
-                            ->disk(config('shopper.core.storage.disk_name')),
+                            ->disk(config('shopper.media.storage.disk_name')),
                         Components\Grid::make()
                             ->schema([
                                 Components\TextInput::make('first_name')

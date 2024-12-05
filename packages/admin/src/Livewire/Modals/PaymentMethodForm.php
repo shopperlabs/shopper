@@ -46,7 +46,7 @@ class PaymentMethodForm extends ModalComponent implements HasForms
                     ->avatar()
                     ->image()
                     ->maxSize(1024)
-                    ->disk(config('shopper.core.storage.disk_name'))
+                    ->disk(config('shopper.media.storage.disk_name'))
                     ->columnSpan('full'),
                 Components\TextInput::make('title')
                     ->label(__('shopper::forms.label.payment_method'))

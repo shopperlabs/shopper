@@ -65,6 +65,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                             ->getOptionLabelFromRecordUsing(fn ($record) => $record->getLabelOptionName())
                             ->preload()
                             ->searchable()
+                            ->optionsLimit(20)
                             ->placeholder(__('shopper::pages/categories.empty_parent')),
                         Components\Toggle::make('is_enabled')
                             ->label(__('shopper::forms.label.visibility'))
@@ -87,7 +88,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                     ->schema([
                         Components\SpatieMediaLibraryFileUpload::make('file')
                             ->label(__('shopper::forms.label.image_preview'))
-                            ->collection(config('shopper.core.storage.thumbnail_collection'))
+                            ->collection(config('shopper.media.storage.thumbnail_collection'))
                             ->image()
                             ->maxSize(1024),
                     ]),

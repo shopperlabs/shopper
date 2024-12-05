@@ -13,7 +13,7 @@ trait HasProfilePhoto
     {
         return Attribute::make(
             get: fn () => $this->avatar_type === 'storage'
-                ? Storage::disk(config('shopper.core.storage.disk_name'))->url($this->avatar_location)
+                ? Storage::disk(config('shopper.media.storage.disk_name'))->url($this->avatar_location)
                 : $this->defaultProfilePhotoUrl()
         );
     }

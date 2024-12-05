@@ -34,21 +34,21 @@ class Media extends Component implements HasForms
     {
         return $form
             ->schema([
-                Forms\Components\SpatieMediaLibraryFileUpload::make('media')
-                    ->collection(config('shopper.core.storage.collection_name'))
+                Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                    ->collection(config('shopper.media.storage.collection_name'))
                     ->label(__('shopper::words.images'))
                     ->helperText(__('shopper::pages/products.images_helpText'))
                     ->multiple()
                     ->panelLayout('grid')
+                    ->maxSize(config('shopper.media.max_size.images'))
                     ->columnSpan(['lg' => 2]),
 
                 Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
-                    ->collection(config('shopper.core.storage.thumbnail_collection'))
+                    ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
                     ->helperText(__('shopper::pages/products.thumbnail_helpText'))
                     ->image()
-                    ->maxSize(1024)
-                    ->imageEditor()
+                    ->maxSize(config('shopper.media.max_size.thumbnail'))
                     ->columnSpan(['lg' => 1]),
             ])
             ->columns(3)

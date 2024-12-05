@@ -43,23 +43,18 @@ class Variants extends Component implements HasForms, HasTable
                     ->newQuery()
             )
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('images')
-                    ->collection(config('shopper.core.storage.collection_name'))
-                    ->stacked()
-                    ->circular()
-                    ->wrap()
-                    ->defaultImageUrl(shopper_fallback_url()),
-
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
+                    ->collection(config('shopper.media.storage.thumbnail_collection'))
+                    ->label(__('shopper::forms.label.thumbnail'))
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('sku')
                     ->label(__('shopper::layout.tables.sku'))
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('stock')
                     ->label(__('shopper::layout.tables.current_stock'))
                     ->formatStateUsing(
@@ -70,7 +65,6 @@ class Variants extends Component implements HasForms, HasTable
                             </div>
                         BLADE))
                     ),
-
                 Tables\Columns\TextColumn::make('price_amount')
                     ->label(__('shopper::forms.label.price'))
                     ->money(shopper_currency())

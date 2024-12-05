@@ -127,21 +127,21 @@ class Create extends AbstractPageComponent implements HasForms
                     Components\Wizard\StepColumn::make(__('shopper::words.media'))
                         ->icon('untitledui-image')
                         ->schema([
-                            Forms\Components\SpatieMediaLibraryFileUpload::make('media')
-                                ->collection(config('shopper.core.storage.collection_name'))
+                            Forms\Components\SpatieMediaLibraryFileUpload::make('images')
+                                ->collection(config('shopper.media.storage.collection_name'))
                                 ->label(__('shopper::words.images'))
                                 ->helperText(__('shopper::pages/products.images_helpText'))
                                 ->multiple()
                                 ->panelLayout('grid')
+                                ->maxSize(config('shopper.media.max_size.images'))
                                 ->columnSpan(['lg' => 3]),
 
                             Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
-                                ->collection(config('shopper.core.storage.thumbnail_collection'))
+                                ->collection(config('shopper.media.storage.thumbnail_collection'))
                                 ->label(__('shopper::forms.label.thumbnail'))
                                 ->helperText(__('shopper::pages/products.thumbnail_helpText'))
                                 ->image()
-                                ->maxSize(1024)
-                                ->imageEditor()
+                                ->maxSize(config('shopper.media.max_size.thumbnail'))
                                 ->columnSpan(['lg' => 2]),
                         ])
                         ->columns(5),
@@ -167,10 +167,11 @@ class Create extends AbstractPageComponent implements HasForms
                                 ->relationship(
                                     relationship: 'categories',
                                     titleAttribute: 'name',
-                                    parentAttribute: 'parent_id'
+                                    parentAttribute: 'parent_id',
+                                    modifyQueryUsing: fn (Builder $query) => $query->where('is_enabled', true)
                                 )
                                 ->independent(false)
-                                ->enableBranchNode()
+                                ->grouped(false)
                                 ->searchable()
                                 ->visible(Feature::enabled('category')),
                         ])

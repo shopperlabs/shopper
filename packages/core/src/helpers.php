@@ -43,7 +43,7 @@ if (! function_exists('shopper_table')) {
 if (! function_exists('shopper_asset')) {
     function shopper_asset(string $file): string
     {
-        return Storage::disk(config('shopper.core.storage.disk_name'))->url($file);
+        return Storage::disk(config('shopper.media.storage.disk_name'))->url($file);
     }
 }
 

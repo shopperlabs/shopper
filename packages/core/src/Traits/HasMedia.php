@@ -14,14 +14,14 @@ trait HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection(config('shopper.core.storage.collection_name'))
-            ->useDisk(config('shopper.core.storage.disk_name'))
+        $this->addMediaCollection(config('shopper.media.storage.collection_name'))
+            ->useDisk(config('shopper.media.storage.disk_name'))
             ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
             ->useFallbackUrl(shopper_fallback_url());
 
-        $this->addMediaCollection(config('shopper.core.storage.thumbnail_collection'))
+        $this->addMediaCollection(config('shopper.media.storage.thumbnail_collection'))
             ->singleFile()
-            ->useDisk(config('shopper.core.storage.disk_name'))
+            ->useDisk(config('shopper.media.storage.disk_name'))
             ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
             ->useFallbackUrl(shopper_fallback_url());
     }
@@ -38,9 +38,5 @@ trait HasMedia
                     $conversion['height']
                 )->keepOriginalImageFormat();
         }
-
-        $this->addMediaConversion('thumb_200')
-            ->fit(Fit::Crop, 200, 200)
-            ->keepOriginalImageFormat();
     }
 }

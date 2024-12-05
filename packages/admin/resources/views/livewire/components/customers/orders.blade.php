@@ -76,7 +76,7 @@
                                         <div class="shrink-0">
                                             <img
                                                 class="size-8 rounded-full object-cover"
-                                                src="{{ $item->product->getFirstMediaUrl(config('shopper.core.storage.thumbnail_collection')) }}"
+                                                src="{{ $item->product->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
                                                 alt="{{ $item->name }}"
                                             />
                                         </div>

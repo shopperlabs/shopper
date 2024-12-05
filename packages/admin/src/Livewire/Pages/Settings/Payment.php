@@ -37,7 +37,7 @@ class Payment extends Component implements HasForms, HasTable
                 Tables\Columns\ImageColumn::make('logo')
                     ->label(__('shopper::forms.label.logo'))
                     ->circular()
-                    ->disk(config('shopper.core.storage.disk_name'))
+                    ->disk(config('shopper.media.storage.disk_name'))
                     ->defaultImageUrl(shopper_fallback_url()),
 
                 Tables\Columns\TextColumn::make('title')
