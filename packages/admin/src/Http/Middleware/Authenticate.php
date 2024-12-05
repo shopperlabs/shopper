@@ -15,8 +15,6 @@ class Authenticate extends Middleware
 
         if (! $guard->check()) {
             $this->unauthenticated($request, $guards);
-
-            return;
         }
 
         $this->auth->shouldUse($guardName);
