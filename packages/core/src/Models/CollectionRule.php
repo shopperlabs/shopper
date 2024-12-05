@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Carbon\Carbon;
-use Database\Factories\CollectionRuleFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Database\Factories\CollectionRuleFactory;
 use Shopper\Core\Enum\Operator;
 use Shopper\Core\Enum\Rule;
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Shopper\Core\Models\Brand;
 use Shopper\Core\Repositories\BrandRepository;
+use Shopper\Livewire\Pages\Brand\Index;
 use Shopper\Livewire\SlideOvers\BrandForm;
 use Shopper\Tests\Admin\Features\TestCase;
 
@@ -15,7 +16,7 @@ describe('Brand', function (): void {
     it('can render brand page', function (): void {
         $this->get($this->prefix . '/brands');
 
-        livewire(\Shopper\Livewire\Pages\Brand\Index::class)
+        livewire(Index::class)
             ->assertSee(__('shopper::pages/brands.menu'));
     });
 

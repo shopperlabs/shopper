@@ -21,6 +21,10 @@ class CollectionRuleFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'rule' => $this->faker->word(),
+            'operator' => $this->faker->word(),
+            'value' => $this->faker->word(),
+        ];
     }
 }
