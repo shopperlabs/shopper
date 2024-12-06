@@ -20,7 +20,7 @@
         <div class="lg:col-span-1">
             <div>
                 <div
-                    class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+                    class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10"
                 >
                     <x-shopper::icons.ga class="size-6" aria-hidden="true" />
                 </div>
@@ -100,7 +100,7 @@
                                 <label
                                     for="json_file"
                                     :class="{ 'outline-none border-primary-300 shadow-outline-primary': focused }"
-                                    class="inline-flex cursor-pointer items-center rounded-md border border-gray-300 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:text-gray-500 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white"
+                                    class="inline-flex cursor-pointer items-center rounded-md border border-gray-300 px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:text-gray-500 dark:border-white/10 dark:text-gray-400 dark:hover:text-white"
                                 >
                                     <x-untitledui-file-download-02 class="mr-1.5 size-5" aria-hidden="true" />
                                     {{ __('shopper::forms.actions.upload') }}
@@ -134,7 +134,7 @@
             <div class="lg:col-span-1">
                 <div>
                     <div
-                        class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+                        class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10"
                     >
                         <x-shopper::icons.gtag class="size-6" aria-hidden="true" />
                     </div>
@@ -179,7 +179,7 @@
             <div class="lg:col-span-1">
                 <div>
                     <div
-                        class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+                        class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10"
                     >
                         <x-shopper::icons.pixel class="size-6" aria-hidden="true" />
                     </div>
@@ -217,7 +217,7 @@
         </div>
     </div>
 
-    <div class="mt-10 border-t border-gray-200 py-10 dark:border-gray-700">
+    <div class="mt-10 border-t border-gray-200 py-10 dark:border-white/10">
         <div class="flex justify-end">
             <x-shopper::buttons.primary wire:click="store" type="button" wire:loading.attr="disabled">
                 <x-shopper::loader wire:loading wire:target="store" class="text-white" />

@@ -35,7 +35,7 @@
                         </button>
                     </div>
                 </x-slot>
-                <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                <div class="divide-y divide-gray-200 dark:divide-white/10">
                     @forelse ($zones as $zone)
                         <label class="relative flex cursor-pointer p-4 focus:outline-none">
                             <x-filament::input.radio

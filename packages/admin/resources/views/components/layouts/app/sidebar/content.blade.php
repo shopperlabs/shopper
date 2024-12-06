@@ -24,7 +24,7 @@
                 <x-shopper::layouts.app.sidebar.secondary />
             </div>
 
-            <div class="space-y-2 border-t border-gray-200 p-4 dark:border-gray-700">
+            <div class="space-y-2 border-t border-gray-200 p-4 dark:border-white/10">
                 @can('access_setting')
                     <x-shopper::link
                         href="{{ route('shopper.settings.index') }}"

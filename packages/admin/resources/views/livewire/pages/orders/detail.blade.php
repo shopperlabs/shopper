@@ -3,7 +3,7 @@
         $total = $order->total() + $shippingOption?->price;
     @endphp
 
-    <x-shopper::container>
+    <x-shopper::container class="py-5">
         <x-shopper::breadcrumb :back="route('shopper.orders.index')">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" />
             <x-shopper::breadcrumb.link
@@ -12,7 +12,7 @@
             />
         </x-shopper::breadcrumb>
 
-        <div class="z-30 mt-5 border-b border-gray-200 pb-5 dark:border-gray-700">
+        <div class="z-30 mt-5 border-b border-gray-200 pb-5 dark:border-white/10">
             <div class="space-y-4">
                 <div class="space-y-3 lg:flex lg:items-center lg:justify-between lg:space-y-0">
                     <div class="flex min-w-0 flex-1 items-center space-x-4">
@@ -21,7 +21,7 @@
                         >
                             {{ $order->number }}
                         </h3>
-                        <div class="flex items-center divide-x-2 divide-gray-200 p-1 dark:divide-gray-700">
+                        <div class="flex items-center divide-x-2 divide-gray-200 p-1 dark:divide-white/10">
                             <div class="flex items-center space-x-2 pr-4">
                                 <x-filament::badge
                                     size="md"
@@ -84,7 +84,7 @@
                                 @if($prevOrder) wire:click="goToOrder({{ $prevOrder->id }})" @endif
                                 type="button"
                                 @class([
-                                    'focus:shadow-outline-primary relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:border-primary-300 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
+                                    'focus:shadow-outline-primary relative inline-flex items-center rounded-l-lg border border-gray-300 px-2 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:border-primary-300 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
                                     'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $prevOrder,
                                     'bg-white' => $prevOrder,
                                 ])
@@ -97,7 +97,7 @@
                                 @if($nextOrder) wire:click="goToOrder({{ $nextOrder->id }})" @endif
                                 type="button"
                                 @class([
-                                    'focus:shadow-outline-primary relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:border-primary-300 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
+                                    'focus:shadow-outline-primary relative -ml-px inline-flex items-center rounded-r-lg border border-gray-300 px-2 py-2 text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:border-primary-300 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-500',
                                     'bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50' => ! $nextOrder,
                                     'bg-white' => $nextOrder,
                                 ])
@@ -113,7 +113,7 @@
         </div>
 
         <div class="grid sm:grid-cols-6">
-            <div class="divide-y divide-gray-200 py-2 dark:divide-gray-700 sm:col-span-4">
+            <div class="divide-y divide-gray-200 py-2 dark:divide-white/10 sm:col-span-4">
                 <div class="py-4 sm:pr-8">
                     <div class="flex items-center justify-between">
                         <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
@@ -135,9 +135,9 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <ul class="bg-white divide-y divide-gray-200 ring-1 ring-gray-200 rounded-lg dark:ring-white/10 dark:bg-gray-900 dark:divide-white/10">
                             @foreach ($items as $item)
-                                <li class="flex-1 py-2.5">
+                                <li class="flex-1 p-4">
                                     <div class="flex items-start">
                                         <div class="flex min-w-0 flex-1 items-center">
                                             <div class="shrink-0">
@@ -176,7 +176,7 @@
                                 </li>
                             @endforeach
                         </ul>
-                        <div class="mt-2 border-t border-gray-200 pt-3 dark:border-gray-700">
+                        <div class="mt-4">
                             {{ $items->links() }}
                         </div>
                     </div>
@@ -264,7 +264,7 @@
                     <div class="mt-4">
                         @if ($order->shippingOption)
                             <dl
-                                class="divide-y divide-gray-200 overflow-hidden rounded-lg ring-1 ring-gray-200 dark:divide-gray-700 dark:bg-gray-800 dark:ring-gray-700"
+                                class="bg-white divide-y divide-gray-200 overflow-hidden rounded-lg ring-1 ring-gray-200 dark:bg-gray-900 dark:divide-white/10 dark:bg-gray-800 dark:ring-white/10"
                             >
                                 <div class="p-4 sm:grid sm:grid-cols-3 sm:gap-4">
                                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -390,7 +390,7 @@
                     </div>
                 </div>
             </div>
-            <div class="divide-y divide-gray-200 border-t border-gray-200 py-2 dark:divide-gray-700 dark:border-gray-700 sm:col-span-2 sm:border-l sm:border-t-0 sm:pl-8">
+            <div class="divide-y divide-gray-200 border-t border-gray-200 py-2 dark:divide-white/10 dark:border-white/10 sm:col-span-2 sm:border-l sm:border-t-0 sm:pl-8">
                 <div class="py-4">
                     <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">
                         {{ __('shopper::words.customer') }}
@@ -413,7 +413,7 @@
                                 <div>
                                     <x-shopper::link
                                         href="{{ route('shopper.customers.show', $order->customer) }}"
-                                        class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                                        class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                                     >
                                         {{ __('shopper::words.view') }}
                                     </x-shopper::link>

@@ -1,6 +1,6 @@
 <div class="space-y-10">
     @if ($zone)
-        <x-shopper::card class="divide-y divide-gray-200 dark:divide-gray-700">
+        <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
             <div class="flex items-center justify-between p-4 lg:p-5">
                 <div class="flex items-center space-x-3">
                     <x-untitledui-globe-05 class="size-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />

@@ -18,7 +18,7 @@
                 />
                 @if ($attribute->type === \Shopper\Core\Enum\FieldType::ColorPicker)
                     <span
-                        class="inline-flex items-center rounded-full p-1 ring-1 ring-inset ring-gray-200 dark:text-gray-300 dark:ring-gray-700"
+                        class="inline-flex items-center rounded-full p-1 ring-1 ring-inset ring-gray-200 dark:text-gray-300 dark:ring-white/10"
                     >
                         <x-shopper::icons.contrast
                             class="size-5"

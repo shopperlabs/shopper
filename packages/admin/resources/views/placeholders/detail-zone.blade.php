@@ -1,4 +1,4 @@
-<x-shopper::card class="divide-y divide-gray-100 ring-gray-100 dark:divide-gray-700">
+<x-shopper::card class="divide-y divide-gray-100 ring-gray-100 dark:divide-white/10">
     <div class="flex items-center justify-between p-4 lg:p-5">
         <x-shopper::skeleton class="h-4 w-1/3 dark:bg-gray-900" />
         <x-shopper::skeleton class="h-4 w-20 dark:bg-gray-900" />

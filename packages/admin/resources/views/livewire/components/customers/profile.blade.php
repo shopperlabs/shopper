@@ -1,5 +1,5 @@
-<x-shopper::container>
-    <div class="space-y-6 divide-y divide-gray-200 dark:divide-gray-700">
+<x-shopper::container class="grid gap-8 lg:grid-cols-3">
+    <div class="space-y-6 lg:col-span-2">
         <div class="space-y-1">
             <x-filament::section.heading>
                 {{ __('shopper::pages/customers.profile.title') }}
@@ -8,9 +8,9 @@
                 {{ __('shopper::pages/customers.profile.description') }}
             </x-filament::section.description>
         </div>
-        <div>
-            <dl class="divide-y divide-gray-200 dark:divide-gray-700">
-                <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+        <div class="bg-white rounded-lg ring-1 ring-gray-200 max-w-4xl dark:bg-gray-900 dark:ring-white/10">
+            <dl class="divide-y divide-gray-200 dark:divide-gray-800">
+                <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::forms.label.first_name') }}
                     </dt>
@@ -20,7 +20,7 @@
                         </div>
                     </dd>
                 </div>
-                <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:pt-5">
+                <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::forms.label.last_name') }}
                     </dt>
@@ -30,7 +30,7 @@
                         </div>
                     </dd>
                 </div>
-                <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:pt-5">
+                <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::forms.label.photo') }}
                     </dt>
@@ -40,7 +40,7 @@
                         </span>
                     </dd>
                 </div>
-                <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:pt-5">
+                <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::forms.label.email') }}
                     </dt>
@@ -50,7 +50,7 @@
                         </div>
                     </dd>
                 </div>
-                <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:pt-5">
+                <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::forms.label.birth_date') }}
                     </dt>
@@ -67,7 +67,7 @@
                         </div>
                     </dd>
                 </div>
-                <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:border-b sm:border-gray-200 sm:py-5">
+                <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::forms.label.gender') }}
                     </dt>
@@ -82,7 +82,7 @@
             </dl>
         </div>
     </div>
-    <div class="mt-10 space-y-6 divide-y divide-gray-200 dark:divide-gray-700">
+    <div class="space-y-6">
         <div class="space-y-1">
             <h3 class="font-heading text-lg font-medium leading-6 text-gray-900 dark:text-white">
                 {{ __('shopper::pages/customers.profile.account') }}
@@ -91,9 +91,9 @@
                 {{ __('shopper::pages/customers.profile.account_description') }}
             </p>
         </div>
-        <div>
-            <dl class="divide-y divide-gray-200 dark:divide-gray-700">
-                <div class="space-y-1 py-4 sm:flex sm:items-center sm:justify-between sm:py-5">
+        <div class="bg-white rounded-lg ring-1 ring-gray-200 max-w-4xl dark:bg-gray-900 dark:ring-white/10">
+            <dl class="divide-y divide-gray-200 dark:divide-gray-800">
+                <div class="space-y-1 p-4 sm:flex sm:items-center sm:justify-between sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.profile.marketing') }}
                     </dt>
@@ -104,7 +104,7 @@
                         />
                     </dd>
                 </div>
-                <div class="space-y-1 py-4 sm:flex sm:items-center sm:justify-between sm:py-5">
+                <div class="space-y-1 p-4 sm:flex sm:items-center sm:justify-between sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.profile.two_factor') }}
                     </dt>

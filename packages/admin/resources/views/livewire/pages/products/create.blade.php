@@ -1,4 +1,4 @@
-<div class="flex min-h-[calc(100vh-7.185rem)] flex-col space-y-10">
+<div class="flex min-h-[calc(100vh-7.185rem)] flex-col space-y-10 py-5">
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.products.index')">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" />
@@ -17,7 +17,7 @@
 
     <form
         wire:submit="store"
-        class="shopper-product-wizard flex min-h-full flex-1 flex-col border-t border-gray-200 dark:border-gray-700"
+        class="shopper-product-wizard flex min-h-full flex-1 flex-col border-t border-gray-200 dark:border-white/10"
     >
         {{ $this->form }}
     </form>

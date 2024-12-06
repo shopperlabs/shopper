@@ -7,7 +7,7 @@
         />
         <div class="mt-5 lg:col-span-2 lg:mt-0 lg:max-w-3xl">
             <x-shopper::card>
-                <div class="border-b border-gray-200 p-4 dark:border-gray-700 sm:px-6">
+                <div class="border-b border-gray-200 p-4 dark:border-white/10 sm:px-6">
                     <div class="flex items-center space-x-3">
                         <div
                             @class([
@@ -69,7 +69,7 @@
                     </div>
                     @if ($this->enabled)
                         @if ($showingQrCode)
-                            <div class="border-t border-gray-200 pt-5 dark:border-gray-700">
+                            <div class="border-t border-gray-200 pt-5 dark:border-white/10">
                                 <p class="max-w-2xl text-sm font-medium text-gray-600 dark:text-gray-400">
                                     {{ __('shopper::pages/auth.account.two_factor_is_enabled') }}
                                 </p>
@@ -81,7 +81,7 @@
                         @endif
 
                         @if ($showingRecoveryCodes)
-                            <div class="border-t border-gray-200 pt-5 dark:border-gray-700">
+                            <div class="border-t border-gray-200 pt-5 dark:border-white/10">
                                 <p class="max-w-2xl text-sm font-medium text-gray-600 dark:text-gray-400">
                                     {{ __('shopper::pages/auth.account.two_factor_store_recovery_codes') }}
                                 </p>

@@ -1,7 +1,7 @@
 <x-shopper::layouts.app :title="$title ?? null">
     <x-slot name="subHeading">
         <div
-            class="sticky top-16 z-10 border-b border-t border-gray-200 bg-white/80 backdrop-blur-md backdrop-filter dark:border-gray-700 dark:bg-gray-800/80 lg:top-[3.8rem] lg:border-t-0"
+            class="sticky top-16 z-10 border-b border-t border-gray-200 bg-white/80 backdrop-blur-md backdrop-filter dark:border-white/10 dark:bg-gray-800/80 lg:top-[3.8rem] lg:border-t-0"
         >
             <div
                 x-data="{
@@ -86,5 +86,7 @@
         </div>
     </x-slot>
 
-    {{ $slot }}
+    <div class="py-5">
+        {{ $slot }}
+    </div>
 </x-shopper::layouts.app>

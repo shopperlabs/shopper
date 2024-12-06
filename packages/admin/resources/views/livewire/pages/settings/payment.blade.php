@@ -32,7 +32,7 @@
         </x-shopper::heading>
     </x-shopper::container>
 
-    <div class="relative space-y-4 border-gray-200 px-4 dark:border-gray-700 lg:border-t lg:px-0">
+    <div class="relative space-y-4 border-gray-200 px-4 dark:border-white/10 lg:border-t lg:px-0">
         <x-filament::tabs :contained="true">
             <x-filament::tabs.item alpine-active="currentTab === 'general'" x-on:click="currentTab = 'general'">
                 {{ __('shopper::words.general') }}

@@ -38,7 +38,7 @@
         </x-shopper::heading>
     </x-shopper::container>
 
-    <div class="relative border-t border-gray-200 dark:border-gray-700">
+    <div class="relative border-t border-gray-200 dark:border-white/10">
         <x-filament::tabs :contained="true">
             <x-filament::tabs.item alpine-active="currentTab === 'role'" x-on:click="currentTab = 'role'">
                 {{ __('shopper::forms.label.role') }}

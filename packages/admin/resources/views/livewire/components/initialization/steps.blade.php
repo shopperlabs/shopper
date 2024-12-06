@@ -13,7 +13,7 @@
                 @class([
                     "relative flex size-6 items-center justify-center rounded-full text-xs leading-5",
                     "bg-primary-600" => $step->complete,
-                    "border border-gray-300 bg-white text-gray-500 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-400" => ! $step->complete,
+                    "border border-gray-300 bg-white text-gray-500 dark:border-white/10 dark:bg-gray-950 dark:text-gray-400" => ! $step->complete,
                 ])
             >
                 @if ($step->complete)

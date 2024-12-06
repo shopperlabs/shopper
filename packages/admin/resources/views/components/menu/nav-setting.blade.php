@@ -5,7 +5,7 @@
 <a
     href="{{ $menu["route"] ? route($menu["route"]) : "#" }}"
     @class([
-        "select-none whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium",
+        "select-none whitespace-nowrap border-b-[3px] px-1 py-4 text-sm font-medium",
         "current border-primary-500 text-primary-600" =>
             $menu["route"] && request()->routeIs($menu["route"] . "*"),
         "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-700 dark:hover:text-gray-300" =>

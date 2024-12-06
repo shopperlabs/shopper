@@ -37,8 +37,8 @@
             <div class="mt-6 grid gap-5 sm:grid-cols-3 lg:grid-cols-4">
                 @foreach ($roles as $role)
                     <x-shopper::link
-                        href="{{ route('shopper.settings.users.role', $role) }}"
-                        class="group flex flex-col justify-between overflow-hidden rounded-lg p-4 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+                        :href="route('shopper.settings.users.role', $role)"
+                        class="group flex flex-col justify-between overflow-hidden rounded-lg p-4 shadow-sm bg-white ring-1 ring-gray-200 dark:bg-gray-900 dark:ring-white/10"
                     >
                         <div class="flex items-center justify-between">
                             <span
@@ -72,7 +72,7 @@
         </div>
         <div class="space-y-6">
             <div
-                class="space-y-3 border-b border-gray-200 pb-6 dark:border-gray-700 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0"
+                class="space-y-3 border-b border-gray-200 pb-6 dark:border-white/10 sm:flex sm:items-center sm:justify-between sm:space-x-4 sm:space-y-0"
             >
                 <div class="min-w-0 max-w-2xl flex-1">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-white">

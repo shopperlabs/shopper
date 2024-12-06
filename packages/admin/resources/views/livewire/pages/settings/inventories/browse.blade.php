@@ -44,7 +44,7 @@
         </div>
         <div class="mt-5 lg:col-span-2 lg:mt-0">
             <x-shopper::card class="overflow-hidden">
-                <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+                <ul class="divide-y divide-gray-200 dark:divide-white/10">
                     @foreach ($inventories as $inventory)
                         <li class="p-4 sm:p-6">
                             <div class="flex items-end gap-6">

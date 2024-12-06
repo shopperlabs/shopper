@@ -36,16 +36,13 @@ class Index extends Component implements HasForms, HasTable
                 Tables\Columns\ViewColumn::make('full_name')
                     ->label(__('shopper::forms.label.full_name'))
                     ->view('shopper::livewire.tables.cells.administrators.name'),
-
                 Tables\Columns\TextColumn::make('email')
                     ->label(__('shopper::forms.label.email'))
                     ->icon(fn ($record): string => $record->email_verified_at ? 'untitledui-check-verified-02' : 'untitledui-alert-circle')
                     ->iconColor(fn ($record): string => $record->email_verified_at ? 'success' : 'danger'),
-
                 Tables\Columns\TextColumn::make('roles_label')
                     ->label(__('shopper::forms.label.role'))
                     ->badge(),
-
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::forms.label.access'))
                     ->color('gray')

@@ -54,7 +54,7 @@
                     name="remember"
                     wire:model="remember"
                     type="checkbox"
-                    class="size-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:focus:ring-offset-gray-900"
+                    class="size-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 dark:border-white/10 dark:bg-gray-800 dark:focus:ring-offset-gray-900"
                 />
                 <x-shopper::label
                     for="remember"
@@ -65,7 +65,7 @@
 
             <div class="text-sm leading-5">
                 <x-shopper::link
-                    href="{{ route('shopper.password.request') }}"
+                    :href="route('shopper.password.request')"
                     class="font-medium text-primary-600 hover:text-primary-500"
                 >
                     {{ __('shopper::pages/auth.login.forgot_password') }}

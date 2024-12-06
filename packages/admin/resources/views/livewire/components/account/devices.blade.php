@@ -12,7 +12,7 @@
                     <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/auth.account.empty_device') }}
                     </p>
-                    <div class="mt-2 divide-y divide-gray-200 dark:divide-gray-700">
+                    <div class="mt-2 divide-y divide-gray-200 dark:divide-white/10">
                         @foreach ($this->sessions as $session)
                             <div class="flex items-center justify-between py-4">
                                 <div class="flex items-center space-x-3">

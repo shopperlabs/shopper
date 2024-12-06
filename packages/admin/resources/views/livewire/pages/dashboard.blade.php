@@ -1,4 +1,4 @@
-<x-shopper::container>
+<x-shopper::container class="py-5">
     <div class="flex items-center">
         <h2
             class="welcome font-heading text-3xl font-bold leading-8 text-gray-950 dark:text-white sm:truncate sm:leading-9"

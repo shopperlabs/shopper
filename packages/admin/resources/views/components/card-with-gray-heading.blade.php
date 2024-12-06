@@ -2,7 +2,7 @@
     'heading',
 ])
 
-<x-shopper::card {{ $attributes->twMerge(['class' => 'bg-gray-50 p-2']) }}>
+<x-shopper::card {{ $attributes->twMerge(['class' => 'bg-white p-2']) }}>
     <header class="flex items-start justify-between gap-2 px-2 py-2.5">
         {{ $heading }}
     </header>

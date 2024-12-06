@@ -1,4 +1,4 @@
-<div class="flex h-full flex-col divide-y divide-gray-200 dark:divide-gray-700">
+<div class="flex h-full flex-col divide-y divide-gray-200 dark:divide-white/10">
     <div class="h-0 flex-1 overflow-y-auto py-6">
         <div class="px-4 sm:px-6">
             <x-shopper::heading class="mt-5">
@@ -18,8 +18,8 @@
                         </x-filament::section.description>
                     </div>
                 </div>
-                <div class="mt-6 border-t border-gray-200 dark:border-gray-700">
-                    <dl class="divide-y divide-gray-200 dark:divide-gray-700">
+                <div class="mt-6 border-t border-gray-200 dark:border-white/10">
+                    <dl class="divide-y divide-gray-200 dark:divide-white/10">
                         <div class="space-y-1 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                             <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                                 {{ __('shopper::pages/products.single') }}

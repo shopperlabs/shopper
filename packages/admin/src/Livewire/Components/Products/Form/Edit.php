@@ -64,11 +64,9 @@ class Edit extends Component implements HasForms
                                     ->columnSpan('full'),
                             ]),
 
-                        Components\Separator::make()
-                            ->columnSpan('full'),
-
                         Forms\Components\Grid::make()
                             ->schema([
+                                Components\Separator::make()->columnSpan('full'),
                                 Forms\Components\TextInput::make('price_amount')  // @phpstan-ignore-line
                                     ->label(__('shopper::forms.label.price_amount'))
                                     ->numeric()
@@ -124,6 +122,7 @@ class Edit extends Component implements HasForms
                                     ->label(__('shopper::pages/collections.menu'))
                                     ->relationship('collections', 'name')
                                     ->searchable()
+                                    ->preload()
                                     ->multiple()
                                     ->visible(Feature::enabled('collection')),
 

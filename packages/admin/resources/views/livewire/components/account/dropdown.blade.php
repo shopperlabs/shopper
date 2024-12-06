@@ -8,7 +8,7 @@
             <img class="size-8 rounded-full" src="{{ $user->picture }}" alt="{{ $user->email }}" />
             <span class="sr-only">{{ $user->full_name }}</span>
             <span
-                class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white dark:ring-gray-700"
+                class="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white dark:ring-white/10"
             ></span>
         </button>
         <div
@@ -28,7 +28,7 @@
             aria-labelledby="options-menu-button"
             tabindex="-1"
         >
-            <div class="divide-y divide-gray-100 dark:divide-gray-700">
+            <div class="divide-y divide-gray-100 dark:divide-white/10">
                 <p class="truncate px-3.5 py-3">
                     <span class="block text-xs text-gray-500 dark:text-gray-400" role="none">
                         {{ __('shopper::words.sign_in_as') }}

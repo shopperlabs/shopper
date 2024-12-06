@@ -1,4 +1,4 @@
-<x-shopper::container>
+<x-shopper::container class="py-5">
     <x-shopper::heading>
         <x-slot name="title">
             {{ __('shopper::pages/brands.menu') }}

@@ -1,7 +1,9 @@
 <div x-data="{
-    options: ['profile', 'address', 'orders'],
-    currentTab: 'profile',
-}">
+        options: ['profile', 'address', 'orders'],
+        currentTab: 'profile',
+    }"
+     class="py-5"
+>
     <x-shopper::container>
         <x-shopper::breadcrumb :back="route('shopper.customers.index')" :current="$customer->full_name">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
@@ -23,7 +25,7 @@
                         <h3 class="font-heading text-2xl font-bold leading-6 text-gray-900 dark:text-white sm:truncate">
                             {{ $customer->full_name }}
                         </h3>
-                        <div class="mt-1 flex items-center sm:space-x-2">
+                        <div class="mt-2 flex items-center sm:space-x-2">
                             <div class="flex items-center">
                                 @if ($customer->email_verified_at)
                                     <x-untitledui-check-verified-02 class="size-5 text-green-500" aria-hidden="true" />
@@ -74,7 +76,7 @@
 
     <div class="relative">
         <div class="sticky top-0">
-            <div class="border-t border-gray-200 dark:border-gray-700">
+            <div class="border-t border-gray-200 dark:border-white/10">
                 <x-filament::tabs :contained="true">
                     <x-filament::tabs.item alpine-active="currentTab === 'profile'" x-on:click="currentTab = 'profile'">
                         {{ __('shopper::pages/customers.profile.title') }}

@@ -28,7 +28,7 @@
                 {{ $this->form }}
             </div>
         </div>
-        <div class="mt-8 border-t border-dashed border-gray-200 pt-10 dark:border-gray-700">
+        <div class="mt-8 border-t border-dashed border-gray-200 pt-10 dark:border-white/10">
             <div class="flex items-center justify-between space-x-4">
                 <x-shopper::buttons.default type="button" wire:click="previousStep">
                     {{ __('shopper::forms.actions.back') }}

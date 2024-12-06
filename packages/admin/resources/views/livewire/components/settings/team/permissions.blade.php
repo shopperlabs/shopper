@@ -8,7 +8,7 @@
         </p>
     </div>
     <div
-        class="mt-4 divide-y divide-gray-200 overflow-x-auto border-t border-gray-200 dark:divide-gray-700 dark:border-gray-700"
+        class="mt-4 divide-y divide-gray-200 bg-white overflow-x-auto border-t border-gray-200 dark:bg-transparent dark:divide-white/10 dark:border-white/10"
     >
         @foreach ($groupPermissions as $group => $permissions)
             <div>
@@ -19,7 +19,7 @@
                         {{ ! empty($group) ? $group : __('shopper::pages/settings/staff.custom_permission') }}
                     </span>
                 </div>
-                <div class="divide-y divide-gray-200 py-1 dark:divide-gray-700">
+                <div class="divide-y divide-gray-200 py-1 dark:divide-white/10">
                     @foreach ($permissions as $permission)
                         <div class="flex items-center justify-between px-4 py-2.5 lg:px-6">
                             <div class="flex items-center space-x-3">

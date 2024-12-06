@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Shopper\Facades\Shopper;
 
 #[Layout('shopper::components.layouts.base')]
 class ResetPassword extends Component
 {
+    #[Locked]
     public ?string $token = null;
 
     public string $email = '';

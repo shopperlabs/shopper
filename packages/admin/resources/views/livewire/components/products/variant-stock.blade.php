@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="mt-5 overflow-hidden rounded-xl ring-1 ring-gray-950/10 dark:ring-white/10">
+    <div class="mt-5 overflow-hidden bg-white rounded-xl ring-1 ring-gray-950/10 dark:bg-gray-900 dark:ring-white/10">
         <table class="min-w-full divide-y divide-gray-200 dark:divide-white/10">
             <thead class="bg-gray-50 dark:bg-white/5">
                 <x-shopper::tables.table-head>

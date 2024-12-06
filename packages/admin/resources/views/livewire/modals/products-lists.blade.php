@@ -1,5 +1,5 @@
 <x-shopper::modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-200 dark:border-gray-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-200 dark:border-white/10"
     contentClasses="relative p-4 sm:px-6 sm:px-5"
     footerClasses="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
 >
@@ -15,7 +15,7 @@
                 wire:model.live.debounce.550ms="search"
             />
         </div>
-        <div class="h-80 -mx-2 my-2 divide-y divide-gray-200 overflow-auto dark:divide-gray-700">
+        <div class="h-80 -mx-2 my-2 divide-y divide-gray-200 overflow-auto dark:divide-white/10">
             @foreach ($this->products as $product)
                 <x-shopper::forms.label-product :product="$product" wire:key="{{ $product->id }}" />
             @endforeach

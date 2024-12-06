@@ -4,7 +4,7 @@
 
 <x-shopper::link
     :href="$menu['route'] ? route($menu['route']) : '#'"
-    class="flex items-start space-x-4 rounded-lg p-3 transition duration-200 ease-in-out hover:bg-gray-50 dark:hover:bg-gray-900/20"
+    class="flex items-start space-x-4 rounded-lg p-3 transition duration-200 ease-in-out hover:bg-gray-50 dark:hover:bg-white/5"
 >
     <div class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary-600 text-white">
         {{ svg($menu['icon'], 'size-6') }}

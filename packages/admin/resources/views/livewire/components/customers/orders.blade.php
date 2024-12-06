@@ -6,9 +6,9 @@
             @endphp
 
             <div
-                class="divide-y divide-gray-200 overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-800"
+                class="divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm dark:divide-white/10 dark:border-white/10 dark:bg-gray-900"
             >
-                <div class="bg-gray-50 px-4 py-3 dark:bg-gray-700 sm:flex sm:items-center sm:justify-between">
+                <div class="bg-gray-50 px-4 py-3 dark:bg-gray-800 sm:flex sm:items-center sm:justify-between">
                     <div class="flex-1 grow sm:grid sm:grid-cols-4 sm:gap-5">
                         <div>
                             <dt

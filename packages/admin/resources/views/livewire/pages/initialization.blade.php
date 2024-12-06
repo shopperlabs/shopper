@@ -63,7 +63,7 @@
                     <x-shopper::brand class="size-10" />
                 </div>
                 <div
-                    class="flex-1 divide-y divide-gray-100 border-l border-gray-100 pl-4 dark:divide-gray-700 dark:border-gray-700"
+                    class="flex-1 divide-y divide-gray-100 border-l border-gray-100 pl-4 dark:divide-white/10 dark:border-white/10"
                 >
                     <div class="px-5 py-8">
                         <h2 class="font-heading text-xl font-bold text-gray-900 dark:text-white">

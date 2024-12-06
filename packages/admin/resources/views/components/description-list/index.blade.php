@@ -1,5 +1,5 @@
 <dl
-    {{ $attributes->twMerge(['class' => 'divide-y divide-gray-200 dark:divide-gray-700']) }}
+    {{ $attributes->twMerge(['class' => 'divide-y divide-gray-200 dark:divide-white/10']) }}
     role="list"
 >
     {{ $slot }}

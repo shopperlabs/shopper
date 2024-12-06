@@ -1,5 +1,5 @@
 <div>
-    <x-shopper::container>
+    <x-shopper::container class="bg-white/75 py-5 dark:bg-gray-900/80">
         <x-shopper::breadcrumb :back="route('shopper.products.index')" :current="$product->name">
             <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" aria-hidden="true" />
             <x-shopper::breadcrumb.link
@@ -10,7 +10,7 @@
     </x-shopper::container>
 
     <div
-        class="pb-10 pt-6"
+        class="pb-10"
         x-data="{
             options: [
                 'detail',

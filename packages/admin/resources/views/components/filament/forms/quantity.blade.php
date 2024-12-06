@@ -116,7 +116,7 @@
 
                 @if ($isStacked())
                     <div
-                        class="-gap-y-px flex flex-col divide-y divide-gray-200 border-s border-gray-200 dark:divide-gray-700 dark:border-gray-700"
+                        class="-gap-y-px flex flex-col divide-y divide-gray-200 border-s border-gray-200 dark:divide-white/10 dark:border-white/10"
                     >
                         <button
                             :disabled="!isIncrementAllowed"
@@ -141,7 +141,7 @@
                             :disabled="!isDecrementAllowed"
                             @click="decrement"
                             type="button"
-                            class="inline-flex size-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            class="inline-flex size-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                         >
                             @svg('heroicon-o-minus', 'h-3.5 w-3.5 shrink-0')
                         </button>
@@ -149,7 +149,7 @@
                             :disabled="!isIncrementAllowed"
                             @click="increment"
                             type="button"
-                            class="inline-flex size-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            class="inline-flex size-6 items-center justify-center gap-x-2 rounded-full border border-gray-200 bg-white text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-white/10 dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                         >
                             @svg('heroicon-o-plus', 'h-3.5 w-3.5 shrink-0')
                         </button>

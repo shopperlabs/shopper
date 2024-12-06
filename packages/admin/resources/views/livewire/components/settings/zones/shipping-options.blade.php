@@ -1,5 +1,5 @@
 <div>
-    <x-shopper::card class="divide-y divide-gray-200 dark:divide-gray-700">
+    <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
         <div class="flex items-center justify-between p-4 lg:p-5">
             <div class="flex items-start space-x-3">
                 <x-heroicon-o-truck class="size-6 text-gray-400 dark:text-gray-500" aria-hidden="true" />
@@ -30,7 +30,7 @@
         <div class="p-4 lg:grid lg:grid-cols-2 lg:gap-6 lg:p-5">
             @forelse ($zone->shippingOptions as $shippingOption)
                 <div
-                    class="relative flex items-start justify-between rounded-lg border border-gray-200 bg-white px-6 py-4 shadow-sm dark:border-gray-700 dark:bg-white/10"
+                    class="relative flex items-start justify-between rounded-lg border border-gray-200 bg-white px-6 py-4 shadow-sm dark:border-white/10 dark:bg-white/5"
                 >
                     <div class="flex flex-1 flex-col leading-6">
                         <p class="flex items-center gap-2">

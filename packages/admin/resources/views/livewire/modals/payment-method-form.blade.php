@@ -1,7 +1,7 @@
 <x-shopper::modal
-    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-gray-700"
+    headerClasses="p-4 sm:px-6 sm:py-4 border-b border-gray-100 dark:border-white/10"
     contentClasses="relative h-full max-h-96 overflow-y-scroll scrolling lg:max-h-[580px]"
-    footerClasses="px-4 py-3 border-t border-gray-200 dark:border-gray-700 sm:px-6 sm:flex sm:flex-row-reverse"
+    footerClasses="px-4 py-3 border-t border-gray-200 dark:border-white/10 sm:px-6 sm:flex sm:flex-row-reverse"
     form-action="save"
 >
     <x-slot name="title">

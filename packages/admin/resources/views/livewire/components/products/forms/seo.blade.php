@@ -26,7 +26,7 @@
                 {{ __('shopper::words.seo.sub_description') }}
             </h4>
             <div
-                class="mt-5 flex h-auto flex-col overflow-hidden rounded-xl bg-gray-100 p-1 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700"
+                class="mt-5 flex h-auto flex-col overflow-hidden rounded-xl bg-gray-100 p-1 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-white/10"
             >
                 <div class="flex w-full items-center justify-between p-1.5">
                     <div class="flex items-center space-x-2">

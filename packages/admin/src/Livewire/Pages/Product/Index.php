@@ -89,16 +89,11 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     Tables\Actions\Action::make('edit')
                         ->label(__('shopper::forms.actions.edit'))
                         ->icon('untitledui-edit-04')
-                        ->url(
-                            fn (Product $record): string => route(
-                                name: 'shopper.products.edit',
-                                parameters: ['product' => $record]
-                            ),
-                        ),
-                    Tables\Actions\ReplicateAction::make()
-                        ->icon('untitledui-copy-dashed')
-                        ->excludeAttributes(['variants_count', 'slug'])
-                        ->successNotificationTitle(__('shopper::pages/products.notifications.replicated')),
+                        ->action(fn (Product $record) => $this->redirectRoute(
+                            name: 'shopper.products.edit',
+                            parameters: ['product' => $record],
+                            navigate: true
+                        )),
                     Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
                         ->icon('untitledui-trash-03')
                         ->modalIcon('untitledui-trash-03')

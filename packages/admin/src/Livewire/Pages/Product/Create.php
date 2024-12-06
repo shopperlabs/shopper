@@ -159,6 +159,7 @@ class Create extends AbstractPageComponent implements HasForms
                                 ->label(__('shopper::pages/collections.menu'))
                                 ->relationship('collections', 'name')
                                 ->searchable()
+                                ->preload()
                                 ->multiple()
                                 ->visible(Feature::enabled('collection')),
 

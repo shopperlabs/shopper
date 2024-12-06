@@ -24,14 +24,14 @@ class Permissions extends Component
             $this->role->revokePermissionTo($permission->name);
 
             Notification::make()
-                ->body(__('shopper::notifications.users_roles.permission_revoke', ['permission' => $permission->display_name]))
+                ->title(__('shopper::notifications.users_roles.permission_revoke', ['permission' => $permission->display_name]))
                 ->success()
                 ->send();
         } else {
             $this->role->givePermissionTo($permission->name);
 
             Notification::make()
-                ->body(__('shopper::notifications.users_roles.permission_allow', ['permission' => $permission->display_name]))
+                ->title(__('shopper::notifications.users_roles.permission_allow', ['permission' => $permission->display_name]))
                 ->success()
                 ->send();
         }
