@@ -21,7 +21,7 @@
   },
   "require-dev": {
     "bacon/bacon-qr-code": "^2.0",
-    "blade-ui-kit/blade-heroicons": "^2.0",
+    "blade-ui-kit/blade-heroicons": "^2.5",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "doctrine/dbal": "^3.6",
     "filament/filament": "^3.2",
@@ -35,11 +35,10 @@
     "pragmarx/google2fa": "^8.0",
     "nunomaduro/collision": "^7.10.0|^8.1.1",
     "orchestra/testbench": "^8.20|^9.0",
-    "pestphp/pest": "^2.34",
-    "pestphp/pest-plugin-laravel": "^2.4",
-    "pestphp/pest-plugin-livewire": "^2.1",
+    "pestphp/pest": "^3.5",
+    "pestphp/pest-plugin-laravel": "^3.0",
+    "pestphp/pest-plugin-livewire": "^3.0",
     "phpstan/phpstan": "^1.8",
-    "phpunit/phpunit": "^10.5",
     "shopper/core": "*",
     "spatie/laravel-livewire-wizard": "^2.2",
     "stevebauman/location": "^7.2",
@@ -84,7 +83,7 @@
     ],
     "pint": "./vendor/bin/pint",
     "test:pest": "pest --parallel",
-    "test:phpstan": "phpstan analyse --memory-limit=2G",
+    "test:phpstan": "phpstan analyse --memory-limit=1G",
     "test": [
       "@test:phpstan",
       "@test:pest"
