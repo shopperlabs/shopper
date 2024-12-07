@@ -86,7 +86,7 @@ class BrandForm extends SlideOverComponent implements HasForms
                             ->label(__('shopper::forms.label.image_preview'))
                             ->collection(config('shopper.media.storage.thumbnail_collection'))
                             ->image()
-                            ->maxSize(1024),
+                            ->maxSize(config('shopper.media.max_size.thumbnail')),
                     ]),
                 Section::make(__('shopper::words.seo.slug'))
                     ->collapsible()

@@ -35,28 +35,22 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
             ->columns([
                 IconColumn::make('icon')
                     ->label(__('shopper::forms.label.icon')),
-
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
                     ->formatStateUsing(fn (Attribute $record) => $record->type_formatted)
                     ->searchable(),
-
                 Tables\Columns\IconColumn::make('is_enabled')
                     ->label(__('shopper::words.is_enabled'))
                     ->boolean(),
-
                 Tables\Columns\IconColumn::make('is_searchable')
                     ->label(__('shopper::forms.label.is_searchable'))
                     ->boolean(),
-
                 Tables\Columns\IconColumn::make('is_filterable')
                     ->label(__('shopper::forms.label.is_filterable'))
                     ->boolean(),
-
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date()
@@ -78,7 +72,6 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
 
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
-                    ->color('gray')
                     ->icon('untitledui-edit-04')
                     ->action(
                         fn (Attribute $record) => $this->dispatch(

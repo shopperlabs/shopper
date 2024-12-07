@@ -36,7 +36,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('Logo')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->circular()
-                    ->defaultImageUrl(shopper_fallback_url())
                     ->grow(false),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
@@ -60,6 +59,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
+                    ->icon('untitledui-edit-04')
                     ->action(
                         fn ($record) => $this->dispatch(
                             'openPanel',
@@ -70,22 +70,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->visible(Shopper::auth()->user()->can('edit_brands')),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
-                    ->label(__('shopper::forms.actions.delete'))
-                    ->requiresConfirmation()
-                    ->action(function (Collection $records): void {
-                        $records->each->delete();
-
-                        Notification::make()
-                            ->title(
-                                __('shopper::notifications.delete', [
-                                    'item' => __('shopper::pages/brands.single'),
-                                ])
-                            )
-                            ->success()
-                            ->send();
-                    })
-                    ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('enabled')
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
@@ -112,6 +96,23 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             ->title(__('shopper::components.tables.status.updated'))
                             ->body(
                                 __('shopper::notifications.disabled', [
+                                    'item' => __('shopper::pages/brands.single'),
+                                ])
+                            )
+                            ->success()
+                            ->send();
+                    })
+                    ->deselectRecordsAfterCompletion(),
+                Tables\Actions\DeleteBulkAction::make()
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon('untitledui-trash-03')
+                    ->requiresConfirmation()
+                    ->action(function (Collection $records): void {
+                        $records->each->delete();
+
+                        Notification::make()
+                            ->title(
+                                __('shopper::notifications.delete', [
                                     'item' => __('shopper::pages/brands.single'),
                                 ])
                             )

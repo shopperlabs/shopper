@@ -36,6 +36,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->with(['roles', 'addresses'])
                     ->query()
                     ->scopes('customers')
+                    ->latest()
             )
             ->columns([
                 Tables\Columns\ViewColumn::make('first_name')
@@ -51,18 +52,28 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('country')
                     ->label(__('shopper::forms.label.country'))
                     ->getStateUsing(
-                        fn ($record): ?string => Country::find($record->addresses->first()?->country_id)?->name ?? null
+                        fn ($record): ?string => Country::query()->find($record->addresses->first()?->country_id)?->name ?? null
                     )
                     ->sortable(),
                 Tables\Columns\TextColumn::make('orders_count')
                     ->counts([
-                        'orders' => fn (Builder $query) => $query->where('status', OrderStatus::Pending->value),
+                        'orders' => fn (Builder $query) => $query->where('status', OrderStatus::Paid()),
                     ])
                     ->label(__('shopper::pages/customers.orders.placed')),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('shopper::forms.label.registered_at'))
                     ->date()
                     ->sortable(),
+            ])
+            ->actions([
+                Tables\Actions\Action::make('view')
+                    ->label(__('shopper::forms.actions.view'))
+                    ->icon('untitledui-eye')
+                    ->action(fn ($record) => $this->redirectRoute(
+                        name: 'shopper.customers.show',
+                        parameters: ['user' => $record],
+                        navigate: true
+                    )),
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('email_verified_at')
@@ -87,12 +98,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             );
                     }),
             ])
-            ->persistFiltersInSession()
-            ->actions([
-                Tables\Actions\Action::make('view')
-                    ->label(__('shopper::forms.actions.view'))
-                    ->url(fn ($record): string => route('shopper.customers.show', $record)),
-            ]);
+            ->persistFiltersInSession();
     }
 
     public function render(): View

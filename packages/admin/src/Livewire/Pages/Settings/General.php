@@ -220,7 +220,8 @@ class General extends Component implements HasForms
     {
         $this->saveSettings($this->form->getState());
 
-        Cache::forget('shopper-setting-default_currency_id');
+        Cache::forget('shopper-setting.default_currency_id');
+        Cache::forget('shopper-setting.default_currency');
 
         Notification::make()
             ->title(__('shopper::notifications.store_info'))

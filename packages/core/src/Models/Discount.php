@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\DiscountFactory;
+use Shopper\Core\Enum\DiscountType;
 
 /**
  * @property-read int $id
  * @property string $code
- * @property string $type
+ * @property DiscountType $type
  * @property int $value
  * @property string $apply_to
  * @property string $eligibility
@@ -40,6 +42,7 @@ class Discount extends Model
         'start_at' => 'datetime',
         'end_at' => 'datetime',
         'metadata' => 'array',
+        'type' => DiscountType::class,
     ];
 
     public function getTable(): string
@@ -50,6 +53,18 @@ class Discount extends Model
     protected static function newFactory(): DiscountFactory
     {
         return DiscountFactory::new();
+    }
+
+    protected function value(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->type === DiscountType::FixedAmount
+                ? $value / 100
+                : $value,
+            set: fn ($value) => $this->type === DiscountType::FixedAmount
+                ? $value * 100
+                : $value,
+        );
     }
 
     public function hasReachedLimit(): bool

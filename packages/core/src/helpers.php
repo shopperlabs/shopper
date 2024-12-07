@@ -54,7 +54,7 @@ if (! function_exists('shopper_currency')) {
 
         if ($currencyId) {
             $currency = Cache::remember(
-                'shopper-currency',
+                'shopper-setting.default_currency',
                 now()->addHour(),
                 fn () => Currency::query()->find($currencyId)
             );
@@ -69,12 +69,8 @@ if (! function_exists('shopper_currency')) {
 if (! function_exists('shopper_money_format')) {
     function shopper_money_format(int | float $amount, ?string $currency = null, bool $convert = false): string
     {
-        $amountValue = $currency
-            ? (is_no_division_currency($currency) ? $amount / 100 : $amount)
-            : $amount;
-
         $money = new Money\Money(
-            amount: $amountValue,
+            amount: $amount,
             currency: new Money\Currency($currency ?? shopper_currency()),
             convert: $convert
         );
@@ -87,7 +83,7 @@ if (! function_exists('shopper_setting')) {
     function shopper_setting(string $key, bool $withCache = true): mixed
     {
         $setting = Cache::remember(
-            "shopper-setting-{$key}",
+            "shopper-setting.{$key}",
             $withCache ? 3600 * 24 : 1,
             fn () => Setting::query()->where('key', $key)->first()
         );

@@ -36,12 +36,12 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 (new CategoryRepository)
                     ->with('parent:id,name')
                     ->query()
+                    ->latest()
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->circular()
-                    ->defaultImageUrl(shopper_fallback_url())
                     ->grow(false),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
@@ -71,6 +71,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
+                    ->icon('untitledui-edit-04')
                     ->action(
                         fn ($record) => $this->dispatch(
                             'openPanel',
@@ -81,23 +82,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->visible($this->getUser()->can('edit_categories')),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make()
-                    ->label(__('shopper::forms.actions.delete'))
-                    ->requiresConfirmation()
-                    ->action(function (Collection $records): void {
-                        $records->each->delete();
-
-                        Notification::make()
-                            ->title(
-                                __('shopper::notifications.delete', [
-                                    'item' => __('shopper::pages/categories.single'),
-                                ])
-                            )
-                            ->success()
-                            ->send();
-                    })
-                    ->visible($this->getUser()->can('delete_categories'))
-                    ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('enabled')
                     ->label(__('shopper::forms.actions.enable'))
                     ->icon('untitledui-check-verified')
@@ -129,6 +113,24 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             ->success()
                             ->send();
                     })
+                    ->deselectRecordsAfterCompletion(),
+                Tables\Actions\DeleteBulkAction::make()
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon('untitledui-trash-03')
+                    ->requiresConfirmation()
+                    ->action(function (Collection $records): void {
+                        $records->each->delete();
+
+                        Notification::make()
+                            ->title(
+                                __('shopper::notifications.delete', [
+                                    'item' => __('shopper::pages/categories.single'),
+                                ])
+                            )
+                            ->success()
+                            ->send();
+                    })
+                    ->visible($this->getUser()->can('delete_categories'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->persistFiltersInSession()

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopper;
 
-use Akaunting\Money;
 use Closure;
 use Filament\Forms\Components\TextInput;
 use Filament\Support\Colors\Color;
@@ -127,11 +126,11 @@ final class ShopperServiceProvider extends PackageServiceProvider
                     $currency = shopper_currency();
                 }
 
-                return (new Money\Money(
+                return shopper_money_format(
                     amount: $state,
-                    currency: (new Money\Currency(mb_strtoupper($column->evaluate($currency)))),
-                    convert: $shouldConvert,
-                ))->format();
+                    currency: mb_strtoupper($column->evaluate($currency)),
+                    convert: $shouldConvert
+                );
             });
 
             return $this; // @phpstan-ignore-line

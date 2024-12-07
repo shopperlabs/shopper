@@ -32,26 +32,22 @@ class Payment extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(PaymentMethod::query())
+            ->query(PaymentMethod::query()->latest())
             ->columns([
                 Tables\Columns\ImageColumn::make('logo')
                     ->label(__('shopper::forms.label.logo'))
                     ->circular()
                     ->disk(config('shopper.media.storage.disk_name'))
                     ->defaultImageUrl(shopper_fallback_url()),
-
                 Tables\Columns\TextColumn::make('title')
                     ->label(__('shopper::forms.label.title'))
                     ->sortable()
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('link_url')
                     ->copyable()
                     ->label(__('shopper::forms.label.website')),
-
                 Tables\Columns\ToggleColumn::make('is_enabled')
                     ->label(__('shopper::forms.label.status')),
-
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date(),
@@ -59,14 +55,15 @@ class Payment extends Component implements HasForms, HasTable
             ->actions([
                 Tables\Actions\Action::make('edit')
                     ->label(__('shopper::forms.actions.edit'))
+                    ->icon('untitledui-edit-04')
                     ->action(fn (PaymentMethod $record) => $this->dispatch(
                         'openModal',
                         component: 'shopper-modals.payment-method-form',
                         arguments: ['paymentId' => $record->id],
                     )),
-
                 Tables\Actions\DeleteAction::make('delete')
-                    ->label(__('shopper::forms.actions.delete')),
+                    ->label(__('shopper::forms.actions.delete'))
+                    ->icon('untitledui-trash-03'),
             ])
             ->emptyStateIcon('untitledui-credit-card-02')
             ->emptyStateDescription(__('shopper::pages/settings/payments.no_method'));

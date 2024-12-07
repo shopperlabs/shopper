@@ -17,7 +17,6 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -37,10 +36,11 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(
                 (new ProductRepository)
-                    ->with(['brand', 'variants'])
                     ->query()
+                    ->with(['brand', 'variants'])
                     ->withCount(['variants'])
                     ->where('parent_id', null)
+                    ->latest()
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
@@ -54,10 +54,10 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price_amount')
                     ->label(__('shopper::forms.label.price'))
-                    ->money(currency: shopper_currency())
+                    ->currency(currency: shopper_currency())
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_visible')
-                    ->label(__('shopper::forms.label.availability'))
+                    ->label(__('shopper::forms.label.visibility'))
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('brand.name')
@@ -89,7 +89,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     Tables\Actions\Action::make('edit')
                         ->label(__('shopper::forms.actions.edit'))
                         ->icon('untitledui-edit-04')
-                        ->action(fn (Product $record) => $this->redirectRoute(
+                        ->color('primary')
+                        ->action(fn ($record) => $this->redirectRoute(
                             name: 'shopper.products.edit',
                             parameters: ['product' => $record],
                             navigate: true
@@ -99,7 +100,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ->modalIcon('untitledui-trash-03')
                         ->color('danger')
                         ->requiresConfirmation()
-                        ->action(fn (Product $record) => $record->delete()),
+                        ->action(fn ($record) => $record->delete()),
                 ])
                     ->tooltip('Actions'),
             ])
