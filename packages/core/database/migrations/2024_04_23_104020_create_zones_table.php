@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('is_enabled')->default(false);
             $table->json('metadata')->nullable();
 
-            $this->addForeignKey($table, 'currency_id', $this->getTableName('currencies'));
+            $this->addForeignKey($table, 'currency_id', $this->getTableName('currencies'), false);
         });
 
         Schema::create($this->getTableName('zone_has_relations'), function (Blueprint $table): void {

@@ -24,6 +24,7 @@ use Shopper\Core\Traits\HasSlug;
  * @property string $carriers_name
  * @property string $countries_name
  * @property string $payments_name
+ * @property string $currency_code
  * @property \Shopper\Core\Models\Currency $currency
  * @property \Illuminate\Database\Eloquent\Collection $carriers
  * @property \Illuminate\Database\Eloquent\Collection $shippingOptions
@@ -89,6 +90,11 @@ class Zone extends Model
                 ? implode(', ', array_map(fn ($item) => ucwords($item), $paymentsMethods))
                 : 'N/A'
         );
+    }
+
+    public function currencyCode(): Attribute
+    {
+        return Attribute::get(fn () => $this->currency->code);
     }
 
     public function scopeEnabled(Builder $query): Builder

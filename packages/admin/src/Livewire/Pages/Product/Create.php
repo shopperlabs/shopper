@@ -305,7 +305,10 @@ class Create extends AbstractPageComponent implements HasForms
         $quantity = (int) $data['quantity'];
 
         if ($quantity && $quantity > 0) {
-            (new InitialQuantityInventory)->handle($quantity, $product);
+            app()->call(InitialQuantityInventory::class, [
+                'quantity' => $quantity,
+                'product' => $product,
+            ]);
         }
 
         Notification::make()

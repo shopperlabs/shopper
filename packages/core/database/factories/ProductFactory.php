@@ -40,4 +40,14 @@ class ProductFactory extends Factory
             'updated_at' => $this->faker->dateTimeBetween('-5 month'),
         ];
     }
+
+    public function publish(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_visible' => true,
+                'published_at' => now(),
+            ];
+        });
+    }
 }

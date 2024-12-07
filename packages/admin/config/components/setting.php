@@ -21,7 +21,6 @@ return [
         'inventory-create' => Pages\Settings\Inventories\Create::class,
         'inventory-edit' => Pages\Settings\Inventories\Edit::class,
         'legal' => Pages\Settings\LegalPage::class,
-        // 'analytics' => Pages\Settings\Analytics::class,
         'payment' => Pages\Settings\Payment::class,
         'team-index' => Pages\Settings\Team\Index::class,
         'team-roles' => Pages\Settings\Team\RolePermission::class,

@@ -6,7 +6,7 @@ namespace Shopper\Livewire\Modals;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
-use Shopper\Actions\ConfirmPassword as ConfirmPasswordAction;
+use Shopper\Actions\Auth\ConfirmPassword as ConfirmPasswordAction;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Components\ModalComponent;
 

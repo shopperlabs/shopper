@@ -12,8 +12,8 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Shopper\Actions\AttemptToAuthenticate;
-use Shopper\Actions\RedirectIfTwoFactorAuthenticatable;
+use Shopper\Actions\Auth\AttemptToAuthenticate;
+use Shopper\Actions\Auth\RedirectIfTwoFactorAuthenticatable;
 use Shopper\Contracts\LoginResponse;
 
 #[Layout('shopper::components.layouts.base')]

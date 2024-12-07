@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property-read int $id
+ * @property string $condition
+ * @property string $discountable_type
+ * @property int $discountable_id
+ * @property int $discount_id
+ * @property int $total_use
+ * @property-read Discount $discount
+ */
 class DiscountDetail extends Model
 {
     use HasFactory;

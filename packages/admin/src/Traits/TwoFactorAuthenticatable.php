@@ -10,7 +10,7 @@ use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\Fill;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use BaconQrCode\Writer;
-use Shopper\Actions\RecoveryCode;
+use Shopper\Actions\Auth\RecoveryCode;
 use Shopper\Contracts\TwoFactorAuthenticationProvider;
 
 trait TwoFactorAuthenticatable

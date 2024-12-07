@@ -10,9 +10,9 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Shopper\Actions\DisableTwoFactorAuthentication;
-use Shopper\Actions\EnableTwoFactorAuthentication;
-use Shopper\Actions\GenerateNewRecoveryCodes;
+use Shopper\Actions\Auth\DisableTwoFactorAuthentication;
+use Shopper\Actions\Auth\EnableTwoFactorAuthentication;
+use Shopper\Actions\Auth\GenerateNewRecoveryCodes;
 use Shopper\Traits\ConfirmsPasswords;
 
 /**

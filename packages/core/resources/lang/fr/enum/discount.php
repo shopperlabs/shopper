@@ -16,7 +16,7 @@ return [
 
     'requirement' => [
         'none' => 'Aucun',
-        'min_amount' => 'Montant d\'achat minimum (:currency)',
+        'min_amount' => 'Montant d\'achat minimum',
         'min_quantity' => 'Quantité minimale d\'éléments',
     ],
 

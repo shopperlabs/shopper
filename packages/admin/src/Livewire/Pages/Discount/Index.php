@@ -20,9 +20,11 @@ use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HasAuthenticated;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
 {
+    use HasAuthenticated;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -34,53 +36,52 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Discount::query())
+            ->query(Discount::with('zone')->latest())
             ->columns([
                 Tables\Columns\TextColumn::make('code')
                     ->label(__('shopper::forms.label.code'))
                     ->badge()
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\ViewColumn::make('value')
                     ->label(__('shopper::words.amount'))
                     ->toggleable()
                     ->view('shopper::livewire.tables.cells.discounts.amount'),
-
                 Tables\Columns\TextColumn::make('apply_to')
                     ->label(__('shopper::pages/discounts.applies_to'))
                     ->toggleable()
                     ->toggledHiddenByDefault()
                     ->color('gray')
                     ->badge(),
-
                 Tables\Columns\TextColumn::make('eligibility')
                     ->label(__('shopper::pages/discounts.customer_eligibility'))
                     ->toggleable()
                     ->toggledHiddenByDefault()
                     ->color('gray')
                     ->badge(),
-
                 Tables\Columns\IconColumn::make('is_active')
                     ->label(__('shopper::forms.label.status'))
                     ->boolean()
                     ->sortable(),
-
                 Tables\Columns\ViewColumn::make('start_at')
                     ->label(__('shopper::words.date'))
                     ->toggleable()
                     ->view('shopper::livewire.tables.cells.discounts.date'),
-
                 Tables\Columns\TextColumn::make('usage_limit')
                     ->label(__('shopper::pages/discounts.usage_limits'))
                     ->alignRight()
                     ->toggleable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('total_use')
                     ->label(__('shopper::pages/discounts.total_use'))
                     ->alignRight()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('zone.name')
+                    ->label(__('shopper::pages/settings/zones.single'))
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable()
+                    ->toggledHiddenByDefault(),
             ])
             ->actions([
                 Tables\Actions\Action::make('edit')
@@ -92,7 +93,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             arguments: ['discountId' => $record->id]
                         )
                     )
-                    ->visible(auth()->user()->can('edit_discounts')),
+                    ->visible($this->getUser()->can('edit_discounts')),
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()
@@ -110,7 +111,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             ->success()
                             ->send();
                     })
-                    ->visible(auth()->user()->can('delete_discounts'))
+                    ->visible($this->getUser()->can('delete_discounts'))
                     ->deselectRecordsAfterCompletion(),
             ])
             ->filters([

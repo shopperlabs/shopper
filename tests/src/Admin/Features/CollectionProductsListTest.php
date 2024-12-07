@@ -6,7 +6,7 @@ use Shopper\Core\Enum\CollectionType;
 use Shopper\Core\Models\Collection;
 use Shopper\Core\Models\Product;
 use Shopper\Livewire\Modals\CollectionProductsList;
-use Shopper\Tests\Admin\Collection\TestCase;
+use Shopper\Tests\Admin\Features\TestCase;
 
 use function Pest\Laravel\get;
 use function Pest\Livewire\livewire;

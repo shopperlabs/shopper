@@ -42,17 +42,14 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->searchable()
                     ->extraAttributes(['class' => 'uppercase'])
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('shopper::words.date'))
                     ->date()
                     ->sortable()
                     ->toggleable(),
-
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('shopper::forms.label.status'))
                     ->badge(),
-
                 Tables\Columns\TextColumn::make('customer.first_name')
                     ->label(__('shopper::words.customer'))
                     ->searchable()
@@ -62,20 +59,17 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ['order' => $model->load('customer')]
                     ))
                     ->toggleable(),
-
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::words.purchased'))
                     ->formatStateUsing(fn (Order $model): View => view(
                         'shopper::livewire.tables.cells.orders.purchased',
                         ['order' => $model->load('items')]
                     )),
-
                 Tables\Columns\TextColumn::make('currency_code')
                     ->label(__('shopper::forms.label.price_amount'))
                     ->formatStateUsing(
                         fn ($state, Order $record): string => shopper_money_format(amount: $record->total(), currency: $state)
                     ),
-
                 Tables\Columns\TextColumn::make('zone.name')
                     ->label(__('shopper::pages/settings/zones.single'))
                     ->searchable()

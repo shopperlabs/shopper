@@ -16,9 +16,11 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
 use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
+use Shopper\Traits\HasAuthenticated;
 
 class Index extends AbstractPageComponent implements HasForms, HasTable
 {
+    use HasAuthenticated;
     use InteractsWithForms;
     use InteractsWithTable;
 
@@ -76,7 +78,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             arguments: ['categoryId' => $record->id]
                         )
                     )
-                    ->visible(auth()->user()->can('edit_categories')),
+                    ->visible($this->getUser()->can('edit_categories')),
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()
@@ -94,7 +96,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             ->success()
                             ->send();
                     })
-                    ->visible(auth()->user()->can('delete_categories'))
+                    ->visible($this->getUser()->can('delete_categories'))
                     ->deselectRecordsAfterCompletion(),
                 Tables\Actions\BulkAction::make('enabled')
                     ->label(__('shopper::forms.actions.enable'))

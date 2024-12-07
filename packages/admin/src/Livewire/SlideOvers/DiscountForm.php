@@ -14,16 +14,16 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
+use Shopper\Actions\Store\SaveAndDispatchDiscountAction;
 use Shopper\Components\Separator;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Enum\DiscountRequirement;
 use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\Zone;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Core\Repositories\UserRepository;
-use Shopper\Jobs\DiscountCustomersJobs;
-use Shopper\Jobs\DiscountProductsJob;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
@@ -88,6 +88,13 @@ class DiscountForm extends SlideOverComponent implements HasForms
                         Forms\Components\Placeholder::make('general')
                             ->label(__('shopper::words.general')),
 
+                        Forms\Components\Select::make('zone_id')
+                            ->label(__('shopper::pages/settings/zones.single'))
+                            ->relationship('zone', 'name')
+                            ->native(false)
+                            ->hint(__('shopper::forms.label.optional'))
+                            ->live(),
+
                         Forms\Components\Radio::make('type')
                             ->label(__('shopper::forms.label.type'))
                             ->inline()
@@ -123,7 +130,9 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     ->suffix(
                                         fn (Forms\Get $get): ?string => match ($get('type')) {
                                             DiscountType::Percentage->value => '%',
-                                            DiscountType::FixedAmount->value => shopper_currency(),
+                                            DiscountType::FixedAmount->value => $get('zone_id')
+                                                ? Zone::query()->find($get('zone_id'))->currency_code
+                                                : shopper_currency(),
                                             default => null
                                         }
                                     )
@@ -179,6 +188,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                 Forms\Components\DateTimePicker::make('start_at')
                                     ->label(__('shopper::pages/discounts.start_date'))
                                     ->required()
+                                    ->minDate(now())
                                     ->native(false),
 
                                 Forms\Components\DateTimePicker::make('end_at')
@@ -208,7 +218,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->live(),
 
                         Forms\Components\Select::make('products')
-                            ->multiple()
                             ->options(
                                 (new ProductRepository)
                                     ->query()
@@ -216,6 +225,10 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     ->get()
                                     ->pluck('name', 'id')
                             )
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->optionsLimit(10)
                             ->minItems(1)
                             ->required(
                                 fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
@@ -232,7 +245,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->live(),
 
                         Forms\Components\Select::make('customers')
-                            ->multiple()
                             ->options(
                                 (new UserRepository)
                                     ->query()
@@ -240,6 +252,10 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     ->get()
                                     ->pluck('full_name', 'id')
                             )
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->optionsLimit(10)
                             ->minItems(1)
                             ->required(
                                 fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
@@ -261,7 +277,9 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->numeric()
                             ->suffix(
                                 fn (Forms\Get $get): ?string => match ($get('min_required')) {
-                                    DiscountRequirement::Price->value => shopper_currency(),
+                                    DiscountRequirement::Price->value => $get('zone_id')
+                                        ? Zone::query()->find($get('zone_id'))->currency_code
+                                        : shopper_currency(),
                                     default => null
                                 }
                             )
@@ -299,27 +317,12 @@ class DiscountForm extends SlideOverComponent implements HasForms
         $data = $this->form->getState();
         $discountFormValues = Arr::except($data, ['products', 'customers', 'usage_number']);
 
-        if ($this->discount->id) {
-            $this->discount->update($discountFormValues);
-        } else {
-            $this->discount = Discount::query()->create($discountFormValues);
-        }
-
-        if (array_key_exists('products', $data)) {
-            DiscountProductsJob::dispatch(
-                $data['apply_to'],
-                $data['products'],
-                $this->discount,
-            );
-        }
-
-        if (array_key_exists('customers', $data)) {
-            DiscountCustomersJobs::dispatch(
-                $data['eligibility'],
-                $data['customers'],
-                $this->discount,
-            );
-        }
+        $this->discount = app()->call(SaveAndDispatchDiscountAction::class, [
+            'values' => $discountFormValues,
+            'discountId' => $this->discount?->id,
+            'productsIds' => data_get($data, 'products', []),
+            'customersIds' => data_get($data, 'customers', []),
+        ]);
 
         Notification::make()
             ->title(__('shopper::pages/discounts.save', ['code' => $this->discount->code]))

@@ -28,7 +28,7 @@ enum DiscountRequirement: string implements HasLabel
     {
         return match ($this) {
             self::None => __('shopper-core::enum/discount.requirement.none'),
-            self::Price => __('shopper-core::enum/discount.requirement.min_amount', ['currency' => shopper_currency()]),
+            self::Price => __('shopper-core::enum/discount.requirement.min_amount'),
             self::Quantity => __('shopper-core::enum/discount.requirement.min_quantity'),
         };
     }
