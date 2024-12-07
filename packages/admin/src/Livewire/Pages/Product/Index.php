@@ -52,7 +52,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->searchable()
                     ->toggleable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('price_amount')
+                Tables\Columns\TextColumn::make('price_amount') // @phpstan-ignore-line
                     ->label(__('shopper::forms.label.price'))
                     ->currency(currency: shopper_currency())
                     ->sortable(),
