@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Database\Factories\OrderAddressFactory;
 
 /**
  * @property-read int $id
@@ -43,6 +44,11 @@ class OrderAddress extends Model
     public function getTable(): string
     {
         return shopper_table('order_addresses');
+    }
+
+    protected static function newFactory(): OrderAddressFactory
+    {
+        return OrderAddressFactory::new();
     }
 
     protected function fullName(): Attribute

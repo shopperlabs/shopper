@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Database\Factories\AttributeProductFactory;
 
 /**
  * @property-read int $id
@@ -33,6 +34,11 @@ class AttributeProduct extends Model
     public function getTable(): string
     {
         return shopper_table('attribute_product');
+    }
+
+    protected static function newFactory(): AttributeProductFactory
+    {
+        return AttributeProductFactory::new();
     }
 
     protected function realValue(): AttributeCast

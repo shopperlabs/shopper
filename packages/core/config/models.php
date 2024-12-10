@@ -12,8 +12,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Eloquent model should be used to retrieve your brands. Of course,
-    | If you want to change this to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Brand model.
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\Brand Model.
     |
     */
 
@@ -25,8 +25,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Eloquent model should be used to retrieve your categories. Of course,
-    | If you want to change this to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Category model.
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\Category Model.
     |
     */
 
@@ -38,8 +38,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Eloquent model should be used to retrieve your collections. Of course,
-    | if you want to change this to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Collection model.
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\Collection Model.
     |
     */
 
@@ -51,8 +51,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Eloquent model should be used to retrieve your products. Of course,
-    | If you want to change this to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Product model.
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\Product Model.
     |
     */
 
@@ -60,12 +60,25 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Product Variant Model
+    |--------------------------------------------------------------------------
+    |
+    | Eloquent model should be used to retrieve your product variants. Of course,
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\ProductVariant Model.
+    |
+    */
+
+    'variant' => Models\ProductVariant::class,
+
+    /*
+    |--------------------------------------------------------------------------
     | Channel Model
     |--------------------------------------------------------------------------
     |
-    | Eloquent model should be used to retrieve your channels. Of course,
-    | If you want to change this to use a custom model, your model needs to extends the
-    | \Shopper\Core\Models\Channel model.
+    | Eloquent model should be used to retrieve channels. Of course,
+    | If you want to use a custom model, your model needs to extends the
+    | \Shopper\Core\Models\Channel Model.
     |
     */
 

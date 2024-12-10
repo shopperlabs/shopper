@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Shopper\Core\Database\Factories\ReviewFactory;
 
 /**
  * @property-read int $id
@@ -31,6 +32,11 @@ class Review extends Model
     public function getTable(): string
     {
         return shopper_table('reviews');
+    }
+
+    protected static function newFactory(): ReviewFactory
+    {
+        return ReviewFactory::new();
     }
 
     public function reviewrateable(): MorphTo

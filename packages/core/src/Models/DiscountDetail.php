@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Shopper\Core\Database\Factories\DiscountDetailFactory;
 
 /**
  * @property-read int $id
@@ -32,6 +33,11 @@ class DiscountDetail extends Model
     public function getTable(): string
     {
         return shopper_table('discountables');
+    }
+
+    protected static function newFactory(): DiscountDetailFactory
+    {
+        return DiscountDetailFactory::new();
     }
 
     public function discount(): BelongsTo

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Database\Factories\CarrierFactory;
 use Shopper\Core\Traits\HasSlug;
 use Shopper\Core\Traits\HasZones;
 
@@ -47,6 +48,11 @@ class Carrier extends Model
     public function getTable(): string
     {
         return shopper_table('carriers');
+    }
+
+    protected static function newFactory(): CarrierFactory
+    {
+        return CarrierFactory::new();
     }
 
     public function scopeEnabled(Builder $query): Builder

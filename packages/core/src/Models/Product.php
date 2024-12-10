@@ -13,30 +13,38 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Contracts\ReviewRateable;
 use Shopper\Core\Database\Factories\ProductFactory;
-use Shopper\Core\Helpers\Price;
+use Shopper\Core\Enum\Dimension\Length;
+use Shopper\Core\Enum\Dimension\Volume;
+use Shopper\Core\Enum\Dimension\Weight;
+use Shopper\Core\Enum\ProductType;
 use Shopper\Core\Traits\CanHaveDiscount;
 use Shopper\Core\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
 use Shopper\Core\Traits\HasStock;
 use Shopper\Core\Traits\ReviewRateable as ReviewRateableTrait;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
-use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 /**
  * @property-read int $id
  * @property string $name
- * @property int | null $parent_id
- * @property string | null $slug
+ * @property string $slug
  * @property string | null $sku
  * @property string | null $barcode
+ * @property ProductType | null $type
  * @property bool $is_visible
  * @property bool $featured
- * @property bool $require_shipping
- * @property bool $backorder
- * @property int | null $price_amount
- * @property int | null $old_price_amount
- * @property int | null $cost_amount
+ * @property Weight $weight_unit
+ * @property float| null $weight_value
+ * @property Length $height_unit
+ * @property float | null $height_value
+ * @property Length $width_unit
+ * @property float| null $width_value
+ * @property Length $depth_unit
+ * @property float| null $depth_value
+ * @property Volume $volume_unit
+ * @property float| null $volume_value
  * @property int | null $security_stock
+ * @property int $variants_stock
  * @property string | null $seo_title
  * @property string | null $seo_description
  * @property \Carbon\Carbon | null $published_at
@@ -48,7 +56,6 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     use CanHaveDiscount;
     use HasFactory;
     use HasMedia;
-    use HasRecursiveRelationships;
     use HasSlug;
     use HasStock;
     use ReviewRateableTrait;
@@ -58,10 +65,19 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     protected $casts = [
         'featured' => 'boolean',
         'is_visible' => 'boolean',
-        'require_shipping' => 'boolean',
-        'backorder' => 'boolean',
         'published_at' => 'datetime',
         'metadata' => 'array',
+        'weight_unit' => Weight::class,
+        'weight_value' => 'decimal:2',
+        'width_unit' => Length::class,
+        'width_value' => 'decimal:2',
+        'height_unit' => Length::class,
+        'height_value' => 'decimal:2',
+        'depth_unit' => Length::class,
+        'depth_value' => 'decimal:2',
+        'volume_unit' => Volume::class,
+        'volume_value' => 'decimal:2',
+        'type' => ProductType::class,
     ];
 
     public function getTable(): string
@@ -74,76 +90,18 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
         return ProductFactory::new();
     }
 
-    protected function priceAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
-        );
-    }
-
-    protected function oldPriceAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
-        );
-    }
-
-    protected function costAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
-        );
-    }
-
-    public function getPriceAmount(): ?Price
-    {
-        if (! $this->price_amount) {
-            return null;
-        }
-
-        if ($this->parent_id) {
-            return $this->price_amount
-                ? Price::from($this->price_amount)
-                : ($this->parent->price_amount ? Price::from($this->parent->price_amount) : null);
-        }
-
-        return Price::from($this->price_amount);
-    }
-
-    public function getOldPriceAmount(): ?Price
-    {
-        if (! $this->old_price_amount) {
-            return null;
-        }
-
-        return Price::from($this->old_price_amount);
-    }
-
-    public function getCostAmount(): ?Price
-    {
-        if (! $this->cost_amount) {
-            return null;
-        }
-
-        return Price::from($this->cost_amount);
-    }
-
     public function variantsStock(): Attribute
     {
         $stock = 0;
 
         if ($this->variants->isNotEmpty()) {
+            /** @var ProductVariant $variant */
             foreach ($this->variants as $variant) {
-                $stock += $variant->stock; // @phpstan-ignore-line
+                $stock += $variant->stock;
             }
         }
 
-        return Attribute::make(
-            get: fn () => $stock,
-        );
+        return Attribute::get(fn () => $stock);
     }
 
     public function scopePublish(Builder $query): void
@@ -154,7 +112,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
 
     public function variants(): HasMany
     {
-        return $this->hasMany(config('shopper.models.product'), 'parent_id');
+        return $this->hasMany(config('shopper.models.variant'), 'product_id');
     }
 
     public function channels(): MorphToMany
@@ -185,5 +143,22 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     public function attributes(): HasMany
     {
         return $this->hasMany(AttributeProduct::class);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection(config('shopper.media.storage.collection_name'))
+            ->useDisk(config('shopper.media.storage.disk_name'))
+            ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
+            ->useFallbackUrl(shopper_fallback_url());
+
+        $this->addMediaCollection(config('shopper.media.storage.thumbnail_collection'))
+            ->singleFile()
+            ->useDisk(config('shopper.media.storage.disk_name'))
+            ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
+            ->useFallbackUrl(shopper_fallback_url());
+
+        $this->addMediaCollection('downloadable')
+            ->useDisk(config('shopper.media.storage.disk_name'));
     }
 }

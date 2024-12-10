@@ -34,7 +34,7 @@ use Shopper\Core\Helpers\Price;
  * @property PaymentMethod | null $paymentMethod
  * @property Zone | null $zone
  * @property \Illuminate\Foundation\Auth\User | User $customer
- * @property \Illuminate\Database\Eloquent\Collection|\Shopper\Core\Models\OrderItem[] $items
+ * @property \Illuminate\Database\Eloquent\Collection | OrderItem[] $items
  */
 class Order extends Model
 {

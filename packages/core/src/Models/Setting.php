@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Core\Database\Factories\SettingFactory;
 
 /**
  * @property-read int $id
@@ -14,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Setting extends Model
 {
+    use HasFactory;
+
     protected $guarded = ['id'];
 
     protected $hidden = [
@@ -28,6 +32,11 @@ class Setting extends Model
     public function getTable(): string
     {
         return shopper_table('settings');
+    }
+
+    protected static function newFactory(): SettingFactory
+    {
+        return SettingFactory::new();
     }
 
     public static function lockedAttributesDisplayName(string $key): string
@@ -51,7 +60,6 @@ class Setting extends Model
             'facebook_link' => __('shopper::words.socials.facebook'),
             'instagram_link' => __('shopper::words.socials.twitter'),
             'twitter_link' => __('shopper::words.socials.instagram'),
-            'google_analytics_add_js' => __('shopper::forms.label.ga_additional_script'),
         ][$key];
     }
 }

@@ -42,42 +42,43 @@ abstract class Migration extends BaseMigration
 
     public function addShippingFields(Blueprint $table): void
     {
-        $table->string('weight_unit')->default(Weight::KG->value);
-        $table->decimal('weight_value', 10, 5)->nullable()
+        $table->string('weight_unit')->default(Weight::KG());
+        $table->decimal('weight_value', 10)->nullable()
             ->default(0.00)
             ->unsigned();
-        $table->string('height_unit')->default(Length::CM->value);
-        $table->decimal('height_value', 10, 5)->nullable()
+        $table->string('height_unit')->default(Length::CM());
+        $table->decimal('height_value', 10)->nullable()
             ->default(0.00)
             ->unsigned();
-        $table->string('width_unit')->default(Length::CM->value);
-        $table->decimal('width_value', 10, 5)->nullable()
+        $table->string('width_unit')->default(Length::CM());
+        $table->decimal('width_value', 10)->nullable()
             ->default(0.00)
             ->unsigned();
-        $table->string('depth_unit')->default(Length::CM->value);
-        $table->decimal('depth_value', 10, 5)->nullable()
+        $table->string('depth_unit')->default(Length::CM());
+        $table->decimal('depth_value', 10)->nullable()
             ->default(0.00)
             ->unsigned();
-        $table->string('volume_unit')->default(Volume::L->value);
-        $table->decimal('volume_value', 10, 5)->nullable()
+        $table->string('volume_unit')->default(Volume::L());
+        $table->decimal('volume_value', 10)->nullable()
             ->default(0.00)
             ->unsigned();
     }
 
-    public function addForeignKey(Blueprint $table, string $columnName, string $tableName, bool $nullable = true): void
+    public function addForeignKey(Blueprint $table, string $column, string $tableName, bool $nullable = true): void
     {
         if ($nullable) {
-            $table->unsignedBigInteger($columnName)->index()->nullable();
-            $table->foreign($columnName)->references('id')->on($tableName)->onDelete('set null');
+            $table->unsignedBigInteger($column)->index()->nullable();
+            $table->foreign($column)->references('id')->on($tableName)->onDelete('set null');
         } else {
-            $table->unsignedBigInteger($columnName)->index();
-            $table->foreign($columnName)->references('id')->on($tableName)->onDelete('CASCADE');
+            $table->unsignedBigInteger($column)->index();
+            $table->foreign($column)->references('id')->on($tableName)->onDelete('CASCADE');
         }
     }
 
-    public function removeLink(Blueprint $table, string $columnName): void
+    public function removeForeignKeyAndColumn(Blueprint $table, string $column): void
     {
-        $table->dropForeign([$columnName]);
-        $table->dropColumn([$columnName]);
+        $table->dropIndex([$column]);
+        $table->dropForeign([$column]);
+        $table->dropColumn($column);
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Core\Database\Factories\ChannelFactory;
 use Shopper\Core\Observers\ChannelObserver;
 use Shopper\Core\Traits\HasSlug;
 
@@ -43,6 +44,11 @@ class Channel extends Model
         parent::boot();
 
         self::observe(ChannelObserver::class);
+    }
+
+    protected static function newFactory(): ChannelFactory
+    {
+        return ChannelFactory::new();
     }
 
     public function scopeDefault(Builder $query): Builder

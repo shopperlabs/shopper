@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Database\Factories\CarrierOptionFactory;
 
 /**
  * @property-read int $id
@@ -17,9 +18,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $zone_id
  * @property int $carrier_id
  * @property bool $is_enabled
- * @property \Shopper\Core\Models\Zone $zone
- * @property \Shopper\Core\Models\Carrier $carrier
- * @property array $metadata
+ * @property Zone $zone
+ * @property Carrier $carrier
+ * @property array | null $metadata
  */
 class CarrierOption extends Model
 {
@@ -40,17 +41,22 @@ class CarrierOption extends Model
         'is_enabled' => 'boolean',
     ];
 
+    public function getTable(): string
+    {
+        return shopper_table('carrier_options');
+    }
+
+    protected static function newFactory(): CarrierOptionFactory
+    {
+        return CarrierOptionFactory::new();
+    }
+
     protected function price(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => $value / 100,
             set: fn ($value) => $value * 100,
         );
-    }
-
-    public function getTable(): string
-    {
-        return shopper_table('carrier_options');
     }
 
     public function isEnabled(): bool

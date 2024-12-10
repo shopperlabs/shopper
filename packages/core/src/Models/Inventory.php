@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Database\Factories\InventoryFactory;
 use Shopper\Core\Observers\InventoryObserver;
 
 /**
@@ -60,6 +61,11 @@ class Inventory extends Model
         parent::boot();
 
         self::observe(InventoryObserver::class);
+    }
+
+    protected static function newFactory(): InventoryFactory
+    {
+        return InventoryFactory::new();
     }
 
     public function scopeDefault(Builder $query): Builder

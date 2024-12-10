@@ -11,12 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Shopper\Core\Database\Factories\ZoneFactory;
 use Shopper\Core\Traits\HasSlug;
 
 /**
  * @property-read int $id
  * @property string $name
- * @property string | null $slug
+ * @property string $slug
  * @property string | null $code
  * @property bool $is_enabled
  * @property int | null $currency_id
@@ -52,6 +53,11 @@ class Zone extends Model
     public function getTable(): string
     {
         return shopper_table('zones');
+    }
+
+    protected static function newFactory(): ZoneFactory
+    {
+        return ZoneFactory::new();
     }
 
     public function isEnabled(): bool

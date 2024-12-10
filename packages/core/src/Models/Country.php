@@ -7,6 +7,7 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Core\Database\Factories\CountryFactory;
 use Shopper\Core\Traits\HasZones;
 
 /**
@@ -57,6 +58,11 @@ class Country extends Model
     public function getTable(): string
     {
         return shopper_table('countries');
+    }
+
+    protected static function newFactory(): CountryFactory
+    {
+        return CountryFactory::new();
     }
 
     public function svgFlag(): Attribute

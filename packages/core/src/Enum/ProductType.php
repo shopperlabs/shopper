@@ -11,9 +11,9 @@ use Shopper\Core\Traits\HasEnumStaticMethods;
 
 /**
  * @method static string External()
- * @method static string Downloadable()
- * @method static string Simple()
- * @method static string VariableProduct()
+ * @method static string Virtual()
+ * @method static string Standard()
+ * @method static string Variant()
  */
 enum ProductType: string implements HasDescription, HasLabel
 {
@@ -22,29 +22,29 @@ enum ProductType: string implements HasDescription, HasLabel
 
     case External = 'external';
 
-    case Downloadable = 'downloadable';
+    case Virtual = 'virtual';
 
-    case Simple = 'simple_product';
+    case Standard = 'standard';
 
-    case VariableProduct = 'variable_product';
+    case Variant = 'variant';
 
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::Downloadable => __('shopper-core::enum/product.downloadable'),
+            self::Virtual => __('shopper-core::enum/product.virtual'),
             self::External => __('shopper-core::enum/product.external'),
-            self::Simple => __('shopper-core::enum/product.simple_product'),
-            self::VariableProduct => __('shopper-core::enum/product.variable_product'),
+            self::Standard => __('shopper-core::enum/product.standard_product'),
+            self::Variant => __('shopper-core::enum/product.variant_product'),
         };
     }
 
     public function getDescription(): ?string
     {
         return match ($this) {
-            self::Downloadable => __('shopper-core::enum/product.downloadable_description'),
+            self::Virtual => __('shopper-core::enum/product.virtual_description'),
             self::External => __('shopper-core::enum/product.external_description'),
-            self::Simple => __('shopper-core::enum/product.simple_product_description'),
-            self::VariableProduct => __('shopper-core::enum/product.variable_product_description'),
+            self::Standard => __('shopper-core::enum/product.standard_product_description'),
+            self::Variant => __('shopper-core::enum/product.variant_product_description'),
         };
     }
 }

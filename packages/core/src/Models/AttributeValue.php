@@ -7,6 +7,7 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Database\Factories\AttributeValueFactory;
 
 /**
  * @property-read int $id
@@ -30,6 +31,11 @@ class AttributeValue extends Model
     public function getTable(): string
     {
         return shopper_table('attribute_values');
+    }
+
+    protected static function newFactory(): AttributeValueFactory
+    {
+        return AttributeValueFactory::new();
     }
 
     public function attribute(): BelongsTo

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Shopper\Core\Database\Factories\PaymentMethodFactory;
 use Shopper\Core\Traits\HasSlug;
 use Shopper\Core\Traits\HasZones;
 
@@ -39,6 +40,11 @@ class PaymentMethod extends Model
     public function getTable(): string
     {
         return shopper_table('payment_methods');
+    }
+
+    protected static function newFactory(): PaymentMethodFactory
+    {
+        return PaymentMethodFactory::new();
     }
 
     public function LogoUrl(): ?Attribute

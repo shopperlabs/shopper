@@ -7,13 +7,14 @@ namespace Shopper\Core\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Database\Factories\OrderRefundFactory;
 use Shopper\Core\Enum\OrderRefundStatus;
 
 class OrderRefund extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'status' => OrderRefundStatus::class,
@@ -31,6 +32,11 @@ class OrderRefund extends Model
     public function getTable(): string
     {
         return shopper_table('order_refunds');
+    }
+
+    protected static function newFactory(): OrderRefundFactory
+    {
+        return OrderRefundFactory::new();
     }
 
     public function customer(): BelongsTo

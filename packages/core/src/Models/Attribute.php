@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shopper\Core\Database\Factories\AttributeFactory;
 use Shopper\Core\Enum\FieldType;
 use Shopper\Core\Traits\HasSlug;
 
@@ -51,6 +52,11 @@ class Attribute extends Model
     public function getTable(): string
     {
         return shopper_table('attributes');
+    }
+
+    protected static function newFactory(): AttributeFactory
+    {
+        return AttributeFactory::new();
     }
 
     protected function typeFormatted(): CastAttribute

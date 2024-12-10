@@ -1,0 +1,80 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopper\Core\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shopper\Core\Database\Factories\ProductVariantFactory;
+use Shopper\Core\Enum\Dimension\Length;
+use Shopper\Core\Enum\Dimension\Volume;
+use Shopper\Core\Enum\Dimension\Weight;
+use Shopper\Core\Traits\HasMedia;
+use Shopper\Core\Traits\HasStock;
+use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
+
+/**
+ * @property-read int $id
+ * @property string $name
+ * @property string | null $sku
+ * @property string | null $barcode
+ * @property string | null $ean
+ * @property string | null $upc
+ * @property Weight $weight_unit
+ * @property float| null $weight_value
+ * @property Length $height_unit
+ * @property float | null $height_value
+ * @property Length $width_unit
+ * @property float| null $width_value
+ * @property Length $depth_unit
+ * @property float| null $depth_value
+ * @property Volume $volume_unit
+ * @property float| null $volume_value
+ * @property bool $allow_backorder
+ * @property int $position
+ * @property int $product_id
+ * @property array | null $metadata
+ * @property-read int $stock
+ * @property-read Product $product
+ */
+class ProductVariant extends Model implements SpatieHasMedia
+{
+    use HasFactory;
+    use HasMedia;
+    use HasStock;
+
+    protected $guarded = ['id'];
+
+    protected $casts = [
+        'allow_backorder' => 'boolean',
+        'metadata' => 'array',
+        'position' => 'integer',
+        'weight_unit' => Weight::class,
+        'weight_value' => 'decimal:2',
+        'width_unit' => Length::class,
+        'width_value' => 'decimal:2',
+        'height_unit' => Length::class,
+        'height_value' => 'decimal:2',
+        'depth_unit' => Length::class,
+        'depth_value' => 'decimal:2',
+        'volume_unit' => Volume::class,
+        'volume_value' => 'decimal:2',
+    ];
+
+    public function getTable(): string
+    {
+        return shopper_table('product_variants');
+    }
+
+    protected static function newFactory(): ProductVariantFactory
+    {
+        return ProductVariantFactory::new();
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(config('shopper.models.product'), 'product_id');
+    }
+}

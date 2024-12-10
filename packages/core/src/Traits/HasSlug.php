@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Traits;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
 
 trait HasSlug
 {
-    public function slug(): string
+    public function slug(): Attribute
     {
-        return $this->slug;
-    }
-
-    public function setSlugAttribute(string $slug): void
-    {
-        $this->attributes['slug'] = $this->generateUniqueSlug($slug);
+        return Attribute::set(fn ($value) => $this->generateUniqueSlug($value));
     }
 
     public static function findBySlug(string $slug): self

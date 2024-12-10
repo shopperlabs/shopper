@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Shopper\Core\Database\Factories\InventoryHistoryFactory;
 
 /**
  * @property-read int $id
@@ -40,6 +41,11 @@ class InventoryHistory extends Model
     public function getTable(): string
     {
         return shopper_table('inventory_histories');
+    }
+
+    protected static function newFactory(): InventoryHistoryFactory
+    {
+        return InventoryHistoryFactory::new();
     }
 
     protected function adjustment(): Attribute

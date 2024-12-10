@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Shopper\Core\Database\Factories\CurrencyFactory;
 
 /**
  * @property-read int $id
@@ -17,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Currency extends Model
 {
+    use HasFactory;
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -30,6 +34,11 @@ class Currency extends Model
     public function getTable(): string
     {
         return shopper_table('currencies');
+    }
+
+    protected static function newFactory(): CurrencyFactory
+    {
+        return CurrencyFactory::new();
     }
 
     public function zone(): HasOne

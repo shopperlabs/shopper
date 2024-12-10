@@ -31,9 +31,6 @@ class ProductFactory extends Factory
             'security_stock' => $this->faker->randomDigitNotNull(),
             'featured' => $this->faker->boolean(),
             'is_visible' => $this->faker->boolean(),
-            'old_price_amount' => $this->faker->randomFloat(min: 100, max: 500),
-            'price_amount' => $this->faker->randomFloat(min: 80, max: 400),
-            'cost_amount' => $this->faker->randomFloat(min: 50, max: 200),
             'type' => $this->faker->randomElement(ProductType::values()),
             'published_at' => $this->faker->dateTimeBetween('-1 year', '+1 year'),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),
@@ -47,6 +44,50 @@ class ProductFactory extends Factory
             return [
                 'is_visible' => true,
                 'published_at' => now(),
+            ];
+        });
+    }
+
+    public function variant(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_visible' => true,
+                'published_at' => now(),
+                'type' => ProductType::Variant(),
+            ];
+        });
+    }
+
+    public function virtual(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_visible' => true,
+                'published_at' => now(),
+                'type' => ProductType::Virtual(),
+            ];
+        });
+    }
+
+    public function external(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_visible' => true,
+                'published_at' => now(),
+                'type' => ProductType::External(),
+            ];
+        });
+    }
+
+    public function standard(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_visible' => true,
+                'published_at' => now(),
+                'type' => ProductType::Standard(),
             ];
         });
     }
