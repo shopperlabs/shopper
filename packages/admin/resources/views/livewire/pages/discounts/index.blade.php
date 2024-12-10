@@ -7,16 +7,12 @@
         <x-slot name="action">
             @if ($total > 0)
                 @can('add_discounts')
-                    <div class="flex space-x-3">
-                        <span class="rounded-md shadow-sm">
-                            <x-shopper::buttons.primary
-                                type="button"
-                                wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.discount-form' })"
-                            >
-                                {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')]) }}
-                            </x-shopper::buttons.primary>
-                        </span>
-                    </div>
+                    <x-shopper::buttons.primary
+                        type="button"
+                        wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.discount-form' })"
+                    >
+                        {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/discounts.single')]) }}
+                    </x-shopper::buttons.primary>
                 @endcan
             @endif
         </x-slot>

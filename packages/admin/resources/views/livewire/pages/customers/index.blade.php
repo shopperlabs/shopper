@@ -7,13 +7,9 @@
         <x-slot name="action">
             @if ($total > 0)
                 @can('add_customers')
-                    <div class="flex space-x-3">
-                        <span class="rounded-md shadow-sm">
-                            <x-shopper::buttons.primary :link="route('shopper.customers.create')">
-                                {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]) }}
-                            </x-shopper::buttons.primary>
-                        </span>
-                    </div>
+                    <x-shopper::buttons.primary :link="route('shopper.customers.create')">
+                        {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]) }}
+                    </x-shopper::buttons.primary>
                 @endcan
             @endif
         </x-slot>

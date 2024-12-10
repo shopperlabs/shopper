@@ -7,7 +7,10 @@
         <x-slot name="action">
             @if ($total > 0)
                 @can('add_products')
-                    <x-shopper::buttons.primary :link="route('shopper.products.create')">
+                    <x-shopper::buttons.primary
+                        wire:click="$dispatch('openPanel', { component: 'shopper-slide-overs.add-product' })"
+                        type="button"
+                    >
                         {{ __('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')]) }}
                     </x-shopper::buttons.primary>
                 @endcan
