@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('amount')->unsigned()->index()->nullable();
             $table->integer('compare_amount')->unsigned()->nullable();
             $table->integer('cost_amount')->unsigned()->nullable();
-            $this->addForeignKey($table, 'currency_id', $this->getTableName('currencies'));
+            $this->addForeignKey($table, 'currency_id', $this->getTableName('currencies'), false);
         });
     }
 

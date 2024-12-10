@@ -27,18 +27,18 @@ return [
     ],
 
     'location' => [
-        'menu' => 'Inventaires',
-        'single' => 'inventaire',
-        'description' => 'Gérez les endroits où vous stockez des marchandises, remplissez des commandes et vendez des produits.',
-        'count' => 'Vous utilisez :count sur les :total inventaires disponible.',
-        'add' => 'Ajout d\'un inventaire',
+        'menu' => 'Emplacements',
+        'single' => 'emplacement',
+        'description' => 'Gérez les emplacements où vous stockez des marchandises, remplissez des commandes et vendez des produits.',
+        'count' => 'Vous utilisez :count sur les :total emplacements disponible.',
+        'add' => 'Ajouter un emplacement',
         'detail' => 'Détails',
         'detail_summary' => "Donnez à cet emplacement un nom court pour qu'il soit facile à identifier. Vous verrez ce nom dans des domaines tels que les produits.",
-        'address' => 'Adresse de l\'inventaire',
-        'address_summary' => 'Les informations complètes de votre inventaire. Veuillez mettre des informations valables qui peuvent être accessibles à vos clients.',
-        'set_default' => 'Définir comme inventaire par défaut',
-        'set_default_summary' => "L'inventaire de ce site est disponible à la vente en ligne et sera utilisé par défaut.",
-        'is_default' => "Il s'agit de votre inventaire par défaut. Pour déterminer si vous remplissez les commandes en ligne à partir de ce stock, sélectionnez d'abord un autre stock par défaut.",
+        'address' => 'Adresse de l\'emplacement',
+        'address_summary' => 'Les informations complètes de votre emplacement. Veuillez mettre des informations valables qui peuvent être accessibles à vos clients.',
+        'set_default' => 'Définir comme emplacement par défaut',
+        'set_default_summary' => "L'emplacement de ce site est disponible à la vente en ligne et sera utilisé par défaut.",
+        'is_default' => "Il s'agit de votre emplacement par défaut. Pour déterminer si vous remplissez les commandes en ligne à partir de cet emplacement, sélectionnez d'abord un autre emplacement par défaut.",
     ],
 
     'analytics' => [

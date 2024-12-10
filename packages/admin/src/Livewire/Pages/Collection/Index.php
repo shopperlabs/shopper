@@ -38,23 +38,19 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->circular()
                     ->defaultImageUrl(shopper_fallback_url())
                     ->grow(false),
-
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('type')
                     ->label(__('shopper::forms.label.type'))
                     ->formatStateUsing(fn ($record): string => $record->isAutomatic() ? __('shopper::pages/collections.automatic') : __('shopper::pages/collections.manual'))
                     ->badge()
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::pages/collections.product_conditions'))
                     ->formatStateUsing(
                         fn ($record): string => $record->rules->isNotEmpty() ? ucfirst($record->firstRule()) : 'N/A'
                     ),
-
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label(__('shopper::forms.label.updated_at'))
                     ->date(),
@@ -69,7 +65,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             parameters: ['collection' => $record]
                         ),
                     ),
-
                 Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
                     ->icon('untitledui-trash-03')
                     ->modalIcon('untitledui-trash-03')

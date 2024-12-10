@@ -14,6 +14,7 @@ return [
     'approved' => ':item approuvé(e) avec succès',
     'disapproved' => ':item désapprouvé(e) avec succès',
     'visibility' => 'Visibilité pour :item a été modifiée avec succès',
+    'saved' => 'Enregistré',
 
     'attributes' => [
         'remove' => 'L\'attribut a été supprimé avec succès',

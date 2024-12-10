@@ -79,6 +79,7 @@ return [
         'customers' => 'For :count customers',
     ],
 
+    'files' => 'Files',
     'images' => 'Images',
     'step' => 'Step :number',
     'environment' => 'Environnement',

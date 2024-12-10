@@ -66,18 +66,6 @@ class Variant extends AbstractPageComponent implements HasForms
                                     ->required()
                                     ->maxLength(255)
                                     ->unique(config('shopper.models.product'), 'slug', ignoreRecord: true),
-                                Forms\Components\TextInput::make('price_amount') // @phpstan-ignore-line
-                                    ->label(__('shopper::forms.label.price_amount'))
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                    ->suffix(shopper_currency())
-                                    ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
-                                Forms\Components\TextInput::make('old_price_amount') // @phpstan-ignore-line
-                                    ->label(__('shopper::forms.label.compare_price'))
-                                    ->numeric()
-                                    ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                    ->suffix(shopper_currency())
-                                    ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
                             ]),
                     ]),
 

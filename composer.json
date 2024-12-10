@@ -21,6 +21,8 @@
   },
   "require-dev": {
     "bacon/bacon-qr-code": "^2.0",
+    "codeat3/blade-phosphor-icons": "^2.0",
+    "jaocero/radio-deck": "^1.2",
     "blade-ui-kit/blade-heroicons": "^2.5",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "doctrine/dbal": "^3.6",
@@ -51,8 +53,6 @@
       "packages/core/src/helpers.php"
     ],
     "psr-4": {
-      "Database\\Factories\\": "packages/core/database/factories",
-      "Database\\Seeders\\": "packages/core/database/seeders",
       "Shopper\\": [
         "packages/admin/src",
         "packages/core/src",

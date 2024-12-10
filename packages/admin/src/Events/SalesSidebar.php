@@ -12,7 +12,7 @@ use Shopper\Sidebar\Contracts\Builder\Group;
 use Shopper\Sidebar\Contracts\Builder\Item;
 use Shopper\Sidebar\Contracts\Builder\Menu;
 
-class SalesSidebar extends AbstractAdminSidebar
+final class SalesSidebar extends AbstractAdminSidebar
 {
     public function extendWith(Menu $menu): Menu
     {

@@ -15,22 +15,43 @@
             options: [
                 'detail',
                 'media',
-                'variants',
+                'price',
+                'files',
                 'attributes',
+                'variants',
                 'inventory',
                 'seo',
                 'shipping',
-                'related',
+                'related'
             ],
-            activeTab: 'detail',
+            activeTab: 'detail'
         }"
     >
-        <div class="sticky top-6 z-30 bg-white/75 backdrop-blur-sm dark:bg-gray-900/80">
+        <div @class([
+            'sticky z-30 bg-white/75 backdrop-blur-sm dark:bg-gray-900/80',
+            '-top-2' => $product->type,
+            'top-6' => ! $product->type
+        ])>
             <div class="space-y-4">
                 <x-shopper::container>
                     <x-shopper::heading>
                         <x-slot:title>
-                            {{ $product->name }}
+                            <div class="space-y-1">
+                                @if($product->type)
+                                    <x-filament::badge
+                                        :color="$product->type->getColor()"
+                                        :icon="$product->type->getIcon()"
+                                        class="inline-flex"
+                                    >
+                                        {{ $product->type->getLabel() }}
+                                    </x-filament::badge>
+                                @endif
+                                <h2
+                                    class="font-heading text-2xl font-bold leading-6 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:leading-9"
+                                >
+                                    {{ $product->name }}
+                                </h2>
+                            </div>
                         </x-slot>
                         <x-slot:action>
                             {{ $this->deleteAction }}
@@ -55,21 +76,43 @@
                         {{ __('shopper::words.media') }}
                     </x-filament::tabs.item>
 
-                    <x-filament::tabs.item
-                        alpine-active="activeTab === 'variants'"
-                        x-on:click="activeTab = 'variants'"
-                        icon="untitledui-book-open"
-                    >
-                        {{ __('shopper::words.variants') }}
-                    </x-filament::tabs.item>
+                    @if (! $product->isVariant())
+                        <x-filament::tabs.item
+                            alpine-active="activeTab === 'price'"
+                            x-on:click="activeTab = 'price'"
+                            icon="untitledui-coins-stacked-02"
+                        >
+                            {{ __('shopper::words.pricing') }}
+                        </x-filament::tabs.item>
+                    @endif
 
-                    @if (\Shopper\Feature::enabled('attribute'))
+                    @if ($product->isVirtual())
+                        <x-filament::tabs.item
+                            alpine-active="activeTab === 'files'"
+                            x-on:click="activeTab = 'files'"
+                            icon="untitledui-paperclip"
+                        >
+                            {{ __('shopper::words.files') }}
+                        </x-filament::tabs.item>
+                    @endif
+
+                    @if (\Shopper\Feature::enabled('attribute') && $product->canUseAttributes())
                         <x-filament::tabs.item
                             alpine-active="activeTab === 'attributes'"
                             x-on:click="activeTab = 'attributes'"
                             icon="untitledui-puzzle-piece"
                         >
                             {{ __('shopper::pages/attributes.menu') }}
+                        </x-filament::tabs.item>
+                    @endif
+
+                    @if ($product->canUseVariants())
+                        <x-filament::tabs.item
+                            alpine-active="activeTab === 'variants'"
+                            x-on:click="activeTab = 'variants'"
+                            icon="untitledui-book-open"
+                        >
+                            {{ __('shopper::words.variants') }}
                         </x-filament::tabs.item>
                     @endif
 
@@ -81,13 +124,15 @@
                         {{ __('shopper::pages/products.stock_inventory_heading') }}
                     </x-filament::tabs.item>
 
-                    <x-filament::tabs.item
-                        alpine-active="activeTab === 'shipping'"
-                        x-on:click="activeTab = 'shipping'"
-                        icon="untitledui-plane"
-                    >
-                        {{ __('shopper::words.shipping') }}
-                    </x-filament::tabs.item>
+                    @if ($product->canUseShipping())
+                        <x-filament::tabs.item
+                            alpine-active="activeTab === 'shipping'"
+                            x-on:click="activeTab = 'shipping'"
+                            icon="untitledui-plane"
+                        >
+                            {{ __('shopper::words.shipping') }}
+                        </x-filament::tabs.item>
+                    @endif
 
                     <x-filament::tabs.item
                         alpine-active="activeTab === 'seo'"
@@ -115,13 +160,28 @@
             <div x-show="activeTab === 'media'">
                 <livewire:shopper-products.form.media :product="$product" />
             </div>
-            <div x-cloak x-show="activeTab === 'variants'">
-                <livewire:shopper-products.form.variants :product="$product" />
-            </div>
 
-            @if (\Shopper\Feature::enabled('attribute'))
+            @if (! $product->isVariant())
+                <div x-cloak x-show="activeTab === 'price'">
+                    <livewire:shopper-products.pricing :model="$product" />
+                </div>
+            @endif
+
+            @if ($product->isVirtual())
+                <div x-cloak x-show="activeTab === 'files'">
+                    <livewire:shopper-products.form.files :product="$product" />
+                </div>
+            @endif
+
+            @if (\Shopper\Feature::enabled('attribute') && $product->canUseAttributes())
                 <div x-cloak x-show="activeTab === 'attributes'">
                     <livewire:shopper-products.form.attributes :product="$product" />
+                </div>
+            @endif
+
+            @if ($product->canUseVariants())
+                <div x-cloak x-show="activeTab === 'variants'">
+                    <livewire:shopper-products.form.variants :product="$product" />
                 </div>
             @endif
 
@@ -131,9 +191,13 @@
             <div x-cloak x-show="activeTab === 'seo'">
                 <livewire:shopper-products.form.seo :product="$product" />
             </div>
-            <div x-cloak x-show="activeTab === 'shipping'">
-                <livewire:shopper-products.form.shipping :product="$product" />
-            </div>
+
+            @if ($product->canUseShipping())
+                <div x-cloak x-show="activeTab === 'shipping'">
+                    <livewire:shopper-products.form.shipping :product="$product" />
+                </div>
+            @endif
+
             <div x-cloak x-show="activeTab === 'related'">
                 <livewire:shopper-products.form.related-products :product="$product" />
             </div>

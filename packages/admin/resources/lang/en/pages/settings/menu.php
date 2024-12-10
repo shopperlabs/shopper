@@ -20,5 +20,7 @@ return [
     'zone_description' => 'Manage shipping, payment, and fulfillment across zones',
     'tax' => 'Taxes',
     'tax_description' => 'Manage how your store charges taxes.',
+    'sales' => 'Sales channels',
+    'sales_description' => 'Manage the online and offline channels you sell products on.',
 
 ];

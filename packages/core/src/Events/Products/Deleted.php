@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Shopper\Core\Events\Products;
 
 use Illuminate\Queue\SerializesModels;
+use Shopper\Core\Models\Product;
 
 class Deleted
 {
     use SerializesModels;
 
-    public function __construct(public $product) {}
+    public function __construct(public Product $product) {}
 }

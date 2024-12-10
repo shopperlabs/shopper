@@ -6,12 +6,14 @@ namespace Shopper\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
+use Codeat3\BladePhosphorIcons\BladePhosphorIconsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
 use Filament\Forms\FormsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use JaOcero\RadioDeck\RadioDeckServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Mckenziearts\BladeUntitledUIIcons\BladeUntitledUIIconsServiceProvider;
 use Orchestra\Testbench\Concerns\WithWorkbench;
@@ -53,6 +55,7 @@ abstract class TestCase extends BaseTestCase
             BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeUntitledUIIconsServiceProvider::class,
+            BladePhosphorIconsServiceProvider::class,
             BladeIconsServiceProvider::class,
             CoreServiceProvider::class,
             PermissionServiceProvider::class,
@@ -65,6 +68,7 @@ abstract class TestCase extends BaseTestCase
             TablesServiceProvider::class,
             MediaLibraryServiceProvider::class,
             TailwindMergeServiceProvider::class,
+            RadioDeckServiceProvider::class,
             WizardServiceProvider::class,
         ];
     }

@@ -7,7 +7,7 @@
     "admin-panel",
     "shopper",
     "e-commerce",
-    "headless",
+    "headless cms",
     "store",
     "shop"
   ],
@@ -19,6 +19,7 @@
   "require": {
     "php": "^8.2",
     "bacon/bacon-qr-code": "^2.0",
+    "codeat3/blade-phosphor-icons": "^2.0",
     "danharrin/livewire-rate-limiting": "^0.3|^1.0",
     "filament/forms": "^3.2",
     "filament/spatie-laravel-media-library-plugin": "^3.2",
@@ -34,6 +35,8 @@
     "illuminate/support": "^10.0|^11.0",
     "illuminate/view": "^10.0|^11.0",
     "jenssegers/agent": "^2.6",
+    "jaocero/radio-deck": "^1.2",
+    "livewire/livewire": "^v3.5.12",
     "milon/barcode": "^10.0|^11.0",
     "pragmarx/google2fa": "^8.0",
     "psr/simple-cache": "^3.0",

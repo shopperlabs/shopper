@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,30 +21,26 @@ use Shopper\Core\Traits\HasSlug;
  * @property string | null $timezone
  * @property string | null $url
  * @property bool $is_default
+ * @property bool $is_enabled
  * @property array | null $metadata
  */
+#[ObservedBy(ChannelObserver::class)]
 class Channel extends Model
 {
     use HasFactory;
     use HasSlug;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'is_default' => 'boolean',
+        'is_enabled' => 'boolean',
         'metadata' => 'array',
     ];
 
     public function getTable(): string
     {
         return shopper_table('channels');
-    }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::observe(ChannelObserver::class);
     }
 
     protected static function newFactory(): ChannelFactory
@@ -54,6 +51,11 @@ class Channel extends Model
     public function scopeDefault(Builder $query): Builder
     {
         return $query->where('is_default', true);
+    }
+
+    public function scopeEnabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
     }
 
     public function products(): MorphToMany

@@ -68,6 +68,8 @@ class AttributeForm extends SlideOverComponent implements HasForms
 
                 Forms\Components\Textarea::make('description')
                     ->label(__('shopper::forms.label.description'))
+                    ->hint(__('shopper::words.characters', ['number' => 100]))
+                    ->maxLength(100)
                     ->rows(3),
 
                 Forms\Components\Toggle::make('is_enabled')

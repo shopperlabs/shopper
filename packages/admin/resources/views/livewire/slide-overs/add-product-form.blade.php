@@ -18,17 +18,7 @@
         </div>
     </header>
 
-    <div class="h-0 flex-1 overflow-y-auto p-4 py-6">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id, illo, voluptatum. A aperiam distinctio eveniet magnam optio! Asperiores id nam velit voluptas. Aliquam incidunt inventore iusto laudantium quas rerum vel.
-    </div>
-
-    <div class="flex shrink-0 justify-end space-x-4 p-4">
-        <x-shopper::buttons.default wire:click="$dispatch('closePanel')" type="button" class="mt-3 sm:mt-0 sm:w-auto">
-            {{ __('shopper::forms.actions.cancel') }}
-        </x-shopper::buttons.default>
-        <x-shopper::buttons.primary type="submit" wire.loading.attr="disabled">
-            <x-shopper::loader wire:loading wire:target="store" class="text-white" />
-            {{ __('shopper::forms.actions.save') }}
-        </x-shopper::buttons.primary>
-    </div>
+    <form wire:submit="store" class="h-0 flex-1 overflow-y-auto [&>div]:h-full">
+        {{ $this->form }}
+    </form>
 </div>

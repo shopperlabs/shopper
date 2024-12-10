@@ -34,6 +34,13 @@ class Media extends Component implements HasForms
     {
         return $form
             ->schema([
+                Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
+                    ->collection(config('shopper.media.storage.thumbnail_collection'))
+                    ->label(__('shopper::forms.label.thumbnail'))
+                    ->helperText(__('shopper::pages/products.thumbnail_helpText'))
+                    ->image()
+                    ->maxSize(config('shopper.media.max_size.thumbnail'))
+                    ->columnSpan(['lg' => 1]),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('images')
                     ->collection(config('shopper.media.storage.collection_name'))
                     ->label(__('shopper::words.images'))
@@ -42,14 +49,6 @@ class Media extends Component implements HasForms
                     ->panelLayout('grid')
                     ->maxSize(config('shopper.media.max_size.images'))
                     ->columnSpan(['lg' => 2]),
-
-                Forms\Components\SpatieMediaLibraryFileUpload::make('thumbnail')
-                    ->collection(config('shopper.media.storage.thumbnail_collection'))
-                    ->label(__('shopper::forms.label.thumbnail'))
-                    ->helperText(__('shopper::pages/products.thumbnail_helpText'))
-                    ->image()
-                    ->maxSize(config('shopper.media.max_size.thumbnail'))
-                    ->columnSpan(['lg' => 1]),
             ])
             ->columns(3)
             ->statePath('data')
@@ -58,6 +57,8 @@ class Media extends Component implements HasForms
 
     public function store(): void
     {
+        $this->validate();
+
         $this->product->update($this->form->getState());
 
         $this->dispatch('productHasUpdated');

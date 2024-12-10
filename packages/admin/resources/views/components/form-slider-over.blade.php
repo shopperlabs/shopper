@@ -33,7 +33,7 @@
     <div class="h-0 flex-1 overflow-y-auto p-4 py-6">
         {{ $slot }}
     </div>
-    <div class="flex shrink-0 justify-end space-x-4 p-4">
+    <div class="flex shrink-0 justify-end gap-3 p-4">
         <x-shopper::buttons.default wire:click="$dispatch('closePanel')" type="button" class="mt-3 sm:mt-0 sm:w-auto">
             {{ __('shopper::forms.actions.cancel') }}
         </x-shopper::buttons.default>

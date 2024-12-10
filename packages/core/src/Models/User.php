@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Shopper\Core\Database\Factories\UserFactory;
-use Shopper\Core\Traits\CanHaveDiscount;
-use Shopper\Core\Traits\HasProfilePhoto;
+use Shopper\Core\Models\Traits\HasDiscounts;
+use Shopper\Core\Models\Traits\HasProfilePhoto;
 use Shopper\Traits\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -34,7 +34,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-    use CanHaveDiscount;
+    use HasDiscounts;
     use HasFactory;
     use HasProfilePhoto;
     use HasRoles;

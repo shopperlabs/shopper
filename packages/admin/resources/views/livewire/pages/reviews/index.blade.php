@@ -1,9 +1,5 @@
 <x-shopper::container class="py-5">
-    <x-shopper::heading>
-        <x-slot name="title">
-            {{ __('shopper::pages/reviews.menu') }}
-        </x-slot>
-    </x-shopper::heading>
+    <x-shopper::heading :title="__('shopper::pages/reviews.menu')" />
 
     @if ($total === 0)
         <div class="relative mt-10 flex w-full flex-col items-center justify-center py-12 lg:py-16">

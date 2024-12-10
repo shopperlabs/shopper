@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute as AttributeCast;
+use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,24 +12,20 @@ use Shopper\Core\Database\Factories\AttributeProductFactory;
 
 /**
  * @property-read int $id
- * @property string|null $attribute_custom_value
  * @property int $attribute_id
- * @property int $attribute_value_id
  * @property int $product_id
- * @property AttributeValue|null $value
+ * @property string | null $attribute_custom_value
+ * @property int | null $attribute_value_id
+ * @property AttributeValue | null $value
+ * @property-read string $real_value
+ * @property Product $product
+ * @property Attribute $attribute
  */
 class AttributeProduct extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
-
-    protected $fillable = [
-        'attribute_id',
-        'attribute_value_id',
-        'attribute_custom_value',
-        'product_id',
-    ];
 
     public function getTable(): string
     {
@@ -41,11 +37,9 @@ class AttributeProduct extends Model
         return AttributeProductFactory::new();
     }
 
-    protected function realValue(): AttributeCast
+    protected function realValue(): CastAttribute
     {
-        return AttributeCast::make(
-            get: fn () => $this->attribute_custom_value ?? $this->value?->value,
-        );
+        return CastAttribute::get(fn () => $this->attribute_custom_value ?? $this->value?->value);
     }
 
     public function attribute(): BelongsTo

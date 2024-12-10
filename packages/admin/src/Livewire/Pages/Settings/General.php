@@ -12,7 +12,6 @@ use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -219,9 +218,6 @@ class General extends Component implements HasForms
     public function store(): void
     {
         $this->saveSettings($this->form->getState());
-
-        Cache::forget('shopper-setting.default_currency_id');
-        Cache::forget('shopper-setting.default_currency');
 
         Notification::make()
             ->title(__('shopper::notifications.store_info'))

@@ -1,9 +1,5 @@
 <x-shopper::container>
-    <x-shopper::heading>
-        <x-slot name="title">
-            {{ __('shopper::pages/auth.account.title') }}
-        </x-slot>
-    </x-shopper::heading>
+    <x-shopper::heading :title="__('shopper::pages/auth.account.title')" />
 
     <livewire:shopper-account.profile />
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\BrandFactory;
-use Shopper\Core\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 

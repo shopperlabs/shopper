@@ -11,12 +11,10 @@ use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
+use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Events\Products\Deleted;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Feature;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -39,47 +37,41 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->query()
                     ->with(['brand', 'variants'])
                     ->withCount(['variants'])
-                    ->where('parent_id', null)
                     ->latest()
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->circular(),
+                    ->square(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
-                    ->toggleable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('price_amount') // @phpstan-ignore-line
-                    ->label(__('shopper::forms.label.price'))
-                    ->currency(currency: shopper_currency())
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('is_visible')
-                    ->label(__('shopper::forms.label.visibility'))
+                Tables\Columns\TextColumn::make('type')
+                    ->label(__('shopper::forms.label.type'))
+                    ->badge(),
+                Tables\Columns\TextColumn::make('sku')
+                    ->label(__('shopper::layout.tables.sku'))
+                    ->searchable()
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('brand.name')
                     ->label(__('shopper::forms.label.brand'))
                     ->searchable()
                     ->sortable()
-                    ->toggleable(Feature::enabled('brand'))
+                    ->toggleable()
                     ->hidden(! Feature::enabled('brand')),
                 Tables\Columns\ViewColumn::make('stock')
                     ->label(__('shopper::layout.tables.stock'))
-                    ->toggleable()
                     ->view('shopper::livewire.tables.cells.products.stock')
-                    ->toggledHiddenByDefault(),
-                Tables\Columns\TextColumn::make('sku')
-                    ->label(__('shopper::layout.tables.sku'))
-                    ->searchable()
-                    ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
+                Tables\Columns\IconColumn::make('is_visible')
+                    ->label(__('shopper::forms.label.visibility'))
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('published_at')
                     ->label(__('shopper::forms.label.published_at'))
-                    ->searchable()
                     ->dateTime()
                     ->toggleable()
                     ->sortable(),
@@ -100,20 +92,24 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ->modalIcon('untitledui-trash-03')
                         ->color('danger')
                         ->requiresConfirmation()
-                        ->action(fn ($record) => $record->delete()),
+                        ->action(function ($record): void {
+                            event(new Deleted($record));
+
+                            $record->delete();
+                        }),
                 ])
                     ->tooltip('Actions'),
             ])
             ->filters([
                 QueryBuilder::make()
                     ->constraints([
-                        TextConstraint::make('name'),
-                        NumberConstraint::make('price_amount')
-                            ->icon('untitledui-bank-note'),
-                        BooleanConstraint::make('is_visible')
+                        QueryBuilder\Constraints\TextConstraint::make('name'),
+                        QueryBuilder\Constraints\SelectConstraint::make('type')
+                            ->options(ProductType::class)
+                            ->multiple(),
+                        QueryBuilder\Constraints\BooleanConstraint::make('is_visible')
                             ->label(__('shopper::forms.label.availability')),
-                        BooleanConstraint::make('backorder'),
-                        DateConstraint::make('published_at'),
+                        QueryBuilder\Constraints\DateConstraint::make('published_at'),
                     ])
                     ->constraintPickerColumns(),
             ])

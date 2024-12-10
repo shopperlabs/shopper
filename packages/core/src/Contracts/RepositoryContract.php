@@ -29,7 +29,7 @@ interface RepositoryContract
 
     public function count(): int;
 
-    public function with($relations);
+    public function with(array | string $relations);
 
     public function query(): Builder;
 }

@@ -144,7 +144,7 @@ return [
     'pages' => [
         'setting-index' => Pages\Settings\Index::class,
         'general' => Pages\Settings\General::class, // [tl! focus]
-        'inventory-index' => Pages\Settings\Inventories\Browse::class,
+        'inventory-index' => Pages\Settings\Locations\Index::class,
         // ...
     ];
     

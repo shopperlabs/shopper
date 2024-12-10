@@ -13,6 +13,7 @@ return [
         'remember' => 'Remember me',
         'change' => 'Change',
         'optional' => 'Optional',
+        'summary' => 'Summary',
         'description' => 'Description',
         'title' => 'Title',
         'confirm' => 'Confirm',
@@ -21,6 +22,7 @@ return [
         'full_name' => 'Full Name',
         'phone_number' => 'Phone number',
         'name' => 'Name',
+        'external_id' => 'Product external Id',
         'slug' => 'Slug',
         'website' => 'Website',
         'url' => 'Url',
@@ -117,6 +119,8 @@ return [
         'pixel_id' => 'Your Facebook Pixel account ID',
         'icon' => 'Icon',
         'thumbnail' => 'Thumbnail',
+        'attribute' => 'Attribute',
+        'attribute_custom_value' => 'Custom value (for text input field)',
     ],
 
     'placeholder' => [

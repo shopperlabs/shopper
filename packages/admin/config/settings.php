@@ -35,16 +35,9 @@ return [
             'name' => 'shopper::pages/settings/menu.location',
             'description' => 'shopper::pages/settings/menu.location_description',
             'icon' => 'untitledui-marker-pin-flag',
-            'route' => 'shopper.settings.inventories',
+            'route' => 'shopper.settings.locations',
             'permission' => null,
         ],
-        //        [
-        //            'name' => 'shopper::pages/settings/menu.analytic',
-        //            'description' => 'shopper::pages/settings/menu.analytic_description',
-        //            'icon' => 'untitledui-pie-chart',
-        //            'route' => 'shopper.settings.analytics',
-        //            'permission' => null,
-        //        ],
         [
             'name' => 'shopper::pages/settings/menu.payment',
             'description' => 'shopper::pages/settings/menu.payment_description',

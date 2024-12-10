@@ -36,7 +36,7 @@
                         {{ __('shopper::pages/dashboard.cards.doc_description') }}
                     </div>
 
-                    <a href="https://laravelshopper.dev" class="group">
+                    <a href="https://laravelshopper.dev" class="group" target="_blank">
                         <div class="mt-5 flex items-center text-sm font-medium text-primary-500">
                             <span>{{ __('shopper::pages/dashboard.cards.doc_link') }}</span>
                             <span
@@ -65,7 +65,7 @@
                         {{ __('shopper::pages/dashboard.cards.screencast_description') }}
                     </div>
 
-                    <a href="https://www.youtube.com/channel/UCgxgoKJi3VA1eXxtjIs2tKw" class="group">
+                    <a href="https://www.youtube.com/channel/UCgxgoKJi3VA1eXxtjIs2tKw" target="_blank" class="group">
                         <div class="mt-5 flex items-center text-sm font-medium text-primary-500">
                             <span>{{ __('shopper::pages/dashboard.cards.screencast_link') }}</span>
                             <span
@@ -118,7 +118,7 @@
                     </div>
 
                     @can('add_products')
-                        <x-shopper::link href="{{ route('shopper.products.create') }}" class="group">
+                        <x-shopper::link :href="route('shopper.products.index')" class="group">
                             <div class="mt-3 flex items-center text-sm font-medium text-primary-500">
                                 <span>{{ __('shopper::pages/dashboard.cards.product_link') }}</span>
                                 <span

@@ -8,7 +8,7 @@ return [
     'general_description' => 'Affichez et mettez à jour les informations de votre boutique.',
     'staff' => 'Personnel et autorisations',
     'staff_description' => 'Affichez et gérez ce que le personnel peut voir ou faire dans votre boutique.',
-    'location' => 'Inventaires',
+    'location' => 'Emplacements',
     'location_description' => "Gérez les emplacements où vous stockez l'inventaire et vendez des produits.",
     'analytic' => 'Analytics',
     'analytic_description' => 'Configurer pour une meilleure compréhension de la provenance de votre trafic.',

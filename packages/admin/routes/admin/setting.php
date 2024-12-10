@@ -7,10 +7,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', config('shopper.components.setting.pages.setting-index'))->name('index');
 Route::get('/general', config('shopper.components.setting.pages.general'))->name('shop');
 
-Route::prefix('inventories')->group(function (): void {
-    Route::get('/', config('shopper.components.setting.pages.inventory-index'))->name('inventories');
-    Route::get('/create', config('shopper.components.setting.pages.inventory-create'))->name('inventories.create');
-    Route::get('/{inventory}/edit', config('shopper.components.setting.pages.inventory-edit'))->name('inventories.edit');
+Route::prefix('locations')->group(function (): void {
+    Route::get('/', config('shopper.components.setting.pages.location-index'))->name('locations');
+    Route::get('/create', config('shopper.components.setting.pages.location-create'))->name('locations.create');
+    Route::get('/{inventory}/edit', config('shopper.components.setting.pages.location-edit'))->name('locations.edit');
 });
 
 Route::get('/legal', config('shopper.components.setting.pages.legal'))->name('legal');

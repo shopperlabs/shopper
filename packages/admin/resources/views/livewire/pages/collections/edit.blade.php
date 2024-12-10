@@ -7,11 +7,7 @@
         />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="mt-6">
-        <x-slot name="title">
-            {{ $collection->name }}
-        </x-slot>
-    </x-shopper::heading>
+    <x-shopper::heading class="mt-6" :title="$collection->name" />
 
     <form wire:submit="store" class="mt-8 border-t border-gray-200 pt-10 dark:border-white/10">
         <div class="space-y-10">

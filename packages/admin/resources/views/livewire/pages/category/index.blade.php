@@ -3,11 +3,7 @@
 @endphp
 
 <x-shopper::container class="py-5">
-    <x-shopper::heading>
-        <x-slot name="title">
-            {{ __('shopper::pages/categories.menu') }}
-        </x-slot>
-
+    <x-shopper::heading :title="__('shopper::pages/categories.menu')">
         <x-slot name="action">
             @if ($total > 0)
                 @can('add_categories')

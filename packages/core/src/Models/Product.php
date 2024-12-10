@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Arr;
 use Shopper\Core\Contracts\ReviewRateable;
 use Shopper\Core\Database\Factories\ProductFactory;
 use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Enum\ProductType;
-use Shopper\Core\Traits\CanHaveDiscount;
-use Shopper\Core\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasDiscounts;
+use Shopper\Core\Models\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasPrices;
+use Shopper\Core\Models\Traits\HasStock;
+use Shopper\Core\Models\Traits\ReviewRateable as ReviewRateableTrait;
+use Shopper\Core\Observers\ProductObserver;
 use Shopper\Core\Traits\HasSlug;
-use Shopper\Core\Traits\HasStock;
-use Shopper\Core\Traits\ReviewRateable as ReviewRateableTrait;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -47,15 +52,25 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property int $variants_stock
  * @property string | null $seo_title
  * @property string | null $seo_description
+ * @property string | null $external_id
  * @property \Carbon\Carbon | null $published_at
  * @property array | null $metadata
- * @property-read int | null $stock
+ * @property-read int $stock
+ * @property-read Brand $brand
+ * @property-read \Illuminate\Database\Eloquent\Collection | Channel[] $channels
+ * @property-read \Illuminate\Database\Eloquent\Collection | Category[] $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection | Attribute[] $options
+ * @property-read \Illuminate\Database\Eloquent\Collection | Collection[] $collections
+ * @property-read \Illuminate\Database\Eloquent\Collection | ProductVariant[] $variants
+ * @property-read \Illuminate\Database\Eloquent\Collection | Price[] $prices
  */
+#[ObservedBy(ProductObserver::class)]
 class Product extends Model implements ReviewRateable, SpatieHasMedia
 {
-    use CanHaveDiscount;
+    use HasDiscounts;
     use HasFactory;
     use HasMedia;
+    use HasPrices;
     use HasSlug;
     use HasStock;
     use ReviewRateableTrait;
@@ -90,7 +105,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
         return ProductFactory::new();
     }
 
-    public function variantsStock(): Attribute
+    public function variantsStock(): CastAttribute
     {
         $stock = 0;
 
@@ -101,13 +116,57 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
             }
         }
 
-        return Attribute::get(fn () => $stock);
+        return CastAttribute::get(fn () => $stock);
     }
 
-    public function scopePublish(Builder $query): void
+    public function canUseShipping(): bool
     {
-        $query->whereDate('published_at', '<=', now())
+        return $this->isStandard() || $this->isVariant();
+    }
+
+    public function canUseAttributes(): bool
+    {
+        return $this->isStandard() || $this->isVariant();
+    }
+
+    public function canUseVariants(): bool
+    {
+        return $this->isVariant();
+    }
+
+    public function isExternal(): bool
+    {
+        return $this->type === ProductType::External;
+    }
+
+    public function isVariant(): bool
+    {
+        return $this->type === ProductType::Variant;
+    }
+
+    public function isVirtual(): bool
+    {
+        return $this->type === ProductType::Virtual;
+    }
+
+    public function isStandard(): bool
+    {
+        return $this->type === ProductType::Standard;
+    }
+
+    public function scopePublish(Builder $query): Builder
+    {
+        return $query->whereDate('published_at', '<=', now())
             ->where('is_visible', true);
+    }
+
+    public function scopeForChannel(Builder $query, string | array $channel): Builder
+    {
+        $channels = Arr::wrap($channel);
+
+        return $query->whereHas('channels', function (Builder $query) use ($channels): void {
+            $query->whereIn('id', $channels);
+        });
     }
 
     public function variants(): HasMany
@@ -140,9 +199,16 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
         return $this->belongsTo(config('shopper.models.brand'), 'brand_id');
     }
 
-    public function attributes(): HasMany
+    /**
+     * Product Attributes relation, to avoid collision with Model $attributes
+     */
+    public function options(): BelongsToMany
     {
-        return $this->hasMany(AttributeProduct::class);
+        return $this->belongsToMany(Attribute::class, table: shopper_table('attribute_product'))
+            ->withPivot([
+                'attribute_value_id',
+                'attribute_custom_value',
+            ]);
     }
 
     public function registerMediaCollections(): void
@@ -158,7 +224,7 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
             ->acceptsMimeTypes(config('shopper.media.accepts_mime_types'))
             ->useFallbackUrl(shopper_fallback_url());
 
-        $this->addMediaCollection('downloadable')
+        $this->addMediaCollection('files')
             ->useDisk(config('shopper.media.storage.disk_name'));
     }
 }

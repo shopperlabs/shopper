@@ -11,6 +11,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Shopper\Core\Models\Attribute;
@@ -18,7 +19,7 @@ use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Product;
 
 /**
- * @property \Illuminate\Support\Collection $currentValues
+ * @property Collection $currentValues
  */
 class MultipleChoice extends Component implements HasActions, HasForms
 {
@@ -39,9 +40,9 @@ class MultipleChoice extends Component implements HasActions, HasForms
     }
 
     #[Computed]
-    public function currentValues(): \Illuminate\Support\Collection
+    public function currentValues(): Collection
     {
-        return $this->product->attributes()
+        return $this->product->options()
             ->where('attribute_id', $this->attribute->id)
             ->get()
             ->pluck('attribute_value_id');

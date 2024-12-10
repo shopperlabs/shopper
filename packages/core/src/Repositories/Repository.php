@@ -8,6 +8,7 @@ use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Shopper\Core\Contracts\RepositoryContract;
 use Shopper\Core\Exceptions\ModelRepositoryException;
 
@@ -99,13 +100,9 @@ abstract class Repository implements RepositoryContract
         );
     }
 
-    public function with($relations): self
+    public function with(array | string $relations): self
     {
-        if (is_string($relations)) {
-            $relations = func_get_args();
-        }
-
-        $this->with = $relations;
+        $this->with = Arr::wrap($relations);
 
         return $this;
     }

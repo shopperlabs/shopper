@@ -27,18 +27,18 @@ return [
     ],
 
     'location' => [
-        'menu' => 'Inventories',
-        'single' => 'inventory',
+        'menu' => 'Locations',
+        'single' => 'location',
         'description' => 'Manage the places you stock inventory, fulfill orders, and sell products.',
-        'count' => 'You’re using :count of the :total available inventories.',
-        'add' => 'Add Inventory',
+        'count' => 'You’re using :count of the :total available locations.',
+        'add' => 'Add location',
         'detail' => 'Details',
         'detail_summary' => 'Give this location a short name to make it easy to identify. You’ll see this name in areas like products.',
-        'address' => 'Inventory address',
-        'address_summary' => "Your inventory's complete information. Please put valide informations this can be accessible for your customers.",
-        'set_default' => 'Set as default inventory',
+        'address' => 'Location address',
+        'address_summary' => "Your location's complete information. Please put valide informations this can be accessible for your customers.",
+        'set_default' => 'Set as default location',
         'set_default_summary' => 'Inventory at this location is available for sale online and will use as default',
-        'is_default' => 'This is your default inventory. To change whether you fulfill online orders from this inventory, select another default inventory first.',
+        'is_default' => 'This is your default location. To change whether you fulfill online orders from this location, select another default location first.',
     ],
 
     'analytics' => [

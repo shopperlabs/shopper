@@ -1,9 +1,5 @@
 <x-shopper::container class="py-5">
-    <div class="min-w-0 flex-1">
-        <h2 class="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:leading-9">
-            {{ __('shopper::pages/settings/global.menu') }}
-        </h2>
-    </div>
+    <x-shopper::heading :title="__('shopper::pages/settings/global.menu')" />
 
     <x-shopper::card class="mt-8 p-4">
         <div class="grid gap-4 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-4">

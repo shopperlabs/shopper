@@ -11,11 +11,7 @@
             />
         </x-shopper::breadcrumb>
 
-        <x-shopper::heading class="my-6">
-            <x-slot name="title">
-                {{ $role->display_name }}
-            </x-slot>
-
+        <x-shopper::heading class="my-6" :title="$role->display_name">
             <x-slot name="action">
                 <div class="flex space-x-3">
                     {{ $this->deleteAction }}

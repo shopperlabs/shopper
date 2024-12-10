@@ -17,9 +17,9 @@ return [
     'pages' => [
         'setting-index' => Pages\Settings\Index::class,
         'general' => Pages\Settings\General::class,
-        'inventory-index' => Pages\Settings\Inventories\Browse::class,
-        'inventory-create' => Pages\Settings\Inventories\Create::class,
-        'inventory-edit' => Pages\Settings\Inventories\Edit::class,
+        'location-index' => Pages\Settings\Locations\Index::class,
+        'location-create' => Pages\Settings\Locations\Create::class,
+        'location-edit' => Pages\Settings\Locations\Edit::class,
         'legal' => Pages\Settings\LegalPage::class,
         'payment' => Pages\Settings\Payment::class,
         'team-index' => Pages\Settings\Team\Index::class,
@@ -40,7 +40,7 @@ return [
         'modals.logout-others-browser' => Livewire\Modals\LogoutOthersBrowser::class,
         'modals.payment-method-form' => Livewire\Modals\PaymentMethodForm::class,
 
-        'settings.inventories.form' => Components\Settings\Inventories\InventoryForm::class,
+        'settings.locations.form' => Components\Settings\Locations\InventoryForm::class,
         'settings.legal.privacy' => Components\Settings\Legal\Privacy::class,
         'settings.legal.refund' => Components\Settings\Legal\Refund::class,
         'settings.legal.shipping' => Components\Settings\Legal\Shipping::class,

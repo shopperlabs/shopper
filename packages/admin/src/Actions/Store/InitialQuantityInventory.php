@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Shopper\Actions\Store;
 
 use Shopper\Core\Models\Inventory;
-use Shopper\Core\Models\Product;
 
 final readonly class InitialQuantityInventory
 {
-    public function __invoke(int $quantity, Product $product): void
+    public function __invoke(int $quantity, $product): void
     {
         /** @var Inventory $inventory */
         $inventory = Inventory::query()->scopes('default')->first();

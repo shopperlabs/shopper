@@ -9,7 +9,7 @@
             </x-filament::section.description>
         </div>
         <div class="bg-white rounded-lg ring-1 ring-gray-200 max-w-4xl dark:bg-gray-900 dark:ring-white/10">
-            <dl class="divide-y divide-gray-200 dark:divide-gray-800">
+            <dl class="divide-y divide-gray-200 dark:divide-white/10">
                 <div class="space-y-1 p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::forms.label.first_name') }}
@@ -92,7 +92,7 @@
             </p>
         </div>
         <div class="bg-white rounded-lg ring-1 ring-gray-200 max-w-4xl dark:bg-gray-900 dark:ring-white/10">
-            <dl class="divide-y divide-gray-200 dark:divide-gray-800">
+            <dl class="divide-y divide-gray-200 dark:divide-white/10">
                 <div class="space-y-1 p-4 sm:flex sm:items-center sm:justify-between sm:py-5">
                     <dt class="text-sm font-medium leading-5 text-gray-500 dark:text-gray-400">
                         {{ __('shopper::pages/customers.profile.marketing') }}

@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Shopper\Core\Database\Factories\ProductVariantFactory;
 use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
-use Shopper\Core\Traits\HasMedia;
-use Shopper\Core\Traits\HasStock;
+use Shopper\Core\Models\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasPrices;
+use Shopper\Core\Models\Traits\HasStock;
+use Shopper\Core\Observers\ProductVariantObserver;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
@@ -38,11 +42,15 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property array | null $metadata
  * @property-read int $stock
  * @property-read Product $product
+ * @property-read \Illuminate\Database\Eloquent\Collection | Price[] $prices
+ * @property-read \Illuminate\Database\Eloquent\Collection | AttributeValue[] $values
  */
+#[ObservedBy(ProductVariantObserver::class)]
 class ProductVariant extends Model implements SpatieHasMedia
 {
     use HasFactory;
     use HasMedia;
+    use HasPrices;
     use HasStock;
 
     protected $guarded = ['id'];
@@ -76,5 +84,15 @@ class ProductVariant extends Model implements SpatieHasMedia
     public function product(): BelongsTo
     {
         return $this->belongsTo(config('shopper.models.product'), 'product_id');
+    }
+
+    public function values(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            AttributeValue::class,
+            shopper_table('attribute_value_product_variant'),
+            'variant_id',
+            'value_id'
+        );
     }
 }

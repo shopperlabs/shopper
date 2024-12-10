@@ -79,7 +79,7 @@ final class StoreSocialLink extends StepComponent implements HasForms
     {
         $this->saveSettings($this->form->getState());
 
-        $this->storeHasSetup();
+        $this->createDefaultInventory();
 
         Notification::make()
             ->title(__('shopper::notifications.store_info'))
@@ -89,7 +89,7 @@ final class StoreSocialLink extends StepComponent implements HasForms
         $this->redirectRoute('shopper.dashboard', navigate: true);
     }
 
-    public function storeHasSetup(): void
+    public function createDefaultInventory(): void
     {
         Inventory::query()->create([
             'name' => $name = shopper_setting('name'),

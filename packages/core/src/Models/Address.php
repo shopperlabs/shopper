@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,7 @@ use Shopper\Core\Observers\AddressObserver;
  * @property int $user_id
  * @property int $country_id
  */
+#[ObservedBy(AddressObserver::class)]
 class Address extends Model
 {
     use HasFactory;
@@ -58,13 +60,6 @@ class Address extends Model
     public function getTable(): string
     {
         return shopper_table('user_addresses');
-    }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::observe(AddressObserver::class);
     }
 
     protected static function newFactory(): AddressFactory

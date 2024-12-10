@@ -13,11 +13,7 @@
                 :title="__('shopper::pages/settings/global.menu')"
             />
         </x-shopper::breadcrumb>
-        <x-shopper::heading class="my-6">
-            <x-slot name="title">
-                {{ __('shopper::pages/settings/payments.title') }}
-            </x-slot>
-
+        <x-shopper::heading class="my-6" :title="__('shopper::pages/settings/payments.title')">
             <x-slot name="action">
                 <x-shopper::buttons.primary
                     wire:click="$dispatch(

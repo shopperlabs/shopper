@@ -7,5 +7,6 @@ export default {
   content: [
     './packages/**/*.blade.php',
     './vendor/filament/**/*.blade.php',
+    './vendor/jaocero/radio-deck/resources/views/**/*.blade.php',
   ],
 }

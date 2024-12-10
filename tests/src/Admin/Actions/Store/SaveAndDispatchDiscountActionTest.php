@@ -11,8 +11,8 @@ use Shopper\Core\Enum\DiscountType;
 use Shopper\Core\Models\Discount;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\User;
-use Shopper\Jobs\DiscountCustomersJobs;
-use Shopper\Jobs\DiscountProductsJob;
+use Shopper\Jobs\AttachedDiscountToCustomers;
+use Shopper\Jobs\AttachedDiscountToProducts;
 use Shopper\Tests\TestCase;
 
 uses(TestCase::class);
@@ -40,8 +40,8 @@ describe(SaveAndDispatchDiscountAction::class, function (): void {
             'values' => $this->formValues,
         ]);
 
-        Queue::assertPushed(DiscountProductsJob::class);
-        Queue::assertPushed(DiscountCustomersJobs::class);
+        Queue::assertPushed(AttachedDiscountToProducts::class);
+        Queue::assertPushed(AttachedDiscountToCustomers::class);
 
         expect($discount)->toBeInstanceOf(Discount::class)
             ->and($discount->code)
@@ -56,8 +56,8 @@ describe(SaveAndDispatchDiscountAction::class, function (): void {
             'productsIds' => [$this->products->first()->id],
         ]);
 
-        Queue::assertPushed(DiscountProductsJob::class);
-        Queue::assertPushed(DiscountCustomersJobs::class);
+        Queue::assertPushed(AttachedDiscountToProducts::class);
+        Queue::assertPushed(AttachedDiscountToCustomers::class);
 
         expect($discount)->toBeInstanceOf(Discount::class);
 
@@ -80,8 +80,8 @@ describe(SaveAndDispatchDiscountAction::class, function (): void {
             'customersIds' => $this->users->pluck('id')->toArray(),
         ]);
 
-        Queue::assertPushed(DiscountProductsJob::class);
-        Queue::assertPushed(DiscountCustomersJobs::class);
+        Queue::assertPushed(AttachedDiscountToProducts::class);
+        Queue::assertPushed(AttachedDiscountToCustomers::class);
 
         $discount->refresh();
 

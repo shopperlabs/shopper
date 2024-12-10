@@ -7,11 +7,7 @@
         />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="mt-5">
-        <x-slot name="title">
-            {{ __('shopper::pages/attributes.menu') }}
-        </x-slot>
-
+    <x-shopper::heading class="mt-5" :title="__('shopper::pages/attributes.menu')">
         <x-slot name="action">
             @if ($total > 0)
                 @can('add_attributes')

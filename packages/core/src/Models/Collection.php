@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\CollectionFactory;
 use Shopper\Core\Enum\CollectionType;
-use Shopper\Core\Traits\HasMedia;
+use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shopper\Core\Database\Factories\AttributeFactory;
 use Shopper\Core\Enum\FieldType;
@@ -17,14 +18,14 @@ use Shopper\Core\Traits\HasSlug;
  * @property-read int $id
  * @property string $name
  * @property string $slug
- * @property string|null $description
+ * @property string | null $description
  * @property FieldType $type
  * @property bool $is_enabled
  * @property bool $is_searchable
  * @property bool $is_filterable
  * @property string|null $icon
  * @property string $type_formatted
- * @property \Illuminate\Database\Eloquent\Collection|array $values
+ * @property \Illuminate\Database\Eloquent\Collection | AttributeValue[] $values
  */
 class Attribute extends Model
 {
@@ -124,6 +125,15 @@ class Attribute extends Model
 
     public function values(): HasMany
     {
-        return $this->hasMany(AttributeValue::class);
+        return $this->hasMany(AttributeValue::class, 'attribute_id');
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(config('shopper.models.product'), table: shopper_table('attribute_product'))
+            ->withPivot([
+                'attribute_value_id',
+                'attribute_custom_value',
+            ]);
     }
 }

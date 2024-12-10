@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Shopper\Core\Database\Factories\CategoryFactory;
+use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Observers\CategoryObserver;
-use Shopper\Core\Traits\HasMedia;
 use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
@@ -24,6 +25,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
  * @property int|null $parent_id
  * @property null|self $parent
  */
+#[ObservedBy(CategoryObserver::class)]
 class Category extends Model implements SpatieHasMedia
 {
     use HasFactory;
@@ -31,7 +33,7 @@ class Category extends Model implements SpatieHasMedia
     use HasRecursiveRelationships;
     use HasSlug;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'is_enabled' => 'boolean',
@@ -41,13 +43,6 @@ class Category extends Model implements SpatieHasMedia
     public function getTable(): string
     {
         return shopper_table('categories');
-    }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::observe(CategoryObserver::class);
     }
 
     protected static function newFactory(): CategoryFactory

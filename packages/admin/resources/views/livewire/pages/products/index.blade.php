@@ -1,9 +1,5 @@
 <x-shopper::container class="py-5">
-    <x-shopper::heading>
-        <x-slot name="title">
-            {{ __('shopper::pages/products.menu') }}
-        </x-slot>
-
+    <x-shopper::heading :title="__('shopper::pages/products.menu')">
         <x-slot name="action">
             @if ($total > 0)
                 @can('add_products')
@@ -23,8 +19,8 @@
             :title="__('shopper::pages/products.title')"
             :content="__('shopper::pages/products.content')"
             :button="__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/products.single')])"
+            panel="{ component: 'shopper-slide-overs.add-product' }"
             permission="add_products"
-            :url="route('shopper.products.create')"
             class="lg:pb-0"
         >
             <div class="shrink-0">

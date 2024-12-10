@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeValue;
 
 /**
@@ -21,6 +22,10 @@ class AttributeValueFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'key' => $this->faker->unique()->slug(),
+            'value' => $this->faker->word(),
+            'position' => $this->faker->randomDigit(),
+        ];
     }
 }

@@ -21,6 +21,13 @@ class ChannelFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'name' => $this->faker->word(),
+            'slug' => $this->faker->slug(),
+            'timezone' => $this->faker->timezone(),
+            'url' => $this->faker->url(),
+            'is_enabled' => $this->faker->boolean(),
+            'is_default' => $this->faker->boolean(),
+        ];
     }
 }

@@ -6,6 +6,7 @@ namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Shopper\Core\Database\Factories\SettingFactory;
 
 /**
@@ -41,7 +42,7 @@ class Setting extends Model
 
     public static function lockedAttributesDisplayName(string $key): string
     {
-        return [
+        return match ($key) {
             'name' => __('shopper::forms.label.store_name'),
             'legal_name' => __('shopper::forms.label.legal_name'),
             'email' => __('shopper::forms.label.email'),
@@ -50,6 +51,7 @@ class Setting extends Model
             'about' => __('shopper::forms.label.about'),
             'country_id' => __('shopper::forms.label.country'),
             'default_currency_id' => __('shopper::forms.label.currency'),
+            'default_product_type' => __('shopper::pages/products.type'),
             'currencies' => __('shopper::forms.label.currencies'),
             'street_address' => __('shopper::forms.label.street_address'),
             'postal_code' => __('shopper::forms.label.postal_code'),
@@ -60,6 +62,7 @@ class Setting extends Model
             'facebook_link' => __('shopper::words.socials.facebook'),
             'instagram_link' => __('shopper::words.socials.twitter'),
             'twitter_link' => __('shopper::words.socials.instagram'),
-        ][$key];
+            default => Str::title($key),
+        };
     }
 }

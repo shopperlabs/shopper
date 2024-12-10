@@ -59,9 +59,9 @@ return [
 
     'pages' => [
         // ...
-        'inventory-index' => Pages\Settings\Inventories\Browse::class,
-        'inventory-create' => Pages\Settings\Inventories\Create::class,
-        'inventory-edit' => Pages\Settings\Inventories\Edit::class,
+        'inventory-index' => Pages\Settings\Locations\Index::class,
+        'inventory-create' => Pages\Settings\Locations\Create::class,
+        'inventory-edit' => Pages\Settings\Locations\Edit::class,
         // ...
     ];
     

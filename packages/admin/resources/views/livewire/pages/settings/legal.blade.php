@@ -13,11 +13,7 @@
                 :title="__('shopper::pages/settings/global.menu')"
             />
         </x-shopper::breadcrumb>
-        <x-shopper::heading class="my-6">
-            <x-slot name="title">
-                {{ __('shopper::pages/settings/global.legal.title') }}
-            </x-slot>
-        </x-shopper::heading>
+        <x-shopper::heading class="my-6" :title="__('shopper::pages/settings/global.legal.title')" />
     </x-shopper::container>
 
     <div class="relative border-t border-gray-200 dark:border-white/10">

@@ -9,9 +9,6 @@ use Shopper\Core\Models;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create($this->getTableName('carrier_options'), function (Blueprint $table): void {
@@ -27,9 +24,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists($this->getTableName('carrier_options'));

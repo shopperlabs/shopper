@@ -16,6 +16,7 @@ final class ChannelSeeder extends Seeder
             'slug' => $name,
             'url' => config('app.url'),
             'is_default' => true,
+            'is_enabled' => true,
         ]);
     }
 }

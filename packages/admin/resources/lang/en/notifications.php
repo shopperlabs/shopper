@@ -14,6 +14,7 @@ return [
     'approved' => ':item has successfully approved',
     'disapproved' => ':item has successfully disapproved',
     'visibility' => ':item has successfully updated visibility',
+    'saved' => 'Saved',
 
     'auth' => [
         'password' => 'This password does not match our records.',

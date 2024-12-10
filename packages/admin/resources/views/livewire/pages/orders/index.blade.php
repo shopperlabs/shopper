@@ -1,9 +1,5 @@
 <x-shopper::container class="py-5">
-    <x-shopper::heading>
-        <x-slot name="title">
-            {{ __('shopper::pages/orders.menu') }}
-        </x-slot>
-    </x-shopper::heading>
+    <x-shopper::heading :title="__('shopper::pages/orders.menu')" />
 
     @if ($total === 0)
         <x-shopper::empty-state

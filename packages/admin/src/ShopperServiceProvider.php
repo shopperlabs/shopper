@@ -75,8 +75,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
     {
         $this->bootLivewireComponents();
 
-        $this->bootModelRelationName();
-
         FilamentColor::register([
             'primary' => config('shopper.admin.filament_color'),
             'teal' => Color::Teal,
@@ -142,17 +140,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
             return $this; // @phpstan-ignore-line
         });
-    }
-
-    protected function bootModelRelationName(): void
-    {
-        Relation::morphMap([
-            'brand' => config('shopper.models.brand'),
-            'category' => config('shopper.models.category'),
-            'collection' => config('shopper.models.collection'),
-            'product' => config('shopper.models.product'),
-            'channel' => config('shopper.models.channel'),
-        ]);
     }
 
     protected function bootLivewireComponents(): void

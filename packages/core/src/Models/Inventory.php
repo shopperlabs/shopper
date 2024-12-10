@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,7 @@ use Shopper\Core\Observers\InventoryObserver;
  * @property string|null $phone_number
  * @property bool $is_default
  */
+#[ObservedBy(InventoryObserver::class)]
 class Inventory extends Model
 {
     use HasFactory;
@@ -54,13 +56,6 @@ class Inventory extends Model
     public function getTable(): string
     {
         return shopper_table('inventories');
-    }
-
-    protected static function boot(): void
-    {
-        parent::boot();
-
-        self::observe(InventoryObserver::class);
     }
 
     protected static function newFactory(): InventoryFactory

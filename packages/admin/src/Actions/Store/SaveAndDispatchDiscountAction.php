@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Actions\Store;
 
 use Shopper\Core\Models\Discount;
-use Shopper\Jobs\DiscountCustomersJobs;
-use Shopper\Jobs\DiscountProductsJob;
+use Shopper\Jobs\AttachedDiscountToCustomers;
+use Shopper\Jobs\AttachedDiscountToProducts;
 
 final readonly class SaveAndDispatchDiscountAction
 {
@@ -21,13 +21,13 @@ final readonly class SaveAndDispatchDiscountAction
             values: $values,
         );
 
-        DiscountProductsJob::dispatch(
+        AttachedDiscountToProducts::dispatch(
             data_get($values, 'apply_to'),
             $productsIds,
             $discount,
         );
 
-        DiscountCustomersJobs::dispatch(
+        AttachedDiscountToCustomers::dispatch(
             data_get($values, 'eligibility'),
             $customersIds,
             $discount,

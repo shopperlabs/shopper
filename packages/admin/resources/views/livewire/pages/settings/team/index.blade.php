@@ -7,11 +7,7 @@
         />
     </x-shopper::breadcrumb>
 
-    <x-shopper::heading class="my-6">
-        <x-slot name="title">
-            {{ __('shopper::pages/settings/staff.header_title') }}
-        </x-slot>
-    </x-shopper::heading>
+    <x-shopper::heading class="my-6" :title="__('shopper::pages/settings/staff.header_title')" />
 
     <div class="mt-10 space-y-12 pb-10">
         <div>
