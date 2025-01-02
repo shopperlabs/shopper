@@ -498,11 +498,9 @@ class SelectTree extends Field implements HasAffixActions
         }
 
         $action = Action::make($this->getCreateOptionActionName())
-            ->form(function (SelectTree $component, Form $form): array | Form | null {
-                return $component->getCreateOptionActionForm($form->model(
-                    $component->getRelationship() ? $component->getRelationship()->getModel()::class : null, // @phpstan-ignore-line
-                ));
-            })
+            ->form(fn (SelectTree $component, Form $form): array | Form | null => $component->getCreateOptionActionForm($form->model(
+                $component->getRelationship() ? $component->getRelationship()->getModel()::class : null, // @phpstan-ignore-line
+            )))
             ->action(static function (Action $action, array $arguments, SelectTree $component, array $data, ComponentContainer $form): void {
                 if (! $component->getCreateOptionUsing()) {
                     throw new Exception("Select field [{$component->getStatePath()}] must have a [createOptionUsing()] closure set.");

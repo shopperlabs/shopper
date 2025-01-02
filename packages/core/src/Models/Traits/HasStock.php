@@ -96,11 +96,9 @@ trait HasStock
             'event' => Arr::get($arguments, 'event'),
             'inventory_id' => $inventoryId,
             'user_id' => auth()->id(),
-        ])->when($reference, function ($collection) use ($reference) {
-            return $collection
-                ->put('reference_type', $reference->getMorphClass())
-                ->put('reference_id', $reference->getKey());
-        })->toArray();
+        ])->when($reference, fn ($collection) => $collection
+            ->put('reference_type', $reference->getMorphClass())
+            ->put('reference_id', $reference->getKey()))->toArray();
 
         return $this->inventoryHistories()->create($createArguments);
     }

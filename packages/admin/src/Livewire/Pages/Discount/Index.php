@@ -130,17 +130,15 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         DatePicker::make('start_at_until')
                             ->native(false),
                     ])
-                    ->query(function (Builder $query, array $data): Builder {
-                        return $query
-                            ->when(
-                                $data['start_at_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('start_at', '>=', $date),
-                            )
-                            ->when(
-                                $data['start_at_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('start_at', '<=', $date),
-                            );
-                    }),
+                    ->query(fn (Builder $query, array $data): Builder => $query
+                        ->when(
+                            $data['start_at_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('start_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['start_at_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('start_at', '<=', $date),
+                        )),
             ])
             ->emptyStateIcon('heroicon-o-gift')
             ->emptyStateHeading(__('shopper::pages/discounts.empty_message'));

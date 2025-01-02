@@ -40,19 +40,15 @@ class DiscountFactory extends Factory
 
     public function forProduct(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'apply_to' => DiscountApplyTo::Products(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'apply_to' => DiscountApplyTo::Products(),
+        ]);
     }
 
     public function forOrder(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'apply_to' => DiscountApplyTo::Order(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'apply_to' => DiscountApplyTo::Order(),
+        ]);
     }
 }

@@ -13,12 +13,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
-use Illuminate\Support\Str;
 use Shopper\Actions\Store\InitialQuantityInventory;
 use Shopper\Components;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
-use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Core\Repositories\VariantRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 

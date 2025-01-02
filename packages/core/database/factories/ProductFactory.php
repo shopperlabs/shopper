@@ -40,55 +40,45 @@ class ProductFactory extends Factory
 
     public function publish(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'is_visible' => true,
-                'published_at' => now(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'is_visible' => true,
+            'published_at' => now(),
+        ]);
     }
 
     public function variant(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'is_visible' => true,
-                'published_at' => now(),
-                'type' => ProductType::Variant(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'is_visible' => true,
+            'published_at' => now(),
+            'type' => ProductType::Variant(),
+        ]);
     }
 
     public function virtual(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'is_visible' => true,
-                'published_at' => now(),
-                'type' => ProductType::Virtual(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'is_visible' => true,
+            'published_at' => now(),
+            'type' => ProductType::Virtual(),
+        ]);
     }
 
     public function external(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'is_visible' => true,
-                'published_at' => now(),
-                'type' => ProductType::External(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'is_visible' => true,
+            'published_at' => now(),
+            'type' => ProductType::External(),
+        ]);
     }
 
     public function standard(): Factory
     {
-        return $this->state(function (array $attributes) {
-            return [
-                'is_visible' => true,
-                'published_at' => now(),
-                'type' => ProductType::Standard(),
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'is_visible' => true,
+            'published_at' => now(),
+            'type' => ProductType::Standard(),
+        ]);
     }
 }

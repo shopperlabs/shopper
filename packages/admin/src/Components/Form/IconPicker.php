@@ -51,13 +51,11 @@ class IconPicker extends Select
             $iconsHash = md5(serialize($icons));
             $key = "icon-picker.results.{$iconsHash}.{$search}";
 
-            return $this->tryCache($key, function () use ($component, $search, $icons) {
-                return collect($icons)
-                    ->flatten()
-                    ->filter(fn (string $icon) => str_contains($icon, $search))
-                    ->mapWithKeys(fn (string $icon) => [$icon => $component->getItemTemplate(['icon' => $icon])])
-                    ->toArray();
-            });
+            return $this->tryCache($key, fn () => collect($icons)
+                ->flatten()
+                ->filter(fn (string $icon) => str_contains($icon, $search))
+                ->mapWithKeys(fn (string $icon) => [$icon => $component->getItemTemplate(['icon' => $icon])])
+                ->toArray());
         };
 
         $this->getOptionLabelUsing = function (IconPicker $component, $value) {
@@ -67,11 +65,9 @@ class IconPicker extends Select
         };
 
         $this
-            ->itemTemplate(function (IconPicker $component, string $icon) {
-                return view('shopper::filament.icon-picker-item', [
-                    'icon' => $icon,
-                ])->render();
-            })
+            ->itemTemplate(fn (IconPicker $component, string $icon) => view('shopper::filament.icon-picker-item', [
+                'icon' => $icon,
+            ])->render())
             ->placeholder(__('shopper::forms.placeholder.icon_placeholder'));
     }
 

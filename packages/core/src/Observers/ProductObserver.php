@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopper\Core\Observers;
 
 use Shopper\Core\Models\Product;
