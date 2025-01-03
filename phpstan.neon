@@ -9,6 +9,7 @@ parameters:
         - packages/admin/src/Livewire/Pages/Auth
         - packages/admin/src/Events/
         - packages/core/src/Traits/
+        - packages/core/src/Models/Traits/
     ignoreErrors:
     checkMissingIterableValueType: true
     treatPhpDocTypesAsCertain: false

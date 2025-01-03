@@ -60,6 +60,6 @@ it('product can choose attributes', function (): void {
         ->assertHasNoErrors()
         ->assertDispatched('closePanel');
 
-    expect($this->product->attributes->count())
+    expect($this->product->options->count())
         ->toBe(2);
 });

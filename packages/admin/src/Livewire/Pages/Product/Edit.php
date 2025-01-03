@@ -36,6 +36,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
             ->requiresConfirmation()
             ->icon('untitledui-trash-03')
             ->modalIcon('untitledui-trash-03')
+            ->authorize('delete_products', $this->product)
             ->color('danger')
             ->button()
             ->action(function (): void {
@@ -52,7 +53,7 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
             });
     }
 
-    #[On('productHasUpdated')]
+    #[On('product.updated')]
     public function render(): View
     {
         return view('shopper::livewire.pages.products.edit')

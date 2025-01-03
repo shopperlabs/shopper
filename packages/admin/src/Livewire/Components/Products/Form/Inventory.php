@@ -196,7 +196,7 @@ class Inventory extends Component implements HasForms, HasTable
     {
         $this->product->update($this->form->getState());
 
-        $this->dispatch('productHasUpdated');
+        $this->dispatch('product.updated');
 
         Notification::make()
             ->title(__('shopper::pages/products.notifications.stock_update'))

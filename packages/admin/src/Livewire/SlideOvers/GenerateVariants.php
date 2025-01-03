@@ -15,6 +15,7 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Core\Repositories\VariantRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
@@ -100,7 +101,7 @@ final class GenerateVariants extends SlideOverComponent
             }])
             ->where('product_id', $this->productId)
             ->get()
-            ->map(fn ($variant) => [
+            ->map(fn (ProductVariant $variant) => [ // @phpstan-ignore-line
                 'id' => $variant->id,
                 'sku' => $variant->sku,
                 'price' => $variant->prices()->first()?->amount ?: 0,

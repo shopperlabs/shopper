@@ -48,7 +48,7 @@ class RelatedProductsList extends ModalComponent
         $currentProducts = $this->product->relatedProducts->pluck('id')->toArray();
         $this->product->relatedProducts()->sync(array_merge($this->selectedProducts, $currentProducts));
 
-        $this->dispatch('productHasUpdated');
+        $this->dispatch('product.updated');
 
         Notification::make()
             ->title(__('shopper::layout.status.added'))

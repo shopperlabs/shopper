@@ -49,7 +49,7 @@ class Seo extends Component implements HasForms
     {
         $this->product->update($this->form->getState());
 
-        $this->dispatch('productHasUpdated');
+        $this->dispatch('product.updated');
 
         Notification::make()
             ->body(__('shopper::pages/products.notifications.seo_update'))

@@ -67,12 +67,16 @@ class Attributes extends Component implements HasForms, HasTable
                     ->label(__('shopper::forms.actions.delete'))
                     ->color('danger')
                     ->requiresConfirmation()
-                    ->action(
-                        fn ($record) => app()->call(DetachAttributesToProductAction::class, [
+                    ->action(function ($record): void {
+                        $this->authorize('delete_attributes', $record);
+
+                        app()->call(DetachAttributesToProductAction::class, [
                             'attributeProduct' => $record,
                             'product' => $this->product,
-                        ])
-                    )
+                        ]);
+
+                        $this->dispatch('product.updated');
+                    })
                     ->successNotificationTitle(__('shopper::pages/products.attributes.session.delete_message')),
             ])
             ->emptyStateHeading(__('shopper::pages/products.attributes.empty_title'))

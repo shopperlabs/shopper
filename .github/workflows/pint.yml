@@ -23,8 +23,3 @@ jobs:
         run: composer install --no-interaction
       - name: Run Laravel Pint
         run: composer pint
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: >
-            chore: fix code formatting

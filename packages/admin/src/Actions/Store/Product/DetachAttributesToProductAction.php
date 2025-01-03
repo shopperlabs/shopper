@@ -7,15 +7,18 @@ namespace Shopper\Actions\Store\Product;
 use Illuminate\Support\Facades\DB;
 use Shopper\Core\Models\AttributeProduct;
 use Shopper\Core\Models\Product;
+use Shopper\Core\Models\ProductVariant;
 
 final class DetachAttributesToProductAction
 {
     public function __invoke(AttributeProduct $attributeProduct, Product $product): void
     {
-        DB::transaction(function () use ($attributeProduct): void {
-            // @Todo: Check if product has variants
-            // If product has variants check if variant is attach to the value of this attribute
-            // and detach variant to attribute product value
+        DB::transaction(function () use ($attributeProduct, $product): void {
+            if ($product->variants()->count()) {
+                $product->variants->each(
+                    fn (ProductVariant $variant) => $variant->values()->detach($attributeProduct->attribute_value_id)
+                );
+            }
 
             $attributeProduct->delete();
         });

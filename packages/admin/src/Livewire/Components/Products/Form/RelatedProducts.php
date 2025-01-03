@@ -35,7 +35,7 @@ class RelatedProducts extends Component implements HasActions, HasForms
             ->action(function (array $arguments): void {
                 $this->product->relatedProducts()->detach($arguments['id']);
 
-                $this->dispatch('productHasUpdated');
+                $this->dispatch('product.updated');
 
                 Notification::make()
                     ->title(__('shopper::pages/products.notifications.remove_related'))
@@ -50,7 +50,7 @@ class RelatedProducts extends Component implements HasActions, HasForms
         return array_merge($this->product->relatedProducts->modelKeys(), [$this->product->id]);
     }
 
-    #[On('productHasUpdated')]
+    #[On('product.updated')]
     public function render(): View
     {
         return view('shopper::livewire.components.products.forms.related', [

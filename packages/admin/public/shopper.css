@@ -4246,6 +4246,11 @@ html {
   height: 100dvh;
 }
 
+.h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
 .h-full {
   height: 100%;
 }
@@ -4254,17 +4259,8 @@ html {
   height: 100vh;
 }
 
-.h-fit {
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
 .max-h-96 {
   max-height: 24rem;
-}
-
-.min-h-\[calc\(100vh-7\.185rem\)\] {
-  min-height: calc(100vh - 7.185rem);
 }
 
 .min-h-\[theme\(spacing\.48\)\] {
@@ -6242,6 +6238,11 @@ html {
   line-height: 1.25rem;
 }
 
+.text-sm\/5 {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -6250,11 +6251,6 @@ html {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-sm\/5 {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
 }
 
 .font-black {
@@ -6315,10 +6311,6 @@ html {
 
 .leading-6 {
   line-height: 1.5rem;
-}
-
-.leading-7 {
-  line-height: 1.75rem;
 }
 
 .leading-8 {
@@ -8078,6 +8070,11 @@ html.dark .shiki span {
   color: rgba(var(--c-700), 0.75);
 }
 
+.hover\:text-danger-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
+}
+
 .hover\:text-gray-400:hover {
   --tw-text-opacity: 1;
   color: rgba(var(--gray-400), var(--tw-text-opacity));
@@ -8135,11 +8132,6 @@ html.dark .shiki span {
 .hover\:text-yellow-600:hover {
   --tw-text-opacity: 1;
   color: rgb(202 138 4 / var(--tw-text-opacity));
-}
-
-.hover\:text-danger-700:hover {
-  --tw-text-opacity: 1;
-  color: rgb(185 28 28 / var(--tw-text-opacity));
 }
 
 .hover\:opacity-100:hover {
@@ -8492,11 +8484,6 @@ html.dark .shiki span {
 
 .dark\:hidden:is(.dark *) {
   display: none;
-}
-
-.dark\:divide-gray-800:is(.dark *) > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-opacity: 1;
-  border-color: rgba(var(--gray-800), var(--tw-divide-opacity));
 }
 
 .dark\:divide-white\/10:is(.dark *) > :not([hidden]) ~ :not([hidden]) {
@@ -8958,6 +8945,11 @@ html.dark .shiki span {
   color: rgba(var(--c-300), 0.75);
 }
 
+.dark\:hover\:text-danger-400:hover:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(248 113 113 / var(--tw-text-opacity));
+}
+
 .dark\:hover\:text-gray-200:hover:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgba(var(--gray-200), var(--tw-text-opacity));
@@ -8990,11 +8982,6 @@ html.dark .shiki span {
 .dark\:hover\:text-white:hover:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.dark\:hover\:text-danger-400:hover:is(.dark *) {
-  --tw-text-opacity: 1;
-  color: rgb(248 113 113 / var(--tw-text-opacity));
 }
 
 .dark\:hover\:ring-white\/20:hover:is(.dark *) {
@@ -10128,14 +10115,14 @@ html.dark .shiki span {
     padding-bottom: 5rem;
   }
 
-  .lg\:py-4 {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
   .lg\:py-3 {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
+  }
+
+  .lg\:py-4 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   .lg\:pb-0 {
