@@ -40,10 +40,6 @@ class Shipping extends Component implements HasForms
                     ->aside()
                     ->compact()
                     ->schema([
-                        Forms\Components\Checkbox::make('backorder')
-                            ->label(__('shopper::pages/products.product_can_returned'))
-                            ->helperText(__('shopper::pages/products.product_can_returned_help_text')),
-
                         Forms\Components\Checkbox::make('require_shipping')
                             ->label(__('shopper::pages/products.product_shipped'))
                             ->helperText(__('shopper::pages/products.product_shipped_help_text'))

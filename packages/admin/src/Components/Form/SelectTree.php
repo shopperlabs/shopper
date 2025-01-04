@@ -149,8 +149,8 @@ class SelectTree extends Field implements HasAffixActions
         }
 
         if ($this->withTrashed) {
-            $nullParentQuery->withTrashed($this->withTrashed);
-            $nonNullParentQuery->withTrashed($this->withTrashed); // @phpstan-ignore-line
+            $nullParentQuery->withTrashed();
+            $nonNullParentQuery->withTrashed(); // @phpstan-ignore-line
         }
 
         $nullParentResults = $nullParentQuery->get();

@@ -10,10 +10,10 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Str;
 use Shopper\Components;
-use Shopper\Core\Events\Products\Updated as ProductUpdated;
 use Shopper\Core\Repositories\ProductRepository;
+use Shopper\Core\Repositories\VariantRepository;
+use Shopper\Livewire\Components\Products\Pricing;
 use Shopper\Livewire\Components\Products\VariantStock;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -30,12 +30,12 @@ class Variant extends AbstractPageComponent implements HasForms
 
     public ?array $data = [];
 
-    public function mount(int $product, int $variantId): void
+    public function mount(int $productId, int $variantId): void
     {
         $this->authorize('edit_products');
 
-        $this->product = (new ProductRepository)->getById($product);
-        $this->variant = (new ProductRepository)->getById($variantId);
+        $this->product = (new ProductRepository)->getById($productId);
+        $this->variant = (new VariantRepository)->with('prices')->getById($variantId);
 
         $this->form->fill($this->variant->toArray());
     }
@@ -54,18 +54,10 @@ class Variant extends AbstractPageComponent implements HasForms
                                     ->label(__('shopper::forms.label.name'))
                                     ->placeholder('Model Y, Model S (Eg. for Tesla)')
                                     ->required()
-                                    ->maxLength(255)
-                                    ->live(onBlur: true)
-                                    ->afterStateUpdated(function ($state, Forms\Set $set): void {
-                                        $set('slug', Str::slug($state));
-                                    }),
-                                Forms\Components\TextInput::make('slug')
-                                    ->label(__('shopper::forms.label.slug'))
-                                    ->disabled()
-                                    ->dehydrated()
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->unique(config('shopper.models.product'), 'slug', ignoreRecord: true),
+                                    ->maxLength(255),
+                                Forms\Components\Checkbox::make('allow_backorder')
+                                    ->label(__('shopper::pages/products.product_can_returned'))
+                                    ->helperText(__('shopper::pages/products.product_can_returned_help_text')),
                             ]),
                     ]),
 
@@ -92,6 +84,17 @@ class Variant extends AbstractPageComponent implements HasForms
 
                 Components\Separator::make(),
 
+                Components\Section::make(__('shopper::pages/products.pricing.title'))
+                    ->description(__('shopper::pages/products.pricing.description'))
+                    ->compact()
+                    ->aside()
+                    ->schema([
+                        Forms\Components\Livewire::make(Pricing::class, ['model' => $this->variant])
+                            ->dehydrated(false),
+                    ]),
+
+                Components\Separator::make(),
+
                 Components\Section::make(__('shopper::pages/settings/menu.location'))
                     ->compact()
                     ->aside()
@@ -100,18 +103,12 @@ class Variant extends AbstractPageComponent implements HasForms
                             ->schema([
                                 Forms\Components\TextInput::make('sku')
                                     ->label(__('shopper::forms.label.sku'))
-                                    ->unique(config('shopper.models.product'), 'sku', ignoreRecord: true)
-                                    ->required()
+                                    ->unique(config('shopper.models.variant'), 'sku', ignoreRecord: true)
                                     ->maxLength(255),
                                 Forms\Components\TextInput::make('barcode')
                                     ->label(__('shopper::forms.label.barcode'))
-                                    ->unique(config('shopper.models.product'), 'barcode', ignoreRecord: true)
+                                    ->unique(config('shopper.models.variant'), 'barcode', ignoreRecord: true)
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('security_stock')
-                                    ->label(__('shopper::forms.label.safety_stock'))
-                                    ->numeric()
-                                    ->default(0)
-                                    ->rules(['integer', 'min:0']),
                             ]),
 
                         Components\Separator::make(),
@@ -127,8 +124,6 @@ class Variant extends AbstractPageComponent implements HasForms
     {
         $this->variant->update($this->form->getState());
         $this->form->model($this->variant)->saveRelationships();
-
-        event(new ProductUpdated($this->variant));
 
         $this->dispatch('onVariantUpdated');
 

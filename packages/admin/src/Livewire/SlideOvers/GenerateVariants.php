@@ -9,15 +9,14 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SaveProductVariantsAction;
 use Shopper\Core\Macros\Arr;
-use Shopper\Core\Models\Attribute;
-use Shopper\Core\Models\AttributeProduct;
-use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Core\Repositories\VariantRepository;
+use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
@@ -25,6 +24,7 @@ use Shopper\Livewire\Components\SlideOverComponent;
  */
 final class GenerateVariants extends SlideOverComponent
 {
+    #[Locked]
     public int $productId;
 
     public array $availableOptions = [];
@@ -55,30 +55,7 @@ final class GenerateVariants extends SlideOverComponent
 
     public function setupProductAttributes(): void
     {
-        $values = AttributeProduct::with(['attribute', 'value'])
-            ->where('product_id', $this->product->id)
-            ->get()
-            ->map(fn ($attributeProduct) => $attributeProduct->value)
-            ->filter(fn ($value) => $value instanceof AttributeValue);
-
-        $options = collect();
-
-        foreach ($this->product->options as $option) {
-            if ($option->hasTextValue()) {
-                continue;
-            }
-
-            $attributeValues = $values->where('attribute_id', $option->id)
-                ->map(fn ($attributeValue) => $this->mapOptionValue($attributeValue))
-                ->toArray();
-
-            $options->push($this->mapOption($option, $attributeValues));
-        }
-
-        $this->availableOptions = $options->groupBy('id')
-            ->map(fn ($group, $key) => \Illuminate\Support\Arr::collapse($group))
-            ->values()
-            ->toArray();
+        $this->availableOptions = MapProductOptions::generate($this->product);
 
         $this->mapVariantPermutations();
     }
@@ -134,25 +111,6 @@ final class GenerateVariants extends SlideOverComponent
     public static function panelMaxWidth(): string
     {
         return '5xl';
-    }
-
-    protected function mapOption(Attribute $attribut, array $values = []): array
-    {
-        return [
-            'id' => $attribut->id,
-            'key' => 'attribute_' . $attribut->id,
-            'name' => $attribut->name,
-            'values' => $values,
-        ];
-    }
-
-    protected function mapOptionValue(AttributeValue $attributeValue): array
-    {
-        return [
-            'id' => $attributeValue->id,
-            'key' => 'value_' . $attributeValue->id,
-            'value' => $attributeValue->value,
-        ];
     }
 
     protected function mapVariantsToProductOptions(array $options, array $variants): array

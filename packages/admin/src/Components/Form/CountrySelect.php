@@ -22,7 +22,7 @@ final class CountrySelect
                         fn (Country $country): array => [
                             $country->id => "<div class='flex items-center gap-2'>
                                                 <img
-                                                    class='h-6 w-6 rounded-full shrink-0 object-cover'
+                                                    class='size-6 rounded-full shrink-0 object-cover'
                                                     src='{$country->svg_flag}'
                                                     alt='{$country->name} flag'
                                                 />

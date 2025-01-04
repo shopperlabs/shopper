@@ -30,8 +30,11 @@
                         <x-shopper::tables.table-cell class="whitespace-no-wrap">
                             <div class="flex items-center gap-2">
                                 {{ $inventory->name }}
+
                                 @if ($inventory->is_default)
-                                    <x-shopper::badge :value="__('shopper::words.default')" style="gray" />
+                                    <x-filament::badge color="gray">
+                                        {{ __('shopper::words.default') }}
+                                    </x-filament::badge>
                                 @endif
                             </div>
                         </x-shopper::tables.table-cell>

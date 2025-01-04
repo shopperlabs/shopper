@@ -169,7 +169,7 @@ class Edit extends Component implements HasForms
         $this->dispatch('product.updated');
 
         Notification::make()
-            ->body(__('shopper::notifications.update', ['item' => __('shopper::pages/products.single')]))
+            ->title(__('shopper::notifications.update', ['item' => __('shopper::pages/products.single')]))
             ->success()
             ->send();
     }

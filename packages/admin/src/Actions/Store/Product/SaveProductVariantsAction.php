@@ -32,13 +32,15 @@ final class SaveProductVariantsAction
             $price = (float) $variantState['price'];
 
             if ($price > 0) {
+                $defaultCurrencyId = (int) shopper_setting('default_currency_id');
+
                 $variant->prices()
-                    ->where('currency_id', (int) shopper_setting('default_currency_id'))
+                    ->where('currency_id', $defaultCurrencyId)
                     ->delete();
 
                 $variant->prices()->create([
                     'amount' => $price,
-                    'currency_id' => (int) shopper_setting('default_currency_id'),
+                    'currency_id' => $defaultCurrencyId,
                 ]);
             }
 

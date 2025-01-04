@@ -50,6 +50,11 @@ return [
         'variants' => [
             'title' => 'Gestion du stock pour cette variante',
             'select' => 'Sélectionner l\'inventaire',
+            'add' => 'Ajouter une variante',
+            'options' => [
+                'title' => 'Attributs de la variante',
+                'description' => 'Sélectionner les options d\'attributs pour cette variante.',
+            ],
         ],
     ],
 
@@ -66,11 +71,6 @@ return [
         'search_label' => 'Recherche de variantes',
         'search_placeholder' => 'Rechercher une variante du produit',
         'variant_information' => 'Informations sur la variante',
-
-        'modal' => [
-            'title' => 'À propos de la variation',
-            'description' => 'Nom et prix de la variante. Si le prix est vide, le prix du produit sera appliqué.',
-        ],
     ],
 
     'reviews' => [
@@ -157,12 +157,13 @@ return [
         'seo_update' => 'Le référencement du produit a été mis à jour avec succès !',
         'shipping_update' => 'L\'expédition du produit a été mise à jour avec succès !',
         'variation_generate' => 'Variantes de produit sauvegardées avec succès',
-        'variation_create' => 'La variation du produit a été ajoutée avec succès !',
-        'variation_delete' => 'La variation a été supprimée avec succès !',
+        'variation_create' => 'La variante a été créée avec succès !',
+        'variation_delete' => 'La variante a été supprimée avec succès !',
         'variation_update' => 'La variante a été mise à jour avec succès !',
         'related_added' => 'Le produit a été ajouté avec succès aux produits connexes !',
         'remove_related' => 'Le produit a été supprimé avec succès des produits connexes !',
         'manage_pricing' => 'La tarification de votre produit a été mis à jour !',
+        'variant_already_exists' => 'Cette variante existe déjà',
     ],
 
     'pricing' => [

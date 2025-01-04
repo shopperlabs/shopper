@@ -163,7 +163,18 @@
 
             @if (! $product->isVariant())
                 <div x-cloak x-show="activeTab === 'price'">
-                    <livewire:shopper-products.pricing :model="$product" />
+                    <x-shopper::container class="space-y-8">
+                        <div>
+                            <x-filament::section.heading>
+                                {{ __('shopper::pages/products.pricing.title') }}
+                            </x-filament::section.heading>
+                            <x-filament::section.description class="mt-1 max-w-2xl">
+                                {{ __('shopper::pages/products.pricing.description') }}
+                            </x-filament::section.description>
+                        </div>
+
+                        <livewire:shopper-products.pricing :model="$product" />
+                    </x-shopper::container>
                 </div>
             @endif
 

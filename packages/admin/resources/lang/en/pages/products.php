@@ -50,6 +50,11 @@ return [
         'variants' => [
             'title' => 'Stock management for this variant',
             'select' => 'Select inventory',
+            'add' => 'Add new variant',
+            'options' => [
+                'title' => 'Variant attributes',
+                'description' => 'Select attribute options for this variant.',
+            ],
         ],
     ],
 
@@ -66,11 +71,6 @@ return [
         'search_label' => 'Search variant',
         'search_placeholder' => 'Search product variant',
         'variant_information' => 'Variant information',
-
-        'modal' => [
-            'title' => 'About the variation',
-            'description' => 'Variant name and price. If the price is empty, the price of the product will be applied.',
-        ],
     ],
 
     'reviews' => [
@@ -157,12 +157,13 @@ return [
         'seo_update' => 'Product SEO successfully updated!',
         'shipping_update' => 'Product shipping successfully updated!',
         'variation_generate' => 'Product Variants successfully saved',
-        'variation_create' => 'Product variation successfully added!',
-        'variation_delete' => 'The variation has successfully removed!',
+        'variation_create' => 'Product variant successfully added!',
+        'variation_delete' => 'The variant has successfully removed!',
         'variation_update' => 'Variant successfully updated!',
         'related_added' => 'The product has successfully added to the related products!',
         'remove_related' => 'The product has successfully removed from the related products!',
         'manage_pricing' => 'Your product pricing has been updated!',
+        'variant_already_exists' => 'This variant already exists!',
     ],
 
     'pricing' => [

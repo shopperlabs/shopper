@@ -33,9 +33,9 @@ final class CreateProductAction
             }
         }
 
-        $quantity = (int) data_get($state, 'quantity');
+        $quantity = data_get($state, 'quantity');
 
-        if ($quantity && $quantity > 0) {
+        if ($quantity && (int) $quantity > 0) {
             app()->call(InitialQuantityInventory::class, [
                 'quantity' => $quantity,
                 'product' => $product,

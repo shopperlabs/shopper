@@ -16,7 +16,10 @@ final class SavePricingAction
 
             if ($amount) {
                 Price::query()->updateOrCreate(
-                    attributes: ['currency_id' => $key],
+                    attributes: [
+                        'currency_id' => $key,
+                        'priceable_id' => $model->id, // @phpstan-ignore-line
+                    ],
                     values: array_merge($price, [
                         'priceable_id' => $model->id, // @phpstan-ignore-line
                         'priceable_type' => $model->getMorphClass(),

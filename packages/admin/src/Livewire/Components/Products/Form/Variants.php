@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Shopper\Core\Models\Product;
 use Shopper\Core\Repositories\VariantRepository;
 
 class Variants extends Component implements HasForms, HasTable
@@ -40,7 +39,7 @@ class Variants extends Component implements HasForms, HasTable
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
                     ->collection(config('shopper.media.storage.thumbnail_collection'))
                     ->label(__('shopper::forms.label.thumbnail'))
-                    ->circular(),
+                    ->square(),
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('shopper::forms.label.name'))
                     ->searchable()
@@ -84,23 +83,20 @@ class Variants extends Component implements HasForms, HasTable
                     ),
             ])
             ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\Action::make('edit')
-                        ->label(__('shopper::forms.actions.edit'))
-                        ->icon('untitledui-edit-04')
-                        ->action(
-                            fn (Product $record) => $this->redirectRoute(
-                                name: 'shopper.products.variant',
-                                parameters: ['variantId' => $record->id, 'product' => $this->product],
-                                navigate: true
-                            ),
+                Tables\Actions\Action::make('edit')
+                    ->label(__('shopper::forms.actions.edit'))
+                    ->icon('untitledui-edit-04')
+                    ->action(
+                        fn ($record) => $this->redirectRoute(
+                            name: 'shopper.products.variant',
+                            parameters: ['productId' => $this->product->id, 'variantId' => $record->id],
+                            navigate: true
                         ),
-                    Tables\Actions\DeleteAction::make()
-                        ->icon('untitledui-trash-03')
-                        ->modalIcon('untitledui-trash-03')
-                        ->successNotificationTitle(__('shopper::pages/products.notifications.variation_delete')),
-                ])
-                    ->tooltip('Actions'),
+                    ),
+                Tables\Actions\DeleteAction::make()
+                    ->icon('untitledui-trash-03')
+                    ->modalIcon('untitledui-trash-03')
+                    ->successNotificationTitle(__('shopper::pages/products.notifications.variation_delete')),
             ])
             ->groupedBulkActions([
                 Tables\Actions\DeleteBulkAction::make()
