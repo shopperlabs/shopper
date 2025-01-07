@@ -58,7 +58,7 @@ it('product can choose attributes', function (): void {
         ])
         ->call('store')
         ->assertHasNoErrors()
-        ->assertDispatched('closePanel');
+        ->assertRedirectToRoute('shopper.products.edit', ['product' => $this->product->id, 'tab' => 'attributes']);
 
     expect($this->product->options->count())
         ->toBe(2);
