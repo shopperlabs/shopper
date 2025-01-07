@@ -13,7 +13,7 @@ use Shopper\Core\Models\Inventory;
 use Shopper\Core\Models\Product;
 use Shopper\Livewire\Components\Products\Form\Edit;
 use Shopper\Livewire\Pages;
-use Shopper\Livewire\SlideOvers\AddProductForm;
+use Shopper\Livewire\SlideOvers\AddProduct;
 use Shopper\Tests\Admin\Features\TestCase;
 
 use function Pest\Laravel\get;
@@ -34,7 +34,7 @@ it('can render products page', function (): void {
 });
 
 it('create a new product', function (): void {
-    livewire(AddProductForm::class)
+    livewire(AddProduct::class)
         ->fillForm([
             'type' => ProductType::Variant(),
             'name' => fake()->name(),
@@ -53,7 +53,7 @@ it('create a new product', function (): void {
 it('create new product with stock', function (): void {
     Inventory::factory(['is_default' => true])->create();
 
-    livewire(AddProductForm::class)
+    livewire(AddProduct::class)
         ->fillForm([
             'type' => ProductType::Variant(),
             'name' => fake()->name(),
@@ -84,7 +84,7 @@ it('create new product with associations', function (): void {
     $categories = Category::factory(['is_enabled' => true])->count(3)->create();
     $channels = Channel::factory(['is_enabled' => true])->count(2)->create();
 
-    livewire(AddProductForm::class)
+    livewire(AddProduct::class)
         ->fillForm([
             'type' => ProductType::Variant(),
             'name' => fake()->name(),
@@ -110,7 +110,7 @@ it('create new product with associations', function (): void {
 });
 
 it('redirect to edit page after create product', function (): void {
-    livewire(AddProductForm::class)
+    livewire(AddProduct::class)
         ->fillForm([
             'type' => ProductType::Variant(),
             'name' => fake()->name(),

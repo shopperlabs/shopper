@@ -20,6 +20,7 @@ use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
 use Shopper\Core\Enum\ProductType;
+use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasPrices;
@@ -67,6 +68,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 #[ObservedBy(ProductObserver::class)]
 class Product extends Model implements ReviewRateable, SpatieHasMedia
 {
+    use HasDimensions;
     use HasDiscounts;
     use HasFactory;
     use HasMedia;

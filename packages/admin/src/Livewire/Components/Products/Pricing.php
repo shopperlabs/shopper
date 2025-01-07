@@ -63,6 +63,7 @@ class Pricing extends Component implements HasForms, HasTable
             ->headerActions([
                 Tables\Actions\Action::make('add')
                     ->label(__('shopper::pages/products.pricing.add'))
+                    ->color('gray')
                     ->action(
                         fn () => $this->dispatch(
                             'openPanel',

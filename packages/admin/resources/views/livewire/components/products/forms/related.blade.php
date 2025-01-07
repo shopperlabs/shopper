@@ -27,13 +27,13 @@
         @if ($relatedProducts->isNotEmpty())
             <div role="list" class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-8">
                 @foreach ($relatedProducts as $relatedProduct)
-                    <div class="group relative">
+                    <div wire:key="{{ $relatedProduct->slug }}" class="group relative">
                         <div class="relative">
-                            <div class="h-70 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+                            <div class="overflow-hidden bg-gray-100 dark:bg-gray-800">
                                 <img
                                     src="{{ $relatedProduct->getFirstMediaUrl(config('shopper.media.storage.thumbnail_collection')) }}"
                                     alt="{{ $relatedProduct->name }} Thumbnail"
-                                    class="h-full w-full max-w-none object-cover object-center"
+                                    class="h-40 w-full max-w-none object-cover object-center rounded-lg"
                                 />
                             </div>
                             <div class="absolute right-4 top-4">
@@ -41,10 +41,8 @@
                                     :actions="[
                                         ($this->removeAction)(['id' => $relatedProduct->id]),
                                     ]"
-                                    :badge="true"
-                                    :icon-button="true"
                                     icon="untitledui-dots-vertical"
-                                    color="primary"
+                                    color="gray"
                                     size="md"
                                     dropdown-placement="bottom-start"
                                 />
@@ -58,12 +56,11 @@
                         </div>
                         <div class="mt-4 flex items-start justify-between">
                             <div>
-                                <h3 class="text-sm text-gray-700 dark:text-gray-300">
-                                    {{ $relatedProduct->name }}
+                                <h3 class="text-sm">
+                                    <x-shopper::link class="text-gray-950 font-semibold hover:text-gray-700 dark:text-gray-300 dark:hover:text-white" :href="route('shopper.products.edit', $relatedProduct)">
+                                        {{ $relatedProduct->name }}
+                                    </x-shopper::link>
                                 </h3>
-                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                    {{ $relatedProduct->getPriceAmount()?->formatted }}
-                                </p>
                             </div>
                             <div class="flex shrink-0 items-center">
                                 <div

@@ -27,7 +27,7 @@ use Shopper\Livewire\Components\SlideOverComponent;
 /**
  * @property Form $form
  */
-class AddProductForm extends SlideOverComponent implements HasForms
+class AddProduct extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 

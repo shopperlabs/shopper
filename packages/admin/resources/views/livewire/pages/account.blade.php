@@ -1,19 +1,28 @@
-<x-shopper::container>
-    <x-shopper::heading :title="__('shopper::pages/auth.account.title')" />
+<x-shopper::container class="py-5 space-y-5">
+    <x-shopper::breadcrumb :back="route('shopper.dashboard')">
+        <x-untitledui-chevron-left class="size-4 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+        <span class="truncate text-gray-500 dark:text-gray-400">
+            {{ __('shopper::pages/auth.account.title') }}
+        </span>
+    </x-shopper::breadcrumb>
 
-    <livewire:shopper-account.profile />
+    <x-shopper::heading :title="__('shopper::pages/auth.account.title')" class="border-b border-gray-200 dark:border-white/10 pb-5" />
 
-    <x-shopper::separator />
+    <div>
+        <livewire:shopper-account.profile />
 
-    <livewire:shopper-account.password />
-
-    @if (config('shopper.auth.2fa_enabled'))
         <x-shopper::separator />
 
-        <livewire:shopper-account.two-factor />
-    @endif
+        <livewire:shopper-account.password />
 
-    <x-shopper::separator />
+        @if (config('shopper.auth.2fa_enabled'))
+            <x-shopper::separator />
 
-    <livewire:shopper-account.devices />
+            <livewire:shopper-account.two-factor />
+        @endif
+
+        <x-shopper::separator />
+
+        <livewire:shopper-account.devices />
+    </div>
 </x-shopper::container>

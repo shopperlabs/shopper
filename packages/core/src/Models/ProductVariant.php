@@ -13,6 +13,7 @@ use Shopper\Core\Database\Factories\ProductVariantFactory;
 use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
 use Shopper\Core\Enum\Dimension\Weight;
+use Shopper\Core\Models\Traits\HasDimensions;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasPrices;
 use Shopper\Core\Models\Traits\HasStock;
@@ -48,6 +49,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 #[ObservedBy(ProductVariantObserver::class)]
 class ProductVariant extends Model implements SpatieHasMedia
 {
+    use HasDimensions;
     use HasFactory;
     use HasMedia;
     use HasPrices;

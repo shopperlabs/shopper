@@ -24,10 +24,8 @@ class Shipping extends Component implements HasForms
 
     public ?array $data = [];
 
-    public function mount($product): void
+    public function mount(): void
     {
-        $this->product = $product;
-
         $this->form->fill($this->product->toArray());
     }
 

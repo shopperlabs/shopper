@@ -25,17 +25,11 @@ class VariantStock extends Component implements HasActions, HasForms
 
     public $variant;
 
-    public function mount($record): void
-    {
-        $this->variant = $record;
-    }
-
     public function stockAction(): Action
     {
         return Action::make('stock')
             ->label(__('shopper::forms.actions.update'))
             ->color('gray')
-            ->modal()
             ->icon('untitledui-package')
             ->modalHeading(__('shopper::pages/products.modals.variants.title'))
             ->modalWidth(MaxWidth::ExtraLarge)
@@ -90,11 +84,11 @@ class VariantStock extends Component implements HasActions, HasForms
                     ->success()
                     ->send();
 
-                $this->dispatch('updateVariantInventory');
+                $this->dispatch('$refresh');
             });
     }
 
-    #[On('updateVariantInventory')]
+    // #[On('updateVariantInventory')]
     public function render(): View
     {
         return view('shopper::livewire.components.products.variant-stock', [

@@ -15,16 +15,22 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
-use Livewire\Attributes\On;
+use Livewire\Attributes\Lazy;
 use Livewire\Component;
 use Shopper\Core\Repositories\VariantRepository;
 
+#[Lazy]
 class Variants extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
 
     public $product;
+
+    public function placeholder(): View
+    {
+        return view('shopper::components.skeleton.products.section');
+    }
 
     public function table(Table $table): Table
     {
@@ -47,6 +53,9 @@ class Variants extends Component implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('sku')
                     ->label(__('shopper::layout.tables.sku'))
                     ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('position')
+                    ->label(__('shopper::forms.label.position'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stock')
                     ->label(__('shopper::layout.tables.current_stock'))
@@ -121,7 +130,6 @@ class Variants extends Component implements HasForms, HasTable
             ->emptyStateIcon('untitledui-book-open');
     }
 
-    #[On('variants.changed')]
     public function render(): View
     {
         return view('shopper::livewire.components.products.forms.variants');

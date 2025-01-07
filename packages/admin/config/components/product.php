@@ -42,8 +42,9 @@ return [
 
         'modals.related-products-list' => Livewire\Modals\RelatedProductsList::class,
 
-        'slide-overs.add-product' => Livewire\SlideOvers\AddProductForm::class,
-        'slide-overs.add-variant' => Livewire\SlideOvers\AddVariantForm::class,
+        'slide-overs.add-product' => Livewire\SlideOvers\AddProduct::class,
+        'slide-overs.add-variant' => Livewire\SlideOvers\AddVariant::class,
+        'slide-overs.update-variant' => Livewire\SlideOvers\UpdateVariant::class,
         'slide-overs.generate-variants' => Livewire\SlideOvers\GenerateVariants::class,
         'slide-overs.attribute-form' => Livewire\SlideOvers\AttributeForm::class,
         'slide-overs.choose-product-attributes' => Livewire\SlideOvers\ChooseProductAttributes::class,

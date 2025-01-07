@@ -42,6 +42,7 @@ return [
     'weight_dimension' => 'Poids et dimensions',
     'weight_dimension_help_text' => 'Utilisé pour calculer les frais d\'expédition lors du passage à la caisse et pour étiqueter les prix lors du traitement des commandes.',
     'external_id_description' => 'L\'identifiant original de votre produit dans le service externe',
+    'allow_backorder' => 'Autoriser les commandes différées',
 
     'modals' => [
         'title' => 'Supprimer ce/cette :item',

@@ -42,6 +42,7 @@ return [
     'weight_dimension' => 'Weight and Dimension',
     'weight_dimension_help_text' => 'Used to calculate shipping charges during checkout and to label prices during order processing.',
     'external_id_description' => 'The original identifier of your product from the external supplier',
+    'allow_backorder' => 'Allow backorder',
 
     'modals' => [
         'title' => 'Delete this :item',

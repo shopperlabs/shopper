@@ -11,18 +11,24 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\On;
+use Livewire\Attributes\Lazy;
 use Livewire\Component;
 use Shopper\Actions\Store\Product\DetachAttributesToProductAction;
 use Shopper\Components\Tables\IconColumn;
 use Shopper\Core\Models\AttributeProduct;
 
+#[Lazy]
 class Attributes extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;
 
     public $product;
+
+    public function placeholder(): View
+    {
+        return view('shopper::components.skeleton.products.section');
+    }
 
     public function table(Table $table): Table
     {
@@ -84,7 +90,6 @@ class Attributes extends Component implements HasForms, HasTable
             ->emptyStateIcon('untitledui-puzzle-piece');
     }
 
-    #[On('product.attributes.added')]
     public function render(): View
     {
         return view('shopper::livewire.components.products.forms.attributes');

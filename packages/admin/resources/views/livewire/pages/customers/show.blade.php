@@ -1,6 +1,6 @@
 <div x-data="{
         options: ['profile', 'address', 'orders'],
-        currentTab: 'profile',
+        currentTab: 'profile'
     }"
      class="py-5"
 >

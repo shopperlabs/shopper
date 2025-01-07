@@ -45,7 +45,7 @@ class CollectionProductsList extends ModalComponent
                 operator: 'like',
                 value: '%' . $this->search . '%'
             )
-            ->get(['name', 'price_amount', 'id'])
+            ->get(['name', 'id'])
             ->except($this->exceptProductIds);
     }
 

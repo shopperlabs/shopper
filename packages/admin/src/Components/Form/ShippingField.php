@@ -57,6 +57,17 @@ final class ShippingField
                         ->options(Volume::toArray())
                         ->default(Volume::ML)
                 ),
+
+            TextInputSelect::make('depth_value')
+                ->label(__('shopper::forms.label.depth'))
+                ->numeric()
+                ->select(
+                    fn () => Forms\Components\Select::make('depth_unit')
+                        ->selectablePlaceholder(false)
+                        ->native(false)
+                        ->options(Length::toArray())
+                        ->default(Length::CM)
+                ),
         ];
     }
 }

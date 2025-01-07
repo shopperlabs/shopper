@@ -22,7 +22,7 @@ use Shopper\Livewire\Components\SlideOverComponent;
 /**
  * @property-read Product $product
  */
-final class GenerateVariants extends SlideOverComponent
+class GenerateVariants extends SlideOverComponent
 {
     #[Locked]
     public int $productId;
@@ -48,9 +48,10 @@ final class GenerateVariants extends SlideOverComponent
             ->success()
             ->send();
 
-        $this->dispatch('variants.changed');
-
-        $this->closePanel();
+        $this->redirect(
+            route('shopper.products.edit', ['product' => $this->product, 'tab' => 'variants']),
+            navigate: true
+        );
     }
 
     public function setupProductAttributes(): void

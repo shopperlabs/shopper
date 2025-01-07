@@ -12,6 +12,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Shopper\Core\Events\Products\Deleted;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -22,6 +23,9 @@ class Edit extends AbstractPageComponent implements HasActions, HasForms
     use InteractsWithForms;
 
     public $product;
+
+    #[Url(as: 'tab')]
+    public string $activeTab = 'detail';
 
     public function mount(): void
     {

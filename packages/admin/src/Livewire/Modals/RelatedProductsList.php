@@ -46,9 +46,8 @@ class RelatedProductsList extends ModalComponent
     public function addSelectedProducts(): void
     {
         $currentProducts = $this->product->relatedProducts->pluck('id')->toArray();
-        $this->product->relatedProducts()->sync(array_merge($this->selectedProducts, $currentProducts));
 
-        $this->dispatch('product.updated');
+        $this->product->relatedProducts()->sync(array_merge($this->selectedProducts, $currentProducts));
 
         Notification::make()
             ->title(__('shopper::layout.status.added'))
@@ -56,7 +55,10 @@ class RelatedProductsList extends ModalComponent
             ->success()
             ->send();
 
-        $this->closeModal();
+        $this->redirect(
+            route('shopper.products.edit', ['product' => $this->product, 'tab' => 'related']),
+            navigate: true
+        );
     }
 
     public function render(): View

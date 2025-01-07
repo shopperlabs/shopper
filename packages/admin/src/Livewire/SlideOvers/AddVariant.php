@@ -33,7 +33,7 @@ use Shopper\Livewire\Components\SlideOverComponent;
  * @property Collection $options
  * @property array $variantsOptions
  */
-class AddVariantForm extends SlideOverComponent implements HasForms
+class AddVariant extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
@@ -176,7 +176,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
                     ])
                     ->submitAction(new HtmlString(Blade::render(<<<'BLADE'
                         <x-shopper::buttons.primary type="submit" wire:loading.attr="disabled">
-                            <x-shopper::loader wire:loading wire:target="store" class="text-white" />
+                            <x-shopper::loader wire:loading wire:target="save" class="text-white" />
                             {{ __('shopper::forms.actions.save') }}
                         </x-shopper::buttons.primary>
                      BLADE))),
@@ -211,7 +211,7 @@ class AddVariantForm extends SlideOverComponent implements HasForms
     protected function variantAlreadyExist(array $optionsValues = []): bool
     {
         foreach ($this->variantsOptions as $option) {
-            if (array_diff(array_values($optionsValues), $option['values']) === []) {
+            if (array_diff(array_values($optionsValues), $option) === []) {
                 return true;
             }
         }
@@ -239,9 +239,9 @@ class AddVariantForm extends SlideOverComponent implements HasForms
             ->select('product_id', 'id')
             ->where('product_id', $this->productId)
             ->get()
-            ->map(fn (ProductVariant $variant): array => [ // @phpstan-ignore-line
-                'values' => $variant->values->pluck('id')->toArray(),
-            ])
+            ->map(
+                fn (ProductVariant $variant): array => $variant->values->pluck('id')->toArray() // @phpstan-ignore-line
+            )
             ->toArray();
     }
 

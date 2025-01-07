@@ -183,9 +183,10 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
             ->success()
             ->send();
 
-        $this->dispatch('product.attributes.added');
-
-        $this->closePanel();
+        $this->redirect(
+            route('shopper.products.edit', ['product' => $this->productId, 'tab' => 'attributes']),
+            navigate: true
+        );
     }
 
     public static function panelMaxWidth(): string

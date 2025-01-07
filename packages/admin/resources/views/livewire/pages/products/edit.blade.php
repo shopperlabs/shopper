@@ -24,7 +24,7 @@
                 'shipping',
                 'related'
             ],
-            activeTab: 'detail'
+            activeTab: @entangle('activeTab')
         }"
     >
         <div @class([
@@ -155,10 +155,10 @@
 
         <div class="mt-8">
             <div x-show="activeTab === 'detail'">
-                <livewire:shopper-products.form.edit :product="$product" />
+                <livewire:shopper-products.form.edit :$product />
             </div>
             <div x-show="activeTab === 'media'">
-                <livewire:shopper-products.form.media :product="$product" />
+                <livewire:shopper-products.form.media :$product />
             </div>
 
             @if (! $product->isVariant())
@@ -180,37 +180,37 @@
 
             @if ($product->isVirtual())
                 <div x-cloak x-show="activeTab === 'files'">
-                    <livewire:shopper-products.form.files :product="$product" />
+                    <livewire:shopper-products.form.files :$product />
                 </div>
             @endif
 
             @if (\Shopper\Feature::enabled('attribute') && $product->canUseAttributes())
                 <div x-cloak x-show="activeTab === 'attributes'">
-                    <livewire:shopper-products.form.attributes :product="$product" />
+                    <livewire:shopper-products.form.attributes :$product />
                 </div>
             @endif
 
             @if ($product->canUseVariants())
                 <div x-cloak x-show="activeTab === 'variants'">
-                    <livewire:shopper-products.form.variants :product="$product" />
+                    <livewire:shopper-products.form.variants :$product />
                 </div>
             @endif
 
             <div x-cloak x-show="activeTab === 'inventory'">
-                <livewire:shopper-products.form.inventory :product="$product" />
+                <livewire:shopper-products.form.inventory :$product />
             </div>
             <div x-cloak x-show="activeTab === 'seo'">
-                <livewire:shopper-products.form.seo :product="$product" />
+                <livewire:shopper-products.form.seo :$product />
             </div>
 
             @if ($product->canUseShipping())
                 <div x-cloak x-show="activeTab === 'shipping'">
-                    <livewire:shopper-products.form.shipping :product="$product" />
+                    <livewire:shopper-products.form.shipping :$product />
                 </div>
             @endif
 
             <div x-cloak x-show="activeTab === 'related'">
-                <livewire:shopper-products.form.related-products :product="$product" />
+                <livewire:shopper-products.form.related-products :$product />
             </div>
         </div>
     </div>

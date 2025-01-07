@@ -1,3 +1,3 @@
-<a {{ $attributes }} wire:navigate>
+<a {{ $attributes }} wire:navigate.hover>
     {{ $slot }}
 </a>
