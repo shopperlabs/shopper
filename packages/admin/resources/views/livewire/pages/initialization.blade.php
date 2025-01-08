@@ -1,6 +1,6 @@
 <div class="min-h-screen lg:grid lg:grid-cols-5 lg:gap-x-20">
     <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-20 lg:col-span-3 lg:max-w-xl">
-        <livewire:shopper-initialize-wizard show-step="shopper-initialize-store-social-link" />
+        <livewire:shopper-initialize-wizard />
     </main>
     <div class="hidden min-h-full p-1.5 lg:col-span-2 lg:flex">
         <div
