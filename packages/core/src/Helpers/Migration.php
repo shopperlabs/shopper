@@ -77,8 +77,8 @@ abstract class Migration extends BaseMigration
 
     public function removeForeignKeyAndColumn(Blueprint $table, string $column): void
     {
-        $table->dropIndex([$column]);
         $table->dropForeign([$column]);
+        $table->dropIndex([$column]);
         $table->dropColumn($column);
     }
 }

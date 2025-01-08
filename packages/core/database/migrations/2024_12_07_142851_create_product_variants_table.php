@@ -29,7 +29,7 @@ return new class extends Migration
         Schema::create($this->getTableName('product_variants'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('sku')->unique()->nullable();
             $table->string('barcode')->unique()->nullable();
             $table->string('ean')->unique()->nullable();
