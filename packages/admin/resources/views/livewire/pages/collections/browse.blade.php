@@ -1,3 +1,7 @@
+@php
+    $total = $this->table->getRecords()->total();
+@endphp
+
 <x-shopper::container class="py-5">
     <x-shopper::heading :title="__('shopper::pages/collections.menu')">
         <x-slot name="action">

@@ -25,7 +25,7 @@ class RelatedProducts extends Component implements HasActions, HasForms
 
     public function mount($product): void
     {
-        $this->product = $product;
+        $this->product->load('relatedProducts');
     }
 
     public function placeholder(): View

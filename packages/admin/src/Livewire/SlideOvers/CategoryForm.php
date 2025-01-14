@@ -111,8 +111,12 @@ class CategoryForm extends SlideOverComponent implements HasForms
     public function save(): void
     {
         if ($this->category->id) {
+            $this->authorize('edit_categories', $this->category);
+
             $this->category->update($this->form->getState());
         } else {
+            $this->authorize('add_categories');
+
             $category = (new CategoryRepository)->create($this->form->getState());
             $this->form->model($category)->saveRelationships();
         }
@@ -122,11 +126,10 @@ class CategoryForm extends SlideOverComponent implements HasForms
             ->success()
             ->send();
 
-        $this->dispatch('category-save');
-
-        $this->closePanel();
-
-        $this->form->fill();
+        $this->redirectRoute(
+            name: 'shopper.categories.index',
+            navigate: true,
+        );
     }
 
     public function render(): View

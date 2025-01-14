@@ -62,4 +62,4 @@ it('product can choose attributes', function (): void {
 
     expect($this->product->options->count())
         ->toBe(2);
-});
+})->group('product');

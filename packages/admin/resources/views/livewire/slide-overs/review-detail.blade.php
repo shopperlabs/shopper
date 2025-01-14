@@ -34,10 +34,6 @@
                                     @if ($review->reviewrateable->sku)
                                         <span>{{ $review->reviewrateable->sku }} -</span>
                                     @endif
-
-                                    <span class="border-b border-dashed border-primary-500 pb-0 text-primary-500">
-                                        {{ $review->reviewrateable->getPriceAmount()?->formatted ?? __('N/A') }}
-                                    </span>
                                 </p>
                             </dd>
                         </div>

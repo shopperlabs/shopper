@@ -1,5 +1,5 @@
 @php
-    $total = $this->table->getQuery()->count();
+    $total = $this->table->getRecords()->total();
 @endphp
 
 <x-shopper::container class="py-5">

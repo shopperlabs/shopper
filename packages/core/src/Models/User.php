@@ -31,6 +31,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property Carbon | null $birth_date
  * @property string | null $two_factor_recovery_codes
  * @property string | null $two_factor_secret
+ * @property-read \Illuminate\Support\Collection | Order[] $orders
  */
 class User extends Authenticatable
 {

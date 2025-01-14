@@ -33,6 +33,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         'customer',
                         'items',
                         'zone',
+                        'items.product',
+                        'items.product.media',
                     ])
                     ->latest()
             )
@@ -54,16 +56,16 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                     ->label(__('shopper::words.customer'))
                     ->searchable()
                     ->sortable()
-                    ->formatStateUsing(fn (Order $model): View => view(
+                    ->formatStateUsing(fn (Order $record): View => view(
                         'shopper::livewire.tables.cells.orders.customer',
-                        ['order' => $model->load('customer')]
+                        ['order' => $record]
                     ))
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('id')
                     ->label(__('shopper::words.purchased'))
-                    ->formatStateUsing(fn (Order $model): View => view(
+                    ->formatStateUsing(fn (Order $record): View => view(
                         'shopper::livewire.tables.cells.orders.purchased',
-                        ['order' => $model->load('items')]
+                        ['order' => $record]
                     )),
                 Tables\Columns\TextColumn::make('currency_code')
                     ->label(__('shopper::forms.label.price_amount'))
@@ -86,15 +88,12 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                             parameters: ['order' => $record]
                         ),
                     ),
-            ])
-            ->filters([]);
+            ]);
     }
 
     public function render(): View
     {
-        return view('shopper::livewire.pages.orders.index', [
-            'total' => Order::query()->count(),
-        ])
+        return view('shopper::livewire.pages.orders.index')
             ->title(__('shopper::pages/orders.menu'));
     }
 }

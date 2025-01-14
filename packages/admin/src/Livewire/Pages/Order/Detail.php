@@ -11,6 +11,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\WithPagination;
 use Shopper\Core\Enum\OrderStatus;
@@ -20,8 +21,12 @@ use Shopper\Core\Events\Orders\Completed;
 use Shopper\Core\Events\Orders\Paid;
 use Shopper\Core\Events\Orders\Registered;
 use Shopper\Core\Models\Order;
+use Shopper\Core\Models\User;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
+/**
+ * @property-read User|null $customer
+ */
 class Detail extends AbstractPageComponent implements HasActions, HasForms
 {
     use InteractsWithActions;
@@ -32,12 +37,14 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
 
     public int $perPage = 3;
 
-    #[Validate('required')]
+    #[Validate('required|string')]
     public ?string $notes = null;
 
     public function mount(): void
     {
         $this->authorize('read_orders');
+
+        $this->order->load('items', 'shippingAddress', 'billingAddress');
     }
 
     public function goToOrder(int $id): void
@@ -57,6 +64,14 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
             ->body(__('shopper::pages/orders.notifications.note_added'))
             ->success()
             ->send();
+    }
+
+    #[Computed(persist: true)]
+    public function customer(): ?User
+    {
+        return User::query()
+            ->withCount('orders')
+            ->find($this->order->customer_id);
     }
 
     public function cancelOrderAction(): Action
@@ -132,7 +147,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
         return view('shopper::livewire.pages.orders.detail', [
             'items' => $this->order
                 ->items()
-                ->with('product')
+                ->with('product', 'product.media', 'product.prices')
                 ->simplePaginate($this->perPage),
             'nextOrder' => Order::query()
                 ->where('id', '>', $this->order->id)
@@ -142,9 +157,6 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
                 ->where('id', '<', $this->order->id)
                 ->latest('id')
                 ->first(),
-            'billingAddress' => $this->order->billingAddress?->load('customer'),
-            'shippingAddress' => $this->order->shippingAddress?->load('customer'),
-            'shippingOption' => $this->order->shippingOption,
         ])
             ->title(__('shopper::pages/orders.show_title', ['number' => $this->order->number]));
     }

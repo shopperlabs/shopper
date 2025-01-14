@@ -15,7 +15,6 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Livewire\Attributes\On;
 use Shopper\Core\Enum\DiscountApplyTo;
 use Shopper\Core\Enum\DiscountEligibility;
 use Shopper\Core\Models\Discount;
@@ -36,7 +35,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Discount::with('zone')->latest())
+            ->query(Discount::with('zone', 'zone.currency')->latest())
             ->columns([
                 Tables\Columns\TextColumn::make('code')
                     ->label(__('shopper::forms.label.code'))
@@ -144,12 +143,9 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->emptyStateHeading(__('shopper::pages/discounts.empty_message'));
     }
 
-    #[On('discount-save')]
     public function render(): View
     {
-        return view('shopper::livewire.pages.discounts.index', [
-            'total' => Discount::query()->count(),
-        ])
+        return view('shopper::livewire.pages.discounts.index')
             ->title(__('shopper::pages/discounts.menu'));
     }
 }

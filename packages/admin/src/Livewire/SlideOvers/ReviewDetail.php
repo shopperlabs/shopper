@@ -22,6 +22,11 @@ class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
 
     public Review $review;
 
+    public function mount(): void
+    {
+        $this->review->load('author', 'reviewrateable');
+    }
+
     public function approvedAction(): Action
     {
         return Action::make('approved')
@@ -30,13 +35,12 @@ class ReviewDetail extends SlideOverComponent implements HasActions, HasForms
             ->action(function (): void {
                 $this->review->updatedApproved(! $this->review->approved);
 
-                $this->dispatch('reviewUpdated');
-                $this->closePanel();
-
                 Notification::make()
                     ->title(__('shopper::pages/products.reviews.approved_message'))
                     ->success()
                     ->send();
+
+                $this->redirectRoute(name: 'shopper.reviews.index', navigate: true);
             });
     }
 

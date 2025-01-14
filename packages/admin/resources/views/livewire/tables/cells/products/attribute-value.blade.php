@@ -5,7 +5,7 @@
 <div>
     @if($record->attribute_value_id)
         @php
-            $attributeValue = \Shopper\Core\Models\AttributeValue::with('attribute')->find($record->attribute_value_id);
+            $attributeValue = $record->value;
         @endphp
 
         <span class="inline-flex items-center text-sm leading-6 gap-2 text-gray-500 dark:text-gray-400">

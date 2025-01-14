@@ -34,7 +34,7 @@ class Attributes extends Component implements HasForms, HasTable
     {
         return $table
             ->query(
-                AttributeProduct::with(['attribute', 'value'])
+                AttributeProduct::with(['attribute', 'value', 'value.attribute'])
                     ->where('product_id', $this->product->id)
             )
             ->columns([

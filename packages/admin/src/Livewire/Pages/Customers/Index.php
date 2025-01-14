@@ -14,7 +14,6 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Shopper\Core\Enum\OrderStatus;
-use Shopper\Core\Models\Country;
 use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -33,8 +32,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(
                 (new UserRepository)
-                    ->with(['roles', 'addresses'])
                     ->query()
+                    ->with(['addresses', 'addresses.country'])
                     ->scopes('customers')
                     ->latest()
             )
@@ -52,7 +51,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                 Tables\Columns\TextColumn::make('country')
                     ->label(__('shopper::forms.label.country'))
                     ->getStateUsing(
-                        fn ($record): ?string => Country::query()->find($record->addresses->first()?->country_id)?->name ?? null
+                        fn ($record): ?string => $record->addresses->first()?->country?->name
                     )
                     ->sortable(),
                 Tables\Columns\TextColumn::make('orders_count')
@@ -101,12 +100,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
     public function render(): View
     {
-        return view('shopper::livewire.pages.customers.index', [
-            'total' => (new UserRepository)
-                ->query()
-                ->scopes('customers')
-                ->count(),
-        ])
+        return view('shopper::livewire.pages.customers.index')
             ->title(__('shopper::pages/customers.menu'));
     }
 }

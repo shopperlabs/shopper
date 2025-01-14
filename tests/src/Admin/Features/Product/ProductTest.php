@@ -31,7 +31,7 @@ it('can render products page', function (): void {
 
     livewire(Pages\Product\Index::class)
         ->assertSee(__('shopper::pages/products.menu'));
-});
+})->group('product');
 
 it('create a new product', function (): void {
     livewire(AddProduct::class)
@@ -48,7 +48,7 @@ it('create a new product', function (): void {
     Event::assertDispatched(Created::class);
 
     expect(Product::query()->count())->toBe(1);
-});
+})->group('product');
 
 it('create new product with stock', function (): void {
     Inventory::factory(['is_default' => true])->create();
@@ -77,7 +77,7 @@ it('create new product with stock', function (): void {
         ->toBe(1)
         ->and($product->stock)
         ->toBe(10);
-});
+})->group('product');
 
 it('create new product with associations', function (): void {
     $brand = Brand::factory(['is_enabled' => true])->create();
@@ -107,7 +107,7 @@ it('create new product with associations', function (): void {
         ->and($product->brand)->toBeInstanceOf(Brand::class)
         ->and($product->categories->count())->toBe(3)
         ->and($product->channels->count())->toBe(2);
-});
+})->group('product');
 
 it('redirect to edit page after create product', function (): void {
     livewire(AddProduct::class)
@@ -121,7 +121,7 @@ it('redirect to edit page after create product', function (): void {
         ->call('store')
         ->assertHasNoFormErrors()
         ->assertRedirect(route('shopper.products.edit', Product::query()->first()));
-});
+})->group('product');
 
 it('can update product information', function (): void {
     $product = Product::factory()->create();
@@ -138,7 +138,7 @@ it('can update product information', function (): void {
     Event::assertDispatched(Updated::class);
 
     expect($product->slug)->toBe('demo-product');
-});
+})->group('product');
 
 it('ensure that external_id field is invisible on non external product', function (): void {
     $product = Product::factory()->virtual()->create();
@@ -146,7 +146,7 @@ it('ensure that external_id field is invisible on non external product', functio
     livewire(Edit::class, ['product' => $product])
         ->fillForm()
         ->assertFormFieldIsHidden('external_id');
-});
+})->group('product');
 
 it('can view the external id field on external product editing', function (): void {
     $product = Product::factory()->external()->create();
@@ -164,4 +164,4 @@ it('can view the external id field on external product editing', function (): vo
     Event::assertDispatched(Updated::class);
 
     expect($product->external_id)->toBe($uuid);
-});
+})->group('product');

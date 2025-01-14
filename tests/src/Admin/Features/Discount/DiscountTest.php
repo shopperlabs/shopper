@@ -28,13 +28,13 @@ beforeEach(function (): void {
     Queue::fake();
 });
 
-it('can render collections page', function (): void {
+it('can render discounts page', function (): void {
     get(route('shopper.discounts.index'))
         ->assertFound();
 
     livewire(Pages\Discount\Index::class)
         ->assertSee(__('shopper::pages/discounts.menu'));
-});
+})->group('discount');
 
 it('creates a new discount', function (): void {
     livewire(DiscountForm::class)
@@ -58,7 +58,7 @@ it('creates a new discount', function (): void {
     expect(Discount::query()->count())->toBe(1);
 
     Queue::assertCount(2);
-});
+})->group('discount');
 
 it('should not create a discount with a date in the past', function (): void {
     livewire(DiscountForm::class)
@@ -74,7 +74,7 @@ it('should not create a discount with a date in the past', function (): void {
         ])
         ->call('store')
         ->assertHasFormErrors(['start_at']);
-});
+})->group('discount');
 
 it('can update a discount', function (): void {
     $discount = Discount::factory()->create();
@@ -100,4 +100,4 @@ it('can update a discount', function (): void {
         ->toBe($code);
 
     Queue::assertCount(2);
-});
+})->group('discount');

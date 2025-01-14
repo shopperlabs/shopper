@@ -84,8 +84,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
                         ->color('primary')
                         ->action(fn ($record) => $this->redirectRoute(
                             name: 'shopper.products.edit',
-                            parameters: ['product' => $record],
-                            navigate: true
+                            parameters: ['product' => $record]
                         )),
                     Tables\Actions\Action::make(__('shopper::forms.actions.delete'))
                         ->icon('untitledui-trash-03')
@@ -119,9 +118,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
     public function render(): View
     {
-        return view('shopper::livewire.pages.products.index', [
-            'total' => (new ProductRepository)->count(),
-        ])
+        return view('shopper::livewire.pages.products.index')
             ->title(__('shopper::pages/products.menu'));
     }
 }

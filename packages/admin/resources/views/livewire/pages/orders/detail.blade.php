@@ -1,6 +1,11 @@
 <div>
     @php
+        $shippingOption = $this->order->shippingOption;
+        $billingAddress = $this->order->billingAddress;
+        $shippingAddress = $this->order->shippingAddress;
+
         $total = $order->total() + $shippingOption?->price;
+        $customer = $this->customer;
     @endphp
 
     <x-shopper::container class="py-5">
@@ -396,23 +401,23 @@
                         {{ __('shopper::words.customer') }}
                     </h3>
                     <div class="mt-4 space-y-4">
-                        @if ($order->customer)
+                        @if ($customer)
                             <div class="flex items-center space-x-4">
                                 <div class="shrink-0">
                                     <img
                                         class="size-8 rounded-full"
-                                        src="{{ $order->customer->picture }}"
+                                        src="{{ $customer->picture }}"
                                         alt="Customer profile"
                                     />
                                 </div>
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate text-sm font-medium text-gray-900 dark:text-white">
-                                        {{ $order->customer->full_name }}
+                                        {{ $customer->full_name }}
                                     </p>
                                 </div>
                                 <div>
                                     <x-shopper::link
-                                        href="{{ route('shopper.customers.show', $order->customer) }}"
+                                        href="{{ route('shopper.customers.show', $customer) }}"
                                         class="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50 dark:border-white/10 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                                     >
                                         {{ __('shopper::words.view') }}
@@ -420,8 +425,8 @@
                                 </div>
                             </div>
                             <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
-                                {{ __('shopper::pages/orders.customer_date', ['date' => $order->customer->created_at->diffForHumans()]) }},
-                                {{ __('shopper::pages/orders.customer_orders', ['number' => $order->customer->orders->count()]) }}
+                                {{ __('shopper::pages/orders.customer_date', ['date' => $customer->created_at->diffForHumans()]) }},
+                                {{ __('shopper::pages/orders.customer_orders', ['number' => $customer->orders_count]) }}
                             </p>
                         @else
                             <div
@@ -443,18 +448,19 @@
                     <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
                         {{ __('shopper::pages/orders.customer_infos') }}
                     </h3>
-                    @if ($order->customer)
+
+                    @if ($customer)
                         <div class="space-y-1">
                             <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
                                 <a
-                                    href="mailto:{{ $order->customer->email }}"
+                                    href="mailto:{{ $customer->email }}"
                                     class="text-primary-600 underline hover:text-primary-500"
                                 >
-                                    {{ $order->customer->email }}
+                                    {{ $customer->email }}
                                 </a>
                             </p>
                             <p class="text-sm leading-5 text-gray-500 dark:text-gray-400">
-                                {{ $order->customer->phone_number ?? __('shopper::words.no_phone_number') }}
+                                {{ $customer->phone_number ?? __('shopper::words.no_phone_number') }}
                             </p>
                         </div>
                     @else
@@ -463,6 +469,7 @@
                         </p>
                     @endif
                 </div>
+
                 @if ($shippingAddress)
                     <div class="py-4">
                         <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
@@ -487,11 +494,13 @@
                             @endif
                         </p>
                     </div>
+
                     @if ($billingAddress)
                         <div class="space-y-3 py-4">
                             <h3 class="text-xs font-medium uppercase leading-4 tracking-wider text-gray-900 dark:text-white">
                                 {{ __('shopper::pages/customers.addresses.billing') }}
                             </h3>
+
                             @if ($billingAddress->is($shippingAddress))
                                 <p class="text-sm text-gray-500 dark:text-gray-400">
                                     {{ __('shopper::words.same_address') }}

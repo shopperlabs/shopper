@@ -23,7 +23,7 @@ it('can render collections page', function (): void {
 
     livewire(Pages\Collection\Index::class)
         ->assertSee(__('shopper::pages/collections.menu'));
-});
+})->group('collection');
 
 it('can validate `required` fields on add collection form', function (): void {
     livewire(AddCollectionForm::class)
@@ -31,7 +31,7 @@ it('can validate `required` fields on add collection form', function (): void {
         ->fillForm([])
         ->call('store')
         ->assertHasFormErrors(['name' => 'required', 'type' => 'required']);
-});
+})->group('collection');
 
 it('can create a collection', function (): void {
     livewire(AddCollectionForm::class)
@@ -50,7 +50,7 @@ it('can create a collection', function (): void {
         );
 
     expect((new CollectionRepository)->count())->toBe(1);
-});
+})->group('collection');
 
 it('can search collection by `name`', function (): void {
     $collections = Collection::factory()->count(10)->create();
@@ -61,7 +61,7 @@ it('can search collection by `name`', function (): void {
         ->searchTable($name)
         ->assertCanSeeTableRecords($collections->where('name', $name))
         ->assertCanNotSeeTableRecords($collections->where('name', '!=', $name));
-});
+})->group('collection');
 
 it('can display the edit collection page by click on table action', function (): void {
     $collections = Collection::factory()->count(3)->create();
@@ -73,7 +73,7 @@ it('can display the edit collection page by click on table action', function ():
 
     livewire(Pages\Collection\Edit::class, ['collection' => $collection->id])
         ->assertSuccessful();
-});
+})->group('collection');
 
 it('can render collection edit page', function (): void {
     $collection = Collection::factory()->create();
@@ -83,7 +83,7 @@ it('can render collection edit page', function (): void {
 
     livewire(Pages\Collection\Edit::class, ['collection' => $collection->id])
         ->assertSee($collection->name);
-});
+})->group('collection');
 
 it('can edit a collection', function (): void {
     $collection = Collection::factory()->create();
@@ -97,7 +97,7 @@ it('can edit a collection', function (): void {
         ->assertNotified(__('shopper::notifications.update', ['item' => __('shopper::pages/collections.single')]));
 
     expect($collection->refresh()->name)->toBe('My manual collection');
-});
+})->group('collection');
 
 it('can\'t change type of collection on edit form', function (): void {
     $collection = Collection::factory(['type' => CollectionType::Manual()])->create();
@@ -111,7 +111,7 @@ it('can\'t change type of collection on edit form', function (): void {
         ->assertHasNoFormErrors();
 
     expect($collection->refresh()->type)->toBe(CollectionType::Manual);
-});
+})->group('collection');
 
 it('can display products modal on manual collection', function (): void {
     $collection = Collection::factory(['type' => CollectionType::Manual()])->create();
@@ -130,7 +130,7 @@ it('can display products modal on manual collection', function (): void {
     livewire(CollectionProductsList::class, ['collectionId' => $collection->id])
         ->assertSuccessful()
         ->assertSee(__('shopper::pages/collections.modal.title'));
-});
+})->group('collection');
 
 it('can save rules on auto collection', function (): void {
     $collection = Collection::factory(['type' => CollectionType::Auto()])->create();
@@ -152,4 +152,4 @@ it('can save rules on auto collection', function (): void {
         ->fillForm([])
         ->call('store')
         ->assertHasNoFormErrors();
-});
+})->group('collection');

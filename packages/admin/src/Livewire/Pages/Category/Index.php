@@ -13,7 +13,6 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Livewire\Attributes\On;
 use Shopper\Core\Repositories\CategoryRepository;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 use Shopper\Traits\HasAuthenticated;
@@ -34,8 +33,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(
                 (new CategoryRepository)
-                    ->with('parent:id,name')
                     ->query()
+                    ->with('parent')
                     ->latest()
             )
             ->columns([
@@ -148,7 +147,6 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ]);
     }
 
-    #[On('category-save')]
     public function render(): View
     {
         return view('shopper::livewire.pages.category.index')

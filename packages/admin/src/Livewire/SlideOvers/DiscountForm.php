@@ -33,7 +33,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    public ?Discount $discount = null;
+    public Discount $discount;
 
     public ?array $data = [];
 
@@ -319,7 +319,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
 
         $this->discount = app()->call(SaveAndDispatchDiscountAction::class, [
             'values' => $discountFormValues,
-            'discountId' => $this->discount?->id,
+            'discountId' => $this->discount->id ?? null,
             'productsIds' => data_get($data, 'products', []),
             'customersIds' => data_get($data, 'customers', []),
         ]);
@@ -329,9 +329,10 @@ class DiscountForm extends SlideOverComponent implements HasForms
             ->success()
             ->send();
 
-        $this->dispatch('discount-save');
-
-        $this->closePanel();
+        $this->redirectRoute(
+            name: 'shopper.discounts.index',
+            navigate: true,
+        );
     }
 
     public function render(): View

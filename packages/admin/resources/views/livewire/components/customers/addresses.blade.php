@@ -1,6 +1,6 @@
 <x-shopper::container>
     <div class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-        @forelse ($addresses as $address)
+        @forelse ($this->addresses as $address)
             <x-shopper::card class="relative flex items-center px-6 py-5">
                 <div class="min-w-0 flex-1">
                     <div class="focus:outline-none">

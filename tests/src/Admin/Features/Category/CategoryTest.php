@@ -37,7 +37,7 @@ it('can create a category', function (): void {
         ])
         ->call('save')
         ->assertHasNoFormErrors()
-        ->assertDispatched('category-save');
+        ->assertRedirectToRoute('shopper.categories.index');
 
     expect((new CategoryRepository)->count())->toBe(1);
 })->group('category');
@@ -51,7 +51,7 @@ it('will generate a slug when brand slug already exists', function (): void {
             'name' => 'My first category',
         ])
         ->call('save')
-        ->assertDispatched('category-save');
+        ->assertRedirectToRoute('shopper.categories.index');
 
     expect((new CategoryRepository)->count())
         ->toBe(2)
@@ -70,7 +70,7 @@ it('can create category with parent', function (): void {
         ])
         ->call('save')
         ->assertHasNoFormErrors()
-        ->assertDispatched('category-save');
+        ->assertRedirectToRoute('shopper.categories.index');
 
     expect((new CategoryRepository)->count())->toBe(2);
 })->group('category');

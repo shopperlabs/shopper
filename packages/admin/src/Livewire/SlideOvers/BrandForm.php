@@ -11,11 +11,9 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Shopper\Components\Form\SeoField;
 use Shopper\Components\Section;
-use Shopper\Core\Models\Brand;
 use Shopper\Core\Repositories\BrandRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
@@ -26,10 +24,7 @@ class BrandForm extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
-    /**
-     * @var Brand|Model|null
-     */
-    public $brand = null;
+    public $brand;
 
     public ?array $data = [];
 
@@ -106,10 +101,13 @@ class BrandForm extends SlideOverComponent implements HasForms
 
     public function save(): void
     {
-        // @phpstan-ignore-next-line
-        if ($this->brand?->id) {
+        if ($this->brand->id) {
+            $this->authorize('edit_brands', $this->brand);
+
             $this->brand->update($this->form->getState());
         } else {
+            $this->authorize('add_brands');
+
             $brand = (new BrandRepository)->create($this->form->getState());
             $this->form->model($brand)->saveRelationships();
         }
@@ -119,11 +117,10 @@ class BrandForm extends SlideOverComponent implements HasForms
             ->success()
             ->send();
 
-        $this->dispatch('brand-save');
-
-        $this->closePanel();
-
-        $this->form->fill();
+        $this->redirectRoute(
+            name: 'shopper.brands.index',
+            navigate: true,
+        );
     }
 
     public function render(): View

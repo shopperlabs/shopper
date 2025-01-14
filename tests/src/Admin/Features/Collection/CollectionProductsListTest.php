@@ -37,4 +37,4 @@ it('can have correct products after search', function (): void {
     $collection->refresh();
 
     expect($collection->products->count())->toBe(2);
-});
+})->group('collection');

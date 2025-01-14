@@ -93,13 +93,13 @@
 
         <div class="mt-10">
             <div x-show="currentTab === 'profile'">
-                <livewire:shopper-customers.profile :customer="$customer" />
+                <livewire:shopper-customers.profile :$customer />
             </div>
             <div x-cloak x-show="currentTab === 'address'">
-                <livewire:shopper-customers.addresses :adresses="$customer->addresses" />
+                <livewire:shopper-customers.addresses :$customer />
             </div>
             <div x-cloak x-show="currentTab === 'orders'">
-                <livewire:shopper-customers.orders :customer="$customer" />
+                <livewire:shopper-customers.orders :$customer />
             </div>
         </div>
     </div>

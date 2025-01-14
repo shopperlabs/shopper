@@ -99,7 +99,6 @@ class Variants extends Component implements HasForms, HasTable
                         fn ($record) => $this->redirectRoute(
                             name: 'shopper.products.variant',
                             parameters: ['productId' => $this->product->id, 'variantId' => $record->id],
-                            navigate: true
                         ),
                     ),
                 Tables\Actions\DeleteAction::make()

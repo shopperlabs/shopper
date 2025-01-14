@@ -13,7 +13,6 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Livewire\Attributes\On;
 use Shopper\Core\Repositories\BrandRepository;
 use Shopper\Facades\Shopper;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -127,11 +126,9 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ->persistFiltersInSession();
     }
 
-    #[On('brand-save')]
     public function render(): View
     {
-        return view('shopper::livewire.pages.brand.index', [
-            'total' => (new BrandRepository)->count(),
-        ])->title(__('shopper::pages/brands.menu'));
+        return view('shopper::livewire.pages.brand.index')
+            ->title(__('shopper::pages/brands.menu'));
     }
 }

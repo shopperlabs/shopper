@@ -29,8 +29,8 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
         return $table
             ->query(
                 (new CollectionRepository)
-                    ->with('rules')
                     ->query()
+                    ->with('rules')
             )
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('image')
@@ -76,9 +76,7 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
 
     public function render(): View
     {
-        return view('shopper::livewire.pages.collections.browse', [
-            'total' => (new CollectionRepository)->count(),
-        ])
+        return view('shopper::livewire.pages.collections.browse')
             ->title(__('shopper::pages/collections.menu'));
     }
 }

@@ -1,6 +1,6 @@
 <x-shopper::container class="space-y-8">
-    @if ($orders->isNotEmpty())
-        @foreach ($orders as $order)
+    @if ($this->orders->isNotEmpty())
+        @foreach ($this->orders as $order)
             @php
                 $total = $order->total() + (int) $order->shippingOption?->price;
             @endphp
@@ -168,7 +168,7 @@
             </div>
         @endforeach
 
-        {{ $orders->links() }}
+        {{ $this->orders->links() }}
     @else
         <x-shopper::card class="sm:col-span-3">
             <x-shopper::empty-card

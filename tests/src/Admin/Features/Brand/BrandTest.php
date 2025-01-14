@@ -34,7 +34,7 @@ it('can create brand', function (): void {
             'name' => 'Nike',
         ])
         ->call('save')
-        ->assertDispatched('brand-save');
+        ->assertRedirectToRoute('shopper.brands.index');
 });
 
 it('will generate a slug when brand slug already exists', function (): void {
@@ -46,7 +46,7 @@ it('will generate a slug when brand slug already exists', function (): void {
             'name' => 'Nike',
         ])
         ->call('save')
-        ->assertDispatched('brand-save');
+        ->assertRedirectToRoute('shopper.brands.index');
 
     expect((new BrandRepository)->count())
         ->toBe(2)

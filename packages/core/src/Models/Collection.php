@@ -70,7 +70,7 @@ class Collection extends Model implements SpatieHasMedia
     public function firstRule(): ?string
     {
         /** @var CollectionRule $collectionRule */
-        $collectionRule = $this->rules()->first();
+        $collectionRule = $this->rules->first();
 
         if ($this->isAutomatic()) {
             $words = $collectionRule->getFormattedRule() . ' ' . $collectionRule->getFormattedOperator() . ' ' . $collectionRule->getFormattedValue();

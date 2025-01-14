@@ -31,7 +31,14 @@ class Variant extends AbstractPageComponent implements HasActions, HasForms
         $this->authorize('edit_products');
 
         $this->product = (new ProductRepository)->getById($productId);
-        $this->variant = (new VariantRepository)->with(['prices', 'media'])->getById($variantId);
+        $this->variant = (new VariantRepository)
+            ->with([
+                'prices',
+                'media',
+                'values',
+                'values.attribute',
+            ])
+            ->getById($variantId);
     }
 
     public function updateStockAction(): Action

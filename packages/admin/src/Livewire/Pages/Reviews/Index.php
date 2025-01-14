@@ -12,7 +12,6 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\On;
 use Shopper\Core\Models\Review;
 use Shopper\Livewire\Pages\AbstractPageComponent;
 
@@ -89,12 +88,9 @@ class Index extends AbstractPageComponent implements HasForms, HasTable
             ]);
     }
 
-    #[On('reviewUpdated')]
     public function render(): View
     {
-        return view('shopper::livewire.pages.reviews.index', [
-            'total' => Review::query()->count(),
-        ])
+        return view('shopper::livewire.pages.reviews.index')
             ->title(__('shopper::pages/reviews.menu'));
     }
 }
