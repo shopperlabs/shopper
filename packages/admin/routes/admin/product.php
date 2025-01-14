@@ -12,7 +12,6 @@ Route::as('products.')->group(function (): void {
 });
 
 if (\Shopper\Feature::enabled('attribute')) {
-    Route::prefix('attributes')->as('attributes.')->group(function (): void {
-        Route::get('/', config('shopper.components.product.pages.attribute-index'))->name('index');
-    });
+    Route::get('attributes', config('shopper.components.product.pages.attribute-index'))
+        ->name('attributes.index');
 }

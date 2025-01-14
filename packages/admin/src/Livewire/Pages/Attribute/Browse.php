@@ -13,7 +13,6 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
-use Livewire\Attributes\On;
 use Shopper\Components\Tables\IconColumn;
 use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Pages\AbstractPageComponent;
@@ -143,12 +142,9 @@ class Browse extends AbstractPageComponent implements HasForms, HasTable
             ]);
     }
 
-    #[On('attribute-save')]
     public function render(): View
     {
-        return view('shopper::livewire.pages.attributes.browse', [
-            'total' => Attribute::query()->count(),
-        ])
+        return view('shopper::livewire.pages.attributes.browse')
             ->title(__('shopper::pages/attributes.menu'));
     }
 }

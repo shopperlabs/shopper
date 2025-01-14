@@ -1,3 +1,7 @@
+@php
+    $total = $this->table->getRecords()->total();
+@endphp
+
 <x-shopper::container class="py-5">
     <x-shopper::breadcrumb :back="route('shopper.products.index')">
         <x-untitledui-chevron-left class="size-4 shrink-0 text-gray-300 dark:text-gray-600" />
