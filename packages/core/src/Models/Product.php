@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Arr;
-use Shopper\Core\Contracts\ReviewRateable;
+use Shopper\Core\Contracts\HasReviews;
 use Shopper\Core\Database\Factories\ProductFactory;
 use Shopper\Core\Enum\Dimension\Length;
 use Shopper\Core\Enum\Dimension\Volume;
@@ -25,7 +25,7 @@ use Shopper\Core\Models\Traits\HasDiscounts;
 use Shopper\Core\Models\Traits\HasMedia;
 use Shopper\Core\Models\Traits\HasPrices;
 use Shopper\Core\Models\Traits\HasStock;
-use Shopper\Core\Models\Traits\ReviewRateable as ReviewRateableTrait;
+use Shopper\Core\Models\Traits\InteractsWithReviews;
 use Shopper\Core\Observers\ProductObserver;
 use Shopper\Core\Traits\HasSlug;
 use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
@@ -66,7 +66,7 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read \Illuminate\Database\Eloquent\Collection | Price[] $prices
  */
 #[ObservedBy(ProductObserver::class)]
-class Product extends Model implements ReviewRateable, SpatieHasMedia
+class Product extends Model implements HasReviews, SpatieHasMedia
 {
     use HasDimensions;
     use HasDiscounts;
@@ -75,9 +75,9 @@ class Product extends Model implements ReviewRateable, SpatieHasMedia
     use HasPrices;
     use HasSlug;
     use HasStock;
-    use ReviewRateableTrait;
+    use InteractsWithReviews;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'featured' => 'boolean',

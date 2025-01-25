@@ -23,12 +23,7 @@ class DiscountDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'discountable_type',
-        'discountable_id',
-        'condition',
-        'discount_id',
-    ];
+    protected $guarded = [];
 
     public function getTable(): string
     {

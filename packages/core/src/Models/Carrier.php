@@ -29,16 +29,7 @@ class Carrier extends Model
     use HasSlug;
     use HasZones;
 
-    protected $fillable = [
-        'name',
-        'slug',
-        'logo',
-        'link_url',
-        'description',
-        'shipping_amount',
-        'is_enabled',
-        'metadata',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'is_enabled' => 'boolean',

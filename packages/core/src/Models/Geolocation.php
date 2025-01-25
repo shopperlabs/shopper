@@ -24,7 +24,7 @@ class Geolocation extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'extreme_ip_lookup' => 'json',

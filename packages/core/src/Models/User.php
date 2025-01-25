@@ -42,7 +42,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $hidden = [
         'password',

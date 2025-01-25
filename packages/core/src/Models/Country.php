@@ -32,19 +32,7 @@ class Country extends Model
 
     public $timestamps = false;
 
-    protected $fillable = [
-        'name',
-        'name_official',
-        'region',
-        'subregion',
-        'cca3',
-        'cca2',
-        'flag',
-        'latitude',
-        'longitude',
-        'phone_calling_code',
-        'currencies',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'phone_calling_code' => 'array',

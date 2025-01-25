@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Spatie\Permission\Models\Role as SpatieRole;
+use Spatie\Permission\Models\Role as Model;
 
 /**
  * @property-read int $id
@@ -14,7 +14,7 @@ use Spatie\Permission\Models\Role as SpatieRole;
  * @property string $display_name
  * @property string|null $description
  */
-class Role extends SpatieRole
+class Role extends Model
 {
     protected $casts = [
         'can_be_removed' => 'boolean',

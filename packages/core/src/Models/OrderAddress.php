@@ -28,18 +28,7 @@ class OrderAddress extends Model
 {
     use HasFactory;
 
-    public $fillable = [
-        'last_name',
-        'first_name',
-        'company',
-        'street_address',
-        'street_address_plus',
-        'postal_code',
-        'city',
-        'phone',
-        'country_name',
-        'customer_id',
-    ];
+    protected $guarded = [];
 
     public function getTable(): string
     {

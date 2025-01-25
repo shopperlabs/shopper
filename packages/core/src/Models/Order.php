@@ -44,7 +44,7 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'status' => OrderStatus::class,

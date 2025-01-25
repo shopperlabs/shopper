@@ -33,7 +33,7 @@ class Category extends Model implements SpatieHasMedia
     use HasRecursiveRelationships;
     use HasSlug;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'is_enabled' => 'boolean',

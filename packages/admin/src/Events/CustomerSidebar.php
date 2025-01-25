@@ -30,7 +30,7 @@ final class CustomerSidebar extends AbstractAdminSidebar
                 $item->useSpa();
                 $item->setIcon(
                     icon: 'untitledui-users-02',
-                    iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                    iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -48,7 +48,7 @@ final class CustomerSidebar extends AbstractAdminSidebar
                     $item->useSpa();
                     $item->setIcon(
                         icon: 'untitledui-message-heart-square',
-                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400'),
+                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
 use Shopper\Core\Models\Review;
 
-trait ReviewRateable
+trait InteractsWithReviews
 {
     public function ratings(): MorphMany
     {

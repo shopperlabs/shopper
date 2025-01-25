@@ -26,15 +26,7 @@ class CarrierOption extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'description',
-        'is_enabled',
-        'price',
-        'carrier_id',
-        'zone_id',
-        'metadata',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'metadata' => 'array',

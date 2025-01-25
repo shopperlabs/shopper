@@ -32,22 +32,7 @@ class Inventory extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'code',
-        'description',
-        'email',
-        'street_address',
-        'street_address_plus',
-        'postal_code',
-        'city',
-        'phone_number',
-        'priority',
-        'latitude',
-        'longitude',
-        'is_default',
-        'country_id',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'is_default' => 'boolean',

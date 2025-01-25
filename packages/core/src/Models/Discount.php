@@ -34,7 +34,7 @@ class Discount extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'is_active' => 'boolean',

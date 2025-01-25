@@ -27,14 +27,7 @@ class Price extends Model
 {
     use HasFactory;
 
-    public $fillable = [
-        'amount',
-        'compare_amount',
-        'cost_amount',
-        'currency_id',
-        'priceable_id',
-        'priceable_type',
-    ];
+    protected $guarded = [];
 
     public function getTable(): string
     {

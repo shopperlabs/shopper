@@ -25,18 +25,7 @@ class InventoryHistory extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'stockable_type',
-        'stockable_id',
-        'reference_type',
-        'reference_id',
-        'inventory_id',
-        'user_id',
-        'event',
-        'quantity',
-        'old_quantity',
-        'description',
-    ];
+    protected $guarded = [];
 
     public function getTable(): string
     {

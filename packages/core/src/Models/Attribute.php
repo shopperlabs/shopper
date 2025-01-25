@@ -32,16 +32,7 @@ class Attribute extends Model
     use HasFactory;
     use HasSlug;
 
-    protected $fillable = [
-        'name',
-        'slug',
-        'description',
-        'type',
-        'is_enabled',
-        'is_searchable',
-        'is_filterable',
-        'icon',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'is_enabled' => 'boolean',

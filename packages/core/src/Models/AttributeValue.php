@@ -25,12 +25,7 @@ class AttributeValue extends Model
 
     public $timestamps = false;
 
-    protected $fillable = [
-        'value',
-        'key',
-        'position',
-        'attribute_id',
-    ];
+    protected $guarded = [];
 
     public function getTable(): string
     {

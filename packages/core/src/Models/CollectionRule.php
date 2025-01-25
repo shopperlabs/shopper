@@ -26,7 +26,7 @@ class CollectionRule extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'rule' => Rule::class,

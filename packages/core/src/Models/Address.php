@@ -35,21 +35,7 @@ class Address extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'last_name',
-        'first_name',
-        'company_name',
-        'street_address',
-        'street_address_plus',
-        'postal_code',
-        'city',
-        'phone_number',
-        'type',
-        'user_id',
-        'country_id',
-        'shipping_default',
-        'billing_default',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'billing_default' => 'boolean',

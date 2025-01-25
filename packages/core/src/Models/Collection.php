@@ -29,7 +29,7 @@ class Collection extends Model implements SpatieHasMedia
     use HasMedia;
     use HasSlug;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'published_at' => 'datetime',

@@ -6,7 +6,7 @@ namespace Shopper\Core\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-interface ReviewRateable
+interface HasReviews
 {
     public function ratings(): MorphMany;
 

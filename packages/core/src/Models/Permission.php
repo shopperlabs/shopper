@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Spatie\Permission\Models\Permission as SpatiePermission;
+use Spatie\Permission\Models\Permission as Model;
 
 /**
  * @property-read int $id
@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Permission as SpatiePermission;
  * @property string|null $display_name
  * @property bool $can_be_removed
  */
-class Permission extends SpatiePermission
+class Permission extends Model
 {
     protected $casts = [
         'can_be_removed' => 'boolean',

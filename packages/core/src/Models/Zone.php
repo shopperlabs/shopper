@@ -36,14 +36,7 @@ class Zone extends Model
     use HasFactory;
     use HasSlug;
 
-    protected $fillable = [
-        'name',
-        'slug',
-        'code',
-        'is_enabled',
-        'currency_id',
-        'metadata',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'is_enabled' => 'boolean',

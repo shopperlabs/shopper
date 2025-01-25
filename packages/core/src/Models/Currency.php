@@ -23,13 +23,7 @@ class Currency extends Model
 
     public $timestamps = false;
 
-    protected $fillable = [
-        'name',
-        'code',
-        'symbol',
-        'format',
-        'exchange_rate',
-    ];
+    protected $guarded = [];
 
     public function getTable(): string
     {

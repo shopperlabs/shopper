@@ -27,6 +27,8 @@ class AttributeProduct extends Model
 
     public $timestamps = false;
 
+    protected $guarded = [];
+
     public function getTable(): string
     {
         return shopper_table('attribute_product');

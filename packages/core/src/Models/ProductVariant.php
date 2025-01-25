@@ -55,7 +55,7 @@ class ProductVariant extends Model implements SpatieHasMedia
     use HasPrices;
     use HasStock;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'allow_backorder' => 'boolean',

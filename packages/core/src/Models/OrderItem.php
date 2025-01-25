@@ -27,15 +27,7 @@ class OrderItem extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'sku',
-        'quantity',
-        'unit_price_amount',
-        'product_id',
-        'product_type',
-        'order_id',
-    ];
+    protected $guarded = [];
 
     public function getTable(): string
     {

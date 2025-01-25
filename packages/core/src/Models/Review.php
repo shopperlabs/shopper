@@ -22,7 +22,7 @@ class Review extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'is_recommended' => 'boolean',

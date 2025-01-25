@@ -30,7 +30,7 @@ class Channel extends Model
     use HasFactory;
     use HasSlug;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     protected $casts = [
         'is_default' => 'boolean',
