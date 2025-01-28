@@ -29,14 +29,20 @@ use Shopper\Core\Observers\OrderObserver;
  * @property int | null $payment_method_id
  * @property int | null $billing_address_id
  * @property int | null $customer_id
+ * @property int | null $channel_id
+ * @property int | null $parent_order_id
+ * @property \Illuminate\Support\Carbon | null $canceled_at
  * @property OrderStatus $status
- * @property CarrierOption $shippingOption
- * @property OrderAddress | null $shippingAddress
- * @property OrderAddress | null $billingAddress
- * @property PaymentMethod | null $paymentMethod
- * @property Zone | null $zone
- * @property \Illuminate\Foundation\Auth\User | User $customer
- * @property \Illuminate\Database\Eloquent\Collection | OrderItem[] $items
+ * @property-read CarrierOption $shippingOption
+ * @property-read OrderAddress | null $shippingAddress
+ * @property-read OrderAddress | null $billingAddress
+ * @property-read PaymentMethod | null $paymentMethod
+ * @property-read Zone | null $zone
+ * @property-read Channel | null $channel
+ * @property-read Order | null $parent
+ * @property-read \Illuminate\Foundation\Auth\User | User $customer
+ * @property-read \Illuminate\Support\Collection<int, OrderItem> $items
+ * @property-read \Illuminate\Support\Collection<int, Order> $children
  */
 #[ObservedBy(OrderObserver::class)]
 class Order extends Model
@@ -48,6 +54,7 @@ class Order extends Model
 
     protected $casts = [
         'status' => OrderStatus::class,
+        'canceled_at' => 'datetime',
     ];
 
     public function __construct(array $attributes = [])
@@ -131,9 +138,24 @@ class Order extends Model
         return $this->belongsTo(config('auth.providers.users.model', User::class), 'customer_id');
     }
 
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(config('shopper.models.channel'), 'channel_id');
+    }
+
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_order_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(self::class, 'parent_order_id');
     }
 
     public function zone(): BelongsTo

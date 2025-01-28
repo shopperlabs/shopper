@@ -32,7 +32,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
     public function mount(?int $categoryId = null): void
     {
         $this->category = $categoryId
-            ? (new CategoryRepository)->getById($categoryId)
+            ? (new CategoryRepository)->query()->find($categoryId)
             : (new CategoryRepository)->query()->newModelInstance();
 
         $this->form->fill($this->category->toArray());
@@ -62,7 +62,7 @@ class CategoryForm extends SlideOverComponent implements HasForms
                                 titleAttribute: 'name',
                                 modifyQueryUsing: fn (Builder $query) => $query->where('is_enabled', true)
                             )
-                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->getLabelOptionName())
+                            ->getOptionLabelFromRecordUsing(fn ($record) => $record->load('parent')->getLabelOptionName())
                             ->preload()
                             ->searchable()
                             ->optionsLimit(20)

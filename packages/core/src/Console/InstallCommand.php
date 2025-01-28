@@ -11,7 +11,7 @@ use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-use function Laravel\Prompts\info;
+use function Laravel\Prompts\confirm;
 
 #[AsCommand(name: 'shopper:install')]
 final class InstallCommand extends Command
@@ -35,7 +35,9 @@ final class InstallCommand extends Command
     {
         $this->newLine();
         $this->progressBar = $this->output->createProgressBar(3);
+
         $this->introMessage();
+
         sleep(1);
 
         if (! $this->progressBar->getProgress()) {
@@ -43,32 +45,38 @@ final class InstallCommand extends Command
         }
 
         $this->newLine();
-        info('Publishing configuration...');
+        $this->components->info('Publishing configuration...');
 
         $this->call('vendor:publish', ['--provider' => CoreServiceProvider::class]);
         $this->call(
             'vendor:publish',
             ['--provider' => MediaLibraryServiceProvider::class, '--tag' => 'medialibrary-migrations']
         );
+
         $this->progressBar->advance();
 
-        $this->setupDatabaseConfig();
+        if (confirm('Run database migrations and seeders ?')) {
+            $this->setupDatabaseConfig();
+        }
 
         if (! file_exists(config_path('shopper/admin.php'))) {
             $this->newLine();
-            $this->line('Installing Shopper Admin Panel.');
+
+            $this->line('Installing Shopper Admin Panel 🚧.');
             $this->call('shopper:panel-install');
         }
     }
 
     protected function setupDatabaseConfig(): void
     {
-        info('Migrating the database tables into your application');
+        $this->components->info('Migrating the database tables into your application 🔽');
         $this->call('migrate');
+
         $this->progressBar->advance();
 
-        info('Flush data into your database');
+        $this->components->info('Seed data into your database 🔽');
         $this->call('db:seed', ['--class' => ShopperSeeder::class]);
+
         $this->progressBar->advance();
 
         // Visually slow down the installation process so that the user can read what's happening
@@ -79,7 +87,7 @@ final class InstallCommand extends Command
 
     protected function introMessage(): void
     {
-        info('
+        $this->components->info('
                 _____ __
               / ___// /_  ____  ____  ____  ___  _____
               \__ \/ __ \/ __ \/ __ \/ __ \/ _ \/ ___/

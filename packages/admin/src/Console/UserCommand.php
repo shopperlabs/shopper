@@ -34,7 +34,7 @@ final class UserCommand extends Command
             placeholder: 'admin@laravelshopper.dev',
             required: true,
             validate: fn (string $value) => User::where('email', $value)->exists()
-                    ? 'An admin with that email already exists.'
+                    ? 'A user with that email already exists.'
                     : null,
         );
         $first_name = text(

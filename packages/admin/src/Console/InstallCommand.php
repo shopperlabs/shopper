@@ -10,8 +10,6 @@ use Shopper\ShopperServiceProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-use function Laravel\Prompts\info;
-
 #[AsCommand(name: 'shopper:panel-install')]
 final class InstallCommand extends Command
 {
@@ -36,7 +34,7 @@ final class InstallCommand extends Command
         $this->progressBar = $this->output->createProgressBar(3);
         sleep(1);
 
-        info('Installation of Shopper Panel, publish assets and config files');
+        $this->components->info('Installation of Shopper Panel, publish assets and config files');
 
         if (! $this->progressBar->getProgress()) {
             $this->progressBar->start();
@@ -45,10 +43,10 @@ final class InstallCommand extends Command
         $this->call('vendor:publish', ['--provider' => ShopperServiceProvider::class]);
         $this->progressBar->advance();
 
-        info('Publish filament-forms assets...');
+        $this->components->info('Publish filament assets 🎨...');
         $this->call('filament:assets');
 
-        info('Enable Shopper symlink for storage...');
+        $this->components->info('Enable Shopper symlink for storage 📎...');
         $this->call('shopper:link');
         $this->progressBar->advance();
 
@@ -63,7 +61,7 @@ final class InstallCommand extends Command
     {
         $this->progressBar->finish();
 
-        info("
+        $this->components->info("
                                       ,@@@@@@@,
                               ,,,.   ,@@@@@@/@@,  .oo8888o.
                            ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o
