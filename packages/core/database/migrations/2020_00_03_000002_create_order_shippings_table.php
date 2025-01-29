@@ -13,11 +13,11 @@ return new class extends Migration
         Schema::create($this->getTableName('order_shipping'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
-            $table->dateTimeTz('shipped_at')->nullable();
+            $table->dateTimeTz('shipped_at');
             $table->dateTimeTz('received_at')->nullable();
             $table->dateTimeTz('returned_at')->nullable();
             $table->string('tracking_number')->nullable();
-            $table->string('tracking_number_url')->nullable();
+            $table->string('tracking_url')->nullable();
             $table->json('voucher')->nullable();
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);

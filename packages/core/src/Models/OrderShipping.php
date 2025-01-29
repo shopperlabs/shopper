@@ -13,11 +13,11 @@ use Shopper\Core\Database\Factories\OrderShippingFactory;
 /**
  * @property-read int $id
  * @property Carbon $shipped_at
- * @property Carbon | null $received_at
- * @property Carbon | null $returned_at
- * @property string | null $tracking_number
- * @property string | null $tracking_number_url
- * @property array | null $voucher
+ * @property Carbon|null $received_at
+ * @property Carbon|null $returned_at
+ * @property string|null $tracking_number
+ * @property string|null $tracking_url
+ * @property array|null $voucher
  * @property int $order_id
  * @property int | null $carrier_id
  * @property-read Order $order

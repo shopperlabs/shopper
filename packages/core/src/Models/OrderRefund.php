@@ -10,6 +10,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shopper\Core\Database\Factories\OrderRefundFactory;
 use Shopper\Core\Enum\OrderRefundStatus;
 
+/**
+ * @property-read int $id
+ * @property string|null $refund_reason
+ * @property int|null $refund_amount
+ * @property OrderRefundStatus $status
+ * @property string|null $notes
+ * @property string $currency
+ * @property int $order_id
+ * @property int|null $user_id
+ * @property-read Order $order
+ * @property-read User|null $customer
+ */
 class OrderRefund extends Model
 {
     use HasFactory;

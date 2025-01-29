@@ -1,4 +1,5 @@
 # Roles & Permissions
+
 Manage access and permissions of your users and members in your store.
 
 To connect to the dashboard you need to have the role `administrator` this role can be found in the configuration file `config/shopper/core.php`.
@@ -22,7 +23,7 @@ To connect to the dashboard you need to have the role `administrator` this role 
 After [creating an super admin](/installing#create-an-admin-user) we get the following result
 
 ```bash
-php artisan shopper:admin
+php artisan shopper:user
 
 Create Admin User for Shopper administration panel
 

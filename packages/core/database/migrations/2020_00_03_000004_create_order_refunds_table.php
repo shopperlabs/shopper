@@ -13,10 +13,11 @@ return new class extends Migration
         Schema::create($this->getTableName('order_refunds'), function (Blueprint $table): void {
             $this->addCommonFields($table);
 
-            $table->longText('refund_reason')->nullable();
-            $table->string('refund_amount')->nullable();
-            $table->string('status')->default(\Shopper\Core\Enum\OrderRefundStatus::Awaiting->value);
-            $table->longText('notes');
+            $table->text('reason')->nullable();
+            $table->integer('amount');
+            $table->string('currency');
+            $table->string('status');
+            $table->text('notes')->nullable();
 
             $this->addForeignKey($table, 'order_id', $this->getTableName('orders'), false);
             $this->addForeignKey($table, 'user_id', 'users');

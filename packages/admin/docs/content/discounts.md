@@ -50,4 +50,4 @@ return [
 ];
 ```
 
-## Manage Brands
+## Manage Discount

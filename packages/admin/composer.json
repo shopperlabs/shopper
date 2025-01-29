@@ -36,7 +36,7 @@
     "illuminate/view": "^10.0|^11.0",
     "jenssegers/agent": "^2.6",
     "jaocero/radio-deck": "^1.2",
-    "livewire/livewire": "^v3.5.12",
+    "livewire/livewire": "^v3.5",
     "milon/barcode": "^10.0|^11.0",
     "pragmarx/google2fa": "^8.0",
     "psr/simple-cache": "^3.0",
