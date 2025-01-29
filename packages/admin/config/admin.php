@@ -40,8 +40,8 @@ return [
     */
 
     'pages' => [
-        'namespace' => 'App\\Shopper',
-        'view_path' => resource_path('views/shopper'),
+        'namespace' => 'App\\Livewire\\Shopper',
+        'view_path' => resource_path('views/livewire/shopper'),
     ],
 
     /*

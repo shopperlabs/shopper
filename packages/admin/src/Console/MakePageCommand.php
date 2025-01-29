@@ -15,7 +15,7 @@ use function Laravel\Prompts\error;
 use function Laravel\Prompts\text;
 
 #[AsCommand(name: 'make:shopper-page')]
-final class MakePageCommand extends FileManipulationCommand
+class MakePageCommand extends FileManipulationCommand
 {
     protected $signature = 'make:shopper-page {name?} {--f|force}';
 
