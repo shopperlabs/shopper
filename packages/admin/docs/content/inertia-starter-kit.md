@@ -1,0 +1,3 @@
+# InertiaJS Starter Kit
+
+Soon...

@@ -1,4 +1,5 @@
 - ##### Prologue
+  - [Introduction](/docs/{{version}}/introduction.md)
   - [Release Notes](https://github.com/shopperlabs/shopper/releases)
   - [Upgrade Guide](/docs/{{version}}/upgrade)
   - [Contribution Guide](/docs/{{version}}/contributing)
@@ -28,6 +29,6 @@
   - [Orders](/docs/{{version}}/orders)
   - [Reviews](/docs/{{version}}/reviews)
 - ##### Storefronts
-  - [:icon-livewire: Livewire](/docs/{{version}}/storefronts/livewire)
-  - [:icon-blade: Blade](/docs/{{version}}/storefronts/blade)
-  - [:icon-inertia: Inertia](/docs/{{version}}/storefronts/inertia)
+  - [:icons.livewire: Livewire](/docs/{{version}}/livewire-starter-kit){:.icon-link}
+  - [:icons.blade: Blade](/docs/{{version}}/blade-starter-kit){:.icon-link}
+  - [:icons.inertia: Inertia](/docs/{{version}}/inertia-starter-kit){:.icon-link}
