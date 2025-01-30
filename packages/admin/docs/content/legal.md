@@ -4,7 +4,7 @@ As with any e-commerce site, it is important for users to know the terms and con
 
 This section allows you to set up your pages for your privacy policy, return policy, terms of use and shipping policy to be presented to customers.
 
-## Fields
+## Model
 
 The model used is `Shopper\Core\Models\Legal`.
 
@@ -39,18 +39,12 @@ return [
 
 In your administration area you must click on the "cog" icon to display the settings page of your store.
 
-- From your admin panel, on the blue sidebar click on the cog icon, go to `Settings > Legal`.
-
-<div class="screenshot">
-    <img src="/screenshots/{{version}}/settings-legal.png" alt="legal setting">
-    <div class="caption">Settings > Legal</div>
-</div>
-
+From your admin panel, on the blue sidebar click on the cog icon, go to `Settings > Legal`.
 Once in this page, all the legal pages are displayed as a tab. You can just fill in the content of each page and click on the Enable switch to retrieve the content of your page and display it in your front-end.
 
 <div class="screenshot">
-    <img src="/screenshots/{{version}}/legal-screenshot.png" alt="legal pages">
-    <div class="caption">Legal pages</div>
+    <img src="/screenshots/{{version}}/legal.png" alt="legal settings">
+    <div class="caption">Legal settings</div>
 </div>
 
 :::warning
@@ -79,28 +73,28 @@ class LegalController extends Controller
     public function privacy()
     {
         return view('legal.privacy', [
-            'legal' => Legal::enabled()->where('slug', 'privacy-policy')->first(),
+            'legal' => Legal::enabled()->where('slug', 'privacy')->first(),
         ]);
     }
 
     public function refund()
     {
         return view('legal.refund', [
-            'legal' => Legal::enabled()->where('slug', 'refund-policy')->first(),
+            'legal' => Legal::enabled()->where('slug', 'refund')->first(),
         ]);
     }
 
     public function terms()
     {
         return view('legal.terms', [
-            'legal' => Legal::enabled()->where('slug', 'terms-of-use')->first(),
+            'legal' => Legal::enabled()->where('slug', 'terms')->first(),
         ]);
     }
 
     public function shipping()
     {
         return view('legal.shipping', [
-            'legal' => Legal::enabled()->where('slug', 'shipping-policy')->first(),
+            'legal' => Legal::enabled()->where('slug', 'shipping')->first(),
         ]);
     }
 }

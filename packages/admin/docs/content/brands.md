@@ -18,7 +18,7 @@ It is mainly used to facilitate the navigation of customers in your catalog, as 
 
 New brands are automatically activated and available for your online store, even if they do not contain any products yet. You must deactivate them so that they do not appear online.
 
-### Fields
+### Model
 
 The model used is `Shopper\Models\Brand`.
 

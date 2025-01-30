@@ -34,18 +34,11 @@
     </div>
 
     <x-shopper::container class="mt-8">
-        <div x-show="currentTab === 'refund'">
-            <livewire:shopper-settings.legal.refund :legal="$legals['refund']" />
-        </div>
-        <div x-cloak x-show="currentTab === 'privacy'">
-            <livewire:shopper-settings.legal.privacy :legal="$legals['privacy']" />
-        </div>
-        <div x-cloak x-show="currentTab === 'terms'">
-            <livewire:shopper-settings.legal.terms :legal="$legals['terms-of-use']" />
-        </div>
-        <div x-cloak x-show="currentTab === 'shipping'">
-            <livewire:shopper-settings.legal.shipping :legal="$legals['shipping']" />
-        </div>
+        @foreach ($legals as $key => $legal)
+            <div x-cloak x-show="currentTab === '{{ $key }}'">
+                @livewire('shopper-settings.legal.'. $key, ['legal' => $legal], key($key))
+            </div>
+        @endforeach
     </x-shopper::container>
 
     <x-shopper::learn-more :name="__('shopper::pages/settings/global.legal.title')" link="legal" />

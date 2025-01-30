@@ -30,7 +30,7 @@ final class LegalsPageTableSeeder extends Seeder
 
         Legal::query()->create([
             'title' => __('shopper::pages/settings/global.legal.terms_of_use'),
-            'slug' => 'terms-of-use',
+            'slug' => 'terms',
             'is_enabled' => true,
             'content' => null,
         ]);

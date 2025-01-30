@@ -1,15 +1,66 @@
 # Media
 
-Shopper supports assigning images to products, brands, collections and categories. It is an additional layer provided by the framework with the help of the [Spatie Media Library](https://spatie.be/docs/laravel-medialibrary)
-We recommend organizing your images in a folder offline and keeping a backup in case you need them in the future or mistakenly alter one and wish to revert to the original. You can look at the [documentation](/configuration#update-configurations) for this purpose
+Shopper supports assigning images to products, variants, brands, collections and categories. It is an additional layer provided 
+by the framework with the help of the [Spatie Media Library](https://spatie.be/docs/laravel-medialibrary)
 
 ## Configuration
 
-For uploading images we are using [FilePond](https://pqina.nl/) and some custom upload component with Livewire.
+The `config/shopper/media.php` file allows you to customize how media files are handled. Below are the available configuration options:
 
-:::warning
-To apply this action on your model you have to prepare your Model with the Laravel Media Library [configuration](https://spatie.be/docs/laravel-medialibrary/v10/basic-usage/preparing-your-model)
-:::
+### Storage Disk
+
+Specifies the storage disk used to save media files. By default, Shopper uses the `public` disk, but you can change 
+it to use services like S3, Cloudinary, or other storage systems. Since the file system is based on the Spatie Laravel Media Library, 
+you also need to define the name of the collection of images and thumbnails for your Models.
+
+```php filename="config/shopper/media.php"
+'storage' => [
+    'collection_name' => 'uploads',
+    'thumbnail_collection' => 'thumbnail',
+    'disk_name' => 'public',
+]
+```
+
+### Accepts Mime Types
+
+Lists the MIME types allowed for media files. This ensures that only specified file formats can be uploaded. For your need you can add more types.
+
+```php filename="config/shopper/media.php"
+'accepts_mime_types' => [
+    'image/jpg',
+    'image/jpeg',
+    'image/png',
+]
+```
+
+### Media Filesize
+
+Sets the maximum allowed file size for media uploads (in kilobytes). This helps control file sizes to avoid performance issues.
+
+```php filename="config/shopper/media.php"
+'max_size' => [
+    'thumbnail' => 1024, // Default size for thumbnail image (1MB). 
+    'images' => 2048, // Default size for individual collection image for product (2MB)
+]
+```
+
+### Image Conversions
+
+Configures image conversions to generate resized or optimized versions of uploaded images. For example, 
+you can create thumbnails or mobile-friendly images.
+
+```php filename="config/shopper/media.php"
+'conversions' => [
+    'large' => [
+        'width' => 800,
+        'height' => 800,
+    ],
+    'medium' => [
+        'width' => 500,
+        'height' => 500,
+    ],
+]
+```
 
 ## Media Variants
 
@@ -33,7 +84,8 @@ But you can extend the different models to add conversions according to your nee
 The presence of thumbnails is a very common scenario, which is why Shopper use them.
 
 ```php
-$product->getUrl('thumb200x200')
+$product->getUrl('thumb200x200') // or
+$product->getUrl(config('shopper.media.storage.thumbnail_collection'))
 ```
 
 For more information on what's available, see [Defining conversions](https://spatie.be/docs/laravel-medialibrary/v10/converting-images/defining-conversions#content-using-multiple-conversions)
@@ -42,5 +94,10 @@ For more information on what's available, see [Defining conversions](https://spa
 To get an image with full url on a product, a brand or a collection
 
 ```php
-$product->getFirstMediaUrl(config('shopper.media.storage.disk_name'))
+$product->getFirstMediaUrl(config('shopper.media.storage.collection_name'))
 ```
+
+## Advanced Customization
+
+If you need further customization, you can configure a custom disk in `config/filesystems.php` and update the `config/shopper/media.php` configuration.
+You can see everything about Storage on the [Laravel documentation](https://laravel.com/docs/11.x/filesystem)

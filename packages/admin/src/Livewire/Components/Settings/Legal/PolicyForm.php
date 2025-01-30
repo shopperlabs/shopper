@@ -10,7 +10,6 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Core\Models\Legal;
 
@@ -23,6 +22,9 @@ class PolicyForm extends Component implements HasForms
 
     public Legal $legal;
 
+    /**
+     * @var array<string, mixed>|null
+     */
     public ?array $data = [];
 
     public function mount(): void
@@ -34,12 +36,14 @@ class PolicyForm extends Component implements HasForms
     {
         return $form
             ->schema([
-                Components\Hidden::make('title'),
+                Components\Hidden::make('title')
+                    ->unique(ignoreRecord: true),
                 Components\Toggle::make('is_enabled')
                     ->label(__('shopper::words.is_enabled'))
                     ->onColor('success'),
                 Components\RichEditor::make('content')
                     ->label(__('shopper::forms.label.content'))
+                    ->id($this->legal->slug)
                     ->required(),
             ])
             ->statePath('data')
@@ -48,9 +52,9 @@ class PolicyForm extends Component implements HasForms
 
     public function store(): void
     {
-        Legal::query()->updateOrCreate([
-            'slug' => Str::slug($this->form->getState()['title']),
-        ], $this->form->getState());
+        $this->legal->update(array_merge($this->form->getState(), [
+            'slug' => $this->legal->slug,
+        ]));
 
         Notification::make()
             ->title($this->legal->title)

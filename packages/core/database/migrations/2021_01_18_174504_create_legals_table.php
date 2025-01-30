@@ -12,7 +12,7 @@ return new class extends Migration
     {
         Schema::create($this->getTableName('legals'), function (Blueprint $table): void {
             $table->id();
-            $table->string('title')->unique();
+            $table->string('title');
             $table->string('slug')->nullable()->unique();
             $table->longText('content')->nullable();
             $table->boolean('is_enabled')->default(false);

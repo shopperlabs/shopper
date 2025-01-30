@@ -1,5 +1,5 @@
 - ##### Prologue
-  - [Introduction](/docs/{{version}}/introduction.md)
+  - [Introduction](/docs/{{version}}/introduction)
   - [Release Notes](https://github.com/shopperlabs/shopper/releases)
   - [Upgrade Guide](/docs/{{version}}/upgrade)
   - [Contribution Guide](/docs/{{version}}/contributing)
@@ -10,7 +10,7 @@
 - ##### Concepts
   - [Initial Set-Up](/docs/{{version}}/initial-setup)
   - [Locations](/docs/{{version}}/locations)
-  - [Roles / Permissions](/docs/{{version}}/roles-permissions)
+  - [Roles / Permissions](/docs/{{version}}/acl)
   - [Currencies](/docs/{{version}}/currencies)
   - [Zones](/docs/{{version}}/zones)
   - [Legal](/docs/{{version}}/legal)

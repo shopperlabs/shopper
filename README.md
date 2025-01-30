@@ -7,7 +7,7 @@
         <img src="https://github.com/shopperlabs/framework/workflows/tests/badge.svg" alt="Build Status">
     </a>
     <a href="https://laravel.com">
-        <img alt="Laravel v10.x" src="https://img.shields.io/badge/Laravel-v10.x-FF2D20">
+        <img alt="Laravel v11.x" src="https://img.shields.io/badge/Laravel-v11.x-FF2D20">
     </a>
     <a href="https://packagist.org/packages/shopper/framework">
         <img src="https://img.shields.io/packagist/dt/shopper/framework" alt="Total Downloads">
@@ -70,18 +70,18 @@ A beta release for version 2 is now available, and here's a roadmap of upcoming 
 - [x] Manage Zones (market zone model in Shopify)
 - [x] Support Multi currencies in setting
 - [x] Support Multi inventories
-- [ ] Generate Variant based on product attributes
-- [ ] Support multi currencies for product / variant
+- [x] Generate Variant based on product attributes
+- [x] Support multi currencies for product / variant
+- [x] Feature & Unit Tests
 - [ ] Support taxes
 - [ ] Dynamic product association based on collections configuration 
-- [ ] Feature & Unit Tests
 
 ## Contact
 
 You can communicate with us using the following mediums:
 
--   [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
--   [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
+- [Follow us on Twitter](https://twitter.com/laravelshopper) for announcements and updates.
+- [Join us on Discord](https://laravelshopper.dev/discord) to chat with us.
 
 ## Contributing
 
@@ -89,10 +89,7 @@ Please see [contributing.md](CONTRIBUTING.md) for details and a todolist.
 
 ## Security
 
-If you discover any security related issues, please email contact@shopperlabs.io instead of using the issue tracker.
-
-It's _heavily_ recommended that you **[subscribe to the Shopper Newsletter](http://laravelshopper.dev)** so you can find out about any security updates, breaking changes or major features.
-We send an email about 3-4 emails per year. Sometimes less.
+If you discover any security related issues, please email arthur@shopperlabs.io instead of using the issue tracker.
 
 ## Credits
 
@@ -110,4 +107,4 @@ The Shopper Framework is open-sourced software licensed under the [MIT license](
 
 ## Sponsoring
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
+Support this project by becoming a [Sponsor](https://github.com/sponsors/mckenziearts). Your logo will show up here with a link to your website.
