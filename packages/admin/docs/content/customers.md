@@ -11,7 +11,7 @@ The first page under the "Customers" menu gives you a list of all the registered
 
 During the [installation](/installing#update-existing-files) of Shopper, one of the first things required is to inherit to our model User the features of the model User that is in Shopper.
 
-## Fields
+## Model
 
 The model used is `App\Models\User` which extends the `\Shopper\Core\Models\User` model. 
 
@@ -72,13 +72,14 @@ return [
 
 ## Manage Customers
 
-When a new customer places an order with your store, their name and information are automatically added to your customer list. A customer profile is created when a customer interacts with your store.
+When a new customer places an order with your store, their name and information are automatically added to your customer list. 
+A customer profile is created when a customer interacts with your store.
 
 Alternatively, you can add a customer to your store manually.
 
 ### Create customer
 
-From your Shopper admin, go to Customers and click on "Add customer" button.
+From your Shopper admin panel, go to Customers and click on "**New customer**" button.
 
 <div class="screenshot">
   <img src="/screenshots/{{version}}/create-customer.png" alt="Create customer">
@@ -92,16 +93,17 @@ When creating a customer manually, you should also fill in an address that will 
   <div class="caption">Customer address form</div>
 </div>
 
-_Optional_: If the customer has agreed to receive marketing emails, and you have entered an email address, then in the Customer overview section, check Customer agreed to receive marketing emails.
+_Optional_: If the customer has agreed to receive marketing emails, and you have entered an email address, then 
+in the Customer overview section, check Customer agreed to receive marketing emails.
 
-And you can also check the **Send customer credentials** checkbox to sent an email to the customer with their login information.
+And you can also check the **Send customer credentials** checkbox to send an email to the customer with their login information.
 
 <div class="screenshot">
   <img src="/screenshots/{{version}}/customer-notification.png" alt="customer notification">
   <div class="caption">Customer notifications</div>
 </div>
 
-The Livewire component used to create a client is `Shopper\Framework\Http\Livewire\Customers\Create`
+The Livewire component used to create a customer is `Shopper\Livewire\Livewire\Pages\Customers\Create`
 
 ```php
 $customer = (new UserRepository())->create([
@@ -133,7 +135,7 @@ In the case where you would like to have more information on a given customer, y
 And in this page you can modify the information of a customer by clicking on the "update" button on the right of each information.
 
 The various sections provide you with some key data on the user:
-- **Customer information**, first and last name, e-mail address, picture, birth date, gender.
+- **Customer information**, first and last name, e-mail address, picture, birthdate, gender.
 - Registered **Addresses**
 - **Orders** Summary of purchases already made by the customer. Amount spent, payment type, order status. For more information on each order, click on the order number.
 

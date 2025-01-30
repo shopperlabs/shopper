@@ -3,7 +3,7 @@
 Shopper is a Headless CMS how provide a range collection of modular tools and components designed to help developers
 create unique and powerful e-commerce experiences.
 
-<img src="/img/socialcard.png" alt="Shopper">
+<img src="/img/socialcard.png" class="rounded-2xl" alt="Shopper">
 
 Built on the flexibility of Laravel, Shopper provides the essential building blocks for crafting custom online stores.
 Developers have full control over their tech stack and the logic behind every feature, enabling them to tailor the platform
@@ -15,8 +15,7 @@ you to create a commerce solution that stands out.
 
 ## Is It Ready For Production?
 
-Yes.
+Not entirely, as Shopper remains under active development, offering new features and regular updates.
+But you can still install it to get your store up and running.
 
 Every component is well-tested, and Shopper uses the [Semantic Versioning Scheme](https://semver.org/), meaning you won't face unexpected breaking changes.
-Shopper remains under active development, offering new features and regular updates.
-

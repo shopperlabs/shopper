@@ -34,7 +34,7 @@ Category
   <div class="caption">Categories</div>
 </div>
 
-### Fields
+## Model
 
 The model used is `Shopper\Core\Models\Category`.
 
@@ -92,7 +92,7 @@ return [
     'category' => \App\Models\Category::class, // [tl! ++]
     ```
 
-### Components
+## Components
 
 By default, categories Livewire components are not published. To customize components, you must publish them.
 
@@ -118,9 +118,11 @@ return [
 
 ## Manage Categories
 
-Categories are determinant of how people will navigate on your site and search for your products. You should focus on your category tree and how categories are organized even before you start creating product sheets.
+Categories are determinant of how people will navigate on your site and search for your products. You should focus on your category 
+tree and how categories are organized even before you start creating product sheets.
 
-The categories are accessible via the **Categories** Menu on the left sidebar. The display page is rendered by the Livewire component `Shopper\Framework\Http\Livewire\Categories\Browse` and for the display of the categories table is the component `Shopper\Framework\Http\Livewire\Tables\CategoriesTable`.
+The categories are accessible via the **Categories** Menu on the left sidebar. The display page is rendered by the Livewire 
+component `Shopper\Livewire\Pages\Category\Index`.
 
 You can modify them in the component configuration file to use your own.
 
@@ -185,7 +187,7 @@ echo $categoryChild->slug;
 // photo-camera
 ```
 
-#### Create Category with parent
+### Create Category with parent
 
 ```php
 use App\Models\Category;
@@ -203,19 +205,6 @@ $child = Category::create([
   'is_enabled' => true,
 ]);
 ```
-
-### Update category
-
-The "Update" button allows you to modify the category.
-
-:::info
-It is important to know that if you update the category name, the slug will automatically be updated as well.
-:::
-
-<div class="screenshot">
-  <img src="/screenshots/{{version}}/category-update.png" alt="update category">
-  <div class="caption">Update Category</div>
-</div>
 
 ## Retrieve Data
 

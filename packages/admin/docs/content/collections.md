@@ -8,19 +8,25 @@ And for the constitution of the collections we got closer to what Shopify offers
 
 ## Context
 
-For example if you have a store that sells various electronic products, you will probably have categories like "Phones", "Computers", "Cameras" etc. Each of these categories may have several products that can be listed.
+For example if you have a store that sells various electronic products, you will probably have categories like "**Phones**", "**Computers**", 
+"**Cameras**" etc. Each of these categories may have several products that can be listed.
 
-And to try to group the products in an even more detailed way you can create for example a collection called "Gaming Collection" and specify in this collection that any product with certain conditions can be included.
+And to try to group the products in an even more detailed way you can create for example a collection called "**Gaming Collection**" 
+and specify in this collection that any product with certain conditions can be included.
 
-And that Gaming Collection can have products that even come from various categories in your site (desktop, laptop, monitor, and many others of the same type) or that don't even have categories (very rare case in e-commerce sites).
+And that Gaming Collection can have products that even come from various categories in your site (desktop, laptop, monitor, and many 
+others of the same type) or that don't even have categories (very rare case in e-commerce sites).
 
-Let's use Netflix as an example. Categories are essentially genres: adventure, action, horror, romance, etc., while collections are similar to a TV series or movie sequels that are ultimately meant to be viewed together.
+Let's use Netflix as an example. Categories are essentially genres: adventure, action, horror, romance, etc., while collections 
+are similar to a TV series or movie sequels that are ultimately meant to be viewed together.
 
 ## Collections vs Categories
 
-The question is essential, it is difficult to find this type of configuration on e-commerce tools because most of the time categories, collections or taxonomies are used to perform the same action **group products**.
+The question is essential, it is difficult to find this type of configuration on e-commerce tools because most of the time categories, 
+collections or taxonomies are used to perform the same action **Group products**.
 
-The advantage of having collections in addition to categories in Shopper is to differentiate or optimize the search for products by customers in your store.
+The advantage of having collections in addition to categories in Shopper is to differentiate or optimize the search for products 
+by customers in your store.
 
 ### Depth
 
@@ -28,18 +34,20 @@ A collection can't have a child or a parent like a category. So all the collecti
 
 ### Condition
 
-Where products can be added to any category, collections cannot. Depending on the type of collection you want to create (Manual or Automatic) you will find yourself creating conditions or rules for the products that should be in that collection.
+Where products can be added to any category, collections cannot. Depending on the type of collection you want to create (**Manual** or **Automatic**)
+you will find yourself creating conditions or rules for the products that should be in that collection.
 
 ## Overview
 
-As mentioned above, the collections in Shopper are inspired by [Shopify collections](https://help.shopify.com/en/manual/products/collections). So there are also 2 types of collections: "Manual" and "Automatic" and the configuration for each is different.
+As mentioned above, the collections in Shopper are inspired by [Shopify collections](https://help.shopify.com/en/manual/products/collections). So there are also 2 types of collections: 
+"**Manual**" and "**Automatic**" and the configuration for each is different.
 
 <div class="screenshot">
   <img src="/screenshots/{{version}}/collections.png" alt="Collections">
   <div class="caption">Collections</div>
 </div>
 
-### Fields
+### Model
 
 As the collections can be automatic, they are managed by 2 Models, the Collection model and the model for rules associated with automatic collections.
 
@@ -146,12 +154,8 @@ return [
 
 ## Manage Collections
 
-Form your Shopper admin on the sidebar go to **Collections**. The display page is rendered by the Livewire component `Shopper\Livewire\Pages\Collection\Index::class`.
-
-<div class="screenshot">
-    <img src="/screenshots/{{version}}/collection-empty-state.png" alt="Collections empty data">
-  	<div class="caption">Collections</div>
-</div>
+Form your Shopper admin on the sidebar go to **Collections**. The display page is rendered by the Livewire component 
+`Shopper\Livewire\Pages\Collection\Index::class`.
 
 ### Create collection
 
@@ -159,7 +163,14 @@ Click on the "Create" button on the collections page, which will display and sli
 Save your changes in order to be taken back to the collection edit page. Required fields are marked with an **asterisk (*)**.
 
 You can create two types of collections as we said: `Automatic` and `Manual` collection.
-Only automatic collections have rules for automating them. When you choose to create an automatic collection the rules section will be available in the edit form.
+Only automatic collections have rules for automating them.
+
+<div class="screenshot">
+  <img src="/screenshots/{{version}}/collection-rules.png" alt="automatic collection rules">
+  <div class="caption">Automatic collection rules</div>
+</div>
+
+When you choose to create an automatic collection the rules section will be available in the edit form.
 
 <div class="screenshot">
   <img src="/screenshots/{{version}}/collection-rules.png" alt="automatic collection rules">
