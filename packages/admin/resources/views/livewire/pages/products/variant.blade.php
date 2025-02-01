@@ -98,7 +98,7 @@
                             <x-filament-tables::header-cell class="lg:py-3" />
                         </x-slot>
 
-                        @foreach($variant->values as $value)
+                        @foreach($variant->values->loadMissing('attribute') as $value)
                             <x-filament-tables::row>
                                 <x-filament-tables::cell>
                                     <div class="grid w-full gap-y-1 py-2 px-3">
