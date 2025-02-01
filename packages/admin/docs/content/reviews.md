@@ -7,14 +7,16 @@ Coming Soon...
 
 The model used is `Shopper\Models\Review`.
 
-| Name             | Type     | Required | Notes                      |
-|------------------|----------|----------|----------------------------|
-| `id`             | autoinc  |          | auto                       |
-| `approved`       | boolean  | no       | Default `false`            |
-| `is_recommended` | boolean  | no       | Default `false`            |
-| `title`          | string   | no       | The title of the review.   |
-| `content`        | longText | no       | The content of the review. |
-| `rating`         | string   | yes      | The rating of the review   |
+| Name             | Type     | Required       | Notes                                                                   |
+|------------------|----------|----------------|-------------------------------------------------------------------------|
+| `id`             | autoinc  |                | auto                                                                    |
+| `approved`       | boolean  | no             | Default `false`                                                         |
+| `is_recommended` | boolean  | no             | Default `false`                                                         |
+| `title`          | string   | no             | The title of the review.                                                |
+| `content`        | longText | author_type no | The content of the review.                                              |
+| `rating`         | string   | yes            | The rating of the review                                                |
+| `reviewrateable` | morphs   | yes            | relation generate `reviewrateable_id` and `reviewrateable_type` columns |
+| `author`         | morphs   | yes            | relation generate `author_id` and `author_type` columns                 |
 
 ### Components
 
