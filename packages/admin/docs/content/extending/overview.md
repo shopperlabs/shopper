@@ -15,13 +15,13 @@ To add new features to Shopper, the first thing you need to do is to register a 
 ```php
 namespace App\Providers;
 
-use Shopper\Framework\Events\BuildingSidebar; // [tl! focus]
+use Shopper\Sidebar\SidebarBuilder; // [tl! focus]
 
 class AppServiceProvider extends ServiceProvider
 {
   public function registerCustomShopperSidebar() // [tl! focus:start]
   {
-    $this->app['events']->listen(BuildingSidebar::class, RegisterCustomMenu::class);
+    $this->app['events']->listen(SidebarBuilder::class, RegisterCustomMenu::class);
   } // [tl! focus:end]
 }
 ```
@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
 The rest of the configuration will be done using the configuration files in the `config/shopper/` folder
 
 - `/routes.php` for the routes that should be dynamically loaded for the admin panel
-- `/admin.php` for the configuration that should be loaded for the cpanel.
+- `/shopper.php` for the configuration that should be loaded for the cpanel.
 
 We will deal with all this in more detail later.
 
@@ -37,6 +37,9 @@ We will deal with all this in more detail later.
 
 It should go without saying — but we'll say it anyway just in case...
 
-Don't ever, for any reason, ever, no matter what, no matter where, or who, or who you are with, or where you are going or... or where you've been... ever, for any reason, whatsoever, edit the files inside `/vendor/shopper`. Or any other Composer package. Anything you do will get blown away and you'll lose those changes forever and ever amen.
+Don't ever, for any reason, ever, no matter what, no matter where, or who, or who you are with, or where you are going or... 
+or where you've been... ever, for any reason, whatsoever, edit the files inside `/vendor/shopper`. Or any other Composer package.
+Anything you do will get blown away and you'll lose those changes forever and ever amen.
 
-You should instead build addons, extensions, and submit pull requests to [admin](https://github.com/shopperlabs/shopper) (after checking with the team first if we'll accept them). Thanks!
+You should instead build addons, extensions, and submit pull requests to [admin](https://github.com/shopperlabs/shopper) (after checking with the team first 
+if we'll accept them). Thanks!

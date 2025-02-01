@@ -2,10 +2,6 @@
 
 ## Model
 
-- [Zone](#zone)(`Shopper\Models\Zone`) represents geographical or shipping regions, typically used for determining delivery areas, tax rules, or pricing zones
-
-### Zone
-
 The model used is `Shopper\Models\Zone`.
 
 | Name          | Type    | Required | Notes                                                   |
@@ -20,8 +16,8 @@ The model used is `Shopper\Models\Zone`.
 
 ## Components
 
-The components used to manage zones are found in the component configuration file `config/shopper/components/setting.php`.
-This configuration file is not available by default.
+The components used to manage zones are found in the component configuration file `config/shopper/components/setting.php`. This configuration file is not available by default.
+
 But if you want to update or change the settings components, you can publish them with the command
 
 ```bash
@@ -30,6 +26,7 @@ php artisan shopper:component:publish setting
 This file contains all Livewire components for settings. Here is only the list of zone components
 
 ```php
+use Shopper\Livewire\Components;
 use Shopper\Livewire\Pages;
 
 return [
