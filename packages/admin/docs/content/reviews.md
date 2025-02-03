@@ -33,7 +33,7 @@ Once you've published the component, you can find it in the `review.php` locate 
 use Shopper\Livewire;
 
 return [
-  'pages' => [
+    'pages' => [
         'review-index' => Livewire\Pages\Reviews\Index::class,
     ],
     
