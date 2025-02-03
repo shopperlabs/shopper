@@ -76,7 +76,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
 
     public function cancelOrderAction(): Action
     {
-        return Action::make('cancel_order')
+        return Action::make('cancelOrder')
             ->label(__('shopper::forms.actions.cancel_order'))
             ->visible($this->order->canBeCancelled())
             ->action(function (): void {
@@ -110,7 +110,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
 
     public function markPaidAction(): Action
     {
-        return Action::make('mark_paid')
+        return Action::make('markPaid')
             ->label(__('shopper::forms.actions.mark_paid'))
             ->visible($this->order->isPending() || $this->order->isRegister())
             ->action(function (): void {
@@ -127,7 +127,7 @@ class Detail extends AbstractPageComponent implements HasActions, HasForms
 
     public function markCompleteAction(): Action
     {
-        return Action::make('mark_complete')
+        return Action::make('markComplete')
             ->label(__('shopper::forms.actions.mark_complete'))
             ->visible($this->order->isPaid())
             ->action(function (): void {

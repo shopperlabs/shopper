@@ -41,7 +41,7 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
 
     case Cancelled = 'cancelled';
 
-    public function getColor(): string | array | null
+    public function getColor(): string
     {
         return match ($this) {
             self::New => 'info',
@@ -55,7 +55,7 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getIcon(): ?string
+    public function getIcon(): string
     {
         return match ($this) {
             self::New => 'untitledui-stars-02',
@@ -69,7 +69,7 @@ enum OrderStatus: string implements HasColor, HasIcon, HasLabel
         };
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::New => __('shopper-core::status.new'),
