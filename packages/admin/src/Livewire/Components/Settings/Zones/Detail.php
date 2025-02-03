@@ -11,29 +11,35 @@ use Filament\Actions\DeleteAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Reactive;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Shopper\Core\Models\Zone;
 
+/**
+ * @property-read Zone $zone
+ */
 #[Lazy]
 class Detail extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;
 
-    public ?Zone $zone = null;
+    #[Reactive]
+    public ?int $currentZoneId = null;
 
-    #[On('refresh-zone')]
-    public function mount(?int $currentZoneId = null): void
+    #[Computed]
+    public function zone(): ?Zone
     {
-        $this->zone = Zone::with([
+        return Zone::with([
             'countries',
             'currency',
             'carriers',
             'paymentMethods',
-            'shippingOptions',
-        ])->find($currentZoneId);
+        ])->find($this->currentZoneId);
     }
 
     public function deleteAction(): Action

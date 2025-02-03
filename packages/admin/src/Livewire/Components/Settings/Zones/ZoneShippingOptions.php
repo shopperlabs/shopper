@@ -11,18 +11,36 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;
 
+/**
+ * @property-read Zone $zone
+ */
 #[Lazy]
 class ZoneShippingOptions extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;
 
-    public ?Zone $zone = null;
+    public ?int $selectedZoneId = null;
+
+    #[On('zone.changed')]
+    public function updatedSelectedZone(int $currentZoneId): void
+    {
+        $this->selectedZoneId = $currentZoneId;
+    }
+
+    #[Computed]
+    public function zone(): ?Zone
+    {
+        return Zone::with(['shippingOptions'])->find($this->selectedZoneId);
+    }
 
     public function deleteAction(): Action
     {
@@ -53,6 +71,11 @@ class ZoneShippingOptions extends Component implements HasActions, HasForms
                 component: 'shopper-slide-overs.shipping-option-form',
                 arguments: ['zoneId' => $arguments['zone_id'], 'optionId' => $arguments['option_id']]
             ));
+    }
+
+    public function placeholder(): View
+    {
+        return view('shopper::placeholders.detail-zone');
     }
 
     public function render(): View

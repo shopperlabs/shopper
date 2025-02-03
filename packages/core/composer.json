@@ -5,7 +5,6 @@
   "require": {
     "ext-intl": "*",
     "php": "^8.2",
-    "akaunting/laravel-money": "^5.2",
     "filament/support": "^3.2",
     "laravel/prompts": "^0.1.15",
     "mckenziearts/blade-untitledui-icons": "^1.3",

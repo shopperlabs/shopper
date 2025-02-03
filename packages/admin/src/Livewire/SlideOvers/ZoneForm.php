@@ -185,9 +185,7 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
             ->success()
             ->send();
 
-        $this->dispatch('refresh-zones');
-
-        $this->closePanel();
+        $this->redirectRoute('shopper.settings.zones', ['zone' => $this->zone->id]);
     }
 
     public static function panelMaxWidth(): string

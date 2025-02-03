@@ -121,7 +121,7 @@ class ShippingOptionForm extends SlideOverComponent implements HasForms, SlideOv
             ->success()
             ->send();
 
-        $this->dispatch('refresh-zone', currentZoneId: $this->zoneId);
+        $this->dispatch('zone.changed', currentZoneId: $this->zoneId);
 
         $this->closePanel();
     }

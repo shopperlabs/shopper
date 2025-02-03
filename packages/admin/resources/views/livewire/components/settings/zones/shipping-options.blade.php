@@ -1,3 +1,7 @@
+@php
+    $zone = $this->zone;
+@endphp
+
 <div>
     <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
         <div class="flex items-center justify-between p-4 lg:p-5">
@@ -50,7 +54,7 @@
                         <span class="text-sm text-gray-500 dark:text-gray-400">
                             {{ __('shopper::forms.label.price') }}:
                             <span class="font-medium text-gray-600 dark:text-gray-300">
-                                {{ shopper_money_format($shippingOption->price, $zone->currency->code) }}
+                                {{ \Illuminate\Support\Number::currency($shippingOption->price, in: $zone->currency->code) }}
                             </span>
                         </span>
                     </div>

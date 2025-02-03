@@ -37,10 +37,11 @@
                 </x-slot>
                 <div class="divide-y divide-gray-200 dark:divide-white/10">
                     @forelse ($zones as $zone)
-                        <label class="relative flex cursor-pointer p-4 focus:outline-none">
+                        <label wire:key="{{ $zone->slug }}" for="{{ $zone->slug }}" class="relative flex cursor-pointer bg-gray-50 p-4 focus:outline-none dark:bg-gray-950">
                             <x-filament::input.radio
                                 name="zone"
                                 value="{{ $zone->id }}"
+                                id="{{ $zone->slug }}"
                                 wire:model.live="currentZoneId"
                                 class="mt-0.5"
                                 aria-labelledby="zone-{{ $zone->id }}-label"
@@ -90,7 +91,9 @@
         </aside>
         <div class="mt-6 space-y-4 lg:col-span-2 lg:mt-0">
             @if ($currentZoneId)
-                <livewire:shopper-settings.zones.detail :$currentZoneId />
+                <livewire:shopper-settings.zones.detail :$currentZoneId :key="$currentZoneId" />
+
+                <livewire:shopper-settings.zones.shipping-options :selectedZoneId="$currentZoneId" :key="'options-' . $currentZoneId" />
             @else
                 <x-shopper::card>
                     <x-shopper::empty-card

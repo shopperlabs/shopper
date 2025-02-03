@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Akaunting\Money;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Number;
 use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Order;
 use Shopper\Core\Models\Setting;
@@ -67,15 +67,13 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format(int | float $amount, ?string $currency = null, bool $convert = false): string
+    function shopper_money_format(int | float $amount, ?string $currency = null): string
     {
-        $money = new Money\Money(
-            amount: $amount,
-            currency: new Money\Currency($currency ?? shopper_currency()),
-            convert: $convert
+        return Number::currency(
+            number: $amount,
+            in: $currency ?? shopper_currency(),
+            locale: app()->getLocale()
         );
-
-        return $money->formatLocale(app()->getLocale());
     }
 }
 

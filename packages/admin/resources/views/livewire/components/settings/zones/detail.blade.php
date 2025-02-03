@@ -1,3 +1,7 @@
+@php
+    $zone = $this->zone;
+@endphp
+
 <div class="space-y-10">
     @if ($zone)
         <x-shopper::card class="divide-y divide-gray-200 dark:divide-white/10">
@@ -53,8 +57,6 @@
                 </div>
             </div>
         </x-shopper::card>
-
-        <livewire:shopper-settings.zones.shipping-options :$zone />
     @else
         <x-shopper::card>
             <x-shopper::empty-card
