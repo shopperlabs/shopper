@@ -112,10 +112,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
     public function bootingPackage(): void
     {
-        TextColumn::macro('currency', function (string | Closure | null $currency = null, bool $shouldConvert = false): TextColumn {
+        TextColumn::macro('currency', function (string | Closure | null $currency = null): TextColumn {
             /*** @var TextColumn $this */
             // @phpstan-ignore-next-line
-            $this->formatStateUsing(static function (Column $column, $state) use ($currency, $shouldConvert): ?string {
+            $this->formatStateUsing(static function (Column $column, $state) use ($currency): ?string {
                 if (blank($state)) {
                     return null;
                 }
@@ -127,7 +127,6 @@ final class ShopperServiceProvider extends PackageServiceProvider
                 return shopper_money_format(
                     amount: $state,
                     currency: mb_strtoupper($column->evaluate($currency)),
-                    convert: $shouldConvert
                 );
             });
 
