@@ -28,6 +28,7 @@
   - [Discounts](/docs/{{version}}/discounts)
   - [Orders](/docs/{{version}}/orders)
   - [Reviews](/docs/{{version}}/reviews)
+  - [Pricing](/docs/{{version}}/pricing)
 - ##### Storefronts
   - [:icons.livewire: Livewire](/docs/{{version}}/livewire-starter-kit){:.icon-link}
   - [:icons.blade: Blade](/docs/{{version}}/blade-starter-kit){:.icon-link}
