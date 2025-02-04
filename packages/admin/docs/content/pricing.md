@@ -31,13 +31,9 @@ Once you've published the component, you can find it in the `product.php` locate
 use Shopper\Livewire;
 
 return [
-  'pages' => [
-        'products.pricing' => Components\Products\Pricing::class,
-        // ...
-    ],
-    
   'components' => [
         // ...
+        'products.pricing' => Components\Products\Pricing::class,
         'slide-overs.manage-pricing' => Livewire\SlideOvers\ManagePricing::class,
         // ...
   ],
