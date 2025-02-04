@@ -8,7 +8,7 @@
   - [Installation](/docs/{{version}}/installation)
   - [Configuration](/docs/{{version}}/configuration)
 - ##### Concepts
-  - [Initial Set-Up](/docs/{{version}}/initial-setup)
+  - [Setup Store](/docs/{{version}}/setup-store)
   - [Locations](/docs/{{version}}/locations)
   - [Roles / Permissions](/docs/{{version}}/acl)
   - [Currencies](/docs/{{version}}/currencies)
