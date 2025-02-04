@@ -16,29 +16,30 @@ The model used is `Shopper\Models\Price`.
 | `priceable`      | morphs  | yes      | Relation generate `priceable_id` and `priceable_type` columns |
 | `currency_id`    | int     | yes      | int (`Currency` object via the `currency` relation)           |
 
-:::tip
-Models are customizable, and we recommend adding the **Price** model when you configure your site.
-To add the model you need to look at the configuration file `config/shopper/models.php`.
-:::
 
-1. Create your own Model
-    ```bash
-    php artisan make:model Price
-    ```
-   Once the `app/Models/Price.php` model is created in your app folder, you need to extend from the `Shopper\Core\Models\Price` Model.
+### Components
 
-2. Extend our Price model from the Price Shopper Model
-    ```php
-    namespace App\Models;
+By default, pricing Livewire components are not published. To customize components, you must publish them.
 
-    use Shopper\Core\Models\Price as Model;
+```bash
+php artisan shopper:component:publish product
+```
 
-    class Price extends Model
-    {
-    }
-    ```
+This command will publish all Livewire components used for product and price management (from pages to form components).
+Once you've published the component, you can find it in the `product.php` locate in the `config/shopper/components` folder.
+```php
+use Shopper\Livewire;
 
-3. Add `price` key for the model on the `models.php` config file to use our new model
-    ```php
-    'price' => \App\Models\Price::class, // [tl! ++]
-    ```
+return [
+  'pages' => [
+        'products.pricing' => Components\Products\Pricing::class,
+        // ...
+    ],
+    
+  'components' => [
+        // ...
+        'slide-overs.manage-pricing' => Livewire\SlideOvers\ManagePricing::class,
+        // ...
+  ],
+];
+```
