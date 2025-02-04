@@ -1,4 +1,4 @@
-# Initial Set-Up
+# Setup Store
 
 Once you have installed Shopper, you need to set up a store to serve as your first location. 
 After creating a new user, you need to login via the url `/cpanel/login`. After logging in you need to fill 
