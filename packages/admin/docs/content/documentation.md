@@ -30,6 +30,7 @@
   - [Reviews](/docs/{{version}}/reviews)
   - [Pricing](/docs/{{version}}/pricing)
 - ##### Storefronts
+  - [Starter Kits](/docs/{{version}}/starter-kits)
   - [:icons.livewire: Livewire](/docs/{{version}}/livewire-starter-kit){:.icon-link}
   - [:icons.blade: Blade](/docs/{{version}}/blade-starter-kit){:.icon-link}
   - [:icons.inertia: Inertia](/docs/{{version}}/inertia-starter-kit){:.icon-link}
