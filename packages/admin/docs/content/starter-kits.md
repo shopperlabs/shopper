@@ -142,7 +142,7 @@ When you click on it, you'll see a list of available zones, depending on what yo
 
 <div class="screenshot">
   <img src="/screenshots/{{version}}/starterkit-zones.png" alt="Login">
-  <div class="caption">Login screen</div>
+  <div class="caption">Zones screen</div>
 </div>
 
 ### Profile Management
@@ -155,7 +155,7 @@ When you click on it, you'll see a list of available zones, depending on what yo
 **View order history and details.**
 <div class="screenshot">
   <img src="/screenshots/{{version}}/starterkit-orders.png" alt="account">
-  <div class="caption">Account screen</div>
+  <div class="caption">Orders screen</div>
 </div>
 
 **Manage billing & shipping addresses**
@@ -186,7 +186,7 @@ When you click on it, you'll see a list of available zones, depending on what yo
 **Shipping method & calculations**
 <div class="screenshot">
   <img src="/screenshots/{{version}}/starterkit-checkout-shipping-method.png" alt="Checkout">
-  <div class="caption">Checkout addresses</div>
+  <div class="caption">Checkout Shipping</div>
 </div>
 
 **Support for multiple payment gateways**
