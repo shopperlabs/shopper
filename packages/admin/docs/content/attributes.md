@@ -17,9 +17,9 @@ enhance search and filtering options, and provide a more personalized shopping e
 
 ## Models
 
-- [Attribute](#attribute)(`Shopper\Models\Attribute`) represents characteristics of a product, such as **Size**, **Color**, **Material**, or any other feature that helps differentiate products
-- [AttributeValue](#attributevalue)(`Shopper\Models\AttributeValue`) Model stores the specific values associated with an attribute. For example, if the attribute is "Color," the values might include "Red," "Blue," and "Green."
-- [AttributeProduct](#attributeproduct)(`Shopper\Models\AttributeProduct`) Model acts as a pivot table that connects attributes and their values to specific products. This model is essential for creating variable products and managing product variations.
+- [Attribute](#attribute)(`Shopper\Core\Models\Attribute`) represents characteristics of a product, such as **Size**, **Color**, **Material**, or any other feature that helps differentiate products
+- [AttributeValue](#attributevalue)(`Shopper\Core\Models\AttributeValue`) Model stores the specific values associated with an attribute. For example, if the attribute is "Color," the values might include "Red," "Blue," and "Green."
+- [AttributeProduct](#attributeproduct)(`Shopper\Core\Models\AttributeProduct`) Model acts as a pivot table that connects attributes and their values to specific products. This model is essential for creating variable products and managing product variations.
 
 ### Attribute
 

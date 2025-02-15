@@ -4,7 +4,7 @@
 
 ### Fields
 
-The model used is `Shopper\Models\Discount`.
+The model used is `Shopper\Core\Models\Discount`.
 
 | Name                   | Type     | Required | Notes                                                                                           |
 |------------------------|----------|----------|-------------------------------------------------------------------------------------------------|

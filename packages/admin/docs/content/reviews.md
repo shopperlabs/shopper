@@ -5,7 +5,7 @@ Coming Soon...
 
 ### Model
 
-The model used is `Shopper\Models\Review`.
+The model used is `Shopper\Core\Models\Review`.
 
 | Name             | Type     | Required       | Notes                                                                   |
 |------------------|----------|----------------|-------------------------------------------------------------------------|

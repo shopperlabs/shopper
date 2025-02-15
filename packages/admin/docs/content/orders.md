@@ -33,11 +33,11 @@ Orders are accessible to users with the appropriate permissions, ensuring that y
 Order management and processing in Shopper are powered by a set of Models that work together seamlessly. These Models represent the core entities 
 involved in handling orders, from creation to fulfillment.
 
-- [Order](#order) (`Shopper\Models\Order`) represents a customer’s purchase, including details like order status, payment method, and total amount.
-- [OrderItem](#orderitem) (`Shopper\Models\OrderItem`) tracks individual products included in an order, along with quantities and prices.
-- [OrderAddress](#orderaddress) (`Shopper\Models\OrderAddress`) responsible for managing the shipping and billing addresses associated with an order
-- [OrderRefund](#orderrefund) (`Shopper\Models\OrderRefund`) manages refund requests and processes, including amounts and reasons for refunds.
-- [OrderShipping](#ordershipping) (`Shopper\Models\OrderShipping`)
+- [Order](#order) (`Shopper\Core\Models\Order`) represents a customer’s purchase, including details like order status, payment method, and total amount.
+- [OrderItem](#orderitem) (`Shopper\Core\Models\OrderItem`) tracks individual products included in an order, along with quantities and prices.
+- [OrderAddress](#orderaddress) (`Shopper\Core\Models\OrderAddress`) responsible for managing the shipping and billing addresses associated with an order
+- [OrderRefund](#orderrefund) (`Shopper\Core\Models\OrderRefund`) manages refund requests and processes, including amounts and reasons for refunds.
+- [OrderShipping](#ordershipping) (`Shopper\Core\Models\OrderShipping`)
 
 ### Order
 

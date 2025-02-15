@@ -5,7 +5,7 @@ Coming Soon...
 
 ### Model
 
-The model used is `Shopper\Models\Price`.
+The model used is `Shopper\Core\Models\Price`.
 
 | Name             | Type    | Required | Notes                                                         |
 |------------------|---------|----------|---------------------------------------------------------------|

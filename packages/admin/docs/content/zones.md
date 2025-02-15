@@ -2,7 +2,7 @@
 
 ## Model
 
-The model used is `Shopper\Models\Zone`.
+The model used is `Shopper\Core\Models\Zone`.
 
 | Name          | Type    | Required | Notes                                                   |
 |---------------|---------|----------|---------------------------------------------------------|

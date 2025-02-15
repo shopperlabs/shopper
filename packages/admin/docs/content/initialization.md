@@ -160,6 +160,6 @@ return [
   <div class="caption">Admin update setting</div>
 </div>
 
-In this interface you will update your store. Don't forget that the model used is the model `Shopper\Models\Setting`. 
+In this interface you will update your store. Don't forget that the model used is the model `Shopper\Core\Models\Setting`. 
 
 With the Shopper configuration you can completely change the architecture of this view and the data stored in the database.

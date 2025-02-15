@@ -20,7 +20,7 @@ New brands are automatically activated and available for your online store, even
 
 ### Model
 
-The model used is `Shopper\Models\Brand`.
+The model used is `Shopper\Core\Models\Brand`.
 
 | Name              | Type     | Required | Notes                                                    |
 |-------------------|----------|----------|----------------------------------------------------------|

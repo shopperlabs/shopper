@@ -2,7 +2,7 @@
 
 ### Model
 
-The model used is `Shopper\Models\ProductVariant`.
+The model used is `Shopper\Core\Models\ProductVariant`.
 
 | Name              | Type    | Required | Notes                                                                             |
 |-------------------|---------|----------|-----------------------------------------------------------------------------------|

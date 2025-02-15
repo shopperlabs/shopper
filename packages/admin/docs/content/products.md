@@ -5,7 +5,7 @@ Coming Soon...
 
 ### Model
 
-The model used is `Shopper\Models\Product`.
+The model used is `Shopper\Core\Models\Product`.
 
 | Name              | Type     | Required | Notes                                                                        |
 |-------------------|----------|----------|------------------------------------------------------------------------------|
