@@ -18,12 +18,12 @@ use function Pest\Livewire\livewire;
 uses(TestCase::class);
 
 it('can render collections page', function (): void {
-    get(route('shopper.collections.index'))
-        ->assertFound();
+get(route('shopper.collections.index'))
+->assertFound();
 
     livewire(Pages\Collection\Index::class)
         ->assertSee(__('shopper::pages/collections.menu'));
-})->group('collection');
+    })->group('collection');
 
 it('can validate `required` fields on add collection form', function (): void {
     livewire(AddCollectionForm::class)

@@ -265,9 +265,9 @@ class DefaultItem implements Item, Serializable
 
     public function isActiveWhen(string $path): Item
     {
-        $path = ltrim($path, '/');
-        $path = rtrim($path, '/');
-        $path = rtrim($path, '?');
+        $path = mb_ltrim($path, '/');
+        $path = mb_rtrim($path, '/');
+        $path = mb_rtrim($path, '?');
 
         $this->activeWhen = (bool) $path;
 

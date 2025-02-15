@@ -13,9 +13,7 @@ use Filament\Forms\Contracts\HasForms;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 use Shopper\Core\Models\Zone;
 

@@ -14,7 +14,6 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
-use Livewire\Attributes\Reactive;
 use Livewire\Component;
 use Shopper\Core\Models\CarrierOption;
 use Shopper\Core\Models\Zone;

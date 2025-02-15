@@ -29,12 +29,12 @@ beforeEach(function (): void {
 });
 
 it('can render discounts page', function (): void {
-    get(route('shopper.discounts.index'))
-        ->assertFound();
+get(route('shopper.discounts.index'))
+->assertFound();
 
     livewire(Pages\Discount\Index::class)
         ->assertSee(__('shopper::pages/discounts.menu'));
-})->group('discount');
+    })->group('discount');
 
 it('creates a new discount', function (): void {
     livewire(DiscountForm::class)

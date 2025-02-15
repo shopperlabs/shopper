@@ -21,7 +21,7 @@ final class ActiveStateChecker
             return Request::is($path);
         }
 
-        $path = ltrim(str_replace(url('/'), '', $item->getUrl()), '/');
+        $path = mb_ltrim(str_replace(url('/'), '', $item->getUrl()), '/');
 
         return Request::is(
             $path,

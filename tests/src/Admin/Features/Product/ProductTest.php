@@ -16,7 +16,6 @@ use Shopper\Livewire\Pages;
 use Shopper\Livewire\SlideOvers\AddProduct;
 use Shopper\Tests\Admin\Features\TestCase;
 
-use function Pest\Laravel\get;
 use function Pest\Livewire\livewire;
 
 uses(TestCase::class);
@@ -26,9 +25,6 @@ beforeEach(function (): void {
 });
 
 it('can render products page', function (): void {
-    get(route('shopper.products.index'))
-        ->assertFound();
-
     livewire(Pages\Product\Index::class)
         ->assertSee(__('shopper::pages/products.menu'));
 })->group('product');

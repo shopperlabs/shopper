@@ -14,12 +14,12 @@ use function Pest\Livewire\livewire;
 uses(TestCase::class);
 
 it('can render categories page', function (): void {
-    get(route('shopper.categories.index'))
-        ->assertFound();
+get(route('shopper.categories.index'))
+->assertFound();
 
     livewire(Pages\Category\Index::class)
         ->assertSee(__('shopper::pages/categories.menu'));
-})->group('category');
+    })->group('category');
 
 it('can validate `required` fields on add category form', function (): void {
     livewire(CategoryForm::class)
