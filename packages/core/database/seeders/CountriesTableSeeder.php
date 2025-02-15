@@ -32,8 +32,8 @@ final class CountriesTableSeeder extends Seeder
                 'flag' => $country['flag'],
                 'latitude' => $country['latlng'][0],
                 'longitude' => $country['latlng'][1],
-                'phone_calling_code' => $country['idd'],
-                'currencies' => $country['currencies'],
+                'phone_calling_code' => json_encode($country['idd']),
+                'currencies' => json_encode($country['currencies']),
             ])
             ->toArray();
 
