@@ -57,7 +57,7 @@ return [
 
     'set_visibility' => 'Set :name visibility for the customers.',
     'set_global_visibility' => 'Setup page visibility for the customers.',
-    'log_out' => 'Log out',
+    'log_out' => 'Logout',
     'browser_platform' => ':browser on :platform',
 
     'generate' => 'Generate',
