@@ -21,10 +21,19 @@ final class CurrenciesTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        foreach ($this->currencies as $code => $currency) {
-            $data = array_merge($currency, ['code' => $code]);
-            Currency::query()->create($data);
-        }
+        $currencies = collect($this->currencies)
+            ->map(fn ($currency, $code): array => [
+                'code' => $code,
+                'name' => $currency['name'],
+                'symbol' => $currency['symbol'],
+                'format' => $currency['format'],
+                'exchange_rate' => $currency['exchange_rate'],
+                'is_enabled' => true,
+            ])
+            ->values()
+            ->toArray();
+
+        Currency::query()->insert($currencies);
 
         Schema::enableForeignKeyConstraints();
     }

@@ -41,7 +41,7 @@ class Price extends Model
 
     public function currencyCode(): Attribute
     {
-        return Attribute::get(fn () => $this->currency->code);
+        return Attribute::get(fn () => $this->loadMissing('currency')->currency->code);
     }
 
     protected function amount(): Attribute
