@@ -33,32 +33,14 @@ class Shipping extends Component implements HasForms
     {
         return $form
             ->schema([
-                Components\Section::make(__('shopper::words.shipping'))
-                    ->description(__('shopper::pages/products.shipping.description'))
+                Components\Section::make(__('shopper::pages/products.shipping.package_dimension'))
+                    ->description(__('shopper::pages/products.shipping.package_dimension_description'))
                     ->aside()
                     ->compact()
                     ->schema([
-                        Forms\Components\Checkbox::make('require_shipping')
-                            ->label(__('shopper::pages/products.product_shipped'))
-                            ->helperText(__('shopper::pages/products.product_shipped_help_text'))
-                            ->default(true)
-                            ->live(),
+                        Forms\Components\Grid::make()
+                            ->schema(Components\Form\ShippingField::make()),
                     ]),
-
-                Forms\Components\Group::make()
-                    ->schema([
-                        Components\Separator::make(),
-
-                        Components\Section::make(__('shopper::pages/products.shipping.package_dimension'))
-                            ->description(__('shopper::pages/products.shipping.package_dimension_description'))
-                            ->aside()
-                            ->compact()
-                            ->schema([
-                                Forms\Components\Grid::make()
-                                    ->schema(Components\Form\ShippingField::make()),
-                            ]),
-                    ])
-                    ->visible(fn (Forms\Get $get): bool => $get('require_shipping')),
             ])
             ->statePath('data')
             ->model($this->product);
@@ -71,7 +53,7 @@ class Shipping extends Component implements HasForms
         $this->dispatch('product.updated');
 
         Notification::make()
-            ->body(__('shopper::pages/products.notifications.shipping_update'))
+            ->title(__('shopper::pages/products.notifications.shipping_update'))
             ->success()
             ->send();
     }
