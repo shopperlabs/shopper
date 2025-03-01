@@ -1597,25 +1597,13 @@ parameters:
 			path: packages/admin/src/Livewire/Components/Products/Form/Seo.php
 
 		-
-			message: '#^Parameter \#1 \$body of method Filament\\Notifications\\Notification\:\:body\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
-			count: 1
-			path: packages/admin/src/Livewire/Components/Products/Form/Shipping.php
-
-		-
 			message: '#^Parameter \#1 \$description of method Filament\\Forms\\Components\\Section\:\:description\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
-			count: 2
-			path: packages/admin/src/Livewire/Components/Products/Form/Shipping.php
-
-		-
-			message: '#^Parameter \#1 \$label of method Filament\\Forms\\Components\\Component\:\:label\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
-			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Livewire/Components/Products/Form/Shipping.php
 
 		-
-			message: '#^Parameter \#1 \$text of method Filament\\Forms\\Components\\Field\:\:helperText\(\) expects Closure\|Illuminate\\Contracts\\Support\\Htmlable\|string\|null, array\|string\|null given\.$#'
+			message: '#^Parameter \#1 \$title of method Filament\\Notifications\\Notification\:\:title\(\) expects Closure\|string\|null, array\|string\|null given\.$#'
 			identifier: argument.type
 			count: 1
 			path: packages/admin/src/Livewire/Components/Products/Form/Shipping.php
