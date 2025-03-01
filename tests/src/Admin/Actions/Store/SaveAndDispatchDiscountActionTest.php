@@ -17,24 +17,27 @@ use Shopper\Tests\TestCase;
 
 uses(TestCase::class);
 
+/**
+ * @var TestCase $this
+ */
+beforeEach(function (): void {
+    $this->products = Product::factory()->count(3)->publish()->create();
+    $this->users = User::factory()->count(3)->create();
+    $this->formValues = [
+        'code' => 'SUMMER23',
+        'is_active' => true,
+        'type' => DiscountType::FixedAmount(),
+        'value' => 1000,
+        'apply_to' => DiscountApplyTo::Products(),
+        'min_required' => DiscountRequirement::None(),
+        'eligibility' => DiscountEligibility::Everyone(),
+        'start_at' => now(),
+    ];
+
+    Queue::fake();
+});
+
 describe(SaveAndDispatchDiscountAction::class, function (): void {
-    beforeEach(function (): void {
-        $this->products = Product::factory()->count(3)->publish()->create();
-        $this->users = User::factory()->count(3)->create();
-        $this->formValues = [
-            'code' => 'SUMMER23',
-            'is_active' => true,
-            'type' => DiscountType::FixedAmount(),
-            'value' => 1000,
-            'apply_to' => DiscountApplyTo::Products(),
-            'min_required' => DiscountRequirement::None(),
-            'eligibility' => DiscountEligibility::Everyone(),
-            'start_at' => now(),
-        ];
-
-        Queue::fake();
-    });
-
     it('should store a new discount', function (): void {
         $discount = app()->call(SaveAndDispatchDiscountAction::class, [
             'values' => $this->formValues,
