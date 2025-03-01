@@ -36,7 +36,7 @@ enum FieldType: string implements HasLabel
 
     case Number = 'number';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Checkbox => __('shopper-core::forms.checkbox'),

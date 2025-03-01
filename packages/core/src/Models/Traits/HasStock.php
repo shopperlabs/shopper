@@ -13,10 +13,13 @@ use Shopper\Core\Models\InventoryHistory;
 
 trait HasStock
 {
-    public function stock(): Attribute
+    /**
+     * @return Attribute<non-falsy-string, never>
+     */
+    protected function stock(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getStock(),
+            get: fn (): int => $this->getStock(),
         );
     }
 
@@ -103,6 +106,9 @@ trait HasStock
         return $this->inventoryHistories()->create($createArguments);
     }
 
+    /**
+     * @return MorphMany<InventoryHistory, $this>
+     */
     public function inventoryHistories(): MorphMany
     {
         return $this->morphMany(InventoryHistory::class, 'stockable')

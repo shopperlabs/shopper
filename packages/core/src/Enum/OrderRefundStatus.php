@@ -36,7 +36,7 @@ enum OrderRefundStatus: string implements HasLabel
 
     case Cancelled = 'cancelled';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Awaiting => __('shopper-core::status.awaiting'),

@@ -83,8 +83,9 @@
       "npx run prettier"
     ],
     "pint": "./vendor/bin/pint",
+    "rector": "./vendor/bin/rector --dry-run",
     "test:pest": "pest --parallel",
-    "test:phpstan": "phpstan analyse --memory-limit=1G",
+    "test:phpstan": "phpstan analyse",
     "test": [
       "@test:phpstan",
       "@test:pest"

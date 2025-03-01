@@ -55,6 +55,10 @@ class Brand extends Model implements SpatieHasMedia
         $this->save();
     }
 
+    /**
+     * @param  Builder<Brand>  $query
+     * @return Builder<Brand>
+     */
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);

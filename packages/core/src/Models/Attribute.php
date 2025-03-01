@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -51,10 +51,10 @@ class Attribute extends Model
         return AttributeFactory::new();
     }
 
-    protected function typeFormatted(): CastAttribute
+    protected function typeFormatted(): LaravelAttribute
     {
-        return CastAttribute::make(
-            get: fn () => self::typesFields()[$this->type->value]
+        return LaravelAttribute::make(
+            get: fn (): string => self::typesFields()[$this->type->value]
         );
     }
 
@@ -104,11 +104,19 @@ class Attribute extends Model
         return $query->where('is_enabled', true);
     }
 
+    /**
+     * @param  Builder<Attribute>  $query
+     * @return Builder<Attribute>
+     */
     public function scopeIsFilterable(Builder $query): Builder
     {
         return $query->where('is_filterable', true);
     }
 
+    /**
+     * @param  Builder<Attribute>  $query
+     * @return Builder<Attribute>
+     */
     public function scopeIsSearchable(Builder $query): Builder
     {
         return $query->where('is_searchable', true);

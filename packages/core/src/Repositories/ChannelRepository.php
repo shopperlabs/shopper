@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Repositories;
 
-class ChannelRepository extends Repository
+final class ChannelRepository extends Repository
 {
     public function model(): string
     {

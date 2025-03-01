@@ -27,7 +27,7 @@ enum PaymentStatus: string implements HasLabel
 
     case Cancelled = 'cancelled';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Pending => __('shopper-core::status.pending'),

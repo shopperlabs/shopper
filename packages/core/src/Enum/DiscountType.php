@@ -22,7 +22,7 @@ enum DiscountType: string implements HasDescription, HasLabel
 
     case FixedAmount = 'fixed_amount';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Percentage => __('shopper-core::enum/discount.type.percentage'),
@@ -30,7 +30,7 @@ enum DiscountType: string implements HasDescription, HasLabel
         };
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return match ($this) {
             self::Percentage => __('shopper-core::enum/discount.type.percentage_description'),

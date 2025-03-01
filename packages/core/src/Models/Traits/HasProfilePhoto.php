@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 trait HasProfilePhoto
 {
-    public function picture(): Attribute
+    protected function picture(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->avatar_type === 'storage'
+            get: fn (): string => $this->avatar_type === 'storage'
                 ? Storage::disk(config('shopper.media.storage.disk_name'))->url($this->avatar_location)
                 : $this->defaultProfilePhotoUrl()
         );

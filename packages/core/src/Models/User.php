@@ -99,7 +99,7 @@ class User extends Authenticatable
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->first_name
+            get: fn (): string => $this->first_name
                 ? $this->first_name . ' ' . $this->last_name
                 : $this->last_name
         );
@@ -108,23 +108,27 @@ class User extends Authenticatable
     protected function birthDateFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->birth_date
+            get: fn (): string => $this->birth_date
                 ? $this->birth_date->isoFormat('%d, %B %Y')
                 : __('shopper::words.not_defined')
         );
     }
 
-    public function rolesLabel(): Attribute
+    protected function rolesLabel(): Attribute
     {
         $roles = $this->roles()->pluck('display_name')->toArray();
 
         return Attribute::make(
-            get: fn () => count($roles)
+            get: fn (): string => count($roles)
                 ? implode(', ', array_map(fn ($item) => ucwords($item), $roles))
                 : 'N/A'
         );
     }
 
+    /**
+     * @param  Builder<User>  $query
+     * @return Builder<User>
+     */
     public function scopeCustomers(Builder $query): Builder
     {
         return $query->whereHas('roles', function (Builder $query): void {
@@ -132,6 +136,10 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * @param  Builder<User>  $query
+     * @return Builder<User>
+     */
     public function scopeAdministrators(Builder $query): Builder
     {
         return $query->whereHas('roles', function (Builder $query): void {
@@ -142,11 +150,17 @@ class User extends Authenticatable
         });
     }
 
+    /**
+     * @return HasMany<Address, $this>
+     */
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }
 
+    /**
+     * @return HasMany<Order, $this>
+     */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'customer_id');

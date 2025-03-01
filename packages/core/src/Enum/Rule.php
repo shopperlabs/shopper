@@ -33,7 +33,7 @@ enum Rule: string implements HasLabel
 
     case InventoryStock = 'inventory_stock';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::ProductTitle => __('shopper-core::enum/collection.rules.product_title'),

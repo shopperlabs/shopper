@@ -21,7 +21,7 @@ enum DiscountEligibility: string implements HasLabel
 
     case Customers = 'customers';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Everyone => __('shopper-core::enum/discount.eligibility.everyone'),

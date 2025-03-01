@@ -21,7 +21,7 @@ enum DiscountApplyTo: string implements HasLabel
 
     case Products = 'products';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Order => __('shopper-core::enum/discount.apply.entire_order'),

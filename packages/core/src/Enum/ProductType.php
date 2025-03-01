@@ -32,7 +32,7 @@ enum ProductType: string implements HasColor, HasDescription, HasDescriptions, H
 
     case Variant = 'variant';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Virtual => __('shopper-core::enum/product.virtual'),
@@ -42,7 +42,7 @@ enum ProductType: string implements HasColor, HasDescription, HasDescriptions, H
         };
     }
 
-    public function getDescriptions(): ?string
+    public function getDescriptions(): string
     {
         return match ($this) {
             self::Virtual => __('shopper-core::enum/product.virtual_description'),
@@ -52,12 +52,12 @@ enum ProductType: string implements HasColor, HasDescription, HasDescriptions, H
         };
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->getDescriptions();
     }
 
-    public function getIcons(): ?string
+    public function getIcons(): string
     {
         return match ($this) {
             self::Virtual => 'phosphor-monitor-duotone',
@@ -67,12 +67,12 @@ enum ProductType: string implements HasColor, HasDescription, HasDescriptions, H
         };
     }
 
-    public function getIcon(): ?string
+    public function getIcon(): string
     {
         return $this->getIcons();
     }
 
-    public function getColor(): string | array | null
+    public function getColor(): string
     {
         return match ($this) {
             self::Virtual => 'info',

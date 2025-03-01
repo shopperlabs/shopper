@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Repositories;
 
-class CategoryRepository extends Repository
+final class CategoryRepository extends Repository
 {
     public function model(): string
     {

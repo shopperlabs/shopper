@@ -9,6 +9,9 @@ use Shopper\Core\Models\Zone;
 
 trait HasZones
 {
+    /**
+     * @return MorphToMany<Zone, $this>
+     */
     public function zones(): MorphToMany
     {
         return $this->morphToMany(Zone::class, 'zonable', shopper_table('zone_has_relations'));

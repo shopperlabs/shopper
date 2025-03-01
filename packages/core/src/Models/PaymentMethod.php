@@ -17,6 +17,7 @@ use Shopper\Core\Traits\HasZones;
  * @property string $title
  * @property string $slug
  * @property string|null $logo
+ * @property string|null $logo_url
  * @property string|null $description
  * @property string|null $link_url
  * @property string|null $instructions
@@ -47,13 +48,17 @@ class PaymentMethod extends Model
         return PaymentMethodFactory::new();
     }
 
-    public function LogoUrl(): ?Attribute
+    protected function LogoUrl(): Attribute
     {
         return Attribute::make(
             get: fn () => $this->logo ? shopper_asset($this->logo) : null,
         );
     }
 
+    /**
+     * @param  Builder<PaymentMethod>  $query
+     * @return Builder<PaymentMethod>
+     */
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);

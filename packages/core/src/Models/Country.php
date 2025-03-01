@@ -53,10 +53,10 @@ class Country extends Model
         return CountryFactory::new();
     }
 
-    public function svgFlag(): Attribute
+    protected function svgFlag(): Attribute
     {
         return Attribute::get(
-            fn () => url(shopper()->prefix() . '/images/flags/' . mb_strtolower($this->cca2) . '.svg')
+            fn (): string => url(shopper()->prefix() . '/images/flags/' . mb_strtolower($this->cca2) . '.svg')
         );
     }
 }

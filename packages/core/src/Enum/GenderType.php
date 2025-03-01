@@ -21,7 +21,7 @@ enum GenderType: string implements HasLabel
 
     case Female = 'female';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Male => __('shopper::words.male'),

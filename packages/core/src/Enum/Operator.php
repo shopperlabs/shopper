@@ -39,7 +39,7 @@ enum Operator: string implements HasLabel
 
     case NotContains = 'not_contains';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::EqualsTo => __('shopper-core::enum/collection.operator.equals_to'),

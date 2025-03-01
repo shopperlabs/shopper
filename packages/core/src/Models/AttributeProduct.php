@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Core\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute as CastAttribute;
+use Illuminate\Database\Eloquent\Casts\Attribute as LaravelAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,9 +39,9 @@ class AttributeProduct extends Model
         return AttributeProductFactory::new();
     }
 
-    protected function realValue(): CastAttribute
+    protected function realValue(): LaravelAttribute
     {
-        return CastAttribute::get(fn () => $this->attribute_custom_value ?? $this->value?->value);
+        return LaravelAttribute::get(fn (): string => $this->attribute_custom_value ?? $this->value?->value);
     }
 
     public function attribute(): BelongsTo

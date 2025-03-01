@@ -21,7 +21,7 @@ enum AddressType: string implements HasLabel
 
     case Shipping = 'shipping';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Shipping => __('shopper-core::enum/address.shipping'),

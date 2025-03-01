@@ -10,6 +10,9 @@ use Shopper\Core\Models\Review;
 
 trait InteractsWithReviews
 {
+    /**
+     * @return MorphMany<Review, $this>
+     */
     public function ratings(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewrateable');

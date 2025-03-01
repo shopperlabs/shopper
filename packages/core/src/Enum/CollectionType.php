@@ -22,7 +22,7 @@ enum CollectionType: string implements HasDescription, HasLabel
 
     case Auto = 'auto';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::Manual => __('shopper-core::enum/collection.manual'),
@@ -30,7 +30,7 @@ enum CollectionType: string implements HasDescription, HasLabel
         };
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return match ($this) {
             self::Manual => __('shopper-core::enum/collection.manual_description'),

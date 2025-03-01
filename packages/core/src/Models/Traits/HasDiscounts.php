@@ -9,6 +9,9 @@ use Shopper\Core\Models\DiscountDetail;
 
 trait HasDiscounts
 {
+    /**
+     * @return MorphToMany<DiscountDetail, $this>
+     */
     public function discounts(): MorphToMany
     {
         return $this->morphedByMany(DiscountDetail::class, 'discountable')

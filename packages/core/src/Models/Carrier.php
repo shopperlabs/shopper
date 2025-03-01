@@ -46,6 +46,10 @@ class Carrier extends Model
         return CarrierFactory::new();
     }
 
+    /**
+     * @param  Builder<Carrier>  $query
+     * @return Builder<Carrier>
+     */
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);

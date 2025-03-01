@@ -25,7 +25,7 @@ trait ArrayableEnum
     {
         if (method_exists(self::class, 'getLabel')) {
             return collect(self::cases())
-                ->mapWithKeys(fn ($enum) => [
+                ->mapWithKeys(fn ($enum): array => [
                     $enum->value => $enum->getLabel(),
                 ])
                 ->toArray();

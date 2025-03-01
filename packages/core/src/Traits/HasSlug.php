@@ -9,9 +9,9 @@ use Illuminate\Support\Str;
 
 trait HasSlug
 {
-    public function slug(): Attribute
+    protected function slug(): Attribute
     {
-        return Attribute::set(fn ($value) => $this->generateUniqueSlug($value));
+        return Attribute::set(fn ($value): string => $this->generateUniqueSlug($value));
     }
 
     public static function findBySlug(string $slug): self

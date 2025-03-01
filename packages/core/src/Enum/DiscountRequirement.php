@@ -24,7 +24,7 @@ enum DiscountRequirement: string implements HasLabel
 
     case Quantity = 'quantity';
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return match ($this) {
             self::None => __('shopper-core::enum/discount.requirement.none'),
