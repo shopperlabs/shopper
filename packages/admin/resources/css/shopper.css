@@ -2,11 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import 'base.css';
-@import 'components/sidebar.css';
-@import 'components/filament.css';
-@import 'components/treeselect.css';
-@import 'components/shiki.css';
+@import './base.css';
+@import './components/sidebar.css';
+@import './components/filament.css';
+@import './components/treeselect.css';
+@import './components/shiki.css';
 
 @layer base {
   html {

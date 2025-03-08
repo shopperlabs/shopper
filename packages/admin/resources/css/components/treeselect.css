@@ -1,4 +1,4 @@
-@import '_treeselect.css';
+@import './_treeselect.css';
 
 .treeselect-input {
   @apply border-0 bg-transparent pl-2.5 text-base text-gray-900 transition duration-75 sm:text-sm sm:leading-6;

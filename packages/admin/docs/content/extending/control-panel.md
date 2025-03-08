@@ -114,10 +114,15 @@ And if you use Tailwind v4 your admin style should look like this
 
 ```css
 @import 'tailwindcss';
+
 @import '../../vendor/shopper/framework/resources/css/theme.css';
 
-@config 'tailwind.config.js';
+@config '../../tailwind.config.js';
 ```
+
+:::warning
+Shopper is based on filament and for this reason tailwind v4 support is based on filament support.
+:::
 
 ### Load theme
 
