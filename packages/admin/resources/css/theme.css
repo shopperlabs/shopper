@@ -1,0 +1,15 @@
+@import 'base.css';
+@import 'components/sidebar.css';
+@import 'components/filament.css';
+@import 'components/treeselect.css';
+@import 'components/shiki.css';
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :root.dark {
+    color-scheme: dark;
+  }
+}

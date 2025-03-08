@@ -89,15 +89,11 @@ Just load the default Tailwind CSS directives inside your `./resources/css/admin
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import '../../vendor/shopper/framework/resources/css/shopper.css';
 ```
 
-Then run `yarn run dev`
-
-:::tip
-Keep in mind the `admin.css` file must be load on the `resources` key of your `shopper/admin.php` config file
-:::
-
-And add Tailwind to the `postcss.config.js` file:
+Add Tailwind to the `postcss.config.js` file:
 
 ```js
 module.export = {
@@ -106,6 +102,17 @@ module.export = {
     autoprefixer: {},
   },
 }
+```
+
+Then run `yarn run dev`
+
+And if you use Tailwind v4 your admin style should look like this
+
+```css
+@import 'tailwindcss';
+@import '../../vendor/shopper/framework/resources/css/theme.css';
+
+@config 'tailwind.config.js';
 ```
 
 ### Branding Logo
