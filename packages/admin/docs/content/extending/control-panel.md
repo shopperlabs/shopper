@@ -106,6 +106,10 @@ module.export = {
 
 Then run `yarn run dev`
 
+:::tip
+For Laravel mix, keep in mind the `admin.css` file must be load on the `resources.stylesheets` key of your `shopper/admin.php` config file
+:::
+
 And if you use Tailwind v4 your admin style should look like this
 
 ```css
@@ -113,6 +117,19 @@ And if you use Tailwind v4 your admin style should look like this
 @import '../../vendor/shopper/framework/resources/css/theme.css';
 
 @config 'tailwind.config.js';
+```
+
+### Load theme
+
+In your `AppServiceProvider` or any other provide you want, you should add this on your boot method
+
+```php
+public function boot()
+{
+    Shopper::serving(function (): void {
+        Shopper::registerViteTheme('resources/css/admin.css');
+    });
+}
 ```
 
 ### Branding Logo
