@@ -54,7 +54,7 @@ class AttributeValue extends Model
     }
 
     /**
-     * @return BelongsToMany<ProductVariant, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
+     * @return BelongsToMany<ProductVariant, $this>
      */
     public function variants(): BelongsToMany
     {

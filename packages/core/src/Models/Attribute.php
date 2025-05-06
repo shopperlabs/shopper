@@ -144,7 +144,7 @@ class Attribute extends Model
     }
 
     /**
-     * @return BelongsToMany<Product, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
+     * @return BelongsToMany<Product, $this>
      */
     public function products(): BelongsToMany
     {
