@@ -19,7 +19,7 @@ use Livewire\Component;
 use Shopper\Core\Models\Collection;
 
 /**
- * @property-read array $productsIds
+ * @property-read array<int, array-key> $productsIds
  */
 class CollectionProducts extends Component implements HasForms, HasTable
 {
@@ -28,10 +28,13 @@ class CollectionProducts extends Component implements HasForms, HasTable
 
     public Collection $collection;
 
+    /**
+     * @return array<int, array-key>
+     */
     #[Computed]
     public function productsIds(): array
     {
-        return $this->collection->products->modelKeys();
+        return $this->collection->products->modelKeys(); // @phpstan-ignore-line
     }
 
     public function table(Table $table): Table

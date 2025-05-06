@@ -23,24 +23,24 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 /**
  * @property-read int $id
  * @property string $name
- * @property string | null $sku
- * @property string | null $barcode
- * @property string | null $ean
- * @property string | null $upc
+ * @property string|null $sku
+ * @property string|null $barcode
+ * @property string|null $ean
+ * @property string|null $upc
  * @property Weight $weight_unit
- * @property float| null $weight_value
+ * @property float|null $weight_value
  * @property Length $height_unit
- * @property float | null $height_value
+ * @property float|null $height_value
  * @property Length $width_unit
- * @property float| null $width_value
+ * @property float|null $width_value
  * @property Length $depth_unit
- * @property float| null $depth_value
+ * @property float|null $depth_value
  * @property Volume $volume_unit
- * @property float| null $volume_value
+ * @property float|null $volume_value
  * @property bool $allow_backorder
  * @property int $position
  * @property int $product_id
- * @property array | null $metadata
+ * @property array<array-key, mixed>|null $metadata
  * @property-read int $stock
  * @property-read Product $product
  * @property-read \Illuminate\Database\Eloquent\Collection | Price[] $prices
@@ -49,33 +49,38 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 #[ObservedBy(ProductVariantObserver::class)]
 class ProductVariant extends Model implements SpatieHasMedia
 {
-    use HasDimensions;
+    /** @use HasFactory<ProductVariantFactory> */
     use HasFactory;
+
+    use HasDimensions;
     use HasMedia;
     use HasPrices;
     use HasStock;
 
     protected $guarded = [];
 
-    protected $casts = [
-        'allow_backorder' => 'boolean',
-        'metadata' => 'array',
-        'position' => 'integer',
-        'weight_unit' => Weight::class,
-        'weight_value' => 'decimal:2',
-        'width_unit' => Length::class,
-        'width_value' => 'decimal:2',
-        'height_unit' => Length::class,
-        'height_value' => 'decimal:2',
-        'depth_unit' => Length::class,
-        'depth_value' => 'decimal:2',
-        'volume_unit' => Volume::class,
-        'volume_value' => 'decimal:2',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('product_variants');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'allow_backorder' => 'boolean',
+            'metadata' => 'array',
+            'position' => 'integer',
+            'weight_unit' => Weight::class,
+            'weight_value' => 'decimal:2',
+            'width_unit' => Length::class,
+            'width_value' => 'decimal:2',
+            'height_unit' => Length::class,
+            'height_value' => 'decimal:2',
+            'depth_unit' => Length::class,
+            'depth_value' => 'decimal:2',
+            'volume_unit' => Volume::class,
+            'volume_value' => 'decimal:2',
+        ];
     }
 
     protected static function newFactory(): ProductVariantFactory
@@ -83,11 +88,18 @@ class ProductVariant extends Model implements SpatieHasMedia
         return ProductVariantFactory::new();
     }
 
+    /**
+     * @return BelongsTo<Product, $this>
+     */
     public function product(): BelongsTo
     {
+        // @phpstan-ignore-next-line
         return $this->belongsTo(config('shopper.models.product'), 'product_id');
     }
 
+    /**
+     * @return BelongsToMany<AttributeValue, $this>
+     */
     public function values(): BelongsToMany
     {
         return $this->belongsToMany(

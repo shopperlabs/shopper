@@ -34,16 +34,19 @@ class Attribute extends Model
 
     protected $guarded = [];
 
-    protected $casts = [
-        'is_enabled' => 'boolean',
-        'is_searchable' => 'boolean',
-        'is_filterable' => 'boolean',
-        'type' => FieldType::class,
-    ];
-
     public function getTable(): string
     {
         return shopper_table('attributes');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_enabled' => 'boolean',
+            'is_searchable' => 'boolean',
+            'is_filterable' => 'boolean',
+            'type' => FieldType::class,
+        ];
     }
 
     protected static function newFactory(): AttributeFactory
@@ -58,11 +61,17 @@ class Attribute extends Model
         );
     }
 
+    /**
+     * @return array<array-key, string>
+     */
     public static function typesFields(): array
     {
         return FieldType::options();
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function fieldsWithValues(): array
     {
         return [
@@ -99,6 +108,10 @@ class Attribute extends Model
         $this->save();
     }
 
+    /**
+     * @param  Builder<Attribute>  $query
+     * @return Builder<Attribute>
+     */
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
@@ -122,13 +135,20 @@ class Attribute extends Model
         return $query->where('is_searchable', true);
     }
 
+    /**
+     * @return HasMany<AttributeValue, $this>
+     */
     public function values(): HasMany
     {
         return $this->hasMany(AttributeValue::class, 'attribute_id');
     }
 
+    /**
+     * @return BelongsToMany<Product, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
+     */
     public function products(): BelongsToMany
     {
+        // @phpstan-ignore-next-line
         return $this->belongsToMany(config('shopper.models.product'), table: shopper_table('attribute_product'))
             ->withPivot([
                 'attribute_value_id',

@@ -20,41 +20,38 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property CollectionType $type
  * @property string $name
  * @property string $slug
- * @property string | null $description
- * @property array | null $metadata
+ * @property string|null $description
+ * @property array<array-key, mixed>|null $metadata
+ * @property-read \Illuminate\Support\Collection<int, CollectionRule> $rules
+ * @property-read \Illuminate\Support\Collection<int, Product> $products
  */
 class Collection extends Model implements SpatieHasMedia
 {
+    /** @use HasFactory<CollectionFactory> */
     use HasFactory;
+
     use HasMedia;
     use HasSlug;
 
     protected $guarded = [];
-
-    protected $casts = [
-        'published_at' => 'datetime',
-        'metadata' => 'array',
-        'type' => CollectionType::class,
-    ];
 
     public function getTable(): string
     {
         return shopper_table('collections');
     }
 
+    protected function casts(): array
+    {
+        return [
+            'published_at' => 'datetime',
+            'metadata' => 'array',
+            'type' => CollectionType::class,
+        ];
+    }
+
     protected static function newFactory(): CollectionFactory
     {
         return CollectionFactory::new();
-    }
-
-    public function scopeManual(Builder $query): void
-    {
-        $query->where('type', CollectionType::Manual());
-    }
-
-    public function scopeAutomatic(Builder $query): void
-    {
-        $query->where('type', CollectionType::Auto());
     }
 
     public function isAutomatic(): bool
@@ -76,17 +73,42 @@ class Collection extends Model implements SpatieHasMedia
             $words = $collectionRule->getFormattedRule() . ' ' . $collectionRule->getFormattedOperator() . ' ' . $collectionRule->getFormattedValue();
             $rules = $this->rules()->count();
 
-            return $words . ' ' . ($rules >= 2 ? '+ ' . ($rules - 1) . __('shopper::words.other') : '');
+            return $words . ' ' . ($rules >= 2 ? '+ ' . ($rules - 1) . __('shopper::words.other') : ''); // @phpstan-ignore-line
         }
 
         return null;
     }
 
+    /**
+     * @param  Builder<Collection>  $query
+     * @return Builder<Collection>
+     */
+    public function scopeManual(Builder $query): Builder
+    {
+        return $query->where('type', CollectionType::Manual());
+    }
+
+    /**
+     * @param  Builder<Collection>  $query
+     * @return Builder<Collection>
+     */
+    public function scopeAutomatic(Builder $query): Builder
+    {
+        return $query->where('type', CollectionType::Auto());
+    }
+
+    /**
+     * @return MorphToMany<Product, $this>
+     */
     public function products(): MorphToMany
     {
+        // @phpstan-ignore-next-line
         return $this->morphToMany(config('shopper.models.product'), 'productable', shopper_table('product_has_relations'));
     }
 
+    /**
+     * @return HasMany<CollectionRule, $this>
+     */
     public function rules(): HasMany
     {
         return $this->hasMany(CollectionRule::class, 'collection_id');

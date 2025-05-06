@@ -34,43 +34,45 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
  * @property-read int $id
  * @property string $name
  * @property string $slug
- * @property string | null $sku
- * @property string | null $barcode
- * @property ProductType | null $type
+ * @property string|null $sku
+ * @property string|null $barcode
+ * @property ProductType|null $type
  * @property bool $is_visible
  * @property bool $featured
  * @property Weight $weight_unit
- * @property float| null $weight_value
+ * @property float|null $weight_value
  * @property Length $height_unit
- * @property float | null $height_value
+ * @property float|null $height_value
  * @property Length $width_unit
- * @property float| null $width_value
+ * @property float|null $width_value
  * @property Length $depth_unit
- * @property float| null $depth_value
+ * @property float|null $depth_value
  * @property Volume $volume_unit
- * @property float| null $volume_value
- * @property int | null $security_stock
+ * @property float|null $volume_value
+ * @property int|null $security_stock
  * @property int $variants_stock
- * @property string | null $seo_title
- * @property string | null $seo_description
- * @property string | null $external_id
- * @property \Carbon\Carbon | null $published_at
- * @property array | null $metadata
+ * @property string|null $seo_title
+ * @property string|null $seo_description
+ * @property string|null $external_id
+ * @property \Illuminate\Support\Carbon|null $published_at
+ * @property array<array-key, mixed>|null $metadata
  * @property-read int $stock
  * @property-read Brand $brand
- * @property-read \Illuminate\Database\Eloquent\Collection | Channel[] $channels
- * @property-read \Illuminate\Database\Eloquent\Collection | Category[] $categories
- * @property-read \Illuminate\Database\Eloquent\Collection | Attribute[] $options
- * @property-read \Illuminate\Database\Eloquent\Collection | Collection[] $collections
- * @property-read \Illuminate\Database\Eloquent\Collection | ProductVariant[] $variants
- * @property-read \Illuminate\Database\Eloquent\Collection | Price[] $prices
+ * @property-read \Illuminate\Support\Collection<int, Channel> $channels
+ * @property-read \Illuminate\Support\Collection<int, Category> $categories
+ * @property-read \Illuminate\Support\Collection<int, Attribute> $options
+ * @property-read \Illuminate\Support\Collection<int, Collection> $collections
+ * @property-read \Illuminate\Support\Collection<int, ProductVariant> $variants
+ * @property-read \Illuminate\Support\Collection<int, Price> $prices
  */
 #[ObservedBy(ProductObserver::class)]
 class Product extends Model implements HasReviews, SpatieHasMedia
 {
+    /** @use HasFactory<ProductFactory> */
+    use HasFactory;
+
     use HasDimensions;
     use HasDiscounts;
-    use HasFactory;
     use HasMedia;
     use HasPrices;
     use HasSlug;
@@ -79,27 +81,30 @@ class Product extends Model implements HasReviews, SpatieHasMedia
 
     protected $guarded = [];
 
-    protected $casts = [
-        'featured' => 'boolean',
-        'is_visible' => 'boolean',
-        'published_at' => 'datetime',
-        'metadata' => 'array',
-        'weight_unit' => Weight::class,
-        'weight_value' => 'decimal:2',
-        'width_unit' => Length::class,
-        'width_value' => 'decimal:2',
-        'height_unit' => Length::class,
-        'height_value' => 'decimal:2',
-        'depth_unit' => Length::class,
-        'depth_value' => 'decimal:2',
-        'volume_unit' => Volume::class,
-        'volume_value' => 'decimal:2',
-        'type' => ProductType::class,
-    ];
-
     public function getTable(): string
     {
         return shopper_table('products');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'featured' => 'boolean',
+            'is_visible' => 'boolean',
+            'published_at' => 'datetime',
+            'metadata' => 'array',
+            'weight_unit' => Weight::class,
+            'weight_value' => 'decimal:2',
+            'width_unit' => Length::class,
+            'width_value' => 'decimal:2',
+            'height_unit' => Length::class,
+            'height_value' => 'decimal:2',
+            'depth_unit' => Length::class,
+            'depth_value' => 'decimal:2',
+            'volume_unit' => Volume::class,
+            'volume_value' => 'decimal:2',
+            'type' => ProductType::class,
+        ];
     }
 
     protected static function newFactory(): ProductFactory
@@ -156,12 +161,20 @@ class Product extends Model implements HasReviews, SpatieHasMedia
         return $this->type === ProductType::Standard;
     }
 
-    public function scopePublish(Builder $query): Builder
+    /**
+     * @param  Builder<Product>  $query
+     */
+    public function scopePublish(Builder $query): void
     {
-        return $query->whereDate('published_at', '<=', now())
+        $query->whereDate('published_at', '<=', now())
             ->where('is_visible', true);
     }
 
+    /**
+     * @param  Builder<Product>  $query
+     * @param  string|array<string>  $channel
+     * @return Builder<Product>
+     */
     public function scopeForChannel(Builder $query, string | array $channel): Builder
     {
         $channels = Arr::wrap($channel);
@@ -169,48 +182,6 @@ class Product extends Model implements HasReviews, SpatieHasMedia
         return $query->whereHas('channels', function (Builder $query) use ($channels): void {
             $query->whereIn('id', $channels);
         });
-    }
-
-    public function variants(): HasMany
-    {
-        return $this->hasMany(config('shopper.models.variant'), 'product_id');
-    }
-
-    public function channels(): MorphToMany
-    {
-        return $this->morphedByMany(config('shopper.models.channel'), 'productable', shopper_table('product_has_relations'));
-    }
-
-    public function relatedProducts(): MorphToMany
-    {
-        return $this->morphedByMany(config('shopper.models.product'), 'productable', shopper_table('product_has_relations'));
-    }
-
-    public function categories(): MorphToMany
-    {
-        return $this->morphedByMany(config('shopper.models.category'), 'productable', shopper_table('product_has_relations'));
-    }
-
-    public function collections(): MorphToMany
-    {
-        return $this->morphedByMany(config('shopper.models.collection'), 'productable', shopper_table('product_has_relations'));
-    }
-
-    public function brand(): BelongsTo
-    {
-        return $this->belongsTo(config('shopper.models.brand'), 'brand_id');
-    }
-
-    /**
-     * Product Attributes relation, to avoid collision with Model $attributes
-     */
-    public function options(): BelongsToMany
-    {
-        return $this->belongsToMany(Attribute::class, table: shopper_table('attribute_product'))
-            ->withPivot([
-                'attribute_value_id',
-                'attribute_custom_value',
-            ]);
     }
 
     public function registerMediaCollections(): void
@@ -228,5 +199,73 @@ class Product extends Model implements HasReviews, SpatieHasMedia
 
         $this->addMediaCollection('files')
             ->useDisk(config('shopper.media.storage.disk_name'));
+    }
+
+    /**
+     * @return HasMany<ProductVariant, $this>
+     */
+    public function variants(): HasMany
+    {
+        // @phpstan-ignore-next-line
+        return $this->hasMany(config('shopper.models.variant'), 'product_id');
+    }
+
+    /**
+     * @return MorphToMany<Channel, $this>
+     */
+    public function channels(): MorphToMany
+    {
+        // @phpstan-ignore-next-line
+        return $this->morphedByMany(config('shopper.models.channel'), 'productable', shopper_table('product_has_relations'));
+    }
+
+    /**
+     * @return MorphToMany<self, $this>
+     */
+    public function relatedProducts(): MorphToMany
+    {
+        // @phpstan-ignore-next-line
+        return $this->morphedByMany(config('shopper.models.product'), 'productable', shopper_table('product_has_relations'));
+    }
+
+    /**
+     * @return MorphToMany<Category, $this>
+     */
+    public function categories(): MorphToMany
+    {
+        // @phpstan-ignore-next-line
+        return $this->morphedByMany(config('shopper.models.category'), 'productable', shopper_table('product_has_relations'));
+    }
+
+    /**
+     * @return MorphToMany<Collection, $this>
+     */
+    public function collections(): MorphToMany
+    {
+        // @phpstan-ignore-next-line
+        return $this->morphedByMany(config('shopper.models.collection'), 'productable', shopper_table('product_has_relations'));
+    }
+
+    /**
+     * @return BelongsTo<Brand, $this>
+     */
+    public function brand(): BelongsTo
+    {
+        // @phpstan-ignore-next-line
+        return $this->belongsTo(config('shopper.models.brand'), 'brand_id');
+    }
+
+    /**
+     * Product Attributes relation, to avoid collision with Model $attributes
+     *
+     * @return BelongsToMany<Attribute, $this>
+     */
+    public function options(): BelongsToMany
+    {
+        return $this->belongsToMany(Attribute::class, table: shopper_table('attribute_product'))
+            ->withPivot([
+                'attribute_value_id',
+                'attribute_custom_value',
+            ]);
     }
 }

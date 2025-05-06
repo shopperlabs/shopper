@@ -28,21 +28,26 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 #[ObservedBy(CategoryObserver::class)]
 class Category extends Model implements SpatieHasMedia
 {
+    /** @use HasFactory<CategoryFactory> */
     use HasFactory;
+
     use HasMedia;
     use HasRecursiveRelationships;
     use HasSlug;
 
     protected $guarded = [];
 
-    protected $casts = [
-        'is_enabled' => 'boolean',
-        'metadata' => 'array',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('categories');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_enabled' => 'boolean',
+            'metadata' => 'array',
+        ];
     }
 
     protected static function newFactory(): CategoryFactory
@@ -50,6 +55,9 @@ class Category extends Model implements SpatieHasMedia
         return CategoryFactory::new();
     }
 
+    /**
+     * @return array<array-key, array<string>>
+     */
     public function getCustomPaths(): array
     {
         return [
@@ -78,18 +86,29 @@ class Category extends Model implements SpatieHasMedia
             : $this->name;
     }
 
+    /**
+     * @param  Builder<Category>  $query
+     * @return Builder<Category>
+     */
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
     }
 
+    /**
+     * @return HasManyOfDescendants<Category, $this>
+     */
     public function descendantCategories(): HasManyOfDescendants
     {
         return $this->hasManyOfDescendants(self::class, 'parent_id');
     }
 
+    /**
+     * @return MorphToMany<Product, $this>
+     */
     public function products(): MorphToMany
     {
+        // @phpstan-ignore-next-line
         return $this->morphToMany(config('shopper.models.product'), 'productable', shopper_table('product_has_relations'));
     }
 }

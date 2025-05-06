@@ -37,18 +37,28 @@ class AttributeValue extends Model
         return AttributeValueFactory::new();
     }
 
+    /**
+     * @return BelongsTo<Attribute, $this>
+     */
     public function attribute(): BelongsTo
     {
         return $this->belongsTo(Attribute::class, 'attribute_id');
     }
 
+    /**
+     * @return BelongsTo<AttributeProduct, $this>
+     */
     public function attributeProduct(): BelongsTo
     {
         return $this->belongsTo(AttributeProduct::class, 'attribute_value_id');
     }
 
+    /**
+     * @return BelongsToMany<ProductVariant, $this, \Illuminate\Database\Eloquent\Relations\Pivot>
+     */
     public function variants(): BelongsToMany
     {
+        // @phpstan-ignore-next-line
         return $this->belongsToMany(
             config('shopper.models.variant'),
             shopper_table('attribute_value_product_variant'),
