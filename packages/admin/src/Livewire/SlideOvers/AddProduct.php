@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\SlideOvers;
 
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -31,6 +32,9 @@ class AddProduct extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
+    /**
+     * @var array<array-key, mixed>|null
+     */
     public ?array $data = [];
 
     public int $startStep = 1;
@@ -152,18 +156,18 @@ class AddProduct extends SlideOverComponent implements HasForms
                                 ->preload()
                                 ->visible(Feature::enabled('brand')),
 
-                            Components\Form\SelectTree::make('categories')
+                            SelectTree::make('categories')
                                 ->label(__('shopper::pages/categories.menu'))
+                                ->enableBranchNode()
                                 ->relationship(
                                     relationship: 'categories',
                                     titleAttribute: 'name',
                                     parentAttribute: 'parent_id',
                                     modifyQueryUsing: fn (Builder $query) => $query->where('is_enabled', true)
                                 )
-                                ->independent(false)
-                                ->grouped(false)
                                 ->searchable()
-                                ->visible(Feature::enabled('category')),
+                                ->visible(Feature::enabled('category'))
+                                ->withCount(),
 
                             Forms\Components\Select::make('channels')
                                 ->label(__('shopper::pages/settings/menu.sales'))

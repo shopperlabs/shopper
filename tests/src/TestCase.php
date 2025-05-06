@@ -7,6 +7,7 @@ namespace Shopper\Tests;
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
 use Codeat3\BladePhosphorIcons\BladePhosphorIconsServiceProvider;
+use CodeWithDennis\FilamentSelectTree\FilamentSelectTreeServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
 use Filament\Forms\FormsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
@@ -69,6 +70,7 @@ abstract class TestCase extends BaseTestCase
             MediaLibraryServiceProvider::class,
             TailwindMergeServiceProvider::class,
             RadioDeckServiceProvider::class,
+            FilamentSelectTreeServiceProvider::class,
             WizardServiceProvider::class,
         ];
     }

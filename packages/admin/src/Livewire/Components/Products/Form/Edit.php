@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopper\Livewire\Components\Products\Form;
 
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -16,6 +17,7 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Shopper\Actions\Store\Product\UpdateProductAction;
 use Shopper\Components;
+use Shopper\Core\Models\Product;
 use Shopper\Feature;
 
 /**
@@ -25,8 +27,14 @@ class Edit extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    /**
+     * @var Product
+     */
     public $product;
 
+    /**
+     * @var array<array-key, mixed>|null
+     */
     public ?array $data = [];
 
     public function mount($product): void
@@ -73,7 +81,6 @@ class Edit extends Component implements HasForms
                                     ->schema([
                                         Components\Separator::make()
                                             ->columnSpanFull(),
-
                                         Forms\Components\TextInput::make('external_id')
                                             ->label(__('shopper::forms.label.external_id'))
                                             ->unique(config('shopper.models.product'), 'external_id', ignoreRecord: true)
@@ -112,18 +119,18 @@ class Edit extends Component implements HasForms
                                     ->searchable()
                                     ->visible(Feature::enabled('brand')),
 
-                                Components\Form\SelectTree::make('categories')
+                                SelectTree::make('categories')
                                     ->label(__('shopper::pages/categories.menu'))
+                                    ->enableBranchNode()
                                     ->relationship(
                                         relationship: 'categories',
                                         titleAttribute: 'name',
                                         parentAttribute: 'parent_id',
                                         modifyQueryUsing: fn (Builder $query) => $query->where('is_enabled', true)
                                     )
-                                    ->independent(false)
-                                    ->grouped(false)
                                     ->searchable()
-                                    ->visible(Feature::enabled('category')),
+                                    ->visible(Feature::enabled('category'))
+                                    ->withCount(),
 
                                 Forms\Components\Select::make('channels')
                                     ->label(__('shopper::pages/settings/menu.sales'))

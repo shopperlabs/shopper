@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Shopper\Components\Form;
 
 use Filament\Forms;
-use Shopper\Core\Enum\Dimension\Length;
-use Shopper\Core\Enum\Dimension\Volume;
-use Shopper\Core\Enum\Dimension\Weight;
+use Shopper\Core\Enum\Dimension;
 
 final class ShippingField
 {
+    /**
+     * @return array<array-key, Forms\Components\Field>
+     */
     public static function make(): array
     {
         return [
@@ -21,10 +22,9 @@ final class ShippingField
                     fn () => Forms\Components\Select::make('width_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Length::toArray())
-                        ->default(Length::CM)
+                        ->options(Dimension\Length::toArray())
+                        ->default(Dimension\Length::CM)
                 ),
-
             TextInputSelect::make('height_value')
                 ->label(__('shopper::forms.label.height'))
                 ->numeric()
@@ -32,10 +32,9 @@ final class ShippingField
                     fn () => Forms\Components\Select::make('height_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Length::toArray())
-                        ->default(Length::CM)
+                        ->options(Dimension\Length::toArray())
+                        ->default(Dimension\Length::CM)
                 ),
-
             TextInputSelect::make('weight_value')
                 ->label(__('shopper::forms.label.weight'))
                 ->numeric()
@@ -43,10 +42,9 @@ final class ShippingField
                     fn () => Forms\Components\Select::make('weight_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Weight::toArray())
-                        ->default(Weight::KG)
+                        ->options(Dimension\Weight::toArray())
+                        ->default(Dimension\Weight::KG)
                 ),
-
             TextInputSelect::make('volume_value')
                 ->label(__('shopper::forms.label.volume'))
                 ->numeric()
@@ -54,10 +52,9 @@ final class ShippingField
                     fn () => Forms\Components\Select::make('volume_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Volume::toArray())
-                        ->default(Volume::ML)
+                        ->options(Dimension\Volume::toArray())
+                        ->default(Dimension\Volume::ML)
                 ),
-
             TextInputSelect::make('depth_value')
                 ->label(__('shopper::forms.label.depth'))
                 ->numeric()
@@ -65,8 +62,8 @@ final class ShippingField
                     fn () => Forms\Components\Select::make('depth_unit')
                         ->selectablePlaceholder(false)
                         ->native(false)
-                        ->options(Length::toArray())
-                        ->default(Length::CM)
+                        ->options(Dimension\Length::toArray())
+                        ->default(Dimension\Length::CM)
                 ),
         ];
     }
