@@ -14,9 +14,9 @@ final class InitializationWizard extends WizardComponent
     public function steps(): array
     {
         return [
-            StoreInformation::class,
-            StoreAddress::class,
-            StoreSocialLink::class,
+            config('shopper.components.initialize.steps.store-information'),
+            config('shopper.components.initialize.steps.store-address'),
+            config('shopper.components.initialize.steps.store-social-link'),
         ];
     }
 }
