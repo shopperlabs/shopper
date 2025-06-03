@@ -139,7 +139,6 @@ class Create extends AbstractPageComponent implements HasForms
         $address = array_merge(Arr::only($data, ['address'])['address'], [
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
-            'is_default' => true,
             'type' => AddressType::Shipping,
         ]);
 
