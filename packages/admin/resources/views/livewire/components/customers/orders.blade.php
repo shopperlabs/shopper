@@ -37,10 +37,14 @@
                                 {{ __('shopper::pages/customers.orders.ship_to') }}
                             </dt>
                             <dd class="mt-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                                {{ $order->shippingAddress->street_address }}
-                                {{ $order->shippingAddress->postal_code }},
-                                {{ $order->shippingAddress->city }}
-                                {{ $order->shippingAddress->country_name }}
+                                @if ($order->shippingAddress)
+                                    {{ $order->shippingAddress->street_address }}
+                                    {{ $order->shippingAddress->postal_code }},
+                                    {{ $order->shippingAddress->city }}
+                                    {{ $order->shippingAddress->country_name }}
+                                @else
+                                    {{ __('N/A') }}
+                                @endif
                             </dd>
                         </div>
                     </div>
