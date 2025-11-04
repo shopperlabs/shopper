@@ -17,7 +17,7 @@ jobs:
           - core
           - sidebar
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - id: previous-tag
         uses: 'WyriHaximus/github-action-get-previous-tag@master'
       - name: Monorepo Split of ${{ matrix.package }}
@@ -31,4 +31,4 @@ jobs:
           branch: 2.x
           tag: ${{ steps.previous-tag.outputs.tag }}
           user_name: 'Arthur Monney'
-          user_email: 'contact@arthurmonney.me'
+          user_email: 'monneylobe@gmail.com'
