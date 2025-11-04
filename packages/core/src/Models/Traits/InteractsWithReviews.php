@@ -103,7 +103,7 @@ trait InteractsWithReviews
             ->pluck('averagePricingReviewRateable');
     }
 
-    public function countRating()
+    public function countRating(): mixed
     {
         return $this->ratings()
             ->selectRaw('count(rating) as countReviewRateable')
