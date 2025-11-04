@@ -12,6 +12,8 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 
 use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\intro;
+use function Laravel\Prompts\note;
 
 #[AsCommand(name: 'shopper:install')]
 final class InstallCommand extends Command
@@ -33,7 +35,6 @@ final class InstallCommand extends Command
 
     public function handle(): void
     {
-        $this->newLine();
         $this->progressBar = $this->output->createProgressBar(3);
 
         $this->introMessage();
@@ -85,17 +86,22 @@ final class InstallCommand extends Command
         $this->progressBar->finish();
     }
 
+    private function shopperLogo(): string
+    {
+        return
+            <<<'HEADER'
+            ███████╗ ██╗  ██╗  ██████╗  ██████╗  ██████╗  ███████╗ ██████╗
+            ██╔════╝ ██║  ██║ ██╔═══██╗ ██╔══██╗ ██╔══██╗ ██╔════╝ ██╔══██╗
+            ███████╗ ███████║ ██║   ██║ ██████╔╝ ██████╔╝ █████╗   ██████╔╝
+            ╚════██║ ██╔══██║ ██║   ██║ ██╔═══╝  ██╔═══╝  ██╔══╝   ██╔══██╗
+            ███████║ ██║  ██║ ╚██████╔╝ ██║      ██║      ███████╗ ██║  ██║
+            ╚══════╝ ╚═╝  ╚═╝  ╚═════╝  ╚═╝      ╚═╝      ╚══════╝ ╚═╝  ╚═╝
+            HEADER;
+    }
+
     protected function introMessage(): void
     {
-        $this->components->info('
-                _____ __
-              / ___// /_  ____  ____  ____  ___  _____
-              \__ \/ __ \/ __ \/ __ \/ __ \/ _ \/ ___/
-             ___/ / / / / /_/ / /_/ / /_/ /  __/ /
-            /____/_/ /_/\____/ .___/ .___/\___/_/
-                            /_/   /_/
-
-            Installation started. Please wait...
-        ');
+        note($this->shopperLogo());
+        intro('✦ Laravel Shopper :: Install ✦');
     }
 }
