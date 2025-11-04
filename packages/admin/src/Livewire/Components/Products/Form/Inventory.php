@@ -188,7 +188,7 @@ class Inventory extends Component implements HasForms, HasTable
             ])
             ->groups([
                 Tables\Grouping\Group::make('inventory.name')
-                    ->label(fn (): string => __('shopper::pages/settings/menu.location'))
+                    ->label(__('shopper::pages/settings/menu.location')) // @phpstan-ignore-line
                     ->collapsible(),
             ]);
     }

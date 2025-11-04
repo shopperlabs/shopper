@@ -26,6 +26,7 @@ class BrandForm extends SlideOverComponent implements HasForms
 
     public $brand;
 
+    /** @var array<array-key, mixed>|null */
     public ?array $data = [];
 
     public function mount(?int $brandId = null): void
