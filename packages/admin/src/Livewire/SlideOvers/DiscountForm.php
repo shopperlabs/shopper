@@ -35,6 +35,9 @@ class DiscountForm extends SlideOverComponent implements HasForms
 
     public Discount $discount;
 
+    /**
+     * @var array<array-key, mixed>|null
+     */
     public ?array $data = [];
 
     public function mount(?int $discountId = null): void
@@ -87,14 +90,12 @@ class DiscountForm extends SlideOverComponent implements HasForms
                     ->schema([
                         Forms\Components\Placeholder::make('general')
                             ->label(__('shopper::words.general')),
-
                         Forms\Components\Select::make('zone_id')
                             ->label(__('shopper::pages/settings/zones.single'))
                             ->relationship('zone', 'name')
                             ->native(false)
                             ->hint(__('shopper::forms.label.optional'))
                             ->live(),
-
                         Forms\Components\Radio::make('type')
                             ->label(__('shopper::forms.label.type'))
                             ->inline()
@@ -102,7 +103,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->options(DiscountType::class)
                             ->required()
                             ->live(),
-
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\TextInput::make('code')
@@ -118,7 +118,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     )
                                     ->unique(table: Discount::class, column: 'code', ignoreRecord: true)
                                     ->required(),
-
                                 Forms\Components\TextInput::make('value')
                                     ->label(
                                         fn (Forms\Get $get): ?string => match ($get('type')) {
@@ -139,14 +138,11 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     ->numeric()
                                     ->required(),
                             ]),
-
                         Forms\Components\Toggle::make('is_active')
                             ->label(__('shopper::forms.label.visibility'))
                             ->helperText(__('shopper::words.set_visibility', ['name' => __('shopper::pages/discounts.single')])),
                     ]),
-
                 Separator::make(),
-
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Placeholder::make('configuration')
@@ -156,12 +152,10 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     {{ __('shopper::pages/discounts.configuration_description') }}
                                 </p>
                             Blade))),
-
                         Forms\Components\Toggle::make('usage_number')
                             ->label(__('shopper::pages/discounts.usage_label'))
                             ->helperText(__('shopper::pages/discounts.usage_label_description'))
                             ->live(),
-
                         Forms\Components\TextInput::make('usage_limit')
                             ->label(__('shopper::pages/discounts.usage_value'))
                             ->placeholder('10')
@@ -171,10 +165,8 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->visible(
                                 fn (Forms\Get $get): bool => $get('usage_number') || $this->discount->usage_limit !== null
                             ),
-
                         Forms\Components\Toggle::make('usage_limit_per_user')
                             ->label(__('shopper::pages/discounts.limit_one_per_user')),
-
                         Forms\Components\Placeholder::make('dates')
                             ->label(__('shopper::pages/discounts.active_dates'))
                             ->content(new HtmlString(Blade::render(<<<'Blade'
@@ -182,7 +174,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     {{ __('shopper::pages/discounts.active_dates_description') }}
                                 </p>
                             Blade))),
-
                         Forms\Components\Grid::make()
                             ->schema([
                                 Forms\Components\DateTimePicker::make('start_at')
@@ -190,16 +181,13 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     ->required()
                                     ->minDate(now())
                                     ->native(false),
-
                                 Forms\Components\DateTimePicker::make('end_at')
                                     ->label(__('shopper::pages/discounts.end_date'))
                                     ->afterOrEqual('start_at')
                                     ->native(false),
                             ]),
                     ]),
-
                 Separator::make(),
-
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\Placeholder::make('conditions')
@@ -209,14 +197,12 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                     {{ __('shopper::pages/discounts.condition_description') }}
                                 </p>
                             Blade))),
-
                         Forms\Components\Radio::make('apply_to')
                             ->label(__('shopper::pages/discounts.applies_to'))
                             ->options(DiscountApplyTo::class)
                             ->inline()
                             ->required()
                             ->live(),
-
                         Forms\Components\Select::make('products')
                             ->options(
                                 (new ProductRepository)
@@ -236,14 +222,12 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->visible(
                                 fn (Forms\Get $get): bool => $get('apply_to') === DiscountApplyTo::Products->value
                             ),
-
                         Forms\Components\Radio::make('eligibility')
                             ->label(__('shopper::pages/discounts.customer_eligibility'))
                             ->inline()
                             ->options(DiscountEligibility::class)
                             ->required()
                             ->live(),
-
                         Forms\Components\Select::make('customers')
                             ->options(
                                 (new UserRepository)
@@ -263,7 +247,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->visible(
                                 fn (Forms\Get $get): bool => $get('eligibility') === DiscountEligibility::Customers->value
                             ),
-
                         Forms\Components\Radio::make('min_required')
                             ->label(__('shopper::pages/discounts.min_requirement'))
                             ->inline()
@@ -271,7 +254,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
                             ->options(DiscountRequirement::class)
                             ->required()
                             ->live(),
-
                         Forms\Components\TextInput::make('min_required_value')
                             ->hiddenLabel()
                             ->numeric()
@@ -294,9 +276,7 @@ class DiscountForm extends SlideOverComponent implements HasForms
                                 return false;
                             }),
                     ]),
-
                 Separator::make(),
-
                 Forms\Components\Group::make()
                     ->schema([
                         Forms\Components\KeyValue::make('metadata')

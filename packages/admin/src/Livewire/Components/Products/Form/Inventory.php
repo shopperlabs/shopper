@@ -19,6 +19,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Shopper\Components;
 use Shopper\Core\Models\InventoryHistory;
+use Shopper\Core\Models\Product;
 
 /**
  * @property Forms\Form $form
@@ -28,10 +29,17 @@ class Inventory extends Component implements HasForms, HasTable
     use InteractsWithForms;
     use InteractsWithTable;
 
+    /** @var Product */
     public $product;
 
+    /**
+     * @var array<array-key, mixed>|null
+     */
     public ?array $data = [];
 
+    /**
+     * @param  Product  $product
+     */
     public function mount($product): void
     {
         $this->product = $product;
@@ -54,12 +62,10 @@ class Inventory extends Component implements HasForms, HasTable
                                     ->label(__('shopper::forms.label.sku'))
                                     ->unique(config('shopper.models.product'), 'sku', ignoreRecord: true)
                                     ->maxLength(255),
-
                                 Forms\Components\TextInput::make('barcode')
                                     ->label(__('shopper::forms.label.barcode'))
                                     ->unique(config('shopper.models.product'), 'barcode', ignoreRecord: true)
                                     ->maxLength(255),
-
                                 Forms\Components\TextInput::make('security_stock')
                                     ->label(__('shopper::forms.label.safety_stock'))
                                     ->helperText(__('shopper::pages/products.safety_security_help_text'))
@@ -87,13 +93,10 @@ class Inventory extends Component implements HasForms, HasTable
                     ->label(__('shopper::words.date'))
                     ->since()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('event')
                     ->label(__('shopper::words.event')),
-
                 Tables\Columns\TextColumn::make('inventory.name')
                     ->label(__('shopper::pages/settings/menu.location')),
-
                 Tables\Columns\TextColumn::make('adjustment')
                     ->label(__('shopper::words.adjustment'))
                     ->color(function (InventoryHistory $record) {
@@ -108,7 +111,6 @@ class Inventory extends Component implements HasForms, HasTable
                         return 'gray';
                     })
                     ->alignRight(),
-
                 Tables\Columns\TextColumn::make('quantity')
                     ->label(__('shopper::pages/products.inventory.movement'))
                     ->color(fn (InventoryHistory $record) => $record->quantity <= 0 ? 'danger' : 'gray')
@@ -133,7 +135,6 @@ class Inventory extends Component implements HasForms, HasTable
                             ->relationship('inventory', 'name')
                             ->native(false)
                             ->required(),
-
                         Forms\Components\TextInput::make('quantity')
                             ->label(__('shopper::forms.label.quantity'))
                             ->placeholder('-10 or -5 or 50, etc')

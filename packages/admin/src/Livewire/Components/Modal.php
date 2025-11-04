@@ -6,10 +6,10 @@ namespace Shopper\Livewire\Components;
 
 use Exception;
 use Illuminate\Contracts\Routing\UrlRoutable;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Reflector;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Mechanisms\ComponentRegistry;
 use ReflectionClass;
@@ -28,7 +28,11 @@ class Modal extends Component
         $this->activeComponent = null;
     }
 
-    public function openModal($component, $arguments = [], $modalAttributes = []): void
+    /**
+     * @param  array<string, mixed>  $arguments
+     * @param  array<string, mixed>  $modalAttributes
+     */
+    public function openModal(string $component, array $arguments = [], array $modalAttributes = []): void
     {
         $requiredInterface = ModalContract::class;
         $componentClass = app(ComponentRegistry::class)->getClass($component);
@@ -63,6 +67,10 @@ class Modal extends Component
         $this->dispatch('activeModalComponentChanged', id: $id);
     }
 
+    /**
+     * @param  array<string, mixed>  $attributes
+     * @return Collection<string, mixed>
+     */
     public function resolveComponentProps(array $attributes, Component $component): Collection
     {
         return $this->getPublicPropertyTypes($component)
@@ -74,7 +82,10 @@ class Modal extends Component
             });
     }
 
-    protected function resolveParameter($attributes, $parameterName, $parameterClassName)
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    protected function resolveParameter(array $attributes, string $parameterName, ?string $parameterClassName): mixed
     {
         $parameterValue = $attributes[$parameterName];
 
@@ -99,18 +110,24 @@ class Modal extends Component
         return $model;
     }
 
-    public function getPublicPropertyTypes($component): Collection
+    /**
+     * @return Collection<string, string|null>
+     */
+    public function getPublicPropertyTypes(Component $component): Collection
     {
         return collect($component->all())
             ->map(fn ($value, $name) => Reflector::getParameterClassName(new ReflectionProperty($component, $name))) // @phpstan-ignore-line
             ->filter();
     }
 
-    public function destroyComponent($id): void
+    public function destroyComponent(string $id): void
     {
         unset($this->components[$id]);
     }
 
+    /**
+     * @return array<string>
+     */
     public function getListeners(): array
     {
         return [

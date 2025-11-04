@@ -16,6 +16,7 @@ abstract class SlideOverComponent extends Component implements PanelContract
 
     public bool $destroySkipped = false;
 
+    /** @var array<string, string> */
     protected static array $maxWidths = [
         'sm' => 'max-w-sm',
         'md' => 'max-w-md',
@@ -36,14 +37,14 @@ abstract class SlideOverComponent extends Component implements PanelContract
         return $this;
     }
 
-    public function skipPreviousPanels($count = 1, $destroy = false): self
+    public function skipPreviousPanels(int $count = 1, bool $destroy = false): self
     {
         $this->skipPreviousPanel($count, $destroy);
 
         return $this;
     }
 
-    public function skipPreviousPanel($count = 1, $destroy = false): self
+    public function skipPreviousPanel(int $count = 1, bool $destroy = false): self
     {
         $this->skipPanels = $count;
         $this->destroySkipped = $destroy;
@@ -68,6 +69,9 @@ abstract class SlideOverComponent extends Component implements PanelContract
         );
     }
 
+    /**
+     * @param array<string, mixed> $events
+     */
     public function closePanelWithEvents(array $events): void
     {
         $this->emitPanelEvents($events);
@@ -119,6 +123,9 @@ abstract class SlideOverComponent extends Component implements PanelContract
         return false;
     }
 
+    /**
+     * @param array<string, mixed> $events
+     */
     private function emitPanelEvents(array $events): void
     {
         foreach ($events as $component => $event) {

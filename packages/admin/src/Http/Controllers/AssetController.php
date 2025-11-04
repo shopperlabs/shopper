@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Shopper\Http\Controllers;
 
+use Symfony\Component\HttpFoundation\Response;
+
 final class AssetController
 {
-    public function __invoke(string $file)
+    public function __invoke(string $file): Response
     {
         switch ($file) {
             case 'shopper.css':
@@ -22,12 +24,12 @@ final class AssetController
         abort(404);
     }
 
-    protected function getHttpDate(int $timestamp)
+    protected function getHttpDate(int $timestamp): string
     {
         return sprintf('%s GMT', gmdate('D, d M Y H:i:s', $timestamp));
     }
 
-    protected function pretendResponseIsFile(string $path, string $contentType)
+    protected function pretendResponseIsFile(string $path, string $contentType): Response
     {
         abort_unless(
             file_exists($path) || file_exists($path = base_path($path)),
@@ -39,7 +41,7 @@ final class AssetController
 
         $lastModified = filemtime($path);
 
-        if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'] ?? '') === $lastModified) {
+        if ($lastModified !== false && @strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'] ?? '') === $lastModified) {
             return response()->noContent(304, [
                 'Expires' => $this->getHttpDate($expires),
                 'Cache-Control' => $cacheControl,
@@ -50,7 +52,7 @@ final class AssetController
             'Content-Type' => $contentType,
             'Expires' => $this->getHttpDate($expires),
             'Cache-Control' => $cacheControl,
-            'Last-Modified' => $this->getHttpDate($lastModified),
+            'Last-Modified' => $this->getHttpDate($lastModified !== false ? $lastModified : time()),
         ]);
     }
 }

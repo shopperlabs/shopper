@@ -10,7 +10,7 @@ use Shopper\Events\LoadShopper;
 
 class DispatchShopper
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         LoadShopper::dispatch();
 

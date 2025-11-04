@@ -16,6 +16,7 @@ abstract class ModalComponent extends Component implements ModalContract
 
     public bool $destroySkipped = false;
 
+    /** @var array<string, string> */
     protected static array $maxWidths = [
         'sm' => 'sm:max-w-sm',
         'md' => 'sm:max-w-md',
@@ -36,14 +37,14 @@ abstract class ModalComponent extends Component implements ModalContract
         return $this;
     }
 
-    public function skipPreviousModals($count = 1, $destroy = false): self
+    public function skipPreviousModals(int $count = 1, bool $destroy = false): self
     {
         $this->skipPreviousModal($count, $destroy);
 
         return $this;
     }
 
-    public function skipPreviousModal($count = 1, $destroy = false): self
+    public function skipPreviousModal(int $count = 1, bool $destroy = false): self
     {
         $this->skipModals = $count;
         $this->destroySkipped = $destroy;
@@ -68,6 +69,9 @@ abstract class ModalComponent extends Component implements ModalContract
         );
     }
 
+    /**
+     * @param array<string, mixed> $events
+     */
     public function closeModalWithEvents(array $events): void
     {
         $this->emitModalEvents($events);
@@ -119,6 +123,9 @@ abstract class ModalComponent extends Component implements ModalContract
         return false;
     }
 
+    /**
+     * @param array<string, mixed> $events
+     */
     private function emitModalEvents(array $events): void
     {
         foreach ($events as $component => $event) {

@@ -18,9 +18,11 @@ use Shopper\Core\Database\Factories\DiscountDetailFactory;
  * @property int $discount_id
  * @property int $total_use
  * @property-read Discount $discount
+ * @property-read Model $discountable
  */
 class DiscountDetail extends Model
 {
+    /** @use HasFactory<DiscountDetailFactory> */
     use HasFactory;
 
     protected $guarded = [];
@@ -35,6 +37,9 @@ class DiscountDetail extends Model
         return DiscountDetailFactory::new();
     }
 
+    /**
+     * @return BelongsTo<Discount, $this>
+     */
     public function discount(): BelongsTo
     {
         return $this->belongsTo(Discount::class, 'discount_id');

@@ -19,7 +19,7 @@ use Shopper\Core\Enum\DiscountType;
  * @property int $value
  * @property string $apply_to
  * @property string $eligibility
- * @property int $usage_limit
+ * @property int|null $usage_limit
  * @property int $total_use
  * @property int | null $zone_id
  * @property bool $usage_limit_per_user
@@ -28,27 +28,14 @@ use Shopper\Core\Enum\DiscountType;
  * @property \Illuminate\Support\Carbon $start_at
  * @property \Illuminate\Support\Carbon|null $end_at
  * @property-read Zone $zone
- * @property-read \Illuminate\Database\Eloquent\Collection | DiscountDetail[] $items
+ * @property-read \Illuminate\Database\Eloquent\Collection<array-key, DiscountDetail> $items
  */
 class Discount extends Model
 {
+    /** @use HasFactory<DiscountFactory> */
     use HasFactory;
 
     protected $guarded = [];
-
-    protected $casts = [
-        'is_active' => 'boolean',
-        'usage_limit_per_user' => 'boolean',
-        'start_at' => 'datetime',
-        'end_at' => 'datetime',
-        'metadata' => 'array',
-        'type' => DiscountType::class,
-    ];
-
-    public function getTable(): string
-    {
-        return shopper_table('discounts');
-    }
 
     protected static function newFactory(): DiscountFactory
     {
@@ -67,6 +54,23 @@ class Discount extends Model
         );
     }
 
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'usage_limit_per_user' => 'boolean',
+            'start_at' => 'datetime',
+            'end_at' => 'datetime',
+            'metadata' => 'array',
+            'type' => DiscountType::class,
+        ];
+    }
+
+    public function getTable(): string
+    {
+        return shopper_table('discounts');
+    }
+
     public function hasReachedLimit(): bool
     {
         if ($this->usage_limit !== null) {
@@ -76,11 +80,17 @@ class Discount extends Model
         return false;
     }
 
+    /**
+     * @return HasMany<DiscountDetail, $this>
+     */
     public function items(): HasMany
     {
         return $this->hasMany(DiscountDetail::class, 'discount_id');
     }
 
+    /**
+     * @return BelongsTo<Zone, $this>
+     */
     public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class, 'zone_id');

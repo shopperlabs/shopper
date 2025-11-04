@@ -5,48 +5,101 @@ declare(strict_types=1);
 namespace Shopper\Core\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
+use Shopper\Core\Models\Review;
 
 interface HasReviews
 {
     public function ratings(): MorphMany;
 
-    public function averageRating($round = null);
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function averageRating(?int $round = null): Collection;
 
-    public function averageCustomerServiceRating($round = null);
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function averageCustomerServiceRating(?int $round = null): Collection;
 
-    public function averageQualityRating($round = null);
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function averageQualityRating(?int $round = null): Collection;
 
-    public function averageFriendlyRating($round = null);
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function averageFriendlyRating(?int $round = null): Collection;
 
-    public function averagePricingRating($round = null);
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function averagePricingRating(?int $round = null): Collection;
 
-    public function countRating();
+    public function countRating(): mixed;
 
-    public function countCustomerServiceRating();
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function countCustomerServiceRating(): Collection;
 
-    public function countQualityRating();
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function countQualityRating(): Collection;
 
-    public function countFriendlyRating();
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function countFriendlyRating(): Collection;
 
-    public function countPriceRating();
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function countPriceRating(): Collection;
 
-    public function sumRating();
+    /**
+     * @return Collection<int, mixed>
+     */
+    public function sumRating(): Collection;
 
     public function ratingPercent(int $max = 5): float;
 
-    public function rating(array $data, $author, $parent = null);
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function rating(array $data, mixed $author, mixed $parent = null): Review;
 
-    public function updateRating(int $id, array $data, $parent = null);
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function updateRating(int $id, array $data, mixed $parent = null): Review;
 
-    public function getAllRatings(int $id, string $sort = 'desc');
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getAllRatings(int $id, string $sort = 'desc'): Collection;
 
-    public function getApprovedRatings(int $id, string $sort = 'desc');
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getApprovedRatings(int $id, string $sort = 'desc'): Collection;
 
-    public function getNotApprovedRatings(int $id, string $sort = 'desc');
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getNotApprovedRatings(int $id, string $sort = 'desc'): Collection;
 
-    public function getRecentRatings(int $id, int $limit = 5, string $sort = 'desc');
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getRecentRatings(int $id, int $limit = 5, string $sort = 'desc'): Collection;
 
-    public function getRecentUserRatings(int $id, int $limit = 5, bool $approved = true, string $sort = 'desc');
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getRecentUserRatings(int $id, int $limit = 5, bool $approved = true, string $sort = 'desc'): Collection;
 
-    public function deleteRating(int $id);
+    public function deleteRating(int $id): ?bool;
 }

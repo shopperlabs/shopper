@@ -12,7 +12,7 @@ use Shopper\Facades\Shopper;
 
 class Dashboard
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         /** @var User $user */
         $user = Shopper::auth()->user();

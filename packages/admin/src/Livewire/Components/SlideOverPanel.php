@@ -13,6 +13,7 @@ use Illuminate\Support\Reflector;
 use Livewire\Component;
 use Livewire\Mechanisms\ComponentRegistry;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
 use Shopper\Contracts\PanelContract;
 
@@ -20,6 +21,7 @@ class SlideOverPanel extends Component
 {
     public ?string $activeComponent;
 
+    /** @var array<string, array<string, mixed>> */
     public array $components = [];
 
     public function resetState(): void
@@ -28,7 +30,13 @@ class SlideOverPanel extends Component
         $this->activeComponent = null;
     }
 
-    public function openPanel($component, $arguments = [], $panelAttributes = []): void
+    /**
+     * @param  array<string, mixed>  $arguments
+     * @param  array<string, mixed>  $panelAttributes
+     *
+     * @throws ReflectionException
+     */
+    public function openPanel(string $component, array $arguments = [], array $panelAttributes = []): void
     {
         $requiredInterface = PanelContract::class;
         $componentClass = app(ComponentRegistry::class)->getClass($component);
@@ -63,18 +71,21 @@ class SlideOverPanel extends Component
         $this->dispatch('activePanelComponentChanged', id: $id);
     }
 
+    /**
+     * @param  array<string, mixed>  $attributes
+     * @return Collection<string, mixed>
+     */
     public function resolveComponentProps(array $attributes, Component $component): Collection
     {
         return $this->getPublicPropertyTypes($component)
             ->intersectByKeys($attributes)
-            ->map(function ($className, $propName) use ($attributes) {
-                $resolved = $this->resolveParameter($attributes, $propName, $className);
-
-                return $resolved;
-            });
+            ->map(fn ($className, $propName) => $this->resolveParameter($attributes, $propName, $className));
     }
 
-    protected function resolveParameter($attributes, $parameterName, $parameterClassName)
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    protected function resolveParameter(array $attributes, string $parameterName, ?string $parameterClassName): mixed
     {
         $parameterValue = $attributes[$parameterName];
 
@@ -99,18 +110,24 @@ class SlideOverPanel extends Component
         return $model;
     }
 
-    public function getPublicPropertyTypes($component): Collection
+    /**
+     * @return Collection<string, string|null>
+     */
+    public function getPublicPropertyTypes(Component $component): Collection
     {
         return collect($component->all())
             ->map(fn ($value, $name) => Reflector::getParameterClassName(new ReflectionProperty($component, $name))) // @phpstan-ignore-line
             ->filter();
     }
 
-    public function destroyComponent($id): void
+    public function destroyComponent(string $id): void
     {
         unset($this->components[$id]);
     }
 
+    /**
+     * @return array<string>
+     */
     public function getListeners(): array
     {
         return [
