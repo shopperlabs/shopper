@@ -15,7 +15,7 @@ use Shopper\Traits\SaveSettings;
 use Spatie\LivewireWizard\Components\StepComponent;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 final class StoreAddress extends StepComponent implements HasForms
 {

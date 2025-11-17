@@ -11,7 +11,7 @@ Route::as('products.')->group(function (): void {
         ->name('variant');
 });
 
-if (\Shopper\Feature::enabled('attribute')) {
+if (Shopper\Feature::enabled('attribute')) {
     Route::get('attributes', config('shopper.components.product.pages.attribute-index'))
         ->name('attributes.index');
 }

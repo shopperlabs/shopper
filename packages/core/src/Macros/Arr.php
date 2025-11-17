@@ -8,6 +8,10 @@ use InvalidArgumentException;
 
 class Arr
 {
+    /**
+     * @param  array<array-key, mixed>  $tuples
+     * @return array<array-key, mixed>
+     */
     public static function permutate(array $tuples): array
     {
         if (empty($tuples)) {
@@ -28,16 +32,28 @@ class Arr
         return array_map(fn ($combination) => array_combine($keys, $combination), $permutations);
     }
 
+    /**
+     * @param  array<array-key, mixed>  $permutation
+     */
     public static function performPermutationIntoWord(array $permutation, string $key, string $separator = ' / '): string
     {
         return implode($separator, array_column($permutation, $key));
     }
 
+    /**
+     * @param  array<array-key, mixed>  $permutation
+     * @return array<array-key, mixed>
+     */
     public static function getPermutationIds(array $permutation): array
     {
         return array_column($permutation, 'id');
     }
 
+    /**
+     * @param  array<array-key, mixed>  $array
+     * @param  array<array-key, mixed>  $compare
+     * @return array<array-key, mixed>
+     */
     public static function recursiveArrayDiffAssoc(array $array, array $compare): array
     {
         $difference = [];

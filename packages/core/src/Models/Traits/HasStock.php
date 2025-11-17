@@ -13,16 +13,6 @@ use Shopper\Core\Models\InventoryHistory;
 
 trait HasStock
 {
-    /**
-     * @return Attribute<non-falsy-string, never>
-     */
-    protected function stock(): Attribute
-    {
-        return Attribute::make(
-            get: fn (): int => $this->getStock(),
-        );
-    }
-
     public function inStock(int $quantity = 1): bool
     {
         return $this->stock > 0 && $this->stock >= $quantity;
@@ -113,5 +103,15 @@ trait HasStock
     {
         return $this->morphMany(InventoryHistory::class, 'stockable')
             ->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * @return Attribute<non-falsy-string, never>
+     */
+    protected function stock(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): int => $this->getStock(),
+        );
     }
 }

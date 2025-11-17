@@ -34,16 +34,6 @@ class AttributeProduct extends Model
         return shopper_table('attribute_product');
     }
 
-    protected static function newFactory(): AttributeProductFactory
-    {
-        return AttributeProductFactory::new();
-    }
-
-    protected function realValue(): LaravelAttribute
-    {
-        return LaravelAttribute::get(fn (): string => $this->attribute_custom_value ?? $this->value?->value);
-    }
-
     public function attribute(): BelongsTo
     {
         return $this->belongsTo(Attribute::class, 'attribute_id');
@@ -57,5 +47,15 @@ class AttributeProduct extends Model
     public function value(): BelongsTo
     {
         return $this->belongsTo(AttributeValue::class, 'attribute_value_id');
+    }
+
+    protected static function newFactory(): AttributeProductFactory
+    {
+        return AttributeProductFactory::new();
+    }
+
+    protected function realValue(): LaravelAttribute
+    {
+        return LaravelAttribute::get(fn (): string => $this->attribute_custom_value ?? $this->value?->value);
     }
 }

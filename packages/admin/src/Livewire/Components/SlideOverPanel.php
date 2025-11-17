@@ -46,7 +46,7 @@ class SlideOverPanel extends Component
             throw new Exception("[{$componentClass}] does not implement [{$requiredInterface}] interface.");
         }
 
-        $id = md5($component . serialize($arguments));
+        $id = md5($component.serialize($arguments));
 
         $arguments = collect($arguments)
             ->merge($this->resolveComponentProps($arguments, new $componentClass))
@@ -83,34 +83,6 @@ class SlideOverPanel extends Component
     }
 
     /**
-     * @param  array<string, mixed>  $attributes
-     */
-    protected function resolveParameter(array $attributes, string $parameterName, ?string $parameterClassName): mixed
-    {
-        $parameterValue = $attributes[$parameterName];
-
-        if ($parameterValue instanceof UrlRoutable) {
-            return $parameterValue;
-        }
-
-        if (enum_exists($parameterClassName)) {
-            $enum = $parameterClassName::tryFrom($parameterValue); // @phpstan-ignore-line
-
-            if ($enum !== null) {
-                return $enum;
-            }
-        }
-
-        $instance = app()->make($parameterClassName);
-
-        if (! $model = $instance->resolveRouteBinding($parameterValue)) {
-            throw (new ModelNotFoundException)->setModel(get_class($instance), [$parameterValue]);
-        }
-
-        return $model;
-    }
-
-    /**
      * @return Collection<string, string|null>
      */
     public function getPublicPropertyTypes(Component $component): Collection
@@ -139,5 +111,33 @@ class SlideOverPanel extends Component
     public function render(): View
     {
         return view('shopper::livewire.components.slide-over-panel');
+    }
+
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    protected function resolveParameter(array $attributes, string $parameterName, ?string $parameterClassName): mixed
+    {
+        $parameterValue = $attributes[$parameterName];
+
+        if ($parameterValue instanceof UrlRoutable) {
+            return $parameterValue;
+        }
+
+        if (enum_exists($parameterClassName)) {
+            $enum = $parameterClassName::tryFrom($parameterValue); // @phpstan-ignore-line
+
+            if ($enum !== null) {
+                return $enum;
+            }
+        }
+
+        $instance = app()->make($parameterClassName);
+
+        if (! $model = $instance->resolveRouteBinding($parameterValue)) {
+            throw (new ModelNotFoundException)->setModel(get_class($instance), [$parameterValue]);
+        }
+
+        return $model;
     }
 }

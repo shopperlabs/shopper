@@ -15,5 +15,5 @@ interface Menu extends Authorizable
 
     public function getGroups(): Collection;
 
-    public function add(Menu $menu): self;
+    public function add(self $menu): self;
 }

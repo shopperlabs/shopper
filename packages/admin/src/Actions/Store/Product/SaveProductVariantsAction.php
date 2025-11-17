@@ -9,11 +9,15 @@ use Shopper\Actions\Store\InitialQuantityInventory;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Repositories\VariantRepository;
+use Throwable;
 
 final class SaveProductVariantsAction
 {
     /**
      * @param  array<string, mixed>  $variants
+     * @return array<string, mixed>
+     *
+     * @throws Throwable
      */
     public function __invoke(array $variants, Product $product): array
     {
@@ -62,9 +66,7 @@ final class SaveProductVariantsAction
 
         $product->variants()->whereNotIn('id', $variantIds)
             ->get()
-            ->each(
-                fn ($variant) => $variant->delete()
-            );
+            ->each(fn (ProductVariant $variant) => $variant->delete());
 
         DB::commit();
 

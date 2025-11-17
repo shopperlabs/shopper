@@ -24,7 +24,7 @@ use Shopper\Livewire\Components\SlideOverComponent;
 use Shopper\Traits\InteractsWithSlideOverForm;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
 {
@@ -42,6 +42,11 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
     public ?array $data = [];
 
     public array $countriesInZone = [];
+
+    public static function panelMaxWidth(): string
+    {
+        return '2xl';
+    }
 
     public function mount(?int $zoneId = null): void
     {
@@ -186,10 +191,5 @@ class ZoneForm extends SlideOverComponent implements HasForms, SlideOverForm
             ->send();
 
         $this->redirectRoute('shopper.settings.zones', ['zone' => $this->zone->id]);
-    }
-
-    public static function panelMaxWidth(): string
-    {
-        return '2xl';
     }
 }

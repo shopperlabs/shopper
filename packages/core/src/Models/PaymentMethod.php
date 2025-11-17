@@ -43,6 +43,15 @@ class PaymentMethod extends Model
         return shopper_table('payment_methods');
     }
 
+    /**
+     * @param  Builder<PaymentMethod>  $query
+     * @return Builder<PaymentMethod>
+     */
+    public function scopeEnabled(Builder $query): Builder
+    {
+        return $query->where('is_enabled', true);
+    }
+
     protected static function newFactory(): PaymentMethodFactory
     {
         return PaymentMethodFactory::new();
@@ -53,14 +62,5 @@ class PaymentMethod extends Model
         return Attribute::make(
             get: fn () => $this->logo ? shopper_asset($this->logo) : null,
         );
-    }
-
-    /**
-     * @param  Builder<PaymentMethod>  $query
-     * @return Builder<PaymentMethod>
-     */
-    public function scopeEnabled(Builder $query): Builder
-    {
-        return $query->where('is_enabled', true);
     }
 }

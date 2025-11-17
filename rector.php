@@ -6,9 +6,9 @@ use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__ . '/packages',
-        __DIR__ . '/tests',
+        __DIR__.'/packages',
+        __DIR__.'/tests',
     ])
-    ->withTypeCoverageLevel(0)
+    ->withTypeCoverageLevel(8)
     ->withDeadCodeLevel(0)
     ->withCodeQualityLevel(0);

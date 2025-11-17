@@ -38,11 +38,6 @@ class CollectionRule extends Model
         return shopper_table('collection_rules');
     }
 
-    protected static function newFactory(): CollectionRuleFactory
-    {
-        return CollectionRuleFactory::new();
-    }
-
     public function getFormattedRule(): string
     {
         return Rule::options()[$this->rule->value];
@@ -65,5 +60,10 @@ class CollectionRule extends Model
     public function collection(): BelongsTo
     {
         return $this->belongsTo(config('shopper.models.collection'), 'collection_id');
+    }
+
+    protected static function newFactory(): CollectionRuleFactory
+    {
+        return CollectionRuleFactory::new();
     }
 }

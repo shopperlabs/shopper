@@ -11,12 +11,13 @@ use Shopper\Core\Database\Factories\SettingFactory;
 
 /**
  * @property-read int $id
- * @property string $key
- * @property string $display_name
- * @property mixed $value
+ * @property-read string $key
+ * @property-read string $display_name
+ * @property-read mixed $value
  */
 class Setting extends Model
 {
+    /** @use HasFactory<SettingFactory> */
     use HasFactory;
 
     protected $guarded = [];
@@ -24,21 +25,6 @@ class Setting extends Model
     protected $hidden = [
         'locked',
     ];
-
-    protected $casts = [
-        'value' => 'array',
-        'locked' => 'boolean',
-    ];
-
-    public function getTable(): string
-    {
-        return shopper_table('settings');
-    }
-
-    protected static function newFactory(): SettingFactory
-    {
-        return SettingFactory::new();
-    }
 
     public static function lockedAttributesDisplayName(string $key): string
     {
@@ -64,5 +50,23 @@ class Setting extends Model
             'twitter_link' => __('shopper::words.socials.instagram'),
             default => Str::title($key),
         };
+    }
+
+    public function getTable(): string
+    {
+        return shopper_table('settings');
+    }
+
+    protected static function newFactory(): SettingFactory
+    {
+        return SettingFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'value' => 'array',
+            'locked' => 'boolean',
+        ];
     }
 }

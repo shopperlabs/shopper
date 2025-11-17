@@ -5,18 +5,25 @@ declare(strict_types=1);
 namespace Shopper\Actions\Auth;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Shopper\Core\Models\User;
 use Shopper\Facades\Shopper;
 use Shopper\Traits\TwoFactorAuthenticatable;
 
 class RedirectIfTwoFactorAuthenticatable
 {
+    /**
+     * @param  array<array-key, mixed>  $data
+     * @return JsonResponse|RedirectResponse
+     */
     public function handle(array $data, Closure $next)
     {
         $user = $this->validateCredentials($data);
 
-        if (optional($user)->two_factor_secret &&
+        if ($user->two_factor_secret &&
             in_array(TwoFactorAuthenticatable::class, class_uses_recursive($user))) {
             return $this->twoFactorChallengeResponse($user, $data['remember']);
         }
@@ -24,6 +31,9 @@ class RedirectIfTwoFactorAuthenticatable
         return $next($data);
     }
 
+    /**
+     * @param  array<string, mixed>  $request
+     */
     protected function validateCredentials(array $request)
     {
         $model = Shopper::auth()->getProvider()->getModel(); // @phpstan-ignore-line
@@ -42,7 +52,7 @@ class RedirectIfTwoFactorAuthenticatable
         ]);
     }
 
-    protected function twoFactorChallengeResponse($user, bool $remember)
+    protected function twoFactorChallengeResponse(User $user, bool $remember): JsonResponse|RedirectResponse
     {
         request()->session()->put([
             'login.id' => $user->getKey(),

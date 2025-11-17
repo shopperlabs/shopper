@@ -35,6 +35,11 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
 
     public $productId;
 
+    public static function panelMaxWidth(): string
+    {
+        return '4xl';
+    }
+
     public function mount(): void
     {
         $this->form->fill();
@@ -187,11 +192,6 @@ class ChooseProductAttributes extends SlideOverComponent implements HasForms
             route('shopper.products.edit', ['product' => $this->productId, 'tab' => 'attributes']),
             navigate: true
         );
-    }
-
-    public static function panelMaxWidth(): string
-    {
-        return '4xl';
     }
 
     public function render(): View

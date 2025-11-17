@@ -12,15 +12,16 @@ use Shopper\Core\Database\Factories\AttributeValueFactory;
 
 /**
  * @property-read int $id
- * @property string $value
- * @property string $key
- * @property int $position
- * @property int $attribute_id
+ * @property-read string $value
+ * @property-read string $key
+ * @property-read int $position
+ * @property-read int $attribute_id
  * @property-read Attribute $attribute
- * @property-read \Illuminate\Database\Eloquent\Collection | ProductVariant[] $variants
+ * @property-read \Illuminate\Database\Eloquent\Collection<array-key, ProductVariant> $variants
  */
 class AttributeValue extends Model
 {
+    /** @use HasFactory<AttributeValueFactory> */
     use HasFactory;
 
     public $timestamps = false;
@@ -30,11 +31,6 @@ class AttributeValue extends Model
     public function getTable(): string
     {
         return shopper_table('attribute_values');
-    }
-
-    protected static function newFactory(): AttributeValueFactory
-    {
-        return AttributeValueFactory::new();
     }
 
     /**
@@ -65,5 +61,10 @@ class AttributeValue extends Model
             'value_id',
             'variant_id'
         );
+    }
+
+    protected static function newFactory(): AttributeValueFactory
+    {
+        return AttributeValueFactory::new();
     }
 }

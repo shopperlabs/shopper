@@ -30,54 +30,6 @@ abstract class ModalComponent extends Component implements ModalContract
         '7xl' => 'sm:max-w-md md:max-w-xl lg:max-w-3xl xl:max-w-5xl 2xl:max-w-7xl',
     ];
 
-    public function destroySkippedModals(): self
-    {
-        $this->destroySkipped = true;
-
-        return $this;
-    }
-
-    public function skipPreviousModals(int $count = 1, bool $destroy = false): self
-    {
-        $this->skipPreviousModal($count, $destroy);
-
-        return $this;
-    }
-
-    public function skipPreviousModal(int $count = 1, bool $destroy = false): self
-    {
-        $this->skipModals = $count;
-        $this->destroySkipped = $destroy;
-
-        return $this;
-    }
-
-    public function forceClose(): self
-    {
-        $this->forceClose = true;
-
-        return $this;
-    }
-
-    public function closeModal(): void
-    {
-        $this->dispatch(
-            'closeModal',
-            force: $this->forceClose,
-            skipPreviousModals: $this->skipModals,
-            destroySkipped: $this->destroySkipped
-        );
-    }
-
-    /**
-     * @param array<string, mixed> $events
-     */
-    public function closeModalWithEvents(array $events): void
-    {
-        $this->emitModalEvents($events);
-        $this->closeModal();
-    }
-
     public static function modalMaxWidth(): string
     {
         return '2xl';
@@ -123,8 +75,56 @@ abstract class ModalComponent extends Component implements ModalContract
         return false;
     }
 
+    public function destroySkippedModals(): self
+    {
+        $this->destroySkipped = true;
+
+        return $this;
+    }
+
+    public function skipPreviousModals(int $count = 1, bool $destroy = false): self
+    {
+        $this->skipPreviousModal($count, $destroy);
+
+        return $this;
+    }
+
+    public function skipPreviousModal(int $count = 1, bool $destroy = false): self
+    {
+        $this->skipModals = $count;
+        $this->destroySkipped = $destroy;
+
+        return $this;
+    }
+
+    public function forceClose(): self
+    {
+        $this->forceClose = true;
+
+        return $this;
+    }
+
+    public function closeModal(): void
+    {
+        $this->dispatch(
+            'closeModal',
+            force: $this->forceClose,
+            skipPreviousModals: $this->skipModals,
+            destroySkipped: $this->destroySkipped
+        );
+    }
+
     /**
-     * @param array<string, mixed> $events
+     * @param  array<string, mixed>  $events
+     */
+    public function closeModalWithEvents(array $events): void
+    {
+        $this->emitModalEvents($events);
+        $this->closeModal();
+    }
+
+    /**
+     * @param  array<string, mixed>  $events
      */
     private function emitModalEvents(array $events): void
     {

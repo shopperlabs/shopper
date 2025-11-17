@@ -43,11 +43,6 @@ class Inventory extends Model
         return shopper_table('inventories');
     }
 
-    protected static function newFactory(): InventoryFactory
-    {
-        return InventoryFactory::new();
-    }
-
     public function scopeDefault(Builder $query): Builder
     {
         return $query->where('is_default', true);
@@ -61,5 +56,10 @@ class Inventory extends Model
     public function histories(): HasMany
     {
         return $this->hasMany(InventoryHistory::class);
+    }
+
+    protected static function newFactory(): InventoryFactory
+    {
+        return InventoryFactory::new();
     }
 }

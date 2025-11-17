@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Zone;
 
 /**
@@ -21,6 +22,9 @@ class ZoneFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'name' => $this->faker->unique()->word().' Zone',
+            'currency_id' => Currency::factory(),
+        ];
     }
 }

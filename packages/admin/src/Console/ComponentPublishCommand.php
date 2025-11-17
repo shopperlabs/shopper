@@ -42,7 +42,7 @@ final class ComponentPublishCommand extends Command
 
         if (! $this->argument('name') && $this->option('all')) {
             foreach ($config as $key => $file) {
-                $this->publish($key, $file, $this->getShopperComponentsConfigFolder() . '/' . $key . '.php');
+                $this->publish($key, $file, $this->getShopperComponentsConfigFolder().'/'.$key.'.php');
             }
 
             return;
@@ -59,7 +59,7 @@ final class ComponentPublishCommand extends Command
             return 1;
         }
 
-        $this->publish($name, $config[$name], $this->getShopperComponentsConfigFolder() . '/' . $name . '.php');
+        $this->publish($name, $config[$name], $this->getShopperComponentsConfigFolder().'/'.$name.'.php');
     }
 
     /**
@@ -84,12 +84,14 @@ final class ComponentPublishCommand extends Command
 
     /**
      * Get an array containing the base configuration files.
+     *
+     * @return array<array-key, mixed>
      */
     protected function getBaseConfigurationFiles(): array
     {
         $config = [];
 
-        foreach (Finder::create()->files()->name('*.php')->in(__DIR__ . '/../../config/components') as $file) {
+        foreach (Finder::create()->files()->name('*.php')->in(__DIR__.'/../../config/components') as $file) {
             $name = basename($file->getRealPath(), '.php');
 
             $config[$name] = $file->getRealPath();
@@ -100,6 +102,6 @@ final class ComponentPublishCommand extends Command
 
     protected function getShopperComponentsConfigFolder(): string
     {
-        return $this->laravel->configPath() . '/shopper/components';
+        return $this->laravel->configPath().'/shopper/components';
     }
 }

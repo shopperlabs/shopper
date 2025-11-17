@@ -6,10 +6,14 @@ namespace Shopper\Http\Responses;
 
 use Illuminate\Validation\ValidationException;
 use Shopper\Contracts\FailedTwoFactorLoginResponse as FailedTwoFactorLoginResponseContract;
+use Symfony\Component\HttpFoundation\Response;
 
 class FailedTwoFactorLoginResponse implements FailedTwoFactorLoginResponseContract
 {
-    public function toResponse($request)
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function toResponse($request): Response
     {
         [$key, $message] = $request->filled('recovery_code')
             ? ['recovery_code', __('The provided two factor recovery code was invalid.')]

@@ -18,7 +18,7 @@ trait LoadComponents
     {
         collect($this->componentsConfig)->each(function ($config): void {
             $this->mergeConfigFrom(
-                path: $this->root . "/config/components/{$config}.php",
+                path: $this->root."/config/components/{$config}.php",
                 key: "shopper.components.{$config}"
             );
         });

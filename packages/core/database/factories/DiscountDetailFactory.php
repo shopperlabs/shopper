@@ -6,6 +6,8 @@ namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Models\DiscountDetail;
+use Shopper\Core\Models\Discount;
+use Shopper\Core\Models\Product;
 
 /**
  * @extends Factory<DiscountDetail>
@@ -21,6 +23,10 @@ class DiscountDetailFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'discountable_type' => Product::class,
+            'discountable_id' => Product::factory(),
+            'discount_id' => Discount::factory(),
+        ];
     }
 }

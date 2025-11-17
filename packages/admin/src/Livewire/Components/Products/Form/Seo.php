@@ -14,7 +14,7 @@ use Livewire\Component;
 use Shopper\Components;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class Seo extends Component implements HasForms
 {

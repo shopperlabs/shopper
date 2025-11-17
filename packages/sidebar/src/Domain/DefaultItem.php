@@ -26,8 +26,14 @@ class DefaultItem implements Item, Serializable
     use ItemableTrait;
     use RouteableTrait;
 
+    /**
+     * @var Collection<int, Badge>
+     */
     protected Collection $badges;
 
+    /**
+     * @var Collection<int, Append>
+     */
     protected Collection $appends;
 
     protected ?string $name = null;
@@ -38,6 +44,7 @@ class DefaultItem implements Item, Serializable
 
     protected string $iconClass = '';
 
+    /** @var array<string, string> */
     protected array $iconAttributes = [];
 
     protected string $type = 'blade';
@@ -66,6 +73,7 @@ class DefaultItem implements Item, Serializable
 
     protected string $parentItemClass = '';
 
+    /** @var string[] */
     protected array $cacheables = [
         'name',
         'weight',
@@ -86,6 +94,43 @@ class DefaultItem implements Item, Serializable
         $this->items = new Collection;
         $this->badges = new Collection;
         $this->appends = new Collection;
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'weight' => $this->weight,
+            'url' => $this->url,
+            'icon' => $this->icon,
+            'toggleIcon' => $this->toggleIcon,
+            'toggleActiveIcon' => $this->toggleActiveIcon,
+            'items' => $this->items,
+            'badges' => $this->badges,
+            'appends' => $this->appends,
+            'authorized' => $this->authorized,
+            'spa' => $this->spa,
+            'type' => $this->type,
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->name = $data['name'];
+        $this->weight = $data['weight'];
+        $this->url = $data['url'];
+        $this->icon = $data['icon'];
+        $this->toggleActiveIcon = $data['toggleActiveIcon'];
+        $this->toggleIcon = $data['toggleIcon'];
+        $this->items = $data['items'];
+        $this->badges = $data['badges'];
+        $this->appends = $data['appends'];
+        $this->authorized = $data['authorized'];
+        $this->spa = $data['spa'];
+        $this->type = $data['type'];
     }
 
     public function getName(): string
@@ -117,6 +162,9 @@ class DefaultItem implements Item, Serializable
         return $this->icon;
     }
 
+    /**
+     * @param  array<string, string>  $attributes
+     */
     public function setIcon(string $icon, string $type = 'blade', string $iconClass = '', array $attributes = []): Item
     {
         $this->icon = $icon;
@@ -144,6 +192,9 @@ class DefaultItem implements Item, Serializable
         return $this;
     }
 
+    /**
+     * @return string[]
+     */
     public function getIconAttributes(): array
     {
         return $this->iconAttributes;
@@ -223,6 +274,9 @@ class DefaultItem implements Item, Serializable
         return $badge;
     }
 
+    /**
+     * @return Collection<int, Badge>
+     */
     public function getBadges(): Collection
     {
         return $this->badges;
@@ -258,6 +312,9 @@ class DefaultItem implements Item, Serializable
         return $append;
     }
 
+    /**
+     * @return Collection<int, Append>
+     */
     public function getAppends(): Collection
     {
         return $this->appends;
@@ -342,39 +399,5 @@ class DefaultItem implements Item, Serializable
         $this->parentItemClass = $class;
 
         return $this;
-    }
-
-    public function __serialize(): array
-    {
-        return [
-            'name' => $this->name,
-            'weight' => $this->weight,
-            'url' => $this->url,
-            'icon' => $this->icon,
-            'toggleIcon' => $this->toggleIcon,
-            'toggleActiveIcon' => $this->toggleActiveIcon,
-            'items' => $this->items,
-            'badges' => $this->badges,
-            'appends' => $this->appends,
-            'authorized' => $this->authorized,
-            'spa' => $this->spa,
-            'type' => $this->type,
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->name = $data['name'];
-        $this->weight = $data['weight'];
-        $this->url = $data['url'];
-        $this->icon = $data['icon'];
-        $this->toggleActiveIcon = $data['toggleActiveIcon'];
-        $this->toggleIcon = $data['toggleIcon'];
-        $this->items = $data['items'];
-        $this->badges = $data['badges'];
-        $this->appends = $data['appends'];
-        $this->authorized = $data['authorized'];
-        $this->spa = $data['spa'];
-        $this->type = $data['type'];
     }
 }

@@ -10,6 +10,9 @@ use Shopper\Facades\Shopper;
 
 class AttemptToAuthenticate
 {
+    /**
+     * @param  array<string, mixed>  $request
+     */
     public function handle(array $request, Closure $next)
     {
         $isLoggedIn = Shopper::auth()->attempt([

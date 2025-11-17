@@ -25,7 +25,7 @@ class BrandFactory extends Factory
         return [
             'name' => $name = $this->faker->unique()->company(),
             'slug' => Str::slug($name),
-            'website' => 'https://www.' . $this->faker->domainName(),
+            'website' => 'https://www.'.$this->faker->domainName(),
             'description' => $this->faker->realText(),
             'is_enabled' => $this->faker->boolean(),
             'created_at' => $this->faker->dateTimeBetween('-1 year', '-6 month'),

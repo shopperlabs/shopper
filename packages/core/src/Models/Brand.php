@@ -43,11 +43,6 @@ class Brand extends Model implements SpatieHasMedia
         return shopper_table('brands');
     }
 
-    protected static function newFactory(): BrandFactory
-    {
-        return BrandFactory::new();
-    }
-
     public function updateStatus(bool $status = true): void
     {
         $this->is_enabled = $status;
@@ -67,5 +62,10 @@ class Brand extends Model implements SpatieHasMedia
     public function products(): HasMany
     {
         return $this->hasMany(config('shopper.models.product'));
+    }
+
+    protected static function newFactory(): BrandFactory
+    {
+        return BrandFactory::new();
     }
 }

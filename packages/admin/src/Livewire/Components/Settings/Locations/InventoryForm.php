@@ -18,7 +18,7 @@ use Shopper\Components\Separator;
 use Shopper\Core\Models\Inventory;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class InventoryForm extends Component implements HasForms
 {

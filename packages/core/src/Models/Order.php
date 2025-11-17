@@ -71,11 +71,6 @@ class Order extends Model
         return shopper_table('orders');
     }
 
-    protected static function newFactory(): OrderFactory
-    {
-        return OrderFactory::new();
-    }
-
     public function totalAmount(): Attribute
     {
         return Attribute::get(
@@ -176,6 +171,11 @@ class Order extends Model
     public function shippingOption(): BelongsTo
     {
         return $this->belongsTo(CarrierOption::class, 'shipping_option_id');
+    }
+
+    protected static function newFactory(): OrderFactory
+    {
+        return OrderFactory::new();
     }
 
     protected function setDefaultOrderStatus(): void

@@ -32,11 +32,6 @@ class DiscountDetail extends Model
         return shopper_table('discountables');
     }
 
-    protected static function newFactory(): DiscountDetailFactory
-    {
-        return DiscountDetailFactory::new();
-    }
-
     /**
      * @return BelongsTo<Discount, $this>
      */
@@ -48,5 +43,10 @@ class DiscountDetail extends Model
     public function discountable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    protected static function newFactory(): DiscountDetailFactory
+    {
+        return DiscountDetailFactory::new();
     }
 }

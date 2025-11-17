@@ -38,44 +38,44 @@ class ProductFactory extends Factory
         ];
     }
 
-    public function publish(): Factory
+    public function publish(): self
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_visible' => true,
             'published_at' => now(),
         ]);
     }
 
-    public function variant(): Factory
+    public function variant(): self
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_visible' => true,
             'published_at' => now(),
             'type' => ProductType::Variant(),
         ]);
     }
 
-    public function virtual(): Factory
+    public function virtual(): self
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_visible' => true,
             'published_at' => now(),
             'type' => ProductType::Virtual(),
         ]);
     }
 
-    public function external(): Factory
+    public function external(): self
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_visible' => true,
             'published_at' => now(),
             'type' => ProductType::External(),
         ]);
     }
 
-    public function standard(): Factory
+    public function standard(): self
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_visible' => true,
             'published_at' => now(),
             'type' => ProductType::Standard(),

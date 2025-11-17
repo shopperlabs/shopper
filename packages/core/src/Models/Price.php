@@ -25,6 +25,7 @@ use Shopper\Core\Helpers\Price as PriceHelper;
  */
 class Price extends Model
 {
+    /** @use HasFactory<PriceFactory> */
     use HasFactory;
 
     protected $guarded = [];
@@ -34,38 +35,9 @@ class Price extends Model
         return shopper_table('prices');
     }
 
-    protected static function newFactory(): PriceFactory
-    {
-        return PriceFactory::new();
-    }
-
     public function currencyCode(): Attribute
     {
         return Attribute::get(fn () => $this->loadMissing('currency')->currency->code);
-    }
-
-    protected function amount(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
-        );
-    }
-
-    protected function compareAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
-        );
-    }
-
-    protected function costAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
-        );
     }
 
     public function amountPrice(): ?PriceHelper
@@ -95,6 +67,9 @@ class Price extends Model
         return PriceHelper::from($this->cost_amount);
     }
 
+    /**
+     * @return BelongsTo<Currency, $this>
+     */
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class, 'currency_id');
@@ -103,5 +78,34 @@ class Price extends Model
     public function priceable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    protected static function newFactory(): PriceFactory
+    {
+        return PriceFactory::new();
+    }
+
+    protected function amount(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $value / 100,
+            set: fn (int $value) => $value * 100,
+        );
+    }
+
+    protected function compareAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $value / 100,
+            set: fn (int $value) => $value * 100,
+        );
+    }
+
+    protected function costAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $value / 100,
+            set: fn (int $value) => $value * 100,
+        );
     }
 }

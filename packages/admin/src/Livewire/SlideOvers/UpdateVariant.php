@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
 use Shopper\Components;
+use Shopper\Core\Models\AttributeValue;
+use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Repositories\ProductRepository;
 use Shopper\Core\Repositories\VariantRepository;
@@ -31,24 +33,38 @@ class UpdateVariant extends SlideOverComponent implements HasForms
 {
     use InteractsWithForms;
 
+    /**
+     * @var ProductVariant
+     */
     public $variant;
 
+    /**
+     * @var Product
+     */
     public $product;
 
+    /**
+     * @var array<string, mixed>|null
+     */
     public ?array $data = [];
 
     public bool $alert = false;
 
     public function mount(int $productId, int $variantId): void
     {
-        $this->product = (new ProductRepository)->getById($productId);
-        $this->variant = (new VariantRepository)->with(['values', 'values.attribute'])->getById($variantId);
+        /** @var Product $product */
+        $product = (new ProductRepository)->getById($productId);
+        /** @var ProductVariant $variant */
+        $variant = (new VariantRepository)->with(['values', 'values.attribute'])->getById($variantId);
+
+        $this->product = $product;
+        $this->variant = $variant;
 
         $this->form->fill(array_merge(
             $this->variant->toArray(),
             count($this->variantsOptions)
                 ? ['values' => $this->variant->values->mapWithKeys( // @phpstan-ignore-line
-                    fn ($value) => [
+                    fn (AttributeValue $value): array => [
                         $value->attribute->id => $value->id,
                     ]
                 )->toArray()]
@@ -74,7 +90,7 @@ class UpdateVariant extends SlideOverComponent implements HasForms
                         Forms\Components\Group::make()
                             ->schema(
                                 $this->options->map(
-                                    fn ($option): Forms\Components\Select => Forms\Components\Select::make('values.' . $option['id'])
+                                    fn ($option): Forms\Components\Select => Forms\Components\Select::make('values.'.$option['id'])
                                         ->label($option['name'])
                                         ->key($option['key'])
                                         ->required()
@@ -153,23 +169,20 @@ class UpdateVariant extends SlideOverComponent implements HasForms
         );
     }
 
-    protected function variantAlreadyExist(array $optionsValues = []): bool
-    {
-        foreach ($this->variantsOptions as $option) {
-            if (array_diff(array_values($optionsValues), $option) === []) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    /**
+     * @return Collection<array-key, mixed>
+     */
     #[Computed]
     public function options(): Collection
     {
         return collect(MapProductOptions::generate($this->product));
     }
 
+    /**
+     * @return array<array-key, mixed>
+     *
+     * @throws \Shopper\Core\Exceptions\ModelRepositoryException
+     */
     #[Computed]
     public function variantsOptions(): array
     {
@@ -189,5 +202,19 @@ class UpdateVariant extends SlideOverComponent implements HasForms
     public function render(): View
     {
         return view('shopper::livewire.slide-overs.update-variant');
+    }
+
+    /**
+     * @param  array<array-key, mixed>  $optionsValues
+     */
+    protected function variantAlreadyExist(array $optionsValues = []): bool
+    {
+        foreach ($this->variantsOptions as $option) {
+            if (array_diff(array_values($optionsValues), $option) === []) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

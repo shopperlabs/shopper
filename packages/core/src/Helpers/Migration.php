@@ -21,7 +21,7 @@ abstract class Migration extends BaseMigration
 
     public function getTableName(string $table): string
     {
-        return $this->prefix . $table;
+        return $this->prefix.$table;
     }
 
     public function addCommonFields(Blueprint $table, bool $hasSoftDelete = false): void

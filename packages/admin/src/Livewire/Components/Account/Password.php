@@ -62,14 +62,6 @@ class Password extends Component implements HasForms
             ->statePath('data');
     }
 
-    protected function onValidationError(ValidationException $exception): void
-    {
-        Notification::make()
-            ->title($exception->getMessage())
-            ->danger()
-            ->send();
-    }
-
     public function save(): void
     {
         /** @var User $user */
@@ -86,5 +78,13 @@ class Password extends Component implements HasForms
     public function render(): View
     {
         return view('shopper::livewire.components.account.password');
+    }
+
+    protected function onValidationError(ValidationException $exception): void
+    {
+        Notification::make()
+            ->title($exception->getMessage())
+            ->danger()
+            ->send();
     }
 }

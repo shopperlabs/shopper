@@ -21,7 +21,7 @@ final class InventoryObserver
     /**
      * Ensures that only one default inventory exists.
      */
-    protected function ensureOnlyOneIsDefault(Inventory $inventory): void
+    private function ensureOnlyOneIsDefault(Inventory $inventory): void
     {
         if ($inventory->is_default) {
             /** @var Inventory | null $defaultInventory */

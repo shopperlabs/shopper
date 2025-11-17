@@ -9,7 +9,7 @@ use Shopper\Sidebar\Contracts\Sidebar;
 
 final class AdminSidebar implements Sidebar
 {
-    public function __construct(protected Menu $menu) {}
+    public function __construct(private Menu $menu) {}
 
     public function build(): void
     {

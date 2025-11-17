@@ -30,7 +30,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                 $item->route('shopper.products.index');
                 $item->setIcon(
                     icon: 'untitledui-book-open',
-                    iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
+                    iconClass: 'size-5 '.($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
                     attributes: [
                         'stroke-width' => '1.5',
                     ],
@@ -60,7 +60,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                     $item->route('shopper.categories.index');
                     $item->setIcon(
                         icon: 'untitledui-tag-03',
-                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
+                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],
@@ -79,7 +79,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                     $item->route('shopper.collections.index');
                     $item->setIcon(
                         icon: 'untitledui-align-horizontal-centre-02',
-                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
+                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],
@@ -98,7 +98,7 @@ final class CatalogSidebar extends AbstractAdminSidebar
                     $item->route('shopper.brands.index');
                     $item->setIcon(
                         icon: 'untitledui-bookmark',
-                        iconClass: 'size-5 ' . ($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
+                        iconClass: 'size-5 '.($item->isActive() ? 'text-primary-600' : 'text-gray-400 dark:text-gray-500'),
                         attributes: [
                             'stroke-width' => '1.5',
                         ],

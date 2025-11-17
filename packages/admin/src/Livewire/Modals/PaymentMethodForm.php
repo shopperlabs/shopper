@@ -25,16 +25,16 @@ class PaymentMethodForm extends ModalComponent implements HasForms
 
     public ?array $data = [];
 
+    public static function modalMaxWidth(): string
+    {
+        return '2xl';
+    }
+
     public function mount(?int $paymentId = null): void
     {
         $this->paymentId = $paymentId;
 
         $this->form->fill(PaymentMethod::query()->find($paymentId)?->toArray());
-    }
-
-    public static function modalMaxWidth(): string
-    {
-        return '2xl';
     }
 
     public function form(Form $form): Form

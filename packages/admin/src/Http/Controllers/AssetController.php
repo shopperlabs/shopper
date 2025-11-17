@@ -12,24 +12,24 @@ final class AssetController
     {
         switch ($file) {
             case 'shopper.css':
-                return $this->pretendResponseIsFile(__DIR__ . '/../../../public/shopper.css', 'text/css; charset=utf-8');
+                return $this->pretendResponseIsFile(__DIR__.'/../../../public/shopper.css', 'text/css; charset=utf-8');
             case 'shopper.css.map':
-                return $this->pretendResponseIsFile(__DIR__ . '/../../../public/shopper.css.map', 'text/css; charset=utf-8');
+                return $this->pretendResponseIsFile(__DIR__.'/../../../public/shopper.css.map', 'text/css; charset=utf-8');
             case 'shopper.js':
-                return $this->pretendResponseIsFile(__DIR__ . '/../../../public/shopper.js', 'application/javascript; charset=utf-8');
+                return $this->pretendResponseIsFile(__DIR__.'/../../../public/shopper.js', 'application/javascript; charset=utf-8');
             case 'shopper.js.map':
-                return $this->pretendResponseIsFile(__DIR__ . '/../../../public/shopper.js.map', 'application/json; charset=utf-8');
+                return $this->pretendResponseIsFile(__DIR__.'/../../../public/shopper.js.map', 'application/json; charset=utf-8');
         }
 
         abort(404);
     }
 
-    protected function getHttpDate(int $timestamp): string
+    private function getHttpDate(int $timestamp): string
     {
         return sprintf('%s GMT', gmdate('D, d M Y H:i:s', $timestamp));
     }
 
-    protected function pretendResponseIsFile(string $path, string $contentType): Response
+    private function pretendResponseIsFile(string $path, string $contentType): Response
     {
         abort_unless(
             file_exists($path) || file_exists($path = base_path($path)),

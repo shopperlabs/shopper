@@ -32,6 +32,11 @@ class ManagePricing extends SlideOverComponent implements HasForms
 
     public ?array $data = [];
 
+    public static function panelMaxWidth(): string
+    {
+        return '4xl';
+    }
+
     /**
      * @param  class-string | string  $modelType
      */
@@ -51,24 +56,6 @@ class ManagePricing extends SlideOverComponent implements HasForms
             ->model($this->model);
     }
 
-    protected function getModelPrices(): array
-    {
-        $prices = collect();
-
-        foreach ($this->model->prices as $price) {
-            $prices->put(
-                $price->currency_id,
-                [
-                    'amount' => $price->amount,
-                    'compare_amount' => $price->compare_amount === 0 ? null : $price->compare_amount,
-                    'cost_amount' => $price->cost_amount === 0 ? null : $price->compare_amount,
-                ]
-            );
-        }
-
-        return $prices->toArray();
-    }
-
     #[Computed]
     public function currencies(): Collection
     {
@@ -79,11 +66,6 @@ class ManagePricing extends SlideOverComponent implements HasForms
                 values: $this->currencyId ? [$this->currencyId] : shopper_setting('currencies')
             )
             ->get();
-    }
-
-    public static function panelMaxWidth(): string
-    {
-        return '4xl';
     }
 
     public function save(): void
@@ -108,5 +90,23 @@ class ManagePricing extends SlideOverComponent implements HasForms
     public function render(): View
     {
         return view('shopper::livewire.slide-overs.add-pricing');
+    }
+
+    protected function getModelPrices(): array
+    {
+        $prices = collect();
+
+        foreach ($this->model->prices as $price) {
+            $prices->put(
+                $price->currency_id,
+                [
+                    'amount' => $price->amount,
+                    'compare_amount' => $price->compare_amount === 0 ? null : $price->compare_amount,
+                    'cost_amount' => $price->cost_amount === 0 ? null : $price->compare_amount,
+                ]
+            );
+        }
+
+        return $prices->toArray();
     }
 }

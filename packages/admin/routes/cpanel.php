@@ -9,19 +9,19 @@ Route::get('/dashboard', config('shopper.components.dashboard.pages.dashboard'))
 Route::get('/profile', config('shopper.components.account.pages.account-index'))->name('profile');
 
 Route::prefix('setting')->as('settings.')->group(function (): void {
-    require __DIR__ . '/admin/setting.php';
+    require __DIR__.'/admin/setting.php';
 });
 
 Route::as('customers.')->prefix('customers')->group(function (): void {
-    require __DIR__ . '/admin/customer.php';
+    require __DIR__.'/admin/customer.php';
 });
 
 Route::as('orders.')->prefix('orders')->group(function (): void {
-    require __DIR__ . '/admin/order.php';
+    require __DIR__.'/admin/order.php';
 });
 
 Route::prefix('products')->group(function (): void {
-    require __DIR__ . '/admin/product.php';
+    require __DIR__.'/admin/product.php';
 });
 
 if (Feature::enabled('brand')) {
@@ -36,7 +36,7 @@ if (Feature::enabled('category')) {
 
 if (Feature::enabled('collection')) {
     Route::as('collections.')->prefix('collections')->group(function (): void {
-        require __DIR__ . '/admin/collection.php';
+        require __DIR__.'/admin/collection.php';
     });
 }
 

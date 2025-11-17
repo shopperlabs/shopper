@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Cache;
 
 trait CanBeCacheable
 {
-    protected null | bool | Closure $cacheable = null;
+    protected null|bool|Closure $cacheable = null;
 
-    protected null | int | DateInterval | DateTimeInterface | Closure $cacheDuration = null;
+    protected null|int|DateInterval|DateTimeInterface|Closure $cacheDuration = null;
 
-    public function cacheable(bool | Closure $cacheable = true): static
+    public function cacheable(bool|Closure $cacheable = true): static
     {
         $this->cacheable = $cacheable;
 
@@ -29,7 +29,7 @@ trait CanBeCacheable
         return $this->evaluate($cacheable);
     }
 
-    public function cacheDuration(int | DateInterval | DateTimeInterface | Closure $cacheDuration): static
+    public function cacheDuration(int|DateInterval|DateTimeInterface|Closure $cacheDuration): static
     {
         $this->cacheDuration = $cacheDuration;
 

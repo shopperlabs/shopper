@@ -16,7 +16,7 @@ use Shopper\Core\Models\Collection;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class CollectionRules extends SlideOverComponent implements HasForms
 {
@@ -25,6 +25,11 @@ class CollectionRules extends SlideOverComponent implements HasForms
     public Collection $collection;
 
     public ?array $data = [];
+
+    public static function panelMaxWidth(): string
+    {
+        return '2xl';
+    }
 
     public function mount(): void
     {
@@ -79,11 +84,6 @@ class CollectionRules extends SlideOverComponent implements HasForms
             ->title(__('shopper::pages/collections.conditions.update'))
             ->success()
             ->send();
-    }
-
-    public static function panelMaxWidth(): string
-    {
-        return '2xl';
     }
 
     public function render(): View

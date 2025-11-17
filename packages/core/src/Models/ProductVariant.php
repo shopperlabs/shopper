@@ -22,37 +22,37 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string|null $sku
- * @property string|null $barcode
- * @property string|null $ean
- * @property string|null $upc
- * @property Weight $weight_unit
- * @property float|null $weight_value
- * @property Length $height_unit
- * @property float|null $height_value
- * @property Length $width_unit
- * @property float|null $width_value
- * @property Length $depth_unit
- * @property float|null $depth_value
- * @property Volume $volume_unit
- * @property float|null $volume_value
- * @property bool $allow_backorder
- * @property int $position
- * @property int $product_id
- * @property array<array-key, mixed>|null $metadata
+ * @property-read string $name
+ * @property-read string|null $sku
+ * @property-read string|null $barcode
+ * @property-read string|null $ean
+ * @property-read string|null $upc
+ * @property-read Weight $weight_unit
+ * @property-read float|null $weight_value
+ * @property-read Length $height_unit
+ * @property-read float|null $height_value
+ * @property-read Length $width_unit
+ * @property-read float|null $width_value
+ * @property-read Length $depth_unit
+ * @property-read float|null $depth_value
+ * @property-read Volume $volume_unit
+ * @property-read float|null $volume_value
+ * @property-read bool $allow_backorder
+ * @property-read int $position
+ * @property-read int $product_id
+ * @property-read array<array-key, mixed>|null $metadata
  * @property-read int $stock
  * @property-read Product $product
- * @property-read \Illuminate\Database\Eloquent\Collection | Price[] $prices
- * @property-read \Illuminate\Database\Eloquent\Collection | AttributeValue[] $values
+ * @property-read \Illuminate\Database\Eloquent\Collection<array-key, Price> $prices
+ * @property-read \Illuminate\Database\Eloquent\Collection<array-key, AttributeValue> $values
  */
 #[ObservedBy(ProductVariantObserver::class)]
 class ProductVariant extends Model implements SpatieHasMedia
 {
+    use HasDimensions;
+
     /** @use HasFactory<ProductVariantFactory> */
     use HasFactory;
-
-    use HasDimensions;
     use HasMedia;
     use HasPrices;
     use HasStock;
@@ -62,30 +62,6 @@ class ProductVariant extends Model implements SpatieHasMedia
     public function getTable(): string
     {
         return shopper_table('product_variants');
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'allow_backorder' => 'boolean',
-            'metadata' => 'array',
-            'position' => 'integer',
-            'weight_unit' => Weight::class,
-            'weight_value' => 'decimal:2',
-            'width_unit' => Length::class,
-            'width_value' => 'decimal:2',
-            'height_unit' => Length::class,
-            'height_value' => 'decimal:2',
-            'depth_unit' => Length::class,
-            'depth_value' => 'decimal:2',
-            'volume_unit' => Volume::class,
-            'volume_value' => 'decimal:2',
-        ];
-    }
-
-    protected static function newFactory(): ProductVariantFactory
-    {
-        return ProductVariantFactory::new();
     }
 
     /**
@@ -108,5 +84,29 @@ class ProductVariant extends Model implements SpatieHasMedia
             'variant_id',
             'value_id'
         );
+    }
+
+    protected static function newFactory(): ProductVariantFactory
+    {
+        return ProductVariantFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'allow_backorder' => 'boolean',
+            'metadata' => 'array',
+            'position' => 'integer',
+            'weight_unit' => Weight::class,
+            'weight_value' => 'decimal:2',
+            'width_unit' => Length::class,
+            'width_value' => 'decimal:2',
+            'height_unit' => Length::class,
+            'height_value' => 'decimal:2',
+            'depth_unit' => Length::class,
+            'depth_value' => 'decimal:2',
+            'volume_unit' => Volume::class,
+            'volume_value' => 'decimal:2',
+        ];
     }
 }

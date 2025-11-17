@@ -14,7 +14,7 @@ use Livewire\Component;
 use Shopper\Core\Models\Product;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class Files extends Component implements HasForms
 {

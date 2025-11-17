@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderShipping;
 
 /**
@@ -21,6 +22,9 @@ class OrderShippingFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'shipped_at' => $this->faker->dateTimeBetween('-30 days'),
+            'order_id' => Order::factory(),
+        ];
     }
 }

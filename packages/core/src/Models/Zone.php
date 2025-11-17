@@ -16,17 +16,17 @@ use Shopper\Core\Traits\HasSlug;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string $slug
- * @property string|null $code
- * @property bool $is_enabled
- * @property int|null $currency_id
- * @property array<array-key, mixed>|null $metadata
- * @property string $carriers_name
- * @property string $countries_name
- * @property string $payments_name
- * @property string $currency_code
- * @property-read \Shopper\Core\Models\Currency $currency
+ * @property-read string $name
+ * @property-read string $slug
+ * @property-read string|null $code
+ * @property-read bool $is_enabled
+ * @property-read int|null $currency_id
+ * @property-read array<array-key, mixed>|null $metadata
+ * @property-read string $carriers_name
+ * @property-read string $countries_name
+ * @property-read string $payments_name
+ * @property-read string $currency_code
+ * @property-read Currency $currency
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Carrier> $carriers
  * @property-read \Illuminate\Database\Eloquent\Collection<int, CarrierOption> $shippingOptions
  * @property-read \Illuminate\Database\Eloquent\Collection<int, PaymentMethod> $paymentMethods
@@ -46,19 +46,6 @@ class Zone extends Model
         return shopper_table('zones');
     }
 
-    protected function casts(): array
-    {
-        return [
-            'is_enabled' => 'boolean',
-            'metadata' => 'array',
-        ];
-    }
-
-    protected static function newFactory(): ZoneFactory
-    {
-        return ZoneFactory::new();
-    }
-
     public function isEnabled(): bool
     {
         return $this->is_enabled;
@@ -70,7 +57,7 @@ class Zone extends Model
 
         return Attribute::make(
             get: fn () => count($countries)
-                ? implode(', ', array_map(fn ($item) => ucwords($item), $countries))
+                ? implode(', ', array_map(fn (string $item) => ucwords($item), $countries))
                 : 'N/A'
         );
     }
@@ -81,7 +68,7 @@ class Zone extends Model
 
         return Attribute::make(
             get: fn () => count($carriers)
-                ? implode(', ', array_map(fn ($item) => ucwords($item), $carriers))
+                ? implode(', ', array_map(fn (string $item) => ucwords($item), $carriers))
                 : 'N/A'
         );
     }
@@ -92,7 +79,7 @@ class Zone extends Model
 
         return Attribute::make(
             get: fn () => count($paymentsMethods)
-                ? implode(', ', array_map(fn ($item) => ucwords($item), $paymentsMethods))
+                ? implode(', ', array_map(fn (string $item) => ucwords($item), $paymentsMethods))
                 : 'N/A'
         );
     }
@@ -149,5 +136,13 @@ class Zone extends Model
     public function shippingOptions(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_enabled' => 'boolean',
+            'metadata' => 'array',
+        ];
     }
 }

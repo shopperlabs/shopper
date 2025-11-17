@@ -12,7 +12,7 @@ trait SaveSettings
     public function saveSettings(array $keys): void
     {
         foreach ($keys as $key => $value) {
-            Cache::forget('shopper-setting.' . $key);
+            Cache::forget('shopper-setting.'.$key);
 
             Setting::query()->updateOrCreate(['key' => $key], [
                 'value' => $value,

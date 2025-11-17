@@ -22,7 +22,7 @@ use Shopper\Core\Models\InventoryHistory;
 use Shopper\Core\Models\Product;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class Inventory extends Component implements HasForms, HasTable
 {

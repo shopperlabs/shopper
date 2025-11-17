@@ -19,12 +19,30 @@ class DefaultBadge implements Badge, Serializable
 
     protected string $class = 'badge-sidebar';
 
+    /** @var string[] */
     protected array $cacheables = [
         'value',
         'class',
     ];
 
     public function __construct(protected Container $container) {}
+
+    public function __serialize(): array
+    {
+        return [
+            'value' => $this->value,
+            'class' => $this->class,
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->value = $data['value'];
+        $this->class = $data['class'];
+    }
 
     public function getValue(): mixed
     {
@@ -48,19 +66,5 @@ class DefaultBadge implements Badge, Serializable
         $this->class = $class;
 
         return $this;
-    }
-
-    public function __serialize(): array
-    {
-        return [
-            'value' => $this->value,
-            'class' => $this->class,
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->value = $data['value'];
-        $this->class = $data['class'];
     }
 }

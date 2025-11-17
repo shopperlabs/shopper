@@ -9,7 +9,8 @@ use Illuminate\Auth\Middleware\Authenticate as Middleware;
 class Authenticate extends Middleware
 {
     /**
-     * @param array<int, string> $guards
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array<int, string>  $guards
      */
     protected function authenticate($request, array $guards): void
     {

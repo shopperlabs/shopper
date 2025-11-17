@@ -12,6 +12,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Shopper\Actions\Store\Product\SaveProductVariantsAction;
 use Shopper\Core\Macros\Arr;
+use Shopper\Core\Models\AttributeValue;
 use Shopper\Core\Models\Product;
 use Shopper\Core\Models\ProductVariant;
 use Shopper\Core\Repositories\ProductRepository;
@@ -30,6 +31,11 @@ class GenerateVariants extends SlideOverComponent
     public array $availableOptions = [];
 
     public array $variants = [];
+
+    public static function panelMaxWidth(): string
+    {
+        return '5xl';
+    }
 
     public function mount(): void
     {
@@ -66,7 +72,7 @@ class GenerateVariants extends SlideOverComponent
         $optionsValues = collect($this->availableOptions)
             ->mapWithKeys(fn ($attribute) => [
                 $attribute['name'] => collect($attribute['values'])
-                    ->map(fn ($item) => [
+                    ->map(fn (array $item) => [
                         'id' => $item['id'],
                         'value' => $item['value'],
                     ]),
@@ -79,13 +85,13 @@ class GenerateVariants extends SlideOverComponent
             }])
             ->where('product_id', $this->productId)
             ->get()
-            ->map(fn (ProductVariant $variant) => [ // @phpstan-ignore-line
+            ->map(fn (ProductVariant $variant): array => [ // @phpstan-ignore-line
                 'id' => $variant->id,
                 'sku' => $variant->sku,
                 'price' => $variant->prices()->first()?->amount ?: 0,
                 'stock' => $variant->stock,
                 'values' => $variant->values->mapWithKeys(
-                    fn ($value) => [
+                    fn (AttributeValue $value): array => [
                         $value->attribute->name => [
                             'id' => $value->id,
                             'value' => $value->value,
@@ -104,16 +110,21 @@ class GenerateVariants extends SlideOverComponent
         return (new ProductRepository)->with(['options', 'options.values'])->getById($this->productId);
     }
 
-    public function removeVariant($key): void
+    public function removeVariant(string|int $key): void
     {
         unset($this->variants[$key]);
     }
 
-    public static function panelMaxWidth(): string
+    public function render(): View
     {
-        return '5xl';
+        return view('shopper::livewire.slide-overs.generate-variants');
     }
 
+    /**
+     * @param  array<array-key, mixed>  $options
+     * @param  array<array-key, mixed>  $variants
+     * @return array<string, mixed>
+     */
     protected function mapVariantsToProductOptions(array $options, array $variants): array
     {
         $permutations = Arr::permutate($options);
@@ -181,10 +192,5 @@ class GenerateVariants extends SlideOverComponent
         }
 
         return $variantPermutations;
-    }
-
-    public function render(): View
-    {
-        return view('shopper::livewire.slide-overs.generate-variants');
     }
 }

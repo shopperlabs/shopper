@@ -41,6 +41,11 @@ class AddProduct extends SlideOverComponent implements HasForms
 
     public ?string $currentProductType = null;
 
+    public static function panelMaxWidth(): string
+    {
+        return '5xl';
+    }
+
     public function mount(): void
     {
         $this->authorize('add_products');
@@ -287,11 +292,6 @@ class AddProduct extends SlideOverComponent implements HasForms
             parameters: ['product' => $product],
             navigate: true
         );
-    }
-
-    public static function panelMaxWidth(): string
-    {
-        return '5xl';
     }
 
     public function render(): View

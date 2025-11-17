@@ -86,6 +86,12 @@ final class InstallCommand extends Command
         $this->progressBar->finish();
     }
 
+    protected function introMessage(): void
+    {
+        note($this->shopperLogo());
+        intro('✦ Laravel Shopper :: Install ✦');
+    }
+
     private function shopperLogo(): string
     {
         return
@@ -97,11 +103,5 @@ final class InstallCommand extends Command
             ███████║ ██║  ██║ ╚██████╔╝ ██║      ██║      ███████╗ ██║  ██║
             ╚══════╝ ╚═╝  ╚═╝  ╚═════╝  ╚═╝      ╚═╝      ╚══════╝ ╚═╝  ╚═╝
             HEADER;
-    }
-
-    protected function introMessage(): void
-    {
-        note($this->shopperLogo());
-        intro('✦ Laravel Shopper :: Install ✦');
     }
 }

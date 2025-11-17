@@ -37,7 +37,7 @@ class RelatedProductsList extends ModalComponent
             ->where(
                 column: 'name',
                 operator: 'like',
-                value: '%' . $this->search . '%'
+                value: '%'.$this->search.'%'
             )
             ->get(['name', 'id'])
             ->except($this->exceptProductIds);

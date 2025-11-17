@@ -21,7 +21,7 @@ use Shopper\Core\Models\Product;
 use Shopper\Feature;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class Edit extends Component implements HasForms
 {

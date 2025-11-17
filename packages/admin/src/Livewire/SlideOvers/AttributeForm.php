@@ -17,7 +17,7 @@ use Shopper\Core\Models\Attribute;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class AttributeForm extends SlideOverComponent implements HasForms
 {

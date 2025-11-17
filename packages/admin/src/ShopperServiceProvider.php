@@ -41,6 +41,7 @@ final class ShopperServiceProvider extends PackageServiceProvider
     use HasRegisterConfigAndMigrationFiles;
     use LoadComponents;
 
+    /** @var string[] */
     protected array $configFiles = [
         'admin',
         'auth',
@@ -49,9 +50,10 @@ final class ShopperServiceProvider extends PackageServiceProvider
         'settings',
     ];
 
+    /** @var string[] */
     protected array $componentsConfig = ['account', 'dashboard', 'setting'];
 
-    protected string $root = __DIR__ . '/..';
+    protected string $root = __DIR__.'/..';
 
     public function configurePackage(Package $package): void
     {
@@ -107,12 +109,12 @@ final class ShopperServiceProvider extends PackageServiceProvider
 
         $this->app->scoped('shopper', fn (): ShopperPanel => new ShopperPanel);
 
-        $this->loadViewsFrom($this->root . '/resources/views', 'shopper');
+        $this->loadViewsFrom($this->root.'/resources/views', 'shopper');
     }
 
     public function bootingPackage(): void
     {
-        TextColumn::macro('currency', function (string | Closure | null $currency = null): TextColumn {
+        TextColumn::macro('currency', function (string|Closure|null $currency = null): TextColumn {
             /*** @var TextColumn $this */
             // @phpstan-ignore-next-line
             $this->formatStateUsing(static function (Column $column, $state) use ($currency): ?string {

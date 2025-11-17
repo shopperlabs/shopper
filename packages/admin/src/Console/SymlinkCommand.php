@@ -18,13 +18,13 @@ final class SymlinkCommand extends Command
     {
         $prefix = shopper()->prefix();
         $link = public_path($prefix);
-        $target = realpath(__DIR__ . '/../../public/');
+        $target = realpath(__DIR__.'/../../public/');
 
         if (file_exists($link)) {
-            $this->error('The "public/' . $prefix . '" directory already exists.');
+            $this->error('The "public/'.$prefix.'" directory already exists.');
         } else {
             $this->laravel->make('files')->link($target, $link);
-            $this->info('The [public/' . $prefix . '] directory has been linked.');
+            $this->info('The [public/'.$prefix.'] directory has been linked.');
         }
 
         $this->info('The link have been created.');

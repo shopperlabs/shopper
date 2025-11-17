@@ -25,7 +25,7 @@ final class ActiveStateChecker
 
         return Request::is(
             $path,
-            $path . '/*'
+            $path.'/*'
         );
     }
 }

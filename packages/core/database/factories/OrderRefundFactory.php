@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Enum\OrderRefundStatus;
+use Shopper\Core\Models\Order;
 use Shopper\Core\Models\OrderRefund;
 
 /**
@@ -21,6 +23,11 @@ class OrderRefundFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'amount' => $this->faker->numberBetween(1000, 10000),
+            'currency' => 'EUR',
+            'status' => $this->faker->randomElement(OrderRefundStatus::cases()),
+            'order_id' => Order::factory(),
+        ];
     }
 }

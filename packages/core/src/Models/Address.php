@@ -48,20 +48,6 @@ class Address extends Model
         return shopper_table('user_addresses');
     }
 
-    protected static function newFactory(): AddressFactory
-    {
-        return AddressFactory::new();
-    }
-
-    protected function fullName(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->first_name
-                ? $this->first_name . ' ' . $this->last_name
-                : $this->last_name
-        );
-    }
-
     public function isShippingDefault(): bool
     {
         return $this->shipping_default === true;
@@ -80,5 +66,19 @@ class Address extends Model
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    protected static function newFactory(): AddressFactory
+    {
+        return AddressFactory::new();
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->first_name
+                ? $this->first_name.' '.$this->last_name
+                : $this->last_name
+        );
     }
 }

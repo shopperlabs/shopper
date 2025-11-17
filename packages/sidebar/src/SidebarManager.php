@@ -23,7 +23,7 @@ class SidebarManager
         if (class_exists($name)) {
             $this->sidebars[] = $name;
         } else {
-            throw new LogicException('Sidebar [' . $name . '] does not exist');
+            throw new LogicException('Sidebar ['.$name.'] does not exist');
         }
 
         return $this;

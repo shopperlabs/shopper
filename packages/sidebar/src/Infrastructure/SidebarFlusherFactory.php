@@ -12,7 +12,7 @@ final class SidebarFlusherFactory
     public static function getClassName(string $name): string
     {
         if ($name) {
-            $class = __NAMESPACE__ . '\\' . Str::studly($name) . 'SidebarFlusher';
+            $class = __NAMESPACE__.'\\'.Str::studly($name).'SidebarFlusher';
 
             if (class_exists($class)) {
                 return $class;
@@ -21,6 +21,6 @@ final class SidebarFlusherFactory
             throw new SidebarFlusherNotSupported('Chosen caching type is not supported. Supported: [static, user-based]');
         }
 
-        return __NAMESPACE__ . '\\NullSidebarFlusher';
+        return __NAMESPACE__.'\\NullSidebarFlusher';
     }
 }

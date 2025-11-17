@@ -32,20 +32,6 @@ class InventoryHistory extends Model
         return shopper_table('inventory_histories');
     }
 
-    protected static function newFactory(): InventoryHistoryFactory
-    {
-        return InventoryHistoryFactory::new();
-    }
-
-    protected function adjustment(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->old_quantity > 0
-                ? '+' . $this->old_quantity
-                : $this->old_quantity
-        );
-    }
-
     public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class, 'inventory_id');
@@ -64,5 +50,19 @@ class InventoryHistory extends Model
     public function reference(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    protected static function newFactory(): InventoryHistoryFactory
+    {
+        return InventoryHistoryFactory::new();
+    }
+
+    protected function adjustment(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->old_quantity > 0
+                ? '+'.$this->old_quantity
+                : $this->old_quantity
+        );
     }
 }

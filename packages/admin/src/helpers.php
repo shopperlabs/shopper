@@ -22,7 +22,7 @@ if (! function_exists('is_active')) {
 if (! function_exists('get_asset_id')) {
     function get_asset_id(string $file, ?string $manifestPath = null): ?string
     {
-        $manifestPath ??= __DIR__ . '/../public/mix-manifest.json';
+        $manifestPath ??= __DIR__.'/../public/mix-manifest.json';
 
         if (! file_exists($manifestPath)) {
             return null;
@@ -66,6 +66,6 @@ if (! function_exists('shopper_fallback_url')) {
 if (! function_exists('shopper_panel_asset')) {
     function shopper_panel_assets(string $asset): string
     {
-        return url(shopper()->prefix() . $asset);
+        return url(shopper()->prefix().$asset);
     }
 }

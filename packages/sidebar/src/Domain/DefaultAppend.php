@@ -27,6 +27,7 @@ class DefaultAppend implements Append, Serializable
 
     protected ?string $class = null;
 
+    /** @var string[] */
     protected array $cacheables = [
         'name',
         'url',
@@ -35,6 +36,27 @@ class DefaultAppend implements Append, Serializable
     ];
 
     public function __construct(protected Container $container) {}
+
+    public function __serialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'url' => $this->url,
+            'icon' => $this->icon,
+            'type' => $this->type,
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->name = $data['name'];
+        $this->url = $data['url'];
+        $this->icon = $data['icon'];
+        $this->type = $data['type'];
+    }
 
     public function getName(): string
     {
@@ -82,23 +104,5 @@ class DefaultAppend implements Append, Serializable
     public function iconSvg(): bool
     {
         return $this->type === 'svg';
-    }
-
-    public function __serialize(): array
-    {
-        return [
-            'name' => $this->name,
-            'url' => $this->url,
-            'icon' => $this->icon,
-            'type' => $this->type,
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->name = $data['name'];
-        $this->url = $data['url'];
-        $this->icon = $data['icon'];
-        $this->type = $data['type'];
     }
 }

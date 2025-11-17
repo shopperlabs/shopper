@@ -34,33 +34,6 @@ class Attribute extends Model
 
     protected $guarded = [];
 
-    public function getTable(): string
-    {
-        return shopper_table('attributes');
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'is_enabled' => 'boolean',
-            'is_searchable' => 'boolean',
-            'is_filterable' => 'boolean',
-            'type' => FieldType::class,
-        ];
-    }
-
-    protected static function newFactory(): AttributeFactory
-    {
-        return AttributeFactory::new();
-    }
-
-    protected function typeFormatted(): LaravelAttribute
-    {
-        return LaravelAttribute::make(
-            get: fn (): string => self::typesFields()[$this->type->value]
-        );
-    }
-
     /**
      * @return array<array-key, string>
      */
@@ -79,6 +52,11 @@ class Attribute extends Model
             FieldType::ColorPicker,
             FieldType::Select,
         ];
+    }
+
+    public function getTable(): string
+    {
+        return shopper_table('attributes');
     }
 
     public function hasMultipleValues(): bool
@@ -154,5 +132,27 @@ class Attribute extends Model
                 'attribute_value_id',
                 'attribute_custom_value',
             ]);
+    }
+
+    protected static function newFactory(): AttributeFactory
+    {
+        return AttributeFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_enabled' => 'boolean',
+            'is_searchable' => 'boolean',
+            'is_filterable' => 'boolean',
+            'type' => FieldType::class,
+        ];
+    }
+
+    protected function typeFormatted(): LaravelAttribute
+    {
+        return LaravelAttribute::make(
+            get: fn (): string => self::typesFields()[$this->type->value]
+        );
     }
 }

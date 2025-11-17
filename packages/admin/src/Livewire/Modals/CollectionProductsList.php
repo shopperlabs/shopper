@@ -24,15 +24,15 @@ class CollectionProductsList extends ModalComponent
 
     public array $selectedProducts = [];
 
+    public static function modalMaxWidth(): string
+    {
+        return 'xl';
+    }
+
     public function mount(int $collectionId, array $exceptProductIds = []): void
     {
         $this->collection = (new CollectionRepository)->getById($collectionId);
         $this->exceptProductIds = $exceptProductIds;
-    }
-
-    public static function modalMaxWidth(): string
-    {
-        return 'xl';
     }
 
     #[Computed]
@@ -43,7 +43,7 @@ class CollectionProductsList extends ModalComponent
             ->where(
                 column: 'name',
                 operator: 'like',
-                value: '%' . $this->search . '%'
+                value: '%'.$this->search.'%'
             )
             ->get(['name', 'id'])
             ->except($this->exceptProductIds);

@@ -31,15 +31,15 @@ class AttributeValues extends SlideOverComponent implements HasForms, HasTable
 
     public Collection $values;
 
+    public static function panelMaxWidth(): string
+    {
+        return '2xl';
+    }
+
     public function mount(int $attributeId): void
     {
         $this->attribute = Attribute::with('values')->find($attributeId);
         $this->values = $this->attribute->values;
-    }
-
-    public static function panelMaxWidth(): string
-    {
-        return '2xl';
     }
 
     public function formSchema(): array

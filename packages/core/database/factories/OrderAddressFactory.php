@@ -6,6 +6,7 @@ namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Models\OrderAddress;
+use Shopper\Core\Models\User;
 
 /**
  * @extends Factory<OrderAddress>
@@ -21,6 +22,13 @@ class OrderAddressFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'customer_id' => User::factory(),
+            'last_name' => $this->faker->lastName(),
+            'first_name' => $this->faker->firstName(),
+            'street_address' => $this->faker->streetAddress(),
+            'postal_code' => $this->faker->postcode(),
+            'city' => $this->faker->city(),
+        ];
     }
 }

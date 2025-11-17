@@ -20,7 +20,7 @@ final class AddressObserver
         $this->ensureOnlyOneDefaultBilling($address);
     }
 
-    protected function ensureOnlyOneDefaultShipping(Address $address): void
+    private function ensureOnlyOneDefaultShipping(Address $address): void
     {
         if ($address->shipping_default) {
             $defaultAddress = Address::query()
@@ -36,7 +36,7 @@ final class AddressObserver
         }
     }
 
-    protected function ensureOnlyOneDefaultBilling(Address $address): void
+    private function ensureOnlyOneDefaultBilling(Address $address): void
     {
         if ($address->billing_default) {
             $defaultAddress = Address::query()

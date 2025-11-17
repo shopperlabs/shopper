@@ -24,7 +24,7 @@ trait InteractsWithReviews
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(rating), ' . $round . ') as averageReviewRateable')
+                ->selectRaw('ROUND(AVG(rating), '.$round.') as averageReviewRateable')
                 ->where($where)
                 ->pluck('averageReviewRateable');
         }
@@ -41,7 +41,7 @@ trait InteractsWithReviews
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(customer_service_rating), ' . $round . ') as averageCustomerServiceReviewRateable')
+                ->selectRaw('ROUND(AVG(customer_service_rating), '.$round.') as averageCustomerServiceReviewRateable')
                 ->where($where)
                 ->pluck('averageCustomerServiceReviewRateable');
         }
@@ -58,7 +58,7 @@ trait InteractsWithReviews
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(quality_rating), ' . $round . ') as averageQualityReviewRateable')
+                ->selectRaw('ROUND(AVG(quality_rating), '.$round.') as averageQualityReviewRateable')
                 ->where($where)
                 ->pluck('averageQualityReviewRateable');
         }
@@ -75,7 +75,7 @@ trait InteractsWithReviews
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(friendly_rating), ' . $round . ') as averageFriendlyReviewRateable')
+                ->selectRaw('ROUND(AVG(friendly_rating), '.$round.') as averageFriendlyReviewRateable')
                 ->where($where)
                 ->pluck('averageFriendlyReviewRateable');
         }
@@ -92,7 +92,7 @@ trait InteractsWithReviews
 
         if ($round) {
             return $this->ratings()
-                ->selectRaw('ROUND(AVG(pricing_rating), ' . $round . ') as averagePricingReviewRateable')
+                ->selectRaw('ROUND(AVG(pricing_rating), '.$round.') as averagePricingReviewRateable')
                 ->where($where)
                 ->pluck('averagePricingReviewRateable');
         }

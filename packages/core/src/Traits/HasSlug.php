@@ -9,14 +9,14 @@ use Illuminate\Support\Str;
 
 trait HasSlug
 {
-    protected function slug(): Attribute
-    {
-        return Attribute::set(fn ($value): string => $this->generateUniqueSlug($value));
-    }
-
     public static function findBySlug(string $slug): self
     {
         return static::where('slug', $slug)->firstOrFail();
+    }
+
+    protected function slug(): Attribute
+    {
+        return Attribute::set(fn ($value): string => $this->generateUniqueSlug($value));
     }
 
     protected function generateUniqueSlug(string $value): string
@@ -26,7 +26,7 @@ trait HasSlug
 
         while ($this->slugExists($slug, $this->exists ? $this->id : null)) {
             $counter++;
-            $slug = $originalSlug . '-' . $counter;
+            $slug = $originalSlug.'-'.$counter;
         }
 
         return $slug;

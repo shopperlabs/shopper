@@ -12,28 +12,42 @@ use Shopper\Core\Database\Factories\GeolocationFactory;
 
 /**
  * @property-read int $id
- * @property int $user_id
- * @property int $order_id
- * @property array | null $ip_api
- * @property array | null $extreme_ip_lookup
- * @property-read \Illuminate\Foundation\Auth\User | User $user
+ * @property-read int $user_id
+ * @property-read int $order_id
+ * @property-read array<array-key, mixed>|null $ip_api
+ * @property-read array<array-key, mixed>|null $extreme_ip_lookup
+ * @property-read \Illuminate\Foundation\Auth\User|User $user
  * @property-read Order $order
  */
 class Geolocation extends Model
 {
+    /** @use HasFactory<GeolocationFactory> */
     use HasFactory;
+
     use SoftDeletes;
 
     protected $guarded = [];
 
-    protected $casts = [
-        'extreme_ip_lookup' => 'json',
-        'ip_api' => 'json',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('users_geolocation_history');
+    }
+
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        // @phpstan-ignore-next-line
+        return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
+    }
+
+    /**
+     * @return BelongsTo<Order, $this>
+     */
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
     protected static function newFactory(): GeolocationFactory
@@ -41,13 +55,11 @@ class Geolocation extends Model
         return GeolocationFactory::new();
     }
 
-    public function user(): BelongsTo
+    protected function casts(): array
     {
-        return $this->belongsTo(config('auth.providers.users.model', User::class), 'user_id');
-    }
-
-    public function order(): BelongsTo
-    {
-        return $this->belongsTo(Order::class, 'order_id');
+        return [
+            'extreme_ip_lookup' => 'json',
+            'ip_api' => 'json',
+        ];
     }
 }

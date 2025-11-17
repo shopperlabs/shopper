@@ -12,6 +12,9 @@ use Shopper\Core\Models\Product;
 
 final class MapProductOptions
 {
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function generate(Product $product): array
     {
         $values = AttributeProduct::with(['attribute', 'value'])
@@ -40,21 +43,28 @@ final class MapProductOptions
             ->toArray();
     }
 
-    protected static function mapOption(Attribute $attribut, array $values = []): array
+    /**
+     * @param  array<array-key, mixed>  $values
+     * @return array<string, mixed>
+     */
+    private static function mapOption(Attribute $attribut, array $values = []): array
     {
         return [
             'id' => $attribut->id,
-            'key' => 'attribute_' . $attribut->id,
+            'key' => 'attribute_'.$attribut->id,
             'name' => $attribut->name,
             'values' => $values,
         ];
     }
 
-    protected static function mapOptionValue(AttributeValue $attributeValue): array
+    /**
+     * @return array<string, mixed>
+     */
+    private static function mapOptionValue(AttributeValue $attributeValue): array
     {
         return [
             'id' => $attributeValue->id,
-            'key' => 'value_' . $attributeValue->id,
+            'key' => 'value_'.$attributeValue->id,
             'value' => $attributeValue->value,
         ];
     }

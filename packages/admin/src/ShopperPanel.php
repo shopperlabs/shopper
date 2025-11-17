@@ -15,9 +15,9 @@ use Shopper\Events\LoadShopper;
 
 final class ShopperPanel
 {
-    protected bool $isServing = false;
+    private bool $isServing = false;
 
-    protected string | Htmlable | null $theme = null;
+    private string|Htmlable|null $theme = null;
 
     public function auth(): Guard
     {
@@ -29,12 +29,12 @@ final class ShopperPanel
         return config('shopper.admin.prefix');
     }
 
-    public function registerTheme(string | Htmlable | null $theme): void
+    public function registerTheme(string|Htmlable|null $theme): void
     {
         $this->theme = $theme;
     }
 
-    public function registerViteTheme(string | array $theme, ?string $buildDirectory = null): void
+    public function registerViteTheme(string|array $theme, ?string $buildDirectory = null): void
     {
         $this->theme = app(Vite::class)($theme, $buildDirectory);
     }

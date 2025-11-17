@@ -13,7 +13,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 final class Thanks
 {
-    private const FUNDING_MESSAGES = [
+    private const array FUNDING_MESSAGES = [
         '',
         '  - Star or contribute to Shopper:',
         '    <options=bold>https://github.com/shopperlabs/shopper</>',

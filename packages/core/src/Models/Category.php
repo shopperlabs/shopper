@@ -42,19 +42,6 @@ class Category extends Model implements SpatieHasMedia
         return shopper_table('categories');
     }
 
-    protected function casts(): array
-    {
-        return [
-            'is_enabled' => 'boolean',
-            'metadata' => 'array',
-        ];
-    }
-
-    protected static function newFactory(): CategoryFactory
-    {
-        return CategoryFactory::new();
-    }
-
     /**
      * @return array<array-key, array<string>>
      */
@@ -82,7 +69,7 @@ class Category extends Model implements SpatieHasMedia
     public function getLabelOptionName(): string
     {
         return $this->parent
-            ? $this->parent->getLabelOptionName() . ' / ' . $this->name
+            ? $this->parent->getLabelOptionName().' / '.$this->name
             : $this->name;
     }
 
@@ -110,5 +97,18 @@ class Category extends Model implements SpatieHasMedia
     {
         // @phpstan-ignore-next-line
         return $this->morphToMany(config('shopper.models.product'), 'productable', shopper_table('product_has_relations'));
+    }
+
+    protected static function newFactory(): CategoryFactory
+    {
+        return CategoryFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_enabled' => 'boolean',
+            'metadata' => 'array',
+        ];
     }
 }

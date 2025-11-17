@@ -41,11 +41,6 @@ class OrderShipping extends Model
         return shopper_table('order_shipping');
     }
 
-    protected static function newFactory(): OrderShippingFactory
-    {
-        return OrderShippingFactory::new();
-    }
-
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id');
@@ -54,5 +49,10 @@ class OrderShipping extends Model
     public function carrier(): BelongsTo
     {
         return $this->belongsTo(Carrier::class, 'carrier_id');
+    }
+
+    protected static function newFactory(): OrderShippingFactory
+    {
+        return OrderShippingFactory::new();
     }
 }

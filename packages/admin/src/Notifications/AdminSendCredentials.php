@@ -21,7 +21,7 @@ final class AdminSendCredentials extends Notification
         return (new MailMessage)
             ->subject(__('Welcome to Shopper'))
             ->greeting("Hello {$notifiable->full_name}")
-            ->line(__('An account has been created for you as Administrator on the website ') . config('app.url'))
+            ->line(__('An account has been created for you as Administrator on the website ').config('app.url'))
             ->line("Email: {$notifiable->email} - Password: {$this->password}")
             ->line(__('You can use the following link to login:'))
             ->action('Login', route('shopper.login'))

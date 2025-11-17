@@ -87,6 +87,6 @@ class RolePermission extends Component implements HasActions, HasForms
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.team.role')
-            ->title(__('shopper::pages/settings/staff.roles') . ' ~ ' . $this->role->display_name);
+            ->title(__('shopper::pages/settings/staff.roles').' ~ '.$this->role->display_name);
     }
 }

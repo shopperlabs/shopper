@@ -124,14 +124,6 @@ class Create extends AbstractPageComponent implements HasForms
             ->model(config('auth.providers.users.model', User::class));
     }
 
-    protected function onValidationError(ValidationException $exception): void
-    {
-        Notification::make()
-            ->title($exception->getMessage())
-            ->danger()
-            ->send();
-    }
-
     public function store(): void
     {
         $data = $this->form->getState();
@@ -173,5 +165,13 @@ class Create extends AbstractPageComponent implements HasForms
             ),
         ])
             ->title(__('shopper::forms.actions.add_label', ['label' => __('shopper::pages/customers.single')]));
+    }
+
+    protected function onValidationError(ValidationException $exception): void
+    {
+        Notification::make()
+            ->title($exception->getMessage())
+            ->danger()
+            ->send();
     }
 }

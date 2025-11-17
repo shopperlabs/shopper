@@ -32,6 +32,16 @@ class Currency extends Model
         'is_enabled' => 'boolean',
     ];
 
+    public function getTable(): string
+    {
+        return shopper_table('currencies');
+    }
+
+    public function zone(): HasOne
+    {
+        return $this->hasOne(Zone::class);
+    }
+
     protected static function booted(): void
     {
         static::addGlobalScope('enabled', function (Builder $query): void {
@@ -39,18 +49,8 @@ class Currency extends Model
         });
     }
 
-    public function getTable(): string
-    {
-        return shopper_table('currencies');
-    }
-
     protected static function newFactory(): CurrencyFactory
     {
         return CurrencyFactory::new();
-    }
-
-    public function zone(): HasOne
-    {
-        return $this->hasOne(Zone::class);
     }
 }

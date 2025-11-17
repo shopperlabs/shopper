@@ -56,7 +56,7 @@ class Country extends Model
     protected function svgFlag(): Attribute
     {
         return Attribute::get(
-            fn (): string => url(shopper()->prefix() . '/images/flags/' . mb_strtolower($this->cca2) . '.svg')
+            fn (): string => url(shopper()->prefix().'/images/flags/'.mb_strtolower($this->cca2).'.svg')
         );
     }
 }

@@ -19,6 +19,11 @@ class LogoutOthersBrowser extends ModalComponent
         'password' => 'required',
     ];
 
+    public static function modalMaxWidth(): string
+    {
+        return 'lg';
+    }
+
     public function logoutOtherBrowserSessions(StatefulGuard $guard): void
     {
         $this->resetErrorBag();
@@ -35,11 +40,6 @@ class LogoutOthersBrowser extends ModalComponent
         $this->dispatch('loggedOut');
 
         $this->closeModal();
-    }
-
-    public static function modalMaxWidth(): string
-    {
-        return 'lg';
     }
 
     public function render(): View

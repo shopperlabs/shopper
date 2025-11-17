@@ -20,23 +20,14 @@ use Shopper\Core\Database\Factories\ReviewFactory;
  */
 class Review extends Model
 {
+    /** @use HasFactory<ReviewFactory> */
     use HasFactory;
 
     protected $guarded = [];
 
-    protected $casts = [
-        'is_recommended' => 'boolean',
-        'approved' => 'boolean',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('reviews');
-    }
-
-    protected static function newFactory(): ReviewFactory
-    {
-        return ReviewFactory::new();
     }
 
     public function reviewrateable(): MorphTo
@@ -62,9 +53,13 @@ class Review extends Model
         return $rating;
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
     public function updateRating(int $id, array $data): self
     {
-        $rating = self::find($id);
+        /** @var Review $rating */
+        $rating = self::query()->find($id);
         $rating->update($data);
 
         return $rating;
@@ -126,5 +121,13 @@ class Review extends Model
         $this->approved = $approved;
 
         $this->save();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_recommended' => 'boolean',
+            'approved' => 'boolean',
+        ];
     }
 }

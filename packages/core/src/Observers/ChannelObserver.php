@@ -19,7 +19,7 @@ final class ChannelObserver
         $this->ensureOnlyOneIsDefault($channel);
     }
 
-    protected function ensureOnlyOneIsDefault(Channel $channel): void
+    private function ensureOnlyOneIsDefault(Channel $channel): void
     {
         if ($channel->is_default) {
             /** @var Channel | null $defaultChannel */

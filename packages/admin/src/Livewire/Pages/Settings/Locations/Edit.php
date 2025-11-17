@@ -22,6 +22,6 @@ class Edit extends Component
     public function render(): View
     {
         return view('shopper::livewire.pages.settings.locations.edit')
-            ->title(__('shopper::pages/settings/global.location.menu') . ' ~ ' . $this->inventory->name);
+            ->title(__('shopper::pages/settings/global.location.menu').' ~ '.$this->inventory->name);
     }
 }

@@ -34,6 +34,16 @@ class OrderItem extends Model
         return shopper_table('order_items');
     }
 
+    public function product(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+
     protected static function newFactory(): OrderItemFactory
     {
         return OrderItemFactory::new();
@@ -44,15 +54,5 @@ class OrderItem extends Model
         return Attribute::make(
             get: fn () => $this->unit_price_amount * $this->quantity
         );
-    }
-
-    public function product(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    public function order(): BelongsTo
-    {
-        return $this->belongsTo(Order::class, 'order_id');
     }
 }

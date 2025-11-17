@@ -33,7 +33,7 @@ if (! function_exists('shopper_table')) {
     function shopper_table(string $table): string
     {
         if (config('shopper.core.table_prefix') !== '') {
-            return config('shopper.core.table_prefix') . $table;
+            return config('shopper.core.table_prefix').$table;
         }
 
         return $table;
@@ -67,7 +67,7 @@ if (! function_exists('shopper_currency')) {
 }
 
 if (! function_exists('shopper_money_format')) {
-    function shopper_money_format(int | float $amount, ?string $currency = null): string
+    function shopper_money_format(int|float $amount, ?string $currency = null): string
     {
         return Number::currency(
             number: $amount,

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Models\Currency;
 use Shopper\Core\Models\Price;
+use Shopper\Core\Models\Product;
 
 /**
  * @extends Factory<Price>
@@ -22,9 +24,12 @@ class PriceFactory extends Factory
     public function definition(): array
     {
         return [
+            'priceable_type' => Product::class,
+            'priceable_id' => Product::factory(),
             'amount' => $this->faker->randomFloat(min: 100, max: 500),
             'compare_amount' => $this->faker->randomFloat(min: 80, max: 400),
             'cost_amount' => $this->faker->randomFloat(min: 50, max: 200),
+            'currency_id' => Currency::factory(),
         ];
     }
 }

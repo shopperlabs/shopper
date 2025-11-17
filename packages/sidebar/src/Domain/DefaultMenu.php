@@ -21,10 +21,11 @@ class DefaultMenu implements Menu, Serializable
     use CallableTrait;
 
     /**
-     * @var Collection|Group[]
+     * @var Collection<int, Group>
      */
-    protected Collection | array $groups;
+    protected Collection $groups;
 
+    /** @var string[] */
     protected array $cacheables = [
         'groups',
     ];
@@ -32,6 +33,21 @@ class DefaultMenu implements Menu, Serializable
     public function __construct(protected Container $container)
     {
         $this->groups = new Collection;
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'groups' => $this->groups,
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->groups = $data['groups'];
     }
 
     public function group(string $name, ?Closure $callback = null): Group
@@ -57,6 +73,9 @@ class DefaultMenu implements Menu, Serializable
         return $this;
     }
 
+    /**
+     * @return Collection<int, Group>
+     */
     public function getGroups(): Collection
     {
         return $this->groups->sortBy(fn (Group $group) => $group->getWeight());
@@ -81,17 +100,5 @@ class DefaultMenu implements Menu, Serializable
         }
 
         return $this;
-    }
-
-    public function __serialize(): array
-    {
-        return [
-            'groups' => $this->groups,
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->groups = $data['groups'];
     }
 }

@@ -23,7 +23,7 @@ final class FeatureServiceProvider extends ServiceProvider
         'review',
     ];
 
-    protected string $root = __DIR__ . '/../..';
+    protected string $root = __DIR__.'/../..';
 
     public function register(): void
     {

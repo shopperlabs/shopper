@@ -37,35 +37,6 @@ class Discount extends Model
 
     protected $guarded = [];
 
-    protected static function newFactory(): DiscountFactory
-    {
-        return DiscountFactory::new();
-    }
-
-    protected function value(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $this->type === DiscountType::FixedAmount
-                ? $value / 100
-                : $value,
-            set: fn ($value) => $this->type === DiscountType::FixedAmount
-                ? $value * 100
-                : $value,
-        );
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'is_active' => 'boolean',
-            'usage_limit_per_user' => 'boolean',
-            'start_at' => 'datetime',
-            'end_at' => 'datetime',
-            'metadata' => 'array',
-            'type' => DiscountType::class,
-        ];
-    }
-
     public function getTable(): string
     {
         return shopper_table('discounts');
@@ -94,5 +65,34 @@ class Discount extends Model
     public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    protected static function newFactory(): DiscountFactory
+    {
+        return DiscountFactory::new();
+    }
+
+    protected function value(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $this->type === DiscountType::FixedAmount
+                ? $value / 100
+                : $value,
+            set: fn (int $value) => $this->type === DiscountType::FixedAmount
+                ? $value * 100
+                : $value,
+        );
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'usage_limit_per_user' => 'boolean',
+            'start_at' => 'datetime',
+            'end_at' => 'datetime',
+            'metadata' => 'array',
+            'type' => DiscountType::class,
+        ];
     }
 }

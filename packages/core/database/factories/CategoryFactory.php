@@ -22,8 +22,11 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        /** @var string $name */
+        $name = $this->faker->unique()->words(3, true);
+
         return [
-            'name' => $name = $this->faker->unique()->words(3, true),
+            'name' => $name,
             'slug' => Str::slug($name),
             'description' => $this->faker->realText(),
             'is_enabled' => $this->faker->boolean(),

@@ -32,6 +32,7 @@ class DefaultGroup implements Group, Serializable
 
     protected ?string $headingClass = null;
 
+    /** @var string[] */
     protected array $cacheables = [
         'name',
         'items',
@@ -42,6 +43,27 @@ class DefaultGroup implements Group, Serializable
     public function __construct(protected Container $container)
     {
         $this->items = new Collection;
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'items' => $this->items,
+            'weight' => $this->weight,
+            'heading' => $this->heading,
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->name = $data['name'];
+        $this->items = $data['items'];
+        $this->weight = $data['weight'];
+        $this->heading = $data['heading'];
     }
 
     public function getName(): string
@@ -114,23 +136,5 @@ class DefaultGroup implements Group, Serializable
         $this->headingClass = $class;
 
         return $this;
-    }
-
-    public function __serialize(): array
-    {
-        return [
-            'name' => $this->name,
-            'items' => $this->items,
-            'weight' => $this->weight,
-            'heading' => $this->heading,
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->name = $data['name'];
-        $this->items = $data['items'];
-        $this->weight = $data['weight'];
-        $this->heading = $data['heading'];
     }
 }

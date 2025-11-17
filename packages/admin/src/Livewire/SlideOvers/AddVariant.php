@@ -28,7 +28,7 @@ use Shopper\Helpers\MapProductOptions;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  * @property Collection $currencies
  * @property Collection $options
  * @property array $variantsOptions
@@ -41,6 +41,11 @@ class AddVariant extends SlideOverComponent implements HasForms
     public int $productId;
 
     public ?array $data = [];
+
+    public static function panelMaxWidth(): string
+    {
+        return '5xl';
+    }
 
     public function mount(): void
     {
@@ -84,7 +89,7 @@ class AddVariant extends SlideOverComponent implements HasForms
                                         Forms\Components\Group::make()
                                             ->schema(
                                                 $this->options->map(
-                                                    fn ($option): Forms\Components\Select => Forms\Components\Select::make('values.' . $option['id'])
+                                                    fn ($option): Forms\Components\Select => Forms\Components\Select::make('values.'.$option['id'])
                                                         ->label($option['name'])
                                                         ->key($option['key'])
                                                         ->required()
@@ -208,17 +213,6 @@ class AddVariant extends SlideOverComponent implements HasForms
         );
     }
 
-    protected function variantAlreadyExist(array $optionsValues = []): bool
-    {
-        foreach ($this->variantsOptions as $option) {
-            if (array_diff(array_values($optionsValues), $option) === []) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     #[Computed]
     public function currencies(): Collection
     {
@@ -254,13 +248,19 @@ class AddVariant extends SlideOverComponent implements HasForms
         return collect(MapProductOptions::generate($product));
     }
 
-    public static function panelMaxWidth(): string
-    {
-        return '5xl';
-    }
-
     public function render(): View
     {
         return view('shopper::livewire.slide-overs.add-variant');
+    }
+
+    protected function variantAlreadyExist(array $optionsValues = []): bool
+    {
+        foreach ($this->variantsOptions as $option) {
+            if (array_diff(array_values($optionsValues), $option) === []) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

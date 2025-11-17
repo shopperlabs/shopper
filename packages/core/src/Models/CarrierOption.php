@@ -13,42 +13,25 @@ use Shopper\Core\Database\Factories\CarrierOptionFactory;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property int $price
- * @property int $zone_id
- * @property int $carrier_id
- * @property bool $is_enabled
- * @property Zone $zone
- * @property Carrier $carrier
- * @property array | null $metadata
+ * @property-read string $name
+ * @property-read int $price
+ * @property-read int $zone_id
+ * @property-read int $carrier_id
+ * @property-read bool $is_enabled
+ * @property-read Zone $zone
+ * @property-read Carrier $carrier
+ * @property-read array<array-key, mixed>|null $metadata
  */
 class CarrierOption extends Model
 {
+    /** @use HasFactory<CarrierOptionFactory> */
     use HasFactory;
 
     protected $guarded = [];
 
-    protected $casts = [
-        'metadata' => 'array',
-        'is_enabled' => 'boolean',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('carrier_options');
-    }
-
-    protected static function newFactory(): CarrierOptionFactory
-    {
-        return CarrierOptionFactory::new();
-    }
-
-    protected function price(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
-        );
     }
 
     public function isEnabled(): bool
@@ -56,18 +39,49 @@ class CarrierOption extends Model
         return $this->is_enabled;
     }
 
+    /**
+     * @param  Builder<CarrierOption>  $query
+     * @return Builder<CarrierOption>
+     */
     public function scopeEnabled(Builder $query): Builder
     {
         return $query->where('is_enabled', true);
     }
 
+    /**
+     * @return BelongsTo<Carrier, $this>
+     */
     public function carrier(): BelongsTo
     {
         return $this->belongsTo(Carrier::class, 'carrier_id');
     }
 
+    /**
+     * @return BelongsTo<Zone, $this>
+     */
     public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    protected static function newFactory(): CarrierOptionFactory
+    {
+        return CarrierOptionFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'metadata' => 'array',
+            'is_enabled' => 'boolean',
+        ];
+    }
+
+    protected function price(): Attribute
+    {
+        return Attribute::make(
+            get: fn (int $value) => $value / 100,
+            set: fn (int $value) => $value * 100,
+        );
     }
 }

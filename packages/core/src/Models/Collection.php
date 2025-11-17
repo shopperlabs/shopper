@@ -40,20 +40,6 @@ class Collection extends Model implements SpatieHasMedia
         return shopper_table('collections');
     }
 
-    protected function casts(): array
-    {
-        return [
-            'published_at' => 'datetime',
-            'metadata' => 'array',
-            'type' => CollectionType::class,
-        ];
-    }
-
-    protected static function newFactory(): CollectionFactory
-    {
-        return CollectionFactory::new();
-    }
-
     public function isAutomatic(): bool
     {
         return $this->type === CollectionType::Auto;
@@ -70,10 +56,10 @@ class Collection extends Model implements SpatieHasMedia
         $collectionRule = $this->rules->first();
 
         if ($this->isAutomatic()) {
-            $words = $collectionRule->getFormattedRule() . ' ' . $collectionRule->getFormattedOperator() . ' ' . $collectionRule->getFormattedValue();
+            $words = $collectionRule->getFormattedRule().' '.$collectionRule->getFormattedOperator().' '.$collectionRule->getFormattedValue();
             $rules = $this->rules()->count();
 
-            return $words . ' ' . ($rules >= 2 ? '+ ' . ($rules - 1) . __('shopper::words.other') : ''); // @phpstan-ignore-line
+            return $words.' '.($rules >= 2 ? '+ '.($rules - 1).__('shopper::words.other') : ''); // @phpstan-ignore-line
         }
 
         return null;
@@ -112,5 +98,19 @@ class Collection extends Model implements SpatieHasMedia
     public function rules(): HasMany
     {
         return $this->hasMany(CollectionRule::class, 'collection_id');
+    }
+
+    protected static function newFactory(): CollectionFactory
+    {
+        return CollectionFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'published_at' => 'datetime',
+            'metadata' => 'array',
+            'type' => CollectionType::class,
+        ];
     }
 }

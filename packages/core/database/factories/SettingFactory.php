@@ -7,6 +7,9 @@ namespace Shopper\Core\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Shopper\Core\Models\Setting;
 
+/**
+ * @extends Factory<Setting>
+ */
 class SettingFactory extends Factory
 {
     protected $model = Setting::class;
@@ -18,6 +21,8 @@ class SettingFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'key' => $this->faker->unique()->slug(),
+        ];
     }
 }

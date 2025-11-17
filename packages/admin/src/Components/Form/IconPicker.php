@@ -23,19 +23,19 @@ class IconPicker extends Select
 
     protected string $view = 'shopper::filament.form.icon-picker';
 
-    protected array | Closure | null $sets = null;
+    protected array|Closure|null $sets = null;
 
-    protected array | Closure | null $allowedIcons = null;
+    protected array|Closure|null $allowedIcons = null;
 
-    protected array | Closure | null $disallowedIcons = null;
+    protected array|Closure|null $disallowedIcons = null;
 
-    protected bool | Closure $isHtmlAllowed = true;
+    protected bool|Closure $isHtmlAllowed = true;
 
-    protected bool | Closure $isSearchable = true;
+    protected bool|Closure $isSearchable = true;
 
-    protected Closure | string | Htmlable | null $itemTemplate = null;
+    protected Closure|string|Htmlable|null $itemTemplate = null;
 
-    protected bool | Closure $show;
+    protected bool|Closure $show;
 
     protected string $layout = 'floating';
 
@@ -71,7 +71,7 @@ class IconPicker extends Select
             ->placeholder(__('shopper::forms.placeholder.icon_placeholder'));
     }
 
-    public function sets(array | Closure | string | null $sets = null): static
+    public function sets(array|Closure|string|null $sets = null): static
     {
         $this->sets = $sets ? (is_string($sets) ? [$sets] : $sets) : null;
 
@@ -83,7 +83,7 @@ class IconPicker extends Select
         return $this->evaluate($this->sets);
     }
 
-    public function allowedIcons(array | Closure | string $allowedIcons): static
+    public function allowedIcons(array|Closure|string $allowedIcons): static
     {
         $this->allowedIcons = $allowedIcons;
 
@@ -97,7 +97,7 @@ class IconPicker extends Select
         ]);
     }
 
-    public function disallowedIcons(array | Closure | string $disallowedIcons): static
+    public function disallowedIcons(array|Closure|string $disallowedIcons): static
     {
         $this->disallowedIcons = $disallowedIcons;
 
@@ -111,7 +111,7 @@ class IconPicker extends Select
         ]);
     }
 
-    public function layout(string | Closure $layout): static
+    public function layout(string|Closure $layout): static
     {
         $this->layout = $layout;
 
@@ -123,7 +123,7 @@ class IconPicker extends Select
         return $this->evaluate($this->layout);
     }
 
-    public function itemTemplate(Htmlable | Closure | View $template): static
+    public function itemTemplate(Htmlable|Closure|View $template): static
     {
         $this->itemTemplate = $template;
 
@@ -155,22 +155,22 @@ class IconPicker extends Select
         return $results;
     }
 
-    public function relationship(string | Closure | null $name = null, string | Closure | null $titleAttribute = null, ?Closure $modifyQueryUsing = null, bool $ignoreRecord = false): static
+    public function relationship(string|Closure|null $name = null, string|Closure|null $titleAttribute = null, ?Closure $modifyQueryUsing = null, bool $ignoreRecord = false): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function options(Arrayable | Closure | array | string | null $options): static
+    public function options(Arrayable|Closure|array|string|null $options): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function allowHtml(bool | Closure $condition = true): static
+    public function allowHtml(bool|Closure $condition = true): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function searchable(bool | array | Closure $condition = true): static
+    public function searchable(bool|array|Closure $condition = true): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
@@ -195,17 +195,17 @@ class IconPicker extends Select
         throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function createOptionForm(array | Closure | null $schema): static
+    public function createOptionForm(array|Closure|null $schema): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function schema(array | Closure $components): static
+    public function schema(array|Closure $components): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
 
-    public function multiple(bool | Closure $condition = true): static
+    public function multiple(bool|Closure $condition = true): static
     {
         throw new BadMethodCallException('Method not allowed.');
     }
@@ -239,7 +239,7 @@ class IconPicker extends Select
             $prefix = $set['prefix'];
             foreach ($set['paths'] as $path) {
                 foreach (File::files($path) as $file) {
-                    $filename = $prefix . '-' . $file->getFilenameWithoutExtension();
+                    $filename = $prefix.'-'.$file->getFilenameWithoutExtension();
 
                     if ($allowedIcons && ! in_array($filename, $allowedIcons)) {
                         continue;

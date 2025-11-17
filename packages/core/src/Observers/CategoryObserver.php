@@ -9,29 +9,29 @@ use Shopper\Core\Repositories\CategoryRepository;
 
 final class CategoryObserver
 {
-    public function creating($model): void
+    public function creating(Category $category): void
     {
-        $this->ensureParentSlugIsCorrectlySet($model);
+        $this->ensureParentSlugIsCorrectlySet($category);
     }
 
-    public function updating($model): void
+    public function updating(Category $category): void
     {
-        $this->ensureParentSlugIsCorrectlySet($model);
+        $this->ensureParentSlugIsCorrectlySet($category);
     }
 
     /**
      * Ensure that the parent slug is present on the category slug is selected
      * slug is "parent_slug_category_slug" when a parent category is choose
      */
-    protected function ensureParentSlugIsCorrectlySet($category): void
+    private function ensureParentSlugIsCorrectlySet(Category $category): void
     {
         if (filled($category->parent_id)) {
-            /** @var Category | null $parent */
+            /** @var Category|null $parent */
             $parent = (new CategoryRepository)
-                ->getById((int) $category->parent_id, ['slug']);
+                ->getById($category->parent_id, ['slug']);
 
             if ($parent) {
-                $category->slug = $parent->slug . '-' . $category->name;
+                $category->slug = $parent->slug.'-'.$category->name;
             }
         }
     }

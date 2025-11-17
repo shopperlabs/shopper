@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopper\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Shopper\Core\Models\Product;
 use Shopper\Core\Models\OrderItem;
+use Shopper\Core\Models\Order;
 
 /**
  * @extends Factory<OrderItem>
@@ -22,7 +24,11 @@ class OrderItemFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'product_type' => Product::class,
+            'product_id' => Product::factory(),
+            'quantity' => $this->faker->numberBetween(1, 10),
+            'unit_price_amount' => $this->faker->numberBetween(1000, 50000),
+            'order_id' => Order::factory(),
         ];
     }
 }

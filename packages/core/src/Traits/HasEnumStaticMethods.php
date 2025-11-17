@@ -12,12 +12,12 @@ use Shopper\Core\Exceptions\UndefinedEnumCaseError;
  */
 trait HasEnumStaticMethods
 {
-    public function __invoke(): int | string
+    public function __invoke(): int|string
     {
         return $this->value;
     }
 
-    public static function __callStatic(string $name, mixed $args): int | string
+    public static function __callStatic(string $name, mixed $args): int|string
     {
         $cases = self::cases();
 

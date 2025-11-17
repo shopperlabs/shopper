@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait HasAuthenticated
 {
-    public function getUser(): Model | Authenticatable | null
+    public function getUser(): Model|Authenticatable|null
     {
         return shopper()->auth()->user();
     }

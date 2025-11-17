@@ -36,7 +36,7 @@ Route::domain(config('shopper.admin.domain'))
         Route::prefix(shopper()->prefix())->group(function (): void {
             Route::middleware([RedirectIfAuthenticated::class])
                 ->as('shopper.')->group(function (): void {
-                    require __DIR__ . '/auth.php';
+                    require __DIR__.'/auth.php';
                 });
 
             Route::get('/assets/{file}', AssetController::class)
@@ -64,7 +64,7 @@ Route::domain(config('shopper.admin.domain'))
                 ResolveSidebars::class,
             ], config('shopper.routes.middleware', [])))->group(function (): void {
                 Route::as('shopper.')->group(function (): void {
-                    require __DIR__ . '/cpanel.php';
+                    require __DIR__.'/cpanel.php';
                 });
 
                 if (config('shopper.routes.custom_file')) {

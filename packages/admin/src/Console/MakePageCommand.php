@@ -41,7 +41,7 @@ class MakePageCommand extends FileManipulationCommand
         }
     }
 
-    protected function createClass(ComponentParser $parser): false | string
+    protected function createClass(ComponentParser $parser): false|string
     {
         $classPath = $parser->classPath();
 
@@ -58,7 +58,7 @@ class MakePageCommand extends FileManipulationCommand
         return $classPath;
     }
 
-    protected function createView(ComponentParser $parser): false | string
+    protected function createView(ComponentParser $parser): false|string
     {
         $viewPath = $parser->viewPath();
 
@@ -110,11 +110,11 @@ class MakePageCommand extends FileManipulationCommand
 
     protected function getStub(string $type): string
     {
-        $stubsDirectory = __DIR__ . '/../../stubs';
+        $stubsDirectory = __DIR__.'/../../stubs';
 
         return match ($type) { // @phpstan-ignore-line
-            'class' => $stubsDirectory . '/page-component.stub',
-            'view' => $stubsDirectory . '/view.stub',
+            'class' => $stubsDirectory.'/page-component.stub',
+            'view' => $stubsDirectory.'/view.stub',
         };
     }
 

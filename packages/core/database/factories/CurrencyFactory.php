@@ -21,6 +21,19 @@ class CurrencyFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        $currencies = [
+            ['name' => 'Euro', 'code' => 'EUR', 'symbol' => '€', 'format' => '1.234,56 €'],
+            ['name' => 'US Dollar', 'code' => 'USD', 'symbol' => '$', 'format' => '$1,234.56'],
+            ['name' => 'British Pound', 'code' => 'GBP', 'symbol' => '£', 'format' => '£1,234.56'],
+        ];
+
+        $currency = $this->faker->randomElement($currencies);
+
+        return [
+            'name' => $currency['name'],
+            'code' => $currency['code'],
+            'symbol' => $currency['symbol'],
+            'format' => $currency['format'],
+        ];
     }
 }

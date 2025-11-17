@@ -1,35 +1,74 @@
 {
   "preset": "laravel",
+  "notPath": [
+    "tests/TestCase.php"
+  ],
   "rules": {
-    "align_multiline_comment": true,
-    "array_indentation": true,
+    "array_push": true,
     "array_syntax": true,
-    "blank_line_after_namespace": true,
-    "blank_line_before_statement": true,
-    "concat_space": {
-      "spacing": "one"
+    "backtick_to_shell_exec": true,
+    "blank_line_before_statement": {
+      "statements": [
+        "break",
+        "continue",
+        "declare",
+        "return",
+        "throw",
+        "try"
+      ]
     },
-    "declare_parentheses": true,
+    "date_time_immutable": true,
     "declare_strict_types": true,
-    "explicit_string_variable": true,
+    "lowercase_keywords": true,
+    "lowercase_static_reference": true,
+    "fully_qualified_strict_types": true,
     "global_namespace_import": {
       "import_classes": true,
       "import_constants": true,
       "import_functions": true
     },
     "mb_str_functions": true,
-    "method_chaining_indentation": true,
-    "modernize_strpos": true,
-    "method_argument_space": true,
-    "no_empty_comment": true,
+    "method_argument_space": {
+      "on_multiline": "ensure_fully_multiline",
+      "keep_multiple_spaces_after_comma": true
+    },
+    "modernize_types_casting": true,
+    "new_with_parentheses": false,
+    "no_superfluous_elseif": true,
+    "no_useless_else": true,
+    "no_multiple_statements_per_line": true,
+    "ordered_class_elements": {
+      "order": [
+        "use_trait",
+        "case",
+        "constant",
+        "constant_public",
+        "constant_protected",
+        "constant_private",
+        "property_public",
+        "property_protected",
+        "property_private",
+        "construct",
+        "destruct",
+        "magic",
+        "phpunit",
+        "method_abstract",
+        "method_public_static",
+        "method_public",
+        "method_protected_static",
+        "method_protected",
+        "method_private_static",
+        "method_private"
+      ],
+      "sort_algorithm": "none"
+    },
+    "ordered_interfaces": true,
     "ordered_traits": true,
-    "single_trait_insert_per_statement": true,
-    "simplified_if_return": true,
+    "self_accessor": true,
+    "self_static_accessor": true,
     "strict_comparison": true,
     "use_arrow_functions": true,
-    "void_return": true,
-    "types_spaces": {
-      "space": "single"
-    }
+    "visibility_required": true,
+    "void_return": true
   }
 }

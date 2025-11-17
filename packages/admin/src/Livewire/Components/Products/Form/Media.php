@@ -13,7 +13,7 @@ use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class Media extends Component implements HasForms
 {

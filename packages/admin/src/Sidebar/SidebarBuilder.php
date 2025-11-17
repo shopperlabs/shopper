@@ -8,7 +8,7 @@ use Shopper\Sidebar\Contracts\Builder\Menu;
 
 final class SidebarBuilder
 {
-    public function __construct(protected Menu $menu) {}
+    public function __construct(private Menu $menu) {}
 
     public function add(Menu $menu): void
     {

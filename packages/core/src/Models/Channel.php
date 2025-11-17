@@ -40,20 +40,6 @@ class Channel extends Model
         return shopper_table('channels');
     }
 
-    protected function casts(): array
-    {
-        return [
-            'is_default' => 'boolean',
-            'is_enabled' => 'boolean',
-            'metadata' => 'array',
-        ];
-    }
-
-    protected static function newFactory(): ChannelFactory
-    {
-        return ChannelFactory::new();
-    }
-
     /**
      * @param  Builder<Channel>  $query
      * @return Builder<Channel>
@@ -83,5 +69,19 @@ class Channel extends Model
             'productable',
             shopper_table('product_has_relations')
         );
+    }
+
+    protected static function newFactory(): ChannelFactory
+    {
+        return ChannelFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_default' => 'boolean',
+            'is_enabled' => 'boolean',
+            'metadata' => 'array',
+        ];
     }
 }

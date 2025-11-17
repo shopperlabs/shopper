@@ -22,7 +22,7 @@ final class CoreServiceProvider extends PackageServiceProvider
         'orders',
     ];
 
-    protected string $root = __DIR__ . '/..';
+    protected string $root = __DIR__.'/..';
 
     public function configurePackage(Package $package): void
     {

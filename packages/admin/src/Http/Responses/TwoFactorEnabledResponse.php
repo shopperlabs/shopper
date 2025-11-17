@@ -9,6 +9,10 @@ use Shopper\Contracts\TwoFactorLoginResponse as TwoFactorLoginResponseContract;
 
 class TwoFactorEnabledResponse implements TwoFactorLoginResponseContract
 {
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @return JsonResponse|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function toResponse($request)
     {
         return $request->wantsJson()

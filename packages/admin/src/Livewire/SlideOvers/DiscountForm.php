@@ -27,7 +27,7 @@ use Shopper\Core\Repositories\UserRepository;
 use Shopper\Livewire\Components\SlideOverComponent;
 
 /**
- * @property Forms\Form $form
+ * @property Form $form
  */
 class DiscountForm extends SlideOverComponent implements HasForms
 {
@@ -39,6 +39,11 @@ class DiscountForm extends SlideOverComponent implements HasForms
      * @var array<array-key, mixed>|null
      */
     public ?array $data = [];
+
+    public static function panelMaxWidth(): string
+    {
+        return '3xl';
+    }
 
     public function mount(?int $discountId = null): void
     {
@@ -285,11 +290,6 @@ class DiscountForm extends SlideOverComponent implements HasForms
             ])
             ->statePath('data')
             ->model($this->discount);
-    }
-
-    public static function panelMaxWidth(): string
-    {
-        return '3xl';
     }
 
     public function store(): void

@@ -23,7 +23,7 @@ class TextInputSelect extends TextInput
 
     protected string $position = 'suffix';
 
-    public function select(Closure | Select $closure): TextInputSelect
+    public function select(Closure|Select $closure): self
     {
         if ($closure instanceof Select) {
             $this->selectComponentClosure = fn () => $closure;
@@ -35,7 +35,7 @@ class TextInputSelect extends TextInput
         return $this;
     }
 
-    public function position(string $position = 'suffix'): TextInputSelect
+    public function position(string $position = 'suffix'): self
     {
         $this->position = $position;
 

@@ -17,7 +17,7 @@ class ItemRenderer extends AbstractRenderer
         if ($item->isAuthorized()) {
             $items = [];
             foreach ($item->getItems() as $child) {
-                $items[] = (new ItemRenderer($this->factory))->render($child);
+                $items[] = (new self($this->factory))->render($child);
             }
 
             $badges = [];

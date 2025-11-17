@@ -23,19 +23,19 @@ final class CurrenciesField
                             Forms\Components\TextInput::make('amount')  // @phpstan-ignore-line
                                 ->label(__('shopper::forms.label.price_amount'))
                                 ->helperText(__('shopper::pages/products.amount_price_help_text'))
-                                ->statePath($currency->id . '.amount')
+                                ->statePath($currency->id.'.amount')
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
-                                ->required(fn (Forms\Get $get) => $get($currency->id . '.compare_amount') !== null)
+                                ->required(fn (Forms\Get $get) => $get($currency->id.'.compare_amount') !== null)
                                 ->suffix($currency->code)
                                 ->live()
                                 ->currencyMask(thousandSeparator: ',', decimalSeparator: '.', precision: 2),
                             Forms\Components\TextInput::make('compare_amount')  // @phpstan-ignore-line
                                 ->label(__('shopper::forms.label.compare_price'))
                                 ->helperText(__('shopper::pages/products.compare_price_help_text'))
-                                ->statePath($currency->id . '.compare_amount')
+                                ->statePath($currency->id.'.compare_amount')
                                 ->afterStateUpdated(
-                                    fn (?string $state, Forms\Set $set) => $state ?? $set($currency->id . '.compare_amount', null)
+                                    fn (?string $state, Forms\Set $set) => $state ?? $set($currency->id.'.compare_amount', null)
                                 )
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
@@ -45,7 +45,7 @@ final class CurrenciesField
                             Forms\Components\TextInput::make('cost_amount')  // @phpstan-ignore-line
                                 ->label(__('shopper::forms.label.cost_per_item'))
                                 ->helperText(__('shopper::pages/products.cost_per_items_help_text'))
-                                ->statePath($currency->id . '.cost_amount')
+                                ->statePath($currency->id.'.cost_amount')
                                 ->numeric()
                                 ->rules(['regex:/^\d{1,6}(\.\d{0,2})?$/'])
                                 ->suffix($currency->code)

@@ -16,6 +16,11 @@ class ConfirmPassword extends ModalComponent
 
     public string $action = '';
 
+    public static function modalMaxWidth(): string
+    {
+        return 'lg';
+    }
+
     public function mount(string $action): void
     {
         $this->action = $action;
@@ -41,11 +46,6 @@ class ConfirmPassword extends ModalComponent
     public function stopConfirmingPassword(): void
     {
         $this->reset('confirmablePassword');
-    }
-
-    public static function modalMaxWidth(): string
-    {
-        return 'lg';
     }
 
     public function render(): View

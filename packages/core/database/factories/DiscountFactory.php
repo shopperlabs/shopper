@@ -40,7 +40,7 @@ class DiscountFactory extends Factory
 
     public function forProduct(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'apply_to' => DiscountApplyTo::Products(),
         ]);
     }

@@ -18,10 +18,10 @@ abstract class AbstractAdminSidebar implements SidebarExtender
         $this->user = Shopper::auth()->user();
     }
 
+    abstract public function extendWith(Menu $menu): Menu;
+
     public function handle(SidebarBuilder $sidebar): void
     {
         $sidebar->add($this->extendWith($sidebar->getMenu()));
     }
-
-    abstract public function extendWith(Menu $menu): Menu;
 }

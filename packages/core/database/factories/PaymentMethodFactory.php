@@ -21,6 +21,8 @@ class PaymentMethodFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            'title' => $this->faker->randomElement(['Carte bancaire', 'PayPal', 'Virement bancaire', 'Chèque']),
+        ];
     }
 }

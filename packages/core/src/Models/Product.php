@@ -68,11 +68,11 @@ use Spatie\MediaLibrary\HasMedia as SpatieHasMedia;
 #[ObservedBy(ProductObserver::class)]
 class Product extends Model implements HasReviews, SpatieHasMedia
 {
+    use HasDimensions;
+
+    use HasDiscounts;
     /** @use HasFactory<ProductFactory> */
     use HasFactory;
-
-    use HasDimensions;
-    use HasDiscounts;
     use HasMedia;
     use HasPrices;
     use HasSlug;
@@ -84,32 +84,6 @@ class Product extends Model implements HasReviews, SpatieHasMedia
     public function getTable(): string
     {
         return shopper_table('products');
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'featured' => 'boolean',
-            'is_visible' => 'boolean',
-            'published_at' => 'datetime',
-            'metadata' => 'array',
-            'weight_unit' => Weight::class,
-            'weight_value' => 'decimal:2',
-            'width_unit' => Length::class,
-            'width_value' => 'decimal:2',
-            'height_unit' => Length::class,
-            'height_value' => 'decimal:2',
-            'depth_unit' => Length::class,
-            'depth_value' => 'decimal:2',
-            'volume_unit' => Volume::class,
-            'volume_value' => 'decimal:2',
-            'type' => ProductType::class,
-        ];
-    }
-
-    protected static function newFactory(): ProductFactory
-    {
-        return ProductFactory::new();
     }
 
     public function variantsStock(): CastAttribute
@@ -175,7 +149,7 @@ class Product extends Model implements HasReviews, SpatieHasMedia
      * @param  string|array<string>  $channel
      * @return Builder<Product>
      */
-    public function scopeForChannel(Builder $query, string | array $channel): Builder
+    public function scopeForChannel(Builder $query, string|array $channel): Builder
     {
         $channels = Arr::wrap($channel);
 
@@ -267,5 +241,31 @@ class Product extends Model implements HasReviews, SpatieHasMedia
                 'attribute_value_id',
                 'attribute_custom_value',
             ]);
+    }
+
+    protected static function newFactory(): ProductFactory
+    {
+        return ProductFactory::new();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'featured' => 'boolean',
+            'is_visible' => 'boolean',
+            'published_at' => 'datetime',
+            'metadata' => 'array',
+            'weight_unit' => Weight::class,
+            'weight_value' => 'decimal:2',
+            'width_unit' => Length::class,
+            'width_value' => 'decimal:2',
+            'height_unit' => Length::class,
+            'height_value' => 'decimal:2',
+            'depth_unit' => Length::class,
+            'depth_value' => 'decimal:2',
+            'volume_unit' => Volume::class,
+            'volume_value' => 'decimal:2',
+            'type' => ProductType::class,
+        ];
     }
 }

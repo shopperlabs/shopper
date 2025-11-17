@@ -25,25 +25,17 @@ use Shopper\Core\Traits\HasZones;
  */
 class Carrier extends Model
 {
+    /** @use HasFactory<CarrierFactory> */
     use HasFactory;
+
     use HasSlug;
     use HasZones;
 
     protected $guarded = [];
 
-    protected $casts = [
-        'is_enabled' => 'boolean',
-        'metadata' => 'array',
-    ];
-
     public function getTable(): string
     {
         return shopper_table('carriers');
-    }
-
-    protected static function newFactory(): CarrierFactory
-    {
-        return CarrierFactory::new();
     }
 
     /**
@@ -55,8 +47,19 @@ class Carrier extends Model
         return $query->where('is_enabled', true);
     }
 
+    /**
+     * @return HasMany<CarrierOption, $this>
+     */
     public function options(): HasMany
     {
         return $this->hasMany(CarrierOption::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_enabled' => 'boolean',
+            'metadata' => 'array',
+        ];
     }
 }
