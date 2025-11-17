@@ -6,7 +6,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Admin & User Role
+    | Roles
     |--------------------------------------------------------------------------
     |
     | User configuration to manage user access using spatie/laravel-permission.
@@ -15,10 +15,10 @@ return [
     |
     */
 
-    'users' => [
-        'admin_role' => 'administrator',
-        'manager_role' => 'manager',
-        'default_role' => 'user',
+    'roles' => [
+        'admin' => 'administrator',
+        'manager' => 'manager',
+        'user' => 'user',
     ],
 
     /*

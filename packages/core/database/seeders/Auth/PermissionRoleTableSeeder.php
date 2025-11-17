@@ -16,7 +16,7 @@ final class PermissionRoleTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         $administrator = Role::query()
-            ->where('name', config('shopper.core.users.admin_role'))
+            ->where('name', config('shopper.core.roles.admin'))
             ->firstOrFail();
 
         $permissions = Permission::all();

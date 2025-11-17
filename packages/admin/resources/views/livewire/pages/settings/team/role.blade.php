@@ -52,7 +52,7 @@
         <div x-show="currentTab === 'role'">
             <x-shopper::container>
                 <div class="w-full space-y-6 lg:max-w-4xl">
-                    @if (config('shopper.core.users.admin_role') === $role->name)
+                    @if (config('shopper.core.roles.admin') === $role->name)
                         <div class="rounded-md bg-info-500 bg-opacity-10 p-4">
                             <div class="flex">
                                 <div class="shrink-0">

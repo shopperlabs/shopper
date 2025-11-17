@@ -47,7 +47,7 @@ class Index extends Component implements HasForms, HasTable
                     ->label(__('shopper::forms.label.access'))
                     ->color('gray')
                     ->formatStateUsing(
-                        fn ($record) => $record->hasRole(config('shopper.core.users.admin_role'))
+                        fn ($record) => $record->hasRole(config('shopper.core.roles.admin'))
                         ? __('shopper::words.full')
                         : __('shopper::words.limited')
                     ),
@@ -66,7 +66,7 @@ class Index extends Component implements HasForms, HasTable
         return view('shopper::livewire.pages.settings.team.index', [
             'roles' => Role::query()
                 ->with('users')
-                ->where('name', '<>', config('shopper.core.users.default_role'))
+                ->where('name', '<>', config('shopper.core.roles.user'))
                 ->orderBy('created_at')
                 ->get(),
         ])

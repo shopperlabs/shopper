@@ -83,12 +83,12 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->hasRole(config('shopper.core.users.admin_role'));
+        return $this->hasRole(config('shopper.core.roles.admin'));
     }
 
     public function isManager(): bool
     {
-        return $this->hasRole(config('shopper.core.users.manager_role'));
+        return $this->hasRole(config('shopper.core.roles.manager'));
     }
 
     public function isVerified(): bool
@@ -132,7 +132,7 @@ class User extends Authenticatable
     public function scopeCustomers(Builder $query): Builder
     {
         return $query->whereHas('roles', function (Builder $query): void {
-            $query->where('name', config('shopper.core.users.default_role'));
+            $query->where('name', config('shopper.core.roles.user'));
         });
     }
 
@@ -144,8 +144,8 @@ class User extends Authenticatable
     {
         return $query->whereHas('roles', function (Builder $query): void {
             $query->whereIn('name', [
-                config('shopper.core.users.admin_role'),
-                config('shopper.core.users.manager_role'),
+                config('shopper.core.roles.admin'),
+                config('shopper.core.roles.manager'),
             ]);
         });
     }

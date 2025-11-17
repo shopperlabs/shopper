@@ -83,7 +83,7 @@ class CreateTeamMember extends SlideOverComponent implements HasForms
                             ->label(__('shopper::pages/settings/staff.choose_role'))
                             ->options(
                                 Role::query()
-                                    ->where('name', '<>', config('shopper.core.users.default_role'))
+                                    ->where('name', '<>', config('shopper.core.roles.user'))
                                     ->pluck('display_name', 'id')
                             )
                             ->required(),

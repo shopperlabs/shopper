@@ -22,6 +22,6 @@ class Role extends Model
 
     public function isAdmin(): bool
     {
-        return $this->name === config('shopper.core.users.admin_role');
+        return $this->name === config('shopper.core.roles.admin');
     }
 }

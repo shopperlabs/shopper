@@ -74,7 +74,7 @@ final class UserCommand extends Command
         try {
             $user = tap((new $model)->forceFill($userData))->save(); // @phpstan-ignore-line
 
-            $user->assignRole(config('shopper.core.users.admin_role'));
+            $user->assignRole(config('shopper.core.roles.admin'));
         } catch (Exception | QueryException $e) {
             $this->error($e->getMessage());
         }

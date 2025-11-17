@@ -15,21 +15,21 @@ final class RolesTableSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         Role::create([
-            'name' => config('shopper.core.users.admin_role'),
+            'name' => config('shopper.core.roles.admin'),
             'display_name' => __('Administrator'),
             'description' => __('Site administrator with access to shop admin panel and developer tools.'),
             'can_be_removed' => false,
         ]);
 
         Role::create([
-            'name' => config('shopper.core.users.manager_role'),
+            'name' => config('shopper.core.roles.manager'),
             'display_name' => __('Manager'),
             'description' => __('Site manager with access to shop admin panel and publishing menus.'),
             'can_be_removed' => false,
         ]);
 
         Role::create([
-            'name' => config('shopper.core.users.default_role'),
+            'name' => config('shopper.core.roles.user'),
             'display_name' => __('User'),
             'description' => __('Site customer role with access on front site.'),
             'can_be_removed' => false,

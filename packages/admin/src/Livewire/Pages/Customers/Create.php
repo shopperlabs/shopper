@@ -148,7 +148,7 @@ class Create extends AbstractPageComponent implements HasForms
             ['email_verified_at' => now()->toDateTimeString()],
         ));
 
-        $customer->assignRole(config('shopper.core.users.default_role'));
+        $customer->assignRole(config('shopper.core.roles.user'));
 
         $customer->addresses()->create($address);
 
