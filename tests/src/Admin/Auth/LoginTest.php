@@ -20,7 +20,7 @@ describe(Login::class, function (): void {
         $this->assertGuest();
 
         $userToAuthenticate = User::factory()->create();
-        $userToAuthenticate->assignRole(config('shopper.core.users.admin_role'));
+        $userToAuthenticate->assignRole(config('shopper.core.roles.admin'));
 
         Livewire::test(Login::class)
             ->set('email', $userToAuthenticate->email)

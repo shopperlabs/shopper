@@ -92,8 +92,7 @@ abstract class TestCase extends BaseTestCase
     protected function makeAdminUser(): User
     {
         $admin = User::factory()->create();
-
-        $admin->assignRole(config('shopper.core.users.admin_role'));
+        $admin->assignRole(config('shopper.core.roles.admin'));
 
         return $admin;
     }
